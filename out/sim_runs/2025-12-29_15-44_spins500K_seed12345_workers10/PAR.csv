@@ -1,0 +1,136 @@
+
+SECTION,SUMMARY
+Game Name,Slot Math Engine Template
+Version,1.0.0
+Layout,5x3
+Paylines,10
+Target RTP,96.00%
+Observed RTP,96.7335%
+95% CI,±1.5279%
+Hit Rate,27.61%
+Max Win Observed,1137x
+Volatility,Medium
+
+SECTION,SIMULATION
+Spins,500,000
+Seed,12345
+Workers,10
+Mode,full
+Bet,1
+
+SECTION,RTP_BREAKDOWN
+Base Line Wins,53.2456%
+Scatter Wins,2.1336%
+Free Spins,18.5489%
+Hold & Win,22.9938%
+
+SECTION,FREE_SPINS
+Trigger Frequency,1 in 117
+Avg FS Spins,9.3
+Avg FS Win,21.78x
+Retrigger Rate,13.20%
+Max Multiplier,10x
+
+SECTION,HOLD_AND_WIN
+Trigger Frequency,1 in 192
+Avg Orbs,7.0
+Avg H&W Win,44.05x
+Full Grid Jackpot Rate,0.0383%
+
+SECTION,PAYTABLE
+Symbol,3-Kind,4-Kind,5-Kind
+LP1,0.9x,2.9x,8.8x
+LP2,0.9x,2.9x,8.8x
+LP3,0.8x,2.2x,7.3x
+LP4,0.8x,2.2x,7.3x
+LP5,0.6x,1.8x,4.9x
+Hero,3.1x,12.2x,63x
+HP2,2.2x,8.8x,44x
+HP3,2x,7.3x,39x
+Wild,3.1x,12.2x,63x
+
+SECTION,SCATTER
+Count,Pay,Free Spins
+3,2x,8
+4,10x,12
+5,50x,15
+
+SECTION,ORB_VALUES
+Type,Multiplier,Weight
+cash,1x,2750
+cash,2x,2550
+cash,4x,2000
+cash,8x,1460
+cash,15x,740
+cash,32x,340
+cash,63x,140
+mini,25x,12
+minor,75x,5
+major,200x,2
+grand,750x,1
+
+SECTION,REELS_BASE
+Reel,Length,Symbols
+1,60,LP1:9 LP2:9 LP3:9 LP4:9 LP5:8 Special:7 Wild:3 Hero:2 Scatter:2 HP2:1 HP3:1
+2,60,LP1:9 LP2:9 LP3:9 LP4:9 LP5:8 Special:7 Wild:3 Hero:2 Scatter:2 HP2:1 HP3:1
+3,60,LP1:9 LP2:9 LP3:9 LP4:9 LP5:8 Special:7 Wild:3 Hero:2 Scatter:2 HP2:1 HP3:1
+4,60,LP1:9 LP2:9 LP3:9 LP4:9 LP5:8 Special:7 Wild:3 Hero:2 Scatter:2 HP2:1 HP3:1
+5,60,LP1:9 LP2:9 LP3:9 LP4:9 LP5:8 Special:7 Wild:3 Hero:2 Scatter:2 HP2:1 HP3:1
+
+SECTION,REELS_FREESPINS
+Reel,Length,Symbols
+1,52,LP1:8 LP2:8 LP3:8 LP5:7 LP4:6 Wild:5 Special:5 Scatter:2 Hero:1 HP2:1 HP3:1
+2,52,LP1:8 LP2:8 LP3:8 LP5:7 LP4:6 Wild:5 Special:5 Scatter:2 Hero:1 HP2:1 HP3:1
+3,51,LP1:8 LP2:8 LP4:7 LP5:7 LP3:6 Wild:5 Special:5 Scatter:2 Hero:1 HP2:1 HP3:1
+4,52,LP1:8 LP2:8 LP3:8 LP5:7 LP4:6 Wild:5 Special:5 Scatter:2 Hero:1 HP2:1 HP3:1
+5,52,LP1:8 LP2:8 LP3:8 LP5:7 LP4:6 Wild:5 Special:5 Scatter:2 Hero:1 HP2:1 HP3:1
+
+SECTION,HISTOGRAM
+Bucket,Count,Percentage,RTP Contribution
+0x (Dead),364580,72.9160%,0.0000%
+0-0.1x,0,0.0000%,0.0000%
+0.1-0.2x,0,0.0000%,0.0000%
+0.2-0.5x,0,0.0000%,0.0000%
+0.5-1x,70340,14.0680%,11.2505%
+1-2x,21382,4.2764%,7.0658%
+2-5x,30213,6.0426%,18.1914%
+5-10x,8176,1.6352%,12.3947%
+10-20x,3844,0.7688%,10.7493%
+20-50x,2945,0.5890%,18.6774%
+50-100x,959,0.1918%,13.0431%
+100-200x,177,0.0354%,4.3065%
+200-500x,8,0.0016%,0.3607%
+500-1000x,3,0.0006%,0.4668%
+1000-2000x,1,0.0002%,0.2274%
+2000-5000x,0,0.0000%,0.0000%
+5000x+,0,0.0000%,0.0000%
+
+SECTION,TOP_WINS
+Rank,Win,Spin Index
+1,1137.00x,11996
+2,792.00x,24586
+3,776.00x,35616
+4,766.00x,26874
+5,274.00x,5461
+6,234.40x,38380
+7,229.00x,41169
+8,219.00x,33032
+9,217.00x,26805
+10,215.00x,27659
+11,210.00x,39509
+12,205.00x,30277
+13,187.00x,26564
+14,176.00x,21694
+15,175.80x,32990
+16,172.00x,8711
+17,171.00x,42797
+18,168.00x,6125
+19,167.00x,47215
+20,167.00x,22507
+
+SECTION,PERFORMANCE
+Volatility Index,5.51
+Std Deviation,5.5121
+100x+ Rate,0.0378%
+500x+ Rate,0.0008%
+1000x+ Rate,0.000200%

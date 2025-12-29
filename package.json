@@ -1,0 +1,38 @@
+{
+  "name": "slot-math-engine-template",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Production-grade Slot Math Simulator Template - Reusable for any slot game",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "sim": "npm run build && node dist/index.js",
+    "sim:quick": "npm run build && node dist/index.js --quick",
+    "sim:full": "npm run build && node dist/index.js --spins=100000000",
+    "compare": "npm run build && node dist/tools/compare.js",
+    "test": "node --experimental-vm-modules node_modules/vitest/vitest.mjs run",
+    "test:watch": "node --experimental-vm-modules node_modules/vitest/vitest.mjs",
+    "lint": "tsc --noEmit"
+  },
+  "author": "Slot Math Engine Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "fast-check": "^4.5.2",
+    "fast-csv": "^5.0.5",
+    "hdr-histogram-js": "^3.0.1",
+    "piscina": "^5.1.4",
+    "pure-rand": "^7.0.1",
+    "xxhash-wasm": "^1.1.0",
+    "zod": "^4.2.1"
+  }
+}
