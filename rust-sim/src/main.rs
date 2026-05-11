@@ -8,6 +8,7 @@
 //!   slot_sim --full        # 1B total
 //!   slot_sim --verify 1000 # Verify 1000 spins match TS exactly
 
+mod analytical;
 mod config;
 mod evaluator;
 mod features;
@@ -74,6 +75,11 @@ struct Args {
     /// Output full PAR sheet metrics
     #[arg(long)]
     par: bool,
+
+    /// Analytical (exact) mode — zero-variance, no spins needed.
+    /// Result is mathematically exact and identical every run.
+    #[arg(long)]
+    analytical: bool,
 }
 
 fn main() {
@@ -92,6 +98,12 @@ fn main() {
         eprintln!("No config specified, using default test config.");
         config::GameConfig::default()
     };
+
+    // Analytical mode — exact, zero-variance, no Monte Carlo
+    if args.analytical {
+        run_analytical_mode(&game_config);
+        return;
+    }
 
     // Verify mode - single-threaded exact comparison
     if let Some(verify_spins) = args.verify {
@@ -149,6 +161,20 @@ fn main() {
     } else {
         print_human_output(&result, &par, &global_stats, &game_config, elapsed, &args);
     }
+}
+
+/// Analytical mode: compute exact RTP without any Monte Carlo sampling.
+/// Result is deterministic — bit-identical every invocation.
+fn run_analytical_mode(config: &config::GameConfig) {
+    let start = Instant::now();
+    let solver = analytical::AnalyticalSolver::new(config);
+    let result = solver.solve();
+    let elapsed = start.elapsed();
+
+    analytical::print_analytical_report(&result, config.target_rtp);
+
+    eprintln!("  Computed in {:.3}ms  (no spins, no variance, exact result)",
+        elapsed.as_secs_f64() * 1000.0);
 }
 
 /// Verify mode: run exact N spins with seed 12345 for comparison with TypeScript

@@ -2,6 +2,7 @@
 //!
 //! High-performance Monte Carlo simulator for slot games.
 
+pub mod analytical;
 pub mod config;
 pub mod evaluator;
 pub mod features;
