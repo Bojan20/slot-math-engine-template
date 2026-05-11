@@ -49,43 +49,43 @@ export interface ScatterPayEntry {
 export const LINE_PAYTABLE: PaytableEntry[] = [
   // Low Pay Symbols
   {
-    symbol: SymbolId.LP_LYRE,
+    symbol: SymbolId.LP_1,
     pays: { 3: 0.9, 4: 2.9, 5: 8.8 }
   },
   {
-    symbol: SymbolId.LP_COIN,
+    symbol: SymbolId.LP_2,
     pays: { 3: 0.9, 4: 2.9, 5: 8.8 }
   },
   {
-    symbol: SymbolId.LP_HELMET,
+    symbol: SymbolId.LP_3,
     pays: { 3: 0.8, 4: 2.2, 5: 7.3 }
   },
   {
-    symbol: SymbolId.LP_SCROLL,
+    symbol: SymbolId.LP_4,
     pays: { 3: 0.8, 4: 2.2, 5: 7.3 }
   },
   {
-    symbol: SymbolId.LP_RING,
+    symbol: SymbolId.LP_5,
     pays: { 3: 0.6, 4: 1.8, 5: 4.9 }
   },
 
   // High Pay Symbols
   {
-    symbol: SymbolId.HP_ZEUS,
+    symbol: SymbolId.HP_1,
     pays: { 3: 3.1, 4: 12.2, 5: 63.0 }  // Top paying symbol
   },
   {
-    symbol: SymbolId.HP_HADES,
+    symbol: SymbolId.HP_2,
     pays: { 3: 2.2, 4: 8.8, 5: 44.0 }
   },
   {
-    symbol: SymbolId.HP_POSEIDON,
+    symbol: SymbolId.HP_3,
     pays: { 3: 2.0, 4: 7.3, 5: 39.0 }
   },
 
   // Wild pays as highest symbol
   {
-    symbol: SymbolId.WILD_SHIELD,
+    symbol: SymbolId.WILD,
     pays: { 3: 3.1, 4: 12.2, 5: 63.0 }
   }
 ];

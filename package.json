@@ -27,11 +27,11 @@
   },
   "dependencies": {
     "commander": "^14.0.2",
+    "decimal.js": "^10.6.0",
     "fast-check": "^4.5.2",
     "fast-csv": "^5.0.5",
     "hdr-histogram-js": "^3.0.1",
     "piscina": "^5.1.4",
-    "pure-rand": "^7.0.1",
     "xxhash-wasm": "^1.1.0",
     "zod": "^4.2.1"
   }

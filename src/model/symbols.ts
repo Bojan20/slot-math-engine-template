@@ -17,21 +17,21 @@
 
 export enum SymbolId {
   // Low Pay Symbols (LP) - Theme artifacts/items
-  LP_LYRE = 'LP_LYRE',       // Rename for your theme (e.g., LP_10, LP_ANKH)
-  LP_COIN = 'LP_COIN',       // Rename for your theme (e.g., LP_J, LP_SCARAB)
-  LP_HELMET = 'LP_HELMET',   // Rename for your theme (e.g., LP_Q, LP_EYE)
-  LP_SCROLL = 'LP_SCROLL',   // Rename for your theme (e.g., LP_K, LP_STAFF)
-  LP_RING = 'LP_RING',       // Rename for your theme (e.g., LP_A, LP_BIRD)
+  LP_1 = 'LP_1',       // e.g., 10, J, Ankh, Lyre
+  LP_2 = 'LP_2',       // e.g., J, Q, Scarab, Coin
+  LP_3 = 'LP_3',       // e.g., Q, K, Eye, Helmet
+  LP_4 = 'LP_4',       // e.g., K, A, Staff, Scroll
+  LP_5 = 'LP_5',       // e.g., A, Bird, Ring
 
   // High Pay Symbols (HP) - Theme characters
-  HP_ZEUS = 'HP_ZEUS',           // Rename for your theme (e.g., HP_PHARAOH)
-  HP_HADES = 'HP_HADES',         // Rename for your theme (e.g., HP_ANUBIS)
-  HP_POSEIDON = 'HP_POSEIDON',   // Rename for your theme (e.g., HP_CLEOPATRA)
+  HP_1 = 'HP_1',       // Top paying (e.g., Pharaoh, Zeus, Dragon)
+  HP_2 = 'HP_2',       // Second (e.g., Anubis, Hades, Tiger)
+  HP_3 = 'HP_3',       // Third (e.g., Cleopatra, Poseidon, Phoenix)
 
   // Special Symbols
-  WILD_SHIELD = 'WILD_SHIELD',       // Wild - substitutes all except Scatter & Special
-  SCATTER_TEMPLE = 'SCATTER_TEMPLE', // Scatter - triggers Free Spins
-  LIGHTNING_ORB = 'LIGHTNING_ORB'    // Special - Hold & Win trigger + cash values
+  WILD = 'WILD',       // Wild - substitutes all except Scatter & Special
+  SCATTER = 'SCATTER', // Scatter - triggers Free Spins
+  BONUS = 'BONUS'      // Special - Hold & Win trigger + cash values
 }
 
 export interface SymbolDefinition {
@@ -46,8 +46,8 @@ export interface SymbolDefinition {
 
 export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
   // Low Pay Symbols
-  [SymbolId.LP_LYRE]: {
-    id: SymbolId.LP_LYRE,
+  [SymbolId.LP_1]: {
+    id: SymbolId.LP_1,
     name: 'LP1',
     tier: 'LP',
     description: 'Low pay symbol 1',
@@ -55,8 +55,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.LP_COIN]: {
-    id: SymbolId.LP_COIN,
+  [SymbolId.LP_2]: {
+    id: SymbolId.LP_2,
     name: 'LP2',
     tier: 'LP',
     description: 'Low pay symbol 2',
@@ -64,8 +64,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.LP_HELMET]: {
-    id: SymbolId.LP_HELMET,
+  [SymbolId.LP_3]: {
+    id: SymbolId.LP_3,
     name: 'LP3',
     tier: 'LP',
     description: 'Low pay symbol 3',
@@ -73,8 +73,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.LP_SCROLL]: {
-    id: SymbolId.LP_SCROLL,
+  [SymbolId.LP_4]: {
+    id: SymbolId.LP_4,
     name: 'LP4',
     tier: 'LP',
     description: 'Low pay symbol 4',
@@ -82,8 +82,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.LP_RING]: {
-    id: SymbolId.LP_RING,
+  [SymbolId.LP_5]: {
+    id: SymbolId.LP_5,
     name: 'LP5',
     tier: 'LP',
     description: 'Low pay symbol 5',
@@ -93,17 +93,17 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
   },
 
   // High Pay Symbols
-  [SymbolId.HP_ZEUS]: {
-    id: SymbolId.HP_ZEUS,
-    name: 'Hero',
+  [SymbolId.HP_1]: {
+    id: SymbolId.HP_1,
+    name: 'HP1',
     tier: 'HP',
     description: 'Top paying symbol',
     substitutes: false,
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.HP_HADES]: {
-    id: SymbolId.HP_HADES,
+  [SymbolId.HP_2]: {
+    id: SymbolId.HP_2,
     name: 'HP2',
     tier: 'HP',
     description: 'High pay symbol 2',
@@ -111,8 +111,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: true,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.HP_POSEIDON]: {
-    id: SymbolId.HP_POSEIDON,
+  [SymbolId.HP_3]: {
+    id: SymbolId.HP_3,
     name: 'HP3',
     tier: 'HP',
     description: 'High pay symbol 3',
@@ -122,8 +122,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
   },
 
   // Special Symbols
-  [SymbolId.WILD_SHIELD]: {
-    id: SymbolId.WILD_SHIELD,
+  [SymbolId.WILD]: {
+    id: SymbolId.WILD,
     name: 'Wild',
     tier: 'WILD',
     description: 'Substitutes all except Scatter & Special',
@@ -131,8 +131,8 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: false,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.SCATTER_TEMPLE]: {
-    id: SymbolId.SCATTER_TEMPLE,
+  [SymbolId.SCATTER]: {
+    id: SymbolId.SCATTER,
     name: 'Scatter',
     tier: 'SCATTER',
     description: 'Triggers Free Spins, pays anywhere',
@@ -140,9 +140,9 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
     canBeSubstituted: false,
     appearsOnReels: [0, 1, 2, 3, 4]
   },
-  [SymbolId.LIGHTNING_ORB]: {
-    id: SymbolId.LIGHTNING_ORB,
-    name: 'Special',
+  [SymbolId.BONUS]: {
+    id: SymbolId.BONUS,
+    name: 'Bonus',
     tier: 'SPECIAL',
     description: 'Hold & Win trigger, carries cash value',
     substitutes: false,
@@ -153,17 +153,17 @@ export const SYMBOL_DEFINITIONS: Record<SymbolId, SymbolDefinition> = {
 
 // Helper arrays for quick lookups
 export const LP_SYMBOLS: SymbolId[] = [
-  SymbolId.LP_LYRE,
-  SymbolId.LP_COIN,
-  SymbolId.LP_HELMET,
-  SymbolId.LP_SCROLL,
-  SymbolId.LP_RING
+  SymbolId.LP_1,
+  SymbolId.LP_2,
+  SymbolId.LP_3,
+  SymbolId.LP_4,
+  SymbolId.LP_5
 ];
 
 export const HP_SYMBOLS: SymbolId[] = [
-  SymbolId.HP_ZEUS,
-  SymbolId.HP_HADES,
-  SymbolId.HP_POSEIDON
+  SymbolId.HP_1,
+  SymbolId.HP_2,
+  SymbolId.HP_3
 ];
 
 export const PAYING_SYMBOLS: SymbolId[] = [...LP_SYMBOLS, ...HP_SYMBOLS];

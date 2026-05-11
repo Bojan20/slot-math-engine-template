@@ -2,7 +2,7 @@
  * SLOT MATH ENGINE TEMPLATE - Piscina Simulation Worker
  *
  * High-performance worker for parallel Monte Carlo simulation.
- * Uses pure-rand for deterministic RNG.
+ * Uses Mulberry32 for deterministic RNG (matches Rust simulator).
  *
  * This worker is spawned by piscina and receives:
  * - seed: deterministic seed for this worker

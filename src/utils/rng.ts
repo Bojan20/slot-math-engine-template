@@ -1,27 +1,44 @@
 /**
- * SLOT MATH ENGINE TEMPLATE - Deterministic RNG Wrapper
+ * SLOT MATH ENGINE TEMPLATE - Deterministic RNG
  *
- * Uses pure-rand xoroshiro128+ algorithm for:
- * - Industry-standard slot simulation
+ * Uses Mulberry32 algorithm for:
+ * - TypeScript/Rust parity (IDENTICAL output)
  * - Deterministic reproducibility
- * - Excellent statistical properties
- * - Fast performance
+ * - Fast performance (single u32 state)
  *
  * Every simulation result is reproducible with the same seed.
+ * Results match Rust simulator exactly.
  */
-
-import * as prand from 'pure-rand';
 
 /**
- * Seeded RNG instance using xoroshiro128+
+ * Core Mulberry32 PRNG function
+ * This is the canonical implementation that Rust must match.
+ *
+ * Expected values for seed 12345:
+ * - v1: 0.9797282677609473
+ * - v2: 0.3067522644996643
+ * - v3: 0.484205421525985
+ */
+export function mulberry32(seed: number): () => number {
+  let t = seed >>> 0;
+  return function rand(): number {
+    t += 0x6d2b79f5;
+    let x = Math.imul(t ^ (t >>> 15), 1 | t);
+    x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Seeded RNG instance using Mulberry32
  */
 export class RNG {
-  private gen: prand.RandomGenerator;
+  private rng: () => number;
   private initialSeed: number;
 
   constructor(seed: number) {
     this.initialSeed = seed;
-    this.gen = prand.xoroshiro128plus(seed);
+    this.rng = mulberry32(seed);
   }
 
   /**
@@ -36,25 +53,21 @@ export class RNG {
    * Primary method for slot mechanics
    */
   nextFloat(): number {
-    const [value, nextGen] = prand.uniformIntDistribution(0, 0x7fffffff, this.gen);
-    this.gen = nextGen;
-    return value / 0x80000000;
+    return this.rng();
   }
 
   /**
    * Generate random integer in [min, max] inclusive
    */
   nextInt(min: number, max: number): number {
-    const [value, nextGen] = prand.uniformIntDistribution(min, max, this.gen);
-    this.gen = nextGen;
-    return value;
+    return min + Math.floor(this.rng() * (max - min + 1));
   }
 
   /**
    * Generate random integer in [0, max) exclusive
    */
   nextIntExclusive(max: number): number {
-    return this.nextInt(0, max - 1);
+    return Math.floor(this.rng() * max);
   }
 
   /**
@@ -64,7 +77,7 @@ export class RNG {
     if (array.length === 0) {
       throw new Error('Cannot pick from empty array');
     }
-    return array[this.nextInt(0, array.length - 1)];
+    return array[Math.floor(this.rng() * array.length)];
   }
 
   /**
@@ -73,7 +86,7 @@ export class RNG {
    */
   weightedSelect(weights: number[]): number {
     const total = weights.reduce((a, b) => a + b, 0);
-    let roll = this.nextFloat() * total;
+    let roll = this.rng() * total;
 
     for (let i = 0; i < weights.length; i++) {
       roll -= weights[i];
@@ -98,7 +111,7 @@ export class RNG {
    */
   shuffle<T>(array: T[]): T[] {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = this.nextInt(0, i);
+      const j = Math.floor(this.rng() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
@@ -115,16 +128,15 @@ export class RNG {
    * Boolean with probability p
    */
   chance(probability: number): boolean {
-    return this.nextFloat() < probability;
+    return this.rng() < probability;
   }
 
   /**
-   * Clone RNG at current state
+   * Clone RNG (creates new RNG with same initial seed)
+   * Note: This does NOT preserve current state, only initial seed
    */
   clone(): RNG {
-    const cloned = new RNG(this.initialSeed);
-    cloned.gen = this.gen;
-    return cloned;
+    return new RNG(this.initialSeed);
   }
 
   /**
@@ -132,7 +144,7 @@ export class RNG {
    */
   skip(n: number): void {
     for (let i = 0; i < n; i++) {
-      this.nextFloat();
+      this.rng();
     }
   }
 }

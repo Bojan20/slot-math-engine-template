@@ -1,68 +1,97 @@
 /**
  * SLOT MATH ENGINE TEMPLATE - RNG Engine
  *
- * Deterministic PRNG for reproducible simulations.
- * Uses xorshift128+ algorithm - fast, statistically solid, seedable.
+ * Mulberry32 PRNG for reproducible simulations.
+ * MUST match Rust implementation exactly for TS/Rust parity.
  *
  * Properties:
- * - Period: 2^128 - 1
- * - Passes BigCrush tests
+ * - Period: ~2^32
+ * - Fast (single 32-bit state)
  * - Deterministic: same seed = same sequence
+ * - Identical output in TypeScript and Rust
  */
 
+/**
+ * Create a Mulberry32 PRNG function
+ *
+ * This is the canonical implementation that Rust must match.
+ *
+ * @param seed - Initial seed value (will be cast to u32)
+ * @returns Function that returns random float in [0, 1)
+ *
+ * @example
+ * const rng = mulberry32(12345);
+ * console.log(rng()); // 0.9797282677609473
+ * console.log(rng()); // 0.3067522644996643
+ */
+export function mulberry32(seed: number): () => number {
+  let t = seed >>> 0;
+  return function rand(): number {
+    t += 0x6d2b79f5;
+    let x = Math.imul(t ^ (t >>> 15), 1 | t);
+    x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Pick random integer in [min, max)
+ */
+export function randInt(rng: () => number, min: number, max: number): number {
+  return Math.floor(rng() * (max - min)) + min;
+}
+
+/**
+ * Pick from weighted items
+ */
+export function pickWeighted<T>(
+  rng: () => number,
+  items: Array<{ value: T; weight: number }>
+): T {
+  const total = items.reduce((s, it) => s + it.weight, 0);
+  let r = rng() * total;
+  for (const it of items) {
+    r -= it.weight;
+    if (r <= 0) return it.value;
+  }
+  return items[items.length - 1].value;
+}
+
+/**
+ * Pick index from weight array
+ */
+export function pickWeightedIndex(rng: () => number, weights: number[]): number {
+  const total = weights.reduce((a, b) => a + b, 0);
+  let roll = rng() * total;
+
+  for (let i = 0; i < weights.length; i++) {
+    roll -= weights[i];
+    if (roll <= 0) {
+      return i;
+    }
+  }
+
+  return weights.length - 1;
+}
+
+/**
+ * RNG Class wrapper for object-oriented usage
+ * Wraps mulberry32 function for compatibility with existing code
+ */
 export class RNG {
-  private state0: bigint;
-  private state1: bigint;
+  private rng: () => number;
+  private seed: number;
 
   constructor(seed?: number) {
-    // Initialize with seed or random
-    const s = seed !== undefined ? seed : Math.floor(Math.random() * 0xFFFFFFFF);
-
-    // Use splitmix64 to initialize state from single seed
-    let state = BigInt(s);
-
-    state = this.splitmix64(state);
-    this.state0 = state;
-
-    state = this.splitmix64(state);
-    this.state1 = state;
-  }
-
-  /**
-   * Splitmix64 for seed initialization
-   */
-  private splitmix64(state: bigint): bigint {
-    state = (state + 0x9E3779B97F4A7C15n) & 0xFFFFFFFFFFFFFFFFn;
-    state = ((state ^ (state >> 30n)) * 0xBF58476D1CE4E5B9n) & 0xFFFFFFFFFFFFFFFFn;
-    state = ((state ^ (state >> 27n)) * 0x94D049BB133111EBn) & 0xFFFFFFFFFFFFFFFFn;
-    return (state ^ (state >> 31n)) & 0xFFFFFFFFFFFFFFFFn;
-  }
-
-  /**
-   * Generate next random 64-bit value (xorshift128+)
-   */
-  private next(): bigint {
-    let s1 = this.state0;
-    const s0 = this.state1;
-
-    this.state0 = s0;
-    s1 ^= (s1 << 23n) & 0xFFFFFFFFFFFFFFFFn;
-    s1 ^= s1 >> 18n;
-    s1 ^= s0;
-    s1 ^= s0 >> 5n;
-    this.state1 = s1;
-
-    return (s0 + s1) & 0xFFFFFFFFFFFFFFFFn;
+    this.seed = seed !== undefined ? seed : Math.floor(Math.random() * 0xFFFFFFFF);
+    this.rng = mulberry32(this.seed);
   }
 
   /**
    * Get random float in [0, 1)
    */
   random(): number {
-    const value = this.next();
-    // Use upper 53 bits for double precision
-    // Note: (1 << 53) doesn't work in JS, must use 2**53
-    return Number(value >> 11n) / (2 ** 53);
+    return this.rng();
   }
 
   /**
@@ -81,22 +110,11 @@ export class RNG {
 
   /**
    * Select from weighted options
-   * @param weights Array of weights (must sum to total)
+   * @param weights Array of weights
    * @returns Index of selected option
    */
   weightedSelect(weights: number[]): number {
-    const total = weights.reduce((a, b) => a + b, 0);
-    let roll = this.random() * total;
-
-    for (let i = 0; i < weights.length; i++) {
-      roll -= weights[i];
-      if (roll <= 0) {
-        return i;
-      }
-    }
-
-    // Fallback (shouldn't happen with proper weights)
-    return weights.length - 1;
+    return pickWeightedIndex(this.rng, weights);
   }
 
   /**
@@ -111,37 +129,22 @@ export class RNG {
   }
 
   /**
-   * Get current state for serialization/debugging
+   * Get seed for debugging
    */
-  getState(): { state0: string; state1: string } {
-    return {
-      state0: this.state0.toString(16),
-      state1: this.state1.toString(16)
-    };
+  getSeed(): number {
+    return this.seed;
   }
 
   /**
-   * Restore state for replay
-   */
-  setState(state: { state0: string; state1: string }): void {
-    this.state0 = BigInt('0x' + state.state0);
-    this.state1 = BigInt('0x' + state.state1);
-  }
-
-  /**
-   * Clone RNG with current state
+   * Create new RNG with same seed (for replay)
    */
   clone(): RNG {
-    const cloned = new RNG(0);
-    cloned.state0 = this.state0;
-    cloned.state1 = this.state1;
-    return cloned;
+    return new RNG(this.seed);
   }
 }
 
 /**
  * Global RNG instance for simulation
- * Can be reseeded between runs
  */
 let globalRng = new RNG();
 

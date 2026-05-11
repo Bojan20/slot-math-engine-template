@@ -14,46 +14,46 @@
 import { SymbolId } from '../model/symbols.js';
 
 // ============================================
-// SYMBOL ROLES — Definiši koji simbol ima koju ulogu
+// SYMBOL ROLES — Define which symbol has which role
 // ============================================
 
 export interface SymbolRoles {
-  // Wild simbol koji substitutes
+  // Wild symbol that substitutes
   wild: SymbolId;
 
-  // Scatter simbol koji triggeruje Free Spins
+  // Scatter symbol that triggers Free Spins
   scatter: SymbolId;
 
-  // Special simbol za Hold & Win (null ako nema H&W)
+  // Special symbol for Hold & Win (null if no H&W)
   special: SymbolId | null;
 
-  // Highest paying simbol (za wild-only linije)
+  // Highest paying symbol (for wild-only lines)
   topPaying: SymbolId;
 }
 
 /**
  * DEFAULT SYMBOL ROLES
  *
- * PROMENI OVO ZA SVOJU IGRU!
+ * CHANGE THIS FOR YOUR GAME!
  *
- * Primer za Egyptian temu:
+ * Example for Egyptian theme:
  * wild: SymbolId.SCARAB_WILD,
  * scatter: SymbolId.PYRAMID_SCATTER,
  * special: SymbolId.ANKH_BONUS,
  * topPaying: SymbolId.PHARAOH,
  */
 export const SYMBOL_ROLES: SymbolRoles = {
-  // Wild simbol
-  wild: SymbolId.WILD_SHIELD,
+  // Wild symbol
+  wild: SymbolId.WILD,
 
   // Scatter (Free Spins trigger)
-  scatter: SymbolId.SCATTER_TEMPLE,
+  scatter: SymbolId.SCATTER,
 
-  // Special (Hold & Win trigger) — postavi na null ako nema H&W
-  special: SymbolId.LIGHTNING_ORB,
+  // Special (Hold & Win trigger) — set to null if no H&W
+  special: SymbolId.BONUS,
 
-  // Top paying simbol (koristi se za wild-only wins)
-  topPaying: SymbolId.HP_ZEUS,
+  // Top paying symbol (used for wild-only wins)
+  topPaying: SymbolId.HP_1,
 };
 
 // ============================================
@@ -134,16 +134,16 @@ export interface FeatureFlags {
 /**
  * DEFAULT FEATURE FLAGS
  *
- * Postavi true/false za feature-e koje tvoja igra ima.
+ * Set true/false for features your game has.
  */
 export const FEATURE_FLAGS: FeatureFlags = {
   hasWild: true,
   hasScatter: true,
   hasFreeSpins: true,
-  hasHoldAndWin: true,  // Postavi false ako nema H&W
+  hasHoldAndWin: true,  // Set false if no H&W
   hasCollector: false,
   hasCascade: false,
-  hasMultiplier: true,  // Progressive multiplier u FS
+  hasMultiplier: true,  // Progressive multiplier in FS
 };
 
 // ============================================
@@ -190,16 +190,16 @@ export function validateSymbolConfig(): boolean {
 // ============================================
 
 /**
- * Primer korišćenja u evaluate.ts:
+ * Usage example in evaluate.ts:
  *
  * import { isWild, isScatter, getWildSymbol } from '../config/symbolConfig.js';
  *
- * // Umesto:
- * if (symbol === SymbolId.WILD_SHIELD) { ... }
+ * // Instead of:
+ * if (symbol === SymbolId.WILD) { ... }
  *
- * // Koristi:
+ * // Use:
  * if (isWild(symbol)) { ... }
  *
- * // Za wild-only linije:
+ * // For wild-only lines:
  * const wildSymbol = getWildSymbol();
  */

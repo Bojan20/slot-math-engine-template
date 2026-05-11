@@ -81,7 +81,13 @@ Typical caps: 2500x - 10000x
 | 10M | ±0.10% | Rough tuning |
 | 50M | ±0.05% | Pre-lock |
 | 100M | ±0.03% | Serious balance |
-| 500M | ±0.02% | Final lock |
+| 500M | ±0.01% | Final lock |
+
+## RTP Tolerance (PRODUCTION RULE)
+
+**Target: 96.00% ±0.01%**
+- Valid range: 95.99% - 96.01%
+- Must pass before commit
 
 ## Common RTP Budgets
 

@@ -2,6 +2,16 @@
  * Evaluation Tests
  *
  * Tests for grid evaluation, scatter detection, and win calculations.
+ *
+ * Uses the template's generic symbol IDs (LP_1..LP_5, HP_1..HP_3, WILD,
+ * SCATTER, BONUS). Previous Wrath-of-Olympus-flavoured aliases
+ * (HP_ZEUS, SCATTER_TEMPLE, etc.) were removed when the engine was
+ * rebranded into a reusable template; this file was left behind on the
+ * old enum. Numbers are unchanged — they match the current paytable:
+ *
+ *   HP_1 5oak = 63.0×
+ *   3 SCATTER → 8 free spins (4 → 12, 5 → 15)
+ *   6 BONUS  → H&W trigger
  */
 
 import { describe, it, expect } from 'vitest';
@@ -14,9 +24,9 @@ describe('Grid Evaluation', () => {
   it('should detect 3 scatters and trigger FS', () => {
     // Create a grid with exactly 3 scatters (grid is [row][reel])
     const grid: Grid = [
-      [SymbolId.SCATTER_TEMPLE, SymbolId.LP_COIN, SymbolId.SCATTER_TEMPLE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.SCATTER, SymbolId.LP_2,    SymbolId.SCATTER, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.LP_1,    SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.SCATTER, SymbolId.LP_1,    SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -30,9 +40,9 @@ describe('Grid Evaluation', () => {
 
   it('should detect 4 scatters correctly', () => {
     const grid: Grid = [
-      [SymbolId.SCATTER_TEMPLE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.SCATTER_TEMPLE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_HELMET]
+      [SymbolId.SCATTER, SymbolId.SCATTER, SymbolId.LP_1,    SymbolId.LP_5,    SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.SCATTER, SymbolId.LP_5,    SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.LP_1,    SymbolId.SCATTER, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -45,9 +55,9 @@ describe('Grid Evaluation', () => {
 
   it('should detect 5 scatters correctly', () => {
     const grid: Grid = [
-      [SymbolId.SCATTER_TEMPLE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_LYRE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.SCATTER_TEMPLE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.SCATTER_TEMPLE]
+      [SymbolId.SCATTER, SymbolId.SCATTER, SymbolId.LP_1,    SymbolId.SCATTER, SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.SCATTER, SymbolId.LP_5,    SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.LP_1,    SymbolId.LP_5,    SymbolId.SCATTER]
     ];
 
     const rng = new RNG(12345);
@@ -60,9 +70,9 @@ describe('Grid Evaluation', () => {
 
   it('should not trigger FS with 2 scatters', () => {
     const grid: Grid = [
-      [SymbolId.SCATTER_TEMPLE, SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.SCATTER_TEMPLE, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.SCATTER, SymbolId.LP_2,    SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.LP_2,    SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_1,    SymbolId.SCATTER, SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -74,11 +84,11 @@ describe('Grid Evaluation', () => {
   });
 
   it('should evaluate 3-of-a-kind LP win on payline', () => {
-    // Create grid with 3 Lyre on payline 0 (middle row)
+    // Create grid with 3 LP_1 (Lyre) on payline 0 (middle row)
     const grid: Grid = [
-      [SymbolId.LP_COIN, SymbolId.LP_COIN, SymbolId.LP_COIN, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_LYRE, SymbolId.LP_LYRE, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LP_SCROLL, SymbolId.LP_SCROLL, SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.LP_2, SymbolId.LP_2, SymbolId.LP_2, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_1, SymbolId.LP_1, SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.LP_4, SymbolId.LP_4, SymbolId.LP_4, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -93,9 +103,9 @@ describe('Grid Evaluation', () => {
     // Create grid with 5 top HP symbols on payline 0 (middle row)
     // Other rows have no matching patterns (all different symbols)
     const grid: Grid = [
-      [SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_HELMET, SymbolId.LP_SCROLL, SymbolId.LP_RING],
-      [SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.LP_2, SymbolId.LP_1, SymbolId.LP_3, SymbolId.LP_4, SymbolId.LP_5],
+      [SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1],
+      [SymbolId.LP_1, SymbolId.LP_2, SymbolId.LP_4, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -103,47 +113,48 @@ describe('Grid Evaluation', () => {
 
     // Should have top HP 5-of-a-kind win (63x per paytable)
     expect(result.lineWinTotal).toBe(63);
-    expect(result.lineWins.some(w => w.symbol === SymbolId.HP_ZEUS && w.count === 5)).toBe(true);
+    expect(result.lineWins.some(w => w.symbol === SymbolId.HP_1 && w.count === 5)).toBe(true);
   });
 
   it('should substitute wild for line win', () => {
-    // Create grid with Wild substituting in HP symbol line
+    // Create grid with Wild substituting in HP_1 line
     const grid: Grid = [
-      [SymbolId.LP_COIN, SymbolId.LP_COIN, SymbolId.LP_COIN, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.HP_ZEUS, SymbolId.WILD_SHIELD, SymbolId.HP_ZEUS, SymbolId.WILD_SHIELD, SymbolId.HP_ZEUS],
-      [SymbolId.LP_SCROLL, SymbolId.LP_SCROLL, SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.LP_2, SymbolId.LP_2, SymbolId.LP_2, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.HP_1, SymbolId.WILD, SymbolId.HP_1, SymbolId.WILD, SymbolId.HP_1],
+      [SymbolId.LP_4, SymbolId.LP_4, SymbolId.LP_4, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
     const result = evaluate(grid, rng, 1);
 
-    // Should count as 5 top HP (25x)
-    expect(result.lineWins.some(w => w.symbol === SymbolId.HP_ZEUS && w.count === 5)).toBe(true);
+    // Should count as 5 top HP via wild substitution
+    expect(result.lineWins.some(w => w.symbol === SymbolId.HP_1 && w.count === 5)).toBe(true);
   });
 
   it('should count all-wild line as wilds paying as top symbol', () => {
     // All wilds on payline 0 (middle row)
     const grid: Grid = [
-      [SymbolId.HP_ZEUS, SymbolId.HP_HADES, SymbolId.HP_POSEIDON, SymbolId.LP_LYRE, SymbolId.LP_COIN],
-      [SymbolId.WILD_SHIELD, SymbolId.WILD_SHIELD, SymbolId.WILD_SHIELD, SymbolId.WILD_SHIELD, SymbolId.WILD_SHIELD],
-      [SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.LP_HELMET, SymbolId.HP_ZEUS, SymbolId.HP_HADES]
+      [SymbolId.HP_1, SymbolId.HP_2, SymbolId.HP_3, SymbolId.LP_1, SymbolId.LP_2],
+      [SymbolId.WILD, SymbolId.WILD, SymbolId.WILD, SymbolId.WILD, SymbolId.WILD],
+      [SymbolId.LP_4, SymbolId.LP_5, SymbolId.LP_3, SymbolId.HP_1, SymbolId.HP_2]
     ];
 
     const rng = new RNG(12345);
     const result = evaluate(grid, rng, 1);
 
-    // Wild pays as top symbol - may have additional wins from wild substitution on other paylines
+    // Wild pays as top symbol — may have additional wins from wild
+    // substitution on other paylines, so use >= against the 5oak floor.
     expect(result.lineWinTotal).toBeGreaterThanOrEqual(25);
     // Verify we have a 5-of-a-kind wild line
     expect(result.lineWins.some(w => w.count === 5)).toBe(true);
   });
 
-  it('should detect special symbols (Lightning Orbs) for H&W trigger', () => {
-    // 6 Lightning Orbs should trigger H&W
+  it('should detect special symbols (BONUS) for H&W trigger', () => {
+    // 6 BONUS symbols should trigger H&W
     const grid: Grid = [
-      [SymbolId.LIGHTNING_ORB, SymbolId.LIGHTNING_ORB, SymbolId.LP_COIN, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LIGHTNING_ORB, SymbolId.LIGHTNING_ORB, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET],
-      [SymbolId.LIGHTNING_ORB, SymbolId.LIGHTNING_ORB, SymbolId.LP_LYRE, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.BONUS, SymbolId.BONUS, SymbolId.LP_2, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.BONUS, SymbolId.BONUS, SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3],
+      [SymbolId.BONUS, SymbolId.BONUS, SymbolId.LP_1, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
@@ -155,12 +166,13 @@ describe('Grid Evaluation', () => {
   });
 
   it('should handle grid with no wins', () => {
-    // Grid carefully constructed so no payline has 3+ matching symbols
-    // Each position in first 3 reels has different symbol to prevent any 3-of-a-kind
+    // Grid carefully constructed so no payline has 3+ matching symbols.
+    // Each position in first 3 reels has a different symbol to prevent
+    // any 3-of-a-kind on any payline.
     const grid: Grid = [
-      [SymbolId.HP_ZEUS, SymbolId.HP_HADES, SymbolId.HP_POSEIDON, SymbolId.LP_LYRE, SymbolId.LP_COIN],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_HELMET, SymbolId.HP_ZEUS, SymbolId.HP_HADES],
-      [SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.HP_ZEUS, SymbolId.LP_HELMET, SymbolId.LP_RING]
+      [SymbolId.HP_1, SymbolId.HP_2, SymbolId.HP_3, SymbolId.LP_1, SymbolId.LP_2],
+      [SymbolId.LP_1, SymbolId.LP_2, SymbolId.LP_3, SymbolId.HP_1, SymbolId.HP_2],
+      [SymbolId.LP_4, SymbolId.LP_5, SymbolId.HP_1, SymbolId.LP_3, SymbolId.LP_5]
     ];
 
     const rng = new RNG(12345);
@@ -175,9 +187,9 @@ describe('Grid Evaluation', () => {
     // Top HP line with FS global multiplier
     // Other rows have no matching patterns
     const grid: Grid = [
-      [SymbolId.LP_COIN, SymbolId.LP_LYRE, SymbolId.LP_HELMET, SymbolId.LP_SCROLL, SymbolId.LP_RING],
-      [SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS, SymbolId.HP_ZEUS],
-      [SymbolId.LP_LYRE, SymbolId.LP_COIN, SymbolId.LP_SCROLL, SymbolId.LP_RING, SymbolId.LP_HELMET]
+      [SymbolId.LP_2, SymbolId.LP_1, SymbolId.LP_3, SymbolId.LP_4, SymbolId.LP_5],
+      [SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1, SymbolId.HP_1],
+      [SymbolId.LP_1, SymbolId.LP_2, SymbolId.LP_4, SymbolId.LP_5, SymbolId.LP_3]
     ];
 
     const rng = new RNG(12345);
