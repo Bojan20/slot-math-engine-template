@@ -452,15 +452,556 @@ Kad svih 20 prolazi: **DONE-UNIVERSAL**.
 
 ---
 
-## 9. ZAKLJUČAK
+## 9. INTERMEDIATE WRAPUP
 
-Trenutni engine je solidan **template** za 5×3 lines + FS + H&W. Univerzalan **nije**. Da bismo stigli do "best ever":
+Sekcije 1–8 pokrivaju **igračku perspektivu** — mehanike i math kakve igrač i designer vide. Aristocrat / Light & Wonder / IGT / Pragmatic interno **ne staju tu** — imaju kompletan **server-side stack**, **jurisdikcijske dialekte**, **provably-fair audit layer**, **AML/RG mreže**, **observability sloj** i **proprietary IR formate**. Sekcije 10–18 dodaju to što velika firma stvarno treba, plus sloj iznad njih (futuristic) gde nijedna kompanija danas javno nije.
 
-1. **Rewrite config-as-IR** (deklarativni AST umesto JSON-klamfe).
-2. **Plugin layer za symbol behavior i feature kinds**.
-3. **Closed-form RTP first, MC as confidence**.
-4. **SIMD + GPU za speed**.
-5. **20 reference igara kao acceptance test**.
-6. **Property tests + fuzzing + RNG certification**.
+---
 
-Procena: 8-14 nedelja punog rada za univerzalan + bulletproof, +4-8 za speed-record.
+## 10. SERVER-SIDE / RGS MATH LAYER
+
+Slot math nije sam u sebi — sedi unutar **Remote Game Server (RGS)** koji vodi transakciju. Velike firme imaju **dva mozga**: math engine (RNG + isplata) i game server (wallet + state + audit). Engine MORA da expose-uje API-je tako da se ovo radi bez "rupa".
+
+### 10.1 Transakcioni integritet
+
+| Zahtev | Industrija danas | Engine mora |
+|---|---|---|
+| **Atomic spin** | Aristocrat/L&W koriste two-phase commit (debit wager → spin → credit win) | API: `beginSpin(walletTxId) → spinId; commitSpin(spinId) ⇄ rollbackSpin(spinId)` |
+| **Idempotency key** | duplicate request iste sesije ne sme da naplati 2× | `spinId = hash(playerSession, nonce)` deterministički |
+| **Crash-mid-feature** | igrač u FS, server padne na spin 7/15 — mora da nastavi tačno odatle | `serializeFeatureState() → blob; resumeFromState(blob)` deterministički + isti seed-pos |
+| **Wallet rollback** | ako server odbije win post-eval, engine mora da postoji bez side effect-a | engine je pure-function po definiciji (commit-flush je server posao) |
+| **Network partition** kod WAP jackpota | igrač hit-uje Mega Moolah ali central server ne potvrđuje | engine vrati `PendingJackpot` koji se finalizuje van engine-a |
+| **Hot wallet overflow** | operator nema cash za Mega Moolah trigger | engine emituje `JackpotPaymentRequired` event, ne crash |
+
+### 10.2 Spin recall / replay (regulatorni)
+
+Većina jurisdikcija zahteva da **bilo koji spin može da se reprodukuje 5+ godina kasnije**, bit-identično, kao dokaz da igra nije bila namjestena.
+
+| Zahtev | Engine mora |
+|---|---|
+| **Spin signature** | hash(config_version, seed_chain, spin_index, math_version) — emituje se uz svaki rezultat |
+| **Math version pinning** | spin recall mora da koristi **istu verziju matematike** koja je bila aktivna u trenutku originalnog spin-a |
+| **Cross-version replay** | engine emituje compatibility shim — math v3.2 spin se može reprodukovati v3.3 engine-om uz `--replay-mode=v3.2` |
+| **Audit hash chain** | svaki spin = `H(prev_hash, spin_data)` — hash chain se nedeljno svedoči ka regulatoru |
+| **Forensic dump** | `slot-sim replay --spin-sig=...` rekonstruiše ceo grid + feature stack + final win |
+| **Storage** | spin signature je 64 bytes / spin → 100M spinova/dan = ~6 GB/dan po stolu, S3 archival |
+
+### 10.3 Bonus money math (operator-awarded)
+
+Operator daje igraču free spinove ili no-deposit bonus → ne ide kroz wallet kao real money → drugačiji RTP track.
+
+| Tip bonusa | Engine treba |
+|---|---|
+| **Free spins award** | wager=0, win ide u "bonus balance" pool, ne realan |
+| **Cashable bonus + wager requirement (WR)** | track `cumulativeWager` × multiplier dok ne ispuni WR; tek tada balance je real |
+| **Sticky bonus** | nikad ne postaje real, samo igra |
+| **Bonus contribution rate per game** | slot doprinosi 100% ka WR, blackjack 10% — engine zna |
+| **Max bet enforcement during bonus** | dok je WR aktivan, max bet je obično $5 |
+| **Bonus expiry** | timer, engine pamti `bonusGrantedAt` + `bonusExpiresAt` |
+| **No-deposit free spin RTP track** | odvojen MC + PAR sa "bonus-mode RTP" — operator izveštava regulatoru |
+
+### 10.4 Multi-currency / FX
+
+| Zahtev | Engine mora |
+|---|---|
+| **Native bet denominations** po valuti | EUR €0.10/0.20/0.50/1, USD $0.01/0.10/1, INR ₹1/5/10 — config |
+| **Banker's rounding (HALF_EVEN)** u EUR, HALF_UP u USD | jurisdikcija-driven rounding mode |
+| **No-rounding payout** kod kripto (8 decimala) | Decimal precision configurabilan po currency |
+| **FX rate snapshot** za multi-currency progressive | jackpot pool u "engine currency", isplata FX-konvertovana |
+| **Currency-specific min/max bet** | constraint validator |
+| **Tax withhold u realnom vremenu** | US W-2G (>$1200), engine vraća `taxableWin: true/false` flag |
+
+### 10.5 Operator config layer (iznad math)
+
+Operator po jurisdikciji menja:
+- **Min/max bet** po marketu
+- **RTP profile** (igra može imati 3 RTP varijante: 92%, 94%, 96% — UK koristi 92%, Italy 94%)
+- **Feature toggles** (UK ban-uje buy-feature, EU ne — engine zna)
+- **Auto-play limits** (max spins, max loss before stop, mandatory break duration)
+- **Reality checks** (svakih X minuta pop-up "igraš 60min, izgubio €Y" — engine zna stanje)
+- **Pre-set bet limits** za logged-in user
+
+Engine mora da podržava sve ovo **bez ponovnog build-a** — config layered (engine config + market config + operator config + player config).
+
+---
+
+## 11. JURISDIKCIJSKA TIPOLOGIJA MATH-A
+
+Slot nije slot u svim zemljama isti pravni objekat. Engine mora da podržava **fundamentalno drugačiju matematiku** po jurisdikciji.
+
+### 11.1 US Class II vs Class III
+
+| | Class II (Tribal / Lottery-backed) | Class III (Commercial) |
+|---|---|---|
+| **Definicija** | Centralno bingo igra "obučena" kao slot | Pravi slot RNG po stolu |
+| **Math** | igrač biva grupisan sa N drugih, bingo card draw determinira win, slot animacija je samo prezentacija | nezavisni RNG po spinu |
+| **Engine treba** | "Bingo coordinator" mode — server determinira win, lokalni engine prikazuje | "Standalone" mode |
+| **Regulatori** | NIGC (federalni), pleme | Nevada GCB, NJ DGE, MGA, UKGC |
+| **Mehanike** | drugačiji RTP eqs (na nivou bingo grupe ne ind. spina) | klasičan RTP per-spin |
+
+### 11.2 Italy VLT specifika
+
+- **Centralno determinisano** preko ADM mreže
+- **AAMS RNG** (državni RNG distribuiše stage outcomes)
+- **Predeterminisani ticket** (ticket-in/ticket-out, ne real-time wallet)
+- **Cycle-bound** math (igra mora hit-ovati RTP unutar definisanog ciklusa)
+- **Min RTP 70% video lottery / 90% comma6a** — engine validira
+
+### 11.3 UK compensated math
+
+UK Gambling Commission razlikuje:
+- **Non-compensated (true random)** — svaki spin nezavisan, RTP "long run"
+- **Compensated** — igra prati "outstanding RTP owed" i prilagođava buduće spinove
+
+Compensated math nije popularan ali postoji u **AWP machines** (Amusement With Prizes, pub gaming):
+- Engine drži state `cycleProgress`, `outstandingPayout`
+- Vrati win po cycle kompletiranju, ne čistom RNG-u
+- Engine mora podržati **oba režima** kao IR opciju
+
+### 11.4 Centrally-determined (Washington State, lottery-backed)
+
+- **Server poseduje pool** outcomes (npr. 1M predeterminisanih tiketa)
+- Igrač "izvlači" sledeći neiskorišćen ticket
+- RNG odlučuje **redosled** ne sadržaj
+- Engine treba `ticketPoolDraw()` mode
+
+### 11.5 Bingo-pattern slot (Class II detail)
+
+| Element | Math impact |
+|---|---|
+| Igrač dobija bingo card sa 24 broja | 75-ball ili 90-ball varijanta |
+| Server izvlači brojeve | igrač markira card |
+| Slot animacija predstavlja card pattern | win = matched pattern, ne reel-stop |
+| Engine zna kompletnu **bingo pattern → slot grid prevodilac** | mapping je config |
+| RTP ekv. **grupni** ne individualni | "igra protiv drugih, ne protiv kuće" |
+
+### 11.6 Skill-based slots (Nevada experiment)
+
+- **Skill influence** je dozvoljen do max 20% RTP varijance po igraču
+- Igrač donosi odluku (timing klik, target select)
+- Engine mora razdvojiti **pure RNG RTP** od **skill modifier**
+- Min-skill-RTP, max-skill-RTP kao two-bound parameter
+
+### 11.7 Regulatorne RTP granice (tabela)
+
+| Jurisdikcija | Min RTP | Max payout cap | Posebnost |
+|---|---|---|---|
+| UK | 85% | £250k | spin time min 2.5s, max bet £2 |
+| Italy | 70% VLT / 90% AWP | €100k / €5k | ADM RNG, compensated AWP |
+| Nemačka | 90% | €1000/h max loss | spin time min 5s, deposit limit |
+| Spain | 85% | €500/spin | self-exclusion registry |
+| Netherlands | 92.5% | €5000/sesh | wager limits |
+| Sweden | 88% (online) | no cap | self-exclusion + cooling-off |
+| Denmark | 88% | no cap | tax model embedded |
+| Portugal | 87% | no cap | bet contribution |
+| Nevada (NV) | 75% | none | most permissive |
+| New Jersey | 83% | none | hourly hash-chain audit |
+| Ontario (AGCO) | 80% | none | mandatory pop-ups |
+| Australia (NSW) | 87% | $1000/spin max | spin time 3s min |
+| Malta (MGA) | 92% | none | EU baseline |
+
+Engine mora **statički proveriti** da config ne krši ovo pre deploy-a, **dinamički** odbiti spin koji prelazi.
+
+---
+
+## 12. PROVIDER-SPECIFIC MEHANIKE — atlas
+
+Velike firme su patentirale mehanike. Da bi engine bio "univerzalan", mora ih sve podržati kao plugin (uz pretpostavku da konzument ima license / sopstveni klon).
+
+### 12.1 Aristocrat
+
+| Mehanika | Math |
+|---|---|
+| **Reel Power** (Buffalo) | 1024 ways, simboli stacked |
+| **Hyperhold** | 4-tier jackpot + hold-and-spin |
+| **Lightning Link** | money coins + tier jackpot + sticky |
+| **Dragon Link** | LL varianta + must-hit-by |
+| **Mighty Cash** | sticky cash sa "Mighty" multiplier reveal |
+| **Outback Pack** | wild reel + free games trigger fix |
+| **Big Wheel** | wheel + multi-tier + retrigger ladder |
+
+### 12.2 Light & Wonder (Scientific Games)
+
+| Mehanika | Math |
+|---|---|
+| **88 Fortunes** sa Fu Bat | jackpot pick game + multi-level |
+| **Quick Hit** | scatter pay + multiplier scale (3=2x, 4=10x, 5=50x...) |
+| **Wonder 4** | 4 independent slot screens spinned together |
+| **Money Money Money** | persistent dollar reel column |
+| **Wheel of Fortune Triple Action** | wheel re-entry tiers |
+
+### 12.3 Big Time Gaming
+
+| Mehanika | Math |
+|---|---|
+| **Megaways™** | 2-7 simbola po reel, 6-th horizontal scatter row, do 117,649 ways |
+| **Megaclusters** | cluster sa exponential expansion |
+| **xWays** (Nolimit) | random N×1 stacks reveal N simbola (lokalna varijanta megaways) |
+| **xNudge wild** | nudge dok ceo reel ne pokrije |
+| **xBomb wild** | uklanja sve oko sebe |
+
+### 12.4 Pragmatic Play
+
+| Mehanika | Math |
+|---|---|
+| **Tumble feature** (Sweet Bonanza) | cluster cascade sa per-cluster reel |
+| **Multiplier sky** | sticky mult symbol agregira tokom FS |
+| **Ante bet** | 25% extra bet za 2× FS trigger probability |
+| **Bonus Buy** | 100× bet za FS trigger, 250× za super FS |
+| **Money Pot Respin** (Bigger Bass) | H&W coin + multiplier orb |
+
+### 12.5 NetEnt / Evolution
+
+| Mehanika | Math |
+|---|---|
+| **Starburst expanding wild** | wild → full-reel expand + sticky 3 respinova |
+| **Reactoonz Quantum Leap** | cluster + charge meter + 5 mini features |
+| **Avalanche** | NetEnt's cascading reels |
+| **Re-Spin to Win** | per-reel respin sa charge cost |
+
+### 12.6 Play'n GO
+
+| Mehanika | Math |
+|---|---|
+| **Expanding symbol FS** (Book of Dead) | jedan random simbol expand-uje na 3-symbol stack |
+| **Pearl & Symbol upgrades** | persistent FS state ulazi u sledeću sesiju |
+| **Reactor cascade** | sa multi-multiplier ladder |
+
+### 12.7 Relax Gaming / Hacksaw
+
+| Mehanika | Math |
+|---|---|
+| **Money Train Persistence** | meter sa special simbolima retained kroz FS |
+| **Hand of Anubis** | per-spin reel modifier random reveal |
+| **Wanted Dead or a Wild** | three-mode FS choice |
+
+Engine treba **mehanic atlas** — registar svake patentirane (ili poznate) mehanike sa referencom na koji plugin je implementuje. Korisnik dolazi sa "hoću ovakvu Mighty Cash" i odmah vidi: "config preset X + plugin Y + Z param-i".
+
+---
+
+## 13. KRIPTO / AUDIT / PROVABLY-FAIR LAYER
+
+### 13.1 Hash-chain audit log
+
+```
+spin[N].audit_hash = H(spin[N-1].audit_hash || spin[N].outcome || spin[N].seed)
+```
+
+- Hash chain se objavljuje **publicly daily** (S3 + IPFS dual)
+- Bilo koji entitet može da **rebuild** chain → ako njegov hash matuje, sve sigurno
+- Engine treba `--hash-chain-mode` koji emituje audit_hash uz svaki spin
+
+### 13.2 Commit-reveal (kripto casino standard)
+
+- Server **commit-uje** SHA256(server_seed) PRE igre
+- Igrač daje **client_seed**
+- Combined `actual_seed = H(server_seed || client_seed || nonce)`
+- Posle sesije server **reveals** server_seed → igrač verifikuje hash
+- Engine treba `commitRevealMode: { serverSeed, clientSeed, nonce, revealAfter }`
+
+### 13.3 ZK-SNARK provable fair
+
+- Spin se mathski reprezentuje kao **circuit**
+- Server proizvodi **proof** da je grid ispravno generisan iz `actual_seed`
+- Igrač verifikuje proof bez gledanja seed-a (privacy-preserving)
+- Engine mora da imati IR za circuit (faza futuristic 13.x)
+- Crypto-casino primer: Stake.com koristi `provably_fair_v3`
+
+### 13.4 Multi-party computation (MPC) za WAP
+
+Federacioni provideri (4+ operatori share Mega Moolah pool):
+- **Nijedan provider ne sme** sam da pokrene jackpot
+- MPC protokol: jackpot hit zahteva **t-of-n** signature
+- Engine zna kako da emit signature request, ne i kako da je sam reši (server posao)
+
+### 13.5 Tamper detection
+
+- Engine **runtime hash-uje sopstveni binary** (cargo `embed-resource` + `sha256_self`)
+- Ako se ne podudara sa registrovanim binary → refuse to start
+- Regulatori (GLI) zovu ovo "**Binary Verification**"
+
+---
+
+## 14. PLAYER-FACING SISTEMI
+
+### 14.1 Responsible Gambling (RG)
+
+| Hook | Engine treba |
+|---|---|
+| **Spin time minimum** (UK 2.5s, DE 5s) | enforce min duration u spin API |
+| **Max loss / time limits** | engine pamti session loss, refuse spin kad limit prekoračen |
+| **Self-exclusion check** | pre svakog spina, query exclusion list (config callback) |
+| **Reality check pop-ups** | engine emit-uje `reality_check_due` event |
+| **Cool-off** | engine refuses spin tokom cool-off periode |
+| **Funder source check** | velika operacija zahteva proof of funds — engine ne odlučuje, ali ne nagrađuje pre verifikacije |
+
+### 14.2 Anti-Money-Laundering (AML)
+
+| Hook | Engine treba |
+|---|---|
+| **Suspicious spin pattern detection** | tag "abnormal" — npr. min-bet 1000× za bonus eligibility cycle |
+| **Velocity check** | broj spinova/min preko threshold → flag |
+| **Win pattern flag** | konzistentna max-win frequency (>3σ) iznad očekivanog → flag |
+| **Cash-out hold** | win iznad jurisdikcija threshold → engine vrati `holdRequired: true` |
+
+### 14.3 Tournament mode
+
+| Aspekt | Engine |
+|---|---|
+| **Leaderboard scoring** | total win × points formula |
+| **Equal RNG seed** za sve igrače | engine podržava `tournamentMode: { sharedSeed, spinIdx }` |
+| **Tournament-only reel set** | drugačiji RTP profil u tournament (publish-overrideable) |
+| **Real-time leaderboard** | engine event hook za score update |
+
+### 14.4 Social casino (free-to-play)
+
+- Coins, ne pravi novac
+- Engine isti math ali bez wallet transakcije
+- Different RTP "feel" (popularno: visok hit-rate, nizak max win za social) — config override
+
+### 14.5 Live casino blend
+
+- Slot + live dealer multiplier reveal (npr. Crazy Time slot mode)
+- Engine mora da expose-uje stage-by-stage outcome za live streaming layer
+
+---
+
+## 15. MATH OBSERVABILITY
+
+Niko trenutno **javno** nema dobar observability layer za slot math u runtime-u. Ovo je space gde idemo iznad svih.
+
+### 15.1 Live RTP heatmap
+
+- Grid pozicija × simbol × vreme → 3D matrica osetljivosti
+- Engine emit-uje stage outcome detalje
+- Frontend renderuje heatmap (toplo = često hit, hladno = retko)
+- Detekcija anomalije: pozicija (3,2) hit-uje 10× češće nego očekivano → bug u stripu
+
+### 15.2 Convergence predictor (ML)
+
+- Klasično: čekaj 10B spinova za 99.99% CI
+- Smart: ML model (LSTM ili Gaussian process) kaže "posle 50M spinova, ovaj specifičan config konverguje za još 200M sa P=0.95"
+- Engine zove `convergencePredictor.estimate(currentStats) → spinsRemaining`
+
+### 15.3 Drift detector (kontinualno)
+
+- Production igra emit-uje hash chain
+- Posle 100M spinova u proizvodnji, engine **re-runs** isti config sa istim seed-skupom
+- Ako rezultat se razlikuje → math je driftao (bug, hardware error, tampering)
+- Auto-flag → regulator + freeze
+
+### 15.4 Sensitivity analysis u runtime-u
+
+- "Šta ako wild weight 12 → 13?" — engine instant emit-uje RTP delta
+- Koristi analytical RTP solver (closed-form) za 0-cost reanalysis
+- Operator vidi "RTP +0.2%" pre commit-a
+
+### 15.5 Per-feature contribution graf
+
+Live graf: base 53.2%, FS 21.4%, H&W 18.5%, bonus 2.9%, scatter pay 0.9% — sa hourly trending. Detekcija anomalije ako featurez doprinos ode izvan 2σ od istorijskog proseka.
+
+### 15.6 Symbol balance audit (live)
+
+- Realan symbol hit count po reel-u vs očekivan
+- Chi-squared continuous test
+- Ako >3σ → moguć tampering ili hardware error
+
+---
+
+## 16. UNIVERSAL SLOT INTERCHANGE FORMAT (USIF) — naš javni standard
+
+Ovo je gde idemo dalje od **svih** velikih firmi. Niko nema otvoren standard.
+
+### 16.1 Šta je
+
+- **USIF v1.0** — JSON / YAML schema koja u potpunosti opisuje slot igru
+- Pokriva: simbole, reels, paytables, evaluatore, behaviore, feature FSM-ove, jackpot tier-e, RNG choice, jurisdikcije
+- **Verifikabilan** kroz formal validator (Zod + JSON Schema strict mode)
+- **Round-trippable**: USIF → engine → run → USIF (engine ne dodaje skrivene parametre)
+- **Versioned**: USIF v1.0 → USIF v1.1 (backward compatible minor), USIF v2.0 (breaking)
+
+### 16.2 Public reference implementation
+
+- **Naš engine** = reference (slot-math-engine-template)
+- 30 reference games (poslat u faze 12) demonstriraju coverage
+- Submission ka eCOGRA / GLI kao **kandidat za public standard**
+- Otvoreni source pod MIT, ne GPL (industry adoption easier)
+
+### 16.3 Format converters
+
+USIF iz/u:
+- Aristocrat AGS XML config (ako možemo reverse-engineer)
+- Pragmatic JSON
+- NetEnt internal
+- Microgaming MGA format
+- Playtech config
+- Custom (any vendor)
+
+Konverter je **lossy** kada vendor format nedostaju polja — engine emituje warning sa missing field-ovima.
+
+### 16.4 USIF Hub (futuristic)
+
+- Web portal: upload USIF, dobiješ instant RTP + PAR + 100M MC validation
+- Community-shared mehanic library
+- Reference igre kao public examples
+- Open-source kompanije konkurišu na features → mreža efekta
+
+---
+
+## 17. DISASTER SCENARIJI — engine ne sme da padne
+
+### 17.1 Math regression u produkciji
+
+- Engine v3.2 deployed → posle 50M spinova RTP je 95.2% umesto 96%
+- **Engine mora da auto-detektuje** (drift detector §15.3)
+- Auto-rollback ka v3.1 hash-verified
+- Notify regulator unutar 15min (regulator timeline)
+- Postmortem: differential test isti seed v3.1 vs v3.2 → identify which line changed
+
+### 17.2 RNG entropy collapse
+
+- Hardware RNG (TRNG) fail-uje → engine pada na backup PRNG seeded od last-known-good
+- Audit log događaja
+- Forensic: did some spins use degenerate RNG?
+
+### 17.3 Jackpot trigger overflow
+
+- Mega Moolah pool je $20M, engine triggera ali central server reportuje pool kao $5M
+- Engine emit `JackpotDiscrepancy` event, ne plaća lokalno
+- Hold for human review
+
+### 17.4 Player session crash mid-feature
+
+- Igrač u FS spin 7/15 sa multiplier ladder na 3×, server crash
+- Engine state je već persisted (svaki spin commit)
+- Resume → spin 8/15 sa istim ladder
+- Bit-identično kao bez crash-a
+
+### 17.5 Config tampering attempt
+
+- Malicious config sa weighting koje violentno krši UK 85% min RTP
+- Engine **odbije** load (jurisdiction validator pre svega)
+- Audit log: tampering attempt
+
+### 17.6 Math version drift (cross-deployment)
+
+- Producer ima v3.2, replica ima v3.2.1 (patch sa različitim rounding)
+- Players na replicama dobijaju različite payout od originala
+- Engine: `binary_version_hash` mora matchovati na svim instancama
+- Health check fails → load balancer skida replicas
+
+### 17.7 1T spin simulation aborts mid-run
+
+- Engine na 800B/1T zbog out-of-memory ili crash
+- **Checkpoint-resume** obavezan (svakih 10M spinova snapshot)
+- Resume: read checkpoint → set RNG state → continue
+- Final stats: merge svih checkpoint partial stats
+
+---
+
+## 18. ROADMAP "POST-ARISTOCRAT"
+
+Aristocrat / Light & Wonder / IGT su industry-grade. Naš target je **biti iznad** — stvari koje niko ne radi javno (a većina ne interno):
+
+### 18.1 Sub-1ns analytical spin
+
+- Memoize celokupan analytical RTP graf
+- Single spin = `lookup(grid_hash) → win`
+- Achievable za male igre (≤ 5×3 sa < 10⁹ stanja) — closed-form prekompjutiraju
+- **0 RNG poziva u "demo" mode** — instant playback
+
+### 18.2 Continuous certification
+
+- Production live emit-uje hash chain → automated regulator inbox
+- Daily statistical report → regulator dashboard
+- No manual "submit cert" — kontinualna verifikacija
+- Niko trenutno ne radi ovo (regulatori još uvek koriste 5-godišnju re-cert)
+
+### 18.3 Federated math ML (privacy-preserving)
+
+- Multipli operateri kontribuiraju **anonimne** session stats
+- ML model trenira preko federisanog dataset-a (homomorphic enc)
+- Output: bolja convergence prediction, fraud detection, RG patterns
+- Niko ne radi ovo zbog conflict of competitive concerns — naša mreža = neutralna treća strana
+
+### 18.4 Cross-jurisdiction single config
+
+- Jedna USIF config → engine emit-uje jurisdikcija-specific variant
+- UK build = 92% RTP, IT build = 90%, NV build = 96%
+- Designer ne piše 3 igre — piše 1 sa `jurisdictionOverrides` blok
+
+### 18.5 LLM-driven game balancing
+
+- Designer kaže prirodnim jezikom: "hoću igru koja je 96% RTP, vol 4/5, hit-rate 22%, big-win freq 1/8000"
+- LLM agent + auto-tuner → predlaže config
+- Iterativni dialog: "smanji bonus contribution" → agent reweighs
+
+### 18.6 Holographic strip encoding
+
+- 117k Megaways state space → kompresan u **N-bit Bloom-filter-like** struct
+- Approximation sa boundable error
+- Useful za GPU shared mem (16KB) kad pun state ne staje
+- Research direction — niko ne radi
+
+### 18.7 Quantum advantage research
+
+- Grover's algorithm može da **O(√N)** enumerate state space gde klasično je O(N)
+- Cilj: enumerate Megaways 117k ways u efektivno √117k = 343 quantum koraka
+- Trenutno samo research, nema praktične implementacije
+- Engine emit-uje "QC-ready IR" čekajući da hardware sazri
+
+### 18.8 Differential privacy PAR exports
+
+- PAR sheet sadrži public stats — ali može da "curi" sensitivne game patterns
+- Inject Laplace noise sa ε=0.1 → public RTP istinit, ali per-cell distribuc je obfuscovana
+- Regulator dobija raw, public dobija DP-export
+- Niko trenutno ne radi
+
+### 18.9 Mining-pool style decentralized WAP
+
+- Mega Moolah pool van centralne kontrole jednog provider-a
+- Bitcoin-style consensus: 5+ operatori potpiše commit
+- Pool grows kroz hash-verified contributions
+- Hit → multi-sig payment iz pool-a
+- Eliminate centralni rizik failure
+
+### 18.10 Time-machine compliance
+
+- Auto re-run istih 1M spinova posle 1 godine na produkcijskom kodu
+- Mora da daje **bit-identičan** rezultat
+- Dokazuje da nije bilo silent code change
+- Audit dossier publikovan publicly
+
+### 18.11 Sub-millisecond MC convergence
+
+- Kombinacija: analytical RTP, QMC (Sobol), antithetic + control variates + importance sampling
+- 1B spin equivalent CI sa **100 hiljada** stvarnih spinova → < 1ms wall clock
+- Engine kao "live tuning console" — designer menja reel weight, vidi novi RTP **trenutno**
+
+### 18.12 Adversarial config tester
+
+- LLM agent + fuzzer **traži** edge config-e koji crash-uju ili violentno krše invariante
+- Stalno radi (CI background)
+- Auto-prijavi bug + propose fix
+- Niko trenutno ne automatizuje ovo
+
+---
+
+## 19. FINALNI ZAKLJUČAK
+
+Da bi engine bio **iznad svake postojeće firme**, treba da pokriva:
+
+1. **Sve mehanike** (sekcije 1.1–1.5 + 12) — config-driven, plugin-based, bez hardkoda.
+2. **Bulletproof math** (2) — closed-form first, MC verifikuje, cert-grade RNG.
+3. **Server stack** (10) — atomic, idempotent, recall-replay, multi-currency.
+4. **Jurisdikcijska adaptacija** (11) — Class II/III, VLT, compensated, lottery — sve.
+5. **Crypto / audit layer** (13) — hash-chain, ZK, MPC za WAP.
+6. **Player systems** (14) — RG, AML, tournament, social, live blend.
+7. **Observability** (15) — live RTP heatmap, ML convergence predictor, drift detector.
+8. **USIF javni standard** (16) — naš diferencijator.
+9. **Disaster resilience** (17) — engine ne pada, ne plaća pogrešno, ne curi podatke.
+10. **Post-Aristocrat features** (18) — gde niko trenutno nije.
+
+Procena: **12–18 meseci** punog rada za pun obim. **6–9 meseci** za "industry-grade-universal" (1–12). **3–6 meseci** dodatno za "post-Aristocrat" diferencijatore (18).
+
+Acceptance: engine prolazi 30 reference igara (faza 12), USIF v1.0 submitted javno, GLI re-cert-able, **1T spinova/sec single chip** kao demonstration of supremacy.
