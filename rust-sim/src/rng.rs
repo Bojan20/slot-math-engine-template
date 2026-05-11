@@ -29,9 +29,7 @@ pub struct SlotRng {
 impl SlotRng {
     /// Create new RNG from seed (Mulberry32)
     pub fn new(seed: u64) -> Self {
-        SlotRng {
-            state: seed as u32,
-        }
+        SlotRng { state: seed as u32 }
     }
 
     /// Generate random float in [0, 1) - Mulberry32 algorithm
@@ -133,7 +131,13 @@ mod tests {
         for (i, &exp) in expected.iter().enumerate() {
             let val = rng.random();
             let diff = (val - exp).abs();
-            println!("v{}: Rust={:.16}, TS={:.16}, diff={:.2e}", i + 1, val, exp, diff);
+            println!(
+                "v{}: Rust={:.16}, TS={:.16}, diff={:.2e}",
+                i + 1,
+                val,
+                exp,
+                diff
+            );
             assert!(diff < 1e-15, "Value {} mismatch: {} vs {}", i, val, exp);
         }
     }

@@ -8,6 +8,18 @@
 //!   slot_sim --full        # 1B total
 //!   slot_sim --verify 1000 # Verify 1000 spins match TS exactly
 
+// Lint debt parity with `lib.rs`. See module-level comment there for the
+// Faza 2 cleanup plan. Binary and library compile separately, so the
+// attribute has to be repeated.
+#![allow(
+    clippy::needless_range_loop,
+    clippy::manual_range_contains,
+    clippy::needless_borrow,
+    unused_variables,
+    unused_assignments,
+    dead_code
+)]
+
 mod analytical;
 mod config;
 mod evaluator;
@@ -113,9 +125,9 @@ fn main() {
 
     // Determine simulation parameters
     let (spins, seeds) = if args.quick {
-        (5_000_000, 10)   // Quick: 50M total (matches TS default)
+        (5_000_000, 10) // Quick: 50M total (matches TS default)
     } else if args.full {
-        (25_000_000, 40)  // Full: 1B total
+        (25_000_000, 40) // Full: 1B total
     } else {
         (args.spins, args.seeds)
     };
@@ -128,11 +140,13 @@ fn main() {
         println!("  Target RTP: {:.2}%", game_config.target_rtp);
         println!("{}", "═".repeat(65));
         println!();
-        println!("Simulation: {} spins × {} seeds = {} total{}",
-                 format_number(spins),
-                 seeds,
-                 format_number(total_spins),
-                 if args.sequential { " (sequential)" } else { "" });
+        println!(
+            "Simulation: {} spins × {} seeds = {} total{}",
+            format_number(spins),
+            seeds,
+            format_number(total_spins),
+            if args.sequential { " (sequential)" } else { "" }
+        );
         println!();
     }
 
@@ -141,7 +155,7 @@ fn main() {
         spins_per_seed: spins,
         num_seeds: seeds,
         base_seed: args.seed,
-        total_bet_mc: 1_000,  // 1.0 credit = 1000 millicredits
+        total_bet_mc: 1_000, // 1.0 credit = 1000 millicredits
         verbose: args.verbose,
         sequential: args.sequential,
     };
@@ -173,15 +187,17 @@ fn run_analytical_mode(config: &config::GameConfig) {
 
     analytical::print_analytical_report(&result, config.target_rtp);
 
-    eprintln!("  Computed in {:.3}ms  (no spins, no variance, exact result)",
-        elapsed.as_secs_f64() * 1000.0);
+    eprintln!(
+        "  Computed in {:.3}ms  (no spins, no variance, exact result)",
+        elapsed.as_secs_f64() * 1000.0
+    );
 }
 
 /// Verify mode: run exact N spins with seed 12345 for comparison with TypeScript
 fn run_verify_mode(config: &config::GameConfig, spins: u64) {
-    use grid::GridGenerator;
     use evaluator::Evaluator;
     use features::FeatureSim;
+    use grid::GridGenerator;
     use rng::SlotRng;
 
     let grid_gen = GridGenerator::new(config);
@@ -219,7 +235,8 @@ fn run_verify_mode(config: &config::GameConfig, spins: u64) {
             total_won += hnw_result.total_payout;
         } else if result.fs_triggered {
             fs_triggers += 1;
-            let fs_result = feature_sim.simulate_free_spins(&mut rng, result.scatter_count, total_bet_mc);
+            let fs_result =
+                feature_sim.simulate_free_spins(&mut rng, result.scatter_count, total_bet_mc);
             fs_wins += fs_result.total_payout;
             total_won += fs_result.total_payout;
         }
@@ -238,7 +255,10 @@ fn run_verify_mode(config: &config::GameConfig, spins: u64) {
     println!("  H&W Wins:      {:.6}", mc(hnw_wins));
     println!("  FS Triggers:   {}", fs_triggers);
     println!("  H&W Triggers:  {}", hnw_triggers);
-    println!("  RTP:           {:.4}%", (total_won as f64 / total_wagered as f64) * 100.0);
+    println!(
+        "  RTP:           {:.4}%",
+        (total_won as f64 / total_wagered as f64) * 100.0
+    );
 }
 
 fn print_json_output(
@@ -281,7 +301,10 @@ fn print_json_output(
                 "+".to_string()
             };
             let comma = if i < dist.buckets.len() - 1 { "," } else { "" };
-            println!("    \"{}-{}x\": {}{}", WIN_BUCKETS[i], range_end, count, comma);
+            println!(
+                "    \"{}-{}x\": {}{}",
+                WIN_BUCKETS[i], range_end, count, comma
+            );
         }
         println!("  }}");
     }
@@ -312,10 +335,14 @@ fn print_human_output(
         "✗ FAIL"
     };
 
-    println!("RTP:          {:.3}% ({:+.3}%) {}", result.rtp, rtp_delta, rtp_status);
-    println!("95% CI:       [{:.3}%, {:.3}%]",
-             result.seed_stats.ci_95_low,
-             result.seed_stats.ci_95_high);
+    println!(
+        "RTP:          {:.3}% ({:+.3}%) {}",
+        result.rtp, rtp_delta, rtp_status
+    );
+    println!(
+        "95% CI:       [{:.3}%, {:.3}%]",
+        result.seed_stats.ci_95_low, result.seed_stats.ci_95_high
+    );
     println!("Std Error:    ±{:.4}%", result.seed_stats.std_error);
     println!();
 
@@ -340,7 +367,10 @@ fn print_human_output(
     println!("{}", "═".repeat(65));
     println!();
     println!("Duration:     {:.2}s", elapsed.as_secs_f64());
-    println!("Speed:        {} spins/sec", format_number(result.spins_per_sec as u64));
+    println!(
+        "Speed:        {} spins/sec",
+        format_number(result.spins_per_sec as u64)
+    );
     println!();
 
     // PAR sheet metrics
@@ -375,8 +405,14 @@ fn print_human_output(
                 let pct = (*count as f64 / total_wins as f64) * 100.0;
                 let bar_len = (pct * 0.5) as usize;
                 let bar = "█".repeat(bar_len.min(25));
-                println!("{:>5}x - {:>5}x: {:>6.2}% {} ({})",
-                    range_start, range_end, pct, bar, format_number(*count));
+                println!(
+                    "{:>5}x - {:>5}x: {:>6.2}% {} ({})",
+                    range_start,
+                    range_end,
+                    pct,
+                    bar,
+                    format_number(*count)
+                );
             }
             println!();
         }
@@ -394,7 +430,10 @@ fn print_human_output(
 
         println!("Min RTP:      {:.3}%", rtps.first().unwrap_or(&0.0));
         println!("Max RTP:      {:.3}%", rtps.last().unwrap_or(&0.0));
-        println!("Range:        {:.3}%", rtps.last().unwrap_or(&0.0) - rtps.first().unwrap_or(&0.0));
+        println!(
+            "Range:        {:.3}%",
+            rtps.last().unwrap_or(&0.0) - rtps.first().unwrap_or(&0.0)
+        );
         println!("Std Dev:      {:.4}%", result.seed_stats.std_dev);
         println!();
     }

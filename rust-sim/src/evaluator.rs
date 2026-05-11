@@ -12,16 +12,16 @@ pub struct LineWin {
     pub payline_id: u8,
     pub symbol_idx: u8,
     pub count: u8,
-    pub payout: i64,  // In millicredits
+    pub payout: i64, // In millicredits
 }
 
 /// Spin evaluation result
 #[derive(Debug, Clone, Default)]
 pub struct SpinResult {
     pub line_wins: Vec<LineWin>,
-    pub base_win: i64,           // In millicredits
+    pub base_win: i64, // In millicredits
     pub multiplier: u32,
-    pub final_win: i64,          // In millicredits
+    pub final_win: i64, // In millicredits
     pub scatter_count: u8,
     pub bonus_count: u8,
     pub fs_triggered: bool,
@@ -62,18 +62,26 @@ impl<'a> Evaluator<'a> {
         }
 
         // Find special symbol indices
-        let wild_idx = config.symbols.iter()
+        let wild_idx = config
+            .symbols
+            .iter()
             .position(|s| s.is_wild)
             .map(|i| i as u8);
-        let scatter_idx = config.symbols.iter()
+        let scatter_idx = config
+            .symbols
+            .iter()
             .position(|s| s.is_scatter)
             .map(|i| i as u8);
-        let bonus_idx = config.symbols.iter()
+        let bonus_idx = config
+            .symbols
+            .iter()
             .position(|s| s.is_bonus)
             .map(|i| i as u8);
 
         // Precompute lightning weights
-        let lightning_weights: Vec<(u32, u32)> = config.lightning.multipliers
+        let lightning_weights: Vec<(u32, u32)> = config
+            .lightning
+            .multipliers
             .iter()
             .map(|m| (m.value, m.weight))
             .collect();
@@ -109,7 +117,8 @@ impl<'a> Evaluator<'a> {
         if count < 3 || count > 5 {
             return 0;
         }
-        self.paytable.get(sym_idx as usize)
+        self.paytable
+            .get(sym_idx as usize)
             .map(|p| p[(count - 3) as usize])
             .unwrap_or(0)
     }
@@ -158,14 +167,18 @@ impl<'a> Evaluator<'a> {
 
         // Evaluate first paying symbol
         if let Some(target) = first_paying {
-            if let Some(win) = self.evaluate_target(grid, payline, &line_syms, chain_len, target, payline_idx) {
+            if let Some(win) =
+                self.evaluate_target(grid, payline, &line_syms, chain_len, target, payline_idx)
+            {
                 best_result = Some(win);
             }
         }
 
         // Evaluate wild-only wins
         if let Some(wild) = self.wild_idx {
-            if let Some(win) = self.evaluate_target(grid, payline, &line_syms, chain_len, wild, payline_idx) {
+            if let Some(win) =
+                self.evaluate_target(grid, payline, &line_syms, chain_len, wild, payline_idx)
+            {
                 if best_result.is_none() || win.payout > best_result.as_ref().unwrap().payout {
                     best_result = Some(win);
                 }
@@ -234,7 +247,7 @@ impl<'a> Evaluator<'a> {
         &self,
         grid: &Grid,
         rng: &mut SlotRng,
-        total_bet_mc: i64,  // Total bet in millicredits
+        total_bet_mc: i64, // Total bet in millicredits
         is_free_spin: bool,
         disable_lightning: bool,
     ) -> SpinResult {
@@ -259,7 +272,10 @@ impl<'a> Evaluator<'a> {
             result.hnw_triggered = true;
         } else if result.scatter_count >= 3 {
             result.fs_triggered = true;
-            result.fs_awarded = *self.config.free_spins.awards
+            result.fs_awarded = *self
+                .config
+                .free_spins
+                .awards
                 .get(&result.scatter_count)
                 .unwrap_or(&10);
         }

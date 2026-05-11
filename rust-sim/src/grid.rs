@@ -89,8 +89,16 @@ impl<'a> GridGenerator<'a> {
     #[inline]
     fn generate_grid(&self, rng: &mut SlotRng, is_fs: bool) -> Grid {
         let mut grid: Grid = [[0; 3]; 5];
-        let weights = if is_fs { &self.fs_weights } else { &self.base_weights };
-        let totals = if is_fs { &self.fs_totals } else { &self.base_totals };
+        let weights = if is_fs {
+            &self.fs_weights
+        } else {
+            &self.base_weights
+        };
+        let totals = if is_fs {
+            &self.fs_totals
+        } else {
+            &self.base_totals
+        };
 
         for reel in 0..5 {
             let reel_weights = &weights[reel];
@@ -120,7 +128,9 @@ impl<'a> GridGenerator<'a> {
     /// Get symbol ID from index
     #[inline]
     pub fn symbol_id(&self, idx: u8) -> &str {
-        self.config.symbols.get(idx as usize)
+        self.config
+            .symbols
+            .get(idx as usize)
             .map(|s| s.id.as_str())
             .unwrap_or("?")
     }
@@ -128,7 +138,9 @@ impl<'a> GridGenerator<'a> {
     /// Check if symbol is wild
     #[inline]
     pub fn is_wild(&self, idx: u8) -> bool {
-        self.config.symbols.get(idx as usize)
+        self.config
+            .symbols
+            .get(idx as usize)
             .map(|s| s.is_wild)
             .unwrap_or(false)
     }
@@ -136,7 +148,9 @@ impl<'a> GridGenerator<'a> {
     /// Check if symbol is scatter
     #[inline]
     pub fn is_scatter(&self, idx: u8) -> bool {
-        self.config.symbols.get(idx as usize)
+        self.config
+            .symbols
+            .get(idx as usize)
             .map(|s| s.is_scatter)
             .unwrap_or(false)
     }
@@ -144,7 +158,9 @@ impl<'a> GridGenerator<'a> {
     /// Check if symbol is bonus
     #[inline]
     pub fn is_bonus(&self, idx: u8) -> bool {
-        self.config.symbols.get(idx as usize)
+        self.config
+            .symbols
+            .get(idx as usize)
             .map(|s| s.is_bonus)
             .unwrap_or(false)
     }

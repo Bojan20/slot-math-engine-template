@@ -7,7 +7,7 @@ use crate::evaluator::Evaluator;
 use crate::features::FeatureSim;
 use crate::grid::GridGenerator;
 use crate::rng::SlotRng;
-use crate::stats::{AtomicStats, SeedStats, MultiSeedStats};
+use crate::stats::{AtomicStats, MultiSeedStats, SeedStats};
 
 use rayon::prelude::*;
 use std::sync::atomic::Ordering;
@@ -41,16 +41,16 @@ pub struct SimConfig {
     pub base_seed: u64,
     pub total_bet_mc: i64,
     pub verbose: bool,
-    pub sequential: bool,  // For exact TypeScript comparison (deterministic order)
+    pub sequential: bool, // For exact TypeScript comparison (deterministic order)
 }
 
 impl Default for SimConfig {
     fn default() -> Self {
         SimConfig {
-            spins_per_seed: 5_000_000,  // Match TypeScript default
-            num_seeds: 10,               // Match TypeScript default
-            base_seed: 1,                // Not used - seeds are (i+1)*12345
-            total_bet_mc: 1_000,         // 1.0 credit = 1000 millicredits (match TS TOTAL_BET=1.0)
+            spins_per_seed: 5_000_000, // Match TypeScript default
+            num_seeds: 10,             // Match TypeScript default
+            base_seed: 1,              // Not used - seeds are (i+1)*12345
+            total_bet_mc: 1_000,       // 1.0 credit = 1000 millicredits (match TS TOTAL_BET=1.0)
             verbose: false,
             sequential: false,
         }
@@ -58,12 +58,7 @@ impl Default for SimConfig {
 }
 
 /// Run simulation on a single seed
-fn simulate_seed(
-    config: &GameConfig,
-    seed: u64,
-    spins: u64,
-    total_bet_mc: i64,
-) -> SeedStats {
+fn simulate_seed(config: &GameConfig, seed: u64, spins: u64, total_bet_mc: i64) -> SeedStats {
     let grid_gen = GridGenerator::new(config);
     let evaluator = Evaluator::new(config, &grid_gen);
     let feature_sim = FeatureSim::new(config, &grid_gen, &evaluator);
@@ -109,10 +104,7 @@ fn simulate_seed(
 }
 
 /// Run full simulation with detailed stats
-pub fn run_simulation(
-    config: &GameConfig,
-    sim_config: &SimConfig,
-) -> SimResult {
+pub fn run_simulation(config: &GameConfig, sim_config: &SimConfig) -> SimResult {
     let start = Instant::now();
 
     // Create seeds - MUST MATCH TypeScript: seed = (s + 1) * 12345
@@ -159,7 +151,7 @@ pub fn run_simulation(
         duration_ms,
         spins_per_sec,
         rtp: overall_rtp,
-        hit_rate: 0.0,  // Would need detailed tracking
+        hit_rate: 0.0, // Would need detailed tracking
         fs_freq: 0.0,
         hnw_freq: 0.0,
         max_win_x: 0.0,
@@ -241,11 +233,18 @@ pub fn run_simulation_detailed(
         hit_rate: global_stats.hit_rate(),
         fs_freq: global_stats.fs_frequency(),
         hnw_freq: global_stats.hnw_frequency(),
-        max_win_x: global_stats.max_win.load(Ordering::Relaxed) as f64 / sim_config.total_bet_mc as f64,
-        base_rtp: (global_stats.total_base_won.load(Ordering::Relaxed) as f64 / total_wagered as f64) * 100.0,
-        fs_rtp: (global_stats.total_fs_won.load(Ordering::Relaxed) as f64 / total_wagered as f64) * 100.0,
-        hnw_rtp: (global_stats.total_hnw_won.load(Ordering::Relaxed) as f64 / total_wagered as f64) * 100.0,
-        lightning_rtp: (global_stats.total_lightning_uplift.load(Ordering::Relaxed) as f64 / total_wagered as f64) * 100.0,
+        max_win_x: global_stats.max_win.load(Ordering::Relaxed) as f64
+            / sim_config.total_bet_mc as f64,
+        base_rtp: (global_stats.total_base_won.load(Ordering::Relaxed) as f64
+            / total_wagered as f64)
+            * 100.0,
+        fs_rtp: (global_stats.total_fs_won.load(Ordering::Relaxed) as f64 / total_wagered as f64)
+            * 100.0,
+        hnw_rtp: (global_stats.total_hnw_won.load(Ordering::Relaxed) as f64 / total_wagered as f64)
+            * 100.0,
+        lightning_rtp: (global_stats.total_lightning_uplift.load(Ordering::Relaxed) as f64
+            / total_wagered as f64)
+            * 100.0,
         seed_stats,
     };
 
@@ -268,7 +267,9 @@ fn simulate_seed_detailed(
 
     for _ in 0..spins {
         stats.total_spins.fetch_add(1, Ordering::Relaxed);
-        stats.total_wagered.fetch_add(total_bet_mc, Ordering::Relaxed);
+        stats
+            .total_wagered
+            .fetch_add(total_bet_mc, Ordering::Relaxed);
 
         // Generate base game grid
         let grid = grid_gen.generate_base(&mut rng);
@@ -280,7 +281,9 @@ fn simulate_seed_detailed(
         let base_win = result.base_win;
         let lightning_uplift = result.final_win - result.base_win;
 
-        stats.total_base_won.fetch_add(result.final_win, Ordering::Relaxed);
+        stats
+            .total_base_won
+            .fetch_add(result.final_win, Ordering::Relaxed);
 
         if result.final_win > 0 {
             stats.winning_spins.fetch_add(1, Ordering::Relaxed);
@@ -288,7 +291,9 @@ fn simulate_seed_detailed(
 
         if result.multiplier > 1 {
             stats.lightning_triggers.fetch_add(1, Ordering::Relaxed);
-            stats.total_lightning_uplift.fetch_add(lightning_uplift, Ordering::Relaxed);
+            stats
+                .total_lightning_uplift
+                .fetch_add(lightning_uplift, Ordering::Relaxed);
         }
 
         let mut total_win = result.final_win;
@@ -299,26 +304,43 @@ fn simulate_seed_detailed(
 
             let hnw = feature_sim.simulate_hnw(&mut rng, &grid, total_bet_mc);
             total_win += hnw.total_payout;
-            stats.total_hnw_won.fetch_add(hnw.total_payout, Ordering::Relaxed);
-            stats.total_hnw_respins.fetch_add(hnw.total_respins as u64, Ordering::Relaxed);
+            stats
+                .total_hnw_won
+                .fetch_add(hnw.total_payout, Ordering::Relaxed);
+            stats
+                .total_hnw_respins
+                .fetch_add(hnw.total_respins as u64, Ordering::Relaxed);
 
             if hnw.full_grid_bonus {
                 stats.hnw_full_grids.fetch_add(1, Ordering::Relaxed);
             }
 
-            stats.jackpots_mini.fetch_add(hnw.jackpots_mini as u64, Ordering::Relaxed);
-            stats.jackpots_minor.fetch_add(hnw.jackpots_minor as u64, Ordering::Relaxed);
-            stats.jackpots_major.fetch_add(hnw.jackpots_major as u64, Ordering::Relaxed);
-            stats.jackpots_grand.fetch_add(hnw.jackpots_grand as u64, Ordering::Relaxed);
-
+            stats
+                .jackpots_mini
+                .fetch_add(hnw.jackpots_mini as u64, Ordering::Relaxed);
+            stats
+                .jackpots_minor
+                .fetch_add(hnw.jackpots_minor as u64, Ordering::Relaxed);
+            stats
+                .jackpots_major
+                .fetch_add(hnw.jackpots_major as u64, Ordering::Relaxed);
+            stats
+                .jackpots_grand
+                .fetch_add(hnw.jackpots_grand as u64, Ordering::Relaxed);
         } else if result.fs_triggered {
             stats.fs_triggers.fetch_add(1, Ordering::Relaxed);
 
             let fs = feature_sim.simulate_free_spins(&mut rng, result.scatter_count, total_bet_mc);
             total_win += fs.total_payout;
-            stats.total_fs_won.fetch_add(fs.total_payout, Ordering::Relaxed);
-            stats.total_fs_spins.fetch_add(fs.spins_played as u64, Ordering::Relaxed);
-            stats.fs_retriggers.fetch_add(fs.retriggers as u64, Ordering::Relaxed);
+            stats
+                .total_fs_won
+                .fetch_add(fs.total_payout, Ordering::Relaxed);
+            stats
+                .total_fs_spins
+                .fetch_add(fs.spins_played as u64, Ordering::Relaxed);
+            stats
+                .fs_retriggers
+                .fetch_add(fs.retriggers as u64, Ordering::Relaxed);
 
             // Update max mult
             let max_mult = fs.max_mult_reached as u64;
@@ -327,7 +349,11 @@ fn simulate_seed_detailed(
                 if max_mult <= current {
                     break;
                 }
-                if stats.max_mult_seen.compare_exchange(current, max_mult, Ordering::Relaxed, Ordering::Relaxed).is_ok() {
+                if stats
+                    .max_mult_seen
+                    .compare_exchange(current, max_mult, Ordering::Relaxed, Ordering::Relaxed)
+                    .is_ok()
+                {
                     break;
                 }
             }
@@ -347,7 +373,11 @@ fn simulate_seed_detailed(
             if total_win <= current {
                 break;
             }
-            if stats.max_win.compare_exchange(current, total_win, Ordering::Relaxed, Ordering::Relaxed).is_ok() {
+            if stats
+                .max_win
+                .compare_exchange(current, total_win, Ordering::Relaxed, Ordering::Relaxed)
+                .is_ok()
+            {
                 break;
             }
         }

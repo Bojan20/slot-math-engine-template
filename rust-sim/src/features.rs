@@ -11,11 +11,11 @@ use crate::rng::SlotRng;
 /// Free Spins result
 #[derive(Debug, Clone, Default)]
 pub struct FSResult {
-    pub total_payout: i64,      // In millicredits
+    pub total_payout: i64, // In millicredits
     pub spins_played: u32,
     pub retriggers: u32,
     pub max_mult_reached: u32,
-    pub scatter_wins: i64,      // In millicredits
+    pub scatter_wins: i64, // In millicredits
 }
 
 /// Hold & Win orb
@@ -23,14 +23,14 @@ pub struct FSResult {
 pub struct HNWOrb {
     pub reel: u8,
     pub row: u8,
-    pub value: u32,             // Multiplier value
+    pub value: u32, // Multiplier value
     pub jackpot: Option<String>,
 }
 
 /// Hold & Win result
 #[derive(Debug, Clone, Default)]
 pub struct HNWResult {
-    pub total_payout: i64,      // In millicredits
+    pub total_payout: i64, // In millicredits
     pub total_respins: u32,
     pub final_orb_count: u8,
     pub full_grid_bonus: bool,
@@ -56,7 +56,9 @@ impl<'a> FeatureSim<'a> {
         grid_gen: &'a GridGenerator<'a>,
         evaluator: &'a Evaluator<'a>,
     ) -> Self {
-        let orb_weights: Vec<(u32, u32, Option<String>)> = config.hold_and_win.orb_values
+        let orb_weights: Vec<(u32, u32, Option<String>)> = config
+            .hold_and_win
+            .orb_values
             .iter()
             .map(|o| (o.value, o.weight, o.jackpot.clone()))
             .collect();
@@ -96,7 +98,10 @@ impl<'a> FeatureSim<'a> {
         let mut result = FSResult::default();
 
         // Get initial spins
-        let mut spins_remaining = *self.config.free_spins.awards
+        let mut spins_remaining = *self
+            .config
+            .free_spins
+            .awards
             .get(&scatter_count)
             .unwrap_or(&10) as u32;
 
@@ -123,15 +128,14 @@ impl<'a> FeatureSim<'a> {
             // Check retrigger
             let scatters = self.grid_gen.count_scatters(&grid);
             if self.config.free_spins.retrigger_enabled && scatters >= 3 {
-                let additional = *self.config.free_spins.awards
-                    .get(&scatters)
-                    .unwrap_or(&0) as u32;
+                let additional = *self.config.free_spins.awards.get(&scatters).unwrap_or(&0) as u32;
                 spins_remaining += additional;
                 result.retriggers += 1;
 
                 // Scatter pay on retrigger
                 if let Some(&scatter_pay) = self.config.free_spins.scatter_pays.get(&scatters) {
-                    let pay = (scatter_pay * 1000.0) as i64 * total_bet_mc / 1000 * current_mult as i64;
+                    let pay =
+                        (scatter_pay * 1000.0) as i64 * total_bet_mc / 1000 * current_mult as i64;
                     result.total_payout += pay;
                     result.scatter_wins += pay;
                 }
@@ -142,8 +146,8 @@ impl<'a> FeatureSim<'a> {
                 &grid,
                 rng,
                 total_bet_mc,
-                true,   // is_free_spin
-                true,   // disable_lightning
+                true, // is_free_spin
+                true, // disable_lightning
             );
 
             // Apply progressive multiplier
@@ -261,8 +265,8 @@ impl<'a> FeatureSim<'a> {
         result.final_orb_count = orb_count;
         if orb_count >= 15 {
             result.full_grid_bonus = true;
-            result.total_payout += (self.config.hold_and_win.full_grid_bonus * 1000.0) as i64
-                * total_bet_mc / 1000;
+            result.total_payout +=
+                (self.config.hold_and_win.full_grid_bonus * 1000.0) as i64 * total_bet_mc / 1000;
         }
 
         // Apply max win cap

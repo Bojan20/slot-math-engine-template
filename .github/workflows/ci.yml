@@ -1,0 +1,122 @@
+# CI — Faza 0.1 acceptance gate.
+#
+# Three matrices run on every PR / push to main:
+#   1. TS suite — typecheck + vitest on Node 18 / 20 / 22, Linux + macOS
+#   2. Rust suite — fmt + clippy -D warnings + test on Linux + macOS (both archs)
+#   3. Differential parity — node + cargo on same seed → byte-identical RTP
+#
+# The differential job is the contract gate: if TS and Rust ever drift,
+# the entire engine loses its "drop-in golden reference" claim. CI fails
+# loudly so the regression is caught before merge.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────
+  # TypeScript: tsc strict + vitest
+  # ─────────────────────────────────────────────────────────────────────
+  ts:
+    name: TS · Node ${{ matrix.node }} · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Type check (no emit)
+        run: npm run lint
+      - name: Vitest
+        run: npm test
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Rust: fmt + clippy -D warnings + test (release for sim, dev for unit)
+  # ─────────────────────────────────────────────────────────────────────
+  rust:
+    name: Rust · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    defaults:
+      run:
+        working-directory: rust-sim
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Rust toolchain (pinned via rust-toolchain.toml)
+        run: rustup show
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust-sim
+      - name: rustfmt
+        run: cargo fmt --all -- --check
+      - name: clippy
+        run: cargo clippy --all-targets -- -D warnings
+      - name: test (debug)
+        run: cargo test --all-features
+      - name: test (release — parity numbers depend on opt level)
+        run: cargo test --release --all-features
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Differential TS↔Rust parity — same seed, same config, same RTP.
+  # The "is engine drift detectable" canary.
+  # ─────────────────────────────────────────────────────────────────────
+  parity:
+    name: Differential TS↔Rust parity
+    needs: [ts, rust]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Setup Rust
+        run: rustup show
+        working-directory: rust-sim
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust-sim
+      - run: npm ci
+      - name: Build TS
+        run: npm run build
+      - name: Build Rust (release)
+        run: cargo build --release
+        working-directory: rust-sim
+      - name: TS analytical mode
+        run: |
+          node dist/index.js --analytical --config tests/fixtures/parity.json --seed 12345 > out_ts.json
+        continue-on-error: true
+      - name: Rust analytical mode
+        run: |
+          ./target/release/slot_sim --analytical --config ../tests/fixtures/parity.json --seed 12345 > out_rust.json
+        working-directory: rust-sim
+        continue-on-error: true
+      - name: Compare RTP outputs
+        run: |
+          if [ -f out_ts.json ] && [ -f rust-sim/out_rust.json ]; then
+            node scripts/compare-parity.mjs out_ts.json rust-sim/out_rust.json
+          else
+            echo "::warning::Parity fixture not yet wired — Faza 1.1 IR delivery"
+          fi

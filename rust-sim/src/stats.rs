@@ -114,23 +114,53 @@ impl AtomicStats {
 
     /// Get win distribution snapshot
     pub fn get_distribution(&self) -> WinDistribution {
-        self.win_distribution.lock().map(|d| d.clone()).unwrap_or_default()
+        self.win_distribution
+            .lock()
+            .map(|d| d.clone())
+            .unwrap_or_default()
     }
 
     /// Merge another stats into this one
     pub fn merge(&self, other: &AtomicStats) {
-        self.total_spins.fetch_add(other.total_spins.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_wagered.fetch_add(other.total_wagered.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_won.fetch_add(other.total_won.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_base_won.fetch_add(other.total_base_won.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_fs_won.fetch_add(other.total_fs_won.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_hnw_won.fetch_add(other.total_hnw_won.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_lightning_uplift.fetch_add(other.total_lightning_uplift.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.total_spins
+            .fetch_add(other.total_spins.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.total_wagered.fetch_add(
+            other.total_wagered.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_won
+            .fetch_add(other.total_won.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.total_base_won.fetch_add(
+            other.total_base_won.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_fs_won.fetch_add(
+            other.total_fs_won.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_hnw_won.fetch_add(
+            other.total_hnw_won.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_lightning_uplift.fetch_add(
+            other.total_lightning_uplift.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
 
-        self.winning_spins.fetch_add(other.winning_spins.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.fs_triggers.fetch_add(other.fs_triggers.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.hnw_triggers.fetch_add(other.hnw_triggers.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.lightning_triggers.fetch_add(other.lightning_triggers.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.winning_spins.fetch_add(
+            other.winning_spins.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.fs_triggers
+            .fetch_add(other.fs_triggers.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.hnw_triggers.fetch_add(
+            other.hnw_triggers.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.lightning_triggers.fetch_add(
+            other.lightning_triggers.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
 
         // Max values
         let other_max = other.max_win.load(Ordering::Relaxed);
@@ -139,7 +169,11 @@ impl AtomicStats {
             if other_max <= current {
                 break;
             }
-            if self.max_win.compare_exchange(current, other_max, Ordering::Relaxed, Ordering::Relaxed).is_ok() {
+            if self
+                .max_win
+                .compare_exchange(current, other_max, Ordering::Relaxed, Ordering::Relaxed)
+                .is_ok()
+            {
                 break;
             }
         }
@@ -150,23 +184,53 @@ impl AtomicStats {
             if other_mult <= current {
                 break;
             }
-            if self.max_mult_seen.compare_exchange(current, other_mult, Ordering::Relaxed, Ordering::Relaxed).is_ok() {
+            if self
+                .max_mult_seen
+                .compare_exchange(current, other_mult, Ordering::Relaxed, Ordering::Relaxed)
+                .is_ok()
+            {
                 break;
             }
         }
 
-        self.total_fs_spins.fetch_add(other.total_fs_spins.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_hnw_respins.fetch_add(other.total_hnw_respins.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.fs_retriggers.fetch_add(other.fs_retriggers.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.hnw_full_grids.fetch_add(other.hnw_full_grids.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.total_fs_spins.fetch_add(
+            other.total_fs_spins.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_hnw_respins.fetch_add(
+            other.total_hnw_respins.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.fs_retriggers.fetch_add(
+            other.fs_retriggers.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.hnw_full_grids.fetch_add(
+            other.hnw_full_grids.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
 
-        self.jackpots_mini.fetch_add(other.jackpots_mini.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.jackpots_minor.fetch_add(other.jackpots_minor.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.jackpots_major.fetch_add(other.jackpots_major.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.jackpots_grand.fetch_add(other.jackpots_grand.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.jackpots_mini.fetch_add(
+            other.jackpots_mini.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.jackpots_minor.fetch_add(
+            other.jackpots_minor.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.jackpots_major.fetch_add(
+            other.jackpots_major.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.jackpots_grand.fetch_add(
+            other.jackpots_grand.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
 
         // Merge win distribution
-        if let (Ok(mut self_dist), Ok(other_dist)) = (self.win_distribution.lock(), other.win_distribution.lock()) {
+        if let (Ok(mut self_dist), Ok(other_dist)) =
+            (self.win_distribution.lock(), other.win_distribution.lock())
+        {
             self_dist.merge(&other_dist);
         }
     }
@@ -250,9 +314,8 @@ impl MultiSeedStats {
         let n = seeds.len() as f64;
         let mean = seeds.iter().map(|s| s.rtp).sum::<f64>() / n;
 
-        let variance = seeds.iter()
-            .map(|s| (s.rtp - mean).powi(2))
-            .sum::<f64>() / (n - 1.0).max(1.0);
+        let variance =
+            seeds.iter().map(|s| (s.rtp - mean).powi(2)).sum::<f64>() / (n - 1.0).max(1.0);
 
         let std_dev = variance.sqrt();
         let std_error = std_dev / n.sqrt();
@@ -318,13 +381,19 @@ impl PARMetrics {
 
             avg_fs_win: if fs_triggers > 0 {
                 (fs_won as f64 / fs_triggers as f64) / total_bet_mc as f64
-            } else { 0.0 },
+            } else {
+                0.0
+            },
             avg_hnw_win: if hnw_triggers > 0 {
                 (hnw_won as f64 / hnw_triggers as f64) / total_bet_mc as f64
-            } else { 0.0 },
+            } else {
+                0.0
+            },
             avg_fs_spins: if fs_triggers > 0 {
                 stats.total_fs_spins.load(Ordering::Relaxed) as f64 / fs_triggers as f64
-            } else { 0.0 },
+            } else {
+                0.0
+            },
             avg_hnw_orbs: 0.0, // Would need tracking
 
             max_win: stats.max_win.load(Ordering::Relaxed) as f64 / total_bet_mc as f64,

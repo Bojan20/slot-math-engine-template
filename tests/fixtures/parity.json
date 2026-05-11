@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "parity-fixture",
+    "name": "Parity Fixture",
+    "version": "1.0.0",
+    "description": "Minimal 5x3 lines config used by TS↔Rust parity gate (Faza 0.1 / 10.3).",
+    "theme_tags": ["test", "fixture"],
+    "author": "engine-team",
+    "created_at_utc": "2026-05-12T00:00:00Z"
+  },
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "S_LP1",  "name": "LP1",  "kind": "lp" },
+    { "id": "S_LP2",  "name": "LP2",  "kind": "lp" },
+    { "id": "S_LP3",  "name": "LP3",  "kind": "lp" },
+    { "id": "S_HP1",  "name": "HP1",  "kind": "hp" },
+    { "id": "S_HP2",  "name": "HP2",  "kind": "hp" },
+    { "id": "S_WILD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "S_SCAT", "name": "Scat", "kind": "scatter" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 2, "S_HP2": 3, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 2, "S_HP2": 3, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 2, "S_HP2": 3, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 2, "S_HP2": 3, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 2, "S_HP2": 3, "S_WILD": 1, "S_SCAT": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "lines",
+    "paylines": [
+      [1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0],
+      [2, 2, 2, 2, 2],
+      [0, 1, 2, 1, 0],
+      [2, 1, 0, 1, 2]
+    ],
+    "direction": "ltr",
+    "min_match": 3,
+    "pay_left_to_right_only": true
+  },
+  "paytable": {
+    "S_LP1": { "3": 0.5, "4": 2,  "5": 8 },
+    "S_LP2": { "3": 0.6, "4": 2.5,"5": 10 },
+    "S_LP3": { "3": 0.8, "4": 3,  "5": 12 },
+    "S_HP1": { "3": 3,   "4": 12, "5": 63 },
+    "S_HP2": { "3": 2.2, "4": 8.8,"5": 44 }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger": { "by": "scatter_count", "thresholds": { "3": 8, "4": 12, "5": 15 } },
+      "global_multiplier": 1
+    }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 12345 },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1.0,
+    "denominations": [0.01, 0.10, 1.0]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.0005,
+    "max_win_x": 5000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.30
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA"],
+    "rtp_range_required": [0.92, 0.97],
+    "max_win_cap_required": 10000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.66,
+    "free_spins": 0.30,
+    "hold_and_win": 0.0,
+    "jackpot": 0.0,
+    "tolerance": 0.005
+  }
+}

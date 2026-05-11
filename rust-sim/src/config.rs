@@ -49,12 +49,12 @@ pub struct LightningMult {
 /// Free Spins configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FreeSpinsConfig {
-    pub awards: HashMap<u8, u8>,  // scatter_count -> spins_awarded
+    pub awards: HashMap<u8, u8>, // scatter_count -> spins_awarded
     pub mult_start: u32,
     pub mult_increment: u32,
     pub mult_max: u32,
     pub retrigger_enabled: bool,
-    pub scatter_pays: HashMap<u8, f64>,  // scatter_count -> pay multiplier
+    pub scatter_pays: HashMap<u8, f64>, // scatter_count -> pay multiplier
 }
 
 /// Hold & Win configuration
@@ -129,29 +129,37 @@ impl GameConfig {
 
     /// Get wild symbol ID
     pub fn wild_id(&self) -> Option<&str> {
-        self.symbols.iter()
+        self.symbols
+            .iter()
             .find(|s| s.is_wild)
             .map(|s| s.id.as_str())
     }
 
     /// Get scatter symbol ID
     pub fn scatter_id(&self) -> Option<&str> {
-        self.symbols.iter()
+        self.symbols
+            .iter()
             .find(|s| s.is_scatter)
             .map(|s| s.id.as_str())
     }
 
     /// Get bonus symbol ID
     pub fn bonus_id(&self) -> Option<&str> {
-        self.symbols.iter()
+        self.symbols
+            .iter()
             .find(|s| s.is_bonus)
             .map(|s| s.id.as_str())
     }
 
     /// Get total weight for a reel
     pub fn reel_total_weight(&self, reel: usize, is_fs: bool) -> u32 {
-        let weights = if is_fs { &self.fs_weights } else { &self.base_weights };
-        weights.get(reel)
+        let weights = if is_fs {
+            &self.fs_weights
+        } else {
+            &self.base_weights
+        };
+        weights
+            .get(reel)
             .map(|w| w.iter().map(|e| e.weight).sum())
             .unwrap_or(0)
     }
@@ -167,14 +175,44 @@ impl Default for GameConfig {
             reels: 5,
             rows: 3,
             paylines: vec![
-                vec![1, 1, 1, 1, 1],  // Middle row
+                vec![1, 1, 1, 1, 1], // Middle row
             ],
             symbols: vec![
-                SymbolDef { id: "W".to_string(), name: "Wild".to_string(), is_wild: true, is_scatter: false, is_bonus: false },
-                SymbolDef { id: "H1".to_string(), name: "High 1".to_string(), is_wild: false, is_scatter: false, is_bonus: false },
-                SymbolDef { id: "L1".to_string(), name: "Low 1".to_string(), is_wild: false, is_scatter: false, is_bonus: false },
-                SymbolDef { id: "S".to_string(), name: "Scatter".to_string(), is_wild: false, is_scatter: true, is_bonus: false },
-                SymbolDef { id: "B".to_string(), name: "Bonus".to_string(), is_wild: false, is_scatter: false, is_bonus: true },
+                SymbolDef {
+                    id: "W".to_string(),
+                    name: "Wild".to_string(),
+                    is_wild: true,
+                    is_scatter: false,
+                    is_bonus: false,
+                },
+                SymbolDef {
+                    id: "H1".to_string(),
+                    name: "High 1".to_string(),
+                    is_wild: false,
+                    is_scatter: false,
+                    is_bonus: false,
+                },
+                SymbolDef {
+                    id: "L1".to_string(),
+                    name: "Low 1".to_string(),
+                    is_wild: false,
+                    is_scatter: false,
+                    is_bonus: false,
+                },
+                SymbolDef {
+                    id: "S".to_string(),
+                    name: "Scatter".to_string(),
+                    is_wild: false,
+                    is_scatter: true,
+                    is_bonus: false,
+                },
+                SymbolDef {
+                    id: "B".to_string(),
+                    name: "Bonus".to_string(),
+                    is_wild: false,
+                    is_scatter: false,
+                    is_bonus: true,
+                },
             ],
             paytable: HashMap::new(),
             base_weights: vec![],
@@ -193,9 +231,21 @@ impl Default for GameConfig {
                 respins_on_new_orb: 3,
                 full_grid_bonus: 500.0,
                 orb_values: vec![
-                    OrbValue { value: 1, weight: 600, jackpot: None },
-                    OrbValue { value: 2, weight: 250, jackpot: None },
-                    OrbValue { value: 5, weight: 100, jackpot: None },
+                    OrbValue {
+                        value: 1,
+                        weight: 600,
+                        jackpot: None,
+                    },
+                    OrbValue {
+                        value: 2,
+                        weight: 250,
+                        jackpot: None,
+                    },
+                    OrbValue {
+                        value: 5,
+                        weight: 100,
+                        jackpot: None,
+                    },
                 ],
                 orb_land_chance_base: 0.035,
                 orb_land_chance_fill_bonus: 0.015,
@@ -204,10 +254,22 @@ impl Default for GameConfig {
                 trigger_chance: 0.15,
                 trigger_chance_fs: 0.0,
                 multipliers: vec![
-                    LightningMult { value: 2, weight: 70 },
-                    LightningMult { value: 3, weight: 18 },
-                    LightningMult { value: 5, weight: 10 },
-                    LightningMult { value: 10, weight: 2 },
+                    LightningMult {
+                        value: 2,
+                        weight: 70,
+                    },
+                    LightningMult {
+                        value: 3,
+                        weight: 18,
+                    },
+                    LightningMult {
+                        value: 5,
+                        weight: 10,
+                    },
+                    LightningMult {
+                        value: 10,
+                        weight: 2,
+                    },
                 ],
             },
             max_win_cap: 5000.0,
