@@ -27,6 +27,12 @@ pub enum EvalMode {
     /// Pay-anywhere evaluation: a symbol pays if it appears at least
     /// `min_count` times anywhere on the grid.
     PayAnywhere { min_count: u32 },
+    /// Megaways: variable per-reel row counts. `row_counts[r]` holds the
+    /// effective row count on reel `r` for this spin. Payout for a
+    /// symbol matching on `N` consecutive reels equals
+    /// `pay(symbol, N) × Π(count_per_reel[0..N])`, where each reel's
+    /// count is the number of matching cells on that reel (wild included).
+    Megaways { row_counts: Vec<usize> },
 }
 
 // ─── Result types ───────────────────────────────────────────────────────────
@@ -438,6 +444,105 @@ impl<'a> Evaluator<'a> {
         (wins, total_win)
     }
 
+    // ─── Megaways evaluator ─────────────────────────────────────────────
+    //
+    // Variable-row ways: each reel has its own `row_counts[reel]` value for
+    // this spin. The win logic is otherwise identical to all-ways:
+    //   pay(symbol, N) × Π(count_on_reel[0..N])
+    // where count_on_reel counts the symbol plus wilds on that reel.
+    //
+    // The reel iteration uses `row_counts` (passed via `EvalMode::Megaways`)
+    // rather than `grid.rows_for_reel(reel)` so callers can decouple the
+    // *configured* row count from the actual `DynGrid` layout. The two
+    // should normally match.
+
+    fn evaluate_megaways(
+        &self,
+        grid: &Grid,
+        row_counts: &[usize],
+        total_bet_mc: i64,
+    ) -> (Vec<LineWin>, i64) {
+        let num_reels = self.config.reels as usize;
+        let mut total_win = 0i64;
+        let mut wins: Vec<LineWin> = Vec::new();
+        let num_syms = self.config.symbols.len();
+
+        for sym_idx in 0..num_syms as u8 {
+            // Skip wilds and specials — they participate as multipliers.
+            if self.is_wild(sym_idx) || self.is_special(sym_idx) {
+                continue;
+            }
+
+            // Count matching positions per reel honouring per-spin row counts.
+            let mut reel_counts: Vec<u32> = Vec::with_capacity(num_reels);
+            for reel in 0..num_reels {
+                let row_count = row_counts
+                    .get(reel)
+                    .copied()
+                    .unwrap_or_else(|| grid.rows_for_reel(reel));
+                let mut hits = 0u32;
+                for row in 0..row_count {
+                    let cell = grid.get(reel, row);
+                    if cell == sym_idx || self.is_wild(cell) {
+                        hits += 1;
+                    }
+                }
+                reel_counts.push(hits);
+            }
+
+            // Consecutive reel span from the left.
+            let mut consec = 0usize;
+            let mut combo: u64 = 1;
+            for reel in 0..num_reels {
+                if reel_counts[reel] == 0 {
+                    break;
+                }
+                consec += 1;
+                combo = combo.saturating_mul(reel_counts[reel] as u64);
+            }
+
+            if consec < 3 {
+                continue;
+            }
+
+            // Megaways pays the highest band the chain reached: get_payout
+            // only defines pay3..pay5, so clamp at 5 — every consec ≥ 5
+            // pays the pay5 band.
+            let pay_band = consec.min(5) as u8;
+            let base_pay = self.get_payout(sym_idx, pay_band);
+            if base_pay <= 0 {
+                continue;
+            }
+
+            let raw_win = (base_pay as i64)
+                .saturating_mul(combo as i64)
+                .saturating_mul(total_bet_mc)
+                / 1000;
+
+            if raw_win > 0 {
+                total_win += raw_win;
+                wins.push(LineWin {
+                    payline_id: sym_idx + 1,
+                    symbol_idx: sym_idx,
+                    count: consec as u8,
+                    payout: raw_win,
+                });
+            }
+        }
+
+        (wins, total_win)
+    }
+
+    /// Total ways for a Megaways spin: Π(row_counts[r]).
+    /// Exposed for callers that want to log it alongside the result.
+    pub fn megaways_total_ways(row_counts: &[usize]) -> u64 {
+        row_counts
+            .iter()
+            .copied()
+            .map(|c| c as u64)
+            .fold(1u64, |acc, c| acc.saturating_mul(c))
+    }
+
     // ─── PayAnywhere evaluator ───────────────────────────────────────────
     //
     // Count total appearances of each symbol across all cells.
@@ -517,6 +622,9 @@ impl<'a> Evaluator<'a> {
             }
             EvalMode::PayAnywhere { min_count } => {
                 self.evaluate_pay_anywhere(grid, *min_count, total_bet_mc)
+            }
+            EvalMode::Megaways { row_counts } => {
+                self.evaluate_megaways(grid, row_counts, total_bet_mc)
             }
         };
 

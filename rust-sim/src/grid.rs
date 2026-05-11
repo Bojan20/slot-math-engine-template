@@ -124,6 +124,74 @@ impl<'a> GridGenerator<'a> {
         self.generate_grid(rng, true)
     }
 
+    /// Generate a Megaways grid: each reel may have a different row count
+    /// for this spin. `row_counts.len()` must equal `config.reels`. The
+    /// resulting `DynGrid` allocates the *maximum* row count across reels
+    /// (uniform `cells[reel].len()`), but only the first
+    /// `row_counts[reel]` cells of each reel are populated — the trailing
+    /// slots are left at the sentinel `0`. Evaluators must honour the
+    /// `row_counts` passed via `EvalMode::Megaways`, not the grid's
+    /// implicit `rows`.
+    ///
+    /// `row_counts_config` is the configurable per-reel min/max envelope
+    /// that drives random row selection for callers that prefer to
+    /// resolve row counts inside the generator. Pass `None` to use the
+    /// rectangular config dimensions.
+    pub fn generate_megaways(
+        &self,
+        rng: &mut SlotRng,
+        row_counts_config: &[(usize, usize)],
+    ) -> (Grid, Vec<usize>) {
+        let num_reels = self.config.reels as usize;
+
+        // Resolve actual per-reel row counts for this spin.
+        let mut row_counts: Vec<usize> = Vec::with_capacity(num_reels);
+        let max_rows = row_counts_config
+            .iter()
+            .map(|(_, hi)| *hi)
+            .max()
+            .unwrap_or(self.config.rows as usize);
+
+        for reel in 0..num_reels {
+            let (lo, hi) = row_counts_config
+                .get(reel)
+                .copied()
+                .unwrap_or((self.config.rows as usize, self.config.rows as usize));
+            let span = hi - lo + 1;
+            let rc = lo + (rng.random() * span as f64) as usize;
+            row_counts.push(rc.min(hi));
+        }
+
+        let mut grid = DynGrid::new(num_reels, max_rows);
+
+        let weights = &self.base_weights;
+        let totals = &self.base_totals;
+
+        for reel in 0..num_reels {
+            let reel_weights = &weights[reel];
+            let total = totals[reel];
+            if total == 0 {
+                continue;
+            }
+
+            let reel_rows = row_counts[reel];
+            for row in 0..reel_rows {
+                let mut roll = rng.random() * total as f64;
+                let mut chosen = 0u8;
+                for &(sym_idx, weight) in reel_weights {
+                    roll -= weight as f64;
+                    if roll <= 0.0 {
+                        chosen = sym_idx;
+                        break;
+                    }
+                }
+                grid.set(reel, row, chosen);
+            }
+        }
+
+        (grid, row_counts)
+    }
+
     /// Core grid generation — iterates over `config.reels` reels and
     /// `config.rows` rows (no hardcoded constants).
     fn generate_grid(&self, rng: &mut SlotRng, is_fs: bool) -> Grid {
