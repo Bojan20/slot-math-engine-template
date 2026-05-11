@@ -1,10 +1,35 @@
-//! Win Evaluator Module
+//! Win Evaluator Module (Faza 1.3)
 //!
-//! Evaluates payline wins, scatter pays, and feature triggers.
+//! Multi-mode evaluator: Lines, Ways, Cluster, PayAnywhere.
+//! The `EvalMode` enum selects the evaluation path; `Evaluator` is
+//! constructed with one mode and dispatches accordingly in `evaluate_spin`.
+//!
+//! All grid iteration uses `config.reels` / `config.rows` — zero hardcoded
+//! grid-size constants.
 
 use crate::config::GameConfig;
 use crate::grid::{Grid, GridGenerator};
 use crate::rng::SlotRng;
+
+// ─── EvalMode ──────────────────────────────────────────────────────────────
+
+/// Evaluation mode — controls which algorithm `evaluate_spin` runs.
+#[derive(Debug, Clone, PartialEq)]
+pub enum EvalMode {
+    /// Classic payline evaluation (left-to-right or both directions).
+    Lines,
+    /// All-ways evaluation: every combination of symbols across consecutive
+    /// reels pays (no explicit paylines required).
+    Ways,
+    /// Cluster evaluation: connected groups of identical symbols pay if
+    /// the group size reaches `min_size`.
+    Cluster { min_size: u32 },
+    /// Pay-anywhere evaluation: a symbol pays if it appears at least
+    /// `min_count` times anywhere on the grid.
+    PayAnywhere { min_count: u32 },
+}
+
+// ─── Result types ───────────────────────────────────────────────────────────
 
 /// Line win result
 #[derive(Debug, Clone)]
@@ -29,56 +54,54 @@ pub struct SpinResult {
     pub fs_awarded: u8,
 }
 
-/// Win evaluator
+// ─── Evaluator ─────────────────────────────────────────────────────────────
+
+/// Win evaluator — created once per simulation seed, shared across spins.
 pub struct Evaluator<'a> {
     config: &'a GameConfig,
     grid_gen: &'a GridGenerator<'a>,
-    /// Precomputed: paytable as [symbol_idx][count-3] -> payout in millicredits
+    /// Evaluation mode selected at construction time.
+    pub eval_mode: EvalMode,
+    /// Precomputed paytable: `[symbol_idx][count-3]` → payout millicredits.
     paytable: Vec<[i64; 3]>,
-    /// Wild symbol index
+    /// Wild symbol index (if any).
     wild_idx: Option<u8>,
-    /// Scatter symbol index
+    /// Scatter symbol index (if any).
     scatter_idx: Option<u8>,
-    /// Bonus symbol index
+    /// Bonus symbol index (if any).
     bonus_idx: Option<u8>,
-    /// Lightning multiplier weights: (value, weight)
+    /// Lightning multiplier weights: `(value, weight)`.
     lightning_weights: Vec<(u32, u32)>,
     lightning_total: u32,
 }
 
 impl<'a> Evaluator<'a> {
-    /// Create new evaluator from config
+    /// Create a new evaluator from config.
+    /// `eval_mode` defaults to `Lines` so existing callers work unchanged.
     pub fn new(config: &'a GameConfig, grid_gen: &'a GridGenerator<'a>) -> Self {
-        // Build paytable lookup
-        let mut paytable = vec![[0i64; 3]; config.symbols.len()];
+        Self::with_mode(config, grid_gen, EvalMode::Lines)
+    }
 
+    /// Create a new evaluator with an explicit `EvalMode`.
+    pub fn with_mode(
+        config: &'a GameConfig,
+        grid_gen: &'a GridGenerator<'a>,
+        eval_mode: EvalMode,
+    ) -> Self {
+        // Build paytable lookup indexed by [symbol_idx][count-3].
+        let mut paytable = vec![[0i64; 3]; config.symbols.len()];
         for (sym_id, pay) in &config.paytable {
             if let Some(idx) = config.symbol_index(sym_id) {
-                // Convert to millicredits (x1000)
                 paytable[idx][0] = (pay.pay3 * 1000.0) as i64;
                 paytable[idx][1] = (pay.pay4 * 1000.0) as i64;
                 paytable[idx][2] = (pay.pay5 * 1000.0) as i64;
             }
         }
 
-        // Find special symbol indices
-        let wild_idx = config
-            .symbols
-            .iter()
-            .position(|s| s.is_wild)
-            .map(|i| i as u8);
-        let scatter_idx = config
-            .symbols
-            .iter()
-            .position(|s| s.is_scatter)
-            .map(|i| i as u8);
-        let bonus_idx = config
-            .symbols
-            .iter()
-            .position(|s| s.is_bonus)
-            .map(|i| i as u8);
+        let wild_idx = config.symbols.iter().position(|s| s.is_wild).map(|i| i as u8);
+        let scatter_idx = config.symbols.iter().position(|s| s.is_scatter).map(|i| i as u8);
+        let bonus_idx = config.symbols.iter().position(|s| s.is_bonus).map(|i| i as u8);
 
-        // Precompute lightning weights
         let lightning_weights: Vec<(u32, u32)> = config
             .lightning
             .multipliers
@@ -90,6 +113,7 @@ impl<'a> Evaluator<'a> {
         Evaluator {
             config,
             grid_gen,
+            eval_mode,
             paytable,
             wild_idx,
             scatter_idx,
@@ -99,19 +123,27 @@ impl<'a> Evaluator<'a> {
         }
     }
 
-    /// Check if symbol blocks payline (scatter or bonus)
+    // ── Internal helpers ─────────────────────────────────────────────────
+
+    /// Returns `true` if the symbol blocks a payline (scatter or bonus).
     #[inline]
     fn blocks_line(&self, idx: u8) -> bool {
         Some(idx) == self.scatter_idx || Some(idx) == self.bonus_idx
     }
 
-    /// Check if symbol is wild
+    /// Returns `true` if the symbol is wild.
     #[inline]
     fn is_wild(&self, idx: u8) -> bool {
         Some(idx) == self.wild_idx
     }
 
-    /// Get payout for symbol and count (returns millicredits per bet unit)
+    /// Returns `true` if the symbol is scatter or bonus (special).
+    #[inline]
+    fn is_special(&self, idx: u8) -> bool {
+        Some(idx) == self.scatter_idx || Some(idx) == self.bonus_idx
+    }
+
+    /// Payout for `(symbol, count)` in millicredits × 1 (unscaled by bet).
     #[inline]
     fn get_payout(&self, sym_idx: u8, count: u8) -> i64 {
         if count < 3 || count > 5 {
@@ -123,25 +155,40 @@ impl<'a> Evaluator<'a> {
             .unwrap_or(0)
     }
 
-    /// Evaluate single payline
+    /// Pick lightning multiplier from weighted distribution.
+    #[inline]
+    fn pick_lightning(&self, rng: &mut SlotRng) -> u32 {
+        let mut roll = rng.random() * self.lightning_total as f64;
+        for (value, weight) in &self.lightning_weights {
+            roll -= *weight as f64;
+            if roll <= 0.0 {
+                return *value;
+            }
+        }
+        self.lightning_weights.last().map(|(v, _)| *v).unwrap_or(1)
+    }
+
+    // ─── Lines evaluator ─────────────────────────────────────────────────
+
     fn evaluate_payline(&self, grid: &Grid, payline_idx: usize) -> Option<LineWin> {
         let payline = &self.config.paylines[payline_idx];
+        let num_reels = self.config.reels as usize;
 
-        // Get symbols on this payline
-        let mut line_syms = [0u8; 5];
-        for reel in 0..5 {
+        // Read symbols along this payline.
+        let mut line_syms = vec![0u8; num_reels];
+        for reel in 0..num_reels {
             let row = payline[reel] as usize;
-            line_syms[reel] = grid[reel][row];
+            line_syms[reel] = grid.get(reel, row);
         }
 
-        // If first symbol blocks, no win
+        // If the first symbol blocks, no win possible.
         if self.blocks_line(line_syms[0]) {
             return None;
         }
 
-        // Build chain of consecutive symbols
-        let mut chain_len = 0;
-        for reel in 0..5 {
+        // Build consecutive chain length (stop at first blocker).
+        let mut chain_len = 0usize;
+        for reel in 0..num_reels {
             if self.blocks_line(line_syms[reel]) {
                 break;
             }
@@ -152,57 +199,39 @@ impl<'a> Evaluator<'a> {
             return None;
         }
 
-        // Find candidates: first non-wild paying symbol, or wild
-        let mut best_result: Option<LineWin> = None;
+        // Find first non-wild paying symbol.
+        let first_paying = (0..chain_len)
+            .map(|r| line_syms[r])
+            .find(|&sym| !self.is_wild(sym) && self.get_payout(sym, 3) > 0);
 
-        // Try first non-wild symbol
-        let mut first_paying: Option<u8> = None;
-        for reel in 0..chain_len {
-            let sym = line_syms[reel];
-            if !self.is_wild(sym) && self.get_payout(sym, 3) > 0 {
-                first_paying = Some(sym);
-                break;
-            }
-        }
+        let mut best: Option<LineWin> = None;
 
-        // Evaluate first paying symbol
         if let Some(target) = first_paying {
-            if let Some(win) =
-                self.evaluate_target(grid, payline, &line_syms, chain_len, target, payline_idx)
-            {
-                best_result = Some(win);
-            }
+            best = self.evaluate_target(&line_syms, chain_len, target, payline_idx);
         }
 
-        // Evaluate wild-only wins
+        // Try wild-only win.
         if let Some(wild) = self.wild_idx {
-            if let Some(win) =
-                self.evaluate_target(grid, payline, &line_syms, chain_len, wild, payline_idx)
-            {
-                if best_result.is_none() || win.payout > best_result.as_ref().unwrap().payout {
-                    best_result = Some(win);
+            if let Some(win) = self.evaluate_target(&line_syms, chain_len, wild, payline_idx) {
+                if best.is_none() || win.payout > best.as_ref().unwrap().payout {
+                    best = Some(win);
                 }
             }
         }
 
-        best_result
+        best
     }
 
-    /// Evaluate payline for specific target symbol
     fn evaluate_target(
         &self,
-        _grid: &Grid,
-        _payline: &[u8],
-        line_syms: &[u8; 5],
+        line_syms: &[u8],
         chain_len: usize,
         target: u8,
         payline_idx: usize,
     ) -> Option<LineWin> {
-        let mut count = 0;
-
+        let mut count = 0usize;
         for reel in 0..chain_len {
             let sym = line_syms[reel];
-            // Matches if symbol equals target OR symbol is wild
             if sym == target || self.is_wild(sym) {
                 count += 1;
             } else {
@@ -227,47 +256,278 @@ impl<'a> Evaluator<'a> {
         })
     }
 
-    /// Pick lightning multiplier
-    #[inline]
-    fn pick_lightning(&self, rng: &mut SlotRng) -> u32 {
-        let mut roll = rng.random() * self.lightning_total as f64;
+    fn evaluate_lines(&self, grid: &Grid, total_bet_mc: i64) -> (Vec<LineWin>, i64) {
+        let mut wins = Vec::new();
+        let mut total = 0i64;
 
-        for (value, weight) in &self.lightning_weights {
-            roll -= *weight as f64;
-            if roll <= 0.0 {
-                return *value;
+        for i in 0..self.config.paylines.len() {
+            if let Some(mut win) = self.evaluate_payline(grid, i) {
+                win.payout = (win.payout * total_bet_mc) / 1000;
+                total += win.payout;
+                wins.push(win);
             }
         }
 
-        self.lightning_weights.last().map(|(v, _)| *v).unwrap_or(1)
+        (wins, total)
     }
 
-    /// Evaluate full spin
+    // ─── Ways evaluator ──────────────────────────────────────────────────
+    //
+    // All-ways: for each non-special symbol, find how many consecutive reels
+    // from left contain at least one instance (wild counts).  Payout =
+    // pay(sym, consec_reels) × product(count_on_each_reel).
+    //
+    // Implementation: iterate reels left-to-right accumulating a set of
+    // active (symbol, combo_count) pairs; multiply combo count by the number
+    // of matching positions (including wilds) on each new reel.
+
+    fn evaluate_ways(&self, grid: &Grid, total_bet_mc: i64) -> (Vec<LineWin>, i64) {
+        let num_reels = self.config.reels as usize;
+        let mut total_win = 0i64;
+        let mut wins: Vec<LineWin> = Vec::new();
+
+        let num_syms = self.config.symbols.len();
+
+        for sym_idx in 0..num_syms as u8 {
+            // Skip wilds and specials — they participate as multipliers.
+            if self.is_wild(sym_idx) || self.is_special(sym_idx) {
+                continue;
+            }
+
+            // Count matching positions per reel (symbol OR wild).
+            let mut reel_counts: Vec<u32> = Vec::with_capacity(num_reels);
+            for reel in 0..num_reels {
+                let row_count = grid.rows_for_reel(reel);
+                let mut hits = 0u32;
+                for row in 0..row_count {
+                    let cell = grid.get(reel, row);
+                    if cell == sym_idx || self.is_wild(cell) {
+                        hits += 1;
+                    }
+                }
+                reel_counts.push(hits);
+            }
+
+            // Find consecutive reel span from left.
+            let mut consec = 0usize;
+            let mut combo: u64 = 1;
+            for reel in 0..num_reels {
+                if reel_counts[reel] == 0 {
+                    break;
+                }
+                consec += 1;
+                combo = combo.saturating_mul(reel_counts[reel] as u64);
+            }
+
+            if consec < 3 {
+                continue;
+            }
+
+            let base_pay = self.get_payout(sym_idx, consec as u8);
+            if base_pay <= 0 {
+                continue;
+            }
+
+            // Scale: payout × ways_combo / rows (normalise to per-line equivalent).
+            // Standard ways math: total_payout = pay(sym, N) × ways
+            // where ways = Π(hits_per_reel[0..N]).
+            // We scale by total_bet_mc/1000 to convert from per-unit to bet.
+            let raw_win = (base_pay as i64)
+                .saturating_mul(combo as i64)
+                .saturating_mul(total_bet_mc)
+                / 1000;
+
+            if raw_win > 0 {
+                total_win += raw_win;
+                wins.push(LineWin {
+                    payline_id: sym_idx + 1,
+                    symbol_idx: sym_idx,
+                    count: consec as u8,
+                    payout: raw_win,
+                });
+            }
+        }
+
+        (wins, total_win)
+    }
+
+    // ─── Cluster evaluator ───────────────────────────────────────────────
+    //
+    // BFS from every cell to find connected groups of identical symbols.
+    // Orthogonal adjacency (left, right, up, down).  Groups below `min_size`
+    // do not pay.  Each cell is counted in at most one group (visited mask).
+
+    fn evaluate_cluster(
+        &self,
+        grid: &Grid,
+        min_size: u32,
+        total_bet_mc: i64,
+    ) -> (Vec<LineWin>, i64) {
+        let num_reels = self.config.reels as usize;
+        let num_rows = self.config.rows as usize;
+        let mut visited = vec![vec![false; num_rows]; num_reels];
+        let mut wins: Vec<LineWin> = Vec::new();
+        let mut total_win = 0i64;
+
+        for start_reel in 0..num_reels {
+            for start_row in 0..grid.rows_for_reel(start_reel) {
+                if visited[start_reel][start_row] {
+                    continue;
+                }
+
+                let sym = grid.get(start_reel, start_row);
+                if self.is_special(sym) || self.is_wild(sym) {
+                    visited[start_reel][start_row] = true;
+                    continue;
+                }
+
+                // BFS — orthogonal adjacency.
+                let mut group_size = 0u32;
+                let mut queue: Vec<(usize, usize)> = vec![(start_reel, start_row)];
+                visited[start_reel][start_row] = true;
+
+                while let Some((reel, row)) = queue.pop() {
+                    if grid.get(reel, row) == sym {
+                        group_size += 1;
+                        // Neighbours: left, right, up, down.
+                        let neighbours = [
+                            (reel.wrapping_sub(1), row),
+                            (reel + 1, row),
+                            (reel, row.wrapping_sub(1)),
+                            (reel, row + 1),
+                        ];
+                        for (nr, nrow) in neighbours {
+                            if nr < num_reels
+                                && nrow < grid.rows_for_reel(nr)
+                                && !visited[nr][nrow]
+                                && grid.get(nr, nrow) == sym
+                            {
+                                visited[nr][nrow] = true;
+                                queue.push((nr, nrow));
+                            }
+                        }
+                    }
+                }
+
+                if group_size < min_size {
+                    continue;
+                }
+
+                // Look up pay: try exact key then "N+" catch-all.
+                // Cluster paytable uses pay(sym, size) stored in PayEntry pay3/4/5.
+                // For cluster we normalise: pay3 = 3-match, pay4 = 4-match, pay5 = 5+
+                // (mirroring how the paytable was loaded from IR).
+                let base_pay = self.get_payout(sym, group_size.min(5) as u8);
+                if base_pay <= 0 {
+                    continue;
+                }
+
+                let win = base_pay.saturating_mul(total_bet_mc) / 1000;
+                if win > 0 {
+                    total_win += win;
+                    wins.push(LineWin {
+                        payline_id: wins.len() as u8 + 1,
+                        symbol_idx: sym,
+                        count: group_size as u8,
+                        payout: win,
+                    });
+                }
+            }
+        }
+
+        (wins, total_win)
+    }
+
+    // ─── PayAnywhere evaluator ───────────────────────────────────────────
+    //
+    // Count total appearances of each symbol across all cells.
+    // Pay if count ≥ min_count.  Uses the same PayEntry table.
+
+    fn evaluate_pay_anywhere(
+        &self,
+        grid: &Grid,
+        min_count: u32,
+        total_bet_mc: i64,
+    ) -> (Vec<LineWin>, i64) {
+        let num_reels = self.config.reels as usize;
+        let num_syms = self.config.symbols.len();
+        let mut counts = vec![0u32; num_syms];
+
+        for reel in 0..num_reels {
+            let row_count = grid.rows_for_reel(reel);
+            for row in 0..row_count {
+                let sym = grid.get(reel, row) as usize;
+                if sym < num_syms {
+                    counts[sym] += 1;
+                }
+            }
+        }
+
+        let mut wins: Vec<LineWin> = Vec::new();
+        let mut total_win = 0i64;
+
+        for (sym_idx, &count) in counts.iter().enumerate() {
+            let sym = sym_idx as u8;
+            if self.is_wild(sym) || self.is_special(sym) {
+                continue;
+            }
+            if count < min_count {
+                continue;
+            }
+
+            let base_pay = self.get_payout(sym, count.min(5) as u8);
+            if base_pay <= 0 {
+                continue;
+            }
+
+            let win = base_pay.saturating_mul(total_bet_mc) / 1000;
+            if win > 0 {
+                total_win += win;
+                wins.push(LineWin {
+                    payline_id: wins.len() as u8 + 1,
+                    symbol_idx: sym,
+                    count: count as u8,
+                    payout: win,
+                });
+            }
+        }
+
+        (wins, total_win)
+    }
+
+    // ─── Public entry point ──────────────────────────────────────────────
+
+    /// Evaluate a full spin and return the aggregated `SpinResult`.
     pub fn evaluate_spin(
         &self,
         grid: &Grid,
         rng: &mut SlotRng,
-        total_bet_mc: i64, // Total bet in millicredits
+        total_bet_mc: i64,
         is_free_spin: bool,
         disable_lightning: bool,
     ) -> SpinResult {
         let mut result = SpinResult::default();
 
-        // Evaluate all paylines
-        for i in 0..self.config.paylines.len() {
-            if let Some(mut win) = self.evaluate_payline(grid, i) {
-                // Scale payout by total bet
-                win.payout = (win.payout * total_bet_mc) / 1000;
-                result.base_win += win.payout;
-                result.line_wins.push(win);
+        // Dispatch to the correct evaluation mode.
+        let (line_wins, base_win) = match &self.eval_mode {
+            EvalMode::Lines => self.evaluate_lines(grid, total_bet_mc),
+            EvalMode::Ways => self.evaluate_ways(grid, total_bet_mc),
+            EvalMode::Cluster { min_size } => {
+                self.evaluate_cluster(grid, *min_size, total_bet_mc)
             }
-        }
+            EvalMode::PayAnywhere { min_count } => {
+                self.evaluate_pay_anywhere(grid, *min_count, total_bet_mc)
+            }
+        };
 
-        // Count special symbols
+        result.line_wins = line_wins;
+        result.base_win = base_win;
+
+        // Count special symbols (grid-wide, evaluation-mode-agnostic).
         result.scatter_count = self.grid_gen.count_scatters(grid);
         result.bonus_count = self.grid_gen.count_bonus(grid);
 
-        // Check feature triggers
+        // Feature trigger checks.
         if result.bonus_count >= self.config.hold_and_win.trigger_count {
             result.hnw_triggered = true;
         } else if result.scatter_count >= 3 {
@@ -280,9 +540,9 @@ impl<'a> Evaluator<'a> {
                 .unwrap_or(&10);
         }
 
-        // Lightning multiplier (only on winning spins, base game)
+        // Lightning multiplier (on winning base spins only).
         result.multiplier = 1;
-        if !disable_lightning && result.base_win > 0 {
+        if !disable_lightning && result.base_win > 0 && self.lightning_total > 0 {
             let chance = if is_free_spin {
                 self.config.lightning.trigger_chance_fs
             } else {
@@ -294,9 +554,7 @@ impl<'a> Evaluator<'a> {
             }
         }
 
-        // Calculate final win
         result.final_win = result.base_win * result.multiplier as i64;
-
         result
     }
 }

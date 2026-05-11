@@ -13,8 +13,12 @@
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
+pub mod adapter;
 pub mod validate;
 
+#[allow(unused_imports)]
+pub use adapter::{ir_to_game_config, AdapterError};
+#[allow(unused_imports)]
 pub use validate::{cross_validate, IRValidationIssue};
 
 // ─── primitives ─────────────────────────────────────────────────────────

@@ -179,16 +179,21 @@ impl<'a> FeatureSim<'a> {
         initial_grid: &Grid,
         total_bet_mc: i64,
     ) -> HNWResult {
+        let num_reels = self.config.reels as usize;
+        let num_rows = self.config.rows as usize;
+        let total_cells = num_reels * num_rows;
+
         let mut result = HNWResult::default();
-        let mut occupied = [[false; 3]; 5];
-        let mut orb_values: Vec<(u8, u8, u32)> = Vec::with_capacity(15);
+        // Flatten occupied into a Vec<Vec<bool>> so dimensions come from config.
+        let mut occupied = vec![vec![false; num_rows]; num_reels];
+        let mut orb_values: Vec<(u8, u8, u32)> = Vec::with_capacity(total_cells);
 
         let max_win_mc = (self.config.max_win_cap * 1000.0) as i64 * total_bet_mc / 1000;
 
-        // Place initial orbs
-        for reel in 0..5 {
-            for row in 0..3 {
-                if self.grid_gen.is_bonus(initial_grid[reel][row]) {
+        // Place initial orbs from the triggering grid.
+        for reel in 0..num_reels {
+            for row in 0..num_rows {
+                if self.grid_gen.is_bonus(initial_grid.get(reel, row)) {
                     occupied[reel][row] = true;
                     let (value, jackpot) = self.generate_orb(rng);
                     orb_values.push((reel as u8, row as u8, value));
@@ -209,22 +214,26 @@ impl<'a> FeatureSim<'a> {
         let mut respins_remaining = self.config.hold_and_win.initial_respins;
         let mut loop_count = 0;
         let mut orb_count: u8 = orb_values.len() as u8;
+        let total_cells_u8 = total_cells as u8;
 
-        // Respin loop
-        while respins_remaining > 0 && orb_count < 15 && loop_count < self.config.feature_loop_cap {
+        // Respin loop — stop when grid is full or respins exhausted.
+        while respins_remaining > 0
+            && orb_count < total_cells_u8
+            && loop_count < self.config.feature_loop_cap
+        {
             loop_count += 1;
             respins_remaining -= 1;
             result.total_respins += 1;
 
             let mut new_orbs = 0;
 
-            // Each empty cell has chance to land orb
-            let fill_ratio = orb_count as f64 / 15.0;
+            // Each empty cell has a chance to land an orb.
+            let fill_ratio = orb_count as f64 / total_cells as f64;
             let orb_chance = self.config.hold_and_win.orb_land_chance_base
                 + fill_ratio * self.config.hold_and_win.orb_land_chance_fill_bonus;
 
-            for reel in 0..5 {
-                for row in 0..3 {
+            for reel in 0..num_reels {
+                for row in 0..num_rows {
                     if occupied[reel][row] {
                         continue;
                     }
@@ -250,7 +259,7 @@ impl<'a> FeatureSim<'a> {
                 }
             }
 
-            // Reset respins if new orbs landed
+            // Reset respins counter when new orbs land.
             if new_orbs > 0 {
                 respins_remaining = self.config.hold_and_win.respins_on_new_orb;
             }
@@ -263,7 +272,7 @@ impl<'a> FeatureSim<'a> {
 
         // Full grid bonus
         result.final_orb_count = orb_count;
-        if orb_count >= 15 {
+        if orb_count >= total_cells_u8 {
             result.full_grid_bonus = true;
             result.total_payout +=
                 (self.config.hold_and_win.full_grid_bonus * 1000.0) as i64 * total_bet_mc / 1000;

@@ -25,6 +25,7 @@ mod config;
 mod evaluator;
 mod features;
 mod grid;
+mod ir;
 mod rng;
 mod simulator;
 mod stats;
@@ -92,18 +93,63 @@ struct Args {
     /// Result is mathematically exact and identical every run.
     #[arg(long)]
     analytical: bool,
+
+    /// Load game config from canonical IR JSON (instead of legacy format).
+    /// When set together with --config, the config file is parsed as a
+    /// SlotGameIR, cross-validated, then converted to GameConfig.
+    #[arg(long)]
+    ir: bool,
 }
 
 fn main() {
     let args = Args::parse();
 
-    // Load config
+    // Load config — either from IR JSON or legacy GameConfig JSON.
     let game_config = if let Some(path) = &args.config {
-        match config::GameConfig::from_file(path) {
-            Ok(c) => c,
-            Err(e) => {
-                eprintln!("Error loading config: {}", e);
+        if args.ir {
+            // ── IR path: parse SlotGameIR → cross-validate → convert ──
+            let content = match std::fs::read_to_string(path) {
+                Ok(s) => s,
+                Err(e) => {
+                    eprintln!("Error reading IR config '{}': {}", path, e);
+                    std::process::exit(1);
+                }
+            };
+            let slot_ir = match ir::SlotGameIR::from_json(&content) {
+                Ok(r) => r,
+                Err(e) => {
+                    eprintln!("Error parsing IR JSON '{}': {}", path, e);
+                    std::process::exit(1);
+                }
+            };
+            let report = ir::cross_validate(&slot_ir);
+            if !report.errors.is_empty() {
+                eprintln!("IR validation errors in '{}':", path);
+                for err in &report.errors {
+                    eprintln!("  [{}] {}", err.path, err.message);
+                }
                 std::process::exit(1);
+            }
+            if !report.warnings.is_empty() {
+                for w in &report.warnings {
+                    eprintln!("WARNING [{}] {}", w.path, w.message);
+                }
+            }
+            match ir::ir_to_game_config(&slot_ir) {
+                Ok(c) => c,
+                Err(e) => {
+                    eprintln!("Error converting IR to GameConfig: {}", e);
+                    std::process::exit(1);
+                }
+            }
+        } else {
+            // ── Legacy path: load GameConfig JSON directly ─────────────
+            match config::GameConfig::from_file(path) {
+                Ok(c) => c,
+                Err(e) => {
+                    eprintln!("Error loading config: {}", e);
+                    std::process::exit(1);
+                }
             }
         }
     } else {

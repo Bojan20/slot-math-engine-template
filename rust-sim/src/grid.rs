@@ -1,67 +1,106 @@
 //! Grid Generation Module
 //!
-//! Generates 5x3 slot grids from weighted reel strips.
+//! Dynamic grid that reads dimensions from `GameConfig` at runtime.
+//! No hardcoded `5` or `3` anywhere — all sizing flows from config.
+//!
+//! `DynGrid` stores symbols as `cells[reel][row]`.  The `Grid` type alias
+//! keeps backward compat with the rest of the codebase that uses `Grid`.
 
 use crate::config::GameConfig;
 use crate::rng::SlotRng;
 
-/// 5x3 grid represented as [reel][row]
-pub type Grid = [[u8; 3]; 5];
+// ─── DynGrid ───────────────────────────────────────────────────────────────
 
-/// Grid generator
+/// Dynamic slot grid.  `cells[reel][row]` holds the symbol index (u8).
+#[derive(Debug, Clone)]
+pub struct DynGrid {
+    /// `cells[reel][row]` — inner vec length = rows for that reel.
+    pub cells: Vec<Vec<u8>>,
+    /// Number of reels.
+    pub reels: usize,
+    /// Maximum row count (uniform for rectangular topology).
+    pub rows: usize,
+}
+
+impl DynGrid {
+    /// Create a zeroed grid of the given dimensions.
+    pub fn new(reels: usize, rows: usize) -> Self {
+        DynGrid {
+            cells: vec![vec![0u8; rows]; reels],
+            reels,
+            rows,
+        }
+    }
+
+    /// Get symbol index at `[reel][row]`.  Returns `0` if out of bounds.
+    #[inline]
+    pub fn get(&self, reel: usize, row: usize) -> u8 {
+        self.cells
+            .get(reel)
+            .and_then(|r| r.get(row))
+            .copied()
+            .unwrap_or(0)
+    }
+
+    /// Set symbol index at `[reel][row]`.  No-op if out of bounds.
+    #[inline]
+    pub fn set(&mut self, reel: usize, row: usize, val: u8) {
+        if let Some(r) = self.cells.get_mut(reel) {
+            if let Some(cell) = r.get_mut(row) {
+                *cell = val;
+            }
+        }
+    }
+
+    /// Row count for a specific reel.  For rectangular grids this is
+    /// `self.rows`; Faza 2 can override this for variable-row grids.
+    #[inline]
+    pub fn rows_for_reel(&self, _reel: usize) -> usize {
+        self.rows
+    }
+}
+
+// ─── Type alias ────────────────────────────────────────────────────────────
+
+/// Public type alias kept for backward compatibility.
+pub type Grid = DynGrid;
+
+// ─── GridGenerator ─────────────────────────────────────────────────────────
+
+/// Grid generator — reads reel count and row count from config.
 pub struct GridGenerator<'a> {
     config: &'a GameConfig,
-    /// Precomputed: base game weights per reel as (symbol_index, weight)
+    /// Precomputed base-game weights per reel: `(symbol_index, weight)`.
     base_weights: Vec<Vec<(u8, u32)>>,
-    /// Precomputed: free spins weights per reel
+    /// Precomputed free-spins weights per reel.
     fs_weights: Vec<Vec<(u8, u32)>>,
-    /// Total weights per reel (base)
+    /// Cumulative totals for base weights.
     base_totals: Vec<u32>,
-    /// Total weights per reel (FS)
+    /// Cumulative totals for FS weights.
     fs_totals: Vec<u32>,
 }
 
 impl<'a> GridGenerator<'a> {
-    /// Create new grid generator from config
+    /// Create a new grid generator.  Precomputes weight tables for O(1)
+    /// weighted sampling at spin time.
     pub fn new(config: &'a GameConfig) -> Self {
-        let mut base_weights = Vec::with_capacity(5);
-        let mut fs_weights = Vec::with_capacity(5);
-        let mut base_totals = Vec::with_capacity(5);
-        let mut fs_totals = Vec::with_capacity(5);
+        let num_reels = config.reels as usize;
 
-        // Precompute weights for each reel
-        for reel in 0..5 {
-            // Base game weights
-            let mut reel_weights = Vec::new();
-            let mut total = 0u32;
+        let mut base_weights = Vec::with_capacity(num_reels);
+        let mut fs_weights = Vec::with_capacity(num_reels);
+        let mut base_totals = Vec::with_capacity(num_reels);
+        let mut fs_totals = Vec::with_capacity(num_reels);
 
-            if let Some(weights) = config.base_weights.get(reel) {
-                for entry in weights {
-                    if let Some(idx) = config.symbol_index(&entry.symbol) {
-                        reel_weights.push((idx as u8, entry.weight));
-                        total += entry.weight;
-                    }
-                }
-            }
+        for reel in 0..num_reels {
+            // ── Base game weights ──────────────────────────────────────
+            let (bw, bt) = build_weight_table(config, reel, false);
+            base_weights.push(bw);
+            base_totals.push(bt);
 
-            base_weights.push(reel_weights);
-            base_totals.push(total);
-
-            // Free spins weights
-            let mut reel_weights = Vec::new();
-            let mut total = 0u32;
-
-            if let Some(weights) = config.fs_weights.get(reel) {
-                for entry in weights {
-                    if let Some(idx) = config.symbol_index(&entry.symbol) {
-                        reel_weights.push((idx as u8, entry.weight));
-                        total += entry.weight;
-                    }
-                }
-            }
-
-            fs_weights.push(reel_weights);
-            fs_totals.push(total);
+            // ── Free spins weights ─────────────────────────────────────
+            let (fw, ft) = build_weight_table(config, reel, true);
+            fs_weights.push(fw);
+            fs_totals.push(ft);
         }
 
         GridGenerator {
@@ -73,22 +112,26 @@ impl<'a> GridGenerator<'a> {
         }
     }
 
-    /// Generate base game grid
+    /// Generate a base-game grid.
     #[inline]
     pub fn generate_base(&self, rng: &mut SlotRng) -> Grid {
         self.generate_grid(rng, false)
     }
 
-    /// Generate free spins grid (no bonus orbs)
+    /// Generate a free-spins grid.
     #[inline]
     pub fn generate_fs(&self, rng: &mut SlotRng) -> Grid {
         self.generate_grid(rng, true)
     }
 
-    /// Generate grid with specified weights
-    #[inline]
+    /// Core grid generation — iterates over `config.reels` reels and
+    /// `config.rows` rows (no hardcoded constants).
     fn generate_grid(&self, rng: &mut SlotRng, is_fs: bool) -> Grid {
-        let mut grid: Grid = [[0; 3]; 5];
+        let num_reels = self.config.reels as usize;
+        let num_rows = self.config.rows as usize;
+
+        let mut grid = DynGrid::new(num_reels, num_rows);
+
         let weights = if is_fs {
             &self.fs_weights
         } else {
@@ -100,7 +143,7 @@ impl<'a> GridGenerator<'a> {
             &self.base_totals
         };
 
-        for reel in 0..5 {
+        for reel in 0..num_reels {
             let reel_weights = &weights[reel];
             let total = totals[reel];
 
@@ -108,24 +151,28 @@ impl<'a> GridGenerator<'a> {
                 continue;
             }
 
-            // Generate 3 symbols for this reel
-            for row in 0..3 {
+            let reel_rows = grid.rows_for_reel(reel);
+            for row in 0..reel_rows {
                 let mut roll = rng.random() * total as f64;
+                let mut chosen = 0u8;
 
-                for (sym_idx, weight) in reel_weights {
-                    roll -= *weight as f64;
+                for &(sym_idx, weight) in reel_weights {
+                    roll -= weight as f64;
                     if roll <= 0.0 {
-                        grid[reel][row] = *sym_idx;
+                        chosen = sym_idx;
                         break;
                     }
                 }
+                grid.set(reel, row, chosen);
             }
         }
 
         grid
     }
 
-    /// Get symbol ID from index
+    // ── Symbol helpers ──────────────────────────────────────────────────
+
+    /// Symbol id string for a symbol index.
     #[inline]
     pub fn symbol_id(&self, idx: u8) -> &str {
         self.config
@@ -135,7 +182,7 @@ impl<'a> GridGenerator<'a> {
             .unwrap_or("?")
     }
 
-    /// Check if symbol is wild
+    /// Returns `true` if the symbol at `idx` is a wild.
     #[inline]
     pub fn is_wild(&self, idx: u8) -> bool {
         self.config
@@ -145,7 +192,7 @@ impl<'a> GridGenerator<'a> {
             .unwrap_or(false)
     }
 
-    /// Check if symbol is scatter
+    /// Returns `true` if the symbol at `idx` is a scatter.
     #[inline]
     pub fn is_scatter(&self, idx: u8) -> bool {
         self.config
@@ -155,7 +202,7 @@ impl<'a> GridGenerator<'a> {
             .unwrap_or(false)
     }
 
-    /// Check if symbol is bonus
+    /// Returns `true` if the symbol at `idx` is a bonus.
     #[inline]
     pub fn is_bonus(&self, idx: u8) -> bool {
         self.config
@@ -165,13 +212,15 @@ impl<'a> GridGenerator<'a> {
             .unwrap_or(false)
     }
 
-    /// Count symbol occurrences in grid
+    /// Count cells matching `predicate` across the whole grid.
     #[inline]
     pub fn count_symbol(&self, grid: &Grid, predicate: impl Fn(u8) -> bool) -> u8 {
-        let mut count = 0;
-        for reel in 0..5 {
-            for row in 0..3 {
-                if predicate(grid[reel][row]) {
+        let num_reels = self.config.reels as usize;
+        let mut count = 0u8;
+        for reel in 0..num_reels {
+            let reel_rows = grid.rows_for_reel(reel);
+            for row in 0..reel_rows {
+                if predicate(grid.get(reel, row)) {
                     count += 1;
                 }
             }
@@ -179,15 +228,44 @@ impl<'a> GridGenerator<'a> {
         count
     }
 
-    /// Count scatters in grid
+    /// Count scatter symbols in the grid.
     #[inline]
     pub fn count_scatters(&self, grid: &Grid) -> u8 {
         self.count_symbol(grid, |idx| self.is_scatter(idx))
     }
 
-    /// Count bonus orbs in grid
+    /// Count bonus symbols in the grid.
     #[inline]
     pub fn count_bonus(&self, grid: &Grid) -> u8 {
         self.count_symbol(grid, |idx| self.is_bonus(idx))
     }
+}
+
+// ─── Internal helpers ──────────────────────────────────────────────────────
+
+/// Build `(weights, total)` for a single reel from config.
+fn build_weight_table(
+    config: &GameConfig,
+    reel: usize,
+    is_fs: bool,
+) -> (Vec<(u8, u32)>, u32) {
+    let source = if is_fs {
+        &config.fs_weights
+    } else {
+        &config.base_weights
+    };
+
+    let mut reel_weights: Vec<(u8, u32)> = Vec::new();
+    let mut total = 0u32;
+
+    if let Some(weights) = source.get(reel) {
+        for entry in weights {
+            if let Some(idx) = config.symbol_index(&entry.symbol) {
+                reel_weights.push((idx as u8, entry.weight));
+                total += entry.weight;
+            }
+        }
+    }
+
+    (reel_weights, total)
 }

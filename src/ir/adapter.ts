@@ -1,0 +1,479 @@
+/**
+ * IR → GameConfig adapter (Faza 1.2 — TypeScript side).
+ *
+ * Mirrors the Rust `ir/adapter.rs` logic exactly so that the TS preview
+ * engine and the Rust MC simulator produce identical GameConfig values for
+ * the same IR input — a prerequisite for the Faza 10.3 parity gate.
+ *
+ * Mapping rules (authoritative spec):
+ *   SymbolKind
+ *     wild | chain_wild | expanding → isWild
+ *     scatter                       → isScatter
+ *     bonus                         → isBonus
+ *     lp | hp | multiplier | sticky | mystery | transform → all false
+ *
+ *   Topology
+ *     rectangular   → numReels, numRows directly
+ *     variable_rows → numReels; numRows = max(row_range_per_reel[][1])
+ *     cluster_grid  → columns → numReels, rows → numRows
+ *
+ *   ReelSet
+ *     weighted → (f64 × 10_000).round() → weight integer
+ *     strips   → count occurrences → weight integer
+ *
+ *   Evaluation
+ *     lines       → paylines array passed through
+ *     ways        → generate synthetic paylines (rows^reels combos)
+ *     cluster / pay_anywhere → empty paylines (own evaluator path)
+ *     pattern     → empty paylines (future evaluator path)
+ *
+ *   Paytable
+ *     keys "3"/"3+" → pay3, "4"/"4+" → pay4, "5"/"5+" → pay5
+ *     other keys (cluster sizes) → ignored in PayEntry
+ *
+ *   Feature.free_spins  → FreeSpinsConfig
+ *   Feature.hold_and_win → HoldAndWinConfig
+ *   All other Feature kinds → ignored (TODO per-feature config structs)
+ */
+
+import type {
+  Evaluation,
+  Feature,
+  ReelSet,
+  SlotGameIR,
+  SymbolKind,
+  Topology,
+} from './types.js';
+
+// ─── GameConfig shape (TS engine format) ──────────────────────────────────
+
+export interface TSSymbolDef {
+  id: string;
+  name: string;
+  isWild: boolean;
+  isScatter: boolean;
+  isBonus: boolean;
+}
+
+export interface TSPayEntry {
+  pay3: number;
+  pay4: number;
+  pay5: number;
+}
+
+export interface TSReelWeight {
+  symbol: string;
+  weight: number;
+}
+
+export interface TSFreeSpinsConfig {
+  awards: Record<number, number>; // scatter_count → spins_awarded
+  multStart: number;
+  multIncrement: number;
+  multMax: number;
+  retriggerEnabled: boolean;
+  scatterPays: Record<number, number>; // scatter_count → pay multiplier
+}
+
+export interface TSOrbValue {
+  value: number;
+  weight: number;
+  jackpot?: string;
+}
+
+export interface TSHoldAndWinConfig {
+  triggerCount: number;
+  initialRespins: number;
+  respinsOnNewOrb: number;
+  fullGridBonus: number;
+  orbValues: TSOrbValue[];
+  orbLandChanceBase: number;
+  orbLandChanceFillBonus: number;
+}
+
+export interface TSGameConfig {
+  name: string;
+  version: string;
+  targetRtp: number; // 0–100 (percentage)
+  maxWinCap: number;
+
+  // Grid
+  numReels: number;
+  numRows: number;
+  paylines: number[][];
+
+  // Symbols
+  symbols: TSSymbolDef[];
+  paytable: Record<string, TSPayEntry>;
+
+  // Reel weights
+  baseWeights: TSReelWeight[][];
+  fsWeights: TSReelWeight[][];
+
+  // Features
+  freeSpins: TSFreeSpinsConfig;
+  holdAndWin: TSHoldAndWinConfig;
+}
+
+// ─── Error class ─────────────────────────────────────────────────────────────
+
+export class AdapterError extends Error {
+  constructor(
+    public readonly kind: 'unsupported_topology' | 'unsupported_evaluation' | 'missing_weights',
+    message: string,
+  ) {
+    super(message);
+    this.name = 'AdapterError';
+  }
+}
+
+// ─── Weight scale constant ────────────────────────────────────────────────────
+
+const WEIGHT_SCALE = 10_000;
+
+function f64ToWeight(v: number): number {
+  return Math.round(v * WEIGHT_SCALE);
+}
+
+// ─── Public entry point ───────────────────────────────────────────────────────
+
+/**
+ * Convert a validated `SlotGameIR` into `TSGameConfig`.
+ * Call `crossValidate` on the IR before calling this function.
+ * @throws {AdapterError} on unsupported topology/evaluation or missing weights.
+ */
+export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
+  const [numReels, numRows] = topologyToDims(ir.topology);
+  const symbols = convertSymbols(ir);
+  const { baseWeights, fsWeights } = convertReels(ir, symbols);
+  const paylines = convertPaylines(ir, numReels, numRows);
+  const paytable = convertPaytable(ir);
+  const { freeSpins, holdAndWin } = convertFeatures(ir);
+
+  return {
+    name: ir.meta.name,
+    version: ir.meta.version,
+    targetRtp: ir.limits.target_rtp * 100,
+    maxWinCap: ir.limits.max_win_x,
+    numReels,
+    numRows,
+    paylines,
+    symbols,
+    paytable,
+    baseWeights,
+    fsWeights,
+    freeSpins,
+    holdAndWin,
+  };
+}
+
+// ─── Topology ────────────────────────────────────────────────────────────────
+
+function topologyToDims(topology: Topology): [number, number] {
+  switch (topology.kind) {
+    case 'rectangular':
+      return [topology.reels, topology.rows];
+
+    case 'variable_rows': {
+      const maxRows = Math.max(...topology.row_range_per_reel.map(([, hi]) => hi));
+      return [topology.reels, maxRows];
+    }
+
+    case 'cluster_grid':
+      return [topology.columns, topology.rows];
+
+    default: {
+      // TypeScript exhaustiveness guard
+      const _exhaustive: never = topology;
+      throw new AdapterError('unsupported_topology', `Unknown topology kind: ${JSON.stringify(_exhaustive)}`);
+    }
+  }
+}
+
+// ─── Symbols ─────────────────────────────────────────────────────────────────
+
+function convertSymbols(ir: SlotGameIR): TSSymbolDef[] {
+  return ir.symbols.map((s) => {
+    const [isWild, isScatter, isBonus] = mapSymbolKind(s.kind);
+    return { id: s.id, name: s.name, isWild, isScatter, isBonus };
+  });
+}
+
+function mapSymbolKind(kind: SymbolKind): [boolean, boolean, boolean] {
+  switch (kind) {
+    case 'wild':
+    case 'chain_wild':
+    case 'expanding':
+      return [true, false, false];
+    case 'scatter':
+      return [false, true, false];
+    case 'bonus':
+      return [false, false, true];
+    case 'lp':
+    case 'hp':
+    case 'multiplier':
+    case 'sticky':
+    case 'mystery':
+    case 'transform':
+      return [false, false, false];
+    default: {
+      // Exhaustiveness guard
+      const _exhaustive: never = kind;
+      return [false, false, false];
+    }
+  }
+}
+
+// ─── Reels ───────────────────────────────────────────────────────────────────
+
+function convertReels(
+  ir: SlotGameIR,
+  symbols: TSSymbolDef[],
+): { baseWeights: TSReelWeight[][]; fsWeights: TSReelWeight[][] } {
+  const symIndex = new Map<string, number>(symbols.map((s, i) => [s.id, i]));
+
+  const reelSet: ReelSet = ir.reels;
+
+  if (reelSet.mode === 'weighted') {
+    const baseWeights = weightedMapToReelWeights(reelSet.base, symIndex);
+    const fsWeights = reelSet.free_spins
+      ? weightedMapToReelWeights(reelSet.free_spins, symIndex)
+      : baseWeights.map((reel) => [...reel]);
+    return { baseWeights, fsWeights };
+  }
+
+  // strips mode
+  const baseWeights = stripsToReelWeights(reelSet.base, symIndex);
+  const fsWeights = reelSet.free_spins
+    ? stripsToReelWeights(reelSet.free_spins, symIndex)
+    : baseWeights.map((reel) => [...reel]);
+  return { baseWeights, fsWeights };
+}
+
+function weightedMapToReelWeights(
+  reels: Array<Record<string, number>>,
+  symIndex: Map<string, number>,
+): TSReelWeight[][] {
+  return reels.map((map, reelIdx) => {
+    const entries = Object.entries(map).filter(([id]) => symIndex.has(id));
+    if (entries.length === 0) {
+      throw new AdapterError('missing_weights', `Reel ${reelIdx} has no valid symbol weights`);
+    }
+    return entries.map(([symbol, raw]) => ({
+      symbol,
+      weight: f64ToWeight(raw),
+    }));
+  });
+}
+
+function stripsToReelWeights(
+  reels: string[][],
+  symIndex: Map<string, number>,
+): TSReelWeight[][] {
+  return reels.map((strip, reelIdx) => {
+    const counts = new Map<string, number>();
+    for (const sym of strip) {
+      if (symIndex.has(sym)) {
+        counts.set(sym, (counts.get(sym) ?? 0) + 1);
+      }
+    }
+    if (counts.size === 0) {
+      throw new AdapterError('missing_weights', `Reel ${reelIdx} strip has no valid symbols`);
+    }
+    return Array.from(counts.entries()).map(([symbol, count]) => ({
+      symbol,
+      weight: count,
+    }));
+  });
+}
+
+// ─── Paylines ─────────────────────────────────────────────────────────────────
+
+function convertPaylines(ir: SlotGameIR, numReels: number, numRows: number): number[][] {
+  const evaluation: Evaluation = ir.evaluation;
+
+  switch (evaluation.kind) {
+    case 'lines':
+      return evaluation.paylines.map((pl) => [...pl]);
+
+    case 'ways':
+      return generateWaysPaylines(numReels, numRows);
+
+    case 'cluster':
+    case 'pay_anywhere':
+    case 'pattern':
+      // Own evaluator path — paylines unused.
+      return [];
+
+    default: {
+      const _exhaustive: never = evaluation;
+      throw new AdapterError('unsupported_evaluation', `Unknown evaluation kind`);
+    }
+  }
+}
+
+/**
+ * Generate all-ways synthetic paylines.
+ * Each combination of row indices across all reels becomes one payline.
+ * For 5 reels × 3 rows → 3^5 = 243 paylines.
+ */
+function generateWaysPaylines(numReels: number, numRows: number): number[][] {
+  const total = Math.pow(numRows, numReels);
+  const paylines: number[][] = [];
+
+  for (let combo = 0; combo < total; combo++) {
+    const pl: number[] = new Array(numReels);
+    let rem = combo;
+    for (let reel = numReels - 1; reel >= 0; reel--) {
+      pl[reel] = rem % numRows;
+      rem = Math.floor(rem / numRows);
+    }
+    paylines.push(pl);
+  }
+
+  return paylines;
+}
+
+// ─── Paytable ────────────────────────────────────────────────────────────────
+
+function convertPaytable(ir: SlotGameIR): Record<string, TSPayEntry> {
+  const out: Record<string, TSPayEntry> = {};
+
+  for (const [symId, countMap] of Object.entries(ir.paytable)) {
+    const entry: TSPayEntry = { pay3: 0, pay4: 0, pay5: 0 };
+
+    for (const [key, val] of Object.entries(countMap)) {
+      const numeric = key.replace(/\+$/, '');
+      switch (numeric) {
+        case '3': entry.pay3 = val; break;
+        case '4': entry.pay4 = val; break;
+        case '5': entry.pay5 = val; break;
+        default:
+          // Higher cluster counts — not stored in PayEntry.
+          break;
+      }
+    }
+
+    out[symId] = entry;
+  }
+
+  return out;
+}
+
+// ─── Features ────────────────────────────────────────────────────────────────
+
+function convertFeatures(ir: SlotGameIR): {
+  freeSpins: TSFreeSpinsConfig;
+  holdAndWin: TSHoldAndWinConfig;
+} {
+  let freeSpins = defaultFreeSpins();
+  let holdAndWin = defaultHoldAndWin();
+
+  for (const feat of ir.features) {
+    switch (feat.kind) {
+      case 'free_spins':
+        freeSpins = convertFreeSpins(feat);
+        break;
+
+      case 'hold_and_win':
+        holdAndWin = convertHoldAndWin(feat);
+        break;
+
+      // TODO: cascade → CascadeConfig when Faza 2 adds the evaluator path.
+      case 'cascade': break;
+      // TODO: respin, pick, wheel, buy_feature, ante_bet, gamble,
+      //       mystery_symbol, symbol_upgrade → dedicated config structs.
+      default: break;
+    }
+  }
+
+  return { freeSpins, holdAndWin };
+}
+
+function convertFreeSpins(feat: Extract<Feature, { kind: 'free_spins' }>): TSFreeSpinsConfig {
+  const awards: Record<number, number> = {};
+  const scatterPays: Record<number, number> = {};
+
+  if (feat.trigger.thresholds) {
+    for (const [key, val] of Object.entries(feat.trigger.thresholds)) {
+      const count = parseInt(key.replace(/\+$/, ''), 10);
+      if (!isNaN(count)) {
+        awards[count] = val;
+      }
+    }
+  }
+
+  if (Object.keys(awards).length === 0 && feat.trigger.min != null) {
+    awards[feat.trigger.min] = 10;
+  }
+
+  const multStart = feat.global_multiplier != null ? feat.global_multiplier : 1;
+  const multIncrement = feat.global_multiplier != null ? 0 : 1;
+  const multMax = feat.global_multiplier != null ? multStart : 10;
+  const retriggerEnabled = feat.retrigger != null;
+
+  return { awards, scatterPays, multStart, multIncrement, multMax, retriggerEnabled };
+}
+
+function convertHoldAndWin(feat: Extract<Feature, { kind: 'hold_and_win' }>): TSHoldAndWinConfig {
+  // Trigger count: prefer min, else lowest threshold key.
+  let triggerCount = feat.trigger.min;
+  if (triggerCount == null && feat.trigger.thresholds) {
+    const keys = Object.keys(feat.trigger.thresholds)
+      .map((k) => parseInt(k.replace(/\+$/, ''), 10))
+      .filter((n) => !isNaN(n));
+    if (keys.length > 0) triggerCount = Math.min(...keys);
+  }
+  triggerCount ??= 6;
+
+  const orbValues: TSOrbValue[] = feat.cash_value_distribution.map((dist) => {
+    const jackpot = feat.jackpot_tiers.find(
+      (t) => Math.abs(t.multiplier - dist.value) < 0.01,
+    )?.id;
+    return { value: dist.value, weight: f64ToWeight(dist.weight), jackpot };
+  });
+
+  const fullGridBonus =
+    feat.grid_full_award != null
+      ? (feat.jackpot_tiers.find((t) => t.id === feat.grid_full_award)?.multiplier ?? 500)
+      : 500;
+
+  return {
+    triggerCount,
+    initialRespins: feat.respins_initial,
+    respinsOnNewOrb: feat.respins_initial,
+    fullGridBonus,
+    orbValues,
+    orbLandChanceBase: 0.035,
+    orbLandChanceFillBonus: 0.015,
+  };
+}
+
+// ─── Defaults (when IR has no matching feature) ───────────────────────────────
+
+function defaultFreeSpins(): TSFreeSpinsConfig {
+  return {
+    awards: { 3: 10, 4: 12, 5: 15 },
+    scatterPays: {},
+    multStart: 1,
+    multIncrement: 1,
+    multMax: 10,
+    retriggerEnabled: true,
+  };
+}
+
+function defaultHoldAndWin(): TSHoldAndWinConfig {
+  return {
+    triggerCount: 6,
+    initialRespins: 3,
+    respinsOnNewOrb: 3,
+    fullGridBonus: 500,
+    orbValues: [
+      { value: 1, weight: 6000 },
+      { value: 2, weight: 2500 },
+      { value: 5, weight: 1000 },
+    ],
+    orbLandChanceBase: 0.035,
+    orbLandChanceFillBonus: 0.015,
+  };
+}
