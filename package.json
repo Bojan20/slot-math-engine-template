@@ -13,11 +13,15 @@
     "compare": "npm run build && node dist/tools/compare.js",
     "test": "node --experimental-vm-modules node_modules/vitest/vitest.mjs run",
     "test:watch": "node --experimental-vm-modules node_modules/vitest/vitest.mjs",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "mutate": "npx stryker run",
+    "mutate:rust": "cd rust-sim && cargo mutants -j4 --timeout 60"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
   "devDependencies": {
+    "@stryker-mutator/core": "^8.7.1",
+    "@stryker-mutator/vitest-runner": "^8.7.1",
     "@types/node": "^20.10.0",
     "typescript": "^5.3.0",
     "vitest": "^1.0.0"
