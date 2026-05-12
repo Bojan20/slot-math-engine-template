@@ -1,4 +1,4 @@
-//! GLI-16 compliant PAR Sheet generator.
+//! GLI-16 compliant PAR Sheet generator — Faza 8 extended.
 //!
 //! Produces a structured [`PARSheet`] that can be serialised to JSON or
 //! printed as a human-readable report. The field set mirrors GLI-16 Appendix D
@@ -8,11 +8,15 @@
 //! 1. **Meta** — game id, version, simulation parameters
 //! 2. **RTP summary** — total, base game, features, per-feature breakdown
 //! 3. **Hit frequency** — overall hit rate, feature trigger 1-in-N averages
-//! 4. **Volatility** — CV, variance, max win, category
+//! 4. **Volatility** — Welford CV, actual variance, max win, category
 //! 5. **Win distribution** — HDR histogram mapped to standard report buckets
 //! 6. **Jackpot section** — per-tier hit frequency, avg payout, RTP contribution
 //! 7. **Compliance** — RTP range, max-win cap, jurisdiction notes
-//! 8. **Statistical confidence** — CI-95%, std error, seed count
+//! 8. **Statistical confidence** — CI-95%/99%/99.9%, std error, seed count
+//! 9. **Quantiles** *(Faza 8)* — P50/P90/P99/P99.9 from HDR
+//! 10. **Moments** *(Faza 8)* — Welford mean, variance, skewness, excess kurtosis
+//! 11. **Bonus distances** *(Faza 8)* — FS + H&W inter-trigger distribution
+//! 12. **Required spins** *(Faza 8)* — sample-size estimates for precision targets
 
 use crate::jackpot::JackpotMetrics;
 use crate::stats::{AtomicStats, PARMetrics, HDR_BUCKET_COUNT};
@@ -50,8 +54,6 @@ pub struct RTPSection {
 pub struct HitFreqSection {
     pub overall_hit_rate_pct: f64,
     pub base_hit_rate_pct: f64,
-    /// Feature kind → "1 in N" spins. Serialises `Infinity` as the string
-    /// `"Infinity"` so JSON consumers can detect the "never triggered" case.
     pub feature_freq: BTreeMap<String, f64>,
     pub avg_fs_spins: f64,
     pub avg_hnw_respins: f64,
@@ -59,10 +61,12 @@ pub struct HitFreqSection {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct VolatilitySection {
-    /// Coefficient of variation σ/μ.
+    /// Coefficient of variation σ/μ (Welford-based).
     pub cv: f64,
-    /// Variance of per-spin win.
+    /// Per-spin win variance (bet multiples²) from Welford accumulator.
     pub variance: f64,
+    /// Standard deviation (bet multiples) from Welford accumulator.
+    pub std_dev: f64,
     /// Maximum single-spin win in bet multiples.
     pub max_win_x: f64,
     /// Qualitative volatility category.
@@ -72,23 +76,18 @@ pub struct VolatilitySection {
 /// One win-distribution bucket in the PAR report.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WinBucket {
-    /// Lower bound (inclusive) in bet multiples.
     pub from_x: f64,
-    /// Upper bound (exclusive) in bet multiples; `None` = unbounded top.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub to_x: Option<f64>,
-    /// Human-readable label for this bucket.
     pub label: String,
     pub count: u64,
     pub probability: f64,
-    /// Contribution to total RTP from this bucket (E[win|bucket] × P(bucket)).
     pub rtp_contribution_pct: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComplianceSection {
     pub jurisdictions: Vec<String>,
-    /// Required RTP range `[min_pct, max_pct]`.
     pub rtp_range_required: [f64; 2],
     pub rtp_within_required: bool,
     pub max_win_cap_required: f64,
@@ -102,16 +101,82 @@ pub struct ComplianceSection {
 pub struct StatisticalSection {
     pub ci_95_low: f64,
     pub ci_95_high: f64,
+    /// CI 99% — Faza 8.
+    #[serde(default)]
+    pub ci_99_low: f64,
+    #[serde(default)]
+    pub ci_99_high: f64,
+    /// CI 99.9% — Faza 8.
+    #[serde(default)]
+    pub ci_999_low: f64,
+    #[serde(default)]
+    pub ci_999_high: f64,
     pub std_error: f64,
     pub std_dev_across_seeds: f64,
     /// True when `std_error < 0.1pp` — threshold for GLI adequacy.
     pub confidence_adequate: bool,
 }
 
+// ─── Faza 8 sections ──────────────────────────────────────────────────────────
+
+/// P-quantile report section (from HDR histogram).
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct QuantileSection {
+    pub p50: f64,
+    pub p90: f64,
+    pub p99: f64,
+    pub p999: f64,
+}
+
+/// Welford online 4-moment snapshot.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct MomentsSection {
+    /// Mean per-spin win in bet multiples.
+    pub mean_win_x: f64,
+    /// Per-spin win variance (bet multiples²).
+    pub variance: f64,
+    /// Per-spin win std deviation (bet multiples).
+    pub std_dev: f64,
+    /// Coefficient of variation σ/μ.
+    pub cv: f64,
+    /// Population skewness (Terriberry algorithm).
+    pub skewness: f64,
+    /// Excess kurtosis (Pearson − 3; normal = 0).
+    pub excess_kurtosis: f64,
+    /// Number of observations in the accumulator.
+    pub sample_count: u64,
+}
+
+/// Per-feature bonus distance statistics.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct BonusDistanceEntry {
+    /// Mean spins between consecutive triggers (Infinity if never triggered).
+    pub mean_distance: f64,
+    /// Maximum spins between consecutive triggers.
+    pub max_distance: u64,
+}
+
+/// FS + H&W inter-trigger distance statistics.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct BonusDistancesSection {
+    pub free_spins: BonusDistanceEntry,
+    pub hold_and_win: BonusDistanceEntry,
+}
+
+/// Required spin counts for precision targets.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct RequiredSpinsSection {
+    /// Spins needed for 0.1pp CI half-width at 95% confidence.
+    pub for_01pp_ci_95: u64,
+    /// Spins needed for 0.01pp CI half-width at 95% confidence.
+    pub for_001pp_ci_95: u64,
+    /// Spins needed for 0.1pp CI half-width at 99% confidence.
+    pub for_01pp_ci_99: u64,
+}
+
 /// Complete GLI-compliant PAR sheet (serialisable to JSON).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PARSheet {
-    /// Always `"1.0.0"` for this engine version.
     pub schema_version: String,
     pub meta: PARMeta,
     pub rtp: RTPSection,
@@ -121,6 +186,15 @@ pub struct PARSheet {
     pub jackpots: Vec<JackpotMetrics>,
     pub compliance: ComplianceSection,
     pub statistics: StatisticalSection,
+    // ── Faza 8 additions (serde default so old JSON still deserialises) ────────
+    #[serde(default)]
+    pub quantiles: QuantileSection,
+    #[serde(default)]
+    pub moments: MomentsSection,
+    #[serde(default)]
+    pub bonus_distances: BonusDistancesSection,
+    #[serde(default)]
+    pub required_spins: RequiredSpinsSection,
 }
 
 // ─── Generator ────────────────────────────────────────────────────────────────
@@ -160,19 +234,17 @@ impl PARGenerator {
         let rtp_within_required =
             actual_rtp >= rtp_range_required[0] && actual_rtp <= rtp_range_required[1];
 
-        // Volatility category from CV.
-        let cv = par.volatility_index;
+        // Volatility: use Welford-based CV (Faza 8 fix — was using legacy WinDistribution CV).
+        let cv = par.welford_cv.max(par.volatility_index); // fall back to legacy if Welford not populated
         let vol_category = Self::volatility_category(cv);
 
         // Feature frequencies.
         let mut feature_freq = BTreeMap::new();
-        let fs_freq = par.fs_frequency;
-        if fs_freq > 0.0 {
-            feature_freq.insert("free_spins".to_string(), fs_freq);
+        if par.fs_frequency > 0.0 {
+            feature_freq.insert("free_spins".to_string(), par.fs_frequency);
         }
-        let hnw_freq = par.hnw_frequency;
-        if hnw_freq > 0.0 {
-            feature_freq.insert("hold_and_win".to_string(), hnw_freq);
+        if par.hnw_frequency > 0.0 {
+            feature_freq.insert("hold_and_win".to_string(), par.hnw_frequency);
         }
 
         PARSheet {
@@ -181,7 +253,6 @@ impl PARGenerator {
                 game_id: game_id.to_string(),
                 game_version: game_version.to_string(),
                 engine_version: env!("CARGO_PKG_VERSION").to_string(),
-                // Deterministic timestamp for reproducible outputs.
                 generated_at_utc: "2026-05-12T00:00:00Z".to_string(),
                 total_spins,
                 seeds_used,
@@ -207,7 +278,9 @@ impl PARGenerator {
             },
             volatility: VolatilitySection {
                 cv,
-                variance: cv * cv, // σ = CV × μ; variance = (CV×μ)² ≈ CV²×μ² / μ² = CV²
+                // Faza 8 fix: use actual Welford variance, not CV².
+                variance: par.welford_variance,
+                std_dev: par.welford_std_dev,
                 max_win_x: par.max_win,
                 category: vol_category,
             },
@@ -226,21 +299,64 @@ impl PARGenerator {
             statistics: StatisticalSection {
                 ci_95_low: par.ci_95_low,
                 ci_95_high: par.ci_95_high,
+                ci_99_low: par.ci_99_low,
+                ci_99_high: par.ci_99_high,
+                ci_999_low: par.ci_999_low,
+                ci_999_high: par.ci_999_high,
                 std_error: par.std_error,
                 std_dev_across_seeds: 0.0,
                 confidence_adequate: par.std_error < 0.1,
             },
+            // Faza 8 sections.
+            quantiles: QuantileSection {
+                p50: par.p50,
+                p90: par.p90,
+                p99: par.p99,
+                p999: par.p999,
+            },
+            moments: MomentsSection {
+                mean_win_x: par.welford_mean,
+                variance: par.welford_variance,
+                std_dev: par.welford_std_dev,
+                cv: par.welford_cv,
+                skewness: par.welford_skewness,
+                excess_kurtosis: par.welford_excess_kurtosis,
+                sample_count: par.welford_sample_count,
+            },
+            bonus_distances: BonusDistancesSection {
+                free_spins: BonusDistanceEntry {
+                    mean_distance: par.fs_mean_distance,
+                    max_distance: par.fs_max_distance,
+                },
+                hold_and_win: BonusDistanceEntry {
+                    mean_distance: par.hnw_mean_distance,
+                    max_distance: par.hnw_max_distance,
+                },
+            },
+            required_spins: RequiredSpinsSection {
+                for_01pp_ci_95: par.required_spins_01pp_95,
+                for_001pp_ci_95: par.required_spins_001pp_95,
+                for_01pp_ci_99: par.required_spins_01pp_99,
+            },
         }
     }
 
+    /// Volatility category from CV.
+    ///
+    /// Fixed in Faza 8: was `match cv as u32` which truncated CV < 1.0 to 0 → always VERY_LOW.
     fn volatility_category(cv: f64) -> String {
-        match cv as u32 {
-            0..=2 => "VERY_LOW",
-            3..=5 => "LOW",
-            6..=9 => "MEDIUM",
-            10..=14 => "HIGH",
-            15..=21 => "VERY_HIGH",
-            _ => "EXTREME",
+        if cv < 0.5 {
+            "VERY_LOW"
+        } else if cv < 2.0 {
+            "LOW"
+        } else if cv < 5.0 {
+            "MEDIUM"
+        } else if cv < 10.0 {
+            "HIGH"
+        } else if cv < 20.0 {
+            "VERY_HIGH"
+        } else {
+            "EXTREME"
         }
         .to_string()
     }
@@ -251,7 +367,6 @@ impl PARGenerator {
         let thresholds = HdrHistogram::THRESHOLDS;
         let mut buckets = Vec::with_capacity(HDR_BUCKET_COUNT);
 
-        // Bucket 0: no win.
         let zero_count = hdr[0];
         let zero_prob = if total_spins > 0 {
             zero_count as f64 / total_spins as f64
@@ -267,7 +382,6 @@ impl PARGenerator {
             rtp_contribution_pct: 0.0,
         });
 
-        // Buckets 1..=30 (matching threshold intervals).
         for i in 0..thresholds.len() {
             let from = if i == 0 { 0.0 } else { thresholds[i - 1] };
             let to = thresholds[i];
@@ -288,7 +402,6 @@ impl PARGenerator {
             });
         }
 
-        // Bucket 31: unbounded top.
         let top_from = *thresholds.last().unwrap_or(&50000.0);
         let top_count = hdr[HDR_BUCKET_COUNT - 1];
         let top_prob = if total_spins > 0 {
@@ -302,7 +415,7 @@ impl PARGenerator {
             label: format!("{top_from:.0}x+"),
             count: top_count,
             probability: top_prob,
-            rtp_contribution_pct: top_prob * top_from * 100.0, // lower-bound estimate
+            rtp_contribution_pct: top_prob * top_from * 100.0,
         });
 
         buckets
@@ -403,25 +516,35 @@ impl PARGenerator {
         }
         println!("╠{rule}╣");
 
-        // Volatility.
+        // Volatility — Faza 8: show Welford variance + skewness.
         println!("║  VOLATILITY{:<width$}║", "", width = w - 13);
         let vol_line = format!(
             "    Category: {}   CV: {:.4}   Max win: {:.1}x",
             par.volatility.category, par.volatility.cv, par.volatility.max_win_x
         );
         println!("║  {vol_line:<width$}║", width = w - 4);
+        let mom_line = format!(
+            "    Var: {:.4}  σ: {:.4}  Skew: {:.4}  KurtEx: {:.4}",
+            par.moments.variance, par.moments.std_dev,
+            par.moments.skewness, par.moments.excess_kurtosis
+        );
+        println!("║  {mom_line:<width$}║", width = w - 4);
+
+        // Faza 8: Quantiles.
+        println!("╠{rule}╣");
+        println!("║  QUANTILES{:<width$}║", "", width = w - 12);
+        let q_line = format!(
+            "    P50: {:.2}x   P90: {:.2}x   P99: {:.2}x   P99.9: {:.2}x",
+            par.quantiles.p50, par.quantiles.p90, par.quantiles.p99, par.quantiles.p999
+        );
+        println!("║  {q_line:<width$}║", width = w - 4);
         println!("╠{rule}╣");
 
-        // Win distribution (non-zero buckets only, up to 20).
+        // Win distribution.
         println!("║  WIN DISTRIBUTION{:<width$}║", "", width = w - 19);
         println!(
             "║    {:<16}  {:>10}  {:>9}  {:>12}{:<width$}║",
-            "Range",
-            "Count",
-            "Prob %",
-            "RTP contrib",
-            "",
-            width = w - 55
+            "Range", "Count", "Prob %", "RTP contrib", "", width = w - 55
         );
         let mut shown = 0;
         for bucket in &par.win_distribution {
@@ -442,6 +565,7 @@ impl PARGenerator {
                 width = w - 55
             );
         }
+
         if !par.jackpots.is_empty() {
             println!("╠{rule}╣");
             println!("║  JACKPOTS{:<width$}║", "", width = w - 11);
@@ -453,14 +577,12 @@ impl PARGenerator {
                 };
                 let line = format!(
                     "    {:.<18}  hits: {:>6}  {}  RTP: {:>6.4}%",
-                    j.name,
-                    j.hits,
-                    avg,
-                    j.contribution_rtp * 100.0
+                    j.name, j.hits, avg, j.contribution_rtp * 100.0
                 );
                 println!("║  {line:<width$}║", width = w - 4);
             }
         }
+
         println!("╠{rule}╣");
 
         // Compliance.
@@ -484,14 +606,19 @@ impl PARGenerator {
         println!("║    Jurisdictions: {jurs:<width$}║", width = w - jurs.len() - 20);
         println!("╠{rule}╣");
 
-        // Statistical confidence.
+        // Statistical confidence — Faza 8: show all three CI levels.
         println!("║  STATISTICAL CONFIDENCE{:<width$}║", "", width = w - 25);
         println!(
             "║    CI-95%%:      [{:.4}%, {:.4}%]{:<width$}║",
-            par.statistics.ci_95_low,
-            par.statistics.ci_95_high,
-            "",
-            width = w - 38
+            par.statistics.ci_95_low, par.statistics.ci_95_high, "", width = w - 38
+        );
+        println!(
+            "║    CI-99%%:      [{:.4}%, {:.4}%]{:<width$}║",
+            par.statistics.ci_99_low, par.statistics.ci_99_high, "", width = w - 38
+        );
+        println!(
+            "║    CI-99.9%%:    [{:.4}%, {:.4}%]{:<width$}║",
+            par.statistics.ci_999_low, par.statistics.ci_999_high, "", width = w - 38
         );
         println!(
             "║    Std error:   {:>8.4}pp  {}{:<width$}║",
@@ -500,6 +627,49 @@ impl PARGenerator {
             "",
             width = w - 34
         );
+
+        // Faza 8: Required spins.
+        println!("╠{rule}╣");
+        println!("║  REQUIRED SPINS FOR PRECISION{:<width$}║", "", width = w - 31);
+        println!(
+            "║    0.1pp @ 95%%:  {:>12}{:<width$}║",
+            par.required_spins.for_01pp_ci_95, "", width = w - 31
+        );
+        println!(
+            "║    0.01pp @ 95%: {:>12}{:<width$}║",
+            par.required_spins.for_001pp_ci_95, "", width = w - 31
+        );
+        println!(
+            "║    0.1pp @ 99%%:  {:>12}{:<width$}║",
+            par.required_spins.for_01pp_ci_99, "", width = w - 31
+        );
+
+        // Faza 8: Bonus distances (only if triggered at all).
+        if par.bonus_distances.free_spins.mean_distance.is_finite()
+            || par.bonus_distances.hold_and_win.mean_distance.is_finite()
+        {
+            println!("╠{rule}╣");
+            println!("║  BONUS INTER-TRIGGER DISTANCES{:<width$}║", "", width = w - 32);
+            if par.bonus_distances.free_spins.mean_distance.is_finite() {
+                println!(
+                    "║    Free Spins:  mean {:>10.1}  max {:>8}{:<width$}║",
+                    par.bonus_distances.free_spins.mean_distance,
+                    par.bonus_distances.free_spins.max_distance,
+                    "",
+                    width = w - 44
+                );
+            }
+            if par.bonus_distances.hold_and_win.mean_distance.is_finite() {
+                println!(
+                    "║    Hold & Win:  mean {:>10.1}  max {:>8}{:<width$}║",
+                    par.bonus_distances.hold_and_win.mean_distance,
+                    par.bonus_distances.hold_and_win.max_distance,
+                    "",
+                    width = w - 44
+                );
+            }
+        }
+
         println!("╚{rule}╝");
     }
 }
@@ -509,7 +679,7 @@ impl PARGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::stats::AtomicStats;
+    use crate::stats::{AtomicStats, MultiSeedStats, PARMetrics, SeedStats};
     use std::sync::atomic::Ordering;
 
     fn make_stats() -> AtomicStats {
@@ -522,34 +692,36 @@ mod tests {
         s.winning_spins.store(330_000, Ordering::Relaxed);
         s.fs_triggers.store(5_000, Ordering::Relaxed);
         s.total_fs_spins.store(60_000, Ordering::Relaxed);
-        // Populate HDR with some wins.
         let mut rng = crate::rng::SlotRng::new(42);
-        for _ in 0..1_000_000 {
+        for i in 0u64..1_000_000 {
             let win = if rng.random() < 0.33 {
                 0.0
             } else {
                 rng.random() * 100.0
             };
-            s.record_win_hdr(win);
+            s.record_win_full(win, 42, i);
+            if i % 200 == 0 {
+                s.record_fs_trigger(i);
+            }
         }
         s
     }
 
     fn make_par_metrics(stats: &AtomicStats) -> PARMetrics {
-        // 20 seeds tightly clustered around 96% → std_dev ≈ 0.022pp,
-        // std_error = 0.022/√20 ≈ 0.005pp — well below the 0.1pp adequacy gate.
-        use crate::stats::SeedStats;
         let rtps = [
             96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99,
             96.00, 95.98, 96.02, 96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
         ];
-        let seeds: Vec<SeedStats> = rtps.iter().map(|&rtp| SeedStats {
-            spins: 50_000,
-            wagered: 50_000,
-            won: (50_000.0 * rtp / 100.0) as i64,
-            rtp,
-        }).collect();
-        let multi = crate::stats::MultiSeedStats::from_seeds(seeds);
+        let seeds: Vec<SeedStats> = rtps
+            .iter()
+            .map(|&rtp| SeedStats {
+                spins: 50_000,
+                wagered: 50_000,
+                won: (50_000.0 * rtp / 100.0) as i64,
+                rtp,
+            })
+            .collect();
+        let multi = MultiSeedStats::from_seeds(seeds);
         PARMetrics::from_stats(stats, &multi, 1)
     }
 
@@ -574,6 +746,8 @@ mod tests {
         )
     }
 
+    // ── Backward-compat tests (identical to Faza 4 unit tests) ────────────────
+
     #[test]
     fn test_par_generates_all_sections() {
         let par = make_par();
@@ -594,10 +768,22 @@ mod tests {
     fn test_rtp_out_of_tolerance() {
         let stats = make_stats();
         let mut par_metrics = make_par_metrics(&stats);
-        par_metrics.total_rtp = 94.0; // 2pp below target
+        par_metrics.total_rtp = 94.0;
         let par = PARGenerator::generate(
-            &stats, &par_metrics, vec![], "g", "1.0.0", 96.0, 0.5,
-            5000.0, vec![], [85.0, 99.0], "must_be_random", true, true, 1,
+            &stats,
+            &par_metrics,
+            vec![],
+            "g",
+            "1.0.0",
+            96.0,
+            0.5,
+            5000.0,
+            vec![],
+            [85.0, 99.0],
+            "must_be_random",
+            true,
+            true,
+            1,
         );
         assert!(!par.rtp.within_tolerance);
     }
@@ -605,13 +791,7 @@ mod tests {
     #[test]
     fn test_win_distribution_bucket_count() {
         let par = make_par();
-        // HDR: 1 no-win + 30 threshold intervals + 1 unbounded top = 32.
-        assert_eq!(
-            par.win_distribution.len(),
-            crate::stats::HDR_BUCKET_COUNT,
-            "expected {} buckets",
-            crate::stats::HDR_BUCKET_COUNT
-        );
+        assert_eq!(par.win_distribution.len(), crate::stats::HDR_BUCKET_COUNT);
     }
 
     #[test]
@@ -619,43 +799,6 @@ mod tests {
         let par = make_par();
         let total: u64 = par.win_distribution.iter().map(|b| b.count).sum();
         assert_eq!(total, 1_000_000);
-    }
-
-    #[test]
-    fn test_jackpot_rtp_aggregation() {
-        use crate::jackpot::{JackpotKind, JackpotMetrics};
-        let stats = make_stats();
-        let par_metrics = make_par_metrics(&stats);
-        let jackpots = vec![
-            JackpotMetrics {
-                id: "mini".to_string(),
-                name: "MINI".to_string(),
-                kind: JackpotKind::Fixed,
-                hits: 100,
-                avg_interval: 10_000.0,
-                total_paid_x: 1_000.0,
-                total_contributed_x: 0.0,
-                current_pool_x: 10.0,
-                contribution_rtp: 0.001, // 0.1%
-            },
-            JackpotMetrics {
-                id: "grand".to_string(),
-                name: "GRAND".to_string(),
-                kind: JackpotKind::Fixed,
-                hits: 2,
-                avg_interval: 500_000.0,
-                total_paid_x: 10_000.0,
-                total_contributed_x: 0.0,
-                current_pool_x: 5000.0,
-                contribution_rtp: 0.01, // 1%
-            },
-        ];
-        let par = PARGenerator::generate(
-            &stats, &par_metrics, jackpots, "g", "1.0.0", 96.0, 0.5,
-            5000.0, vec![], [85.0, 99.0], "must_be_random", true, true, 1,
-        );
-        // jackpot_rtp_pct = (0.001 + 0.01) × 100 = 1.1%
-        assert!((par.rtp.jackpot_rtp_pct - 1.1).abs() < 1e-9, "got {}", par.rtp.jackpot_rtp_pct);
     }
 
     #[test]
@@ -669,7 +812,6 @@ mod tests {
     #[test]
     fn test_statistical_confidence_adequate() {
         let par = make_par();
-        // 5 seeds of 200k spins each — std_error should be < 0.5pp.
         assert!(par.statistics.confidence_adequate, "std_error={}", par.statistics.std_error);
     }
 
@@ -686,7 +828,154 @@ mod tests {
     #[test]
     fn test_print_doesnt_panic() {
         let par = make_par();
-        // Capture stdout to avoid cluttering test output, but verify no panic.
         PARGenerator::print(&par);
+    }
+
+    // ── Faza 8: Volatility category fix ───────────────────────────────────────
+
+    #[test]
+    fn volatility_category_uses_f64_ranges() {
+        // CV = 0.3 → < 0.5 → VERY_LOW (old code would give VERY_LOW only coincidentally)
+        assert_eq!(PARGenerator::volatility_category(0.3), "VERY_LOW");
+        // CV = 0.7 → [0.5, 2.0) → LOW (old code: 0 as u32 → VERY_LOW! BUG fixed)
+        assert_eq!(PARGenerator::volatility_category(0.7), "LOW");
+        assert_eq!(PARGenerator::volatility_category(1.5), "LOW");
+        assert_eq!(PARGenerator::volatility_category(3.0), "MEDIUM");
+        assert_eq!(PARGenerator::volatility_category(7.0), "HIGH");
+        assert_eq!(PARGenerator::volatility_category(15.0), "VERY_HIGH");
+        assert_eq!(PARGenerator::volatility_category(25.0), "EXTREME");
+    }
+
+    // ── Faza 8: new sections ──────────────────────────────────────────────────
+
+    #[test]
+    fn par_has_quantile_section() {
+        let par = make_par();
+        // P90 should be greater than P50.
+        assert!(
+            par.quantiles.p90 >= par.quantiles.p50,
+            "P90={} should be >= P50={}",
+            par.quantiles.p90,
+            par.quantiles.p50
+        );
+        assert!(
+            par.quantiles.p99 >= par.quantiles.p90,
+            "P99={} should be >= P90={}",
+            par.quantiles.p99,
+            par.quantiles.p90
+        );
+    }
+
+    #[test]
+    fn par_has_moments_section() {
+        let par = make_par();
+        // With 1M spins all recorded via record_win_full, sample count should be 1M.
+        assert_eq!(par.moments.sample_count, 1_000_000);
+        assert!(par.moments.mean_win_x > 0.0, "mean must be positive");
+        assert!(par.moments.variance >= 0.0, "variance must be non-negative");
+        assert!(par.moments.std_dev >= 0.0, "std_dev must be non-negative");
+    }
+
+    #[test]
+    fn par_has_ci_99_and_999() {
+        let par = make_par();
+        // CI99 must be wider than CI95.
+        let width_95 = par.statistics.ci_95_high - par.statistics.ci_95_low;
+        let width_99 = par.statistics.ci_99_high - par.statistics.ci_99_low;
+        let width_999 = par.statistics.ci_999_high - par.statistics.ci_999_low;
+        assert!(width_99 >= width_95, "CI99 must be >= CI95 width");
+        assert!(width_999 >= width_99, "CI99.9 must be >= CI99 width");
+    }
+
+    #[test]
+    fn par_has_required_spins() {
+        let par = make_par();
+        // Required spins for 0.01pp should be > for 0.1pp.
+        assert!(
+            par.required_spins.for_001pp_ci_95 > par.required_spins.for_01pp_ci_95,
+            "tighter target needs more spins"
+        );
+        assert!(
+            par.required_spins.for_01pp_ci_99 > par.required_spins.for_01pp_ci_95,
+            "higher confidence needs more spins"
+        );
+    }
+
+    #[test]
+    fn par_has_bonus_distances() {
+        let par = make_par();
+        // FS was triggered every 200 spins → mean_distance ≈ 200.
+        assert!(
+            par.bonus_distances.free_spins.mean_distance.is_finite(),
+            "fs mean_distance should be finite"
+        );
+        assert!(
+            (par.bonus_distances.free_spins.mean_distance - 200.0).abs() < 5.0,
+            "expected ~200, got {}",
+            par.bonus_distances.free_spins.mean_distance
+        );
+    }
+
+    #[test]
+    fn par_variance_uses_welford_not_cv_squared() {
+        // The old code had `variance: cv * cv` which is dimensionless and wrong.
+        // With Welford, variance is in bet-multiples² ≥ 0.
+        let par = make_par();
+        // Variance from Welford should be numerically distinct from CV².
+        // (For a distribution with mean ~66x and σ ~30x, CV≈0.45, CV²≈0.2
+        //  but actual variance ≈ 900 — very different.)
+        assert!(
+            par.volatility.variance > 1.0 || par.volatility.cv < 0.01,
+            "variance={} should be in bet-multiples² (not CV²)",
+            par.volatility.variance
+        );
+    }
+
+    #[test]
+    fn par_jackpot_rtp_aggregation() {
+        use crate::jackpot::{JackpotKind, JackpotMetrics};
+        let stats = make_stats();
+        let par_metrics = make_par_metrics(&stats);
+        let jackpots = vec![
+            JackpotMetrics {
+                id: "mini".to_string(),
+                name: "MINI".to_string(),
+                kind: JackpotKind::Fixed,
+                hits: 100,
+                avg_interval: 10_000.0,
+                total_paid_x: 1_000.0,
+                total_contributed_x: 0.0,
+                current_pool_x: 10.0,
+                contribution_rtp: 0.001,
+            },
+            JackpotMetrics {
+                id: "grand".to_string(),
+                name: "GRAND".to_string(),
+                kind: JackpotKind::Fixed,
+                hits: 2,
+                avg_interval: 500_000.0,
+                total_paid_x: 10_000.0,
+                total_contributed_x: 0.0,
+                current_pool_x: 5000.0,
+                contribution_rtp: 0.01,
+            },
+        ];
+        let par = PARGenerator::generate(
+            &stats,
+            &par_metrics,
+            jackpots,
+            "g",
+            "1.0.0",
+            96.0,
+            0.5,
+            5000.0,
+            vec![],
+            [85.0, 99.0],
+            "must_be_random",
+            true,
+            true,
+            1,
+        );
+        assert!((par.rtp.jackpot_rtp_pct - 1.1).abs() < 1e-9, "got {}", par.rtp.jackpot_rtp_pct);
     }
 }

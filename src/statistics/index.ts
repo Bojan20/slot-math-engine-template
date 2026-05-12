@@ -12,3 +12,7 @@
 
 export * from './variance.js';
 export * from './parSheet.js';
+export * from './streaming.js';
+export * from './convergence.js';
+export * from './topN.js';
+export * from './hdrQuantile.js';
