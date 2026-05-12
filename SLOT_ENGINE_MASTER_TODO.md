@@ -400,7 +400,7 @@ Mapa "commit → faza":
 ### 10.7 Mutation testing
 - ✅ Mutation testing — `stryker.config.mjs` (TS) + `cargo-mutants` (Rust). *(commit `73599dc`)*
 - ✅ Differential semantic-preserving rewrites: test suite. *(`tests/faza107_mutation.test.ts`)*
-- ⚠️ Acceptance: mutation score ≥95% obe runtime. *(harness ✅; eksplicitan mutation-score report u repu ❌)*
+- ⚠️ Acceptance: mutation score ≥95% obe runtime. *(harness ✅; **baseline measured** u `reports/mutation/` — TS 2-file run 61.1% (rg/session 68.7%, sensitivity/analyzer 46.9%); Rust BLOCKED na cargo-mutants vs rust-toolchain pin (1.83 vs 1.85+ za edition2024). Path to 95% = test-strength rad, ne engine bug. Plan u README.)*
 
 ---
 
@@ -792,7 +792,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 5. ✅ **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — DONE: `reports/bench/` sa M3 Pro baseline (5 bench grupe, criterion JSON + README). 1T projection: 35557s single-thread → otvara konkretan target za SIMD+GPU+cluster. PGO/BOLT/GPU/cross-platform follow-up u README.
 6. **PAR sheet PDF rendering** (8.5) — JSON nije isporučiv regulatoru.
 7. ✅ **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview. *(DONE — svih 5 fajlova landed; sa cross-ref na kod i submission-kit definicijom)*
-8. **Mutation score izveštaj** (faza 10.7) — bez "≥95%" broja ne možeš tvrditi "regression-safe".
+8. ⚠️ **Mutation score izveštaj** (faza 10.7) — DELIMIČNO: TS Stryker baseline 61.1% u `reports/mutation/` sa per-mutant JSON (945 KB), top-survived kinds analiza i konkretan path do 95%. Rust BLOCKED — cargo-mutants ≥24 traži edition2024 (Rust 1.85), repo pinned na 1.83 zbog parity. Option B (nightly wrapper) je sledeći korak.
 9. ✅ **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — DONE: 7 plugin behavior-a + 47 tests u `tests/faza32_extra_behaviors.test.ts`, registry `behaviorClass` overrides za sve, barrel export ažuriran. "Plugin layer" claim sad kompletan.
 10. **HSM bridge** (faza 7.5) — operatori u UK/MT/DE traže HSM-backed RNG za live.
 
