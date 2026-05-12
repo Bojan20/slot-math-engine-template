@@ -35,4 +35,4 @@ pub use protocol::{
     ClusterEnvelope, ClusterError, ProgressFrame, WorkSlice, WorkerHello, WorkerResult,
     CLUSTER_PROTOCOL_VERSION,
 };
-pub use transport::{ClusterTransport, InMemoryTransport};
+pub use transport::{ClusterTransport, InMemoryTransport, TcpTransport};

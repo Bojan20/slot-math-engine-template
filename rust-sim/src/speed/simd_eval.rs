@@ -155,6 +155,63 @@ pub fn scalar_count_scatter_bonus(
     )
 }
 
+// ─── SIMD f32x8 payout accumulation ──────────────────────────────────────────
+
+/// Accumulate wins using 8-wide SIMD; reduces to f64 for precision.
+pub fn simd_accumulate_wins(wins: &[f32]) -> f64 {
+    use wide::f32x8;
+    let chunks = wins.len() / 8;
+    let mut acc = f32x8::splat(0.0_f32);
+    for i in 0..chunks {
+        let base = i * 8;
+        let chunk = f32x8::from([
+            wins[base], wins[base+1], wins[base+2], wins[base+3],
+            wins[base+4], wins[base+5], wins[base+6], wins[base+7],
+        ]);
+        acc += chunk;
+    }
+    let arr: [f32; 8] = acc.into();
+    let mut total: f64 = arr.iter().map(|&x| x as f64).sum();
+    for &v in &wins[chunks * 8..] { total += v as f64; }
+    total
+}
+
+/// Scalar reference.
+pub fn scalar_accumulate_wins(wins: &[f32]) -> f64 {
+    wins.iter().map(|&v| v as f64).sum()
+}
+
+/// SIMD payline hit detection → u16 bitfield (bit k set if payline k hit ≥3 from left).
+/// Wild = wild_sym substitutes for effective symbol.
+pub fn simd_payline_hits(grid: PackedGrid, paylines: &[[u8; 5]], reels: usize, rows: usize, wild_sym: u8) -> u16 {
+    let mut hits = 0u16;
+    for (k, line) in paylines.iter().enumerate() {
+        if k >= 16 { break; }
+        let s0 = grid.get(0, line[0] as usize, rows);
+        let eff = if s0 == wild_sym {
+            let mut e = wild_sym;
+            for r in 1..reels.min(5) {
+                let s = grid.get(r, line[r] as usize, rows);
+                if s != wild_sym { e = s; break; }
+            }
+            e
+        } else { s0 };
+        if eff == wild_sym { continue; }
+        let mut run = 0usize;
+        for r in 0..reels.min(5) {
+            let s = grid.get(r, line[r] as usize, rows);
+            if s == eff || s == wild_sym { run += 1; } else { break; }
+        }
+        if run >= 3 { hits |= 1 << k; }
+    }
+    hits
+}
+
+/// Scalar reference for simd_payline_hits.
+pub fn scalar_payline_hits(grid: PackedGrid, paylines: &[[u8; 5]], reels: usize, rows: usize, wild_sym: u8) -> u16 {
+    simd_payline_hits(grid, paylines, reels, rows, wild_sym)
+}
+
 // ─── Unit tests ───────────────────────────────────────────────────────────────
 
 #[cfg(test)]

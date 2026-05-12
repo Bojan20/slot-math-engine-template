@@ -58,6 +58,49 @@ impl ClusterTransport for InMemoryTransport {
     }
 }
 
+use std::io::{Read, Write};
+use std::net::TcpStream;
+
+pub struct TcpTransport {
+    inner: std::sync::Mutex<TcpStream>,
+}
+
+impl TcpTransport {
+    pub fn connect(addr: &str) -> Result<Self, String> {
+        TcpStream::connect(addr)
+            .map(|s| Self { inner: std::sync::Mutex::new(s) })
+            .map_err(|e| format!("TcpTransport::connect: {e}"))
+    }
+    pub fn from_stream(stream: TcpStream) -> Self {
+        Self { inner: std::sync::Mutex::new(stream) }
+    }
+}
+
+impl ClusterTransport for TcpTransport {
+    fn send(&self, envelope: &ClusterEnvelope) -> Result<(), String> {
+        let json = serde_json::to_vec(envelope).map_err(|e| format!("serialize: {e}"))?;
+        let len = (json.len() as u32).to_le_bytes();
+        let mut s = self.inner.lock().map_err(|e| format!("lock: {e}"))?;
+        s.write_all(&len).map_err(|e| format!("write_len: {e}"))?;
+        s.write_all(&json).map_err(|e| format!("write_body: {e}"))?;
+        Ok(())
+    }
+    fn recv(&self) -> Result<Option<ClusterEnvelope>, String> {
+        let mut s = self.inner.lock().map_err(|e| format!("lock: {e}"))?;
+        let mut len_buf = [0u8; 4];
+        match s.read_exact(&mut len_buf) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof
+                   || e.kind() == std::io::ErrorKind::ConnectionReset => return Ok(None),
+            Err(e) => return Err(format!("read_len: {e}")),
+        }
+        let len = u32::from_le_bytes(len_buf) as usize;
+        let mut body = vec![0u8; len];
+        s.read_exact(&mut body).map_err(|e| format!("read_body: {e}"))?;
+        serde_json::from_slice(&body).map(Some).map_err(|e| format!("deserialize: {e}"))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

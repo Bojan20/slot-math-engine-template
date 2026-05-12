@@ -50,3 +50,4 @@ pub use simd_eval::{
     scalar_count_scatter_bonus, scalar_count_symbol, simd_count_multi4, simd_count_scatter_bonus,
     simd_count_symbol,
 };
+pub use simd_eval::{simd_accumulate_wins, scalar_accumulate_wins, simd_payline_hits, scalar_payline_hits};
