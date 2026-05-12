@@ -19,7 +19,11 @@ pub fn apply_effect(state: &mut SpinState, effect: &Effect) {
             adjust_multiplier(state, *scope, *value, true);
         }
 
-        Effect::TransformSymbol { reel, row, to_symbol } => {
+        Effect::TransformSymbol {
+            reel,
+            row,
+            to_symbol,
+        } => {
             if let Some(col) = state.grid.get_mut(*reel) {
                 if let Some(cell) = col.get_mut(*row) {
                     *cell = to_symbol.clone();
@@ -35,14 +39,20 @@ pub fn apply_effect(state: &mut SpinState, effect: &Effect) {
             }
         }
 
-        Effect::LockPosition { reel, row, remaining_spins } => {
-            let existing = state.locked_positions.iter_mut().find(
-                |lp| lp.reel == *reel && lp.row == *row
-            );
+        Effect::LockPosition {
+            reel,
+            row,
+            remaining_spins,
+        } => {
+            let existing = state
+                .locked_positions
+                .iter_mut()
+                .find(|lp| lp.reel == *reel && lp.row == *row);
             if let Some(lp) = existing {
                 lp.remaining_spins = lp.remaining_spins.max(*remaining_spins);
             } else {
-                let sym = state.grid
+                let sym = state
+                    .grid
                     .get(*reel)
                     .and_then(|c| c.get(*row))
                     .cloned()
@@ -67,7 +77,7 @@ pub fn apply_effect(state: &mut SpinState, effect: &Effect) {
         Effect::CollectCoin { reel, row, amount } => {
             state.collected_coins.push(super::types::CollectedCoin {
                 reel: *reel,
-                row:  *row,
+                row: *row,
                 amount: *amount,
             });
         }
@@ -82,7 +92,10 @@ pub fn apply_effect(state: &mut SpinState, effect: &Effect) {
             }
         }
 
-        Effect::UpgradeSymbols { from_symbol, to_symbol } => {
+        Effect::UpgradeSymbols {
+            from_symbol,
+            to_symbol,
+        } => {
             for col in state.grid.iter_mut() {
                 for cell in col.iter_mut() {
                     if cell == from_symbol {
@@ -90,7 +103,9 @@ pub fn apply_effect(state: &mut SpinState, effect: &Effect) {
                     }
                 }
             }
-            state.upgrades.push((from_symbol.clone(), to_symbol.clone()));
+            state
+                .upgrades
+                .push((from_symbol.clone(), to_symbol.clone()));
         }
 
         Effect::ScatterPay { multiplier, .. } => {
@@ -114,12 +129,16 @@ pub fn apply_effects(state: &mut SpinState, effects: &[Effect]) {
 
 fn adjust_multiplier(state: &mut SpinState, scope: EffectScope, value: f64, mul: bool) {
     let target = match scope {
-        EffectScope::Line    => &mut state.line_multiplier,
-        EffectScope::Ways    => &mut state.spin_multiplier,
-        EffectScope::Spin    => &mut state.spin_multiplier,
+        EffectScope::Line => &mut state.line_multiplier,
+        EffectScope::Ways => &mut state.spin_multiplier,
+        EffectScope::Spin => &mut state.spin_multiplier,
         EffectScope::Session => &mut state.session_multiplier,
     };
-    if mul { *target *= value; } else { *target += value; }
+    if mul {
+        *target *= value;
+    } else {
+        *target += value;
+    }
 }
 
 // ─── Locked-position tick ─────────────────────────────────────────────────────

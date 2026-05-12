@@ -12,8 +12,8 @@
 //! 6 reels — the evaluator itself supports any reel count.
 
 use slot_sim::config::{
-    FreeSpinsConfig, GameConfig, HoldAndWinConfig, LightningConfig, OrbValue, PayEntry,
-    ReelWeight, SymbolDef,
+    FreeSpinsConfig, GameConfig, HoldAndWinConfig, LightningConfig, OrbValue, PayEntry, ReelWeight,
+    SymbolDef,
 };
 use slot_sim::evaluator::{EvalMode, Evaluator};
 use slot_sim::grid::{DynGrid, GridGenerator};
@@ -262,10 +262,7 @@ fn test_megaways_rtp_smoke() {
     // The synthetic config above is intentionally not balanced — it just
     // proves the simulator hits a finite RTP and produces some wins. The
     // band must be wide enough to accommodate the unbalanced config.
-    assert!(
-        rtp > 0.0,
-        "Megaways smoke RTP must be > 0, got {rtp}"
-    );
+    assert!(rtp > 0.0, "Megaways smoke RTP must be > 0, got {rtp}");
     assert!(
         rtp.is_finite(),
         "Megaways smoke RTP must be finite, got {rtp}"

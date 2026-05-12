@@ -55,15 +55,17 @@ fn unpack_simd(grid: PackedGrid, reels: usize, rows: usize) -> [u8; 16] {
 /// all 15 cells simultaneously on capable hardware.
 #[inline]
 pub fn simd_count_symbol(grid: PackedGrid, sym: u8, reels: usize, rows: usize) -> u8 {
-    let buf    = unpack_simd(grid, reels, rows);
-    let v      = u8x16::from(buf);
+    let buf = unpack_simd(grid, reels, rows);
+    let v = u8x16::from(buf);
     let target = u8x16::splat(sym);
     // cmp_eq returns 0xFF on equal lanes, 0x00 on unequal.
     let mask: [u8; 16] = v.cmp_eq(target).into();
     let n_cells = (reels * rows).min(15);
     let mut count = 0u8;
     for i in 0..n_cells {
-        if mask[i] != 0 { count += 1; }
+        if mask[i] != 0 {
+            count += 1;
+        }
     }
     count
 }
@@ -80,8 +82,8 @@ pub fn simd_count_scatter_bonus(
     reels: usize,
     rows: usize,
 ) -> (u8, u8) {
-    let buf     = unpack_simd(grid, reels, rows);
-    let v       = u8x16::from(buf);
+    let buf = unpack_simd(grid, reels, rows);
+    let v = u8x16::from(buf);
     let n_cells = (reels * rows).min(15);
 
     let smask: [u8; 16] = v.cmp_eq(u8x16::splat(scatter_idx)).into();
@@ -90,8 +92,12 @@ pub fn simd_count_scatter_bonus(
     let mut sc = 0u8;
     let mut bc = 0u8;
     for i in 0..n_cells {
-        if smask[i] != 0 { sc += 1; }
-        if bmask[i] != 0 { bc += 1; }
+        if smask[i] != 0 {
+            sc += 1;
+        }
+        if bmask[i] != 0 {
+            bc += 1;
+        }
     }
     (sc, bc)
 }
@@ -101,21 +107,18 @@ pub fn simd_count_scatter_bonus(
 /// Useful for ways/cluster evaluators that need multiple symbol counts.
 /// Returns `[count_0, count_1, count_2, count_3]`.
 #[inline]
-pub fn simd_count_multi4(
-    grid: PackedGrid,
-    syms: [u8; 4],
-    reels: usize,
-    rows: usize,
-) -> [u8; 4] {
-    let buf     = unpack_simd(grid, reels, rows);
-    let v       = u8x16::from(buf);
+pub fn simd_count_multi4(grid: PackedGrid, syms: [u8; 4], reels: usize, rows: usize) -> [u8; 4] {
+    let buf = unpack_simd(grid, reels, rows);
+    let v = u8x16::from(buf);
     let n_cells = (reels * rows).min(15);
 
     let mut out = [0u8; 4];
     for k in 0..4 {
         let mask: [u8; 16] = v.cmp_eq(u8x16::splat(syms[k])).into();
         for i in 0..n_cells {
-            if mask[i] != 0 { out[k] += 1; }
+            if mask[i] != 0 {
+                out[k] += 1;
+            }
         }
     }
     out
@@ -129,7 +132,9 @@ pub fn scalar_count_symbol(grid: PackedGrid, sym: u8, reels: usize, rows: usize)
     let mut count = 0u8;
     for r in 0..reels {
         for row in 0..rows {
-            if grid.get(r, row, rows) == sym { count += 1; }
+            if grid.get(r, row, rows) == sym {
+                count += 1;
+            }
         }
     }
     count
@@ -146,7 +151,7 @@ pub fn scalar_count_scatter_bonus(
 ) -> (u8, u8) {
     (
         scalar_count_symbol(grid, scatter_idx, reels, rows),
-        scalar_count_symbol(grid, bonus_idx,   reels, rows),
+        scalar_count_symbol(grid, bonus_idx, reels, rows),
     )
 }
 
@@ -154,24 +159,39 @@ pub fn scalar_count_scatter_bonus(
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::rng::SlotRng;
     use super::super::packed_grid::{PackedGrid, PackedGridGenerator};
+    use super::*;
     use crate::config::*;
+    use crate::rng::SlotRng;
     use std::collections::HashMap;
 
     fn make_test_config() -> GameConfig {
         let mut cfg = GameConfig::default();
         let rw = vec![
-            ReelWeight { symbol: "W".to_string(),  weight: 2  },
-            ReelWeight { symbol: "H1".to_string(), weight: 10 },
-            ReelWeight { symbol: "L1".to_string(), weight: 30 },
-            ReelWeight { symbol: "S".to_string(),  weight: 3  },
-            ReelWeight { symbol: "B".to_string(),  weight: 5  },
+            ReelWeight {
+                symbol: "W".to_string(),
+                weight: 2,
+            },
+            ReelWeight {
+                symbol: "H1".to_string(),
+                weight: 10,
+            },
+            ReelWeight {
+                symbol: "L1".to_string(),
+                weight: 30,
+            },
+            ReelWeight {
+                symbol: "S".to_string(),
+                weight: 3,
+            },
+            ReelWeight {
+                symbol: "B".to_string(),
+                weight: 5,
+            },
         ];
         cfg.base_weights = vec![rw.clone(); 5];
-        cfg.fs_weights   = vec![rw; 5];
-        cfg.paytable     = HashMap::new();
+        cfg.fs_weights = vec![rw; 5];
+        cfg.paytable = HashMap::new();
         cfg
     }
 
@@ -180,7 +200,8 @@ mod tests {
         let g = PackedGrid::default();
         // Nothing set → all cells are 0 (which happens to be W if present).
         // Both functions should agree.
-        let reels = 5; let rows = 3;
+        let reels = 5;
+        let rows = 3;
         assert_eq!(
             simd_count_symbol(g, 0, reels, rows),
             scalar_count_symbol(g, 0, reels, rows),
@@ -195,10 +216,15 @@ mod tests {
 
     #[test]
     fn simd_count_all_same_symbol() {
-        let reels = 5; let rows = 3;
+        let reels = 5;
+        let rows = 3;
         let mut g = PackedGrid::default();
         // Fill entire grid with symbol 2
-        for r in 0..reels { for row in 0..rows { g.set(r, row, rows, 2); } }
+        for r in 0..reels {
+            for row in 0..rows {
+                g.set(r, row, rows, 2);
+            }
+        }
         let n = reels * rows;
         assert_eq!(simd_count_symbol(g, 2, reels, rows), n as u8);
         assert_eq!(scalar_count_symbol(g, 2, reels, rows), n as u8);
@@ -209,20 +235,20 @@ mod tests {
         let cfg = make_test_config();
         let gen = PackedGridGenerator::from_config(&cfg);
         let mut rng = SlotRng::new(77777);
-        let reels   = gen.reels();
-        let rows    = gen.rows();
+        let reels = gen.reels();
+        let rows = gen.rows();
         let scatter = 3u8; // S index
-        let bonus   = 4u8; // B index
+        let bonus = 4u8; // B index
 
         for _ in 0..10_000 {
             let g = gen.generate_base(&mut rng);
 
-            let simd_s  = simd_count_symbol(g, scatter, reels, rows);
-            let scal_s  = scalar_count_symbol(g, scatter, reels, rows);
+            let simd_s = simd_count_symbol(g, scatter, reels, rows);
+            let scal_s = scalar_count_symbol(g, scatter, reels, rows);
             assert_eq!(simd_s, scal_s, "scatter mismatch on grid {:?}", g);
 
-            let simd_b  = simd_count_symbol(g, bonus, reels, rows);
-            let scal_b  = scalar_count_symbol(g, bonus, reels, rows);
+            let simd_b = simd_count_symbol(g, bonus, reels, rows);
+            let scal_b = scalar_count_symbol(g, bonus, reels, rows);
             assert_eq!(simd_b, scal_b, "bonus mismatch on grid {:?}", g);
 
             let (simd_sc, simd_bc) = simd_count_scatter_bonus(g, scatter, bonus, reels, rows);
@@ -238,7 +264,7 @@ mod tests {
         let gen = PackedGridGenerator::from_config(&cfg);
         let mut rng = SlotRng::new(54321);
         let reels = gen.reels();
-        let rows  = gen.rows();
+        let rows = gen.rows();
 
         for _ in 0..1_000 {
             let g = gen.generate_base(&mut rng);
@@ -246,7 +272,11 @@ mod tests {
             let multi = simd_count_multi4(g, syms, reels, rows);
             for k in 0..4 {
                 let expected = scalar_count_symbol(g, syms[k], reels, rows);
-                assert_eq!(multi[k], expected, "multi4[{k}] mismatch for sym={}", syms[k]);
+                assert_eq!(
+                    multi[k], expected,
+                    "multi4[{k}] mismatch for sym={}",
+                    syms[k]
+                );
             }
         }
     }
@@ -254,20 +284,30 @@ mod tests {
     #[test]
     fn sentinel_byte_never_matches_valid_symbol() {
         // The 16th byte of unpack_simd is 0xFF; no real symbol should be 255.
-        let reels = 5; let rows = 3; // 15 cells: indices 0..14 used, index 15 = 0xFF
+        let reels = 5;
+        let rows = 3; // 15 cells: indices 0..14 used, index 15 = 0xFF
         let mut g = PackedGrid::default();
         // Fill with sym=30 (max valid 5-bit value)
-        for r in 0..reels { for row in 0..rows { g.set(r, row, rows, 30); } }
+        for r in 0..reels {
+            for row in 0..rows {
+                g.set(r, row, rows, 30);
+            }
+        }
         // sym=255 should not be found
         assert_eq!(simd_count_symbol(g, 255, reels, rows), 0);
     }
 
     #[test]
     fn scatter_bonus_zero_when_no_special_syms_present() {
-        let reels = 5; let rows = 3;
+        let reels = 5;
+        let rows = 3;
         let mut g = PackedGrid::default();
         // Fill with H1 only (sym=1)
-        for r in 0..reels { for row in 0..rows { g.set(r, row, rows, 1); } }
+        for r in 0..reels {
+            for row in 0..rows {
+                g.set(r, row, rows, 1);
+            }
+        }
         let (sc, bc) = simd_count_scatter_bonus(g, 3, 4, reels, rows);
         assert_eq!(sc, 0, "no scatter expected");
         assert_eq!(bc, 0, "no bonus expected");

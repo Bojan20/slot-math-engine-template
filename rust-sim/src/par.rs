@@ -439,9 +439,7 @@ impl PARGenerator {
             par.meta.total_spins,
             par.meta.seeds_used,
             width = w.saturating_sub(
-                par.meta.engine_version.len()
-                    + par.meta.seeds_used.to_string().len()
-                    + 33
+                par.meta.engine_version.len() + par.meta.seeds_used.to_string().len() + 33
             )
         );
         println!("╠{rule}╣");
@@ -453,7 +451,11 @@ impl PARGenerator {
             par.rtp.total_rtp_pct,
             par.rtp.target_rtp_pct,
             par.rtp.rtp_tolerance_pct,
-            if par.rtp.within_tolerance { "✓" } else { "✗ OUT OF TOLERANCE" },
+            if par.rtp.within_tolerance {
+                "✓"
+            } else {
+                "✗ OUT OF TOLERANCE"
+            },
             width = w.saturating_sub(57)
         );
         println!(
@@ -525,8 +527,10 @@ impl PARGenerator {
         println!("║  {vol_line:<width$}║", width = w - 4);
         let mom_line = format!(
             "    Var: {:.4}  σ: {:.4}  Skew: {:.4}  KurtEx: {:.4}",
-            par.moments.variance, par.moments.std_dev,
-            par.moments.skewness, par.moments.excess_kurtosis
+            par.moments.variance,
+            par.moments.std_dev,
+            par.moments.skewness,
+            par.moments.excess_kurtosis
         );
         println!("║  {mom_line:<width$}║", width = w - 4);
 
@@ -544,7 +548,12 @@ impl PARGenerator {
         println!("║  WIN DISTRIBUTION{:<width$}║", "", width = w - 19);
         println!(
             "║    {:<16}  {:>10}  {:>9}  {:>12}{:<width$}║",
-            "Range", "Count", "Prob %", "RTP contrib", "", width = w - 55
+            "Range",
+            "Count",
+            "Prob %",
+            "RTP contrib",
+            "",
+            width = w - 55
         );
         let mut shown = 0;
         for bucket in &par.win_distribution {
@@ -577,7 +586,10 @@ impl PARGenerator {
                 };
                 let line = format!(
                     "    {:.<18}  hits: {:>6}  {}  RTP: {:>6.4}%",
-                    j.name, j.hits, avg, j.contribution_rtp * 100.0
+                    j.name,
+                    j.hits,
+                    avg,
+                    j.contribution_rtp * 100.0
                 );
                 println!("║  {line:<width$}║", width = w - 4);
             }
@@ -591,57 +603,91 @@ impl PARGenerator {
             "║    RTP range:   [{:.2}%, {:.2}%]  {}{:<width$}║",
             par.compliance.rtp_range_required[0],
             par.compliance.rtp_range_required[1],
-            if par.compliance.rtp_within_required { "✓" } else { "✗ FAIL" },
+            if par.compliance.rtp_within_required {
+                "✓"
+            } else {
+                "✗ FAIL"
+            },
             "",
             width = w - 42
         );
         println!(
             "║    Max win cap: {:.0}x  {}{:<width$}║",
             par.compliance.max_win_cap_required,
-            if par.compliance.max_win_within_cap { "✓" } else { "✗ FAIL" },
+            if par.compliance.max_win_within_cap {
+                "✓"
+            } else {
+                "✗ FAIL"
+            },
             "",
             width = w - 24
         );
         let jurs = par.compliance.jurisdictions.join(", ");
-        println!("║    Jurisdictions: {jurs:<width$}║", width = w - jurs.len() - 20);
+        println!(
+            "║    Jurisdictions: {jurs:<width$}║",
+            width = w - jurs.len() - 20
+        );
         println!("╠{rule}╣");
 
         // Statistical confidence — Faza 8: show all three CI levels.
         println!("║  STATISTICAL CONFIDENCE{:<width$}║", "", width = w - 25);
         println!(
             "║    CI-95%%:      [{:.4}%, {:.4}%]{:<width$}║",
-            par.statistics.ci_95_low, par.statistics.ci_95_high, "", width = w - 38
+            par.statistics.ci_95_low,
+            par.statistics.ci_95_high,
+            "",
+            width = w - 38
         );
         println!(
             "║    CI-99%%:      [{:.4}%, {:.4}%]{:<width$}║",
-            par.statistics.ci_99_low, par.statistics.ci_99_high, "", width = w - 38
+            par.statistics.ci_99_low,
+            par.statistics.ci_99_high,
+            "",
+            width = w - 38
         );
         println!(
             "║    CI-99.9%%:    [{:.4}%, {:.4}%]{:<width$}║",
-            par.statistics.ci_999_low, par.statistics.ci_999_high, "", width = w - 38
+            par.statistics.ci_999_low,
+            par.statistics.ci_999_high,
+            "",
+            width = w - 38
         );
         println!(
             "║    Std error:   {:>8.4}pp  {}{:<width$}║",
             par.statistics.std_error,
-            if par.statistics.confidence_adequate { "adequate" } else { "INSUFFICIENT" },
+            if par.statistics.confidence_adequate {
+                "adequate"
+            } else {
+                "INSUFFICIENT"
+            },
             "",
             width = w - 34
         );
 
         // Faza 8: Required spins.
         println!("╠{rule}╣");
-        println!("║  REQUIRED SPINS FOR PRECISION{:<width$}║", "", width = w - 31);
+        println!(
+            "║  REQUIRED SPINS FOR PRECISION{:<width$}║",
+            "",
+            width = w - 31
+        );
         println!(
             "║    0.1pp @ 95%%:  {:>12}{:<width$}║",
-            par.required_spins.for_01pp_ci_95, "", width = w - 31
+            par.required_spins.for_01pp_ci_95,
+            "",
+            width = w - 31
         );
         println!(
             "║    0.01pp @ 95%: {:>12}{:<width$}║",
-            par.required_spins.for_001pp_ci_95, "", width = w - 31
+            par.required_spins.for_001pp_ci_95,
+            "",
+            width = w - 31
         );
         println!(
             "║    0.1pp @ 99%%:  {:>12}{:<width$}║",
-            par.required_spins.for_01pp_ci_99, "", width = w - 31
+            par.required_spins.for_01pp_ci_99,
+            "",
+            width = w - 31
         );
 
         // Faza 8: Bonus distances (only if triggered at all).
@@ -649,7 +695,11 @@ impl PARGenerator {
             || par.bonus_distances.hold_and_win.mean_distance.is_finite()
         {
             println!("╠{rule}╣");
-            println!("║  BONUS INTER-TRIGGER DISTANCES{:<width$}║", "", width = w - 32);
+            println!(
+                "║  BONUS INTER-TRIGGER DISTANCES{:<width$}║",
+                "",
+                width = w - 32
+            );
             if par.bonus_distances.free_spins.mean_distance.is_finite() {
                 println!(
                     "║    Free Spins:  mean {:>10.1}  max {:>8}{:<width$}║",
@@ -709,8 +759,8 @@ mod tests {
 
     fn make_par_metrics(stats: &AtomicStats) -> PARMetrics {
         let rtps = [
-            96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99,
-            96.00, 95.98, 96.02, 96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
+            96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99, 96.00, 95.98,
+            96.02, 96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
         ];
         let seeds: Vec<SeedStats> = rtps
             .iter()
@@ -804,7 +854,10 @@ mod tests {
     #[test]
     fn test_compliance_jurisdiction_check() {
         let par = make_par();
-        assert!(par.compliance.rtp_within_required, "96% is within [85%, 99%]");
+        assert!(
+            par.compliance.rtp_within_required,
+            "96% is within [85%, 99%]"
+        );
         assert!(par.compliance.max_win_within_cap);
         assert_eq!(par.compliance.jurisdictions, vec!["MGA", "UKGC"]);
     }
@@ -812,7 +865,11 @@ mod tests {
     #[test]
     fn test_statistical_confidence_adequate() {
         let par = make_par();
-        assert!(par.statistics.confidence_adequate, "std_error={}", par.statistics.std_error);
+        assert!(
+            par.statistics.confidence_adequate,
+            "std_error={}",
+            par.statistics.std_error
+        );
     }
 
     #[test]
@@ -976,6 +1033,10 @@ mod tests {
             true,
             1,
         );
-        assert!((par.rtp.jackpot_rtp_pct - 1.1).abs() < 1e-9, "got {}", par.rtp.jackpot_rtp_pct);
+        assert!(
+            (par.rtp.jackpot_rtp_pct - 1.1).abs() < 1e-9,
+            "got {}",
+            par.rtp.jackpot_rtp_pct
+        );
     }
 }

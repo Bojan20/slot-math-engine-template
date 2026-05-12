@@ -18,16 +18,15 @@
 //! | R3-10 | BehaviorRegistry                               |   4   |
 //! | R3-11 | Pipeline-level integration                     |   4   |
 
-use slot_sim::behavior::{
-    apply_effect, apply_effects, tick_locked_positions, restore_locked_positions,
-    Effect, EffectScope, SpinState, BehaviorContext, SymbolBehavior,
-};
 use slot_sim::behavior::impls::{
-    WildBehavior, ExpandingWildBehavior, StickyWildBehavior, MultiplierWildBehavior,
-    JackpotBehavior, JackpotTrigger,
-    ScatterBehavior, CoinBehavior,
+    CoinBehavior, ExpandingWildBehavior, JackpotBehavior, JackpotTrigger, MultiplierWildBehavior,
+    ScatterBehavior, StickyWildBehavior, WildBehavior,
 };
 use slot_sim::behavior::registry::BehaviorRegistry;
+use slot_sim::behavior::{
+    apply_effect, apply_effects, restore_locked_positions, tick_locked_positions, BehaviorContext,
+    Effect, EffectScope, SpinState, SymbolBehavior,
+};
 use std::collections::HashMap;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -69,30 +68,66 @@ fn r3_01_noop_no_state_change() {
 #[test]
 fn r3_01_multiplier_add_spin() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::MultiplierAdd { value: 2.0, scope: EffectScope::Spin });
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierAdd {
+            value: 2.0,
+            scope: EffectScope::Spin,
+        },
+    );
     assert!((s.spin_multiplier - 2.0).abs() < 1e-10);
 }
 
 #[test]
 fn r3_01_multiplier_add_additive_stacking() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::MultiplierAdd { value: 2.0, scope: EffectScope::Spin });
-    apply_effect(&mut s, &Effect::MultiplierAdd { value: 2.0, scope: EffectScope::Spin });
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierAdd {
+            value: 2.0,
+            scope: EffectScope::Spin,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierAdd {
+            value: 2.0,
+            scope: EffectScope::Spin,
+        },
+    );
     assert!((s.spin_multiplier - 3.0).abs() < 1e-10);
 }
 
 #[test]
 fn r3_01_multiplier_mul_multiplicative_stacking() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::MultiplierMul { value: 2.0, scope: EffectScope::Spin });
-    apply_effect(&mut s, &Effect::MultiplierMul { value: 3.0, scope: EffectScope::Spin });
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierMul {
+            value: 2.0,
+            scope: EffectScope::Spin,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierMul {
+            value: 3.0,
+            scope: EffectScope::Spin,
+        },
+    );
     assert!((s.spin_multiplier - 6.0).abs() < 1e-10);
 }
 
 #[test]
 fn r3_01_multiplier_session_scope() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::MultiplierMul { value: 4.0, scope: EffectScope::Session });
+    apply_effect(
+        &mut s,
+        &Effect::MultiplierMul {
+            value: 4.0,
+            scope: EffectScope::Session,
+        },
+    );
     assert!((s.session_multiplier - 4.0).abs() < 1e-10);
     assert!((s.spin_multiplier - 1.0).abs() < 1e-10);
 }
@@ -100,7 +135,14 @@ fn r3_01_multiplier_session_scope() {
 #[test]
 fn r3_01_transform_symbol_replaces_cell() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::TransformSymbol { reel: 2, row: 1, to_symbol: "H1".to_string() });
+    apply_effect(
+        &mut s,
+        &Effect::TransformSymbol {
+            reel: 2,
+            row: 1,
+            to_symbol: "H1".to_string(),
+        },
+    );
     assert_eq!(s.grid[2][1], "H1");
     assert_eq!(s.grid[2][0], "L1"); // neighbor unchanged
 }
@@ -108,7 +150,13 @@ fn r3_01_transform_symbol_replaces_cell() {
 #[test]
 fn r3_01_expand_wild_fills_reel() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::ExpandWild { reel: 1, symbol: "W".to_string() });
+    apply_effect(
+        &mut s,
+        &Effect::ExpandWild {
+            reel: 1,
+            symbol: "W".to_string(),
+        },
+    );
     assert_eq!(s.grid[1], vec!["W", "W", "W"]);
     assert_eq!(s.grid[0][0], "L1"); // other reel unchanged
 }
@@ -116,9 +164,30 @@ fn r3_01_expand_wild_fills_reel() {
 #[test]
 fn r3_01_lock_position_upsert_keeps_max() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 3 });
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 5 });
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 2 });
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 3,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 5,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 2,
+        },
+    );
     assert_eq!(s.locked_positions.len(), 1);
     assert_eq!(s.locked_positions[0].remaining_spins, 5);
 }
@@ -126,7 +195,14 @@ fn r3_01_lock_position_upsert_keeps_max() {
 #[test]
 fn r3_01_collect_coin_appends() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::CollectCoin { reel: 1, row: 0, amount: 42.0 });
+    apply_effect(
+        &mut s,
+        &Effect::CollectCoin {
+            reel: 1,
+            row: 0,
+            amount: 42.0,
+        },
+    );
     assert_eq!(s.collected_coins.len(), 1);
     assert!((s.collected_coins[0].amount - 42.0).abs() < 1e-10);
 }
@@ -134,16 +210,38 @@ fn r3_01_collect_coin_appends() {
 #[test]
 fn r3_01_trigger_feature_deduped() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::TriggerFeature { feature_id: "free_spins".to_string() });
-    apply_effect(&mut s, &Effect::TriggerFeature { feature_id: "free_spins".to_string() });
+    apply_effect(
+        &mut s,
+        &Effect::TriggerFeature {
+            feature_id: "free_spins".to_string(),
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::TriggerFeature {
+            feature_id: "free_spins".to_string(),
+        },
+    );
     assert_eq!(s.triggered_features.len(), 1);
 }
 
 #[test]
 fn r3_01_award_jackpot_once_per_spin() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::AwardJackpot { tier: "grand".to_string(), amount: 1000.0 });
-    apply_effect(&mut s, &Effect::AwardJackpot { tier: "minor".to_string(), amount: 100.0 });
+    apply_effect(
+        &mut s,
+        &Effect::AwardJackpot {
+            tier: "grand".to_string(),
+            amount: 1000.0,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::AwardJackpot {
+            tier: "minor".to_string(),
+            amount: 100.0,
+        },
+    );
     let jp = s.jackpot_awarded.as_ref().unwrap();
     assert_eq!(jp.0, "grand");
 }
@@ -151,10 +249,13 @@ fn r3_01_award_jackpot_once_per_spin() {
 #[test]
 fn r3_01_upgrade_symbols_replaces_all() {
     let mut s = make_state(5, 3); // all L1
-    apply_effect(&mut s, &Effect::UpgradeSymbols {
-        from_symbol: "L1".to_string(),
-        to_symbol:   "H1".to_string(),
-    });
+    apply_effect(
+        &mut s,
+        &Effect::UpgradeSymbols {
+            from_symbol: "L1".to_string(),
+            to_symbol: "H1".to_string(),
+        },
+    );
     for col in &s.grid {
         for cell in col {
             assert_eq!(cell, "H1");
@@ -165,8 +266,20 @@ fn r3_01_upgrade_symbols_replaces_all() {
 #[test]
 fn r3_01_scatter_pay_accumulates() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::ScatterPay { count: 3, multiplier: 5.0 });
-    apply_effect(&mut s, &Effect::ScatterPay { count: 4, multiplier: 10.0 });
+    apply_effect(
+        &mut s,
+        &Effect::ScatterPay {
+            count: 3,
+            multiplier: 5.0,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::ScatterPay {
+            count: 4,
+            multiplier: 10.0,
+        },
+    );
     assert!((s.scatter_payout - 15.0).abs() < 1e-10);
 }
 
@@ -182,9 +295,18 @@ fn r3_01_respin_increments() {
 fn r3_01_apply_effects_batch_order() {
     let mut s = make_state(5, 3);
     let effects = vec![
-        Effect::MultiplierMul { value: 2.0, scope: EffectScope::Spin },
-        Effect::MultiplierMul { value: 3.0, scope: EffectScope::Spin },
-        Effect::MultiplierMul { value: 5.0, scope: EffectScope::Spin },
+        Effect::MultiplierMul {
+            value: 2.0,
+            scope: EffectScope::Spin,
+        },
+        Effect::MultiplierMul {
+            value: 3.0,
+            scope: EffectScope::Spin,
+        },
+        Effect::MultiplierMul {
+            value: 5.0,
+            scope: EffectScope::Spin,
+        },
     ];
     apply_effects(&mut s, &effects);
     assert!((s.spin_multiplier - 30.0).abs() < 1e-10);
@@ -195,7 +317,14 @@ fn r3_01_apply_effects_batch_order() {
 #[test]
 fn r3_02_tick_decrements_remaining() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 3 });
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 3,
+        },
+    );
     tick_locked_positions(&mut s);
     assert_eq!(s.locked_positions[0].remaining_spins, 2);
 }
@@ -203,7 +332,14 @@ fn r3_02_tick_decrements_remaining() {
 #[test]
 fn r3_02_tick_removes_expired() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 1 });
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 1,
+        },
+    );
     let released = tick_locked_positions(&mut s);
     assert!(s.locked_positions.is_empty());
     assert_eq!(released.len(), 1);
@@ -213,7 +349,14 @@ fn r3_02_tick_removes_expired() {
 fn r3_02_restore_overwrites_grid() {
     let mut s = make_state(5, 3);
     s.grid[2][1] = "W".to_string();
-    apply_effect(&mut s, &Effect::LockPosition { reel: 2, row: 1, remaining_spins: 3 });
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 2,
+            row: 1,
+            remaining_spins: 3,
+        },
+    );
     // Simulate reel re-draw
     s.grid[2][1] = "H1".to_string();
     restore_locked_positions(&mut s);
@@ -223,8 +366,22 @@ fn r3_02_restore_overwrites_grid() {
 #[test]
 fn r3_02_multiple_locks_survive_partial_tick() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 2 });
-    apply_effect(&mut s, &Effect::LockPosition { reel: 1, row: 0, remaining_spins: 1 });
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 2,
+        },
+    );
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 1,
+            row: 0,
+            remaining_spins: 1,
+        },
+    );
     tick_locked_positions(&mut s);
     // Position [0,0] still alive, [1,0] expired
     assert_eq!(s.locked_positions.len(), 1);
@@ -236,7 +393,9 @@ fn r3_02_multiple_locks_survive_partial_tick() {
 #[test]
 fn r3_03_wild_on_land_empty() {
     let s = make_state(5, 3);
-    let b = WildBehavior { id: "W".to_string() };
+    let b = WildBehavior {
+        id: "W".to_string(),
+    };
     let ctx = make_ctx("W", 2, 1, &s);
     assert!(b.on_land(&ctx).is_empty());
 }
@@ -244,14 +403,18 @@ fn r3_03_wild_on_land_empty() {
 #[test]
 fn r3_03_wild_on_win_empty() {
     let s = make_state(5, 3);
-    let b = WildBehavior { id: "W".to_string() };
+    let b = WildBehavior {
+        id: "W".to_string(),
+    };
     let ctx = make_ctx("W", 2, 1, &s);
     assert!(b.on_win(&ctx).is_empty());
 }
 
 #[test]
 fn r3_03_wild_kind_and_id() {
-    let b = WildBehavior { id: "WLD".to_string() };
+    let b = WildBehavior {
+        id: "WLD".to_string(),
+    };
     assert_eq!(b.id(), "WLD");
     assert_eq!(b.kind(), "WildBehavior");
 }
@@ -261,7 +424,10 @@ fn r3_03_wild_kind_and_id() {
 #[test]
 fn r3_04_expanding_on_land_emits_expand() {
     let s = make_state(5, 3);
-    let b = ExpandingWildBehavior { id: "EW".to_string(), on_win_only: false };
+    let b = ExpandingWildBehavior {
+        id: "EW".to_string(),
+        on_win_only: false,
+    };
     let ctx = make_ctx("EW", 3, 1, &s);
     let effects = b.on_land(&ctx);
     assert_eq!(effects.len(), 1);
@@ -274,7 +440,10 @@ fn r3_04_expanding_on_land_emits_expand() {
 #[test]
 fn r3_04_expanding_on_land_empty_when_win_only() {
     let s = make_state(5, 3);
-    let b = ExpandingWildBehavior { id: "EW".to_string(), on_win_only: true };
+    let b = ExpandingWildBehavior {
+        id: "EW".to_string(),
+        on_win_only: true,
+    };
     let ctx = make_ctx("EW", 3, 1, &s);
     assert!(b.on_land(&ctx).is_empty());
 }
@@ -282,7 +451,10 @@ fn r3_04_expanding_on_land_empty_when_win_only() {
 #[test]
 fn r3_04_expanding_on_win_emits_when_win_only() {
     let s = make_state(5, 3);
-    let b = ExpandingWildBehavior { id: "EW".to_string(), on_win_only: true };
+    let b = ExpandingWildBehavior {
+        id: "EW".to_string(),
+        on_win_only: true,
+    };
     let ctx = make_ctx("EW", 2, 0, &s);
     assert!(!b.on_win(&ctx).is_empty());
 }
@@ -290,7 +462,10 @@ fn r3_04_expanding_on_win_emits_when_win_only() {
 #[test]
 fn r3_04_expand_effect_fills_reel() {
     let mut s = make_state(5, 3);
-    let b = ExpandingWildBehavior { id: "EW".to_string(), on_win_only: false };
+    let b = ExpandingWildBehavior {
+        id: "EW".to_string(),
+        on_win_only: false,
+    };
     let effects = b.on_land(&make_ctx("EW", 1, 2, &s));
     apply_effects(&mut s, &effects);
     assert_eq!(s.grid[1], vec!["EW", "EW", "EW"]);
@@ -301,11 +476,17 @@ fn r3_04_expand_effect_fills_reel() {
 #[test]
 fn r3_05_sticky_on_land_emits_lock() {
     let s = make_state(5, 3);
-    let b = StickyWildBehavior { id: "SW".to_string(), duration: 3, upgrade_on_win: false };
+    let b = StickyWildBehavior {
+        id: "SW".to_string(),
+        duration: 3,
+        upgrade_on_win: false,
+    };
     let effects = b.on_land(&make_ctx("SW", 2, 1, &s));
     assert_eq!(effects.len(), 1);
     match &effects[0] {
-        Effect::LockPosition { remaining_spins, .. } => assert_eq!(*remaining_spins, 3),
+        Effect::LockPosition {
+            remaining_spins, ..
+        } => assert_eq!(*remaining_spins, 3),
         _ => panic!("expected LockPosition"),
     }
 }
@@ -313,19 +494,36 @@ fn r3_05_sticky_on_land_emits_lock() {
 #[test]
 fn r3_05_sticky_on_win_empty_without_upgrade() {
     let s = make_state(5, 3);
-    let b = StickyWildBehavior { id: "SW".to_string(), duration: 3, upgrade_on_win: false };
+    let b = StickyWildBehavior {
+        id: "SW".to_string(),
+        duration: 3,
+        upgrade_on_win: false,
+    };
     assert!(b.on_win(&make_ctx("SW", 0, 0, &s)).is_empty());
 }
 
 #[test]
 fn r3_05_sticky_upgrade_on_win_extends_lock() {
     let mut s = make_state(5, 3);
-    apply_effect(&mut s, &Effect::LockPosition { reel: 0, row: 0, remaining_spins: 2 });
-    let b = StickyWildBehavior { id: "SW".to_string(), duration: 3, upgrade_on_win: true };
+    apply_effect(
+        &mut s,
+        &Effect::LockPosition {
+            reel: 0,
+            row: 0,
+            remaining_spins: 2,
+        },
+    );
+    let b = StickyWildBehavior {
+        id: "SW".to_string(),
+        duration: 3,
+        upgrade_on_win: true,
+    };
     let effects = b.on_win(&make_ctx("SW", 0, 0, &s));
     assert!(!effects.is_empty());
     match &effects[0] {
-        Effect::LockPosition { remaining_spins, .. } => assert_eq!(*remaining_spins, 3),
+        Effect::LockPosition {
+            remaining_spins, ..
+        } => assert_eq!(*remaining_spins, 3),
         _ => panic!("expected LockPosition"),
     }
 }
@@ -333,7 +531,11 @@ fn r3_05_sticky_upgrade_on_win_extends_lock() {
 #[test]
 fn r3_05_sticky_persists_across_spins() {
     let mut s = make_state(5, 3);
-    let b = StickyWildBehavior { id: "SW".to_string(), duration: 2, upgrade_on_win: false };
+    let b = StickyWildBehavior {
+        id: "SW".to_string(),
+        duration: 2,
+        upgrade_on_win: false,
+    };
     let effects = b.on_land(&make_ctx("SW", 1, 1, &s));
     apply_effects(&mut s, &effects);
     assert_eq!(s.locked_positions[0].remaining_spins, 2);
@@ -345,7 +547,11 @@ fn r3_05_sticky_persists_across_spins() {
 
 #[test]
 fn r3_05_sticky_kind() {
-    let b = StickyWildBehavior { id: "SW".to_string(), duration: 3, upgrade_on_win: false };
+    let b = StickyWildBehavior {
+        id: "SW".to_string(),
+        duration: 3,
+        upgrade_on_win: false,
+    };
     assert_eq!(b.kind(), "StickyWildBehavior");
 }
 
@@ -354,14 +560,24 @@ fn r3_05_sticky_kind() {
 #[test]
 fn r3_06_mul_wild_on_land_empty() {
     let s = make_state(5, 3);
-    let b = MultiplierWildBehavior { id: "MW".to_string(), value: 2.0, scope: EffectScope::Line, mul: true };
+    let b = MultiplierWildBehavior {
+        id: "MW".to_string(),
+        value: 2.0,
+        scope: EffectScope::Line,
+        mul: true,
+    };
     assert!(b.on_land(&make_ctx("MW", 0, 0, &s)).is_empty());
 }
 
 #[test]
 fn r3_06_mul_wild_on_win_emits_mul() {
     let s = make_state(5, 3);
-    let b = MultiplierWildBehavior { id: "MW".to_string(), value: 3.0, scope: EffectScope::Spin, mul: true };
+    let b = MultiplierWildBehavior {
+        id: "MW".to_string(),
+        value: 3.0,
+        scope: EffectScope::Spin,
+        mul: true,
+    };
     let effects = b.on_win(&make_ctx("MW", 0, 0, &s));
     match &effects[0] {
         Effect::MultiplierMul { value, .. } => assert!((value - 3.0).abs() < 1e-10),
@@ -372,9 +588,14 @@ fn r3_06_mul_wild_on_win_emits_mul() {
 #[test]
 fn r3_06_mul_wild_additive_mode() {
     let s = make_state(5, 3);
-    let b = MultiplierWildBehavior { id: "MW".to_string(), value: 2.0, scope: EffectScope::Line, mul: false };
+    let b = MultiplierWildBehavior {
+        id: "MW".to_string(),
+        value: 2.0,
+        scope: EffectScope::Line,
+        mul: false,
+    };
     match &b.on_win(&make_ctx("MW", 0, 0, &s))[0] {
-        Effect::MultiplierAdd { .. } => {},
+        Effect::MultiplierAdd { .. } => {}
         _ => panic!("expected MultiplierAdd"),
     }
 }
@@ -382,7 +603,12 @@ fn r3_06_mul_wild_additive_mode() {
 #[test]
 fn r3_06_two_mul_wilds_stack_to_x4() {
     let mut s = make_state(5, 3);
-    let b = MultiplierWildBehavior { id: "MW".to_string(), value: 2.0, scope: EffectScope::Spin, mul: true };
+    let b = MultiplierWildBehavior {
+        id: "MW".to_string(),
+        value: 2.0,
+        scope: EffectScope::Spin,
+        mul: true,
+    };
     let e1 = b.on_win(&make_ctx("MW", 0, 0, &s));
     apply_effects(&mut s, &e1);
     let e2 = b.on_win(&make_ctx("MW", 1, 0, &s));
@@ -404,7 +630,9 @@ fn r3_07_scatter_no_trigger_below_threshold() {
         scatter_pays: HashMap::new(),
     };
     let effects = b.on_land(&make_ctx("SC", 0, 0, &s));
-    assert!(!effects.iter().any(|e| matches!(e, Effect::TriggerFeature { .. })));
+    assert!(!effects
+        .iter()
+        .any(|e| matches!(e, Effect::TriggerFeature { .. })));
 }
 
 #[test]
@@ -420,13 +648,17 @@ fn r3_07_scatter_triggers_at_threshold() {
         scatter_pays: HashMap::new(),
     };
     let effects = b.on_land(&make_ctx("SC", 0, 0, &s));
-    assert!(effects.iter().any(|e| matches!(e, Effect::TriggerFeature { .. })));
+    assert!(effects
+        .iter()
+        .any(|e| matches!(e, Effect::TriggerFeature { .. })));
 }
 
 #[test]
 fn r3_07_scatter_pay_emitted_for_count() {
     let mut s = make_state(5, 3);
-    for i in 0..3 { s.grid[i][0] = "SC".to_string(); }
+    for i in 0..3 {
+        s.grid[i][0] = "SC".to_string();
+    }
     let mut pays = HashMap::new();
     pays.insert(3, 5.0);
     let b = ScatterBehavior {
@@ -436,7 +668,9 @@ fn r3_07_scatter_pay_emitted_for_count() {
         scatter_pays: pays,
     };
     let effects = b.on_land(&make_ctx("SC", 0, 0, &s));
-    assert!(effects.iter().any(|e| matches!(e, Effect::ScatterPay { multiplier, .. } if (*multiplier - 5.0).abs() < 1e-10)));
+    assert!(effects.iter().any(
+        |e| matches!(e, Effect::ScatterPay { multiplier, .. } if (*multiplier - 5.0).abs() < 1e-10)
+    ));
 }
 
 #[test]
@@ -454,7 +688,9 @@ fn r3_07_scatter_on_win_empty() {
 #[test]
 fn r3_07_scatter_deduped_in_state() {
     let mut s = make_state(5, 3);
-    for i in 0..3 { s.grid[i][0] = "SC".to_string(); }
+    for i in 0..3 {
+        s.grid[i][0] = "SC".to_string();
+    }
     let b = ScatterBehavior {
         id: "SC".to_string(),
         feature_id: "free_spins".to_string(),
@@ -482,7 +718,9 @@ fn r3_08_coin_on_land_collects_coin() {
         respins_reset: 3,
     };
     let effects = b.on_land(&make_ctx("COIN", 0, 0, &s));
-    assert!(effects.iter().any(|e| matches!(e, Effect::CollectCoin { amount, .. } if (*amount - 5.0).abs() < 1e-10)));
+    assert!(effects
+        .iter()
+        .any(|e| matches!(e, Effect::CollectCoin { amount, .. } if (*amount - 5.0).abs() < 1e-10)));
 }
 
 #[test]
@@ -502,7 +740,9 @@ fn r3_08_coin_triggers_when_threshold_met() {
         respins_reset: 3,
     };
     let effects = b.on_land(&make_ctx("COIN", 0, 0, &s));
-    assert!(effects.iter().any(|e| matches!(e, Effect::TriggerFeature { .. })));
+    assert!(effects
+        .iter()
+        .any(|e| matches!(e, Effect::TriggerFeature { .. })));
 }
 
 #[test]
@@ -518,7 +758,9 @@ fn r3_08_coin_respin_during_hnw() {
         respins_reset: 3,
     };
     let effects = b.on_land(&make_ctx("COIN", 0, 0, &s));
-    assert!(effects.iter().any(|e| matches!(e, Effect::Respin { count } if *count == 3)));
+    assert!(effects
+        .iter()
+        .any(|e| matches!(e, Effect::Respin { count } if *count == 3)));
 }
 
 #[test]
@@ -629,7 +871,12 @@ fn r3_09_jackpot_only_once_per_spin() {
 #[test]
 fn r3_10_registry_register_and_get() {
     let mut reg = BehaviorRegistry::new();
-    reg.register("W", Box::new(WildBehavior { id: "W".to_string() }));
+    reg.register(
+        "W",
+        Box::new(WildBehavior {
+            id: "W".to_string(),
+        }),
+    );
     assert!(reg.has("W"));
     assert!(reg.get("W").is_some());
 }
@@ -645,15 +892,36 @@ fn r3_10_registry_not_found() {
 #[should_panic(expected = "duplicate")]
 fn r3_10_registry_duplicate_panics() {
     let mut reg = BehaviorRegistry::new();
-    reg.register("W", Box::new(WildBehavior { id: "W".to_string() }));
-    reg.register("W", Box::new(WildBehavior { id: "W".to_string() }));
+    reg.register(
+        "W",
+        Box::new(WildBehavior {
+            id: "W".to_string(),
+        }),
+    );
+    reg.register(
+        "W",
+        Box::new(WildBehavior {
+            id: "W".to_string(),
+        }),
+    );
 }
 
 #[test]
 fn r3_10_registry_override_no_panic() {
     let mut reg = BehaviorRegistry::new();
-    reg.register("W", Box::new(WildBehavior { id: "W".to_string() }));
-    reg.override_behavior("W", Box::new(ExpandingWildBehavior { id: "W".to_string(), on_win_only: false }));
+    reg.register(
+        "W",
+        Box::new(WildBehavior {
+            id: "W".to_string(),
+        }),
+    );
+    reg.override_behavior(
+        "W",
+        Box::new(ExpandingWildBehavior {
+            id: "W".to_string(),
+            on_win_only: false,
+        }),
+    );
     assert_eq!(reg.get("W").unwrap().kind(), "ExpandingWildBehavior");
 }
 
@@ -666,12 +934,15 @@ fn r3_11_scatter_pipeline_triggers_free_spins() {
     s.grid[1][0] = "SC".to_string();
     s.grid[2][0] = "SC".to_string();
     let mut reg = BehaviorRegistry::new();
-    reg.register("SC", Box::new(ScatterBehavior {
-        id: "SC".to_string(),
-        feature_id: "free_spins".to_string(),
-        trigger_count: 3,
-        scatter_pays: HashMap::new(),
-    }));
+    reg.register(
+        "SC",
+        Box::new(ScatterBehavior {
+            id: "SC".to_string(),
+            feature_id: "free_spins".to_string(),
+            trigger_count: 3,
+            scatter_pays: HashMap::new(),
+        }),
+    );
 
     for reel in 0..5 {
         for row in 0..3 {
@@ -690,12 +961,15 @@ fn r3_11_scatter_pipeline_triggers_free_spins() {
 fn r3_11_mul_wilds_accumulate_via_on_win() {
     let mut s = make_state(5, 3);
     let mut reg = BehaviorRegistry::new();
-    reg.register("MW", Box::new(MultiplierWildBehavior {
-        id: "MW".to_string(),
-        value: 2.0,
-        scope: EffectScope::Spin,
-        mul: true,
-    }));
+    reg.register(
+        "MW",
+        Box::new(MultiplierWildBehavior {
+            id: "MW".to_string(),
+            value: 2.0,
+            scope: EffectScope::Spin,
+            mul: true,
+        }),
+    );
 
     let winning = vec![("MW", 0usize, 0usize), ("MW", 1, 0)];
     for (sym, reel, row) in &winning {
@@ -712,10 +986,13 @@ fn r3_11_expanding_wild_fills_reel_via_pipeline() {
     let mut s = make_state(5, 3);
     s.grid[2][1] = "EW".to_string();
     let mut reg = BehaviorRegistry::new();
-    reg.register("EW", Box::new(ExpandingWildBehavior {
-        id: "EW".to_string(),
-        on_win_only: false,
-    }));
+    reg.register(
+        "EW",
+        Box::new(ExpandingWildBehavior {
+            id: "EW".to_string(),
+            on_win_only: false,
+        }),
+    );
 
     // Run onLand for all cells
     for reel in 0..5 {
@@ -735,11 +1012,14 @@ fn r3_11_sticky_wild_lock_persists_and_restores() {
     let mut s = make_state(5, 3);
     s.grid[1][2] = "SW".to_string();
     let mut reg = BehaviorRegistry::new();
-    reg.register("SW", Box::new(StickyWildBehavior {
-        id: "SW".to_string(),
-        duration: 3,
-        upgrade_on_win: false,
-    }));
+    reg.register(
+        "SW",
+        Box::new(StickyWildBehavior {
+            id: "SW".to_string(),
+            duration: 3,
+            upgrade_on_win: false,
+        }),
+    );
 
     // spin 1: land
     let effects = reg.get("SW").unwrap().on_land(&make_ctx("SW", 1, 2, &s));

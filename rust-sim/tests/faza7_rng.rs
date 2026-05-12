@@ -11,7 +11,7 @@
 //! * Statistical stress: 10M samples, chi-squared < strict threshold for each backend.
 
 use slot_sim::rng::{
-    chi_squared_uniformity, bounded_uniformity, create_rng, Mulberry32Backend, Pcg64Backend,
+    bounded_uniformity, chi_squared_uniformity, create_rng, Mulberry32Backend, Pcg64Backend,
     Philox4x32Backend, RngBackend, RngKind, SlotRng, Xoshiro256SSBackend,
 };
 
@@ -54,8 +54,16 @@ fn slot_rng_pick_weighted_stable() {
     }
     // Weights 10/30/60 → expect ~10/30/60k hits each.
     assert!(counts[0] > 8_000 && counts[0] < 12_000, "low={}", counts[0]);
-    assert!(counts[1] > 27_000 && counts[1] < 33_000, "mid={}", counts[1]);
-    assert!(counts[2] > 57_000 && counts[2] < 63_000, "high={}", counts[2]);
+    assert!(
+        counts[1] > 27_000 && counts[1] < 33_000,
+        "mid={}",
+        counts[1]
+    );
+    assert!(
+        counts[2] > 57_000 && counts[2] < 63_000,
+        "high={}",
+        counts[2]
+    );
 }
 
 #[test]
@@ -107,7 +115,10 @@ fn pcg64_integration_split_two_nonces_differ() {
     let mut s2 = parent.split(1002);
     let seq1: Vec<u64> = (0..50).map(|_| s1.next_u64()).collect();
     let seq2: Vec<u64> = (0..50).map(|_| s2.next_u64()).collect();
-    assert_ne!(seq1, seq2, "different nonces must produce different child sequences");
+    assert_ne!(
+        seq1, seq2,
+        "different nonces must produce different child sequences"
+    );
 }
 
 #[test]
@@ -116,7 +127,11 @@ fn pcg64_integration_split_same_nonce_same_output() {
     let mut s1 = parent.split(7777);
     let mut s2 = parent.split(7777);
     for _ in 0..100 {
-        assert_eq!(s1.next_u64(), s2.next_u64(), "same nonce must be deterministic");
+        assert_eq!(
+            s1.next_u64(),
+            s2.next_u64(),
+            "same nonce must be deterministic"
+        );
     }
 }
 
@@ -139,7 +154,10 @@ fn pcg64_integration_bounded_chi_squared() {
 fn pcg64_seed_state_round_trip() {
     let rng = Pcg64Backend::new(12345);
     let state = rng.seed_state();
-    assert!(state.iter().any(|&x| x != 0), "state must be non-zero after seeding");
+    assert!(
+        state.iter().any(|&x| x != 0),
+        "state must be non-zero after seeding"
+    );
 }
 
 // ─── Xoshiro256** ─────────────────────────────────────────────────────────────

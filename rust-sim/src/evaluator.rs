@@ -104,9 +104,21 @@ impl<'a> Evaluator<'a> {
             }
         }
 
-        let wild_idx = config.symbols.iter().position(|s| s.is_wild).map(|i| i as u8);
-        let scatter_idx = config.symbols.iter().position(|s| s.is_scatter).map(|i| i as u8);
-        let bonus_idx = config.symbols.iter().position(|s| s.is_bonus).map(|i| i as u8);
+        let wild_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_wild)
+            .map(|i| i as u8);
+        let scatter_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_scatter)
+            .map(|i| i as u8);
+        let bonus_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_bonus)
+            .map(|i| i as u8);
 
         let lightning_weights: Vec<(u32, u32)> = config
             .lightning
@@ -617,9 +629,7 @@ impl<'a> Evaluator<'a> {
         let (line_wins, base_win) = match &self.eval_mode {
             EvalMode::Lines => self.evaluate_lines(grid, total_bet_mc),
             EvalMode::Ways => self.evaluate_ways(grid, total_bet_mc),
-            EvalMode::Cluster { min_size } => {
-                self.evaluate_cluster(grid, *min_size, total_bet_mc)
-            }
+            EvalMode::Cluster { min_size } => self.evaluate_cluster(grid, *min_size, total_bet_mc),
             EvalMode::PayAnywhere { min_count } => {
                 self.evaluate_pay_anywhere(grid, *min_count, total_bet_mc)
             }

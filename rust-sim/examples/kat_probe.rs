@@ -15,19 +15,55 @@ fn make_config() -> GameConfig {
         vec![2u8, 1, 0, 1, 2],
     ];
     cfg.paytable = HashMap::from([
-        ("W".to_string(),  PayEntry { pay3: 10.0, pay4:  50.0, pay5: 200.0 }),
-        ("H1".to_string(), PayEntry { pay3:  5.0, pay4:  25.0, pay5: 100.0 }),
-        ("L1".to_string(), PayEntry { pay3:  2.0, pay4:  10.0, pay5:  40.0 }),
+        (
+            "W".to_string(),
+            PayEntry {
+                pay3: 10.0,
+                pay4: 50.0,
+                pay5: 200.0,
+            },
+        ),
+        (
+            "H1".to_string(),
+            PayEntry {
+                pay3: 5.0,
+                pay4: 25.0,
+                pay5: 100.0,
+            },
+        ),
+        (
+            "L1".to_string(),
+            PayEntry {
+                pay3: 2.0,
+                pay4: 10.0,
+                pay5: 40.0,
+            },
+        ),
     ]);
     let rw = vec![
-        ReelWeight { symbol: "W".to_string(),  weight:  2 },
-        ReelWeight { symbol: "H1".to_string(), weight: 10 },
-        ReelWeight { symbol: "L1".to_string(), weight: 30 },
-        ReelWeight { symbol: "S".to_string(),  weight:  3 },
-        ReelWeight { symbol: "B".to_string(),  weight:  5 },
+        ReelWeight {
+            symbol: "W".to_string(),
+            weight: 2,
+        },
+        ReelWeight {
+            symbol: "H1".to_string(),
+            weight: 10,
+        },
+        ReelWeight {
+            symbol: "L1".to_string(),
+            weight: 30,
+        },
+        ReelWeight {
+            symbol: "S".to_string(),
+            weight: 3,
+        },
+        ReelWeight {
+            symbol: "B".to_string(),
+            weight: 5,
+        },
     ];
     cfg.base_weights = vec![rw.clone(); 5];
-    cfg.fs_weights   = vec![rw; 5];
+    cfg.fs_weights = vec![rw; 5];
     cfg
 }
 
@@ -44,8 +80,15 @@ fn main() {
     for i in 0..10 {
         let grid = gen.generate_base(&mut rng);
         let res = eval.eval_lines(grid, bet_mc);
-        println!("spin {:2}: base_win={:>8} scatter={} bonus={} fs={} hnw={}",
-            i, res.base_win, res.scatter_count, res.bonus_count, res.fs_triggered, res.hnw_triggered);
+        println!(
+            "spin {:2}: base_win={:>8} scatter={} bonus={} fs={} hnw={}",
+            i,
+            res.base_win,
+            res.scatter_count,
+            res.bonus_count,
+            res.fs_triggered,
+            res.hnw_triggered
+        );
         total += res.base_win;
         wins.push(res.base_win);
     }
@@ -62,9 +105,15 @@ fn main() {
         let grid = gen.generate_base(&mut rng);
         let res = eval.eval_lines(grid, bet_mc);
         total_win += res.base_win;
-        if res.base_win > 0 { hit_count += 1; }
-        if res.fs_triggered { scatter_triggers += 1; }
-        if res.hnw_triggered { hnw_triggers += 1; }
+        if res.base_win > 0 {
+            hit_count += 1;
+        }
+        if res.fs_triggered {
+            scatter_triggers += 1;
+        }
+        if res.hnw_triggered {
+            hnw_triggers += 1;
+        }
     }
     let total_bet = (n as i64) * bet_mc;
     let rtp = total_win as f64 / total_bet as f64 * 100.0;
@@ -76,11 +125,11 @@ fn main() {
     println!("scatter_triggers={scatter_triggers}");
     println!("hnw_triggers={hnw_triggers}");
 
-    let entries = [(0u8,2),(1u8,10),(2u8,30),(3u8,3),(4u8,5)];
+    let entries = [(0u8, 2), (1u8, 10), (2u8, 30), (3u8, 3), (4u8, 5)];
     let t = AliasTable::build(&entries);
-    let total_w: u32 = entries.iter().map(|(_,w)| w).sum();
+    let total_w: u32 = entries.iter().map(|(_, w)| w).sum();
     println!("\n=== AliasTable marginals ===");
-    for (i, (_,w)) in entries.iter().enumerate() {
+    for (i, (_, w)) in entries.iter().enumerate() {
         let mp = t.marginal_probability(i as u8);
         let expected = *w as f64 / total_w as f64;
         println!("sym_{i}_marginal={mp:.10}");

@@ -99,13 +99,16 @@ impl ZeroAllocEvaluator {
     /// exceeds `MAX_SYMS - 1`.
     pub fn from_config(config: &GameConfig) -> Self {
         let reels = config.reels as usize;
-        let rows  = config.rows  as usize;
+        let rows = config.rows as usize;
 
         // ── Paytable ──────────────────────────────────────────────────────
         let mut paytable = [[0i64; 3]; MAX_SYMS];
         for (sym_id, pay) in &config.paytable {
             if let Some(idx) = config.symbol_index(sym_id) {
-                assert!(idx < MAX_SYMS, "symbol index {idx} exceeds MAX_SYMS={MAX_SYMS}");
+                assert!(
+                    idx < MAX_SYMS,
+                    "symbol index {idx} exceeds MAX_SYMS={MAX_SYMS}"
+                );
                 paytable[idx][0] = (pay.pay3 * 1_000.0) as i64;
                 paytable[idx][1] = (pay.pay4 * 1_000.0) as i64;
                 paytable[idx][2] = (pay.pay5 * 1_000.0) as i64;
@@ -126,12 +129,24 @@ impl ZeroAllocEvaluator {
         }
 
         // ── Special symbol indices ─────────────────────────────────────────
-        let wild_idx = config.symbols.iter()
-            .position(|s| s.is_wild).map(|i| i as u8).unwrap_or(NO_SYM);
-        let scatter_idx = config.symbols.iter()
-            .position(|s| s.is_scatter).map(|i| i as u8).unwrap_or(NO_SYM);
-        let bonus_idx = config.symbols.iter()
-            .position(|s| s.is_bonus).map(|i| i as u8).unwrap_or(NO_SYM);
+        let wild_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_wild)
+            .map(|i| i as u8)
+            .unwrap_or(NO_SYM);
+        let scatter_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_scatter)
+            .map(|i| i as u8)
+            .unwrap_or(NO_SYM);
+        let bonus_idx = config
+            .symbols
+            .iter()
+            .position(|s| s.is_bonus)
+            .map(|i| i as u8)
+            .unwrap_or(NO_SYM);
 
         ZeroAllocEvaluator {
             paytable,
@@ -156,16 +171,20 @@ impl ZeroAllocEvaluator {
     /// Returns a `PackedSpinResult` on the stack.
     #[inline]
     pub fn eval_lines(&self, grid: PackedGrid, total_bet_mc: i64) -> PackedSpinResult {
-        let mut base_win     = 0i64;
+        let mut base_win = 0i64;
         let mut scatter_count = 0u8;
-        let mut bonus_count   = 0u8;
+        let mut bonus_count = 0u8;
 
         // ── Count special symbols (scalar loop over all cells) ────────────
         for r in 0..self.reels {
             for row in 0..self.rows {
                 let sym = grid.get(r, row, self.rows);
-                if sym == self.scatter_idx { scatter_count += 1; }
-                if sym == self.bonus_idx   { bonus_count   += 1; }
+                if sym == self.scatter_idx {
+                    scatter_count += 1;
+                }
+                if sym == self.bonus_idx {
+                    bonus_count += 1;
+                }
             }
         }
 
@@ -183,7 +202,7 @@ impl ZeroAllocEvaluator {
         // Legacy code: `if hnw { ... } else if scatter >= 3 { ... }` — when HnW
         // fires, FS does NOT fire even if scatter_count >= 3.
         let hnw_triggered = bonus_count >= self.hnw_trigger_count;
-        let fs_triggered  = !hnw_triggered && scatter_count >= self.fs_trigger_count;
+        let fs_triggered = !hnw_triggered && scatter_count >= self.fs_trigger_count;
 
         PackedSpinResult {
             base_win,
@@ -207,15 +226,21 @@ impl ZeroAllocEvaluator {
         let s0 = line[0];
 
         // Scatter or bonus at reel 0 breaks all paylines.
-        if self.is_blocker(s0) { return 0; }
+        if self.is_blocker(s0) {
+            return 0;
+        }
 
         // Chain: consecutive non-blocker cells from left.
         let mut chain = 0usize;
         for r in 0..self.reels {
-            if self.is_blocker(line[r]) { break; }
+            if self.is_blocker(line[r]) {
+                break;
+            }
             chain += 1;
         }
-        if chain < 3 { return 0; }
+        if chain < 3 {
+            return 0;
+        }
 
         // First non-wild paying symbol in the chain.
         let target = (0..chain)
@@ -247,16 +272,22 @@ impl ZeroAllocEvaluator {
                 break;
             }
         }
-        if count < 3 { return 0; }
+        if count < 3 {
+            return 0;
+        }
         let raw = self.get_pay_raw(tgt, count as u8);
-        if raw <= 0 { return 0; }
+        if raw <= 0 {
+            return 0;
+        }
         raw.saturating_mul(bet_mc) / 1_000
     }
 
     /// `paytable[sym][count-3]` with bounds-checked access.
     #[inline(always)]
     fn get_pay_raw(&self, sym: u8, count: u8) -> i64 {
-        if (sym as usize) >= MAX_SYMS || count < 3 || count > 5 { return 0; }
+        if (sym as usize) >= MAX_SYMS || count < 3 || count > 5 {
+            return 0;
+        }
         self.paytable[sym as usize][(count - 3) as usize]
     }
 
@@ -269,13 +300,21 @@ impl ZeroAllocEvaluator {
     // ── Accessors for tests ───────────────────────────────────────────────
 
     #[cfg(test)]
-    pub fn reels(&self) -> usize { self.reels }
+    pub fn reels(&self) -> usize {
+        self.reels
+    }
     #[cfg(test)]
-    pub fn rows(&self) -> usize  { self.rows  }
+    pub fn rows(&self) -> usize {
+        self.rows
+    }
     #[cfg(test)]
-    pub fn scatter_idx(&self) -> u8  { self.scatter_idx }
+    pub fn scatter_idx(&self) -> u8 {
+        self.scatter_idx
+    }
     #[cfg(test)]
-    pub fn bonus_idx(&self)   -> u8  { self.bonus_idx   }
+    pub fn bonus_idx(&self) -> u8 {
+        self.bonus_idx
+    }
 }
 
 // ─── Unit tests ───────────────────────────────────────────────────────────────
@@ -296,18 +335,32 @@ mod tests {
     fn make_config() -> GameConfig {
         let mut cfg = GameConfig::default();
         cfg.paylines = vec![
-            vec![1,1,1,1,1],  // middle row
-            vec![0,0,0,0,0],  // top row
-            vec![2,2,2,2,2],  // bottom row
-            vec![0,1,2,1,0],  // V shape
-            vec![2,1,0,1,2],  // inverted V
+            vec![1, 1, 1, 1, 1], // middle row
+            vec![0, 0, 0, 0, 0], // top row
+            vec![2, 2, 2, 2, 2], // bottom row
+            vec![0, 1, 2, 1, 0], // V shape
+            vec![2, 1, 0, 1, 2], // inverted V
         ];
         // W (idx=0) NOT in paytable → wild-only chains yield 0.
         // This lets us use PackedGrid::default() (all-zero = all-wild) as a
         // zero-win baseline while still testing wild substitution.
         cfg.paytable = HashMap::from([
-            ("H1".to_string(), PayEntry { pay3:  5.0, pay4:  25.0, pay5: 100.0 }),
-            ("L1".to_string(), PayEntry { pay3:  2.0, pay4:  10.0, pay5:  40.0 }),
+            (
+                "H1".to_string(),
+                PayEntry {
+                    pay3: 5.0,
+                    pay4: 25.0,
+                    pay5: 100.0,
+                },
+            ),
+            (
+                "L1".to_string(),
+                PayEntry {
+                    pay3: 2.0,
+                    pay4: 10.0,
+                    pay5: 40.0,
+                },
+            ),
         ]);
         cfg
     }
@@ -331,51 +384,69 @@ mod tests {
     fn no_symbols_set_gives_zero_win() {
         // PackedGrid::default() = all 0 = all W (wild).
         // W is NOT in the paytable, so wild-only chains pay nothing.
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
-        let g    = PackedGrid::default();
-        let res  = eval.eval_lines(g, 1_000);
-        assert_eq!(res.base_win, 0, "wild-only grid with W not in paytable → zero win");
+        let g = PackedGrid::default();
+        let res = eval.eval_lines(g, 1_000);
+        assert_eq!(
+            res.base_win, 0,
+            "wild-only grid with W not in paytable → zero win"
+        );
         assert_eq!(res.scatter_count, 0);
-        assert_eq!(res.bonus_count,   0);
+        assert_eq!(res.bonus_count, 0);
         assert!(!res.fs_triggered);
         assert!(!res.hnw_triggered);
     }
 
     #[test]
     fn h1_five_of_a_kind_on_middle_line() {
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let rows = 3;
         let mut g = PackedGrid::default();
         // Block all non-middle paylines via scatter at reel 0.
         block_non_middle_paylines(&mut g);
         // Place H1 (idx=1) on the entire middle row.
-        for r in 0..5 { g.set(r, 1, rows, 1); }
+        for r in 0..5 {
+            g.set(r, 1, rows, 1);
+        }
         let bet_mc = 1_000i64;
         let res = eval.eval_lines(g, bet_mc);
         // Middle row: H1 pay5 = 100 × bet/1000 = 100_000 mc.
-        assert_eq!(res.base_win, 100_000, "H1×5 on middle line; got {}", res.base_win);
+        assert_eq!(
+            res.base_win, 100_000,
+            "H1×5 on middle line; got {}",
+            res.base_win
+        );
     }
 
     #[test]
     fn scatter_at_reel0_on_all_rows_blocks_every_payline() {
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let rows = 3;
         let mut g = PackedGrid::default();
         // Scatter (idx=3) on ALL rows of reel 0 → every payline blocked.
-        for row in 0..rows { g.set(0, row, rows, 3); }
+        for row in 0..rows {
+            g.set(0, row, rows, 3);
+        }
         // Fill reels 1-4 with H1 (would pay if not blocked).
-        for r in 1..5 { for row in 0..rows { g.set(r, row, rows, 1); } }
+        for r in 1..5 {
+            for row in 0..rows {
+                g.set(r, row, rows, 1);
+            }
+        }
         let res = eval.eval_lines(g, 1_000);
-        assert_eq!(res.base_win, 0, "scatter on all rows of reel 0: all paylines blocked");
+        assert_eq!(
+            res.base_win, 0,
+            "scatter on all rows of reel 0: all paylines blocked"
+        );
         assert_eq!(res.scatter_count, 3, "exactly 3 scatters at reel 0");
     }
 
     #[test]
     fn three_scatters_trigger_fs() {
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let mut g = PackedGrid::default();
         let rows = 3;
@@ -391,7 +462,7 @@ mod tests {
 
     #[test]
     fn wild_substitutes_for_h1_on_isolated_payline() {
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let rows = 3;
         let mut g = PackedGrid::default();
@@ -399,23 +470,33 @@ mod tests {
         block_non_middle_paylines(&mut g);
         // Middle row: W(0) at reel 0, H1(1) at reels 1-4.
         g.set(0, 1, rows, 0); // W (wild)
-        for r in 1..5 { g.set(r, 1, rows, 1); } // H1
+        for r in 1..5 {
+            g.set(r, 1, rows, 1);
+        } // H1
         let res = eval.eval_lines(g, 1_000);
         // W + H1×4 → chain of 5 counting W as wild → H1-pay5 = 100_000 mc.
-        assert_eq!(res.base_win, 100_000, "wild sub gives H1×5; got {}", res.base_win);
+        assert_eq!(
+            res.base_win, 100_000,
+            "wild sub gives H1×5; got {}",
+            res.base_win
+        );
     }
 
     #[test]
     fn three_of_a_kind_on_isolated_middle_line() {
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let rows = 3;
         let mut g = PackedGrid::default();
         block_non_middle_paylines(&mut g);
         // H1 at reels 0-2, L1 at reels 3-4 on the middle row.
         // The chain stops at reel 3 (L1 ≠ H1 and L1 ≠ wild) → 3-of-a-kind H1.
-        for r in 0..3 { g.set(r, 1, rows, 1); } // H1
-        for r in 3..5 { g.set(r, 1, rows, 2); } // L1
+        for r in 0..3 {
+            g.set(r, 1, rows, 1);
+        } // H1
+        for r in 3..5 {
+            g.set(r, 1, rows, 2);
+        } // L1
         let res = eval.eval_lines(g, 1_000);
         // H1 pay3 = 5 × bet_mc/1000 = 5_000 mc.
         assert_eq!(res.base_win, 5_000, "H1×3; got {}", res.base_win);
@@ -424,7 +505,7 @@ mod tests {
     #[test]
     fn hnw_trigger_requires_config_count() {
         // Default HnW trigger = 6 bonus symbols.
-        let cfg  = make_config();
+        let cfg = make_config();
         let eval = ZeroAllocEvaluator::from_config(&cfg);
         let rows = 3;
         let mut g = PackedGrid::default();
@@ -436,13 +517,19 @@ mod tests {
         g.set(4, 0, rows, 4);
         let res = eval.eval_lines(g, 1_000);
         assert_eq!(res.bonus_count, 5);
-        assert!(!res.hnw_triggered, "5 bonus < 6 required — must not trigger");
+        assert!(
+            !res.hnw_triggered,
+            "5 bonus < 6 required — must not trigger"
+        );
 
         // 6th bonus → triggers HnW.
         g.set(0, 1, rows, 4);
         let res = eval.eval_lines(g, 1_000);
         assert_eq!(res.bonus_count, 6);
-        assert!(res.hnw_triggered, "6 bonus == trigger_count=6 — must trigger");
+        assert!(
+            res.hnw_triggered,
+            "6 bonus == trigger_count=6 — must trigger"
+        );
     }
 
     #[test]
@@ -454,7 +541,9 @@ mod tests {
         let rows = 3;
         let mut g = PackedGrid::default();
         // Fill middle row with H1.
-        for r in 0..5 { g.set(r, 1, rows, 1); }
+        for r in 0..5 {
+            g.set(r, 1, rows, 1);
+        }
         let res = eval.eval_lines(g, 1_000);
         assert_eq!(res.base_win, 0, "empty paytable → zero win");
     }

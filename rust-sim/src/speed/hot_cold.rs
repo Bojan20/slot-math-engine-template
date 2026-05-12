@@ -44,23 +44,23 @@ use super::packed_grid::PackedGrid;
 #[repr(C, align(64))]
 pub struct SpinHot {
     /// Packed grid for the current spin.
-    pub grid: PackedGrid,        // u128, align 16 → bytes  0–15
+    pub grid: PackedGrid, // u128, align 16 → bytes  0–15
     /// Current RNG state snapshot (for debugging / replay).
-    pub rng_state: u64,          //       align  8 → bytes 16–23
+    pub rng_state: u64, //       align  8 → bytes 16–23
     /// Current spin base win (millicredits, bet-scaled).
-    pub base_win: i64,           //       align  8 → bytes 24–31
+    pub base_win: i64, //       align  8 → bytes 24–31
     /// Active win multiplier (1 = no multiplier applied).
-    pub multiplier: u32,         //       align  4 → bytes 32–35
+    pub multiplier: u32, //       align  4 → bytes 32–35
     /// Scatter symbol count on the current grid.
-    pub scatter_count: u8,       //                  byte  36
+    pub scatter_count: u8, //                  byte  36
     /// Bonus symbol count on the current grid.
-    pub bonus_count: u8,         //                  byte  37
+    pub bonus_count: u8, //                  byte  37
     /// Free-spin feature was triggered this spin.
-    pub fs_triggered: bool,      //                  byte  38
+    pub fs_triggered: bool, //                  byte  38
     /// Hold-and-Win feature was triggered this spin.
-    pub hnw_triggered: bool,     //                  byte  39
+    pub hnw_triggered: bool, //                  byte  39
     #[allow(dead_code)]
-    _pad: [u8; 24],              //                  bytes 40–63
+    _pad: [u8; 24], //                  bytes 40–63
 }
 
 // Compile-time layout verification.
@@ -74,26 +74,26 @@ impl SpinHot {
     #[inline]
     pub const fn new() -> Self {
         SpinHot {
-            grid:          PackedGrid(0),
-            rng_state:     0,
-            base_win:      0,
-            multiplier:    1,
+            grid: PackedGrid(0),
+            rng_state: 0,
+            base_win: 0,
+            multiplier: 1,
             scatter_count: 0,
-            bonus_count:   0,
-            fs_triggered:  false,
+            bonus_count: 0,
+            fs_triggered: false,
             hnw_triggered: false,
-            _pad:          [0u8; 24],
+            _pad: [0u8; 24],
         }
     }
 
     /// Reset to "start of spin" state — clears win and feature flags.
     #[inline(always)]
     pub fn reset_spin(&mut self) {
-        self.base_win      = 0;
-        self.multiplier    = 1;
+        self.base_win = 0;
+        self.multiplier = 1;
         self.scatter_count = 0;
-        self.bonus_count   = 0;
-        self.fs_triggered  = false;
+        self.bonus_count = 0;
+        self.fs_triggered = false;
         self.hnw_triggered = false;
     }
 
@@ -105,7 +105,9 @@ impl SpinHot {
 }
 
 impl Default for SpinHot {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 // ─── SpinCold ─────────────────────────────────────────────────────────────────
@@ -138,17 +140,23 @@ impl SpinCold {
     /// Update aggregate counters with one spin's result.
     #[inline(always)]
     pub fn record(&mut self, hot: &SpinHot) {
-        self.spins_done  += 1;
+        self.spins_done += 1;
         self.total_wagered = self.total_wagered.saturating_add(self.bet_mc);
-        self.total_won     = self.total_won.saturating_add(hot.final_win());
-        if hot.fs_triggered  { self.fs_triggers  += 1; }
-        if hot.hnw_triggered { self.hnw_triggers += 1; }
+        self.total_won = self.total_won.saturating_add(hot.final_win());
+        if hot.fs_triggered {
+            self.fs_triggers += 1;
+        }
+        if hot.hnw_triggered {
+            self.hnw_triggers += 1;
+        }
     }
 
     /// RTP as percentage.
     #[inline]
     pub fn rtp_pct(&self) -> f64 {
-        if self.total_wagered == 0 { return 0.0; }
+        if self.total_wagered == 0 {
+            return 0.0;
+        }
         self.total_won as f64 / self.total_wagered as f64 * 100.0
     }
 }
@@ -202,22 +210,28 @@ mod tests {
 
     #[test]
     fn spin_cold_record_accumulates() {
-        let mut cold = SpinCold { bet_mc: 1_000, ..Default::default() };
-        let mut hot  = SpinHot::new();
-        hot.base_win   = 2_000;
+        let mut cold = SpinCold {
+            bet_mc: 1_000,
+            ..Default::default()
+        };
+        let mut hot = SpinHot::new();
+        hot.base_win = 2_000;
         hot.multiplier = 1;
         cold.record(&hot);
         cold.record(&hot);
-        assert_eq!(cold.spins_done,   2);
+        assert_eq!(cold.spins_done, 2);
         assert_eq!(cold.total_wagered, 2_000);
-        assert_eq!(cold.total_won,     4_000);
+        assert_eq!(cold.total_won, 4_000);
     }
 
     #[test]
     fn spin_cold_rtp_100pct() {
-        let mut cold = SpinCold { bet_mc: 1_000, ..Default::default() };
-        let mut hot  = SpinHot::new();
-        hot.base_win   = 1_000; // win = bet → 100% RTP
+        let mut cold = SpinCold {
+            bet_mc: 1_000,
+            ..Default::default()
+        };
+        let mut hot = SpinHot::new();
+        hot.base_win = 1_000; // win = bet → 100% RTP
         hot.multiplier = 1;
         for _ in 0..1_000 {
             cold.record(&hot);

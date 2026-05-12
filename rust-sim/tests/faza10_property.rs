@@ -22,9 +22,7 @@ use proptest::prelude::*;
 use slot_sim::{
     config::{GameConfig, PayEntry, ReelWeight},
     rng::SlotRng,
-    speed::{
-        AliasTable, PackedGrid, PackedGridGenerator, ZeroAllocEvaluator,
-    },
+    speed::{AliasTable, PackedGrid, PackedGridGenerator, ZeroAllocEvaluator},
 };
 use std::collections::HashMap;
 
@@ -42,18 +40,47 @@ fn base_config() -> GameConfig {
         vec![2u8, 1, 0, 1, 2],
     ];
     cfg.paytable = HashMap::from([
-        ("H1".to_string(), PayEntry { pay3: 5.0, pay4: 25.0, pay5: 100.0 }),
-        ("L1".to_string(), PayEntry { pay3: 2.0, pay4: 10.0, pay5:  40.0 }),
+        (
+            "H1".to_string(),
+            PayEntry {
+                pay3: 5.0,
+                pay4: 25.0,
+                pay5: 100.0,
+            },
+        ),
+        (
+            "L1".to_string(),
+            PayEntry {
+                pay3: 2.0,
+                pay4: 10.0,
+                pay5: 40.0,
+            },
+        ),
     ]);
     let rw = vec![
-        ReelWeight { symbol: "W".to_string(),  weight:  2 },
-        ReelWeight { symbol: "H1".to_string(), weight: 10 },
-        ReelWeight { symbol: "L1".to_string(), weight: 30 },
-        ReelWeight { symbol: "S".to_string(),  weight:  3 },
-        ReelWeight { symbol: "B".to_string(),  weight:  5 },
+        ReelWeight {
+            symbol: "W".to_string(),
+            weight: 2,
+        },
+        ReelWeight {
+            symbol: "H1".to_string(),
+            weight: 10,
+        },
+        ReelWeight {
+            symbol: "L1".to_string(),
+            weight: 30,
+        },
+        ReelWeight {
+            symbol: "S".to_string(),
+            weight: 3,
+        },
+        ReelWeight {
+            symbol: "B".to_string(),
+            weight: 5,
+        },
     ];
     cfg.base_weights = vec![rw.clone(); 5];
-    cfg.fs_weights   = vec![rw; 5];
+    cfg.fs_weights = vec![rw; 5];
     cfg
 }
 
@@ -63,13 +90,12 @@ fn base_config() -> GameConfig {
 /// Symbols are distinct u8 indices in 0..=30 (5-bit constraint).
 fn arb_alias_entries() -> impl Strategy<Value = Vec<(u8, u32)>> {
     (1usize..=30usize).prop_flat_map(|n| {
-        prop::sample::subsequence((0u8..=30u8).collect::<Vec<_>>(), n..=n)
-            .prop_flat_map(move |syms| {
+        prop::sample::subsequence((0u8..=30u8).collect::<Vec<_>>(), n..=n).prop_flat_map(
+            move |syms| {
                 prop::collection::vec(1u32..=10_000u32, n)
-                    .prop_map(move |weights| {
-                        syms.iter().copied().zip(weights).collect::<Vec<_>>()
-                    })
-            })
+                    .prop_map(move |weights| syms.iter().copied().zip(weights).collect::<Vec<_>>())
+            },
+        )
     })
 }
 
@@ -147,14 +173,7 @@ proptest! {
 
 /// Strategy: random (reel, row, num_rows) within PackedGrid's valid range.
 fn arb_cell() -> impl Strategy<Value = (usize, usize, usize, u8)> {
-    (1usize..=5usize).prop_flat_map(|rows| {
-        (
-            0usize..5usize,
-            0usize..rows,
-            Just(rows),
-            0u8..32u8,
-        )
-    })
+    (1usize..=5usize).prop_flat_map(|rows| (0usize..5usize, 0usize..rows, Just(rows), 0u8..32u8))
 }
 
 proptest! {

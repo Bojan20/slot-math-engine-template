@@ -57,19 +57,31 @@ fn symbol_kind_mapping_correct() {
     let cfg = ir_to_game_config(&ir).expect("conversion must succeed");
 
     // Wild symbol: S_WILD
-    let wild = cfg.symbols.iter().find(|s| s.id == "S_WILD").expect("S_WILD must exist");
+    let wild = cfg
+        .symbols
+        .iter()
+        .find(|s| s.id == "S_WILD")
+        .expect("S_WILD must exist");
     assert!(wild.is_wild, "S_WILD must be is_wild=true");
     assert!(!wild.is_scatter);
     assert!(!wild.is_bonus);
 
     // Scatter symbol: S_SCAT
-    let scat = cfg.symbols.iter().find(|s| s.id == "S_SCAT").expect("S_SCAT must exist");
+    let scat = cfg
+        .symbols
+        .iter()
+        .find(|s| s.id == "S_SCAT")
+        .expect("S_SCAT must exist");
     assert!(scat.is_scatter, "S_SCAT must be is_scatter=true");
     assert!(!scat.is_wild);
     assert!(!scat.is_bonus);
 
     // LP symbol: all false
-    let lp1 = cfg.symbols.iter().find(|s| s.id == "S_LP1").expect("S_LP1 must exist");
+    let lp1 = cfg
+        .symbols
+        .iter()
+        .find(|s| s.id == "S_LP1")
+        .expect("S_LP1 must exist");
     assert!(!lp1.is_wild);
     assert!(!lp1.is_scatter);
     assert!(!lp1.is_bonus);
@@ -82,11 +94,7 @@ fn weighted_reel_conversion_positive_totals() {
     let ir = load_parity();
     let cfg = ir_to_game_config(&ir).expect("conversion must succeed");
 
-    assert_eq!(
-        cfg.base_weights.len(),
-        5,
-        "must have 5 reel weight vectors"
-    );
+    assert_eq!(cfg.base_weights.len(), 5, "must have 5 reel weight vectors");
 
     for (reel, weights) in cfg.base_weights.iter().enumerate() {
         let total: u32 = weights.iter().map(|w| w.weight).sum();
@@ -127,8 +135,8 @@ fn lines_evaluation_paylines_match_ir() {
 #[test]
 fn ways_evaluation_generates_synthetic_paylines() {
     // Build a minimal IR with Ways evaluation.
-    let raw = std::fs::read_to_string(fixture_dir().join("parity.json"))
-        .expect("parity.json must exist");
+    let raw =
+        std::fs::read_to_string(fixture_dir().join("parity.json")).expect("parity.json must exist");
     let mut ir = SlotGameIR::from_json(&raw).expect("parse");
 
     // Switch to Ways evaluation.
@@ -213,8 +221,8 @@ fn roundtrip_smoke_10k_spins_rtp_in_bounds() {
 #[test]
 fn invalid_ir_bad_symbol_reel_missing_weights() {
     // Build an IR where a reel has no valid symbols (empty weighted map).
-    let raw = std::fs::read_to_string(fixture_dir().join("parity.json"))
-        .expect("parity.json must exist");
+    let raw =
+        std::fs::read_to_string(fixture_dir().join("parity.json")).expect("parity.json must exist");
     let mut ir = SlotGameIR::from_json(&raw).expect("parse");
 
     // Replace base reel 0 with an empty weight map.
@@ -241,7 +249,10 @@ fn paytable_conversion_correct_values() {
     let cfg = ir_to_game_config(&ir).expect("conversion must succeed");
 
     // parity.json: S_HP1 → "3": 3.0, "4": 12.0, "5": 63.0
-    let hp1 = cfg.paytable.get("S_HP1").expect("S_HP1 must be in paytable");
+    let hp1 = cfg
+        .paytable
+        .get("S_HP1")
+        .expect("S_HP1 must be in paytable");
     assert!(
         (hp1.pay3 - 3.0).abs() < 0.001,
         "pay3 should be 3.0, got {}",
@@ -259,10 +270,25 @@ fn paytable_conversion_correct_values() {
     );
 
     // S_LP1 → "3": 0.5, "4": 2.0, "5": 8.0
-    let lp1 = cfg.paytable.get("S_LP1").expect("S_LP1 must be in paytable");
-    assert!((lp1.pay3 - 0.5).abs() < 0.001, "pay3 mismatch: {}", lp1.pay3);
-    assert!((lp1.pay4 - 2.0).abs() < 0.001, "pay4 mismatch: {}", lp1.pay4);
-    assert!((lp1.pay5 - 8.0).abs() < 0.001, "pay5 mismatch: {}", lp1.pay5);
+    let lp1 = cfg
+        .paytable
+        .get("S_LP1")
+        .expect("S_LP1 must be in paytable");
+    assert!(
+        (lp1.pay3 - 0.5).abs() < 0.001,
+        "pay3 mismatch: {}",
+        lp1.pay3
+    );
+    assert!(
+        (lp1.pay4 - 2.0).abs() < 0.001,
+        "pay4 mismatch: {}",
+        lp1.pay4
+    );
+    assert!(
+        (lp1.pay5 - 8.0).abs() < 0.001,
+        "pay5 mismatch: {}",
+        lp1.pay5
+    );
 }
 
 // ─── Test 9: FreeSpins feature conversion ───────────────────────────────────

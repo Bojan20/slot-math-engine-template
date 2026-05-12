@@ -15,12 +15,9 @@
 //!     as user-readable config loading failures.
 
 use crate::config::{
-    FreeSpinsConfig, GameConfig, HoldAndWinConfig, OrbValue, PayEntry,
-    ReelWeight, SymbolDef,
+    FreeSpinsConfig, GameConfig, HoldAndWinConfig, OrbValue, PayEntry, ReelWeight, SymbolDef,
 };
-use crate::ir::{
-    Evaluation, Feature, ReelSet, SlotGameIR, SymbolKind, Topology, TriggerBy,
-};
+use crate::ir::{Evaluation, Feature, ReelSet, SlotGameIR, SymbolKind, Topology, TriggerBy};
 use std::collections::HashMap;
 
 // ─── Error type ────────────────────────────────────────────────────────────
@@ -165,9 +162,7 @@ fn convert_symbols(ir: &SlotGameIR) -> Vec<SymbolDef> {
 #[inline]
 fn map_symbol_kind(kind: SymbolKind) -> (bool, bool, bool) {
     match kind {
-        SymbolKind::Wild | SymbolKind::ChainWild | SymbolKind::Expanding => {
-            (true, false, false)
-        }
+        SymbolKind::Wild | SymbolKind::ChainWild | SymbolKind::Expanding => (true, false, false),
         SymbolKind::Scatter => (false, true, false),
         SymbolKind::Bonus => (false, false, true),
         SymbolKind::Lp
@@ -474,9 +469,8 @@ fn convert_free_spins(
         10
     };
 
-    let retrigger_enabled = retrigger.is_some()
-        || matches!(trigger.by, TriggerBy::ScatterCount)
-            && !awards.is_empty();
+    let retrigger_enabled =
+        retrigger.is_some() || matches!(trigger.by, TriggerBy::ScatterCount) && !awards.is_empty();
 
     FreeSpinsConfig {
         awards,
@@ -539,7 +533,7 @@ fn convert_hold_and_win(
         respins_on_new_orb: respins_initial as u8, // same reset count by convention
         full_grid_bonus,
         orb_values,
-        orb_land_chance_base: 0.035,   // sensible default — no IR field yet
+        orb_land_chance_base: 0.035, // sensible default — no IR field yet
         orb_land_chance_fill_bonus: 0.015,
     }
 }

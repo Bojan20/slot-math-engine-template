@@ -54,7 +54,7 @@ impl PackedGrid {
     #[inline(always)]
     pub fn get(self, reel: usize, row: usize, num_rows: usize) -> u8 {
         debug_assert!(reel < Self::MAX_REELS);
-        debug_assert!(row  < Self::MAX_ROWS);
+        debug_assert!(row < Self::MAX_ROWS);
         let offset = Self::BITS * (reel * num_rows + row) as u32;
         ((self.0 >> offset) & Self::MASK) as u8
     }
@@ -63,8 +63,8 @@ impl PackedGrid {
     #[inline(always)]
     pub fn set(&mut self, reel: usize, row: usize, num_rows: usize, val: u8) {
         debug_assert!(reel < Self::MAX_REELS);
-        debug_assert!(row  < Self::MAX_ROWS);
-        debug_assert!(val  < 32, "symbol index must fit in 5 bits");
+        debug_assert!(row < Self::MAX_ROWS);
+        debug_assert!(val < 32, "symbol index must fit in 5 bits");
         let offset = Self::BITS * (reel * num_rows + row) as u32;
         self.0 &= !(Self::MASK << offset);
         self.0 |= (val as u128 & Self::MASK) << offset;
@@ -105,7 +105,7 @@ impl PackedGrid {
     /// results with the legacy `Evaluator`.
     pub fn from_dyn(grid: &crate::grid::DynGrid) -> Self {
         let reels = grid.reels;
-        let rows  = grid.rows;
+        let rows = grid.rows;
         let mut g = PackedGrid::default();
         for r in 0..reels.min(Self::MAX_REELS) {
             for row in 0..rows.min(Self::MAX_ROWS) {
@@ -124,9 +124,9 @@ impl PackedGrid {
 /// [`generate_base`] or [`generate_fs`] per spin — zero heap allocation.
 pub struct PackedGridGenerator {
     base_tables: Vec<AliasTable>,
-    fs_tables:   Vec<AliasTable>,
+    fs_tables: Vec<AliasTable>,
     reels: usize,
-    rows:  usize,
+    rows: usize,
 }
 
 impl PackedGridGenerator {
@@ -170,11 +170,15 @@ impl PackedGridGenerator {
 
     /// Number of reels this generator was built for.
     #[inline]
-    pub fn reels(&self) -> usize { self.reels }
+    pub fn reels(&self) -> usize {
+        self.reels
+    }
 
     /// Number of rows this generator was built for.
     #[inline]
-    pub fn rows(&self) -> usize { self.rows }
+    pub fn rows(&self) -> usize {
+        self.rows
+    }
 
     // ── Internal ──────────────────────────────────────────────────────────
 
@@ -195,14 +199,16 @@ impl PackedGridGenerator {
 
 fn build_alias_for_reel(config: &GameConfig, reel: usize, is_fs: bool) -> AliasTable {
     // Try the requested mode; fall back to base if FS weights not configured.
-    let source = if is_fs { &config.fs_weights } else { &config.base_weights };
+    let source = if is_fs {
+        &config.fs_weights
+    } else {
+        &config.base_weights
+    };
     let weights = source
         .get(reel)
         .filter(|w| !w.is_empty())
         .or_else(|| config.base_weights.get(reel))
-        .unwrap_or_else(|| panic!(
-            "PackedGridGenerator: reel {reel} has no weight entries"
-        ));
+        .unwrap_or_else(|| panic!("PackedGridGenerator: reel {reel} has no weight entries"));
 
     let entries: Vec<(u8, u32)> = weights
         .iter()
@@ -290,7 +296,7 @@ mod tests {
     fn from_dyn_matches_original() {
         use crate::grid::DynGrid;
         let reels = 5;
-        let rows  = 3;
+        let rows = 3;
         let mut dyn_grid = DynGrid::new(reels, rows);
         let mut k = 0u8;
         for r in 0..reels {
@@ -318,14 +324,29 @@ mod tests {
 
         let mut cfg = GameConfig::default();
         let rw = vec![
-            ReelWeight { symbol: "W".to_string(),  weight: 2  },
-            ReelWeight { symbol: "H1".to_string(), weight: 10 },
-            ReelWeight { symbol: "L1".to_string(), weight: 30 },
-            ReelWeight { symbol: "S".to_string(),  weight: 3  },
-            ReelWeight { symbol: "B".to_string(),  weight: 5  },
+            ReelWeight {
+                symbol: "W".to_string(),
+                weight: 2,
+            },
+            ReelWeight {
+                symbol: "H1".to_string(),
+                weight: 10,
+            },
+            ReelWeight {
+                symbol: "L1".to_string(),
+                weight: 30,
+            },
+            ReelWeight {
+                symbol: "S".to_string(),
+                weight: 3,
+            },
+            ReelWeight {
+                symbol: "B".to_string(),
+                weight: 5,
+            },
         ];
         cfg.base_weights = vec![rw.clone(); 5];
-        cfg.fs_weights   = vec![rw; 5];
+        cfg.fs_weights = vec![rw; 5];
         cfg.paytable = HashMap::new();
 
         let gen = PackedGridGenerator::from_config(&cfg);
@@ -336,7 +357,10 @@ mod tests {
             for r in 0..gen.reels() {
                 for row in 0..gen.rows() {
                     let sym = g.get(r, row, gen.rows());
-                    assert!(sym < 5, "symbol index {sym} out of expected range (have 5 symbols)");
+                    assert!(
+                        sym < 5,
+                        "symbol index {sym} out of expected range (have 5 symbols)"
+                    );
                 }
             }
         }
@@ -350,12 +374,18 @@ mod tests {
         let mut cfg = GameConfig::default();
         // Base: only symbol 0 (W)
         cfg.base_weights = vec![
-            vec![ReelWeight { symbol: "W".to_string(), weight: 100 }];
+            vec![ReelWeight {
+                symbol: "W".to_string(),
+                weight: 100
+            }];
             5
         ];
         // FS: only symbol 1 (H1)
         cfg.fs_weights = vec![
-            vec![ReelWeight { symbol: "H1".to_string(), weight: 100 }];
+            vec![ReelWeight {
+                symbol: "H1".to_string(),
+                weight: 100
+            }];
             5
         ];
         cfg.paytable = HashMap::new();
@@ -365,9 +395,9 @@ mod tests {
 
         for _ in 0..100 {
             let base = gen.generate_base(&mut rng);
-            let fs   = gen.generate_fs(&mut rng);
+            let fs = gen.generate_fs(&mut rng);
             assert_eq!(base.get(0, 0, gen.rows()), 0, "base must use W (idx=0)");
-            assert_eq!(fs.get(0, 0, gen.rows()),   1, "FS must use H1 (idx=1)");
+            assert_eq!(fs.get(0, 0, gen.rows()), 1, "FS must use H1 (idx=1)");
         }
     }
 }

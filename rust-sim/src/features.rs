@@ -384,12 +384,7 @@ impl<'a> IRFeatureSim<'a> {
 
     // ─── Free Spins ─────────────────────────────────────────────────────
 
-    pub fn simulate_fs_ir(
-        &self,
-        rng: &mut SlotRng,
-        trigger_scatter: u8,
-        bet_mc: i64,
-    ) -> FSResult {
+    pub fn simulate_fs_ir(&self, rng: &mut SlotRng, trigger_scatter: u8, bet_mc: i64) -> FSResult {
         let feat = match self.find_free_spins() {
             Some(f) => f,
             None => return FSResult::default(),
@@ -414,7 +409,10 @@ impl<'a> IRFeatureSim<'a> {
         let global_mult = global_mult.unwrap_or(1.0).max(0.0);
         let has_ladder = modifiers
             .as_ref()
-            .map(|m| m.iter().any(|x| matches!(x, ir::FsModifier::MultiplierLadder)))
+            .map(|m| {
+                m.iter()
+                    .any(|x| matches!(x, ir::FsModifier::MultiplierLadder))
+            })
             .unwrap_or(false);
         let mut ladder: u32 = 1;
 
@@ -443,9 +441,7 @@ impl<'a> IRFeatureSim<'a> {
             result.spins_played += 1;
 
             let grid = self.grid_gen.generate_fs(rng);
-            let spin = self
-                .evaluator
-                .evaluate_spin(&grid, rng, bet_mc, true, true);
+            let spin = self.evaluator.evaluate_spin(&grid, rng, bet_mc, true, true);
 
             let multiplier = if has_ladder {
                 global_mult * ladder as f64
@@ -465,10 +461,7 @@ impl<'a> IRFeatureSim<'a> {
             if let Some(min) = retrigger_min {
                 if (spin.scatter_count as u32) >= min && total_awarded < max_total {
                     let extra = Self::fs_awarded(
-                        retrigger
-                            .as_ref()
-                            .map(|r| &r.trigger)
-                            .unwrap_or(trigger),
+                        retrigger.as_ref().map(|r| &r.trigger).unwrap_or(trigger),
                         spin.scatter_count,
                     );
                     let allow = max_total.saturating_sub(total_awarded);
@@ -490,12 +483,7 @@ impl<'a> IRFeatureSim<'a> {
 
     // ─── Hold & Win ─────────────────────────────────────────────────────
 
-    pub fn simulate_hnw_ir(
-        &self,
-        rng: &mut SlotRng,
-        grid: &Grid,
-        bet_mc: i64,
-    ) -> HNWResult {
+    pub fn simulate_hnw_ir(&self, rng: &mut SlotRng, grid: &Grid, bet_mc: i64) -> HNWResult {
         let feat = match self.find_hold_and_win() {
             Some(f) => f,
             None => return HNWResult::default(),
@@ -533,8 +521,7 @@ impl<'a> IRFeatureSim<'a> {
         // Bonus-cell detector — use grid_gen helpers which read SymbolDef
         // flags (set by the IR adapter).
         let mut occupied = vec![vec![false; num_rows]; num_reels];
-        let mut orb_values: Vec<(u8, u8, u32, Option<String>)> =
-            Vec::with_capacity(total_cells);
+        let mut orb_values: Vec<(u8, u8, u32, Option<String>)> = Vec::with_capacity(total_cells);
 
         let mut result = HNWResult::default();
 
@@ -701,7 +688,14 @@ impl<'a> IRFeatureSim<'a> {
 
             match replacement {
                 ir::CascadeReplacement::Drop => {
-                    cascade_drop(&mut grid, &to_clear, rng, num_reels, num_rows, self.grid_gen);
+                    cascade_drop(
+                        &mut grid,
+                        &to_clear,
+                        rng,
+                        num_reels,
+                        num_rows,
+                        self.grid_gen,
+                    );
                 }
                 ir::CascadeReplacement::RefillRandom => {
                     cascade_refill_random(
@@ -736,8 +730,7 @@ fn cascade_drop(
     num_rows: usize,
     grid_gen: &GridGenerator<'_>,
 ) {
-    let cleared: std::collections::HashSet<(usize, usize)> =
-        to_clear.iter().copied().collect();
+    let cleared: std::collections::HashSet<(usize, usize)> = to_clear.iter().copied().collect();
 
     for reel in 0..num_reels {
         let mut survivors: Vec<u8> = Vec::with_capacity(num_rows);
@@ -761,7 +754,12 @@ fn cascade_drop(
     }
 }
 
-fn cascade_refill_random(grid: &mut Grid, to_clear: &[(usize, usize)], rng: &mut SlotRng, num_syms: u8) {
+fn cascade_refill_random(
+    grid: &mut Grid,
+    to_clear: &[(usize, usize)],
+    rng: &mut SlotRng,
+    num_syms: u8,
+) {
     for (reel, row) in to_clear {
         let pick = rng.random_int(num_syms as u32) as u8;
         grid.set(*reel, *row, pick);

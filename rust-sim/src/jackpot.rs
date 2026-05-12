@@ -502,7 +502,11 @@ mod tests {
         let cfg = fixed_tier("grand", 0.0001, 5000.0);
         let a = JackpotAnalytical::solve(&cfg).unwrap();
         // E[RTP] = 0.0001 × 5000 = 0.5
-        assert!((a.expected_rtp - 0.5).abs() < 1e-9, "rtp={}", a.expected_rtp);
+        assert!(
+            (a.expected_rtp - 0.5).abs() < 1e-9,
+            "rtp={}",
+            a.expected_rtp
+        );
         assert!((a.expected_interval - 10_000.0).abs() < 1.0);
     }
 
@@ -549,13 +553,17 @@ mod tests {
             mgr.on_spin(&[0.0], 0.0);
         }
         let m = &mgr.metrics(100)[0];
-        assert!((m.contribution_rtp - 10.0).abs() < 1e-6, "rtp={}", m.contribution_rtp);
+        assert!(
+            (m.contribution_rtp - 10.0).abs() < 1e-6,
+            "rtp={}",
+            m.contribution_rtp
+        );
         assert_eq!(m.hits, 100);
     }
 
     #[test]
     fn test_multiple_independent_tiers() {
-        let mini = fixed_tier("mini", 1.0, 5.0);   // always hits
+        let mini = fixed_tier("mini", 1.0, 5.0); // always hits
         let grand = fixed_tier("grand", 0.0, 5000.0); // never hits
         let mgr = JackpotManager::new(vec![mini, grand]);
         let hits = mgr.on_spin(&[0.0, 0.5], 0.0);

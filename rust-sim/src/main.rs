@@ -8,17 +8,9 @@
 //!   slot_sim --full        # 1B total
 //!   slot_sim --verify 1000 # Verify 1000 spins match TS exactly
 
-// Lint debt parity with `lib.rs`. See module-level comment there for the
-// Faza 2 cleanup plan. Binary and library compile separately, so the
-// attribute has to be repeated.
-#![allow(
-    clippy::needless_range_loop,
-    clippy::manual_range_contains,
-    clippy::needless_borrow,
-    unused_variables,
-    unused_assignments,
-    dead_code
-)]
+// Lint policy lives in Cargo.toml `[lints]` so it applies to both
+// `cargo check --lib` and `cargo build --bin slot_sim` without repeating
+// the allow-list here. See `lib.rs` module-level docs.
 
 mod analytical;
 mod config;

@@ -99,8 +99,7 @@ impl WinDistribution {
             return 0.0;
         }
         let mean = self.sum_wins / self.win_count as f64;
-        let variance =
-            (self.sum_sq_wins - self.sum_wins * mean) / (self.win_count - 1) as f64;
+        let variance = (self.sum_sq_wins - self.sum_wins * mean) / (self.win_count - 1) as f64;
         if mean > 0.0 {
             variance.sqrt() / mean
         } else {
@@ -151,9 +150,9 @@ impl Default for HdrHistogram {
 impl HdrHistogram {
     /// Threshold boundaries (30 values → 31 intervals + 1 no-win bucket = 32).
     pub const THRESHOLDS: &'static [f64] = &[
-        0.1, 0.2, 0.5, 1.0, 2.0, 3.0, 5.0, 8.0, 10.0, 15.0, 20.0, 30.0, 50.0, 75.0, 100.0,
-        150.0, 200.0, 300.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 5000.0, 7500.0,
-        10000.0, 15000.0, 20000.0, 50000.0,
+        0.1, 0.2, 0.5, 1.0, 2.0, 3.0, 5.0, 8.0, 10.0, 15.0, 20.0, 30.0, 50.0, 75.0, 100.0, 150.0,
+        200.0, 300.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 5000.0, 7500.0, 10000.0,
+        15000.0, 20000.0, 50000.0,
     ];
 
     #[inline]
@@ -186,8 +185,7 @@ impl HdrHistogram {
 
     pub fn merge(&self, other: &HdrHistogram) {
         for i in 0..HDR_BUCKET_COUNT {
-            self.counts[i]
-                .fetch_add(other.counts[i].load(Ordering::Relaxed), Ordering::Relaxed);
+            self.counts[i].fetch_add(other.counts[i].load(Ordering::Relaxed), Ordering::Relaxed);
         }
     }
 
@@ -346,8 +344,7 @@ impl WelfordAccumulator {
         let term1 = delta * delta_n * n1; // = delta^2 * n1/n
 
         // Update M4 first (uses old M2 and M3).
-        self.m4 += term1 * delta_n2 * (n * n - 3.0 * n + 3.0)
-            + 6.0 * delta_n2 * self.m2
+        self.m4 += term1 * delta_n2 * (n * n - 3.0 * n + 3.0) + 6.0 * delta_n2 * self.m2
             - 4.0 * delta_n * self.m3;
         self.m3 += term1 * delta_n * (n - 2.0) - 3.0 * delta_n * self.m2;
         self.m2 += term1;
@@ -524,10 +521,14 @@ impl TopNWins {
             Ok(g) => g,
             Err(_) => return,
         };
-        let should_insert = guard.len() < self.capacity
-            || guard.first().map_or(true, |min| win_x > min.win_x);
+        let should_insert =
+            guard.len() < self.capacity || guard.first().map_or(true, |min| win_x > min.win_x);
         if should_insert {
-            guard.push(WinRecord { win_x, seed, spin_index });
+            guard.push(WinRecord {
+                win_x,
+                seed,
+                spin_index,
+            });
             // Re-sort ascending so index 0 = smallest.
             guard.sort_unstable_by(|a, b| {
                 a.win_x
@@ -656,13 +657,19 @@ impl BonusDistanceTracker {
     /// Merge another tracker into this one (for shard aggregation).
     pub fn merge(&self, other: &BonusDistanceTracker) {
         for i in 0..13 {
-            self.dist_counts[i]
-                .fetch_add(other.dist_counts[i].load(Ordering::Relaxed), Ordering::Relaxed);
+            self.dist_counts[i].fetch_add(
+                other.dist_counts[i].load(Ordering::Relaxed),
+                Ordering::Relaxed,
+            );
         }
-        self.sum_distances
-            .fetch_add(other.sum_distances.load(Ordering::Relaxed), Ordering::Relaxed);
-        self.total_intervals
-            .fetch_add(other.total_intervals.load(Ordering::Relaxed), Ordering::Relaxed);
+        self.sum_distances.fetch_add(
+            other.sum_distances.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
+        self.total_intervals.fetch_add(
+            other.total_intervals.load(Ordering::Relaxed),
+            Ordering::Relaxed,
+        );
         atomic_max_u64(
             &self.max_distance,
             other.max_distance.load(Ordering::Relaxed),
@@ -727,8 +734,7 @@ impl ConvergenceDetector {
         }
         let n = self.window.len() as f64;
         let mean = self.window.iter().sum::<f64>() / n;
-        let var =
-            self.window.iter().map(|&r| (r - mean).powi(2)).sum::<f64>() / (n - 1.0);
+        let var = self.window.iter().map(|&r| (r - mean).powi(2)).sum::<f64>() / (n - 1.0);
         self.z_score * (var / n).sqrt()
     }
 
@@ -802,8 +808,8 @@ impl SpinCountEstimator {
         }
         let z = Self::z_score(confidence);
         let p = hit_rate.clamp(1e-6, 1.0 - 1e-6);
-        ((z * z * p * (1.0 - p)) / (target_half_width_fraction * target_half_width_fraction))
-            .ceil() as u64
+        ((z * z * p * (1.0 - p)) / (target_half_width_fraction * target_half_width_fraction)).ceil()
+            as u64
     }
 }
 
@@ -849,7 +855,6 @@ pub struct AtomicStats {
     hdr: HdrHistogram,
 
     // ── Faza 8 additions ──────────────────────────────────────────────────────
-
     /// Welford 4-moment accumulator (Mutex; update via `record_win_full` or
     /// batch-merge via `merge_welford_batch` for maximum throughput).
     pub welford: Mutex<WelfordAccumulator>,
@@ -1002,9 +1007,7 @@ impl AtomicStats {
         self.hdr.merge(&other.hdr);
 
         // Legacy distribution merge.
-        if let (Ok(mut s), Ok(o)) =
-            (self.win_distribution.lock(), other.win_distribution.lock())
-        {
+        if let (Ok(mut s), Ok(o)) = (self.win_distribution.lock(), other.win_distribution.lock()) {
             s.merge(&o);
         }
 
@@ -1115,11 +1118,8 @@ impl MultiSeedStats {
 
         let n = seeds.len() as f64;
         let mean = seeds.iter().map(|s| s.rtp).sum::<f64>() / n;
-        let variance = seeds
-            .iter()
-            .map(|s| (s.rtp - mean).powi(2))
-            .sum::<f64>()
-            / (n - 1.0).max(1.0);
+        let variance =
+            seeds.iter().map(|s| (s.rtp - mean).powi(2)).sum::<f64>() / (n - 1.0).max(1.0);
         let std_dev = variance.sqrt();
         let std_error = std_dev / n.sqrt();
 
@@ -1193,7 +1193,6 @@ pub struct PARMetrics {
     pub std_error: f64,
 
     // ── Faza 8 additions ──────────────────────────────────────────────────────
-
     /// Welford streaming moments.
     pub welford_mean: f64,
     pub welford_variance: f64,
@@ -1319,12 +1318,20 @@ impl PARMetrics {
             // Convert f64::INFINITY (no trigger yet) to 0.0 for JSON safety.
             fs_mean_distance: {
                 let d = stats.fs_distance.mean_distance();
-                if d.is_infinite() || d.is_nan() { 0.0 } else { d }
+                if d.is_infinite() || d.is_nan() {
+                    0.0
+                } else {
+                    d
+                }
             },
             fs_max_distance: stats.fs_distance.max_distance(),
             hnw_mean_distance: {
                 let d = stats.hnw_distance.mean_distance();
-                if d.is_infinite() || d.is_nan() { 0.0 } else { d }
+                if d.is_infinite() || d.is_nan() {
+                    0.0
+                } else {
+                    d
+                }
             },
             hnw_max_distance: stats.hnw_distance.max_distance(),
         }
@@ -1450,7 +1457,11 @@ mod tests {
         let h = HdrHistogram::default();
         let mut rng = crate::rng::SlotRng::new(42);
         for _ in 0..100_000 {
-            let w = if rng.random() < 0.3 { 0.0 } else { rng.random() * 500.0 };
+            let w = if rng.random() < 0.3 {
+                0.0
+            } else {
+                rng.random() * 500.0
+            };
             h.record(w);
         }
         let q = [0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 0.999];
@@ -1521,10 +1532,22 @@ mod tests {
         let multi = MultiSeedStats::default();
         let par = PARMetrics::from_stats(&stats, &multi, 1);
 
-        assert!((par.total_rtp - 96.0).abs() < 1e-6, "total_rtp={}", par.total_rtp);
-        assert!((par.base_rtp - 60.0).abs() < 1e-6, "base_rtp={}", par.base_rtp);
+        assert!(
+            (par.total_rtp - 96.0).abs() < 1e-6,
+            "total_rtp={}",
+            par.total_rtp
+        );
+        assert!(
+            (par.base_rtp - 60.0).abs() < 1e-6,
+            "base_rtp={}",
+            par.base_rtp
+        );
         assert!((par.fs_rtp - 36.0).abs() < 1e-6, "fs_rtp={}", par.fs_rtp);
-        assert!((par.hit_rate - 33.0).abs() < 1e-4, "hit_rate={}", par.hit_rate);
+        assert!(
+            (par.hit_rate - 33.0).abs() < 1e-4,
+            "hit_rate={}",
+            par.hit_rate
+        );
     }
 
     // ── WelfordAccumulator ────────────────────────────────────────────────────
@@ -1606,7 +1629,10 @@ mod tests {
             (half1.population_variance() - single.population_variance()).abs() < 1e-6,
             "variance mismatch"
         );
-        assert!((half1.skewness() - single.skewness()).abs() < 1e-4, "skewness mismatch");
+        assert!(
+            (half1.skewness() - single.skewness()).abs() < 1e-4,
+            "skewness mismatch"
+        );
     }
 
     #[test]
@@ -1670,7 +1696,11 @@ mod tests {
     fn bonus_distance_first_trigger_no_interval() {
         let t = BonusDistanceTracker::new();
         t.record_trigger(100);
-        assert_eq!(t.total_intervals(), 0, "first trigger should not record an interval");
+        assert_eq!(
+            t.total_intervals(),
+            0,
+            "first trigger should not record an interval"
+        );
     }
 
     #[test]
@@ -1687,9 +1717,9 @@ mod tests {
     fn bonus_distance_multiple_triggers() {
         let t = BonusDistanceTracker::new();
         t.record_trigger(0);
-        t.record_trigger(50);   // dist=50
-        t.record_trigger(150);  // dist=100
-        t.record_trigger(400);  // dist=250
+        t.record_trigger(50); // dist=50
+        t.record_trigger(150); // dist=100
+        t.record_trigger(400); // dist=250
         assert_eq!(t.total_intervals(), 3);
         // mean = (50+100+250)/3 = 400/3 ≈ 133.3
         assert!((t.mean_distance() - 400.0 / 3.0).abs() < 0.01);
@@ -1723,7 +1753,10 @@ mod tests {
         for _ in 0..20 {
             d.push(95.0 + rng.random() * 2.0); // ±1pp noise
         }
-        assert!(!d.has_converged(), "noisy readings should not converge for 0.001pp target");
+        assert!(
+            !d.has_converged(),
+            "noisy readings should not converge for 0.001pp target"
+        );
     }
 
     #[test]
@@ -1775,7 +1808,10 @@ mod tests {
         // p=0.5 (max variance) should need more spins than p=0.1.
         let n_p05 = SpinCountEstimator::required_for_hit_rate(0.5, 0.001, 0.95);
         let n_p01 = SpinCountEstimator::required_for_hit_rate(0.1, 0.001, 0.95);
-        assert!(n_p05 > n_p01, "max-variance p=0.5 needs more spins than p=0.1");
+        assert!(
+            n_p05 > n_p01,
+            "max-variance p=0.5 needs more spins than p=0.1"
+        );
     }
 
     // ── MultiSeedStats CI ─────────────────────────────────────────────────────
@@ -1813,7 +1849,12 @@ mod tests {
         let rtps = [96.0f64; 10];
         let seeds: Vec<SeedStats> = rtps
             .iter()
-            .map(|&r| SeedStats { spins: 100_000, wagered: 100_000, won: 96_000, rtp: r })
+            .map(|&r| SeedStats {
+                spins: 100_000,
+                wagered: 100_000,
+                won: 96_000,
+                rtp: r,
+            })
             .collect();
         let m = MultiSeedStats::from_seeds(seeds);
         // All RTPs identical → CI collapses to mean.

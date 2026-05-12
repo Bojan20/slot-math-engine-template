@@ -152,8 +152,8 @@ pub fn solve_hold_and_win(cfg: &HoldAndWinConfig) -> HoldAndWinResult {
 
     // V[k][0] = k × E_cell (+ grid_full_award if k == t)
     for k in 0..=t {
-        v[k][0] = k as f64 * cfg.expected_cell_value
-            + if k == t { cfg.grid_full_award } else { 0.0 };
+        v[k][0] =
+            k as f64 * cfg.expected_cell_value + if k == t { cfg.grid_full_award } else { 0.0 };
     }
 
     // V[t][r] = t × E_cell + grid_full_award (full grid, any respins).
@@ -190,9 +190,7 @@ pub fn solve_hold_and_win(cfg: &HoldAndWinConfig) -> HoldAndWinResult {
             let q = pmf[0]; // P(no orb this respin)
 
             // C_k = Σ_{j≥1} pmf[j] × V[k+j][ir]
-            let ck: f64 = (1..=n)
-                .map(|j| pmf[j] * v[k + j][ir])
-                .sum();
+            let ck: f64 = (1..=n).map(|j| pmf[j] * v[k + j][ir]).sum();
             c_k[k] = ck;
 
             // V[k][ir] from closed-form solution of the miss-chain recurrence.
@@ -268,11 +266,15 @@ pub fn solve_hold_and_win(cfg: &HoldAndWinConfig) -> HoldAndWinResult {
         for k_iter in 0..=t {
             for r_iter in (0..=ir).rev() {
                 let p_here = prob[idx(k_iter, r_iter)];
-                if p_here < 1e-18 { continue; }
+                if p_here < 1e-18 {
+                    continue;
+                }
 
                 if r_iter == 0 || k_iter == t {
                     p_term_k[k_iter] += p_here;
-                    if k_iter == t { p_grid_full += p_here; }
+                    if k_iter == t {
+                        p_grid_full += p_here;
+                    }
                     continue;
                 }
 
@@ -294,11 +296,15 @@ pub fn solve_hold_and_win(cfg: &HoldAndWinConfig) -> HoldAndWinResult {
         for r_iter in (0..=ir).rev() {
             for k_iter in 0..=t {
                 let p_here = prob[idx(k_iter, r_iter)];
-                if p_here < 1e-18 { continue; }
+                if p_here < 1e-18 {
+                    continue;
+                }
 
                 if r_iter == 0 || k_iter == t {
                     p_term_k[k_iter] += p_here;
-                    if k_iter == t { p_grid_full += p_here; }
+                    if k_iter == t {
+                        p_grid_full += p_here;
+                    }
                     continue;
                 }
 
@@ -331,7 +337,9 @@ pub fn solve_hold_and_win(cfg: &HoldAndWinConfig) -> HoldAndWinResult {
     for r_iter in 0..=ir {
         for k_iter in 0..=t {
             let p_here = prob[idx(k_iter, r_iter)];
-            if p_here < 1e-18 { continue; }
+            if p_here < 1e-18 {
+                continue;
+            }
             if r_iter == 0 || k_iter == t {
                 expected_respins_remaining += p_here * r_iter as f64;
             }
@@ -432,8 +440,10 @@ pub fn solve_free_spins(cfg: &FreeSpinsConfig) -> FreeSpinsResult {
         1.0
     };
 
-    let expected_payout =
-        expected_total_spins * cfg.base_win_per_spin * cfg.global_multiplier * ladder_adjusted_multiplier;
+    let expected_payout = expected_total_spins
+        * cfg.base_win_per_spin
+        * cfg.global_multiplier
+        * ladder_adjusted_multiplier;
 
     FreeSpinsResult {
         expected_total_spins,
@@ -517,11 +527,7 @@ pub fn solve_cascade(cfg: &CascadeConfig) -> CascadeResult {
     let mut expected_payout = 0.0_f64;
     for c in 0..=cap {
         let p_fires = p.powi(c as i32);
-        let mult = cfg
-            .multiplier_progression
-            .get(c)
-            .copied()
-            .unwrap_or(1.0);
+        let mult = cfg.multiplier_progression.get(c).copied().unwrap_or(1.0);
         expected_payout += p_fires * cfg.base_win_per_winning_spin * mult;
     }
 
@@ -566,10 +572,7 @@ mod tests {
             for p in [0.0, 0.035, 0.06, 0.5, 0.99, 1.0] {
                 let pmf = binom_pmf(n, p);
                 let sum: f64 = pmf.iter().sum();
-                assert!(
-                    (sum - 1.0).abs() < 1e-10,
-                    "n={n}, p={p}, sum={sum}"
-                );
+                assert!((sum - 1.0).abs() < 1e-10, "n={n}, p={p}, sum={sum}");
             }
         }
     }
@@ -584,7 +587,11 @@ mod tests {
             ..Default::default()
         };
         let res = solve_hold_and_win(&cfg);
-        assert!((res.expected_payout - 0.0).abs() < 1e-9, "got {}", res.expected_payout);
+        assert!(
+            (res.expected_payout - 0.0).abs() < 1e-9,
+            "got {}",
+            res.expected_payout
+        );
     }
 
     #[test]
@@ -599,7 +606,11 @@ mod tests {
         };
         let res = solve_hold_and_win(&cfg);
         // V(4, 3) = 4×2.0 + 100.0 = 108.0
-        assert!((res.expected_payout - 108.0).abs() < 1e-9, "got {}", res.expected_payout);
+        assert!(
+            (res.expected_payout - 108.0).abs() < 1e-9,
+            "got {}",
+            res.expected_payout
+        );
     }
 
     #[test]
@@ -613,7 +624,11 @@ mod tests {
         };
         let res = solve_hold_and_win(&cfg);
         // V(1, 0) = 1 × 3.5 = 3.5
-        assert!((res.expected_payout - 3.5).abs() < 1e-9, "got {}", res.expected_payout);
+        assert!(
+            (res.expected_payout - 3.5).abs() < 1e-9,
+            "got {}",
+            res.expected_payout
+        );
     }
 
     #[test]
@@ -647,8 +662,14 @@ mod tests {
             expected_cell_value: 1.0,
             ..Default::default()
         };
-        let low = solve_hold_and_win(&HoldAndWinConfig { init_locked_cells: 4, ..base.clone() });
-        let high = solve_hold_and_win(&HoldAndWinConfig { init_locked_cells: 10, ..base.clone() });
+        let low = solve_hold_and_win(&HoldAndWinConfig {
+            init_locked_cells: 4,
+            ..base.clone()
+        });
+        let high = solve_hold_and_win(&HoldAndWinConfig {
+            init_locked_cells: 10,
+            ..base.clone()
+        });
         assert!(
             high.expected_payout > low.expected_payout,
             "V(10) = {} should > V(4) = {}",
@@ -666,8 +687,14 @@ mod tests {
             respin_reset_on_new: true,
             ..Default::default()
         };
-        let low = solve_hold_and_win(&HoldAndWinConfig { initial_respins: 1, ..base.clone() });
-        let high = solve_hold_and_win(&HoldAndWinConfig { initial_respins: 5, ..base.clone() });
+        let low = solve_hold_and_win(&HoldAndWinConfig {
+            initial_respins: 1,
+            ..base.clone()
+        });
+        let high = solve_hold_and_win(&HoldAndWinConfig {
+            initial_respins: 5,
+            ..base.clone()
+        });
         assert!(
             high.expected_payout > low.expected_payout,
             "V(6,5) = {} should > V(6,1) = {}",
@@ -700,7 +727,10 @@ mod tests {
             grid_full_award: 0.0,
         };
         let without = solve_hold_and_win(&base);
-        let with_award = solve_hold_and_win(&HoldAndWinConfig { grid_full_award: 50.0, ..base });
+        let with_award = solve_hold_and_win(&HoldAndWinConfig {
+            grid_full_award: 50.0,
+            ..base
+        });
         assert!(
             with_award.expected_payout > without.expected_payout,
             "award should raise payout: {} vs {}",
@@ -744,7 +774,10 @@ mod tests {
             respin_reset_on_new: true,
         };
         let with_reset = solve_hold_and_win(&base);
-        let no_reset = solve_hold_and_win(&HoldAndWinConfig { respin_reset_on_new: false, ..base });
+        let no_reset = solve_hold_and_win(&HoldAndWinConfig {
+            respin_reset_on_new: false,
+            ..base
+        });
         // With reset, there's more "time" to accumulate → typically higher or equal payout.
         assert!(
             with_reset.expected_payout >= no_reset.expected_payout,
@@ -857,7 +890,10 @@ mod tests {
             ..Default::default()
         };
         let res1 = solve_free_spins(&base);
-        let res2 = solve_free_spins(&FreeSpinsConfig { global_multiplier: 3.0, ..base });
+        let res2 = solve_free_spins(&FreeSpinsConfig {
+            global_multiplier: 3.0,
+            ..base
+        });
         assert!(
             (res2.expected_payout - res1.expected_payout * 3.0).abs() < 1e-9,
             "3x multiplier should triple payout: {} vs {}",
@@ -875,7 +911,10 @@ mod tests {
             ..Default::default()
         };
         let no_ladder = solve_free_spins(&base);
-        let with_ladder = solve_free_spins(&FreeSpinsConfig { has_multiplier_ladder: true, ..base });
+        let with_ladder = solve_free_spins(&FreeSpinsConfig {
+            has_multiplier_ladder: true,
+            ..base
+        });
         assert!(
             with_ladder.expected_payout > no_ladder.expected_payout,
             "ladder should increase payout: {} vs {}",
@@ -933,7 +972,11 @@ mod tests {
         };
         let res = solve_cascade(&cfg);
         // Only chain 0 fires (p^0 = 1), base_win_per_winning_spin × m[0]=1.0
-        assert!((res.expected_payout_per_spin - 5.0).abs() < 1e-9, "got {}", res.expected_payout_per_spin);
+        assert!(
+            (res.expected_payout_per_spin - 5.0).abs() < 1e-9,
+            "got {}",
+            res.expected_payout_per_spin
+        );
         assert!((res.expected_cascade_chains - 0.0).abs() < 1e-9);
     }
 
@@ -968,10 +1011,7 @@ mod tests {
             };
             let res = solve_cascade(&cfg);
             let sum: f64 = res.chain_probabilities.iter().sum();
-            assert!(
-                (sum - 1.0).abs() < 1e-9,
-                "p={p_win}, chain_prob_sum={sum}"
-            );
+            assert!((sum - 1.0).abs() < 1e-9, "p={p_win}, chain_prob_sum={sum}");
         }
     }
 
@@ -1038,8 +1078,7 @@ mod tests {
         };
         let res = solve_cascade(&cfg);
         // All multipliers = 1.0 → payout = 2.0 × Σ 0.5^c for c=0..5
-        let expected_payout: f64 =
-            (0..=5).map(|c| 0.5_f64.powi(c) * 2.0).sum();
+        let expected_payout: f64 = (0..=5).map(|c| 0.5_f64.powi(c) * 2.0).sum();
         assert!(
             (res.expected_payout_per_spin - expected_payout).abs() < 1e-9,
             "got {} expected {}",

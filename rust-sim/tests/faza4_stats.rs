@@ -20,16 +20,18 @@ fn five_seed_multi() -> MultiSeedStats {
     // 20 seeds tightly clustered around 96% — std_dev ≈ 0.022pp,
     // std_error = 0.022/√20 ≈ 0.005pp → below the 0.1pp adequacy gate.
     let rtps: [f64; 20] = [
-        96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99,
-        96.00, 95.98, 96.02, 96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
+        96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99, 96.00, 95.98, 96.02,
+        96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
     ];
     MultiSeedStats::from_seeds(
-        rtps.iter().map(|&rtp| SeedStats {
-            spins: 50_000,
-            wagered: 50_000,
-            won: (50_000.0 * rtp / 100.0) as i64,
-            rtp,
-        }).collect()
+        rtps.iter()
+            .map(|&rtp| SeedStats {
+                spins: 50_000,
+                wagered: 50_000,
+                won: (50_000.0 * rtp / 100.0) as i64,
+                rtp,
+            })
+            .collect(),
     )
 }
 
@@ -92,8 +94,8 @@ fn hdr_first_threshold_boundary() {
 #[test]
 fn hdr_unbounded_top_bucket() {
     let h = HdrHistogram::default();
-    h.record(50_000.0);  // exactly the last threshold → bucket 31
-    h.record(99_999.0);  // above → bucket 31
+    h.record(50_000.0); // exactly the last threshold → bucket 31
+    h.record(99_999.0); // above → bucket 31
     h.record(1_000_000.0); // way above → bucket 31
     assert_eq!(h.get(HDR_BUCKET_COUNT - 1), 3);
 }
@@ -113,15 +115,13 @@ fn hdr_snapshot_matches_get() {
     let h = HdrHistogram::default();
     for i in 0..HDR_BUCKET_COUNT {
         for _ in 0..i {
-            h.record(
-                if i == 0 {
-                    0.0
-                } else if i < HdrHistogram::THRESHOLDS.len() + 1 {
-                    HdrHistogram::THRESHOLDS[i - 1]
-                } else {
-                    100_000.0
-                },
-            );
+            h.record(if i == 0 {
+                0.0
+            } else if i < HdrHistogram::THRESHOLDS.len() + 1 {
+                HdrHistogram::THRESHOLDS[i - 1]
+            } else {
+                100_000.0
+            });
         }
     }
     let snap = h.snapshot();
@@ -150,7 +150,11 @@ fn hdr_1m_spins_constant_memory() {
     let stats = AtomicStats::new();
     let mut rng = slot_sim::rng::SlotRng::new(9999);
     for _ in 0..1_000_000 {
-        let win = if rng.random() < 0.35 { 0.0 } else { rng.random() * 500.0 };
+        let win = if rng.random() < 0.35 {
+            0.0
+        } else {
+            rng.random() * 500.0
+        };
         stats.record_win_hdr(win);
     }
     let snap = stats.get_hdr_histogram();
@@ -169,7 +173,10 @@ fn atomic_stats_merge_hdr_additive() {
     b.record_win_hdr(50.0);
     a.merge(&b);
     let snap = a.get_hdr_histogram();
-    assert_eq!(snap[14], 3, "merged HDR should have 3 counts in the [50,75)x bucket");
+    assert_eq!(
+        snap[14], 3,
+        "merged HDR should have 3 counts in the [50,75)x bucket"
+    );
 }
 
 // ─── PAR Sheet tests ──────────────────────────────────────────────────────────
@@ -199,8 +206,20 @@ fn par_rtp_out_of_tolerance() {
     let mut par_m = base_par(&stats);
     par_m.total_rtp = 93.9; // 2.1pp below target
     let par = PARGenerator::generate(
-        &stats, &par_m, vec![], "g", "1.0.0", 96.0, 0.5,
-        5000.0, vec![], [85.0, 99.0], "must_be_random", true, true, 1,
+        &stats,
+        &par_m,
+        vec![],
+        "g",
+        "1.0.0",
+        96.0,
+        0.5,
+        5000.0,
+        vec![],
+        [85.0, 99.0],
+        "must_be_random",
+        true,
+        true,
+        1,
     );
     assert!(!par.rtp.within_tolerance);
 }
@@ -216,14 +235,20 @@ fn par_win_distribution_sums_to_total_hdr() {
     }
     let par = make_par_sheet(&stats);
     let total: u64 = par.win_distribution.iter().map(|b| b.count).sum();
-    assert_eq!(total, 1_000_000, "all HDR records must appear in distribution");
+    assert_eq!(
+        total, 1_000_000,
+        "all HDR records must appear in distribution"
+    );
 }
 
 #[test]
 fn par_compliance_rtp_within_required() {
     let stats = base_stats();
     let par = make_par_sheet(&stats);
-    assert!(par.compliance.rtp_within_required, "96% is within [85%, 99%]");
+    assert!(
+        par.compliance.rtp_within_required,
+        "96% is within [85%, 99%]"
+    );
     assert!(par.compliance.max_win_within_cap);
 }
 
@@ -257,13 +282,26 @@ fn par_with_jackpot_metrics() {
         },
     ];
     let par = PARGenerator::generate(
-        &stats, &par_m, jackpots, "jp-game", "1.0.0", 96.0, 0.5,
-        5000.0, vec!["MGA".to_string()], [85.0, 99.0], "must_be_random", true, true, 5,
+        &stats,
+        &par_m,
+        jackpots,
+        "jp-game",
+        "1.0.0",
+        96.0,
+        0.5,
+        5000.0,
+        vec!["MGA".to_string()],
+        [85.0, 99.0],
+        "must_be_random",
+        true,
+        true,
+        5,
     );
     // jackpot_rtp_pct = (0.002 + 0.005) × 100 = 0.7%
     assert!(
         (par.rtp.jackpot_rtp_pct - 0.7).abs() < 1e-9,
-        "got {}", par.rtp.jackpot_rtp_pct
+        "got {}",
+        par.rtp.jackpot_rtp_pct
     );
     assert_eq!(par.jackpots.len(), 2);
 }
@@ -293,7 +331,11 @@ fn par_statistical_confidence_from_multi_seed() {
     let stats = base_stats();
     let par = make_par_sheet(&stats);
     // 5 seeds of 200k — std_error should be well below 0.5pp.
-    assert!(par.statistics.std_error < 0.5, "std_error={}", par.statistics.std_error);
+    assert!(
+        par.statistics.std_error < 0.5,
+        "std_error={}",
+        par.statistics.std_error
+    );
     assert!(par.statistics.confidence_adequate);
     // CI should straddle the mean.
     assert!(par.statistics.ci_95_low < par.statistics.ci_95_high);

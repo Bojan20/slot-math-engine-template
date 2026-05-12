@@ -38,7 +38,11 @@ fn sim_stats(seed: u64) -> AtomicStats {
 
     let mut rng = SlotRng::new(seed);
     for i in 0u64..1_000_000 {
-        let win = if rng.random() < 0.33 { 0.0 } else { rng.random() * 100.0 };
+        let win = if rng.random() < 0.33 {
+            0.0
+        } else {
+            rng.random() * 100.0
+        };
         s.record_win_full(win, seed, i);
         if i % 250 == 0 {
             s.record_fs_trigger(i);
@@ -52,12 +56,17 @@ fn sim_stats(seed: u64) -> AtomicStats {
 
 fn make_multi_seed() -> MultiSeedStats {
     let rtps: [f64; 20] = [
-        96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99,
-        96.00, 95.98, 96.02, 96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
+        96.00, 96.02, 95.98, 96.01, 95.99, 96.03, 95.97, 96.00, 96.01, 95.99, 96.00, 95.98, 96.02,
+        96.01, 95.99, 96.00, 96.02, 95.98, 96.01, 95.99,
     ];
     MultiSeedStats::from_seeds(
         rtps.iter()
-            .map(|&rtp| SeedStats { spins: 50_000, wagered: 50_000, won: (50_000.0 * rtp / 100.0) as i64, rtp })
+            .map(|&rtp| SeedStats {
+                spins: 50_000,
+                wagered: 50_000,
+                won: (50_000.0 * rtp / 100.0) as i64,
+                rtp,
+            })
             .collect(),
     )
 }
@@ -66,10 +75,20 @@ fn make_par_sheet(stats: &AtomicStats) -> PARSheet {
     let multi = make_multi_seed();
     let par_m = PARMetrics::from_stats(stats, &multi, 1);
     PARGenerator::generate(
-        stats, &par_m, vec![], "faza8-test", "1.0.0",
-        96.0, 0.5, 5000.0,
+        stats,
+        &par_m,
+        vec![],
+        "faza8-test",
+        "1.0.0",
+        96.0,
+        0.5,
+        5000.0,
         vec!["MGA".to_string(), "UKGC".to_string()],
-        [85.0, 99.0], "must_be_random", true, true, 20,
+        [85.0, 99.0],
+        "must_be_random",
+        true,
+        true,
+        20,
     )
 }
 
@@ -102,7 +121,11 @@ fn welford_two_observations_variance() {
     w.push(4.0);
     // mean=3, sample var = ((2-3)^2 + (4-3)^2) / 1 = 2
     assert!((w.mean() - 3.0).abs() < 1e-12);
-    assert!((w.sample_variance() - 2.0).abs() < 1e-12, "var={}", w.sample_variance());
+    assert!(
+        (w.sample_variance() - 2.0).abs() < 1e-12,
+        "var={}",
+        w.sample_variance()
+    );
     assert!((w.std_dev() - std::f64::consts::SQRT_2).abs() < 1e-10);
 }
 
@@ -113,7 +136,10 @@ fn welford_constant_series_zero_variance() {
         w.push(3.14);
     }
     assert!((w.mean() - 3.14).abs() < 1e-10);
-    assert!(w.sample_variance() < 1e-20, "var should be ~0 for constant series");
+    assert!(
+        w.sample_variance() < 1e-20,
+        "var should be ~0 for constant series"
+    );
     assert_eq!(w.volatility_category(), "VERY_LOW");
 }
 
@@ -131,7 +157,11 @@ fn welford_uniform_distribution_moments() {
         "pop_var={:.6}",
         w.population_variance()
     );
-    assert!(w.skewness().abs() < 0.02, "skew={:.4} should be ~0", w.skewness());
+    assert!(
+        w.skewness().abs() < 0.02,
+        "skew={:.4} should be ~0",
+        w.skewness()
+    );
     assert!(
         (w.excess_kurtosis() - (-1.2)).abs() < 0.05,
         "excess_kurt={:.4} should be ~-1.2",
@@ -164,7 +194,10 @@ fn welford_merge_equivalence_to_single_pass() {
         (a.population_variance() - single.population_variance()).abs() < 1e-6,
         "variance mismatch"
     );
-    assert!((a.skewness() - single.skewness()).abs() < 1e-4, "skewness mismatch");
+    assert!(
+        (a.skewness() - single.skewness()).abs() < 1e-4,
+        "skewness mismatch"
+    );
     assert_eq!(a.count(), single.count());
 }
 
@@ -201,7 +234,11 @@ fn welford_cv_and_volatility_category() {
     // Mean ≈ 1, std ≈ 5 → CV ≈ 5 → HIGH.
     let mut rng = SlotRng::new(11);
     for _ in 0..10_000 {
-        high.push(if rng.random() < 0.9 { 0.5 } else { rng.random() * 50.0 });
+        high.push(if rng.random() < 0.9 {
+            0.5
+        } else {
+            rng.random() * 50.0
+        });
     }
     let cat = high.volatility_category();
     assert!(
@@ -234,7 +271,11 @@ fn hdr_quantile_monotone_increasing() {
     let h = HdrHistogram::default();
     let mut rng = SlotRng::new(88);
     for _ in 0..500_000 {
-        let w = if rng.random() < 0.3 { 0.0 } else { rng.random() * 200.0 };
+        let w = if rng.random() < 0.3 {
+            0.0
+        } else {
+            rng.random() * 200.0
+        };
         h.record(w);
     }
     let ps = [0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 0.999];
@@ -284,7 +325,11 @@ fn hdr_cdf_has_32_entries() {
         h.record(1.5);
     }
     let cdf = h.cdf();
-    assert_eq!(cdf.len(), HDR_BUCKET_COUNT, "CDF must have {HDR_BUCKET_COUNT} entries");
+    assert_eq!(
+        cdf.len(),
+        HDR_BUCKET_COUNT,
+        "CDF must have {HDR_BUCKET_COUNT} entries"
+    );
 }
 
 #[test]
@@ -297,10 +342,17 @@ fn hdr_cdf_monotone_and_sums_to_one() {
     let cdf = h.cdf();
     let mut prev = 0.0f64;
     for e in &cdf {
-        assert!(e.cumulative >= prev - 1e-9, "not monotone: {prev:.6} → {:.6}", e.cumulative);
+        assert!(
+            e.cumulative >= prev - 1e-9,
+            "not monotone: {prev:.6} → {:.6}",
+            e.cumulative
+        );
         prev = e.cumulative;
     }
-    assert!((prev - 1.0).abs() < 1e-6, "final cumulative={prev:.8}, expected ~1.0");
+    assert!(
+        (prev - 1.0).abs() < 1e-6,
+        "final cumulative={prev:.8}, expected ~1.0"
+    );
 }
 
 #[test]
@@ -597,7 +649,12 @@ fn multi_seed_required_spins_01pp_gt_zero() {
 #[test]
 fn multi_seed_ci_straddles_mean_when_constant() {
     let seeds: Vec<SeedStats> = vec![
-        SeedStats { spins: 100_000, wagered: 100_000, won: 96_000, rtp: 96.0 };
+        SeedStats {
+            spins: 100_000,
+            wagered: 100_000,
+            won: 96_000,
+            rtp: 96.0
+        };
         10
     ];
     let m = MultiSeedStats::from_seeds(seeds);
@@ -620,7 +677,10 @@ fn par_sheet_has_quantile_section() {
 fn par_sheet_moments_populated() {
     let stats = sim_stats(99);
     let par = make_par_sheet(&stats);
-    assert_eq!(par.moments.sample_count, 1_000_000, "all spins recorded in Welford");
+    assert_eq!(
+        par.moments.sample_count, 1_000_000,
+        "all spins recorded in Welford"
+    );
     assert!(par.moments.mean_win_x > 0.0, "mean must be positive");
     assert!(par.moments.variance >= 0.0, "variance must be non-negative");
     // Variance ≠ CV² (the old bug).
@@ -691,7 +751,10 @@ fn par_sheet_json_roundtrip_preserves_faza8_fields() {
     assert!((par.quantiles.p99 - par2.quantiles.p99).abs() < 1e-12);
     assert!((par.moments.variance - par2.moments.variance).abs() < 1e-12);
     assert_eq!(par.moments.sample_count, par2.moments.sample_count);
-    assert_eq!(par.required_spins.for_01pp_ci_95, par2.required_spins.for_01pp_ci_95);
+    assert_eq!(
+        par.required_spins.for_01pp_ci_95,
+        par2.required_spins.for_01pp_ci_95
+    );
 }
 
 #[test]
@@ -722,7 +785,11 @@ fn volatility_category_cv_below_one_is_correct() {
             w2.push(v);
         }
     }
-    assert_eq!(w2.volatility_category(), "LOW", "CV≈0.8 should be LOW not VERY_LOW");
+    assert_eq!(
+        w2.volatility_category(),
+        "LOW",
+        "CV≈0.8 should be LOW not VERY_LOW"
+    );
 }
 
 // ─── AtomicStats::merge propagates Faza 8 fields ────────────────────────────

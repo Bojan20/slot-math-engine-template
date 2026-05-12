@@ -16,8 +16,8 @@ use slot_sim::evaluator::Evaluator;
 use slot_sim::features::IRFeatureSim;
 use slot_sim::grid::GridGenerator;
 use slot_sim::ir::{
-    self, ir_to_game_config, CashValueDist, Evaluation, Feature, JackpotTier,
-    Rng as IrRng, RngKind, SlotGameIR, TriggerBy, TriggerByCount,
+    self, ir_to_game_config, CashValueDist, Evaluation, Feature, JackpotTier, Rng as IrRng,
+    RngKind, SlotGameIR, TriggerBy, TriggerByCount,
 };
 use slot_sim::rng::SlotRng;
 use std::path::PathBuf;

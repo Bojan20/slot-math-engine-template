@@ -10,9 +10,7 @@
 //! * Multi-tier independence.
 
 use slot_sim::{
-    jackpot::{
-        JackpotAnalytical, JackpotKind, JackpotManager, JackpotTierConfig, JackpotTrigger,
-    },
+    jackpot::{JackpotAnalytical, JackpotKind, JackpotManager, JackpotTierConfig, JackpotTrigger},
     rng::SlotRng,
 };
 
@@ -68,7 +66,11 @@ fn fixed_payout_identical_on_repeated_hits() {
     for i in 0..10 {
         let hits = mgr.on_spin(&[0.0], 0.0);
         assert_eq!(hits.len(), 1);
-        assert!((hits[0].1 - 10.0).abs() < 1e-9, "hit {i}: got {}", hits[0].1);
+        assert!(
+            (hits[0].1 - 10.0).abs() < 1e-9,
+            "hit {i}: got {}",
+            hits[0].1
+        );
     }
 }
 
@@ -76,9 +78,21 @@ fn fixed_payout_identical_on_repeated_hits() {
 fn fixed_rng_boundary_exact() {
     // rng_val < probability → hit; rng_val >= probability → no hit.
     let mgr = JackpotManager::new(vec![fixed("mini", 0.5, 10.0)]);
-    assert_eq!(mgr.on_spin(&[0.499999], 0.0).len(), 1, "just below threshold → hit");
-    assert_eq!(mgr.on_spin(&[0.5], 0.0).len(), 0, "exactly at threshold → no hit");
-    assert_eq!(mgr.on_spin(&[0.500001], 0.0).len(), 0, "above threshold → no hit");
+    assert_eq!(
+        mgr.on_spin(&[0.499999], 0.0).len(),
+        1,
+        "just below threshold → hit"
+    );
+    assert_eq!(
+        mgr.on_spin(&[0.5], 0.0).len(),
+        0,
+        "exactly at threshold → no hit"
+    );
+    assert_eq!(
+        mgr.on_spin(&[0.500001], 0.0).len(),
+        0,
+        "above threshold → no hit"
+    );
 }
 
 // ─── Progressive jackpot ──────────────────────────────────────────────────────
@@ -142,7 +156,10 @@ fn progressive_contribution_tracked() {
     }
     // contributed = 200 × 0.02 = 4.0
     let contributed = mgr.states[0].total_contributed();
-    assert!((contributed - 4.0).abs() < 0.01, "contributed={contributed}");
+    assert!(
+        (contributed - 4.0).abs() < 0.01,
+        "contributed={contributed}"
+    );
 }
 
 // ─── Hold & Win Full trigger ──────────────────────────────────────────────────
@@ -227,14 +244,22 @@ fn analytical_expected_rtp() {
     let cfg = fixed("grand", 0.0001, 5_000.0);
     let a = JackpotAnalytical::solve(&cfg).unwrap();
     // E[RTP] = 0.0001 × 5000 = 0.5
-    assert!((a.expected_rtp - 0.5).abs() < 1e-9, "expected_rtp={}", a.expected_rtp);
+    assert!(
+        (a.expected_rtp - 0.5).abs() < 1e-9,
+        "expected_rtp={}",
+        a.expected_rtp
+    );
 }
 
 #[test]
 fn analytical_expected_interval() {
     let cfg = fixed("grand", 0.0001, 5_000.0);
     let a = JackpotAnalytical::solve(&cfg).unwrap();
-    assert!((a.expected_interval - 10_000.0).abs() < 1.0, "interval={}", a.expected_interval);
+    assert!(
+        (a.expected_interval - 10_000.0).abs() < 1.0,
+        "interval={}",
+        a.expected_interval
+    );
 }
 
 #[test]
@@ -333,7 +358,7 @@ fn metrics_avg_interval_never_triggered() {
 
 #[test]
 fn multiple_tiers_independent() {
-    let mini = fixed("mini", 1.0, 5.0);   // always hits
+    let mini = fixed("mini", 1.0, 5.0); // always hits
     let grand = fixed("grand", 0.0, 5_000.0); // never hits
     let mgr = JackpotManager::new(vec![mini, grand]);
     let hits = mgr.on_spin(&[0.0, 0.9], 0.0);

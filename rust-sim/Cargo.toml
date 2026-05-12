@@ -33,6 +33,10 @@ bumpalo = "3"
 # Pinned to 1.x — 2.4+ pulls getrandom 0.4 which requires edition2024
 fastrand = "1.9"
 
+# FAZA 8.5 — Spin recall: sha256 hash chain. Pure-rust impl, no openssl/
+# libgmp deps, stable across all platforms in our target matrix.
+sha2 = "0.10"
+
 [dev-dependencies]
 # Benchmark harness with HTML reports and regression detection
 criterion = { version = "0.5", features = ["html_reports"] }
@@ -45,6 +49,40 @@ tempfile = "= 3.12.0"
 [[bench]]
 name = "spin_throughput"
 harness = false
+
+# Package-wide lint policy.
+#
+# New modules (`ir`, `recall`) ship with `-D warnings` clean. The
+# pre-existing simulation / evaluator / speed / analytical / markov
+# modules carry idiomatic lint debt accumulated across Faza 0→10 that's
+# scheduled for the Faza 2 cleanup pass. Allow-list is narrow — only the
+# specific lint kinds that actually trip in the legacy code, not a
+# blanket `-A warnings`. Anything new must justify additions.
+#
+# `[lints]` in Cargo.toml applies to the library AND every test/example
+# target, so we don't have to repeat `#![allow(...)]` in every file.
+[lints.clippy]
+needless_range_loop = "allow"
+manual_range_contains = "allow"
+needless_borrow = "allow"
+unnecessary_cast = "allow"
+field_reassign_with_default = "allow"
+type_complexity = "allow"
+never_loop = "allow"
+doc_lazy_continuation = "allow"
+enum_variant_names = "allow"
+bool_assert_comparison = "allow"
+explicit_counter_loop = "allow"
+explicit_auto_deref = "allow"
+inconsistent_digit_grouping = "allow"
+unreadable_literal = "allow"
+useless_vec = "allow"
+approx_constant = "allow"
+
+[lints.rust]
+unused_variables = "allow"
+unused_assignments = "allow"
+dead_code = "allow"
 
 [profile.release]
 opt-level = 3

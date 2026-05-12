@@ -32,7 +32,11 @@ fn hnw_integration_zero_cells_immediate_payout() {
     };
     let res = solve_hold_and_win(&cfg);
     // E[payout | k=0, r=3] must be ≥ 0.
-    assert!(res.expected_payout >= 0.0, "E[payout]={}", res.expected_payout);
+    assert!(
+        res.expected_payout >= 0.0,
+        "E[payout]={}",
+        res.expected_payout
+    );
     // Grid cannot already be full.
     assert!(res.grid_full_probability < 1.0);
 }
@@ -77,7 +81,10 @@ fn hnw_integration_monotone_in_locked_cells() {
     };
     let mut prev = 0.0_f64;
     for k in [0, 3, 6, 9, 12] {
-        let res = solve_hold_and_win(&HoldAndWinConfig { init_locked_cells: k, ..base.clone() });
+        let res = solve_hold_and_win(&HoldAndWinConfig {
+            init_locked_cells: k,
+            ..base.clone()
+        });
         assert!(
             res.expected_payout >= prev,
             "k={k}: E[payout]={} < prev={prev}",
@@ -95,14 +102,17 @@ fn hnw_integration_grid_full_award_delta_exact() {
         init_locked_cells: 2,
         initial_respins: 4,
         expected_cell_value: 1.0,
-        base_chance: 0.25,  // relatively high → measurable grid-fill probability
+        base_chance: 0.25, // relatively high → measurable grid-fill probability
         fill_bonus_cap: 0.10,
         respin_reset_on_new: true,
         grid_full_award: 0.0,
     };
     let without = solve_hold_and_win(&base);
     let award = 75.0_f64;
-    let with_award = solve_hold_and_win(&HoldAndWinConfig { grid_full_award: award, ..base });
+    let with_award = solve_hold_and_win(&HoldAndWinConfig {
+        grid_full_award: award,
+        ..base
+    });
     let delta = with_award.expected_payout - without.expected_payout;
     let expected_delta = with_award.grid_full_probability * award;
     assert!(
@@ -146,11 +156,7 @@ fn hnw_integration_state_table_shape() {
         ..Default::default()
     };
     let res = solve_hold_and_win(&cfg);
-    assert_eq!(
-        res.state_values.len(),
-        10,
-        "rows = total_cells+1"
-    );
+    assert_eq!(res.state_values.len(), 10, "rows = total_cells+1");
     for row in &res.state_values {
         assert_eq!(row.len(), 6, "cols = initial_respins+1");
     }
@@ -265,7 +271,10 @@ fn fs_integration_global_multiplier_linear() {
         ..Default::default()
     };
     let r1 = solve_free_spins(&base);
-    let r5 = solve_free_spins(&FreeSpinsConfig { global_multiplier: 5.0, ..base });
+    let r5 = solve_free_spins(&FreeSpinsConfig {
+        global_multiplier: 5.0,
+        ..base
+    });
     assert!(
         (r5.expected_payout - r1.expected_payout * 5.0).abs() < 1e-9,
         "5× mult failed: {} vs {}",
@@ -350,10 +359,7 @@ fn cascade_integration_chain_probs_sum_to_one() {
         };
         let res = solve_cascade(&cfg);
         let sum: f64 = res.chain_probabilities.iter().sum();
-        assert!(
-            (sum - 1.0).abs() < 1e-9,
-            "p={p}: chain_prob_sum={sum}"
-        );
+        assert!((sum - 1.0).abs() < 1e-9, "p={p}: chain_prob_sum={sum}");
     }
 }
 
@@ -453,7 +459,10 @@ fn cascade_integration_json_roundtrip() {
     let rjson = serde_json::to_string_pretty(&res).unwrap();
     let res2: slot_sim::markov::CascadeResult = serde_json::from_str(&rjson).unwrap();
     assert!((res.expected_payout_per_spin - res2.expected_payout_per_spin).abs() < 1e-12);
-    assert_eq!(res.chain_probabilities.len(), res2.chain_probabilities.len());
+    assert_eq!(
+        res.chain_probabilities.len(),
+        res2.chain_probabilities.len()
+    );
 }
 
 // ─── Cross-solver sanity ──────────────────────────────────────────────────────

@@ -67,7 +67,7 @@ impl AliasTable {
             .map(|(_, w)| n as f64 * (*w as f64) / (total as f64))
             .collect();
 
-        let mut prob  = vec![1.0f64; n];
+        let mut prob = vec![1.0f64; n];
         let mut alias_col = vec![0usize; n]; // column index (remapped after)
 
         // Partition into small (u_i < 1) and large (u_i >= 1) stacks.
@@ -87,7 +87,7 @@ impl AliasTable {
             let l = small.pop().unwrap();
             let g = *large.last().unwrap();
 
-            prob[l]      = u[l];
+            prob[l] = u[l];
             alias_col[l] = g;
 
             // Reduce large column's surplus by the deficit we just consumed.
@@ -102,10 +102,15 @@ impl AliasTable {
         // Drop silently — remaining items are fully satisfied.
 
         // Map column indices to symbol indices.
-        let own: Vec<u8>   = entries.iter().map(|(sym, _)| *sym).collect();
+        let own: Vec<u8> = entries.iter().map(|(sym, _)| *sym).collect();
         let alias: Vec<u8> = alias_col.iter().map(|&col| entries[col].0).collect();
 
-        AliasTable { prob, own, alias, n }
+        AliasTable {
+            prob,
+            own,
+            alias,
+            n,
+        }
     }
 
     /// Sample one symbol in O(1) time.
@@ -114,12 +119,12 @@ impl AliasTable {
     /// Return `own[j]` if `frac < prob[j]`, else `alias[j]`.
     #[inline(always)]
     pub fn sample(&self, rng: &mut SlotRng) -> u8 {
-        let u     = rng.random();
+        let u = rng.random();
         let scaled = u * self.n as f64;
         // `scaled as usize` truncates toward zero; clamp to n-1 for the
         // rare case where floating-point gives exactly n.0.
-        let j     = (scaled as usize).min(self.n - 1);
-        let frac  = scaled - j as f64;
+        let j = (scaled as usize).min(self.n - 1);
+        let frac = scaled - j as f64;
 
         if frac < self.prob[j] {
             self.own[j]
@@ -192,9 +197,21 @@ mod tests {
         // weights: A=70, B=20, C=10 → probs 0.70, 0.20, 0.10
         let t = AliasTable::build(&[(0u8, 70), (1u8, 20), (2u8, 10)]);
         let eps = 1e-9;
-        assert!((t.marginal_probability(0) - 0.70).abs() < eps, "p(A)={}", t.marginal_probability(0));
-        assert!((t.marginal_probability(1) - 0.20).abs() < eps, "p(B)={}", t.marginal_probability(1));
-        assert!((t.marginal_probability(2) - 0.10).abs() < eps, "p(C)={}", t.marginal_probability(2));
+        assert!(
+            (t.marginal_probability(0) - 0.70).abs() < eps,
+            "p(A)={}",
+            t.marginal_probability(0)
+        );
+        assert!(
+            (t.marginal_probability(1) - 0.20).abs() < eps,
+            "p(B)={}",
+            t.marginal_probability(1)
+        );
+        assert!(
+            (t.marginal_probability(2) - 0.10).abs() < eps,
+            "p(C)={}",
+            t.marginal_probability(2)
+        );
     }
 
     #[test]
@@ -205,7 +222,9 @@ mod tests {
         let mut a_count = 0u32;
         let n = 100_000;
         for _ in 0..n {
-            if t.sample(&mut rng) == 0 { a_count += 1; }
+            if t.sample(&mut rng) == 0 {
+                a_count += 1;
+            }
         }
         let p_a = a_count as f64 / n as f64;
         assert!((p_a - 0.999).abs() < 0.005, "P(A) = {p_a}");
@@ -214,7 +233,7 @@ mod tests {
     #[test]
     fn chi_squared_distribution_valid() {
         // 5 symbols with weights 5,4,3,2,1 → total=15, expected probs 1/3,4/15,1/5,2/15,1/15
-        let entries = [(0u8,5),(1u8,4),(2u8,3),(3u8,2),(4u8,1)];
+        let entries = [(0u8, 5), (1u8, 4), (2u8, 3), (3u8, 2), (4u8, 1)];
         let total = 15u32;
         let t = AliasTable::build(&entries);
         let mut rng = SlotRng::new(12345);
@@ -224,11 +243,14 @@ mod tests {
             counts[t.sample(&mut rng) as usize] += 1;
         }
         // chi-squared: Σ (observed - expected)² / expected
-        let chi2: f64 = entries.iter().map(|(i, w)| {
-            let expected = n as f64 * (*w as f64 / total as f64);
-            let diff = counts[*i as usize] as f64 - expected;
-            diff * diff / expected
-        }).sum();
+        let chi2: f64 = entries
+            .iter()
+            .map(|(i, w)| {
+                let expected = n as f64 * (*w as f64 / total as f64);
+                let diff = counts[*i as usize] as f64 - expected;
+                diff * diff / expected
+            })
+            .sum();
         // df=4, critical value at α=0.001 ≈ 18.5
         assert!(chi2 < 30.0, "chi² = {chi2:.3} — distribution skewed");
     }

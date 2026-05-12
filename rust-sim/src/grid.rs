@@ -312,11 +312,7 @@ impl<'a> GridGenerator<'a> {
 // ─── Internal helpers ──────────────────────────────────────────────────────
 
 /// Build `(weights, total)` for a single reel from config.
-fn build_weight_table(
-    config: &GameConfig,
-    reel: usize,
-    is_fs: bool,
-) -> (Vec<(u8, u32)>, u32) {
+fn build_weight_table(config: &GameConfig, reel: usize, is_fs: bool) -> (Vec<(u8, u32)>, u32) {
     let source = if is_fs {
         &config.fs_weights
     } else {

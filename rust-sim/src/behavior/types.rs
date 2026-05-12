@@ -41,31 +41,31 @@ pub enum Effect {
     },
 
     TransformSymbol {
-        reel:      usize,
-        row:       usize,
+        reel: usize,
+        row: usize,
         to_symbol: String,
     },
 
     ExpandWild {
-        reel:   usize,
+        reel: usize,
         symbol: String,
     },
 
     LockPosition {
-        reel:             usize,
-        row:              usize,
-        remaining_spins:  u32,
+        reel: usize,
+        row: usize,
+        remaining_spins: u32,
     },
 
     AddWild {
-        reel:   usize,
-        row:    usize,
+        reel: usize,
+        row: usize,
         symbol: String,
     },
 
     CollectCoin {
-        reel:   usize,
-        row:    usize,
+        reel: usize,
+        row: usize,
         amount: f64,
     },
 
@@ -74,17 +74,17 @@ pub enum Effect {
     },
 
     AwardJackpot {
-        tier:   String,
+        tier: String,
         amount: f64,
     },
 
     UpgradeSymbols {
         from_symbol: String,
-        to_symbol:   String,
+        to_symbol: String,
     },
 
     ScatterPay {
-        count:      usize,
+        count: usize,
         multiplier: f64,
     },
 
@@ -97,9 +97,9 @@ pub enum Effect {
 
 #[derive(Debug, Clone)]
 pub struct LockedPosition {
-    pub reel:            usize,
-    pub row:             usize,
-    pub symbol:          String,
+    pub reel: usize,
+    pub row: usize,
+    pub symbol: String,
     pub remaining_spins: u32,
 }
 
@@ -107,8 +107,8 @@ pub struct LockedPosition {
 
 #[derive(Debug, Clone)]
 pub struct CollectedCoin {
-    pub reel:   usize,
-    pub row:    usize,
+    pub reel: usize,
+    pub row: usize,
     pub amount: f64,
 }
 
@@ -119,22 +119,22 @@ pub struct CollectedCoin {
 #[derive(Debug)]
 pub struct SpinState {
     /// grid[reel][row] — symbol ids
-    pub grid:               Vec<Vec<String>>,
-    pub reels:              usize,
-    pub rows:               usize,
+    pub grid: Vec<Vec<String>>,
+    pub reels: usize,
+    pub rows: usize,
 
-    pub line_multiplier:    f64,
-    pub spin_multiplier:    f64,
+    pub line_multiplier: f64,
+    pub spin_multiplier: f64,
     pub session_multiplier: f64,
 
-    pub locked_positions:   Vec<LockedPosition>,
-    pub collected_coins:    Vec<CollectedCoin>,
+    pub locked_positions: Vec<LockedPosition>,
+    pub collected_coins: Vec<CollectedCoin>,
     pub triggered_features: HashSet<String>,
-    pub jackpot_awarded:    Option<(String, f64)>,
+    pub jackpot_awarded: Option<(String, f64)>,
 
-    pub scatter_payout:     f64,
-    pub respins_awarded:    u32,
-    pub upgrades:           Vec<(String, String)>,
+    pub scatter_payout: f64,
+    pub respins_awarded: u32,
+    pub upgrades: Vec<(String, String)>,
 }
 
 impl SpinState {
@@ -146,16 +146,16 @@ impl SpinState {
             grid,
             reels,
             rows,
-            line_multiplier:    1.0,
-            spin_multiplier:    1.0,
+            line_multiplier: 1.0,
+            spin_multiplier: 1.0,
             session_multiplier: 1.0,
-            locked_positions:   Vec::new(),
-            collected_coins:    Vec::new(),
+            locked_positions: Vec::new(),
+            collected_coins: Vec::new(),
             triggered_features: HashSet::new(),
-            jackpot_awarded:    None,
-            scatter_payout:     0.0,
-            respins_awarded:    0,
-            upgrades:           Vec::new(),
+            jackpot_awarded: None,
+            scatter_payout: 0.0,
+            respins_awarded: 0,
+            upgrades: Vec::new(),
         }
     }
 }
@@ -165,23 +165,29 @@ impl SpinState {
 /// Read-only context injected into every behavior hook.
 pub struct BehaviorContext<'a> {
     pub symbol_id: &'a str,
-    pub reel:      usize,
-    pub row:       usize,
-    pub state:     &'a SpinState,
-    pub config:    &'a HashMap<String, String>,
+    pub reel: usize,
+    pub row: usize,
+    pub state: &'a SpinState,
+    pub config: &'a HashMap<String, String>,
 }
 
 // ─── SymbolBehavior trait ─────────────────────────────────────────────────────
 
 /// Plugin interface every behavior implementation must satisfy.
 pub trait SymbolBehavior: Send + Sync {
-    fn id(&self)   -> &str;
+    fn id(&self) -> &str;
     fn kind(&self) -> &str;
 
-    fn on_land(&self, ctx: &BehaviorContext<'_>)  -> Vec<Effect>;
-    fn on_win(&self,  ctx: &BehaviorContext<'_>)  -> Vec<Effect>;
+    fn on_land(&self, ctx: &BehaviorContext<'_>) -> Vec<Effect>;
+    fn on_win(&self, ctx: &BehaviorContext<'_>) -> Vec<Effect>;
 
-    fn on_cascade_remove(&self, _ctx: &BehaviorContext<'_>) -> Vec<Effect> { vec![] }
-    fn on_feature_start(&self,  _ctx: &BehaviorContext<'_>) -> Vec<Effect> { vec![] }
-    fn on_spin_end(&self,       _ctx: &BehaviorContext<'_>) -> Vec<Effect> { vec![] }
+    fn on_cascade_remove(&self, _ctx: &BehaviorContext<'_>) -> Vec<Effect> {
+        vec![]
+    }
+    fn on_feature_start(&self, _ctx: &BehaviorContext<'_>) -> Vec<Effect> {
+        vec![]
+    }
+    fn on_spin_end(&self, _ctx: &BehaviorContext<'_>) -> Vec<Effect> {
+        vec![]
+    }
 }

@@ -47,6 +47,6 @@ pub use hot_cold::{SpinCold, SpinHot};
 pub use packed_eval::{PackedSpinResult, ZeroAllocEvaluator, MAX_PAYLINES, MAX_REELS, MAX_SYMS};
 pub use packed_grid::{PackedGrid, PackedGridGenerator};
 pub use simd_eval::{
-    scalar_count_scatter_bonus, scalar_count_symbol,
-    simd_count_multi4, simd_count_scatter_bonus, simd_count_symbol,
+    scalar_count_scatter_bonus, scalar_count_symbol, simd_count_multi4, simd_count_scatter_bonus,
+    simd_count_symbol,
 };

@@ -2,8 +2,8 @@
 //!
 //! Mirrors `src/behaviors/registry.ts`.
 
-use std::collections::HashMap;
 use super::types::SymbolBehavior;
+use std::collections::HashMap;
 
 /// Registry: symbol-id → Box<dyn SymbolBehavior>.
 pub struct BehaviorRegistry {
@@ -12,20 +12,29 @@ pub struct BehaviorRegistry {
 
 impl BehaviorRegistry {
     pub fn new() -> Self {
-        Self { map: HashMap::new() }
+        Self {
+            map: HashMap::new(),
+        }
     }
 
     /// Register a behavior. Panics on duplicate.
     pub fn register(&mut self, symbol_id: impl Into<String>, behavior: Box<dyn SymbolBehavior>) {
         let id = symbol_id.into();
         if self.map.contains_key(&id) {
-            panic!("BehaviorRegistry: duplicate registration for symbol id \"{}\"", id);
+            panic!(
+                "BehaviorRegistry: duplicate registration for symbol id \"{}\"",
+                id
+            );
         }
         self.map.insert(id, behavior);
     }
 
     /// Override (or add) a behavior.
-    pub fn override_behavior(&mut self, symbol_id: impl Into<String>, behavior: Box<dyn SymbolBehavior>) {
+    pub fn override_behavior(
+        &mut self,
+        symbol_id: impl Into<String>,
+        behavior: Box<dyn SymbolBehavior>,
+    ) {
         self.map.insert(symbol_id.into(), behavior);
     }
 
@@ -51,5 +60,7 @@ impl BehaviorRegistry {
 }
 
 impl Default for BehaviorRegistry {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }

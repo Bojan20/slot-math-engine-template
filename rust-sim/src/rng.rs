@@ -173,9 +173,7 @@ impl Pcg64Backend {
         // Two-step seed initialization (standard PCG seeding protocol).
         rng.state = rng.state.wrapping_add(seed as u128);
         rng.advance_state();
-        rng.state = rng
-            .state
-            .wrapping_add(0x9E37_79B9_7F4A_7C15_u128);
+        rng.state = rng.state.wrapping_add(0x9E37_79B9_7F4A_7C15_u128);
         rng.advance_state();
         rng
     }
@@ -427,11 +425,7 @@ impl RngBackend for Philox4x32Backend {
 ///
 /// For `n_buckets` buckets, the distribution has `n_buckets − 1` degrees of
 /// freedom. A good RNG should produce χ² < critical_value(0.001, df).
-pub fn chi_squared_uniformity(
-    rng: &mut dyn RngBackend,
-    n_buckets: usize,
-    n_samples: u64,
-) -> f64 {
+pub fn chi_squared_uniformity(rng: &mut dyn RngBackend, n_buckets: usize, n_samples: u64) -> f64 {
     let mut counts = vec![0u64; n_buckets];
     for _ in 0..n_samples {
         let bucket = rng.next_u32_bounded(n_buckets as u32) as usize;
@@ -714,7 +708,10 @@ mod tests {
         // Child and parent must differ (different seed after nonce mix).
         let child_vals: Vec<f64> = (0..10).map(|_| child.next_f64()).collect();
         let parent_vals: Vec<f64> = (0..10).map(|_| parent2.next_f64()).collect();
-        assert_ne!(child_vals, parent_vals, "split must produce different sequence");
+        assert_ne!(
+            child_vals, parent_vals,
+            "split must produce different sequence"
+        );
     }
 
     // ── PCG-64 ────────────────────────────────────────────────────────────────
@@ -846,7 +843,11 @@ mod tests {
         let mut w1 = Philox4x32Backend::new(42);
         w0.set_worker_id(0);
         w1.set_worker_id(1);
-        assert_ne!(w0.next_u64(), w1.next_u64(), "worker IDs must produce independent streams");
+        assert_ne!(
+            w0.next_u64(),
+            w1.next_u64(),
+            "worker IDs must produce independent streams"
+        );
     }
 
     #[test]
