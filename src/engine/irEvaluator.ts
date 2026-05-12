@@ -9,6 +9,15 @@
  * can swap each evaluator for an IR-first implementation without touching
  * the dispatcher.
  *
+ * Faza 3 addition:
+ *   When a `BehaviorRegistry` is supplied via `IREvaluateOptions.behaviors`,
+ *   the evaluator runs the full Behavior Plugin pipeline:
+ *     1. createSpinState(grid)
+ *     2. BehaviorPipeline.runOnLand()  — mystery reveals, expanding wilds, etc.
+ *     3. win evaluation on transformed grid
+ *     4. BehaviorPipeline.runOnWin()   — multiplier wilds, jackpot symbols
+ *   `IRWinResult.spinMultiplier` reflects any multiplier effects applied.
+ *
  * Dispatch table:
  *   evaluation.kind === 'lines'        → LineEvaluator
  *   evaluation.kind === 'ways'         → WaysEvaluator
@@ -41,6 +50,13 @@ import {
   evaluateClusters,
   createClusterEvalContext,
 } from '../evaluators/clusterEvaluator.js';
+import {
+  BehaviorRegistry,
+  BehaviorPipeline,
+  createSpinState,
+  applyEffects,
+  type SpinState,
+} from '../behaviors/index.js';
 
 // ─── Public result types ───────────────────────────────────────────────────
 
@@ -61,11 +77,21 @@ export interface IRWinResult {
   wins: IRWin[];
   /** Sum of per-win `payout` values (already a total-bet multiplier). */
   totalPayout: number;
+  /**
+   * Combined spin-scope multiplier from the Behavior Pipeline.
+   * `totalPayout` does NOT include this — callers must multiply:
+   *   finalPayout = totalPayout * spinMultiplier * lineMultiplier
+   * Defaults to 1.0 when no behavior registry is supplied.
+   */
+  spinMultiplier: number;
+  lineMultiplier: number;
   evalMode: 'lines' | 'ways' | 'cluster' | 'megaways' | 'pay_anywhere' | 'pattern';
   scatterCount: number;
   bonusCount: number;
   /** Feature `kind` strings whose trigger condition fired this spin. */
   triggeredFeatures: string[];
+  /** SpinState after pipeline run — defined only when behaviors option is set. */
+  spinState?: SpinState;
 }
 
 // ─── IR → GameConfig bridge (internal) ─────────────────────────────────────
@@ -274,24 +300,40 @@ function countByKind(
  * Evaluate trigger conditions on a feature. Returns `true` if the feature
  * fired. Pass already-aggregated scatter / bonus counts to avoid traversing
  * the grid once per feature.
+ *
+ * Faza 3 additions:
+ *   mystery_symbol  — fires every spin (handled by MysteryBehavior.onLand)
+ *   symbol_upgrade  — fires based on probability (handled by SymbolUpgrade simulator)
+ *   pick / wheel    — fires based on scatter/bonus count trigger
+ *   respin          — fires if player is willing to pay (cost_x model; eval returns true
+ *                     so the simulator can decide whether to simulate it)
+ *   gamble          — fires if there was a win > 0 this spin
  */
 function isFeatureTriggered(
   feat: Feature,
   scatterCount: number,
   bonusCount: number,
+  _options?: { hadWin?: boolean; evalGrid?: string[][] },
 ): boolean {
-  // Features that don't use TriggerByCount can't fire from a single spin.
+  // Structural features that require separate simulation paths.
   if (
     feat.kind === 'cascade' ||
-    feat.kind === 'respin' ||
-    feat.kind === 'pick' ||
-    feat.kind === 'wheel' ||
     feat.kind === 'buy_feature' ||
-    feat.kind === 'ante_bet' ||
-    feat.kind === 'gamble' ||
-    feat.kind === 'mystery_symbol' ||
-    feat.kind === 'symbol_upgrade'
+    feat.kind === 'ante_bet'
   ) {
+    return false;
+  }
+
+  // mystery_symbol and symbol_upgrade fire every spin — the simulator
+  // handles them unconditionally so we do not flag them here.
+  if (feat.kind === 'mystery_symbol' || feat.kind === 'symbol_upgrade') {
+    return false;
+  }
+
+  // respin / pick / wheel / gamble — use their own trigger logic
+  if (feat.kind === 'respin' || feat.kind === 'pick' || feat.kind === 'wheel' || feat.kind === 'gamble') {
+    // These have TriggerByCount triggers — fall through to count-based logic below.
+    // gamble specifically fires when a win occurred (handled in irSimulator by checking spinWon > 0)
     return false;
   }
 
@@ -501,6 +543,18 @@ export interface IREvaluateOptions {
    * `ir.topology.kind`.
    */
   forceMegaways?: boolean;
+  /**
+   * Faza 3: if supplied, the Behavior Plugin Pipeline runs around win
+   * evaluation. The registry is auto-populated from the IR symbols when
+   * not provided here — pass `BehaviorRegistry.forIR(ir)` for default
+   * behaviour or a custom registry for game-specific overrides.
+   */
+  behaviors?: BehaviorRegistry;
+  /**
+   * Faza 3: seeded RNG for behavior hooks that need randomness (e.g.
+   * MysteryBehavior reveal). Defaults to Math.random if omitted.
+   */
+  rng?: () => number;
 }
 
 /**
@@ -510,6 +564,11 @@ export interface IREvaluateOptions {
  * expect). Pay-anywhere / pattern paths return `[reel, row]` pairs
  * (matching the IR's coordinate convention); lines / ways / cluster paths
  * inherit positions from their respective evaluators.
+ *
+ * When `options.behaviors` is provided the pipeline runs:
+ *   1. BehaviorPipeline.runOnLand()  → transform/expand/reveal effects on grid
+ *   2. Win evaluation on (possibly mutated) grid
+ *   3. BehaviorPipeline.runOnWin()   → multiplier / jackpot effects
  */
 export function evaluateIR(
   ir: SlotGameIR,
@@ -517,8 +576,21 @@ export function evaluateIR(
   options: IREvaluateOptions = {},
 ): IRWinResult {
   const kindIndex = buildKindIndex(ir);
-  const scatterCount = countByKind(grid, kindIndex, (k) => k === 'scatter');
-  const bonusCount = countByKind(grid, kindIndex, (k) => k === 'bonus');
+
+  // ── Behavior pipeline: onLand pass ───────────────────────────────────────
+  let spinState: SpinState | undefined;
+  let evalGrid = grid;
+
+  if (options.behaviors) {
+    spinState = createSpinState(grid);
+    const pipeline = new BehaviorPipeline(options.behaviors.toMap(), spinState);
+    pipeline.runOnLand();
+    // Use the (possibly transformed) grid for win evaluation.
+    evalGrid = spinState.grid;
+  }
+
+  const scatterCount = countByKind(evalGrid, kindIndex, (k) => k === 'scatter');
+  const bonusCount = countByKind(evalGrid, kindIndex, (k) => k === 'bonus');
 
   const triggeredFeatures: string[] = [];
   for (const feat of ir.features) {
@@ -532,7 +604,7 @@ export function evaluateIR(
 
   switch (ir.evaluation.kind) {
     case 'lines': {
-      const cfg = irToLegacyConfig(ir, grid);
+      const cfg = irToLegacyConfig(ir, evalGrid);
       const ctx = createLineEvalContext(cfg);
       const direction =
         ir.evaluation.direction === 'rtl'
@@ -540,7 +612,7 @@ export function evaluateIR(
           : ir.evaluation.direction === 'both'
           ? 'BOTH'
           : 'LTR';
-      const lineWins = evaluateLines(grid, cfg.paylines ?? [], ctx, direction, true);
+      const lineWins = evaluateLines(evalGrid, cfg.paylines ?? [], ctx, direction, true);
       wins = lineWins.map((w) => ({
         symbolId: w.symbolId,
         count: w.count,
@@ -553,9 +625,9 @@ export function evaluateIR(
     }
 
     case 'ways': {
-      const cfg = irToLegacyConfig(ir, grid);
+      const cfg = irToLegacyConfig(ir, evalGrid);
       const ctx = createWaysEvalContext(cfg);
-      const wayWins = evaluateWays(grid, ctx, true);
+      const wayWins = evaluateWays(evalGrid, ctx, true);
       wins = wayWins.map((w) => ({
         symbolId: w.symbolId,
         count: w.count,
@@ -567,9 +639,9 @@ export function evaluateIR(
     }
 
     case 'cluster': {
-      const cfg = irToLegacyConfig(ir, grid);
+      const cfg = irToLegacyConfig(ir, evalGrid);
       const ctx = createClusterEvalContext(cfg, cfg.clusterConfig);
-      const clusterWins = evaluateClusters(grid, ctx, true);
+      const clusterWins = evaluateClusters(evalGrid, ctx, true);
       wins = clusterWins.map((w) => ({
         symbolId: w.symbolId,
         count: w.count,
@@ -581,13 +653,13 @@ export function evaluateIR(
     }
 
     case 'pay_anywhere': {
-      wins = evaluatePayAnywhereIR(ir, grid, ir.evaluation.min_count);
+      wins = evaluatePayAnywhereIR(ir, evalGrid, ir.evaluation.min_count);
       evalMode = 'pay_anywhere';
       break;
     }
 
     case 'pattern': {
-      wins = evaluatePatternIR(ir, grid, ir.evaluation.patterns);
+      wins = evaluatePatternIR(ir, evalGrid, ir.evaluation.patterns);
       evalMode = 'pattern';
       break;
     }
@@ -598,15 +670,33 @@ export function evaluateIR(
     }
   }
 
+  // ── Behavior pipeline: onWin pass ────────────────────────────────────────
+  if (spinState && options.behaviors && wins.length > 0) {
+    const pipeline = new BehaviorPipeline(options.behaviors.toMap(), spinState);
+    // Collect all winning positions for onWin hooks.
+    const winningPositions: Array<{ symbolId: string; reel: number; row: number }> = [];
+    for (const w of wins) {
+      if (w.positions) {
+        for (const [reel, row] of w.positions) {
+          winningPositions.push({ symbolId: w.symbolId, reel, row });
+        }
+      }
+    }
+    pipeline.runOnWin(winningPositions);
+  }
+
   const totalPayout = wins.reduce((s, w) => s + w.payout, 0);
 
   return {
     wins,
     totalPayout,
+    spinMultiplier: spinState?.spinMultiplier ?? 1,
+    lineMultiplier: spinState?.lineMultiplier ?? 1,
     evalMode,
     scatterCount,
     bonusCount,
     triggeredFeatures,
+    spinState,
   };
 }
 

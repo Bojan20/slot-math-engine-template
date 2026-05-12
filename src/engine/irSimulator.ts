@@ -26,6 +26,7 @@
 import type { Feature, ReelSet, SlotGameIR, SymbolKey } from '../ir/types.js';
 import { mulberry32 } from './rng.js';
 import { evaluateIR, type IRWinResult } from './irEvaluator.js';
+import { BehaviorRegistry } from '../behaviors/index.js';
 
 // ─── Public API ────────────────────────────────────────────────────────────
 
@@ -236,6 +237,47 @@ function findAnteBet(
     | undefined;
 }
 
+function findPickFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'pick' }> | undefined {
+  return ir.features.find((f) => f.kind === 'pick') as
+    | Extract<Feature, { kind: 'pick' }>
+    | undefined;
+}
+
+function findWheelFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'wheel' }> | undefined {
+  return ir.features.find((f) => f.kind === 'wheel') as
+    | Extract<Feature, { kind: 'wheel' }>
+    | undefined;
+}
+
+function findRespinFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'respin' }> | undefined {
+  return ir.features.find((f) => f.kind === 'respin') as
+    | Extract<Feature, { kind: 'respin' }>
+    | undefined;
+}
+
+function findGambleFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'gamble' }> | undefined {
+  return ir.features.find((f) => f.kind === 'gamble') as
+    | Extract<Feature, { kind: 'gamble' }>
+    | undefined;
+}
+
+/** Returns all symbol_upgrade features (a game may have multiple). */
+function findSymbolUpgradeFeatures(
+  ir: SlotGameIR,
+): Array<Extract<Feature, { kind: 'symbol_upgrade' }>> {
+  return ir.features.filter((f) => f.kind === 'symbol_upgrade') as Array<
+    Extract<Feature, { kind: 'symbol_upgrade' }>
+  >;
+}
+
 function getScatterIds(ir: SlotGameIR): Set<string> {
   const ids = new Set<string>();
   for (const s of ir.symbols) if (s.kind === 'scatter') ids.add(s.id);
@@ -301,6 +343,7 @@ export async function simulateFreeSpins(
   triggerScatterCount: number,
   rng: () => number,
   totalBet: number,
+  behaviorRegistry?: BehaviorRegistry,
 ): Promise<{ payout: number; spinsPlayed: number; retriggers: number }> {
   void totalBet; // per-spin RTP uses bet=1 in the outer loop
 
@@ -369,8 +412,13 @@ export async function simulateFreeSpins(
       throw new Error('FS simulator: no reel data available');
     }
 
-    const result = evaluateIR(ir, grid);
-    let spinWin = result.totalPayout;
+    const result = evaluateIR(
+      ir,
+      grid,
+      behaviorRegistry ? { behaviors: behaviorRegistry } : {},
+    );
+    // Apply behavior multipliers (multiplier wilds, etc.) to FS spin win.
+    let spinWin = result.totalPayout * result.spinMultiplier * result.lineMultiplier;
 
     // Scatter pays during FS (pay_anywhere semantics for scatter ids).
     // Honours the paytable: if the scatter id has a paytable row, count
@@ -553,6 +601,131 @@ export async function simulateHoldAndWin(
   return { payout, jackpots, orbCount: locked.size };
 }
 
+// ─── Feature: Pick Bonus ──────────────────────────────────────────────────
+
+/**
+ * Simulate a pick-bonus screen. Player picks from `prize_pool` — one
+ * weighted draw determines the prize. Returns the pay_multiplier of the
+ * selected prize entry.
+ *
+ * Trigger convention (no trigger field in IR): fires when `bonusCount >= 3`
+ * in the main spin loop (configurable minimum at the call site).
+ */
+export function simulatePick(
+  feature: Extract<Feature, { kind: 'pick' }>,
+  rng: () => number,
+): number {
+  return pickWeighted(
+    rng,
+    feature.prize_pool.map((p) => ({ value: p.pay_multiplier, weight: p.weight })),
+  );
+}
+
+// ─── Feature: Wheel ───────────────────────────────────────────────────────
+
+/**
+ * Simulate a wheel-of-fortune spin. One weighted draw selects the segment.
+ * Returns the pay_multiplier of the landed segment.
+ *
+ * Trigger convention: fires when `scatterCount >= 3` AND no FS triggered.
+ */
+export function simulateWheel(
+  feature: Extract<Feature, { kind: 'wheel' }>,
+  rng: () => number,
+): number {
+  return pickWeighted(
+    rng,
+    feature.segments.map((s) => ({ value: s.pay_multiplier, weight: s.weight })),
+  );
+}
+
+// ─── Feature: Respin ──────────────────────────────────────────────────────
+
+/**
+ * Simulate a player-purchased respin.
+ *
+ * The player pays `cost_x` and gets one fresh base-game spin in return.
+ * Simulation policy: one respin is always purchased (models "player buys
+ * when base win = 0" EV scenario). `generateGrid` is a closure the caller
+ * provides so respin can pull a new grid from the same RNG stream.
+ *
+ * Returns:
+ *   `payout`   — gross win on the respin grid (before accounting for cost).
+ *   `costPaid` — feature.cost_x (caller adds to totalWagered).
+ */
+export async function simulateRespin(
+  ir: SlotGameIR,
+  feature: Extract<Feature, { kind: 'respin' }>,
+  rng: () => number,
+  generateGrid: () => string[][],
+  behaviorRegistry?: BehaviorRegistry,
+): Promise<{ payout: number; costPaid: number }> {
+  void rng; // grid generator already advances the RNG stream
+  const grid = generateGrid();
+  const result = evaluateIR(
+    ir,
+    grid,
+    behaviorRegistry ? { behaviors: behaviorRegistry } : {},
+  );
+  const payout = result.totalPayout * result.spinMultiplier * result.lineMultiplier;
+  return { payout, costPaid: feature.cost_x };
+}
+
+// ─── Feature: Gamble ──────────────────────────────────────────────────────
+
+/**
+ * Simulate one gamble step on the current win.
+ *
+ * - `red_black`: 50 % chance to double; 50 % to lose all.
+ *   With `tie_resolution: 'house'`, the 50/50 boundary gives the house the
+ *   edge on ties — modelled by strict `roll < 0.5` (ties go to house).
+ * - `suit`: 25 % chance to 4×; 75 % to lose all.
+ *
+ * The simulator applies exactly one gamble step per triggering spin. Using
+ * max_steps iterations would model "player gambles until bust or max", but
+ * one step is the conservative, most-common model.
+ *
+ * Returns the new win amount (0 on loss, 2× or 4× on win).
+ */
+export function simulateGamble(
+  feature: Extract<Feature, { kind: 'gamble' }>,
+  rng: () => number,
+  currentWin: number,
+): number {
+  if (currentWin <= 0) return currentWin;
+
+  const roll = rng();
+  if (feature.type === 'red_black') {
+    // Strict < 0.5: ties resolve to house (house wins).
+    return roll < 0.5 ? currentWin * 2 : 0;
+  } else {
+    // suit: 1 in 4 suits → 4× win; 3 in 4 → lose.
+    return roll < 0.25 ? currentWin * 4 : 0;
+  }
+}
+
+// ─── Feature: Symbol Upgrade ──────────────────────────────────────────────
+
+/**
+ * Apply a probability-gated symbol upgrade to a grid, **before** win
+ * evaluation. Returns the input grid unchanged if the RNG roll misses
+ * the probability gate; otherwise returns a **new** grid (does not mutate)
+ * with every occurrence of `feature.from` replaced by `feature.to`.
+ *
+ * Multiple `symbol_upgrade` features are applied sequentially by the caller
+ * (each has its own probability roll).
+ */
+export function simulateSymbolUpgrade(
+  feature: Extract<Feature, { kind: 'symbol_upgrade' }>,
+  grid: string[][],
+  rng: () => number,
+): string[][] {
+  if (rng() > feature.probability) return grid;
+  return grid.map((row) =>
+    row.map((cell) => (cell === feature.from ? feature.to : cell)),
+  );
+}
+
 // ─── Feature: Cascade ──────────────────────────────────────────────────────
 
 /**
@@ -664,6 +837,7 @@ export async function applyCascade(
   grid: string[][],
   rng: () => number,
   totalBet: number,
+  behaviorRegistry?: BehaviorRegistry,
 ): Promise<{ totalPayout: number; cascadeCount: number; maxMultiplier: number }> {
   void totalBet;
 
@@ -687,14 +861,19 @@ export async function applyCascade(
   // First evaluation is the "initial" grid the caller passed in.
   // We loop: evaluate → if wins → remove → replace → re-evaluate.
   for (let chain = 0; chain < chainCap; chain++) {
-    const result = evaluateIR(ir, grid);
+    const result = evaluateIR(
+      ir,
+      grid,
+      behaviorRegistry ? { behaviors: behaviorRegistry } : {},
+    );
     if (result.totalPayout <= 0) break;
 
     const multiplier =
       chain < progression.length ? progression[chain] ?? 1 : 1;
     if (multiplier > maxMultiplier) maxMultiplier = multiplier;
 
-    totalPayout += result.totalPayout * multiplier;
+    // Cascade multiplier stacks with any behavior-layer spinMultiplier.
+    totalPayout += result.totalPayout * result.spinMultiplier * result.lineMultiplier * multiplier;
     cascadeCount++;
 
     // Collect positions to remove. Pay-anywhere/cluster/pattern provide
@@ -779,6 +958,11 @@ export async function runIRSimulation(
     baseStrips = ir.reels.base;
   }
 
+  // Build behavior registry once — same instance reused across all spins.
+  // Faza 3: mystery reveals, expanding wilds, multiplier wilds etc. are
+  // applied automatically by the BehaviorPipeline inside evaluateIR.
+  const behaviorRegistry = BehaviorRegistry.forIR(ir);
+
   // Resolve feature handles up-front so the hot loop just branches on
   // pre-computed pointers instead of re-scanning `ir.features`.
   const fsFeature = findFreeSpinsFeature(ir);
@@ -786,6 +970,11 @@ export async function runIRSimulation(
   const cascadeFeature = findCascadeFeature(ir);
   const buyFeature = findBuyFeature(ir);
   const anteFeature = findAnteBet(ir);
+  const pickFeature = findPickFeature(ir);
+  const wheelFeature = findWheelFeature(ir);
+  const respinFeature = findRespinFeature(ir);
+  const gambleFeature = findGambleFeature(ir);
+  const symbolUpgradeFeatures = findSymbolUpgradeFeatures(ir);
 
   const anteOn = config.forceAnte ?? ir.bet.ante_bet?.enabled ?? false;
   const anteExtra =
@@ -804,6 +993,11 @@ export async function runIRSimulation(
   let fsWon = 0;
   let hnwWon = 0;
   let cascadeWon = 0;
+  let pickWon = 0;
+  let wheelWon = 0;
+  let respinWon = 0;
+  // gambleNet: net effect of gambling (can be negative — house edge).
+  let gambleNet = 0;
 
   // Buy-feature: when forced, rotate through offers round-robin so any
   // offer mapped to a known feature gets exercised at least once.
@@ -824,17 +1018,32 @@ export async function runIRSimulation(
       throw new Error('Unsupported reel set mode');
     }
 
-    let result: IRWinResult = evaluateIR(ir, grid);
-    let baseSpinPayout = result.totalPayout;
+    // ── Symbol upgrades (probability-gated transform before eval) ──────
+    // Applied in declaration order; each upgrade has its own RNG roll.
+    let evalGrid = grid;
+    for (const upgFeat of symbolUpgradeFeatures) {
+      const upgraded = simulateSymbolUpgrade(upgFeat, evalGrid, rng);
+      if (upgraded !== evalGrid) {
+        featureCounts.symbol_upgrade = (featureCounts.symbol_upgrade ?? 0) + 1;
+      }
+      evalGrid = upgraded;
+    }
 
-    // ── Cascade (operates on the base grid) ────────────────────────────
+    // ── Base spin evaluation (behaviors wired) ─────────────────────────
+    let result: IRWinResult = evaluateIR(ir, evalGrid, { behaviors: behaviorRegistry });
+    // Apply behavior multipliers (multiplier wilds etc.) to base payout.
+    let baseSpinPayout =
+      result.totalPayout * result.spinMultiplier * result.lineMultiplier;
+
+    // ── Cascade (operates on the (possibly upgraded) base grid) ────────
     if (cascadeFeature) {
       const cascadeResult = await applyCascade(
         ir,
         cascadeFeature,
-        grid,
+        evalGrid,
         rng,
         1,
+        behaviorRegistry,
       );
       // The first chain already consumed the base evaluation, so we
       // record cascade payout in full and zero-out base attribution for
@@ -916,9 +1125,69 @@ export async function runIRSimulation(
         result.scatterCount,
         rng,
         1,
+        behaviorRegistry,
       );
       fsWon += fs.payout;
       spinWon += fs.payout;
+    }
+
+    // ── Pick Bonus trigger (bonus_count >= 3 convention) ───────────────
+    // pick features have no trigger field in the IR — we trigger them
+    // when ≥ 3 bonus symbols land (standard operator convention).
+    if (pickFeature && effectiveBonus >= 3) {
+      featureCounts.pick = (featureCounts.pick ?? 0) + 1;
+      const pickPayout = simulatePick(pickFeature, rng);
+      pickWon += pickPayout;
+      spinWon += pickPayout;
+    }
+
+    // ── Wheel trigger (scatter_count >= 3, no FS this spin) ────────────
+    // Wheel triggered by scatter when FS is NOT also triggered (avoids
+    // double-counting the same scatter landing). If a game has both
+    // wheel and FS, the FS takes priority.
+    if (wheelFeature && effectiveScatter >= 3 && !fsTriggered) {
+      featureCounts.wheel = (featureCounts.wheel ?? 0) + 1;
+      const wheelPayout = simulateWheel(wheelFeature, rng);
+      wheelWon += wheelPayout;
+      spinWon += wheelPayout;
+    }
+
+    // ── Respin (player buys one respin when base win = 0) ──────────────
+    // Models the most common use-case: player opts in when no base win.
+    // Each respin costs feature.cost_x (added to totalWagered).
+    if (respinFeature && baseSpinPayout === 0 && !cascadeFeature) {
+      // Closure so simulateRespin pulls from the same RNG stream.
+      const gridFn = (): string[][] => {
+        const rc = variableRows ? drawRowCounts(rng, variableRows) : undefined;
+        if (weightedTables) {
+          return generateWeightedGrid(rng, weightedTables, numRows, rc);
+        } else if (baseStrips) {
+          return generateStripsGrid(rng, baseStrips, numRows, rc);
+        }
+        throw new Error('No reel data for respin');
+      };
+      featureCounts.respin = (featureCounts.respin ?? 0) + 1;
+      const respinResult = await simulateRespin(
+        ir,
+        respinFeature,
+        rng,
+        gridFn,
+        behaviorRegistry,
+      );
+      totalWagered += respinResult.costPaid; // player pays for the respin
+      respinWon += respinResult.payout;
+      spinWon += respinResult.payout;
+    }
+
+    // ── Gamble (player gambles entire win, one step) ───────────────────
+    // Triggered when spinWon > 0. EV is neutral (red_black = 1.0×,
+    // suit = 1.0×) so gamble does not shift average RTP — only volatility.
+    // gambleNet tracks the net effect for breakdown attribution.
+    if (gambleFeature && spinWon > 0) {
+      const preGamble = spinWon;
+      featureCounts.gamble = (featureCounts.gamble ?? 0) + 1;
+      spinWon = simulateGamble(gambleFeature, rng, spinWon);
+      gambleNet += spinWon - preGamble; // positive on win, negative on loss
     }
 
     // ── Buy Feature (forced for coverage) ──────────────────────────────
@@ -946,6 +1215,7 @@ export async function runIRSimulation(
             Math.max(highest, fsFeature.trigger.min ?? 3),
             rng,
             1,
+            behaviorRegistry,
           );
           fsWon += fs.payout;
           spinWon += fs.payout;
@@ -953,11 +1223,21 @@ export async function runIRSimulation(
           featureCounts.buy_feature = (featureCounts.buy_feature ?? 0) + 1;
           // Force a 6-cell seed (typical H&W min trigger) at arbitrary
           // positions so the simulation has something to grow from.
-          const seed = new Map<string, number>();
-          for (let k = 0; k < 6; k++) seed.set(`0,${k % numCols}`, 0);
-          const hnw = await simulateHoldAndWin(ir, hnwFeature, seed, rng, 1);
+          const hnwSeed = new Map<string, number>();
+          for (let k = 0; k < 6; k++) hnwSeed.set(`0,${k % numCols}`, 0);
+          const hnw = await simulateHoldAndWin(ir, hnwFeature, hnwSeed, rng, 1);
           hnwWon += hnw.payout;
           spinWon += hnw.payout;
+        } else if (guarantee === 'pick' && pickFeature) {
+          featureCounts.buy_feature = (featureCounts.buy_feature ?? 0) + 1;
+          const pickPayout = simulatePick(pickFeature, rng);
+          pickWon += pickPayout;
+          spinWon += pickPayout;
+        } else if (guarantee === 'wheel' && wheelFeature) {
+          featureCounts.buy_feature = (featureCounts.buy_feature ?? 0) + 1;
+          const wheelPayout = simulateWheel(wheelFeature, rng);
+          wheelWon += wheelPayout;
+          spinWon += wheelPayout;
         }
       }
     }
@@ -992,6 +1272,10 @@ export async function runIRSimulation(
     free_spins: totalWagered > 0 ? fsWon / totalWagered : 0,
     hold_and_win: totalWagered > 0 ? hnwWon / totalWagered : 0,
     cascade: totalWagered > 0 ? cascadeWon / totalWagered : 0,
+    pick: totalWagered > 0 ? pickWon / totalWagered : 0,
+    wheel: totalWagered > 0 ? wheelWon / totalWagered : 0,
+    respin: totalWagered > 0 ? respinWon / totalWagered : 0,
+    gamble: totalWagered > 0 ? gambleNet / totalWagered : 0,
   };
 
   return {
@@ -1012,5 +1296,10 @@ export const _internal = {
   simulateFreeSpins,
   simulateHoldAndWin,
   applyCascade,
+  simulatePick,
+  simulateWheel,
+  simulateRespin,
+  simulateGamble,
+  simulateSymbolUpgrade,
   freeSpinsAwarded,
 };
