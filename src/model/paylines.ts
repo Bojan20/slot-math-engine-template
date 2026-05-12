@@ -1,17 +1,24 @@
 /**
- * SLOT MATH ENGINE TEMPLATE - Payline Definitions
+ * SLOT MATH ENGINE TEMPLATE - Demo Payline Definitions (5×3)
  *
- * 10 fixed paylines on a 5x3 grid
+ * NOTE: This file describes the **default demo game** (10 paylines on 5×3).
+ * The engine itself supports arbitrary grids — see `src/ir/` and
+ * `src/config/gameConfig.ts::buildGameConfig()` for IR-driven configs.
+ *
+ * Dimensions are **derived** from the payline definitions below, NOT
+ * hardcoded. Override by passing a different `paylines` set to
+ * `buildGameConfig({ paylines, ... })`.
+ *
  * Grid positions (row, col):
  *   [0,0] [0,1] [0,2] [0,3] [0,4]  <- Top row
  *   [1,0] [1,1] [1,2] [1,3] [1,4]  <- Middle row
  *   [2,0] [2,1] [2,2] [2,3] [2,4]  <- Bottom row
  *
- * Paylines evaluate Left-to-Right only
- * Each payline is an array of row indices per reel [reel0Row, reel1Row, ...]
+ * Paylines evaluate Left-to-Right only by default.
+ * Each payline is an array of row indices per reel [reel0Row, reel1Row, ...].
  */
 
-export type PaylineDefinition = [number, number, number, number, number];
+export type PaylineDefinition = number[];
 
 /**
  * Standard 10-line payline configuration
@@ -49,9 +56,43 @@ export const PAYLINES: PaylineDefinition[] = [
   [1, 0, 1, 2, 1]
 ];
 
+// Dimensions DERIVED from PAYLINES, not hardcoded.
+// Engine supports arbitrary grids — these constants describe the demo only.
 export const NUM_PAYLINES = PAYLINES.length;
-export const NUM_REELS = 5;
-export const NUM_ROWS = 3;
+export const NUM_REELS: number = PAYLINES[0]?.length ?? 5;
+export const NUM_ROWS: number = (() => {
+  let max = 0;
+  for (const line of PAYLINES) for (const r of line) if (r > max) max = r;
+  return max + 1;
+})();
+
+/**
+ * Build straight-line paylines for an arbitrary grid:
+ *   row 0 across, row 1 across, ..., row (rows-1) across.
+ *
+ * For non-rectangular topologies, use IR `evaluation.paylines` instead.
+ */
+export function buildStraightLinePaylines(reels: number, rows: number): PaylineDefinition[] {
+  const out: PaylineDefinition[] = [];
+  for (let r = 0; r < rows; r++) {
+    out.push(new Array(reels).fill(r));
+  }
+  return out;
+}
+
+/**
+ * Derive dimensions from any payline set.
+ * Returns `{reels, rows}` for the given set, or null if empty.
+ */
+export function deriveDimensions(
+  paylines: PaylineDefinition[],
+): { reels: number; rows: number } | null {
+  if (paylines.length === 0) return null;
+  const reels = paylines[0]!.length;
+  let rows = 0;
+  for (const line of paylines) for (const r of line) if (r >= rows) rows = r + 1;
+  return { reels, rows };
+}
 
 /**
  * Payline visualization helper
@@ -59,17 +100,15 @@ export const NUM_ROWS = 3;
  */
 export function visualizePayline(lineIndex: number): string {
   const payline = PAYLINES[lineIndex];
-  const grid: string[][] = [
-    ['.', '.', '.', '.', '.'],
-    ['.', '.', '.', '.', '.'],
-    ['.', '.', '.', '.', '.']
-  ];
-
+  if (!payline) return '';
+  // Use the demo dimensions derived from this PAYLINES set.
+  const grid: string[][] = Array.from({ length: NUM_ROWS }, () =>
+    Array(NUM_REELS).fill('.'),
+  );
   for (let reel = 0; reel < NUM_REELS; reel++) {
     const row = payline[reel];
-    grid[row][reel] = 'X';
+    if (row !== undefined && grid[row]) grid[row]![reel] = 'X';
   }
-
   return grid.map(row => row.join(' ')).join('\n');
 }
 
@@ -93,18 +132,24 @@ export function getCoveredPositions(): Set<string> {
  * Validate payline definitions
  * Ensures all positions are within grid bounds
  */
-export function validatePaylines(): boolean {
-  for (let i = 0; i < PAYLINES.length; i++) {
-    const payline = PAYLINES[i];
+export function validatePaylines(
+  paylines: PaylineDefinition[] = PAYLINES,
+  reels: number = NUM_REELS,
+  rows: number = NUM_ROWS,
+): boolean {
+  for (let i = 0; i < paylines.length; i++) {
+    const payline = paylines[i];
+    if (!payline) continue;
 
-    if (payline.length !== NUM_REELS) {
-      console.error(`Payline ${i + 1} has wrong length: ${payline.length}`);
+    if (payline.length !== reels) {
+      console.error(`Payline ${i + 1} has wrong length: ${payline.length} (expected ${reels})`);
       return false;
     }
 
-    for (let reel = 0; reel < NUM_REELS; reel++) {
-      if (payline[reel] < 0 || payline[reel] >= NUM_ROWS) {
-        console.error(`Payline ${i + 1}, reel ${reel}: invalid row ${payline[reel]}`);
+    for (let reel = 0; reel < reels; reel++) {
+      const r = payline[reel];
+      if (r === undefined || r < 0 || r >= rows) {
+        console.error(`Payline ${i + 1}, reel ${reel}: invalid row ${r}`);
         return false;
       }
     }

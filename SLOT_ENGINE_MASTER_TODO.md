@@ -770,7 +770,7 @@ Sve faze do 14 moraju zadovoljiti **1T spinova/sec end-to-end** kao acceptance.
 ## TEHNIČKI DUG (registar — popraviti uz odgovarajuće faze)
 
 - ⚠️ Hardkodovan `SymbolId` enum (faza 1.2) — i dalje živi u `src/model/symbols.ts` + `src/config/symbolConfig.ts` paralelno sa IR-om. Treba **obrisati legacy granu**.
-- ⚠️ Hardkodovan `NUM_REELS=5` / `NUM_ROWS=3` (faza 1.3) — i dalje u `src/model/paylines.ts` + `src/config/gameConfig.ts` + `src/utils/mathValidator.ts`. IR podržava dinamičke dimenzije ✅, ali legacy putanja vlada za default config.
+- ⚠️ Hardkodovan `NUM_REELS=5` / `NUM_ROWS=3` (faza 1.3) — **POPRAVLJENO (delimično)**: `paylines.ts` više ne hardkoduje `5`/`3`, sad **derived from PAYLINES** + dodate `buildStraightLinePaylines(reels, rows)` i `deriveDimensions(paylines)` helper funkcije. `validatePaylines` accepts `(paylines, reels, rows)` parametre. `PaylineDefinition` više nije fixed-tuple `[n,n,n,n,n]`, sad generički `number[]`. Legacy 5×3 demo i dalje radi; operator koji želi 6-reel: zameni `PAYLINES` ili koristi `buildStraightLinePaylines(6, 4)`. Full IR migracija demo igre (`BASE_REELS`, `SymbolId` enum) i dalje na čekanju.
 - ⚠️ TS `BASE_REELS` / `FREE_SPINS_REELS` kao TS const (faza 1.1) — IR adapter ih učitava, ali izvori su još hardcoded TS.
 - ✅ Mulberry32 jedini RNG (faza 7.1) — **REŠENO**: 5 backend-a aktivnih (Mulberry32 legacy, PCG-64 default, Xoshiro256**, Philox4x32, ChaCha20-Poly1305).
 - ⚠️ TS i Rust evaluatori divergirajuće implementacije (faza 1.1) — IR-native dispatch unifikuje glavnu putanju ✅; ali legacy `lineEvaluator.ts` ↔ Rust `evaluator.rs` razlikuju se u sub-mehanikama. Parity test (`compare-parity.mjs`) jaha samo specifične fixture-e.
@@ -785,7 +785,7 @@ Sve faze do 14 moraju zadovoljiti **1T spinova/sec end-to-end** kao acceptance.
 Ovo je realan blokator za production-grade prodaju engine-a operatorima/providerima:
 
 1. ✅ **Windows-x64 CI grana** (faza 0.1) — bez nje ne možeš tvrditi "cross-platform deterministic". *(DONE — `ci.yml` sad uključuje `windows-latest` u TS+Rust matrix)*
-2. **Brisanje legacy `SymbolId` + `NUM_REELS/NUM_ROWS` enuma** (faza 1.2/1.3 tehnički dug) — operator koji proba da napravi 6-reel igru udara u zid.
+2. ⚠️ **Brisanje legacy `SymbolId` + `NUM_REELS/NUM_ROWS` enuma** (faza 1.2/1.3 tehnički dug) — `NUM_REELS/NUM_ROWS` POPRAVLJENO (derived from PAYLINES, `buildStraightLinePaylines` factory dostupan). SymbolId enum + full IR migracija demo igre (BASE_REELS/FREE_SPINS_REELS) i dalje na čekanju za hard purge.
 3. **TestU01 BigCrush / NIST / PractRand izveštaji** (faza 7.2) — bez tih izveštaja regulator ne prihvata RNG.
 4. **PAR sheet sakupljanje za 20 reference igara** (faza 0.3 + 10.4 KAT) — bez nazivnog KAT-a "univerzalnost" nije dokazana.
 5. **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — bez merenja "1T spins/sec" je marketing.
