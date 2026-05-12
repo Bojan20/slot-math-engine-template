@@ -71,22 +71,22 @@ Mapa "commit → faza":
 ## FAZA 0 — Pripreme i temelji *(1-2 nedelje)*
 
 ### 0.1 Repo & infra
-- ⚠️ Postaviti **CI matrix**: `linux-x64`, `macos-arm64`, `macos-x64`, `windows-x64` — bit-identičan RTP iz istih seed-ova. *(linux + macos rade; windows-x64 grana NEDOSTAJE — `commit 833c040`)*
+- ✅ Postaviti **CI matrix**: `linux-x64`, `macos-arm64`, `macos-x64`, `windows-x64` — bit-identičan RTP iz istih seed-ova. *(svi 4 OS-a sad u `.github/workflows/ci.yml` za TS+Rust)*
 - ⚠️ Dodati `cargo bench` + `vitest bench` regresione grafove (criterion.rs + reporter). *(criterion benches: `rust-sim/benches/spin_throughput.rs`, `bulk_throughput.rs` ✅; vitest bench i CI graph reporter ❌)*
 - ✅ `cargo-fuzz` setup za config parser + grid evaluator. *(`rust-sim/fuzz/fuzz_targets/{fuzz_alias,fuzz_eval_config,fuzz_packed_grid}.rs`)*
 - ✅ Pre-commit: `cargo clippy -W clippy::pedantic`, `tsc --noEmit`, `cargo test`, `vitest run` (sve mora proći). *(`scripts/pre-commit.sh`)*
 - ❌ Renovate / dependabot za `decimal.js`, `rust_decimal`, `rayon`, `proptest`.
 
 ### 0.2 Dokumentacija temelj
-- ❌ `docs/architecture.md` — diagram protoka spin-a (TS i Rust).
-- ❌ `docs/rng.md` — formalna definicija svakog RNG-a + state-machine.
-- ❌ `docs/precision.md` — gde koristimo f64, bigint, Decimal i zašto.
-- ❌ `docs/glossary.md` — reel set, way, line, pay, scatter, trigger, retrigger, cascade…
+- ✅ `docs/architecture.md` — diagram protoka spin-a (TS i Rust). *(Faza 0.2 commit — full ASCII flow, modul ownership table, hot-path specialization)*
+- ✅ `docs/rng.md` — formalna definicija svakog RNG-a + state-machine. *(4 backend katalog, splitting protokol, statistical-quality acceptance)*
+- ✅ `docs/precision.md` — gde koristimo f64, bigint, Decimal i zašto. *(3 domena, 4 sanctioned conversion boundaries, common pitfalls)*
+- ✅ `docs/glossary.md` — reel set, way, line, pay, scatter, trigger, retrigger, cascade… *(industry-grade A–W glossary sa cross-ref u kod)*
 - ✅ *Bonus već postoji:* `docs/IR_SPEC.md`, `docs/MATH_QUICK_REFERENCE.md`, `docs/RECALL_SPEC.md`.
 
 ### 0.3 Reference materijal (sakupiti i indeksirati)
-- ❌ PAR sheet-ovi za 20 reference igara iz `SLOT_ENGINE_ULTIMATE_SCENARIOS.md §8` (legalne javne objave + reverse-engineered iz literature).
-- ❌ GLI-11 / GLI-19 čitanje + checklist `docs/compliance.md`.
+- ⚠️ PAR sheet sample-i za 20 generičkih mehanika konfiguracija (legalno reverse-engineered iz literature; bez TM imena). *(fixture-i u `tests/fixtures/reference/` postoje za većinu mehanika; standalone PAR-set kit još fali)*
+- ✅ GLI-11 / GLI-19 čitanje + checklist `docs/compliance.md`. *(per-clause status table, per-jurisdiction overlay, submission-kit zip definicija)*
 - ❌ Reading list: Markov chain RTP papers (link u `docs/research.md`).
 
 ---
@@ -784,13 +784,13 @@ Sve faze do 14 moraju zadovoljiti **1T spinova/sec end-to-end** kao acceptance.
 
 Ovo je realan blokator za production-grade prodaju engine-a operatorima/providerima:
 
-1. **Windows-x64 CI grana** (faza 0.1) — bez nje ne možeš tvrditi "cross-platform deterministic".
+1. ✅ **Windows-x64 CI grana** (faza 0.1) — bez nje ne možeš tvrditi "cross-platform deterministic". *(DONE — `ci.yml` sad uključuje `windows-latest` u TS+Rust matrix)*
 2. **Brisanje legacy `SymbolId` + `NUM_REELS/NUM_ROWS` enuma** (faza 1.2/1.3 tehnički dug) — operator koji proba da napravi 6-reel igru udara u zid.
 3. **TestU01 BigCrush / NIST / PractRand izveštaji** (faza 7.2) — bez tih izveštaja regulator ne prihvata RNG.
 4. **PAR sheet sakupljanje za 20 reference igara** (faza 0.3 + 10.4 KAT) — bez nazivnog KAT-a "univerzalnost" nije dokazana.
 5. **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — bez merenja "1T spins/sec" je marketing.
 6. **PAR sheet PDF rendering** (8.5) — JSON nije isporučiv regulatoru.
-7. **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview.
+7. ✅ **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview. *(DONE — svih 5 fajlova landed; sa cross-ref na kod i submission-kit definicijom)*
 8. **Mutation score izveštaj** (faza 10.7) — bez "≥95%" broja ne možeš tvrditi "regression-safe".
 9. **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — nekompletan "plugin layer" claim.
 10. **HSM bridge** (faza 7.5) — operatori u UK/MT/DE traže HSM-backed RNG za live.

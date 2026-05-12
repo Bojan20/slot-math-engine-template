@@ -35,7 +35,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-14]
+        # linux-x64, macos-arm64, macos-x64, windows-x64 — full matrix
+        # so cross-platform determinism is enforced on every PR.
+        os: [ubuntu-latest, macos-14, macos-13, windows-latest]
         node: ['18', '20', '22']
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +60,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-14]
+        # linux-x64, macos-arm64, macos-x64, windows-x64 — Rust deterministic
+        # across all four; any drift fails the build (P0 #1 plug).
+        os: [ubuntu-latest, macos-14, macos-13, windows-latest]
     defaults:
       run:
         working-directory: rust-sim
