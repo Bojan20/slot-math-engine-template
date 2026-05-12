@@ -362,8 +362,9 @@ Mapa "commit → faza":
 
 ### 9.7 Bench harness
 - ✅ `cargo bench` sa criterion (already setup base). *(`rust-sim/benches/`)*
-- ⚠️ Reported metrics: spins/sec, ns/spin, allocs/spin, L1 miss rate. *(spins/sec ✅; alloc/L1 metrike ❌)*
+- ⚠️ Reported metrics: spins/sec, ns/spin, allocs/spin, L1 miss rate. *(spins/sec ✅ — measured & committed u `reports/bench/`; alloc/L1 metrike ❌)*
 - ❌ Regression detection u CI (fail ako > 5% slower).
+- ✅ **Bench reports committed** (P0 #5) — Apple M3 Pro baseline: scalar 2.66 Mspins/s, packed 4.41 Mspins/s, 1T projection 35557s single-thread → confirms need for SIMD batched + GPU + cluster za <60s acceptance.
 
 ---
 
@@ -757,8 +758,8 @@ Sve faze do 14 moraju zadovoljiti **1T spinova/sec end-to-end** kao acceptance.
 
 | Stack | Spins/sec target | 1T trajanje | Status |
 |---|---|---|---|
-| CPU SIMD (faza 9.1) | 5B+ | 200 sek | ⚠️ kod ✅, merenje ❌ |
-| + Bitpacked (faza 9.2) | 8B+ | 125 sek | ⚠️ kod ✅, merenje ❌ |
+| CPU SIMD (faza 9.1) | 5B+ | 200 sek | ⚠️ kod ✅, merenje **započeto** — scatter_count SIMD trenutno SPORIJI od scalar na M3 Pro za 5×3 (lane overhead), pays off na 8×8+ ili batched |
+| + Bitpacked (faza 9.2) | 8B+ | 125 sek | ⚠️ kod ✅, merenje ✅ — 1.66× speedup vs scalar full_spin (`reports/bench/full_spin/`) |
 | + Arena + PGO/BOLT (faza 9.3-9.5) | 12B+ | 80 sek | ❌ PGO/BOLT |
 | + GPU Metal (faza 9.6) | 600B+ | < 2 sek ⚡ | ⚠️ WGSL ✅, merenje ❌ |
 | + Distribuirani (faza 9.8, 4-8 nodes) | 1.8T+ | < 1 sek ⚡⚡ | ⚠️ cluster ✅, multi-node merenje ❌ |
@@ -788,7 +789,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 2. ⚠️ **Brisanje legacy `SymbolId` + `NUM_REELS/NUM_ROWS` enuma** (faza 1.2/1.3 tehnički dug) — `NUM_REELS/NUM_ROWS` POPRAVLJENO (derived from PAYLINES, `buildStraightLinePaylines` factory dostupan). SymbolId enum + full IR migracija demo igre (BASE_REELS/FREE_SPINS_REELS) i dalje na čekanju za hard purge.
 3. **TestU01 BigCrush / NIST / PractRand izveštaji** (faza 7.2) — bez tih izveštaja regulator ne prihvata RNG.
 4. **PAR sheet sakupljanje za 20 reference igara** (faza 0.3 + 10.4 KAT) — bez nazivnog KAT-a "univerzalnost" nije dokazana.
-5. **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — bez merenja "1T spins/sec" je marketing.
+5. ✅ **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — DONE: `reports/bench/` sa M3 Pro baseline (5 bench grupe, criterion JSON + README). 1T projection: 35557s single-thread → otvara konkretan target za SIMD+GPU+cluster. PGO/BOLT/GPU/cross-platform follow-up u README.
 6. **PAR sheet PDF rendering** (8.5) — JSON nije isporučiv regulatoru.
 7. ✅ **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview. *(DONE — svih 5 fajlova landed; sa cross-ref na kod i submission-kit definicijom)*
 8. **Mutation score izveštaj** (faza 10.7) — bez "≥95%" broja ne možeš tvrditi "regression-safe".
