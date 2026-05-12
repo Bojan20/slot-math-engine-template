@@ -138,7 +138,7 @@ The compliance gaps map 1:1 to entries in the engineering P0 list:
 | #5 ✅ Benchmark reports                         | Performance claims in submission narrative         |
 | #6 ✅ PAR PDF render                            | Required artefact format                           |
 | #8 Mutation score ≥ 95%                        | Test-suite robustness claim                        |
-| #10 HSM bridge                                 | UK / MGA / DE jurisdiction unlock                  |
+| #10 ✅ HSM bridge                               | UK / MGA / DE jurisdiction unlock — `src/hsm/` shipped with AWS KMS, PKCS#11, Mock adapters + audit log |
 
 Until those are closed, the engine is **technically sound but not
 audit-ready**. Closing them is sequential and scriptable; no further
