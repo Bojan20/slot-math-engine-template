@@ -1,10 +1,21 @@
 /**
- * IR-native Monte Carlo Simulator (Faza 2).
+ * IR-native Monte Carlo Simulator (Faza 2 + Faza 3).
  *
  * Runs a configurable number of spins against a `SlotGameIR`, draws each
  * spin's grid from the IR's reel definition (weighted-per-cell or strips),
  * dispatches the win evaluation through `evaluateIR`, and accumulates RTP
  * / hit-rate / feature-trigger frequencies.
+ *
+ * Faza 3 additions:
+ *   - Free Spins feature: scatter-triggered FS sessions with optional
+ *     `global_multiplier`, `MultiplierLadder` modifier, retrigger, and
+ *     FS-specific reel set.
+ *   - Hold & Win feature: bonus-triggered respin sessions with per-orb
+ *     cash values, jackpot tiers, optional `grid_full_award`.
+ *   - Cascade feature: cascading reels with replacement strategies
+ *     (`drop` | `refill_random` | `fixed_strip`) and optional
+ *     `multiplier_progression`.
+ *   - Buy Feature offers and Ante Bet bias hooks.
  *
  * The simulator is intentionally agnostic of the legacy `GameConfig`
  * pipeline — the entire spin loop reads from the IR directly so the same
@@ -12,7 +23,7 @@
  * Megaways games.
  */
 
-import type { ReelSet, SlotGameIR } from '../ir/types.js';
+import type { Feature, ReelSet, SlotGameIR, SymbolKey } from '../ir/types.js';
 import { mulberry32 } from './rng.js';
 import { evaluateIR, type IRWinResult } from './irEvaluator.js';
 
@@ -24,6 +35,21 @@ export interface IRSimConfig {
   seed?: number;
   /** Print per-1k-spin progress / final breakdown to stderr. */
   verbose?: boolean;
+  /**
+   * Faza 3: when true, the simulator forces a `BuyFeature` offer purchase
+   * on every spin (round-robin across offers). Used by feature-coverage
+   * tests so we can prove the offer path lights up regardless of base
+   * trigger probability. Default `false` — production sims never auto-buy.
+   */
+  forceBuyFeature?: boolean;
+  /**
+   * Faza 3: when true, the simulator applies the `ante_bet` feature's
+   * `extra_multiplier` to scatter / bonus counts (rounded up) before
+   * feature-trigger evaluation. Models the typical "Ante boosts scatter
+   * frequency" payment. Default: read from `bet.ante_bet.enabled` on
+   * the IR.
+   */
+  forceAnte?: boolean;
 }
 
 export interface IRSimResult {
@@ -35,7 +61,12 @@ export interface IRSimResult {
   /** Largest single-spin total payout (multiplier × bet === multiplier here). */
   maxWinX: number;
   /** Cumulative win contribution per RTP source. `base` is always present. */
-  rtpBreakdown: { base: number } & Record<string, number>;
+  rtpBreakdown: {
+    base: number;
+    free_spins: number;
+    hold_and_win: number;
+    cascade: number;
+  } & Record<string, number>;
 }
 
 // ─── Grid generators ───────────────────────────────────────────────────────
@@ -55,9 +86,9 @@ interface WeightedCell {
  * both sides.
  */
 function buildWeightedDrawTables(
-  reels: Extract<ReelSet, { mode: 'weighted' }>,
+  perReel: Array<Record<SymbolKey, number>>,
 ): WeightedCell[] {
-  return reels.base.map((map) => {
+  return perReel.map((map) => {
     const ids = Object.keys(map).slice().sort();
     const weights = ids.map((id) => map[id] ?? 0);
     const total = weights.reduce((s, w) => s + w, 0);
@@ -104,17 +135,17 @@ function generateWeightedGrid(
 /** Generate one grid for a strips reel-set IR. */
 function generateStripsGrid(
   rng: () => number,
-  reels: Extract<ReelSet, { mode: 'strips' }>,
+  strips: string[][],
   numRows: number,
   rowCounts?: number[],
 ): string[][] {
   const grid: string[][] = [];
-  const numCols = reels.base.length;
+  const numCols = strips.length;
   for (let r = 0; r < numRows; r++) {
     grid.push(new Array<string>(numCols).fill(''));
   }
   for (let c = 0; c < numCols; c++) {
-    const strip = reels.base[c];
+    const strip = strips[c];
     if (!strip || strip.length === 0) continue;
     const rowsForReel = rowCounts ? rowCounts[c] ?? numRows : numRows;
     // Pick a random stop within the strip; window wraps the strip length.
@@ -159,6 +190,565 @@ function drawRowCounts(
   });
 }
 
+// ─── Feature lookup helpers ────────────────────────────────────────────────
+
+function findFreeSpinsFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'free_spins' }> | undefined {
+  return ir.features.find((f) => f.kind === 'free_spins') as
+    | Extract<Feature, { kind: 'free_spins' }>
+    | undefined;
+}
+
+function findHoldAndWinFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'hold_and_win' }> | undefined {
+  return ir.features.find((f) => f.kind === 'hold_and_win') as
+    | Extract<Feature, { kind: 'hold_and_win' }>
+    | undefined;
+}
+
+function findCascadeFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'cascade' }> | undefined {
+  return ir.features.find((f) => f.kind === 'cascade') as
+    | Extract<Feature, { kind: 'cascade' }>
+    | undefined;
+}
+
+function findBuyFeature(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'buy_feature' }> | undefined {
+  return ir.features.find((f) => f.kind === 'buy_feature') as
+    | Extract<Feature, { kind: 'buy_feature' }>
+    | undefined;
+}
+
+function findAnteBet(
+  ir: SlotGameIR,
+): Extract<Feature, { kind: 'ante_bet' }> | undefined {
+  return ir.features.find((f) => f.kind === 'ante_bet') as
+    | Extract<Feature, { kind: 'ante_bet' }>
+    | undefined;
+}
+
+function getScatterIds(ir: SlotGameIR): Set<string> {
+  const ids = new Set<string>();
+  for (const s of ir.symbols) if (s.kind === 'scatter') ids.add(s.id);
+  return ids;
+}
+
+function getBonusIds(ir: SlotGameIR): Set<string> {
+  const ids = new Set<string>();
+  for (const s of ir.symbols) if (s.kind === 'bonus') ids.add(s.id);
+  return ids;
+}
+
+// ─── Helper: weighted pick ─────────────────────────────────────────────────
+
+function pickWeighted<T>(
+  rng: () => number,
+  entries: Array<{ value: T; weight: number }>,
+): T {
+  const total = entries.reduce((s, e) => s + e.weight, 0);
+  if (total <= 0) {
+    const fallback = entries[0];
+    if (!fallback) throw new Error('pickWeighted: empty pool');
+    return fallback.value;
+  }
+  let roll = rng() * total;
+  for (const e of entries) {
+    roll -= e.weight;
+    if (roll <= 0) return e.value;
+  }
+  const last = entries[entries.length - 1];
+  if (!last) throw new Error('pickWeighted: empty pool');
+  return last.value;
+}
+
+// ─── Feature: Free Spins ───────────────────────────────────────────────────
+
+/**
+ * Read the awarded-spins count for a scatter trigger. Honours numeric keys
+ * with optional `+` suffix; falls back to 10 when nothing matches.
+ */
+function freeSpinsAwarded(
+  feature: Extract<Feature, { kind: 'free_spins' }>,
+  scatterCount: number,
+): number {
+  const thresholds = feature.trigger.thresholds;
+  if (!thresholds) return 10;
+
+  // Build a sorted descending list of (threshold, value) — we pick the
+  // highest threshold ≤ scatterCount.
+  const entries = Object.entries(thresholds)
+    .map(([k, v]) => ({ n: parseInt(k.replace(/\+$/, ''), 10), v }))
+    .filter(({ n }) => !Number.isNaN(n))
+    .sort((a, b) => b.n - a.n);
+  for (const e of entries) {
+    if (scatterCount >= e.n) return Math.floor(e.v);
+  }
+  return 10;
+}
+
+export async function simulateFreeSpins(
+  ir: SlotGameIR,
+  feature: Extract<Feature, { kind: 'free_spins' }>,
+  triggerScatterCount: number,
+  rng: () => number,
+  totalBet: number,
+): Promise<{ payout: number; spinsPlayed: number; retriggers: number }> {
+  void totalBet; // per-spin RTP uses bet=1 in the outer loop
+
+  const initialSpins = freeSpinsAwarded(feature, triggerScatterCount);
+  if (initialSpins <= 0) {
+    return { payout: 0, spinsPlayed: 0, retriggers: 0 };
+  }
+
+  // Build the FS grid generator. Prefer the FS reel set, fall back to base.
+  const { numCols, numRows, variableRows } = topologyDims(ir);
+  let fsWeightedTables: WeightedCell[] | null = null;
+  let fsStrips: string[][] | null = null;
+
+  if (ir.reels.mode === 'weighted') {
+    const reels = ir.reels as Extract<ReelSet, { mode: 'weighted' }>;
+    const tableSrc = reels.free_spins ?? reels.base;
+    fsWeightedTables = buildWeightedDrawTables(tableSrc);
+  } else {
+    const reels = ir.reels as Extract<ReelSet, { mode: 'strips' }>;
+    fsStrips = reels.free_spins ?? reels.base;
+  }
+  void numCols;
+
+  const globalMult = feature.global_multiplier ?? 1;
+  const hasLadder =
+    (feature.modifiers ?? []).includes('multiplier_ladder');
+  const retrigger = feature.retrigger;
+  const maxTotal = retrigger?.max_total ?? Infinity;
+
+  // Retrigger threshold: explicit min, else lowest numeric threshold key.
+  let retriggerMin: number | undefined = retrigger?.min;
+  if (retrigger && retriggerMin == null && retrigger.thresholds) {
+    const keys = Object.keys(retrigger.thresholds)
+      .map((k) => parseInt(k.replace(/\+$/, ''), 10))
+      .filter((n) => !Number.isNaN(n));
+    if (keys.length > 0) retriggerMin = Math.min(...keys);
+  }
+
+  // Cap on number of FS "loops" we ever execute — prevents runaway retriggers.
+  const MAX_FS_LOOPS = 10_000;
+
+  // Detect scatter symbols for retrigger / scatter-pay accounting.
+  const scatterIds = getScatterIds(ir);
+
+  let remaining = initialSpins;
+  let played = 0;
+  let retriggers = 0;
+  let totalAwarded = initialSpins;
+  let payout = 0;
+  let ladderMult = 1;
+
+  let loopCount = 0;
+  while (remaining > 0 && loopCount < MAX_FS_LOOPS) {
+    loopCount++;
+    remaining--;
+    played++;
+
+    const rowCounts = variableRows ? drawRowCounts(rng, variableRows) : undefined;
+
+    let grid: string[][];
+    if (fsWeightedTables) {
+      grid = generateWeightedGrid(rng, fsWeightedTables, numRows, rowCounts);
+    } else if (fsStrips) {
+      grid = generateStripsGrid(rng, fsStrips, numRows, rowCounts);
+    } else {
+      throw new Error('FS simulator: no reel data available');
+    }
+
+    const result = evaluateIR(ir, grid);
+    let spinWin = result.totalPayout;
+
+    // Scatter pays during FS (pay_anywhere semantics for scatter ids).
+    // Honours the paytable: if the scatter id has a paytable row, count
+    // anywhere on the FS grid and grant the highest matching tier.
+    for (const sid of scatterIds) {
+      const payMap = ir.paytable[sid];
+      if (!payMap) continue;
+      let count = 0;
+      for (let r = 0; r < grid.length; r++) {
+        const row = grid[r];
+        if (!row) continue;
+        for (let c = 0; c < row.length; c++) {
+          if (row[c] === sid) count++;
+        }
+      }
+      if (count <= 0) continue;
+      // Pick highest tier ≤ count.
+      let scatPay = 0;
+      const sorted = Object.keys(payMap)
+        .map((k) => ({ k, n: parseInt(k.replace(/\+$/, ''), 10) }))
+        .filter(({ n }) => !Number.isNaN(n))
+        .sort((a, b) => a.n - b.n);
+      for (const { k, n } of sorted) {
+        if (n <= count) {
+          const v = payMap[k];
+          if (v != null && v > scatPay) scatPay = v;
+        }
+      }
+      // Only add scatter pays the standard evaluator wouldn't have already
+      // booked (lines/ways/cluster don't pay scatter via the normal path).
+      const evalKind = ir.evaluation.kind;
+      if (evalKind !== 'pay_anywhere') {
+        spinWin += scatPay;
+      }
+    }
+
+    const effectiveMult = globalMult * (hasLadder ? ladderMult : 1);
+    payout += spinWin * effectiveMult;
+
+    // MultiplierLadder progression: increment after each spin, regardless
+    // of win/no-win (typical "+1 each spin" interpretation).
+    if (hasLadder) ladderMult += 1;
+
+    // Retrigger handling.
+    if (retrigger && retriggerMin != null && result.scatterCount >= retriggerMin) {
+      const extra = freeSpinsAwarded(
+        // Synthesize a free_spins shape from the retrigger trigger so the
+        // helper can read awarded spins from the same thresholds.
+        {
+          kind: 'free_spins',
+          trigger: {
+            by: retrigger.by,
+            thresholds: retrigger.thresholds,
+            min: retrigger.min,
+          },
+        },
+        result.scatterCount,
+      );
+      const canAward = Math.max(0, maxTotal - totalAwarded);
+      const actual = Math.min(extra, canAward);
+      if (actual > 0) {
+        remaining += actual;
+        totalAwarded += actual;
+        retriggers++;
+      }
+    }
+  }
+
+  return { payout, spinsPlayed: played, retriggers };
+}
+
+// ─── Feature: Hold & Win ───────────────────────────────────────────────────
+
+export async function simulateHoldAndWin(
+  ir: SlotGameIR,
+  feature: Extract<Feature, { kind: 'hold_and_win' }>,
+  initialBonusPositions: Map<string, number>,
+  rng: () => number,
+  totalBet: number,
+): Promise<{ payout: number; jackpots: Record<string, number>; orbCount: number }> {
+  void totalBet; // per-spin RTP uses bet=1 in the outer loop
+
+  const { numCols, numRows } = topologyDims(ir);
+  const totalCells = numCols * numRows;
+
+  const dist = feature.cash_value_distribution.map((d) => ({
+    value: d,
+    weight: d.weight,
+  }));
+
+  // Map jackpot id → multiplier so we can attribute by id.
+  const jackpotById = new Map<string, number>();
+  for (const t of feature.jackpot_tiers) jackpotById.set(t.id, t.multiplier);
+
+  const jackpots: Record<string, number> = {};
+  let payout = 0;
+
+  // Locked cells, keyed by `r,c` (sentinel) plus their numeric values.
+  const locked = new Map<string, { value: number; jackpotId?: string }>();
+
+  // Seed the locked grid from initialBonusPositions. The position key is
+  // already `r,c`. If the value is a positive number we treat it as a
+  // pre-rolled cash value (used by KAT tests). Otherwise we roll fresh.
+  for (const [posKey, presetValue] of initialBonusPositions) {
+    let entry: { value: number; jackpotId?: string };
+    if (presetValue > 0) {
+      entry = { value: presetValue };
+    } else {
+      const draw = pickWeighted(rng, dist);
+      const value = draw.value;
+      const jackpotId = feature.jackpot_tiers.find(
+        (t) => Math.abs(t.multiplier - value) < 1e-9,
+      )?.id;
+      entry = jackpotId ? { value, jackpotId } : { value };
+    }
+    locked.set(posKey, entry);
+  }
+
+  let respinsRemaining = feature.respins_initial;
+  let loopCount = 0;
+  const MAX_HNW_LOOPS = 200;
+
+  // Per-cell landing chance. Modelled after the in-house holdAndWin.ts
+  // probability ramp (3-6% per empty position depending on fill).
+  const baseChance = 0.035;
+  const fillBonusCap = 0.025;
+
+  while (
+    respinsRemaining > 0 &&
+    locked.size < totalCells &&
+    loopCount < MAX_HNW_LOOPS
+  ) {
+    loopCount++;
+    respinsRemaining--;
+
+    const fillRatio = locked.size / totalCells;
+    const chance = baseChance + fillRatio * fillBonusCap;
+
+    let newLands = 0;
+    for (let r = 0; r < numRows; r++) {
+      for (let c = 0; c < numCols; c++) {
+        const key = `${r},${c}`;
+        if (locked.has(key)) continue;
+        if (rng() < chance) {
+          const draw = pickWeighted(rng, dist);
+          const value = draw.value;
+          const jackpotId = feature.jackpot_tiers.find(
+            (t) => Math.abs(t.multiplier - value) < 1e-9,
+          )?.id;
+          locked.set(key, jackpotId ? { value, jackpotId } : { value });
+          newLands++;
+        }
+      }
+    }
+
+    if (newLands > 0 && feature.respin_reset_on_new) {
+      respinsRemaining = feature.respins_initial;
+    }
+  }
+
+  // Payout: sum of cash values + per-symbol jackpots already encoded
+  // through `jackpotById`. We treat each orb's value as a bet multiplier.
+  for (const entry of locked.values()) {
+    payout += entry.value;
+    if (entry.jackpotId) {
+      jackpots[entry.jackpotId] = (jackpots[entry.jackpotId] ?? 0) + 1;
+    }
+  }
+
+  // Full-grid award: maps to a jackpot tier id.
+  if (locked.size >= totalCells && feature.grid_full_award) {
+    const mult = jackpotById.get(feature.grid_full_award);
+    if (mult != null) {
+      payout += mult;
+      jackpots[feature.grid_full_award] =
+        (jackpots[feature.grid_full_award] ?? 0) + 1;
+    }
+  }
+
+  return { payout, jackpots, orbCount: locked.size };
+}
+
+// ─── Feature: Cascade ──────────────────────────────────────────────────────
+
+/**
+ * Resolve cascade replacement for `'drop'`: empty cells "fall" downward
+ * with refill at the top from a random pull of the per-reel weighted
+ * distribution (or strip stop). This mirrors typical NetEnt-style cascades.
+ */
+function dropAndRefill(
+  ir: SlotGameIR,
+  grid: string[][],
+  removedKeys: Set<string>,
+  rng: () => number,
+  tables: WeightedCell[] | null,
+  strips: string[][] | null,
+): void {
+  const numCols = grid[0]?.length ?? 0;
+  const numRows = grid.length;
+  for (let c = 0; c < numCols; c++) {
+    // Collect surviving symbols from bottom to top.
+    const survivors: string[] = [];
+    for (let r = numRows - 1; r >= 0; r--) {
+      const key = `${r},${c}`;
+      if (removedKeys.has(key)) continue;
+      const sym = grid[r]?.[c];
+      if (sym !== undefined && sym !== '') survivors.push(sym);
+    }
+    // Refill from top with new symbols until we have numRows entries.
+    while (survivors.length < numRows) {
+      let newSym = '';
+      if (tables) {
+        const table = tables[c];
+        if (table && table.total > 0) {
+          let roll = rng() * table.total;
+          let chosen = table.ids[0] ?? '';
+          for (let i = 0; i < table.ids.length; i++) {
+            roll -= table.weights[i] ?? 0;
+            if (roll <= 0) {
+              chosen = table.ids[i] ?? '';
+              break;
+            }
+          }
+          newSym = chosen;
+        }
+      } else if (strips) {
+        const strip = strips[c];
+        if (strip && strip.length > 0) {
+          const idx = Math.floor(rng() * strip.length);
+          newSym = strip[idx] ?? '';
+        }
+      }
+      survivors.push(newSym);
+    }
+    // Pour back into grid: survivors[0] is the bottom-most.
+    for (let r = numRows - 1, i = 0; r >= 0; r--, i++) {
+      const row = grid[r];
+      if (row) row[c] = survivors[i] ?? '';
+    }
+  }
+  // Suppress unused-binding lint for ir on this helper (kept for future
+  // role-aware refill behaviour like sticky/expanding wilds).
+  void ir;
+}
+
+function refillRandom(
+  ir: SlotGameIR,
+  grid: string[][],
+  removedKeys: Set<string>,
+  rng: () => number,
+): void {
+  // Sample uniformly from all symbol ids. Maintains simple semantics for
+  // tests where the IR doesn't define a strip.
+  const symbolIds = ir.symbols.map((s) => s.id);
+  for (const key of removedKeys) {
+    const [rs, cs] = key.split(',');
+    const r = parseInt(rs ?? '0', 10);
+    const c = parseInt(cs ?? '0', 10);
+    const row = grid[r];
+    if (row && symbolIds.length > 0) {
+      const pick = symbolIds[Math.floor(rng() * symbolIds.length)] ?? '';
+      row[c] = pick;
+    }
+  }
+}
+
+function refillFixedStrip(
+  grid: string[][],
+  removedKeys: Set<string>,
+  strips: string[][] | null,
+  rng: () => number,
+): void {
+  // Each emptied cell pulls the next symbol from a fresh strip stop.
+  if (!strips) return;
+  for (const key of removedKeys) {
+    const [rs, cs] = key.split(',');
+    const r = parseInt(rs ?? '0', 10);
+    const c = parseInt(cs ?? '0', 10);
+    const strip = strips[c];
+    const row = grid[r];
+    if (row && strip && strip.length > 0) {
+      const idx = Math.floor(rng() * strip.length);
+      row[c] = strip[idx] ?? '';
+    }
+  }
+}
+
+export async function applyCascade(
+  ir: SlotGameIR,
+  feature: Extract<Feature, { kind: 'cascade' }>,
+  grid: string[][],
+  rng: () => number,
+  totalBet: number,
+): Promise<{ totalPayout: number; cascadeCount: number; maxMultiplier: number }> {
+  void totalBet;
+
+  let weightedTables: WeightedCell[] | null = null;
+  let strips: string[][] | null = null;
+  if (ir.reels.mode === 'weighted') {
+    weightedTables = buildWeightedDrawTables(ir.reels.base);
+  } else if (ir.reels.mode === 'strips') {
+    strips = ir.reels.base;
+  }
+
+  let totalPayout = 0;
+  let cascadeCount = 0;
+  let maxMultiplier = 1;
+  const progression = feature.multiplier_progression ?? [];
+
+  // Cap absolute chains to feature.max_chain (also bounded by safety).
+  const HARD_CAP = 100;
+  const chainCap = Math.min(feature.max_chain, HARD_CAP);
+
+  // First evaluation is the "initial" grid the caller passed in.
+  // We loop: evaluate → if wins → remove → replace → re-evaluate.
+  for (let chain = 0; chain < chainCap; chain++) {
+    const result = evaluateIR(ir, grid);
+    if (result.totalPayout <= 0) break;
+
+    const multiplier =
+      chain < progression.length ? progression[chain] ?? 1 : 1;
+    if (multiplier > maxMultiplier) maxMultiplier = multiplier;
+
+    totalPayout += result.totalPayout * multiplier;
+    cascadeCount++;
+
+    // Collect positions to remove. Pay-anywhere/cluster/pattern provide
+    // them directly; lines/ways do not — for those modes we fall back to
+    // marking all cells that contain the winning symbols.
+    const removed = new Set<string>();
+    for (const w of result.wins) {
+      if (w.positions && w.positions.length > 0) {
+        for (const [colOrReel, row] of w.positions) {
+          removed.add(`${row},${colOrReel}`);
+        }
+      } else {
+        // No positions — fall back to clearing every cell whose symbol
+        // matches the winning symbol (lines / ways).
+        for (let r = 0; r < grid.length; r++) {
+          const row = grid[r];
+          if (!row) continue;
+          for (let c = 0; c < row.length; c++) {
+            if (row[c] === w.symbolId) removed.add(`${r},${c}`);
+          }
+        }
+      }
+    }
+    if (removed.size === 0) break;
+
+    switch (feature.replacement) {
+      case 'drop':
+        dropAndRefill(ir, grid, removed, rng, weightedTables, strips);
+        break;
+      case 'refill_random':
+        refillRandom(ir, grid, removed, rng);
+        break;
+      case 'fixed_strip':
+        refillFixedStrip(grid, removed, strips, rng);
+        break;
+    }
+  }
+
+  return { totalPayout, cascadeCount, maxMultiplier };
+}
+
+// ─── Internal: ante / buy helpers ──────────────────────────────────────────
+
+/**
+ * Apply the ante-bet bias: when ante is "on", scatter / bonus counts are
+ * scaled up by `extra_multiplier` (rounded up). Models the operator-side
+ * convention where ante pays for *higher trigger frequency*, not a flat
+ * multiplier on wins. Conservative — only inflates feature counts.
+ */
+function applyAnteBias(
+  base: number,
+  enabled: boolean,
+  extra: number,
+): number {
+  if (!enabled || extra <= 1) return base;
+  return Math.ceil(base * extra);
+}
+
 // ─── Main entry point ──────────────────────────────────────────────────────
 
 /**
@@ -174,45 +764,208 @@ export async function runIRSimulation(
   const seed = config.seed ?? ir.rng.default_seed;
   const rng = mulberry32(seed);
   const { numCols, numRows, variableRows } = topologyDims(ir);
+  void numCols;
 
   // Pre-build draw tables for weighted mode (cheap to do once).
   let weightedTables: WeightedCell[] | null = null;
+  let baseStrips: string[][] | null = null;
   if (ir.reels.mode === 'weighted') {
-    weightedTables = buildWeightedDrawTables(ir.reels);
+    weightedTables = buildWeightedDrawTables(ir.reels.base);
+  } else {
+    baseStrips = ir.reels.base;
   }
+
+  // Resolve feature handles up-front so the hot loop just branches on
+  // pre-computed pointers instead of re-scanning `ir.features`.
+  const fsFeature = findFreeSpinsFeature(ir);
+  const hnwFeature = findHoldAndWinFeature(ir);
+  const cascadeFeature = findCascadeFeature(ir);
+  const buyFeature = findBuyFeature(ir);
+  const anteFeature = findAnteBet(ir);
+
+  const anteOn = config.forceAnte ?? ir.bet.ante_bet?.enabled ?? false;
+  const anteExtra =
+    anteFeature?.extra_multiplier ?? ir.bet.ante_bet?.extra_multiplier ?? 1;
+
+  const bonusIds = getBonusIds(ir);
 
   let totalWagered = 0;
   let totalWon = 0;
   let totalHits = 0;
   let maxWinX = 0;
   const featureCounts: Record<string, number> = {};
-  const featureRtp: Record<string, number> = {};
+
+  // RTP breakdown buckets (cumulative win contribution per source).
+  let baseWon = 0;
+  let fsWon = 0;
+  let hnwWon = 0;
+  let cascadeWon = 0;
+
+  // Buy-feature: when forced, rotate through offers round-robin so any
+  // offer mapped to a known feature gets exercised at least once.
+  let buyIndex = 0;
 
   for (let i = 0; i < config.spins; i++) {
     totalWagered += 1; // one unit per spin — RTP is win/wager
+    let spinWon = 0;
 
     const rowCounts = variableRows ? drawRowCounts(rng, variableRows) : undefined;
 
     let grid: string[][];
     if (weightedTables) {
       grid = generateWeightedGrid(rng, weightedTables, numRows, rowCounts);
-    } else if (ir.reels.mode === 'strips') {
-      grid = generateStripsGrid(rng, ir.reels, numRows, rowCounts);
+    } else if (baseStrips) {
+      grid = generateStripsGrid(rng, baseStrips, numRows, rowCounts);
     } else {
       throw new Error('Unsupported reel set mode');
     }
 
-    const result: IRWinResult = evaluateIR(ir, grid);
-    totalWon += result.totalPayout;
-    if (result.totalPayout > 0) totalHits++;
-    if (result.totalPayout > maxWinX) maxWinX = result.totalPayout;
+    let result: IRWinResult = evaluateIR(ir, grid);
+    let baseSpinPayout = result.totalPayout;
 
-    // Capture per-feature trigger counts and (rough) RTP contribution.
-    // Faza 2 does NOT simulate the feature itself — we record trigger
-    // frequency only; sub-feature RTP attribution is a Faza 3 deliverable.
+    // ── Cascade (operates on the base grid) ────────────────────────────
+    if (cascadeFeature) {
+      const cascadeResult = await applyCascade(
+        ir,
+        cascadeFeature,
+        grid,
+        rng,
+        1,
+      );
+      // The first chain already consumed the base evaluation, so we
+      // record cascade payout in full and zero-out base attribution for
+      // this spin. cascadeCount > 0 implies the base eval did fire.
+      if (cascadeResult.cascadeCount > 0) {
+        cascadeWon += cascadeResult.totalPayout;
+        spinWon += cascadeResult.totalPayout;
+        baseSpinPayout = 0;
+        featureCounts.cascade = (featureCounts.cascade ?? 0) + 1;
+      }
+    }
+
+    spinWon += baseSpinPayout;
+    baseWon += baseSpinPayout;
+    if (baseSpinPayout > 0) totalHits++;
+
+    // ── Ante-biased scatter / bonus counts for feature triggers ────────
+    const effectiveScatter = applyAnteBias(
+      result.scatterCount,
+      anteOn,
+      anteExtra,
+    );
+    const effectiveBonus = applyAnteBias(
+      result.bonusCount,
+      anteOn,
+      anteExtra,
+    );
+
+    // ── Hold & Win trigger ─────────────────────────────────────────────
+    let hnwTriggered = false;
+    if (hnwFeature) {
+      const trig = hnwFeature.trigger;
+      let count = 0;
+      if (trig.by === 'bonus_count') count = effectiveBonus;
+      else if (trig.by === 'scatter_count') count = effectiveScatter;
+      else count = effectiveScatter + effectiveBonus;
+      const minHnw = trig.min ?? 6;
+      if (count >= minHnw) hnwTriggered = true;
+    }
+
+    if (hnwTriggered && hnwFeature) {
+      featureCounts.hold_and_win = (featureCounts.hold_and_win ?? 0) + 1;
+      const positions = new Map<string, number>();
+      for (let r = 0; r < grid.length; r++) {
+        const row = grid[r];
+        if (!row) continue;
+        for (let c = 0; c < row.length; c++) {
+          if (bonusIds.has(row[c] ?? '')) positions.set(`${r},${c}`, 0);
+        }
+      }
+      const hnw = await simulateHoldAndWin(ir, hnwFeature, positions, rng, 1);
+      hnwWon += hnw.payout;
+      spinWon += hnw.payout;
+    }
+
+    // ── Free Spins trigger ─────────────────────────────────────────────
+    let fsTriggered = false;
+    if (fsFeature) {
+      const trig = fsFeature.trigger;
+      let count = 0;
+      if (trig.by === 'scatter_count') count = effectiveScatter;
+      else if (trig.by === 'bonus_count') count = effectiveBonus;
+      else count = effectiveScatter + effectiveBonus;
+      let min: number | undefined = trig.min;
+      if (min == null && trig.thresholds) {
+        const keys = Object.keys(trig.thresholds)
+          .map((k) => parseInt(k.replace(/\+$/, ''), 10))
+          .filter((n) => !Number.isNaN(n));
+        if (keys.length > 0) min = Math.min(...keys);
+      }
+      if (min != null && count >= min) fsTriggered = true;
+    }
+
+    if (fsTriggered && fsFeature) {
+      featureCounts.free_spins = (featureCounts.free_spins ?? 0) + 1;
+      const fs = await simulateFreeSpins(
+        ir,
+        fsFeature,
+        result.scatterCount,
+        rng,
+        1,
+      );
+      fsWon += fs.payout;
+      spinWon += fs.payout;
+    }
+
+    // ── Buy Feature (forced for coverage) ──────────────────────────────
+    if (config.forceBuyFeature && buyFeature && buyFeature.offers.length > 0) {
+      const offer = buyFeature.offers[buyIndex % buyFeature.offers.length];
+      buyIndex++;
+      if (offer) {
+        const guarantee = offer.guaranteed;
+        // The contract is open-ended: we map common ids to feature
+        // simulation calls. Unknown ids degrade to a no-op.
+        if (guarantee === 'free_spins' && fsFeature) {
+          featureCounts.buy_feature = (featureCounts.buy_feature ?? 0) + 1;
+          // Synthesize the highest threshold count so the FS sim awards
+          // the maximum spin count the operator advertises.
+          let highest = 0;
+          if (fsFeature.trigger.thresholds) {
+            for (const k of Object.keys(fsFeature.trigger.thresholds)) {
+              const n = parseInt(k.replace(/\+$/, ''), 10);
+              if (!Number.isNaN(n)) highest = Math.max(highest, n);
+            }
+          }
+          const fs = await simulateFreeSpins(
+            ir,
+            fsFeature,
+            Math.max(highest, fsFeature.trigger.min ?? 3),
+            rng,
+            1,
+          );
+          fsWon += fs.payout;
+          spinWon += fs.payout;
+        } else if (guarantee === 'hold_and_win' && hnwFeature) {
+          featureCounts.buy_feature = (featureCounts.buy_feature ?? 0) + 1;
+          // Force a 6-cell seed (typical H&W min trigger) at arbitrary
+          // positions so the simulation has something to grow from.
+          const seed = new Map<string, number>();
+          for (let k = 0; k < 6; k++) seed.set(`0,${k % numCols}`, 0);
+          const hnw = await simulateHoldAndWin(ir, hnwFeature, seed, rng, 1);
+          hnwWon += hnw.payout;
+          spinWon += hnw.payout;
+        }
+      }
+    }
+
+    // ── Feature trigger frequency counts ───────────────────────────────
     for (const featKind of result.triggeredFeatures) {
       featureCounts[featKind] = (featureCounts[featKind] ?? 0) + 1;
     }
+
+    if (spinWon > maxWinX) maxWinX = spinWon;
+    if (spinWon > 0 && baseSpinPayout === 0) totalHits++; // count feature-only hits
+    totalWon += spinWon;
 
     if (config.verbose && (i + 1) % 100000 === 0) {
       const rtpSoFar = totalWon / totalWagered;
@@ -230,10 +983,12 @@ export async function runIRSimulation(
   const rtp = totalWagered > 0 ? totalWon / totalWagered : 0;
   const hitRate = config.spins > 0 ? totalHits / config.spins : 0;
 
-  const rtpBreakdown: { base: number } & Record<string, number> = { base: rtp };
-  for (const [kind, contribution] of Object.entries(featureRtp)) {
-    rtpBreakdown[kind] = contribution;
-  }
+  const rtpBreakdown: IRSimResult['rtpBreakdown'] = {
+    base: totalWagered > 0 ? baseWon / totalWagered : 0,
+    free_spins: totalWagered > 0 ? fsWon / totalWagered : 0,
+    hold_and_win: totalWagered > 0 ? hnwWon / totalWagered : 0,
+    cascade: totalWagered > 0 ? cascadeWon / totalWagered : 0,
+  };
 
   return {
     spins: config.spins,
@@ -244,3 +999,12 @@ export async function runIRSimulation(
     rtpBreakdown,
   };
 }
+
+// ─── Test exports ──────────────────────────────────────────────────────────
+
+export const _internal = {
+  simulateFreeSpins,
+  simulateHoldAndWin,
+  applyCascade,
+  freeSpinsAwarded,
+};

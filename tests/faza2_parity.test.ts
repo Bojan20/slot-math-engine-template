@@ -19,8 +19,8 @@
  * deterministic bit-parity. Once Faza 3 brings Lightning + FS + H&W into
  * the TS sim this test should tighten to <0.5 RTP points.
  *
- * At 1k spins with target RTP ≈ 0.96 (this fixture is high volatility),
- * a 5 RTP-point absolute envelope is the realistic MC variance band.
+ * At 10k spins with target RTP ≈ 0.96 (this fixture is high volatility),
+ * a 3 RTP-point absolute envelope is the realistic MC variance band.
  */
 
 import { describe, it, expect } from 'vitest';
@@ -35,17 +35,21 @@ import { runIRSimulation } from '../src/engine/irSimulator.js';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FIXTURE = resolve(HERE, 'fixtures', 'parity.json');
 
-const SPINS = 1000;
+const SPINS = 10_000;
 const SEED = 12345;
 /**
  * Absolute RTP-points tolerance for the differential check. The
  * fixture is intentionally high-volatility and the two engines'
  * Mulberry32 streams desync after the first win (Rust calls
  * `rng.random()` extra times for Lightning rolls), so we accept a
- * conventional MC variance window rather than bit-parity. Faza 3
- * tightens this once TS replays Lightning / FS / H&W.
+ * conventional MC variance window rather than bit-parity.
+ *
+ * Faza 3 update: the TS simulator now replays FS / H&W / Cascade,
+ * so the streams stay in step for longer and the differential band
+ * tightens from 10pp → 3pp. Full <0.1pp parity still requires
+ * identical RNG consumption order between TS and Rust (Faza 4).
  */
-const RTP_TOLERANCE = 0.10;
+const RTP_TOLERANCE = 0.03;
 
 const RUST_RELEASE = resolve(HERE, '..', 'rust-sim', 'target', 'release', 'slot_sim');
 const RUST_DEBUG = resolve(HERE, '..', 'rust-sim', 'target', 'debug', 'slot_sim');
@@ -77,7 +81,7 @@ function rustBaseRtp(stdout: string, totalSpins: number): number | null {
 }
 
 describe('Faza 2 — TS↔Rust IR parity', () => {
-  it('TS and Rust IR-driven RTP converge under MC variance (1k spins, seed=12345)', async () => {
+  it('TS and Rust IR-driven RTP converge under MC variance (10k spins, seed=12345)', async () => {
     // ── TS side ────────────────────────────────────────────────────────
     const raw = JSON.parse(readFileSync(FIXTURE, 'utf-8'));
     const parsed = parseGameIR(raw);
@@ -89,7 +93,11 @@ describe('Faza 2 — TS↔Rust IR parity', () => {
     const ir = parsed.ir;
 
     const tsResult = await runIRSimulation(ir, { spins: SPINS, seed: SEED });
-    const tsRtp = tsResult.rtp;
+    // Faza 3: the TS sim now plays FS / H&W / Cascade payouts. The Rust
+    // `--verify` binary still only reports the **base-game** RTP (Base
+    // Wins / Wagered). To keep apples-to-apples, compare `rtpBreakdown.base`
+    // on the TS side, which excludes feature wins.
+    const tsRtp = tsResult.rtpBreakdown.base;
 
     // ── Rust side ──────────────────────────────────────────────────────
     const bin = rustBinaryPath();
