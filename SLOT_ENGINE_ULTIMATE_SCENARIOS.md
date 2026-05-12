@@ -126,7 +126,7 @@ Tri stuba na koja sve staje:
 | **Anti-streak / smart compensation** | ❌ |
 | **Tournament mode** | ❌ |
 | **Crash / multiplier-only** (non-reel) | ❌ |
-| **megaclusters ** | ❌ |
+| **expanding cluster grid** | ❌ |
 | **Drop-the-pop** | ❌ |
 | **Hold & Roll dice features** | ❌ |
 | **Lightning / Pseudo-must-hit + level progression** | ❌ |
@@ -442,7 +442,7 @@ Engine je univerzalan kada može da implementira sledećih **20 reference igara*
 13. **Supermeter state-switch** — supermeter mode (state switch)
 14. **Money-symbol H&W + multi-tier jackpot** — money symbol + hold + multi-tier jackpot
 15. **Must-hit-by jackpot** — sa MTH (must-hit-by) jackpot
-16. **Stacked wilds + reel-power-1024** — stacked wilds + bonus
+16. **Stacked wilds + 1024 all-ways** — stacked wilds + bonus
 17. **Pseudo-must-hit + level progression** — pseudo-must-hit + level progression
 18. **Pick bonus + multi-level** — pick bonus + multi-level
 19. **Crash-style (non-reel) corner case-like crash** (non-reel) — kao corner case
@@ -612,7 +612,7 @@ Velike firme su patentirale mehanike. Da bi engine bio "univerzalan", mora ih sv
 
 | Mehanika | Math |
 |---|---|
-| **Reel Power** (Buffalo) | 1024 ways, simboli stacked |
+| **1024 all-ways stacked** | 1024 ways, simboli stacked |
 | **Hyperhold** | 4-tier jackpot + hold-and-spin |
 | **Money-symbol H&W + multi-tier jackpot** | money coins + tier jackpot + sticky |
 | **Must-hit-by jackpot** | LL varianta + must-hit-by |
@@ -635,7 +635,7 @@ Velike firme su patentirale mehanike. Da bi engine bio "univerzalan", mora ih sv
 | Mehanika | Math |
 |---|---|
 | **variable-rows ways** | 2-7 simbola po reel, 6-th horizontal scatter row, do 117,649 ways |
-| **megaclusters** | cluster sa exponential expansion |
+| **expanding cluster grid** | cluster sa exponential expansion |
 | **reveal-stack-ways** | random N×1 stacks reveal N simbola (lokalna varijanta variable_ways) |
 | **nudge-wild wild** | nudge dok ceo reel ne pokrije |
 | **bomb-wild wild** | uklanja sve oko sebe |
