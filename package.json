@@ -15,7 +15,8 @@
     "test:watch": "node --experimental-vm-modules node_modules/vitest/vitest.mjs",
     "lint": "tsc --noEmit",
     "mutate": "npx stryker run",
-    "mutate:rust": "cd rust-sim && cargo mutants -j4 --timeout 60"
+    "mutate:rust": "cd rust-sim && cargo mutants -j4 --timeout 60",
+    "par-samples": "npm run build && node scripts/par-samples-generate.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

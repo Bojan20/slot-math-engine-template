@@ -112,7 +112,9 @@ When a math package is sent to a GLI-accredited lab:
 8. `reports/rng/bigcrush.txt` — TestU01 BigCrush report ⚠️ TODO.
 9. `reports/rng/nist.json` — NIST 800-22 report ⚠️ TODO.
 10. `reports/rng/practrand.txt` — PractRand 2³⁸+ byte report ⚠️ TODO.
-11. `reports/math/par.pdf` — Generated PAR sheet ⚠️ PDF rendering TODO (P0 #6).
+11. `reports/par-samples/<id>.par.{json,pdf}` — Generated PAR sheets ✅
+    (20 generic-mechanic samples per `reports/par-samples/INDEX.md`).
+    Reproducible via `npm run par-samples`. PDF renderer landed P0 #6.
 12. `reports/math/rtp-distribution.json` — 10⁹ spin RTP distribution.
 13. `reports/math/mutation-score.json` — Stryker + cargo-mutants summary
     ≥ 95% (P0 #8).
@@ -132,8 +134,9 @@ The compliance gaps map 1:1 to entries in the engineering P0 list:
 |------------------------------------------------|----------------------------------------------------|
 | #1 Windows-x64 CI grana                        | Cross-platform determinism evidence                |
 | #3 TestU01 BigCrush / NIST / PractRand reports | RNG quality submission                             |
-| #5 Benchmark reports                           | Performance claims in submission narrative         |
-| #6 PAR PDF render                              | Required artefact format                           |
+| #4 ✅ 20 generic PAR samples                   | Universality claim concrete; submission item #11   |
+| #5 ✅ Benchmark reports                         | Performance claims in submission narrative         |
+| #6 ✅ PAR PDF render                            | Required artefact format                           |
 | #8 Mutation score ≥ 95%                        | Test-suite robustness claim                        |
 | #10 HSM bridge                                 | UK / MGA / DE jurisdiction unlock                  |
 

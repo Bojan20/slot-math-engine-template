@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:31:31.168Z",
+  "configHash": null,
+  "game": {
+    "name": "5x3 243 Ways",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x3",
+    "paySystem": "ways",
+    "paylines": 0,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.0031480059286002975,
+    "preScaleRTP": 304.95495299999203
+  },
+  "results": {
+    "observedRTP": 0.96000000000005,
+    "rtpPercent": 96.000000000005,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.95380193578612,
+    "ci95Upper": 0.96619806421398,
+    "rtpBreakdown": {
+      "base": 0.14742137262482136,
+      "free_spins": 0.8125786273751935,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.7922,
+    "deadSpinRate": 0.20779999999999998,
+    "maxObservedWin": 133.07565461972038
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.06642,
+      "frequency": "1 in 15",
+      "rtpContribution": 0.8125786273751935
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Ways; mechanic: ways.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 3.1480e-3 to match target_rtp = 96.00% (pre-scale observed RTP = 30495.50%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

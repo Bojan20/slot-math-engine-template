@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:33:23.696Z",
+  "configHash": null,
+  "game": {
+    "name": "Cascade Refill Random 5x3 Ways",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x3",
+    "paySystem": "ways",
+    "paylines": 0,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.0004262547674020567,
+    "preScaleRTP": 2252.1742239999353
+  },
+  "results": {
+    "observedRTP": 0.9600000000000007,
+    "rtpPercent": 96.00000000000007,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357860708,
+    "ci95Upper": 0.9661980642139307,
+    "rtpBreakdown": {
+      "base": 0,
+      "free_spins": 0,
+      "hold_and_win": 0,
+      "cascade": 0.9600000000000007,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.84882,
+    "deadSpinRate": 0.15117999999999998,
+    "maxObservedWin": 43.433485277293
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "cascade",
+      "name": "Cascade",
+      "triggerRate": 0.8488199999999999,
+      "frequency": "1 in 1",
+      "rtpContribution": 0.9600000000000007
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Cascade; mechanic: cascade.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 4.2625e-4 to match target_rtp = 96.00% (pre-scale observed RTP = 225217.42%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

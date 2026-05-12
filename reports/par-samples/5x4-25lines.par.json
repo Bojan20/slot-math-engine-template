@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:31:29.178Z",
+  "configHash": null,
+  "game": {
+    "name": "5x4 25 Lines Both Directions",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x4",
+    "paySystem": "lines",
+    "paylines": 25,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.03320641679414726,
+    "preScaleRTP": 28.910074999998287
+  },
+  "results": {
+    "observedRTP": 0.9599999999999245,
+    "rtpPercent": 95.99999999999244,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357859945,
+    "ci95Upper": 0.9661980642138545,
+    "rtpBreakdown": {
+      "base": 0.40859708873115685,
+      "free_spins": 0.5514029112688548,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.95858,
+    "deadSpinRate": 0.04142000000000001,
+    "maxObservedWin": 30.36394751656825
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.13534000000000002,
+      "frequency": "1 in 7",
+      "rtpContribution": 0.5514029112688548
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Lines; mechanic: lines.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 3.3206e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 2891.01%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

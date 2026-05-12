@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:32:31.665Z",
+  "configHash": null,
+  "game": {
+    "name": "Pay Anywhere 5x4",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x4",
+    "paySystem": "pay_anywhere",
+    "paylines": 0,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.003899196699680476,
+    "preScaleRTP": 246.2045580000281
+  },
+  "results": {
+    "observedRTP": 0.9599999999997386,
+    "rtpPercent": 95.99999999997387,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357858086,
+    "ci95Upper": 0.9661980642136686,
+    "rtpBreakdown": {
+      "base": 0.35306539077150767,
+      "free_spins": 0.6069346092284101,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 1,
+    "deadSpinRate": 0,
+    "maxObservedWin": 15.577290815223504
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.17224,
+      "frequency": "1 in 6",
+      "rtpContribution": 0.6069346092284101
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Pay-Anywhere; mechanic: pay_anywhere.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 3.8992e-3 to match target_rtp = 96.00% (pre-scale observed RTP = 24620.46%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

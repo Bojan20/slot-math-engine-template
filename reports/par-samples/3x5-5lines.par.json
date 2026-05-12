@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:31:23.997Z",
+  "configHash": null,
+  "game": {
+    "name": "3 Reel 5 Row Lines",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "3x5",
+    "paySystem": "lines",
+    "paylines": 5,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 1,
+    "preScaleRTP": 0.9847420000003623
+  },
+  "results": {
+    "observedRTP": 0.9847420000003623,
+    "rtpPercent": 98.47420000003623,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9785439357864323,
+    "ci95Upper": 0.9909400642142923,
+    "rtpBreakdown": {
+      "base": 0.6924420000002227,
+      "free_spins": 0.29229999999999623,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.60537,
+    "deadSpinRate": 0.39463000000000004,
+    "maxObservedWin": 28.1
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.08458,
+      "frequency": "1 in 12",
+      "rtpContribution": 0.29229999999999623
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Lines; mechanic: lines.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

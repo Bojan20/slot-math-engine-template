@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:33:26.433Z",
+  "configHash": null,
+  "game": {
+    "name": "Free Spins Sticky Wilds",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x3",
+    "paySystem": "lines",
+    "paylines": 5,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.42152814490738716,
+    "preScaleRTP": 2.2774279999996656
+  },
+  "results": {
+    "observedRTP": 0.9600000000003973,
+    "rtpPercent": 96.00000000003973,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357864673,
+    "ci95Upper": 0.9661980642143273,
+    "rtpBreakdown": {
+      "base": 0.717421512337893,
+      "free_spins": 0.24257848766243412,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.4885,
+    "deadSpinRate": 0.5115000000000001,
+    "maxObservedWin": 84.51639305393113
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.06642,
+      "frequency": "1 in 15",
+      "rtpContribution": 0.24257848766243412
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Free-Spins; mechanic: free_spins.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 4.2153e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 227.74%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

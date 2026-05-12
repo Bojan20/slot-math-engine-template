@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:33:27.891Z",
+  "configHash": null,
+  "game": {
+    "name": "Free Spins Retrigger",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "5x3",
+    "paySystem": "lines",
+    "paylines": 5,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.26238648709597634,
+    "preScaleRTP": 3.658724999999138
+  },
+  "results": {
+    "observedRTP": 0.9600000000003758,
+    "rtpPercent": 96.00000000003757,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357864458,
+    "ci95Upper": 0.9661980642143058,
+    "rtpBreakdown": {
+      "base": 0.6244979439559877,
+      "free_spins": 0.3355020560441973,
+      "hold_and_win": 0,
+      "cascade": 0,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.5965,
+    "deadSpinRate": 0.40349999999999997,
+    "maxObservedWin": 43.97597523728563
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "free_spins",
+      "name": "Free Spins",
+      "triggerRate": 0.08502,
+      "frequency": "1 in 12",
+      "rtpContribution": 0.3355020560441973
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Free-Spins; mechanic: free_spins.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 2.6239e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 365.87%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}

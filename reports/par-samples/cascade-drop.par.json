@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-12T22:33:13.353Z",
+  "configHash": null,
+  "game": {
+    "name": "Cascade Drop 6x5",
+    "version": "1.0.0",
+    "mathVersion": "sample-run",
+    "layout": "6x5 (cluster)",
+    "paySystem": "cluster",
+    "paylines": 0,
+    "targetRTP": 96,
+    "maxWin": 5000
+  },
+  "simulation": {
+    "spins": 100000,
+    "seed": 12345,
+    "engineVersion": "slot-math-engine-template @ a5679c9+",
+    "paytableScaleFactor": 0.08064593360522278,
+    "preScaleRTP": 11.903885999998252
+  },
+  "results": {
+    "observedRTP": 0.9599999999999393,
+    "rtpPercent": 95.99999999999393,
+    "errorMargin": 0.006198064213930023,
+    "ci95Lower": 0.9538019357860094,
+    "ci95Upper": 0.9661980642138693,
+    "rtpBreakdown": {
+      "base": 0,
+      "free_spins": 0,
+      "hold_and_win": 0,
+      "cascade": 0.9599999999999393,
+      "pick": 0,
+      "wheel": 0,
+      "respin": 0,
+      "gamble": 0
+    },
+    "hitRate": 0.88443,
+    "deadSpinRate": 0.11556999999999995,
+    "maxObservedWin": 48.76659605107821
+  },
+  "volatility": {},
+  "features": [
+    {
+      "id": "cascade",
+      "name": "Cascade",
+      "triggerRate": 0.8844299999999999,
+      "frequency": "1 in 1",
+      "rtpContribution": 0.9599999999999393
+    }
+  ],
+  "notes": [
+    "Generic-mechanic sample — no game / vendor IP.",
+    "Family: Cascade; mechanic: cascade.",
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 8.0646e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 1190.39%)."
+  ],
+  "compliance": {
+    "standard": "GLI-16",
+    "submitter": "Slot Math Engine Template (P0 #4 sample set)",
+    "cycleSize": 100000
+  }
+}
