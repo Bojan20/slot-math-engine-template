@@ -57,3 +57,7 @@ pub mod speed;
 pub mod stats;
 /// FAZA 11.9 — Jurisdiction adapter: compliance validation + auto-fix.
 pub mod jurisdiction;
+/// FAZA 8.6 — Server-side Casino Protocols (G2S, SAS, GAT-IV).
+/// Protocol adapter layer bridging engine IR to industry-standard
+/// casino backend message formats.
+pub mod protocols;
