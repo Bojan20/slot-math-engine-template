@@ -323,9 +323,9 @@ Mapa "commit → faza":
 - ✅ Max win frequency, max-win expected hit count per N spins.
 
 ### 8.5 PAR sheet generator
-- ⚠️ `tools/par-gen` CLI → reads config + MC result → outputs PDF. *(`PARGenerator` ✅ ali samo JSON + text print; PDF output ❌)*
+- ✅ `tools/par-gen` CLI → reads config + MC result → outputs PDF. *(`src/report/parPdf.ts` + `slot-sim par-pdf <report.json>` CLI komanda; sample u `reports/par-samples/sample-par-sheet.pdf` — 3 stranice, 20 KB)*
 - ✅ Polja: RTP, hold, hit freq, vol index, bonus freq/contrib, max win, symbol weights, cycle length. *(GLI-16 sekcije 1-12 u `rust-sim/src/par.rs`)*
-- ⚠️ GLI-compliant format option. *(GLI-16 polja prisutna ✅; submit-ready PDF rendering ❌)*
+- ✅ GLI-compliant format option. *(8 sekcija u PDF-u: Meta / RTP / HitFreq+Vol / Quantiles / Features / Histogram / Paytable / Notes+Compliance; structural input typing accepts dialect PAR JSON-e)*
 
 ---
 
@@ -790,7 +790,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 3. **TestU01 BigCrush / NIST / PractRand izveštaji** (faza 7.2) — bez tih izveštaja regulator ne prihvata RNG.
 4. **PAR sheet sakupljanje za 20 reference igara** (faza 0.3 + 10.4 KAT) — bez nazivnog KAT-a "univerzalnost" nije dokazana.
 5. ✅ **Benchmark izveštaji** (9.1, 9.2, 9.3, 9.6, 9.8 acceptance) — DONE: `reports/bench/` sa M3 Pro baseline (5 bench grupe, criterion JSON + README). 1T projection: 35557s single-thread → otvara konkretan target za SIMD+GPU+cluster. PGO/BOLT/GPU/cross-platform follow-up u README.
-6. **PAR sheet PDF rendering** (8.5) — JSON nije isporučiv regulatoru.
+6. ✅ **PAR sheet PDF rendering** (8.5) — DONE: `src/report/parPdf.ts` (471 L) + 14 testova + sample 3-page PDF u `reports/par-samples/`. CLI: `slot-sim par-pdf <SimReport.json> --out PAR.pdf`. Uncompressed streams za audit-search. 8 GLI sekcija, structural typing accepts external dialect JSON-e.
 7. ✅ **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview. *(DONE — svih 5 fajlova landed; sa cross-ref na kod i submission-kit definicijom)*
 8. ⚠️ **Mutation score izveštaj** (faza 10.7) — DELIMIČNO: TS Stryker baseline 61.1% u `reports/mutation/` sa per-mutant JSON (945 KB), top-survived kinds analiza i konkretan path do 95%. Rust BLOCKED — cargo-mutants ≥24 traži edition2024 (Rust 1.85), repo pinned na 1.83 zbog parity. Option B (nightly wrapper) je sledeći korak.
 9. ✅ **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — DONE: 7 plugin behavior-a + 47 tests u `tests/faza32_extra_behaviors.test.ts`, registry `behaviorClass` overrides za sve, barrel export ažuriran. "Plugin layer" claim sad kompletan.

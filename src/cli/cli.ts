@@ -192,6 +192,39 @@ export function createCLI(): Command {
     });
 
   // ─────────────────────────────────────────────────────────────────────────
+  // PAR-PDF COMMAND (P0 #6) — Render JSON PAR → GLI-shaped PDF
+  // ─────────────────────────────────────────────────────────────────────────
+
+  program
+    .command('par-pdf')
+    .description('Render a PAR sheet PDF from a SimReport JSON (P0 #6 deliverable)')
+    .argument('<report>', 'SimReport.json path (or any PAR-shaped JSON)')
+    .option('-o, --out <path>', 'Output PDF file path', './out/PAR.pdf')
+    .option('--disclaimer <text>', 'Custom footer disclaimer text')
+    .option('--histogram-limit <n>', 'Max histogram rows in PDF', '30')
+    .option('--paytable-limit <n>', 'Max paytable rows in PDF', '20')
+    .action(async (report, opts) => {
+      const { readFileSync } = await import('fs');
+      const { renderParSheetToFile } = await import('../report/parPdf.js');
+
+      const reportPath = resolve(report);
+      const outPath = resolve(opts.out);
+
+      logger.info(`Loading PAR JSON: ${reportPath}`);
+      const raw = readFileSync(reportPath, 'utf-8');
+      const parsed = JSON.parse(raw);
+
+      logger.info(`Rendering PDF → ${outPath}`);
+      await renderParSheetToFile(parsed, outPath, {
+        disclaimer: opts.disclaimer,
+        histogramRowLimit: Number(opts.histogramLimit ?? 30),
+        paytableRowLimit: Number(opts.paytableLimit ?? 20),
+      });
+
+      logger.info(`PAR PDF written: ${outPath}`);
+    });
+
+  // ─────────────────────────────────────────────────────────────────────────
   // DEFAULT ACTION (same as sim)
   // ─────────────────────────────────────────────────────────────────────────
 
