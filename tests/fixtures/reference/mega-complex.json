@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "meta": { "id": "mega-complex", "name": "Mega Complex 6x4 Megaways", "version": "1.0.0", "theme_tags": ["megaways", "cascade", "free-spins", "mystery", "hold-and-win"] },
+  "topology": {
+    "kind": "variable_rows",
+    "reels": 6,
+    "row_range_per_reel": [[2,7],[2,7],[2,7],[2,7],[2,7],[2,7]],
+    "ways_cap": 117649
+  },
+  "symbols": [
+    { "id": "LP1", "name": "LP1", "kind": "lp" },
+    { "id": "LP2", "name": "LP2", "kind": "lp" },
+    { "id": "HP1", "name": "HP1", "kind": "hp" },
+    { "id": "HP2", "name": "HP2", "kind": "hp" },
+    { "id": "WLD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Scatter", "kind": "scatter" },
+    { "id": "BNS", "name": "Bonus", "kind": "bonus" },
+    { "id": "MY",  "name": "Mystery", "kind": "mystery" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1, "MY": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "ways",
+    "direction": "ltr",
+    "min_match": 3,
+    "max_ways_per_spin": 117649
+  },
+  "paytable": {
+    "LP1": { "3": 0.5, "4": 2, "5": 8, "6": 20 },
+    "LP2": { "3": 0.6, "4": 2.5, "5": 10, "6": 25 },
+    "HP1": { "3": 3, "4": 12, "5": 50, "6": 150 },
+    "HP2": { "3": 5, "4": 20, "5": 100, "6": 300 }
+  },
+  "features": [
+    { "kind": "cascade", "replacement": "drop", "max_chain": 5, "multiplier_progression": [1, 2, 3, 5, 10] },
+    { "kind": "free_spins", "trigger": { "by": "scatter_count", "thresholds": { "3": 12 } }, "global_multiplier": 2, "modifiers": ["multiplier_ladder"] },
+    { "kind": "mystery_symbol", "symbol_id": "MY", "reveal_distribution": { "LP1": 1, "HP1": 1 } },
+    { "kind": "symbol_upgrade", "from": "LP1", "to": "HP1", "probability": 0.1 },
+    { "kind": "hold_and_win", "trigger": { "by": "bonus_count", "min": 6 }, "respins_initial": 3, "respin_reset_on_new": true, "cash_value_distribution": [{ "value": 1, "weight": 5 }, { "value": 5, "weight": 2 }, { "value": 10, "weight": 1 }], "jackpot_tiers": [{ "id": "MINI", "multiplier": 25 }, { "id": "MAJOR", "multiplier": 500 }] },
+    { "kind": "buy_feature", "offers": [{ "id": "buy_fs", "cost_x": 100, "guaranteed": "free_spins" }] },
+    { "kind": "gamble", "type": "red_black", "max_steps": 5, "tie_resolution": "house" }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 42 },
+  "bet": { "currency": "EUR", "base_bet": 1, "denominations": [0.1, 1.0] },
+  "limits": { "target_rtp": 0.96, "rtp_tolerance": 0.01, "max_win_x": 5000, "win_cap_apply": "per_spin", "target_volatility": "ultra", "hit_freq_target": 0.25 },
+  "compliance": { "jurisdictions": ["MGA"], "rtp_range_required": [0.92, 0.99], "max_win_cap_required": 5000, "near_miss_rule": "must_be_random", "ldw_disclosure": true, "session_time_display": true },
+  "rtp_allocation": { "base_game": 0.50, "free_spins": 0.20, "hold_and_win": 0.26, "jackpot": 0.0, "tolerance": 0.01 }
+}

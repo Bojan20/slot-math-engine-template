@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "meta": { "id": "pay-anywhere", "name": "Pay Anywhere 5x4", "version": "1.0.0", "theme_tags": ["pay-anywhere"] },
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 4 },
+  "symbols": [
+    { "id": "LP1", "name": "LP1", "kind": "lp" },
+    { "id": "LP2", "name": "LP2", "kind": "lp" },
+    { "id": "HP1", "name": "HP1", "kind": "hp" },
+    { "id": "HP2", "name": "HP2", "kind": "hp" },
+    { "id": "WLD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Scatter", "kind": "scatter" },
+    { "id": "BNS", "name": "Bonus", "kind": "bonus" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "LP1": 6, "LP2": 5, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1 },
+      { "LP1": 6, "LP2": 5, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1 },
+      { "LP1": 6, "LP2": 5, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1 },
+      { "LP1": 6, "LP2": 5, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1 },
+      { "LP1": 6, "LP2": 5, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1, "BNS": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "pay_anywhere",
+    "min_count": 3
+  },
+  "paytable": {
+    "LP1": { "3": 0.5, "4": 2, "5": 5, "6": 10, "7": 20, "8": 30 },
+    "LP2": { "3": 0.8, "4": 3, "5": 7, "6": 15, "7": 30, "8": 50 },
+    "HP1": { "3": 3, "4": 10, "5": 25, "6": 50, "7": 100, "8": 200 },
+    "HP2": { "3": 5, "4": 15, "5": 40, "6": 80, "7": 150, "8": 300 }
+  },
+  "features": [
+    { "kind": "free_spins", "trigger": { "by": "scatter_count", "thresholds": { "3": 10 } }, "global_multiplier": 2 }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 42 },
+  "bet": { "currency": "EUR", "base_bet": 1, "denominations": [0.1, 1.0] },
+  "limits": { "target_rtp": 0.96, "rtp_tolerance": 0.01, "max_win_x": 5000, "win_cap_apply": "per_spin", "target_volatility": "medium", "hit_freq_target": 0.40 },
+  "compliance": { "jurisdictions": ["MGA"], "rtp_range_required": [0.92, 0.99], "max_win_cap_required": 5000, "near_miss_rule": "must_be_random", "ldw_disclosure": true, "session_time_display": true },
+  "rtp_allocation": { "base_game": 0.70, "free_spins": 0.26, "hold_and_win": 0.0, "jackpot": 0.0, "tolerance": 0.01 }
+}

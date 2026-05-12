@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "meta": { "id": "5x3-243ways", "name": "5x3 243 Ways", "version": "1.0.0", "theme_tags": ["ways"] },
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "LP1", "name": "LP1", "kind": "lp" },
+    { "id": "LP2", "name": "LP2", "kind": "lp" },
+    { "id": "HP1", "name": "HP1", "kind": "hp" },
+    { "id": "HP2", "name": "HP2", "kind": "hp" },
+    { "id": "WLD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Scatter", "kind": "scatter" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1 },
+      { "LP1": 8, "LP2": 6, "HP1": 3, "HP2": 2, "WLD": 1, "SCT": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "ways",
+    "direction": "ltr",
+    "min_match": 3,
+    "max_ways_per_spin": 243
+  },
+  "paytable": {
+    "LP1": { "3": 0.5, "4": 2, "5": 8 },
+    "LP2": { "3": 0.6, "4": 2.5, "5": 10 },
+    "HP1": { "3": 3, "4": 12, "5": 50 },
+    "HP2": { "3": 5, "4": 20, "5": 100 }
+  },
+  "features": [
+    { "kind": "free_spins", "trigger": { "by": "scatter_count", "thresholds": { "3": 10 } }, "global_multiplier": 3, "modifiers": ["multiplier_ladder"] }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 42 },
+  "bet": { "currency": "EUR", "base_bet": 1, "denominations": [0.1, 1.0] },
+  "limits": { "target_rtp": 0.96, "rtp_tolerance": 0.01, "max_win_x": 5000, "win_cap_apply": "per_spin", "target_volatility": "high", "hit_freq_target": 0.30 },
+  "compliance": { "jurisdictions": ["MGA"], "rtp_range_required": [0.92, 0.99], "max_win_cap_required": 5000, "near_miss_rule": "must_be_random", "ldw_disclosure": true, "session_time_display": true },
+  "rtp_allocation": { "base_game": 0.70, "free_spins": 0.26, "hold_and_win": 0.0, "jackpot": 0.0, "tolerance": 0.01 }
+}
