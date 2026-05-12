@@ -57,3 +57,19 @@ export { TransformBehavior } from './impls/TransformBehavior.js';
 export type { TransformBehaviorConfig, TransformRule, TransformTrigger } from './impls/TransformBehavior.js';
 export { JackpotBehavior } from './impls/JackpotBehavior.js';
 export type { JackpotBehaviorConfig, JackpotTrigger } from './impls/JackpotBehavior.js';
+
+// Faza 3.2 — additional plugin behaviors (P0 #9 closure)
+export { WanderingWildBehavior } from './impls/WanderingWildBehavior.js';
+export type { WanderingWildConfig, WanderStrategy } from './impls/WanderingWildBehavior.js';
+export { WildReelBehavior } from './impls/WildReelBehavior.js';
+export type { WildReelConfig } from './impls/WildReelBehavior.js';
+export { CollectBehavior } from './impls/CollectBehavior.js';
+export type { CollectConfig } from './impls/CollectBehavior.js';
+export { UpgradeBehavior } from './impls/UpgradeBehavior.js';
+export type { UpgradeConfig, UpgradeChain } from './impls/UpgradeBehavior.js';
+export { SplitBehavior } from './impls/SplitBehavior.js';
+export type { SplitConfig, SplitEvalMode } from './impls/SplitBehavior.js';
+export { MegaSymbolBehavior } from './impls/MegaSymbolBehavior.js';
+export type { MegaSymbolConfig, MegaAnchor } from './impls/MegaSymbolBehavior.js';
+export { PrizeBehavior } from './impls/PrizeBehavior.js';
+export type { PrizeConfig } from './impls/PrizeBehavior.js';

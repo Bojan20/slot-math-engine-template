@@ -32,6 +32,13 @@ import { CoinBehavior } from './impls/CoinBehavior.js';
 import { MultiplierSymbolBehavior } from './impls/MultiplierSymbolBehavior.js';
 import { TransformBehavior } from './impls/TransformBehavior.js';
 import { JackpotBehavior } from './impls/JackpotBehavior.js';
+import { WanderingWildBehavior } from './impls/WanderingWildBehavior.js';
+import { WildReelBehavior } from './impls/WildReelBehavior.js';
+import { CollectBehavior } from './impls/CollectBehavior.js';
+import { UpgradeBehavior } from './impls/UpgradeBehavior.js';
+import { SplitBehavior } from './impls/SplitBehavior.js';
+import { MegaSymbolBehavior } from './impls/MegaSymbolBehavior.js';
+import { PrizeBehavior } from './impls/PrizeBehavior.js';
 
 // ─── Registry (immutable after build) ─────────────────────────────────────
 
@@ -228,6 +235,35 @@ function _behaviorForSymbol(
 
     case 'transform':
       return new TransformBehavior(sym.id, cfg);
+
+    // ─── Faza 3.2 — extra behaviors (P0 #9) ─────────────────────────────
+    // These are not native IR `kind` values; they're reachable only via
+    // `configOverrides[symId].behaviorClass = "..."`. That keeps the IR
+    // schema small while still allowing operators to wire any plugin.
+    case 'wandering_wild':
+      return new WanderingWildBehavior(sym.id, {
+        reels: _reelCount(ir),
+        rows: _rowCount(ir),
+        ...cfg,
+      });
+
+    case 'wild_reel':
+      return new WildReelBehavior(sym.id, cfg);
+
+    case 'collect':
+      return new CollectBehavior(sym.id, cfg);
+
+    case 'upgrade':
+      return new UpgradeBehavior(sym.id, cfg);
+
+    case 'split':
+      return new SplitBehavior(sym.id, cfg);
+
+    case 'mega':
+      return new MegaSymbolBehavior(sym.id, cfg);
+
+    case 'prize':
+      return new PrizeBehavior(sym.id, cfg);
 
     case 'hp':
     case 'lp':

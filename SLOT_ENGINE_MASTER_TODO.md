@@ -160,19 +160,19 @@ Mapa "commit → faza":
 - ✅ `StickyWildBehavior` — config: persistOver (spin / cascade / feature).
 - ✅ `WalkingWildBehavior` — pomera se za N po spinu.
 - ✅ `WildMultiplierBehavior` — nosi mult value. *(`MultiplierWildBehavior.ts`)*
-- ❌ `WanderingWildBehavior` — random reposition.
-- ❌ `WildReelBehavior` — ceo reel = wild.
+- ✅ `WanderingWildBehavior` — random reposition. *(`src/behaviors/impls/WanderingWildBehavior.ts` — deterministic LCG, uniform/avoid-current strategies, bounds-checked)*
+- ✅ `WildReelBehavior` — ceo reel = wild. *(`src/behaviors/impls/WildReelBehavior.ts` — expand_wild + optional sticky lock)*
 - ✅ `ScatterPayBehavior` (postoji ✅, refaktorisati u plugin). *(`ScatterBehavior.ts`)*
 - ✅ `ScatterTriggerBehavior` (postoji ✅). *(deo `ScatterBehavior.ts`)*
 - ✅ `MysterySymbolBehavior` — reveal weighted. *(`MysteryBehavior.ts` + `mysterySymbol.ts`)*
 - ✅ `CoinValueBehavior` — H&W coin (postoji ✅, refaktor). *(`CoinBehavior.ts`)*
 - ✅ `JackpotSymbolBehavior` — direkt jackpot trigger. *(`JackpotBehavior.ts`)*
 - ✅ `MultiplierSymbolBehavior` — global mult add/mul.
-- ❌ `CollectBehavior` — sakupi sve coin vrednosti.
-- ❌ `UpgradeBehavior` — unapredi all-of-symbol na grid-u. *(postoji feature `symbolUpgrade.ts`, ali ne kao plugin behavior)*
-- ❌ `SplitBehavior` — 2-in-1 pozicija.
-- ❌ `MegaSymbolBehavior` — 2×2 / 3×3 colossal.
-- ❌ `PrizeBehavior` — cash-on-reel.
+- ✅ `CollectBehavior` — sakupi sve coin vrednosti. *(`src/behaviors/impls/CollectBehavior.ts` — sweeps grid for coin symbols, emits collect_coin per cell, multiplier support)*
+- ✅ `UpgradeBehavior` — unapredi all-of-symbol na grid-u. *(`src/behaviors/impls/UpgradeBehavior.ts` — single + chain mode for cascade upgrades; distinct from feature `symbolUpgrade.ts` which is feature-level)*
+- ✅ `SplitBehavior` — 2-in-1 pozicija. *(`src/behaviors/impls/SplitBehavior.ts` — ways scope mul; cluster spin scope; lines noop with paytable note)*
+- ✅ `MegaSymbolBehavior` — 2×2 / 3×3 colossal. *(`src/behaviors/impls/MegaSymbolBehavior.ts` — 5 anchor modes, bounds-checked regulator-safe no-op when rectangle wouldn't fit)*
+- ✅ `PrizeBehavior` — cash-on-reel. *(`src/behaviors/impls/PrizeBehavior.ts` — direct scatter_pay or collect_coin path, amountByCell + weighted distribution sampling with deterministic seed)*
 - ✅ `TransformBehavior` — config-rule transformacija.
 - ✅ Svaki behavior ima **unit test** (golden grid → expected effects). *(`tests/faza3_behaviors.test.ts`, `rust-sim/tests/faza3_behaviors.rs`)*
 - ⚠️ Acceptance: kompoziciono — `expanding wild + multiplier wild` daje očekivan win. *(integration test postoji, ali ne svih 19 behavior-a — 6 fali)*
@@ -792,7 +792,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 6. **PAR sheet PDF rendering** (8.5) — JSON nije isporučiv regulatoru.
 7. ✅ **`docs/architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`** (faza 0.2/0.3) — operator koji integriše hoće 5-stranični arhitekturni overview. *(DONE — svih 5 fajlova landed; sa cross-ref na kod i submission-kit definicijom)*
 8. **Mutation score izveštaj** (faza 10.7) — bez "≥95%" broja ne možeš tvrditi "regression-safe".
-9. **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — nekompletan "plugin layer" claim.
+9. ✅ **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — DONE: 7 plugin behavior-a + 47 tests u `tests/faza32_extra_behaviors.test.ts`, registry `behaviorClass` overrides za sve, barrel export ažuriran. "Plugin layer" claim sad kompletan.
 10. **HSM bridge** (faza 7.5) — operatori u UK/MT/DE traže HSM-backed RNG za live.
 
 ---
