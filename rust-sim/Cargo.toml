@@ -37,6 +37,9 @@ fastrand = "1.9"
 # libgmp deps, stable across all platforms in our target matrix.
 sha2 = "0.10"
 
+# FAZA 9.9 — NUMA-aware allocation: mmap-backed reel strip storage.
+memmap2 = "0.9"
+
 # FAZA 9.8b — GPU compute scaffold. Off by default so the toolchain
 # matrix stays light; flip on with `cargo build --features gpu` once the
 # wgpu integration lands.

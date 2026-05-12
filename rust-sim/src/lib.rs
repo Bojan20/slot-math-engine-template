@@ -55,6 +55,9 @@ pub mod simulator;
 /// cache-line layout.
 pub mod speed;
 pub mod stats;
+/// FAZA 9.9 — NUMA-aware allocation: portable topology detection,
+/// chunk-based worker assignment, and mmap-backed reel strip storage.
+pub mod numa;
 /// FAZA 11.9 — Jurisdiction adapter: compliance validation + auto-fix.
 pub mod jurisdiction;
 /// FAZA 8.6 — Server-side Casino Protocols (G2S, SAS, GAT-IV).
