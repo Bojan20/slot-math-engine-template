@@ -133,7 +133,7 @@ The compliance gaps map 1:1 to entries in the engineering P0 list:
 | P0 plug item                                   | Compliance impact                                  |
 |------------------------------------------------|----------------------------------------------------|
 | #1 Windows-x64 CI grana                        | Cross-platform determinism evidence                |
-| #3 TestU01 BigCrush / NIST / PractRand reports | RNG quality submission                             |
+| #3 ⚠️ TestU01 / NIST / PractRand reports        | Engine harness DONE (`rust-sim/src/bin/rng_cert.rs` — 8-test NIST SP 800-22 subset; all 4 backends pass 32/32 at 16 MiB). External BigCrush / PractRand / NIST STS captures pending CI run (workflow `.github/workflows/rng-cert.yml`). |
 | #4 ✅ 20 generic PAR samples                   | Universality claim concrete; submission item #11   |
 | #5 ✅ Benchmark reports                         | Performance claims in submission narrative         |
 | #6 ✅ PAR PDF render                            | Required artefact format                           |

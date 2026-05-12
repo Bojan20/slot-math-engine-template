@@ -1,0 +1,136 @@
+# P0 #3 — External RNG certification workflow.
+#
+# Manual-dispatch only. Builds PractRand and NIST STS from source, then
+# runs both batteries against all 4 RNG backends and uploads the
+# resulting reports as artifacts. TestU01 BigCrush is included but
+# gated behind a `with: include_bigcrush` flag because it takes
+# 8–12 h per backend.
+#
+# Trigger:
+#   gh workflow run rng-cert.yml -f include_bigcrush=false
+#
+# Expected wall-clock (no BigCrush): ~4 h.
+
+name: RNG certification (external batteries)
+
+on:
+  workflow_dispatch:
+    inputs:
+      include_bigcrush:
+        description: 'Run TestU01 BigCrush (adds 8–12 h per backend)?'
+        type: boolean
+        default: false
+      practrand_bytes:
+        description: 'PractRand sample size in bytes (default 4 GB)'
+        type: string
+        default: '4294967296'
+      sts_bytes:
+        description: 'NIST STS sample size in bytes (default 125 MB)'
+        type: string
+        default: '125000000'
+
+jobs:
+  rng-cert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 720  # 12 h ceiling — BigCrush worst case
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [mulberry32, pcg64, xoshiro256ss, philox4x32]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.83.0'
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: rust-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build harness
+        run: cargo build --release --bin rng_cert
+
+      - name: Install PractRand
+        run: |
+          set -e
+          cd /tmp
+          curl -L -o pr.zip 'https://sourceforge.net/projects/pr-and/files/latest/download'
+          unzip -q pr.zip -d practrand
+          cd practrand/PractRand-*-bin
+          make -j$(nproc) || make -j$(nproc) RNG_test
+          sudo cp RNG_test /usr/local/bin/
+
+      - name: Install NIST STS
+        run: |
+          set -e
+          git clone --depth 1 https://github.com/terrillmoore/NIST-Statistical-Test-Suite.git /tmp/sts
+          cd /tmp/sts
+          make -j$(nproc)
+
+      - name: Install TestU01 (BigCrush)
+        if: ${{ inputs.include_bigcrush }}
+        run: |
+          set -e
+          cd /tmp
+          curl -O https://simul.iro.umontreal.ca/testu01/TestU01-1.2.3.zip
+          unzip -q TestU01-1.2.3.zip
+          cd TestU01-*
+          ./configure --prefix=/usr/local
+          make -j$(nproc)
+          sudo make install
+          sudo ldconfig
+
+      - name: Run internal battery (reference)
+        run: |
+          mkdir -p reports/rng-cert
+          ./target/release/rng_cert --mode internal --rng ${{ matrix.backend }} \
+            --seed 12345 --bytes 16777216 \
+            --out reports/rng-cert/${{ matrix.backend }}-internal.json
+
+      - name: Run PractRand
+        run: |
+          ./target/release/rng_cert --mode stream --rng ${{ matrix.backend }} \
+            --seed 12345 --bytes ${{ inputs.practrand_bytes }} \
+            | RNG_test stdin64 -tlmax 1G \
+            > reports/rng-cert/${{ matrix.backend }}-practrand.txt 2>&1
+
+      - name: Run NIST STS
+        run: |
+          ./target/release/rng_cert --mode stream --rng ${{ matrix.backend }} \
+            --seed 12345 --bytes ${{ inputs.sts_bytes }} \
+            > /tmp/sample.bin
+          cd /tmp/sts
+          ./assess 1000000 < /tmp/sample.bin || true
+          cp experiments/AlgorithmTesting/finalAnalysisReport.txt \
+            "$GITHUB_WORKSPACE/reports/rng-cert/${{ matrix.backend }}-nist-sts.txt"
+
+      - name: Run TestU01 BigCrush
+        if: ${{ inputs.include_bigcrush }}
+        run: |
+          cat > /tmp/run_bigcrush.c <<'EOF'
+          #include "unif01.h"
+          #include "bbattery.h"
+          int main(void){
+            unif01_Gen *g = unif01_CreateExternGenBits("stdin", NULL);
+            bbattery_BigCrush(g);
+            return 0;
+          }
+          EOF
+          gcc -O2 -o /tmp/run_bigcrush /tmp/run_bigcrush.c \
+            -ltestu01 -lprobdist -lmylib -lm
+          ./target/release/rng_cert --mode stream --rng ${{ matrix.backend }} \
+            --seed 12345 --bytes 17179869184 \
+            | /tmp/run_bigcrush > reports/rng-cert/${{ matrix.backend }}-bigcrush.txt 2>&1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rng-cert-${{ matrix.backend }}
+          path: reports/rng-cert/${{ matrix.backend }}-*
+          retention-days: 90

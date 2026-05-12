@@ -1,0 +1,97 @@
+{
+  "backend": "pcg64",
+  "seed": 12345,
+  "bytes_consumed": 16777216,
+  "bit_count": 134217728,
+  "tests": [
+    {
+      "name": "monobit",
+      "p_value": 0.42392025129803823,
+      "pass": true,
+      "detail": {
+        "S_n": 9264,
+        "s_obs": 0.7996383326308808
+      }
+    },
+    {
+      "name": "block_frequency",
+      "p_value": 0.7322194968260072,
+      "pass": true,
+      "detail": {
+        "M": 1024,
+        "blocks": 131072,
+        "chi2": 131003.3984375
+      }
+    },
+    {
+      "name": "runs",
+      "p_value": 0.4120601128017487,
+      "pass": true,
+      "detail": {
+        "V_n": 67102144.0,
+        "pi": 0.500034511089325,
+        "s_obs": 0.8202734767189284
+      }
+    },
+    {
+      "name": "longest_run",
+      "p_value": 0.3087746115447816,
+      "pass": true,
+      "detail": {
+        "M": 10000,
+        "blocks": 13421,
+        "chi2": 7.1324198311614175,
+        "v": [
+          1133,
+          2865,
+          3389,
+          2568,
+          1640,
+          861,
+          965
+        ]
+      }
+    },
+    {
+      "name": "byte_chi2",
+      "p_value": 0.8074037864864455,
+      "pass": true,
+      "detail": {
+        "chi2": 235.25238037109375,
+        "df": 255
+      }
+    },
+    {
+      "name": "serial_2bit",
+      "p_value": 0.903979367075485,
+      "pass": true,
+      "detail": {
+        "nabla": -0.014553040266036987,
+        "psi2_m": 0.6248684227466583,
+        "psi2_m1": 0.6394214630126953
+      }
+    },
+    {
+      "name": "cumulative_sums",
+      "p_value": 0.742696214891168,
+      "pass": true,
+      "detail": {
+        "k_hi": 3297,
+        "k_lo": -3298,
+        "max_abs": 10176,
+        "z_over_sqrt_n": 0.8783592047551645
+      }
+    },
+    {
+      "name": "approximate_entropy",
+      "p_value": 0.6392928715052738,
+      "pass": true,
+      "detail": {
+        "ap_en": 0.6931471711353963,
+        "chi2": 2.5298831164836884,
+        "m": 2
+      }
+    }
+  ],
+  "all_pass": true
+}
