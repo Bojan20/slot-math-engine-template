@@ -39,3 +39,6 @@ export { MemoryJournal, NdjsonFileJournal, writeManifest, readManifest, getEngin
 
 export type { ReplayDriver, ReplayOptions } from './replay.js';
 export { replaySpin } from './replay.js';
+
+export type { SpinDisplay, DisputeCertificate, ChainVerificationReport } from './viewer.js';
+export { SpinReplayViewer } from './viewer.js';
