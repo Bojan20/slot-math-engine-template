@@ -15,9 +15,20 @@ pub mod analytical;
 /// Effect discriminated union + applyEffect pipeline + 11 behavior impls.
 /// Mirrors `src/behaviors/` TypeScript module tree exactly.
 pub mod behavior;
+/// FAZA 9.8 — Bulk dispatcher for 1T-spin runs.
+/// Constant-memory chunked execution + progress + checkpoint/resume.
+pub mod bulk;
+/// FAZA 9.8 — Cluster mode: coordinator + worker over a transport
+/// abstraction. Partitions a `BulkConfig` across N workers, merges
+/// slice results back into a single `AtomicStats`.
+pub mod cluster;
 pub mod config;
 pub mod evaluator;
 pub mod features;
+/// FAZA 9.8b — GPU compute scaffold (Metal / WGSL).
+/// Phase-A: public surface + shader source + dispatch contract.
+/// Real wgpu integration lands in 9.8b under `feature = "gpu"`.
+pub mod gpu;
 pub mod grid;
 /// FAZA 1.1 — canonical Slot Game IR shared with TS (`src/ir/`).
 /// Cross-validation + serde JSON round-trip. Engine consumers do not

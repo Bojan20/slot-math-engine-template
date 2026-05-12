@@ -37,6 +37,13 @@ fastrand = "1.9"
 # libgmp deps, stable across all platforms in our target matrix.
 sha2 = "0.10"
 
+# FAZA 9.8b — GPU compute scaffold. Off by default so the toolchain
+# matrix stays light; flip on with `cargo build --features gpu` once the
+# wgpu integration lands.
+[features]
+default = []
+gpu = []
+
 [dev-dependencies]
 # Benchmark harness with HTML reports and regression detection
 criterion = { version = "0.5", features = ["html_reports"] }
@@ -48,6 +55,12 @@ tempfile = "= 3.12.0"
 
 [[bench]]
 name = "spin_throughput"
+harness = false
+
+# FAZA 9.8 — 1T acceptance benchmark. Run with:
+#   cargo bench --bench bulk_throughput
+[[bench]]
+name = "bulk_throughput"
 harness = false
 
 # Package-wide lint policy.
@@ -76,6 +89,7 @@ explicit_counter_loop = "allow"
 explicit_auto_deref = "allow"
 inconsistent_digit_grouping = "allow"
 unreadable_literal = "allow"
+unusual_byte_groupings = "allow"
 useless_vec = "allow"
 approx_constant = "allow"
 

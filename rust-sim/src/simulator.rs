@@ -251,8 +251,13 @@ pub fn run_simulation_detailed(
     (result, global_stats)
 }
 
-/// Simulate single seed with detailed statistics
-fn simulate_seed_detailed(
+/// Simulate single seed with detailed statistics.
+///
+/// `pub` so the Faza 9.8 `BulkDispatcher` can drive it on per-worker
+/// shards without duplicating the inner loop. Returns the merged
+/// `SeedStats` plus the local `AtomicStats` so the caller can decide
+/// whether to keep per-seed records or only roll them up.
+pub fn simulate_seed_detailed(
     config: &GameConfig,
     seed: u64,
     spins: u64,

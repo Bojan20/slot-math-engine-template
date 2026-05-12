@@ -193,6 +193,37 @@ impl HdrHistogram {
         std::array::from_fn(|i| self.counts[i].load(Ordering::Relaxed))
     }
 
+    /// Faza 9.8 — restore bucket counts from a checkpoint snapshot.
+    /// Adds to whatever's already there (idempotent under double-resume
+    /// is the caller's responsibility — typical pattern is to call this
+    /// once on a fresh `HdrHistogram` during resume).
+    pub fn add_buckets(&self, buckets: &[u64]) {
+        let limit = buckets.len().min(HDR_BUCKET_COUNT);
+        for (i, &c) in buckets.iter().take(limit).enumerate() {
+            self.counts[i].fetch_add(c, Ordering::Relaxed);
+        }
+    }
+
+    /// Faza 9.8 — coarse midpoint per bucket, used for any consumer that
+    /// needs a representative win value (rare; HDR is for percentiles
+    /// not points). Returns 0.0 for the no-win bucket.
+    pub fn bucket_midpoint(idx: usize) -> f64 {
+        if idx == 0 {
+            return 0.0;
+        }
+        let lo = if idx == 1 {
+            0.0
+        } else {
+            Self::THRESHOLDS[idx - 2]
+        };
+        let hi = if idx <= Self::THRESHOLDS.len() {
+            Self::THRESHOLDS[idx - 1]
+        } else {
+            lo * 2.0
+        };
+        (lo + hi) * 0.5
+    }
+
     /// Estimate the p-th quantile from the current histogram (0 ≤ p ≤ 1).
     ///
     /// Returns a win value in bet multiples via linear interpolation within the
@@ -852,7 +883,11 @@ pub struct AtomicStats {
     win_distribution: Mutex<WinDistribution>,
 
     // Faza 4: lock-free HDR histogram.
-    hdr: HdrHistogram,
+    // `pub` so Faza 9.8 BulkDispatcher can merge chunk-local HDRs into
+    // the running global without an indirection. Reads only — the
+    // mutation path goes through `record_win_*` so the legacy locked
+    // `win_distribution` stays in sync.
+    pub hdr: HdrHistogram,
 
     // ── Faza 8 additions ──────────────────────────────────────────────────────
     /// Welford 4-moment accumulator (Mutex; update via `record_win_full` or
