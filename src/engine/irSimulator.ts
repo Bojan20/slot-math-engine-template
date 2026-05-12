@@ -51,6 +51,11 @@ export interface IRSimConfig {
    * the IR.
    */
   forceAnte?: boolean;
+  /**
+   * Faza 11.7: optional observability session — when provided, every
+   * completed spin is recorded via `session.recordSpin(...)`.
+   */
+  observabilitySession?: import('../observability/index.js').ObservabilitySession;
 }
 
 export interface IRSimResult {
@@ -1250,6 +1255,18 @@ export async function runIRSimulation(
     if (spinWon > maxWinX) maxWinX = spinWon;
     if (spinWon > 0 && baseSpinPayout === 0) totalHits++; // count feature-only hits
     totalWon += spinWon;
+
+    // ── Observability hook (Faza 11.7) ─────────────────────────────────
+    if (config.observabilitySession) {
+      const featureHits: Array<{ kind: string; payout: number }> = [];
+      if (fsTriggered && fsFeature) featureHits.push({ kind: 'free_spins', payout: 0 });
+      if (hnwTriggered && hnwFeature) featureHits.push({ kind: 'hold_and_win', payout: 0 });
+      config.observabilitySession.recordSpin({
+        bet: 1,
+        payout: spinWon,
+        features: featureHits,
+      });
+    }
 
     if (config.verbose && (i + 1) % 100000 === 0) {
       const rtpSoFar = totalWon / totalWagered;
