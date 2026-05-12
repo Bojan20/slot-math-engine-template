@@ -21,7 +21,21 @@ serde_json = "1.0"
 # Progress bar - latest
 indicatif = { version = "0.18", features = ["rayon"] }
 
+# FAZA 9 — Speed: SIMD abstractions (NEON/AVX2/SSE2 auto-dispatch, stable Rust)
+wide = "0.7"
+
+# FAZA 9 — Speed: arena allocator for zero-heap per-spin temporaries
+bumpalo = "3"
+
 # No external RNG needed - using Mulberry32 for TS compatibility
+
+[dev-dependencies]
+# Benchmark harness with HTML reports and regression detection
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "spin_throughput"
+harness = false
 
 [profile.release]
 opt-level = 3

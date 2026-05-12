@@ -41,5 +41,9 @@ pub mod par;
 /// H&W Markov DP, FS geometric series, Cascade chain-depth EV.
 pub mod markov;
 pub mod rng;
+/// FAZA 9 — Speed: Walker's Alias O(1) sampling, PackedGrid(u128),
+/// ZeroAllocEvaluator (stack-only), SIMD scatter counting, hot/cold
+/// cache-line layout.
+pub mod speed;
 pub mod simulator;
 pub mod stats;
