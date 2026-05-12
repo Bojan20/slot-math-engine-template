@@ -37,6 +37,9 @@ pub mod jackpot;
 /// FAZA 4 — GLI-16 compliant PAR sheet generator.
 /// Produces structured JSON + printable report from `AtomicStats`.
 pub mod par;
+/// FAZA 6 — Closed-form feature RTP solvers.
+/// H&W Markov DP, FS geometric series, Cascade chain-depth EV.
+pub mod markov;
 pub mod rng;
 pub mod simulator;
 pub mod stats;
