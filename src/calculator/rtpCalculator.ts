@@ -30,7 +30,7 @@ import { WaysEvaluator } from '../evaluators/waysEvaluator.js';
 import { AllWaysEvaluator } from '../evaluators/allWaysEvaluator.js';
 import { ClusterEvaluator } from '../evaluators/clusterEvaluator.js';
 import { ScatterEvaluator } from '../evaluators/scatterEvaluator.js';
-import { MegawaysEvaluator } from '../evaluators/megawaysEvaluator.js';
+import { VariableWaysEvaluator } from '../evaluators/variableWaysEvaluator.js';
 import { CascadeClusterEvaluator } from '../evaluators/cascadeCalculator.js';
 import { SpecialWildManager } from '../evaluators/specialWilds.js';
 import { MysterySymbolTransformer, createMysteryTransformer } from '../evaluators/mysterySymbol.js';
@@ -104,7 +104,7 @@ export class RTPCalculator {
   private waysEvaluator: WaysEvaluator | null = null;
   private allWaysEvaluator: AllWaysEvaluator | null = null;
   private clusterEvaluator: ClusterEvaluator | null = null;
-  private megawaysEvaluator: MegawaysEvaluator | null = null;
+  private variableWaysEvaluator: VariableWaysEvaluator | null = null;
   private cascadeEvaluator: CascadeClusterEvaluator | null = null;
   private scatterEvaluator: ScatterEvaluator;
   private specialWildManager: SpecialWildManager | null = null;
@@ -159,9 +159,9 @@ export class RTPCalculator {
       case 'WAYS':
         this.waysEvaluator = new WaysEvaluator(config);
         break;
-      case 'MEGAWAYS':
-        // Megaways uses dedicated evaluator with variable row heights
-        this.megawaysEvaluator = new MegawaysEvaluator(config);
+      case 'VARIABLE_WAYS':
+        // Variable-ways uses dedicated evaluator with variable row heights
+        this.variableWaysEvaluator = new VariableWaysEvaluator(config);
         // Also create ways evaluator as fallback for fixed-height evaluation
         this.waysEvaluator = new WaysEvaluator(config);
         break;
@@ -184,7 +184,7 @@ export class RTPCalculator {
         console.warn('HYBRID evalType combines lines and cluster evaluation. Results may need manual verification.');
         break;
       default:
-        throw new Error(`Unsupported evalType: ${config.evalType}. Supported types: LINES_LTR, LINES_RTL, LINES_BOTH, WAYS, MEGAWAYS, CLUSTER, ALL_WAYS, HYBRID`);
+        throw new Error(`Unsupported evalType: ${config.evalType}. Supported types: LINES_LTR, LINES_RTL, LINES_BOTH, WAYS, VARIABLE_WAYS, CLUSTER, ALL_WAYS, HYBRID`);
     }
 
     // Scatter evaluator always created
@@ -489,13 +489,13 @@ export class RTPCalculator {
       wins.push(...clusterWins);
       lineWin = lineWin.plus(sum(clusterWins.map(w => dec(w.totalWin))));
 
-    } else if (this.megawaysEvaluator) {
-      // Megaways: use variable row evaluation
+    } else if (this.variableWaysEvaluator) {
+      // Variable-ways: use variable row evaluation
       // For exact calculation, we evaluate with the grid's actual row counts
       const symbolsPerReel = this.getSymbolsPerReel(evalGrid);
-      const megaWins = this.megawaysEvaluator.evaluate(evalGrid, symbolsPerReel);
-      wins.push(...megaWins);
-      lineWin = sum(megaWins.map(w => dec(w.totalWin)));
+      const varWins = this.variableWaysEvaluator.evaluate(evalGrid, symbolsPerReel);
+      wins.push(...varWins);
+      lineWin = sum(varWins.map(w => dec(w.totalWin)));
 
     } else if (this.lineEvaluator) {
       const lineWins = this.lineEvaluator.evaluate(evalGrid);
@@ -641,11 +641,11 @@ export class RTPCalculator {
       wins.push(...clusterWins);
       lineWin = lineWin.plus(sum(clusterWins.map(w => dec(w.totalWin))));
 
-    } else if (this.megawaysEvaluator) {
+    } else if (this.variableWaysEvaluator) {
       const symbolsPerReel = this.getSymbolsPerReel(grid);
-      const megaWins = this.megawaysEvaluator.evaluate(grid, symbolsPerReel);
-      wins.push(...megaWins);
-      lineWin = sum(megaWins.map(w => dec(w.totalWin)));
+      const varWins = this.variableWaysEvaluator.evaluate(grid, symbolsPerReel);
+      wins.push(...varWins);
+      lineWin = sum(varWins.map(w => dec(w.totalWin)));
 
     } else if (this.lineEvaluator) {
       const lineWins = this.lineEvaluator.evaluate(grid);
@@ -694,7 +694,7 @@ export class RTPCalculator {
   }
 
   /**
-   * Get the number of non-empty symbols per reel (for Megaways)
+   * Get the number of non-empty symbols per reel (for variable-ways grids)
    */
   private getSymbolsPerReel(grid: string[][]): number[] {
     const cols = grid[0]?.length ?? 0;
@@ -1357,12 +1357,12 @@ export class RTPCalculator {
     // Mystery symbols are now supported via exact EV calculation
     // (no longer requires simulation fallback)
 
-    // Megaways with very high variability
-    if (this.config.evalType === 'MEGAWAYS' && this.config.megawaysConfig) {
-      const { minSymbolsPerReel, maxSymbolsPerReel } = this.config.megawaysConfig;
+    // Variable-ways with very high variability
+    if (this.config.evalType === 'VARIABLE_WAYS' && this.config.variableWaysConfig) {
+      const { minSymbolsPerReel, maxSymbolsPerReel } = this.config.variableWaysConfig;
       const variability = maxSymbolsPerReel - minSymbolsPerReel;
       if (variability > 5) {
-        return 'Megaways with high variability (>5 symbol range)';
+        return 'Variable-ways with high variability (>5 symbol range)';
       }
     }
 

@@ -55,10 +55,10 @@ function buildClusterGrid(cols: number, rows: number): string[][] {
 }
 
 /**
- * For variable_rows topology (Megaways): build a grid where each column
- * uses the minimum row count from row_range_per_reel, all filled with HP1.
+ * For variable_rows topology: build a grid where each column uses the
+ * minimum row count from row_range_per_reel, all filled with HP1.
  */
-function buildMegawaysGrid(
+function buildVariableRowsGrid(
   ranges: Array<[number, number]>,
   maxRows: number,
 ): string[][] {
@@ -98,7 +98,7 @@ function buildWinningGrid(ir: SlotGameIR): string[][] {
   if (topo.kind === 'variable_rows') {
     const ranges = topo.row_range_per_reel;
     const maxRows = Math.max(...ranges.map(([, hi]) => hi));
-    return buildMegawaysGrid(ranges, maxRows);
+    return buildVariableRowsGrid(ranges, maxRows);
   }
 
   if (topo.kind === 'cluster_grid') {
@@ -140,7 +140,7 @@ const FIXTURES: Array<{ id: string; file: string }> = [
   { id: '3x5-5lines',           file: '3x5-5lines.json' },
   { id: '5x3-243ways',          file: '5x3-243ways.json' },
   { id: '6x4-4096ways',         file: '6x4-4096ways.json' },
-  { id: 'megaways-7reels',      file: 'megaways-7reels.json' },
+  { id: 'variable-rows-7reels', file: 'variable-rows-7reels.json' },
   { id: 'cluster-7x7',          file: 'cluster-7x7.json' },
   { id: 'cluster-hexagonal',    file: 'cluster-hexagonal.json' },
   { id: 'cluster-diagonal',     file: 'cluster-diagonal.json' },
@@ -162,7 +162,7 @@ const FIXTURES: Array<{ id: string; file: string }> = [
   { id: 'multiplier-wilds',     file: 'multiplier-wilds.json' },
   { id: 'walking-wilds',        file: 'walking-wilds.json' },
   { id: 'expanding-wilds',      file: 'expanding-wilds.json' },
-  { id: 'mega-complex',         file: 'mega-complex.json' },
+  { id: 'complex-variable-rows', file: 'complex-variable-rows.json' },
   { id: 'pay-anywhere',         file: 'pay-anywhere.json' },
 ];
 

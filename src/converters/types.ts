@@ -7,7 +7,7 @@
 
 import type { SlotGameIR } from '../ir/types.js';
 
-export type DialectId = 'microgaming' | 'playtech' | 'netent' | 'generic' | string;
+export type DialectId = 'reel_weight_map' | 'weighted_pairs' | 'reel_strips' | 'generic' | string;
 
 export interface ConversionWarning {
   field: string;
@@ -50,7 +50,7 @@ export interface GenericGameConfig {
   reelWeights?: Record<string, number>[];
   /** Each element is a per-reel strip array */
   reelStrips?: string[][];
-  /** Playtech-style: array of arrays of { symbol, weight } objects */
+  /** Weighted-pairs shape: array of arrays of { symbol, weight } objects */
   weightedReels?: Array<Array<{ symbol: string; weight: number }>>;
 
   rtp?: number;

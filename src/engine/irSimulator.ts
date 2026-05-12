@@ -20,7 +20,7 @@
  * The simulator is intentionally agnostic of the legacy `GameConfig`
  * pipeline — the entire spin loop reads from the IR directly so the same
  * code path drives lines, ways, cluster, pay-anywhere, pattern, and
- * Megaways games.
+ * variable-row games.
  */
 
 import type { Feature, ReelSet, SlotGameIR, SymbolKey } from '../ir/types.js';
@@ -189,7 +189,7 @@ function topologyDims(ir: SlotGameIR): {
   }
 }
 
-/** Draw per-reel row counts for variable_rows (Megaways-style). */
+/** Draw per-reel row counts for variable_rows topology. */
 function drawRowCounts(
   rng: () => number,
   ranges: Array<[number, number]>,
@@ -629,7 +629,7 @@ export function simulatePick(
 // ─── Feature: Wheel ───────────────────────────────────────────────────────
 
 /**
- * Simulate a wheel-of-fortune spin. One weighted draw selects the segment.
+ * Simulate a bonus wheel spin. One weighted draw selects the segment.
  * Returns the pay_multiplier of the landed segment.
  *
  * Trigger convention: fires when `scatterCount >= 3` AND no FS triggered.
@@ -736,7 +736,7 @@ export function simulateSymbolUpgrade(
 /**
  * Resolve cascade replacement for `'drop'`: empty cells "fall" downward
  * with refill at the top from a random pull of the per-reel weighted
- * distribution (or strip stop). This mirrors typical NetEnt-style cascades.
+ * distribution (or strip stop). This is the canonical "drop" cascade.
  */
 function dropAndRefill(
   ir: SlotGameIR,

@@ -17,16 +17,16 @@
 
 export enum SymbolId {
   // Low Pay Symbols (LP) - Theme artifacts/items
-  LP_1 = 'LP_1',       // e.g., 10, J, Ankh, Lyre
-  LP_2 = 'LP_2',       // e.g., J, Q, Scarab, Coin
-  LP_3 = 'LP_3',       // e.g., Q, K, Eye, Helmet
-  LP_4 = 'LP_4',       // e.g., K, A, Staff, Scroll
-  LP_5 = 'LP_5',       // e.g., A, Bird, Ring
+  LP_1 = 'LP_1',       // Generic low-paying symbol slot 1
+  LP_2 = 'LP_2',       // Generic low-paying symbol slot 2
+  LP_3 = 'LP_3',       // Generic low-paying symbol slot 3
+  LP_4 = 'LP_4',       // Generic low-paying symbol slot 4
+  LP_5 = 'LP_5',       // Generic low-paying symbol slot 5
 
-  // High Pay Symbols (HP) - Theme characters
-  HP_1 = 'HP_1',       // Top paying (e.g., Pharaoh, Zeus, Dragon)
-  HP_2 = 'HP_2',       // Second (e.g., Anubis, Hades, Tiger)
-  HP_3 = 'HP_3',       // Third (e.g., Cleopatra, Poseidon, Phoenix)
+  // High Pay Symbols (HP) — assign per-game theme via config, not enum
+  HP_1 = 'HP_1',       // Top paying high-pay symbol
+  HP_2 = 'HP_2',       // Second-tier high-pay symbol
+  HP_3 = 'HP_3',       // Third-tier high-pay symbol
 
   // Special Symbols
   WILD = 'WILD',       // Wild - substitutes all except Scatter & Special

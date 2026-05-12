@@ -4,7 +4,7 @@
  * Generic configuration schema for ANY slot game type.
  * Supports:
  * - Line pay (L→R, R→L, Both)
- * - Ways to win (243, 1024, Megaways)
+ * - Ways to win (fixed e.g. 243/1024 or variable per spin)
  * - Cluster pay
  * - All feature types
  */
@@ -145,7 +145,7 @@ export const EvalTypeSchema = z.enum([
   'LINES_RTL',      // Line pay, right to left only
   'LINES_BOTH',     // Line pay, both directions
   'WAYS',           // Ways to win (243, 1024, etc.)
-  'MEGAWAYS',       // Variable ways (Megaways)
+  'VARIABLE_WAYS',  // Variable per-reel symbol count → variable total ways per spin
   'CLUSTER',        // Cluster pay
   'ALL_WAYS',       // All ways (any adjacent)
   'HYBRID'          // Mixed evaluation
@@ -166,15 +166,19 @@ export const ClusterConfigSchema = z.object({
 export type ClusterConfig = z.infer<typeof ClusterConfigSchema>;
 
 /**
- * Megaways configuration
+ * Variable-ways configuration
+ *
+ * Each reel can land a variable number of symbol rows in a configured
+ * range, so the total number of ways per spin equals the product of
+ * per-reel row counts. Generic — no vendor naming.
  */
-export const MegawaysConfigSchema = z.object({
+export const VariableWaysConfigSchema = z.object({
   minSymbolsPerReel: z.number().int().min(2),
   maxSymbolsPerReel: z.number().int().max(10),
   reelWeights: z.array(z.record(z.string(), z.number())).optional()  // Weights for each reel height
 });
 
-export type MegawaysConfig = z.infer<typeof MegawaysConfigSchema>;
+export type VariableWaysConfig = z.infer<typeof VariableWaysConfigSchema>;
 
 // ============================================================================
 // FEATURE DEFINITIONS
@@ -313,7 +317,7 @@ export const GameConfigSchema = z.object({
   evalType: EvalTypeSchema,
   paylines: z.array(PaylineSchema).optional(),  // Required for line pay
   clusterConfig: ClusterConfigSchema.optional(),  // Required for cluster
-  megawaysConfig: MegawaysConfigSchema.optional(),  // Required for megaways
+  variableWaysConfig: VariableWaysConfigSchema.optional(),  // Required for VARIABLE_WAYS
 
   // Features
   freeSpins: FreeSpinsConfigSchema.optional(),

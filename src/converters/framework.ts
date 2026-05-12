@@ -204,7 +204,7 @@ function buildReels(
   symbols: Symbol[],
   warnings: ConversionWarning[],
 ): ReelSet {
-  // 1. weightedReels (Playtech format): array of [{symbol, weight}, ...]
+  // 1. weightedReels (weighted-pairs shape): array of [{symbol, weight}, ...]
   if (generic.weightedReels && generic.weightedReels.length > 0) {
     const base: Array<Record<string, number>> = generic.weightedReels.map((reelArr) => {
       const map: Record<string, number> = {};
@@ -216,12 +216,12 @@ function buildReels(
     return { mode: 'weighted', base };
   }
 
-  // 2. reelWeights (Microgaming format): array of {symbolId: weight}
+  // 2. reelWeights (reel-weight-map shape): array of {symbolId: weight}
   if (generic.reelWeights && generic.reelWeights.length > 0) {
     return { mode: 'weighted', base: generic.reelWeights };
   }
 
-  // 3. reelStrips (NetEnt format): array of symbol strips
+  // 3. reelStrips (reel-strips shape): array of symbol strips
   if (generic.reelStrips && generic.reelStrips.length > 0) {
     // Convert strips to weighted by counting occurrences
     const base: Array<Record<string, number>> = generic.reelStrips.map((strip) => {

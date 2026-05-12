@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "meta": { "id": "megaways-7reels", "name": "Megaways 7 Reels", "version": "1.0.0", "theme_tags": ["megaways", "variable"] },
+  "meta": { "id": "variable-rows-7reels", "name": "Variable-Rows 7 Reels", "version": "1.0.0", "theme_tags": ["variable_rows", "variable_ways"] },
   "topology": {
     "kind": "variable_rows",
     "reels": 7,

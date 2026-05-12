@@ -124,20 +124,20 @@ impl<'a> GridGenerator<'a> {
         self.generate_grid(rng, true)
     }
 
-    /// Generate a Megaways grid: each reel may have a different row count
-    /// for this spin. `row_counts.len()` must equal `config.reels`. The
-    /// resulting `DynGrid` allocates the *maximum* row count across reels
-    /// (uniform `cells[reel].len()`), but only the first
+    /// Generate a variable-rows grid: each reel may have a different row
+    /// count for this spin. `row_counts.len()` must equal `config.reels`.
+    /// The resulting `DynGrid` allocates the *maximum* row count across
+    /// reels (uniform `cells[reel].len()`), but only the first
     /// `row_counts[reel]` cells of each reel are populated — the trailing
     /// slots are left at the sentinel `0`. Evaluators must honour the
-    /// `row_counts` passed via `EvalMode::Megaways`, not the grid's
+    /// `row_counts` passed via `EvalMode::VariableWays`, not the grid's
     /// implicit `rows`.
     ///
     /// `row_counts_config` is the configurable per-reel min/max envelope
     /// that drives random row selection for callers that prefer to
     /// resolve row counts inside the generator. Pass `None` to use the
     /// rectangular config dimensions.
-    pub fn generate_megaways(
+    pub fn generate_variable_rows(
         &self,
         rng: &mut SlotRng,
         row_counts_config: &[(usize, usize)],

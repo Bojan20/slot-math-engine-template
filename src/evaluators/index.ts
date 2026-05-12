@@ -9,6 +9,6 @@ export * from './clusterEvaluator.js';
 export * from './scatterEvaluator.js';
 export * from './cascadeCalculator.js';
 export * from './specialWilds.js';
-export * from './megawaysEvaluator.js';
+export * from './variableWaysEvaluator.js';
 export * from './mysterySymbol.js';
 export * from './allWaysEvaluator.js';

@@ -563,19 +563,19 @@ export class ConfigValidator {
       }
     }
 
-    // Gap #32: Megaways variable rows
-    if (config.evalType === 'MEGAWAYS') {
-      if (!config.megawaysConfig) {
+    // Gap #32: variable rows per reel
+    if (config.evalType === 'VARIABLE_WAYS') {
+      if (!config.variableWaysConfig) {
         this.addError(
-          'megawaysConfig',
-          'MEGAWAYS_CONFIG_REQUIRED',
-          'Megaways config required for MEGAWAYS evaluation type'
+          'variableWaysConfig',
+          'VARIABLE_WAYS_CONFIG_REQUIRED',
+          'Variable-ways config required for VARIABLE_WAYS evaluation type'
         );
       } else {
-        if (config.megawaysConfig.minSymbolsPerReel < 2) {
+        if (config.variableWaysConfig.minSymbolsPerReel < 2) {
           this.addError(
-            'megawaysConfig.minSymbolsPerReel',
-            'MEGAWAYS_MIN_TOO_LOW',
+            'variableWaysConfig.minSymbolsPerReel',
+            'VARIABLE_WAYS_MIN_TOO_LOW',
             'Minimum symbols per reel must be at least 2'
           );
         }
@@ -844,23 +844,23 @@ export function sanitizeConfig(
     }
   }
 
-  // 11. Megaways config
-  if (sanitized.megawaysConfig) {
-    const mw = sanitized.megawaysConfig;
+  // 11. Variable-ways config
+  if (sanitized.variableWaysConfig) {
+    const mw = sanitized.variableWaysConfig;
 
     // Min/max symbols per reel (reasonable: 2-10)
     if (clampValues) {
       if (mw.minSymbolsPerReel < 2) {
-        recordChange('megawaysConfig.minSymbolsPerReel', mw.minSymbolsPerReel, 2, 'Clamped to minimum');
+        recordChange('variableWaysConfig.minSymbolsPerReel', mw.minSymbolsPerReel, 2, 'Clamped to minimum');
         mw.minSymbolsPerReel = 2;
       }
       if (mw.maxSymbolsPerReel > 10) {
-        recordChange('megawaysConfig.maxSymbolsPerReel', mw.maxSymbolsPerReel, 10, 'Clamped to maximum');
+        recordChange('variableWaysConfig.maxSymbolsPerReel', mw.maxSymbolsPerReel, 10, 'Clamped to maximum');
         mw.maxSymbolsPerReel = 10;
       }
       // Ensure min <= max
       if (mw.minSymbolsPerReel > mw.maxSymbolsPerReel) {
-        recordChange('megawaysConfig.minSymbolsPerReel', mw.minSymbolsPerReel, mw.maxSymbolsPerReel, 'Min > Max, clamped');
+        recordChange('variableWaysConfig.minSymbolsPerReel', mw.minSymbolsPerReel, mw.maxSymbolsPerReel, 'Min > Max, clamped');
         mw.minSymbolsPerReel = mw.maxSymbolsPerReel;
       }
     }

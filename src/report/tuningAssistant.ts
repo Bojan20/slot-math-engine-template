@@ -179,7 +179,7 @@ export function generateTuningHints(stats: SimulationStatistics): TuningHint[] {
       severity: 'warn',
       category: 'Hold & Win',
       message: `Hold & Win triggers very frequently (1 in ${Math.round(hnwFreq)})`,
-      suggestion: 'This may inflate RTP unpredictably. Consider reducing Lightning Orb stops on reels.'
+      suggestion: 'This may inflate RTP unpredictably. Consider reducing multiplier-orb stops on reels.'
     });
   } else if (hnwFreq > TARGETS.hnwFrequency.max) {
     hints.push({

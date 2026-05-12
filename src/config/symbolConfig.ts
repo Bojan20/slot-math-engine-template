@@ -36,11 +36,11 @@ export interface SymbolRoles {
  *
  * CHANGE THIS FOR YOUR GAME!
  *
- * Example for Egyptian theme:
- * wild: SymbolId.SCARAB_WILD,
- * scatter: SymbolId.PYRAMID_SCATTER,
- * special: SymbolId.ANKH_BONUS,
- * topPaying: SymbolId.PHARAOH,
+ * Example for a themed game (rename SymbolId values to match your theme):
+ * wild: SymbolId.<your-wild-id>,
+ * scatter: SymbolId.<your-scatter-id>,
+ * special: SymbolId.<your-special-id>,
+ * topPaying: SymbolId.<your-top-pay-id>,
  */
 export const SYMBOL_ROLES: SymbolRoles = {
   // Wild symbol

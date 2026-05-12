@@ -69,7 +69,7 @@ export interface Symbol {
   substitutes?: SymbolKey[] | '*';
   /** Hint only — explicit `reels` strips override. */
   weight_hint?: number;
-  /** Optional reel-eligibility list (Reactoonz-style positional constraints). */
+  /** Optional reel-eligibility list for positional symbol constraints. */
   appears_on?: ReelIndex[];
 }
 

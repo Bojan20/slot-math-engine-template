@@ -1,15 +1,16 @@
-//! Megaways evaluator — Faza 2 acceptance tests.
+//! Variable-ways evaluator — Faza 2 acceptance tests.
 //!
-//! The Megaways path lives in `evaluator.rs::EvalMode::Megaways`. Three
-//! checks:
+//! The variable-ways path lives in `evaluator.rs::EvalMode::VariableWays`.
+//! Three checks:
 //!
-//!   1. `megaways_total_ways([2,3,4,5,6,7]) == 2520`
+//!   1. `variable_ways_total([2,3,4,5,6,7]) == 5040`
 //!   2. Win calculation on a fixed grid produces the expected payout
 //!   3. 50K-spin smoke test: RTP must land in a plausible range
 //!      (loose because the synthetic config below has no balanced math).
 //!
-//! The fixed-grid case uses a 6-reel config because Megaways is canonically
-//! 6 reels — the evaluator itself supports any reel count.
+//! The fixed-grid case uses a 6-reel config because 6 reels is the most
+//! common variable-ways layout — the evaluator itself supports any reel
+//! count. Generic naming: no vendor trademarks anywhere in this template.
 
 use slot_sim::config::{
     FreeSpinsConfig, GameConfig, HoldAndWinConfig, LightningConfig, OrbValue, PayEntry, ReelWeight,
@@ -22,7 +23,7 @@ use std::collections::HashMap;
 
 // ─── Fixture builder ───────────────────────────────────────────────────────
 
-fn megaways_config(reels: u8, max_rows: u8) -> GameConfig {
+fn variable_ways_config(reels: u8, max_rows: u8) -> GameConfig {
     let mut paytable = HashMap::new();
     paytable.insert(
         "HP1".to_string(),
@@ -64,7 +65,7 @@ fn megaways_config(reels: u8, max_rows: u8) -> GameConfig {
     }
 
     GameConfig {
-        name: "Megaways Test".to_string(),
+        name: "Variable-Ways Test".to_string(),
         version: "1.0.0".to_string(),
         target_rtp: 96.0,
         reels,
@@ -137,25 +138,25 @@ fn megaways_config(reels: u8, max_rows: u8) -> GameConfig {
 // ─── Test 1: ways count formula ────────────────────────────────────────────
 
 #[test]
-fn test_megaways_ways_count() {
+fn test_variable_ways_count() {
     let row_counts: Vec<usize> = vec![2, 3, 4, 5, 6, 7];
-    let total = Evaluator::megaways_total_ways(&row_counts);
+    let total = Evaluator::variable_ways_total(&row_counts);
     // 2 × 3 × 4 × 5 × 6 × 7 = 5040.
     assert_eq!(total, 5040, "2×3×4×5×6×7 must equal 5040");
 
     // Bonus: classic max-ways for [7,7,7,7,7,7] = 117649.
     assert_eq!(
-        Evaluator::megaways_total_ways(&vec![7, 7, 7, 7, 7, 7]),
+        Evaluator::variable_ways_total(&vec![7, 7, 7, 7, 7, 7]),
         117649,
-        "7^6 max-Megaways ways must equal 117649"
+        "7^6 max variable-ways must equal 117649"
     );
 }
 
 // ─── Test 2: fixed-grid win calculation ────────────────────────────────────
 
 #[test]
-fn test_megaways_win_calculation() {
-    let cfg = megaways_config(6, 7);
+fn test_variable_ways_win_calculation() {
+    let cfg = variable_ways_config(6, 7);
     let grid_gen = GridGenerator::new(&cfg);
 
     // HP1 idx = 1 (after WILD=0). LP1 idx = 2. WILD idx = 0. SCAT idx = 3.
@@ -190,7 +191,7 @@ fn test_megaways_win_calculation() {
         grid.set(5, r, lp1);
     }
 
-    let eval_mode = EvalMode::Megaways {
+    let eval_mode = EvalMode::VariableWays {
         row_counts: row_counts.clone(),
     };
     let evaluator = Evaluator::with_mode(&cfg, &grid_gen, eval_mode);
@@ -232,8 +233,8 @@ fn test_megaways_win_calculation() {
 // ─── Test 3: RTP smoke ─────────────────────────────────────────────────────
 
 #[test]
-fn test_megaways_rtp_smoke() {
-    let cfg = megaways_config(6, 7);
+fn test_variable_ways_rtp_smoke() {
+    let cfg = variable_ways_config(6, 7);
     let grid_gen = GridGenerator::new(&cfg);
     let mut rng = SlotRng::new(12345);
 
@@ -246,11 +247,11 @@ fn test_megaways_rtp_smoke() {
 
     for _ in 0..spins {
         total_wagered += total_bet_mc;
-        let (grid, row_counts) = grid_gen.generate_megaways(&mut rng, &row_ranges);
+        let (grid, row_counts) = grid_gen.generate_variable_rows(&mut rng, &row_ranges);
         let evaluator = Evaluator::with_mode(
             &cfg,
             &grid_gen,
-            EvalMode::Megaways {
+            EvalMode::VariableWays {
                 row_counts: row_counts.clone(),
             },
         );
@@ -262,9 +263,9 @@ fn test_megaways_rtp_smoke() {
     // The synthetic config above is intentionally not balanced — it just
     // proves the simulator hits a finite RTP and produces some wins. The
     // band must be wide enough to accommodate the unbalanced config.
-    assert!(rtp > 0.0, "Megaways smoke RTP must be > 0, got {rtp}");
+    assert!(rtp > 0.0, "Variable-ways smoke RTP must be > 0, got {rtp}");
     assert!(
         rtp.is_finite(),
-        "Megaways smoke RTP must be finite, got {rtp}"
+        "Variable-ways smoke RTP must be finite, got {rtp}"
     );
 }

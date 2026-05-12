@@ -496,7 +496,8 @@ export function validateAnteBetConfig(config: AnteBetConfig): {
 // ============================================================================
 
 /**
- * Create standard ante bet configuration (like Gates of Olympus style)
+ * Create standard ante bet configuration: +25% bet pays 2× the base
+ * feature trigger probability.
  */
 export function createStandardAnteBetConfig(
   baseRTP: number = 0.9610,
@@ -544,7 +545,7 @@ export function createStandardAnteBetConfig(
 }
 
 /**
- * Create multi-tier ante config (like some Pragmatic games)
+ * Create multi-tier ante config: multiple ante levels with progressive trigger boosts.
  */
 export function createMultiTierAnteBetConfig(
   baseRTP: number = 0.9640,

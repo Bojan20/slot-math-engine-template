@@ -71,6 +71,6 @@ export {
   catalan,
   clusterWays,
   waysToWin,
-  megawaysCombinations,
+  variableWaysCombinations,
   reduceFraction
 } from './combinatorics.js';

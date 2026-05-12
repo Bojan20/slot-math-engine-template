@@ -1,8 +1,9 @@
 /**
- * SLOT MATH EXACT - Megaways Evaluator
+ * SLOT MATH EXACT - Variable-Ways Evaluator
  *
- * Handles variable-row Megaways mechanics where each reel can have
- * different numbers of symbols per spin (2-7 typically).
+ * Handles variable-row mechanics where each reel can land a different
+ * number of symbol rows per spin (typically 2-7). Total ways = product
+ * of per-reel row counts. Generic — no vendor naming.
  *
  * Key concepts:
  * - Each reel has weighted probability for different row counts
@@ -21,7 +22,7 @@ import type {
   GameConfig,
   SymbolDef,
   WinResult,
-  MegawaysConfig
+  VariableWaysConfig
 } from '../types/config.js';
 import {
   WildTransformer,
@@ -39,9 +40,9 @@ export interface ReelHeightConfig {
 }
 
 /**
- * Megaways grid state
+ * Variable-ways grid state
  */
-export interface MegawaysGridState {
+export interface VariableWaysGridState {
   grid: string[][];
   symbolsPerReel: number[];
   totalWays: bigint;
@@ -49,9 +50,9 @@ export interface MegawaysGridState {
 }
 
 /**
- * Megaways evaluation context
+ * Variable-ways evaluation context
  */
-export interface MegawaysEvalContext {
+export interface VariableWaysEvalContext {
   symbolMap: Map<string, SymbolDef>;
   paytableMap: Map<string, Map<number, number>>;
   wildSymbols: Set<string>;
@@ -62,12 +63,12 @@ export interface MegawaysEvalContext {
 }
 
 /**
- * Create Megaways evaluation context
+ * Create variable-ways evaluation context
  */
-export function createMegawaysEvalContext(
+export function createVariableWaysEvalContext(
   config: GameConfig,
   multiplierMode: MultiplierMode = 'MULTIPLY'
-): MegawaysEvalContext {
+): VariableWaysEvalContext {
   const symbolMap = new Map<string, SymbolDef>();
   const wildSymbols = new Set<string>();
   const wildMultipliers = new Map<string, number>();
@@ -95,16 +96,16 @@ export function createMegawaysEvalContext(
   }
 
   // Build reel height configs
-  const megaConfig = config.megawaysConfig;
+  const varConfig = config.variableWaysConfig;
   const numReels = config.grid.cols;
   const reelHeights: ReelHeightConfig[] = [];
 
   for (let i = 0; i < numReels; i++) {
-    const reelWeights = megaConfig?.reelWeights?.[i];
+    const reelWeights = varConfig?.reelWeights?.[i];
     const weights = new Map<number, number>();
 
-    const minSym = megaConfig?.minSymbolsPerReel ?? 2;
-    const maxSym = megaConfig?.maxSymbolsPerReel ?? 7;
+    const minSym = varConfig?.minSymbolsPerReel ?? 2;
+    const maxSym = varConfig?.maxSymbolsPerReel ?? 7;
 
     if (reelWeights) {
       for (const [key, weight] of Object.entries(reelWeights)) {
@@ -224,14 +225,14 @@ export function* enumerateHeightCombinations(
 /**
  * Calculate total possible ways for a height configuration
  */
-export function calculateMegaways(symbolsPerReel: number[]): bigint {
+export function calculateVariableWays(symbolsPerReel: number[]): bigint {
   return waysToWin(symbolsPerReel);
 }
 
 /**
  * Create a variable-height grid from reel strips
  */
-export function createMegawaysGrid(
+export function createVariableRowsGrid(
   reelStrips: string[][],
   stopPositions: number[],
   symbolsPerReel: number[]
@@ -262,13 +263,13 @@ export function createMegawaysGrid(
 }
 
 /**
- * Evaluate Megaways grid for ways wins
+ * Evaluate variable-ways grid for ways wins
  * Similar to WaysEvaluator but handles variable row counts
  */
-export function evaluateMegawaysWins(
+export function evaluateVariableWaysWins(
   grid: string[][],
   symbolsPerReel: number[],
-  ctx: MegawaysEvalContext,
+  ctx: VariableWaysEvalContext,
   applyWildTransform: boolean = true
 ): WinResult[] {
   // Apply wild transformations
@@ -339,9 +340,9 @@ export function evaluateMegawaysWins(
 }
 
 /**
- * Megaways evaluation result
+ * Variable-ways evaluation result
  */
-export interface MegawaysEvalResult {
+export interface VariableWaysEvalResult {
   wins: WinResult[];
   symbolsPerReel: number[];
   totalWays: bigint;
@@ -349,36 +350,36 @@ export interface MegawaysEvalResult {
 }
 
 /**
- * Megaways evaluator class
+ * Variable-ways evaluator class
  */
-export class MegawaysEvaluator {
-  private readonly ctx: MegawaysEvalContext;
+export class VariableWaysEvaluator {
+  private readonly ctx: VariableWaysEvalContext;
   private readonly applyWildTransform: boolean;
 
   constructor(config: GameConfig, options: { multiplierMode?: MultiplierMode; applyWildTransform?: boolean } = {}) {
     const { multiplierMode = 'MULTIPLY', applyWildTransform = true } = options;
-    this.ctx = createMegawaysEvalContext(config, multiplierMode);
+    this.ctx = createVariableWaysEvalContext(config, multiplierMode);
     this.applyWildTransform = applyWildTransform;
   }
 
   /**
-   * Evaluate a Megaways grid
+   * Evaluate a variable-ways grid
    */
   evaluate(grid: string[][], symbolsPerReel: number[]): WinResult[] {
-    return evaluateMegawaysWins(grid, symbolsPerReel, this.ctx, this.applyWildTransform);
+    return evaluateVariableWaysWins(grid, symbolsPerReel, this.ctx, this.applyWildTransform);
   }
 
   /**
    * Evaluate with full info
    */
-  evaluateWithInfo(grid: string[][], symbolsPerReel: number[]): MegawaysEvalResult {
+  evaluateWithInfo(grid: string[][], symbolsPerReel: number[]): VariableWaysEvalResult {
     const transformed = this.ctx.wildTransformer.transform(grid);
-    const wins = evaluateMegawaysWins(transformed.grid, symbolsPerReel, this.ctx, false);
+    const wins = evaluateVariableWaysWins(transformed.grid, symbolsPerReel, this.ctx, false);
 
     return {
       wins,
       symbolsPerReel,
-      totalWays: calculateMegaways(symbolsPerReel),
+      totalWays: calculateVariableWays(symbolsPerReel),
       transformedGrid: transformed
     };
   }
@@ -390,7 +391,7 @@ export class MegawaysEvaluator {
     for (const combo of enumerateHeightCombinations(this.ctx.reelHeights)) {
       yield {
         ...combo,
-        ways: calculateMegaways(combo.symbolsPerReel)
+        ways: calculateVariableWays(combo.symbolsPerReel)
       };
     }
   }

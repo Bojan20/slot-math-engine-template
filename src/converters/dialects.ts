@@ -1,41 +1,49 @@
 /**
- * Faza 13.7 — Dialect normalizers.
+ * Faza 13.7 — Dialect normalizers (shape-driven, vendor-agnostic).
  *
- * Each function maps proprietary field names to the canonical
- * GenericGameConfig shape. Unknown fields pass through unchanged
- * (the framework picks them up as warnings).
+ * Each function maps an external config-shape to the canonical
+ * GenericGameConfig. Three dialect shapes are supported, named by their
+ * structural distinguishing feature (NOT by any vendor product):
+ *
+ *   - `reel_weight_map`  — per-reel `{ symbolId: weight }` records
+ *   - `weighted_pairs`   — per-reel arrays of `{ symbol, weight }` pairs
+ *   - `reel_strips`      — per-reel arrays of raw symbol strips
+ *
+ * Unknown fields pass through unchanged (the framework picks them up as
+ * warnings).
  */
 
 import type { GenericGameConfig } from './types.js';
 
-// ─── Microgaming ───────────────────────────────────────────────────────
+// ─── Reel-weight-map dialect ───────────────────────────────────────────
+//
+// Distinguished by: `ReelSets` is an array of `{symbolId: weight}` records
+// (one per reel set). Common in PascalCase field naming.
+//
+// Known field mappings:
+//   GameId → gameId
+//   GameName → gameName
+//   GameVersion → gameVersion
+//   NumReels → reels
+//   NumRows → rows
+//   PayTable → paytable (Record<string, number[]>)
+//   ReelSets[0] → reelWeights (first reel set)
+//   FreeSpins → hasFreeSpins
+//   HasWild → hasWild
+//   HasScatter → hasScatter
+//   BuyFeature → hasBuyFeature
+//   Gamble → hasGamble
+//   Cascade → hasCascade
+//   HoldAndWin → hasHoldAndWin
+//   RTP → rtp
+//   Paylines → paylines
+//   MinBet → minBet
+//   MaxBet → maxBet
+//   DefaultBet → defaultBet
 
-/**
- * Microgaming proprietary → GenericGameConfig.
- * Known field mappings:
- *   GameId → gameId
- *   GameName → gameName
- *   GameVersion → gameVersion
- *   NumReels → reels
- *   NumRows → rows
- *   PayTable → paytable (Record<string, number[]>)
- *   ReelSets[0] → reelWeights (first reel set)
- *   FreeSpins → hasFreeSpins
- *   HasWild → hasWild
- *   HasScatter → hasScatter
- *   BuyFeature → hasBuyFeature
- *   Gamble → hasGamble
- *   Cascade → hasCascade
- *   HoldAndWin → hasHoldAndWin
- *   RTP → rtp
- *   Paylines → paylines
- *   MinBet → minBet
- *   MaxBet → maxBet
- *   DefaultBet → defaultBet
- */
-export function normalizeMicrogaming(raw: Record<string, unknown>): GenericGameConfig {
+export function normalizeReelWeightMap(raw: Record<string, unknown>): GenericGameConfig {
   const generic: GenericGameConfig = {
-    provider: 'microgaming',
+    provider: 'reel_weight_map',
   };
 
   if (raw['GameId'] !== undefined) generic.gameId = String(raw['GameId']);
@@ -85,27 +93,28 @@ export function normalizeMicrogaming(raw: Record<string, unknown>): GenericGameC
   return generic;
 }
 
-// ─── Playtech ─────────────────────────────────────────────────────────
+// ─── Weighted-pairs dialect ────────────────────────────────────────────
+//
+// Distinguished by: `WeightedReels` is an array (per reel) of
+// `{symbol, weight}` pair arrays. Common with explicit Lines counter.
+//
+// Known field mappings:
+//   GameCode → gameId
+//   GameTitle → gameName
+//   Version → gameVersion
+//   ReelCount → reels
+//   RowCount → rows
+//   Lines (number) → paylines
+//   WeightedReels → weightedReels
+//   PayTable → paytable
+//   RTP → rtp
+//   Features (string[]) → hasFreeSpins / hasGamble / hasCascade / hasBuyFeature
+//   MinBet → minBet
+//   MaxBet → maxBet
 
-/**
- * Playtech proprietary → GenericGameConfig.
- * Known field mappings:
- *   GameCode → gameId
- *   GameTitle → gameName
- *   Version → gameVersion
- *   ReelCount → reels
- *   RowCount → rows
- *   Lines (number) → paylines
- *   WeightedReels → weightedReels
- *   PayTable → paytable
- *   RTP → rtp
- *   Features (string[]) → hasFreeSpins / hasGamble / hasCascade / hasBuyFeature
- *   MinBet → minBet
- *   MaxBet → maxBet
- */
-export function normalizePlaytech(raw: Record<string, unknown>): GenericGameConfig {
+export function normalizeWeightedPairs(raw: Record<string, unknown>): GenericGameConfig {
   const generic: GenericGameConfig = {
-    provider: 'playtech',
+    provider: 'weighted_pairs',
   };
 
   if (raw['GameCode'] !== undefined) generic.gameId = String(raw['GameCode']);
@@ -154,27 +163,28 @@ export function normalizePlaytech(raw: Record<string, unknown>): GenericGameConf
   return generic;
 }
 
-// ─── NetEnt ───────────────────────────────────────────────────────────
+// ─── Reel-strips dialect ───────────────────────────────────────────────
+//
+// Distinguished by: `reelSets` is an array (per reel set) of raw symbol
+// strip arrays. Common with camelCase field naming.
+//
+// Known field mappings:
+//   id → gameId
+//   name → gameName
+//   version → gameVersion
+//   reelCount → reels
+//   rowCount → rows
+//   reelSets[0] → reelStrips
+//   payoutTable → paytable
+//   activeLinesMax → paylines (number)
+//   rtp → rtp
+//   baseGameFeatures (string[]) → hasFreeSpins / hasCascade / etc.
+//   minBet → minBet
+//   maxBet → maxBet
 
-/**
- * NetEnt proprietary → GenericGameConfig.
- * Known field mappings:
- *   id → gameId
- *   name → gameName
- *   version → gameVersion
- *   reelCount → reels
- *   rowCount → rows
- *   reelSets[0] → reelStrips
- *   payoutTable → paytable
- *   activeLinesMax → paylines (number)
- *   rtp → rtp
- *   baseGameFeatures (string[]) → hasFreeSpins / hasCascade / etc.
- *   minBet → minBet
- *   maxBet → maxBet
- */
-export function normalizeNetEnt(raw: Record<string, unknown>): GenericGameConfig {
+export function normalizeReelStrips(raw: Record<string, unknown>): GenericGameConfig {
   const generic: GenericGameConfig = {
-    provider: 'netent',
+    provider: 'reel_strips',
   };
 
   if (raw['id'] !== undefined) generic.gameId = String(raw['id']);

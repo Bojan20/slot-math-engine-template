@@ -51,11 +51,11 @@ a config missing any block — production sims must never silently default.
 
 ```jsonc
 {
-  "id": "wolf-gold-clone",                 // stable kebab-case key
-  "name": "Wolf Gold Clone",                // display label
+  "id": "example-game",                     // stable kebab-case key
+  "name": "Example Game",                   // display label
   "version": "1.0.0",                       // semver of the config itself
   "description": "5x3 hold-and-win demo",
-  "theme_tags": ["wild-west", "animal"],
+  "theme_tags": ["sample", "demo"],
   "author": "math@studio.example",
   "created_at_utc": "2026-05-12T00:00:00Z"
 }
@@ -75,7 +75,7 @@ validate against newer schema.
 { "kind": "rectangular", "reels": 5, "rows": 3 }
 ```
 
-### `kind: "variable_rows"` (Megaways and friends)
+### `kind: "variable_rows"` (variable per-reel row counts)
 
 Each reel can land any row count in its declared range. Total ways is
 the product of per-spin row counts.
@@ -89,7 +89,7 @@ the product of per-spin row counts.
 }
 ```
 
-### `kind: "cluster_grid"` (Sweet Bonanza style)
+### `kind: "cluster_grid"` (cluster-pay grid)
 
 ```jsonc
 { "kind": "cluster_grid", "columns": 6, "rows": 5, "adjacency": "orthogonal" }
@@ -107,7 +107,7 @@ Arbitrary set — no enum, no fixed count. Each entry:
 ```jsonc
 {
   "id": "S_WILD",                            // stable key, referenced everywhere
-  "name": "Lightning Wild",
+  "name": "Wild",
   "kind": "wild",                            // see kinds table below
   "substitutes": ["S_LP1", "S_HP1", ...],    // or "*" for "all non-special"
   "weight_hint": 0.04                         // optional; reel strips override
@@ -397,8 +397,8 @@ finding.
 
 ## Open questions (resolved during Faza 1.2 / 1.3)
 
-- Per-reel symbol **eligibility lists** (Reactoonz: some symbols only on
-  specific cluster positions) — needs `appears_on` field per symbol.
+- Per-reel symbol **eligibility lists** (cluster games where some symbols
+  appear only on specific positions) — needs `appears_on` field per symbol.
 - **Hex grid** evaluator semantics — pending Faza 2.3 cluster impl.
 - **Anticipation reels** (slow stop on near-miss bonuses) — server-side
   pacing flag in `meta` or part of `features` discriminator?

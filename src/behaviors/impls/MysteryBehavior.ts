@@ -2,8 +2,8 @@
  * MysteryBehavior — symbol that transforms into another symbol on land.
  *
  * All mystery instances on the grid reveal as the SAME symbol (drawn once
- * from the weighted distribution). This is the standard casino convention
- * (IGT Fortune Coin, etc.).
+ * from the weighted distribution). This is the standard convention for
+ * mystery-reveal mechanics.
  *
  * Config:
  *   revealDistribution — { symbolId: weight, ... }

@@ -28,7 +28,7 @@ import type { SpinJournalEntry } from '../src/recall/types.js';
 function sampleIdentity(overrides: Partial<GameIdentity> = {}): GameIdentity {
   return {
     gameId: 'GAME001',
-    gameName: 'Dragon Spin',
+    gameName: 'Example Game',
     version: '1.0.0',
     targetRtp: 0.96,
     jurisdiction: 'UKGC',

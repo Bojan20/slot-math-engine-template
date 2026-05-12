@@ -24,17 +24,17 @@ Tri stuba na koja sve staje:
 | **Klasičan 3-reel** | 3×3, 3×1, 3×3 sa Hold-om | reel-strip + lines | ✅ |
 | **5-reel video** | 5×3 / 5×4 | reel-strip | ✅ |
 | **6-reel / 7-reel** | 6×4, 6×5, 7×7 | reel-strip variabilan W×H | ⚠️ samo 5×3 testiran |
-| **Asymmetric grid** | 3-4-5-4-3 (npr. Cleopatra) | per-reel height | ❌ |
-| **Megaways™** | 2–7 simbola po reel-u random | dinamička visina + 6-th horizontalni reel | ❌ |
+| **Asymmetric grid** | 3-4-5-4-3 (npr. Asymmetric paytable) | per-reel height | ❌ |
+| **variable-rows ways** | 2–7 simbola po reel-u random | dinamička visina + 6-th horizontalni reel | ❌ |
 | **Hyperways / InfiniReels** | reel se širi dok ima win | recursive reel expansion | ❌ |
-| **Reel-in-reel** | npr. Lightning Box Dragon Pearls | nested grid | ❌ |
+| **Reel-in-reel** | npr. nested grid | nested grid | ❌ |
 | **Spinning wheel / Carousel** | Mystery, Wheel-of-Fortune bonus | wheel evaluator (single index) | ❌ |
 | **Cluster grid** | 6×5, 7×7, 8×8 cluster pays | grid (no reels conceptually), ali strip-driven | ❌ |
-| **Cascade / Avalanche / Tumbling** | Win → uklanja → padaju novi | cascade orchestrator + per-cascade reel | ⚠️ stub |
+| **Cascade / cascade / Tumbling** | Win → uklanja → padaju novi | cascade orchestrator + per-cascade reel | ⚠️ stub |
 | **Rolling reels** | strip se pomera za 1 umesto re-spin | strip cursor state | ❌ |
 | **Linked reels** | 2+ reel-a se vrte zajedno | reel-set sa shared cursor | ❌ |
 | **Mystery reel** | celi reel = isti simbol | mystery transform layer | ❌ |
-| **Expanding reels (Big Time Gaming)** | grid raste pri win-u | dynamic grid resize | ❌ |
+| **Expanding reels ** | grid raste pri win-u | dynamic grid resize | ❌ |
 | **Split reels / Dual reels** | 1 pozicija = 2 simbola | virtual position multiplier | ❌ |
 | **Stacked reels** | full-stack simboli | stack metadata na stripu | ⚠️ |
 | **Synced reels** | 2-5 reel-a uvek isti simbol | sync constraint | ❌ |
@@ -44,15 +44,15 @@ Tri stuba na koja sve staje:
 | Tip | Primer | Engine API |
 |---|---|---|
 | **Fixed paylines (L→R)** | 5/10/20/25 lines | ✅ |
-| **Both-ways (L→R + R→L)** | Starburst | dvostruka evaluacija | ❌ |
+| **Both-ways (L→R + R→L)** | Both-ways + expanding wild | dvostruka evaluacija | ❌ |
 | **All-ways / X-ways** | 243, 720, 1024, 3125 | ways-evaluator | ❌ |
-| **Megaways** | 117,649 max | ways × per-reel-symbols | ❌ |
+| **variable-rows ways** | 117,649 max | ways × per-reel-symbols | ❌ |
 | **Cluster pays** | 5+ adjacent (flood-fill) | union-find cluster engine | ❌ |
 | **Pay-anywhere scatter** | 8+ bilo gde | count-evaluator | ✅ |
 | **Pay-adjacent** | bez linija, samo komšije | adjacency graph | ❌ |
 | **Pattern pays** | tačno definisani oblici | pattern matcher | ❌ |
 | **Lines + scatter hybrid** | većina klasičnih | ✅ |
-| **Win-double (Big Bass style)** | level-based multiplikatori | per-symbol state | ❌ |
+| **Win-double / level mechanic** | level-based multiplikatori | per-symbol state | ❌ |
 
 ### 1.3 Simboli — taksonomija
 
@@ -82,7 +82,7 @@ Tri stuba na koja sve staje:
 | **Colossal symbol (full screen)** | 5×5 jedan simbol | ❌ |
 | **Linked symbols** | mora se "pojave zajedno" | ❌ |
 | **Persistent symbol** | ostaje između sesija (sticky game state) | ❌ |
-| **Lightning symbols** | numeric value, Lightning Link | ❌ |
+| **Lightning symbols** | numeric value, Money-symbol H&W + multi-tier jackpot | ❌ |
 | **Prize / Cash-on-reels** | direktna isplata na grid-u | ❌ |
 | **Transforming symbol** | menja u drugi simbol pod uslovom | ❌ |
 | **Chained / Linked-pay** | susedi povezuju isti simbol | ❌ |
@@ -96,7 +96,7 @@ Tri stuba na koja sve staje:
 | Free Spins (basic) | ✅ |
 | FS + globalni multiplier | ✅ |
 | FS + retrigger | ✅ |
-| FS + ekspanzioni multiplier (Sweet Bonanza) | ❌ |
+| FS + ekspanzioni multiplier (Cluster cascade + multiplier symbols) | ❌ |
 | FS + sticky wilds | ⚠️ |
 | FS + extra reels / rows | ❌ |
 | FS + persistent state (cumulative) | ❌ |
@@ -105,9 +105,9 @@ Tri stuba na koja sve staje:
 | H&W + level progression (Mini→Grand) | ⚠️ |
 | H&W + reset on no-new | ⚠️ |
 | H&W + collect feature | ❌ |
-| **Cascade / Avalanche** | ⚠️ stub |
+| **Cascade / cascade** | ⚠️ stub |
 | Cascade + ekspanzioni multiplier | ❌ |
-| Megaways + cascade | ❌ |
+| variable-rows ways + cascade | ❌ |
 | **Mystery reveal** | ❌ |
 | **Symbol upgrade** | ❌ |
 | **Symbol collection** | ❌ |
@@ -126,11 +126,11 @@ Tri stuba na koja sve staje:
 | **Anti-streak / smart compensation** | ❌ |
 | **Tournament mode** | ❌ |
 | **Crash / multiplier-only** (non-reel) | ❌ |
-| **Megaclusters (BTG)** | ❌ |
+| **megaclusters ** | ❌ |
 | **Drop-the-pop** | ❌ |
 | **Hold & Roll dice features** | ❌ |
-| **Lightning / Cash Connection** | ❌ |
-| **Money cart / Bonanza Billion** | ❌ |
+| **Lightning / Pseudo-must-hit + level progression** | ❌ |
+| **Money cart / money cart** | ❌ |
 | **Powerball / pot scoop** | ❌ |
 
 ### 1.5 Jackpot sistemi
@@ -144,7 +144,7 @@ Tri stuba na koja sve staje:
 | Standalone progressive | seed + contribution stream | ❌ |
 | Local linked | inter-machine sync | ❌ |
 | Wide-area progressive | network-driven | ❌ |
-| Lightning Link / Cash Connection | persistent + tier | ❌ |
+| Money-symbol H&W + multi-tier jackpot / Pseudo-must-hit + level progression | persistent + tier | ❌ |
 | Pots of Gold / wheel pick | pick-game eval | ❌ |
 | Jackpot ladder | tier escalation | ❌ |
 | Time-based jackpot | wall-clock or spin-count | ❌ |
@@ -192,7 +192,7 @@ Tri stuba na koja sve staje:
 | FS sa retrigger | ✅ geometric expectation | ❌ |
 | H&W (fixed trigger) | ⚠️ semi-analytic (kombinatorika coins) | ❌ |
 | Cascade | ⚠️ Markov (state = preživeli simboli) | ❌ |
-| Megaways | ❌ MC obavezan (visok state space) | n/a |
+| variable-rows ways | ❌ MC obavezan (visok state space) | n/a |
 | Picks/wheels | ✅ trivijalan EV | ❌ |
 | Multi-level jackpot | ✅ tier probabilities | ❌ |
 
@@ -262,7 +262,7 @@ Tri stuba na koja sve staje:
 - Cycle count (Π stripLen) preko bigint → guard.
 - FS multiplier × retrigger × base-multiplier kombinatorna eksplozija → cap-and-warn.
 - Max win cap niži od jednog teorijskog hit-a → unreachable.
-- Megaways high reel = 7 ali strip nema 7 stack-ova → unreachable depth.
+- variable-rows ways high reel = 7 ali strip nema 7 stack-ova → unreachable depth.
 
 ### 3.3 Logika feature-a
 
@@ -273,7 +273,7 @@ Tri stuba na koja sve staje:
 - Wheel sa svim "lose" segmentima → mora postojati min EV guarantee.
 - Mystery reveal koji otkriva scatter — da li može retrigger?
 - Sticky wild + cascade — kako ostaje?
-- Megaways win evaluation kad reel ima 1 simbol → ways = 1 × ostalo.
+- variable-rows ways win evaluation kad reel ima 1 simbol → ways = 1 × ostalo.
 - Both-ways evaluation sa istom linijom — duplo plaća? (industrija: zavisi od igre)
 
 ### 3.4 RNG / determinizam
@@ -287,7 +287,7 @@ Tri stuba na koja sve staje:
 ### 3.5 Performance
 
 - Hot loop alocira Vec<u8> svaki spin → arena allocator.
-- Megaways: 117,649 ways × line eval = puna iteracija → bitmask short-circuit.
+- variable-rows ways: 117,649 ways × line eval = puna iteracija → bitmask short-circuit.
 - Cascade Markov state može da bude eksponencijalan → ograničiti.
 - Cluster pays = union-find po grid-u svaki cascade — preallocate disjoint-set.
 - JSON config parse svaki spin (loš design) — parse once, share Arc.
@@ -330,7 +330,7 @@ Tri stuba na koja sve staje:
 | **PGO / BOLT** | 10-30% | ❌ |
 | **Profile-driven inlining ključnih staza** | varies | ❌ |
 
-**Target:** **1B spins/sec** na single M-series chip za 5×3 lines, ~100M/sec za Megaways.
+**Target:** **1B spins/sec** na single M-series chip za 5×3 lines, ~100M/sec za variable-rows ways.
 
 ### 4.3 GPU strategija
 
@@ -369,7 +369,7 @@ Tri stuba na koja sve staje:
 - Nema property-based testova (proptest / fast-check).
 - Nema differential testa TS vs Rust **po spinu** (samo aggregate RTP).
 - Nema fuzz testa za config (malicious JSON crashing engine).
-- Nema known-answer tests sa publikovanih PAR sheet-a (Cleopatra, Starburst itd.).
+- Nema known-answer tests sa publikovanih PAR sheet-a (Asymmetric paytable, Both-ways + expanding wild itd.).
 - Nema regression suite — RTP može diftati nakon refactora i niko ne primeti.
 - Nema performance regression test.
 
@@ -395,7 +395,7 @@ Tri stuba na koja sve staje:
 - **Cross-game wallet math** — engine zna o multi-game progresivima.
 - **A/B math testing framework** — dve verzije iste igre, RTP-equivalent ali volatilnost-different.
 - **Auto-generated GLI certification PDF**.
-- **Format converters** — import sa Playtech / Microgaming / NetEnt config dijalekata.
+- **Format converters** — import sa Weighted-pairs family / Reel-weight-map family / Reel-strips family config dijalekata.
 
 ---
 
@@ -405,7 +405,7 @@ Tri stuba na koja sve staje:
 |---|---|---|
 | 🔥 P0 | bulletproof | Closed-form RTP za base + scatter (TS+Rust) |
 | 🔥 P0 | universal | Generic Symbol IDs + arbitrary count |
-| 🔥 P0 | universal | Ways / Megaways / Cluster evaluatori |
+| 🔥 P0 | universal | Ways / variable-rows ways / Cluster evaluatori |
 | 🔥 P0 | universal | Cascade orchestrator (proper, ne stub) |
 | 🔥 P0 | bulletproof | Differential testa TS↔Rust per-spin |
 | 🔥 P0 | bulletproof | TestU01 BigCrush RNG certification |
@@ -427,26 +427,26 @@ Tri stuba na koja sve staje:
 
 Engine je univerzalan kada može da implementira sledećih **20 reference igara** iz config-a, sa RTP-om koji se poklapa sa publikovanim PAR sheet-om (±0.05% nakon 10⁹ spins):
 
-1. **Starburst** — both-ways, expanding wild, respins
-2. **Cleopatra** — asymmetric pay, scatter mult
-3. **Sweet Bonanza** — cluster cascade, mult symbols
-4. **Gates of Olympus** — pay-anywhere, mult collect, ante-bet, buy-feature
-5. **Big Bass Bonanza** — money symbol collect FS
-6. **Bonanza** — Megaways + cascade + unlimited multiplier
-7. **Book of Dead** — expanding symbol FS
-8. **Wolf Gold** — Hold & Win multi-jackpot
-9. **Money Train 3** — persistent multiplier + symbol upgrade FS
-10. **Reactoonz** — cluster cascade + charge meter + side feature
-11. **Dead or Alive 2** — sticky wilds multi-mode FS
-12. **Mega Moolah** — multi-tier WAP jackpot wheel
-13. **Mega Joker** — supermeter mode (state switch)
-14. **Lightning Link** — money symbol + hold + multi-tier jackpot
-15. **Dragon Link** — sa MTH (must-hit-by) jackpot
-16. **Buffalo Stampede** — stacked wilds + bonus
-17. **Cash Connection** — pseudo-must-hit + level progression
-18. **88 Fortunes** — pick bonus + multi-level
-19. **Aviator-like crash** (non-reel) — kao corner case
-20. **Fishin' Frenzy Megaways** — money collect + Megaways + cascade
+1. **Both-ways + expanding wild** — both-ways, expanding wild, respins
+2. **Asymmetric paytable** — asymmetric pay, scatter mult
+3. **Cluster cascade + multiplier symbols** — cluster cascade, mult symbols
+4. **Pay-anywhere + multiplier collect** — pay-anywhere, mult collect, ante-bet, buy-feature
+5. **Money-collect FS** — money symbol collect FS
+6. **Variable-rows + cascade** — variable-rows ways + cascade + unlimited multiplier
+7. **Expanding-symbol FS** — expanding symbol FS
+8. **H&W multi-jackpot** — Hold & Win multi-jackpot
+9. **Persistent-multiplier + symbol-upgrade FS** — persistent multiplier + symbol upgrade FS
+10. **Cluster cascade + charge meter** — cluster cascade + charge meter + side feature
+11. **Sticky wilds + multi-mode FS** — sticky wilds multi-mode FS
+12. **Multi-tier WAP jackpot + wheel** — multi-tier WAP jackpot wheel
+13. **Supermeter state-switch** — supermeter mode (state switch)
+14. **Money-symbol H&W + multi-tier jackpot** — money symbol + hold + multi-tier jackpot
+15. **Must-hit-by jackpot** — sa MTH (must-hit-by) jackpot
+16. **Stacked wilds + reel-power-1024** — stacked wilds + bonus
+17. **Pseudo-must-hit + level progression** — pseudo-must-hit + level progression
+18. **Pick bonus + multi-level** — pick bonus + multi-level
+19. **Crash-style (non-reel) corner case-like crash** (non-reel) — kao corner case
+20. **money-collect variable-rows ways** — money collect + variable-rows ways + cascade
 
 Kad svih 20 prolazi: **DONE-UNIVERSAL**.
 
@@ -454,7 +454,7 @@ Kad svih 20 prolazi: **DONE-UNIVERSAL**.
 
 ## 9. INTERMEDIATE WRAPUP
 
-Sekcije 1–8 pokrivaju **igračku perspektivu** — mehanike i math kakve igrač i designer vide. Aristocrat / Light & Wonder / IGT / Pragmatic interno **ne staju tu** — imaju kompletan **server-side stack**, **jurisdikcijske dialekte**, **provably-fair audit layer**, **AML/RG mreže**, **observability sloj** i **proprietary IR formate**. Sekcije 10–18 dodaju to što velika firma stvarno treba, plus sloj iznad njih (futuristic) gde nijedna kompanija danas javno nije.
+Sekcije 1–8 pokrivaju **igračku perspektivu** — mehanike i math kakve igrač i designer vide. Multi-tier-jackpot family / Multi-pick family / SAS-protocol family / Cluster-cascade family interno **ne staju tu** — imaju kompletan **server-side stack**, **jurisdikcijske dialekte**, **provably-fair audit layer**, **AML/RG mreže**, **observability sloj** i **proprietary IR formate**. Sekcije 10–18 dodaju to što velika firma stvarno treba, plus sloj iznad njih (futuristic) gde nijedna kompanija danas javno nije.
 
 ---
 
@@ -466,12 +466,12 @@ Slot math nije sam u sebi — sedi unutar **Remote Game Server (RGS)** koji vodi
 
 | Zahtev | Industrija danas | Engine mora |
 |---|---|---|
-| **Atomic spin** | Aristocrat/L&W koriste two-phase commit (debit wager → spin → credit win) | API: `beginSpin(walletTxId) → spinId; commitSpin(spinId) ⇄ rollbackSpin(spinId)` |
+| **Atomic spin** | Multi-tier-jackpot family/Multi-pick family koriste two-phase commit (debit wager → spin → credit win) | API: `beginSpin(walletTxId) → spinId; commitSpin(spinId) ⇄ rollbackSpin(spinId)` |
 | **Idempotency key** | duplicate request iste sesije ne sme da naplati 2× | `spinId = hash(playerSession, nonce)` deterministički |
 | **Crash-mid-feature** | igrač u FS, server padne na spin 7/15 — mora da nastavi tačno odatle | `serializeFeatureState() → blob; resumeFromState(blob)` deterministički + isti seed-pos |
 | **Wallet rollback** | ako server odbije win post-eval, engine mora da postoji bez side effect-a | engine je pure-function po definiciji (commit-flush je server posao) |
-| **Network partition** kod WAP jackpota | igrač hit-uje Mega Moolah ali central server ne potvrđuje | engine vrati `PendingJackpot` koji se finalizuje van engine-a |
-| **Hot wallet overflow** | operator nema cash za Mega Moolah trigger | engine emituje `JackpotPaymentRequired` event, ne crash |
+| **Network partition** kod WAP jackpota | igrač hit-uje Multi-tier WAP jackpot + wheel ali central server ne potvrđuje | engine vrati `PendingJackpot` koji se finalizuje van engine-a |
+| **Hot wallet overflow** | operator nema cash za Multi-tier WAP jackpot + wheel trigger | engine emituje `JackpotPaymentRequired` event, ne crash |
 
 ### 10.2 Spin recall / replay (regulatorni)
 
@@ -608,74 +608,74 @@ Engine mora **statički proveriti** da config ne krši ovo pre deploy-a, **dinam
 
 Velike firme su patentirale mehanike. Da bi engine bio "univerzalan", mora ih sve podržati kao plugin (uz pretpostavku da konzument ima license / sopstveni klon).
 
-### 12.1 Aristocrat
+### 12.1 Multi-tier-jackpot family
 
 | Mehanika | Math |
 |---|---|
 | **Reel Power** (Buffalo) | 1024 ways, simboli stacked |
 | **Hyperhold** | 4-tier jackpot + hold-and-spin |
-| **Lightning Link** | money coins + tier jackpot + sticky |
-| **Dragon Link** | LL varianta + must-hit-by |
-| **Mighty Cash** | sticky cash sa "Mighty" multiplier reveal |
-| **Outback Pack** | wild reel + free games trigger fix |
-| **Big Wheel** | wheel + multi-tier + retrigger ladder |
+| **Money-symbol H&W + multi-tier jackpot** | money coins + tier jackpot + sticky |
+| **Must-hit-by jackpot** | LL varianta + must-hit-by |
+| **Sticky cash + multiplier reveal** | sticky cash sa "Mighty" multiplier reveal |
+| **wild-reel + FS-trigger** | wild reel + free games trigger fix |
+| **wheel-tier-retrigger** | wheel + multi-tier + retrigger ladder |
 
-### 12.2 Light & Wonder (Scientific Games)
-
-| Mehanika | Math |
-|---|---|
-| **88 Fortunes** sa Fu Bat | jackpot pick game + multi-level |
-| **Quick Hit** | scatter pay + multiplier scale (3=2x, 4=10x, 5=50x...) |
-| **Wonder 4** | 4 independent slot screens spinned together |
-| **Money Money Money** | persistent dollar reel column |
-| **Wheel of Fortune Triple Action** | wheel re-entry tiers |
-
-### 12.3 Big Time Gaming
+### 12.2 Multi-pick family 
 
 | Mehanika | Math |
 |---|---|
-| **Megaways™** | 2-7 simbola po reel, 6-th horizontal scatter row, do 117,649 ways |
-| **Megaclusters** | cluster sa exponential expansion |
-| **xWays** (Nolimit) | random N×1 stacks reveal N simbola (lokalna varijanta megaways) |
-| **xNudge wild** | nudge dok ceo reel ne pokrije |
-| **xBomb wild** | uklanja sve oko sebe |
+| **Pick bonus + multi-level** sa Pick bonus + multi-level | jackpot pick game + multi-level |
+| **Scatter pay + multiplier scale** | scatter pay + multiplier scale (3=2x, 4=10x, 5=50x...) |
+| **Parallel screens (N independent)** | 4 independent slot screens spinned together |
+| **persistent-dollar-reel** | persistent dollar reel column |
+| **Wheel + re-entry tiers** | wheel re-entry tiers |
 
-### 12.4 Pragmatic Play
+### 12.3 Variable-rows-ways family
 
 | Mehanika | Math |
 |---|---|
-| **Tumble feature** (Sweet Bonanza) | cluster cascade sa per-cluster reel |
+| **variable-rows ways** | 2-7 simbola po reel, 6-th horizontal scatter row, do 117,649 ways |
+| **megaclusters** | cluster sa exponential expansion |
+| **reveal-stack-ways** | random N×1 stacks reveal N simbola (lokalna varijanta variable_ways) |
+| **nudge-wild wild** | nudge dok ceo reel ne pokrije |
+| **bomb-wild wild** | uklanja sve oko sebe |
+
+### 12.4 Cluster-cascade family
+
+| Mehanika | Math |
+|---|---|
+| **Tumble feature** (Cluster cascade + multiplier symbols) | cluster cascade sa per-cluster reel |
 | **Multiplier sky** | sticky mult symbol agregira tokom FS |
 | **Ante bet** | 25% extra bet za 2× FS trigger probability |
 | **Bonus Buy** | 100× bet za FS trigger, 250× za super FS |
-| **Money Pot Respin** (Bigger Bass) | H&W coin + multiplier orb |
+| **Money Pot Respin** (money-collect+orb) | H&W coin + multiplier orb |
 
-### 12.5 NetEnt / Evolution
+### 12.5 Reel-strips family / Live-table family
 
 | Mehanika | Math |
 |---|---|
-| **Starburst expanding wild** | wild → full-reel expand + sticky 3 respinova |
-| **Reactoonz Quantum Leap** | cluster + charge meter + 5 mini features |
-| **Avalanche** | NetEnt's cascading reels |
+| **Both-ways + expanding wild expanding wild** | wild → full-reel expand + sticky 3 respinova |
+| **Cluster cascade + charge meter multi-feature progress** | cluster + charge meter + 5 mini features |
+| **cascade** | reel-strips-style cascading reels |
 | **Re-Spin to Win** | per-reel respin sa charge cost |
 
-### 12.6 Play'n GO
+### 12.6 Expanding-symbol family
 
 | Mehanika | Math |
 |---|---|
-| **Expanding symbol FS** (Book of Dead) | jedan random simbol expand-uje na 3-symbol stack |
+| **Expanding symbol FS** (Expanding-symbol FS) | jedan random simbol expand-uje na 3-symbol stack |
 | **Pearl & Symbol upgrades** | persistent FS state ulazi u sledeću sesiju |
 | **Reactor cascade** | sa multi-multiplier ladder |
 
-### 12.7 Relax Gaming / Hacksaw
+### 12.7 Persistent-multiplier family / Multi-mode-FS family
 
 | Mehanika | Math |
 |---|---|
-| **Money Train Persistence** | meter sa special simbolima retained kroz FS |
-| **Hand of Anubis** | per-spin reel modifier random reveal |
-| **Wanted Dead or a Wild** | three-mode FS choice |
+| **persistent meter FS Persistence** | meter sa special simbolima retained kroz FS |
+| **Per-spin reel-modifier reveal** | per-spin reel modifier random reveal |
+| **Three-mode FS choice** | three-mode FS choice |
 
-Engine treba **mehanic atlas** — registar svake patentirane (ili poznate) mehanike sa referencom na koji plugin je implementuje. Korisnik dolazi sa "hoću ovakvu Mighty Cash" i odmah vidi: "config preset X + plugin Y + Z param-i".
+Engine treba **mehanic atlas** — registar svake patentirane (ili poznate) mehanike sa referencom na koji plugin je implementuje. Korisnik dolazi sa "hoću ovakvu Sticky cash + multiplier reveal" i odmah vidi: "config preset X + plugin Y + Z param-i".
 
 ---
 
@@ -709,7 +709,7 @@ spin[N].audit_hash = H(spin[N-1].audit_hash || spin[N].outcome || spin[N].seed)
 
 ### 13.4 Multi-party computation (MPC) za WAP
 
-Federacioni provideri (4+ operatori share Mega Moolah pool):
+Federacioni provideri (4+ operatori share Multi-tier WAP jackpot + wheel pool):
 - **Nijedan provider ne sme** sam da pokrene jackpot
 - MPC protokol: jackpot hit zahteva **t-of-n** signature
 - Engine zna kako da emit signature request, ne i kako da je sam reši (server posao)
@@ -830,11 +830,11 @@ Ovo je gde idemo dalje od **svih** velikih firmi. Niko nema otvoren standard.
 ### 16.3 Format converters
 
 USIF iz/u:
-- Aristocrat AGS XML config (ako možemo reverse-engineer)
-- Pragmatic JSON
-- NetEnt internal
-- Microgaming MGA format
-- Playtech config
+- Multi-tier-jackpot family AGS XML config (ako možemo reverse-engineer)
+- Cluster-cascade family JSON
+- Reel-strips family internal
+- Reel-weight-map family MGA format
+- Weighted-pairs family config
 - Custom (any vendor)
 
 Konverter je **lossy** kada vendor format nedostaju polja — engine emituje warning sa missing field-ovima.
@@ -866,7 +866,7 @@ Konverter je **lossy** kada vendor format nedostaju polja — engine emituje war
 
 ### 17.3 Jackpot trigger overflow
 
-- Mega Moolah pool je $20M, engine triggera ali central server reportuje pool kao $5M
+- Multi-tier WAP jackpot + wheel pool je $20M, engine triggera ali central server reportuje pool kao $5M
 - Engine emit `JackpotDiscrepancy` event, ne plaća lokalno
 - Hold for human review
 
@@ -899,9 +899,9 @@ Konverter je **lossy** kada vendor format nedostaju polja — engine emituje war
 
 ---
 
-## 18. ROADMAP "POST-ARISTOCRAT"
+## 18. ROADMAP "NEXT-GENERATION"
 
-Aristocrat / Light & Wonder / IGT su industry-grade. Naš target je **biti iznad** — stvari koje niko ne radi javno (a većina ne interno):
+Multi-tier-jackpot family / Multi-pick family / SAS-protocol family su industry-grade. Naš target je **biti iznad** — stvari koje niko ne radi javno (a većina ne interno):
 
 ### 18.1 Sub-1ns analytical spin
 
@@ -938,7 +938,7 @@ Aristocrat / Light & Wonder / IGT su industry-grade. Naš target je **biti iznad
 
 ### 18.6 Holographic strip encoding
 
-- 117k Megaways state space → kompresan u **N-bit Bloom-filter-like** struct
+- 117k variable-rows ways state space → kompresan u **N-bit Bloom-filter-like** struct
 - Approximation sa boundable error
 - Useful za GPU shared mem (16KB) kad pun state ne staje
 - Research direction — niko ne radi
@@ -946,7 +946,7 @@ Aristocrat / Light & Wonder / IGT su industry-grade. Naš target je **biti iznad
 ### 18.7 Quantum advantage research
 
 - Grover's algorithm može da **O(√N)** enumerate state space gde klasično je O(N)
-- Cilj: enumerate Megaways 117k ways u efektivno √117k = 343 quantum koraka
+- Cilj: enumerate variable-rows ways 117k ways u efektivno √117k = 343 quantum koraka
 - Trenutno samo research, nema praktične implementacije
 - Engine emit-uje "QC-ready IR" čekajući da hardware sazri
 
@@ -959,7 +959,7 @@ Aristocrat / Light & Wonder / IGT su industry-grade. Naš target je **biti iznad
 
 ### 18.9 Mining-pool style decentralized WAP
 
-- Mega Moolah pool van centralne kontrole jednog provider-a
+- Multi-tier WAP jackpot + wheel pool van centralne kontrole jednog provider-a
 - Bitcoin-style consensus: 5+ operatori potpiše commit
 - Pool grows kroz hash-verified contributions
 - Hit → multi-sig payment iz pool-a
@@ -1000,8 +1000,8 @@ Da bi engine bio **iznad svake postojeće firme**, treba da pokriva:
 7. **Observability** (15) — live RTP heatmap, ML convergence predictor, drift detector.
 8. **USIF javni standard** (16) — naš diferencijator.
 9. **Disaster resilience** (17) — engine ne pada, ne plaća pogrešno, ne curi podatke.
-10. **Post-Aristocrat features** (18) — gde niko trenutno nije.
+10. **Post-Multi-tier-jackpot family features** (18) — gde niko trenutno nije.
 
-Procena: **12–18 meseci** punog rada za pun obim. **6–9 meseci** za "industry-grade-universal" (1–12). **3–6 meseci** dodatno za "post-Aristocrat" diferencijatore (18).
+Procena: **12–18 meseci** punog rada za pun obim. **6–9 meseci** za "industry-grade-universal" (1–12). **3–6 meseci** dodatno za "post-Multi-tier-jackpot family" diferencijatore (18).
 
 Acceptance: engine prolazi 30 reference igara (faza 12), USIF v1.0 submitted javno, GLI re-cert-able, **1T spinova/sec single chip** kao demonstration of supremacy.

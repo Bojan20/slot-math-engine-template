@@ -1,5 +1,6 @@
 /**
- * SAS (Slot Accounting System) — IGT SAS v6.02 protocol adapter.
+ * SAS (Slot Accounting System) v6.02 protocol adapter — industry-standard
+ * casino floor accounting protocol.
  *
  * Encodes/decodes binary SAS messages for meter reporting.
  *

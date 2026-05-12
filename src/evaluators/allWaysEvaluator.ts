@@ -6,7 +6,7 @@
  * - Right to Left
  *
  * This is different from standard WAYS which only pays L→R.
- * Common in games like "Reactoonz", "Cluster Slide", etc.
+ * Common in cluster-slide style mechanics where every adjacent match counts.
  *
  * Key features:
  * - Multi-directional win detection

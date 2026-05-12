@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "meta": { "id": "mega-complex", "name": "Mega Complex 6x4 Megaways", "version": "1.0.0", "theme_tags": ["megaways", "cascade", "free-spins", "mystery", "hold-and-win"] },
+  "meta": { "id": "complex-variable-rows", "name": "Complex 6x4 Variable-Rows", "version": "1.0.0", "theme_tags": ["variable_rows", "cascade", "free-spins", "mystery", "hold-and-win"] },
   "topology": {
     "kind": "variable_rows",
     "reels": 6,

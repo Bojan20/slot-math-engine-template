@@ -27,12 +27,12 @@ pub enum EvalMode {
     /// Pay-anywhere evaluation: a symbol pays if it appears at least
     /// `min_count` times anywhere on the grid.
     PayAnywhere { min_count: u32 },
-    /// Megaways: variable per-reel row counts. `row_counts[r]` holds the
-    /// effective row count on reel `r` for this spin. Payout for a
+    /// Variable-ways: variable per-reel row counts. `row_counts[r]` holds
+    /// the effective row count on reel `r` for this spin. Payout for a
     /// symbol matching on `N` consecutive reels equals
     /// `pay(symbol, N) × Π(count_per_reel[0..N])`, where each reel's
     /// count is the number of matching cells on that reel (wild included).
-    Megaways { row_counts: Vec<usize> },
+    VariableWays { row_counts: Vec<usize> },
 }
 
 // ─── Result types ───────────────────────────────────────────────────────────
@@ -456,19 +456,19 @@ impl<'a> Evaluator<'a> {
         (wins, total_win)
     }
 
-    // ─── Megaways evaluator ─────────────────────────────────────────────
+    // ─── Variable-ways evaluator ─────────────────────────────────────────
     //
     // Variable-row ways: each reel has its own `row_counts[reel]` value for
     // this spin. The win logic is otherwise identical to all-ways:
     //   pay(symbol, N) × Π(count_on_reel[0..N])
     // where count_on_reel counts the symbol plus wilds on that reel.
     //
-    // The reel iteration uses `row_counts` (passed via `EvalMode::Megaways`)
-    // rather than `grid.rows_for_reel(reel)` so callers can decouple the
-    // *configured* row count from the actual `DynGrid` layout. The two
-    // should normally match.
+    // The reel iteration uses `row_counts` (passed via
+    // `EvalMode::VariableWays`) rather than `grid.rows_for_reel(reel)` so
+    // callers can decouple the *configured* row count from the actual
+    // `DynGrid` layout. The two should normally match.
 
-    fn evaluate_megaways(
+    fn evaluate_variable_ways(
         &self,
         grid: &Grid,
         row_counts: &[usize],
@@ -517,7 +517,7 @@ impl<'a> Evaluator<'a> {
                 continue;
             }
 
-            // Megaways pays the highest band the chain reached: get_payout
+            // Variable-ways pays the highest band the chain reached: get_payout
             // only defines pay3..pay5, so clamp at 5 — every consec ≥ 5
             // pays the pay5 band.
             let pay_band = consec.min(5) as u8;
@@ -545,9 +545,9 @@ impl<'a> Evaluator<'a> {
         (wins, total_win)
     }
 
-    /// Total ways for a Megaways spin: Π(row_counts[r]).
+    /// Total ways for a variable-ways spin: Π(row_counts[r]).
     /// Exposed for callers that want to log it alongside the result.
-    pub fn megaways_total_ways(row_counts: &[usize]) -> u64 {
+    pub fn variable_ways_total(row_counts: &[usize]) -> u64 {
         row_counts
             .iter()
             .copied()
@@ -633,8 +633,8 @@ impl<'a> Evaluator<'a> {
             EvalMode::PayAnywhere { min_count } => {
                 self.evaluate_pay_anywhere(grid, *min_count, total_bet_mc)
             }
-            EvalMode::Megaways { row_counts } => {
-                self.evaluate_megaways(grid, row_counts, total_bet_mc)
+            EvalMode::VariableWays { row_counts } => {
+                self.evaluate_variable_ways(grid, row_counts, total_bet_mc)
             }
         };
 

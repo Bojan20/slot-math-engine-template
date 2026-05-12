@@ -17,7 +17,7 @@ import { LineEvaluator } from '../evaluators/lineEvaluator.js';
 import { WaysEvaluator } from '../evaluators/waysEvaluator.js';
 import { ClusterEvaluator } from '../evaluators/clusterEvaluator.js';
 import { ScatterEvaluator } from '../evaluators/scatterEvaluator.js';
-import { MegawaysEvaluator } from '../evaluators/megawaysEvaluator.js';
+import { VariableWaysEvaluator } from '../evaluators/variableWaysEvaluator.js';
 
 /**
  * XorShift128+ PRNG - fast, high-quality, seedable
@@ -451,7 +451,7 @@ export class Simulator {
   private lineEvaluator: LineEvaluator | null = null;
   private waysEvaluator: WaysEvaluator | null = null;
   private clusterEvaluator: ClusterEvaluator | null = null;
-  private megawaysEvaluator: MegawaysEvaluator | null = null;
+  private variableWaysEvaluator: VariableWaysEvaluator | null = null;
   private scatterEvaluator: ScatterEvaluator;
 
   constructor(config: GameConfig, seed?: number) {
@@ -475,8 +475,8 @@ export class Simulator {
       case 'WAYS':
         this.waysEvaluator = new WaysEvaluator(config);
         break;
-      case 'MEGAWAYS':
-        this.megawaysEvaluator = new MegawaysEvaluator(config);
+      case 'VARIABLE_WAYS':
+        this.variableWaysEvaluator = new VariableWaysEvaluator(config);
         break;
       case 'CLUSTER':
         this.clusterEvaluator = new ClusterEvaluator(config);
@@ -692,11 +692,11 @@ export class Simulator {
       wins.push(...lineWins);
       lineWin = lineWins.reduce((sum, w) => sum + w.totalWin, 0);
 
-    } else if (this.megawaysEvaluator) {
+    } else if (this.variableWaysEvaluator) {
       const symbolsPerReel = grid[0]?.map(() => grid.length) ?? [];
-      const megaWins = this.megawaysEvaluator.evaluate(grid, symbolsPerReel);
-      wins.push(...megaWins);
-      lineWin = megaWins.reduce((sum, w) => sum + w.totalWin, 0);
+      const varWins = this.variableWaysEvaluator.evaluate(grid, symbolsPerReel);
+      wins.push(...varWins);
+      lineWin = varWins.reduce((sum, w) => sum + w.totalWin, 0);
 
     } else if (this.waysEvaluator) {
       const waysWins = this.waysEvaluator.evaluate(grid);

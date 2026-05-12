@@ -165,7 +165,7 @@ export const USIF_SCHEMA_OBJECT = {
       properties: {
         mode: {
           type: 'string',
-          enum: ['lines', 'ways', 'megaways', 'cluster', 'pay_anywhere', 'pattern'],
+          enum: ['lines', 'ways', 'variable_ways', 'cluster', 'pay_anywhere', 'pattern'],
           description: 'Win evaluation algorithm.',
         },
         paylines: {

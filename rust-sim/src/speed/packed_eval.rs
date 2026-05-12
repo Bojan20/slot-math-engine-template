@@ -19,7 +19,7 @@
 //! ## Scope
 //!
 //! Only **Lines** mode is implemented here (by far the most common production
-//! game type).  Ways/Cluster/Megaways require dynamic intermediate storage
+//! game type).  Ways/Cluster/Variable-Ways require dynamic intermediate storage
 //! (per-reel hit counts) that can't fit in constant-size stack arrays at the
 //! maximum grid dimensions — use `bumpalo` arena allocation for those (see
 //! `arena_eval.rs`).

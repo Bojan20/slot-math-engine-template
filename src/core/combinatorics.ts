@@ -253,10 +253,11 @@ export function waysToWin(
 }
 
 /**
- * Calculate Megaways total combinations
- * Each reel has variable symbols (2-7 typically)
+ * Calculate total combinations for a variable-ways spin.
+ * Each reel can land a different number of symbol rows (e.g. 2-7),
+ * so total combinations = product of per-reel row counts.
  */
-export function megawaysCombinations(symbolsPerReel: number[]): bigint {
+export function variableWaysCombinations(symbolsPerReel: number[]): bigint {
   return productBigInt(symbolsPerReel.map(s => BigInt(s)));
 }
 

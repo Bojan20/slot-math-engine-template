@@ -25,7 +25,7 @@ export interface USIFValidationResult {
 
 const SEMVER_RE = /^\d+\.\d+\.\d+$/;
 
-const VALID_WIN_EVALUATOR_MODES = ['lines', 'ways', 'megaways', 'cluster', 'pay_anywhere', 'pattern'] as const;
+const VALID_WIN_EVALUATOR_MODES = ['lines', 'ways', 'variable_ways', 'cluster', 'pay_anywhere', 'pattern'] as const;
 
 function err(path: string, message: string, value?: unknown): USIFValidationError {
   return { path, message, value };

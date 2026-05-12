@@ -17,10 +17,10 @@ High-performance Monte Carlo simulator for slot games written in Rust.
 cargo build --release
 
 # Quick test (4M spins)
-./target/release/slot_sim --config configs/wrath_of_olympus.json --quick
+./target/release/slot_sim --config configs/template.json --quick
 
 # Full simulation (1B spins)
-./target/release/slot_sim --config configs/wrath_of_olympus.json --full
+./target/release/slot_sim --config configs/template.json --full
 
 # Custom simulation
 ./target/release/slot_sim --config configs/your_game.json --spins 25000000 --seeds 40
@@ -47,7 +47,7 @@ OPTIONS:
 
 ## Configuration Format
 
-Games are configured via JSON files. See `configs/wrath_of_olympus.json` for a complete example.
+Games are configured via JSON files. See `configs/template.json` for a complete example.
 
 ### Required Fields
 
@@ -97,7 +97,7 @@ src/
 
 ```
 ════════════════════════════════════════════════════════════
-  Wrath of Olympus v9.0
+  Example Game v1.0
   Target RTP: 96.00%
 ════════════════════════════════════════════════════════════
 

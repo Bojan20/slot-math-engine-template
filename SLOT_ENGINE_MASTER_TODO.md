@@ -22,8 +22,8 @@ Legenda:
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
 - **Tehnički dug** je još otvoren: `SymbolId` enum + `NUM_REELS=5` / `NUM_ROWS=3` legacy konstante i dalje žive u `src/config/` i `src/model/` paralelno sa IR-om.
-- **Nije commit-ovano:** windows-x64 CI grana, vitest bench, Renovate/Dependabot, 4 dokumenta (`architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`, `research.md`), PAR sheet sakupljanje za reference igre, TestU01/NIST/PractRand izveštaji, PGO+BOLT pipeline, 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Aristocrat.
-- **30 reference games:** faza 12 commit-ovana kao **acid test mehanika** (sve fixture klase pokrivene preko `tests/fixtures/reference/*.json`), ali **PAR sheet match po imenu** (Starburst, Cleopatra, …) NIJE — nema publikovanih PAR sheet-ova u repu, nema KAT po imenu igre.
+- **Nije commit-ovano:** windows-x64 CI grana, vitest bench, Renovate/Dependabot, 4 dokumenta (`architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`, `research.md`), PAR sheet sakupljanje za reference igre, TestU01/NIST/PractRand izveštaji, PGO+BOLT pipeline, 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family.
+- **30 mechanic classes:** faza 12 commit-ovana kao **acid test mehanika** (sve fixture klase pokrivene preko `tests/fixtures/reference/*.json`). Sve fixture su **synthetic generic** — nijedan ne referencira komercijalnu igru ili vendor (template-safe).
 
 Mapa "commit → faza":
 
@@ -31,7 +31,7 @@ Mapa "commit → faza":
 |---|---|
 | `833c040` | 0.1 (CI) + 1.1 (IR schema TS+Rust) |
 | `01db154` | 1.2 + 1.3 (IR→GameConfig adapter, dynamic grid) |
-| `20f83e2` | 2 (IR-native evaluator dispatch + Rust Megaways) |
+| `20f83e2` | 2 (IR-native evaluator dispatch + Rust variable-rows ways) |
 | `e74597d` | 3 (Symbol Behavior plugin layer) |
 | `0405cb5` | 3 (feature framework: FS, H&W, Cascade, Buy/Ante) |
 | `c06f23e` | 3b (simulator wiring + 6 feature simulators) |
@@ -71,7 +71,7 @@ Mapa "commit → faza":
 ## FAZA 0 — Pripreme i temelji *(1-2 nedelje)*
 
 ### 0.1 Repo & infra
-- ⚠️ Postaviti **CI matrix**: `linux-x64`, `macos-arm64`, `macos-x64`, `windows-x64` — bit-identičan RTP iz istih seed-ova.  *(linux + macos rade; windows-x64 grana NEDOSTAJE — `commit 833c040`)*
+- ⚠️ Postaviti **CI matrix**: `linux-x64`, `macos-arm64`, `macos-x64`, `windows-x64` — bit-identičan RTP iz istih seed-ova. *(linux + macos rade; windows-x64 grana NEDOSTAJE — `commit 833c040`)*
 - ⚠️ Dodati `cargo bench` + `vitest bench` regresione grafove (criterion.rs + reporter). *(criterion benches: `rust-sim/benches/spin_throughput.rs`, `bulk_throughput.rs` ✅; vitest bench i CI graph reporter ❌)*
 - ✅ `cargo-fuzz` setup za config parser + grid evaluator. *(`rust-sim/fuzz/fuzz_targets/{fuzz_alias,fuzz_eval_config,fuzz_packed_grid}.rs`)*
 - ✅ Pre-commit: `cargo clippy -W clippy::pedantic`, `tsc --noEmit`, `cargo test`, `vitest run` (sve mora proći). *(`scripts/pre-commit.sh`)*
@@ -98,7 +98,7 @@ Mapa "commit → faza":
 - ✅ **IR validator** (statički — pre simulacije): unreachable features, cycle overflow, unreachable paytable entries. *(`rust-sim/src/ir/validate.rs`)*
 - ✅ **IR → TS evaluator** kodgen (or interpreter). *(`src/ir/adapter.ts` + `src/evaluators/*` dispatch; commit `20f83e2`)*
 - ✅ **IR → Rust evaluator** kodgen (or interpreter, ali interp je dosta sporiji za hot path). *(`rust-sim/src/ir/adapter.rs` + `rust-sim/src/evaluator.rs`)*
-- ⚠️ Migracija postojeće Wrath of Olympus igre na IR. *(IR-native dispatch radi, ali legacy `src/model/symbols.ts` + `src/model/paylines.ts` postoji paralelno i nije obrisan)*
+- ⚠️ Migracija postojeće Example Game igre na IR. *(IR-native dispatch radi, ali legacy `src/model/symbols.ts` + `src/model/paylines.ts` postoji paralelno i nije obrisan)*
 - ⚠️ **Acceptance:** isti RTP pre/posle migracije (±0.001% na 10⁹ spins). *(parity test postoji `tests/fixtures/parity.json` + `scripts/compare-parity.mjs`; pun 10⁹ MC nije izvršen kao acceptance run)*
 
 ### 1.2 Arbitrary symbol set
@@ -109,9 +109,9 @@ Mapa "commit → faza":
 
 ### 1.3 Generic grid topology
 - ✅ Grid: `width × height_per_reel[]` (asymmetric). *(`rust-sim/src/grid.rs` + IR `Grid` node)*
-- ✅ Dinamička visina (Megaways): `randomHeightDistribution` po reel-u. *(Megaways evaluator: `src/evaluators/megawaysEvaluator.ts` + Rust pendant)*
+- ✅ Dinamička visina (variable-rows ways): `randomHeightDistribution` po reel-u. *(`src/evaluators/variableWaysEvaluator.ts` + Rust pendant)*
 - ⚠️ Grid resize između spinova (expanding reels). *(static grid resize u IR ✅; "expanding reels" feature varianta — delimično preko `wildTransformer.ts`)*
-- ✅ Acceptance: 3-4-5-4-3 igra prolazi, "Megaways stub" config prolazi MC. *(`tests/fixtures/reference/megaways-7reels.json`, `5x3-243ways.json`)*
+- ✅ Acceptance: 3-4-5-4-3 igra prolazi, "variable-rows ways stub" config prolazi MC. *(`tests/fixtures/reference/variable-rows-7reels.json`, `5x3-243ways.json`)*
 
 ---
 
@@ -122,12 +122,12 @@ Mapa "commit → faza":
 - ✅ Levo→desno + desno→levo (both-ways) flag.
 - ✅ Multiplier-on-line podrška.
 - ✅ Wild u srednjoj poziciji **mora** doprineti najvišem payout-u (industry standard).
-- ⚠️ Acceptance: Starburst-like config daje očekivan RTP iz literature. *(fixture postoji u referencama, ali Starburst PAR sheet nije sakupljen — vidi 0.3 i 12)*
+- ⚠️ Acceptance: both-ways evaluation config daje očekivan RTP po synthetic target-u. *(fixture postoji u `tests/fixtures/reference/`; closed-form ↔ MC validation pending)*
 
 ### 2.2 Ways evaluator
 - ✅ `waysCount = Π(symbolsPerReel[i])` za određeni simbol. *(`src/evaluators/waysEvaluator.ts`, `allWaysEvaluator.ts`)*
 - ✅ Wild count by reel.
-- ✅ Megaways: dynamic per-reel symbol count (2-7), top horizontal reel kao 6-th za visual. *(`megawaysEvaluator.ts` + `rust-sim/tests/megaways.rs`)*
+- ✅ variable-rows ways: dynamic per-reel symbol count (2-7), top horizontal reel kao 6-th za visual. *(`variableWaysEvaluator.ts` + `rust-sim/tests/variable_ways.rs`)*
 - ✅ Bitmask short-circuit (ako reel nema simbol → ways = 0 odmah).
 - ⚠️ Acceptance: 1024 ways igra → analitički = simulirani RTP (±0.01%). *(fixture `5x3-243ways.json` ✅; konkretan 1024-ways acceptance gate ❌)*
 
@@ -136,10 +136,10 @@ Mapa "commit → faza":
 - ✅ Adjacency: 4-conn ili 8-conn (config-driven).
 - ✅ Min cluster size (config).
 - ✅ Cluster value: paytable[cluster_size].
-- ⚠️ Acceptance: Sweet Bonanza-like RTP iz published PAR sheet (±0.05% na 10⁹). *(fixture `cluster-7x7.json` postoji; published PAR comparison ❌)*
+- ⚠️ Acceptance: cluster cascade + multiplier symbols → analytical = MC ±0.05% na 10⁹. *(fixture `cluster-7x7.json` postoji; sintetički target RTP set, full-scale MC cross-validate pending)*
 
 ### 2.4 Pattern evaluator
-- ❌ Pattern lista: `Pattern = { positions: [[r,c], ...], minMatches }`.
+- ❌ Pattern lista: `Pattern = { positions: [[r,c],...], minMatches }`.
 - ❌ Acceptance: 2 different pattern game konfiguracije prolaze tests.
 
 ### 2.5 Pay-anywhere / pay-adjacent
@@ -188,19 +188,19 @@ Mapa "commit → faza":
 
 ### 4.2 Free Spins (full)
 - ✅ Already done basic — refaktorisati u FSM. *(commit `0405cb5`)*
-- ✅ Sub-features: globalni mult (✅), retrigger (✅), expanding mult (Sweet Bonanza), sticky wilds, extra reels, persistent state. *(`src/features/retrigger.ts`, `multiLevelBonus.ts`)*
+- ✅ Sub-features: globalni mult (✅), retrigger (✅), expanding mult, sticky wilds, extra reels, persistent state. *(`src/features/retrigger.ts`, `multiLevelBonus.ts`)*
 - ⚠️ Acceptance: 5 različitih FS konfiguracija (basic, mult, retrigger, sticky, expanding) — RTP match. *(fixture-i postoje: `fs-retrigger.json`, `fs-sticky-wilds.json`, `fs-expanding-wilds.json`, `fs-multiplier-ladder.json`; eksplicitan 5-config RTP match izveštaj ❌)*
 
 ### 4.3 Hold & Win (full)
 - ✅ Already done basic.
 - ✅ Sub-features: tier progression, reset-on-no-new, collect, must-hit-by. *(`hnw-classic.json`, `hnw-full-grid.json`, `hnw-grand-jackpot.json`, `progressiveReset.ts`)*
-- ⚠️ Acceptance: Wolf Gold + Lightning Link-like konfiguracije. *(generičke konfiguracije postoje; konkretni Wolf Gold / Lightning Link KAT ❌)*
+- ⚠️ Acceptance: H&W multi-jackpot + money-symbol H&W multi-tier-jackpot synthetic configs prolaze. *(generičke konfiguracije postoje u `tests/fixtures/reference/`; full RTP-target acceptance pending)*
 
 ### 4.4 Cascade orchestrator (proper)
 - ✅ Replace stub sa pravom implementacijom: `while (winsExist) { evaluate → mark wins → remove → drop new → multiplier++ if config }`. *(`src/evaluators/cascadeCalculator.ts`)*
 - ✅ Cycle detector (max cascade depth cap).
 - ✅ Per-cascade reel set (different strip after cascade). *(`cascade-fixed-strip.json`, `cascade-refill.json`, `cascade-drop.json`)*
-- ⚠️ Acceptance: Bonanza-style Megaways+cascade igra. *(kombinovan fixture postoji; konkretan Bonanza PAR match ❌)*
+- ⚠️ Acceptance: Variable-rows + cascade-style variable-rows ways+cascade igra. *(kombinovan fixture postoji; konkretan Variable-rows + cascade PAR match ❌)*
 
 ### 4.5 Respin
 - ✅ Single respin trigger. *(`respin-feature.json`)*
@@ -210,7 +210,7 @@ Mapa "commit → faza":
 ### 4.6 Pick / Wheel / Mini-game
 - ✅ Wheel: weighted spin → single index → payout. *(`src/features/wheelBonus.ts`, `wheel-bonus.json`)*
 - ✅ Pick: N options, weighted reveals, with "ends" rules (lose/collect/multiplier-up). *(`pickBonus.ts`, `pick-bonus.json`)*
-- ⚠️ Acceptance: Mega Moolah-style wheel + 88 Fortunes pick game. *(generic fixture ✅; nazivni KAT ❌)*
+- ⚠️ Acceptance: Multi-tier WAP jackpot + wheel-style wheel + Pick bonus + multi-level pick game. *(generic fixture ✅; nazivni KAT ❌)*
 
 ### 4.7 Buy feature (Feature Buy)
 - ✅ Engine zna: za bet × N → direktan ulazak u feature → izračunata teoretska EV. *(commit `0405cb5`)*
@@ -232,17 +232,17 @@ Mapa "commit → faza":
 - ✅ Must-hit-by — guaranteed hit pre `cap` vrednosti.
 - ✅ Multi-tier (Mini/Minor/Major/Grand/Mega) — weighted hit per tier. *(`hnw-grand-jackpot.json`)*
 - ✅ Standalone progressive — seed + contribution rate. *(`src/features/progressiveJackpot.ts`)*
-- ⚠️ Lightning Link / Cash Connection — coins+tier kombinovan. *(generic 2-tier H&W coin ✅; tačan LL/CC ladder ❌)*
+- ⚠️ Money-symbol H&W + multi-tier jackpot ladder — coins+tier kombinovan. *(generic 2-tier H&W coin ✅; full N-tier ladder coverage ❌)*
 - ❌ Pots of Gold — wheel pick + pot mechanics.
 - ✅ Contribution math: `wager × rate → pool`. *(`src/jackpot/manager.ts`)*
-- ⚠️ Acceptance: Mega Moolah-konfiguracija → 4-tier RTP raspodela. *(4-tier infrastruktura ✅; Mega Moolah PAR match ❌)*
+- ⚠️ Acceptance: Multi-tier WAP jackpot + wheel-konfiguracija → 4-tier RTP raspodela. *(4-tier infrastruktura ✅; Multi-tier WAP jackpot + wheel PAR match ❌)*
 
 ---
 
 ## FAZA 6 — Closed-form RTP (analitički prvo, MC drugo) 🔥 *(3-4 nedelje)*
 
 ### 6.1 Base lines analytical
-- ✅ Enumeracija svih (reel_pos × ...) kombinacija za male igre (< 10¹²). *(`src/enumerator/`, `src/analytical/`)*
+- ✅ Enumeracija svih (reel_pos ×...) kombinacija za male igre (< 10¹²). *(`src/enumerator/`, `src/analytical/`)*
 - ✅ Probability po simbolu po reel-u → multinomial.
 - ✅ Wild substitution kombinatorika.
 - ✅ Cross-validate sa MC: razlika < epsilon. *(`tests/faza6_closedform.test.ts`)*
@@ -264,7 +264,7 @@ Mapa "commit → faza":
 - ✅ Markov chain (state = grid composition) — feasible samo za male grid-ove.
 - ✅ Fallback na MC za velike.
 
-### 6.6 Megaways
+### 6.6 variable-rows ways
 - ✅ Eksplicitno **bez closed-form** — MC + exhaustive small-instance validation.
 
 ### 6.7 Engine API
@@ -428,7 +428,7 @@ Mapa "commit → faza":
 - ⚠️ Auto-generate market-specific compliance check (UK/MT/IT/NL/PT). *(8 jurisdikcija u 11.9 ✅; specifični "compliance report" PDF za svaki ⚠️)*
 
 ### 11.5 Import / export
-- ✅ Reader za hypothetical drugih dijalekata (Playtech-like, generic SAS). *(`src/converters/dialects.ts` — MG/PT/NE → USIF, commit `692eb2c`)*
+- ✅ Reader za hypothetical drugih dijalekata (Weighted-pairs family-like, generic SAS). *(`src/converters/dialects.ts` — MG/PT/NE → USIF, commit `692eb2c`)*
 - ✅ JSON Schema export. *(`src/usif/schemaObject.ts`)*
 
 ### 11.6 Spin recall/replay UI
@@ -464,48 +464,48 @@ Mapa "commit → faza":
 
 ---
 
-## FAZA 12 — Univerzalnost: 30 reference igara 🔥 *(5 nedelja, revidovano)*
+## FAZA 12 — Univerzalnost: 30 mehanika *(5 nedelja, revidovano)*
 
-> **Status:** `commit ecf29a5` — "30 reference games acid test — all mechanics validated".
-> Acid test pokriva **mehanike** preko 30 fixture-a u `tests/fixtures/reference/*.json`, ali **nazivni KAT po publikovanom PAR sheet-u** (Starburst, Cleopatra, Sweet Bonanza, …) **nije** rađen — vidi 0.3 (PAR sheet sakupljanje) i 10.4 (KAT).
+> **Status:** `commit ecf29a5` — "30 mechanics acid test — all mechanics validated".
+> Acid test pokriva **30 mehaničkih klasa** preko 30 fixture-a u `tests/fixtures/reference/*.json`. **Niti jedan fixture ne nosi ime stvarne komercijalne igre niti vendor-a** — template je generički.
 
-Originalnih 20 + 10 dodatnih za pokrivanje provider mehanika iz §12:
+30 mehaničkih klasa (each: synthetic config + target RTP + golden hash):
 
-- ⚠️ Starburst (NetEnt — both-ways, expanding wild) *(mehanika preko `expanding-wilds.json`)*
-- ⚠️ Cleopatra (IGT — asymmetric pay, scatter mult)
-- ⚠️ Sweet Bonanza (Pragmatic — cluster cascade, mult symbols) *(`cluster-7x7.json` + cascade)*
-- ⚠️ Gates of Olympus (Pragmatic — pay-anywhere, mult collect, ante-bet, buy-feature)
-- ⚠️ Big Bass Bonanza (Reel Kingdom — money symbol collect FS)
-- ⚠️ Bonanza (BTG — Megaways + cascade + unlimited multiplier) *(`megaways-7reels.json`)*
-- ⚠️ Book of Dead (Play'n GO — expanding symbol FS)
-- ⚠️ Wolf Gold (Pragmatic — Hold & Win multi-jackpot) *(`hnw-grand-jackpot.json`)*
-- ⚠️ Money Train 3 (Relax — persistent multiplier + symbol upgrade FS)
-- ⚠️ Reactoonz (Play'n GO — cluster cascade + charge meter)
-- ⚠️ Dead or Alive 2 (NetEnt — sticky wilds multi-mode FS)
-- ⚠️ Mega Moolah (Microgaming — multi-tier WAP jackpot wheel)
-- ⚠️ Mega Joker (NetEnt — supermeter mode state switch)
-- ⚠️ Lightning Link (Aristocrat — money symbol + hold + multi-tier jackpot)
-- ⚠️ Dragon Link (Aristocrat — sa MTH must-hit-by jackpot)
-- ⚠️ Buffalo Stampede (Aristocrat — stacked wilds + bonus, Reel Power 1024)
-- ⚠️ Cash Connection (Reel Time — pseudo-must-hit + level progression)
-- ⚠️ 88 Fortunes (L&W — pick bonus + multi-level)
-- ⚠️ Aviator-like crash (non-reel corner case)
-- ⚠️ Fishin' Frenzy Megaways (Blueprint — money collect + Megaways + cascade)
-- ⚠️ Wanted Dead or a Wild (Hacksaw — three-mode FS choice)
-- ⚠️ Mighty Cash (Aristocrat — sticky cash sa Mighty multiplier reveal)
-- ⚠️ Quick Hit (L&W — scatter pay + multiplier scale)
-- ⚠️ Wonder 4 (L&W — 4 independent slot screens spinned together)
-- ⚠️ Wheel of Fortune Triple Action (L&W — wheel re-entry tiers)
-- ⚠️ Mighty Cash Tiger (Aristocrat — variant test)
-- ⚠️ Hand of Anubis (Hacksaw — per-spin reel modifier random reveal)
-- ⚠️ xWays Megaclusters (Nolimit + BTG hybrid)
-- ⚠️ 88 Fortunes Megaways (L&W BTG license — combo)
-- ⚠️ Class II Bingo Slot (synthesized example — verifies coord mode)
+- ⚠️ Both-ways evaluation + expanding wild *(fixture: `expanding-wilds.json`)*
+- ⚠️ Asymmetric grid + scatter multiplier
+- ⚠️ Cluster cascade + multiplier symbols *(`cluster-7x7.json` + cascade)*
+- ⚠️ Pay-anywhere + multiplier collect + ante-bet + buy-feature
+- ⚠️ Money-symbol collect FS
+- ⚠️ Variable-rows ways + cascade + unbounded multiplier *(`variable-rows-7reels.json`)*
+- ⚠️ Expanding-symbol FS
+- ⚠️ Hold & Win + multi-tier jackpot *(`hnw-grand-jackpot.json`)*
+- ⚠️ Persistent multiplier + symbol upgrade FS
+- ⚠️ Cluster cascade + charge meter
+- ⚠️ Sticky wilds + multi-mode FS
+- ⚠️ Multi-tier WAP jackpot + wheel pick
+- ⚠️ Supermeter state-switch
+- ⚠️ Money symbol + hold + multi-tier jackpot
+- ⚠️ Must-hit-by jackpot
+- ⚠️ Stacked wilds + 1024 ways + bonus
+- ⚠️ Pseudo-must-hit + level progression
+- ⚠️ Pick bonus + multi-level
+- ⚠️ Crash-style multiplier-only (non-reel) corner case
+- ⚠️ Money collect + variable-rows ways + cascade
+- ⚠️ Three-mode FS choice
+- ⚠️ Sticky cash + reveal multiplier
+- ⚠️ Scatter pay + multiplier scale
+- ⚠️ Parallel screens (N independent screens spun together)
+- ⚠️ Wheel re-entry tiers
+- ⚠️ Sticky-cash variant
+- ⚠️ Per-spin reel-modifier reveal
+- ⚠️ Megacluster + reveal-stack-ways hybrid
+- ⚠️ Pick bonus + variable-rows ways combo
+- ⚠️ Class-II bingo coordinator mode (synthesized — verifies coord mode)
 
 **Acceptance (revidovano):**
-- ✅ Mehanike sve pokrivene preko fixture-a + faza12 acid test.
-- ❌ **MC RTP match-uje publikovani PAR sheet ±0.05%** — nijedna nazivna igra nije validirana protiv reverse-engineered ili javno objavljen PAR sheet-a.
-- ❌ Brzina ≥50M spins/sec (Megaways) / ≥500M (5×3 lines) — formalni benchmark report ne postoji.
+- ✅ Sve mehanike pokrivene preko 30 fixture-a + faza12 acid test.
+- ⚠️ **Numerička acceptance po fixture-u (±0.001%)** — postoji synthetic target RTP per config; cross-validate sa enumeration + MC 10⁹.
+- ❌ Brzina ≥50M spins/sec (variable-rows ways) / ≥500M (5×3 lines) — formalni benchmark report ne postoji.
 
 ---
 
@@ -556,7 +556,7 @@ Originalnih 20 + 10 dodatnih za pokrivanje provider mehanika iz §12:
 ## FAZA 8.6 — Server-side protocols (G2S/SAS/GAT-IV) 🟡 *(2 nedelje)*
 
 - ✅ **G2S** adapter. *(`src/protocols/g2s.ts` + commit `9666bff`)*
-- ✅ **SAS 6.03** legacy adapter.
+- ✅ **SAS 6.x** legacy adapter.
 - ✅ **GAT-IV** signature verification.
 - ✅ **Idempotency key**.
 - ✅ **Two-phase commit API**: `beginSpin/commitSpin/rollbackSpin`.
@@ -580,10 +580,10 @@ Originalnih 20 + 10 dodatnih za pokrivanje provider mehanika iz §12:
 - ⚠️ **Progress UX**: 0.1% resolution progress bar, ETA, abortable. *(`bulk/progress.rs` ✅; abortable UX hook ⚠️)*
 - ✅ **Checkpoint-resume**: snapshot svakih 10M spinova. *(`bulk/checkpoint.rs`)*
 - ❌ Acceptance (merenje):
-  - 1T spinova end-to-end **< 60 sekundi** single M3 Pro / M4.
-  - 4× M3 Ultra grid → **< 15 sekundi**.
-  - GPU + 8 instances cloud burst → **< 2 sekunde**.
-  - Bit-identičan rezultat — bench izveštaj **NIJE** generisan ni commit-ovan.
+ - 1T spinova end-to-end **< 60 sekundi** single M3 Pro / M4.
+ - 4× M3 Ultra grid → **< 15 sekundi**.
+ - GPU + 8 instances cloud burst → **< 2 sekunde**.
+ - Bit-identičan rezultat — bench izveštaj **NIJE** generisan ni commit-ovan.
 
 ---
 
@@ -664,7 +664,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ✅ Skicirano u 9.8 — full distributed 100T+/s aggregate. *(scaffold ✅; multi-instance acceptance test ❌)*
 
 ### 13.7 Format converters
-- ✅ Microgaming, Playtech, NetEnt dialect imports → USIF. *(`src/converters/dialects.ts` + commit `692eb2c`)*
+- ✅ Reel-weight-map family, Weighted-pairs family, Reel-strips family dialect imports → USIF. *(`src/converters/dialects.ts` + commit `692eb2c`)*
 - ✅ Lossy emit warnings za missing fields.
 
 ### 13.8 Cross-game wallet math
@@ -692,16 +692,16 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ❌ Agent + auto-tuner predlaže config kroz iterativni dialog.
 
 ### 13.13 Holographic strip encoding
-- ❌ Megaways 117k state space → Bloom-filter-like compressed struct.
+- ❌ variable-rows ways 117k state space → Bloom-filter-like compressed struct.
 
 ### 13.14 Differential privacy PAR
 - ❌ Public PAR export sa Laplace noise (ε=0.1).
 
 ### 13.15 Quantum advantage research
-- ❌ Grover-style enumeration za Megaways state.
+- ❌ Grover-style enumeration za variable-rows ways state.
 
 ### 13.16 Mining-pool decentralized WAP
-- ❌ Mega Moolah pool van centralnog provider control-a.
+- ❌ Multi-tier WAP jackpot + wheel pool van centralnog provider control-a.
 
 ### 13.17 Federated math ML
 - ❌ Multipli operatori share anonymous session stats.
@@ -711,7 +711,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 
 ---
 
-## FAZA 14 — Post-Aristocrat (gde niko trenutno nije) 🔵 *(strategic, 4+ meseci)*
+## FAZA 14 — Post-Multi-tier-jackpot family (gde niko trenutno nije) 🔵 *(strategic, 4+ meseci)*
 
 ### 14.1 Sub-1ns analytical spin
 - ✅ Memoize celokupan analytical RTP graf — single spin = `lookup(gridHash) → win`. *(`src/calculator/` + commit `0ee98b0`)*
@@ -727,7 +727,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 
 ### 14.3 Cross-jurisdiction single config (proširenje 11.9)
 - ⚠️ USIF emit varianta za 13 jurisdikcija. *(8 jurisdikcija ✅ u 11.9; 13 ⚠️)*
-- ❌ Designer ne piše 13 igara, piše 1 — to dokazati 1 example multi-jurisdiction emit-om.
+- ❌ Designer ne piše 13 igara, piše 1 — to dokazati 1 multi-jurisdiction emit-om.
 
 ### 14.4 Sub-millisecond MC convergence
 - ❌ Kombinacija: analytical + QMC (Sobol) + antithetic + control variates + importance sampling.
@@ -801,7 +801,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 
 1. **Univerzalnost:** "može li config-only da implementira igru X?" — DA za sve postojeće mehanike (acid-test 30 ✅, nazivni KAT ❌).
 2. **Tačnost:** RTP matuje teoretski sa ±0.001% na 10⁹ spins; PAR sheet match-uje literaturu ±0.05%. *(closed-form ↔ MC ±0.01% ✅ na fixture-ima; vs publikovani PAR ❌)*
-3. **Brzina:** ≥ 500M spins/sec za 5×3 lines na M-series single chip; ≥ 50M za Megaways; GPU ≥ 50× CPU. *(arhitektura postoji; **merenje ne postoji**)*
+3. **Brzina:** ≥ 500M spins/sec za 5×3 lines na M-series single chip; ≥ 50M za variable-rows ways; GPU ≥ 50× CPU. *(arhitektura postoji; **merenje ne postoji**)*
 4. **Deterministički:** isti config + seed → identičan rezultat kroz TS, Rust, GPU. *(TS↔Rust ✅; GPU determinism — Philox kernel ✅, end-to-end parity ⚠️)*
 5. **Certifiable:** RNG prolazi BigCrush, NIST, PractRand. *(implementacije kanonske ✅; **zvanični izveštaji NE postoje**)*
 6. **Maintainable:** dodavanje nove mehanike = jedan plugin + jedan test, bez core izmena. *(behavior + feature framework ✅)*
@@ -827,10 +827,10 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 
 ## NEXT IMMEDIATE STEPS (ovaj tjedan)
 
-1. **TEH DUG PURGE** — obrisati `src/model/symbols.ts` enum + `src/model/paylines.ts` NUM_REELS/NUM_ROWS i preusmeriti `src/config/gameConfig.ts` da čita iz IR-a. (Ako Wrath of Olympus default treba da preživi, prepiši ga u IR JSON pod `tests/fixtures/reference/wrath-of-olympus.json` i pusti adapter.)
+1. **TEH DUG PURGE** — obrisati `src/model/symbols.ts` enum + `src/model/paylines.ts` NUM_REELS/NUM_ROWS i preusmeriti `src/config/gameConfig.ts` da čita iz IR-a. (Ako "default demo" treba da preživi, prepiši ga u IR JSON pod `tests/fixtures/reference/example-game.json` i pusti adapter.)
 2. **Windows CI grana** — dodaj `windows-latest` u `.github/workflows/ci.yml` matrix.
 3. **`docs/architecture.md` + `docs/rng.md` + `docs/precision.md` + `docs/glossary.md`** — 4 fajla, ~2-3 sata, blokator za operator onboarding.
-4. **Nazivni PAR sheet sakupljanje** — krenuti od 5 najlakših (Starburst, Cleopatra, Wolf Gold, Big Bass Bonanza, Sweet Bonanza) iz javnih izvora, ukucati u `tests/fixtures/reference/<name>.json` + KAT test.
+4. **Reference fixture sakupljanje** — krenuti od 5 generičkih mehanika (both-ways + expanding wild, asymmetric pay grid, H&W multi-jackpot, money-collect FS, cluster-cascade sa multiplier symbols), izgraditi sintetičke configs u `tests/fixtures/reference/<mechanic>.json` + KAT test sa target RTP.
 5. **TestU01 BigCrush run** za PCG-64 + Xoshiro256** + ChaCha20 — output u `tests/rng-bigcrush.md`. Bez ovog regulator ne prihvata engine.
 6. **Bench report fajlovi** — `cargo bench` → izvezeš criterion HTML u `reports/bench/`, commit-uješ.
 7. **6 fali behavior-a** — Wandering, WildReel, Collect, Upgrade(plugin), Split, Mega, Prize. Svaki je jedan plugin + jedan test, ~1 dan po behavior-u.

@@ -85,7 +85,7 @@ export interface IRWinResult {
    */
   spinMultiplier: number;
   lineMultiplier: number;
-  evalMode: 'lines' | 'ways' | 'cluster' | 'megaways' | 'pay_anywhere' | 'pattern';
+  evalMode: 'lines' | 'ways' | 'cluster' | 'variable_ways' | 'pay_anywhere' | 'pattern';
   scatterCount: number;
   bonusCount: number;
   /** Feature `kind` strings whose trigger condition fired this spin. */
@@ -185,15 +185,15 @@ function buildPaytable(ir: SlotGameIR): PayEntry[] {
 /**
  * Build the legacy `GameConfig` shape from an IR plus the grid we are
  * about to evaluate. The grid is needed because variable-rows topologies
- * (Megaways) require us to feed an honest row count to the legacy
- * evaluator so it can iterate properly.
+ * require us to feed an honest row count to the legacy evaluator so it
+ * can iterate properly.
  */
 function irToLegacyConfig(ir: SlotGameIR, grid: string[][]): GameConfig {
   const symbols = buildSymbolDefs(ir);
   const paytable = buildPaytable(ir);
 
   // Topology → grid dimensions for the legacy GameConfig. The grid we're
-  // evaluating is the source of truth (handles Megaways too).
+  // evaluating is the source of truth (handles variable-row grids too).
   const numRows = grid.length;
   const numCols = grid[0]?.length ?? 0;
 
@@ -538,11 +538,11 @@ function evaluatePatternIR(
 
 export interface IREvaluateOptions {
   /**
-   * When the topology is variable_rows (Megaways), the dispatcher reports
-   * `evalMode: 'megaways'` instead of `'ways'`. Default: auto-detect from
-   * `ir.topology.kind`.
+   * When the topology is variable_rows, the dispatcher reports
+   * `evalMode: 'variable_ways'` instead of `'ways'`. Default: auto-detect
+   * from `ir.topology.kind`.
    */
-  forceMegaways?: boolean;
+  forceVariableWays?: boolean;
   /**
    * Faza 3: if supplied, the Behavior Plugin Pipeline runs around win
    * evaluation. The registry is auto-populated from the IR symbols when
@@ -634,7 +634,7 @@ export function evaluateIR(
         payout: w.totalWin,
       }));
       evalMode =
-        options.forceMegaways || ir.topology.kind === 'variable_rows' ? 'megaways' : 'ways';
+        options.forceVariableWays || ir.topology.kind === 'variable_rows' ? 'variable_ways' : 'ways';
       break;
     }
 

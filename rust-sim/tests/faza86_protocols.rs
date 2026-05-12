@@ -12,7 +12,7 @@ use slot_sim::ir::SlotGameIR;
 fn sample_identity() -> GameIdentity {
     GameIdentity {
         game_id: "GAME001".to_string(),
-        game_name: "Dragon Spin".to_string(),
+        game_name: "Example Game".to_string(),
         version: "1.0.0".to_string(),
         target_rtp: 0.96,
         jurisdiction: "UKGC".to_string(),

@@ -4,10 +4,7 @@
  * Tests for grid evaluation, scatter detection, and win calculations.
  *
  * Uses the template's generic symbol IDs (LP_1..LP_5, HP_1..HP_3, WILD,
- * SCATTER, BONUS). Previous Wrath-of-Olympus-flavoured aliases
- * (HP_ZEUS, SCATTER_TEMPLE, etc.) were removed when the engine was
- * rebranded into a reusable template; this file was left behind on the
- * old enum. Numbers are unchanged — they match the current paytable:
+ * SCATTER, BONUS). Numbers match the current paytable:
  *
  *   HP_1 5oak = 63.0×
  *   3 SCATTER → 8 free spins (4 → 12, 5 → 15)

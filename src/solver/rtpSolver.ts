@@ -148,7 +148,7 @@ function quickCalculateRTP(
 
       let probability: Decimal;
 
-      if (evalType === 'WAYS' || evalType === 'MEGAWAYS') {
+      if (evalType === 'WAYS' || evalType === 'VARIABLE_WAYS') {
         // Ways calculation: freq^count × rows^count
         const ways = Math.pow(gridSize.rows, count);
         probability = freq.pow(count).times(ways);

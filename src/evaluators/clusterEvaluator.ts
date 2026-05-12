@@ -2,7 +2,7 @@
  * SLOT MATH EXACT - Cluster Pay Evaluator
  *
  * Evaluates cluster-based wins where adjacent matching symbols form clusters.
- * Used in games like Sweet Bonanza, Candy Crush style mechanics.
+ * Used in match-three / connected-cluster style mechanics.
  *
  * Supports:
  * - Orthogonal adjacency (up/down/left/right)

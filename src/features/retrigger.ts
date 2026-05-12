@@ -539,7 +539,7 @@ export function createStandardRetriggerConfig(
 }
 
 /**
- * Create multiplier boost retrigger config (like Sweet Bonanza)
+ * Create multiplier boost retrigger config: each retrigger increases the active multiplier.
  */
 export function createMultiplierBoostRetriggerConfig(
   baseSpins: number = 10,
