@@ -47,3 +47,7 @@ pub mod rng;
 pub mod speed;
 pub mod simulator;
 pub mod stats;
+/// FAZA 3 — Symbol Behavior Plugin Layer.
+/// Effect discriminated union + applyEffect pipeline + 11 behavior impls.
+/// Mirrors `src/behaviors/` TypeScript module tree exactly.
+pub mod behavior;
