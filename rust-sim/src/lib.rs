@@ -55,3 +55,5 @@ pub mod simulator;
 /// cache-line layout.
 pub mod speed;
 pub mod stats;
+/// FAZA 11.9 — Jurisdiction adapter: compliance validation + auto-fix.
+pub mod jurisdiction;
