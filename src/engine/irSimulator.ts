@@ -67,6 +67,10 @@ export interface IRSimResult {
     hold_and_win: number;
     cascade: number;
   } & Record<string, number>;
+  /** Jackpot contribution to RTP, per tier id. */
+  jackpotBreakdown?: Record<string, number>;  // tierId → fraction of total wagered
+  /** Total jackpot RTP fraction. */
+  jackpotRtp?: number;
 }
 
 // ─── Grid generators ───────────────────────────────────────────────────────
@@ -997,6 +1001,8 @@ export async function runIRSimulation(
     featureTriggerFreqs,
     maxWinX,
     rtpBreakdown,
+    jackpotBreakdown: {},
+    jackpotRtp: 0,
   };
 }
 

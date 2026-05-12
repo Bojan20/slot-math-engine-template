@@ -31,6 +31,12 @@ pub mod grid;
 /// Cross-validation + serde JSON round-trip. Engine consumers do not
 /// touch hardcoded enums anymore; everything flows from `SlotGameIR`.
 pub mod ir;
+/// FAZA 5 — Jackpot manager: Fixed, Progressive, Pooled.
+/// Thread-safe runtime state + analytical solver for RandomPick tiers.
+pub mod jackpot;
+/// FAZA 4 — GLI-16 compliant PAR sheet generator.
+/// Produces structured JSON + printable report from `AtomicStats`.
+pub mod par;
 pub mod rng;
 pub mod simulator;
 pub mod stats;

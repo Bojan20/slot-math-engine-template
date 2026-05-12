@@ -11,3 +11,4 @@
  */
 
 export * from './variance.js';
+export * from './parSheet.js';
