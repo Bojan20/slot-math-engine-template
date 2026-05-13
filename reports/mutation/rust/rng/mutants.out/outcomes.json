@@ -8,7 +8,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 28.018333334,
+          "duration": 30.436106792,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -20,7 +20,7 @@
         },
         {
           "phase": "Test",
-          "duration": 8.300100167,
+          "duration": 8.702784209,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -70,7 +70,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.431455334,
+          "duration": 3.630480291,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -82,7 +82,7 @@
         },
         {
           "phase": "Test",
-          "duration": 8.345475125,
+          "duration": 8.835044458,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -132,7 +132,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.140823125,
+          "duration": 3.366404375,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -144,7 +144,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.593449792,
+          "duration": 0.5311445,
           "process_status": {
             "Failure": 101
           },
@@ -196,7 +196,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.361294375,
+          "duration": 3.465353208,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -208,7 +208,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.590732625,
+          "duration": 0.547257333,
           "process_status": {
             "Failure": 101
           },
@@ -260,7 +260,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.834594084,
+          "duration": 3.443046416,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -272,7 +272,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.591905458,
+          "duration": 0.598196584,
           "process_status": {
             "Failure": 101
           },
@@ -324,7 +324,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.003712833,
+          "duration": 3.220680709,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -336,7 +336,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.5951565,
+          "duration": 0.5844725,
           "process_status": {
             "Failure": 101
           },
@@ -388,7 +388,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 2.940186875,
+          "duration": 3.136023292,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -400,7 +400,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.596680791,
+          "duration": 0.59835525,
           "process_status": {
             "Failure": 101
           },
@@ -452,7 +452,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.04078725,
+          "duration": 3.2990359160000002,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -464,7 +464,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.599452083,
+          "duration": 0.595906125,
           "process_status": {
             "Failure": 101
           },
@@ -516,7 +516,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.177681792,
+          "duration": 4.045405708,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -528,7 +528,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.58912375,
+          "duration": 0.761465417,
           "process_status": {
             "Failure": 101
           },
@@ -580,7 +580,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.134030375,
+          "duration": 4.042769792,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -592,7 +592,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.589434167,
+          "duration": 0.586990334,
           "process_status": {
             "Failure": 101
           },
@@ -644,7 +644,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 7.365127958,
+          "duration": 8.4254185,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -656,7 +656,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.043678083,
+          "duration": 60.012781833,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -706,7 +706,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 4.032452167,
+          "duration": 3.840452292,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -718,7 +718,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.014963542,
+          "duration": 60.014255875,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -768,7 +768,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 43.246005375,
+          "duration": 53.7147915,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -780,7 +780,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.751165375,
+          "duration": 0.706621125,
           "process_status": {
             "Failure": 101
           },
@@ -832,7 +832,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 18.573321542,
+          "duration": 14.485973084,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -844,7 +844,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.645741334,
+          "duration": 0.861603375,
           "process_status": {
             "Failure": 101
           },
@@ -896,7 +896,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 13.591967083,
+          "duration": 16.45113775,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -908,72 +908,10 @@
         },
         {
           "phase": "Test",
-          "duration": 0.761201417,
+          "duration": 0.760249625,
           "process_status": {
             "Failure": 101
           },
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 122,
-                "column": 5
-              },
-              "end": {
-                "line": 127,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 126,
-              "column": 20
-            },
-            "end": {
-              "line": 126,
-              "column": 21
-            }
-          },
-          "replacement": "^",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_126_col_20_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_126_col_20_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 130.437274125,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 11.901362958,
-          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -1022,7 +960,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 160.089710416,
+          "duration": 161.172103625,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1034,10 +972,72 @@
         },
         {
           "phase": "Test",
-          "duration": 0.8045615,
+          "duration": 0.64785225,
           "process_status": {
             "Failure": 101
           },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 122,
+                "column": 5
+              },
+              "end": {
+                "line": 127,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 126,
+              "column": 20
+            },
+            "end": {
+              "line": 126,
+              "column": 21
+            }
+          },
+          "replacement": "^",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_126_col_20.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_126_col_20.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 155.056845,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 10.831331583,
+          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -1086,7 +1086,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 164.290137458,
+          "duration": 169.307344042,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1098,7 +1098,133 @@
         },
         {
           "phase": "Test",
-          "duration": 0.76451725,
+          "duration": 0.64964,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 122,
+                "column": 5
+              },
+              "end": {
+                "line": 127,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 126,
+              "column": 20
+            },
+            "end": {
+              "line": 126,
+              "column": 21
+            }
+          },
+          "replacement": "&",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Timeout",
+      "log_path": "log/rust-sim__src__rng.rs_line_126_col_20_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_126_col_20_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 134.854918042,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 60.009584708,
+          "process_status": "Timeout",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 269,
+                "column": 5
+              },
+              "end": {
+                "line": 280,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 272,
+              "column": 27
+            },
+            "end": {
+              "line": 272,
+              "column": 29
+            }
+          },
+          "replacement": ">>",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_272_col_27.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_272_col_27.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.808074208,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 5.657155958,
           "process_status": {
             "Failure": 101
           },
@@ -1150,7 +1276,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 34.110627042,
+          "duration": 40.366638083,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1162,131 +1288,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.028775292,
-          "process_status": "Timeout",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 269,
-                "column": 5
-              },
-              "end": {
-                "line": 280,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 272,
-              "column": 27
-            },
-            "end": {
-              "line": 272,
-              "column": 29
-            }
-          },
-          "replacement": ">>",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_272_col_27.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_272_col_27.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 8.780205125,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 9.175371458,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 122,
-                "column": 5
-              },
-              "end": {
-                "line": 127,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 126,
-              "column": 20
-            },
-            "end": {
-              "line": 126,
-              "column": 21
-            }
-          },
-          "replacement": "&",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "Timeout",
-      "log_path": "log/rust-sim__src__rng.rs_line_126_col_20.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_126_col_20.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 155.10303525,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 60.045803459,
+          "duration": 60.054140083,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1330,13 +1332,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_273_col_19.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_273_col_19.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 2.906253666,
+          "duration": 3.083378458,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1348,69 +1350,7 @@
         },
         {
           "phase": "Test",
-          "duration": 9.4231685,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 269,
-                "column": 5
-              },
-              "end": {
-                "line": 280,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 273,
-              "column": 19
-            },
-            "end": {
-              "line": 273,
-              "column": 21
-            }
-          },
-          "replacement": "&=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_273_col_19_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_273_col_19_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 3.300390792,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 0.714125875,
+          "duration": 6.779235583,
           "process_status": {
             "Failure": 101
           },
@@ -1462,7 +1402,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 4.859342041,
+          "duration": 3.191843708,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1474,7 +1414,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.933294709,
+          "duration": 0.718000333,
           "process_status": {
             "Failure": 101
           },
@@ -1493,40 +1433,40 @@
           "package": "slot_sim",
           "file": "rust-sim/src/rng.rs",
           "function": {
-            "function_name": "<impl RngBackend for Pcg64Backend>::next_u64",
+            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
             "return_type": "-> u64",
             "span": {
               "start": {
-                "line": 198,
+                "line": 269,
                 "column": 5
               },
               "end": {
-                "line": 203,
+                "line": 280,
                 "column": 6
               }
             }
           },
           "span": {
             "start": {
-              "line": 200,
-              "column": 9
+              "line": 273,
+              "column": 19
             },
             "end": {
-              "line": 202,
-              "column": 26
+              "line": 273,
+              "column": 21
             }
           },
-          "replacement": "1",
-          "genre": "FnValue"
+          "replacement": "&=",
+          "genre": "BinaryOperator"
         }
       },
-      "summary": "Timeout",
-      "log_path": "log/rust-sim__src__rng.rs_line_200_col_9_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_200_col_9_001.diff",
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_273_col_19_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_273_col_19_001.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 22.272442375,
+          "duration": 11.745237333,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1538,8 +1478,10 @@
         },
         {
           "phase": "Test",
-          "duration": 60.037473417,
-          "process_status": "Timeout",
+          "duration": 0.701436834,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -1588,7 +1530,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 5.24924125,
+          "duration": 3.730508083,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1600,199 +1542,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.831756208,
-          "process_status": {
-            "Failure": 101
-          },
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 269,
-                "column": 5
-              },
-              "end": {
-                "line": 280,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 275,
-              "column": 19
-            },
-            "end": {
-              "line": 275,
-              "column": 21
-            }
-          },
-          "replacement": "|=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_275_col_19.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_275_col_19.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 4.748888083,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 0.711695375,
-          "process_status": {
-            "Failure": 101
-          },
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 269,
-                "column": 5
-              },
-              "end": {
-                "line": 280,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 276,
-              "column": 19
-            },
-            "end": {
-              "line": 276,
-              "column": 21
-            }
-          },
-          "replacement": "|=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_276_col_19.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_276_col_19.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 5.34523275,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 0.772559333,
-          "process_status": {
-            "Failure": 101
-          },
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 269,
-                "column": 5
-              },
-              "end": {
-                "line": 280,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 276,
-              "column": 19
-            },
-            "end": {
-              "line": 276,
-              "column": 21
-            }
-          },
-          "replacement": "&=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_276_col_19_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_276_col_19_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 7.310570375,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 0.770320125,
+          "duration": 0.9325185,
           "process_status": {
             "Failure": 101
           },
@@ -1844,7 +1594,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 176.032460667,
+          "duration": 163.376678875,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1856,7 +1606,261 @@
         },
         {
           "phase": "Test",
-          "duration": 60.052638375,
+          "duration": 60.034530209,
+          "process_status": "Timeout",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 269,
+                "column": 5
+              },
+              "end": {
+                "line": 280,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 275,
+              "column": 19
+            },
+            "end": {
+              "line": 275,
+              "column": 21
+            }
+          },
+          "replacement": "|=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_275_col_19.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_275_col_19.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.043427042,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.663764875,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 269,
+                "column": 5
+              },
+              "end": {
+                "line": 280,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 276,
+              "column": 19
+            },
+            "end": {
+              "line": 276,
+              "column": 21
+            }
+          },
+          "replacement": "|=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_276_col_19.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_276_col_19.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.380174083,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.882116875,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 269,
+                "column": 5
+              },
+              "end": {
+                "line": 280,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 276,
+              "column": 19
+            },
+            "end": {
+              "line": 276,
+              "column": 21
+            }
+          },
+          "replacement": "&=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_276_col_19_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_276_col_19_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.464888375,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.815111375,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Pcg64Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 198,
+                "column": 5
+              },
+              "end": {
+                "line": 203,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 200,
+              "column": 9
+            },
+            "end": {
+              "line": 202,
+              "column": 26
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Timeout",
+      "log_path": "log/rust-sim__src__rng.rs_line_200_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_200_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.844787917,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 60.020369792,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1906,7 +1910,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 15.444409333,
+          "duration": 14.18884,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1918,7 +1922,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.042270791,
+          "duration": 60.05095325,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1968,7 +1972,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 13.044195584,
+          "duration": 11.384642542,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -1980,7 +1984,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.054476167,
+          "duration": 60.00360225,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2024,13 +2028,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_277_col_19.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_277_col_19.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 7.389818333,
+          "duration": 4.32916275,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2042,8 +2046,10 @@
         },
         {
           "phase": "Test",
-          "duration": 15.153997833,
-          "process_status": "Success",
+          "duration": 8.884597124999999,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -2086,13 +2092,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_277_col_19_001.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_277_col_19_001.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 6.58946375,
+          "duration": 4.773852208,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2104,8 +2110,10 @@
         },
         {
           "phase": "Test",
-          "duration": 15.807545875,
-          "process_status": "Success",
+          "duration": 8.99575675,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -2154,7 +2162,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.581744458,
+          "duration": 7.610405667,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2166,7 +2174,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.870310708,
+          "duration": 0.919569375,
           "process_status": {
             "Failure": 101
           },
@@ -2200,25 +2208,25 @@
           },
           "span": {
             "start": {
-              "line": 389,
-              "column": 25
+              "line": 393,
+              "column": 22
             },
             "end": {
-              "line": 389,
-              "column": 27
+              "line": 393,
+              "column": 24
             }
           },
-          "replacement": "<",
+          "replacement": "*=",
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_389_col_25.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_389_col_25.diff",
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_393_col_22_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_393_col_22_001.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 16.246202375,
+          "duration": 9.68792475,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2230,8 +2238,10 @@
         },
         {
           "phase": "Test",
-          "duration": 18.222718,
-          "process_status": "Success",
+          "duration": 10.334642666,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -2280,7 +2290,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.217060125,
+          "duration": 3.838300459,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2292,7 +2302,7 @@
         },
         {
           "phase": "Test",
-          "duration": 0.929303666,
+          "duration": 1.061335125,
           "process_status": {
             "Failure": 101
           },
@@ -2338,13 +2348,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_394_col_25.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_394_col_25.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 5.009137667,
+          "duration": 6.092675916,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2356,255 +2366,7 @@
         },
         {
           "phase": "Test",
-          "duration": 16.988333917,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 387,
-                "column": 5
-              },
-              "end": {
-                "line": 400,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 393,
-              "column": 22
-            },
-            "end": {
-              "line": 393,
-              "column": 24
-            }
-          },
-          "replacement": "*=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_393_col_22_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_393_col_22_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 5.059870958,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 17.79978325,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 387,
-                "column": 5
-              },
-              "end": {
-                "line": 400,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 398,
-              "column": 22
-            },
-            "end": {
-              "line": 398,
-              "column": 24
-            }
-          },
-          "replacement": "*=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_398_col_22_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_398_col_22_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 3.254647333,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 12.865182792,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 387,
-                "column": 5
-              },
-              "end": {
-                "line": 400,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 399,
-              "column": 20
-            },
-            "end": {
-              "line": 399,
-              "column": 21
-            }
-          },
-          "replacement": "^",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_399_col_20_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_20_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 4.819487792,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 12.398684875,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 468,
-                "column": 5
-              },
-              "end": {
-                "line": 471,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 470,
-              "column": 9
-            },
-            "end": {
-              "line": 470,
-              "column": 28
-            }
-          },
-          "replacement": "0",
-          "genre": "FnValue"
-        }
-      },
-      "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_470_col_9.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_470_col_9.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 3.495480042,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 0.666306083,
+          "duration": 13.342764875,
           "process_status": {
             "Failure": 101
           },
@@ -2623,40 +2385,40 @@
           "package": "slot_sim",
           "file": "rust-sim/src/rng.rs",
           "function": {
-            "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
+            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
             "return_type": "-> u64",
             "span": {
               "start": {
-                "line": 468,
+                "line": 387,
                 "column": 5
               },
               "end": {
-                "line": 471,
+                "line": 400,
                 "column": 6
               }
             }
           },
           "span": {
             "start": {
-              "line": 470,
-              "column": 9
+              "line": 389,
+              "column": 25
             },
             "end": {
-              "line": 470,
-              "column": 28
+              "line": 389,
+              "column": 27
             }
           },
-          "replacement": "1",
-          "genre": "FnValue"
+          "replacement": "<",
+          "genre": "BinaryOperator"
         }
       },
       "summary": "CaughtMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_470_col_9_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_470_col_9_001.diff",
+      "log_path": "log/rust-sim__src__rng.rs_line_389_col_25.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_389_col_25.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.127506833,
+          "duration": 17.905669375,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2668,7 +2430,71 @@
         },
         {
           "phase": "Test",
-          "duration": 0.605224667,
+          "duration": 11.885126959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 387,
+                "column": 5
+              },
+              "end": {
+                "line": 400,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 398,
+              "column": 22
+            },
+            "end": {
+              "line": 398,
+              "column": 24
+            }
+          },
+          "replacement": "*=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_398_col_22_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_398_col_22_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.710743875,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 8.754000291,
           "process_status": {
             "Failure": 101
           },
@@ -2720,7 +2546,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 21.886768375,
+          "duration": 5.347070958,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2732,8 +2558,390 @@
         },
         {
           "phase": "Test",
-          "duration": 60.050180792,
+          "duration": 60.044660791,
           "process_status": "Timeout",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 387,
+                "column": 5
+              },
+              "end": {
+                "line": 400,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 399,
+              "column": 20
+            },
+            "end": {
+              "line": 399,
+              "column": 21
+            }
+          },
+          "replacement": "^",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_399_col_20_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_20_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 7.0969655,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 12.751506833,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 468,
+                "column": 5
+              },
+              "end": {
+                "line": 471,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 470,
+              "column": 9
+            },
+            "end": {
+              "line": 470,
+              "column": 28
+            }
+          },
+          "replacement": "0",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_470_col_9.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_470_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.735390375,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.707344208,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 468,
+                "column": 5
+              },
+              "end": {
+                "line": 471,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 470,
+              "column": 9
+            },
+            "end": {
+              "line": 470,
+              "column": 28
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_470_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_470_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.209922958,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.814522417,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::random_int",
+            "return_type": "-> u32",
+            "span": {
+              "start": {
+                "line": 537,
+                "column": 5
+              },
+              "end": {
+                "line": 544,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 543,
+              "column": 9
+            },
+            "end": {
+              "line": 543,
+              "column": 44
+            }
+          },
+          "replacement": "0",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_543_col_9.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.623602167,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 8.006102792,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::random_int",
+            "return_type": "-> u32",
+            "span": {
+              "start": {
+                "line": 537,
+                "column": 5
+              },
+              "end": {
+                "line": 544,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 543,
+              "column": 9
+            },
+            "end": {
+              "line": 543,
+              "column": 44
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_543_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.490393083,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 7.46921925,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::random_int",
+            "return_type": "-> u32",
+            "span": {
+              "start": {
+                "line": 537,
+                "column": 5
+              },
+              "end": {
+                "line": 544,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 543,
+              "column": 24
+            },
+            "end": {
+              "line": 543,
+              "column": 25
+            }
+          },
+          "replacement": "+",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_543_col_24.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_24.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.498833459,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 7.719793417,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -2782,7 +2990,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 18.122305708,
+          "duration": 20.147615875,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2794,7 +3002,7 @@
         },
         {
           "phase": "Test",
-          "duration": 60.023517208,
+          "duration": 60.013702291,
           "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2844,7 +3052,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 18.0406855,
+          "duration": 18.681167333,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -2856,256 +3064,8 @@
         },
         {
           "phase": "Test",
-          "duration": 60.04624875,
+          "duration": 60.02810575,
           "process_status": "Timeout",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::random_int",
-            "return_type": "-> u32",
-            "span": {
-              "start": {
-                "line": 537,
-                "column": 5
-              },
-              "end": {
-                "line": 544,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 543,
-              "column": 9
-            },
-            "end": {
-              "line": 543,
-              "column": 44
-            }
-          },
-          "replacement": "1",
-          "genre": "FnValue"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_543_col_9_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_9_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 5.31873625,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 18.422154667,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::random_int",
-            "return_type": "-> u32",
-            "span": {
-              "start": {
-                "line": 537,
-                "column": 5
-              },
-              "end": {
-                "line": 544,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 543,
-              "column": 9
-            },
-            "end": {
-              "line": 543,
-              "column": 44
-            }
-          },
-          "replacement": "0",
-          "genre": "FnValue"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_543_col_9.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_9.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 5.459003541,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 18.931892125,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
-            "return_type": "-> u64",
-            "span": {
-              "start": {
-                "line": 387,
-                "column": 5
-              },
-              "end": {
-                "line": 400,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 399,
-              "column": 20
-            },
-            "end": {
-              "line": 399,
-              "column": 21
-            }
-          },
-          "replacement": "&",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "Timeout",
-      "log_path": "log/rust-sim__src__rng.rs_line_399_col_20.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_20.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 3.66868025,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 60.034562166,
-          "process_status": "Timeout",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::random_int",
-            "return_type": "-> u32",
-            "span": {
-              "start": {
-                "line": 537,
-                "column": 5
-              },
-              "end": {
-                "line": 544,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 543,
-              "column": 24
-            },
-            "end": {
-              "line": 543,
-              "column": 25
-            }
-          },
-          "replacement": "+",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_543_col_24.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_24.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 11.179765249999999,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 23.832916458,
-          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3148,13 +3108,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_543_col_24_001.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_543_col_24_001.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 11.234895792,
+          "duration": 3.5582751249999998,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3166,8 +3126,10 @@
         },
         {
           "phase": "Test",
-          "duration": 24.302819458,
-          "process_status": "Success",
+          "duration": 9.246185375,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3216,7 +3178,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 1.0723305,
+          "duration": 4.205342167,
           "process_status": {
             "Failure": 101
           },
@@ -3236,40 +3198,40 @@
           "package": "slot_sim",
           "file": "rust-sim/src/rng.rs",
           "function": {
-            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
-            "return_type": "-> u64",
+            "function_name": "SlotRng::random_bounded",
+            "return_type": "-> u32",
             "span": {
               "start": {
-                "line": 387,
+                "line": 546,
                 "column": 5
               },
               "end": {
-                "line": 400,
+                "line": 566,
                 "column": 6
               }
             }
           },
           "span": {
             "start": {
-              "line": 399,
-              "column": 13
+              "line": 552,
+              "column": 9
             },
             "end": {
-              "line": 399,
-              "column": 15
+              "line": 565,
+              "column": 10
             }
           },
-          "replacement": ">>",
-          "genre": "BinaryOperator"
+          "replacement": "0",
+          "genre": "FnValue"
         }
       },
-      "summary": "Timeout",
-      "log_path": "log/rust-sim__src__rng.rs_line_399_col_13.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_13.diff",
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_552_col_9.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_552_col_9.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.414621334,
+          "duration": 4.719577084,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3281,8 +3243,10 @@
         },
         {
           "phase": "Test",
-          "duration": 60.037008042,
-          "process_status": "Timeout",
+          "duration": 6.277281083,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3331,7 +3295,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 6.655771292,
+          "duration": 6.98248075,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3343,7 +3307,7 @@
         },
         {
           "phase": "Test",
-          "duration": 1.291933209,
+          "duration": 0.979036792,
           "process_status": {
             "Failure": 101
           },
@@ -3395,7 +3359,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 6.463823167,
+          "duration": 6.483829791,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3407,7 +3371,7 @@
         },
         {
           "phase": "Test",
-          "duration": 1.512163042,
+          "duration": 0.819187458,
           "process_status": {
             "Failure": 101
           },
@@ -3426,40 +3390,40 @@
           "package": "slot_sim",
           "file": "rust-sim/src/rng.rs",
           "function": {
-            "function_name": "SlotRng::random_bounded",
-            "return_type": "-> u32",
+            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+            "return_type": "-> u64",
             "span": {
               "start": {
-                "line": 546,
+                "line": 387,
                 "column": 5
               },
               "end": {
-                "line": 566,
+                "line": 400,
                 "column": 6
               }
             }
           },
           "span": {
             "start": {
-              "line": 552,
-              "column": 9
+              "line": 399,
+              "column": 20
             },
             "end": {
-              "line": 565,
-              "column": 10
+              "line": 399,
+              "column": 21
             }
           },
-          "replacement": "0",
-          "genre": "FnValue"
+          "replacement": "&",
+          "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_552_col_9.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_552_col_9.diff",
+      "summary": "Timeout",
+      "log_path": "log/rust-sim__src__rng.rs_line_399_col_20.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_20.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 5.103244791,
+          "duration": 6.181789333,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3471,8 +3435,8 @@
         },
         {
           "phase": "Test",
-          "duration": 25.393445083,
-          "process_status": "Success",
+          "duration": 60.006408333,
+          "process_status": "Timeout",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3521,7 +3485,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 4.048478834,
+          "duration": 3.640004167,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3533,7 +3497,7 @@
         },
         {
           "phase": "Test",
-          "duration": 1.244209625,
+          "duration": 1.135521833,
           "process_status": {
             "Failure": 101
           },
@@ -3585,7 +3549,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 5.963405667,
+          "duration": 4.6611245,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3597,72 +3561,10 @@
         },
         {
           "phase": "Test",
-          "duration": 1.247491875,
+          "duration": 1.443337875,
           "process_status": {
             "Failure": 101
           },
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::random_bounded",
-            "return_type": "-> u32",
-            "span": {
-              "start": {
-                "line": 546,
-                "column": 5
-              },
-              "end": {
-                "line": 566,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 552,
-              "column": 9
-            },
-            "end": {
-              "line": 565,
-              "column": 10
-            }
-          },
-          "replacement": "1",
-          "genre": "FnValue"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_552_col_9_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_552_col_9_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 6.1616715,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 28.613071292,
-          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3711,7 +3613,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 7.23342675,
+          "duration": 6.000482709,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3723,7 +3625,133 @@
         },
         {
           "phase": "Test",
-          "duration": 1.135182459,
+          "duration": 1.3738380000000001,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 387,
+                "column": 5
+              },
+              "end": {
+                "line": 400,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 399,
+              "column": 13
+            },
+            "end": {
+              "line": 399,
+              "column": 15
+            }
+          },
+          "replacement": ">>",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Timeout",
+      "log_path": "log/rust-sim__src__rng.rs_line_399_col_13.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_399_col_13.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.518310792,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 60.021041958,
+          "process_status": "Timeout",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::random_bounded",
+            "return_type": "-> u32",
+            "span": {
+              "start": {
+                "line": 546,
+                "column": 5
+              },
+              "end": {
+                "line": 566,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 552,
+              "column": 9
+            },
+            "end": {
+              "line": 565,
+              "column": 10
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_552_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_552_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 19.858017792,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 10.550146291,
           "process_status": {
             "Failure": 101
           },
@@ -3769,13 +3797,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_553_col_16.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_553_col_16.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 3.079640792,
+          "duration": 21.273357583,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3787,70 +3815,10 @@
         },
         {
           "phase": "Test",
-          "duration": 22.642268541,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::pick_weighted_index",
-            "return_type": "-> usize",
-            "span": {
-              "start": {
-                "line": 584,
-                "column": 5
-              },
-              "end": {
-                "line": 598,
-                "column": 6
-              }
-            }
+          "duration": 10.050745917,
+          "process_status": {
+            "Failure": 101
           },
-          "span": {
-            "start": {
-              "line": 587,
-              "column": 9
-            },
-            "end": {
-              "line": 597,
-              "column": 26
-            }
-          },
-          "replacement": "1",
-          "genre": "FnValue"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_587_col_9_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_587_col_9_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 9.488836333,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 28.805030708,
-          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3893,13 +3861,13 @@
           "genre": "FnValue"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_587_col_9.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_587_col_9.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 11.044680167,
+          "duration": 7.430010666,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3911,8 +3879,74 @@
         },
         {
           "phase": "Test",
-          "duration": 31.825479125,
+          "duration": 15.574946333,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::pick_weighted_index",
+            "return_type": "-> usize",
+            "span": {
+              "start": {
+                "line": 584,
+                "column": 5
+              },
+              "end": {
+                "line": 598,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 587,
+              "column": 9
+            },
+            "end": {
+              "line": 597,
+              "column": 26
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_587_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_587_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.175578667,
           "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 17.850004417,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -3955,13 +3989,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_588_col_38.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_588_col_38.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 10.533308917,
+          "duration": 6.314805208,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -3973,132 +4007,10 @@
         },
         {
           "phase": "Test",
-          "duration": 38.005230208,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::pick_weighted_index",
-            "return_type": "-> usize",
-            "span": {
-              "start": {
-                "line": 584,
-                "column": 5
-              },
-              "end": {
-                "line": 598,
-                "column": 6
-              }
-            }
+          "duration": 22.474595542,
+          "process_status": {
+            "Failure": 101
           },
-          "span": {
-            "start": {
-              "line": 588,
-              "column": 38
-            },
-            "end": {
-              "line": 588,
-              "column": 39
-            }
-          },
-          "replacement": "/",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_588_col_38_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_588_col_38_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 11.058902542,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 38.184861334,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        }
-      ]
-    },
-    {
-      "scenario": {
-        "Mutant": {
-          "package": "slot_sim",
-          "file": "rust-sim/src/rng.rs",
-          "function": {
-            "function_name": "SlotRng::pick_weighted_index",
-            "return_type": "-> usize",
-            "span": {
-              "start": {
-                "line": 584,
-                "column": 5
-              },
-              "end": {
-                "line": 598,
-                "column": 6
-              }
-            }
-          },
-          "span": {
-            "start": {
-              "line": 591,
-              "column": 18
-            },
-            "end": {
-              "line": 591,
-              "column": 20
-            }
-          },
-          "replacement": "/=",
-          "genre": "BinaryOperator"
-        }
-      },
-      "summary": "MissedMutant",
-      "log_path": "log/rust-sim__src__rng.rs_line_591_col_18_001.log",
-      "diff_path": "diff/rust-sim__src__rng.rs_line_591_col_18_001.diff",
-      "phase_results": [
-        {
-          "phase": "Build",
-          "duration": 7.865775042,
-          "process_status": "Success",
-          "argv": [
-            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
-            "test",
-            "--no-run",
-            "--verbose",
-            "--package=slot_sim@1.0.0"
-          ]
-        },
-        {
-          "phase": "Test",
-          "duration": 38.683681959,
-          "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -4141,13 +4053,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_591_col_18.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_591_col_18.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 11.154734334,
+          "duration": 7.652501792,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4159,8 +4071,138 @@
         },
         {
           "phase": "Test",
-          "duration": 38.811231417,
+          "duration": 24.491794083,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::pick_weighted_index",
+            "return_type": "-> usize",
+            "span": {
+              "start": {
+                "line": 584,
+                "column": 5
+              },
+              "end": {
+                "line": 598,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 588,
+              "column": 38
+            },
+            "end": {
+              "line": 588,
+              "column": 39
+            }
+          },
+          "replacement": "/",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_588_col_38_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_588_col_38_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 8.551541,
           "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 24.628061959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/rng.rs",
+          "function": {
+            "function_name": "SlotRng::pick_weighted_index",
+            "return_type": "-> usize",
+            "span": {
+              "start": {
+                "line": 584,
+                "column": 5
+              },
+              "end": {
+                "line": 598,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 591,
+              "column": 18
+            },
+            "end": {
+              "line": 591,
+              "column": 20
+            }
+          },
+          "replacement": "/=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__rng.rs_line_591_col_18_001.log",
+      "diff_path": "diff/rust-sim__src__rng.rs_line_591_col_18_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.235151375,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 24.862064458,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -4203,13 +4245,13 @@
           "genre": "BinaryOperator"
         }
       },
-      "summary": "MissedMutant",
+      "summary": "CaughtMutant",
       "log_path": "log/rust-sim__src__rng.rs_line_592_col_21.log",
       "diff_path": "diff/rust-sim__src__rng.rs_line_592_col_21.diff",
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 2.783716625,
+          "duration": 2.850340375,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4221,8 +4263,10 @@
         },
         {
           "phase": "Test",
-          "duration": 27.548284291999998,
-          "process_status": "Success",
+          "duration": 21.366943584,
+          "process_status": {
+            "Failure": 101
+          },
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
             "test",
@@ -4271,7 +4315,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 2.561950875,
+          "duration": 2.924704167,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4283,7 +4327,7 @@
         },
         {
           "phase": "Test",
-          "duration": 25.522477583,
+          "duration": 25.541172792,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4333,7 +4377,7 @@
       "phase_results": [
         {
           "phase": "Build",
-          "duration": 2.2837685,
+          "duration": 2.271832583,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4345,7 +4389,7 @@
         },
         {
           "phase": "Test",
-          "duration": 18.457837375,
+          "duration": 20.923893875,
           "process_status": "Success",
           "argv": [
             "/Users/vanvinklstudio/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo",
@@ -4358,8 +4402,8 @@
     }
   ],
   "total_mutants": 69,
-  "missed": 27,
-  "caught": 28,
+  "missed": 5,
+  "caught": 50,
   "timeout": 13,
   "unviable": 1,
   "success": 0

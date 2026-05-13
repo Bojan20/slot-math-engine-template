@@ -11,18 +11,40 @@ rust-sim/src/rng.rs:132:28: replace / with % in <impl RngBackend for Mulberry32B
 rust-sim/src/rng.rs:132:28: replace / with * in <impl RngBackend for Mulberry32Backend>::next_f64
 rust-sim/src/rng.rs:132:9: replace <impl RngBackend for Mulberry32Backend>::next_f64 -> f64 with 0.0
 rust-sim/src/rng.rs:132:9: replace <impl RngBackend for Mulberry32Backend>::next_f64 -> f64 with 1.0
-rust-sim/src/rng.rs:273:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:272:27: replace << with >> in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:273:19: replace ^= with |= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:274:19: replace ^= with |= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:273:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:274:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:275:19: replace ^= with |= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:276:19: replace ^= with |= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:276:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:277:19: replace ^= with |= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:277:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
 rust-sim/src/rng.rs:393:22: replace += with -= in <impl RngBackend for Philox4x32Backend>::next_u64
+rust-sim/src/rng.rs:393:22: replace += with *= in <impl RngBackend for Philox4x32Backend>::next_u64
 rust-sim/src/rng.rs:398:22: replace += with -= in <impl RngBackend for Philox4x32Backend>::next_u64
+rust-sim/src/rng.rs:394:25: replace >= with < in <impl RngBackend for Philox4x32Backend>::next_u64
+rust-sim/src/rng.rs:389:25: replace >= with < in <impl RngBackend for Philox4x32Backend>::next_u64
+rust-sim/src/rng.rs:398:22: replace += with *= in <impl RngBackend for Philox4x32Backend>::next_u64
 rust-sim/src/rng.rs:470:9: replace <impl RngBackend for Box<dyn RngBackend>>::next_u64 -> u64 with 0
 rust-sim/src/rng.rs:470:9: replace <impl RngBackend for Box<dyn RngBackend>>::next_u64 -> u64 with 1
+rust-sim/src/rng.rs:543:9: replace SlotRng::random_int -> u32 with 0
+rust-sim/src/rng.rs:543:9: replace SlotRng::random_int -> u32 with 1
+rust-sim/src/rng.rs:543:24: replace * with + in SlotRng::random_int
+rust-sim/src/rng.rs:543:24: replace * with / in SlotRng::random_int
+rust-sim/src/rng.rs:552:9: replace SlotRng::random_bounded -> u32 with 0
 rust-sim/src/rng.rs:572:38: replace * with + in SlotRng::pick_weighted
 rust-sim/src/rng.rs:572:38: replace * with / in SlotRng::pick_weighted
 rust-sim/src/rng.rs:575:18: replace -= with += in SlotRng::pick_weighted
 rust-sim/src/rng.rs:575:18: replace -= with /= in SlotRng::pick_weighted
 rust-sim/src/rng.rs:576:21: replace <= with > in SlotRng::pick_weighted
+rust-sim/src/rng.rs:552:9: replace SlotRng::random_bounded -> u32 with 1
+rust-sim/src/rng.rs:553:16: replace == with != in SlotRng::random_bounded
+rust-sim/src/rng.rs:587:9: replace SlotRng::pick_weighted_index -> usize with 0
+rust-sim/src/rng.rs:587:9: replace SlotRng::pick_weighted_index -> usize with 1
+rust-sim/src/rng.rs:588:38: replace * with + in SlotRng::pick_weighted_index
+rust-sim/src/rng.rs:591:18: replace -= with += in SlotRng::pick_weighted_index
+rust-sim/src/rng.rs:588:38: replace * with / in SlotRng::pick_weighted_index
+rust-sim/src/rng.rs:591:18: replace -= with /= in SlotRng::pick_weighted_index
+rust-sim/src/rng.rs:592:21: replace <= with > in SlotRng::pick_weighted_index
