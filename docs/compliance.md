@@ -79,9 +79,9 @@ not days.
 
 | Jurisdiction          | Authority         | Notable extra rules over GLI-11/19                                  | Engine knob                                |
 |-----------------------|-------------------|----------------------------------------------------------------------|--------------------------------------------|
-| United Kingdom        | UKGC              | HSM-backed RNG mandatory for live; player-protection (GAMSTOP)       | `jurisdiction/uk.ts`                       |
-| Malta                 | MGA               | HSM-backed RNG; quarterly audit reports                              | `jurisdiction/mt.ts`                       |
-| Germany               | GGL (formerly DSWV)| Bet caps, 1-spin/sec floor, deposit cap, mandatory tax integration   | `jurisdiction/de.ts`                       |
+| United Kingdom        | UKGC              | HSM-backed RNG mandatory for live; player-protection (GAMSTOP) — bridge in `src/crypto/hsm.ts` (`MockHSMProvider` ⚠️, real PKCS#11 driver TBD) | `jurisdiction/uk.ts`, `src/crypto/hsm.ts` |
+| Malta                 | MGA               | HSM-backed RNG; quarterly audit reports — bridge in `src/crypto/hsm.ts` (`MockHSMProvider` ⚠️, real PKCS#11 driver TBD) | `jurisdiction/mt.ts`, `src/crypto/hsm.ts` |
+| Germany               | GGL (formerly DSWV)| Bet caps, 1-spin/sec floor, deposit cap, mandatory tax integration; HSM-backed RNG via `src/crypto/hsm.ts` (`MockHSMProvider` ⚠️, real PKCS#11 driver TBD) | `jurisdiction/de.ts`, `src/crypto/hsm.ts` |
 | Sweden                | Spelinspektionen  | Real-name binding; bonus restrictions                                 | `jurisdiction/se.ts`                       |
 | Italy                 | ADM               | Centralized concession reporting; bet/cycle caps                      | `jurisdiction/it.ts`                       |
 | Spain                 | DGOJ              | Player-protection register integration                                | `jurisdiction/es.ts`                       |
