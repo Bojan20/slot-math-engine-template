@@ -1,0 +1,55 @@
+{
+  "backend": "mulberry32",
+  "seed_hex": "0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)",
+  "sample_bits": 1000000,
+  "tested_at": "2026-05-13T03:08:29.864Z",
+  "overall_pass": true,
+  "results": [
+    {
+      "name": "monobit",
+      "p": 0.9840433285299156,
+      "pass": true,
+      "sObs": 0.02,
+      "n": 1000000
+    },
+    {
+      "name": "block_frequency",
+      "p": 0.11266639777592617,
+      "pass": true,
+      "chi2": 1054.5200000000038,
+      "blocks": 1000,
+      "M": 1000
+    },
+    {
+      "name": "runs",
+      "p": 0.454459894413999,
+      "pass": true,
+      "Vn": 500374,
+      "pi": 0.49999,
+      "n": 1000000
+    },
+    {
+      "name": "longest_run",
+      "p": 0.6461169732648115,
+      "pass": true,
+      "chi2": 4.226039253437138,
+      "classes": [
+        8,
+        20,
+        28,
+        14,
+        17,
+        7,
+        6
+      ],
+      "M": 10000
+    },
+    {
+      "name": "cusum_forward",
+      "p": 0.7223862072021812,
+      "pass": true,
+      "z": 900,
+      "n": 1000000
+    }
+  ]
+}
