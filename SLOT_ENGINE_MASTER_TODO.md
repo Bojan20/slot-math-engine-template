@@ -22,8 +22,8 @@ Legenda:
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
 - **Tehnički dug** je još otvoren: `SymbolId` enum + `NUM_REELS=5` / `NUM_ROWS=3` legacy konstante i dalje žive u `src/config/` i `src/model/` paralelno sa IR-om.
-- **Landed kasnije (post-`477423b`):** windows-x64 CI grana (`b67a340`), 5 foundational docs (`architecture.md`/`rng.md`/`precision.md`/`glossary.md`/`compliance.md`) (`b67a340`), 20 generic-mechanic PAR samples (`b5d5372`+`3701af7`), P0 #4.2 non-linear PAR tuner (`5c43725`), TS-side NIST 5-test baseline + 4-backend reports + `HOWTO-fullsuite.md` (`6896eb3`), HSM bridge interface + `MockHSMProvider` (`54a3ba6`), bench reports (`9e1588b`), TS mutation baseline (`da2b88e`), 7 plugin behaviors (`2633274`).
-- **Nije commit-ovano:** vitest bench, Renovate/Dependabot, `research.md`, full external TestU01 BigCrush / NIST 15 / PractRand 2³⁸ captures (HOWTO landed; binarije TBD), PGO+BOLT pipeline, real PKCS#11 driver (MockHSMProvider landed), 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family, P0 #2 legacy `SymbolId` enum purge (164 references, 3-5h refactor — sledeća sesija).
+- **Landed kasnije (post-`477423b`):** windows-x64 CI grana (`b67a340`), 5 foundational docs (`architecture.md`/`rng.md`/`precision.md`/`glossary.md`/`compliance.md`) (`b67a340`), 20 generic-mechanic PAR samples (`b5d5372`+`3701af7`), P0 #4.2 non-linear PAR tuner (`5c43725`), TS-side NIST 5-test baseline + 4-backend reports + `HOWTO-fullsuite.md` (`6896eb3`), HSM bridge interface + `MockHSMProvider` (`54a3ba6`), bench reports (`9e1588b`), TS mutation baseline (`da2b88e`), 7 plugin behaviors (`2633274`), P0 #2 SymbolId enum purge → free-form string + IR loader (`f70581b`), P0 #10 HSM audit/health/audited-provider + sanitization helper (`03eef5b`), P0 #4 stability harness via PAR distribution stress (50 seeds × 20k spins, CoV ≤ 2.5%) (`03eef5b`→`d9d2bd8`).
+- **Nije commit-ovano:** vitest bench, Renovate/Dependabot, `research.md`, full external TestU01 BigCrush / NIST 15 / PractRand 2³⁸ captures (HOWTO landed; binarije TBD), PGO+BOLT pipeline, real PKCS#11 driver via `dlopen()`/N-API (audit/health monitor + MockHSMProvider landed), 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family.
 - **30 mechanic classes:** faza 12 commit-ovana kao **acid test mehanika** (sve fixture klase pokrivene preko `tests/fixtures/reference/*.json`). Sve fixture su **synthetic generic** — nijedan ne referencira komercijalnu igru ili vendor (template-safe).
 
 Mapa "commit → faza":
@@ -80,6 +80,9 @@ Mapa "commit → faza":
 | `54a3ba6`→`51a1f67` | P0 #10 (HSM bridge interface + MockHSMProvider) |
 | `5c43725`→`3701af7` | P0 #4.2 (non-linear PAR tuner — bisection, 20/20 within ±0.5%) |
 | `09f7f6e` | Wave 1 docs closure (`PARALLEL_TASK_LOG.md`) |
+| `e557b33`→`f70581b` | P0 #2 (SymbolId enum purge → free-form string + IR-derived loader) |
+| `4950337` | Wave 1 + B3 docs reconcile (commit→phase mapping refresh) |
+| `03eef5b`→`d9d2bd8` | P0 #10 hardening (HSMAuditLog + HSMHealthMonitor + HSMAuditedProvider + sanitize, 25 tests) + P0 #4 stability harness (`par-distribution-stress.mjs`, 50 seeds × 20k spins, CoV ≤ 2.5%) |
 
 ---
 
