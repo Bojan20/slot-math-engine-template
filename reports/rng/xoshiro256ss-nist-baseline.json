@@ -1,0 +1,55 @@
+{
+  "backend": "xoshiro256ss",
+  "seed_hex": "0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)",
+  "sample_bits": 1000000,
+  "tested_at": "2026-05-13T03:08:29.922Z",
+  "overall_pass": true,
+  "results": [
+    {
+      "name": "monobit",
+      "p": 0.6832736561457028,
+      "pass": true,
+      "sObs": 0.408,
+      "n": 1000000
+    },
+    {
+      "name": "block_frequency",
+      "p": 0.8027910319372799,
+      "pass": true,
+      "chi2": 961.7440000000033,
+      "blocks": 1000,
+      "M": 1000
+    },
+    {
+      "name": "runs",
+      "p": 0.8824741160031888,
+      "pass": true,
+      "Vn": 499926,
+      "pi": 0.500204,
+      "n": 1000000
+    },
+    {
+      "name": "longest_run",
+      "p": 0.5473960498561705,
+      "pass": true,
+      "chi2": 4.97210325100508,
+      "classes": [
+        6,
+        24,
+        25,
+        24,
+        9,
+        8,
+        4
+      ],
+      "M": 10000
+    },
+    {
+      "name": "cusum_forward",
+      "p": 0.8120757076561644,
+      "pass": true,
+      "z": 803,
+      "n": 1000000
+    }
+  ]
+}

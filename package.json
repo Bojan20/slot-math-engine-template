@@ -18,7 +18,8 @@
     "mutate:scoped": "npx stryker run stryker.scoped.config.mjs",
     "mutate:rust": "./scripts/rust-mutate.sh",
     "mutate:rust:whole": "./scripts/rust-mutate.sh --whole-crate",
-    "par-samples": "npm run build && node scripts/par-samples-generate.mjs"
+    "par-samples": "npm run build && node scripts/par-samples-generate.mjs",
+    "rng-quality": "npm run build && node scripts/rng-quality.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
