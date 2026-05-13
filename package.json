@@ -15,6 +15,7 @@
     "test:watch": "node --experimental-vm-modules node_modules/vitest/vitest.mjs",
     "lint": "tsc --noEmit",
     "mutate": "npx stryker run",
+    "mutate:scoped": "npx stryker run stryker.scoped.config.mjs",
     "mutate:rust": "./scripts/rust-mutate.sh",
     "mutate:rust:whole": "./scripts/rust-mutate.sh --whole-crate",
     "par-samples": "npm run build && node scripts/par-samples-generate.mjs"

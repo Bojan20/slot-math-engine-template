@@ -137,7 +137,7 @@ The compliance gaps map 1:1 to entries in the engineering P0 list:
 | #4 ✅ 20 generic PAR samples                   | Universality claim concrete; submission item #11   |
 | #5 ✅ Benchmark reports                         | Performance claims in submission narrative         |
 | #6 ✅ PAR PDF render                            | Required artefact format                           |
-| #8 ⚠️ Mutation score ≥ 95%                      | Rust `rng.rs` hot path now **90.9 % strict** (up from 50.9 % baseline; +22 caught via boundary + chi² + KAT tests). TS Stryker 61.1 %. Path to 95 % ≤ ½ dev-day. UKGC/MGA/DE threshold ≥ 80 % already exceeded on Rust. |
+| #8 ⚠️ Mutation score ≥ 95%                      | UKGC/MGA/DE ≥ 80 % threshold now exceeded on BOTH sides: **TS 85.38 % combined** (rg/session 89.25 %, sensitivity 78.91 %; +24 pp) + **Rust 90.9 % strict** (rng.rs; +40 pp). Path to 95 % ≤ ½ dev-day Rust + 1 dev-day TS. |
 | #10 ✅ HSM bridge                               | UK / MGA / DE jurisdiction unlock — `src/hsm/` shipped with AWS KMS, PKCS#11, Mock adapters + audit log |
 
 Until those are closed, the engine is **technically sound but not
