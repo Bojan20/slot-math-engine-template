@@ -137,7 +137,7 @@ The compliance gaps map 1:1 to entries in the engineering P0 list:
 | #4 ✅ 20 generic PAR samples                   | Universality claim concrete; submission item #11   |
 | #5 ✅ Benchmark reports                         | Performance claims in submission narrative         |
 | #6 ✅ PAR PDF render                            | Required artefact format                           |
-| #8 Mutation score ≥ 95%                        | Test-suite robustness claim                        |
+| #8 ⚠️ Mutation score ≥ 95%                      | TS Stryker baseline 61.1% + Rust cargo-mutants baseline 50.9% strict (rng.rs hot path); test-strength path to 95% documented in `reports/mutation/*/README.md` (~3 dev-days). |
 | #10 ✅ HSM bridge                               | UK / MGA / DE jurisdiction unlock — `src/hsm/` shipped with AWS KMS, PKCS#11, Mock adapters + audit log |
 
 Until those are closed, the engine is **technically sound but not

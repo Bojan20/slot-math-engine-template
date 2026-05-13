@@ -1,0 +1,13 @@
+rust-sim/src/rng.rs:124:9: replace <impl RngBackend for Mulberry32Backend>::next_u64 -> u64 with 0
+rust-sim/src/rng.rs:124:9: replace <impl RngBackend for Mulberry32Backend>::next_u64 -> u64 with 1
+rust-sim/src/rng.rs:200:9: replace <impl RngBackend for Pcg64Backend>::next_u64 -> u64 with 0
+rust-sim/src/rng.rs:126:20: replace | with & in <impl RngBackend for Mulberry32Backend>::next_u64
+rust-sim/src/rng.rs:200:9: replace <impl RngBackend for Pcg64Backend>::next_u64 -> u64 with 1
+rust-sim/src/rng.rs:126:13: replace << with >> in <impl RngBackend for Mulberry32Backend>::next_u64
+rust-sim/src/rng.rs:271:9: replace <impl RngBackend for Xoshiro256SSBackend>::next_u64 -> u64 with 0
+rust-sim/src/rng.rs:271:9: replace <impl RngBackend for Xoshiro256SSBackend>::next_u64 -> u64 with 1
+rust-sim/src/rng.rs:275:19: replace ^= with &= in <impl RngBackend for Xoshiro256SSBackend>::next_u64
+rust-sim/src/rng.rs:389:9: replace <impl RngBackend for Philox4x32Backend>::next_u64 -> u64 with 0
+rust-sim/src/rng.rs:389:9: replace <impl RngBackend for Philox4x32Backend>::next_u64 -> u64 with 1
+rust-sim/src/rng.rs:399:20: replace | with & in <impl RngBackend for Philox4x32Backend>::next_u64
+rust-sim/src/rng.rs:399:13: replace << with >> in <impl RngBackend for Philox4x32Backend>::next_u64

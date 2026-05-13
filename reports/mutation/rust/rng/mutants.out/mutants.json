@@ -1,0 +1,2072 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 9
+      },
+      "end": {
+        "line": 31,
+        "column": 75
+      }
+    },
+    "replacement": "0.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 9
+      },
+      "end": {
+        "line": 31,
+        "column": 75
+      }
+    },
+    "replacement": "1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 9
+      },
+      "end": {
+        "line": 31,
+        "column": 75
+      }
+    },
+    "replacement": "-1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 42
+      },
+      "end": {
+        "line": 31,
+        "column": 43
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 42
+      },
+      "end": {
+        "line": 31,
+        "column": 43
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 27
+      },
+      "end": {
+        "line": 31,
+        "column": 29
+      }
+    },
+    "replacement": "<<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 53
+      },
+      "end": {
+        "line": 31,
+        "column": 54
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 53
+      },
+      "end": {
+        "line": 31,
+        "column": 54
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "RngBackend::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 27,
+          "column": 5
+        },
+        "end": {
+          "line": 32,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 61
+      },
+      "end": {
+        "line": 31,
+        "column": 63
+      }
+    },
+    "replacement": ">>",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 122,
+          "column": 5
+        },
+        "end": {
+          "line": 127,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 124,
+        "column": 9
+      },
+      "end": {
+        "line": 126,
+        "column": 24
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 122,
+          "column": 5
+        },
+        "end": {
+          "line": 127,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 124,
+        "column": 9
+      },
+      "end": {
+        "line": 126,
+        "column": 24
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 122,
+          "column": 5
+        },
+        "end": {
+          "line": 127,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 126,
+        "column": 20
+      },
+      "end": {
+        "line": 126,
+        "column": 21
+      }
+    },
+    "replacement": "&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 122,
+          "column": 5
+        },
+        "end": {
+          "line": 127,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 126,
+        "column": 20
+      },
+      "end": {
+        "line": 126,
+        "column": 21
+      }
+    },
+    "replacement": "^",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 122,
+          "column": 5
+        },
+        "end": {
+          "line": 127,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 126,
+        "column": 13
+      },
+      "end": {
+        "line": 126,
+        "column": 15
+      }
+    },
+    "replacement": ">>",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 129,
+          "column": 5
+        },
+        "end": {
+          "line": 133,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 132,
+        "column": 9
+      },
+      "end": {
+        "line": 132,
+        "column": 45
+      }
+    },
+    "replacement": "0.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 129,
+          "column": 5
+        },
+        "end": {
+          "line": 133,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 132,
+        "column": 9
+      },
+      "end": {
+        "line": 132,
+        "column": 45
+      }
+    },
+    "replacement": "1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 129,
+          "column": 5
+        },
+        "end": {
+          "line": 133,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 132,
+        "column": 9
+      },
+      "end": {
+        "line": 132,
+        "column": 45
+      }
+    },
+    "replacement": "-1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 129,
+          "column": 5
+        },
+        "end": {
+          "line": 133,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 132,
+        "column": 28
+      },
+      "end": {
+        "line": 132,
+        "column": 29
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Mulberry32Backend>::next_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 129,
+          "column": 5
+        },
+        "end": {
+          "line": 133,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 132,
+        "column": 28
+      },
+      "end": {
+        "line": 132,
+        "column": 29
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Pcg64Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 198,
+          "column": 5
+        },
+        "end": {
+          "line": 203,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 9
+      },
+      "end": {
+        "line": 202,
+        "column": 26
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Pcg64Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 198,
+          "column": 5
+        },
+        "end": {
+          "line": 203,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 9
+      },
+      "end": {
+        "line": 202,
+        "column": 26
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 271,
+        "column": 9
+      },
+      "end": {
+        "line": 279,
+        "column": 15
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 271,
+        "column": 9
+      },
+      "end": {
+        "line": 279,
+        "column": 15
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 272,
+        "column": 27
+      },
+      "end": {
+        "line": 272,
+        "column": 29
+      }
+    },
+    "replacement": ">>",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 273,
+        "column": 19
+      },
+      "end": {
+        "line": 273,
+        "column": 21
+      }
+    },
+    "replacement": "|=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 273,
+        "column": 19
+      },
+      "end": {
+        "line": 273,
+        "column": 21
+      }
+    },
+    "replacement": "&=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 274,
+        "column": 19
+      },
+      "end": {
+        "line": 274,
+        "column": 21
+      }
+    },
+    "replacement": "|=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 274,
+        "column": 19
+      },
+      "end": {
+        "line": 274,
+        "column": 21
+      }
+    },
+    "replacement": "&=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 275,
+        "column": 19
+      },
+      "end": {
+        "line": 275,
+        "column": 21
+      }
+    },
+    "replacement": "|=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 275,
+        "column": 19
+      },
+      "end": {
+        "line": 275,
+        "column": 21
+      }
+    },
+    "replacement": "&=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 276,
+        "column": 19
+      },
+      "end": {
+        "line": 276,
+        "column": 21
+      }
+    },
+    "replacement": "|=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 276,
+        "column": 19
+      },
+      "end": {
+        "line": 276,
+        "column": 21
+      }
+    },
+    "replacement": "&=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 277,
+        "column": 19
+      },
+      "end": {
+        "line": 277,
+        "column": 21
+      }
+    },
+    "replacement": "|=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Xoshiro256SSBackend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 269,
+          "column": 5
+        },
+        "end": {
+          "line": 280,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 277,
+        "column": 19
+      },
+      "end": {
+        "line": 277,
+        "column": 21
+      }
+    },
+    "replacement": "&=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 389,
+        "column": 9
+      },
+      "end": {
+        "line": 399,
+        "column": 24
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 389,
+        "column": 9
+      },
+      "end": {
+        "line": 399,
+        "column": 24
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 389,
+        "column": 25
+      },
+      "end": {
+        "line": 389,
+        "column": 27
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 393,
+        "column": 22
+      },
+      "end": {
+        "line": 393,
+        "column": 24
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 393,
+        "column": 22
+      },
+      "end": {
+        "line": 393,
+        "column": 24
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 394,
+        "column": 25
+      },
+      "end": {
+        "line": 394,
+        "column": 27
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 398,
+        "column": 22
+      },
+      "end": {
+        "line": 398,
+        "column": 24
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 398,
+        "column": 22
+      },
+      "end": {
+        "line": 398,
+        "column": 24
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 399,
+        "column": 20
+      },
+      "end": {
+        "line": 399,
+        "column": 21
+      }
+    },
+    "replacement": "&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 399,
+        "column": 20
+      },
+      "end": {
+        "line": 399,
+        "column": 21
+      }
+    },
+    "replacement": "^",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Philox4x32Backend>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 387,
+          "column": 5
+        },
+        "end": {
+          "line": 400,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 399,
+        "column": 13
+      },
+      "end": {
+        "line": 399,
+        "column": 15
+      }
+    },
+    "replacement": ">>",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 468,
+          "column": 5
+        },
+        "end": {
+          "line": 471,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 470,
+        "column": 9
+      },
+      "end": {
+        "line": 470,
+        "column": 28
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "<impl RngBackend for Box<dyn RngBackend>>::next_u64",
+      "return_type": "-> u64",
+      "span": {
+        "start": {
+          "line": 468,
+          "column": 5
+        },
+        "end": {
+          "line": 471,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 470,
+        "column": 9
+      },
+      "end": {
+        "line": 470,
+        "column": 28
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_int",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 537,
+          "column": 5
+        },
+        "end": {
+          "line": 544,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 543,
+        "column": 9
+      },
+      "end": {
+        "line": 543,
+        "column": 44
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_int",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 537,
+          "column": 5
+        },
+        "end": {
+          "line": 544,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 543,
+        "column": 9
+      },
+      "end": {
+        "line": 543,
+        "column": 44
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_int",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 537,
+          "column": 5
+        },
+        "end": {
+          "line": 544,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 543,
+        "column": 24
+      },
+      "end": {
+        "line": 543,
+        "column": 25
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_int",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 537,
+          "column": 5
+        },
+        "end": {
+          "line": 544,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 543,
+        "column": 24
+      },
+      "end": {
+        "line": 543,
+        "column": 25
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_bounded",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 546,
+          "column": 5
+        },
+        "end": {
+          "line": 566,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 552,
+        "column": 9
+      },
+      "end": {
+        "line": 565,
+        "column": 10
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_bounded",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 546,
+          "column": 5
+        },
+        "end": {
+          "line": 566,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 552,
+        "column": 9
+      },
+      "end": {
+        "line": 565,
+        "column": 10
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::random_bounded",
+      "return_type": "-> u32",
+      "span": {
+        "start": {
+          "line": 546,
+          "column": 5
+        },
+        "end": {
+          "line": 566,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 553,
+        "column": 16
+      },
+      "end": {
+        "line": 553,
+        "column": 18
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 571,
+        "column": 9
+      },
+      "end": {
+        "line": 581,
+        "column": 40
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 572,
+        "column": 38
+      },
+      "end": {
+        "line": 572,
+        "column": 39
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 572,
+        "column": 38
+      },
+      "end": {
+        "line": 572,
+        "column": 39
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 575,
+        "column": 18
+      },
+      "end": {
+        "line": 575,
+        "column": 20
+      }
+    },
+    "replacement": "+=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 575,
+        "column": 18
+      },
+      "end": {
+        "line": 575,
+        "column": 20
+      }
+    },
+    "replacement": "/=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted",
+      "return_type": "-> T",
+      "span": {
+        "start": {
+          "line": 568,
+          "column": 5
+        },
+        "end": {
+          "line": 582,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 576,
+        "column": 21
+      },
+      "end": {
+        "line": 576,
+        "column": 23
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 587,
+        "column": 9
+      },
+      "end": {
+        "line": 597,
+        "column": 26
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 587,
+        "column": 9
+      },
+      "end": {
+        "line": 597,
+        "column": 26
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 588,
+        "column": 38
+      },
+      "end": {
+        "line": 588,
+        "column": 39
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 588,
+        "column": 38
+      },
+      "end": {
+        "line": 588,
+        "column": 39
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 591,
+        "column": 18
+      },
+      "end": {
+        "line": 591,
+        "column": 20
+      }
+    },
+    "replacement": "+=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 591,
+        "column": 18
+      },
+      "end": {
+        "line": 591,
+        "column": 20
+      }
+    },
+    "replacement": "/=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 592,
+        "column": 21
+      },
+      "end": {
+        "line": 592,
+        "column": 23
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 597,
+        "column": 23
+      },
+      "end": {
+        "line": 597,
+        "column": 24
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/rng.rs",
+    "function": {
+      "function_name": "SlotRng::pick_weighted_index",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 584,
+          "column": 5
+        },
+        "end": {
+          "line": 598,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 597,
+        "column": 23
+      },
+      "end": {
+        "line": 597,
+        "column": 24
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  }
+]

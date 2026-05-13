@@ -41,3 +41,9 @@ yarn-debug.log*
 yarn-error.log*
 .cache/
 .tmp/
+
+# ─── Mutation testing fat artifacts (per-mutant logs + diffs are ~44 MB) ────
+reports/mutation/rust/*/mutants.out/log/
+reports/mutation/rust/*/mutants.out/diff/
+reports/mutation/rust/*/mutants.out/lock.json
+reports/mutation/rust/*/mutants.out/debug.log

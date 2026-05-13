@@ -1,0 +1,1 @@
+rust-sim/src/rng.rs:571:9: replace SlotRng::pick_weighted -> T with Default::default()
