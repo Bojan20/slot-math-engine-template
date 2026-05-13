@@ -191,6 +191,84 @@ share semantics but the two implementations diverge in micro-detail
 
 ---
 
+### HSM-backed
+
+UK / MGA / DE jurisdictions require *hardware-backed* RNG for live
+deployment (GLI-19 §4.2, UKGC RTS-7, MGA Directive 2 §7.4).  The
+engine exposes this through `src/crypto/hsm.ts`:
+
+```ts
+interface HSMProvider {
+  open(opts: HSMOpenOptions): Promise<HSMSession>;
+}
+interface HSMSession {
+  generateRandomBytes(n: number): Promise<Uint8Array>;
+  healthCheck(): Promise<{ ok: boolean; latencyMs: number; vendor: string; serialNo?: string }>;
+  close(): Promise<void>;
+}
+```
+
+A `MockHSMProvider` (deterministic, ChaCha20-backed, no native deps)
+ships today so the engine integrates without waiting for the real
+PKCS#11 driver.  The real driver (nCipher / Thales Luna / Utimaco /
+SoftHSM) drops in by implementing `HSMProvider` — no spin-loop edits.
+
+| Property           | Value                                                                    |
+|--------------------|---------------------------------------------------------------------------|
+| State (mock)       | ChaCha20Rng (32-byte key + 12-byte nonce derived from seed)               |
+| State (PKCS#11)    | Device-internal — engine pulls 4 KiB chunks via `C_GenerateRandom`         |
+| Period (mock)      | 2²⁵⁶ (ChaCha20 keystream over 2⁶⁴ blocks of 64 bytes)                     |
+| Period (PKCS#11)   | Device-defined — usually true-RNG, no period                              |
+| Splitting protocol | parent's next u64 mixed with nonce → fresh ChaCha20 seed (in-process)     |
+| Refill granularity | 4 KiB (`HSM_REFILL_BYTES`) — matches nCipher/Luna page size               |
+
+**IR usage** — a future schema bump will accept `rng.kind = "hsm_pkcs11"`.
+Until then, callers wire the provider directly:
+
+```ts
+import { createRngAsync } from './src/rng/RngFactory.js';
+import { MockHSMProvider } from './src/crypto/hsm.js';
+
+const rng = await createRngAsync('hsm_pkcs11', seed, {
+  provider: new MockHSMProvider(),       // swap to Pkcs11Provider in prod
+  openOpts: { slot: 0, pin: process.env.HSM_PIN, mechanism: 'ECDSA_P256' },
+  fallbackForbidden: true,               // live tenants MUST set this
+});
+```
+
+**Fallback rule.**  If `provider` is missing or `healthCheck.ok === false`,
+the factory emits a `console.warn` and falls back to ChaCha20 keyed
+from the IR seed.  This is **dev-only**.  Live tenants under UK/MGA/DE
+must set `fallbackForbidden: true` **or** `process.env.HSM_FALLBACK_FORBIDDEN=1`
+so the warning becomes a hard throw — the tenant refuses to boot
+rather than silently downgrade to software RNG.
+
+**Sync vs async.**  `RngBackend.next*` methods are synchronous (the
+spin loop must not await).  `HSMBackedRngBackend` prefetches a 4 KiB
+chunk in the async factory then serves it from a buffer.  When the
+buffer drains:
+
+- `MockHSMProvider` (and any other `SyncCapableHSMSession`) refills
+  in-process, no await.
+- Real PKCS#11 providers throw `synchronous underrun` — the caller
+  MUST schedule `rng.refill()` calls async between batches.
+
+**Real-driver integration path** (intentionally out of this PR):
+
+1. Add `Pkcs11Provider` in `src/crypto/hsm.ts` implementing
+   `HSMProvider.open` by `dlopen()`-ing the vendor's PKCS#11 .so/.dll
+   (libcknfast.so / libCryptoki2_64.so / libsofthsm2.so) via a Node
+   N-API addon — no native deps in this PR.
+2. Map `mechanism` to `CKM_*` on the C side; route
+   `generateRandomBytes` → `C_GenerateRandom`, `healthCheck` →
+   `C_GetTokenInfo`.
+3. Wire the provider into `createRngAsync` via the existing
+   `HsmRngFactoryConfig.provider` slot.
+4. Add a `tests/hsm_pkcs11_live.test.ts` gated on `SOFTHSM_PIN`
+   environment variable for CI runs against SoftHSM.
+
+---
+
 ## Adding a new backend
 
 1. Implement the trait in `rust-sim/src/rng.rs::backends::*` and the
