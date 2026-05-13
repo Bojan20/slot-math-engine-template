@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-12T22:33:00.465Z",
+  "generatedAt": "2026-05-13T03:28:56.821Z",
   "configHash": null,
   "game": {
     "name": "Complex 6x4 Variable-Rows",
@@ -16,65 +16,71 @@
     "spins": 100000,
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
-    "paytableScaleFactor": 0.0000018383518646486323,
-    "preScaleRTP": 522206.8845800021
+    "paytableScaleFactor": 0.0000016314854642676238,
+    "preScaleRTP": 527750.1446760009,
+    "nonLinearTuner": {
+      "iterations": 6,
+      "converged": true,
+      "finalScale": 0.0000016314854642676238
+    }
   },
   "results": {
-    "observedRTP": 1.0614132441998896,
-    "rtpPercent": 106.14132441998896,
+    "observedRTP": 0.9574834520198652,
+    "rtpPercent": 95.74834520198652,
     "errorMargin": 0.006198064213930023,
-    "ci95Lower": 1.0552151799859595,
-    "ci95Upper": 1.0676113084138197,
+    "ci95Lower": 0.9512853878059352,
+    "ci95Upper": 0.9636815162337952,
     "rtpBreakdown": {
-      "base": 0.000026420701081136905,
-      "free_spins": 0.03879551922118771,
-      "hold_and_win": 0.09597,
-      "cascade": 0.9284016872958737,
+      "base": 0.000021128544347570578,
+      "free_spins": 0.03398958441977539,
+      "hold_and_win": 0.09562,
+      "cascade": 0.8189739782842067,
       "pick": 0,
       "wheel": 0,
       "respin": 0,
-      "gamble": -0.0017803830182552907
+      "gamble": 0.008878760771526974
     },
-    "hitRate": 0.45417,
-    "deadSpinRate": 0.54583,
-    "maxObservedWin": 300.06191569080136
+    "hitRate": 0.45453,
+    "deadSpinRate": 0.54547,
+    "maxObservedWin": 266.4636735698813
   },
   "volatility": {},
   "features": [
     {
       "id": "free_spins",
       "name": "Free Spins",
-      "triggerRate": 0.22730000000000003,
+      "triggerRate": 0.22641999999999998,
       "frequency": "1 in 4",
-      "rtpContribution": 0.03879551922118771
+      "rtpContribution": 0.03398958441977539
     },
     {
       "id": "hold_and_win",
       "name": "Hold And Win",
-      "triggerRate": 0.00224,
-      "frequency": "1 in 446",
-      "rtpContribution": 0.09597
+      "triggerRate": 0.00232,
+      "frequency": "1 in 431",
+      "rtpContribution": 0.09562
     },
     {
       "id": "cascade",
       "name": "Cascade",
-      "triggerRate": 0.87038,
+      "triggerRate": 0.8702699999999999,
       "frequency": "1 in 1",
-      "rtpContribution": 0.9284016872958737
+      "rtpContribution": 0.8189739782842067
     },
     {
       "id": "gamble",
       "name": "Gamble",
-      "triggerRate": 0.8947700000000001,
+      "triggerRate": 0.89517,
       "frequency": "1 in 1",
-      "rtpContribution": -0.0017803830182552907
+      "rtpContribution": 0.008878760771526974
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Variable-Rows; mechanic: variable_ways.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 1.8384e-6 to match target_rtp = 96.00% (pre-scale observed RTP = 52220688.46%)."
+    "Two-pass auto-scale: paytable multiplied by 1.6315e-6 to match target_rtp = 96.00% (pre-scale observed RTP = 52775014.47%).",
+    "Non-linear PAR tuner (P0 #4.2): 6 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
   ],
   "compliance": {
     "standard": "GLI-16",

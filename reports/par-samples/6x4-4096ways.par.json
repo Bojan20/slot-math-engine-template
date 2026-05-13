@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-12T22:31:40.594Z",
+  "generatedAt": "2026-05-13T03:26:18.945Z",
   "configHash": null,
   "game": {
     "name": "6x4 4096 Ways",
@@ -16,20 +16,25 @@
     "spins": 100000,
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
-    "paytableScaleFactor": 0.00006613989367839612,
-    "preScaleRTP": 14514.689193000224
+    "paytableScaleFactor": 0.00006518124954186845,
+    "preScaleRTP": 14514.689193000224,
+    "nonLinearTuner": {
+      "iterations": 2,
+      "converged": true,
+      "finalScale": 0.00006518124954186845
+    }
   },
   "results": {
-    "observedRTP": 0.9741190661046689,
-    "rtpPercent": 97.41190661046689,
+    "observedRTP": 0.9602046579523328,
+    "rtpPercent": 96.02046579523328,
     "errorMargin": 0.006198064213930023,
-    "ci95Lower": 0.9679210018907389,
-    "ci95Upper": 0.9803171303185989,
+    "ci95Lower": 0.9540065937384028,
+    "ci95Upper": 0.9664027221662628,
     "rtpBreakdown": {
       "base": 0,
       "free_spins": 0,
       "hold_and_win": 0.01412,
-      "cascade": 0.9599990661046705,
+      "cascade": 0.9460846579523332,
       "pick": 0,
       "wheel": 0,
       "respin": 0,
@@ -37,7 +42,7 @@
     },
     "hitRate": 0.89768,
     "deadSpinRate": 0.10231999999999997,
-    "maxObservedWin": 116.37975691650583
+    "maxObservedWin": 114.69292669387173
   },
   "volatility": {},
   "features": [
@@ -53,14 +58,15 @@
       "name": "Cascade",
       "triggerRate": 0.8975299999999999,
       "frequency": "1 in 1",
-      "rtpContribution": 0.9599990661046705
+      "rtpContribution": 0.9460846579523332
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Ways; mechanic: ways.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 6.6140e-5 to match target_rtp = 96.00% (pre-scale observed RTP = 1451468.92%)."
+    "Two-pass auto-scale: paytable multiplied by 6.5181e-5 to match target_rtp = 96.00% (pre-scale observed RTP = 1451468.92%).",
+    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
   ],
   "compliance": {
     "standard": "GLI-16",
