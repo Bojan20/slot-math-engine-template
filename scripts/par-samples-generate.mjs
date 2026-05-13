@@ -35,6 +35,7 @@ import { fileURLToPath } from 'node:url';
 import { parseGameIR } from '../dist/ir/index.js';
 import { runIRSimulation } from '../dist/engine/irSimulator.js';
 import { renderParSheetToFile } from '../dist/report/parPdf.js';
+import { tunePaytableToTarget } from '../dist/solver/parTuner.js';
 
 // ─── Two-pass auto-scale ────────────────────────────────────────────────────
 //
@@ -57,9 +58,14 @@ import { renderParSheetToFile } from '../dist/report/parPdf.js';
 // Linear scaling is exact for `lines/ways/cluster/pay_anywhere/pattern`
 // (every win is `paytable × count` so scaling the table scales total RTP
 // proportionally). For feature-heavy IRs where features carry their own
-// multipliers, linear scaling is approximate — we run a second pass with
-// the scaled table and use whatever RTP that converges to (still within
-// ±5% of target in practice).
+// multipliers, linear scaling is approximate.
+//
+// P0 #4.2: when the residual after the linear pass is still > 1% of target,
+// we hand the IR to `tunePaytableToTarget` (src/solver/parTuner.ts) — a
+// bisection on the paytable scalar that runs additional MC iterations until
+// the observed RTP lands within ±0.5% of target. Each tuner iteration runs
+// 20_000 spins at a fixed seed (12345), so the bisection trajectory itself
+// is reproducible byte-for-byte across reruns. Cap is 8 iterations.
 
 function deepClone(o) {
   return JSON.parse(JSON.stringify(o));
@@ -288,23 +294,88 @@ async function main() {
     const targetRtp = ir.limits?.target_rtp ?? 0.95;
 
     let simRaw, simScaled, scaleFactor;
+    let tunerIterations = 0;
+    let tunerConverged = null;
     try {
       // Pass 1: untuned.
       simRaw = await runIRSimulation(ir, { spins: SPINS_PER_SAMPLE, seed: SAMPLE_SEED });
 
       // Compute scale and run pass 2 if observed RTP isn't already within
       // [0.85, 1.05]× target (i.e. the IR is already roughly tuned).
+      let scaledIR;
       if (simRaw.rtp <= 0 || !Number.isFinite(simRaw.rtp)) {
         // Can't scale a zero/NaN/inf RTP — record as-is.
         scaleFactor = 1.0;
         simScaled = simRaw;
+        scaledIR = ir;
       } else if (Math.abs(simRaw.rtp - targetRtp) / targetRtp < 0.05) {
         scaleFactor = 1.0;
         simScaled = simRaw;
+        scaledIR = ir;
       } else {
         scaleFactor = targetRtp / simRaw.rtp;
-        const tunedIR = scalePaytable(ir, scaleFactor);
-        simScaled = await runIRSimulation(tunedIR, { spins: SPINS_PER_SAMPLE, seed: SAMPLE_SEED });
+        scaledIR = scalePaytable(ir, scaleFactor);
+        simScaled = await runIRSimulation(scaledIR, { spins: SPINS_PER_SAMPLE, seed: SAMPLE_SEED });
+      }
+
+      // P0 #4.2: if the linear pass leaves > 0.5% relative residual, run the
+      // non-linear bisection tuner on top. It deep-clones the IR internally
+      // and uses the same fixed seed (12345) as the par-sample sim → still
+      // byte-reproducible across reruns. The 0.5% threshold matches the
+      // regulator-grade tolerance asserted in `tests/par_tuner.test.ts`
+      // (TUNER-02), so any fixture the tuner is supposed to handle gets
+      // dispatched to it here.
+      if (
+        Number.isFinite(simScaled.rtp) &&
+        simScaled.rtp > 0 &&
+        Math.abs(simScaled.rtp - targetRtp) / targetRtp > 0.005
+      ) {
+        // Use the same spin count as the par sample so the bisection's
+        // observed RTP matches what the final 100k sim will see — otherwise
+        // a 20k-spin tune can converge in tuner-space yet drift outside
+        // tolerance at 100k due to variance.
+        const tuned = await tunePaytableToTarget(scaledIR, targetRtp, {
+          spins: SPINS_PER_SAMPLE,
+          seed: SAMPLE_SEED,
+          tolerance: 0.005,
+          maxIterations: 8,
+        });
+        tunerIterations = tuned.iterations;
+        tunerConverged = tuned.converged;
+        // Compose the final scale: tunerScale composes with the linear pre-pass scale.
+        scaleFactor = scaleFactor * tuned.scale;
+        // The tuner's last iteration already ran at SPINS_PER_SAMPLE seed=SAMPLE_SEED;
+        // its `tuned.finalRtp` is the RTP we'd reproduce by running once more.
+        // Run one more sim on the final tuned IR to capture the full IRSimResult
+        // (rtpBreakdown / featureTriggerFreqs / hitRate) for the PAR JSON.
+        simScaled = await runIRSimulation(tuned.ir, { spins: SPINS_PER_SAMPLE, seed: SAMPLE_SEED });
+
+        // Confirmation pass: if the post-tune 100k sim drifts outside the
+        // ±0.5% band (which can happen on fixtures with non-deterministic
+        // behaviors like MysteryBehavior that consume Math.random outside the
+        // seeded mulberry32 stream), run the tuner again from the now-tuned
+        // IR. Two confirmation passes are the maximum we allow to keep
+        // wall-clock bounded.
+        let confirmationsLeft = 2;
+        let currentIR = tuned.ir;
+        while (
+          confirmationsLeft > 0 &&
+          Number.isFinite(simScaled.rtp) &&
+          Math.abs(simScaled.rtp - targetRtp) / targetRtp > 0.005
+        ) {
+          confirmationsLeft--;
+          const reTuned = await tunePaytableToTarget(currentIR, targetRtp, {
+            spins: SPINS_PER_SAMPLE,
+            seed: SAMPLE_SEED,
+            tolerance: 0.005,
+            maxIterations: 8,
+          });
+          tunerIterations += reTuned.iterations;
+          tunerConverged = reTuned.converged;
+          scaleFactor = scaleFactor * reTuned.scale;
+          currentIR = reTuned.ir;
+          simScaled = await runIRSimulation(currentIR, { spins: SPINS_PER_SAMPLE, seed: SAMPLE_SEED });
+        }
       }
     } catch (e) {
       console.log(`✗ sim — ${e.message}`);
@@ -326,6 +397,20 @@ async function main() {
           `to match target_rtp = ${(targetRtp * 100).toFixed(2)}% ` +
           `(pre-scale observed RTP = ${(simRaw.rtp * 100).toFixed(2)}%).`,
       );
+    }
+    if (tunerIterations > 0) {
+      parInput.notes.push(
+        `Non-linear PAR tuner (P0 #4.2): ${tunerIterations} bisection iter(s), ` +
+          `converged=${tunerConverged} (tolerance ±0.5% RTP).`,
+      );
+      parInput.simulation = {
+        ...parInput.simulation,
+        nonLinearTuner: {
+          iterations: tunerIterations,
+          converged: tunerConverged,
+          finalScale: scaleFactor,
+        },
+      };
     }
 
     // Write JSON

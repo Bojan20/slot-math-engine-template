@@ -3,3 +3,4 @@
  */
 
 export * from './rtpSolver.js';
+export * from './parTuner.js';

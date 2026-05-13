@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-12T22:33:30.259Z",
+  "generatedAt": "2026-05-13T03:29:29.662Z",
   "configHash": null,
   "game": {
     "name": "Hold and Win Classic",
@@ -16,17 +16,22 @@
     "spins": 100000,
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
-    "paytableScaleFactor": 0.5903430938774755,
-    "preScaleRTP": 1.6261729999999728
+    "paytableScaleFactor": 0.5780394716529066,
+    "preScaleRTP": 1.6261729999999728,
+    "nonLinearTuner": {
+      "iterations": 2,
+      "converged": true,
+      "finalScale": 0.5780394716529066
+    }
   },
   "results": {
-    "observedRTP": 0.9804336864778649,
-    "rtpPercent": 98.0433686477865,
+    "observedRTP": 0.9610395728900132,
+    "rtpPercent": 96.10395728900131,
     "errorMargin": 0.006198064213930023,
-    "ci95Lower": 0.9742356222639349,
-    "ci95Upper": 0.9866317506917949,
+    "ci95Lower": 0.9548415086760832,
+    "ci95Upper": 0.9672376371039432,
     "rtpBreakdown": {
-      "base": 0.9305536864778442,
+      "base": 0.9111595728900515,
       "free_spins": 0,
       "hold_and_win": 0.04988,
       "cascade": 0,
@@ -53,7 +58,8 @@
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Hold-and-Win; mechanic: hold_and_win.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 5.9034e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 162.62%)."
+    "Two-pass auto-scale: paytable multiplied by 5.7804e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 162.62%).",
+    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
   ],
   "compliance": {
     "standard": "GLI-16",

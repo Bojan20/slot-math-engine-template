@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-12T22:31:23.997Z",
+  "generatedAt": "2026-05-13T03:25:47.788Z",
   "configHash": null,
   "game": {
     "name": "3 Reel 5 Row Lines",
@@ -16,18 +16,23 @@
     "spins": 100000,
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
-    "paytableScaleFactor": 1,
-    "preScaleRTP": 0.9847420000003623
+    "paytableScaleFactor": 0.974874637214262,
+    "preScaleRTP": 0.9847420000003623,
+    "nonLinearTuner": {
+      "iterations": 2,
+      "converged": true,
+      "finalScale": 0.974874637214262
+    }
   },
   "results": {
-    "observedRTP": 0.9847420000003623,
-    "rtpPercent": 98.47420000003623,
+    "observedRTP": 0.959999999999605,
+    "rtpPercent": 95.9999999999605,
     "errorMargin": 0.006198064213930023,
-    "ci95Lower": 0.9785439357864323,
-    "ci95Upper": 0.9909400642142923,
+    "ci95Lower": 0.953801935785675,
+    "ci95Upper": 0.9661980642135349,
     "rtpBreakdown": {
-      "base": 0.6924420000002227,
-      "free_spins": 0.29229999999999623,
+      "base": 0.6750441435421323,
+      "free_spins": 0.2849558564577284,
       "hold_and_win": 0,
       "cascade": 0,
       "pick": 0,
@@ -37,7 +42,7 @@
     },
     "hitRate": 0.60537,
     "deadSpinRate": 0.39463000000000004,
-    "maxObservedWin": 28.1
+    "maxObservedWin": 27.393977305720764
   },
   "volatility": {},
   "features": [
@@ -46,13 +51,15 @@
       "name": "Free Spins",
       "triggerRate": 0.08458,
       "frequency": "1 in 12",
-      "rtpContribution": 0.29229999999999623
+      "rtpContribution": 0.2849558564577284
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Lines; mechanic: lines.",
-    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345."
+    "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
+    "Two-pass auto-scale: paytable multiplied by 9.7487e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 98.47%).",
+    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
   ],
   "compliance": {
     "standard": "GLI-16",
