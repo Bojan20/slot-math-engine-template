@@ -22,7 +22,8 @@ Legenda:
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
 - **Tehnički dug** je još otvoren: `SymbolId` enum + `NUM_REELS=5` / `NUM_ROWS=3` legacy konstante i dalje žive u `src/config/` i `src/model/` paralelno sa IR-om.
-- **Nije commit-ovano:** windows-x64 CI grana, vitest bench, Renovate/Dependabot, 4 dokumenta (`architecture.md`, `rng.md`, `precision.md`, `glossary.md`, `compliance.md`, `research.md`), PAR sheet sakupljanje za reference igre, TestU01/NIST/PractRand izveštaji, PGO+BOLT pipeline, 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family.
+- **Landed kasnije (post-`477423b`):** windows-x64 CI grana (`b67a340`), 5 foundational docs (`architecture.md`/`rng.md`/`precision.md`/`glossary.md`/`compliance.md`) (`b67a340`), 20 generic-mechanic PAR samples (`b5d5372`+`3701af7`), P0 #4.2 non-linear PAR tuner (`5c43725`), TS-side NIST 5-test baseline + 4-backend reports + `HOWTO-fullsuite.md` (`6896eb3`), HSM bridge interface + `MockHSMProvider` (`54a3ba6`), bench reports (`9e1588b`), TS mutation baseline (`da2b88e`), 7 plugin behaviors (`2633274`).
+- **Nije commit-ovano:** vitest bench, Renovate/Dependabot, `research.md`, full external TestU01 BigCrush / NIST 15 / PractRand 2³⁸ captures (HOWTO landed; binarije TBD), PGO+BOLT pipeline, real PKCS#11 driver (MockHSMProvider landed), 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family, P0 #2 legacy `SymbolId` enum purge (164 references, 3-5h refactor — sledeća sesija).
 - **30 mechanic classes:** faza 12 commit-ovana kao **acid test mehanika** (sve fixture klase pokrivene preko `tests/fixtures/reference/*.json`). Sve fixture su **synthetic generic** — nijedan ne referencira komercijalnu igru ili vendor (template-safe).
 
 Mapa "commit → faza":
@@ -65,6 +66,20 @@ Mapa "commit → faza":
 | `e9121b2` | 13.9 (USIF v1.0 schema) |
 | `0ee98b0` | 14.1 (analytical memoization — exhaustive enumeration) |
 | `4d7fe47` | 14.2 (continuous certification — daily hash-chain reports) |
+| `a977a9f`+`30f7760` | TM-clean: strip all game/vendor names from template |
+| `802801f` | TODO reconcile against actual repo state |
+| `61add41` | P0 #2 partial: NUM_REELS/NUM_ROWS derived from PAYLINES |
+| `b67a340` | P0 #1 (Windows CI) + P0 #7 (5 foundational docs) |
+| `2633274` | P0 #9 (7 plugin behaviors close out plugin layer claim) |
+| `9e1588b` | P0 #5 (bench reports — first measured M3 Pro baseline) |
+| `da2b88e` | P0 #8 partial (TS mutation baseline + Rust blocker docs) |
+| `b5d5372` | P0 #6 (PAR sheet PDF renderer + CLI + sample) |
+| `a5679c9` | Workspace root Cargo.toml + lockfile for daemon check |
+| `2539256`+`3ffa438` | P0 #8 TS push (rg/session, analyzer, RNG mutation scores) |
+| `6896eb3`→`853880d` | P0 #3 TS-side (Node NIST 5-test baseline + 4-backend reports + HOWTO) |
+| `54a3ba6`→`51a1f67` | P0 #10 (HSM bridge interface + MockHSMProvider) |
+| `5c43725`→`3701af7` | P0 #4.2 (non-linear PAR tuner — bisection, 20/20 within ±0.5%) |
+| `09f7f6e` | Wave 1 docs closure (`PARALLEL_TASK_LOG.md`) |
 
 ---
 
