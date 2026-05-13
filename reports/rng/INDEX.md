@@ -1,6 +1,6 @@
 # RNG Quality — NIST SP 800-22 Baseline
 
-**Generated:** 2026-05-13T03:08:29.959Z  ·  **Sample:** 1.0 Mbit per backend  ·  **Seed:** `0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)`  ·  **Pass bar:** p > 0.01 (NIST default α)
+**Generated:** 2026-05-13T07:48:31.558Z  ·  **Sample:** 1.0 Mbit per backend  ·  **Seed:** `0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)`  ·  **Pass bar:** p > 0.01 (NIST default α)
 
 ## Scope
 

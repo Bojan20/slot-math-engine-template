@@ -308,7 +308,7 @@ export function generateSimReport(
 
     paytable: {
       symbols: LINE_PAYTABLE.map((entry) => ({
-        id: SymbolId[entry.symbol],
+        id: entry.symbol,
         name: getSymbolName(entry.symbol),
         tier: getSymbolTier(entry.symbol),
         pays: [

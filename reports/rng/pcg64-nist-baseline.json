@@ -2,7 +2,7 @@
   "backend": "pcg64",
   "seed_hex": "0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)",
   "sample_bits": 1000000,
-  "tested_at": "2026-05-13T03:08:29.894Z",
+  "tested_at": "2026-05-13T07:48:31.493Z",
   "overall_pass": true,
   "results": [
     {
