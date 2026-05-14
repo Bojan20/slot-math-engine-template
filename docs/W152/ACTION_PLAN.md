@@ -264,16 +264,46 @@ now fully implemented in both TS and Rust with byte-stable parity.
 
 ## P2 — MEDIUM (incremental polish)
 
-### P2-11 · RGS pluggable surface (KIMI 13)
-- `src/protocols/rgs.ts` trait + Hub88 / CWS / Stake Engine adapteri.
-- `src/rgs/wallet_adapter.ts` + auth middleware (HMAC/JWT/RSA).
-- `tests/rgs/mock-walletservers/` docker-compose; p99 <100 ms gate.
+### P2-11 · RGS pluggable surface (KIMI 13) — ✅ **W152 LANDED (Wave 9)**
 
-### P2-12 · RG hooks reference + self-exclusion client (KIMI 11)
-- `src/rg/hooks.ts` centralni emitter.
-- `src/rg/self_exclusion_client.ts` — GAMSTOP/OASIS/Spelpaus/ROFUS/
-  CRUKS/Ontario CSE async wrapper sa 500 ms circuit-breaker.
-- `docs/RG_HOOK_REFERENCE.md`.
+- ✅ `src/rgs/types.ts` — canonical `BetRequest` / `WinRequest` /
+  `BalanceResponse` / `WalletError` / `WalletResult<T>` / `RoundEvent`.
+  Integer millicredits everywhere, ISO-4217 currency.
+- ✅ `src/rgs/wallet.ts` — `WalletBackend` interface + `InMemoryMockWallet`
+  reference impl (debit / credit / rollback / balance), idempotency
+  cache by uuid, promo-token short-circuit.
+- ✅ `src/rgs/auth/index.ts` — three signers: `HmacSha256Signer` (CWS
+  pattern), `JwtHs256Signer` (RFC 7519 inner HMAC), `RsaSha256Signer`
+  (Hub88 pattern, injected impl for Web3/Node crypto neutrality).
+  `canonicalJson()` for stable signature input.
+- ✅ `src/rgs/protocol.ts` — `RgsProtocol` orchestrator: sign-envelope,
+  promo-validator gate, debit/credit/rollback, round-event sink, KIMI 13
+  LCD `withDeadline(op)` (default 200 ms p99).
+- ✅ 26 vitest specs (wallet contract + idempotency + promo +
+  edge errors, all three signers, canonical JSON, RGS protocol
+  round-trip, deadline timeout, end-to-end debit → credit → rollback).
+
+### P2-12 · RG hooks reference + self-exclusion client (KIMI 11) — ✅ **W152 LANDED (Wave 9)**
+
+- ✅ `src/rg/hooks.ts` — `RGHookEmitter` sa 8 typed event kinds:
+  REALITY_CHECK_ACK, SPIN_SPEED_GATE, DEPOSIT_LIMIT_BLOCK,
+  LOSS_LIMIT_REACHED, SELF_EXCLUSION_LOOKUP, AFFORDABILITY_SCREEN,
+  SESSION_TIMER, COOLING_OFF_INIT. Subscribe/unsubscribe + fan-out
+  + clear; synchronous; framework-agnostic.
+- ✅ `src/rg/self_exclusion_client.ts` — `SelfExclusionClient` sa
+  `Promise.all` fan-out na 6 registries (GAMSTOP, OASIS, SPELPAUS,
+  ROFUS, CRUKS, AGCO_CSE). Per-call 500 ms p99 deadline (KIMI 11 LCD).
+  Pluggable `SelfExclusionProvider` interface + `StubSelfExclusionProvider`
+  reference impl za testove.
+- ✅ `CircuitBreaker` — three-state (closed/open/half-open), default
+  5-failures threshold + 30 s recovery, injected `now()` za deterministic
+  testove.
+- ✅ Fail-closed semantika kao default (KIMI 11: regulatorny safety) —
+  ako svaki provider's breaker open, player se blokira; `failClosed=false`
+  override za dev.
+- ✅ 13 vitest specs (emitter fan-out + unsubscribe, breaker FSM,
+  client multi-registry verdict, timeout → breaker trip, error capture,
+  audit emission per provider).
 
 ### P2-13 · AML signal spec + telemetry emitter (KIMI 12)
 - `src/fraud/telemetry_emitter.ts` + Rust pendant.

@@ -15,9 +15,9 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja Wave 8, izvora i fixture-a — 2026-05-14, W152 P0-5 + P1-8 + P2-14 + P2-16 landed)
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 9, izvora i fixture-a — 2026-05-14, W152 P2-11 + P2-12 + Faza 10.5 landed)
 
-**Ukupno: ~86% kompletno na kodu, ~52% kompletno na "acceptance proof"-u.** *(W152 Wave 8: P0-5 evaluator parity oracle (Rust bin + TS spec), P1-8 PAR sheet diff (cert-trigger flags), P2-14 ECVRF/Chainlink VRF adapter (RFC 9381 baseline), P2-16 Makefile (18 targets). Wave 7: P1-7 persistent-grid H&W, P1-10 coverage trojka, P2-15 max-win cap + EVT, Faza 7.2 RNG cert ChaCha20 row, P2-13 AML telemetry.)*
+**Ukupno: ~90% kompletno na kodu, ~62% kompletno na "acceptance proof"-u.** *(W152 Wave 9: P2-11 RGS pluggable surface (wallet/auth/protocol/26 testova), P2-12 RG hooks + self-exclusion client (RGHookEmitter + CircuitBreaker + 6-registry fan-out / 13 testova), Faza 10.5 acceptance golden (30-fixture snapshot + 8-fixture replay test / 10 testova). Wave 8: P0-5 + P1-8 + P2-14 + P2-16. Wave 7: P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
@@ -415,8 +415,8 @@ Mapa "commit → faza":
 - ❌ Acceptance: RTP iz published PAR sheet ±0.05% na 10⁹ spins.
 
 ### 10.5 Regression suite
-- ⚠️ Golden hashes svake reference igre (RTP, hit-freq, vol, max-win freq). *(neke fixture parity hash-eve postoje; sveobuhvatan golden registry ❌)*
-- ❌ CI fail na drift > 0.005%.
+- ✅ Golden hashes svake reference igre (RTP, hit-freq, max-win-X, feature triggers). *(W152 Wave 9 — `scripts/acceptance-golden.mjs` + `reports/acceptance/golden.json` sa 30 fixture-a × 20k spinova @ seed 12345; replay test `tests/acceptance_golden.test.ts` proverava 8 reprezentativnih fixture-a u <6s sa `|replay - golden| < 1e-6` exact-match tolerance)*
+- ✅ CI fail na drift > 1e-6 (deterministic-seed exact match). *(W152 Wave 9 — replay test pada na byte-drift; engineer ili regeneriše golden ili dijagnostikuje regresion)*
 
 ### 10.6 Adversarial tests
 - ✅ Malicious config: 10¹⁸ cycle count → reject sa clear error. *(`tests/faza10_adversarial.test.ts`)*

@@ -1,0 +1,253 @@
+{
+  "generatedAtUtc": "2026-05-14T21:52:04.462Z",
+  "engineCommit": null,
+  "seed": 12345,
+  "spins": 20000,
+  "fixtures": {
+    "3x5-5lines": {
+      "rtp": 0.97792,
+      "hitRate": 0.60345,
+      "maxWinX": 28.1,
+      "features": {
+        "free_spins": 11.961722488038278
+      }
+    },
+    "5x3-20lines": {
+      "rtp": 4.22748,
+      "hitRate": 0.64955,
+      "maxWinX": 263.6,
+      "features": {
+        "free_spins": 31.645569620253166
+      }
+    },
+    "5x3-243ways": {
+      "rtp": 304.675015,
+      "hitRate": 0.79445,
+      "maxWinX": 34728.8,
+      "features": {
+        "free_spins": 15.082956259426847
+      }
+    },
+    "5x4-25lines": {
+      "rtp": 29.66433,
+      "hitRate": 0.95925,
+      "maxWinX": 849.4,
+      "features": {
+        "free_spins": 7.178750897343862
+      }
+    },
+    "6x4-4096ways": {
+      "rtp": 14447.269285,
+      "hitRate": 0.89635,
+      "maxWinX": 634250,
+      "features": {
+        "cascade": 1.1160091512750405,
+        "hold_and_win": 454.54545454545456
+      }
+    },
+    "cascade-drop": {
+      "rtp": 11.809285,
+      "hitRate": 0.88355,
+      "maxWinX": 524.4,
+      "features": {
+        "cascade": 1.131797860902043
+      }
+    },
+    "cascade-fixed-strip": {
+      "rtp": 4.420565,
+      "hitRate": 0.5414,
+      "maxWinX": 127.5,
+      "features": {
+        "cascade": 1.847063169560399
+      }
+    },
+    "cascade-refill": {
+      "rtp": 2227.66092,
+      "hitRate": 0.8481,
+      "maxWinX": 101895.6,
+      "features": {
+        "cascade": 1.1791062374719963
+      }
+    },
+    "classic-3x3-lines": {
+      "rtp": 0.56055,
+      "hitRate": 0.46815,
+      "maxWinX": 18.9,
+      "features": {
+        "free_spins": 70.92198581560284
+      }
+    },
+    "cluster-7x7": {
+      "rtp": 28.383775,
+      "hitRate": 0.9934,
+      "maxWinX": 157.1,
+      "features": {
+        "free_spins": 1.1988970147464333
+      }
+    },
+    "cluster-diagonal": {
+      "rtp": 1.6502,
+      "hitRate": 0.72235,
+      "maxWinX": 29.1,
+      "features": {
+        "free_spins": 4.41306266548985
+      }
+    },
+    "cluster-hexagonal": {
+      "rtp": 33.171495,
+      "hitRate": 0.99975,
+      "maxWinX": 247.9,
+      "features": {
+        "free_spins": 2.0725388601036268
+      }
+    },
+    "complex-variable-rows": {
+      "rtp": 533331.14713,
+      "hitRate": 0.45215,
+      "maxWinX": 38236270,
+      "features": {
+        "cascade": 1.1525384659713018,
+        "gamble": 1.1187559433909493,
+        "symbol_upgrade": 9.83284169124877,
+        "free_spins": 4.426737494466578,
+        "hold_and_win": 454.54545454545456
+      }
+    },
+    "expanding-wilds": {
+      "rtp": 11602.93263,
+      "hitRate": 0.9347,
+      "maxWinX": 170292,
+      "features": {
+        "free_spins": 19.305019305019304
+      }
+    },
+    "fs-expanding-wilds": {
+      "rtp": 3.294005,
+      "hitRate": 0.59395,
+      "maxWinX": 100,
+      "features": {
+        "free_spins": 11.961722488038278
+      }
+    },
+    "fs-multiplier-ladder": {
+      "rtp": 7.70997,
+      "hitRate": 0.59395,
+      "maxWinX": 608.3,
+      "features": {
+        "free_spins": 11.961722488038278
+      }
+    },
+    "fs-retrigger": {
+      "rtp": 3.540555,
+      "hitRate": 0.5932,
+      "maxWinX": 111.2,
+      "features": {
+        "free_spins": 11.990407673860911
+      }
+    },
+    "fs-sticky-wilds": {
+      "rtp": 2.28052,
+      "hitRate": 0.49225,
+      "maxWinX": 121.5,
+      "features": {
+        "free_spins": 15.082956259426847
+      }
+    },
+    "hnw-classic": {
+      "rtp": 1.584665,
+      "hitRate": 0.4495,
+      "maxWinX": 62,
+      "features": {
+        "hold_and_win": 204.08163265306123
+      }
+    },
+    "hnw-full-grid": {
+      "rtp": 3.27857,
+      "hitRate": 0.82965,
+      "maxWinX": 127,
+      "features": {
+        "hold_and_win": 18.38235294117647
+      }
+    },
+    "hnw-grand-jackpot": {
+      "rtp": 189.519695,
+      "hitRate": 0.9134,
+      "maxWinX": 3456,
+      "features": {
+        "hold_and_win": 48.309178743961354
+      }
+    },
+    "multiplier-wilds": {
+      "rtp": 1.59816,
+      "hitRate": 0.4258,
+      "maxWinX": 72.5,
+      "features": {
+        "free_spins": 17.6056338028169
+      }
+    },
+    "mystery-symbol": {
+      "rtp": 5.28542,
+      "hitRate": 0.56495,
+      "maxWinX": 343.2,
+      "features": {
+        "free_spins": 10.626992561105208
+      }
+    },
+    "pay-anywhere": {
+      "rtp": 246.289805,
+      "hitRate": 1,
+      "maxWinX": 3534.6,
+      "features": {
+        "free_spins": 5.793742757821553
+      }
+    },
+    "pick-bonus": {
+      "rtp": 3.1966,
+      "hitRate": 0.5768,
+      "maxWinX": 62.5,
+      "features": {
+        "pick": 5.932957579353308
+      }
+    },
+    "respin-feature": {
+      "rtp": 2.739274,
+      "hitRate": 0.81155,
+      "maxWinX": 100,
+      "features": {
+        "respin": 2.3004370830457788
+      }
+    },
+    "symbol-upgrade": {
+      "rtp": 313.52886,
+      "hitRate": 0.86335,
+      "maxWinX": 12150,
+      "features": {
+        "symbol_upgrade": 4.981320049813201
+      }
+    },
+    "variable-rows-7reels": {
+      "rtp": 21545.99301,
+      "hitRate": 0.91555,
+      "maxWinX": 853535.6,
+      "features": {
+        "free_spins": 2.5926886180969664
+      }
+    },
+    "walking-wilds": {
+      "rtp": 4.541775,
+      "hitRate": 0.6659,
+      "maxWinX": 174.5,
+      "features": {
+        "free_spins": 13.422818791946309
+      }
+    },
+    "wheel-bonus": {
+      "rtp": 59.28958,
+      "hitRate": 0.8649,
+      "maxWinX": 1302,
+      "features": {
+        "wheel": 5.35475234270415
+      }
+    }
+  }
+}
