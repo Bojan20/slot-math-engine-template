@@ -1,0 +1,62 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":dependencyDashboard"
+  ],
+  "schedule": ["before 4am on monday"],
+  "timezone": "Europe/Belgrade",
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 4am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Auto-merge minor + patch updates for low-risk math libraries — broken updates fail CI loud.",
+      "matchPackageNames": [
+        "decimal.js",
+        "hdr-histogram-js",
+        "fast-check",
+        "vitest",
+        "@vitest/coverage-v8"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Rust crates pinned via rust-toolchain.toml — Renovate manages Cargo.lock minor bumps only.",
+      "matchManagers": ["cargo"],
+      "matchPackageNames": [
+        "rust_decimal",
+        "rayon",
+        "proptest",
+        "criterion"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false
+    },
+    {
+      "description": "Group all dev-deps (lint + format) together.",
+      "matchDepTypes": ["devDependencies"],
+      "matchPackagePatterns": ["eslint", "prettier", "@types/"],
+      "groupName": "dev-tooling"
+    },
+    {
+      "description": "Major bumps get manual review — math libraries can break determinism.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major-bump-review"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": false
+  },
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 10
+}

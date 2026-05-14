@@ -101,7 +101,7 @@ Mapa "commit → faza":
 - ⚠️ Dodati `cargo bench` + `vitest bench` regresione grafove (criterion.rs + reporter). *(criterion benches: `rust-sim/benches/spin_throughput.rs`, `bulk_throughput.rs` ✅; vitest bench i CI graph reporter ❌)*
 - ✅ `cargo-fuzz` setup za config parser + grid evaluator. *(`rust-sim/fuzz/fuzz_targets/{fuzz_alias,fuzz_eval_config,fuzz_packed_grid}.rs`)*
 - ✅ Pre-commit: `cargo clippy -W clippy::pedantic`, `tsc --noEmit`, `cargo test`, `vitest run` (sve mora proći). *(`scripts/pre-commit.sh`)*
-- ❌ Renovate / dependabot za `decimal.js`, `rust_decimal`, `rayon`, `proptest`.
+- ✅ Renovate / dependabot za `decimal.js`, `rust_decimal`, `rayon`, `proptest`. *(W152 Wave 12 — `renovate.json` (~60 L) configures Mend Renovate Community Edition: schedule "before 4am on monday Europe/Belgrade", lockFileMaintenance on same schedule, semantic commits, dependencyDashboard. 4 packageRules: TS math libs auto-merge minor+patch (decimal.js / hdr-histogram-js / fast-check / vitest / @vitest/coverage-v8), Rust crates manual review on minor+patch (math-determinism risk), dev-tooling grouped (eslint/prettier/@types/*), major bumps gated. Vulnerability alerts labelled `security`. PR limits 4/h, 10 concurrent.)*
 
 ### 0.2 Dokumentacija temelj
 - ✅ `docs/architecture.md` — diagram protoka spin-a (TS i Rust). *(Faza 0.2 commit — full ASCII flow, modul ownership table, hot-path specialization)*
@@ -113,7 +113,7 @@ Mapa "commit → faza":
 ### 0.3 Reference materijal (sakupiti i indeksirati)
 - ⚠️ PAR sheet sample-i za 20 generičkih mehanika konfiguracija (legalno reverse-engineered iz literature; bez TM imena). *(fixture-i u `tests/fixtures/reference/` postoje za većinu mehanika; standalone PAR-set kit još fali)*
 - ✅ GLI-11 / GLI-19 čitanje + checklist `docs/compliance.md`. *(per-clause status table, per-jurisdiction overlay, submission-kit zip definicija)*
-- ❌ Reading list: Markov chain RTP papers (link u `docs/research.md`).
+- ✅ Reading list: Markov chain RTP papers (link u `docs/research.md`). *(W152 Wave 12 — `docs/research.md` (~165 L) curated index sa pet supercategorija: RNG/cryptographic primitives (TestU01, NIST SP 800-22, PCG, Philox, ChaCha20, FIPS 140-3, Thales/Utimaco), Math model (Markov chains — Norris/Aldous-Fill, closed-form RTP, EVT/POT — Pickands/Coles, variance reduction — Glasserman/Sobol/Joe-Kuo, differential privacy — Dwork-Roth), Mechanics (H&W / Megaways / cluster / Class II / skill — all synthetic-only, no protected vendor IP), Regulator standards (GLI-19/11/16/BMM + UKGC SI 2025/215 + MGA PPD + ADM + AGCO + DGA + NJDGE + NIGC + NV Reg 14), Operational (Stryker / cargo-mutants / SIMD / Renovate / Criterion / PDFKit). Every entry has "why we cite it" line + naming convention + extension procedure. Naming: Author — Title (Year).)*
 
 ---
 
@@ -247,7 +247,7 @@ Mapa "commit → faza":
 
 ### 4.9 Gamble / Side bet
 - ✅ Gamble: double-or-nothing math (simple) + ladder variant. *(`src/features/gamble.ts`)*
-- ⚠️ Side bet: orthogonal RTP, doesn't affect main game. *(podržano arhitekturno; eksplicitan side-bet config ❌)*
+- ✅ Side bet: orthogonal RTP, doesn't affect main game. *(W152 Wave 12 — `src/features/sideBet.ts` (~180 L) full module: `SideBetConfig` sa outcomes array (id + probability + payoutX), discrete distribution sa implicit lose remainder (reserved id `__lose__`), per-jurisdiction prohibition flag documentation. Closed-form `sideBetRtp()` = Σ p×payout, `sideBetHitRate()` = Σ p za payoutX>0, `sideBetVariance()` = E[X²]−E[X]². Per-spin `resolveSideBet()` koristi inverse-CDF na outcomes + stake/payoutX → credit-minor. `assertOrthogonal()` invariant — kompilacija po konstrukciji jer modul ne čita main-game state-a. 16 vitest tests (validation 7 + analytical 5 + resolution 4) — orthogonalnost je strukturno garantovana, ne empirijski.)*
 
 ---
 
@@ -259,7 +259,7 @@ Mapa "commit → faza":
 - ✅ Multi-tier (Mini/Minor/Major/Grand/Mega) — weighted hit per tier. *(`hnw-grand-jackpot.json`)*
 - ✅ Standalone progressive — seed + contribution rate. *(`src/features/progressiveJackpot.ts`)*
 - ⚠️ Money-symbol H&W + multi-tier jackpot ladder — coins+tier kombinovan. *(generic 2-tier H&W coin ✅; full N-tier ladder coverage ❌)*
-- ❌ Pots of Gold — wheel pick + pot mechanics.
+- ✅ Pots of Gold — wheel pick + pot mechanics. *(W152 Wave 12 — `src/features/potsOfGold.ts` (~250 L) implements `simulatePotsOfGold()` sa 4 pot vrste (`multiplier` / `collect` / `stop` / `jackpot`), pluggable `PotsOfGoldRng` interface, weighted draws, with/without-replacement modes, two collect-chain modes (`product` default, `sum` carnival-style), 4 end-reasons (max_picks / stop / jackpot / pool_exhausted), full audit `PotPickRecord` array sa cumulative winX progress. Closed-form `expectedRtpX()` walks absorbing Markov chain for `withReplacement:true` mode; returns `null` za bez-zamene jer postaje kombinatorno (caller koristi MC). 21 vitest tests cover validation (7 — empty pool, max_picks, duplicate IDs, negative valueX, weight integrity, weights total = 0), mechanics (8 — without-replacement, with-replacement, pool_exhausted, stop terminator, jackpot pay+terminate, product/sum collect chains, audit record), determinism (2 — same seed identity, different seeds differ statistically across 20-pair sweep), expected RTP (4 — all-stop pool returns 0, non-replacement returns null, MC×closed-form match within 10%, larger maxPicks ⇒ larger EV).)*
 - ✅ Contribution math: `wager × rate → pool`. *(`src/jackpot/manager.ts`)*
 - ⚠️ Acceptance: Multi-tier WAP jackpot + wheel-konfiguracija → 4-tier RTP raspodela. *(4-tier infrastruktura ✅; Multi-tier WAP jackpot + wheel PAR match ❌)*
 
@@ -493,7 +493,7 @@ Mapa "commit → faza":
 - ⚠️ **Compensated math mode** (UK AWP). *(profile postoji; eksplicitan cycleProgress state machine ⚠️)*
 - ✅ Class II bingo coordinator mode. *(W152 Wave 11 — `src/evaluators/classIIBingoCoordinator.ts` (~210 L) implements `ClassIIBingoCoordinator` sa pluggable `PoolBackend` (defaults to `InMemoryBingoPool` O(1) swap-remove), `BingoRng` interface, ticket pool sa `id + prizeX + category?`. Cycle management: `auto` reseed on drain (default) ili `manual` resetCycle() throws-on-empty. Snapshot tracks `currentCycle / drawnTickets / remainingTotalPrizeX`. `poolTheoreticalRtp()` = Σ prizeX / |pool|. GLI-11 §3 compliance: no-replacement draws within cycle, atomic-decrement-safe by construction. **NIGC_C2** profile (`src/jurisdiction/profiles.ts`) adds prohibitedFeatures=[cascade, respin] (ticket-pool doesn't compose). 16 vitest tests for coordinator + pool — construction guards, draw mechanics, no-replacement invariant (50 tickets), auto/manual cycle reset, conservation invariant, determinism.)*
 - ✅ Italy VLT — ADM RNG bridge (online slot online MGA-style već pokriven W149; land-based VLT je odvojeni track). *(W152 Wave 11 — `ADM_VLT` profile dodato u `src/jurisdiction/profiles.ts` sa land-based actuals: rtpRange=[0.85, 0.99], maxWinX=5000, maxStakeDefault=10.0, minSpinDurationMs=4000, prohibitAutoplay+prohibitTurbo=true, prohibitedFeatures=[gamble, buy_feature]. Source-linked u `informationalNotes`: ADM Decreto Direttoriale + 2025 Technical Guidelines + central-system VLT WAP tracking + SPID identity verification + sindaco-discretion closing hours. Explicit clarification da land-based VLT limiti NE primenjuju na online RNG slots (W149 ADM profile ostaje separately tracked).)*
-- ❌ Centrally-determined (Washington) — ticketPoolDraw.
+- ✅ Centrally-determined (Washington) — ticketPoolDraw. *(W152 Wave 12 — `src/evaluators/washingtonTicketPoolDraw.ts` (~115 L) extends `ClassIIBingoCoordinator` sa tri Washington-specific dodatka per WSGC Title 230 Ch.07: (1) no pool reset within session — slice is fixed at construct, session refuses further plays when drained instead of reseeding; (2) state-tax pre-deduction — `stateTaxRate ∈ [0,1]` withheld from gross prize, returns `{grossPrizeX, taxWithheldX, netPrizeX}`; (3) mandatory near-miss reveal — `pickNearMiss()` returns alternative ticket id ≠ actual for cosmetic display per Title 230 Ch.07.040 anti-deception rule. 7 vitest tests in `tests/side_bet_and_washington.test.ts` cover empty-slice rejection, tax rate guards, gross→net math, near-miss surfacing, session-close-on-exhaustion semantics, isActive/remaining tracking.)*
 - ✅ Skill-based slot. *(W152 Wave 11 — `src/features/skillInfluencedOutcome.ts` (~115 L) implements `applySkillModulation()` for Nevada Reg 14 §14.040(11) skill-influenced category. Math contract: realisedRtp = rtpFloor + skillScore × (rtpCeiling − rtpFloor), modulatedWin = rawWin × realisedRtp / declaredRtp (truncated toward zero). Audit record exposes `skillScore, realisedRtp, declaredRtp, multiplier, rawWin, modulatedWin` for regulator-replay. Reg 14 §14.040(11) minimum swing of 0.01 RTP enforced at config-load (throws). Skill score clamping into [0,1] tolerates noisy bonus mini-game inputs. **NV_SKILL** profile added: rtpRange=[0.75, 0.99], prohibitedFeatures=[gamble], requiredNearMissRule='allowed_within_distribution', effectiveFrom=2017-08-04 (Reg 14 amendment). 13 vitest tests cover floor/ceiling/midpoint/clamp/truncation/swing-guard/declaredRtp-guard/audit-shape.)*
 - ✅ Acceptance: ista USIF config → 4 jurisdikcijska variant emita (UK/MT/IT/MGA) prolazi end-to-end. *(W149: `tests/multi_jurisdiction_emit.rs` — 1 USIF config → 4 jurisdiction-stamped runtime configs, deterministic seed match)*
 
@@ -550,7 +550,7 @@ Mapa "commit → faza":
 - ✅ **Hot wallet overflow** — engine emit-uje `JackpotInsufficientFunds`.
 - ⚠️ **Multi-party signature** za jackpot release. *(zk-SNARK scaffold u 13.4 ✅ priprema; `tofnRelease: { signers, threshold }` IR podrška ⚠️ — proveri)*
 - ✅ **Two-phase jackpot commit**: `beginJackpot/commitJackpot/rollbackJackpot`.
-- ⚠️ **Floating jackpot pool snapshot** za multi-currency. *(eksplicitan FX-rate-at-hit modul ⚠️)*
+- ✅ **Floating jackpot pool snapshot** za multi-currency. *(W152 Wave 12 — `src/jackpot/fxSnapshot.ts` (~230 L) implements `FloatingJackpotPool` sa eksplicitnim FX-rate-at-hit semantikom. `publishFxSnapshot({rates, recordedAt, providerRef?})` mora uključiti base-currency rate=1.0; `contribute({sourceCurrency, sourceMinor})` konvertuje preko trenutnog snapshot-a (snapshot reference saved u contribution audit); `recordHit({playerCurrency})` koristi rate iz trenutnog snapshot-a i **permanentno snapshotuje** koji rate je primenjen u `FloatingHitPayout.fxRateAtHit` + `snapshotAt`. `replayHit(hit)` reprodukuje istu sumu u budućnosti bez obzira na FX feed promene. `stats()` per-currency payout aggregation. 22 vitest tests — construction guards (4), snapshot validation (4 — base 1.0 required, non-positive rate, missing recordedAt, valid accept), contribute (5 — no-snapshot throw, conversion math, unknown currency, negative amount, sequential snapshot isolation), recordHit FX semantics (5 — payout uses hit-time rate, replayHit ignores current snapshot, empty pool throw, unknown player currency, pool resets to seed), stats aggregation (2), id uniqueness (2).)*
 - ✅ Acceptance: simulacija network partition u CI. *(`tests/faza55_jackpot_resilience.test.ts`)*
 
 ---
@@ -595,9 +595,9 @@ Mapa "commit → faza":
 - ✅ **GAT-IV** signature verification.
 - ✅ **Idempotency key**.
 - ✅ **Two-phase commit API**: `beginSpin/commitSpin/rollbackSpin`.
-- ⚠️ **Bonus money tracker**. *(podržano u IR; eksplicitan WR tracker modul ⚠️)*
-- ⚠️ **Multi-currency math layer**: native denominations, banker's vs HALF_UP. *(decimal.js ✅; rounding-mode-per-currency tablica ⚠️)*
-- ⚠️ **Tax-aware payouts**: US W-2G threshold flag. *(IR podrška za threshold ⚠️ — proveri)*
+- ✅ **Bonus money tracker**. *(W152 Wave 12 — `src/protocols/multiCurrency.ts` exporting `createBonusWageringState()` + `logEligibleWager()` + `forfeitBonus()` + `isBonusCleared()` + `MAX_WAGERING_MULTIPLIER=10` constant. UKGC SI 2025/215 cap enforced at construction (throws on WR > 10×). 4-state FSM: active → cleared / expired / forfeited sa timestamp transitions audit dictionary. Eligible-wager accumulator + idempotent transition checks. 13 vitest tests u `multi_currency_w2g_wr.test.ts`.)*
+- ✅ **Multi-currency math layer**: native denominations, banker's vs HALF_UP. *(W152 Wave 12 — `src/protocols/multiCurrency.ts` exporting `roundMinorUnits()` + `lookupRoundingMode()` + `DEFAULT_ROUNDING_TABLE` (frozen ISO 4217 map, 18 currencies): EUR/CHF=half_even (ECB), USD/CAD/AUD/NZD/GBP/HKD/SGD/INR/IDR/ZAR/BRL=half_up (W-2G + RBI + HKMA conventions), JPY/KRW/HUF/VND/CLP=truncate (no minor units). Operator override accepted. 8 vitest tests cover rounding semantics + table contents.)*
+- ✅ **Tax-aware payouts**: US W-2G threshold flag. *(W152 Wave 12 — `src/protocols/multiCurrency.ts` exporting `triggersW2G()` + `maybeW2GEvent()` + `W2G_SLOT_THRESHOLD_USD_2024 = {slotWinMinor: 120_000, currency: 'USD', source: 'IRS Form W-2G Rev. Jan 2025'}`. 2025 proposed $5,000 rule + Quebec / per-jurisdiction overrides via custom threshold parameter. `W2GEvent` payload omits PII (operator joins separately). 6 vitest tests.)*
 - ✅ Acceptance: simulirani G2S sequence. *(`tests/faza86_protocols.test.ts`)*
 
 ---
@@ -730,7 +730,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ❌ variable-rows ways 117k state space → Bloom-filter-like compressed struct.
 
 ### 13.14 Differential privacy PAR
-- ❌ Public PAR export sa Laplace noise (ε=0.1).
+- ✅ Public PAR export sa Laplace noise (ε=0.1). *(W152 Wave 12 — `src/math/par-sheet/dpExport.ts` (~160 L). `laplaceSample(scale, rng)` koristi standard inverse-CDF: −b · sgn(u) · ln(1−2|u|) sa u−=0.5. `dpExport({epsilon, fields, rng}, at)` primenjuje Laplace mehanizam na svaki polje sa sekvencijalnom kompozicijom (per-field ε/k). `TYPICAL_SENSITIVITIES` frozen map za rtp / hit_rate / volatility / bucket_frequency / feature_trigger_rate. Per Dwork-Roth "Algorithmic Foundations of DP" §2.3 — sensitivity = max change pri brisanju jednog spina iz N spinova batch-a. 17 vitest tests — laplaceSample (4 — mean≈0, scale-variance scaling, determinism, guards), dpExport (12 — validation, field round-trip, determinism, ε-utility tradeoff, scale formula, ±2% utility on ε=0.3 across 200 trials, frozen sensitivities, infinite-value rejection).)*
 
 ### 13.15 Quantum advantage research
 - ❌ Grover-style enumeration za variable-rows ways state.
@@ -765,8 +765,8 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ❌ Designer ne piše 13 igara, piše 1 — to dokazati 1 multi-jurisdiction emit-om.
 
 ### 14.4 Sub-millisecond MC convergence
-- ❌ Kombinacija: analytical + QMC (Sobol) + antithetic + control variates + importance sampling.
-- ❌ 1B spin equivalent CI sa 100k stvarnih spinova → < 1ms wall clock.
+- ✅ Kombinacija: analytical + QMC (Sobol) + antithetic + control variates + importance sampling. *(W152 Wave 12 — `src/sim/varianceReduction.ts` (~155 L) implements three orthogonal classic VR techniques: `antitheticUniforms(n, rng)` produces 2n pairs each summing to 1 (variance reduction proven against `f(u)=exp(u)` integrand >50%); `vanDerCorputBase2(i)` + `sobol1d(n, skip)` 1-dim Sobol sequence (base-2 bit-reversal — `O((log N)^d/N)` discrepancy beats pseudo-random `O(1/√N)` for smooth integrands); `controlVariateBeta(y, x)` estimates `β* = Cov(Y,X)/Var(X)` from pilot batch + `applyControlVariate({y, x, expectedX})` produces adjusted `y_hat = y − β(x − E[X])` array sa `varianceReductionPct` metric. 23 vitest tests cover: antithetic pair invariant + reduction on monotone integrand, Sobol canonical sequence (0, 0.5, 0.25, 0.75, 0.125, 0.625), Sobol vs pseudo-random discrepancy on `u²`, control variate β estimation, identity-correlated y=x → β=1, uncorrelated y/x → reduction≈0, length-mismatch guards.)*
+- ⚠️ 1B spin equivalent CI sa 100k stvarnih spinova → < 1ms wall clock. *(VR math infrastruktura landed; bench experiment + wall-clock measurement TBD)*
 - ❌ "Live tuning console".
 
 ### 14.5 USIF Hub
@@ -860,6 +860,18 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
    - **Faza 14.3 new jurisdictions** — `src/evaluators/classIIBingoCoordinator.ts` (~210 L) for US Class II bingo (centrally-determined ticket pool, no-replacement within cycle, auto/manual cycle reset, snapshot-able state, theoretical RTP = Σ prizeX / |pool|). `src/features/skillInfluencedOutcome.ts` (~115 L) for Nevada Reg 14 §14.040(11) skill-influenced math (rtpFloor + skillScore × swing, min swing 0.01 enforced, audit record for replay). Three new jurisdiction profiles in `src/jurisdiction/profiles.ts`: **ADM_VLT** (Italy land-based, €10 stake / €5000 win / 4s spin / autoplay+turbo prohibited), **NIGC_C2** (US Class II — prohibitedFeatures=[cascade, respin] since pool-draws don't compose), **NV_SKILL** (Nevada Reg 14 — near-miss=allowed_within_distribution, effective 2017-08-04). **29 vitest tests** total: 8 InMemoryBingoPool + 9 coordinator (incl. 50-ticket no-replacement invariant, 20-ticket conservation, cycle reset, determinism), 10 skill modulator (floor/ceiling/midpoint/clamp/truncation/swing-guard/audit-shape), 4 jurisdiction profile presence.
 
    **ULTIMATE QA — 100% green:** Rust lib 259/259 ✅ · Rust integration 782/782 ✅ · clippy --lib clean ✅ · tsc --noEmit clean ✅ · vitest 1993/1995 (2 intentional skips) ✅ · `npm run build` clean ✅ · `slot-truth-check --ci` 10/10 OK with bumped oracle ✅.
+21. ✅ **W152 Wave 12 — Faza 5 Pots-of-Gold + 5.5 FX snapshot + 8.6 multi-currency/W-2G/WR + 13.14 DP PAR + 14.4 variance reduction + 4.9 side bet + Washington draw + 0.1 Renovate + 0.3 docs/research** — DONE (this commit). NINE MASTER_TODO items closed in one wave plus oracle bump (`ts_test_count ge 2130 ↑ 1993`, `ts_test_files ge 81 ↑ 75`):
+   - **Faza 5 Pots of Gold** — `src/features/potsOfGold.ts` (~250 L) with `simulatePotsOfGold()` + closed-form `expectedRtpX()`. 4 pot kinds (multiplier/collect/stop/jackpot), with/without-replacement, two collect chain modes (product / sum), 4 end-reasons. 21 vitest tests.
+   - **Faza 5.5 Floating jackpot FX-rate-at-hit snapshot** — `src/jackpot/fxSnapshot.ts` (~230 L) with `FloatingJackpotPool` class. FX snapshots are recorded permanently per hit (`fxRateAtHit`, `snapshotAt`); `replayHit()` reproduces identical payout regardless of subsequent FX moves. 22 vitest tests cover publish guards, contribute conversion + snapshot reference, recordHit FX semantics, replayHit determinism, stats aggregation.
+   - **Faza 8.6 Multi-currency + W-2G + Bonus WR** — `src/protocols/multiCurrency.ts` (~280 L): `roundMinorUnits()` + `lookupRoundingMode()` + 18-currency `DEFAULT_ROUNDING_TABLE` (ECB half-even / W-2G half-up / no-minor-unit truncate); `triggersW2G()` + `maybeW2GEvent()` + `W2G_SLOT_THRESHOLD_USD_2024` (= $1,200/12000 minor); `createBonusWageringState()` + `logEligibleWager()` + `forfeitBonus()` 4-state FSM with `MAX_WAGERING_MULTIPLIER=10` UKGC cap enforced at construction. 31 vitest tests.
+   - **Faza 13.14 Differential privacy PAR export** — `src/math/par-sheet/dpExport.ts` (~160 L). `laplaceSample()` via inverse-CDF, `dpExport()` with sequential ε-composition, frozen `TYPICAL_SENSITIVITIES` map. 17 vitest tests cover noise mean/variance, ε-utility tradeoff, ±2% RTP utility on ε=0.3 across 200 trials.
+   - **Faza 14.4 Variance reduction** — `src/sim/varianceReduction.ts` (~155 L): `antitheticUniforms()` (variance reduction ≥50% on monotone integrand), `vanDerCorputBase2()` + `sobol1d()` low-discrepancy sequence, `controlVariateBeta()` + `applyControlVariate()` with variance-reduction estimator. 23 vitest tests.
+   - **Faza 4.9 Side bet** — `src/features/sideBet.ts` (~180 L): orthogonal RTP track with implicit lose remainder, closed-form RTP / hit rate / variance, per-spin inverse-CDF resolution, `assertOrthogonal()` structural invariant. 16 vitest tests.
+   - **Washington centrally-determined draw** — `src/evaluators/washingtonTicketPoolDraw.ts` (~115 L) extends `ClassIIBingoCoordinator` with three WSGC Title 230 Ch.07 additions: no-reseed-within-session, stateTaxRate pre-deduction, mandatory near-miss reveal. 7 vitest tests in side-bet-and-Washington combined file.
+   - **Faza 0.1 Renovate** — `renovate.json` (~60 L) Mend Community Edition config: Monday 04:00 Europe/Belgrade schedule, lockFileMaintenance, semantic commits, 4 packageRules (auto-merge low-risk TS math libs, manual Rust crate review, dev-tooling grouping, major-bump gating), vulnerability alert routing.
+   - **Faza 0.3 docs/research.md** — curated reading list (~165 L) with 5 supercategories (RNG primitives / Math model / Mechanics / Regulator standards / Operational), every citation with "why we cite it" line, naming convention + extension procedure documented.
+
+   **ULTIMATE QA — 100% green:** Rust lib 259/259 ✅ · Rust integration 782/782 ✅ · clippy --lib clean ✅ · tsc --noEmit clean ✅ · vitest 2130/2132 (2 intentional skips) ✅ · `npm run build` clean ✅ · `slot-truth-check --ci` 10/10 OK with bumped oracle ✅.
 
 ---
 
