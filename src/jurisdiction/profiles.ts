@@ -196,6 +196,87 @@ const NJDGE: JurisdictionProfile = {
   regulatorUrl: 'https://www.nj.gov/oag/ge/',
 };
 
+// ADM_VLT — Italy land-based VLT (separate from ADM online slots track).
+// Decree 10 Jan 2011 + 2025 ADM Technical Guidelines. Land-based VLT has
+// per-spin stake/win caps that DO NOT apply to online RNG slots; this
+// profile tracks those land-based limits explicitly so Class III online
+// slots don't accidentally inherit them.
+const ADM_VLT: JurisdictionProfile = {
+  id: 'ADM_VLT',
+  name: 'ADM (Italy) — Land-based VLT',
+  rtpRange: [0.85, 0.99],
+  maxWinX: 5000,
+  prohibitedFeatures: ['gamble', 'buy_feature'],
+  requireLdwDisclosure: true,
+  requireSessionTimeDisplay: true,
+  requiredNearMissRule: 'must_be_random',
+  informationalNotes: [
+    'Land-based VLT (Video Lottery Terminal): minimum 85% RTP, max single win €5000 (NOT applicable to online RNG slots — those are separate ADM jurisdiction).',
+    'Max stake per spin €10 (Newslot / AWP). VLT pattern subject to ADM Decreto Direttoriale.',
+    'Mandatory connection to ADM central system (server-side draw audit + WAP tracking).',
+    'Land-based VLT slot pattern is RNG-driven on the ADM central server, not on the terminal itself.',
+    'Players: ≥18, identity verified at first cash-in via SPID or anti-fraud sweep.',
+    'Closing hours per municipality (sindaco discretion).',
+  ],
+  maxStakeDefault: 10.0,
+  ageTieredStakes: [],
+  minSpinDurationMs: 4000,
+  prohibitAutoplay: true,
+  prohibitTurbo: true,
+  bonusWageringCapX: undefined,
+  effectiveFrom: '2011-07-18',
+  regulatorUrl: 'https://www.adm.gov.it/portale/monopoli/giochi/vlt',
+};
+
+// NIGC_C2 — US National Indian Gaming Commission Class II.
+// Different track entirely: prizes drawn from a centrally-determined
+// ticket pool (`ClassIIBingoCoordinator`), NOT generated independently
+// per spin. Profile flags surfaced here so jurisdiction adapter can
+// route to the bingo coordinator instead of the regular evaluator.
+const NIGC_C2: JurisdictionProfile = {
+  id: 'NIGC_C2',
+  name: 'US National Indian Gaming Commission (Class II)',
+  rtpRange: [0.80, 0.99],
+  maxWinX: undefined,
+  prohibitedFeatures: ['cascade', 'respin'], // ticket-pool draws don't compose
+  requireLdwDisclosure: false,
+  requireSessionTimeDisplay: false,
+  requiredNearMissRule: 'must_be_random',
+  informationalNotes: [
+    'Class II = bingo / pull-tab pool-draw mechanic. Per-spin RNG is COSMETIC — the underlying prize is drawn from a finite, centrally-determined pool.',
+    'Implementation: route through `ClassIIBingoCoordinator` (Faza 14.3) rather than per-spin evaluator.',
+    'Pool must be cryptographically random (GLI-11 §3 — HSM-grade RNG required).',
+    'No two terminals on the same coordinator may receive the same ticket (atomic decrement).',
+    'IGRA 1988 + 25 CFR Parts 542-547 — tribal-state compact required.',
+  ],
+  effectiveFrom: '1988-10-17',
+  regulatorUrl: 'https://www.nigc.gov/regulations',
+};
+
+// NV_SKILL — Nevada Gaming Commission, skill-influenced slot game category
+// (Senate Bill 9 / Reg 14, effective 2017-08-04). Player skill modifies
+// outcome distribution within a bounded envelope; RTP_min must be honoured
+// regardless of skill level.
+const NV_SKILL: JurisdictionProfile = {
+  id: 'NV_SKILL',
+  name: 'Nevada — Skill-Influenced Slot (Reg 14)',
+  rtpRange: [0.75, 0.99],
+  maxWinX: undefined,
+  prohibitedFeatures: ['gamble'],
+  requireLdwDisclosure: false,
+  requireSessionTimeDisplay: false,
+  requiredNearMissRule: 'allowed_within_distribution',
+  informationalNotes: [
+    'Skill component must contribute ≥1% RTP swing at the player-skill extremes (Reg 14 §14.040(11)).',
+    'Min RTP must be achievable by an unskilled player; max RTP must be achievable by an expert.',
+    'Skill input MUST be recorded for audit (replay-able skill session per spin).',
+    'Reg 14 §14.040(15): NGCB pre-approval required before deployment.',
+    'NJ DGE Internet Gaming Technical Standard 14.1 has a similar profile but is separately tracked.',
+  ],
+  effectiveFrom: '2017-08-04',
+  regulatorUrl: 'https://gaming.nv.gov/about/contact-information/',
+};
+
 export const PROFILES: ReadonlyMap<string, JurisdictionProfile> = new Map([
   ['UKGC', UKGC],
   ['MGA', MGA],
@@ -205,4 +286,7 @@ export const PROFILES: ReadonlyMap<string, JurisdictionProfile> = new Map([
   ['AGCO', AGCO],
   ['DGA', DGA],
   ['NJDGE', NJDGE],
+  ['ADM_VLT', ADM_VLT],
+  ['NIGC_C2', NIGC_C2],
+  ['NV_SKILL', NV_SKILL],
 ]);

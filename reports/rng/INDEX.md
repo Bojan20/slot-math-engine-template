@@ -1,6 +1,6 @@
 # RNG Quality — NIST SP 800-22 Baseline
 
-**Generated:** 2026-05-13T07:48:31.558Z  ·  **Sample:** 1.0 Mbit per backend  ·  **Seed:** `0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)`  ·  **Pass bar:** p > 0.01 (NIST default α)
+**Generated:** 2026-05-14T22:38:59.946Z  ·  **Sample:** 1.0 Mbit per backend  ·  **Seed:** `0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)`  ·  **Pass bar:** p > 0.01 (NIST default α)
 
 ## Scope
 
@@ -16,6 +16,7 @@ This baseline implements 5 of the 15 NIST SP 800-22 tests directly in Node.js so
 | `pcg64` | ✅ 5/5 | ✅ 0.396 | ✅ 0.554 | ✅ 0.214 | ✅ 0.918 | ✅ 0.322 |
 | `xoshiro256ss` | ✅ 5/5 | ✅ 0.683 | ✅ 0.803 | ✅ 0.882 | ✅ 0.547 | ✅ 0.812 |
 | `philox4x32` | ✅ 5/5 | ✅ 0.481 | ✅ 0.836 | ✅ 0.748 | ✅ 0.602 | ✅ 0.775 |
+| `chacha20` | ✅ 5/5 | ✅ 0.194 | ✅ 0.063 | ✅ 0.646 | ✅ 0.524 | ✅ 0.282 |
 
 ## Per-backend JSON
 
@@ -23,6 +24,7 @@ This baseline implements 5 of the 15 NIST SP 800-22 tests directly in Node.js so
 - [`pcg64-nist-baseline.json`](./pcg64-nist-baseline.json)
 - [`xoshiro256ss-nist-baseline.json`](./xoshiro256ss-nist-baseline.json)
 - [`philox4x32-nist-baseline.json`](./philox4x32-nist-baseline.json)
+- [`chacha20-nist-baseline.json`](./chacha20-nist-baseline.json)
 
 ## Acceptance
 

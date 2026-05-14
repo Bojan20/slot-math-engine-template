@@ -88,6 +88,14 @@ struct Args {
 
 /// One JSON record per emitted spin. Keep field names snake_case so
 /// the TS side can `JSON.parse` directly without renaming.
+///
+/// W152 Wave 11 — Faza 10.3 extension: the record now also carries
+/// `grid_symbols` (per-spin flat list of symbol ids, row-major
+/// `reels × rows`) so the TS-side mirror grid generator can verify a
+/// **byte-identical per-cell match**, not just aggregate RTP. Symbol
+/// strings are emitted instead of u8 indices so the comparison stays
+/// stable across config reorderings (the index→symbol mapping isn't
+/// promised to be stable, but the IR symbol ids are).
 #[derive(Serialize)]
 struct SpinRecord {
     spin: u32,
@@ -99,6 +107,9 @@ struct SpinRecord {
     fs_awarded: u8,
     multiplier: u32,
     final_win: i64,
+    /// Row-major flat list of symbol ids (length `reels × rows`).
+    /// Each entry is the IR symbol id string for that cell.
+    grid_symbols: Vec<String>,
 }
 
 fn load_config(path: &PathBuf) -> GameConfig {
@@ -139,8 +150,23 @@ fn main() {
     // 1000 mc — matches the legacy TS simulator's default unit bet.
     let total_bet_mc: i64 = 1000;
 
+    let num_reels = cfg.reels as usize;
+    let num_rows = cfg.rows as usize;
+
     for spin_idx in 0..args.spins {
         let grid = grid_gen.generate_base(&mut rng);
+        // Flatten the grid (row-major: reel-by-reel, top→bottom rows).
+        // We must do this BEFORE `evaluate_spin` because the evaluator
+        // mutates the grid in place for cascades / respins. Faza 10.3
+        // wants the pristine post-spin grid for byte-match.
+        let mut grid_symbols: Vec<String> = Vec::with_capacity(num_reels * num_rows);
+        for reel in 0..num_reels {
+            for row in 0..num_rows {
+                let sym_idx = grid.get(reel, row);
+                grid_symbols.push(grid_gen.symbol_id(sym_idx).to_string());
+            }
+        }
+
         let result =
             evaluator.evaluate_spin(&grid, &mut rng, total_bet_mc, false, /*disable_lightning*/ true);
 
@@ -154,6 +180,7 @@ fn main() {
             fs_awarded: result.fs_awarded,
             multiplier: result.multiplier,
             final_win: result.final_win,
+            grid_symbols,
         };
         // One JSON line per spin (NDJSON). `to_string` + manual `\n`
         // avoids the trailing-comma + bracket overhead of a top-level

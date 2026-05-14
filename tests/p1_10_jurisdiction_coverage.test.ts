@@ -28,9 +28,11 @@ const ALL_JURISDICTIONS = ['UKGC', 'MGA', 'ADM', 'BMM', 'GLI19', 'AGCO', 'DGA', 
 
 describe('P1-10 — Jurisdiction coverage (8 profiles)', () => {
   describe('PROFILES registry', () => {
-    it('contains exactly the 8 expected profiles', () => {
-      const keys = Array.from(PROFILES.keys()).sort();
-      expect(keys).toEqual([...ALL_JURISDICTIONS].sort());
+    it('contains the 8 originally-required profiles (extras from Faza 14.3 allowed)', () => {
+      const keys = Array.from(PROFILES.keys());
+      for (const required of ALL_JURISDICTIONS) {
+        expect(keys).toContain(required);
+      }
     });
 
     it.each(ALL_JURISDICTIONS)('profile %s has a well-formed RTP range', (id) => {

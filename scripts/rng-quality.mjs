@@ -52,6 +52,7 @@ import {
   Xoshiro256SS,
   Philox4x32,
 } from '../dist/rng/index.js';
+import { ChaCha20Rng } from '../dist/crypto/chacha20.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -67,17 +68,28 @@ const BACKEND_SEED_HEX = '0xCAFEBABE_DEADBEEF (XOR-mixed → 0x' + BACKEND_SEED_
 
 // ─── Bit-extraction harness ────────────────────────────────────────────────
 
-/** Pull `n` bits from a backend, returning a Uint8Array of bit values 0/1. */
+/** Pull `n` bits from a backend, returning a Uint8Array of bit values 0/1.
+ *  Backends that expose `nextU64()` (engine RngBackend conformant) emit 64
+ *  bits per draw; backends that only expose `nextUint32()` (e.g. ChaCha20Rng
+ *  in `crypto/`) emit 32 bits per draw. Either way the extraction is MSB
+ *  first so re-runs produce byte-identical output. */
 function pullBits(rng, nBits) {
   const out = new Uint8Array(nBits);
   let i = 0;
+  const has64 = typeof rng.nextU64 === 'function';
   while (i < nBits) {
-    const [hi, lo] = rng.nextU64();
-    // 64 bits per draw, MSB first to keep extraction deterministic.
-    for (let bit = 63; bit >= 0 && i < nBits; bit--) {
-      const word = bit >= 32 ? hi : lo;
-      const shift = bit >= 32 ? bit - 32 : bit;
-      out[i++] = (word >>> shift) & 1;
+    if (has64) {
+      const [hi, lo] = rng.nextU64();
+      for (let bit = 63; bit >= 0 && i < nBits; bit--) {
+        const word = bit >= 32 ? hi : lo;
+        const shift = bit >= 32 ? bit - 32 : bit;
+        out[i++] = (word >>> shift) & 1;
+      }
+    } else {
+      const word = rng.nextUint32() >>> 0;
+      for (let bit = 31; bit >= 0 && i < nBits; bit--) {
+        out[i++] = (word >>> bit) & 1;
+      }
     }
   }
   return out;
@@ -297,6 +309,16 @@ function newBackend(kind, seed) {
       return new Xoshiro256SS(seed >>> 0);
     case 'philox4x32':
       return new Philox4x32(seed >>> 0);
+    case 'chacha20': {
+      // ChaCha20 takes a hex string seed (32 bytes = 64 hex chars). We
+      // expand the 32-bit numeric seed to 32 bytes deterministically:
+      // pad with seed-derived counter bytes so every backend uses the
+      // identical entropy footprint baseline.
+      const s = (seed >>> 0).toString(16).padStart(8, '0');
+      // 64-hex = 32 bytes: repeat the 8-hex seed 8× for a deterministic
+      // expansion (good enough as a quality smoke test entropy seed).
+      return new ChaCha20Rng(s.repeat(8));
+    }
     default:
       throw new Error(`unknown backend ${kind}`);
   }
@@ -325,7 +347,7 @@ function runBackend(kind) {
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
 
-  const backends = ['mulberry32', 'pcg64', 'xoshiro256ss', 'philox4x32'];
+  const backends = ['mulberry32', 'pcg64', 'xoshiro256ss', 'philox4x32', 'chacha20'];
   const summaries = [];
 
   for (const kind of backends) {

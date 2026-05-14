@@ -11,13 +11,15 @@ roll-up across both layers of evidence:
 
 ## At-a-glance: internal battery (16 MiB, seed = 12345)
 
+Re-captured in W152 Wave 11. Backends remain green on all 8 sub-tests:
+
 | Backend       | NIST subset (8 tests) | Avg p-value | Cert role |
 |---------------|:--:|--:|---|
-| `mulberry32`  | ✅ 8/8 | 0.27 | Legacy / quick replay; **not** for production play |
-| `pcg64`       | ✅ 8/8 | 0.54 | Default MC sim backend |
-| `xoshiro256ss`| ✅ 8/8 | 0.33 | High-throughput alt for parallel sim |
-| `philox4x32`  | ✅ 8/8 | 0.46 | Counter-based, parallel-friendly |
-| `chacha20`    | ✅ 8/8 | 0.55 | CSPRNG — required by UK / MGA / DE / NL |
+| `mulberry32`  | ✅ 8/8 | 0.245 | Legacy / quick replay; **not** for production play |
+| `pcg64`       | ✅ 8/8 | 0.621 | Default MC sim backend |
+| `xoshiro256ss`| ✅ 8/8 | 0.294 | High-throughput alt for parallel sim |
+| `philox4x32`  | ✅ 8/8 | 0.523 | Counter-based, parallel-friendly |
+| `chacha20`    | ✅ 8/8 | 0.571 | CSPRNG — required by UK / MGA / DE / NL |
 
 All five backends pass the NIST p ≥ 0.01 threshold on every sub-test.
 Avg p-value is informational only; no individual p must be near 0.5

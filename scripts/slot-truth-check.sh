@@ -57,8 +57,8 @@ read_oracle() {
   cat <<'EOF'
 rust_lib_tests           ge   259
 rust_total_tests         ge   782
-ts_test_count            ge   1913
-ts_test_files            ge   71
+ts_test_count            ge   1993
+ts_test_files            ge   75
 ir_feature_stubs_closed  eq   20
 chacha20_kat_test        eq   1
 rng_submission_bin       eq   1

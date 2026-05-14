@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        backend: [mulberry32, pcg64, xoshiro256ss, philox4x32]
+        backend: [mulberry32, pcg64, xoshiro256ss, philox4x32, chacha20]
     steps:
       - uses: actions/checkout@v4
 
