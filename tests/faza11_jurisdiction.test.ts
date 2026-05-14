@@ -197,27 +197,24 @@ describe('Faza 11.9 — Jurisdiction Adapter', () => {
     expect(v?.canAutoFix).toBe(true);
   });
 
-  // ── JURI-11: max_win_x=300000 in MGA (cap=250000) ───────────────────────
-  it('JURI-11: max_win_x=300000 in MGA (cap=250000) → error', () => {
+  // ── JURI-11: MGA online has NO max-win cap (Kimi research May 2026) ─────
+  it('JURI-11: MGA online enforces no max-win cap', () => {
     const ir = baseIR();
-    ir.limits.max_win_x = 300_000;
+    ir.limits.max_win_x = 1_000_000;
     const report = adapter.validate(ir, ['MGA']);
     const v = report.violations.find((v) => v.ruleId === 'MGA-MAXWIN-001');
-    expect(v).toBeDefined();
-    expect(v?.severity).toBe('error');
-    expect(v?.canAutoFix).toBe(true);
+    expect(v).toBeUndefined();
   });
 
-  // ── JURI-12: max_win_x=2000 in ADM (cap=1000) ───────────────────────────
-  it('JURI-12: max_win_x=2000 in ADM (cap=1000) → error', () => {
+  // ── JURI-12: ADM online has NO per-spin max-win cap ─────────────────────
+  it('JURI-12: ADM online enforces no per-spin max-win cap', () => {
     const ir = baseIR();
-    ir.limits.max_win_x = 2000;
+    ir.limits.max_win_x = 50_000;
     ir.compliance.jurisdictions = ['ADM'];
-    ir.compliance.rtp_range_required = [0.85, 0.97];
+    ir.compliance.rtp_range_required = [0.90, 0.99];
     const report = adapter.validate(ir, ['ADM']);
     const v = report.violations.find((v) => v.ruleId === 'ADM-MAXWIN-001');
-    expect(v).toBeDefined();
-    expect(v?.severity).toBe('error');
+    expect(v).toBeUndefined();
   });
 
   // ── JURI-13: autoFix removes gamble from UKGC IR ────────────────────────
@@ -268,16 +265,15 @@ describe('Faza 11.9 — Jurisdiction Adapter', () => {
     expect(fix).toBeDefined();
   });
 
-  // ── JURI-17: autoFix caps max_win_x for MGA ─────────────────────────────
-  it('JURI-17: autoFix caps max_win_x for MGA', () => {
+  // ── JURI-17: MGA auto-fix is a no-op on max_win_x (no statutory cap) ────
+  it('JURI-17: MGA autoFix does not clamp max_win_x', () => {
     const ir = baseIR();
-    ir.limits.max_win_x = 300_000;
+    ir.limits.max_win_x = 1_000_000;
 
     const result = adapter.autoFix(ir, ['MGA']);
-    expect(result.ir.limits.max_win_x).toBe(250_000);
-    expect(result.ir.compliance.max_win_cap_required).toBe(250_000);
+    expect(result.ir.limits.max_win_x).toBe(1_000_000);
     const fix = result.appliedFixes.find((f) => f.ruleId === 'MGA-MAXWIN-001');
-    expect(fix).toBeDefined();
+    expect(fix).toBeUndefined();
   });
 
   // ── JURI-18: autoFix sets near_miss_rule ────────────────────────────────
@@ -342,7 +338,7 @@ describe('Faza 11.9 — Jurisdiction Adapter', () => {
   // ── JURI-23: multiple jurisdictions → violations from both ───────────────
   it('JURI-23: multiple jurisdictions validate against both rule sets', () => {
     const ir = baseIR();
-    ir.limits.target_rtp = 0.91; // below MGA (0.92) and UKGC (0.94) minimums
+    ir.limits.target_rtp = 0.84; // below MGA (0.85) and UKGC (0.94) minimums
     ir.compliance.rtp_range_required = [0.94, 0.99];
 
     const report = adapter.validate(ir, ['UKGC', 'MGA']);
@@ -377,15 +373,15 @@ describe('Faza 11.9 — Jurisdiction Adapter', () => {
     expect(report.checkedJurisdictions).not.toContain('UKGC');
   });
 
-  // ── JURI-26: info violations for informational notes ─────────────────────
+  // ── JURI-26: info violations for informational notes + derived checks ────
   it('JURI-26: info violations generated for informational notes', () => {
     const ir = baseIR();
     const report = adapter.validate(ir, ['UKGC']);
     const infoViolations = report.violations.filter((v) => v.severity === 'info');
     expect(infoViolations.length).toBeGreaterThan(0);
-    // UKGC has 5 informational notes
+    // UKGC: 6 informational notes + 4 derived (AUTOPLAY, TURBO, PACING, WAGERING) = 10.
     const ukgcInfo = infoViolations.filter((v) => v.jurisdiction === 'UKGC');
-    expect(ukgcInfo.length).toBe(5);
+    expect(ukgcInfo.length).toBe(10);
     expect(ukgcInfo[0].canAutoFix).toBe(false);
   });
 
@@ -564,14 +560,14 @@ describe('Faza 11.9 — Jurisdiction Adapter', () => {
     expect(profile?.prohibitedFeatures).toContain('buy_feature');
   });
 
-  it('MGA maxWinX is 250000', () => {
+  it('MGA online has no statutory maxWinX cap', () => {
     const profile = adapter.getProfile('MGA');
-    expect(profile?.maxWinX).toBe(250_000);
+    expect(profile?.maxWinX).toBeUndefined();
   });
 
-  it('ADM maxWinX is 1000', () => {
+  it('ADM online has no per-spin maxWinX cap', () => {
     const profile = adapter.getProfile('ADM');
-    expect(profile?.maxWinX).toBe(1_000);
+    expect(profile?.maxWinX).toBeUndefined();
   });
 
   it('info violations all have canAutoFix=false', () => {
