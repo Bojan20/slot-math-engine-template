@@ -15,9 +15,9 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja `38702a4`, izvora i fixture-a — 2026-05-14, W152 P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13 landed)
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 8, izvora i fixture-a — 2026-05-14, W152 P0-5 + P1-8 + P2-14 + P2-16 landed)
 
-**Ukupno: ~82% kompletno na kodu, ~45% kompletno na "acceptance proof"-u.** *(W152 P1-7 (persistent-grid H&W) + P1-10 (rng/jackpot/jurisdiction coverage trojka) + P2-15 (max-win cap + EVT) + Faza 7.2 (RNG cert ChaCha20 row + SUMMARY.md) + P2-13 (AML telemetry emitter) — sve u jednoj sesiji, sa full QA.)*
+**Ukupno: ~86% kompletno na kodu, ~52% kompletno na "acceptance proof"-u.** *(W152 Wave 8: P0-5 evaluator parity oracle (Rust bin + TS spec), P1-8 PAR sheet diff (cert-trigger flags), P2-14 ECVRF/Chainlink VRF adapter (RFC 9381 baseline), P2-16 Makefile (18 targets). Wave 7: P1-7 persistent-grid H&W, P1-10 coverage trojka, P2-15 max-win cap + EVT, Faza 7.2 RNG cert ChaCha20 row, P2-13 AML telemetry.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.

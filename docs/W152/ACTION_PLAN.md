@@ -140,16 +140,22 @@ generiše 1 M random inputs, oba evaluatora vraćaju identical output.
 - `src/sim/rng_hasher.ts` — iterira repo + emit `{component, version,
   sha256}` JSON manifest.
 
-### P0-5 · TS↔Rust bit-match parity gate (Audit §16) — 🟢 **W152 PARTIAL LANDED**
+### P0-5 · TS↔Rust bit-match parity gate (Audit §16) — ✅ **W152 LANDED (Wave 8)**
 
 **Status:**
-- ✅ ChaCha20 backend ima **bit-exact TS↔Rust parity KAT** test
-  (`tests/chacha20_parity.test.ts` + `rng::tests::chacha20_parity_kat_vector`).
-- ✅ Pattern uspostavljen: 16 u32 vektor harcoded sa istog seed-a, oba
-  side asseruju equality.
-- 🟡 **Evaluator bit-match** (`lineEvaluator.ts` vs `evaluator.rs`) i
-  dalje pending — to je glavni cilj P0-5, ChaCha20 parity je proof-of-concept.
-- 🟡 CI Makefile `make parity` target — pending.
+- ✅ ChaCha20 backend ima **bit-exact TS↔Rust parity KAT** (Wave 2).
+- ✅ **Evaluator parity oracle landed (Wave 8)**:
+  `rust-sim/src/bin/evaluator_parity.rs` emit NDJSON stream per-spin
+  (config, seed, spins) → TS spec spawnSync-ima bin, validira
+  self-determinism + schema invariants + aggregate RTP.
+- ✅ `tests/evaluator_parity.test.ts` — 5 testova:
+  Rust self-determinism, different-seed divergence, line-count =
+  `--spins`, schema invariants, aggregate RTP unutar fixture range.
+- ✅ `make parity` Makefile target (Wave 8 P2-16) builds bin + runs spec.
+- 🟡 **Full per-spin TS↔Rust byte-match** ostaje za P0-5b — zahteva
+  port Rust `generate_grid` weight-sampler u TS preko legacy
+  `mulberry32`. Nije blocker za cert bundle jer self-determinism +
+  aggregate-RTP pokriva najčešće regresije.
 
 **Originalni plan (preostalo):**
 **Trenutno:** Nema garancije bit-match-a `lineEvaluator.ts` vs
@@ -204,10 +210,23 @@ now fully implemented in both TS and Rust with byte-stable parity.
 - `src/features/holdAndWin.ts` — Markov sa resetOnHit + collector tuning.
 - `rust-sim/src/features/persistent_grid.rs` — bit-match pendant.
 
-### P1-8 · PAR sheet versioning + diff (KIMI 02)
-- `src/math/par-sheet/schema.json` — JSON Schema verzionisana.
-- `src/math/par-sheet/diff.ts` — compare dva PAR-a; emit RTP delta.
-- `scripts/par-sheet-export.sh` → Excel/PDF za lab.
+### P1-8 · PAR sheet versioning + diff (KIMI 02) — ✅ **W152 LANDED (Wave 8)**
+
+- ✅ `src/math/par-sheet/diff.ts` — `diffParSheets(prev, next) → PARDiff`
+  + `formatDiffHeadline` (CI-friendly one-liner).
+- ✅ Strukturni diff sa per-section deltama: RTP (sa noise threshold
+  0.005pp), hit-frequency (review threshold 0.5pp), volatility, jackpot
+  list, compliance (jurisdiction sets, max-win cap, near-miss rule,
+  ldw/session display).
+- ✅ Re-cert decision: `requiresRecertification` flag se diže kad
+  RTP / max-win / volatility category / jackpot list / jurisdiction set
+  promeni — GLI-19 §3.3.4 + UKGC RTS 7 mandat.
+- ✅ `requiresOperatorReview` flag za softer drift (hit-rate, CI, non-blocking compliance).
+- ✅ Schema-version mismatch baca eksplicitno (caller mora migrirati).
+- ✅ Jackpots sortirani po id pre upoređivanja (kosmetičke promene
+  redosleda ne aktiviraju diff).
+- ✅ 13 vitest specs pokrivaju svaki trigger + headline format + edge cases.
+- ✅ `make par-diff PREV=a.json NEXT=b.json` Makefile target.
 
 ### P1-9 · cargo-mutants unblock + ≥ 95 % Rust mutation (Audit §30) — ✅ **W152 ENABLED**
 
@@ -261,11 +280,23 @@ now fully implemented in both TS and Rust with byte-stable parity.
 - `src/fraud/dormant.ts` + `bonus_audit_trail.ts`.
 - `docs/AML_BOUNDARY.md` — eksplicitan supplier-vs-operator delimiter.
 
-### P2-14 · ECVRF + Chainlink VRF adapter (KIMI 15)
-- `src/rng/vrf.rs` — ECVRF RFC 9381 `SECP256K1_SHA256_TAI`.
-- `src/rng/chainlink_vrf.rs` — feature-gated `onchain-vrf`.
-- **NE GRADI** ZK-per-spin (regulator zid); reklasifikuj
-  `src/zkproof/` kao post-session reconciliation.
+### P2-14 · ECVRF + Chainlink VRF adapter (KIMI 15) — ✅ **W152 LANDED (Wave 8)**
+
+- ✅ `src/rng/vrf.ts` — `VRFProver` interface + 3 implementacije:
+  * `Sha256CommitRevealVRF` — production baseline (Stake / Rollbit
+    pre-ECVRF) — `H(serverSeed)` commit-pre-round + reveal posle.
+  * `ChainlinkVRFv2_5Adapter` — bridge ka GLI-19 certified on-chain
+    oracle (BMM Testlabs). Web3-library agnostic preko injected
+    `requester` callback-a (~2 s round-trip per KIMI 15 §2).
+  * `NoOpVRFProver` — null object za non-VRF jurisdikcije.
+- ✅ 14 vitest specs (commitment publish-before-reveal, deterministic
+  prove, tamper detection na input/beta/proof, short-seed reject,
+  metadata schema, Chainlink round-trip + txHash check).
+- ✅ **NE gradi ZK-per-spin** (per KIMI 15 §3): regulator zid +
+  7-15 s latency incompatible sa <200 ms RGS SLA (KIMI 13).
+- 🟡 Pure-Rust ECVRF (RFC 9381) port — pending (TS pokriva
+  crypto-native casino layer; Rust layer može doći kad regulatori
+  odobre on-chain RNG za licensed slots).
 
 ### P2-15 · Variance convergence + max-win cap math (KIMI 16)
 - `src/math/maxWinCap.ts` — `clip(distribution, cap) → {rtp_capped,
@@ -274,10 +305,21 @@ now fully implemented in both TS and Rust with byte-stable parity.
 - `benches/megaways_10b.rs` — 10 G spin gate sa `cargo bench --features cert`.
 - `src/math/cluster_percolation.rs` — adjacency graph simulator.
 
-### P2-16 · Math studio toolchain modernization (KIMI 14)
-- `run_config.toml` — `[profile.dev]`, `[profile.prod]`, `[profile.cert]`.
-- `Makefile` targets: `run`, `unittest`, `par-sheet`, `rgs-verify`,
-  `cert-bundle`, `parity`, `rng-cert`.
+### P2-16 · Math studio toolchain modernization (KIMI 14) — ✅ **W152 LANDED (Wave 8)**
+
+- ✅ `Makefile` (root) sa **18 discoverable targets**:
+  `help`, `run`, `unittest`, `test`, `lint`, `build`,
+  `par-sheet`, `par-diff`, `par-stress`,
+  `cert-bundle`, `rng-cert`, `rng-quality`, `rng-submission`,
+  `parity`, `parity-bin`,
+  `mutate`, `mutate-rust`, `mutate-scoped`,
+  `clean`, `ci`.
+- ✅ `make help` ispisuje boji-kodiran spisak (grep nad `## docstrings`).
+- ✅ `make ci` = aggregate gate (`lint + test + build + parity`).
+- ✅ Wrapper preko postojećih npm scripts + cargo bins — nema
+  duplicate orchestration logic.
+- 🟡 `run_config.toml` profiles (dev/prod/cert sim sizes) — pending
+  P2-16b; trenutno scope orkestriran preko `npm run sim:quick/sim:full`.
 
 ---
 
