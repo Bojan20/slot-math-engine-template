@@ -143,6 +143,8 @@ fn variable_ways_config(reels: u8, max_rows: u8) -> GameConfig {
         ante_bet: None,
         gamble: None,
         symbol_upgrade: None,
+        // W152 Faza 2.4 — Pattern evaluator (variable_ways test does not use it).
+        pattern: None,
         max_win_cap: 5000.0,
         feature_loop_cap: 100,
     }

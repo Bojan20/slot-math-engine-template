@@ -1,0 +1,722 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![], 0)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![], 1)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![], -1)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![Default::default()], 0)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![Default::default()], 1)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 660,
+        "column": 9
+      },
+      "end": {
+        "line": 746,
+        "column": 26
+      }
+    },
+    "replacement": "(vec![Default::default()], -1)",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 684,
+        "column": 38
+      },
+      "end": {
+        "line": 684,
+        "column": 40
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 684,
+        "column": 25
+      },
+      "end": {
+        "line": 684,
+        "column": 27
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 684,
+        "column": 45
+      },
+      "end": {
+        "line": 684,
+        "column": 47
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 694,
+        "column": 20
+      },
+      "end": {
+        "line": 694,
+        "column": 21
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 698,
+        "column": 41
+      },
+      "end": {
+        "line": 698,
+        "column": 43
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 705,
+        "column": 27
+      },
+      "end": {
+        "line": 705,
+        "column": 29
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 705,
+        "column": 16
+      },
+      "end": {
+        "line": 705,
+        "column": 17
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 719,
+        "column": 33
+      },
+      "end": {
+        "line": 719,
+        "column": 35
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 719,
+        "column": 38
+      },
+      "end": {
+        "line": 719,
+        "column": 40
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 721,
+        "column": 16
+      },
+      "end": {
+        "line": 721,
+        "column": 17
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 729,
+        "column": 47
+      },
+      "end": {
+        "line": 729,
+        "column": 48
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 729,
+        "column": 47
+      },
+      "end": {
+        "line": 729,
+        "column": 48
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 730,
+        "column": 23
+      },
+      "end": {
+        "line": 730,
+        "column": 25
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 733,
+        "column": 59
+      },
+      "end": {
+        "line": 733,
+        "column": 60
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 733,
+        "column": 59
+      },
+      "end": {
+        "line": 733,
+        "column": 60
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 734,
+        "column": 20
+      },
+      "end": {
+        "line": 734,
+        "column": 22
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 737,
+        "column": 23
+      },
+      "end": {
+        "line": 737,
+        "column": 25
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/evaluator.rs",
+    "function": {
+      "function_name": "Evaluator<'a>::evaluate_pattern",
+      "return_type": "-> (Vec<LineWin>, i64)",
+      "span": {
+        "start": {
+          "line": 654,
+          "column": 5
+        },
+        "end": {
+          "line": 747,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 737,
+        "column": 23
+      },
+      "end": {
+        "line": 737,
+        "column": 25
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  }
+]

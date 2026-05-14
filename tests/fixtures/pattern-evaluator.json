@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "w152-pattern-fixture",
+    "name": "W152 Faza 2.4 Pattern Evaluator Fixture",
+    "version": "1.0.0",
+    "description": "3x3 grid + 3 pattern rules: top row, left column, main diagonal. Used by the pattern-evaluator integration test in both TS and Rust.",
+    "theme_tags": ["test", "fixture", "pattern"],
+    "author": "engine-team",
+    "created_at_utc": "2026-05-14T00:00:00Z"
+  },
+  "topology": { "kind": "rectangular", "reels": 3, "rows": 3 },
+  "symbols": [
+    { "id": "LP1",    "name": "LP1",  "kind": "lp" },
+    { "id": "HP1",    "name": "HP1",  "kind": "hp" },
+    { "id": "S_WILD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "S_SCAT", "name": "Scat", "kind": "scatter" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "LP1": 8, "HP1": 2, "S_WILD": 1, "S_SCAT": 1 },
+      { "LP1": 8, "HP1": 2, "S_WILD": 1, "S_SCAT": 1 },
+      { "LP1": 8, "HP1": 2, "S_WILD": 1, "S_SCAT": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "pattern",
+    "patterns": [
+      { "id": "row_top",  "positions": [[0, 0], [0, 1], [0, 2]], "pay_multiplier": 10.0 },
+      { "id": "col_left", "positions": [[0, 0], [1, 0], [2, 0]], "pay_multiplier": 5.0 },
+      { "id": "diagonal", "positions": [[0, 0], [1, 1], [2, 2]], "pay_multiplier": 25.0 }
+    ]
+  },
+  "paytable": {
+    "LP1": { "3": 0.5, "4": 2,   "5": 8 },
+    "HP1": { "3": 3,   "4": 12,  "5": 63 }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger": { "by": "scatter_count", "thresholds": { "3": 8 } },
+      "global_multiplier": 1
+    }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 0 },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1.0,
+    "denominations": [0.01, 0.10, 1.0]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.0005,
+    "max_win_x": 5000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "medium",
+    "hit_freq_target": 0.30
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA"],
+    "rtp_range_required": [0.92, 0.97],
+    "max_win_cap_required": 10000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.96,
+    "free_spins": 0.0,
+    "hold_and_win": 0.0,
+    "jackpot": 0.0,
+    "tolerance": 0.005
+  }
+}

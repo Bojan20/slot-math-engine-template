@@ -33,6 +33,30 @@ pub enum EvalMode {
     /// `pay(symbol, N) × Π(count_per_reel[0..N])`, where each reel's
     /// count is the number of matching cells on that reel (wild included).
     VariableWays { row_counts: Vec<usize> },
+    /// W152 Faza 2.4 — Pattern evaluation: arbitrary positional templates.
+    ///
+    /// Each rule specifies a list of `(row, reel)` positions plus a
+    /// `pay_multiplier`. The grid pays the rule if **every** position
+    /// holds the **same** symbol (wilds substitute for non-special
+    /// symbols, like in line evaluation). The payout for a rule is
+    /// `pay_multiplier × total_bet`. Pay-table entries are ignored —
+    /// pattern rules carry their own payouts. The `min_match` from the
+    /// IR is not relevant for pattern mode (positions are fixed).
+    Pattern { rules: Vec<PatternRule> },
+}
+
+/// One pattern rule — used by `EvalMode::Pattern`.
+#[derive(Debug, Clone, PartialEq)]
+pub struct PatternRule {
+    /// Stable identifier (e.g. `"diamond"`, `"corners"`); echoed in
+    /// `LineWin::payline_id` is **not** possible (u8) so we keep it
+    /// here purely for downstream reporting/debugging.
+    pub id: String,
+    /// List of `(row, reel)` cells that must all match. The order is
+    /// preserved exactly as authored in the IR.
+    pub positions: Vec<(u32, u32)>,
+    /// Total-bet multiplier paid when every position matches.
+    pub pay_multiplier: f64,
 }
 
 // ─── Result types ───────────────────────────────────────────────────────────
@@ -612,6 +636,116 @@ impl<'a> Evaluator<'a> {
         (wins, total_win)
     }
 
+    // ─── W152 Faza 2.4 — Pattern evaluator ───────────────────────────────
+    //
+    // Each rule lists `(row, reel)` positions. The rule pays its
+    // `pay_multiplier × total_bet` if **every** position holds the same
+    // symbol, with wilds substituting for any non-special symbol
+    // (mirrors line evaluation). Positions that fall outside the grid
+    // (e.g. `row >= rows_for_reel(reel)`) cause the rule to skip with no
+    // win — this is the documented behaviour for cluster-grid topologies
+    // that use Pattern mode against a static rectangular envelope.
+    //
+    // Each matching rule produces one `LineWin` whose `payline_id` is
+    // the rule's position in the list (`0..255`; capped because the
+    // existing struct uses u8 — see `PatternRule::id` for the stable
+    // string identifier if more than 255 rules are needed).
+
+    fn evaluate_pattern(
+        &self,
+        grid: &Grid,
+        rules: &[PatternRule],
+        total_bet_mc: i64,
+    ) -> (Vec<LineWin>, i64) {
+        let num_reels = self.config.reels as usize;
+        let mut wins: Vec<LineWin> = Vec::with_capacity(rules.len());
+        let mut total_win = 0i64;
+
+        for (rule_idx, rule) in rules.iter().enumerate() {
+            // Empty rule → cannot match by convention (no positions to
+            // verify). Guard avoids the "vacuously-true" payout.
+            if rule.positions.is_empty() {
+                continue;
+            }
+
+            // Find the candidate symbol — the first non-wild symbol in
+            // the rule's positions. If every position is a wild, we
+            // treat the lowest-paying non-wild symbol as the match
+            // ("wild-only fallback") because wild-only patterns paying
+            // their own value would distort RTP; mirroring the line
+            // evaluator's behaviour, wild-only matches don't pay.
+            let mut candidate: Option<u8> = None;
+            let mut all_wild = true;
+            let mut bounds_ok = true;
+
+            for &(row, reel) in &rule.positions {
+                let reel = reel as usize;
+                let row = row as usize;
+                if reel >= num_reels || row >= grid.rows_for_reel(reel) {
+                    bounds_ok = false;
+                    break;
+                }
+                let sym = grid.get(reel, row);
+                if self.is_special(sym) {
+                    // Scatter / bonus in a pattern slot voids the rule.
+                    bounds_ok = false;
+                    break;
+                }
+                if !self.is_wild(sym) {
+                    all_wild = false;
+                    if candidate.is_none() {
+                        candidate = Some(sym);
+                    } else if candidate != Some(sym) {
+                        bounds_ok = false;
+                        break;
+                    }
+                }
+            }
+
+            if !bounds_ok || all_wild {
+                continue;
+            }
+
+            let symbol = match candidate {
+                Some(s) => s,
+                None => continue,
+            };
+
+            // Verify every position is either wild or the candidate
+            // symbol (we already did this implicitly above, but assert
+            // for clarity / future re-ordering).
+            let matches_all = rule.positions.iter().all(|&(row, reel)| {
+                let s = grid.get(reel as usize, row as usize);
+                self.is_wild(s) || s == symbol
+            });
+            if !matches_all {
+                continue;
+            }
+
+            // `pay_multiplier × total_bet`. The IR exposes pay_multiplier
+            // as f64; we scale by 1000 to match the millicredit
+            // convention used elsewhere (paytable already stores
+            // millicredits via `(pay * 1000.0) as i64`).
+            let pay_mc = (rule.pay_multiplier * 1000.0).round() as i64;
+            if pay_mc <= 0 {
+                continue;
+            }
+            let win = pay_mc.saturating_mul(total_bet_mc) / 1000;
+            if win <= 0 {
+                continue;
+            }
+            total_win += win;
+            wins.push(LineWin {
+                payline_id: rule_idx.min(255) as u8,
+                symbol_idx: symbol,
+                count: rule.positions.len().min(255) as u8,
+                payout: win,
+            });
+        }
+
+        (wins, total_win)
+    }
+
     // ─── Public entry point ──────────────────────────────────────────────
 
     /// Evaluate a full spin and return the aggregated `SpinResult`.
@@ -636,6 +770,7 @@ impl<'a> Evaluator<'a> {
             EvalMode::VariableWays { row_counts } => {
                 self.evaluate_variable_ways(grid, row_counts, total_bet_mc)
             }
+            EvalMode::Pattern { rules } => self.evaluate_pattern(grid, rules, total_bet_mc),
         };
 
         result.line_wins = line_wins;

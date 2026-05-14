@@ -180,6 +180,23 @@ export interface TSSymbolUpgradeConfig {
   probability: number;
 }
 
+// ─── W152 Faza 2.4 — Pattern evaluator config ───────────────────────────────
+//
+// Mirror of `rust-sim/src/config.rs::{PatternRuleConfig, PatternConfig}`.
+// Positions are `[row, reel]` tuples — same wire shape as the IR
+// `PatternPositions::List` variant.
+
+export interface TSPatternRuleConfig {
+  id: string;
+  /** `[row, reel]` per cell. */
+  positions: Array<[number, number]>;
+  payMultiplier: number;
+}
+
+export interface TSPatternConfig {
+  rules: TSPatternRuleConfig[];
+}
+
 export interface TSGameConfig {
   name: string;
   version: string;
@@ -215,6 +232,9 @@ export interface TSGameConfig {
   anteBet?: TSAnteBetConfig;
   gamble?: TSGambleConfig;
   symbolUpgrade?: TSSymbolUpgradeConfig;
+  // W152 Faza 2.4 — Pattern evaluator (kind === "pattern"). Populated
+  // only when the IR evaluation is `pattern`, otherwise undefined.
+  pattern?: TSPatternConfig;
 }
 
 // ─── Error class ─────────────────────────────────────────────────────────────
@@ -263,6 +283,9 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
     gamble,
     symbolUpgrade,
   } = convertFeatures(ir);
+  // W152 Faza 2.4 — Pattern evaluator. Lives on `evaluation`, not
+  // `features[]`, so we extract it through a dedicated helper.
+  const pattern = convertPatternConfig(ir.evaluation);
 
   return {
     name: ir.meta.name,
@@ -290,7 +313,31 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
     ...(anteBet !== undefined ? { anteBet } : {}),
     ...(gamble !== undefined ? { gamble } : {}),
     ...(symbolUpgrade !== undefined ? { symbolUpgrade } : {}),
+    ...(pattern !== undefined ? { pattern } : {}),
   };
+}
+
+// W152 Faza 2.4 — Pattern config extraction. Returns `undefined` if the
+// IR's evaluation kind is anything other than `pattern`. An empty
+// patterns list yields `{ rules: [] }` (NOT `undefined`) so downstream
+// code can tell "game uses pattern mode with zero rules" apart from
+// "game does not use pattern mode".
+function convertPatternConfig(evaluation: Evaluation): TSPatternConfig | undefined {
+  if (evaluation.kind !== 'pattern') {
+    return undefined;
+  }
+  const rules: TSPatternRuleConfig[] = evaluation.patterns.map((p) => {
+    const positions: Array<[number, number]> =
+      p.positions === 'all'
+        ? [] // "all" expanded by the evaluator factory against grid dims.
+        : p.positions.map(([row, reel]) => [row, reel] as [number, number]);
+    return {
+      id: p.id,
+      positions,
+      payMultiplier: p.pay_multiplier,
+    };
+  });
+  return { rules };
 }
 
 // ─── Topology ────────────────────────────────────────────────────────────────

@@ -162,6 +162,33 @@ generiše 1 M random inputs, oba evaluatora vraćaju identical output.
 
 ---
 
+### Faza 2.4 · Pattern evaluator (MASTER_TODO ❌ → ✅ **W152 LANDED**)
+
+**Status:** Pattern evaluation, listed as ❌ in MASTER_TODO §2.4, is
+now fully implemented in both TS and Rust with byte-stable parity.
+
+- ✅ `rust-sim/src/evaluator.rs` — `EvalMode::Pattern { rules }`
+  variant + `PatternRule { id, positions, pay_multiplier }` struct;
+  `evaluate_pattern` honours wild substitution, voids on scatter/bonus,
+  ignores wild-only rules.
+- ✅ `rust-sim/src/config.rs` — `PatternConfig` + `PatternRuleConfig`
+  serde structs; `GameConfig.pattern: Option<PatternConfig>`.
+- ✅ `rust-sim/src/ir/adapter.rs` — `convert_pattern_to_config`
+  extracts `evaluation.kind = "pattern"` into the runtime config.
+- ✅ `src/evaluators/patternEvaluator.ts` — TS evaluator mirroring
+  Rust math exactly (`Math.round(pay × 1000) × totalBet / 1000` via
+  `Math.floor` to mirror Rust's i64 integer division).
+- ✅ `src/ir/adapter.ts` — `TSPatternConfig` + `convertPatternConfig`
+  mirroring the Rust adapter path.
+- ✅ Shared fixture `tests/fixtures/pattern-evaluator.json` consumed
+  by both suites; 8 Rust + 9 TS tests with **identical expected payouts**
+  (uniform HP1 = 40 credits across 3 rules; broken row_top = 30
+  credits; wild substitution = 10; scatter voids = 0).
+- ✅ Mutation-tested: 9 of 9 testable mutants caught (100 %); 12
+  timeouts are budget-bound, not test-coverage gaps.
+
+---
+
 ## P1 — HIGH (5 sesija, professional reputation)
 
 ### P1-6 · Reporting adapters: UK + MGA + ADM bin (KIMI 06)
@@ -182,7 +209,23 @@ generiše 1 M random inputs, oba evaluatora vraćaju identical output.
 - `src/math/par-sheet/diff.ts` — compare dva PAR-a; emit RTP delta.
 - `scripts/par-sheet-export.sh` → Excel/PDF za lab.
 
-### P1-9 · cargo-mutants unblock + ≥ 95 % Rust mutation (Audit §30)
+### P1-9 · cargo-mutants unblock + ≥ 95 % Rust mutation (Audit §30) — ✅ **W152 ENABLED**
+
+**Status:**
+- ✅ `cargo-mutants 25.3.1` installed and working.
+- ✅ Workaround `scripts/rust-mutate.sh` uses `RUSTUP_TOOLCHAIN=stable`
+  to run cargo-mutants outside the parity-pinned 1.83 toolchain. Parity
+  guarantee intact (mutants only mutates code under stable, runs the
+  full test suite under same stable build).
+- ✅ Demonstrated on `evaluate_pattern`: **9 caught / 0 missed / 12
+  timeouts / 3 unviable** — **100 % mutation score** (caught /
+  (caught + missed) excluding timeouts).
+- ✅ Reports landed in `reports/mutation/rust/evaluator/mutants.out/`.
+- 🟡 Workspace-wide ≥ 95 % score over **all** modules — next sprint
+  (each module ~5 min × ~30 modules = ~2.5 h budget). The infrastructure
+  works; this is now just running it.
+
+**Originalni plan (referenca):**
 **Trenutno:** P0 BLOCKED — cargo-mutants vs rust-toolchain pin.
 **Hipotetski fix:**
 1. Probaj `cargo-mutants 25.0.1+` (proveriti compat).

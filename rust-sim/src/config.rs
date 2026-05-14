@@ -132,6 +132,31 @@ pub struct RespinConfig {
     pub max_uses_per_spin: u32,
 }
 
+// W152 Faza 2.4 — Pattern evaluator config (sits with the other
+// runtime feature configs even though the evaluator itself lives in
+// `crate::evaluator::EvalMode::Pattern`). Carrying the rules here keeps
+// the GameConfig the single source-of-truth that downstream consumers
+// (analytical, MC sim, PAR generator) can hash for parity.
+
+/// One pattern rule — fixed list of `(row, reel)` cells that must all
+/// match the same symbol (wilds substitute). Mirrors the
+/// `evaluator::PatternRule` struct exactly so the adapter can clone
+/// across without translation.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct PatternRuleConfig {
+    pub id: String,
+    /// `[row, reel]` per cell. Serialised as 2-element array to match
+    /// the IR wire shape (`PatternPositions::List`).
+    pub positions: Vec<[u32; 2]>,
+    pub pay_multiplier: f64,
+}
+
+/// Pattern evaluation configuration.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct PatternConfig {
+    pub rules: Vec<PatternRuleConfig>,
+}
+
 /// Mystery symbol feature configuration.
 ///
 /// `symbol_id` is the placeholder symbol that, after landing, reveals
@@ -326,6 +351,13 @@ pub struct GameConfig {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub symbol_upgrade: Option<SymbolUpgradeConfig>,
 
+    // W152 Faza 2.4 — Pattern evaluator config. Populated when the IR's
+    // evaluation kind is `pattern`; otherwise `None`. The engine
+    // dispatches to `EvalMode::Pattern { rules }` when this field is
+    // present.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pattern: Option<PatternConfig>,
+
     // Limits
     pub max_win_cap: f64,
     pub feature_loop_cap: u32,
@@ -501,6 +533,8 @@ impl Default for GameConfig {
             ante_bet: None,
             gamble: None,
             symbol_upgrade: None,
+            // W152 Faza 2.4 — Pattern evaluator default.
+            pattern: None,
             max_win_cap: 5000.0,
             feature_loop_cap: 100,
         }

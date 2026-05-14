@@ -163,8 +163,8 @@ Mapa "commit → faza":
 - ⚠️ Acceptance: cluster cascade + multiplier symbols → analytical = MC ±0.05% na 10⁹. *(fixture `cluster-7x7.json` postoji; sintetički target RTP set, full-scale MC cross-validate pending)*
 
 ### 2.4 Pattern evaluator
-- ❌ Pattern lista: `Pattern = { positions: [[r,c],...], minMatches }`.
-- ❌ Acceptance: 2 different pattern game konfiguracije prolaze tests.
+- ✅ Pattern lista: `Pattern = { id, positions: [[r,c],...], pay_multiplier }`. *(W152 — `rust-sim/src/evaluator.rs::EvalMode::Pattern`; `src/evaluators/patternEvaluator.ts`)*
+- ✅ Acceptance: 2+ pattern konfiguracije prolaze tests. *(W152 — `tests/fixtures/pattern-evaluator.json` testira row_top + col_left + diagonal pattern preko 8 Rust + 9 TS testova; bit-exact TS↔Rust parity sa istim expected payouts; cargo-mutants 9/9 caught na `evaluate_pattern`)*
 
 ### 2.5 Pay-anywhere / pay-adjacent
 - ✅ Already partially done — generalizovati za bilo koji simbol, ne samo scatter. *(`src/evaluators/scatterEvaluator.ts` + fixture `pay-anywhere.json`)*

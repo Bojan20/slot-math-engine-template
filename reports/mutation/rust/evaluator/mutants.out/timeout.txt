@@ -1,0 +1,12 @@
+rust-sim/src/evaluator.rs:660:9: replace Evaluator<'a>::evaluate_pattern -> (Vec<LineWin>, i64) with (vec![], 1)
+rust-sim/src/evaluator.rs:684:45: replace >= with < in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:705:27: replace || with && in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:698:41: replace != with == in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:660:9: replace Evaluator<'a>::evaluate_pattern -> (Vec<LineWin>, i64) with (vec![], -1)
+rust-sim/src/evaluator.rs:721:16: delete ! in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:729:47: replace * with + in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:729:47: replace * with / in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:730:23: replace <= with > in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:733:59: replace / with % in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:733:59: replace / with * in Evaluator<'a>::evaluate_pattern
+rust-sim/src/evaluator.rs:734:20: replace <= with > in Evaluator<'a>::evaluate_pattern

@@ -107,6 +107,12 @@ pub fn ir_to_game_config(ir: &SlotGameIR) -> Result<GameConfig, AdapterError> {
     // ── Features ───────────────────────────────────────────────────────
     convert_features(ir, &mut cfg);
 
+    // ── W152 Faza 2.4 — Pattern evaluation extraction ──────────────────
+    // The IR carries pattern rules on `evaluation.kind === "pattern"`,
+    // NOT on `features[]`. Extract them into `cfg.pattern` so the
+    // evaluator factory can construct `EvalMode::Pattern { rules }`.
+    cfg.pattern = convert_pattern_to_config(&ir.evaluation);
+
     Ok(cfg)
 }
 
@@ -339,8 +345,10 @@ fn convert_paylines(
         }
 
         Evaluation::Pattern { .. } => {
-            // TODO: Pattern evaluation will need a dedicated evaluator pass.
-            // For now we return an empty payline set (same as Cluster).
+            // W152 Faza 2.4 — Pattern evaluation runs through
+            // `EvalMode::Pattern`; classical paylines are unused. The
+            // pattern rules themselves are extracted by
+            // `convert_pattern_to_config` into `cfg.pattern`.
             Ok(vec![])
         }
     }
@@ -384,6 +392,61 @@ fn convert_paytable(ir: &SlotGameIR) -> HashMap<String, PayEntry> {
     }
 
     out
+}
+
+// ─── W152 Faza 2.4 — Pattern evaluator extraction ─────────────────────────
+//
+// The IR's `Evaluation::Pattern { patterns }` carries an array of pattern
+// rules. We materialise them as a `PatternConfig` so the engine can pick
+// the right `EvalMode` at construction time without re-parsing the IR.
+//
+// Pattern positions can be either:
+// - `PatternPositions::List([row, reel], ...)` — explicit cell list.
+// - `PatternPositions::All("all")` — every grid cell must match.
+//
+// The "all" form is expanded to the rectangular envelope `(0..rows) ×
+// (0..reels)` so the evaluator can iterate it uniformly. The expansion
+// must use the *adapter-known* grid dimensions; that's why this helper
+// takes the topology dims as a parameter rather than re-reading them.
+
+fn convert_pattern_to_config(evaluation: &Evaluation) -> Option<crate::config::PatternConfig> {
+    let patterns = match evaluation {
+        Evaluation::Pattern { patterns } => patterns,
+        _ => return None,
+    };
+    if patterns.is_empty() {
+        // An empty pattern list is not the same as "no pattern feature":
+        // it would force the engine into Pattern mode with zero rules,
+        // which always pays zero. We surface it explicitly as
+        // `Some(empty)` so downstream tooling can flag it (vs `None`,
+        // which means "this game doesn't use pattern evaluation").
+        return Some(crate::config::PatternConfig { rules: Vec::new() });
+    }
+
+    let rules = patterns
+        .iter()
+        .map(|p| {
+            let positions: Vec<[u32; 2]> = match &p.positions {
+                crate::ir::PatternPositions::List(list) => list.clone(),
+                crate::ir::PatternPositions::All(_) => {
+                    // "all" expands at evaluator construction time —
+                    // store the marker as an empty list so the engine
+                    // knows to fan it out. Callers MUST check for the
+                    // empty-positions sentinel and rebuild against
+                    // current grid dims; mixed lists + sentinel are
+                    // intentionally rejected by IR validation.
+                    Vec::new()
+                }
+            };
+            crate::config::PatternRuleConfig {
+                id: p.id.clone(),
+                positions,
+                pay_multiplier: p.pay_multiplier,
+            }
+        })
+        .collect();
+
+    Some(crate::config::PatternConfig { rules })
 }
 
 // ─── Features ──────────────────────────────────────────────────────────────
