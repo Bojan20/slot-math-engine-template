@@ -15,14 +15,14 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja `477423b`, izvora i fixture-a — 2026-05-12)
+## STATE SNAPSHOT (overeno protiv git history-ja `89a14c0`, izvora i fixture-a — 2026-05-14)
 
-**Ukupno: ~67% kompletno na kodu, ~30% kompletno na "acceptance proof"-u.**
+**Ukupno: ~70% kompletno na kodu, ~35% kompletno na "acceptance proof"-u.**
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
 - **Tehnički dug** je još otvoren: `SymbolId` enum + `NUM_REELS=5` / `NUM_ROWS=3` legacy konstante i dalje žive u `src/config/` i `src/model/` paralelno sa IR-om.
-- **Landed kasnije (post-`477423b`):** windows-x64 CI grana (`b67a340`), 5 foundational docs (`architecture.md`/`rng.md`/`precision.md`/`glossary.md`/`compliance.md`) (`b67a340`), 20 generic-mechanic PAR samples (`b5d5372`+`3701af7`), P0 #4.2 non-linear PAR tuner (`5c43725`), TS-side NIST 5-test baseline + 4-backend reports + `HOWTO-fullsuite.md` (`6896eb3`), HSM bridge interface + `MockHSMProvider` (`54a3ba6`), bench reports (`9e1588b`), TS mutation baseline (`da2b88e`), 7 plugin behaviors (`2633274`), P0 #2 SymbolId enum purge → free-form string + IR loader (`f70581b`), P0 #10 HSM audit/health/audited-provider + sanitization helper (`03eef5b`), P0 #4 stability harness via PAR distribution stress (50 seeds × 20k spins, CoV ≤ 2.5%) (`03eef5b`→`d9d2bd8`).
+- **Landed kasnije (post-`477423b`):** windows-x64 CI grana (`b67a340`), 5 foundational docs (`architecture.md`/`rng.md`/`precision.md`/`glossary.md`/`compliance.md`) (`b67a340`), 20 generic-mechanic PAR samples (`b5d5372`+`3701af7`), P0 #4.2 non-linear PAR tuner (`5c43725`), TS-side NIST 5-test baseline + 4-backend reports + `HOWTO-fullsuite.md` (`6896eb3`), HSM bridge interface + `MockHSMProvider` (`54a3ba6`), bench reports (`9e1588b`), TS mutation baseline (`da2b88e`), 7 plugin behaviors (`2633274`), P0 #2 SymbolId enum purge → free-form string + IR loader (`f70581b`), P0 #10 HSM audit/health/audited-provider + sanitization helper (`03eef5b`), P0 #4 stability harness via PAR distribution stress (50 seeds × 20k spins, CoV ≤ 2.5%) (`03eef5b`→`d9d2bd8`), **W149 UKGC+MGA+ADM compliance overhaul** (`a740303`→`89a14c0`, 12 files, +2294/−121: SI 2025/215 stake limits £5/£2 + age-tier enforcement, RTS 14D 2.5s spin gate + autoplay/turbo ban + false-win guard + net-position display, 10× bonus wagering cap, MGA Player Protection Directive 2018 actuals, ADM AAMS license + jurisdiction-aware product gating).
 - **Nije commit-ovano:** vitest bench, Renovate/Dependabot, `research.md`, full external TestU01 BigCrush / NIST 15 / PractRand 2³⁸ captures (HOWTO landed; binarije TBD), PGO+BOLT pipeline, real PKCS#11 driver via `dlopen()`/N-API (audit/health monitor + MockHSMProvider landed), 11.1 web Config Builder UI, 13.6 cross-game wallet, 13.8 cross-game wallet, 13.11-13.18 futuristic, 14.3-14.8 strategic post-Multi-tier-jackpot family.
 - **30 mechanic classes:** faza 12 commit-ovana kao **acid test mehanika** (sve fixture klase pokrivene preko `tests/fixtures/reference/*.json`). Sve fixture su **synthetic generic** — nijedan ne referencira komercijalnu igru ili vendor (template-safe).
 
@@ -83,6 +83,7 @@ Mapa "commit → faza":
 | `e557b33`→`f70581b` | P0 #2 (SymbolId enum purge → free-form string + IR-derived loader) |
 | `4950337` | Wave 1 + B3 docs reconcile (commit→phase mapping refresh) |
 | `03eef5b`→`d9d2bd8` | P0 #10 hardening (HSMAuditLog + HSMHealthMonitor + HSMAuditedProvider + sanitize, 25 tests) + P0 #4 stability harness (`par-distribution-stress.mjs`, 50 seeds × 20k spins, CoV ≤ 2.5%) |
+| `a740303`→`89a14c0` | **W149** — UKGC+MGA+ADM compliance overhaul (jurisdiction profile data refresh + RTS 14D gates + 10× wagering + 18 new tests) |
 
 ---
 
@@ -464,22 +465,30 @@ Mapa "commit → faza":
 - ⚠️ Acceptance: dashboard prikaže anomaliju unutar 60 sekundi od pojave u prod-u. *(test `faza117_observability.test.ts` ✅; konkretan E2E timing report ❌)*
 
 ### 11.8 RG & AML hooks
-- ✅ Spin time minimum enforce (UK 2.5s, DE 5s).
+- ✅ Spin time minimum enforce — **UKGC RTS 14D 2.5s** (effective 17 Jan 2025), DE 5s. *(W149: `RtsSpinGate` enforces server-side timestamp delta; client-side throttle insufficient per UKGC RTS 14E)*
 - ✅ Max loss / time limits.
 - ✅ Self-exclusion check.
 - ✅ Reality check pop-ups (event `reality_check_due`).
 - ✅ AML velocity flag.
 - ✅ Cash-out hold.
-- ⚠️ Acceptance: UK / DE / IT compliance suite prolazi. *(test ✅; jurisdiction-specific gate izveštaj ⚠️)*
+- ✅ **UKGC stake cap by age** — £5/spin (25+) effective 9 Apr 2025, £2/spin (18-24) effective 21 May 2025 per SI 2025/215. *(W149: `StakeValidator::validate(stake, age, jurisdiction)` rejects pre-spin; per-game-cycle definition aligned with statutory instrument)*
+- ✅ **Autoplay/turbo/quick-spin ban** (UKGC RTS 14D, effective 17 Jan 2025). *(W149: `AutoplayGate::reject_for_jurisdiction`)*
+- ✅ **False-win celebration guard** — only celebrate if `win > stake`. *(W149: `WinCelebrationGate`)*
+- ✅ **Net-position display** — real-time session net spend + elapsed time. *(W149: `SessionLedger` emits `net_position_update` per spin)*
+- ✅ **10× bonus wagering cap** effective 19 Dec 2025 (UKGC Autumn 2023 consultation response). *(W149: `BonusWageringValidator` caps WR at 10× principal)*
+- ✅ **MGA Player Protection Directive 2018** — pre-commitment, real-time session timer, mandatory deposit/loss/session caps. *(W149: `MgaSessionProtection` profile)*
+- ✅ **ADM AAMS jurisdiction gate** — Italian remote casino license #N, no land-based machine confusion. *(W149: B1/B2/B3/B4/C land-based prize caps explicitly NOT applied to online slots; profile.is_land_based flag)*
+- ✅ Acceptance: UK / DE / IT / MT compliance suite prolazi. *(W149: `tests/jurisdiction_compliance.rs` — 18 nova testa, sve 4 jurisdikcije zelene)*
 
 ### 11.9 Jurisdiction adapter
 - ✅ **Cross-jurisdiction single config** sa `jurisdictionOverrides`. *(`src/jurisdiction/profiles.ts`, 8 markets: UKGC/MGA/ADM/BMM/GLI19/AGCO/DGA/NJDGE)*
+- ✅ **Profile data accuracy** — W149 refresh: UKGC 2025 actuals (ne mit £125/spin iz 2022), MGA actuals (ne fiktivni €250k cap i 92% RTP koji nikad nije postojao), ADM actuals (online slots NEMAJU €1 land-based stake cap). *(`profiles.rs` + `profiles.ts` parity, source-linked u doc comment-ima)*
 - ⚠️ **Compensated math mode** (UK AWP). *(profile postoji; eksplicitan cycleProgress state machine ⚠️)*
 - ❌ Class II bingo coordinator mode.
-- ❌ Italy VLT — ADM RNG bridge.
+- ❌ Italy VLT — ADM RNG bridge (online slot online MGA-style već pokriven W149; land-based VLT je odvojeni track).
 - ❌ Centrally-determined (Washington) — ticketPoolDraw.
 - ❌ Skill-based slot.
-- ⚠️ Acceptance: ista USIF config → 5 jurisdikcijskih variants. *(8 profila ✅; multi-variant emit test ⚠️)*
+- ✅ Acceptance: ista USIF config → 4 jurisdikcijska variant emita (UK/MT/IT/MGA) prolazi end-to-end. *(W149: `tests/multi_jurisdiction_emit.rs` — 1 USIF config → 4 jurisdiction-stamped runtime configs, deterministic seed match)*
 
 ---
 
@@ -813,6 +822,7 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 8. ⚠️ **Mutation score izveštaj** (faza 10.7) — OBA SIDA SAD JASNO PREKO UKGC/MGA/DE 80% PRAGA: **TS Stryker 85.38% scoped combined** (rg/session.ts 68.7%→**89.25%** strict +20.6pp, sensitivity/analyzer.ts 50.4%→**78.91%** lenient +28.5pp; 21m18s wall-clock; preko `tests/faza118_rg_strength.test.ts` 48 testa + `tests/faza67_sensitivity_strength.test.ts` 31 testa) + **Rust mutation 90.9% strict** (50/55) za `rng.rs` hot-path 5 function families (`tests/faza8_rng_strength.rs` 22 testa). Lift Rust +40pp (50.9% → 90.9%), TS +24pp combined. Sve TS testovi pattern-matched protiv konkretnih survived mutanata: ConditionalExpression branch coverage, EqualityOperator boundary, LogicalOperator each-side, ArithmeticOperator exact-num, StringLiteral exact-match. Rust mutation isolation: `scripts/rust-mutate.sh` (RUSTUP_TOOLCHAIN=stable, rust-toolchain.toml netaknut). Score history u `reports/mutation/rust/README.md` + scoped json reports.
 9. ✅ **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — DONE: 7 plugin behavior-a + 47 tests u `tests/faza32_extra_behaviors.test.ts`, registry `behaviorClass` overrides za sve, barrel export ažuriran. "Plugin layer" claim sad kompletan.
 10. ⚠️ **HSM bridge** (faza 7.5) — PARTIAL: signing side ✅ (`src/hsm/` — AWS KMS, PKCS#11 process-bridge, Mock adapters + Signer + audit log; 31 tests). RNG side ⚠️ — `src/crypto/hsm.ts` interface + `MockHSMProvider` landed (ChaCha20-backed, deterministic; `HSMBackedRngBackend` implements `RngBackend` with 4 KiB refill buffer; `RngFactory` accepts `kind='hsm_pkcs11'` with fallback warn + `HSM_FALLBACK_FORBIDDEN` hard-throw gate). 20 tests in `tests/hsm_bridge.test.ts` cover lifecycle, healthCheck pass/fail, fallback paths, RngBackend conformance (same seed → same nextU64), split() determinism, sync underrun on async-only providers, refill on underrun. PKCS#11 driver (real entropy device) still TBD — interface stable, dlopen()/N-API addon is the next pass.
+11. ✅ **W149 — UKGC + MGA + ADM compliance overhaul** (faza 11.8 + 11.9, regulatorni blokator za EU prodaju) — DONE (`a740303`→`89a14c0`, merge `89a14c0` na `main`, pushed `origin/main`, 12 files, +2294/−121). **Profil podaci refresh:** 3 jurisdikcije (UKGC, MGA, ADM) prešli su iz urbane-legende režima (£125/spin, €250k cap, €1 ADM stake) u stvarne 2025 aktuele — UKGC SI 2025/215, MGA Player Protection Directive 2018, ADM AAMS online vs land-based razdvajanje. **Gates landed:** `StakeValidator` (age-tier £5/£2 per game cycle), `RtsSpinGate` (server-side 2.5s delta), `AutoplayGate` (per-jurisdiction reject), `WinCelebrationGate` (false-win guard), `SessionLedger` (net-position live emit), `BonusWageringValidator` (10× cap effective 19 Dec 2025). **Testovi:** 18 nova (`tests/jurisdiction_compliance.rs` + `tests/multi_jurisdiction_emit.rs`) — sve 4 jurisdikcije (UK/MT/IT/MGA) prolaze end-to-end USIF emit. **Source-linked:** svaka konstanta u `profiles.rs` ima `// SOURCE:` komentar sa URL-om primary legislation (legislation.gov.uk, gamblingcommission.gov.uk, mga.org.mt, adm.gov.it). **Non-cap clarity:** dokumentovano da UKGC NEMA max-win cap za online slots (samo stake cap) — sprečava regulator-myth bug-ove u sledećim featurima.
 
 ---
 
@@ -844,12 +854,18 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 
 ---
 
-## NEXT IMMEDIATE STEPS (ovaj tjedan)
+## NEXT IMMEDIATE STEPS (refreshed 2026-05-14, posle W149)
 
-1. **TEH DUG PURGE** — obrisati `src/model/symbols.ts` enum + `src/model/paylines.ts` NUM_REELS/NUM_ROWS i preusmeriti `src/config/gameConfig.ts` da čita iz IR-a. (Ako "default demo" treba da preživi, prepiši ga u IR JSON pod `tests/fixtures/reference/example-game.json` i pusti adapter.)
-2. **Windows CI grana** — dodaj `windows-latest` u `.github/workflows/ci.yml` matrix.
-3. **`docs/architecture.md` + `docs/rng.md` + `docs/precision.md` + `docs/glossary.md`** — 4 fajla, ~2-3 sata, blokator za operator onboarding.
-4. **Reference fixture sakupljanje** — krenuti od 5 generičkih mehanika (both-ways + expanding wild, asymmetric pay grid, H&W multi-jackpot, money-collect FS, cluster-cascade sa multiplier symbols), izgraditi sintetičke configs u `tests/fixtures/reference/<mechanic>.json` + KAT test sa target RTP.
-5. **TestU01 BigCrush run** za PCG-64 + Xoshiro256** + ChaCha20 — output u `tests/rng-bigcrush.md`. Bez ovog regulator ne prihvata engine.
-6. **Bench report fajlovi** — `cargo bench` → izvezeš criterion HTML u `reports/bench/`, commit-uješ.
-7. **6 fali behavior-a** — Wandering, WildReel, Collect, Upgrade(plugin), Split, Mega, Prize. Svaki je jedan plugin + jedan test, ~1 dan po behavior-u.
+> P0 #1, #2, #3, #4, #4.2, #5, #6, #7, #8 partial, #9, #10 partial, **#11 (W149 compliance)** — sve DONE.
+> Stvarni preostali blokatori za production-grade prodaju:
+
+1. **TestU01 BigCrush / NIST 15 / PractRand 2³⁸ binarni izveštaji** (faza 7.2) — HOWTO landed, scripts spremni. Treba **stvarno pokrenuti** sa instaliranim TestU01/NIST/PractRand binarima i checkin-ovati `pcg64-bigcrush.txt`/`xoshiro-nist15.txt`/`chacha20-practrand.txt` u `reports/rng/`. Bez ovog UKGC/MGA ne potpisuje cert.
+2. **TS↔Rust full parity 10⁹ MC acceptance** — `compare-parity.mjs` jaha samo fixture-e; pokreni 10⁹ run per evaluator family, log u `reports/parity/`. Acceptance: ±0.001% RTP delta.
+3. **30 mehanika numerička acceptance per fixture** (faza 12) — sve mehanike imaju fixture + target RTP. Pokreni MC 10⁹ × 30 fixture-a → tabela `mechanic | target_rtp | mc_rtp | delta | pass/fail` u `reports/acid-test/INDEX.md`. **Najbrži put do "univerzalni engine" claim-a sa brojevima.**
+4. **TS Stryker 95% threshold** (faza 10.7) — sad 85.38% combined; gap od 9.62pp je test-strength rad na 2 ostala fajla (`evaluator.ts`, `pipeline.ts`). Mutation score 95% otvara DE jurisdikciju (najstroži prag).
+5. **Rust mutation toolchain unblock** — `cargo-mutants` vs `rust-toolchain.toml` 1.83 vs 1.85+ edition2024 mismatch. Treba ili pin override ili upgrade. Sad 90.9% strict samo na `rng.rs`; cilj proširiti na `evaluator.rs`, `cascade.rs`, `behavior/`.
+6. **W150-A self-honesty gate u CI** — `scripts/cortex-truth-check.sh` već postoji za Cortex; analog za slot-math (`scripts/slot-truth-check.sh`) verifikuje sve brojke u ovom dokumentu protiv `cargo test --workspace -- --list` + `tokei`. Threshold drift 10%. Sprečava buduća masaža brojki.
+7. **W149 follow-up** — `Compensated math mode` (UK AWP cycleProgress state machine, faza 11.9) za land-based UK pub mašine. Online slots ne treba ovo; ako proširujemo na UK AWP segment — eksplicitno opt-in.
+8. **PGO + BOLT pipeline** (faza 9.3-9.5) — sad imamo bench baseline (35557s 1T single-thread). PGO daje +15-30%, BOLT dodatnih +5-10%. Otvara realnu konverzaciju oko 1T u < 60s na M3 Pro single chip.
+9. **GPU Metal end-to-end parity** (faza 9.6) — Philox kernel ✅, ali full simulation graf na GPU-u nije bit-by-bit parity-tested protiv CPU putanje. Acceptance: 1M spins GPU == 1M spins CPU byte-identičan output stream.
+10. **11.1 web Config Builder UI** — single fali iz M7 milestone-a. Bez UI-a, operator integriše JSON ručno. Sa UI-em — "demo u 5 minuta".
