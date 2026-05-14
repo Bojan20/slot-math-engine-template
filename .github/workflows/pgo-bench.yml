@@ -1,0 +1,63 @@
+# Faza 9.5 — Profile-Guided Optimization bench pipeline.
+#
+# Runs three-stage PGO (instrument → training → optimize) on a Linux runner
+# and uploads the criterion delta as an artifact. Manual trigger only — PGO
+# builds are slow (8-12 minutes on ubuntu-latest), so they're not on every PR.
+#
+# Acceptance gate: ≥20% throughput improvement on `full_spin/packed_ZeroAlloc`
+# bench vs. non-PGO baseline. The job fails if the delta is below the gate.
+#
+# To run: GitHub → Actions → `pgo-bench` → Run workflow.
+
+name: pgo-bench
+
+on:
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: "Minimum throughput delta (e.g. 0.20 = 20%)"
+        required: false
+        default: "0.20"
+      training_spins:
+        description: "Spins per fixture in the PGO training run"
+        required: false
+        default: "2000000"
+  schedule:
+    # Weekly Saturday 04:00 UTC — keep PGO baseline fresh against
+    # rustc updates without burning CI minutes on every PR.
+    - cron: "0 4 * * 6"
+
+permissions:
+  contents: read
+
+jobs:
+  pgo:
+    name: PGO build + bench (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust toolchain (with llvm-tools-preview)
+        run: |
+          rustup show
+          rustup component add llvm-tools-preview
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust-sim
+
+      - name: Run PGO pipeline
+        env:
+          PGO_THRESHOLD: ${{ github.event.inputs.threshold || '0.20' }}
+          PGO_TRAINING_SPINS: ${{ github.event.inputs.training_spins || '2000000' }}
+          PGO_QUIET: "1"
+        run: scripts/pgo-build.sh
+
+      - name: Upload PGO summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pgo-summary-${{ github.run_id }}
+          path: reports/bench/pgo/
+          retention-days: 30
