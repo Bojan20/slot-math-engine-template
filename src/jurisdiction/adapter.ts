@@ -10,12 +10,178 @@ import { PROFILES } from './profiles.js';
 import type {
   AppliedFix,
   AutoFixResult,
+  ComplianceError,
   ComplianceReport,
   ComplianceSummary,
   ComplianceViolation,
   JurisdictionId,
   JurisdictionProfile,
+  SpinContext,
 } from './types.js';
+
+// ─── Profile helpers (Rust↔TS parity) ──────────────────────────────────────
+
+/**
+ * Resolve the maximum stake for a player based on age, falling back to
+ * `maxStakeDefault`. Returns `undefined` when no cap applies.
+ *
+ * Mirrors `JurisdictionProfile::resolve_stake_cap` in Rust.
+ */
+export function resolveStakeCap(
+  profile: JurisdictionProfile,
+  playerAge?: number,
+): number | undefined {
+  const tiers = profile.ageTieredStakes ?? [];
+  if (tiers.length > 0) {
+    if (playerAge !== undefined) {
+      let best: number | undefined;
+      for (const tier of tiers) {
+        if (playerAge >= tier.minAge && playerAge <= tier.maxAge) {
+          best = best === undefined ? tier.maxStake : Math.min(best, tier.maxStake);
+        }
+      }
+      return best; // undefined ⇒ unknown band — caller MUST reject
+    }
+    // No age supplied — return strictest cap.
+    let min = Infinity;
+    for (const tier of tiers) min = Math.min(min, tier.maxStake);
+    return Number.isFinite(min) ? min : undefined;
+  }
+  return profile.maxStakeDefault;
+}
+
+// ─── Runtime enforcement (sloj 3) ───────────────────────────────────────────
+
+/** Mirror of Rust `validate_stake`. */
+export function validateStake(
+  jurisdiction: string,
+  stake: number,
+  playerAge?: number,
+): ComplianceError | null {
+  const profile = PROFILES.get(jurisdiction);
+  if (!profile) return { kind: 'unknown_jurisdiction', jurisdiction };
+
+  if (!Number.isFinite(stake) || stake <= 0) {
+    return { kind: 'invalid_stake', jurisdiction, stake };
+  }
+
+  const tiers = profile.ageTieredStakes ?? [];
+  if (tiers.length > 0 && playerAge === undefined) {
+    return { kind: 'age_required', jurisdiction };
+  }
+  if (tiers.length > 0 && playerAge !== undefined) {
+    const anyMatch = tiers.some(
+      (t) => playerAge >= t.minAge && playerAge <= t.maxAge,
+    );
+    if (!anyMatch) {
+      return { kind: 'unknown_age_band', jurisdiction, age: playerAge };
+    }
+  }
+
+  const cap = resolveStakeCap(profile, playerAge);
+  if (cap !== undefined && stake > cap) {
+    return { kind: 'stake_over_cap', jurisdiction, stake, cap };
+  }
+  return null;
+}
+
+/** Mirror of Rust `validate_spin_duration`. */
+export function validateSpinDuration(
+  jurisdiction: string,
+  actualMs: number,
+): ComplianceError | null {
+  const profile = PROFILES.get(jurisdiction);
+  if (!profile) return { kind: 'unknown_jurisdiction', jurisdiction };
+  if (profile.minSpinDurationMs !== undefined && actualMs < profile.minSpinDurationMs) {
+    return {
+      kind: 'spin_too_fast',
+      jurisdiction,
+      actualMs,
+      minMs: profile.minSpinDurationMs,
+    };
+  }
+  return null;
+}
+
+/** Mirror of Rust `validate_autoplay`. */
+export function validateAutoplay(jurisdiction: string): ComplianceError | null {
+  const profile = PROFILES.get(jurisdiction);
+  if (!profile) return { kind: 'unknown_jurisdiction', jurisdiction };
+  if (profile.prohibitAutoplay) {
+    return { kind: 'autoplay_prohibited', jurisdiction };
+  }
+  return null;
+}
+
+/** Mirror of Rust `validate_turbo`. */
+export function validateTurbo(jurisdiction: string): ComplianceError | null {
+  const profile = PROFILES.get(jurisdiction);
+  if (!profile) return { kind: 'unknown_jurisdiction', jurisdiction };
+  if (profile.prohibitTurbo) {
+    return { kind: 'turbo_prohibited', jurisdiction };
+  }
+  return null;
+}
+
+/** Mirror of Rust `validate_bonus_wagering`. */
+export function validateBonusWagering(
+  jurisdiction: string,
+  wageringX: number,
+): ComplianceError | null {
+  const profile = PROFILES.get(jurisdiction);
+  if (!profile) return { kind: 'unknown_jurisdiction', jurisdiction };
+  if (profile.bonusWageringCapX !== undefined && wageringX > profile.bonusWageringCapX) {
+    return {
+      kind: 'bonus_wagering_over_cap',
+      jurisdiction,
+      wageringX,
+      capX: profile.bonusWageringCapX,
+    };
+  }
+  return null;
+}
+
+/**
+ * Validate a complete `SpinContext` against a jurisdiction. Fails fast on
+ * the first violation; for the batched variant use `validateSpinFull`.
+ */
+export function validateSpin(ctx: SpinContext): ComplianceError | null {
+  if (ctx.autoplay) {
+    const e = validateAutoplay(ctx.jurisdiction);
+    if (e) return e;
+  }
+  if (ctx.turbo) {
+    const e = validateTurbo(ctx.jurisdiction);
+    if (e) return e;
+  }
+  const stakeErr = validateStake(ctx.jurisdiction, ctx.stake, ctx.playerAge);
+  if (stakeErr) return stakeErr;
+  if (ctx.spinDurationMs !== undefined) {
+    const e = validateSpinDuration(ctx.jurisdiction, ctx.spinDurationMs);
+    if (e) return e;
+  }
+  return null;
+}
+
+/** Collect every violation for a spin (does not short-circuit). */
+export function validateSpinFull(ctx: SpinContext): ComplianceError[] {
+  const errs: ComplianceError[] = [];
+  if (ctx.autoplay) {
+    const e = validateAutoplay(ctx.jurisdiction);
+    if (e) errs.push(e);
+  }
+  if (ctx.turbo) {
+    const e = validateTurbo(ctx.jurisdiction);
+    if (e) errs.push(e);
+  }
+  const stakeErr = validateStake(ctx.jurisdiction, ctx.stake, ctx.playerAge);
+  if (stakeErr) errs.push(stakeErr);
+  if (ctx.spinDurationMs !== undefined) {
+    const e = validateSpinDuration(ctx.jurisdiction, ctx.spinDurationMs);
+    if (e) errs.push(e);
+  }
+  return errs;
+}
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -128,6 +294,129 @@ function checkProhibitedFeatures(
   }
 
   return violations;
+}
+
+/**
+ * Check IR-declared stake configuration against profile cap (Rust parity).
+ *
+ * Probes both `bet.base_bet` and `bet.denominations[*]` against the
+ * conservative cap (strictest tier when no age is in context).
+ */
+function checkStakeCap(
+  ir: SlotGameIR,
+  profile: JurisdictionProfile,
+): ComplianceViolation[] {
+  const violations: ComplianceViolation[] = [];
+  const cap = resolveStakeCap(profile, undefined);
+  if (cap === undefined) return violations;
+
+  const baseBet = ir.bet.base_bet;
+  if (baseBet > cap) {
+    violations.push({
+      ruleId: `${profile.id}-STAKE-001`,
+      jurisdiction: profile.id,
+      severity: 'error',
+      message: `bet.base_bet ${baseBet} exceeds ${profile.name} per-cycle stake cap ${cap}.`,
+      field: 'bet.base_bet',
+      actual: baseBet,
+      required: cap,
+      canAutoFix: true,
+    });
+  }
+
+  const denoms = ir.bet.denominations ?? [];
+  let maxDen: number | undefined;
+  for (const d of denoms) {
+    if (Number.isFinite(d)) maxDen = maxDen === undefined ? d : Math.max(maxDen, d);
+  }
+  if (maxDen !== undefined && maxDen > cap) {
+    violations.push({
+      ruleId: `${profile.id}-STAKE-002`,
+      jurisdiction: profile.id,
+      severity: 'error',
+      message: `bet.denominations contains ${maxDen} which exceeds ${profile.name} per-cycle stake cap ${cap}.`,
+      field: 'bet.denominations',
+      actual: maxDen,
+      required: cap,
+      canAutoFix: true,
+    });
+  }
+
+  if (!Number.isFinite(baseBet) || baseBet <= 0) {
+    violations.push({
+      ruleId: `${profile.id}-STAKE-003`,
+      jurisdiction: profile.id,
+      severity: 'error',
+      message: `bet.base_bet ${baseBet} is not a finite positive number.`,
+      field: 'bet.base_bet',
+      actual: baseBet,
+      required: '> 0',
+      canAutoFix: false,
+    });
+  }
+
+  return violations;
+}
+
+/** Surface autoplay / turbo bans as Info violations (UI gate). */
+function checkAutoplayTurbo(
+  _ir: SlotGameIR,
+  profile: JurisdictionProfile,
+): ComplianceViolation[] {
+  const violations: ComplianceViolation[] = [];
+  if (profile.prohibitAutoplay) {
+    violations.push({
+      ruleId: `${profile.id}-AUTOPLAY-001`,
+      jurisdiction: profile.id,
+      severity: 'info',
+      message: `${profile.name}: auto-play UI/feature must be disabled in client build.`,
+      canAutoFix: false,
+    });
+  }
+  if (profile.prohibitTurbo) {
+    violations.push({
+      ruleId: `${profile.id}-TURBO-001`,
+      jurisdiction: profile.id,
+      severity: 'info',
+      message: `${profile.name}: turbo / quick-spin UI must be disabled in client build.`,
+      canAutoFix: false,
+    });
+  }
+  return violations;
+}
+
+/** Surface pacing minimum (e.g. UKGC RTS 14D 2500ms) as Info. */
+function checkPacing(
+  _ir: SlotGameIR,
+  profile: JurisdictionProfile,
+): ComplianceViolation[] {
+  if (profile.minSpinDurationMs === undefined) return [];
+  return [
+    {
+      ruleId: `${profile.id}-PACING-001`,
+      jurisdiction: profile.id,
+      severity: 'info',
+      message: `${profile.name}: minimum ${profile.minSpinDurationMs}ms per game cycle — client spin animation must enforce.`,
+      canAutoFix: false,
+    },
+  ];
+}
+
+/** Surface bonus wagering cap (e.g. UKGC 10x) as Info. */
+function checkWagering(
+  _ir: SlotGameIR,
+  profile: JurisdictionProfile,
+): ComplianceViolation[] {
+  if (profile.bonusWageringCapX === undefined) return [];
+  return [
+    {
+      ruleId: `${profile.id}-WAGERING-001`,
+      jurisdiction: profile.id,
+      severity: 'info',
+      message: `${profile.name}: bonus wagering requirement capped at ${profile.bonusWageringCapX}x.`,
+      canAutoFix: false,
+    },
+  ];
 }
 
 function checkCompliance(
@@ -282,6 +571,37 @@ function applyFix(
     };
   }
 
+  // STAKE-001: cap bet.base_bet to strictest profile band
+  if (ruleId.endsWith('-STAKE-001')) {
+    const cap = resolveStakeCap(profile, undefined);
+    if (cap !== undefined) {
+      const old = ir.bet.base_bet;
+      ir.bet.base_bet = cap;
+      return {
+        ruleId,
+        description: `Capped bet.base_bet from ${old} to ${cap} for ${profile.id}.`,
+      };
+    }
+    return null;
+  }
+
+  // STAKE-002: drop denominations over cap
+  if (ruleId.endsWith('-STAKE-002')) {
+    const cap = resolveStakeCap(profile, undefined);
+    if (cap !== undefined) {
+      const before = ir.bet.denominations.length;
+      ir.bet.denominations = ir.bet.denominations.filter(
+        (d) => Number.isFinite(d) && d > 0 && d <= cap,
+      );
+      const removed = before - ir.bet.denominations.length;
+      return {
+        ruleId,
+        description: `Dropped ${removed} denomination(s) over ${profile.name} stake cap ${cap} for ${profile.id}.`,
+      };
+    }
+    return null;
+  }
+
   // DECL-001: push jurisdiction to compliance.jurisdictions
   if (ruleId.endsWith('-DECL-001')) {
     if (!ir.compliance.jurisdictions.includes(profile.id)) {
@@ -320,6 +640,10 @@ export class JurisdictionAdapter {
       violations.push(...checkRtp(ir, profile));
       violations.push(...checkMaxWin(ir, profile));
       violations.push(...checkProhibitedFeatures(ir, profile));
+      violations.push(...checkStakeCap(ir, profile));
+      violations.push(...checkAutoplayTurbo(ir, profile));
+      violations.push(...checkPacing(ir, profile));
+      violations.push(...checkWagering(ir, profile));
       violations.push(...checkCompliance(ir, profile));
       violations.push(...checkJurisdictionDeclared(ir, profile));
       violations.push(...checkInformational(profile));

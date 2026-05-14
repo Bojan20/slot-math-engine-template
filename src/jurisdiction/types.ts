@@ -48,6 +48,13 @@ export interface AutoFixResult {
   isFullyCompliant: boolean;
 }
 
+/** Stake limit by age band (e.g. UKGC 18-24 = £2, 25+ = £5). */
+export interface AgeTier {
+  readonly minAge: number;
+  readonly maxAge: number;
+  readonly maxStake: number;
+}
+
 export interface JurisdictionProfile {
   readonly id: JurisdictionId;
   readonly name: string;
@@ -58,4 +65,59 @@ export interface JurisdictionProfile {
   readonly requireSessionTimeDisplay: boolean;
   readonly requiredNearMissRule?: 'must_be_random' | 'allowed_within_distribution';
   readonly informationalNotes: ReadonlyArray<string>;
+
+  // ── Faza 11.10+ runtime-enforceable extensions ───────────────────────────
+  /** Default max stake per game cycle, if regulator caps it. */
+  readonly maxStakeDefault?: number;
+  /** Per-age-band stake limits (e.g. UKGC 18-24 = £2, 25+ = £5). */
+  readonly ageTieredStakes?: ReadonlyArray<AgeTier>;
+  /** Minimum spin / game-cycle duration in ms (UKGC RTS 14D = 2500). */
+  readonly minSpinDurationMs?: number;
+  /** Auto-play prohibited (UKGC RTS 14D). */
+  readonly prohibitAutoplay?: boolean;
+  /** Turbo / quick-spin prohibited (UKGC RTS 14D). */
+  readonly prohibitTurbo?: boolean;
+  /** Bonus / promo wagering multiplier cap (UKGC = 10x). */
+  readonly bonusWageringCapX?: number;
+  /** ISO date the listed rules became effective. */
+  readonly effectiveFrom?: string;
+  /** Primary regulator source URL. */
+  readonly regulatorUrl?: string;
+}
+
+/** Runtime compliance error — fires per spin/wager/bonus event. */
+export type ComplianceError =
+  | {
+      kind: 'stake_over_cap';
+      jurisdiction: string;
+      stake: number;
+      cap: number;
+    }
+  | { kind: 'unknown_age_band'; jurisdiction: string; age: number }
+  | { kind: 'age_required'; jurisdiction: string }
+  | { kind: 'invalid_stake'; jurisdiction: string; stake: number }
+  | {
+      kind: 'spin_too_fast';
+      jurisdiction: string;
+      actualMs: number;
+      minMs: number;
+    }
+  | { kind: 'autoplay_prohibited'; jurisdiction: string }
+  | { kind: 'turbo_prohibited'; jurisdiction: string }
+  | {
+      kind: 'bonus_wagering_over_cap';
+      jurisdiction: string;
+      wageringX: number;
+      capX: number;
+    }
+  | { kind: 'unknown_jurisdiction'; jurisdiction: string };
+
+/** Per-spin runtime context for `validateSpin`. */
+export interface SpinContext {
+  jurisdiction: string;
+  stake: number;
+  playerAge?: number;
+  spinDurationMs?: number;
+  autoplay?: boolean;
+  turbo?: boolean;
 }

@@ -3,12 +3,12 @@
 //! Implements compliance validation and auto-fix for SlotGameIR
 //! against registered jurisdiction profiles.
 
-use crate::ir::{Feature, NearMissRule, SlotGameIR};
 use super::profiles::{get_profile, ALL_PROFILES};
 use super::types::{
-    AppliedFix, AutoFixResult, ComplianceReport, ComplianceSummary, ComplianceViolation,
-    JurisdictionProfile, ViolationSeverity,
+    AppliedFix, AutoFixResult, ComplianceError, ComplianceReport, ComplianceSummary,
+    ComplianceViolation, JurisdictionProfile, ViolationSeverity,
 };
+use crate::ir::{Feature, NearMissRule, SlotGameIR};
 
 // ─── feature kind helper ────────────────────────────────────────────────────
 
@@ -110,6 +110,154 @@ fn check_prohibited_features(
     violations
 }
 
+/// Check IR-declared stake configuration against profile cap.
+///
+/// We probe both `bet.base_bet` and every `bet.denominations` entry; if any
+/// declared bet exceeds the regulator cap, the IR is non-compliant.
+fn check_stake_cap(ir: &SlotGameIR, profile: &JurisdictionProfile) -> Vec<ComplianceViolation> {
+    let mut violations = Vec::new();
+
+    // Conservative cap: use the strictest of the declared bands when no age
+    // is in context (static IR check).
+    let cap = profile.resolve_stake_cap(None);
+    let Some(cap) = cap else { return violations };
+
+    if ir.bet.base_bet > cap {
+        violations.push(ComplianceViolation {
+            rule_id: format!("{}-STAKE-001", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Error,
+            message: format!(
+                "bet.base_bet {} exceeds {} per-cycle stake cap {}.",
+                ir.bet.base_bet, profile.name, cap
+            ),
+            field: Some("bet.base_bet".to_string()),
+            can_auto_fix: true,
+        });
+    }
+
+    if let Some(max_den) = ir
+        .bet
+        .denominations
+        .iter()
+        .copied()
+        .filter(|d| d.is_finite())
+        .fold(None, |acc: Option<f64>, d| {
+            Some(acc.map_or(d, |m| m.max(d)))
+        })
+    {
+        if max_den > cap {
+            violations.push(ComplianceViolation {
+                rule_id: format!("{}-STAKE-002", profile.id),
+                jurisdiction: profile.id.to_string(),
+                severity: ViolationSeverity::Error,
+                message: format!(
+                    "bet.denominations contains {} which exceeds {} per-cycle stake cap {}.",
+                    max_den, profile.name, cap
+                ),
+                field: Some("bet.denominations".to_string()),
+                can_auto_fix: true,
+            });
+        }
+    }
+
+    // Sanity: invalid declarations (NaN, ≤0, infinite) — never auto-fix.
+    if !ir.bet.base_bet.is_finite() || ir.bet.base_bet <= 0.0 {
+        violations.push(ComplianceViolation {
+            rule_id: format!("{}-STAKE-003", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Error,
+            message: format!(
+                "bet.base_bet {} is not a finite positive number.",
+                ir.bet.base_bet
+            ),
+            field: Some("bet.base_bet".to_string()),
+            can_auto_fix: false,
+        });
+    }
+
+    violations
+}
+
+/// Check auto-play / turbo bans against the feature list and AnteBet.
+///
+/// In the current IR we don't model autoplay / turbo as Feature variants —
+/// they're presentation-layer toggles. We still surface an `Info` note so
+/// the front-end build pipeline catches it. If a future IR adds explicit
+/// `AutoPlay { .. }` or `Turbo { .. }` features, those would surface as
+/// Error here.
+fn check_autoplay_turbo(
+    _ir: &SlotGameIR,
+    profile: &JurisdictionProfile,
+) -> Vec<ComplianceViolation> {
+    let mut violations = Vec::new();
+    if profile.prohibit_autoplay {
+        violations.push(ComplianceViolation {
+            rule_id: format!("{}-AUTOPLAY-001", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Info,
+            message: format!(
+                "{}: auto-play UI/feature must be disabled in client build.",
+                profile.name
+            ),
+            field: None,
+            can_auto_fix: false,
+        });
+    }
+    if profile.prohibit_turbo {
+        violations.push(ComplianceViolation {
+            rule_id: format!("{}-TURBO-001", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Info,
+            message: format!(
+                "{}: turbo / quick-spin UI must be disabled in client build.",
+                profile.name
+            ),
+            field: None,
+            can_auto_fix: false,
+        });
+    }
+    violations
+}
+
+/// Check pacing rule (min spin duration) — informational at IR level; the
+/// runtime `validate_spin_duration` enforces it per-event.
+fn check_pacing(_ir: &SlotGameIR, profile: &JurisdictionProfile) -> Vec<ComplianceViolation> {
+    if let Some(min_ms) = profile.min_spin_duration_ms {
+        return vec![ComplianceViolation {
+            rule_id: format!("{}-PACING-001", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Info,
+            message: format!(
+                "{}: minimum {}ms per game cycle — client spin animation must enforce.",
+                profile.name, min_ms
+            ),
+            field: None,
+            can_auto_fix: false,
+        }];
+    }
+    vec![]
+}
+
+/// Check wagering cap — informational at IR level; runtime
+/// `validate_bonus_wagering` enforces it per bonus award.
+fn check_wagering(_ir: &SlotGameIR, profile: &JurisdictionProfile) -> Vec<ComplianceViolation> {
+    if let Some(cap_x) = profile.bonus_wagering_cap_x {
+        return vec![ComplianceViolation {
+            rule_id: format!("{}-WAGERING-001", profile.id),
+            jurisdiction: profile.id.to_string(),
+            severity: ViolationSeverity::Info,
+            message: format!(
+                "{}: bonus wagering requirement capped at {}x.",
+                profile.name, cap_x
+            ),
+            field: None,
+            can_auto_fix: false,
+        }];
+    }
+    vec![]
+}
+
 fn check_compliance(ir: &SlotGameIR, profile: &JurisdictionProfile) -> Vec<ComplianceViolation> {
     let mut violations = Vec::new();
 
@@ -162,7 +310,11 @@ fn check_jurisdiction_declared(
     ir: &SlotGameIR,
     profile: &JurisdictionProfile,
 ) -> Vec<ComplianceViolation> {
-    if !ir.compliance.jurisdictions.contains(&profile.id.to_string()) {
+    if !ir
+        .compliance
+        .jurisdictions
+        .contains(&profile.id.to_string())
+    {
         return vec![ComplianceViolation {
             rule_id: format!("{}-DECL-001", profile.id),
             jurisdiction: profile.id.to_string(),
@@ -285,6 +437,39 @@ fn apply_fix(
         }
     }
 
+    if rule_id.ends_with("-STAKE-001") {
+        if let Some(cap) = profile.resolve_stake_cap(None) {
+            let old = ir.bet.base_bet;
+            ir.bet.base_bet = cap;
+            return Some(AppliedFix {
+                rule_id: rule_id.clone(),
+                description: format!(
+                    "Capped bet.base_bet from {} to {} for {}.",
+                    old, cap, profile.id
+                ),
+            });
+        }
+        return None;
+    }
+
+    if rule_id.ends_with("-STAKE-002") {
+        if let Some(cap) = profile.resolve_stake_cap(None) {
+            let before = ir.bet.denominations.len();
+            ir.bet
+                .denominations
+                .retain(|d| d.is_finite() && *d > 0.0 && *d <= cap);
+            let removed = before - ir.bet.denominations.len();
+            return Some(AppliedFix {
+                rule_id: rule_id.clone(),
+                description: format!(
+                    "Dropped {} denomination(s) over {} stake cap {} for {}.",
+                    removed, profile.name, cap, profile.id
+                ),
+            });
+        }
+        return None;
+    }
+
     if rule_id.ends_with("-DECL-001") {
         let jid = profile.id.to_string();
         if !ir.compliance.jurisdictions.contains(&jid) {
@@ -334,6 +519,10 @@ pub fn validate(ir: &SlotGameIR, jurisdictions: &[&str]) -> ComplianceReport {
                 violations.extend(check_rtp(ir, profile));
                 violations.extend(check_max_win(ir, profile));
                 violations.extend(check_prohibited_features(ir, profile));
+                violations.extend(check_stake_cap(ir, profile));
+                violations.extend(check_autoplay_turbo(ir, profile));
+                violations.extend(check_pacing(ir, profile));
+                violations.extend(check_wagering(ir, profile));
                 violations.extend(check_compliance(ir, profile));
                 violations.extend(check_jurisdiction_declared(ir, profile));
                 violations.extend(check_informational(profile));
@@ -341,9 +530,18 @@ pub fn validate(ir: &SlotGameIR, jurisdictions: &[&str]) -> ComplianceReport {
         }
     }
 
-    let errors = violations.iter().filter(|v| v.severity == ViolationSeverity::Error).count();
-    let warnings = violations.iter().filter(|v| v.severity == ViolationSeverity::Warning).count();
-    let infos = violations.iter().filter(|v| v.severity == ViolationSeverity::Info).count();
+    let errors = violations
+        .iter()
+        .filter(|v| v.severity == ViolationSeverity::Error)
+        .count();
+    let warnings = violations
+        .iter()
+        .filter(|v| v.severity == ViolationSeverity::Warning)
+        .count();
+    let infos = violations
+        .iter()
+        .filter(|v| v.severity == ViolationSeverity::Info)
+        .count();
     let auto_fixable = violations.iter().filter(|v| v.can_auto_fix).count();
 
     ComplianceReport {
@@ -382,7 +580,9 @@ pub fn auto_fix(ir: &SlotGameIR, jurisdictions: &[&str]) -> (SlotGameIR, AutoFix
     let remaining_violations: Vec<ComplianceViolation> = final_report
         .violations
         .into_iter()
-        .filter(|v| v.severity == ViolationSeverity::Error || v.severity == ViolationSeverity::Warning)
+        .filter(|v| {
+            v.severity == ViolationSeverity::Error || v.severity == ViolationSeverity::Warning
+        })
         .collect();
 
     let result = AutoFixResult {
@@ -392,4 +592,227 @@ pub fn auto_fix(ir: &SlotGameIR, jurisdictions: &[&str]) -> (SlotGameIR, AutoFix
     };
 
     (working, result)
+}
+
+// ─── Runtime enforcement (sloj 3) ───────────────────────────────────────────
+//
+// These functions are called per-event from the engine / orchestrator, *not*
+// from the static IR pipeline. They return `Result<(), ComplianceError>` so
+// the caller can fail fast and surface a structured error to the client.
+
+/// Validate a stake against the resolved per-cycle cap for `jurisdiction`.
+///
+/// - `stake` must be finite and `> 0`.
+/// - If the profile is age-tiered and `player_age` is `None`, returns
+///   `AgeRequired` — there is no safe default for an age-gated rule.
+/// - If `player_age` is supplied but falls outside every declared band,
+///   returns `UnknownAgeBand` (fail closed).
+/// - Returns `StakeOverCap` if `stake > cap`.
+pub fn validate_stake(
+    jurisdiction: &str,
+    stake: f64,
+    player_age: Option<u8>,
+) -> Result<(), ComplianceError> {
+    let profile =
+        get_profile(jurisdiction).ok_or_else(|| ComplianceError::UnknownJurisdiction {
+            jurisdiction: jurisdiction.to_string(),
+        })?;
+
+    if !stake.is_finite() || stake <= 0.0 {
+        return Err(ComplianceError::InvalidStake {
+            jurisdiction: jurisdiction.to_string(),
+            stake,
+        });
+    }
+
+    // Age-tiered jurisdictions must have an age supplied at runtime.
+    if !profile.age_tiered_stakes.is_empty() && player_age.is_none() {
+        return Err(ComplianceError::AgeRequired {
+            jurisdiction: jurisdiction.to_string(),
+        });
+    }
+
+    // If an age was provided but doesn't match any band, fail closed.
+    if !profile.age_tiered_stakes.is_empty() {
+        if let Some(age) = player_age {
+            let any_match = profile
+                .age_tiered_stakes
+                .iter()
+                .any(|t| age >= t.min_age && age <= t.max_age);
+            if !any_match {
+                return Err(ComplianceError::UnknownAgeBand {
+                    jurisdiction: jurisdiction.to_string(),
+                    age,
+                });
+            }
+        }
+    }
+
+    if let Some(cap) = profile.resolve_stake_cap(player_age) {
+        if stake > cap {
+            return Err(ComplianceError::StakeOverCap {
+                jurisdiction: jurisdiction.to_string(),
+                stake,
+                cap,
+            });
+        }
+    }
+
+    Ok(())
+}
+
+/// Validate that a spin animation honoured the regulator pacing floor.
+pub fn validate_spin_duration(jurisdiction: &str, actual_ms: u32) -> Result<(), ComplianceError> {
+    let profile =
+        get_profile(jurisdiction).ok_or_else(|| ComplianceError::UnknownJurisdiction {
+            jurisdiction: jurisdiction.to_string(),
+        })?;
+    if let Some(min_ms) = profile.min_spin_duration_ms {
+        if actual_ms < min_ms {
+            return Err(ComplianceError::SpinTooFast {
+                jurisdiction: jurisdiction.to_string(),
+                actual_ms,
+                min_ms,
+            });
+        }
+    }
+    Ok(())
+}
+
+/// Reject an auto-play attempt in any jurisdiction that bans it.
+pub fn validate_autoplay(jurisdiction: &str) -> Result<(), ComplianceError> {
+    let profile =
+        get_profile(jurisdiction).ok_or_else(|| ComplianceError::UnknownJurisdiction {
+            jurisdiction: jurisdiction.to_string(),
+        })?;
+    if profile.prohibit_autoplay {
+        return Err(ComplianceError::AutoplayProhibited {
+            jurisdiction: jurisdiction.to_string(),
+        });
+    }
+    Ok(())
+}
+
+/// Reject a turbo / quick-spin attempt in any jurisdiction that bans it.
+pub fn validate_turbo(jurisdiction: &str) -> Result<(), ComplianceError> {
+    let profile =
+        get_profile(jurisdiction).ok_or_else(|| ComplianceError::UnknownJurisdiction {
+            jurisdiction: jurisdiction.to_string(),
+        })?;
+    if profile.prohibit_turbo {
+        return Err(ComplianceError::TurboProhibited {
+            jurisdiction: jurisdiction.to_string(),
+        });
+    }
+    Ok(())
+}
+
+/// Validate a bonus wagering requirement against the regulator cap.
+pub fn validate_bonus_wagering(jurisdiction: &str, wagering_x: u32) -> Result<(), ComplianceError> {
+    let profile =
+        get_profile(jurisdiction).ok_or_else(|| ComplianceError::UnknownJurisdiction {
+            jurisdiction: jurisdiction.to_string(),
+        })?;
+    if let Some(cap_x) = profile.bonus_wagering_cap_x {
+        if wagering_x > cap_x {
+            return Err(ComplianceError::BonusWageringOverCap {
+                jurisdiction: jurisdiction.to_string(),
+                wagering_x,
+                cap_x,
+            });
+        }
+    }
+    Ok(())
+}
+
+/// Convenience wrapper: validate a complete `SpinContext` against a
+/// jurisdiction in one call.
+///
+/// Fails fast on the first violation — returns a `Vec<ComplianceError>` only
+/// in the batched variant `validate_spin_full`.
+pub fn validate_spin(ctx: &SpinContext<'_>) -> Result<(), ComplianceError> {
+    if ctx.autoplay {
+        validate_autoplay(ctx.jurisdiction)?;
+    }
+    if ctx.turbo {
+        validate_turbo(ctx.jurisdiction)?;
+    }
+    validate_stake(ctx.jurisdiction, ctx.stake, ctx.player_age)?;
+    if let Some(dur) = ctx.spin_duration_ms {
+        validate_spin_duration(ctx.jurisdiction, dur)?;
+    }
+    Ok(())
+}
+
+/// Validate a spin and collect **every** violation rather than short-circuit.
+/// Returns an empty Vec when compliant.
+pub fn validate_spin_full(ctx: &SpinContext<'_>) -> Vec<ComplianceError> {
+    let mut errs = Vec::new();
+    if ctx.autoplay {
+        if let Err(e) = validate_autoplay(ctx.jurisdiction) {
+            errs.push(e);
+        }
+    }
+    if ctx.turbo {
+        if let Err(e) = validate_turbo(ctx.jurisdiction) {
+            errs.push(e);
+        }
+    }
+    if let Err(e) = validate_stake(ctx.jurisdiction, ctx.stake, ctx.player_age) {
+        errs.push(e);
+    }
+    if let Some(dur) = ctx.spin_duration_ms {
+        if let Err(e) = validate_spin_duration(ctx.jurisdiction, dur) {
+            errs.push(e);
+        }
+    }
+    errs
+}
+
+/// Per-spin runtime context used by [`validate_spin`].
+///
+/// All fields except `jurisdiction` and `stake` are optional/default-able
+/// so callers can adopt incrementally.
+#[derive(Debug, Clone)]
+pub struct SpinContext<'a> {
+    pub jurisdiction: &'a str,
+    pub stake: f64,
+    pub player_age: Option<u8>,
+    pub spin_duration_ms: Option<u32>,
+    pub autoplay: bool,
+    pub turbo: bool,
+}
+
+impl<'a> SpinContext<'a> {
+    /// Minimal context — just jurisdiction + stake.
+    pub fn new(jurisdiction: &'a str, stake: f64) -> Self {
+        Self {
+            jurisdiction,
+            stake,
+            player_age: None,
+            spin_duration_ms: None,
+            autoplay: false,
+            turbo: false,
+        }
+    }
+
+    pub fn with_age(mut self, age: u8) -> Self {
+        self.player_age = Some(age);
+        self
+    }
+
+    pub fn with_duration_ms(mut self, ms: u32) -> Self {
+        self.spin_duration_ms = Some(ms);
+        self
+    }
+
+    pub fn with_autoplay(mut self, on: bool) -> Self {
+        self.autoplay = on;
+        self
+    }
+
+    pub fn with_turbo(mut self, on: bool) -> Self {
+        self.turbo = on;
+        self
+    }
 }

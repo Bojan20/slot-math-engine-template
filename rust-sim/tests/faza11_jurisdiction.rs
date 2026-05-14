@@ -4,9 +4,9 @@
 //! built from JSON via serde_json round-trip.
 
 use slot_sim::ir::{Feature, GambleType, NearMissRule, SlotGameIR, TieResolution};
-use slot_sim::jurisdiction::{auto_fix, validate};
 use slot_sim::jurisdiction::profiles::get_profile;
 use slot_sim::jurisdiction::types::ViolationSeverity;
+use slot_sim::jurisdiction::{auto_fix, validate};
 
 // ─── Minimal compliant IR JSON ────────────────────────────────────────────────
 
@@ -94,7 +94,10 @@ fn faza11_validate_rtp_violation_ukgc() {
     ir.limits.target_rtp = 0.93; // below UKGC min 0.94
     let report = validate(&ir, &["UKGC"]);
     assert!(!report.is_compliant);
-    let v = report.violations.iter().find(|v| v.rule_id == "UKGC-RTP-001");
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-RTP-001");
     assert!(v.is_some(), "Expected UKGC-RTP-001 violation");
     assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
     assert!(!v.unwrap().can_auto_fix, "RTP-001 must not be auto-fixable");
@@ -109,7 +112,10 @@ fn faza11_validate_gamble_violation_ukgc() {
         tie_resolution: TieResolution::House,
     });
     let report = validate(&ir, &["UKGC"]);
-    let v = report.violations.iter().find(|v| v.rule_id == "UKGC-FEAT-GAMBLE");
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-FEAT-GAMBLE");
     assert!(v.is_some(), "Expected UKGC-FEAT-GAMBLE violation");
     assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
     assert!(v.unwrap().can_auto_fix);
@@ -126,7 +132,10 @@ fn faza11_validate_buy_feature_violation_ukgc() {
         }],
     });
     let report = validate(&ir, &["UKGC"]);
-    let v = report.violations.iter().find(|v| v.rule_id == "UKGC-FEAT-BUYFEATURE");
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-FEAT-BUYFEATURE");
     assert!(v.is_some(), "Expected UKGC-FEAT-BUYFEATURE violation");
     assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
 }
@@ -136,21 +145,32 @@ fn faza11_validate_ldw_disclosure_violation() {
     let mut ir = base_ir();
     ir.compliance.ldw_disclosure = false;
     let report = validate(&ir, &["UKGC"]);
-    let v = report.violations.iter().find(|v| v.rule_id == "UKGC-LDW-001");
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-LDW-001");
     assert!(v.is_some(), "Expected UKGC-LDW-001 violation");
     assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
     assert!(v.unwrap().can_auto_fix);
 }
 
 #[test]
-fn faza11_validate_max_win_violation_mga() {
+fn faza11_validate_max_win_mga_no_cap() {
+    // Regression: MGA online has NO statutory max-win cap (Kimi research,
+    // May 2026 — Player Protection Directive 2/2018). Any positive value
+    // must validate without a MAXWIN error.
     let mut ir = base_ir();
-    ir.limits.max_win_x = 300_000.0; // above MGA cap of 250_000
+    ir.limits.max_win_x = 1_000_000.0;
     let report = validate(&ir, &["MGA"]);
-    let v = report.violations.iter().find(|v| v.rule_id == "MGA-MAXWIN-001");
-    assert!(v.is_some(), "Expected MGA-MAXWIN-001 violation");
-    assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
-    assert!(v.unwrap().can_auto_fix);
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "MGA-MAXWIN-001");
+    assert!(
+        v.is_none(),
+        "MGA online must not enforce a max-win cap (got: {:?})",
+        v
+    );
 }
 
 #[test]
@@ -161,11 +181,20 @@ fn faza11_auto_fix_removes_gamble() {
         max_steps: 5,
         tie_resolution: TieResolution::House,
     });
-    assert!(ir.features.iter().any(|f| matches!(f, Feature::Gamble { .. })));
+    assert!(ir
+        .features
+        .iter()
+        .any(|f| matches!(f, Feature::Gamble { .. })));
 
     let (fixed_ir, result) = auto_fix(&ir, &["UKGC"]);
-    assert!(!fixed_ir.features.iter().any(|f| matches!(f, Feature::Gamble { .. })));
-    let fix = result.applied_fixes.iter().find(|f| f.rule_id == "UKGC-FEAT-GAMBLE");
+    assert!(!fixed_ir
+        .features
+        .iter()
+        .any(|f| matches!(f, Feature::Gamble { .. })));
+    let fix = result
+        .applied_fixes
+        .iter()
+        .find(|f| f.rule_id == "UKGC-FEAT-GAMBLE");
     assert!(fix.is_some(), "Expected UKGC-FEAT-GAMBLE fix applied");
 }
 
@@ -176,20 +205,31 @@ fn faza11_auto_fix_sets_ldw_disclosure() {
 
     let (fixed_ir, result) = auto_fix(&ir, &["UKGC"]);
     assert!(fixed_ir.compliance.ldw_disclosure);
-    let fix = result.applied_fixes.iter().find(|f| f.rule_id == "UKGC-LDW-001");
+    let fix = result
+        .applied_fixes
+        .iter()
+        .find(|f| f.rule_id == "UKGC-LDW-001");
     assert!(fix.is_some());
 }
 
 #[test]
-fn faza11_auto_fix_caps_max_win_mga() {
+fn faza11_auto_fix_max_win_mga_is_noop() {
+    // Regression: MGA has no statutory online max-win cap, so the
+    // auto-fixer must NOT clamp max_win_x.
     let mut ir = base_ir();
-    ir.limits.max_win_x = 300_000.0;
+    ir.limits.max_win_x = 1_000_000.0;
 
     let (fixed_ir, result) = auto_fix(&ir, &["MGA"]);
-    assert_eq!(fixed_ir.limits.max_win_x, 250_000.0);
-    assert_eq!(fixed_ir.compliance.max_win_cap_required, 250_000.0);
-    let fix = result.applied_fixes.iter().find(|f| f.rule_id == "MGA-MAXWIN-001");
-    assert!(fix.is_some());
+    // Value untouched.
+    assert_eq!(fixed_ir.limits.max_win_x, 1_000_000.0);
+    // No MAXWIN fix recorded.
+    assert!(
+        result
+            .applied_fixes
+            .iter()
+            .all(|f| f.rule_id != "MGA-MAXWIN-001"),
+        "MGA-MAXWIN-001 must not auto-fix when no cap defined"
+    );
 }
 
 #[test]
@@ -199,10 +239,15 @@ fn faza11_auto_fix_on_compliant_zero_fixes() {
     // Should be fully compliant after fix (already was)
     assert!(result.is_fully_compliant);
     // No error-level fixes needed
-    let error_fixes: Vec<_> = result.applied_fixes.iter()
+    let error_fixes: Vec<_> = result
+        .applied_fixes
+        .iter()
         .filter(|f| f.rule_id.ends_with("-RTP-001") || f.rule_id.ends_with("-LDW-001"))
         .collect();
-    assert!(error_fixes.is_empty(), "No error fixes should be needed for compliant IR");
+    assert!(
+        error_fixes.is_empty(),
+        "No error fixes should be needed for compliant IR"
+    );
 }
 
 #[test]
@@ -222,13 +267,20 @@ fn faza11_get_profile_unknown_none() {
 
 #[test]
 fn faza11_multiple_jurisdiction_validation() {
+    // Post-2025 ranges: UKGC ≥ 0.94, MGA ≥ 0.85. Pick 0.84 to break both.
     let mut ir = base_ir();
-    ir.limits.target_rtp = 0.91; // below both MGA (0.92) and UKGC (0.94)
+    ir.limits.target_rtp = 0.84;
     ir.compliance.rtp_range_required = [0.94, 0.99];
 
     let report = validate(&ir, &["UKGC", "MGA"]);
-    let ukgc_err = report.violations.iter().find(|v| v.rule_id == "UKGC-RTP-001");
-    let mga_err = report.violations.iter().find(|v| v.rule_id == "MGA-RTP-001");
+    let ukgc_err = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-RTP-001");
+    let mga_err = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "MGA-RTP-001");
     assert!(ukgc_err.is_some(), "Expected UKGC-RTP-001");
     assert!(mga_err.is_some(), "Expected MGA-RTP-001");
 }
@@ -242,7 +294,10 @@ fn faza11_auto_fix_does_not_modify_rtp_001() {
     // The RTP should NOT have been changed
     assert_eq!(fixed_ir.limits.target_rtp, 0.93);
     // No fix for RTP-001
-    let rtp_fix = result.applied_fixes.iter().find(|f| f.rule_id == "UKGC-RTP-001");
+    let rtp_fix = result
+        .applied_fixes
+        .iter()
+        .find(|f| f.rule_id == "UKGC-RTP-001");
     assert!(rtp_fix.is_none(), "RTP-001 must not be auto-fixed");
     // Not fully compliant since RTP error remains
     assert!(!result.is_fully_compliant);
@@ -252,11 +307,14 @@ fn faza11_auto_fix_does_not_modify_rtp_001() {
 fn faza11_validate_informational_notes_count() {
     let ir = base_ir();
     let report = validate(&ir, &["UKGC"]);
-    let info_count = report.violations.iter()
+    let info_count = report
+        .violations
+        .iter()
         .filter(|v| v.severity == ViolationSeverity::Info && v.jurisdiction == "UKGC")
         .count();
-    // UKGC has 4 informational notes in the Rust profile
-    assert_eq!(info_count, 4);
+    // UKGC has 6 informational notes + 4 derived Info checks
+    // (AUTOPLAY-001, TURBO-001, PACING-001, WAGERING-001) = 10.
+    assert_eq!(info_count, 10);
 }
 
 #[test]
@@ -264,7 +322,10 @@ fn faza11_validate_session_time_violation() {
     let mut ir = base_ir();
     ir.compliance.session_time_display = false;
     let report = validate(&ir, &["UKGC"]);
-    let v = report.violations.iter().find(|v| v.rule_id == "UKGC-SESSION-001");
+    let v = report
+        .violations
+        .iter()
+        .find(|v| v.rule_id == "UKGC-SESSION-001");
     assert!(v.is_some(), "Expected UKGC-SESSION-001");
     assert_eq!(v.unwrap().severity, ViolationSeverity::Error);
     assert!(v.unwrap().can_auto_fix);
@@ -276,8 +337,14 @@ fn faza11_auto_fix_sets_near_miss_rule() {
     ir.compliance.near_miss_rule = NearMissRule::AllowedWithinDistribution;
 
     let (fixed_ir, result) = auto_fix(&ir, &["UKGC"]);
-    assert_eq!(fixed_ir.compliance.near_miss_rule, NearMissRule::MustBeRandom);
-    let fix = result.applied_fixes.iter().find(|f| f.rule_id == "UKGC-NEARMISS-001");
+    assert_eq!(
+        fixed_ir.compliance.near_miss_rule,
+        NearMissRule::MustBeRandom
+    );
+    let fix = result
+        .applied_fixes
+        .iter()
+        .find(|f| f.rule_id == "UKGC-NEARMISS-001");
     assert!(fix.is_some());
 }
 
