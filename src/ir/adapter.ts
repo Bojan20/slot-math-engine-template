@@ -91,6 +91,37 @@ export interface TSHoldAndWinConfig {
   orbLandChanceFillBonus: number;
 }
 
+// ─── W152 P0-3 — IR feature configs ──────────────────────────────────────────
+//
+// Mirror of `rust-sim/src/config.rs::{CascadeConfig, RespinConfig,
+// MysteryConfig}`. Field names use camelCase on the TS side (idiomatic)
+// vs snake_case in Rust; the adapter is the single transition point.
+// The IR ↔ runtime conversion is byte-stable: a deterministic IR JSON
+// produces an identical config in both languages (W152 P0-5 parity
+// gate).
+
+export type TSCascadeReplacement = 'drop' | 'refill_random' | 'fixed_strip';
+
+export interface TSCascadeConfig {
+  replacement: TSCascadeReplacement;
+  maxChain: number;
+  multiplierProgression?: number[];
+}
+
+export interface TSRespinConfig {
+  costX: number;
+  maxUsesPerSpin: number;
+}
+
+export interface TSMysteryConfig {
+  symbolId: string;
+  /**
+   * Symbol-id → raw weight. The consumer normalises across the full map
+   * per spin (same strategy both sides — see parity test fixture).
+   */
+  revealDistribution: Record<string, number>;
+}
+
 export interface TSGameConfig {
   name: string;
   version: string;
@@ -113,6 +144,11 @@ export interface TSGameConfig {
   // Features
   freeSpins: TSFreeSpinsConfig;
   holdAndWin: TSHoldAndWinConfig;
+  // W152 P0-3 — IR feature unstub. Optional so games that don't declare
+  // the feature get `undefined` and downstream branches via truthiness.
+  cascade?: TSCascadeConfig;
+  respin?: TSRespinConfig;
+  mystery?: TSMysteryConfig;
 }
 
 // ─── Error class ─────────────────────────────────────────────────────────────
@@ -148,7 +184,7 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
   const { baseWeights, fsWeights } = convertReels(ir, symbols);
   const paylines = convertPaylines(ir, numReels, numRows);
   const paytable = convertPaytable(ir);
-  const { freeSpins, holdAndWin } = convertFeatures(ir);
+  const { freeSpins, holdAndWin, cascade, respin, mystery } = convertFeatures(ir);
 
   return {
     name: ir.meta.name,
@@ -164,6 +200,12 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
     fsWeights,
     freeSpins,
     holdAndWin,
+    // W152 P0-3 — IR feature unstub. Only emit the key if the IR
+    // declared the feature; otherwise omit so JSON stays compact and
+    // matches Rust's `skip_serializing_if = "Option::is_none"`.
+    ...(cascade !== undefined ? { cascade } : {}),
+    ...(respin !== undefined ? { respin } : {}),
+    ...(mystery !== undefined ? { mystery } : {}),
   };
 }
 
@@ -365,9 +407,15 @@ function convertPaytable(ir: SlotGameIR): Record<string, TSPayEntry> {
 function convertFeatures(ir: SlotGameIR): {
   freeSpins: TSFreeSpinsConfig;
   holdAndWin: TSHoldAndWinConfig;
+  cascade?: TSCascadeConfig;
+  respin?: TSRespinConfig;
+  mystery?: TSMysteryConfig;
 } {
   let freeSpins = defaultFreeSpins();
   let holdAndWin = defaultHoldAndWin();
+  let cascade: TSCascadeConfig | undefined;
+  let respin: TSRespinConfig | undefined;
+  let mystery: TSMysteryConfig | undefined;
 
   for (const feat of ir.features) {
     switch (feat.kind) {
@@ -379,15 +427,69 @@ function convertFeatures(ir: SlotGameIR): {
         holdAndWin = convertHoldAndWin(feat);
         break;
 
-      // TODO: cascade → CascadeConfig when Faza 2 adds the evaluator path.
-      case 'cascade': break;
-      // TODO: respin, pick, wheel, buy_feature, ante_bet, gamble,
-      //       mystery_symbol, symbol_upgrade → dedicated config structs.
-      default: break;
+      // W152 P0-3 — Cascade (drop / refill / fixed-strip).
+      case 'cascade':
+        cascade = convertCascade(feat);
+        break;
+
+      // W152 P0-3 — Respin (paid extra spin).
+      case 'respin':
+        respin = convertRespin(feat);
+        break;
+
+      // W152 P0-3 — MysterySymbol (placeholder reveal).
+      case 'mystery_symbol':
+        mystery = convertMystery(feat);
+        break;
+
+      // Still pending: pick, wheel, buy_feature, ante_bet, gamble,
+      // symbol_upgrade — each needs its own runtime config struct.
+      default:
+        break;
     }
   }
 
-  return { freeSpins, holdAndWin };
+  return { freeSpins, holdAndWin, cascade, respin, mystery };
+}
+
+// W152 P0-3 — Cascade
+function convertCascade(
+  feat: Extract<Feature, { kind: 'cascade' }>,
+): TSCascadeConfig {
+  return {
+    replacement: feat.replacement,
+    maxChain: feat.max_chain,
+    multiplierProgression: feat.multiplier_progression
+      ? [...feat.multiplier_progression]
+      : undefined,
+  };
+}
+
+// W152 P0-3 — Respin
+function convertRespin(
+  feat: Extract<Feature, { kind: 'respin' }>,
+): TSRespinConfig {
+  return {
+    costX: feat.cost_x,
+    maxUsesPerSpin: feat.max_uses_per_spin,
+  };
+}
+
+// W152 P0-3 — MysterySymbol
+function convertMystery(
+  feat: Extract<Feature, { kind: 'mystery_symbol' }>,
+): TSMysteryConfig {
+  // Sort keys alphabetically so the resulting record iterates in the
+  // same order as the Rust BTreeMap → parity-safe.
+  const sortedKeys = Object.keys(feat.reveal_distribution).sort();
+  const distribution: Record<string, number> = {};
+  for (const key of sortedKeys) {
+    distribution[key] = feat.reveal_distribution[key];
+  }
+  return {
+    symbolId: feat.symbol_id,
+    revealDistribution: distribution,
+  };
 }
 
 function convertFreeSpins(feat: Extract<Feature, { kind: 'free_spins' }>): TSFreeSpinsConfig {

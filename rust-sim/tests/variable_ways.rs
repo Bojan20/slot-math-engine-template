@@ -130,6 +130,11 @@ fn variable_ways_config(reels: u8, max_rows: u8) -> GameConfig {
             trigger_chance_fs: 0.0,
             multipliers: vec![],
         },
+        // W152 P0-3 — IR feature unstub fields default to None for
+        // hand-rolled test configs that don't exercise these features.
+        cascade: None,
+        respin: None,
+        mystery: None,
         max_win_cap: 5000.0,
         feature_loop_cap: 100,
     }

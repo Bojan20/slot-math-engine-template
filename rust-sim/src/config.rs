@@ -4,7 +4,7 @@
 //! Supports any slot theme with customizable symbols, paytable, and reels.
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 
 /// Symbol definition
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -77,6 +77,75 @@ pub struct LightningConfig {
     pub multipliers: Vec<LightningMult>,
 }
 
+// ─── W152 P0-3 — IR feature unstub ─────────────────────────────────────────
+//
+// Three new config structs that the IR adapter now extracts from
+// `Feature::Cascade`, `Feature::Respin`, and `Feature::MysterySymbol`
+// instead of dropping them on the floor. They mirror the TS-side
+// `TSCascadeConfig` / `TSRespinConfig` / `TSMysteryConfig` exactly
+// (snake_case → camelCase rename happens in the TS adapter).
+//
+// Downstream consumers (analytical solver, MC simulator, PAR generator)
+// can pattern-match on `Option::is_some` to decide whether the feature
+// is active for a given game. The structs themselves carry data only —
+// no engine logic.
+
+/// Cascade (drop / refill) feature configuration.
+///
+/// `replacement` controls how the grid refills after a winning cluster
+/// is cleared:
+/// - `Drop`         — existing symbols fall, top is refilled from reel strip.
+/// - `RefillRandom` — every cleared cell is redrawn from the reel weights.
+/// - `FixedStrip`   — the cleared cells consume the next symbols on a
+///                    persistent strip ("avalanche" semantics).
+///
+/// `max_chain` caps the number of consecutive cascade steps per spin to
+/// keep variance budget finite (KIMI 07: max-win cap interaction).
+///
+/// `multiplier_progression` is the per-chain-step multiplier ladder.
+/// For example `[1, 2, 3, 5]` means step 0 = ×1, step 1 = ×2, etc.
+/// `None` ⇒ flat ×1 across all chain steps.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct CascadeConfig {
+    pub replacement: CascadeReplacement,
+    pub max_chain: u32,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub multiplier_progression: Option<Vec<f64>>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum CascadeReplacement {
+    Drop,
+    RefillRandom,
+    FixedStrip,
+}
+
+/// Respin feature configuration — paid extra spins on existing grid.
+///
+/// `cost_x` is the multiplier of the base bet charged per respin.
+/// `max_uses_per_spin` caps consecutive respins from a single base spin
+/// (industry-typical 1–3 to bound variance).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct RespinConfig {
+    pub cost_x: f64,
+    pub max_uses_per_spin: u32,
+}
+
+/// Mystery symbol feature configuration.
+///
+/// `symbol_id` is the placeholder symbol that, after landing, reveals
+/// as one of the symbols in `reveal_distribution` weighted by the f64
+/// value. The weights are normalised by the consumer; we keep raw f64
+/// to preserve the IR shape and allow downstream tooling to inspect
+/// the distribution shape (KIMI 07 xWays mystery, NetEnt cluster reveal).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct MysteryConfig {
+    pub symbol_id: String,
+    /// BTreeMap so JSON serialisation is byte-stable for parity tests.
+    pub reveal_distribution: BTreeMap<String, f64>,
+}
+
 /// Reel weight entry
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReelWeight {
@@ -108,6 +177,16 @@ pub struct GameConfig {
     pub free_spins: FreeSpinsConfig,
     pub hold_and_win: HoldAndWinConfig,
     pub lightning: LightningConfig,
+
+    // W152 P0-3 — IR feature unstub. All `Option` so games that don't
+    // declare the feature in the IR carry `None` and downstream consumers
+    // can branch on `is_some()` without touching default values.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cascade: Option<CascadeConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub respin: Option<RespinConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mystery: Option<MysteryConfig>,
 
     // Limits
     pub max_win_cap: f64,
@@ -272,6 +351,12 @@ impl Default for GameConfig {
                     },
                 ],
             },
+            // W152 P0-3 — IR features default to None on the testing
+            // default config; games that need them populate via the
+            // IR adapter.
+            cascade: None,
+            respin: None,
+            mystery: None,
             max_win_cap: 5000.0,
             feature_loop_cap: 100,
         }

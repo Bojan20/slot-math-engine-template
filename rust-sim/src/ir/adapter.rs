@@ -15,10 +15,14 @@
 //!     as user-readable config loading failures.
 
 use crate::config::{
-    FreeSpinsConfig, GameConfig, HoldAndWinConfig, OrbValue, PayEntry, ReelWeight, SymbolDef,
+    CascadeConfig, CascadeReplacement as RtCascadeReplacement, FreeSpinsConfig, GameConfig,
+    HoldAndWinConfig, MysteryConfig, OrbValue, PayEntry, ReelWeight, RespinConfig, SymbolDef,
 };
-use crate::ir::{Evaluation, Feature, ReelSet, SlotGameIR, SymbolKind, Topology, TriggerBy};
-use std::collections::HashMap;
+use crate::ir::{
+    CascadeReplacement as IrCascadeReplacement, Evaluation, Feature, ReelSet, SlotGameIR,
+    SymbolKind, Topology, TriggerBy,
+};
+use std::collections::{BTreeMap, HashMap};
 
 // ─── Error type ────────────────────────────────────────────────────────────
 
@@ -410,21 +414,41 @@ fn convert_features(ir: &SlotGameIR, cfg: &mut GameConfig) {
                 );
             }
 
-            // TODO: Cascade — when Faza 2 adds a cascade evaluator path this
-            // match arm should populate a `CascadeConfig` on GameConfig.
-            Feature::Cascade { .. } => {}
+            // W152 P0-3 — Cascade (drop / refill / fixed-strip avalanche).
+            Feature::Cascade {
+                replacement,
+                max_chain,
+                multiplier_progression,
+            } => {
+                cfg.cascade = Some(convert_cascade(replacement, *max_chain, multiplier_progression));
+            }
 
-            // TODO: Respin — will map to a per-spin respin mechanic config.
-            Feature::Respin { .. } => {}
+            // W152 P0-3 — Respin (paid extra spin on the existing grid).
+            Feature::Respin {
+                cost_x,
+                max_uses_per_spin,
+            } => {
+                cfg.respin = Some(convert_respin(*cost_x, *max_uses_per_spin));
+            }
 
-            // TODO: Pick / Wheel / BuyFeature — bonus round configs.
+            // W152 P0-3 — MysterySymbol (placeholder that reveals as a
+            // weighted real symbol after the spin).
+            Feature::MysterySymbol {
+                symbol_id,
+                reveal_distribution,
+            } => {
+                cfg.mystery = Some(convert_mystery(symbol_id, reveal_distribution));
+            }
+
+            // Still pending: Pick / Wheel / BuyFeature bonus rounds.
             Feature::Pick { .. } | Feature::Wheel { .. } | Feature::BuyFeature { .. } => {}
 
-            // TODO: AnteBet / Gamble — bet modifier configs.
+            // Still pending: AnteBet / Gamble bet modifiers (jurisdiction-
+            // gated; see W152 §3.10 buy-feature bans + ante guidance).
             Feature::AnteBet { .. } | Feature::Gamble { .. } => {}
 
-            // TODO: MysterySymbol / SymbolUpgrade — symbol transform configs.
-            Feature::MysterySymbol { .. } | Feature::SymbolUpgrade { .. } => {}
+            // Still pending: SymbolUpgrade transform config.
+            Feature::SymbolUpgrade { .. } => {}
         }
     }
 }
@@ -535,5 +559,122 @@ fn convert_hold_and_win(
         orb_values,
         orb_land_chance_base: 0.035, // sensible default — no IR field yet
         orb_land_chance_fill_bonus: 0.015,
+    }
+}
+
+// ─── W152 P0-3 — Cascade / Respin / MysterySymbol converters ──────────────
+
+/// Convert `Feature::Cascade` from IR into the runtime `CascadeConfig`.
+///
+/// The IR enum variant names are snake_case (`drop`, `refill_random`,
+/// `fixed_strip`) on the wire; the Rust enum mirrors that exactly.
+/// `multiplier_progression` is moved through unchanged so the consumer
+/// can keep the ladder shape (e.g. `[1.0, 2.0, 3.0, 5.0]`).
+fn convert_cascade(
+    replacement: &IrCascadeReplacement,
+    max_chain: u32,
+    multiplier_progression: &Option<Vec<f64>>,
+) -> CascadeConfig {
+    let replacement = match replacement {
+        IrCascadeReplacement::Drop => RtCascadeReplacement::Drop,
+        IrCascadeReplacement::RefillRandom => RtCascadeReplacement::RefillRandom,
+        IrCascadeReplacement::FixedStrip => RtCascadeReplacement::FixedStrip,
+    };
+    CascadeConfig {
+        replacement,
+        max_chain,
+        multiplier_progression: multiplier_progression.clone(),
+    }
+}
+
+/// Convert `Feature::Respin` from IR into the runtime `RespinConfig`.
+/// No coercion — both fields are passed through verbatim.
+fn convert_respin(cost_x: f64, max_uses_per_spin: u32) -> RespinConfig {
+    RespinConfig {
+        cost_x,
+        max_uses_per_spin,
+    }
+}
+
+/// Convert `Feature::MysterySymbol` from IR into the runtime `MysteryConfig`.
+///
+/// `reveal_distribution` is normalised into a `BTreeMap` for byte-stable
+/// JSON serialisation (parity gate requirement). Weights are kept as raw
+/// `f64` — the consumer normalises them per spin (TS↔Rust must use the
+/// same normalisation strategy; we document it in the consumer call site,
+/// not here).
+fn convert_mystery(symbol_id: &str, reveal_distribution: &BTreeMap<String, f64>) -> MysteryConfig {
+    MysteryConfig {
+        symbol_id: symbol_id.to_owned(),
+        reveal_distribution: reveal_distribution.clone(),
+    }
+}
+
+// ─── Unit tests (W152 P0-3) ────────────────────────────────────────────────
+
+#[cfg(test)]
+mod cascade_respin_mystery_tests {
+    use super::*;
+
+    #[test]
+    fn convert_cascade_maps_all_replacement_variants() {
+        for (ir, expected) in [
+            (IrCascadeReplacement::Drop, RtCascadeReplacement::Drop),
+            (
+                IrCascadeReplacement::RefillRandom,
+                RtCascadeReplacement::RefillRandom,
+            ),
+            (
+                IrCascadeReplacement::FixedStrip,
+                RtCascadeReplacement::FixedStrip,
+            ),
+        ] {
+            let out = convert_cascade(&ir, 7, &Some(vec![1.0, 2.0, 3.0, 5.0]));
+            assert_eq!(out.replacement, expected);
+            assert_eq!(out.max_chain, 7);
+            assert_eq!(out.multiplier_progression, Some(vec![1.0, 2.0, 3.0, 5.0]));
+        }
+    }
+
+    #[test]
+    fn convert_cascade_handles_none_progression() {
+        let out = convert_cascade(&IrCascadeReplacement::Drop, 3, &None);
+        assert!(out.multiplier_progression.is_none());
+        assert_eq!(out.max_chain, 3);
+    }
+
+    #[test]
+    fn convert_respin_passes_through() {
+        let out = convert_respin(2.5, 3);
+        assert!((out.cost_x - 2.5).abs() < f64::EPSILON);
+        assert_eq!(out.max_uses_per_spin, 3);
+    }
+
+    #[test]
+    fn convert_mystery_preserves_distribution_keys() {
+        let mut dist = BTreeMap::new();
+        dist.insert("S_LP1".to_owned(), 50.0);
+        dist.insert("S_HP1".to_owned(), 30.0);
+        dist.insert("S_WILD".to_owned(), 20.0);
+        let out = convert_mystery("S_MYS", &dist);
+        assert_eq!(out.symbol_id, "S_MYS");
+        assert_eq!(out.reveal_distribution.len(), 3);
+        assert_eq!(out.reveal_distribution.get("S_LP1"), Some(&50.0));
+        assert_eq!(out.reveal_distribution.get("S_HP1"), Some(&30.0));
+        assert_eq!(out.reveal_distribution.get("S_WILD"), Some(&20.0));
+    }
+
+    #[test]
+    fn convert_mystery_btreemap_iter_is_byte_stable() {
+        // BTreeMap iteration order is lexicographic — encode + decode
+        // must yield the same string for any input order.
+        let mut a = BTreeMap::new();
+        a.insert("Z".to_owned(), 1.0);
+        a.insert("A".to_owned(), 2.0);
+        a.insert("M".to_owned(), 3.0);
+        let out = convert_mystery("S_MYS", &a);
+        let json = serde_json::to_string(&out.reveal_distribution).unwrap();
+        // Lexicographic key order: A, M, Z.
+        assert_eq!(json, r#"{"A":2.0,"M":3.0,"Z":1.0}"#);
     }
 }

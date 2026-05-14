@@ -81,7 +81,40 @@ export const UK_PROFILE: JurisdictionProfile = {
 **Engine guard:** `src/engine/spinGuard.ts` — refuse spin ako
 `stake > profile.stakeCap[ageBand]` ili `bonusWagering > cap`.
 
-### P0-3 · IR feature unstub: cascade → mystery → respin (KIMI 03; Audit §19-20)
+### P0-3 · IR feature unstub: cascade → mystery → respin (KIMI 03; Audit §19-20) — ✅ **W152 LANDED**
+
+**Status:** 3 od 8 stub-ova zatvoreno (`cascade`, `respin`,
+`mystery_symbol`). Preostali stub-ovi (`pick`, `wheel`, `buy_feature`,
+`ante_bet`, `gamble`, `symbol_upgrade`) ostaju za sledeću turu.
+
+**Konkretno:**
+- ✅ `rust-sim/src/config.rs` — 3 nove strukture (`CascadeConfig`,
+  `RespinConfig`, `MysteryConfig`) sa `CascadeReplacement` enum-om;
+  `GameConfig` ima 3 nova `Option<...>` polja sa
+  `skip_serializing_if = "Option::is_none"`.
+- ✅ `rust-sim/src/ir/adapter.rs` — `convert_cascade`,
+  `convert_respin`, `convert_mystery` helperi; `convert_features` ne
+  baca cascade/respin/mystery na pod više.
+- ✅ `src/ir/adapter.ts` — mirror TS strana: 3 nove `TSXxxConfig`
+  interfejse, optional polja u `TSGameConfig`, 3 convert helpera.
+- ✅ TS adapter sortira `revealDistribution` ključeve leksikografski
+  da odgovara Rust `BTreeMap` redosledu (byte-stable JSON za parity).
+- ✅ Test fixture `tests/fixtures/cascade-respin-mystery.json`
+  zajednički za TS i Rust integration testove.
+- ✅ Rust: 5 unit testova u adapter-u + 6 integration testova =
+  **11 novih Rust tests PASS**.
+- ✅ TS: 6 novih tests PASS (`tests/ir_cascade_respin_mystery.test.ts`).
+- ✅ **TS↔Rust parity gate** — isti fixture, identično ekstrakovan u
+  oba pravca (mystery `BTreeMap`/sorted-Record byte equality verified).
+
+**Preostalo za P0-3 (sledeća tura):**
+- `pick` / `wheel` — bonus round prize-pool config.
+- `buy_feature` — jurisdiction-gated (UKGC/NL/DE/DK ban-aware).
+- `ante_bet` — bet modifier.
+- `gamble` — red/black/suit side bet.
+- `symbol_upgrade` — symbol transform u FS-u.
+
+**Originalni plan (referenca):**
 **Trenutno:** `src/ir/adapter.ts` + `rust-sim/src/ir/adapter.rs` —
 TODO za 8 feature types.
 **Sekvenca (3 najurgentnija):**
