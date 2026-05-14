@@ -1,0 +1,473 @@
+{
+  "generatedAtUtc": "2026-05-14T23:39:49.019Z",
+  "goldenSnapshot": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/acceptance/golden.json",
+  "goldenSpins": 20000,
+  "config": {
+    "precision": 0.00001,
+    "confidence": 0.99,
+    "varianceSource": "fallback"
+  },
+  "summary": {
+    "overall": "too_few_spins",
+    "convergedCount": 0,
+    "warnCount": 30,
+    "failCount": 0,
+    "totalCount": 30,
+    "worstDelta": 0,
+    "worstCiHalfWidth": 461813.10554905306,
+    "totalRequiredSpins": 4.2721359850782246e+25,
+    "maxRequiredSpins": 4.265426889137215e+25
+  },
+  "fixtures": [
+    {
+      "fixtureId": "3x5-5lines",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.3839071601762362,
+        "delta": 0,
+        "requiredSpins": 29476941526917,
+        "spinsMargin": 1473847076.34585,
+        "reason": "20,000 spins so far; need ≈29,476,941,526,917 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 0.97792,
+      "observedRtp": 0.97792,
+      "perSpinVariance": 444.28141071760007,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "5x3-20lines",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 3.8076631153443397,
+        "delta": 0,
+        "requiredSpins": 2899659679990752,
+        "spinsMargin": 144982983999.5376,
+        "reason": "20,000 spins so far; need ≈2,899,659,679,990,752 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 4.22748,
+      "observedRtp": 4.22748,
+      "perSpinVariance": 43704.157436105605,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "5x3-243ways",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 558.8531929600266,
+        "delta": 0,
+        "requiredSpins": 62463378256323340000,
+        "spinsMargin": 3123168912816167,
+        "reason": "20,000 spins so far; need ≈62,463,378,256,323,340,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 304.675015,
+      "observedRtp": 304.675015,
+      "perSpinVariance": 941458522.2339184,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "5x4-25lines",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 14.623420154555626,
+        "delta": 0,
+        "requiredSpins": 42768883403332744,
+        "spinsMargin": 2138444170166.6372,
+        "reason": "20,000 spins so far; need ≈42,768,883,403,332,744 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 29.66433,
+      "observedRtp": 29.66433,
+      "perSpinVariance": 644619.7898753621,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "6x4-4096ways",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 10688.163294101725,
+        "delta": 0,
+        "requiredSpins": 2.2847366920276684e+22,
+        "spinsMargin": 1142368346013834200,
+        "reason": "20,000 spins so far; need ≈22,847,366,920,276,684,000,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 14447.269285,
+      "observedRtp": 14447.269285,
+      "perSpinVariance": 344359349400.4193,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cascade-drop",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 8.776040760223918,
+        "delta": 0,
+        "requiredSpins": 15403778285022318,
+        "spinsMargin": 770188914251.1158,
+        "reason": "20,000 spins so far; need ≈15,403,778,285,022,318 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 11.809285,
+      "observedRtp": 11.809285,
+      "perSpinVariance": 232168.33200288774,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cascade-fixed-strip",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1.6503608306432371,
+        "delta": 0,
+        "requiredSpins": 544738174264288,
+        "spinsMargin": 27236908713.2144,
+        "reason": "20,000 spins so far; need ≈544,738,174,264,288 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 4.420565,
+      "observedRtp": 4.420565,
+      "perSpinVariance": 8210.385202714226,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cascade-refill",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1671.8433378934046,
+        "delta": 0,
+        "requiredSpins": 559012029291712000000,
+        "spinsMargin": 27950601464585600,
+        "reason": "20,000 spins so far; need ≈559,012,029,291,712,000,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 2227.66092,
+      "observedRtp": 2227.66092,
+      "perSpinVariance": 8425523141.708747,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "classic-3x3-lines",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.22866848255426453,
+        "delta": 0,
+        "requiredSpins": 10457854982734,
+        "spinsMargin": 522892749.1367,
+        "reason": "20,000 spins so far; need ≈10,457,854,982,734 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 0.56055,
+      "observedRtp": 0.56055,
+      "perSpinVariance": 157.622545764,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cluster-7x7",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 2.3370212160317463,
+        "delta": 0,
+        "requiredSpins": 1092333632836501,
+        "spinsMargin": 54616681641.82505,
+        "reason": "20,000 spins so far; need ≈1,092,333,632,836,501 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 28.383775,
+      "observedRtp": 28.383775,
+      "perSpinVariance": 16463.835874143628,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cluster-diagonal",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.4252179622070311,
+        "delta": 0,
+        "requiredSpins": 36162063076701,
+        "spinsMargin": 1808103153.83505,
+        "reason": "20,000 spins so far; need ≈36,162,063,076,701 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 1.6502,
+      "observedRtp": 1.6502,
+      "perSpinVariance": 545.0406848860001,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "cluster-hexagonal",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 3.910513988011042,
+        "delta": 0,
+        "requiredSpins": 3058423930086005,
+        "spinsMargin": 152921196504.30026,
+        "reason": "20,000 spins so far; need ≈3,058,423,930,086,005 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 33.171495,
+      "observedRtp": 33.171495,
+      "perSpinVariance": 46097.07886384028,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "complex-variable-rows",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 461813.10554905306,
+        "delta": 0,
+        "requiredSpins": 4.265426889137215e+25,
+        "spinsMargin": 2.1327134445686075e+21,
+        "reason": "20,000 spins so far; need ≈42,654,268,891,372,150,000,000,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 533331.14713,
+      "observedRtp": 533331.14713,
+      "perSpinVariance": 642892300711805,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "expanding-wilds",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 2794.8683651387373,
+        "delta": 0,
+        "requiredSpins": 1.5622578356906557e+21,
+        "spinsMargin": 78112891784532780,
+        "reason": "20,000 spins so far; need ≈1,562,257,835,690,655,700,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 11602.93263,
+      "observedRtp": 11602.93263,
+      "perSpinVariance": 23546612341.42889,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "fs-expanding-wilds",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1.3579933726655773,
+        "delta": 0,
+        "requiredSpins": 368829200040726,
+        "spinsMargin": 18441460002.0363,
+        "reason": "20,000 spins so far; need ≈368,829,200,040,726 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 3.294005,
+      "observedRtp": 3.294005,
+      "perSpinVariance": 5559.055614990026,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "fs-multiplier-ladder",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 8.430914126372627,
+        "delta": 0,
+        "requiredSpins": 14216062601253908,
+        "spinsMargin": 710803130062.6954,
+        "reason": "20,000 spins so far; need ≈14,216,062,601,253,908 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 7.70997,
+      "observedRtp": 7.70997,
+      "perSpinVariance": 214266.88184618796,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "fs-retrigger",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1.5108134536568287,
+        "delta": 0,
+        "requiredSpins": 456511458350095,
+        "spinsMargin": 22825572917.50475,
+        "reason": "20,000 spins so far; need ≈456,511,458,350,095 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 3.540555,
+      "observedRtp": 3.540555,
+      "perSpinVariance": 6880.617330645625,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "fs-sticky-wilds",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1.5237691241595688,
+        "delta": 0,
+        "requiredSpins": 464374468748404,
+        "spinsMargin": 23218723437.4202,
+        "reason": "20,000 spins so far; need ≈464,374,468,748,404 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 2.28052,
+      "observedRtp": 2.28052,
+      "perSpinVariance": 6999.129943260401,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "hnw-classic",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.7380606692239441,
+        "delta": 0,
+        "requiredSpins": 108946710291060,
+        "spinsMargin": 5447335514.553,
+        "reason": "20,000 spins so far; need ≈108,946,710,291,060 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 1.584665,
+      "observedRtp": 1.584665,
+      "perSpinVariance": 1642.063105392225,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "hnw-full-grid",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 2.052678050535111,
+        "delta": 0,
+        "requiredSpins": 842697435829725,
+        "spinsMargin": 42134871791.48625,
+        "reason": "20,000 spins so far; need ≈842,697,435,829,725 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 3.27857,
+      "observedRtp": 3.27857,
+      "perSpinVariance": 12701.2772087179,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "hnw-grand-jackpot",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 56.869182050303124,
+        "delta": 0,
+        "requiredSpins": 646820773414103700,
+        "spinsMargin": 32341038670705.184,
+        "reason": "20,000 spins so far; need ≈646,820,773,414,103,700 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 189.519695,
+      "observedRtp": 189.519695,
+      "perSpinVariance": 9748991.272770237,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "multiplier-wilds",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.8429585151335907,
+        "delta": 0,
+        "requiredSpins": 142115811647246,
+        "spinsMargin": 7105790582.3623,
+        "reason": "20,000 spins so far; need ≈142,115,811,647,246 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 1.59816,
+      "observedRtp": 1.59816,
+      "perSpinVariance": 2141.9933688255996,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "mystery-symbol",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 4.626472491772403,
+        "delta": 0,
+        "requiredSpins": 4280849543425350,
+        "spinsMargin": 214042477171.2675,
+        "reason": "20,000 spins so far; need ≈4,280,849,543,425,350 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 5.28542,
+      "observedRtp": 5.28542,
+      "perSpinVariance": 64521.6829054708,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "pay-anywhere",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 59.892152257881214,
+        "delta": 0,
+        "requiredSpins": 717413980416245200,
+        "spinsMargin": 35870699020812.266,
+        "reason": "20,000 spins so far; need ≈717,413,980,416,245,200 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 246.289805,
+      "observedRtp": 246.289805,
+      "perSpinVariance": 10812983.938540937,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "pick-bonus",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 0.8212053548777102,
+        "delta": 0,
+        "requiredSpins": 134875646975966,
+        "spinsMargin": 6743782348.7983,
+        "reason": "20,000 spins so far; need ≈134,875,646,975,966 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 3.1966,
+      "observedRtp": 3.1966,
+      "perSpinVariance": 2032.8683915599997,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "respin-feature",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 1.5959977793902362,
+        "delta": 0,
+        "requiredSpins": 509441782363714,
+        "spinsMargin": 25472089118.1857,
+        "reason": "20,000 spins so far; need ≈509,441,782,363,714 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 2.739274,
+      "observedRtp": 2.739274,
+      "perSpinVariance": 7678.392059107076,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "symbol-upgrade",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 200.32582728172397,
+        "delta": 0,
+        "requiredSpins": 8026087415221419000,
+        "spinsMargin": 401304370761070.94,
+        "reason": "20,000 spins so far; need ≈8,026,087,415,221,419,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 313.52886,
+      "observedRtp": 313.52886,
+      "perSpinVariance": 120970536.78792457,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "variable-rows-7reels",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 14500.050280598234,
+        "delta": 0,
+        "requiredSpins": 4.205029162797538e+22,
+        "spinsMargin": 2102514581398769200,
+        "reason": "20,000 spins so far; need ≈42,050,291,627,975,380,000,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 21545.99301,
+      "observedRtp": 21545.99301,
+      "perSpinVariance": 633789054013.7632,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "walking-wilds",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 2.5265134987380478,
+        "delta": 0,
+        "requiredSpins": 1276654091861115,
+        "spinsMargin": 63832704593.05575,
+        "reason": "20,000 spins so far; need ≈1,276,654,091,861,115 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 4.541775,
+      "observedRtp": 4.541775,
+      "perSpinVariance": 19241.944772748127,
+      "varianceSource": "fallback_from_maxWinX"
+    },
+    {
+      "fixtureId": "wheel-bonus",
+      "verdict": {
+        "status": "too_few_spins",
+        "ciHalfWidth": 21.05364149553148,
+        "delta": 0,
+        "requiredSpins": 88651164044473000,
+        "spinsMargin": 4432558202223.649,
+        "reason": "20,000 spins so far; need ≈88,651,164,044,473,000 for ±0.00001 at 99.00%"
+      },
+      "referenceRtp": 59.28958,
+      "observedRtp": 59.28958,
+      "perSpinVariance": 1336165.2255364081,
+      "varianceSource": "fallback_from_maxWinX"
+    }
+  ]
+}

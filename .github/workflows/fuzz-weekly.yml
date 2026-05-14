@@ -1,0 +1,113 @@
+# Faza 10.2 — 24h fuzz run, weekly CI gate.
+#
+# Runs `cargo +nightly fuzz run` on every fuzz target for 8 hours each
+# (24 hours total at one-target-per-job concurrency, fits inside the
+# 24-hour GitHub Actions hard limit).  Each target runs in its own
+# matrix job — failure in one doesn't block the others.
+#
+# Artifacts uploaded:
+#   - `corpus/<target>/` for any newly-discovered inputs
+#   - `crashes/<target>/` if any crash files are produced (these MUST
+#     be triaged within 48h — they're real bugs)
+#   - `coverage/<target>.txt` from `cargo fuzz coverage` post-run
+#
+# Trigger:
+#   - Sunday 02:00 UTC cron — 24h sweep before Monday standup.
+#   - Manual via `gh workflow run fuzz-weekly.yml`.
+#
+# Acceptance:
+#   - Zero crashes per target.  Any crash artifact = workflow fails.
+#   - Corpus growth tracked but not gated (informational).
+
+name: fuzz-weekly
+
+on:
+  schedule:
+    # Every Sunday at 02:00 UTC — gives Monday morning a fresh report.
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+    inputs:
+      hours_per_target:
+        description: "Hours per fuzz target (default 8 → 24h total over 3 targets)"
+        required: false
+        default: "8"
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    name: fuzz · ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    # 24h hard ceiling — matches GitHub Actions max timeout.
+    timeout-minutes: 1440
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [fuzz_alias, fuzz_eval_config, fuzz_packed_grid]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust nightly + cargo-fuzz
+        run: |
+          rustup install nightly --profile minimal
+          rustup default nightly
+          cargo install cargo-fuzz --locked
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust-sim/fuzz
+
+      - name: Run fuzz target (${{ matrix.target }})
+        env:
+          HOURS: ${{ github.event.inputs.hours_per_target || '8' }}
+        working-directory: rust-sim/fuzz
+        run: |
+          # Convert hours to seconds for cargo-fuzz's `-max_total_time`.
+          SECONDS_LIMIT=$(( ${HOURS} * 3600 ))
+          echo "Running ${{ matrix.target }} for ${HOURS}h (${SECONDS_LIMIT}s)..."
+          set +e
+          cargo +nightly fuzz run "${{ matrix.target }}" -- \
+            -max_total_time=${SECONDS_LIMIT} \
+            -print_final_stats=1 \
+            -timeout=25
+          STATUS=$?
+          set -e
+          # Exit code 77 = sanitizer crash; surface to CI but keep
+          # the rest of the workflow running so artifacts upload.
+          echo "fuzz exit status: ${STATUS}"
+          if [ "${STATUS}" -ne 0 ] && [ -d artifacts/${{ matrix.target }} ]; then
+            echo "::error::fuzz target ${{ matrix.target }} produced crash artifacts"
+          fi
+
+      - name: Show final coverage
+        if: always()
+        working-directory: rust-sim/fuzz
+        run: |
+          mkdir -p coverage
+          cargo +nightly fuzz coverage "${{ matrix.target }}" \
+            --output-file coverage/${{ matrix.target }}.profraw 2>/dev/null || true
+          echo "Corpus size: $(find corpus/${{ matrix.target }} -type f 2>/dev/null | wc -l) files"
+
+      - name: Upload corpus + artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-${{ matrix.target }}-${{ github.run_id }}
+          path: |
+            rust-sim/fuzz/corpus/${{ matrix.target }}/
+            rust-sim/fuzz/artifacts/${{ matrix.target }}/
+            rust-sim/fuzz/coverage/${{ matrix.target }}.profraw
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Fail job on crash artifacts
+        if: always()
+        working-directory: rust-sim/fuzz
+        run: |
+          if [ -d artifacts/${{ matrix.target }} ] && [ "$(ls -A artifacts/${{ matrix.target }} 2>/dev/null)" ]; then
+            echo "::error::crash artifacts present for ${{ matrix.target }} — triage required"
+            exit 1
+          fi
+          echo "no crash artifacts — ${{ matrix.target }} clean"
