@@ -25,6 +25,7 @@ import { Mulberry32 } from './backends/Mulberry32.js';
 import { PCG64 } from './backends/PCG64.js';
 import { Xoshiro256SS } from './backends/Xoshiro256SS.js';
 import { Philox4x32 } from './backends/Philox4x32.js';
+import { ChaCha20 } from './backends/ChaCha20.js';
 import {
   HSMProvider,
   HSMOpenOptions,
@@ -81,6 +82,8 @@ export function createRng(
       return new Xoshiro256SS(seed);
     case 'philox4x32':
       return new Philox4x32(seed);
+    case 'chacha20':
+      return new ChaCha20(seed);
     case 'hsm_pkcs11':
       return createHsmRngSync(seed, cfg);
     default: {

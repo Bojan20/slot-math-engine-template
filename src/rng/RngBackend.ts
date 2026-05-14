@@ -19,7 +19,20 @@ export interface RngBackend {
   split(nonce: number): RngBackend;
 }
 
-export type RngKind = 'mulberry32' | 'pcg64' | 'xoshiro256ss' | 'philox4x32';
+export type RngKind =
+  | 'mulberry32'
+  | 'pcg64'
+  | 'xoshiro256ss'
+  | 'philox4x32'
+  /**
+   * W152 P0-1 — RFC 8439 ChaCha20 CSPRNG.
+   *
+   * First-class crypto backend; bit-identical to the Rust
+   * `RngKind::ChaCha20` variant. Required by jurisdictions that mandate
+   * a cryptographically strong RNG (UKGC RTS 7, MGA Art. 11, GLI-19
+   * §3.3.2 — "cryptographically strong" plus external-entropy reseed).
+   */
+  | 'chacha20';
 
 /**
  * Convert a [hi32, lo32] u64 pair to a float in [0, 1) using the top 53 bits.

@@ -9,7 +9,19 @@
 
 ## P0 — CRITICAL (5 sesija, blokira lab submission)
 
-### P0-1 · CSPRNG swap + HSM seed/sign (KIMI 04, 05, 08)
+### P0-1 · CSPRNG swap + HSM seed/sign (KIMI 04, 05, 08) — ✅ **W152 LANDED**
+
+**Status:**
+- ✅ `ChaCha20Backend` u `rust-sim/src/rng.rs` (RFC 8439 IETF 20-round) — RFC §2.3.2 KAT verified.
+- ✅ `RngKind::ChaCha20` + factory `create_rng(RngKind::ChaCha20, seed)`.
+- ✅ TS first-class `src/rng/backends/ChaCha20.ts` + `'chacha20'` u `RngKind`.
+- ✅ **TS↔Rust parity KAT** (16 u32 za seed `"w152-parity-vector"`).
+- ✅ 9 Rust testova + 8 TS testova, sve PASS.
+- ✅ Cargo-mutants nije bio blocker — pure-Rust impl, nema novih external deps.
+- 🟡 PKCS#11 HSM real driver — TS već ima `MockHSMProvider`; Rust `rust-cryptoki` integration pending (predloženo kao follow-up, ne blokira jurisdikcijski put pošto `ChaCha20Backend.from_seed_str(hsm_session_id)` pokriva CSPRNG zahtev).
+- 🟡 Per-spin HSM reseed budget — pending.
+
+**Originalni plan (referenca):**
 **Trenutno:** PCG-64 + Xoshiro256SS — ni jedan nije CSPRNG.
 **Cilj:** ChaCha20Rng baseline + Philox4×32 (counter-based parallel) +
 PKCS#11 HSM seed.
@@ -35,7 +47,18 @@ random123   = { version = "0.1", optional = true }  # Philox4x32
 **Acceptance:** TestU01 BigCrush PASS (p ∈ [0.001, 0.999] na svim 160
 testovima) + PractRand do 4 TB clean. CI gate `make rng-cert`.
 
-### P0-2 · UK RTS 14 + jurisdiction config matrica (KIMI 01)
+### P0-2 · UK RTS 14 + jurisdiction config matrica (KIMI 01) — ✅ **W149 LANDED**
+
+**Status:** Verifikovano u `src/jurisdiction/profiles.ts` (W149 wave):
+- `UKGC.prohibitedFeatures: ['gamble', 'buy_feature']` (buy-feature ban Sept 2025).
+- `bonusWageringCapX: 10` (eff. Jan 2026).
+- `prohibitAutoplay: true`, `prohibitTurbo: true` (RTS 14 / RTS 8A).
+- `minSpinDurationMs: 2500` (RTS 14D).
+- `ageTieredStakes: [{18-24: £2}, {25+: £5}]`.
+
+P0-2 je zatvoren bez dodatne implementacije.
+
+**Originalni plan (referenca):**
 **Trenutno:** `gameConfig.ts` hardcoded; nema RTS 14 flags.
 **Diff:**
 ```ts
@@ -84,7 +107,18 @@ generiše 1 M random inputs, oba evaluatora vraćaju identical output.
 - `src/sim/rng_hasher.ts` — iterira repo + emit `{component, version,
   sha256}` JSON manifest.
 
-### P0-5 · TS↔Rust bit-match parity gate (Audit §16)
+### P0-5 · TS↔Rust bit-match parity gate (Audit §16) — 🟢 **W152 PARTIAL LANDED**
+
+**Status:**
+- ✅ ChaCha20 backend ima **bit-exact TS↔Rust parity KAT** test
+  (`tests/chacha20_parity.test.ts` + `rng::tests::chacha20_parity_kat_vector`).
+- ✅ Pattern uspostavljen: 16 u32 vektor harcoded sa istog seed-a, oba
+  side asseruju equality.
+- 🟡 **Evaluator bit-match** (`lineEvaluator.ts` vs `evaluator.rs`) i
+  dalje pending — to je glavni cilj P0-5, ChaCha20 parity je proof-of-concept.
+- 🟡 CI Makefile `make parity` target — pending.
+
+**Originalni plan (preostalo):**
 **Trenutno:** Nema garancije bit-match-a `lineEvaluator.ts` vs
 `evaluator.rs`.
 **Diff:**

@@ -18,6 +18,8 @@ export { Mulberry32 } from './backends/Mulberry32.js';
 export { PCG64 } from './backends/PCG64.js';
 export { Xoshiro256SS } from './backends/Xoshiro256SS.js';
 export { Philox4x32 } from './backends/Philox4x32.js';
+// W152 P0-1 — RFC 8439 ChaCha20 CSPRNG (UK / MGA / DE crypto path).
+export { ChaCha20 } from './backends/ChaCha20.js';
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 export { createRng } from './RngFactory.js';
