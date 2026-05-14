@@ -15,12 +15,15 @@
 //!     as user-readable config loading failures.
 
 use crate::config::{
-    CascadeConfig, CascadeReplacement as RtCascadeReplacement, FreeSpinsConfig, GameConfig,
-    HoldAndWinConfig, MysteryConfig, OrbValue, PayEntry, ReelWeight, RespinConfig, SymbolDef,
+    AnteBetConfig, BuyFeatureConfig, BuyFeatureOffer, CascadeConfig,
+    CascadeReplacement as RtCascadeReplacement, FreeSpinsConfig, GambleConfig,
+    GambleTieResolution as RtGambleTieResolution, GambleType as RtGambleType, GameConfig,
+    HoldAndWinConfig, MysteryConfig, OrbValue, PayEntry, PickConfig, PrizeSlot, ReelWeight,
+    RespinConfig, SymbolDef, SymbolUpgradeConfig, WheelConfig,
 };
 use crate::ir::{
-    CascadeReplacement as IrCascadeReplacement, Evaluation, Feature, ReelSet, SlotGameIR,
-    SymbolKind, Topology, TriggerBy,
+    BuyOffer, CascadeReplacement as IrCascadeReplacement, Evaluation, Feature, GambleType,
+    PrizeEntry, ReelSet, SlotGameIR, SymbolKind, TieResolution, Topology, TriggerBy,
 };
 use std::collections::{BTreeMap, HashMap};
 
@@ -440,15 +443,50 @@ fn convert_features(ir: &SlotGameIR, cfg: &mut GameConfig) {
                 cfg.mystery = Some(convert_mystery(symbol_id, reveal_distribution));
             }
 
-            // Still pending: Pick / Wheel / BuyFeature bonus rounds.
-            Feature::Pick { .. } | Feature::Wheel { .. } | Feature::BuyFeature { .. } => {}
+            // W152 P0-3 round 2 — Pick bonus (weighted pool draw).
+            Feature::Pick { prize_pool } => {
+                cfg.pick = Some(convert_pick(prize_pool));
+            }
 
-            // Still pending: AnteBet / Gamble bet modifiers (jurisdiction-
-            // gated; see W152 §3.10 buy-feature bans + ante guidance).
-            Feature::AnteBet { .. } | Feature::Gamble { .. } => {}
+            // W152 P0-3 round 2 — Wheel bonus (single weighted spin).
+            Feature::Wheel { segments } => {
+                cfg.wheel = Some(convert_wheel(segments));
+            }
 
-            // Still pending: SymbolUpgrade transform config.
-            Feature::SymbolUpgrade { .. } => {}
+            // W152 P0-3 round 2 — BuyFeature bonus-buy menu.
+            // NOTE: jurisdiction enforcement (UKGC SI 2025/215, NL KSA May 2024,
+            // DE GGL, DK SP) happens in `jurisdiction::validate`, not here —
+            // the IR carries the offers verbatim so cross-market replay works.
+            Feature::BuyFeature { offers } => {
+                cfg.buy_feature = Some(convert_buy_feature(offers));
+            }
+
+            // W152 P0-3 round 2 — AnteBet stake modifier.
+            Feature::AnteBet {
+                extra_multiplier,
+                enabled_by_default,
+            } => {
+                cfg.ante_bet = Some(convert_ante_bet(*extra_multiplier, *enabled_by_default));
+            }
+
+            // W152 P0-3 round 2 — Gamble post-win double-up
+            // (jurisdiction-gated, see UKGC RTS 14D / KIMI 01 §3.9).
+            Feature::Gamble {
+                ty,
+                max_steps,
+                tie_resolution,
+            } => {
+                cfg.gamble = Some(convert_gamble(*ty, *max_steps, *tie_resolution));
+            }
+
+            // W152 P0-3 round 2 — SymbolUpgrade transform.
+            Feature::SymbolUpgrade {
+                from,
+                to,
+                probability,
+            } => {
+                cfg.symbol_upgrade = Some(convert_symbol_upgrade(from, to, *probability));
+            }
         }
     }
 }
@@ -610,6 +648,89 @@ fn convert_mystery(symbol_id: &str, reveal_distribution: &BTreeMap<String, f64>)
     }
 }
 
+// ─── W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+// SymbolUpgrade converters ─────────────────────────────────────────────────
+
+/// Map an IR `PrizeEntry` → runtime `PrizeSlot`.
+///
+/// Identical shape — kept as a separate runtime type so the engine can evolve
+/// its internal representation (e.g. add caching fields) without touching IR.
+fn prize_entry_to_slot(entry: &PrizeEntry) -> PrizeSlot {
+    PrizeSlot {
+        id: entry.id.clone(),
+        weight: entry.weight,
+        pay_multiplier: entry.pay_multiplier,
+    }
+}
+
+/// Convert `Feature::Pick` into runtime `PickConfig`.
+fn convert_pick(prize_pool: &[PrizeEntry]) -> PickConfig {
+    PickConfig {
+        prize_pool: prize_pool.iter().map(prize_entry_to_slot).collect(),
+    }
+}
+
+/// Convert `Feature::Wheel` into runtime `WheelConfig`.
+fn convert_wheel(segments: &[PrizeEntry]) -> WheelConfig {
+    WheelConfig {
+        segments: segments.iter().map(prize_entry_to_slot).collect(),
+    }
+}
+
+/// Convert `Feature::BuyFeature` into runtime `BuyFeatureConfig`.
+///
+/// The offers are carried through verbatim. Downstream jurisdiction
+/// validation (UKGC SI 2025/215, NL KSA, DE GGL, DK SP) decides whether
+/// they can actually be exposed at runtime.
+fn convert_buy_feature(offers: &[BuyOffer]) -> BuyFeatureConfig {
+    BuyFeatureConfig {
+        offers: offers
+            .iter()
+            .map(|o| BuyFeatureOffer {
+                id: o.id.clone(),
+                cost_x: o.cost_x,
+                guaranteed: o.guaranteed.clone(),
+            })
+            .collect(),
+    }
+}
+
+/// Convert `Feature::AnteBet` into runtime `AnteBetConfig`.
+fn convert_ante_bet(extra_multiplier: f64, enabled_by_default: bool) -> AnteBetConfig {
+    AnteBetConfig {
+        extra_multiplier,
+        enabled_by_default,
+    }
+}
+
+/// Convert `Feature::Gamble` into runtime `GambleConfig`.
+///
+/// Both enum variants (kind, tie-resolution) are mapped 1:1.
+fn convert_gamble(ty: GambleType, max_steps: u32, tie: TieResolution) -> GambleConfig {
+    let ty_rt = match ty {
+        GambleType::RedBlack => RtGambleType::RedBlack,
+        GambleType::Suit => RtGambleType::Suit,
+    };
+    let tie_rt = match tie {
+        TieResolution::House => RtGambleTieResolution::House,
+        TieResolution::Push => RtGambleTieResolution::Push,
+    };
+    GambleConfig {
+        ty: ty_rt,
+        max_steps,
+        tie_resolution: tie_rt,
+    }
+}
+
+/// Convert `Feature::SymbolUpgrade` into runtime `SymbolUpgradeConfig`.
+fn convert_symbol_upgrade(from: &str, to: &str, probability: f64) -> SymbolUpgradeConfig {
+    SymbolUpgradeConfig {
+        from: from.to_owned(),
+        to: to.to_owned(),
+        probability,
+    }
+}
+
 // ─── Unit tests (W152 P0-3) ────────────────────────────────────────────────
 
 #[cfg(test)]
@@ -676,5 +797,136 @@ mod cascade_respin_mystery_tests {
         let json = serde_json::to_string(&out.reveal_distribution).unwrap();
         // Lexicographic key order: A, M, Z.
         assert_eq!(json, r#"{"A":2.0,"M":3.0,"Z":1.0}"#);
+    }
+
+    // ── W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+    // SymbolUpgrade ────────────────────────────────────────────────────────
+
+    fn sample_prize_pool() -> Vec<PrizeEntry> {
+        vec![
+            PrizeEntry {
+                id: "MINI".to_owned(),
+                weight: 50.0,
+                pay_multiplier: 10.0,
+            },
+            PrizeEntry {
+                id: "MINOR".to_owned(),
+                weight: 30.0,
+                pay_multiplier: 50.0,
+            },
+            PrizeEntry {
+                id: "MAJOR".to_owned(),
+                weight: 15.0,
+                pay_multiplier: 250.0,
+            },
+            PrizeEntry {
+                id: "GRAND".to_owned(),
+                weight: 5.0,
+                pay_multiplier: 1000.0,
+            },
+        ]
+    }
+
+    #[test]
+    fn convert_pick_preserves_pool_order_and_values() {
+        let pool = sample_prize_pool();
+        let out = convert_pick(&pool);
+        assert_eq!(out.prize_pool.len(), 4);
+        assert_eq!(out.prize_pool[0].id, "MINI");
+        assert!((out.prize_pool[0].weight - 50.0).abs() < f64::EPSILON);
+        assert!((out.prize_pool[3].pay_multiplier - 1000.0).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn convert_pick_handles_empty_pool() {
+        let out = convert_pick(&[]);
+        assert!(out.prize_pool.is_empty());
+    }
+
+    #[test]
+    fn convert_wheel_preserves_segments() {
+        let pool = sample_prize_pool();
+        let out = convert_wheel(&pool);
+        assert_eq!(out.segments.len(), 4);
+        // Weights sum check (analytical RTP relies on this; off-by-one here
+        // would silently corrupt EV calculations).
+        let total: f64 = out.segments.iter().map(|s| s.weight).sum();
+        assert!((total - 100.0).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn convert_buy_feature_roundtrips_offers() {
+        let offers = vec![
+            BuyOffer {
+                id: "FS".to_owned(),
+                cost_x: 100.0,
+                guaranteed: "free_spins".to_owned(),
+            },
+            BuyOffer {
+                id: "SUPER_FS".to_owned(),
+                cost_x: 250.0,
+                guaranteed: "super_free_spins".to_owned(),
+            },
+        ];
+        let out = convert_buy_feature(&offers);
+        assert_eq!(out.offers.len(), 2);
+        assert_eq!(out.offers[1].id, "SUPER_FS");
+        assert!((out.offers[1].cost_x - 250.0).abs() < f64::EPSILON);
+        assert_eq!(out.offers[1].guaranteed, "super_free_spins");
+    }
+
+    #[test]
+    fn convert_ante_bet_passes_through() {
+        let out = convert_ante_bet(1.25, true);
+        assert!((out.extra_multiplier - 1.25).abs() < f64::EPSILON);
+        assert!(out.enabled_by_default);
+
+        let off = convert_ante_bet(1.5, false);
+        assert!((off.extra_multiplier - 1.5).abs() < f64::EPSILON);
+        assert!(!off.enabled_by_default);
+    }
+
+    #[test]
+    fn convert_gamble_maps_all_variants() {
+        let cases = [
+            (
+                GambleType::RedBlack,
+                TieResolution::House,
+                RtGambleType::RedBlack,
+                RtGambleTieResolution::House,
+            ),
+            (
+                GambleType::Suit,
+                TieResolution::Push,
+                RtGambleType::Suit,
+                RtGambleTieResolution::Push,
+            ),
+        ];
+        for (ir_ty, ir_tie, rt_ty, rt_tie) in cases {
+            let out = convert_gamble(ir_ty, 5, ir_tie);
+            assert_eq!(out.ty, rt_ty);
+            assert_eq!(out.tie_resolution, rt_tie);
+            assert_eq!(out.max_steps, 5);
+        }
+    }
+
+    #[test]
+    fn convert_symbol_upgrade_passes_through() {
+        let out = convert_symbol_upgrade("S_LP1", "S_HP3", 0.05);
+        assert_eq!(out.from, "S_LP1");
+        assert_eq!(out.to, "S_HP3");
+        assert!((out.probability - 0.05).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn convert_gamble_serializes_snake_case_kind_and_tie() {
+        // Round-trip through serde to confirm wire format matches IR.
+        let g = convert_gamble(GambleType::RedBlack, 3, TieResolution::Push);
+        let json = serde_json::to_string(&g).unwrap();
+        // Expected wire shape (RtGambleConfig uses #[serde(rename = "type")]
+        // and snake_case enums to mirror the IR wire format).
+        assert!(json.contains(r#""type":"red_black""#));
+        assert!(json.contains(r#""tie_resolution":"push""#));
+        assert!(json.contains(r#""max_steps":3"#));
     }
 }

@@ -122,6 +122,64 @@ export interface TSMysteryConfig {
   revealDistribution: Record<string, number>;
 }
 
+// ─── W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+// SymbolUpgrade configs ──────────────────────────────────────────────────
+//
+// Mirror of `rust-sim/src/config.rs::{PrizeSlot, PickConfig, WheelConfig,
+// BuyFeatureOffer, BuyFeatureConfig, AnteBetConfig, GambleType,
+// GambleTieResolution, GambleConfig, SymbolUpgradeConfig}`. Wire format is
+// identical (snake_case on the wire via JSON); the TS adapter exposes
+// camelCase fields idiomatically.
+
+export interface TSPrizeSlot {
+  id: string;
+  weight: number;
+  payMultiplier: number;
+}
+
+export interface TSPickConfig {
+  prizePool: TSPrizeSlot[];
+}
+
+export interface TSWheelConfig {
+  segments: TSPrizeSlot[];
+}
+
+export interface TSBuyFeatureOffer {
+  id: string;
+  costX: number;
+  guaranteed: string;
+}
+
+/**
+ * Bonus-buy menu config. Jurisdiction-gated downstream (UKGC SI 2025/215,
+ * NL KSA May 2024, DE GGL, DK SP all prohibit bonus-buys). The adapter
+ * carries the offers verbatim; gating happens in `jurisdiction.validate`.
+ */
+export interface TSBuyFeatureConfig {
+  offers: TSBuyFeatureOffer[];
+}
+
+export interface TSAnteBetConfig {
+  extraMultiplier: number;
+  enabledByDefault: boolean;
+}
+
+export type TSGambleType = 'red_black' | 'suit';
+export type TSGambleTieResolution = 'house' | 'push';
+
+export interface TSGambleConfig {
+  type: TSGambleType;
+  maxSteps: number;
+  tieResolution: TSGambleTieResolution;
+}
+
+export interface TSSymbolUpgradeConfig {
+  from: string;
+  to: string;
+  probability: number;
+}
+
 export interface TSGameConfig {
   name: string;
   version: string;
@@ -149,6 +207,14 @@ export interface TSGameConfig {
   cascade?: TSCascadeConfig;
   respin?: TSRespinConfig;
   mystery?: TSMysteryConfig;
+  // W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+  // SymbolUpgrade. Same Optional pattern.
+  pick?: TSPickConfig;
+  wheel?: TSWheelConfig;
+  buyFeature?: TSBuyFeatureConfig;
+  anteBet?: TSAnteBetConfig;
+  gamble?: TSGambleConfig;
+  symbolUpgrade?: TSSymbolUpgradeConfig;
 }
 
 // ─── Error class ─────────────────────────────────────────────────────────────
@@ -184,7 +250,19 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
   const { baseWeights, fsWeights } = convertReels(ir, symbols);
   const paylines = convertPaylines(ir, numReels, numRows);
   const paytable = convertPaytable(ir);
-  const { freeSpins, holdAndWin, cascade, respin, mystery } = convertFeatures(ir);
+  const {
+    freeSpins,
+    holdAndWin,
+    cascade,
+    respin,
+    mystery,
+    pick,
+    wheel,
+    buyFeature,
+    anteBet,
+    gamble,
+    symbolUpgrade,
+  } = convertFeatures(ir);
 
   return {
     name: ir.meta.name,
@@ -206,6 +284,12 @@ export function irToGameConfig(ir: SlotGameIR): TSGameConfig {
     ...(cascade !== undefined ? { cascade } : {}),
     ...(respin !== undefined ? { respin } : {}),
     ...(mystery !== undefined ? { mystery } : {}),
+    ...(pick !== undefined ? { pick } : {}),
+    ...(wheel !== undefined ? { wheel } : {}),
+    ...(buyFeature !== undefined ? { buyFeature } : {}),
+    ...(anteBet !== undefined ? { anteBet } : {}),
+    ...(gamble !== undefined ? { gamble } : {}),
+    ...(symbolUpgrade !== undefined ? { symbolUpgrade } : {}),
   };
 }
 
@@ -410,12 +494,24 @@ function convertFeatures(ir: SlotGameIR): {
   cascade?: TSCascadeConfig;
   respin?: TSRespinConfig;
   mystery?: TSMysteryConfig;
+  pick?: TSPickConfig;
+  wheel?: TSWheelConfig;
+  buyFeature?: TSBuyFeatureConfig;
+  anteBet?: TSAnteBetConfig;
+  gamble?: TSGambleConfig;
+  symbolUpgrade?: TSSymbolUpgradeConfig;
 } {
   let freeSpins = defaultFreeSpins();
   let holdAndWin = defaultHoldAndWin();
   let cascade: TSCascadeConfig | undefined;
   let respin: TSRespinConfig | undefined;
   let mystery: TSMysteryConfig | undefined;
+  let pick: TSPickConfig | undefined;
+  let wheel: TSWheelConfig | undefined;
+  let buyFeature: TSBuyFeatureConfig | undefined;
+  let anteBet: TSAnteBetConfig | undefined;
+  let gamble: TSGambleConfig | undefined;
+  let symbolUpgrade: TSSymbolUpgradeConfig | undefined;
 
   for (const feat of ir.features) {
     switch (feat.kind) {
@@ -442,14 +538,54 @@ function convertFeatures(ir: SlotGameIR): {
         mystery = convertMystery(feat);
         break;
 
-      // Still pending: pick, wheel, buy_feature, ante_bet, gamble,
-      // symbol_upgrade — each needs its own runtime config struct.
+      // W152 P0-3 round 2 — Pick bonus.
+      case 'pick':
+        pick = convertPick(feat);
+        break;
+
+      // W152 P0-3 round 2 — Wheel bonus.
+      case 'wheel':
+        wheel = convertWheel(feat);
+        break;
+
+      // W152 P0-3 round 2 — BuyFeature (jurisdiction-gated downstream).
+      case 'buy_feature':
+        buyFeature = convertBuyFeature(feat);
+        break;
+
+      // W152 P0-3 round 2 — AnteBet stake modifier.
+      case 'ante_bet':
+        anteBet = convertAnteBet(feat);
+        break;
+
+      // W152 P0-3 round 2 — Gamble post-win double-up (jurisdiction-gated).
+      case 'gamble':
+        gamble = convertGamble(feat);
+        break;
+
+      // W152 P0-3 round 2 — SymbolUpgrade transform.
+      case 'symbol_upgrade':
+        symbolUpgrade = convertSymbolUpgrade(feat);
+        break;
+
       default:
         break;
     }
   }
 
-  return { freeSpins, holdAndWin, cascade, respin, mystery };
+  return {
+    freeSpins,
+    holdAndWin,
+    cascade,
+    respin,
+    mystery,
+    pick,
+    wheel,
+    buyFeature,
+    anteBet,
+    gamble,
+    symbolUpgrade,
+  };
 }
 
 // W152 P0-3 — Cascade
@@ -489,6 +625,75 @@ function convertMystery(
   return {
     symbolId: feat.symbol_id,
     revealDistribution: distribution,
+  };
+}
+
+// ─── W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+// SymbolUpgrade converters ──────────────────────────────────────────────
+
+/** IR `{ id, weight, pay_multiplier }` → TS `{ id, weight, payMultiplier }`. */
+function prizeEntryToSlot(entry: {
+  id: string;
+  weight: number;
+  pay_multiplier: number;
+}): TSPrizeSlot {
+  return {
+    id: entry.id,
+    weight: entry.weight,
+    payMultiplier: entry.pay_multiplier,
+  };
+}
+
+function convertPick(feat: Extract<Feature, { kind: 'pick' }>): TSPickConfig {
+  return {
+    prizePool: feat.prize_pool.map(prizeEntryToSlot),
+  };
+}
+
+function convertWheel(feat: Extract<Feature, { kind: 'wheel' }>): TSWheelConfig {
+  return {
+    segments: feat.segments.map(prizeEntryToSlot),
+  };
+}
+
+function convertBuyFeature(
+  feat: Extract<Feature, { kind: 'buy_feature' }>,
+): TSBuyFeatureConfig {
+  return {
+    offers: feat.offers.map((o) => ({
+      id: o.id,
+      costX: o.cost_x,
+      guaranteed: o.guaranteed,
+    })),
+  };
+}
+
+function convertAnteBet(
+  feat: Extract<Feature, { kind: 'ante_bet' }>,
+): TSAnteBetConfig {
+  return {
+    extraMultiplier: feat.extra_multiplier,
+    enabledByDefault: feat.enabled_by_default,
+  };
+}
+
+function convertGamble(
+  feat: Extract<Feature, { kind: 'gamble' }>,
+): TSGambleConfig {
+  return {
+    type: feat.type,
+    maxSteps: feat.max_steps,
+    tieResolution: feat.tie_resolution,
+  };
+}
+
+function convertSymbolUpgrade(
+  feat: Extract<Feature, { kind: 'symbol_upgrade' }>,
+): TSSymbolUpgradeConfig {
+  return {
+    from: feat.from,
+    to: feat.to,
+    probability: feat.probability,
   };
 }
 

@@ -135,6 +135,14 @@ fn variable_ways_config(reels: u8, max_rows: u8) -> GameConfig {
         cascade: None,
         respin: None,
         mystery: None,
+        // W152 P0-3 round 2 — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+        // SymbolUpgrade defaults.
+        pick: None,
+        wheel: None,
+        buy_feature: None,
+        ante_bet: None,
+        gamble: None,
+        symbol_upgrade: None,
         max_win_cap: 5000.0,
         feature_loop_cap: 100,
     }

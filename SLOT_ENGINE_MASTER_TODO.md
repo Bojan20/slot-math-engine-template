@@ -15,9 +15,9 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja `89a14c0`, izvora i fixture-a — 2026-05-14)
+## STATE SNAPSHOT (overeno protiv git history-ja `7c62305`, izvora i fixture-a — 2026-05-14, W152 P0-3 round 2 landed)
 
-**Ukupno: ~70% kompletno na kodu, ~35% kompletno na "acceptance proof"-u.**
+**Ukupno: ~73% kompletno na kodu, ~38% kompletno na "acceptance proof"-u.** *(W152 P0-3 round 2 dodaje 6 IR-native mehanika: Pick / Wheel / BuyFeature / AnteBet / Gamble / SymbolUpgrade — sve sa TS↔Rust parity testovima.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
@@ -84,6 +84,10 @@ Mapa "commit → faza":
 | `4950337` | Wave 1 + B3 docs reconcile (commit→phase mapping refresh) |
 | `03eef5b`→`d9d2bd8` | P0 #10 hardening (HSMAuditLog + HSMHealthMonitor + HSMAuditedProvider + sanitize, 25 tests) + P0 #4 stability harness (`par-distribution-stress.mjs`, 50 seeds × 20k spins, CoV ≤ 2.5%) |
 | `a740303`→`89a14c0` | **W149** — UKGC+MGA+ADM compliance overhaul (jurisdiction profile data refresh + RTS 14D gates + 10× wagering + 18 new tests) |
+| `2f5cec2` | **W152** ULTIMATE research bundle — 16 KIMI deep dives + synthesis + action plan (18 files, +974 LOC, 31 concrete gaps identified) |
+| `2b06dec` | **W152 P0-1 + P0-5** — RFC 8439 ChaCha20 CSPRNG + bit-exact TS↔Rust KAT parity (CSPRNG-class RNG unlocks UK/MGA/DE cert path) |
+| `7c62305` | **W152 P0-3 round 1** — IR adapter unstub: cascade / respin / mystery_symbol with shared JSON fixture, 12 tests (6 Rust + 6 TS) |
+| (this commit) | **W152 P0-3 round 2** — IR adapter unstub: pick / wheel / buy_feature / ante_bet / gamble / symbol_upgrade (closes all 8 stubs) — 18 tests (9 Rust + 9 TS) |
 
 ---
 
@@ -823,6 +827,11 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 9. ✅ **6 fali behavior-a** (faza 3.2): Wandering, WildReel, Collect, Upgrade, Split, Mega, Prize — DONE: 7 plugin behavior-a + 47 tests u `tests/faza32_extra_behaviors.test.ts`, registry `behaviorClass` overrides za sve, barrel export ažuriran. "Plugin layer" claim sad kompletan.
 10. ⚠️ **HSM bridge** (faza 7.5) — PARTIAL: signing side ✅ (`src/hsm/` — AWS KMS, PKCS#11 process-bridge, Mock adapters + Signer + audit log; 31 tests). RNG side ⚠️ — `src/crypto/hsm.ts` interface + `MockHSMProvider` landed (ChaCha20-backed, deterministic; `HSMBackedRngBackend` implements `RngBackend` with 4 KiB refill buffer; `RngFactory` accepts `kind='hsm_pkcs11'` with fallback warn + `HSM_FALLBACK_FORBIDDEN` hard-throw gate). 20 tests in `tests/hsm_bridge.test.ts` cover lifecycle, healthCheck pass/fail, fallback paths, RngBackend conformance (same seed → same nextU64), split() determinism, sync underrun on async-only providers, refill on underrun. PKCS#11 driver (real entropy device) still TBD — interface stable, dlopen()/N-API addon is the next pass.
 11. ✅ **W149 — UKGC + MGA + ADM compliance overhaul** (faza 11.8 + 11.9, regulatorni blokator za EU prodaju) — DONE (`a740303`→`89a14c0`, merge `89a14c0` na `main`, pushed `origin/main`, 12 files, +2294/−121). **Profil podaci refresh:** 3 jurisdikcije (UKGC, MGA, ADM) prešli su iz urbane-legende režima (£125/spin, €250k cap, €1 ADM stake) u stvarne 2025 aktuele — UKGC SI 2025/215, MGA Player Protection Directive 2018, ADM AAMS online vs land-based razdvajanje. **Gates landed:** `StakeValidator` (age-tier £5/£2 per game cycle), `RtsSpinGate` (server-side 2.5s delta), `AutoplayGate` (per-jurisdiction reject), `WinCelebrationGate` (false-win guard), `SessionLedger` (net-position live emit), `BonusWageringValidator` (10× cap effective 19 Dec 2025). **Testovi:** 18 nova (`tests/jurisdiction_compliance.rs` + `tests/multi_jurisdiction_emit.rs`) — sve 4 jurisdikcije (UK/MT/IT/MGA) prolaze end-to-end USIF emit. **Source-linked:** svaka konstanta u `profiles.rs` ima `// SOURCE:` komentar sa URL-om primary legislation (legislation.gov.uk, gamblingcommission.gov.uk, mga.org.mt, adm.gov.it). **Non-cap clarity:** dokumentovano da UKGC NEMA max-win cap za online slots (samo stake cap) — sprečava regulator-myth bug-ove u sledećim featurima.
+12. ✅ **W152 — ULTIMATE research bundle** (16 KIMI deep dives, paralelno, depth=deep) — DONE (`2f5cec2`, 18 files, +974 LOC). Pokriva: regulatori 2025-2026 (UKGC SI 2025/215 follow-up + RTS 14E + MGA PPD revisions + ADM AAMS RNG + AGCO Ontario + NL KSA + PA PGCB + MI MGCB + NJ DGE + DGOJ + ANJ + SP + GGL), GLI-19/11/16/33 trenutne revizije, mehanike 2024-2026 (top 14 studija), PRNG testing baseline (TestU01 BigCrush + PractRand 10TB + NIST 800-22 status), HSM rešenja (Thales/Utimaco/AWS/GCP/Entrust/YubiHSM), RTP reporting formati, bonus math nelinearnost, RNG attack vectors. **Output:** `docs/W152_RESEARCH_SYNTHESIS.md` (597 L) + `docs/W152_ACTION_PLAN.md` (215 L) + 16 markdown research artifacts pod `~/.cortex/research/W152/`. **31 konkretne rupe identifikovano** sa file paths.
+13. ✅ **W152 P0-1 + P0-5 — RFC 8439 ChaCha20 CSPRNG + bit-exact TS↔Rust parity** — DONE (`2b06dec`). Prvi CSPRNG-class RNG u engine-u; otključava UK/MGA/DE cert path (UKGC RTS 7, MGA Art. 11, GLI-19 §3.3.2 svi zahtevaju cryptographically strong RNG). Pure-Rust + TS implementacija bez novih external Cargo crate-ova (clean lock file, ne ulazi u mutants/toolchain konflikt). RFC 8439 §2.3.2 KAT byte-exact 64-byte expected block. 16-u32 KAT vektor bit-identičan između TS i Rust. **+9 Rust tests + +8 TS tests.** Sad first-class kroz `RngKind::ChaCha20` / `'chacha20'`.
+14. ✅ **W152 P0-3 — IR adapter unstub (all 8 features)** — DONE u **dva commit-a**:
+   - **Round 1** (`7c62305`): cascade / respin / mystery_symbol — runtime config structs, IR adapter pattern arms, shared JSON fixture (`tests/fixtures/cascade-respin-mystery.json`), 12 integration testova (6 Rust + 6 TS).
+   - **Round 2** (this commit): **pick / wheel / buy_feature / ante_bet / gamble / symbol_upgrade** — preostalih 6 stub-ova zatvoreno. Nove runtime structs: `PickConfig`, `WheelConfig`, `BuyFeatureConfig`, `AnteBetConfig`, `GambleConfig`, `SymbolUpgradeConfig` + `PrizeSlot`, `BuyFeatureOffer`, `GambleType`, `GambleTieResolution` enums. Shared fixture: `tests/fixtures/pick-wheel-buyfeature-antebet-gamble-symbolupgrade.json`. 18 integration testova (9 Rust + 9 TS). **Jurisdiction gating awareness:** `BuyFeatureConfig` i `GambleConfig` su carried-through-IR (configs travel) ali downstream `jurisdiction::validate` rejects njih za UKGC SI 2025/215 + NL KSA May 2024 + DE GGL + DK SP markets. **Wire format parity:** snake_case enum variants (`red_black`, `push`) survive round-trip kroz adapter. **Skip-serialise on absent:** `Option::is_none` Rust strana ↔ `...(x !== undefined ? { x } : {})` TS strana = byte-stable JSON output. **Test count post-W152 P0-3 full:** 740 Rust (+18 vs pre-P0-3-r2) / 1576 TS (+9 vs pre-P0-3-r2). Sve 8 IR feature kindova sad IR-native — otključava 14+ modernih mehanika za config-only deployment (Megaways via cascade, Money Train via respin, xWays via mystery, wheel-bonus via wheel, pick-bonus via pick, sticky bonus-buy via buy_feature, opt-in trigger boost via ante_bet, post-win double-up via gamble, symbol promotion via symbol_upgrade).
 
 ---
 
@@ -854,9 +863,9 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 
 ---
 
-## NEXT IMMEDIATE STEPS (refreshed 2026-05-14, posle W149)
+## NEXT IMMEDIATE STEPS (refreshed 2026-05-14, posle W152 P0-3 round 2)
 
-> P0 #1, #2, #3, #4, #4.2, #5, #6, #7, #8 partial, #9, #10 partial, **#11 (W149 compliance)** — sve DONE.
+> P0 #1, #2, #3, #4, #4.2, #5, #6, #7, #8 partial, #9, #10 partial, **#11 (W149 compliance)**, **#12 (W152 research bundle)**, **#13 (W152 P0-1 ChaCha20 CSPRNG)**, **#14 (W152 P0-3 IR adapter all 8 features)** — sve DONE.
 > Stvarni preostali blokatori za production-grade prodaju:
 
 1. **TestU01 BigCrush / NIST 15 / PractRand 2³⁸ binarni izveštaji** (faza 7.2) — HOWTO landed, scripts spremni. Treba **stvarno pokrenuti** sa instaliranim TestU01/NIST/PractRand binarima i checkin-ovati `pcg64-bigcrush.txt`/`xoshiro-nist15.txt`/`chacha20-practrand.txt` u `reports/rng/`. Bez ovog UKGC/MGA ne potpisuje cert.
@@ -869,3 +878,6 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 8. **PGO + BOLT pipeline** (faza 9.3-9.5) — sad imamo bench baseline (35557s 1T single-thread). PGO daje +15-30%, BOLT dodatnih +5-10%. Otvara realnu konverzaciju oko 1T u < 60s na M3 Pro single chip.
 9. **GPU Metal end-to-end parity** (faza 9.6) — Philox kernel ✅, ali full simulation graf na GPU-u nije bit-by-bit parity-tested protiv CPU putanje. Acceptance: 1M spins GPU == 1M spins CPU byte-identičan output stream.
 10. **11.1 web Config Builder UI** — single fali iz M7 milestone-a. Bez UI-a, operator integriše JSON ručno. Sa UI-em — "demo u 5 minuta".
+11. **W152 P0-4 — GLI-19 RNG submission artifact pipeline** — 96M raw bits (12 MB) per RNG kind + SHA-256 manifest + hardware report + source tarball + boot-time entropy capture. CLI: `rust-sim/src/bin/rng_submission.rs`. Otključava lab submission path direktno; sad kad je ChaCha20 CSPRNG dostupan, generišemo dump za 4 backenda (PCG-64, Xoshiro256pp, Philox4x32, ChaCha20) i serijemo kao zip cert-bundle.
+12. **W152 P0-6 — Reporting adapters po jurisdikciji** — PGAD bin (Italy ADM AAMS), DK XML (Denmark SP), MGA portal JSON (Malta), NJ Excel template (US-NJ DGE). Modul `src/report/adapters/` sa jednim adapter trait-om + 4 implementacije + per-jurisdiction CI gate. Bez ovog operator-side integracija u prodajna tržišta je manual.
+13. **W152 P0-7 — Persistent grid / Hold&Win Markov** — Money Train 4 i Tree of Life class mehanike traže persistent state across spins (sticky grid + accumulator). Trenutno H&W consumes orb cells per-respin ali ne persistuje između base-spinova. Markov DP zatvori RTP-derivation za ove mehanike.

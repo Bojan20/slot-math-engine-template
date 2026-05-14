@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "w152-p0-3-round2-fixture",
+    "name": "W152 P0-3 r2 — Pick/Wheel/BuyFeature/AnteBet/Gamble/SymbolUpgrade Fixture",
+    "version": "1.0.0",
+    "description": "Exercises the pick + wheel + buy_feature + ante_bet + gamble + symbol_upgrade IR adapter paths landed in W152 P0-3 round 2. Use for TS↔Rust parity verification (same JSON deserialises into byte-identical config in both languages). Includes weighted prize pools, jurisdiction-gated bonus-buy offers, gamble with snake_case enums.",
+    "theme_tags": ["test", "fixture", "w152", "p0-3-round2"],
+    "author": "engine-team",
+    "created_at_utc": "2026-05-14T00:00:00Z"
+  },
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "S_LP1",  "name": "LP1",  "kind": "lp" },
+    { "id": "S_LP2",  "name": "LP2",  "kind": "lp" },
+    { "id": "S_LP3",  "name": "LP3",  "kind": "lp" },
+    { "id": "S_HP1",  "name": "HP1",  "kind": "hp" },
+    { "id": "S_HP2",  "name": "HP2",  "kind": "hp" },
+    { "id": "S_HP3",  "name": "HP3",  "kind": "hp" },
+    { "id": "S_WILD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "S_SCAT", "name": "Scat", "kind": "scatter" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 3, "S_HP2": 2, "S_HP3": 1, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 3, "S_HP2": 2, "S_HP3": 1, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 3, "S_HP2": 2, "S_HP3": 1, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 3, "S_HP2": 2, "S_HP3": 1, "S_WILD": 1, "S_SCAT": 1 },
+      { "S_LP1": 8, "S_LP2": 7, "S_LP3": 6, "S_HP1": 3, "S_HP2": 2, "S_HP3": 1, "S_WILD": 1, "S_SCAT": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "lines",
+    "paylines": [
+      [1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0],
+      [2, 2, 2, 2, 2]
+    ],
+    "direction": "ltr",
+    "min_match": 3,
+    "pay_left_to_right_only": true
+  },
+  "paytable": {
+    "S_LP1": { "3": 0.5, "4": 2,   "5": 8 },
+    "S_LP2": { "3": 0.6, "4": 2.5, "5": 10 },
+    "S_LP3": { "3": 0.8, "4": 3,   "5": 12 },
+    "S_HP1": { "3": 3,   "4": 12,  "5": 63 },
+    "S_HP2": { "3": 2.2, "4": 8.8, "5": 44 },
+    "S_HP3": { "3": 5,   "4": 20,  "5": 100 }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger": { "by": "scatter_count", "thresholds": { "3": 8, "4": 12, "5": 15 } },
+      "global_multiplier": 1
+    },
+    {
+      "kind": "pick",
+      "prize_pool": [
+        { "id": "MINI",  "weight": 50.0, "pay_multiplier": 10.0 },
+        { "id": "MINOR", "weight": 30.0, "pay_multiplier": 50.0 },
+        { "id": "MAJOR", "weight": 15.0, "pay_multiplier": 250.0 },
+        { "id": "GRAND", "weight": 5.0,  "pay_multiplier": 1000.0 }
+      ]
+    },
+    {
+      "kind": "wheel",
+      "segments": [
+        { "id": "x1",  "weight": 40.0, "pay_multiplier": 1.0 },
+        { "id": "x2",  "weight": 25.0, "pay_multiplier": 2.0 },
+        { "id": "x5",  "weight": 20.0, "pay_multiplier": 5.0 },
+        { "id": "x10", "weight": 10.0, "pay_multiplier": 10.0 },
+        { "id": "x50", "weight": 5.0,  "pay_multiplier": 50.0 }
+      ]
+    },
+    {
+      "kind": "buy_feature",
+      "offers": [
+        { "id": "FS",       "cost_x": 100.0, "guaranteed": "free_spins" },
+        { "id": "SUPER_FS", "cost_x": 250.0, "guaranteed": "super_free_spins" }
+      ]
+    },
+    {
+      "kind": "ante_bet",
+      "extra_multiplier": 1.25,
+      "enabled_by_default": false
+    },
+    {
+      "kind": "gamble",
+      "type": "red_black",
+      "max_steps": 5,
+      "tie_resolution": "push"
+    },
+    {
+      "kind": "symbol_upgrade",
+      "from": "S_LP1",
+      "to": "S_HP3",
+      "probability": 0.05
+    }
+  ],
+  "rng": { "kind": "mulberry32", "default_seed": 0 },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1.0,
+    "denominations": [0.01, 0.10, 1.0]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.0005,
+    "max_win_x": 5000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.30
+  },
+  "compliance": {
+    "jurisdictions": ["MGA"],
+    "rtp_range_required": [0.92, 0.97],
+    "max_win_cap_required": 10000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.55,
+    "free_spins": 0.25,
+    "hold_and_win": 0.0,
+    "jackpot": 0.20,
+    "tolerance": 0.005
+  }
+}

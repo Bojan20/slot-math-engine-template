@@ -146,6 +146,129 @@ pub struct MysteryConfig {
     pub reveal_distribution: BTreeMap<String, f64>,
 }
 
+// ─── W152 P0-3 (round 2) — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+// SymbolUpgrade configs ─────────────────────────────────────────────────────
+//
+// Six additional runtime feature configs. Each mirrors a `Feature::*` IR
+// variant and is materialised as `Option<…>` on `GameConfig` so consumers
+// branch on `is_some()` without touching defaults.
+//
+// Design notes:
+//   * The IR uses `Vec<PrizeEntry>` and `Vec<BuyOffer>` directly, but the
+//     runtime types own their entries (no borrowing) so they can move freely
+//     across thread boundaries and into per-game caches.
+//   * Enum variants (`GambleType`, `TieResolution`) are mirrored 1:1 with
+//     `#[serde(rename_all = "snake_case")]` so wire format matches IR.
+//   * `BuyFeatureConfig` is jurisdiction-gated downstream (UKGC SI 2025/215
+//     prohibits feature buys for 18-24 segment, NL KSA bans entirely since
+//     May 2024; see KIMI 01 §3.10). The config carries the offers; gating
+//     happens in `jurisdiction::validate` at runtime.
+
+/// One entry in a `Pick` bonus prize pool (also reused for `Wheel`
+/// segments — mathematically identical shape, weighted pick of a payout).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct PrizeSlot {
+    pub id: String,
+    pub weight: f64,
+    pub pay_multiplier: f64,
+}
+
+/// `Pick` bonus configuration — player chooses N from a weighted pool.
+///
+/// Common in Hold & Win bonus games and end-of-feature pick rounds.
+/// We expose the raw pool; the engine handles "player picks 1 / 3 / …"
+/// at simulation time based on feature trace metadata.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct PickConfig {
+    pub prize_pool: Vec<PrizeSlot>,
+}
+
+/// `Wheel` bonus configuration — single weighted spin of a wheel of payouts.
+///
+/// Identical pool shape to `PickConfig` but tagged separately so the
+/// presentation layer + analytical solver can differentiate (a wheel is a
+/// one-shot draw; a pick is N draws without replacement unless guaranteed).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct WheelConfig {
+    pub segments: Vec<PrizeSlot>,
+}
+
+/// One purchasable feature offer (e.g. "Buy free spins for 100× bet").
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct BuyFeatureOffer {
+    pub id: String,
+    pub cost_x: f64,
+    pub guaranteed: String,
+}
+
+/// `BuyFeature` configuration — bonus-buy menu.
+///
+/// **Jurisdiction-gated** (UKGC, NL KSA, DE GGL, DK SP — all prohibit
+/// bonus-buys for online slots). The runtime jurisdiction validator
+/// rejects games that ship a non-empty `BuyFeatureConfig` for those
+/// markets; see KIMI 01 §3.10 for the canonical list.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct BuyFeatureConfig {
+    pub offers: Vec<BuyFeatureOffer>,
+}
+
+/// `AnteBet` configuration — opt-in stake multiplier that boosts a
+/// feature trigger probability in exchange for a higher per-spin bet.
+///
+/// `extra_multiplier` is the bet multiplier (e.g. 1.25 = +25%). The
+/// downstream trigger model uses `enabled_by_default` to decide whether
+/// the simulator runs in ante-on or ante-off mode unless the IR fixture
+/// overrides it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct AnteBetConfig {
+    pub extra_multiplier: f64,
+    pub enabled_by_default: bool,
+}
+
+/// Gamble kind — what is being predicted.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum GambleType {
+    /// Two-way pick (50/50). Industry default.
+    RedBlack,
+    /// Four-way pick (suit). 1/4 win, ×4 payout.
+    Suit,
+}
+
+/// Tie resolution policy when the gamble outcome equals the player pick.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum GambleTieResolution {
+    /// House wins on ties (favors casino edge).
+    House,
+    /// Push — stake returned, no win, no loss.
+    Push,
+}
+
+/// `Gamble` configuration — optional post-win double-up.
+///
+/// **Jurisdiction-gated** (UKGC RTS 14D prohibits gamble features for
+/// online slots; KIMI 01 §3.9). Carried in IR so legacy / land-based
+/// fixtures still round-trip cleanly.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct GambleConfig {
+    #[serde(rename = "type")]
+    pub ty: GambleType,
+    pub max_steps: u32,
+    pub tie_resolution: GambleTieResolution,
+}
+
+/// `SymbolUpgrade` configuration — symbol transform with a fixed probability.
+///
+/// Each landing instance of `from` independently becomes `to` with the given
+/// probability. `0.0` ≤ `probability` ≤ `1.0` is asserted by IR validator.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct SymbolUpgradeConfig {
+    pub from: String,
+    pub to: String,
+    pub probability: f64,
+}
+
 /// Reel weight entry
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReelWeight {
@@ -187,6 +310,21 @@ pub struct GameConfig {
     pub respin: Option<RespinConfig>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mystery: Option<MysteryConfig>,
+
+    // W152 P0-3 (round 2) — Pick / Wheel / BuyFeature / AnteBet / Gamble /
+    // SymbolUpgrade. All `Option` for the same reason as round 1.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pick: Option<PickConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wheel: Option<WheelConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub buy_feature: Option<BuyFeatureConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ante_bet: Option<AnteBetConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub gamble: Option<GambleConfig>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub symbol_upgrade: Option<SymbolUpgradeConfig>,
 
     // Limits
     pub max_win_cap: f64,
@@ -357,6 +495,12 @@ impl Default for GameConfig {
             cascade: None,
             respin: None,
             mystery: None,
+            pick: None,
+            wheel: None,
+            buy_feature: None,
+            ante_bet: None,
+            gamble: None,
+            symbol_upgrade: None,
             max_win_cap: 5000.0,
             feature_loop_cap: 100,
         }
