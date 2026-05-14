@@ -1,0 +1,71 @@
+{
+  "_comment": "W152 P1-7 shared fixture — TS and Rust both load this JSON and produce identical Persistent-Grid H&W solver output (float-equal). 'cases' is a list of scenarios; each carries the input config and the expected payout from the Rust solver (used as the gold).",
+  "cases": [
+    {
+      "name": "money_train_default_5x3",
+      "occupancy": {
+        "totalCells": 15,
+        "initialRespins": 3,
+        "baseChance": 0.06,
+        "fillBonusCap": 0.025,
+        "respinResetOnNew": true,
+        "gridFullAward": 0,
+        "initLockedCells": 6
+      },
+      "classes": {
+        "pCash": 0.75,
+        "muCash": 1.5,
+        "pMult": 0.15,
+        "muMult": 2.0,
+        "pCollector": 0.05,
+        "muCollector": 3.0,
+        "pInert": 0.05
+      },
+      "terminalGlobalMultiplier": 1.0
+    },
+    {
+      "name": "tree_of_life_6x6_with_terminal_reaper",
+      "occupancy": {
+        "totalCells": 36,
+        "initialRespins": 3,
+        "baseChance": 0.04,
+        "fillBonusCap": 0.04,
+        "respinResetOnNew": true,
+        "gridFullAward": 500,
+        "initLockedCells": 8
+      },
+      "classes": {
+        "pCash": 0.6,
+        "muCash": 2.0,
+        "pMult": 0.2,
+        "muMult": 2.5,
+        "pCollector": 0.1,
+        "muCollector": 5.0,
+        "pInert": 0.1
+      },
+      "terminalGlobalMultiplier": 1.5
+    },
+    {
+      "name": "pure_cash_baseline_4x5",
+      "occupancy": {
+        "totalCells": 20,
+        "initialRespins": 3,
+        "baseChance": 0.05,
+        "fillBonusCap": 0.02,
+        "respinResetOnNew": true,
+        "gridFullAward": 100,
+        "initLockedCells": 5
+      },
+      "classes": {
+        "pCash": 1.0,
+        "muCash": 2.0,
+        "pMult": 0.0,
+        "muMult": 1.0,
+        "pCollector": 0.0,
+        "muCollector": 0.0,
+        "pInert": 0.0
+      },
+      "terminalGlobalMultiplier": 1.0
+    }
+  ]
+}

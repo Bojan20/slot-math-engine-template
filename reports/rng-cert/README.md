@@ -40,8 +40,12 @@ Run: `cargo run --release --bin rng_cert -- --mode internal --rng <kind> --seed 
 | pcg64 | 16,777,216 | 134,217,728 | 0.4239 ✅ | 0.7322 ✅ | 0.4121 ✅ | 0.3088 ✅ | 0.8074 ✅ | 0.9040 ✅ | 0.7427 ✅ | 0.6393 ✅ | ✅ |
 | xoshiro256ss | 16,777,216 | 134,217,728 | 0.1725 ✅ | 0.9518 ✅ | 0.2706 ✅ | 0.1436 ✅ | 0.3024 ✅ | 0.1302 ✅ | 0.1386 ✅ | 0.2416 ✅ | ✅ |
 | philox4x32 | 16,777,216 | 134,217,728 | 0.6296 ✅ | 0.9349 ✅ | 0.9945 ✅ | 0.5099 ✅ | 0.1161 ✅ | 0.1837 ✅ | 0.4944 ✅ | 0.3242 ✅ | ✅ |
+| chacha20 | 16,777,216 | 134,217,728 | 0.4340 ✅ | 0.8577 ✅ | 0.6176 ✅ | 0.9029 ✅ | 0.6544 ✅ | 0.3456 ✅ | 0.2076 ✅ | 0.5466 ✅ | ✅ |
 
-Threshold: p ≥ 0.01 (NIST SP 800-22 standard). All 32 sub-tests pass.
+Threshold: p ≥ 0.01 (NIST SP 800-22 standard). All 40 sub-tests pass (5 backends × 8 tests).
+
+W152 Faza 7.2 update — **ChaCha20** (RFC 8439 CSPRNG) added in this wave;
+required by UKGC / MGA / DE jurisdiction profiles per W152 P0-1.
 
 ## Tests implemented (all from NIST SP 800-22)
 

@@ -15,6 +15,7 @@ export * from './parSheet.js';
 export * from './streaming.js';
 export * from './convergence.js';
 export * from './topN.js';
+export * from './tailFit.js';
 // `hdrQuantile.ts` re-exports its own `HDR_THRESHOLDS` that collides
 // with the one in `parSheet.ts`. Keep parSheet's as the canonical export
 // (it's wired into the GLI-16 PAR generator) and surface the hdrQuantile

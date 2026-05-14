@@ -82,6 +82,7 @@ enum RngArg {
     Pcg64,
     Xoshiro256ss,
     Philox4x32,
+    Chacha20,
 }
 
 impl RngArg {
@@ -91,6 +92,7 @@ impl RngArg {
             RngArg::Pcg64 => RngKind::Pcg64,
             RngArg::Xoshiro256ss => RngKind::Xoshiro256StarStar,
             RngArg::Philox4x32 => RngKind::Philox4x32,
+            RngArg::Chacha20 => RngKind::ChaCha20,
         }
     }
     fn name(self) -> &'static str {
@@ -99,6 +101,7 @@ impl RngArg {
             RngArg::Pcg64 => "pcg64",
             RngArg::Xoshiro256ss => "xoshiro256ss",
             RngArg::Philox4x32 => "philox4x32",
+            RngArg::Chacha20 => "chacha20",
         }
     }
 }

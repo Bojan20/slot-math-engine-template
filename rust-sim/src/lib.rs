@@ -40,6 +40,15 @@ pub mod jackpot;
 /// FAZA 6 — Closed-form feature RTP solvers.
 /// H&W Markov DP, FS geometric series, Cascade chain-depth EV.
 pub mod markov;
+/// W152 P1-7 — Persistent-grid H&W solver (Money Train 4 class).
+/// Multi-class cell occupancy (cash / multiplier / collector / inert) with
+/// closed-form terminal payout on top of the standard `(occupied, respins_left)`
+/// Markov chain.
+pub mod markov_persistent;
+/// W152 P2-15 — Max-win cap math + EVT (Pareto) tail fitting.
+/// `clip_distribution` / `fit_pareto_tail` / `evt_tail_quantile`. Mirrors
+/// `src/statistics/tailFit.ts`.
+pub mod tail_fit;
 /// FAZA 4 — GLI-16 compliant PAR sheet generator.
 /// Produces structured JSON + printable report from `AtomicStats`.
 pub mod par;
