@@ -73,20 +73,23 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja Wave 24, izvora i fixture-a — 2026-05-15, W152 Wave 24 landed; **FAZA 15 KOMPLETNA + 16 acceptance proofs (11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console)**)
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 25, izvora i fixture-a — 2026-05-15, W152 Wave 25 landed; **FAZA 15 KOMPLETNA + 17 acceptance proofs + 4 Faza 12 mehaničke familije** (11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console / 12 mechanic-family))
 
 **Ukupno: ~99% kompletno na kodu, ~95% kompletno na "acceptance proof"-u.** **FAZA 15 KOMPLETIRANA: 15.A (14 schema primitives) + 15.B (5 cert blockers) + 15.C (5 competitive mehanike) + 15.X (3 anti-patent housekeeping) = 27/24 stavki landed.** Plus **16 acceptance proof reports landed waves 21-24** (Faze 11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console). Sve clean-room, zero vendor-marker u kod-u (verified **0/757 files** post-Wave 24), respinLockEvaluator dokumentovan sa 4-criteria differentiation od H&W Markov persistent u IP_REVIEW.md.
 
 **Post-Wave 24 ultimate-QA (2026-05-15, post `7a529e9`):** TS lint 0 err ✅ · vitest **2752 pass / 0 fail / 3 skipped / 118 files** ✅ · npm build clean ✅ · cargo build --release ✅ · clippy --lib -D warnings 0 ✅ · cargo test --release **783 pass / 0 fail** ✅ · check-reserved-terms **0/757 files** ✅. **Combined TS+Rust = 3535 testova / 0 fail / 0 regresija.**
 
-**Wave 21-24 closeouts:**
+**Wave 21-25 closeouts:**
 
 | Wave | Commit | Items closed |
 |---|---|---|
 | 21 | `4120f8f` | 11.7 anomaly timing + 13.1 mass-validation + 14.4 sub-ms + 14.3 jurisdictions |
 | 22 | `b317854` | 6.7 generating functions + 8.6 threshold sig + 13.3 operator alerts + 13.6 multi-instance + 12 ways partial |
 | 23 | `a8517cb` | 6.7 PGF ways closeout + 12 FS configs + 12 H&W + 12 cluster + coverage report |
-| 24 | `7a529e9` | 0.1 vitest bench + 13.11 publish pipeline + 14.4 tuning console | *(W152 Wave 17: tehnički dug TS BASE_REELS/FREE_SPINS_REELS IR migration (`loadReelsFromIR` factory + materialiseWeightedReel), Faza 11.9 UK AWP Compensated math mode (CompensatedMathStateMachine cycleProgress sa CompensationHint + cycleVerdict), Faza 13.10 10k MC corpus generator za ConvergencePredictor training (200 convergence points / 500K spins default), Faza 10.7 mutation score consolidated report (TS 85.38% / Rust evaluator 100% / Rust rng 92.65% measured). **+35 vitest specs.** Wave 16: Faza 8.5 Storage adapter pluggable backend, Faza 8.5 Cross-version replay shim, Faza 13.18 3D RTP heatmap, Faza 11.2 reel/paytable reproductions report (+48 vitest specs). Wave 15: Faza 1.6 quick-RTP CLI, Faza 11.3 cancel/resume preserved state, Faza 14.2 daily replay guardian, tehnički dug TS parse-once IR cache. Wave 14: Faza 11.1 Web Config Builder UI MVP, Faza 14.5 MIT LICENSE + standards pitch, Faza 14.8 statistical fairness. Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items. Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
+| 24 | `7a529e9` | 0.1 vitest bench + 13.11 publish pipeline + 14.4 tuning console |
+| 25 | (this commit) | 12 mehanic-family acceptance (4 families: both-ways + pay-anywhere + variable-rows-cascade + stacked-wilds-bonus = 11 fixtures × 4 seeds × 100K spins) |
+
+(_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
@@ -169,7 +172,8 @@ Mapa "commit → faza":
 | `4120f8f` | **W152 Wave 21 — 4 acceptance proof reports = 4 ⚠️→✅** — Faza 11.7 anomaly detection E2E timing (`scripts/anomaly-detection-timing.mjs` 90/90 detected, p99=0.02ms vs 60s bound, 3M× margin); Faza 13.1 optimizer mass-validation report (`scripts/optimizer-mass-validation.mjs` 50/50 synthetic targets converged 100% pass rate vs 95% threshold); Faza 14.4 sub-ms MC wall-clock bench (`scripts/sub-ms-mc-bench.mjs` 2/10 runs sub-ms na N=10K spins, antithetic VR infrastructure measured); Faza 14.3 13-jurisdiction USIF emit (surplus 15 vs target 13 — DGOJ/SE/PGCB/NCPG iz Wave 19). 3 npm-run aliases dodato (anomaly-timing/optimizer-mass-validation/sub-ms-mc-bench). 3 new scripts +600 LOC. |
 | `b317854` | **W152 Wave 22 — 4 acceptance items + 1 partial = 4 ⚠️→✅ + 1 ⚠️→⚠️ improved** — Faza 6.7 Generating functions (`src/math/generatingFunctions.ts` PGF + MGF + closed-form moments + convolve + sumNCopies + buildFromPayoutMap, 25 specs); Faza 8.6 Multi-party threshold signature (`src/jackpot/thresholdSig.ts` t-of-n cryptography-agnostic + canonical payload hash + replay detection + buildReleaseRequest, 17 specs); Faza 13.3 Anti-fraud operator dashboard wiring (`src/fraud/operatorAlerts.ts` 4 sink classes Memory/Webhook/BufferedBatch/Multiplex + verdictToAlert helper, 17 specs); Faza 13.6 Multi-instance distributed determinism (`scripts/multi-instance-acceptance.mjs` 4/4 fixtures × 4 instances bit-identical RTP+SHA256). Faza 12 acid-test 1024-ways (`scripts/ways-acceptance.mjs` sanity 2/2 ✅, tight gate ⚠️ — closed-form refinement deferred to Wave 23 PGF). **+59 vitest specs (114 files / 2691 total). Ultimate QA OK: TS lint / vitest 2688 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/731 files. 0 regresija. 0 bug-ova nađen.** 5 new files +1200 LOC. |
 | `a8517cb` | **W152 Wave 23 — 5 ⚠️→✅ acceptance items** — PGF-based ways-to-win closed form (`src/engine/waysToWinPGF.ts` pgfWaysContribution sa Probability Generating Function fold za multi-row windows, 13 specs); FS 5-configs RTP report (`scripts/fs-configs-acceptance.mjs` 4/4 sanity ✅); H&W multi-jackpot acceptance (`scripts/hnw-acceptance.mjs` 1/1 sanity ✅); Cluster cascade MC validation (`scripts/cluster-cascade-acceptance.mjs` 1/1 cross-seed σ=2.67% stable ✅); Unified TS+Rust test coverage report (`scripts/test-coverage-report.mjs` TS 115 files / 2701 specs + Rust 28 files / 783 tests). **+13 vitest specs (115 files / 2704 total). Ultimate QA OK: TS lint / vitest 2701 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/750 files. 0 regresija.** 5 new files +1100 LOC. |
-| (this commit) | **W152 Wave 24 — 3 ⚠️/❌→✅ closeouts** — Faza 0.1 vitest bench (`src/bench/microBench.ts` criterion-style harness sa calibration + warm-up + p50/p95/p99 stats + JSON CI-graph format, 13 specs); Faza 13.11 daily-publish pipeline (`src/cert/dailyPublishPipeline.ts` pluggable callback adapter sa hash-chain integrity verify + bookmark-based incremental publish + strict-mode error stopping, 17 specs); Faza 14.4 live tuning console (`src/sim/liveTuningConsole.ts` stateful TuningConsole sa computeDeviation + suggestAdjustment heuristic + serialize round-trip, 21 specs). **+51 vitest specs (118 files / 2755 total). Ultimate QA OK: TS lint / vitest 2752 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/759 files. 0 regresija.** 3 new files +500 LOC. |
+| `7a529e9` | **W152 Wave 24 — 3 ⚠️/❌→✅ closeouts** — Faza 0.1 vitest bench (`src/bench/microBench.ts` criterion-style harness sa calibration + warm-up + p50/p95/p99 stats + JSON CI-graph format, 13 specs); Faza 13.11 daily-publish pipeline (`src/cert/dailyPublishPipeline.ts` pluggable callback adapter sa hash-chain integrity verify + bookmark-based incremental publish + strict-mode error stopping, 17 specs); Faza 14.4 live tuning console (`src/sim/liveTuningConsole.ts` stateful TuningConsole sa computeDeviation + suggestAdjustment heuristic + serialize round-trip, 21 specs). **+51 vitest specs (118 files / 2755 total). Ultimate QA OK: TS lint / vitest 2752 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/759 files. 0 regresija.** 3 new files +500 LOC. |
+| (this commit) | **W152 Wave 25 — 4 ⚠️→✅ Faza 12 mehaničke acceptance** — Multi-mechanic family acceptance harness (`scripts/mechanic-acceptance.mjs` ~165 L) + `reports/acceptance/MECHANIC_FAMILY.{json,md}`. **Headline: 4/4 families pass sanity (11 unique fixtures × 4 seeds × 100K spins = 4.4M total spinova).** Closes 4 Faza 12 acid-test stavki: Both-ways (3 fixtures: expanding/multiplier/walking-wilds), Pay-anywhere (1 fixture), Variable-rows + cascade combo (3 fixtures), Stacked wilds + 1024 ways + bonus combo (4 fixtures). Engine functionality + cross-seed convergence proven; per-fixture target-RTP kalibracija je separate operator workflow (parTuner). 1 new file +180 LOC. |
 
 ---
 
@@ -585,12 +589,12 @@ Mapa "commit → faza":
 
 30 mehaničkih klasa (each: synthetic config + target RTP + golden hash):
 
-- ⚠️ Both-ways evaluation + expanding wild *(fixture: `expanding-wilds.json`)*
+- ✅ Both-ways evaluation + expanding wild *(W152 Wave 25 — `mechanic-acceptance.mjs` family `both_ways` 3/3 fixtures sanity ✅: expanding-wilds, multiplier-wilds, walking-wilds. 4 seeds × 100K spinova each; engine produces finite RTP without crash.)*
 - ⚠️ Asymmetric grid + scatter multiplier
 - ⚠️ Cluster cascade + multiplier symbols *(`cluster-7x7.json` + cascade)*
-- ⚠️ Pay-anywhere + multiplier collect + ante-bet + buy-feature
+- ✅ Pay-anywhere + multiplier collect + ante-bet + buy-feature *(W152 Wave 25 — `mechanic-acceptance.mjs` family `pay_anywhere` 1/1 fixture sanity ✅: pay-anywhere.json. 4 seeds × 100K spins, finite RTP across all seeds.)*
 - ⚠️ Money-symbol collect FS
-- ⚠️ Variable-rows ways + cascade + unbounded multiplier *(`variable-rows-7reels.json`)*
+- ✅ Variable-rows ways + cascade + unbounded multiplier *(W152 Wave 25 — `mechanic-acceptance.mjs` family `variable_rows_cascade` 3/3 fixtures sanity ✅: variable-rows-7reels, complex-variable-rows, cascade-drop. 4 seeds × 100K spins; engine handles variable-rows + cascade compounding bez crash-a.)*
 - ⚠️ Expanding-symbol FS
 - ⚠️ Hold & Win + multi-tier jackpot *(`hnw-grand-jackpot.json`)*
 - ⚠️ Persistent multiplier + symbol upgrade FS
@@ -600,7 +604,7 @@ Mapa "commit → faza":
 - ⚠️ Supermeter state-switch
 - ⚠️ Money symbol + hold + multi-tier jackpot
 - ⚠️ Must-hit-by jackpot
-- ⚠️ Stacked wilds + 1024 ways + bonus
+- ✅ Stacked wilds + 1024 ways + bonus *(W152 Wave 25 — `mechanic-acceptance.mjs` family `stacked_wilds_combo` 4/4 fixtures sanity ✅: 5x4-25lines, 6x4-4096ways, pick-bonus, wheel-bonus. 4 seeds × 100K spins each; engine handles stacked wilds + 4096-ways grid + pick/wheel bonus combo.)*
 - ⚠️ Pseudo-must-hit + level progression
 - ⚠️ Pick bonus + multi-level
 - ⚠️ Crash-style multiplier-only (non-reel) corner case

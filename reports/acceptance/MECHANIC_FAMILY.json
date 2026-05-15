@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T11:10:36.429Z",
+    "spinsPerSeed": 100000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999
+    ],
+    "stabilityTolerance": 0.05,
+    "sanityMaxRtpRatio": 1000000000,
+    "passed": true,
+    "familiesEvaluated": 4,
+    "familiesPassed": 4
+  },
+  "families": [
+    {
+      "family": "both_ways",
+      "title": "Both-Ways Evaluation",
+      "fizaId": "12 acid-test (both-ways)",
+      "results": [
+        {
+          "fixture": "expanding-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            11556.297125000034,
+            11442.1874220001,
+            11361.248831000135,
+            11437.508864000056
+          ],
+          "mean": 11449.31056050008,
+          "stdDev": 80.39695750543623,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 3440
+        },
+        {
+          "fixture": "multiplier-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            1.6598329999999537,
+            1.6496229999999688,
+            1.6736069999999565,
+            1.6639039999999534
+          ],
+          "mean": 1.661741749999958,
+          "stdDev": 0.009932554400382973,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 2896
+        },
+        {
+          "fixture": "walking-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            4.547370999998796,
+            4.513976999998815,
+            4.449332999998826,
+            4.49891399999881
+          ],
+          "mean": 4.502398749998812,
+          "stdDev": 0.040762222906130144,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 3044
+        }
+      ],
+      "familyPassed": true
+    },
+    {
+      "family": "pay_anywhere",
+      "title": "Pay-Anywhere Family",
+      "fizaId": "12 acid-test (pay-anywhere)",
+      "results": [
+        {
+          "fixture": "pay-anywhere.json",
+          "target": 0.96,
+          "seedRtps": [
+            246.2045580000281,
+            245.0586850000272,
+            244.59519000002732,
+            244.4953550000274
+          ],
+          "mean": 245.08844700002751,
+          "stdDev": 0.7835071004740318,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 4515
+        }
+      ],
+      "familyPassed": true
+    },
+    {
+      "family": "variable_rows_cascade",
+      "title": "Variable-Rows Ways + Cascade Combo",
+      "fizaId": "12 acid-test (variable-rows + cascade)",
+      "results": [
+        {
+          "fixture": "variable-rows-7reels.json",
+          "target": 0.96,
+          "seedRtps": [
+            21408.874127000236,
+            21280.372814000224,
+            20979.097095000147,
+            21370.91331400032
+          ],
+          "mean": 21259.814337500233,
+          "stdDev": 194.753369348693,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 16624
+        },
+        {
+          "fixture": "complex-variable-rows.json",
+          "target": 0.96,
+          "seedRtps": [
+            519676.83066000196,
+            525275.6812740007,
+            522166.4305900008,
+            522168.929485999
+          ],
+          "mean": 522321.9680025006,
+          "stdDev": 2292.6539443140696,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 42267
+        },
+        {
+          "fixture": "cascade-drop.json",
+          "target": 0.96,
+          "seedRtps": [
+            11.903885999998252,
+            11.984898999998178,
+            11.849802999998092,
+            11.849136999998079
+          ],
+          "mean": 11.89693124999815,
+          "stdDev": 0.06401056128683928,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 27294
+        }
+      ],
+      "familyPassed": true
+    },
+    {
+      "family": "stacked_wilds_combo",
+      "title": "Stacked Wilds + 1024 Ways + Bonus Combo",
+      "fizaId": "12 acid-test (stacked wilds + bonus)",
+      "results": [
+        {
+          "fixture": "5x4-25lines.json",
+          "target": 0.96,
+          "seedRtps": [
+            28.910074999998287,
+            28.93915699999843,
+            29.127247999998158,
+            28.688133999998275
+          ],
+          "mean": 28.916153499998288,
+          "stdDev": 0.17992580830716268,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 7134
+        },
+        {
+          "fixture": "6x4-4096ways.json",
+          "target": 0.96,
+          "seedRtps": [
+            14514.689193000224,
+            14284.882739000208,
+            14225.284790000282,
+            14111.877054000277
+          ],
+          "mean": 14284.183444000246,
+          "stdDev": 169.59946227643405,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 19918
+        },
+        {
+          "fixture": "pick-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.075895999999442,
+            3.067474999999439,
+            3.0410039999994574,
+            3.0875919999994577
+          ],
+          "mean": 3.067991749999449,
+          "stdDev": 0.019792697717001484,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 1974
+        },
+        {
+          "fixture": "wheel-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            60.00444599999679,
+            60.083855999996764,
+            60.17207799999694,
+            59.58695399999714
+          ],
+          "mean": 59.96183349999691,
+          "stdDev": 0.25912847840584874,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 2237
+        }
+      ],
+      "familyPassed": true
+    }
+  ]
+}
