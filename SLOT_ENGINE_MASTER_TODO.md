@@ -155,7 +155,7 @@ Legenda:
 | 32 | `7a4ea2d` | **Kimi deep-audit report landed** — `docs/research/KIMI_AUDIT_2026-05-15.md` 25-source TL;DR + 10-step action list integrated u master-todo §"🔬 KIMI DEEP AUDIT 2026-05-15" |
 | 33 | `f4ca791` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
 | 34 | `d23489a` | **Kimi K6 ⚠️→✅ INFRA** — Mutation-score CI gate (regression + strict modes) + baseline.json + GitHub Action workflow; dokazano blokira simulirane -5pp/-10pp regresije |
-| 35 | `(this commit)` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
+| 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
