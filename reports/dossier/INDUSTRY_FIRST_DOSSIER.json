@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-15T23:01:36.476Z",
-  "repo_sha": "1cb24978b682f6d2a3b5e0e6ed3390b813d8ab56",
+  "generatedAtUtc": "2026-05-15T23:34:57.365Z",
+  "repo_sha": "fdf6bd8dbe517b58c8b5db348b8baf7b32e7a2aa",
   "headline": {
-    "waves": 8,
-    "industry_firsts": 8,
+    "waves": 9,
+    "industry_firsts": 9,
     "all_present": true
   },
   "waves": [
@@ -204,6 +204,58 @@
         ]
       },
       "industry_first": "Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable"
+    },
+    {
+      "wave": 43,
+      "kimi": "K1 partial",
+      "commit": "(this commit)",
+      "name": "ENT Entropy Battery (in-process)",
+      "reportPath": "reports/rng/ENT_ASSESSMENT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T23:31:38.092Z",
+      "headline": "6/6 sources PASS all 5 ENT stats",
+      "detail": {
+        "sampleBytes": 100000,
+        "sources": [
+          {
+            "id": "mulberry32",
+            "H": 7.998104609351095,
+            "pi": 3.1592463698547943,
+            "pass": true
+          },
+          {
+            "id": "pcg64",
+            "H": 7.998111653748092,
+            "pi": 3.154686187447498,
+            "pass": true
+          },
+          {
+            "id": "xoshiro256ss",
+            "H": 7.99809311685706,
+            "pi": 3.1496459858394337,
+            "pass": true
+          },
+          {
+            "id": "philox4x32",
+            "H": 7.998370377109955,
+            "pi": 3.145085803432137,
+            "pass": true
+          },
+          {
+            "id": "chacha20",
+            "H": 7.998039972790725,
+            "pi": 3.155646225849034,
+            "pass": true
+          },
+          {
+            "id": "hsm-mock-bridge",
+            "H": 7.998159799639599,
+            "pi": 3.141245649825993,
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed"
     }
   ],
   "auditor_qa": [

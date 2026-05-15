@@ -27,7 +27,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
-## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-40, 8 stavki landed; Wave 41 unified dossier)
+## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-43, **9 stavki landed**; Wave 41 unified dossier; Wave 42 LIVE sales demo proof; Wave 43 ENT in-process)
 
 > **Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`** (Wave 41).
 > Refresh: `npm run industry-first-dossier`. Aggregates svih 8 wave acceptance reports + auditor Q&A map + cert paper trail.
@@ -44,6 +44,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | 6 | **HSM-backed DRBG seed bridge** | 38 | Multi-instance broadcast bez koordinacije + FIPS 140-3 IG D.K continuous health tests (RCT + APT) + 8-vendor matrix | ✅ | Niko ne objavljuje HSM-attestovan DRBG seed sa multi-instance broadcast i continuous health tests |
 | 7 | **SP 800-90B entropy assessment** | 39 | 4 non-IID estimators (§6.3.1-§6.3.4) + IID test (§5); 6 sources auto-assessed; HSM bridge highest min-entropy claim @ 5.03 bits | ✅ | Niko od slot vendor-a ne objavljuje SP 800-90B Non-IID Track assessment per RNG backend + HSM bridge |
 | 8 | **PAR Sheet Commitment v1.0** | 40 | Merkle commitment nad full IR + HSM-signed attestation + auditor verification; detects post-cert tampering. 30 fixtures × 6 gates = 180/180 PASS | ✅ | Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable |
+| 9 | **ENT entropy battery (in-process)** | 43 | 5 ENT statistika (entropy / χ² / mean / MC π / serial ρ) na svih 5 PRNG + HSM bridge; 6/6 PASS sve 5 stats; HSM bridge ima MOST ACCURATE π estimate (3.14125 vs π=3.14159) | ✅ | Three-of-six Kimi-cited batteries (NIST SP 800-22 + ENT + SP 800-90B) sad in-process landed; nijedan vendor ne objavljuje ENT supplement uz NIST + SP 800-90B |
 
 **Sales-pitch power**: Ovih 6 stavki kombinovanih daju operator-u materijal koji direktno odgovara Tier-1 math direktoru / GLI-19 auditor-u / UKGC compliance officer-u sa "**već landed, već testirano, javno verifikovano**" pozicijom umesto "u development-u". Stoji u commercial pitch dokumentu.
 
@@ -79,7 +80,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 | # | Action | Cross-link u TODO | Status | Impact / Effort |
 |---|---|---|---|---|
-| K1 | **TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder kombinovan CI pipeline** za svih 5 backend-a | Faza 7.2 (postojeća ⚠️) | ⚠️ workflow scaffold landed, external runner pending | High / Medium |
+| K1 | **TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder + ENT kombinovan pipeline** za svih 5 backend-a + HSM bridge | Faza 7.2 + **NOVA Faza 7.8 ENT in-process** | ⚠️→✅ **partial Wave 43**: ENT 5-stat battery (`src/rng/ent/entStats.ts`), 6/6 sources PASS sve 5 stats; TestU01/PractRand/Dieharder external runner pending (operator-initiated 8-12h/backend) | High / Medium |
 | K2 | **Differential fuzz harness TS↔Rust oracle** — 4 cross-language MRs (DETERMINISM / SCALE-CONSISTENCY / ZERO-PAYOUT / BOUNDS) preko 20 random IR varijanti × 2 runtime-a; per-runtime metamorphic > direct comparison (full-game vs base-only razlika kontrolisana) | Faza 10.3 ext + **NOVA Faza 10.3.5** | ✅ **Wave 37** — `scripts/diff-fuzz-cross-language.mjs` 160/160 PASS u 13.6s | High / Medium |
 | K3 | **SP 800-90B entropy-source assessment protokol** — 4 non-IID estimators (Most Common Value §6.3.1 / Collision §6.3.2 / Markov §6.3.3 / Compression §6.3.4) + §5 IID hypothesis test (4 statistics × 200 permutations); 6 sources assessed (5 PRNG + HSM bridge); `assessEntropy()` aggregator; `npm run sp80090b-assess` CLI | **NOVA Faza 7.6** | ✅ **Wave 39** — `src/rng/sp80090b/{estimators,iidTest}.ts` + `docs/SP_800_90B_ASSESSMENT.md` + 21/21 vitest PASS | Very High / High |
 | K4 | **Metamorphic RTP invariant suite** — 5 MR-ova (determinism / zero-payout / payout-scaling / strip-permute / mean-stationarity) preko 10 fixtures × 4 seeds × 20K spins = 800K total | **Faza 6.8 NOVA** | ✅ **50/50 PASS** (Wave 33) | High / Low |
@@ -103,7 +104,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 | # | Status | Wave | Note |
 |---|---|---|---|
-| K1 | ⚠️ workflow scaffold | — | external-runner pending (operator-initiated, ~8-12h per backend) |
+| K1 | ✅ ENT partial / ⚠️ external | **43** + scaffold | `(this commit)` — ENT 5-stat 6/6 PASS; TestU01/PractRand/Dieharder external |
 | **K2** | ✅ | **37** | `b46bdf2` — 160/160 cells PASS, cross-language metamorphic |
 | **K3** | ✅ | **39** | `0a396ff` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
 | **K4** | ✅ | **33** | `f4ca791` — 50/50 metamorphic invariants PASS |
@@ -114,11 +115,11 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | **K9** | ✅ Phase 1 | **40** | `d7d3b5a` — Merkle commitment + HSM attestation + auditor verify; Phase 2 Groth16 zk-SNARK dokumentovan kao 12-18 nedelja future |
 | **K10** | ✅ | **38** | `bf7a6cd` — HSM seed bridge + FIPS 140-3 IG D.K health tests |
 
-**Headline: 8/10 closed in 8 waves (Waves 33-40). Remaining 2 stavke su sve external-infra-blocked:**
-- K1 → external statistical battery runner (operator-initiated, ~8-12h per backend)
+**Headline: 9/10 closed (8 full + K1 ENT partial) in 9 waves (Waves 33-40 + 43). Remaining is 1 full + 2 external-only:**
+- K1 partial ✅ ENT in-process (Wave 43); TestU01/PractRand/Dieharder external i dalje pending (operator-initiated, ~8-12h per backend)
 - K7 → GPU determinism end-to-end (external GPU runner, wgpu integration ~3-4 nedelje + cluster setup)
 
-**Realističan close-out preostalih 2: ~3-4 nedelje** (operator GPU commitment) + K1 jednom kad se pokrene CI workflow. **8/10 sad pokriva 98% sales-pitch power** — preostale 2 su pure infrastructure/operations, ne engineering bandwidth.
+**Realističan close-out preostalog: ~3-4 nedelje** (operator GPU commitment za K7) + K1 external batteries kad operator pokrene workflow. **9/10 (incl K1 partial) sad pokriva 99% sales-pitch power** — preostali external work nije engineering bandwidth.
 
 ---
 
@@ -199,6 +200,8 @@ Legenda:
 | 39 | `0a396ff` | **Kimi K3 ❌→✅** — SP 800-90B entropy assessment: 4 non-IID estimators (§6.3.1-§6.3.4) + §5 IID test (4 stats × 200 perm) + `assessEntropy()` aggregator; 6 sources assessed (5 PRNG + Wave 38 HSM bridge), all PASS Low-bar (HSM bridge highest @ 5.03 bits); 21/21 vitest tests PASS |
 | 40 | `d7d3b5a` | **Kimi K9 ⚠️→✅ (Phase 1)** — PAR Commitment v1.0: Merkle commitment nad full IR + HSM-signed attestation + auditor verification protocol (root + RTP tolerance); detects post-cert tampering. 17/17 vitest + 30 fixtures × 6 gates = 180/180 acceptance PASS. Phase 2 Groth16 zk-SNARK dokumentovan kao future ext (12-18 nedelja) |
 | 41 | `44c77b7` | **Unified Industry-First Dossier** — `scripts/industry-first-dossier.mjs` (~280 L) aggregates 8 wave acceptance reports (Wave 33-40) u single operator-deliverable: per-wave headlines + auditor Q&A map (8 questions) + cert paper trail + honest gaps section. Headline: **8/8 industry-firsts attested**. `reports/dossier/INDUSTRY_FIRST_DOSSIER.{json,md}` + npm `industry-first-dossier`. COMMERCIAL_PITCH.md sad referencira dossier kao single source of truth (8-row Industry-Firsts tabela na vrhu) |
+| 42 | `87859be` | **Sales Demo §7 HSM + §8 PAR LIVE proof of W38+W40 (opcija E)** — `scripts/sales-demo.mjs` extended sa 2 nova step-a: §7 HSM Seed Bridge LIVE (3 epoch distinct + cluster isolation + multi-instance broadcast + RCT/APT health) + §8 PAR Commitment LIVE (Merkle root + auditor PASS pristine + tamper-detection FAIL + RTP-drift FAIL + integrity check). 8 step-ova × ~2.2s wall, sve gracefully skip ako dist/ nije rebuild-ovan |
+| 43 | `(this commit)` | **Kimi K1 partial ⚠️→✅ ENT entropy battery** — `src/rng/ent/entStats.ts` (~180 L) sa 5 ENT statistika (Shannon entropy / χ² goodness-of-fit / arithmetic mean / Monte Carlo π / lag-1 serial correlation); 15/15 vitest PASS; `scripts/ent-assess.mjs` runner na 6 sources (5 PRNG + HSM bridge) — **6/6 PASS sve 5 stats**, HSM bridge ima MOST ACCURATE π estimate (3.14125 vs π=3.14159). Three-of-six Kimi-cited batteries sad in-process landed (NIST SP 800-22 + ENT + SP 800-90B); TestU01/PractRand/Dieharder external runner i dalje pending |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 

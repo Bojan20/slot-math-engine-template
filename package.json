@@ -49,7 +49,8 @@
     "diff-fuzz-cross-lang": "npm run build && node scripts/diff-fuzz-cross-language.mjs",
     "sp80090b-assess": "npm run build && node scripts/sp80090b-assess.mjs",
     "par-commitment-acceptance": "npm run build && node scripts/par-commitment-acceptance.mjs",
-    "industry-first-dossier": "node scripts/industry-first-dossier.mjs"
+    "industry-first-dossier": "node scripts/industry-first-dossier.mjs",
+    "ent-assess": "npm run build && node scripts/ent-assess.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

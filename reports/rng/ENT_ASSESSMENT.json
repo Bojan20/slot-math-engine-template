@@ -1,0 +1,146 @@
+{
+  "schema": "ent-entropy-assessment/v1",
+  "generatedAtUtc": "2026-05-15T23:31:38.091Z",
+  "config": {
+    "sampleBytes": 100000
+  },
+  "headline": {
+    "sourceCount": 6,
+    "passCount": 6,
+    "allPass": true
+  },
+  "sources": [
+    {
+      "source": "mulberry32",
+      "label": "Mulberry32 (legacy)",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.998104609351095,
+        "chiSquare": 263.42912000000024,
+        "chiSquarePValue": 0.34504620838644984,
+        "arithmeticMean": 127.22083,
+        "monteCarloPi": 3.1592463698547943,
+        "monteCarloPiErrorPct": 0.5619352415033476,
+        "serialCorrelation": -0.0046449229853286625,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    },
+    {
+      "source": "pcg64",
+      "label": "PCG64",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.998111653748092,
+        "chiSquare": 261.6473600000001,
+        "chiSquarePValue": 0.37397281985411235,
+        "arithmeticMean": 127.49454,
+        "monteCarloPi": 3.154686187447498,
+        "monteCarloPiErrorPct": 0.41678012719896024,
+        "serialCorrelation": 0.0029505191954172956,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    },
+    {
+      "source": "xoshiro256ss",
+      "label": "Xoshiro256SS",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.99809311685706,
+        "chiSquare": 263.18848000000025,
+        "chiSquarePValue": 0.34889728331011916,
+        "arithmeticMean": 127.1729,
+        "monteCarloPi": 3.1496459858394337,
+        "monteCarloPiErrorPct": 0.2563455271783336,
+        "serialCorrelation": -0.0035701737016545936,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    },
+    {
+      "source": "philox4x32",
+      "label": "Philox4x32",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.998370377109955,
+        "chiSquare": 226.41664000000017,
+        "chiSquarePValue": 0.9008914528107175,
+        "arithmeticMean": 127.44834,
+        "monteCarloPi": 3.145085803432137,
+        "monteCarloPiErrorPct": 0.1111904128739463,
+        "serialCorrelation": -0.0031155862909653426,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    },
+    {
+      "source": "chacha20",
+      "label": "ChaCha20 (CSPRNG)",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.998039972790725,
+        "chiSquare": 270.55104000000017,
+        "chiSquarePValue": 0.24053265817365488,
+        "arithmeticMean": 127.42119,
+        "monteCarloPi": 3.155646225849034,
+        "monteCarloPiErrorPct": 0.4473390986314673,
+        "serialCorrelation": 0.00202556127450471,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    },
+    {
+      "source": "hsm-mock-bridge",
+      "label": "HSM Mock Bridge (Wave 38)",
+      "result": {
+        "sampleBytes": 100000,
+        "entropyBitsPerByte": 7.998159799639599,
+        "chiSquare": 255.08864000000017,
+        "chiSquarePValue": 0.48665960311092826,
+        "arithmeticMean": 127.42132,
+        "monteCarloPi": 3.141245649825993,
+        "monteCarloPiErrorPct": 0.011045472856053631,
+        "serialCorrelation": 0.0059216351025165185,
+        "pass": {
+          "entropy": true,
+          "chiSquare": true,
+          "arithmeticMean": true,
+          "monteCarloPi": true,
+          "serialCorrelation": true
+        },
+        "overallPass": true
+      }
+    }
+  ]
+}

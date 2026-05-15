@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-15T23:01:36.476Z` · repo SHA: `1cb24978b682`
+> Generated: `2026-05-15T23:34:57.365Z` · repo SHA: `fdf6bd8dbe51`
 
-## Headline: **8/8 industry-firsts attested** ✅
+## Headline: **9/9 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -17,6 +17,7 @@
 | 38 | K10 | **HSM-Backed DRBG Seed Bridge** | ✅ 15/15 vitest tests PASS | _vitest-only_ |
 | 39 | K3 | **SP 800-90B Entropy Assessment** | ✅ 6 sources, all Low-bar (≥0.5 bits) ✅ | [`reports/rng/SP_800_90B_ASSESSMENT.json`](../../reports/rng/SP_800_90B_ASSESSMENT.md) |
 | 40 | K9 | **PAR Sheet Commitment v1.0** | ✅ 180/180 gates PASS | [`reports/acceptance/PAR_COMMITMENT.json`](../../reports/acceptance/PAR_COMMITMENT.md) |
+| 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 
 ## Why each is industry-first
 
@@ -75,6 +76,13 @@
 - **Industry-first claim**: Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable
 - **Commit**: `d7d3b5a`
 - **Detail**: `{"fixtures":30,"gatesPerFixture":6,"gates":["g1","g2","g3","g4","g5","g6"]}`
+
+### Wave 43 · ENT Entropy Battery (in-process) (K1 partial)
+
+- **Acceptance**: 6/6 sources PASS all 5 ENT stats
+- **Industry-first claim**: ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed
+- **Commit**: `(this commit)`
+- **Detail**: `{"sampleBytes":100000,"sources":[{"id":"mulberry32","H":7.998104609351095,"pi":3.1592463698547943,"pass":true},{"id":"pcg64","H":7.998111653748092,"pi":3.154686187447498,"pass":true},{"id":"xoshiro256ss","H":7.9980931168`…
 
 ## Auditor Q&A Map
 

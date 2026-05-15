@@ -162,6 +162,19 @@ const WAVES = [
     }),
     industry_first: 'Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable',
   },
+  {
+    wave: 43,
+    name: 'ENT Entropy Battery (in-process)',
+    kimi: 'K1 partial',
+    commit: '(this commit)',
+    reportPath: 'reports/rng/ENT_ASSESSMENT.json',
+    extractHeadline: (j) => `${j.headline.passCount}/${j.headline.sourceCount} sources PASS all 5 ENT stats`,
+    extractDetail: (j) => ({
+      sampleBytes: j.config?.sampleBytes,
+      sources: (j.sources ?? []).map((s) => ({ id: s.source, H: s.result.entropyBitsPerByte, pi: s.result.monteCarloPi, pass: s.result.overallPass })),
+    }),
+    industry_first: 'ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
@@ -272,6 +285,7 @@ function guessNpmAlias(wave) {
     38: 'test -- --run tests/hsmSeedBridge',
     39: 'sp80090b-assess',
     40: 'par-commitment-acceptance',
+    43: 'ent-assess',
   }[wave] ?? '(unknown)';
 }
 
