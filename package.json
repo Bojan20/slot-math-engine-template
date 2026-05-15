@@ -48,7 +48,8 @@
     "jurisdiction-auto-gate": "npm run build && node scripts/jurisdiction-auto-gate-acceptance.mjs",
     "diff-fuzz-cross-lang": "npm run build && node scripts/diff-fuzz-cross-language.mjs",
     "sp80090b-assess": "npm run build && node scripts/sp80090b-assess.mjs",
-    "par-commitment-acceptance": "npm run build && node scripts/par-commitment-acceptance.mjs"
+    "par-commitment-acceptance": "npm run build && node scripts/par-commitment-acceptance.mjs",
+    "industry-first-dossier": "node scripts/industry-first-dossier.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

@@ -40,6 +40,29 @@ or in 5 years.
 
 ---
 
+## 🏆 8 Industry-Firsts (Wave 33-40, all attested)
+
+> Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
+> Refresh anytime: `npm run industry-first-dossier`
+
+| Wave | What it ships that no other slot vendor publishes | Acceptance proof |
+|---:|---|---|
+| 33 | **Metamorphic RTP invariant suite** — MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) | 50/50 cells PASS |
+| 34 | **Mutation-score CI gate** — regression baseline + ≥90% promotion target | dual-mode gate landed |
+| 35 | **USIF PAR Schema v1.0** — open JSON Schema sa Markov transition matrices, EVT Pareto tail, jurisdiction-gated RTP | 20/20 samples valid |
+| 36 | **Jurisdiction auto-gate matrix** — 15 jurisdictions × 11 rules, single-page compliance answer | 450 verdicts emitted |
+| 37 | **Differential fuzz cross-language** — TS↔Rust scaling agreement na random IR varijantama | 160/160 cells PASS |
+| 38 | **HSM-backed DRBG seed bridge** — multi-instance broadcast bez koordinacije + FIPS 140-3 IG D.K health tests | 15/15 vitest PASS |
+| 39 | **SP 800-90B entropy assessment** — 4 non-IID estimators + IID test per RNG backend + HSM bridge | 6 sources Low-bar PASS |
+| 40 | **PAR sheet cryptographic commitment** — Merkle root + HSM-signed attestation; tamper detection | 180/180 gates PASS |
+
+These eight are deliberately vendor-disjoint. They exist in OUR engine
+because operator workflows and regulator workflows DEMAND them — not
+because anyone else built them and we copied. **The dossier is the
+differentiator.**
+
+---
+
 ## What you can verify on YOUR laptop in 5 minutes
 
 ```

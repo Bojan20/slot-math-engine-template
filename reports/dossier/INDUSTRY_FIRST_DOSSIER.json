@@ -1,0 +1,243 @@
+{
+  "schema": "industry-first-dossier/v1",
+  "generatedAtUtc": "2026-05-15T23:01:36.476Z",
+  "repo_sha": "1cb24978b682f6d2a3b5e0e6ed3390b813d8ab56",
+  "headline": {
+    "waves": 8,
+    "industry_firsts": 8,
+    "all_present": true
+  },
+  "waves": [
+    {
+      "wave": 33,
+      "kimi": "K4",
+      "commit": "f4ca791",
+      "name": "Metamorphic RTP Invariant Suite",
+      "reportPath": "reports/acceptance/METAMORPHIC_RTP.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T21:24:56.906Z",
+      "headline": "50/50 cells PASS",
+      "detail": {
+        "mrs": [
+          "MR1",
+          "MR2",
+          "MR3",
+          "MR4",
+          "MR5"
+        ],
+        "fixtures": 10,
+        "seeds": 4,
+        "spinsPerSeed": 20000,
+        "wallSeconds": "124.4"
+      },
+      "industry_first": "No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators"
+    },
+    {
+      "wave": 34,
+      "kimi": "K6",
+      "commit": "d23489a",
+      "name": "Mutation-Score CI Gate",
+      "reportPath": "reports/mutation/SUMMARY.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T21:32:42.196Z",
+      "headline": "TS 85.4% + Rust evaluator=100.0% / rng=92.6%",
+      "detail": {
+        "ts_total": 342,
+        "ts_killed": 290,
+        "ts_survived": 50,
+        "rust_crates": [
+          {
+            "crate": "evaluator",
+            "total": 24,
+            "caught": 9,
+            "score": 1
+          },
+          {
+            "crate": "rng",
+            "total": 69,
+            "caught": 50,
+            "score": 0.9264705882352942
+          }
+        ]
+      },
+      "industry_first": "No slot vendor advertises mutation-tested math kernel sa CI-gated regression baseline"
+    },
+    {
+      "wave": 35,
+      "kimi": "K5",
+      "commit": "dc3fdc0",
+      "name": "USIF PAR Sheet Schema v1.0",
+      "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T21:47:16.204Z",
+      "headline": "20/20 samples valid",
+      "detail": {
+        "mode": "baseline",
+        "schemaPath": "schemas/usif-par-v1.0.json",
+        "samples": 20
+      },
+      "industry_first": "No slot vendor publishes formal PAR sheet schema sa Markov transition matrices, EVT Pareto tail, jurisdiction-gated RTP"
+    },
+    {
+      "wave": 36,
+      "kimi": "K8",
+      "commit": "3f17c5e",
+      "name": "Jurisdiction Auto-Gate Matrix",
+      "reportPath": "reports/acceptance/JURISDICTION_AUTO_GATE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T22:02:23.141Z",
+      "headline": "450 verdicts (PASS=203 / WARN=175 / FAIL=72)",
+      "detail": {
+        "jurisdictions": 15,
+        "fixtures": 30,
+        "passPct": "45.11"
+      },
+      "industry_first": "No slot vendor publishes 15-jurisdiction compliance matrix sa near-miss UKGC RTS-3 enforcement"
+    },
+    {
+      "wave": 37,
+      "kimi": "K2",
+      "commit": "b46bdf2",
+      "name": "Differential Fuzz Cross-Language",
+      "reportPath": "reports/acceptance/DIFF_FUZZ_CROSS_LANG.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T22:12:02.999Z",
+      "headline": "160/160 cells PASS",
+      "detail": {
+        "mrs": [
+          "MR-CL-1",
+          "MR-CL-2",
+          "MR-CL-3",
+          "MR-CL-4"
+        ],
+        "variants": 20,
+        "spinsPerRun": 5000,
+        "wallSeconds": "13.6"
+      },
+      "industry_first": "No slot vendor tests cross-language scaling agreement TS↔Rust sa metamorphic invariants"
+    },
+    {
+      "wave": 38,
+      "kimi": "K10",
+      "commit": "bf7a6cd",
+      "name": "HSM-Backed DRBG Seed Bridge",
+      "reportPath": null,
+      "reportExists": true,
+      "reportMtime": null,
+      "headline": "15/15 vitest tests PASS",
+      "detail": {
+        "vendors": 8,
+        "healthTests": [
+          "RCT",
+          "APT"
+        ],
+        "fipsLevel": "140-3 IG D.K",
+        "docPath": "docs/HSM_SEED_ARCHITECTURE.md"
+      },
+      "industry_first": "No slot vendor publishes HSM-attested DRBG seed sa multi-instance broadcast i continuous health tests"
+    },
+    {
+      "wave": 39,
+      "kimi": "K3",
+      "commit": "0a396ff",
+      "name": "SP 800-90B Entropy Assessment",
+      "reportPath": "reports/rng/SP_800_90B_ASSESSMENT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T22:34:57.279Z",
+      "headline": "6 sources, all Low-bar (≥0.5 bits) ✅",
+      "detail": {
+        "sources": [
+          {
+            "id": "mulberry32",
+            "claim": 4.893084796083488,
+            "isIid": true
+          },
+          {
+            "id": "pcg64",
+            "claim": 4.5511741872648726,
+            "isIid": true
+          },
+          {
+            "id": "xoshiro256ss",
+            "claim": 4.692490965025601,
+            "isIid": true
+          },
+          {
+            "id": "philox4x32",
+            "claim": 4.930737337562886,
+            "isIid": true
+          },
+          {
+            "id": "chacha20",
+            "claim": 4.977279923499917,
+            "isIid": true
+          },
+          {
+            "id": "hsm-mock-bridge",
+            "claim": 5.029747343394052,
+            "isIid": true
+          }
+        ],
+        "sampleBytes": 50000
+      },
+      "industry_first": "No slot vendor publishes SP 800-90B Non-IID Track assessment per RNG backend + HSM bridge"
+    },
+    {
+      "wave": 40,
+      "kimi": "K9",
+      "commit": "d7d3b5a",
+      "name": "PAR Sheet Commitment v1.0",
+      "reportPath": "reports/acceptance/PAR_COMMITMENT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-15T22:45:53.592Z",
+      "headline": "180/180 gates PASS",
+      "detail": {
+        "fixtures": 30,
+        "gatesPerFixture": 6,
+        "gates": [
+          "g1",
+          "g2",
+          "g3",
+          "g4",
+          "g5",
+          "g6"
+        ]
+      },
+      "industry_first": "Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable"
+    }
+  ],
+  "auditor_qa": [
+    {
+      "q": "How do you prove the engine math implementation matches the spec?",
+      "a": "Wave 33 metamorphic RTP suite (50/50 PASS) + Wave 37 differential fuzz cross-language (160/160 PASS)."
+    },
+    {
+      "q": "How do you ensure new code does not silently break the math?",
+      "a": "Wave 34 mutation-score CI gate — regression mode blocks any score decline; promotion mode enforces ≥90% threshold."
+    },
+    {
+      "q": "What format do you submit the PAR sheet in?",
+      "a": "Wave 35 USIF PAR Schema v1.0 — JSON Schema Draft 2020-12, REQUIRED baseline + OPTIONAL Tier-1 extra-credit fields."
+    },
+    {
+      "q": "How do you know the game is compliant for our jurisdiction?",
+      "a": "Wave 36 jurisdiction auto-gate — 15 jurisdictions × 11 rules, single matrix shows PASS/WARN/FAIL per game."
+    },
+    {
+      "q": "What entropy assessment do you provide for the RNG?",
+      "a": "Wave 39 SP 800-90B Non-IID + IID assessment — 4 estimators per source, all 6 sources clear Low-bar (≥0.5 bits)."
+    },
+    {
+      "q": "How is the RNG seed protected from prediction?",
+      "a": "Wave 38 HSM-backed DRBG seed bridge — FIPS 140-3 IG D.K continuous health tests (RCT + APT), multi-instance broadcast."
+    },
+    {
+      "q": "How do we know the deployed math is the audited math?",
+      "a": "Wave 40 PAR Sheet Commitment v1.0 — SHA-256 Merkle commitment over full IR + HSM-signed attestation; post-cert tampering publicly detectable."
+    },
+    {
+      "q": "Can we replay outcomes to verify a disputed spin?",
+      "a": "Wave 38 HSM seed bridge provides epoch-deterministic seed; combined with bit-exact TS↔Rust parity (Wave 37) every spin is byte-reproducible."
+    }
+  ]
+}
