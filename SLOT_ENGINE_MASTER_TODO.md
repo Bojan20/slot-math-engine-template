@@ -104,7 +104,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 | # | Status | Wave | Note |
 |---|---|---|---|
-| K1 | ✅ ENT partial / ⚠️ external | **43** + scaffold | `(this commit)` — ENT 5-stat 6/6 PASS; TestU01/PractRand/Dieharder external |
+| K1 | ✅ ENT partial / ⚠️ external | **43** + scaffold | `ead0518` — ENT 5-stat 6/6 PASS; TestU01/PractRand/Dieharder external |
 | **K2** | ✅ | **37** | `b46bdf2` — 160/160 cells PASS, cross-language metamorphic |
 | **K3** | ✅ | **39** | `0a396ff` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
 | **K4** | ✅ | **33** | `f4ca791` — 50/50 metamorphic invariants PASS |
@@ -201,7 +201,7 @@ Legenda:
 | 40 | `d7d3b5a` | **Kimi K9 ⚠️→✅ (Phase 1)** — PAR Commitment v1.0: Merkle commitment nad full IR + HSM-signed attestation + auditor verification protocol (root + RTP tolerance); detects post-cert tampering. 17/17 vitest + 30 fixtures × 6 gates = 180/180 acceptance PASS. Phase 2 Groth16 zk-SNARK dokumentovan kao future ext (12-18 nedelja) |
 | 41 | `44c77b7` | **Unified Industry-First Dossier** — `scripts/industry-first-dossier.mjs` (~280 L) aggregates 8 wave acceptance reports (Wave 33-40) u single operator-deliverable: per-wave headlines + auditor Q&A map (8 questions) + cert paper trail + honest gaps section. Headline: **8/8 industry-firsts attested**. `reports/dossier/INDUSTRY_FIRST_DOSSIER.{json,md}` + npm `industry-first-dossier`. COMMERCIAL_PITCH.md sad referencira dossier kao single source of truth (8-row Industry-Firsts tabela na vrhu) |
 | 42 | `87859be` | **Sales Demo §7 HSM + §8 PAR LIVE proof of W38+W40 (opcija E)** — `scripts/sales-demo.mjs` extended sa 2 nova step-a: §7 HSM Seed Bridge LIVE (3 epoch distinct + cluster isolation + multi-instance broadcast + RCT/APT health) + §8 PAR Commitment LIVE (Merkle root + auditor PASS pristine + tamper-detection FAIL + RTP-drift FAIL + integrity check). 8 step-ova × ~2.2s wall, sve gracefully skip ako dist/ nije rebuild-ovan |
-| 43 | `(this commit)` | **Kimi K1 partial ⚠️→✅ ENT entropy battery** — `src/rng/ent/entStats.ts` (~180 L) sa 5 ENT statistika (Shannon entropy / χ² goodness-of-fit / arithmetic mean / Monte Carlo π / lag-1 serial correlation); 15/15 vitest PASS; `scripts/ent-assess.mjs` runner na 6 sources (5 PRNG + HSM bridge) — **6/6 PASS sve 5 stats**, HSM bridge ima MOST ACCURATE π estimate (3.14125 vs π=3.14159). Three-of-six Kimi-cited batteries sad in-process landed (NIST SP 800-22 + ENT + SP 800-90B); TestU01/PractRand/Dieharder external runner i dalje pending |
+| 43 | `ead0518` | **Kimi K1 partial ⚠️→✅ ENT entropy battery** — `src/rng/ent/entStats.ts` (~180 L) sa 5 ENT statistika (Shannon entropy / χ² goodness-of-fit / arithmetic mean / Monte Carlo π / lag-1 serial correlation); 15/15 vitest PASS; `scripts/ent-assess.mjs` runner na 6 sources (5 PRNG + HSM bridge) — **6/6 PASS sve 5 stats**, HSM bridge ima MOST ACCURATE π estimate (3.14125 vs π=3.14159). Three-of-six Kimi-cited batteries sad in-process landed (NIST SP 800-22 + ENT + SP 800-90B); TestU01/PractRand/Dieharder external runner i dalje pending |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
