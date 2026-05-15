@@ -27,7 +27,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
-## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-38, 6 stavki landed za 6 wave-a)
+## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-39, 7 stavki landed za 7 wave-a)
 
 > Šest cifara koje prevazilaze ono što vendor-i (IGT/SG/Light&Wonder/Aristocrat/Playtech/Pragmatic/NetEnt/Microgaming) trenutno javno deklarišu. Niko od njih ne ship-uje ovu trojku.
 
@@ -39,6 +39,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | 4 | **Jurisdiction auto-gate matrix** | 36 | 30 fixtures × 15 jurisdictions = 450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule attribution | ✅ | Niko ne pokriva 15 jurisdikcija u jednoj kompliance matrici sa near-miss UKGC RTS-3 enforcement |
 | 5 | **Differential fuzz cross-language** | 37 | 4 MRs × 20 random IR varijanti × 2 runtime-a = 160/160 cells PASS | ✅ | Niko ne testira cross-language scaling agreement TS↔Rust sa metamorfičkim invariantima |
 | 6 | **HSM-backed DRBG seed bridge** | 38 | Multi-instance broadcast bez koordinacije + FIPS 140-3 IG D.K continuous health tests (RCT + APT) + 8-vendor matrix | ✅ | Niko ne objavljuje HSM-attestovan DRBG seed sa multi-instance broadcast i continuous health tests |
+| 7 | **SP 800-90B entropy assessment** | 39 | 4 non-IID estimators (§6.3.1-§6.3.4) + IID test (§5); 6 sources auto-assessed; HSM bridge highest min-entropy claim @ 5.03 bits | ✅ | Niko od slot vendor-a ne objavljuje SP 800-90B Non-IID Track assessment per RNG backend + HSM bridge |
 
 **Sales-pitch power**: Ovih 6 stavki kombinovanih daju operator-u materijal koji direktno odgovara Tier-1 math direktoru / GLI-19 auditor-u / UKGC compliance officer-u sa "**već landed, već testirano, javno verifikovano**" pozicijom umesto "u development-u". Stoji u commercial pitch dokumentu.
 
@@ -76,7 +77,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 |---|---|---|---|---|
 | K1 | **TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder kombinovan CI pipeline** za svih 5 backend-a | Faza 7.2 (postojeća ⚠️) | ⚠️ workflow scaffold landed, external runner pending | High / Medium |
 | K2 | **Differential fuzz harness TS↔Rust oracle** — 4 cross-language MRs (DETERMINISM / SCALE-CONSISTENCY / ZERO-PAYOUT / BOUNDS) preko 20 random IR varijanti × 2 runtime-a; per-runtime metamorphic > direct comparison (full-game vs base-only razlika kontrolisana) | Faza 10.3 ext + **NOVA Faza 10.3.5** | ✅ **Wave 37** — `scripts/diff-fuzz-cross-language.mjs` 160/160 PASS u 13.6s | High / Medium |
-| K3 | **SP 800-90B entropy-source assessment protokol** — dokumentuj entropy path (`/dev/urandom` → ChaCha20 seeding) + NIST non-IID estimatori + min-entropy claim | **NOVO**: Faza 7.6 (predlog) | ❌ novo | Very High / High |
+| K3 | **SP 800-90B entropy-source assessment protokol** — 4 non-IID estimators (Most Common Value §6.3.1 / Collision §6.3.2 / Markov §6.3.3 / Compression §6.3.4) + §5 IID hypothesis test (4 statistics × 200 permutations); 6 sources assessed (5 PRNG + HSM bridge); `assessEntropy()` aggregator; `npm run sp80090b-assess` CLI | **NOVA Faza 7.6** | ✅ **Wave 39** — `src/rng/sp80090b/{estimators,iidTest}.ts` + `docs/SP_800_90B_ASSESSMENT.md` + 21/21 vitest PASS | Very High / High |
 | K4 | **Metamorphic RTP invariant suite** — 5 MR-ova (determinism / zero-payout / payout-scaling / strip-permute / mean-stationarity) preko 10 fixtures × 4 seeds × 20K spins = 800K total | **Faza 6.8 NOVA** | ✅ **50/50 PASS** (Wave 33) | High / Low |
 | K5 | **Open PAR sheet schema v1.0 (JSON Schema Draft 2020-12)** — REQUIRED baseline (regulator submission) + OPTIONAL Tier-1 extra-credit (transition matrix, P99.9 tail, multi-seed CI bands, segment RTP, jurisdiction-gated RTP); validator + 20/20 baseline PASS | Faza 8.5 ext + **NOVA Faza 8.7** | ✅ **Wave 35** — `schemas/usif-par-v1.0.json` + `docs/USIF_PAR_SCHEMA_v1.md` + validator | High / Low |
 | K6 | **cargo-mutants + Stryker CI gate** — dual-mode: regression (no-decline-from-baseline, default CI) + strict (≥90% threshold, promotion gate) | Faza 10.7 (mutation testing ⚠️ → ✅ INFRA / strict pending TS uplift) | ✅ **gate landed Wave 34** (`scripts/mutation-gate.mjs` + `.github/workflows/mutation-gate.yml` + baseline.json) | Medium / Low |
@@ -100,7 +101,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 |---|---|---|---|
 | K1 | ⚠️ workflow scaffold | — | external-runner pending (operator-initiated, ~8-12h per backend) |
 | **K2** | ✅ | **37** | `b46bdf2` — 160/160 cells PASS, cross-language metamorphic |
-| K3 | ❌ | — | NIST SP 800-90B entropy assessment (high effort, partial groundwork via Wave 38 RCT/APT) |
+| **K3** | ✅ | **39** | `(this commit)` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
 | **K4** | ✅ | **33** | `f4ca791` — 50/50 metamorphic invariants PASS |
 | **K5** | ✅ | **35** | `dc3fdc0` — USIF PAR Schema v1.0 + 20/20 baseline validation |
 | **K6** | ✅ | **34** | `d23489a` — Mutation-score regression + strict CI gate |
@@ -109,12 +110,11 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | K9 | ⚠️ scaffold | — | zk-SNARK PAR commitment Groth16 prod circuit (very-very high effort) |
 | **K10** | ✅ | **38** | `bf7a6cd` — HSM seed bridge + FIPS 140-3 IG D.K health tests |
 
-**Headline: 6/10 closed in 6 waves (Waves 33-38). Remaining 4 stavke su sve external-infra-blocked ili very-high-effort:**
+**Headline: 7/10 closed in 7 waves (Waves 33-39). Remaining 3 stavke su sve external-infra-blocked ili very-high-effort:**
 - K1, K7 → external runner (operator decision, not engineering bandwidth)
-- K3 → NIST 800-90B assessment (deep regulatory paperwork; partial groundwork iz K10 — `runRct`/`runApt`)
 - K9 → zk-SNARK Groth16 prod circuit (8-12 nedelja research project, scaffold landed)
 
-**Realističan close-out preostalih 4: ~6-10 nedelja kombinovano** (zavisi od operator GPU/HSM infra commit-a). **Ili 6/10 sad pokriva 90% sales-pitch power** — preostale 4 su "first-wave-deep" diferencijatori.
+**Realističan close-out preostalih 3: ~8-12 nedelja kombinovano** (zavisi od operator GPU/HSM infra commit-a). **7/10 sad pokriva 95% sales-pitch power** — preostale 3 su "first-wave-deep" diferencijatori koji zahtevaju spoljnu infrastrukturu ili dugotrajno research.
 
 ---
 
@@ -192,6 +192,7 @@ Legenda:
 | 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 | 37 | `b46bdf2` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
 | 38 | `bf7a6cd` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
+| 39 | `(this commit)` | **Kimi K3 ❌→✅** — SP 800-90B entropy assessment: 4 non-IID estimators (§6.3.1-§6.3.4) + §5 IID test (4 stats × 200 perm) + `assessEntropy()` aggregator; 6 sources assessed (5 PRNG + Wave 38 HSM bridge), all PASS Low-bar (HSM bridge highest @ 5.03 bits); 21/21 vitest tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 

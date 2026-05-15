@@ -1,0 +1,651 @@
+{
+  "schema": "sp-800-90b-assessment/v1",
+  "generatedAtUtc": "2026-05-15T22:34:57.278Z",
+  "config": {
+    "sampleBytes": 50000,
+    "iidPermutations": 200
+  },
+  "headline": {
+    "sourceCount": 6,
+    "allCsprngPass": false,
+    "allLowPass": true
+  },
+  "sources": [
+    {
+      "source": "mulberry32",
+      "label": "Mulberry32 (legacy)",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.629Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.453711120854691,
+            "details": {
+              "L": 50000,
+              "maxCount": 245,
+              "pHat": 0.0049,
+              "pUpper": 0.005704392150596546,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.30079057963854,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.73942586040528,
+              "seMean": 1.1404796928454604,
+              "pMaxEst": 0.000024206251750265367,
+              "pUpper": 0.00002477439616959341
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 4.893084796083488,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.0049,
+              "maxCondP": 0.03365384615384615,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.882249288470735,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.182249288470735,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 4.893084796083488,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.667Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 2897.50079999998,
+            "permutationCount": 200,
+            "exceedances": 182,
+            "pValue": 0.9104477611940298,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3363,
+            "permutationCount": 200,
+            "exceedances": 18,
+            "pValue": 0.0945273631840796,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 7,
+            "permutationCount": 200,
+            "exceedances": 165,
+            "pValue": 0.8258706467661692,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 222.1952,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 4.893084796083488,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    },
+    {
+      "source": "pcg64",
+      "label": "PCG64",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.684Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.437393597255266,
+            "details": {
+              "L": 50000,
+              "maxCount": 248,
+              "pHat": 0.00496,
+              "pUpper": 0.005769277617047629,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.29938563266309,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.61804438726278,
+              "seMean": 1.1409436943013265,
+              "pMaxEst": 0.00002422933645229918,
+              "pUpper": 0.000024798534095822604
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 4.5511741872648726,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.00496,
+              "maxCondP": 0.04265402843601896,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.881636029685502,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.181636029685502,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 4.5511741872648726,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.714Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 3889.896000000008,
+            "permutationCount": 200,
+            "exceedances": 110,
+            "pValue": 0.5522388059701493,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3313,
+            "permutationCount": 200,
+            "exceedances": 142,
+            "pValue": 0.7114427860696517,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 6,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 259.3664000000001,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 4.5511741872648726,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    },
+    {
+      "source": "xoshiro256ss",
+      "label": "Xoshiro256SS",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.729Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.526729688123668,
+            "details": {
+              "L": 50000,
+              "maxCount": 232,
+              "pHat": 0.00464,
+              "pUpper": 0.005422862523071424,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.29832461054391,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.52201270504986,
+              "seMean": 1.1395847118027795,
+              "pMaxEst": 0.00002424762345909974,
+              "pUpper": 0.000024816778749236504
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 4.692490965025601,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.00464,
+              "maxCondP": 0.03867403314917127,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.879877558456065,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.179877558456065,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 4.692490965025601,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.759Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 3653.3559999999998,
+            "permutationCount": 200,
+            "exceedances": 128,
+            "pValue": 0.6417910447761194,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3330,
+            "permutationCount": 200,
+            "exceedances": 99,
+            "pValue": 0.4975124378109453,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 7,
+            "permutationCount": 200,
+            "exceedances": 164,
+            "pValue": 0.8208955223880597,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 257.01120000000003,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 4.692490965025601,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    },
+    {
+      "source": "philox4x32",
+      "label": "Philox4x32",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.781Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.486934292547287,
+            "details": {
+              "L": 50000,
+              "maxCount": 239,
+              "pHat": 0.00478,
+              "pUpper": 0.00557452929875667,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.299662725037772,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.64936474750724,
+              "seMean": 1.1437192137914074,
+              "pMaxEst": 0.000024223376689716815,
+              "pUpper": 0.000024793771602946347
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 4.930737337562886,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.00478,
+              "maxCondP": 0.03278688524590164,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.875201437770755,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.175201437770755,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 4.930737337562886,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.810Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 4754.338400000008,
+            "permutationCount": 200,
+            "exceedances": 74,
+            "pValue": 0.373134328358209,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3339,
+            "permutationCount": 200,
+            "exceedances": 66,
+            "pValue": 0.3333333333333333,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 7,
+            "permutationCount": 200,
+            "exceedances": 167,
+            "pValue": 0.835820895522388,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 218.61120000000008,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 4.930737337562886,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    },
+    {
+      "source": "chacha20",
+      "label": "ChaCha20 (CSPRNG)",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.825Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.486934292547287,
+            "details": {
+              "L": 50000,
+              "maxCount": 239,
+              "pHat": 0.00478,
+              "pUpper": 0.00557452929875667,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.302041908669576,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.83330652943067,
+              "seMean": 1.1345232860066488,
+              "pMaxEst": 0.000024188419854229738,
+              "pUpper": 0.000024752917284758868
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 4.977279923499917,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.00478,
+              "maxCondP": 0.031746031746031744,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.889912205789407,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.1899122057894065,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 4.977279923499917,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:56.854Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 3236.8439999999828,
+            "permutationCount": 200,
+            "exceedances": 162,
+            "pValue": 0.8109452736318408,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3367,
+            "permutationCount": 200,
+            "exceedances": 19,
+            "pValue": 0.09950248756218906,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 7,
+            "permutationCount": 200,
+            "exceedances": 159,
+            "pValue": 0.7960199004975125,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 205.1967999999999,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 4.977279923499917,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    },
+    {
+      "source": "hsm-mock-bridge",
+      "label": "HSM Mock Bridge (Wave 38)",
+      "assessment": {
+        "schema": "sp-800-90b/v1",
+        "generatedAtUtc": "2026-05-15T22:34:57.249Z",
+        "sampleCount": 50000,
+        "alphabetSize": 256,
+        "estimators": [
+          {
+            "estimator": "most_common_value_6.3.1",
+            "minEntropyBits": 7.492549799098923,
+            "details": {
+              "L": 50000,
+              "maxCount": 238,
+              "pHat": 0.00476,
+              "pUpper": 0.00555287332792069,
+              "alphabetSize": 256,
+              "z": 2.5758293064439264
+            }
+          },
+          {
+            "estimator": "collision_6.3.2",
+            "minEntropyBits": 15.297990275802068,
+            "details": {
+              "L": 50000,
+              "collisions": 49744,
+              "meanDistance": 254.482570762303,
+              "seMean": 1.1355894051123492,
+              "pMaxEst": 0.000024255140260638855,
+              "pUpper": 0.000024822530534995148
+            }
+          },
+          {
+            "estimator": "markov_6.3.3",
+            "minEntropyBits": 5.029747343394052,
+            "details": {
+              "L": 50000,
+              "pInitMax": 0.00476,
+              "maxCondP": 0.030612244897959183,
+              "alphabetSize": 256
+            }
+          },
+          {
+            "estimator": "compression_6.3.4",
+            "minEntropyBits": 6.888962701609654,
+            "details": {
+              "L": 50000,
+              "init": 1000,
+              "meanLogDist": 7.188962701609654,
+              "count": 49000
+            }
+          }
+        ],
+        "minEntropyClaim": 5.029747343394052,
+        "passesLowBar": true,
+        "passesCsprngBar": false
+      },
+      "iid": {
+        "schema": "sp-800-90b-iid-test/v1",
+        "generatedAtUtc": "2026-05-15T22:34:57.278Z",
+        "sampleCount": 5000,
+        "permutations": 200,
+        "tests": [
+          {
+            "test": "iid_excursion",
+            "observed": 3750.5053999999946,
+            "permutationCount": 200,
+            "exceedances": 132,
+            "pValue": 0.6616915422885572,
+            "pass": true
+          },
+          {
+            "test": "iid_num_directional_runs",
+            "observed": 3336,
+            "permutationCount": 200,
+            "exceedances": 66,
+            "pValue": 0.3333333333333333,
+            "pass": true
+          },
+          {
+            "test": "iid_longest_directional_run",
+            "observed": 7,
+            "permutationCount": 200,
+            "exceedances": 166,
+            "pValue": 0.8308457711442786,
+            "pass": true
+          },
+          {
+            "test": "iid_chi_square_uniform",
+            "observed": 274.31679999999983,
+            "permutationCount": 200,
+            "exceedances": 200,
+            "pValue": 1,
+            "pass": true
+          }
+        ],
+        "isIid": true
+      },
+      "headline": {
+        "claim": 5.029747343394052,
+        "passLow": true,
+        "passCsprng": false,
+        "isIid": true
+      }
+    }
+  ]
+}

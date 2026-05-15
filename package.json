@@ -46,7 +46,8 @@
     "usif-par-validate": "node scripts/usif-par-validate.mjs",
     "usif-par-validate:strict": "node scripts/usif-par-validate.mjs --strict-tier1",
     "jurisdiction-auto-gate": "npm run build && node scripts/jurisdiction-auto-gate-acceptance.mjs",
-    "diff-fuzz-cross-lang": "npm run build && node scripts/diff-fuzz-cross-language.mjs"
+    "diff-fuzz-cross-lang": "npm run build && node scripts/diff-fuzz-cross-language.mjs",
+    "sp80090b-assess": "npm run build && node scripts/sp80090b-assess.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
