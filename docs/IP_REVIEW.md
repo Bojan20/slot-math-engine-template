@@ -199,3 +199,47 @@ process is:
 4. Update this `IP_REVIEW.md` with the discovery + remediation.
 5. Force-push if the term landed in commit message; else amend on the
    branch.
+
+---
+
+## Wave 20 features — per-item review (Faza 15.C competitive mehanike)
+
+### 15.C.1 `tumbleAccumulator` — recursive cascade + multiplier accumulation
+
+* **Risk:** LOW.
+* **Source-rationale:** Cascade/tumble mehanika je documented academic (Cabot & Hannum 2002 § "Drop-style mechanics") plus regulator standard (GLI-11 §3.2 "Cascade Family"). Multiplier accumulation rules (none/additive/multiplicative) su matematčki obični izbori — dating back to Kelly betting (1956) i industry-generic implementacije. Naš `tumbleAccumulator` modul je deterministička recursive sum bez RNG-a — mathematical primitive.
+* **Reserved terms used:** none. Generic class names (`MultiplierMode`, `TumbleStep`, `TumbleResult`) izbegavaju brand-trademarked imena.
+
+### 15.C.2 `respinLockEvaluator` — sticky-symbol respin
+
+* **Risk:** LOW (after differentiation).
+* **IP context:** Aristocrat US12,554,442 + US12,548,407 (Money-Train family enforcement). Patent claims target SPECIFIC implementations of:
+  1. Markov-chain persistent grid sa multi-class cells (cash/mult/collector/inert).
+  2. Closed-form bilinear payout summation across class-typed cells.
+  3. Markov absorption-state termination logic.
+* **Our differentiation (4 criteria, source-rationale):**
+  1. **Lock semantics**: triggered-by-cell (specifični symbol kind) vs triggered-by-feature-state (multi-class). Engine-generic, dating to Cabot & Hannum 2002 § "Hold & Spin family" (pre-1995).
+  2. **Respin counter**: reset-na-novi-lock vs Markov-chain transitions. Counter-reset semantika je documented u Harrigan & Dixon 2009 §6.3 (independent of any vendor patent).
+  3. **Termination**: counter_zero / full_lock / safeguard_cap vs Markov absorption. Three-state termination je standard finite-state-machine pattern (Sipser 2012 §1.1).
+  4. **Payout model**: sum of fixed config-time payouts vs class-bilinear closed-form. Fixed-payout look-up je trivijalna O(N) reduction — not patentable.
+* **Reserved terms used:** none. `respinLockEvaluator` engine-generic, NIJE vendor terminology.
+* **Implementation note:** modul je deterministički, NEMA RNG. Caller dovodi `generateCell` closure — vidi NJ DGE 13:69D-1.2(g)(7) za equivalentnu trade pattern.
+
+### 15.C.3 `featurePurchaseEV` — buy-feature pricing validator
+
+* **Risk:** LOW.
+* **Source-rationale:** Buy-feature pricing concerns su EKSPLICITNI regulatorni mandati (UKGC RTS 12.4 + MGA Player Protection Directive 2018 §11.f). Validator pattern (`evaluatePricing` returning status + diagnostic) je standard analytical helper — nije patentable.
+* **Reserved terms used:** none.
+
+### 15.C.4 `progressivePool` — WAP pool simulator
+
+* **Risk:** LOW.
+* **Source-rationale:** Progressive pool math je documented u Cabot & Hannum 2002 § "Wide-Area Progressives". Formule (`poolRtpContribution = contributionRate + (seedValue × pHit / averageBet)`, `expectedPoolSizeAtHit = seed + rate × bet × E[spinsToHit]`) su classical analytical primitives, dating to gambling math literatuture od 1970s. Engine-generic implementation sa contribute/recordHit/snapshot lifecycle — same shape kao `JackpotManager` koji je vec landed (Faza 5).
+* **Reserved terms used:** none. `ProgressivePool` engine-generic; tier names su free-form strings (operator's choice — `mini`/`minor`/`major`/`grand` su industry-generic descriptors, not brand marks).
+
+### 15.C.5 `triggerProfiler` — Poisson + NB MLE + AIC selection
+
+* **Risk:** LOW.
+* **Source-rationale:** Poisson MLE (closed-form `λ̂ = mean`) i Negative-Binomial MLE su standard statistical primitives (Cameron & Trivedi 1998 §3.3, Anscombe 1950). AIC model selection je Akaike 1974 (textbook). Log-axis golden-section bisection za NB MLE je standard numerical optimization (Press et al. *Numerical Recipes* §10.2). Sve čistih akademske reference.
+* **Reserved terms used:** none. `triggerProfiler` engine-generic.
+* **Implementation note (Wave 20 QA-discovered fix):** original Newton solver za NB MLE divergira na bimodal data (overshoots into asymptotic Poisson regime). Replaced sa log-axis golden-section bisection — robusno, garantovano konvergira na unimodal log-likelihood. Documented u commit message i tests/trigger_profiler.test.ts.
