@@ -50,7 +50,9 @@
     "sp80090b-assess": "npm run build && node scripts/sp80090b-assess.mjs",
     "par-commitment-acceptance": "npm run build && node scripts/par-commitment-acceptance.mjs",
     "industry-first-dossier": "node scripts/industry-first-dossier.mjs",
-    "ent-assess": "npm run build && node scripts/ent-assess.mjs"
+    "ent-assess": "npm run build && node scripts/ent-assess.mjs",
+    "operator-package": "node scripts/operator-package.mjs",
+    "operator-package:cached": "node scripts/operator-package.mjs --skip-acceptance"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

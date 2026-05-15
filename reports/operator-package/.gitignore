@@ -1,0 +1,5 @@
+# Operator package ZIPs and manifests are regenerated artifacts;
+# they should NOT be committed. Run `npm run operator-package` to
+# generate a fresh package for a given commit.
+*.zip
+*.MANIFEST.json
