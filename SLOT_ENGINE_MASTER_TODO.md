@@ -4,6 +4,29 @@
 > Format: **fazni** (sve P0 pre P1 itd.), unutar faze **paralelizibilno** koliko god moguće.
 > Acceptance kriterij za svaku stavku je **konkretan i merljiv**.
 
+---
+
+## 🔒 PROCESS RULE (Boki, 2026-05-15, **OBAVEZNO BEZ IZUZETKA**)
+
+**UVEK:** ultimativno rešenje → ultimativna implementacija → **ULTIMATIVNO DETALJAN QA implementiranog** → fix svih bug-ova nađenih → commit + push.
+
+Ultimate QA checklist (svaki Wave, posle svake implementacije, bez pitanja):
+
+1. **TS lint** — `npm run lint` (tsc --noEmit) → 0 errors.
+2. **TS test suite** — `npm test` → 0 fail, baseline broj specs ne sme pasti.
+3. **TS build** — `npm run build` → clean.
+4. **Rust build** — `cargo build --release` → clean.
+5. **Rust clippy** — `cargo clippy --lib -D warnings` → 0 warnings.
+6. **Rust test** — `cargo test --release` → 0 fail.
+7. **Reserved-terms scan** — `bash scripts/check-reserved-terms.sh --all` → 0 violations.
+8. **Integration smoke** — `npm run optimizer-reproductions` ili equivalent ako je modul taknut.
+9. **Master_todo update** — flip ⚠️/❌ → ✅ sa landed-note (file paths, LOC, spec count).
+10. **Commit + push** — sa Co-Authored-By: Claude Opus + detaljnim message-om.
+
+Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): close N bugs" commit ako je manji refaktor). Nikada ne ostaviti bug nepokriven kao "drugi commit će popraviti".
+
+---
+
 Legenda:
 - ✅ uradjeno
 - ⚠️ delimično / stub
