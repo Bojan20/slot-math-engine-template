@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/schemas/usif-par-v1.0.json",
+  "title": "USIF PAR Sheet Schema v1.0",
+  "description": "Universal Slot Interchange Format — PAR Sheet open standard. Two tiers of fields: REQUIRED (regulator submission baseline) and OPTIONAL (Tier-1 math-director extra credit). The optional fields are what slot vendors keep secret; this schema publishes them as a public standard. References: GLI-19 §3, UKGC RTS-7, MGA PPD §11.f, eCOGRA Generic Slots Algorithm Audit, Harrigan & Dixon (CDS Press 2014).",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "game", "simulation", "results", "compliance"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Pinned. Future revisions bump to 1.1 / 2.0 with explicit migration notes."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of report generation."
+    },
+    "configHash": {
+      "type": ["string", "null"],
+      "pattern": "^[a-f0-9]{16,64}$",
+      "description": "SHA-256 (or truncated 16-char) of the source IR config. Allows lab-side cryptographic match between the audited config and the deployed binary."
+    },
+    "game": {
+      "type": "object",
+      "required": ["name", "version", "layout", "paySystem", "targetRTP"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "mathVersion": { "type": "string" },
+        "layout": { "type": "string", "description": "e.g. '5x3', '6x4', '7x7'" },
+        "paySystem": {
+          "type": "string",
+          "enum": ["lines", "ways", "cluster", "pay-anywhere", "pay_anywhere", "pattern", "scatter-pay", "scatter_pay"],
+          "description": "Both kebab-case (USIF canonical) and snake_case (vendor-legacy) forms accepted. Validators may normalize to canonical kebab-case on read."
+        },
+        "paylines": { "type": ["integer", "null"], "minimum": 0 },
+        "targetRTP": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200,
+          "description": "Target RTP. Values >1 are interpreted as percent (e.g. 96 = 96%); values ≤1 as fraction (e.g. 0.96 = 96%)."
+        },
+        "maxWin": { "type": ["number", "null"], "minimum": 0, "description": "Max-win cap as multiple of bet (UKGC SI 2025/215, NL KSA, MGA PPD)." }
+      }
+    },
+    "simulation": {
+      "type": "object",
+      "required": ["spins", "seed", "engineVersion"],
+      "properties": {
+        "spins": { "type": "integer", "minimum": 1 },
+        "seed": { "type": ["integer", "string"] },
+        "engineVersion": { "type": "string" },
+        "paytableScaleFactor": { "type": ["number", "null"], "description": "Optional auto-scale factor applied to match targetRTP." },
+        "preScaleRTP": { "type": ["number", "null"] },
+        "rngBackend": {
+          "type": "string",
+          "enum": ["mulberry32", "pcg64", "xoshiro256ss", "philox4x32", "chacha20"],
+          "description": "Optional. Required for FIPS / GLI-19 RNG-source attestation."
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "required": ["observedRTP", "rtpPercent", "hitRate"],
+      "properties": {
+        "observedRTP": { "type": "number", "minimum": 0 },
+        "rtpPercent": { "type": "number", "minimum": 0 },
+        "errorMargin": { "type": "number", "minimum": 0 },
+        "ci95Lower": { "type": "number", "minimum": 0 },
+        "ci95Upper": { "type": "number", "minimum": 0 },
+        "rtpBreakdown": {
+          "type": "object",
+          "description": "Segment RTP by feature class. Tier-1 math directors require this — regulators don't always.",
+          "additionalProperties": { "type": "number", "minimum": 0 }
+        },
+        "hitRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "deadSpinRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "maxObservedWin": { "type": "number", "minimum": 0 }
+      }
+    },
+    "volatility": {
+      "type": "object",
+      "description": "OPTIONAL. Standard fields are VI95 / VI99; extra-credit adds full quantile vector and POT (Peaks-Over-Threshold) Pareto fit for max-win-tail projection.",
+      "properties": {
+        "vi95": { "type": ["number", "null"], "minimum": 0 },
+        "vi99": { "type": ["number", "null"], "minimum": 0 },
+        "stdDev": { "type": ["number", "null"], "minimum": 0 },
+        "p99": { "type": ["number", "null"] },
+        "p999": { "type": ["number", "null"], "description": "P99.9 tail — Tier-1 extra credit." },
+        "p9999": { "type": ["number", "null"], "description": "P99.99 tail — auditor extra extra credit." },
+        "paretoTail": {
+          "type": "object",
+          "description": "EVT POT fit — projects max-win-cap pressure beyond observed sample.",
+          "properties": {
+            "alpha": { "type": "number" },
+            "xm": { "type": "number" },
+            "ksPValue": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "array",
+      "description": "Per-feature contribution + frequency. REQUIRED if game has any feature (FS / H&W / cascade / wheel / pick / buy / ante / gamble / symbol-upgrade).",
+      "items": {
+        "type": "object",
+        "required": ["id", "rtpContribution"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "triggerRate": { "type": "number", "minimum": 0, "maximum": 1 },
+          "frequency": { "type": "string", "description": "Human-readable e.g. '1 in 30'" },
+          "rtpContribution": { "type": "number", "minimum": 0 },
+          "transitionMatrix": {
+            "type": "array",
+            "description": "OPTIONAL Tier-1 extra credit. For Markov-modelable features (collection bonus, sticky wilds, Lightning-Link-class), publish the full discrete-time transition matrix. Reference: SolCalc 2018, Aarhus University. No vendor publishes this.",
+            "items": {
+              "type": "array",
+              "items": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          },
+          "timeToTriggerCdf": {
+            "type": "array",
+            "description": "OPTIONAL extra credit. CDF as [{spinIndex, probability}] list — operators use this for player-experience modeling.",
+            "items": {
+              "type": "object",
+              "required": ["spinIndex", "probability"],
+              "properties": {
+                "spinIndex": { "type": "integer", "minimum": 0 },
+                "probability": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ciBands": {
+      "type": "object",
+      "description": "OPTIONAL extra credit. Multi-seed CI bands — auditor proof that a single MC run is representative. Reference: Harrigan & Dixon CDS Press 2014.",
+      "properties": {
+        "seedCount": { "type": "integer", "minimum": 2 },
+        "seedRtps": { "type": "array", "items": { "type": "number", "minimum": 0 } },
+        "meanRtp": { "type": "number", "minimum": 0 },
+        "stdDev": { "type": "number", "minimum": 0 },
+        "se95Lower": { "type": "number", "minimum": 0 },
+        "se95Upper": { "type": "number", "minimum": 0 }
+      }
+    },
+    "jurisdictionGated": {
+      "type": "object",
+      "description": "OPTIONAL — emit per-jurisdiction RTP variants if the IR supports configurable RTP (IGT-style). Field name → array of {jurisdiction, rtp}.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "jurisdiction": { "type": "string" },
+            "rtp": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "compliance": {
+      "type": "object",
+      "required": ["standard"],
+      "properties": {
+        "standard": {
+          "type": "string",
+          "description": "e.g. 'GLI-19 v3.0', 'GLI-16', 'UKGC RTS-7', 'eCOGRA Generic Slots'"
+        },
+        "submitter": { "type": "string" },
+        "cycleSize": { "type": "integer", "minimum": 1 },
+        "labCertId": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

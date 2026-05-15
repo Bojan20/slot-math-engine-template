@@ -1,0 +1,114 @@
+{
+  "schema": "usif-par-validation/v1",
+  "generatedAtUtc": "2026-05-15T21:47:16.202Z",
+  "schemaPath": "schemas/usif-par-v1.0.json",
+  "mode": "baseline",
+  "headline": {
+    "total": 20,
+    "pass": 20,
+    "fail": 0,
+    "allPass": true
+  },
+  "samples": [
+    {
+      "file": "3x5-5lines.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "5x3-20lines.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "5x3-243ways.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "5x4-25lines.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "6x4-4096ways.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cascade-drop.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cascade-fixed-strip.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cascade-refill.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "classic-3x3-lines.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cluster-7x7.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cluster-diagonal.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "cluster-hexagonal.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "complex-variable-rows.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "fs-expanding-wilds.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "fs-multiplier-ladder.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "fs-retrigger.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "fs-sticky-wilds.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "hnw-classic.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "pay-anywhere.par.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "file": "variable-rows-7reels.par.json",
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

@@ -42,7 +42,9 @@
     "metamorphic-rtp": "npm run build && node scripts/metamorphic-rtp-invariants.mjs",
     "mutation-gate": "node scripts/mutation-gate.mjs",
     "mutation-gate:strict": "node scripts/mutation-gate.mjs --strict",
-    "mutation-gate:update-baseline": "node scripts/mutation-gate.mjs --update-baseline"
+    "mutation-gate:update-baseline": "node scripts/mutation-gate.mjs --update-baseline",
+    "usif-par-validate": "node scripts/usif-par-validate.mjs",
+    "usif-par-validate:strict": "node scripts/usif-par-validate.mjs --strict-tier1"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
