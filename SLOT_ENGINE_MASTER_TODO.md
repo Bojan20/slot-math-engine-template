@@ -153,7 +153,7 @@ Legenda:
 | 30 | `f7aedba` | 2 ❌→✅ Commercial Readiness closeouts (sales demo skripta + one-page pitch dokument) |
 | 31 | `e81b319` | 1 ⚠️→✅ Faza 3.2 behaviors compositional (6 dvo-behavior kombinacija × 4 seeds × 50K = 1.2M total, sve PASS) |
 | 32 | `7a4ea2d` | **Kimi deep-audit report landed** — `docs/research/KIMI_AUDIT_2026-05-15.md` 25-source TL;DR + 10-step action list integrated u master-todo §"🔬 KIMI DEEP AUDIT 2026-05-15" |
-| 33 | `(this commit)` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
+| 33 | `f4ca791` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
