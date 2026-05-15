@@ -87,7 +87,11 @@ Legenda:
 | 22 | `b317854` | 6.7 generating functions + 8.6 threshold sig + 13.3 operator alerts + 13.6 multi-instance + 12 ways partial |
 | 23 | `a8517cb` | 6.7 PGF ways closeout + 12 FS configs + 12 H&W + 12 cluster + coverage report |
 | 24 | `7a529e9` | 0.1 vitest bench + 13.11 publish pipeline + 14.4 tuning console |
-| 25 |  `506870e` | 12 mehanic-family acceptance (4 families: both-ways + pay-anywhere + variable-rows-cascade + stacked-wilds-bonus = 11 fixtures × 4 seeds × 100K spins) |
+| 25 | `faa88b2` | 12 mehanic-family acceptance (4 families: both-ways + pay-anywhere + variable-rows-cascade + stacked-wilds-bonus = 11 fixtures × 4 seeds × 100K spins) |
+| 26 | `ef4f921` | 12 ⚠️/❌→✅ engineering closeouts + honest fail reports (1.1/1.2/9.3/9.1/9.5/9.8/13.9/10.3/10.7/7.2/9.6/14.3/11.1) |
+| 27 | `0515398` | 7.4 χ² uniformity all sizes + 10.5 random-config sweep + 14.1 honest 10⁹ replay gap |
+| 28 | `f87e080` | 2.1 both-ways MC + 4.4 var-rows×cascade + 14.1 Rust closure (Node 15.76s → Rust 5.43s) |
+| 29 | `506870e` | 15 ⚠️→✅ Faza 12 named mechanic acceptance (15 mechanics × 27 fixtures × 4 seeds × 25K spins = 2.7M total) |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
