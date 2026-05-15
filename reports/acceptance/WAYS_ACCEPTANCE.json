@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T09:55:55.062Z",
+    "spins": 200000,
+    "seed": 12345,
+    "tolerancePP": 0.01,
+    "passed": true
+  },
+  "results": [
+    {
+      "fixture": "5x3-243ways.json",
+      "mcRtp": 298.481714500042,
+      "analyticalRtp": 0.42814563107033826,
+      "deltaPP": 298.0535688689717,
+      "tightPass": false,
+      "sanityPass": true,
+      "mcSpins": 200000,
+      "seed": 12345,
+      "wallMs": 1731
+    },
+    {
+      "fixture": "5x4-1024ways (synthetic)",
+      "mcRtp": 16.513675,
+      "analyticalRtp": 0.17361111111111108,
+      "deltaPP": 16.34006388888889,
+      "tightPass": false,
+      "sanityPass": true,
+      "mcSpins": 200000,
+      "seed": 12345,
+      "wallMs": 732
+    }
+  ]
+}

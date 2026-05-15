@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T09:55:58.509Z",
+    "instancesPerFixture": 4,
+    "spinsPerInstance": 5000,
+    "seed": 12345,
+    "passed": true,
+    "fixturesPassed": 4,
+    "totalFixtures": 4
+  },
+  "results": [
+    {
+      "fixture": "3x5-5lines.json",
+      "instances": [
+        {
+          "instance": 0,
+          "rtp": 0.9902400000000154,
+          "hitRate": 0.6046,
+          "signatureHex": "2662070b4d4471f825aef2b5e81adb8e809c5a596471da015023a22a0199c288"
+        },
+        {
+          "instance": 1,
+          "rtp": 0.9902400000000154,
+          "hitRate": 0.6046,
+          "signatureHex": "2662070b4d4471f825aef2b5e81adb8e809c5a596471da015023a22a0199c288"
+        },
+        {
+          "instance": 2,
+          "rtp": 0.9902400000000154,
+          "hitRate": 0.6046,
+          "signatureHex": "2662070b4d4471f825aef2b5e81adb8e809c5a596471da015023a22a0199c288"
+        },
+        {
+          "instance": 3,
+          "rtp": 0.9902400000000154,
+          "hitRate": 0.6046,
+          "signatureHex": "2662070b4d4471f825aef2b5e81adb8e809c5a596471da015023a22a0199c288"
+        }
+      ],
+      "determinismPassed": true,
+      "uniqueSignatureCount": 1
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "instances": [
+        {
+          "instance": 0,
+          "rtp": 4.336059999999979,
+          "hitRate": 0.6548,
+          "signatureHex": "a8af20bb5300cbcdc527efd96f0bbdb503888bea304220c9345f360f3a29e19e"
+        },
+        {
+          "instance": 1,
+          "rtp": 4.336059999999979,
+          "hitRate": 0.6548,
+          "signatureHex": "a8af20bb5300cbcdc527efd96f0bbdb503888bea304220c9345f360f3a29e19e"
+        },
+        {
+          "instance": 2,
+          "rtp": 4.336059999999979,
+          "hitRate": 0.6548,
+          "signatureHex": "a8af20bb5300cbcdc527efd96f0bbdb503888bea304220c9345f360f3a29e19e"
+        },
+        {
+          "instance": 3,
+          "rtp": 4.336059999999979,
+          "hitRate": 0.6548,
+          "signatureHex": "a8af20bb5300cbcdc527efd96f0bbdb503888bea304220c9345f360f3a29e19e"
+        }
+      ],
+      "determinismPassed": true,
+      "uniqueSignatureCount": 1
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "instances": [
+        {
+          "instance": 0,
+          "rtp": 291.3198399999991,
+          "hitRate": 0.7938,
+          "signatureHex": "62ca69ab8bbab3cd974b60223ada1babe4bb52d2e7df8200b624d1e3dcdbb2cf"
+        },
+        {
+          "instance": 1,
+          "rtp": 291.3198399999991,
+          "hitRate": 0.7938,
+          "signatureHex": "62ca69ab8bbab3cd974b60223ada1babe4bb52d2e7df8200b624d1e3dcdbb2cf"
+        },
+        {
+          "instance": 2,
+          "rtp": 291.3198399999991,
+          "hitRate": 0.7938,
+          "signatureHex": "62ca69ab8bbab3cd974b60223ada1babe4bb52d2e7df8200b624d1e3dcdbb2cf"
+        },
+        {
+          "instance": 3,
+          "rtp": 291.3198399999991,
+          "hitRate": 0.7938,
+          "signatureHex": "62ca69ab8bbab3cd974b60223ada1babe4bb52d2e7df8200b624d1e3dcdbb2cf"
+        }
+      ],
+      "determinismPassed": true,
+      "uniqueSignatureCount": 1
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "instances": [
+        {
+          "instance": 0,
+          "rtp": 11.733019999999783,
+          "hitRate": 0.8876,
+          "signatureHex": "08ff9884eaba7d285929117eeff388f84b93e4ceafd1b0e83f34e1f5fa84daf8"
+        },
+        {
+          "instance": 1,
+          "rtp": 11.733019999999783,
+          "hitRate": 0.8876,
+          "signatureHex": "08ff9884eaba7d285929117eeff388f84b93e4ceafd1b0e83f34e1f5fa84daf8"
+        },
+        {
+          "instance": 2,
+          "rtp": 11.733019999999783,
+          "hitRate": 0.8876,
+          "signatureHex": "08ff9884eaba7d285929117eeff388f84b93e4ceafd1b0e83f34e1f5fa84daf8"
+        },
+        {
+          "instance": 3,
+          "rtp": 11.733019999999783,
+          "hitRate": 0.8876,
+          "signatureHex": "08ff9884eaba7d285929117eeff388f84b93e4ceafd1b0e83f34e1f5fa84daf8"
+        }
+      ],
+      "determinismPassed": true,
+      "uniqueSignatureCount": 1
+    }
+  ]
+}
