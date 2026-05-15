@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T10:34:10.502Z",
+    "spinsPerSeed": 200000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999
+    ],
+    "stabilityTolerancePP": 0.05,
+    "passed": true,
+    "tightPassCount": 0,
+    "sanityPassCount": 1,
+    "totalFixtures": 1
+  },
+  "results": [
+    {
+      "fixture": "cluster-7x7.json",
+      "target": 0.96,
+      "seedRtps": [
+        28.213788499994404,
+        28.26751699999441,
+        28.24936999999436,
+        28.2730044999944
+      ],
+      "mean": 28.250919999994395,
+      "stdDev": 0.02673534702411849,
+      "targetDelta": 27.290919999994394,
+      "tightPass": false,
+      "sanityPass": true
+    }
+  ]
+}

@@ -26,7 +26,11 @@
     "mutation-summary": "node scripts/mutation-summary.mjs",
     "anomaly-timing": "npm run build && node scripts/anomaly-detection-timing.mjs",
     "optimizer-mass-validation": "npm run build && node scripts/optimizer-mass-validation.mjs",
-    "sub-ms-mc-bench": "npm run build && node scripts/sub-ms-mc-bench.mjs"
+    "sub-ms-mc-bench": "npm run build && node scripts/sub-ms-mc-bench.mjs",
+    "fs-configs-acceptance": "npm run build && node scripts/fs-configs-acceptance.mjs",
+    "hnw-acceptance": "npm run build && node scripts/hnw-acceptance.mjs",
+    "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
+    "test-coverage": "node scripts/test-coverage-report.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

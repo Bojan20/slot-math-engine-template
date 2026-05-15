@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T10:32:16.883Z",
+    "spins": 200000,
+    "seed": 12345,
+    "tolerancePP": 0.1,
+    "passed": true,
+    "tightPassCount": 0,
+    "sanityPassCount": 1,
+    "totalFixtures": 1
+  },
+  "results": [
+    {
+      "fixture": "hnw-grand-jackpot.json",
+      "target": 0.96,
+      "measured": 189.35707350001076,
+      "delta": 188.39707350001075,
+      "tightPass": false,
+      "sanityPass": true,
+      "hitRate": 0.91309,
+      "wallMs": 1494
+    }
+  ]
+}

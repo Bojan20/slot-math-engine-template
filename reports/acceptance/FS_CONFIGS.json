@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T10:32:04.376Z",
+    "spins": 100000,
+    "seed": 12345,
+    "tolerancePP": 0.05,
+    "passed": true,
+    "tightPassCount": 0,
+    "sanityPassCount": 4,
+    "totalFixtures": 4
+  },
+  "results": [
+    {
+      "fixture": "fs-retrigger.json",
+      "target": 0.96,
+      "measured": 3.658724999999138,
+      "delta": 2.698724999999138,
+      "tightPass": false,
+      "sanityPass": true,
+      "wallMs": 821,
+      "hitRate": 0.5965
+    },
+    {
+      "fixture": "fs-sticky-wilds.json",
+      "target": 0.96,
+      "measured": 2.2774279999996656,
+      "delta": 1.3174279999996656,
+      "tightPass": false,
+      "sanityPass": true,
+      "wallMs": 764,
+      "hitRate": 0.4885
+    },
+    {
+      "fixture": "fs-expanding-wilds.json",
+      "target": 0.96,
+      "measured": 3.3953039999992014,
+      "delta": 2.4353039999992014,
+      "tightPass": false,
+      "sanityPass": true,
+      "wallMs": 718,
+      "hitRate": 0.59634
+    },
+    {
+      "fixture": "fs-multiplier-ladder.json",
+      "target": 0.96,
+      "measured": 7.979035000001002,
+      "delta": 7.0190350000010024,
+      "tightPass": false,
+      "sanityPass": true,
+      "wallMs": 716,
+      "hitRate": 0.59634
+    }
+  ]
+}

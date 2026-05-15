@@ -1,0 +1,22 @@
+{
+  "generatedAtUtc": "2026-05-15T10:35:05.791Z",
+  "typescript": {
+    "testFiles": 115,
+    "passingSpecs": 2701,
+    "totalSpecs": 2704,
+    "byCategory": {
+      "acceptance": 7,
+      "unit": 73,
+      "integration": 35
+    }
+  },
+  "rust": {
+    "testFiles": 28,
+    "passingTests": 783,
+    "byCategory": {
+      "integration": 19,
+      "unit": 9
+    }
+  },
+  "diffVsPrior": null
+}
