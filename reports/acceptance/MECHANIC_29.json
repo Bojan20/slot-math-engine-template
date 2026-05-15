@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T20:38:34.895Z",
+    "mechanicsEvaluated": 15,
+    "mechanicsPassed": 15,
+    "mechanicsFailed": 0,
+    "spinsPerSeed": 25000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999
+    ],
+    "stabilityTolerance": 0.05,
+    "sanityMaxRtpRatio": 1000000000,
+    "overallPassed": true,
+    "wallTotalMs": 63364,
+    "totalSpins": 2700000
+  },
+  "mechanics": [
+    {
+      "id": "asymmetric_scatter_mult",
+      "name": "Asymmetric grid + scatter multiplier",
+      "fixtures": [
+        "3x5-5lines.json"
+      ],
+      "engine_path": "3-reel × 5-row asymmetric grid + scatter pay path",
+      "fixtureRows": [
+        {
+          "fixture": "3x5-5lines.json",
+          "target": 0.96,
+          "seedRtps": [
+            0.9734799999999074,
+            0.9984079999999131,
+            0.9678719999999141,
+            0.97955199999991
+          ],
+          "mean": 0.9798279999999111,
+          "stdDev": 0.013273226384970745,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 676
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "cluster_cascade_mult",
+      "name": "Cluster cascade + multiplier symbols",
+      "fixtures": [
+        "cluster-7x7.json",
+        "cluster-diagonal.json",
+        "cluster-hexagonal.json"
+      ],
+      "engine_path": "cluster evaluator + flood-fill + multiplier symbol chain",
+      "fixtureRows": [
+        {
+          "fixture": "cluster-7x7.json",
+          "target": 0.96,
+          "seedRtps": [
+            28.387487999996836,
+            28.431235999996932,
+            28.126511999996797,
+            28.150903999996856
+          ],
+          "mean": 28.274034999996854,
+          "stdDev": 0.15759443338311652,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 13865
+        },
+        {
+          "fixture": "cluster-diagonal.json",
+          "target": 0.96,
+          "seedRtps": [
+            1.6474519999998467,
+            1.6527479999998427,
+            1.6537799999998426,
+            1.6359079999998407
+          ],
+          "mean": 1.6474719999998433,
+          "stdDev": 0.008192548158744511,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 3008
+        },
+        {
+          "fixture": "cluster-hexagonal.json",
+          "target": 0.96,
+          "seedRtps": [
+            33.23942399999652,
+            33.45379599999644,
+            33.39249999999665,
+            33.12829999999662
+          ],
+          "mean": 33.303504999996555,
+          "stdDev": 0.14754734979203962,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 8340
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "money_symbol_collect_fs",
+      "name": "Money-symbol collect FS",
+      "fixtures": [
+        "mystery-symbol.json"
+      ],
+      "engine_path": "mystery-reveal + collect-on-FS-trigger orchestration",
+      "fixtureRows": [
+        {
+          "fixture": "mystery-symbol.json",
+          "target": 0.96,
+          "seedRtps": [
+            5.200000000000238,
+            5.414612000000187,
+            5.189496000000233,
+            5.386948000000216
+          ],
+          "mean": 5.297764000000218,
+          "stdDev": 0.1195644881503776,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 733
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "expanding_symbol_fs",
+      "name": "Expanding-symbol FS",
+      "fixtures": [
+        "fs-expanding-wilds.json"
+      ],
+      "engine_path": "FS state machine + expanding-wild behavior compound",
+      "fixtureRows": [
+        {
+          "fixture": "fs-expanding-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.2908920000001984,
+            3.357832000000205,
+            3.3113440000002057,
+            3.386680000000194
+          ],
+          "mean": 3.3366870000002007,
+          "stdDev": 0.04353489308588948,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 686
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "hnw_multitier_jackpot",
+      "name": "Hold & Win + multi-tier jackpot",
+      "fixtures": [
+        "hnw-grand-jackpot.json",
+        "hnw-full-grid.json",
+        "hnw-classic.json"
+      ],
+      "engine_path": "H&W coordinator + tier-jackpot ladder + respin orchestrator",
+      "fixtureRows": [
+        {
+          "fixture": "hnw-grand-jackpot.json",
+          "target": 0.96,
+          "seedRtps": [
+            189.54407200000006,
+            188.28472800000006,
+            188.454264,
+            188.34410800000072
+          ],
+          "mean": 188.6567930000002,
+          "stdDev": 0.5956750493156515,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 712
+        },
+        {
+          "fixture": "hnw-full-grid.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.291884000000072,
+            3.3795960000001255,
+            3.236220000000088,
+            3.329884000000083
+          ],
+          "mean": 3.3093960000000924,
+          "stdDev": 0.06057831092617678,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 1363
+        },
+        {
+          "fixture": "hnw-classic.json",
+          "target": 0.96,
+          "seedRtps": [
+            1.5861120000000066,
+            1.5948240000000067,
+            1.6064280000000009,
+            1.6287160000000047
+          ],
+          "mean": 1.6040200000000047,
+          "stdDev": 0.018447707716677402,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 515
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "persistent_mult_symbol_upgrade",
+      "name": "Persistent multiplier + symbol upgrade FS",
+      "fixtures": [
+        "symbol-upgrade.json",
+        "fs-multiplier-ladder.json"
+      ],
+      "engine_path": "symbol-upgrade behavior + persistent FS multiplier ladder",
+      "fixtureRows": [
+        {
+          "fixture": "symbol-upgrade.json",
+          "target": 0.96,
+          "seedRtps": [
+            311.44181199999537,
+            309.93180799999556,
+            311.6519039999951,
+            306.6356039999961
+          ],
+          "mean": 309.9152819999955,
+          "stdDev": 2.316801725377642,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 563
+        },
+        {
+          "fixture": "fs-multiplier-ladder.json",
+          "target": 0.96,
+          "seedRtps": [
+            7.701307999999797,
+            7.815807999999753,
+            7.709283999999782,
+            8.048003999999773
+          ],
+          "mean": 7.818600999999775,
+          "stdDev": 0.16159763983011713,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 795
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "sticky_wilds_multimode_fs",
+      "name": "Sticky wilds + multi-mode FS",
+      "fixtures": [
+        "fs-sticky-wilds.json"
+      ],
+      "engine_path": "sticky-wild behavior + FS multi-mode dispatcher",
+      "fixtureRows": [
+        {
+          "fixture": "fs-sticky-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            2.272384000000082,
+            2.274668000000082,
+            2.234024000000076,
+            2.1911280000000737
+          ],
+          "mean": 2.2430510000000785,
+          "stdDev": 0.03931727455797241,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 768
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "wap_wheel_pick",
+      "name": "Multi-tier WAP jackpot + wheel pick",
+      "fixtures": [
+        "wheel-bonus.json",
+        "hnw-grand-jackpot.json"
+      ],
+      "engine_path": "WAP jackpot pool + wheel pick orchestrator + tier-ladder dispatch",
+      "fixtureRows": [
+        {
+          "fixture": "wheel-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            59.393804000000664,
+            60.377976000000835,
+            59.80096000000073,
+            59.14777200000076
+          ],
+          "mean": 59.68012800000075,
+          "stdDev": 0.5375799311234737,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 563
+        },
+        {
+          "fixture": "hnw-grand-jackpot.json",
+          "target": 0.96,
+          "seedRtps": [
+            189.54407200000006,
+            188.28472800000006,
+            188.454264,
+            188.34410800000072
+          ],
+          "mean": 188.6567930000002,
+          "stdDev": 0.5956750493156515,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 694
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "pick_bonus_multilevel",
+      "name": "Pick bonus + multi-level",
+      "fixtures": [
+        "pick-bonus.json"
+      ],
+      "engine_path": "pick bonus FSM + multi-level progression",
+      "fixtureRows": [
+        {
+          "fixture": "pick-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.131280000000138,
+            3.0530640000001403,
+            3.050480000000132,
+            3.0145160000001225
+          ],
+          "mean": 3.0623350000001333,
+          "stdDev": 0.04921572327350128,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 489
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "money_collect_varrows_cascade",
+      "name": "Money collect + variable-rows ways + cascade",
+      "fixtures": [
+        "complex-variable-rows.json",
+        "cascade-drop.json"
+      ],
+      "engine_path": "variable-rows ways + cascade orchestrator + money-collect path",
+      "fixtureRows": [
+        {
+          "fixture": "complex-variable-rows.json",
+          "target": 0.96,
+          "seedRtps": [
+            522507.40579999925,
+            521203.6996719995,
+            525641.8038639998,
+            521308.4515280006
+          ],
+          "mean": 522665.34021599975,
+          "stdDev": 2070.5731186564863,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 10786
+        },
+        {
+          "fixture": "cascade-drop.json",
+          "target": 0.96,
+          "seedRtps": [
+            11.881704000000463,
+            12.09164800000041,
+            11.941528000000433,
+            11.793684000000491
+          ],
+          "mean": 11.927141000000448,
+          "stdDev": 0.12535925791629715,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 7579
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "three_mode_fs_choice",
+      "name": "Three-mode FS choice",
+      "fixtures": [
+        "fs-multiplier-ladder.json",
+        "fs-retrigger.json",
+        "fs-sticky-wilds.json"
+      ],
+      "engine_path": "three independent FS configs proving multi-mode dispatch",
+      "fixtureRows": [
+        {
+          "fixture": "fs-multiplier-ladder.json",
+          "target": 0.96,
+          "seedRtps": [
+            7.701307999999797,
+            7.815807999999753,
+            7.709283999999782,
+            8.048003999999773
+          ],
+          "mean": 7.818600999999775,
+          "stdDev": 0.16159763983011713,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 891
+        },
+        {
+          "fixture": "fs-retrigger.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.567096000000213,
+            3.603028000000214,
+            3.5557080000002137,
+            3.650288000000209
+          ],
+          "mean": 3.5940300000002128,
+          "stdDev": 0.04258302716654258,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 993
+        },
+        {
+          "fixture": "fs-sticky-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            2.272384000000082,
+            2.274668000000082,
+            2.234024000000076,
+            2.1911280000000737
+          ],
+          "mean": 2.2430510000000785,
+          "stdDev": 0.03931727455797241,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 789
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "scatter_pay_mult_scale",
+      "name": "Scatter pay + multiplier scale",
+      "fixtures": [
+        "pay-anywhere.json",
+        "multiplier-wilds.json"
+      ],
+      "engine_path": "pay-anywhere evaluator + scaling multiplier on scatter triggers",
+      "fixtureRows": [
+        {
+          "fixture": "pay-anywhere.json",
+          "target": 0.96,
+          "seedRtps": [
+            246.8207119999934,
+            243.5234599999929,
+            246.0500799999932,
+            244.04861599999268
+          ],
+          "mean": 245.11071699999303,
+          "stdDev": 1.5762750462241368,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 1119
+        },
+        {
+          "fixture": "multiplier-wilds.json",
+          "target": 0.96,
+          "seedRtps": [
+            1.5992239999999964,
+            1.67330000000001,
+            1.6664600000000143,
+            1.6343200000000073
+          ],
+          "mean": 1.6433260000000072,
+          "stdDev": 0.03395937313909785,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 701
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "wheel_re_entry_tiers",
+      "name": "Wheel re-entry tiers",
+      "fixtures": [
+        "wheel-bonus.json"
+      ],
+      "engine_path": "wheel pick + re-entry tier ladder + FS-trigger",
+      "fixtureRows": [
+        {
+          "fixture": "wheel-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            59.393804000000664,
+            60.377976000000835,
+            59.80096000000073,
+            59.14777200000076
+          ],
+          "mean": 59.68012800000075,
+          "stdDev": 0.5375799311234737,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 549
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "per_spin_reel_modifier_reveal",
+      "name": "Per-spin reel-modifier reveal",
+      "fixtures": [
+        "respin-feature.json",
+        "mystery-symbol.json"
+      ],
+      "engine_path": "respin state machine + mystery-symbol reveal per-spin",
+      "fixtureRows": [
+        {
+          "fixture": "respin-feature.json",
+          "target": 0.96,
+          "seedRtps": [
+            2.742606553338484,
+            2.78194821208407,
+            2.792817779532713,
+            2.7847962459868825
+          ],
+          "mean": 2.7755421977355375,
+          "stdDev": 0.022434176510790414,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 675
+        },
+        {
+          "fixture": "mystery-symbol.json",
+          "target": 0.96,
+          "seedRtps": [
+            5.249300000000239,
+            5.356012000000208,
+            5.2590760000002295,
+            5.345368000000222
+          ],
+          "mean": 5.302439000000224,
+          "stdDev": 0.056026982963556654,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 770
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "pick_varrows_ways_combo",
+      "name": "Pick bonus + variable-rows ways combo",
+      "fixtures": [
+        "pick-bonus.json",
+        "variable-rows-7reels.json"
+      ],
+      "engine_path": "pick FSM + variable-rows-ways combo",
+      "fixtureRows": [
+        {
+          "fixture": "pick-bonus.json",
+          "target": 0.96,
+          "seedRtps": [
+            3.131280000000138,
+            3.0530640000001403,
+            3.050480000000132,
+            3.0145160000001225
+          ],
+          "mean": 3.0623350000001333,
+          "stdDev": 0.04921572327350128,
+          "sanityPass": true,
+          "stabilityPass": true,
+          "lastError": null,
+          "wallMs": 553
+        },
+        {
+          "fixture": "variable-rows-7reels.json",
+          "target": 0.96,
+          "seedRtps": [
+            21562.62421599987,
+            21427.412587999894,
+            21054.130131999947,
+            21221.34002399999
+          ],
+          "mean": 21316.376739999927,
+          "stdDev": 224.18150367723726,
+          "sanityPass": true,
+          "stabilityPass": false,
+          "lastError": null,
+          "wallMs": 4177
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

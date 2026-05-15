@@ -1,6 +1,13 @@
 //! Faza 8.6 — Server-side Casino Protocols test suite (Rust).
 //!
 //! 15+ tests covering G2S, SAS, GAT-IV, and ProtocolBridge.
+//!
+//! W152 Wave 29: `clippy::absurd_extreme_comparisons` deny-by-default
+//! flags `crc <= 0xffff` on a u16 (always true). The assertion is a
+//! documentation aid showing the wire format constraint — keep it,
+//! allow at file scope.
+
+#![allow(clippy::absurd_extreme_comparisons)]
 
 use slot_sim::protocols::{
     G2SAdapter, GAT4Adapter, GameIdentity, MeterSnapshot, ProtocolBridge, SASAdapter, SpinEvent,
