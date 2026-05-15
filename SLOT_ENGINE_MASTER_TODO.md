@@ -158,7 +158,7 @@ Legenda:
 | 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
 | 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 | 37 | `b46bdf2` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
-| 38 | `(this commit)` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
+| 38 | `bf7a6cd` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
