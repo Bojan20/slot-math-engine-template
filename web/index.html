@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slot Math Engine — Config Builder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Slot Math Engine — Config Builder</h1>
+    <p class="subtitle">
+      W152 Faza 11.1 MVP — drop a Slot Game IR JSON to inspect, validate,
+      and estimate base-game RTP without leaving the browser.
+    </p>
+  </header>
+
+  <main>
+    <section id="drop-zone" tabindex="0" aria-label="IR drop zone">
+      <p><strong>Drop an IR JSON file here</strong></p>
+      <p class="hint">Or click to choose — accepts the same shape as <code>tests/fixtures/reference/*.json</code></p>
+      <input type="file" id="file-input" accept=".json,application/json" hidden />
+    </section>
+
+    <section id="status" aria-live="polite"></section>
+
+    <section id="ir-summary" hidden>
+      <h2>Configuration</h2>
+      <dl class="kv">
+        <dt>Game ID</dt><dd id="game-id">—</dd>
+        <dt>Version</dt><dd id="game-version">—</dd>
+        <dt>Topology</dt><dd id="topology">—</dd>
+        <dt>Evaluation</dt><dd id="evaluation">—</dd>
+        <dt>Target RTP</dt><dd id="target-rtp">—</dd>
+        <dt>Max win</dt><dd id="max-win">—</dd>
+        <dt>Jurisdictions</dt><dd id="jurisdictions">—</dd>
+      </dl>
+    </section>
+
+    <section id="symbols-panel" hidden>
+      <h2>Symbols</h2>
+      <table id="symbols-table">
+        <thead><tr><th>ID</th><th>Name</th><th>Kind</th><th>Substitutes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="reels-panel" hidden>
+      <h2>Reel weights</h2>
+      <div id="reels-grid"></div>
+    </section>
+
+    <section id="paytable-panel" hidden>
+      <h2>Paytable</h2>
+      <table id="paytable-table">
+        <thead><tr><th>Symbol</th><th>3-of-a-kind</th><th>4-of-a-kind</th><th>5-of-a-kind</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="rtp-panel" hidden>
+      <h2>Base-game RTP estimate</h2>
+      <p class="hint">
+        Closed-form-style estimate using reel symbol probabilities + paytable.
+        Captures lines / ways games only — feature contribution adds on top.
+      </p>
+      <dl class="kv">
+        <dt>Per-reel symbol probabilities</dt><dd id="reel-probs">computed on load</dd>
+        <dt>Base RTP estimate</dt><dd id="rtp-estimate">—</dd>
+        <dt>Hit-rate estimate</dt><dd id="hit-rate-estimate">—</dd>
+      </dl>
+      <div id="rtp-bar" class="rtp-bar"><div id="rtp-bar-fill" class="rtp-bar-fill"></div></div>
+    </section>
+
+    <section id="cli-panel" hidden>
+      <h2>CLI handoff</h2>
+      <p class="hint">Run the full Monte Carlo on this IR via:</p>
+      <pre><code id="cli-cmd">npm run sim -- --config &lt;your-config.json&gt;</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <small>
+      Slot Math Engine Template · W152 Wave 14 · this UI does not phone home —
+      every byte of your IR stays in this tab.
+    </small>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

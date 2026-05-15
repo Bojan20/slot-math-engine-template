@@ -15,9 +15,9 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja Wave 9, izvora i fixture-a — 2026-05-14, W152 P2-11 + P2-12 + Faza 10.5 landed)
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 14, izvora i fixture-a — 2026-05-15, W152 Faza 11.1 + 14.5 + 14.8 landed)
 
-**Ukupno: ~90% kompletno na kodu, ~62% kompletno na "acceptance proof"-u.** *(W152 Wave 9: P2-11 RGS pluggable surface (wallet/auth/protocol/26 testova), P2-12 RG hooks + self-exclusion client (RGHookEmitter + CircuitBreaker + 6-registry fan-out / 13 testova), Faza 10.5 acceptance golden (30-fixture snapshot + 8-fixture replay test / 10 testova). Wave 8: P0-5 + P1-8 + P2-14 + P2-16. Wave 7: P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13.)*
+**Ukupno: ~95% kompletno na kodu, ~70% kompletno na "acceptance proof"-u.** *(W152 Wave 14: Faza 11.1 Web Config Builder UI MVP (pure HTML+CSS+ESM, no Vite/React, 20 vitest specs), Faza 14.5 MIT LICENSE + standards body submission pitch (`docs/standards/SUBMISSION.md`), Faza 14.8 statistical fairness across player segments (`src/fairness/`, Decimal.js precision + Wilson-Hilferty p-value + Bonferroni-corrected pairwise z, 18 vitest specs). Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items (PoG, FX, multi-currency, DP PAR, VR, side bet, Washington, 0.1, 0.3). Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
@@ -433,11 +433,11 @@ Mapa "commit → faza":
 ## FAZA 11 — Tooling i UX 🟡 *(3-4 nedelje, paralelno)*
 
 ### 11.1 Config builder UI (web)
-- ❌ Vite + React drag-drop slot designer.
-- ❌ Live preview spin.
-- ❌ Live theoretical RTP.
-- ❌ Export JSON config.
-- ❌ Import javnih PAR sheet-ova kao starting point.
+- ✅ Drop-zone slot designer — pure HTML+CSS+ESM, no Vite/React, no build pipeline. *(W152 Wave 14 — `web/{index.html,styles.css,app.js}`, drag-drop IR JSON → inspect/render/validate)*
+- ⚠️ Live preview spin — not in MVP; CLI handoff command emitted instead. *(W152 Wave 14 deliberate MVP cut — Vite+React full preview is multi-wave scope)*
+- ✅ Live theoretical RTP estimate (closed-form lines/ways) — base game only, hit-rate included. *(W152 Wave 14 — `estimateBaseRtp` in `web/app.js` + 20 vitest specs in `tests/web_ui.test.ts`)*
+- ⚠️ Export JSON config — drop-zone parses input but does not re-serialise; round-trip is JSON→engine→JSON (operator writes back via CLI). *(W152 Wave 14 deliberate MVP cut)*
+- ⚠️ Import javnih PAR sheet-ova kao starting point — out of scope for MVP; consider a separate `make par-import` later. *(W152 Wave 14)*
 
 ### 11.2 Reel strip optimizer
 - ✅ Input: target RTP, target vol, hit freq, max win. *(`src/optimizer/`)*
@@ -710,8 +710,8 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ✅ USIF v1.0 schema (Zod + JSON Schema strict). *(`src/usif/schemaObject.ts` + commit `e9121b2`)*
 - ✅ Reference implementation (sam engine).
 - ⚠️ 30 reference games kao public examples. *(fixture-i ✅; "public" hosted examples ❌)*
-- ❌ Submit eCOGRA / GLI / G2S Standards Body kao kandidat.
-- ❌ Open-source MIT.
+- ⚠️ Submit eCOGRA / GLI / G2S Standards Body kao kandidat. *(W152 Wave 14 — `docs/standards/SUBMISSION.md` pitch landed; actual submission to bodies pending operator decision)*
+- ✅ Open-source MIT. *(W152 Wave 14 — root `LICENSE` MIT + regulatory disclaimer carving out vendor TMs and regulator KAT bundles)*
 
 ### 13.10 Predictive convergence ML
 - ✅ LSTM ili Gaussian process model predviđa "remaining spinova do CI=ε". *(`src/convergence/` + commit `71d9401`)*
@@ -782,7 +782,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ❌ ML model gleda prod metrics, predviđa drift.
 
 ### 14.8 Behavioral fairness audit
-- ❌ Statistical fairness across player segments.
+- ✅ Statistical fairness across player segments. *(W152 Wave 14 — `src/fairness/segment-rtp.ts`: aggregateBySegment (Decimal.js precision-stable), Pearson χ² goodness-of-fit, Wilson-Hilferty cubic p-value, Hastings normal-tail, pairwise z-test sa Bonferroni correction, `fairnessReport()` end-to-end + 18 vitest specs u `tests/fairness.test.ts`)*
 
 ---
 
