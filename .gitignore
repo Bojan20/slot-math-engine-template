@@ -47,3 +47,8 @@ reports/mutation/rust/*/mutants.out/log/
 reports/mutation/rust/*/mutants.out/diff/
 reports/mutation/rust/*/mutants.out/lock.json
 reports/mutation/rust/*/mutants.out/debug.log
+
+# ─── Daily cert replay output (W152 Wave 15 cert-daily.mjs) ───────────
+# Per-day timestamped dossiers + HEAD/CHAIN are operator-side cron output,
+# regenerated daily. Tracking them would commit-noise every CI run.
+reports/acceptance/cert-daily/

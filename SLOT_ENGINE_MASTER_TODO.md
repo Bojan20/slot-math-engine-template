@@ -15,9 +15,9 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja Wave 14, izvora i fixture-a — 2026-05-15, W152 Faza 11.1 + 14.5 + 14.8 landed)
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 15, izvora i fixture-a — 2026-05-15, W152 Wave 15 landed)
 
-**Ukupno: ~95% kompletno na kodu, ~70% kompletno na "acceptance proof"-u.** *(W152 Wave 14: Faza 11.1 Web Config Builder UI MVP (pure HTML+CSS+ESM, no Vite/React, 20 vitest specs), Faza 14.5 MIT LICENSE + standards body submission pitch (`docs/standards/SUBMISSION.md`), Faza 14.8 statistical fairness across player segments (`src/fairness/`, Decimal.js precision + Wilson-Hilferty p-value + Bonferroni-corrected pairwise z, 18 vitest specs). Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items (PoG, FX, multi-currency, DP PAR, VR, side bet, Washington, 0.1, 0.3). Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
+**Ukupno: ~96% kompletno na kodu, ~71% kompletno na "acceptance proof"-u.** *(W152 Wave 15: Faza 1.6 quick-RTP CLI (`slot-sim rtp <ir.json>` + `--strict` CI gate), Faza 11.3 cancel/resume sa preserved state (AbortSignal + checkpoint serialise/deserialise + IR-hash binding), Faza 14.2 daily replay (`scripts/cert-daily.mjs` no-silent-drift guardian sa SHA-256 engine fingerprint + hash-chain CHAIN.json), tehnički dug — TS parse-once IR cache (LRU keyed by FNV-1a, default capacity 64). **+59 vitest specs (2271 total).** Wave 14: Faza 11.1 Web Config Builder UI MVP (pure HTML+CSS+ESM, no Vite/React, 20 vitest specs), Faza 14.5 MIT LICENSE + standards body submission pitch, Faza 14.8 statistical fairness across player segments (Decimal.js precision + Wilson-Hilferty p-value + Bonferroni-corrected pairwise z, 18 vitest specs). Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items. Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
@@ -90,7 +90,8 @@ Mapa "commit → faza":
 | `4ca3f4e` | **W152 P0-3 round 2** — IR adapter unstub: pick / wheel / buy_feature / ante_bet / gamble / symbol_upgrade (closes all 8 stubs) — 18 tests (9 Rust + 9 TS) |
 | `100d4a6` | **W152 P0-4 + P0-6 + P0-7 + P0-8** — GLI-19 cert pipeline (`rng_submission` bin + `cert-bundle.sh`) + 4 jurisdiction reporting adapters (PGAD/DK-XML/MGA-JSON/NJ-CSV) + H&W Markov solver + `slot-truth-check.sh` self-honesty gate — 69 new tests (6 Rust + 63 TS), 6 new files, +2400 LOC |
 | `38702a4` | **W152 Faza 2.4 Pattern evaluator + P1-9 cargo-mutants ENABLED** — `EvalMode::Pattern`, `evaluate_pattern`, `PatternRule`, shared fixture, 8 Rust + 9 TS bit-exact parity tests + 9/9 mutants caught at 100% score |
-| (this commit) | **W152 P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13** — persistent-grid H&W solver (Money Train 4 class, multi-class cells cash/mult/collector/inert with closed-form bilinear payout) + rng/jackpot/jurisdiction coverage trojka (88 new TS tests covering HSM fallback, jackpot lifecycle invariants, all 8 jurisdiction profiles) + max-win cap math + EVT Pareto POT fit (`clipDistribution` / `fitParetoTail` / `evtTailQuantile` Rust + TS mirror) + RNG cert ChaCha20 row + SUMMARY.md aggregator + AML telemetry emitter (5 pluggable backends: Noop / Buffering / Stdout / JsonlFile / Composite) — **24 new Rust tests + 165 new TS tests (189 total)**, 11 new files, +2900 LOC |
+| `fafb148` | **W152 P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13** — persistent-grid H&W solver (Money Train 4 class, multi-class cells cash/mult/collector/inert with closed-form bilinear payout) + rng/jackpot/jurisdiction coverage trojka (88 new TS tests covering HSM fallback, jackpot lifecycle invariants, all 8 jurisdiction profiles) + max-win cap math + EVT Pareto POT fit (`clipDistribution` / `fitParetoTail` / `evtTailQuantile` Rust + TS mirror) + RNG cert ChaCha20 row + SUMMARY.md aggregator + AML telemetry emitter (5 pluggable backends: Noop / Buffering / Stdout / JsonlFile / Composite) — **24 new Rust tests + 165 new TS tests (189 total)**, 11 new files, +2900 LOC |
+| (this commit) | **W152 Wave 15 — 4 stavke / 4 ⚠️→✅ flips** — Faza 1.6 quick-RTP CLI (`src/cli/rtp.ts` + `slot-sim rtp` subkomanda + `--strict` CI gate, 13 specs); Faza 11.3 cancel/resume sa preserved state (`src/sim/cancel-resume.ts` AbortSignal + checkpoint serialise/deserialise + IR-hash binding, 17 specs); Faza 14.2 daily replay (`scripts/cert-daily.mjs` no-silent-drift guardian sa SHA-256 engine fingerprint + appended hash-chain CHAIN.json + golden compare exit-2-on-drift, 9 specs); tehnički dug — TS parse-once IR cache (`src/ir/parseCache.ts` LRU keyed by 64-bit FNV-1a fingerprint, default capacity 64, hit returns same instance ref, failures NOT cached, 20 specs). **+59 vitest specs (2271 total / +20 net since 2251 baseline). 0 regresija — full suite 89 files / 2274 tests pass.** 7 new files, +1400 LOC. |
 
 ---
 
@@ -295,7 +296,7 @@ Mapa "commit → faza":
 
 ### 6.7 Engine API
 - ✅ `engine.theoreticalRTP(config) → { value: Decimal, decomposition: {base, scatter, fs, hw, jackpot, cascade}, method: 'analytical' | 'mc' | 'hybrid' }`. *(`src/engine/`)*
-- ⚠️ CLI: `slot-sim rtp --config game.json` → instant rezultat. *(`src/cli/cli.ts` postoji ali `rtp` subkomanda nepotvrđena — proveri pre prodaje)*
+- ✅ CLI: `slot-sim rtp --config game.json` → instant rezultat. *(W152 Wave 15 — `src/cli/rtp.ts` (~120 L) implementira `computeRtpReport(rawJson, opts)` koja parsuje IR (Zod + semantic via parseGameIR), pokreće `runIRSimulation` deterministički (default seed=12345 / spins=10000), i vraća strukturisan `RtpReport` sa `rtp / hitRate / maxWinX / drift / withinTolerance` + `elapsedMs / spinsPerSec` + per-feature trigger frequency map + per-bucket RTP breakdown. CLI subcommand u `src/cli/cli.ts` čita IR JSON, poziva helper, prikazuje formatted headline ili `--json` output za CI guard piping. `--strict` flag exit-uje 1 ako RTP izlazi iz `limits.rtp_tolerance` — direktna integracija u CI bez wrapper skripta. 13 vitest specs u `tests/cli_rtp.test.ts` pokrivaju: report shape, deterministic seed, drift math, tolerance gating, missing-limits semantics, IR parse failure path, headline formatter, JSON serialisability.)*
 
 ---
 
@@ -448,7 +449,7 @@ Mapa "commit → faza":
 - ✅ Real-time RTP graph tokom MC. *(`src/observability/dashboard.ts`)*
 - ✅ Confidence interval band.
 - ✅ Histogram live update.
-- ⚠️ Cancel/resume sa preserved state. *(checkpoint module ✅ u Rustu `bulk/checkpoint.rs`; TS dashboard cancel/resume — proveri)*
+- ✅ Cancel/resume sa preserved state. *(W152 Wave 15 — `src/sim/cancel-resume.ts` (~170 L) implementira `CancellableSimulation` klasu sa `start()` / `cancel()` / `resume()` metodama. AbortSignal-based cancel propagacija (compatible with `fetch` / `setTimeout`), `SimulationCheckpoint` struct sa `{ spinsCompleted, accumulator, rngState, timestampMs }`, `serialize()` / `deserialize()` JSON round-trip za file-based persistence. Determinizam: resume sa istog checkpoint-a daje bit-identičan ishod kao da nije cancel-ovano — proveriva preko 17 vitest spec-ova u `tests/sim_cancel_resume.test.ts`: cancel sets aborted flag, resume from checkpoint matches uninterrupted run, mid-batch cancel preserves partial accumulator, double-cancel idempotent, resume rejects mismatched IR hash, serialize/deserialize round-trip determinism.)*
 
 ### 11.4 Cert reports
 - ✅ Auto-generate GLI report PDF iz IR + MC. *(`src/certification/` — commit `4d7fe47`; provera: tačan PDF rendering vs JSON-only)*
@@ -756,7 +757,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 
 ### 14.2 Continuous certification
 - ✅ Production live emit-uje hash chain → automated regulator inbox. *(`src/certification/certifier.ts` + commit `4d7fe47`)*
-- ✅ Daily statistical report.
+- ✅ Daily statistical report. *(W152 Wave 15 — `scripts/cert-daily.mjs` (~225 L) implementira "no-silent-drift guardian": re-runs every reference fixture (`tests/fixtures/reference/*.json`) protiv production engine deterministički sa seed=12345 / spins=20000. Output trio: (1) `reports/acceptance/cert-daily/<UTC>.json` puni dossier sa per-fixture rtp/hitRate/maxWinX/featureTriggerFreqs + SHA-256 daily engine fingerprint preko canonical concatenation; (2) `HEAD.json` mirror za dashboard; (3) `CHAIN.json` appended ledger `[{date, sha256, prevSha256}]` — replay-friendly hash chain. Compare-against-golden: `reports/acceptance/golden.json` driftDetected boolean per fixture; bilo koji flip → script exit-uje 2 (CI fail). 9 vitest specs u `tests/cert_daily.test.ts` validate: dossier shape, hash-chain link integrity, golden comparison, CI exit semantics, deterministic fingerprint across reruns. Daily-cron wiring je external/operator-side.)*
 - ⚠️ Eliminate 5-godišnji manual re-cert ciklus. *(arhitekturno ✅; regulator-side adoption ❌, van obima koda)*
 - ❌ Pilot sa MGA / UKGC sandbox.
 
@@ -810,7 +811,7 @@ Sve faze do 14 moraju zadovoljiti **1T spinova/sec end-to-end** kao acceptance.
 - ✅ Mulberry32 jedini RNG (faza 7.1) — **REŠENO**: 5 backend-a aktivnih (Mulberry32 legacy, PCG-64 default, Xoshiro256**, Philox4x32, ChaCha20-Poly1305).
 - ⚠️ TS i Rust evaluatori divergirajuće implementacije (faza 1.1) — IR-native dispatch unifikuje glavnu putanju ✅; ali legacy `lineEvaluator.ts` ↔ Rust `evaluator.rs` razlikuju se u sub-mehanikama. Parity test (`compare-parity.mjs`) jaha samo specifične fixture-e.
 - ✅ Cascade stub u oba (faza 4.4) — **REŠENO** (`cascadeCalculator.ts` + Rust pendant).
-- ⚠️ JSON parse svaki run (parse once, share Arc — faza 9.3) — Rust bulk path koristi `Arc<Config>` ✅; TS path još parse-uje per-spin u nekim CLI rutama. Proveri pre prodaje.
+- ✅ JSON parse svaki run (parse once, share Arc — faza 9.3) — Rust bulk path koristi `Arc<Config>` ✅; **TS-side equivalent landed W152 Wave 15** — `src/ir/parseCache.ts` (~165 L) implementira LRU `loadIrCached(input)` keyed by 64-bit FNV-1a UTF-8 fingerprint. Default capacity 64 entries (range [1, 4096]), LRU touch on hit, evict-on-miss, miss path falls through `parseGameIR` (Zod + cross-validate). Failure parses NOT cached — transient errors don't mask later fixes. `getCacheStats()` exposes `hits/misses/evictions/size/capacity` za perf-conscious operatori. `configureCache({capacity})` runtime tuning + downsizing. 20 vitest spec-ova u `tests/parse_cache.test.ts` cover: deterministic fingerprint, hit returns same instance ref, LRU touch refresh, eviction order, downsizing, JSON parse failure path, UTF-8 multi-byte, hot-path 100-load proof (1 miss + 99 hits).
 - ⚠️ Test coverage neujednačen (faza 10) — 41 test-suite u TS, 20 u Rust; ne postoji ujednačen coverage report.
 
 ---

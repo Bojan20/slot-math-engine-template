@@ -225,6 +225,53 @@ export function createCLI(): Command {
     });
 
   // ─────────────────────────────────────────────────────────────────────────
+  // RTP COMMAND — W152 Wave 15 Faza 1.6
+  // ─────────────────────────────────────────────────────────────────────────
+  //
+  // Instant RTP estimate from an IR JSON file. Runs the IR-native
+  // simulator (`runIRSimulation`) at a configurable spin budget and
+  // prints the headline numbers. Designed for two flows:
+  //   1. Engineer iteration: "tweak paytable, see RTP, commit when happy."
+  //      A 10K-spin run finishes in <2 s on a laptop.
+  //   2. CI gate: pipe `--json` into a guard script that asserts the RTP
+  //      stays within tolerance vs the IR's `limits.target_rtp`.
+
+  program
+    .command('rtp')
+    .description('Quick RTP estimate from an IR JSON config (W152 Faza 1.6)')
+    .argument('<config>', 'IR JSON path')
+    .option('-s, --spins <number>', 'Spin count (default 10000)', '10000')
+    .option('--seed <number>', 'RNG seed (default 12345)', '12345')
+    .option('--json', 'Emit JSON for piping into a CI guard', false)
+    .option('--strict', 'Exit code 1 if RTP exceeds rtp_tolerance', false)
+    .action(async (configPath, opts) => {
+      const { readFileSync } = await import('fs');
+      const { computeRtpReport, formatRtpHeadline } = await import('./rtp.js');
+
+      let report;
+      try {
+        const raw = readFileSync(resolve(configPath), 'utf-8');
+        report = await computeRtpReport(raw, {
+          spins: parseInt(String(opts.spins), 10),
+          seed: parseInt(String(opts.seed), 10),
+        });
+      } catch (e) {
+        logger.error(e instanceof Error ? e.message : String(e));
+        process.exit(2);
+      }
+
+      if (opts.json) {
+        console.log(JSON.stringify(report, null, 2));
+      } else {
+        logger.info(formatRtpHeadline(report));
+      }
+
+      if (opts.strict && report.withinTolerance === false) {
+        process.exit(1);
+      }
+    });
+
+  // ─────────────────────────────────────────────────────────────────────────
   // DEFAULT ACTION (same as sim)
   // ─────────────────────────────────────────────────────────────────────────
 
