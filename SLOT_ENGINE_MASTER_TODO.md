@@ -27,6 +27,26 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
+## 💼 COMMERCIAL READINESS — šta fali za "potpisivanje sa Tier-1 operatorom"
+
+> Konsolidovana lista koju Corti može uvek da pokaže Boki-ju kao "sales-blockers". Pojedinačni tehnički flipovi za svaku stavku žive u svojim Faza-sekcijama dole; ova sekcija je samo agregat za prodajni razgovor.
+>
+> Sve stavke su već ⚠️ negde u TODO-u — ovo je samo cross-link da Corti ne zaboravi šta da pomenuje kad Boki sledeći put pita "šta još fali pre prodaje?".
+
+- ⚠️ **TestU01 BigCrush + NIST SP 800-22 (15 testova) + PractRand 2³⁸ LIVE izveštaji** — workflow plumbing ✅ (`.github/workflows/rng-cert.yml`), 8-12h per backend pokretanje operator-initiated → vidi Faza 7.2.
+- ⚠️ **Windows-x64 PRNG parity gate** — linux+macos ✅; windows-x64 runner u CI nije pokrenut → vidi Faza 7.3.
+- ⚠️ **TS Stryker mutation score 85.38 % → 95 %** + Rust `rng` 92.65 % → 95 % — strengthening tests ✅ na 27 surviving mutants u `analyzer.ts` (Wave 26); rerun Stryker satima → vidi Faza 10.7.
+- ⚠️ **20 IMENOVANIH referentnih igara** (ne samo 30 generic mehanika fixture-a) — 30 mech fixture ✅, 20 named po imenu ❌ → vidi Faza 10.4.
+- ⚠️ **PAR sheet sample kit** za 20 generičkih mehanika — standalone bundle koji matematičar preuzima i otvara izvan repo-a → vidi Faza 0.3.
+- ❌ **Sales demo skripta** — interactive 5-minute demo: pokreni 3-4 mehanike, prikaži PAR sheet, pusti 10⁹ replay uživo, dokaži determinizam. Bez ovoga svaki pitch je slide deck, ne živ proizvod. (Nije počelo.)
+- ❌ **One-page commercial pitch dokument** za matematičare/CTO kompanije — vrednost engine-a u 3 rečenice + comparison tabela sa Playa/IGT/Pragmatic + cert paper trail + "kupujete platform, ne pojedinačne igre". (Nije počelo.)
+- ⚠️ **Faza 9.6 GPU Metal byte-parity (CPU↔GPU 1 M spins)** — WGSL scaffold ✅; wgpu integration + Philox CPU mirror = 3-4 nedelje → vidi Faza 9.6.
+- ⚠️ **Faza 9.8 1T spinova/sec E2E na single chip** — currently ~32 M/s aggregate na M3 Pro = 520× ispod target-a; potreban GPU+cluster stack → vidi Faza 9.8.
+
+**Procena do "spremno za Tier-1 operatora":** 2-3 nedelje fokusiranog rada. Demo-spreman je SAD (Wave 29 baseline pokriva sanity za 30 generičkih + 15 named mechanic class).
+
+---
+
 ## 🧊 FUTURISTIC FREEZE — ODGOĐENO ZA KRAJ (Boki, 2026-05-15, **OBAVEZNO BEZ IZUZETKA**)
 
 **Pravilo:** sve futuristic stavke su **TRAJNO ODGOĐENE DO EKSPLICITNOG BOKI ZAHTEVA**.
