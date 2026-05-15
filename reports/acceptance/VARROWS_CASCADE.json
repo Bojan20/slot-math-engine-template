@@ -1,0 +1,93 @@
+{
+  "generatedAtUtc": "2026-05-15T20:22:48.700Z",
+  "fixture": "complex-variable-rows.json",
+  "topology": {
+    "kind": "variable_rows",
+    "reels": 6,
+    "row_range_per_reel": [
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        7
+      ]
+    ],
+    "ways_cap": 117649
+  },
+  "cascadeFeature": {
+    "kind": "cascade",
+    "replacement": "drop",
+    "max_chain": 5,
+    "multiplier_progression": [
+      1,
+      2,
+      3,
+      5,
+      10
+    ]
+  },
+  "seeds": [
+    12345,
+    67890,
+    11111,
+    99999
+  ],
+  "spinsPerSeed": 100000,
+  "relSigmaTolerance": 0.05,
+  "wallMs": 54782,
+  "modes": {
+    "withCascade": {
+      "label": "cascade ON",
+      "seedRtps": [
+        519688.02674799744,
+        523303.3957140016,
+        518820.5816920029,
+        519275.72046000237
+      ],
+      "mean": 520271.9311535011,
+      "std": 2051.793747071858,
+      "n": 4
+    },
+    "noCascade": {
+      "label": "cascade OFF",
+      "seedRtps": [
+        25360.368460000216,
+        25772.21951800017,
+        25325.197200000228,
+        25085.942678000334
+      ],
+      "mean": 25385.931964000236,
+      "std": 284.9291434637027,
+      "n": 4
+    }
+  },
+  "metrics": {
+    "relSigmaOn": 0.003943694872261899,
+    "relSigmaOff": 0.011223899278850997,
+    "liftPP": 494885.9991895009
+  },
+  "gates": {
+    "sanityPass": true,
+    "sigmaPass": true,
+    "liftPass": true
+  },
+  "overallPass": true
+}

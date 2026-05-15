@@ -1,0 +1,73 @@
+{
+  "generatedAtUtc": "2026-05-15T20:20:47.021Z",
+  "fixture": "5x4-25lines.json",
+  "originalDirection": "both",
+  "reels": 5,
+  "rows": 4,
+  "paylines": 25,
+  "spinsPerSeed": 200000,
+  "seeds": [
+    12345,
+    67890,
+    11111,
+    99999
+  ],
+  "relSigmaTolerance": 0.05,
+  "relSigmas": {
+    "both": 0.006726934853925051,
+    "ltr": 0.007488188310872281,
+    "rtl": 0.007680244571336456
+  },
+  "wallMs": 45036,
+  "modes": {
+    "both": {
+      "label": "BOTH",
+      "directionOverride": "both",
+      "seedRtps": [
+        29.053928499981197,
+        28.692725999981946,
+        29.10173399998151,
+        28.81532099998223
+      ],
+      "mean": 28.91592737498172,
+      "std": 0.19451555969233003,
+      "n": 4
+    },
+    "ltr": {
+      "label": "LTR",
+      "directionOverride": "ltr",
+      "seedRtps": [
+        20.006050499994117,
+        19.693331499993874,
+        19.982930999993638,
+        19.806931999994106
+      ],
+      "mean": 19.872311249993935,
+      "std": 0.1488076088122203,
+      "n": 4
+    },
+    "rtl": {
+      "label": "RTL",
+      "directionOverride": "rtl",
+      "seedRtps": [
+        19.948007999994143,
+        19.67665449999434,
+        20.014882999994015,
+        19.793318999994224
+      ],
+      "mean": 19.85821612499418,
+      "std": 0.15251595659041262,
+      "n": 4
+    }
+  },
+  "bounds": {
+    "lower": 19.872311249993935,
+    "upper": 39.730527374988114
+  },
+  "gates": {
+    "lbPass": true,
+    "ubPass": true,
+    "sigmaPass": true
+  },
+  "overallPass": true
+}
