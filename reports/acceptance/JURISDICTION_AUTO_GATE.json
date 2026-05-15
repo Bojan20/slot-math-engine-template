@@ -1,0 +1,4023 @@
+{
+  "schema": "jurisdiction-auto-gate/v1",
+  "generatedAtUtc": "2026-05-15T22:02:23.140Z",
+  "config": {
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "ADM",
+      "BMM",
+      "GLI19",
+      "AGCO",
+      "DGA",
+      "NJDGE",
+      "ADM_VLT",
+      "NIGC_C2",
+      "NV_SKILL",
+      "DGOJ",
+      "SPELINSPEKTIONEN",
+      "PGCB",
+      "NCPG"
+    ],
+    "fixtureCount": 30
+  },
+  "headline": {
+    "totalVerdicts": 450,
+    "pass": 203,
+    "warn": 175,
+    "fail": 72,
+    "passPct": "45.11",
+    "warnPct": "38.89",
+    "failPct": "16.00"
+  },
+  "perJurisdiction": {
+    "UKGC": {
+      "pass": 0,
+      "warn": 29,
+      "fail": 1
+    },
+    "MGA": {
+      "pass": 30,
+      "warn": 0,
+      "fail": 0
+    },
+    "ADM": {
+      "pass": 29,
+      "warn": 0,
+      "fail": 1
+    },
+    "BMM": {
+      "pass": 30,
+      "warn": 0,
+      "fail": 0
+    },
+    "GLI19": {
+      "pass": 30,
+      "warn": 0,
+      "fail": 0
+    },
+    "AGCO": {
+      "pass": 0,
+      "warn": 29,
+      "fail": 1
+    },
+    "DGA": {
+      "pass": 30,
+      "warn": 0,
+      "fail": 0
+    },
+    "NJDGE": {
+      "pass": 30,
+      "warn": 0,
+      "fail": 0
+    },
+    "ADM_VLT": {
+      "pass": 0,
+      "warn": 29,
+      "fail": 1
+    },
+    "NIGC_C2": {
+      "pass": 24,
+      "warn": 0,
+      "fail": 6
+    },
+    "NV_SKILL": {
+      "pass": 0,
+      "warn": 0,
+      "fail": 30
+    },
+    "DGOJ": {
+      "pass": 0,
+      "warn": 30,
+      "fail": 0
+    },
+    "SPELINSPEKTIONEN": {
+      "pass": 0,
+      "warn": 29,
+      "fail": 1
+    },
+    "PGCB": {
+      "pass": 0,
+      "warn": 0,
+      "fail": 30
+    },
+    "NCPG": {
+      "pass": 0,
+      "warn": 29,
+      "fail": 1
+    }
+  },
+  "ruleFailureCounts": {
+    "near_miss_rule": {
+      "NV_SKILL": 30,
+      "PGCB": 30
+    },
+    "prohibited_features": {
+      "NIGC_C2": 6,
+      "UKGC": 1,
+      "ADM": 1,
+      "AGCO": 1,
+      "ADM_VLT": 1,
+      "NV_SKILL": 1,
+      "SPELINSPEKTIONEN": 1,
+      "NCPG": 1
+    }
+  },
+  "matrix": [
+    {
+      "fixture": "3x5-5lines.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "5x4-25lines.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "6x4-4096ways.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cascade-fixed-strip.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cascade-refill.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cluster-7x7.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cluster-diagonal.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "cluster-hexagonal.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "complex-variable-rows.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 5,
+          "pass": 4,
+          "na": 1,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 4,
+          "na": 6,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 1,
+          "pass": 4,
+          "na": 5,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 4,
+          "pass": 5,
+          "na": 1,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 2,
+          "warn": 0,
+          "pass": 1,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features",
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 5,
+          "pass": 4,
+          "na": 1,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 5,
+          "pass": 5,
+          "na": 0,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        }
+      }
+    },
+    {
+      "fixture": "expanding-wilds.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "fs-expanding-wilds.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "fs-multiplier-ladder.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "fs-retrigger.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "fs-sticky-wilds.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "hnw-classic.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "hnw-full-grid.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "hnw-grand-jackpot.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "multiplier-wilds.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "mystery-symbol.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "pay-anywhere.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "pick-bonus.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "respin-feature.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "prohibited_features"
+          ]
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "symbol-upgrade.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "variable-rows-7reels.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "walking-wilds.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    },
+    {
+      "fixture": "wheel-bonus.json",
+      "perJurisdiction": {
+        "UKGC": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "MGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "ADM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 5,
+          "na": 6,
+          "failingRules": []
+        },
+        "BMM": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "GLI19": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 2,
+          "na": 9,
+          "failingRules": []
+        },
+        "AGCO": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 1,
+          "pass": 5,
+          "na": 5,
+          "failingRules": []
+        },
+        "DGA": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "NJDGE": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 4,
+          "na": 7,
+          "failingRules": []
+        },
+        "ADM_VLT": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 4,
+          "pass": 6,
+          "na": 1,
+          "failingRules": []
+        },
+        "NIGC_C2": {
+          "status": "PASS",
+          "fail": 0,
+          "warn": 0,
+          "pass": 3,
+          "na": 8,
+          "failingRules": []
+        },
+        "NV_SKILL": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 0,
+          "pass": 2,
+          "na": 8,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "DGOJ": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "SPELINSPEKTIONEN": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 5,
+          "na": 1,
+          "failingRules": []
+        },
+        "PGCB": {
+          "status": "FAIL",
+          "fail": 1,
+          "warn": 2,
+          "pass": 3,
+          "na": 5,
+          "failingRules": [
+            "near_miss_rule"
+          ]
+        },
+        "NCPG": {
+          "status": "WARN",
+          "fail": 0,
+          "warn": 5,
+          "pass": 6,
+          "na": 0,
+          "failingRules": []
+        }
+      }
+    }
+  ]
+}

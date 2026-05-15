@@ -202,8 +202,21 @@ describe('evaluateCompliance — overall verdict', () => {
     expect(v.overallStatus).toBe('FAIL');
   });
   it('overallStatus = WARN when only WARN, no FAIL', () => {
-    // PGCB has min_spin_duration WARN but no other failures by default
-    const v = evaluateCompliance(makeIR(), 'PGCB');
+    // PGCB has min_spin_duration WARN but no other failures by default.
+    // PGCB requires near_miss_rule = 'allowed_within_distribution' (legacy
+    // Class III equivalent); use PGCB-compatible IR to isolate the WARN-only
+    // path. Wave 36 K8 added the near-miss rule check to evaluateCompliance.
+    const ir = makeIR({
+      compliance: {
+        jurisdictions: ['PGCB'],
+        rtp_range_required: [0.85, 1.0],
+        max_win_cap_required: 50000,
+        near_miss_rule: 'allowed_within_distribution',
+        ldw_disclosure: true,
+        session_time_display: true,
+      },
+    } as Partial<SlotGameIR>);
+    const v = evaluateCompliance(ir, 'PGCB');
     expect(v.overallStatus).toBe('WARN');
   });
 });

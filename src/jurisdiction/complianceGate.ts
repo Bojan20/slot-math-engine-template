@@ -85,6 +85,9 @@ export function evaluateCompliance(ir: SlotGameIR, jurisdictionId: string): Comp
   // ── 10. Session-time display ────────────────────────────────────────────
   checks.push(checkSessionTimeDisplay(ir, profile));
 
+  // ── 11. Near-miss rule (UKGC RTS-3 / MGA equivalent) ────────────────────
+  checks.push(checkNearMissRule(ir, profile));
+
   // ── Aggregate ──────────────────────────────────────────────────────────
   const failCount = checks.filter((c) => c.status === 'FAIL').length;
   const warnCount = checks.filter((c) => c.status === 'WARN').length;
@@ -255,6 +258,34 @@ function checkLdwDisclosure(ir: SlotGameIR, profile: JurisdictionProfile): Compl
     expected: true,
     observed: ir.compliance.ldw_disclosure,
     note: ok ? undefined : 'Loss-disguised-as-win celebration guard required',
+    citation: profile.regulatorUrl,
+  };
+}
+
+/**
+ * Check near-miss rule per Kimi K8 + UKGC RTS-3 + MGA PPD §11.f.
+ *
+ * UKGC RTS-3 explicitly bans "false display of near-miss results" — the
+ * symbol that almost-completed a payline must not be artificially
+ * over-represented relative to its baseline strip frequency. Most
+ * jurisdictions require `near_miss_rule: 'must_be_random'`. A few
+ * (BMM Class III legacy cabinets) allow `'allowed_within_distribution'`
+ * when the operator publishes the conditional symbol distribution.
+ */
+function checkNearMissRule(ir: SlotGameIR, profile: JurisdictionProfile): ComplianceCheck {
+  if (profile.requiredNearMissRule === undefined) {
+    return { ruleId: 'near_miss_rule', status: 'N/A' };
+  }
+  const observed = ir.compliance.near_miss_rule;
+  const ok = observed === profile.requiredNearMissRule;
+  return {
+    ruleId: 'near_miss_rule',
+    status: ok ? 'PASS' : 'FAIL',
+    expected: profile.requiredNearMissRule,
+    observed,
+    note: ok
+      ? undefined
+      : `${profile.id} requires near_miss_rule '${profile.requiredNearMissRule}', got '${observed ?? 'undefined'}'`,
     citation: profile.regulatorUrl,
   };
 }

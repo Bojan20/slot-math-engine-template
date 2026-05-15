@@ -64,7 +64,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | K5 | **Open PAR sheet schema v1.0 (JSON Schema Draft 2020-12)** — REQUIRED baseline (regulator submission) + OPTIONAL Tier-1 extra-credit (transition matrix, P99.9 tail, multi-seed CI bands, segment RTP, jurisdiction-gated RTP); validator + 20/20 baseline PASS | Faza 8.5 ext + **NOVA Faza 8.7** | ✅ **Wave 35** — `schemas/usif-par-v1.0.json` + `docs/USIF_PAR_SCHEMA_v1.md` + validator | High / Low |
 | K6 | **cargo-mutants + Stryker CI gate** — dual-mode: regression (no-decline-from-baseline, default CI) + strict (≥90% threshold, promotion gate) | Faza 10.7 (mutation testing ⚠️ → ✅ INFRA / strict pending TS uplift) | ✅ **gate landed Wave 34** (`scripts/mutation-gate.mjs` + `.github/workflows/mutation-gate.yml` + baseline.json) | Medium / Low |
 | K7 | **GPU deterministic replay kernel (Metal/WGSL) end-to-end** — wgpu integration + CPU↔GPU byte-parity na 10⁶ spinova | Faza 9.6 (GPU Metal ⚠️) | ⚠️ scaffold + WGSL landed, integration pending | Very High / High |
-| K8 | **Jurisdiction-specific compliance auto-gate** — automated reject na max-win cap, hit-freq floor, near-miss threshold violacijama (UKGC RTS-3, NL KSA, DK SCP.01.00) | Faza 11.9 + 15.B (compliance gate ✅) | ⚠️ 15 jurisdikcija profila ✅; auto-reject rule za RTS-3 near-miss fali | High / Medium |
+| K8 | **Jurisdiction-specific compliance auto-gate** — `evaluateCompliance()` 11-rule gate (sad sa near-miss rule UKGC RTS-3) + 30 fixtures × 15 jurisdictions = 450-cell compliance matrix | Faza 11.9 + 15.B + **NOVA Faza 11.10** | ✅ **Wave 36** — `checkNearMissRule` landed + `scripts/jurisdiction-auto-gate-acceptance.mjs` + 24/24 unit tests | High / Medium |
 | K9 | **zk-SNARK PAR sheet commitment prototype** — Groth16 circuit: public = PAR hash + mechanic params; witness = reel strips + weights; proof = RTP integrity | Faza 13.4 (zk-SNARK scaffold ✅) + **NOVO**: production circuit | ⚠️ scaffold landed `71d9401`; Groth16 prod circuit fali | Very Very High / Very High |
 | K10 | **HSM-backed seed architecture design doc** — Thales Luna 7 / AWS CloudHSM / Vault za DRBG seed injection + side-channel resistance + multi-instance broadcast | Faza 7.x + P0 #10 (HSM bridge ✅ Mock) | ⚠️ MockHSMProvider ✅ + audit/health ✅; real PKCS#11 driver fali | High / High |
 
@@ -156,6 +156,7 @@ Legenda:
 | 33 | `f4ca791` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
 | 34 | `d23489a` | **Kimi K6 ⚠️→✅ INFRA** — Mutation-score CI gate (regression + strict modes) + baseline.json + GitHub Action workflow; dokazano blokira simulirane -5pp/-10pp regresije |
 | 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
+| 36 | `(this commit)` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
