@@ -1,0 +1,683 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T18:16:30.467Z",
+    "fixtureCount": 30,
+    "spinsPerSeed": 25000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999
+    ],
+    "stabilityTolerance": 0.05,
+    "sanityMaxRtpRatio": 1000000000,
+    "passed": 30,
+    "failed": 0,
+    "overallPassed": true,
+    "wallTotalMs": 70661,
+    "totalSpins": 3000000,
+    "spinsPerSec": 42456
+  },
+  "fixtures": [
+    {
+      "fixture": "3x5-5lines.json",
+      "target": 0.96,
+      "seedRtps": [
+        0.9734799999999074,
+        0.9984079999999131,
+        0.9678719999999141,
+        0.97955199999991
+      ],
+      "seedHits": [
+        0.60436,
+        0.61008,
+        0.60404,
+        0.60608
+      ],
+      "mean": 0.9798279999999111,
+      "stdDev": 0.013273226384970745,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 629
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "target": 0.96,
+      "seedRtps": [
+        4.28196800000021,
+        4.340564000000259,
+        4.359568000000237,
+        4.197968000000214
+      ],
+      "seedHits": [
+        0.64976,
+        0.65068,
+        0.6486,
+        0.65212
+      ],
+      "mean": 4.295017000000231,
+      "stdDev": 0.07264100222327848,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 860
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "target": 0.96,
+      "seedRtps": [
+        309.6994160000026,
+        293.66915200000216,
+        286.7553800000019,
+        296.89815200000214
+      ],
+      "seedHits": [
+        0.79276,
+        0.79224,
+        0.79124,
+        0.79248
+      ],
+      "mean": 296.7555250000022,
+      "stdDev": 9.610640890824799,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 808
+    },
+    {
+      "fixture": "5x4-25lines.json",
+      "target": 0.96,
+      "seedRtps": [
+        29.5182520000007,
+        28.706104000000327,
+        29.485816000000476,
+        29.183968000000533
+      ],
+      "seedHits": [
+        0.95856,
+        0.95972,
+        0.96056,
+        0.96
+      ],
+      "mean": 29.22353500000051,
+      "stdDev": 0.37636410575411416,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 1683
+    },
+    {
+      "fixture": "6x4-4096ways.json",
+      "target": 0.96,
+      "seedRtps": [
+        14468.115707999945,
+        14255.222495999958,
+        14107.538587999923,
+        14382.950939999913
+      ],
+      "seedHits": [
+        0.8976,
+        0.89952,
+        0.8938,
+        0.89648
+      ],
+      "mean": 14303.456932999936,
+      "stdDev": 157.20726038541696,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 4647
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "target": 0.96,
+      "seedRtps": [
+        11.881704000000463,
+        12.09164800000041,
+        11.941528000000433,
+        11.793684000000491
+      ],
+      "seedHits": [
+        0.88364,
+        0.88496,
+        0.88264,
+        0.88736
+      ],
+      "mean": 11.927141000000448,
+      "stdDev": 0.12535925791629715,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 6339
+    },
+    {
+      "fixture": "cascade-fixed-strip.json",
+      "target": 0.96,
+      "seedRtps": [
+        4.404416000000432,
+        4.264012000000404,
+        4.274172000000386,
+        4.32729200000042
+      ],
+      "seedHits": [
+        0.54288,
+        0.54044,
+        0.53628,
+        0.53804
+      ],
+      "mean": 4.317473000000411,
+      "stdDev": 0.06426132359879379,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 1182
+    },
+    {
+      "fixture": "cascade-refill.json",
+      "target": 0.96,
+      "seedRtps": [
+        2230.2476920000163,
+        2282.568448000019,
+        2264.156704000004,
+        2267.259572000014
+      ],
+      "seedHits": [
+        0.84784,
+        0.84472,
+        0.84948,
+        0.84888
+      ],
+      "mean": 2261.0581040000134,
+      "stdDev": 22.060794137436975,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 3978
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "target": 0.96,
+      "seedRtps": [
+        0.5587439999999729,
+        0.5564559999999753,
+        0.5572799999999746,
+        0.5472839999999749
+      ],
+      "seedHits": [
+        0.47092,
+        0.47288,
+        0.46724,
+        0.46452
+      ],
+      "mean": 0.5549409999999745,
+      "stdDev": 0.0051916151629329095,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 422
+    },
+    {
+      "fixture": "cluster-7x7.json",
+      "target": 0.96,
+      "seedRtps": [
+        28.387487999996836,
+        28.431235999996932,
+        28.126511999996797,
+        28.150903999996856
+      ],
+      "seedHits": [
+        0.99376,
+        0.99308,
+        0.99244,
+        0.9932
+      ],
+      "mean": 28.274034999996854,
+      "stdDev": 0.15759443338311652,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 13299
+    },
+    {
+      "fixture": "cluster-diagonal.json",
+      "target": 0.96,
+      "seedRtps": [
+        1.6474519999998467,
+        1.6527479999998427,
+        1.6537799999998426,
+        1.6359079999998407
+      ],
+      "seedHits": [
+        0.7194,
+        0.72168,
+        0.71928,
+        0.72132
+      ],
+      "mean": 1.6474719999998433,
+      "stdDev": 0.008192548158744511,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 2912
+    },
+    {
+      "fixture": "cluster-hexagonal.json",
+      "target": 0.96,
+      "seedRtps": [
+        33.23942399999652,
+        33.45379599999644,
+        33.39249999999665,
+        33.12829999999662
+      ],
+      "seedHits": [
+        0.99952,
+        0.99948,
+        0.99956,
+        0.99956
+      ],
+      "mean": 33.303504999996555,
+      "stdDev": 0.14754734979203962,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 8134
+    },
+    {
+      "fixture": "complex-variable-rows.json",
+      "target": 0.96,
+      "seedRtps": [
+        521240.84132799844,
+        522386.7286879996,
+        522952.90538400004,
+        528426.1832160001
+      ],
+      "seedHits": [
+        0.44876,
+        0.45096,
+        0.4528,
+        0.45528
+      ],
+      "mean": 523751.6646539995,
+      "stdDev": 3196.687041483692,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 10382
+    },
+    {
+      "fixture": "expanding-wilds.json",
+      "target": 0.96,
+      "seedRtps": [
+        11600.08821199997,
+        11436.315423999999,
+        11354.586459999971,
+        11463.324019999987
+      ],
+      "seedHits": [
+        0.9356,
+        0.9358,
+        0.93432,
+        0.9354
+      ],
+      "mean": 11463.57852899998,
+      "stdDev": 102.07432966018995,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 840
+    },
+    {
+      "fixture": "fs-expanding-wilds.json",
+      "target": 0.96,
+      "seedRtps": [
+        3.2908920000001984,
+        3.357832000000205,
+        3.3113440000002057,
+        3.386680000000194
+      ],
+      "seedHits": [
+        0.59124,
+        0.59132,
+        0.59592,
+        0.5984
+      ],
+      "mean": 3.3366870000002007,
+      "stdDev": 0.04353489308588948,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 663
+    },
+    {
+      "fixture": "fs-multiplier-ladder.json",
+      "target": 0.96,
+      "seedRtps": [
+        7.701307999999797,
+        7.815807999999753,
+        7.709283999999782,
+        8.048003999999773
+      ],
+      "seedHits": [
+        0.59124,
+        0.59132,
+        0.59592,
+        0.5984
+      ],
+      "mean": 7.818600999999775,
+      "stdDev": 0.16159763983011713,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 661
+    },
+    {
+      "fixture": "fs-retrigger.json",
+      "target": 0.96,
+      "seedRtps": [
+        3.567096000000213,
+        3.603028000000214,
+        3.5557080000002137,
+        3.650288000000209
+      ],
+      "seedHits": [
+        0.59236,
+        0.59044,
+        0.5956,
+        0.59888
+      ],
+      "mean": 3.5940300000002128,
+      "stdDev": 0.04258302716654258,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 713
+    },
+    {
+      "fixture": "fs-sticky-wilds.json",
+      "target": 0.96,
+      "seedRtps": [
+        2.272384000000082,
+        2.274668000000082,
+        2.234024000000076,
+        2.1911280000000737
+      ],
+      "seedHits": [
+        0.49072,
+        0.49048,
+        0.48308,
+        0.48232
+      ],
+      "mean": 2.2430510000000785,
+      "stdDev": 0.03931727455797241,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 687
+    },
+    {
+      "fixture": "hnw-classic.json",
+      "target": 0.96,
+      "seedRtps": [
+        1.5861120000000066,
+        1.5948240000000067,
+        1.6064280000000009,
+        1.6287160000000047
+      ],
+      "seedHits": [
+        0.45152,
+        0.45644,
+        0.4518,
+        0.46108
+      ],
+      "mean": 1.6040200000000047,
+      "stdDev": 0.018447707716677402,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 485
+    },
+    {
+      "fixture": "hnw-full-grid.json",
+      "target": 0.96,
+      "seedRtps": [
+        3.291884000000072,
+        3.3795960000001255,
+        3.236220000000088,
+        3.329884000000083
+      ],
+      "seedHits": [
+        0.82956,
+        0.8272,
+        0.82752,
+        0.82368
+      ],
+      "mean": 3.3093960000000924,
+      "stdDev": 0.06057831092617678,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 1336
+    },
+    {
+      "fixture": "hnw-grand-jackpot.json",
+      "target": 0.96,
+      "seedRtps": [
+        189.54407200000006,
+        188.28472800000006,
+        188.454264,
+        188.34410800000072
+      ],
+      "seedHits": [
+        0.91396,
+        0.9124,
+        0.9126,
+        0.9146
+      ],
+      "mean": 188.6567930000002,
+      "stdDev": 0.5956750493156515,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 683
+    },
+    {
+      "fixture": "multiplier-wilds.json",
+      "target": 0.96,
+      "seedRtps": [
+        1.5992239999999964,
+        1.67330000000001,
+        1.6664600000000143,
+        1.6343200000000073
+      ],
+      "seedHits": [
+        0.42456,
+        0.4316,
+        0.42964,
+        0.42764
+      ],
+      "mean": 1.6433260000000072,
+      "stdDev": 0.03395937313909785,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 691
+    },
+    {
+      "fixture": "mystery-symbol.json",
+      "target": 0.96,
+      "seedRtps": [
+        5.214840000000238,
+        5.452892000000186,
+        5.261296000000229,
+        5.420248000000208
+      ],
+      "seedHits": [
+        0.56276,
+        0.57312,
+        0.56776,
+        0.57044
+      ],
+      "mean": 5.337319000000215,
+      "stdDev": 0.1169258159974155,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 772
+    },
+    {
+      "fixture": "pay-anywhere.json",
+      "target": 0.96,
+      "seedRtps": [
+        246.8207119999934,
+        243.5234599999929,
+        246.0500799999932,
+        244.04861599999268
+      ],
+      "seedHits": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "mean": 245.11071699999303,
+      "stdDev": 1.5762750462241368,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 1048
+    },
+    {
+      "fixture": "pick-bonus.json",
+      "target": 0.96,
+      "seedRtps": [
+        3.131280000000138,
+        3.0530640000001403,
+        3.050480000000132,
+        3.0145160000001225
+      ],
+      "seedHits": [
+        0.5742,
+        0.57304,
+        0.567,
+        0.57148
+      ],
+      "mean": 3.0623350000001333,
+      "stdDev": 0.04921572327350128,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 486
+    },
+    {
+      "fixture": "respin-feature.json",
+      "target": 0.96,
+      "seedRtps": [
+        2.742606553338484,
+        2.78194821208407,
+        2.792817779532713,
+        2.7847962459868825
+      ],
+      "seedHits": [
+        0.81028,
+        0.81556,
+        0.81844,
+        0.8166
+      ],
+      "mean": 2.7755421977355375,
+      "stdDev": 0.022434176510790414,
+      "sanityPass": true,
+      "stabilityPass": true,
+      "lastError": null,
+      "wallMs": 636
+    },
+    {
+      "fixture": "symbol-upgrade.json",
+      "target": 0.96,
+      "seedRtps": [
+        311.44181199999537,
+        309.93180799999556,
+        311.6519039999951,
+        306.6356039999961
+      ],
+      "seedHits": [
+        0.86252,
+        0.86692,
+        0.86472,
+        0.86552
+      ],
+      "mean": 309.9152819999955,
+      "stdDev": 2.316801725377642,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 517
+    },
+    {
+      "fixture": "variable-rows-7reels.json",
+      "target": 0.96,
+      "seedRtps": [
+        21562.62421599987,
+        21427.412587999894,
+        21054.130131999947,
+        21221.34002399999
+      ],
+      "seedHits": [
+        0.9152,
+        0.91456,
+        0.914,
+        0.91356
+      ],
+      "mean": 21316.376739999927,
+      "stdDev": 224.18150367723726,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 3945
+    },
+    {
+      "fixture": "walking-wilds.json",
+      "target": 0.96,
+      "seedRtps": [
+        4.538372000000294,
+        4.529808000000299,
+        4.430048000000287,
+        4.480656000000298
+      ],
+      "seedHits": [
+        0.66324,
+        0.6658,
+        0.66084,
+        0.66376
+      ],
+      "mean": 4.494721000000295,
+      "stdDev": 0.05005639660756368,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 702
+    },
+    {
+      "fixture": "wheel-bonus.json",
+      "target": 0.96,
+      "seedRtps": [
+        59.393804000000664,
+        60.377976000000835,
+        59.80096000000073,
+        59.14777200000076
+      ],
+      "seedHits": [
+        0.86412,
+        0.8652,
+        0.8668,
+        0.86128
+      ],
+      "mean": 59.68012800000075,
+      "stdDev": 0.5375799311234737,
+      "sanityPass": true,
+      "stabilityPass": false,
+      "lastError": null,
+      "wallMs": 518
+    }
+  ]
+}

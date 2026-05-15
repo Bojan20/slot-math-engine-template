@@ -1,0 +1,85 @@
+{
+  "jurisdictionId": "ADM_VLT",
+  "jurisdictionName": "ADM (Italy) — Land-based VLT",
+  "overallStatus": "WARN",
+  "failCount": 0,
+  "warnCount": 4,
+  "passCount": 5,
+  "naCount": 1,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.85,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "PASS",
+      "expected": 5000,
+      "observed": 5000,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "PASS",
+      "expected": [
+        "gamble",
+        "buy_feature"
+      ],
+      "observed": [
+        "free_spins"
+      ]
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "WARN",
+      "expected": 4000,
+      "note": "Operator must enforce ≥4000 ms server-side spin gate (engine cannot self-verify).",
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Autoplay must be disabled in client UI.",
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Turbo / quick-spin must be disabled in client UI.",
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "WARN",
+      "expected": 10,
+      "note": "Default per-game-cycle stake cap 10 (operator must enforce).",
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+    }
+  ]
+}

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slot Math Studio — Cockpit</title>
+  <link rel="stylesheet" href="studio.css" />
+</head>
+<body>
+  <!-- ╔══════════════════════════════════════════════════════════════════════╗
+       ║ TOP COMMAND BAR                                                       ║
+       ╚══════════════════════════════════════════════════════════════════════╝ -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">◆</div>
+      <div>
+        <h1>SLOT MATH STUDIO</h1>
+        <p>Mathematician's Cockpit · v1.0-mockup</p>
+      </div>
+    </div>
+
+    <nav class="presets">
+      <label>Preset</label>
+      <select id="preset-select">
+        <option value="blank">— Blank canvas —</option>
+        <optgroup label="Classic">
+          <option value="classic-25">3×5 · 25 lines · low vol</option>
+          <option value="classic-243">3×5 · 243 ways · med vol</option>
+        </optgroup>
+        <optgroup label="Modern">
+          <option value="megaways">6×{2..7} · Megaways · high vol</option>
+          <option value="cluster">7×7 · cluster · med-high</option>
+          <option value="cascade">5×5 · cascade · multiplier</option>
+        </optgroup>
+        <optgroup label="Feature-heavy">
+          <option value="hold-win">5×3 · Hold & Win 4-tier jackpot</option>
+          <option value="money-collect">6×4 · Money symbol FS</option>
+          <option value="multimode">5×4 · 3-mode FS choice</option>
+        </optgroup>
+        <optgroup label="Special">
+          <option value="crash">Crash-style multiplier-only</option>
+          <option value="bingo">Class-II bingo coordinator</option>
+          <option value="parallel">Parallel screens (4 indep)</option>
+        </optgroup>
+      </select>
+
+      <button class="btn btn-ghost" title="Save current config">⬇ Save</button>
+      <button class="btn btn-ghost" title="Load IR JSON">⬆ Load</button>
+      <button class="btn btn-ghost" title="Export PAR + IR">⤴ Export</button>
+      <button class="btn btn-ghost" title="A/B compare mode">⇄ Compare</button>
+    </nav>
+
+    <div class="status-mini">
+      <span class="dot dot-ok"></span>
+      <span>Engine ready · 16T · Metal GPU available</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════════════════════════════════════╗
+       ║ MAIN — 3 COLUMNS                                                      ║
+       ╚══════════════════════════════════════════════════════════════════════╝ -->
+  <main class="cockpit">
+
+    <!-- ┌──────────────────────────────────────────────────────────────────┐
+         │ LEFT — PARAMETER STUDIO (accordion sections)                     │
+         └──────────────────────────────────────────────────────────────────┘ -->
+    <aside class="studio">
+      <div class="studio-search">
+        <input type="search" placeholder="🔍 Find any parameter…" id="param-search"/>
+      </div>
+
+      <!-- 1. IDENTITY ─────────────────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">🎮</span> Game Identity <span class="badge">core</span></summary>
+        <div class="grid-2">
+          <label>Game ID
+            <input type="text" value="my-slot-001"/>
+          </label>
+          <label>Display name
+            <input type="text" value="My Ultimate Slot"/>
+          </label>
+          <label>Version
+            <input type="text" value="1.0.0"/>
+          </label>
+          <label>Studio / Provider
+            <input type="text" value="FluxForge"/>
+          </label>
+          <label class="span-2">Theme tags
+            <input type="text" value="adventure, mythology, gems"/>
+          </label>
+          <label>Math mode
+            <select>
+              <option>Standard (theoretical RTP)</option>
+              <option>Compensated (UK AWP — cycleProgress)</option>
+              <option>Hybrid (mixed pool)</option>
+            </select>
+          </label>
+          <label>Cycle length (AWP)
+            <input type="number" value="10000" min="1000"/>
+          </label>
+          <label class="span-2">Jurisdictions
+            <div class="chip-row">
+              <span class="chip chip-on">UK GC</span>
+              <span class="chip chip-on">MGA</span>
+              <span class="chip chip-on">AAMS</span>
+              <span class="chip">DK SG</span>
+              <span class="chip">NJ DGE</span>
+              <span class="chip">MI MGCB</span>
+              <span class="chip">PA PGCB</span>
+              <span class="chip">ON iGO</span>
+              <span class="chip">SE SGA</span>
+              <span class="chip">DE GGL</span>
+              <span class="chip">RO ONJN</span>
+              <span class="chip">BG NRA</span>
+              <span class="chip">GR HGC</span>
+              <span class="chip">ES DGOJ</span>
+              <span class="chip">CO Coljuegos</span>
+            </div>
+          </label>
+        </div>
+      </details>
+
+      <!-- 2. TOPOLOGY ─────────────────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">🧮</span> Grid Topology <span class="badge">structure</span></summary>
+        <div class="grid-2">
+          <label>Reels (cols)
+            <input type="range" min="1" max="12" value="5" data-display="reels-val"/>
+            <output id="reels-val">5</output>
+          </label>
+          <label>Rows
+            <input type="range" min="1" max="8" value="3" data-display="rows-val"/>
+            <output id="rows-val">3</output>
+          </label>
+          <label class="check">
+            <input type="checkbox"/> Asymmetric grid (per-reel row override)
+          </label>
+          <label class="check">
+            <input type="checkbox"/> Variable rows (Megaways-style)
+          </label>
+          <label class="check">
+            <input type="checkbox"/> Cluster grid (no payline rows)
+          </label>
+          <label class="check">
+            <input type="checkbox"/> Persistent grid Markov (Money Train style)
+          </label>
+          <label>Reel-set count
+            <input type="number" value="1" min="1" max="8"/>
+          </label>
+          <label>Variable rows distribution
+            <input type="text" value="2,3,4,5,6,7" placeholder="comma-separated"/>
+          </label>
+        </div>
+      </details>
+
+      <!-- 3. EVALUATION ─────────────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">🔀</span> Win Evaluation <span class="badge">math core</span></summary>
+        <div class="grid-2">
+          <label class="span-2">Evaluator family
+            <div class="seg seg-5">
+              <button class="seg-btn active">Lines</button>
+              <button class="seg-btn">Ways</button>
+              <button class="seg-btn">Cluster</button>
+              <button class="seg-btn">Pay-Anywhere</button>
+              <button class="seg-btn">Scatter-Pay</button>
+            </div>
+          </label>
+          <label>Paylines (count)
+            <input type="number" value="25" min="1" max="100"/>
+          </label>
+          <label>Ways count (computed)
+            <input type="text" value="243" disabled/>
+          </label>
+          <label class="check"><input type="checkbox"/> Both-ways evaluation (left+right)</label>
+          <label class="check"><input type="checkbox"/> Megaways (variable per-reel ways)</label>
+          <label>Cluster min size
+            <input type="number" value="5" min="3" max="12"/>
+          </label>
+          <label>Cluster adjacency
+            <select>
+              <option>4-connected (orthogonal)</option>
+              <option>8-connected (diagonal too)</option>
+              <option>Hex</option>
+            </select>
+          </label>
+          <label class="span-2">Payline editor
+            <button class="btn btn-mini">✎ Open visual payline designer</button>
+          </label>
+        </div>
+      </details>
+
+      <!-- 4. SYMBOLS LIBRARY ───────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">🎰</span> Symbols Library <span class="badge">11 symbols</span></summary>
+        <div class="symbols-toolbar">
+          <button class="btn btn-mini">+ Add symbol</button>
+          <button class="btn btn-mini">⚖ Auto-balance weights to target RTP</button>
+          <button class="btn btn-mini">🎨 Theme palette</button>
+        </div>
+        <table class="symbols-table">
+          <thead>
+            <tr><th></th><th>ID</th><th>Name</th><th>Kind</th><th>Color</th><th>Weight</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>👑</td><td>WD</td><td>Wild</td><td><select><option>Wild</option><option>Regular</option><option>Scatter</option><option>Bonus</option><option>Multiplier</option><option>Money</option><option>Sticky</option><option>Walking</option><option>Expanding</option><option>Mystery</option></select></td><td><input type="color" value="#f5b400"/></td><td><input type="number" value="3"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>⭐</td><td>SC</td><td>Scatter</td><td><select><option>Scatter</option><option>Regular</option><option>Wild</option></select></td><td><input type="color" value="#9b59ff"/></td><td><input type="number" value="2"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>💎</td><td>H1</td><td>Diamond</td><td><select><option>Regular</option></select></td><td><input type="color" value="#5ec8ff"/></td><td><input type="number" value="5"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>💰</td><td>H2</td><td>Gold</td><td><select><option>Regular</option></select></td><td><input type="color" value="#ffd700"/></td><td><input type="number" value="6"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>🔱</td><td>H3</td><td>Trident</td><td><select><option>Regular</option></select></td><td><input type="color" value="#ff5e8a"/></td><td><input type="number" value="8"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>🅰</td><td>L1</td><td>Ace</td><td><select><option>Regular</option></select></td><td><input type="color" value="#888"/></td><td><input type="number" value="12"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>K</td><td>L2</td><td>King</td><td><select><option>Regular</option></select></td><td><input type="color" value="#999"/></td><td><input type="number" value="14"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>Q</td><td>L3</td><td>Queen</td><td><select><option>Regular</option></select></td><td><input type="color" value="#aaa"/></td><td><input type="number" value="16"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>J</td><td>L4</td><td>Jack</td><td><select><option>Regular</option></select></td><td><input type="color" value="#bbb"/></td><td><input type="number" value="18"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>💵</td><td>$M</td><td>Money</td><td><select><option>Money</option></select></td><td><input type="color" value="#1ed760"/></td><td><input type="number" value="2"/></td><td><button class="btn-x">×</button></td></tr>
+            <tr><td>×</td><td>MX</td><td>Multiplier</td><td><select><option>Multiplier</option></select></td><td><input type="color" value="#ff7700"/></td><td><input type="number" value="1"/></td><td><button class="btn-x">×</button></td></tr>
+          </tbody>
+        </table>
+      </details>
+
+      <!-- 5. PAYTABLE ─────────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">📊</span> Paytable</summary>
+        <table class="paytable">
+          <thead><tr><th>Symbol</th><th>3OAK</th><th>4OAK</th><th>5OAK</th><th>6OAK</th></tr></thead>
+          <tbody>
+            <tr><td>👑 Wild</td><td><input value="5"/></td><td><input value="50"/></td><td><input value="500"/></td><td><input value="2500"/></td></tr>
+            <tr><td>💎 Diamond</td><td><input value="2"/></td><td><input value="20"/></td><td><input value="200"/></td><td><input value="1000"/></td></tr>
+            <tr><td>💰 Gold</td><td><input value="1.5"/></td><td><input value="15"/></td><td><input value="150"/></td><td><input value="750"/></td></tr>
+            <tr><td>🔱 Trident</td><td><input value="1"/></td><td><input value="10"/></td><td><input value="100"/></td><td><input value="500"/></td></tr>
+            <tr><td>🅰 Ace</td><td><input value="0.5"/></td><td><input value="5"/></td><td><input value="50"/></td><td><input value="250"/></td></tr>
+            <tr><td>K King</td><td><input value="0.4"/></td><td><input value="4"/></td><td><input value="40"/></td><td><input value="200"/></td></tr>
+            <tr><td>Q Queen</td><td><input value="0.3"/></td><td><input value="3"/></td><td><input value="30"/></td><td><input value="150"/></td></tr>
+            <tr><td>J Jack</td><td><input value="0.25"/></td><td><input value="2.5"/></td><td><input value="25"/></td><td><input value="125"/></td></tr>
+          </tbody>
+        </table>
+      </details>
+
+      <!-- 6. REEL STRIPS ──────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">🎲</span> Reel Strips (virtual reels)</summary>
+        <div class="reels-bar">
+          <div class="reel-col"><b>R1</b>
+            <div class="weights">
+              <div class="w-bar" style="--w:30%;background:#5ec8ff" title="Diamond 30%"></div>
+              <div class="w-bar" style="--w:25%;background:#ffd700"></div>
+              <div class="w-bar" style="--w:18%;background:#ff5e8a"></div>
+              <div class="w-bar" style="--w:15%;background:#888"></div>
+              <div class="w-bar" style="--w:8%;background:#f5b400"></div>
+              <div class="w-bar" style="--w:4%;background:#9b59ff"></div>
+            </div>
+            <small>87 stops</small>
+          </div>
+          <div class="reel-col"><b>R2</b>
+            <div class="weights">
+              <div class="w-bar" style="--w:25%;background:#5ec8ff"></div>
+              <div class="w-bar" style="--w:30%;background:#ffd700"></div>
+              <div class="w-bar" style="--w:18%;background:#ff5e8a"></div>
+              <div class="w-bar" style="--w:14%;background:#888"></div>
+              <div class="w-bar" style="--w:9%;background:#f5b400"></div>
+              <div class="w-bar" style="--w:4%;background:#9b59ff"></div>
+            </div>
+            <small>92 stops</small>
+          </div>
+          <div class="reel-col"><b>R3</b>
+            <div class="weights">
+              <div class="w-bar" style="--w:22%;background:#5ec8ff"></div>
+              <div class="w-bar" style="--w:28%;background:#ffd700"></div>
+              <div class="w-bar" style="--w:20%;background:#ff5e8a"></div>
+              <div class="w-bar" style="--w:15%;background:#888"></div>
+              <div class="w-bar" style="--w:10%;background:#f5b400"></div>
+              <div class="w-bar" style="--w:5%;background:#9b59ff"></div>
+            </div>
+            <small>96 stops</small>
+          </div>
+          <div class="reel-col"><b>R4</b>
+            <div class="weights">
+              <div class="w-bar" style="--w:25%;background:#5ec8ff"></div>
+              <div class="w-bar" style="--w:30%;background:#ffd700"></div>
+              <div class="w-bar" style="--w:18%;background:#ff5e8a"></div>
+              <div class="w-bar" style="--w:14%;background:#888"></div>
+              <div class="w-bar" style="--w:9%;background:#f5b400"></div>
+              <div class="w-bar" style="--w:4%;background:#9b59ff"></div>
+            </div>
+            <small>92 stops</small>
+          </div>
+          <div class="reel-col"><b>R5</b>
+            <div class="weights">
+              <div class="w-bar" style="--w:30%;background:#5ec8ff"></div>
+              <div class="w-bar" style="--w:25%;background:#ffd700"></div>
+              <div class="w-bar" style="--w:18%;background:#ff5e8a"></div>
+              <div class="w-bar" style="--w:15%;background:#888"></div>
+              <div class="w-bar" style="--w:8%;background:#f5b400"></div>
+              <div class="w-bar" style="--w:4%;background:#9b59ff"></div>
+            </div>
+            <small>87 stops</small>
+          </div>
+        </div>
+        <div class="grid-2">
+          <button class="btn btn-mini">📋 Paste reel strips from CSV</button>
+          <button class="btn btn-mini">🧠 Solve for RTP (auto-balance)</button>
+        </div>
+      </details>
+
+      <!-- 7. RNG ──────────────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">🔢</span> RNG Engine <span class="badge">GLI-19</span></summary>
+        <div class="grid-2">
+          <label class="span-2">Backend
+            <div class="seg seg-4">
+              <button class="seg-btn">Xoshiro256++</button>
+              <button class="seg-btn active">ChaCha20</button>
+              <button class="seg-btn">PCG-XSH-RR</button>
+              <button class="seg-btn">Philox4×32×10</button>
+            </div>
+          </label>
+          <label class="check"><input type="checkbox" checked/> Hardware entropy capture (/dev/urandom)</label>
+          <label class="check"><input type="checkbox"/> Re-seed every N spins</label>
+          <label>Seed
+            <input type="text" value="0xDEADBEEFCAFEBABE"/>
+          </label>
+          <label>Re-seed interval
+            <input type="number" value="10000" min="100"/>
+          </label>
+          <label class="span-2">Cert preset
+            <div class="seg seg-5">
+              <button class="seg-btn active">GLI-19</button>
+              <button class="seg-btn">GLI-11</button>
+              <button class="seg-btn">NMi</button>
+              <button class="seg-btn">BMM</button>
+              <button class="seg-btn">eCOGRA</button>
+            </div>
+          </label>
+          <label class="check"><input type="checkbox" checked/> TestU01 BigCrush stream output</label>
+          <label class="check"><input type="checkbox" checked/> NIST SP 800-22 stream output</label>
+          <label class="check"><input type="checkbox"/> PractRand 2³⁸ bytes</label>
+        </div>
+      </details>
+
+      <!-- 8. FEATURES ─────────────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">⚡</span> Features Stack <span class="badge">3 enabled</span></summary>
+
+        <div class="feature-card on">
+          <div class="feature-head">
+            <input type="checkbox" checked/>
+            <strong>Free Spins</strong>
+            <span class="contrib">+18.4% RTP</span>
+          </div>
+          <div class="grid-2">
+            <label>Trigger symbol <select><option>SC (Scatter)</option></select></label>
+            <label>Trigger count <input type="number" value="3"/></label>
+            <label>FS count <input type="number" value="10"/></label>
+            <label>Retrigger prob <input type="number" value="0.05" step="0.01"/></label>
+            <label>Max retriggers <input type="number" value="3"/></label>
+            <label>Multiplier mode
+              <select><option>Constant</option><option>Progressive +1 per win</option><option>Random per FS</option><option>Cumulative meter</option></select>
+            </label>
+            <label class="check"><input type="checkbox" checked/> Sticky wilds</label>
+            <label class="check"><input type="checkbox"/> Expanding wilds</label>
+            <label class="check"><input type="checkbox"/> Walking wilds</label>
+            <label class="check"><input type="checkbox"/> Mode choice on trigger (e.g. 10 spins ×3 / 5 spins ×10)</label>
+          </div>
+        </div>
+
+        <div class="feature-card on">
+          <div class="feature-head">
+            <input type="checkbox" checked/>
+            <strong>Cascade / Tumble</strong>
+            <span class="contrib">+6.2% RTP</span>
+          </div>
+          <div class="grid-2">
+            <label>Max chain depth <input type="number" value="20"/></label>
+            <label>Refill mode <select><option>Top-down</option><option>Anywhere</option><option>Random column</option></select></label>
+            <label class="span-2">Multiplier progression
+              <input type="text" value="1,2,3,5,8,13,20" placeholder="comma-separated"/>
+            </label>
+            <label class="check"><input type="checkbox" checked/> Reset multiplier on no-win</label>
+            <label class="check"><input type="checkbox"/> Persistent multiplier (carry to next spin)</label>
+          </div>
+        </div>
+
+        <div class="feature-card on">
+          <div class="feature-head">
+            <input type="checkbox" checked/>
+            <strong>Hold & Win Bonus</strong>
+            <span class="contrib">+4.1% RTP</span>
+          </div>
+          <div class="grid-2">
+            <label>Initial respins <input type="number" value="3"/></label>
+            <label>Total cells (grid) <input type="number" value="15"/></label>
+            <label>Reset respins on hit <select><option>Yes</option><option>No</option></select></label>
+            <label>Min triggering cells <input type="number" value="6"/></label>
+            <label class="check"><input type="checkbox" checked/> Money symbols (cash values)</label>
+            <label class="check"><input type="checkbox" checked/> Full-grid jackpot (Grand)</label>
+            <label>Money value distribution
+              <select><option>Pareto (heavy tail)</option><option>Uniform</option><option>Exponential</option><option>Custom table</option></select>
+            </label>
+            <label>Jackpot tiers
+              <select><option>4 (Mini/Minor/Major/Grand)</option><option>3</option><option>5</option></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Pick Bonus</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Wheel Bonus (multi-tier)</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Symbol Upgrade / Transform</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Mystery / Mega Symbol</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Charge / Progress Meter</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Supermeter State-Switch</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Per-Spin Random Multiplier</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-head">
+            <input type="checkbox"/>
+            <strong>Parallel Screens (N indep.)</strong>
+            <span class="contrib">— off</span>
+          </div>
+        </div>
+
+        <button class="btn btn-mini btn-add">+ Add custom feature</button>
+      </details>
+
+      <!-- 9. JACKPOTS ─────────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">💎</span> Jackpots <span class="badge">4 tiers</span></summary>
+        <table class="jackpot-table">
+          <thead><tr><th>Tier</th><th>Kind</th><th>Trigger</th><th>Seed ×bet</th><th>Contrib %</th><th>Cap ×bet</th></tr></thead>
+          <tbody>
+            <tr><td>Mini</td><td><select><option>Fixed</option></select></td><td><select><option>RandomPick</option></select></td><td><input value="20"/></td><td><input value="0"/></td><td><input value="20"/></td></tr>
+            <tr><td>Minor</td><td><select><option>Progressive</option></select></td><td><select><option>SymbolCombo</option></select></td><td><input value="50"/></td><td><input value="0.5"/></td><td><input value="500"/></td></tr>
+            <tr><td>Major</td><td><select><option>Pooled</option></select></td><td><select><option>WinMultiplierThreshold</option></select></td><td><input value="500"/></td><td><input value="1.0"/></td><td><input value="5000"/></td></tr>
+            <tr><td>Grand</td><td><select><option>Must-Hit-By</option></select></td><td><select><option>HoldAndWinFull</option></select></td><td><input value="10000"/></td><td><input value="2.0"/></td><td><input value="100000"/></td></tr>
+          </tbody>
+        </table>
+        <div class="grid-2">
+          <label class="check"><input type="checkbox"/> WAP (wide-area progressive)</label>
+          <label class="check"><input type="checkbox"/> Pseudo-must-hit + level progression</label>
+        </div>
+      </details>
+
+      <!-- 10. CONSTRAINTS ──────────────────────────────────── -->
+      <details class="section" open>
+        <summary><span class="ico">🎯</span> Target Constraints <span class="badge">solver</span></summary>
+        <div class="grid-2">
+          <label>Target RTP %
+            <input type="range" min="80" max="99.5" step="0.1" value="96" data-display="rtp-target-val"/>
+            <output id="rtp-target-val">96.0</output>
+          </label>
+          <label>RTP tolerance ±
+            <input type="number" value="0.5" step="0.01"/>
+          </label>
+          <label class="span-2">Volatility category
+            <div class="seg seg-6">
+              <button class="seg-btn">Very low</button>
+              <button class="seg-btn">Low</button>
+              <button class="seg-btn">Med-Low</button>
+              <button class="seg-btn active">Med-High</button>
+              <button class="seg-btn">High</button>
+              <button class="seg-btn">Ultra</button>
+            </div>
+          </label>
+          <label>Hit rate target (1-in-N)
+            <input type="number" value="3.5" step="0.1"/>
+          </label>
+          <label>Max win cap (×bet)
+            <select><option>2 500</option><option>5 000</option><option selected>10 000</option><option>25 000</option><option>50 000</option><option>100 000</option></select>
+          </label>
+          <label>Buy-bonus cost (×bet)
+            <input type="number" value="100" min="0"/>
+          </label>
+          <label class="check"><input type="checkbox"/> Buy-bonus enabled</label>
+        </div>
+      </details>
+
+      <!-- 11. BETTING ──────────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">💰</span> Betting Config</summary>
+        <div class="grid-2">
+          <label>Min bet <input type="number" value="0.10" step="0.01"/></label>
+          <label>Max bet <input type="number" value="100" step="1"/></label>
+          <label class="span-2">Denominations (×bet unit)
+            <div class="chip-row">
+              <span class="chip chip-on">0.10</span><span class="chip chip-on">0.20</span><span class="chip chip-on">0.50</span><span class="chip chip-on">1.00</span><span class="chip chip-on">2.00</span><span class="chip chip-on">5.00</span><span class="chip">10.00</span><span class="chip">25.00</span><span class="chip">50.00</span><span class="chip">100.00</span>
+            </div>
+          </label>
+          <label class="check"><input type="checkbox"/> Megaways stake-ways (extra cost per row)</label>
+          <label>Default bet level <input type="number" value="1.00"/></label>
+        </div>
+      </details>
+
+      <!-- 12. COMPLIANCE ───────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">🛡</span> Compliance & Limits</summary>
+        <div class="grid-2">
+          <label>UK reality check interval (min) <input type="number" value="60"/></label>
+          <label>Max session length (min) <input type="number" value="240"/></label>
+          <label>Max loss / session (×bet) <input type="number" value="500"/></label>
+          <label>DK net-position cap (×bet) <input type="number" value="1000"/></label>
+          <label>Min spin time (ms) <input type="number" value="2500"/></label>
+          <label>Auto-stop after big win? <input type="number" value="500" placeholder="threshold ×bet"/></label>
+          <label class="check"><input type="checkbox" checked/> Anti-cheat: bet pattern detection</label>
+          <label class="check"><input type="checkbox" checked/> Anti-cheat: timing analysis</label>
+          <label class="check"><input type="checkbox"/> Land-based AWP cycle progress</label>
+          <label class="check"><input type="checkbox"/> Class-II bingo coordinator</label>
+        </div>
+      </details>
+
+      <!-- 13. ADVANCED ─────────────────────────────────────── -->
+      <details class="section">
+        <summary><span class="ico">🔬</span> Advanced / Research</summary>
+        <div class="grid-2">
+          <label class="check"><input type="checkbox"/> Player-behavior simulator (sessions vs spins)</label>
+          <label class="check"><input type="checkbox"/> Risk-of-ruin calculator</label>
+          <label class="check"><input type="checkbox"/> Bankroll Markov forecast</label>
+          <label class="check"><input type="checkbox" checked/> Anti-fraud operator dashboard hooks</label>
+          <label class="check"><input type="checkbox"/> ZK-SNARK signed outcomes (multi-party sig)</label>
+          <label class="check"><input type="checkbox"/> Generating Functions analytical mode</label>
+        </div>
+      </details>
+
+    </aside>
+
+    <!-- ┌──────────────────────────────────────────────────────────────────┐
+         │ CENTER — LIVE PREVIEW                                            │
+         └──────────────────────────────────────────────────────────────────┘ -->
+    <section class="preview">
+
+      <!-- Reel display -->
+      <div class="reel-stage">
+        <div class="reel-stage-head">
+          <h3>Live preview · seed sample spin</h3>
+          <div class="actions">
+            <button class="btn btn-mini">↻ Re-seed</button>
+            <button class="btn btn-mini">▶ Single spin</button>
+            <button class="btn btn-mini">⏵ 100 spins</button>
+          </div>
+        </div>
+        <div class="reel-grid" id="reel-grid">
+          <!-- 5×3 grid populated by JS, but render static fallback -->
+          <div class="cell" style="background:#5ec8ff22;color:#5ec8ff">💎</div>
+          <div class="cell" style="background:#ffd70022;color:#ffd700">💰</div>
+          <div class="cell" style="background:#f5b40022;color:#f5b400">👑</div>
+          <div class="cell" style="background:#88888822;color:#aaa">🅰</div>
+          <div class="cell" style="background:#9b59ff22;color:#9b59ff">⭐</div>
+
+          <div class="cell" style="background:#ff5e8a22;color:#ff5e8a">🔱</div>
+          <div class="cell" style="background:#5ec8ff22;color:#5ec8ff">💎</div>
+          <div class="cell" style="background:#ffd70022;color:#ffd700">💰</div>
+          <div class="cell" style="background:#88888822;color:#aaa">K</div>
+          <div class="cell" style="background:#5ec8ff22;color:#5ec8ff">💎</div>
+
+          <div class="cell" style="background:#88888822;color:#aaa">Q</div>
+          <div class="cell" style="background:#ff5e8a22;color:#ff5e8a">🔱</div>
+          <div class="cell" style="background:#ffd70022;color:#ffd700">💰</div>
+          <div class="cell" style="background:#88888822;color:#aaa">J</div>
+          <div class="cell" style="background:#ff5e8a22;color:#ff5e8a">🔱</div>
+        </div>
+        <div class="reel-stage-foot">
+          <span>Spin #1 · RTP-this-spin: <b>2.4×</b> · 3 paylines hit · feature: <b>—</b></span>
+        </div>
+      </div>
+
+      <!-- Analytical preview row -->
+      <div class="metrics-grid">
+        <!-- RTP gauge -->
+        <div class="card">
+          <h4>Theoretical RTP <span class="hint">(analytical)</span></h4>
+          <div class="gauge">
+            <svg viewBox="0 0 200 120" width="100%" height="auto">
+              <defs>
+                <linearGradient id="rtp-grad" x1="0%" x2="100%" y1="0%" y2="0%">
+                  <stop offset="0%" stop-color="#ff5e8a"/>
+                  <stop offset="50%" stop-color="#f5b400"/>
+                  <stop offset="100%" stop-color="#1ed760"/>
+                </linearGradient>
+              </defs>
+              <path d="M20,110 A80,80 0 0,1 180,110" fill="none" stroke="#2a2f3a" stroke-width="14"/>
+              <path d="M20,110 A80,80 0 0,1 165,55" fill="none" stroke="url(#rtp-grad)" stroke-width="14" stroke-linecap="round"/>
+              <text x="100" y="95" text-anchor="middle" font-size="32" font-weight="700" fill="#f0f3fa">96.12%</text>
+              <text x="100" y="115" text-anchor="middle" font-size="11" fill="#8b94a8">target 96.00 · Δ +0.12</text>
+            </svg>
+          </div>
+          <div class="kv-row">
+            <div><span class="k">Base</span><b>71.4%</b></div>
+            <div><span class="k">FS</span><b>18.4%</b></div>
+            <div><span class="k">Cascade</span><b>6.2%</b></div>
+            <div><span class="k">Jackpot</span><b>0.12%</b></div>
+          </div>
+        </div>
+
+        <!-- Volatility radar -->
+        <div class="card">
+          <h4>Volatility profile</h4>
+          <svg viewBox="0 0 220 220" width="100%" height="auto">
+            <g transform="translate(110,110)">
+              <polygon points="0,-90 78,-45 78,45 0,90 -78,45 -78,-45" fill="none" stroke="#2a2f3a"/>
+              <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="none" stroke="#2a2f3a"/>
+              <polygon points="0,-30 26,-15 26,15 0,30 -26,15 -26,-15" fill="none" stroke="#2a2f3a"/>
+              <polygon points="0,-72 65,-15 60,40 0,75 -45,32 -60,-30"
+                fill="#5ec8ff33" stroke="#5ec8ff" stroke-width="2"/>
+              <text x="0" y="-100" text-anchor="middle" font-size="10" fill="#8b94a8">Hit %</text>
+              <text x="92" y="-50" font-size="10" fill="#8b94a8">Max win</text>
+              <text x="92" y="55" font-size="10" fill="#8b94a8">Variance</text>
+              <text x="0" y="105" text-anchor="middle" font-size="10" fill="#8b94a8">CV</text>
+              <text x="-92" y="55" text-anchor="middle" font-size="10" fill="#8b94a8">Avg win</text>
+              <text x="-92" y="-50" text-anchor="middle" font-size="10" fill="#8b94a8">Skew</text>
+            </g>
+          </svg>
+          <div class="kv-row">
+            <div><span class="k">σ</span><b>8.42</b></div>
+            <div><span class="k">CV</span><b>8.77</b></div>
+            <div><span class="k">Kurt</span><b>45.2</b></div>
+            <div><span class="k">Class</span><b>Med-High</b></div>
+          </div>
+        </div>
+
+        <!-- Win distribution -->
+        <div class="card card-wide">
+          <h4>Win distribution (analytical · 32 buckets)</h4>
+          <svg viewBox="0 0 480 160" preserveAspectRatio="none" width="100%" height="160">
+            <g>
+              <!-- bars -->
+              <rect x="0"   y="20"  width="13" height="140" fill="#5ec8ff" opacity="0.9"/>
+              <rect x="15"  y="40"  width="13" height="120" fill="#5ec8ff" opacity="0.85"/>
+              <rect x="30"  y="60"  width="13" height="100" fill="#5ec8ff" opacity="0.82"/>
+              <rect x="45"  y="75"  width="13" height="85"  fill="#5ec8ff" opacity="0.78"/>
+              <rect x="60"  y="85"  width="13" height="75"  fill="#5ec8ff" opacity="0.72"/>
+              <rect x="75"  y="92"  width="13" height="68"  fill="#5ec8ff" opacity="0.68"/>
+              <rect x="90"  y="100" width="13" height="60"  fill="#f5b400" opacity="0.62"/>
+              <rect x="105" y="108" width="13" height="52"  fill="#f5b400" opacity="0.6"/>
+              <rect x="120" y="115" width="13" height="45"  fill="#f5b400" opacity="0.58"/>
+              <rect x="135" y="120" width="13" height="40"  fill="#f5b400" opacity="0.55"/>
+              <rect x="150" y="125" width="13" height="35"  fill="#f5b400" opacity="0.5"/>
+              <rect x="165" y="130" width="13" height="30"  fill="#ff7700" opacity="0.5"/>
+              <rect x="180" y="134" width="13" height="26"  fill="#ff7700" opacity="0.48"/>
+              <rect x="195" y="137" width="13" height="23"  fill="#ff7700" opacity="0.45"/>
+              <rect x="210" y="140" width="13" height="20"  fill="#ff7700" opacity="0.42"/>
+              <rect x="225" y="142" width="13" height="18"  fill="#ff5e8a" opacity="0.4"/>
+              <rect x="240" y="144" width="13" height="16"  fill="#ff5e8a" opacity="0.38"/>
+              <rect x="255" y="146" width="13" height="14"  fill="#ff5e8a" opacity="0.35"/>
+              <rect x="270" y="148" width="13" height="12"  fill="#ff5e8a" opacity="0.33"/>
+              <rect x="285" y="150" width="13" height="10"  fill="#9b59ff" opacity="0.32"/>
+              <rect x="300" y="151" width="13" height="9"   fill="#9b59ff" opacity="0.3"/>
+              <rect x="315" y="152" width="13" height="8"   fill="#9b59ff" opacity="0.28"/>
+              <rect x="330" y="153" width="13" height="7"   fill="#9b59ff" opacity="0.26"/>
+              <rect x="345" y="154" width="13" height="6"   fill="#9b59ff" opacity="0.24"/>
+              <rect x="360" y="155" width="13" height="5"   fill="#9b59ff" opacity="0.22"/>
+              <rect x="375" y="156" width="13" height="4"   fill="#1ed760" opacity="0.2"/>
+              <rect x="390" y="157" width="13" height="3"   fill="#1ed760" opacity="0.18"/>
+              <rect x="405" y="158" width="13" height="2"   fill="#1ed760" opacity="0.16"/>
+              <rect x="420" y="158.5" width="13" height="1.5" fill="#1ed760" opacity="0.14"/>
+              <rect x="435" y="159" width="13" height="1"   fill="#1ed760" opacity="0.12"/>
+              <rect x="450" y="159.5" width="13" height="0.5" fill="#1ed760" opacity="0.1"/>
+            </g>
+            <!-- p50/p99 markers -->
+            <line x1="90" y1="10" x2="90" y2="160" stroke="#f5b400" stroke-dasharray="3,3"/>
+            <text x="92" y="14" fill="#f5b400" font-size="10">P50</text>
+            <line x1="285" y1="10" x2="285" y2="160" stroke="#ff5e8a" stroke-dasharray="3,3"/>
+            <text x="287" y="14" fill="#ff5e8a" font-size="10">P99</text>
+            <line x1="375" y1="10" x2="375" y2="160" stroke="#9b59ff" stroke-dasharray="3,3"/>
+            <text x="377" y="14" fill="#9b59ff" font-size="10">P99.9</text>
+          </svg>
+          <div class="kv-row">
+            <div><span class="k">P50</span><b>0.4×</b></div>
+            <div><span class="k">P90</span><b>2.1×</b></div>
+            <div><span class="k">P99</span><b>18×</b></div>
+            <div><span class="k">P99.9</span><b>240×</b></div>
+            <div><span class="k">Max</span><b>10000×</b></div>
+          </div>
+        </div>
+
+        <!-- Hit rate breakdown -->
+        <div class="card card-wide">
+          <h4>Hit-rate decomposition</h4>
+          <table class="hit-table">
+            <thead><tr><th>Event</th><th>1-in-N</th><th>Prob</th><th>EV ×bet</th><th>RTP%</th></tr></thead>
+            <tbody>
+              <tr><td>Any base win</td><td>3.51</td><td>0.2849</td><td>2.51</td><td>71.42%</td></tr>
+              <tr><td>FS trigger</td><td>164</td><td>0.0061</td><td>30.2</td><td>18.40%</td></tr>
+              <tr><td>Cascade chain ≥2</td><td>11.2</td><td>0.0893</td><td>0.69</td><td>6.21%</td></tr>
+              <tr><td>H&W trigger</td><td>892</td><td>0.00112</td><td>—</td><td>4.05%</td></tr>
+              <tr><td>Mini jackpot</td><td>50 000</td><td>2×10⁻⁵</td><td>20</td><td>0.04%</td></tr>
+              <tr><td>Grand jackpot</td><td>2 500 000</td><td>4×10⁻⁷</td><td>10 000</td><td>0.004%</td></tr>
+              <tr><td>Max win ceiling</td><td>1 480 000</td><td>6.75×10⁻⁷</td><td>10 000</td><td>0.0068%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ┌──────────────────────────────────────────────────────────────────┐
+         │ RIGHT — RUN CONSOLE                                              │
+         └──────────────────────────────────────────────────────────────────┘ -->
+    <aside class="run-console">
+
+      <h3>Run Simulation</h3>
+
+      <!-- Spin count -->
+      <div class="run-block">
+        <label>Spin count</label>
+        <div class="spin-display">
+          <input type="text" id="spin-count" value="1,000,000,000"/>
+          <span class="unit">spins</span>
+        </div>
+        <input type="range" id="spin-slider" min="4" max="12" step="0.1" value="9"/>
+        <div class="quick-spins">
+          <button class="qp">10K</button>
+          <button class="qp">100K</button>
+          <button class="qp active">1M</button>
+          <button class="qp">10M</button>
+          <button class="qp">100M</button>
+          <button class="qp active">1B</button>
+          <button class="qp">10B</button>
+          <button class="qp">100B</button>
+          <button class="qp glow">1T</button>
+        </div>
+      </div>
+
+      <!-- Backend -->
+      <div class="run-block">
+        <label>Engine backend</label>
+        <div class="seg seg-3 vert">
+          <button class="seg-btn">⚡ TypeScript (Node) — eyeball</button>
+          <button class="seg-btn active">🦀 Rust CPU · 16T — production</button>
+          <button class="seg-btn">🎮 Rust + Metal GPU — 1T cluster</button>
+        </div>
+      </div>
+
+      <!-- Mode -->
+      <div class="run-block">
+        <label>Mode</label>
+        <div class="seg seg-3">
+          <button class="seg-btn">Analytical</button>
+          <button class="seg-btn active">Monte Carlo</button>
+          <button class="seg-btn">Both (parity)</button>
+        </div>
+      </div>
+
+      <!-- Convergence -->
+      <div class="run-block">
+        <label class="check"><input type="checkbox"/> Auto-stop when CI95 width ≤
+          <input type="number" value="0.01" step="0.001" class="inline-num"/> % RTP</label>
+        <label class="check"><input type="checkbox" checked/> Stream live progress every <input type="number" value="1" class="inline-num"/> s</label>
+        <label class="check"><input type="checkbox" checked/> Capture top-100 wins</label>
+        <label class="check"><input type="checkbox"/> Capture full HDR (32 buckets)</label>
+        <label class="check"><input type="checkbox" checked/> Generate PAR sheet on finish</label>
+      </div>
+
+      <!-- Estimate -->
+      <div class="run-block est">
+        <div><span class="k">Est. runtime</span><b>~35.6 s</b></div>
+        <div><span class="k">Throughput</span><b>28.1 Mspin/s</b></div>
+        <div><span class="k">CI95 width</span><b>±0.003% RTP</b></div>
+        <div><span class="k">Memory</span><b>~280 MB</b></div>
+      </div>
+
+      <!-- THE BIG BUTTON -->
+      <button class="run-btn" id="run-btn">
+        <span class="run-btn-icon">▶</span>
+        <span class="run-btn-label">RUN SIMULATION</span>
+        <span class="run-btn-sub">1 000 000 000 spins · Rust 16T</span>
+      </button>
+
+      <!-- Progress (hidden until running) -->
+      <div class="run-progress" id="run-progress">
+        <div class="prog-head">
+          <span class="dot dot-run"></span>
+          <span>Running… <b>—</b> spins</span>
+          <button class="btn btn-mini btn-cancel">⏹ Cancel</button>
+        </div>
+        <div class="prog-bar"><div class="prog-fill"></div></div>
+        <div class="kv-row">
+          <div><span class="k">Live RTP</span><b id="live-rtp">—</b></div>
+          <div><span class="k">CI95</span><b>—</b></div>
+          <div><span class="k">ETA</span><b>—</b></div>
+          <div><span class="k">Spins/s</span><b>—</b></div>
+        </div>
+      </div>
+
+      <!-- Results (hidden until done) -->
+      <div class="run-results" id="run-results">
+        <h4>Last run · ✅ done</h4>
+        <div class="kv-row">
+          <div><span class="k">RTP</span><b>96.118%</b></div>
+          <div><span class="k">σ</span><b>8.42</b></div>
+          <div><span class="k">Max win</span><b>9 875×</b></div>
+          <div><span class="k">Hit %</span><b>28.49%</b></div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-mini">📄 PAR sheet</button>
+          <button class="btn btn-mini">📊 Full report</button>
+          <button class="btn btn-mini">🧾 JSON</button>
+          <button class="btn btn-mini">🛡 Cert bundle</button>
+          <button class="btn btn-mini">📤 Send to QA</button>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ╔══════════════════════════════════════════════════════════════════════╗
+       ║ BOTTOM STATUS BAR                                                     ║
+       ╚══════════════════════════════════════════════════════════════════════╝ -->
+  <footer class="statusbar">
+    <span><span class="dot dot-ok"></span> idle</span>
+    <span>config: <b>my-slot-001 · v1.0.0</b></span>
+    <span>RTP est: <b>96.12%</b></span>
+    <span>features: <b>FS · Cascade · H&W</b></span>
+    <span>jurisdictions: <b>3 active</b></span>
+    <span>last run: <b>9.875×10⁸ spins · 35.6s</b></span>
+    <span class="right">build · slot-math-engine-template@1.0.0 · faa88b2</span>
+  </footer>
+
+  <script src="studio.js"></script>
+</body>
+</html>

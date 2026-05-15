@@ -1,0 +1,64 @@
+{
+  "jurisdictionId": "NV_SKILL",
+  "jurisdictionName": "Nevada — Skill-Influenced Slot (Reg 14)",
+  "overallStatus": "PASS",
+  "failCount": 0,
+  "warnCount": 0,
+  "passCount": 2,
+  "naCount": 8,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.75,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://gaming.nv.gov/about/contact-information/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "N/A",
+      "note": "No max-win cap mandated by jurisdiction"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "PASS",
+      "expected": [
+        "gamble"
+      ],
+      "observed": [
+        "free_spins"
+      ]
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "N/A"
+    }
+  ]
+}

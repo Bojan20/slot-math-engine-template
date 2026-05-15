@@ -1,0 +1,71 @@
+{
+  "jurisdictionId": "PGCB",
+  "jurisdictionName": "Pennsylvania — Gaming Control Board (58 Pa. Code §809a)",
+  "overallStatus": "WARN",
+  "failCount": 0,
+  "warnCount": 2,
+  "passCount": 3,
+  "naCount": 5,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.85,
+        1
+      ],
+      "observed": 0.96,
+      "citation": "https://gamingcontrolboard.pa.gov/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "N/A",
+      "note": "No max-win cap mandated by jurisdiction"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "N/A",
+      "note": "No feature prohibitions for this jurisdiction"
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "WARN",
+      "expected": 2000,
+      "note": "Operator must enforce ≥2000 ms server-side spin gate (engine cannot self-verify).",
+      "citation": "https://gamingcontrolboard.pa.gov/"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "WARN",
+      "expected": 25,
+      "note": "Promo wagering must not exceed 25× principal.",
+      "citation": "https://gamingcontrolboard.pa.gov/"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://gamingcontrolboard.pa.gov/"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://gamingcontrolboard.pa.gov/"
+    }
+  ]
+}

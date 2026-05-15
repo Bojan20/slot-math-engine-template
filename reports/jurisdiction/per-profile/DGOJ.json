@@ -1,0 +1,82 @@
+{
+  "jurisdictionId": "DGOJ",
+  "jurisdictionName": "Spain — Dirección General de Ordenación del Juego (AT-08)",
+  "overallStatus": "WARN",
+  "failCount": 0,
+  "warnCount": 5,
+  "passCount": 4,
+  "naCount": 1,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.9,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "PASS",
+      "expected": 50000,
+      "observed": 5000,
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "N/A",
+      "note": "No feature prohibitions for this jurisdiction"
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "WARN",
+      "expected": 2500,
+      "note": "Operator must enforce ≥2500 ms server-side spin gate (engine cannot self-verify).",
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Autoplay must be disabled in client UI.",
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Turbo / quick-spin must be disabled in client UI.",
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "WARN",
+      "expected": 30,
+      "note": "Promo wagering must not exceed 30× principal.",
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "WARN",
+      "expected": 50,
+      "note": "Default per-game-cycle stake cap 50 (operator must enforce).",
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.ordenacionjuego.es/"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.ordenacionjuego.es/"
+    }
+  ]
+}

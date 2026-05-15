@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAtUtc": "2026-05-15T11:10:36.429Z",
+    "generatedAtUtc": "2026-05-15T11:17:25.849Z",
     "spinsPerSeed": 100000,
     "seeds": [
       12345,
@@ -34,7 +34,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 3440
+          "wallMs": 3441
         },
         {
           "fixture": "multiplier-wilds.json",
@@ -50,7 +50,7 @@
           "sanityPass": true,
           "stabilityPass": true,
           "lastError": null,
-          "wallMs": 2896
+          "wallMs": 2830
         },
         {
           "fixture": "walking-wilds.json",
@@ -66,7 +66,7 @@
           "sanityPass": true,
           "stabilityPass": true,
           "lastError": null,
-          "wallMs": 3044
+          "wallMs": 2944
         }
       ],
       "familyPassed": true
@@ -90,7 +90,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 4515
+          "wallMs": 4281
         }
       ],
       "familyPassed": true
@@ -114,23 +114,23 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 16624
+          "wallMs": 16292
         },
         {
           "fixture": "complex-variable-rows.json",
           "target": 0.96,
           "seedRtps": [
-            519676.83066000196,
-            525275.6812740007,
-            522166.4305900008,
-            522168.929485999
+            524945.6063360064,
+            524895.8345999988,
+            520809.45875600295,
+            523104.55741800286
           ],
-          "mean": 522321.9680025006,
-          "stdDev": 2292.6539443140696,
+          "mean": 523438.86427750275,
+          "stdDev": 1950.945806893024,
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 42267
+          "wallMs": 42431
         },
         {
           "fixture": "cascade-drop.json",
@@ -146,7 +146,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 27294
+          "wallMs": 26481
         }
       ],
       "familyPassed": true
@@ -170,7 +170,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 7134
+          "wallMs": 6932
         },
         {
           "fixture": "6x4-4096ways.json",
@@ -186,7 +186,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 19918
+          "wallMs": 19420
         },
         {
           "fixture": "pick-bonus.json",
@@ -202,7 +202,7 @@
           "sanityPass": true,
           "stabilityPass": true,
           "lastError": null,
-          "wallMs": 1974
+          "wallMs": 2003
         },
         {
           "fixture": "wheel-bonus.json",
@@ -218,7 +218,7 @@
           "sanityPass": true,
           "stabilityPass": false,
           "lastError": null,
-          "wallMs": 2237
+          "wallMs": 2175
         }
       ],
       "familyPassed": true

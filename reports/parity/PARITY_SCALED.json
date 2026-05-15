@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T18:20:08.222Z",
+    "fixture": "tests/fixtures/parity.json",
+    "spinsPerSeed": 100000,
+    "seeds": [
+      42,
+      1337,
+      3405691582,
+      3735928559
+    ],
+    "rustSelfDeterminism": true,
+    "tsSelfDeterminism": true,
+    "crossLanguageGate": true,
+    "overallPassed": true,
+    "wallTotalMs": 7550,
+    "totalRustSpins": 800000,
+    "totalTsSpins": 800000
+  },
+  "rust": [
+    {
+      "seed": 42,
+      "sha256": "0e5bc0bcacb58361e224eeddf34b5bb9c98d832909063d1d17f06740246f1698",
+      "bitExact": true,
+      "msA": 140,
+      "msB": 138
+    },
+    {
+      "seed": 1337,
+      "sha256": "e6fdbaa0854625ff6a8a3af5a86cdd8b538d11868385bd20a3a2b49e416f6103",
+      "bitExact": true,
+      "msA": 136,
+      "msB": 139
+    },
+    {
+      "seed": 3405691582,
+      "sha256": "67e1f4e951f4e3204255e56419fa774db5e816dd988584334624ab4dcefc2473",
+      "bitExact": true,
+      "msA": 137,
+      "msB": 142
+    },
+    {
+      "seed": 3735928559,
+      "sha256": "b4b3267c8d3f0de4707f936e01c16069b139d2b3e1d1ae2dbe59ef452f48c8e3",
+      "bitExact": true,
+      "msA": 135,
+      "msB": 137
+    }
+  ],
+  "ts": [
+    {
+      "seed": 42,
+      "rtp": 0.7941390000000609,
+      "hitRate": 0.32526,
+      "totalWin": null,
+      "bitExact": true,
+      "msA": 740,
+      "msB": 703
+    },
+    {
+      "seed": 1337,
+      "rtp": 0.7816460000000568,
+      "hitRate": 0.32743,
+      "totalWin": null,
+      "bitExact": true,
+      "msA": 720,
+      "msB": 714
+    },
+    {
+      "seed": 3405691582,
+      "rtp": 0.7927460000000627,
+      "hitRate": 0.32645,
+      "totalWin": null,
+      "bitExact": true,
+      "msA": 714,
+      "msB": 704
+    },
+    {
+      "seed": 3735928559,
+      "rtp": 0.7824790000000555,
+      "hitRate": 0.32657,
+      "totalWin": null,
+      "bitExact": true,
+      "msA": 701,
+      "msB": 710
+    }
+  ],
+  "cross": {
+    "exit": 0,
+    "pass": true,
+    "stdoutTail": "\n RUN  v1.6.1 /Users/vanvinklstudio/Projects/slot-math-engine-template\n\n ✓ tests/evaluator_parity.test.ts  (6 tests | 1 skipped) 36ms\n\n Test Files  1 passed (1)\n      Tests  5 passed | 1 skipped (6)\n   Start at  20:20:07\n   Duration  228ms (transform 16ms, setup 0ms, collect 17ms, tests 36ms, environment 0ms, prepare 46ms)\n\n"
+  }
+}

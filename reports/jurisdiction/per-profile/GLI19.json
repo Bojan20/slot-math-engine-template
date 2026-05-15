@@ -1,0 +1,59 @@
+{
+  "jurisdictionId": "GLI19",
+  "jurisdictionName": "Gaming Laboratories International Standard 19",
+  "overallStatus": "PASS",
+  "failCount": 0,
+  "warnCount": 0,
+  "passCount": 1,
+  "naCount": 9,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.8,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://gaminglabs.com/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "N/A",
+      "note": "No max-win cap mandated by jurisdiction"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "N/A",
+      "note": "No feature prohibitions for this jurisdiction"
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "N/A"
+    }
+  ]
+}

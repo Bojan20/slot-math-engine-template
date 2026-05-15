@@ -1,0 +1,1095 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T18:27:47.161Z",
+    "fixture": "/Users/vanvinklstudio/Projects/slot-math-engine-template/tests/fixtures/reference/classic-3x3-lines.json",
+    "profilesEvaluated": 15,
+    "passCount": 8,
+    "warnCount": 7,
+    "failCount": 0,
+    "multiEmit": true
+  },
+  "verdicts": [
+    {
+      "jurisdictionId": "UKGC",
+      "jurisdictionName": "UK Gambling Commission",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 5,
+      "passCount": 4,
+      "naCount": 1,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.94,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "gamble",
+            "buy_feature"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 2500,
+          "note": "Operator must enforce ≥2500 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Turbo / quick-spin must be disabled in client UI.",
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "WARN",
+          "expected": 10,
+          "note": "Promo wagering must not exceed 10× principal.",
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "WARN",
+          "expected": 5,
+          "note": "Default per-game-cycle stake cap 5 (operator must enforce).",
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/online-slots-stake-limits"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "MGA",
+      "jurisdictionName": "Malta Gaming Authority",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 3,
+      "naCount": 7,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.85,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.mga.org.mt/licensee-hub/compliance/player-protection/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.mga.org.mt/licensee-hub/compliance/player-protection/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.mga.org.mt/licensee-hub/compliance/player-protection/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "ADM",
+      "jurisdictionName": "Agenzia delle Dogane e dei Monopoli (Italy)",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 4,
+      "naCount": 6,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.9,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "gamble"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "BMM",
+      "jurisdictionName": "BMM Testlabs / GLI-16",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 1,
+      "naCount": 9,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.8,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://bmm.com/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "N/A"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "GLI19",
+      "jurisdictionName": "Gaming Laboratories International Standard 19",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 1,
+      "naCount": 9,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.8,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://gaminglabs.com/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "N/A"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "AGCO",
+      "jurisdictionName": "Alcohol and Gaming Commission of Ontario",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 1,
+      "passCount": 4,
+      "naCount": 5,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.85,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.agco.ca/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "gamble"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.agco.ca/"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.agco.ca/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.agco.ca/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "DGA",
+      "jurisdictionName": "Spillemyndigheden (Denmark)",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 3,
+      "naCount": 7,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.92,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.spillemyndigheden.dk/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.spillemyndigheden.dk/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.spillemyndigheden.dk/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "NJDGE",
+      "jurisdictionName": "New Jersey Division of Gaming Enforcement",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 3,
+      "naCount": 7,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.83,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.nj.gov/oag/ge/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.nj.gov/oag/ge/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.nj.gov/oag/ge/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "ADM_VLT",
+      "jurisdictionName": "ADM (Italy) — Land-based VLT",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 4,
+      "passCount": 5,
+      "naCount": 1,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.85,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "PASS",
+          "expected": 5000,
+          "observed": 5000,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "gamble",
+            "buy_feature"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 4000,
+          "note": "Operator must enforce ≥4000 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Turbo / quick-spin must be disabled in client UI.",
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "WARN",
+          "expected": 10,
+          "note": "Default per-game-cycle stake cap 10 (operator must enforce).",
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.adm.gov.it/portale/monopoli/giochi/vlt"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "NIGC_C2",
+      "jurisdictionName": "US National Indian Gaming Commission (Class II)",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 2,
+      "naCount": 8,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.8,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.nigc.gov/regulations"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "cascade",
+            "respin"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "N/A"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "NV_SKILL",
+      "jurisdictionName": "Nevada — Skill-Influenced Slot (Reg 14)",
+      "overallStatus": "PASS",
+      "failCount": 0,
+      "warnCount": 0,
+      "passCount": 2,
+      "naCount": 8,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.75,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://gaming.nv.gov/about/contact-information/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "gamble"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "N/A"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "DGOJ",
+      "jurisdictionName": "Spain — Dirección General de Ordenación del Juego (AT-08)",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 5,
+      "passCount": 4,
+      "naCount": 1,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.9,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "PASS",
+          "expected": 50000,
+          "observed": 5000,
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 2500,
+          "note": "Operator must enforce ≥2500 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Turbo / quick-spin must be disabled in client UI.",
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "WARN",
+          "expected": 30,
+          "note": "Promo wagering must not exceed 30× principal.",
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "WARN",
+          "expected": 50,
+          "note": "Default per-game-cycle stake cap 50 (operator must enforce).",
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.ordenacionjuego.es/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.ordenacionjuego.es/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "SPELINSPEKTIONEN",
+      "jurisdictionName": "Sweden — Spelinspektionen (Spellagen 2018:1138 + 2025 B2B reform)",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 5,
+      "passCount": 4,
+      "naCount": 1,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.9,
+            0.99
+          ],
+          "observed": 0.96,
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "buy_feature"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 3000,
+          "note": "Operator must enforce ≥3000 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Turbo / quick-spin must be disabled in client UI.",
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "WARN",
+          "expected": 1,
+          "note": "Promo wagering must not exceed 1× principal.",
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "WARN",
+          "expected": 50,
+          "note": "Default per-game-cycle stake cap 50 (operator must enforce).",
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.spelinspektionen.se/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.spelinspektionen.se/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "PGCB",
+      "jurisdictionName": "Pennsylvania — Gaming Control Board (58 Pa. Code §809a)",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 2,
+      "passCount": 3,
+      "naCount": 5,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.85,
+            1
+          ],
+          "observed": 0.96,
+          "citation": "https://gamingcontrolboard.pa.gov/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "N/A",
+          "note": "No max-win cap mandated by jurisdiction"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "N/A",
+          "note": "No feature prohibitions for this jurisdiction"
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 2000,
+          "note": "Operator must enforce ≥2000 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://gamingcontrolboard.pa.gov/"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "WARN",
+          "expected": 25,
+          "note": "Promo wagering must not exceed 25× principal.",
+          "citation": "https://gamingcontrolboard.pa.gov/"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "N/A"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://gamingcontrolboard.pa.gov/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://gamingcontrolboard.pa.gov/"
+        }
+      ]
+    },
+    {
+      "jurisdictionId": "NCPG",
+      "jurisdictionName": "Singapore — NCPG / Casino Control Act 2006",
+      "overallStatus": "WARN",
+      "failCount": 0,
+      "warnCount": 5,
+      "passCount": 5,
+      "naCount": 0,
+      "checks": [
+        {
+          "ruleId": "rtp_range",
+          "status": "PASS",
+          "expected": [
+            0.92,
+            0.985
+          ],
+          "observed": 0.96,
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "max_win_cap",
+          "status": "PASS",
+          "expected": 25000,
+          "observed": 5000,
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "prohibited_features",
+          "status": "PASS",
+          "expected": [
+            "buy_feature",
+            "gamble"
+          ],
+          "observed": [
+            "free_spins"
+          ]
+        },
+        {
+          "ruleId": "min_spin_duration",
+          "status": "WARN",
+          "expected": 4000,
+          "note": "Operator must enforce ≥4000 ms server-side spin gate (engine cannot self-verify).",
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "autoplay_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Autoplay must be disabled in client UI.",
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "turbo_prohibition",
+          "status": "WARN",
+          "expected": false,
+          "note": "Turbo / quick-spin must be disabled in client UI.",
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "bonus_wagering_cap",
+          "status": "WARN",
+          "expected": 5,
+          "note": "Promo wagering must not exceed 5× principal.",
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "max_stake_default",
+          "status": "WARN",
+          "expected": 100,
+          "note": "Default per-game-cycle stake cap 100 (operator must enforce).",
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "ldw_disclosure",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.ncpg.org.sg/"
+        },
+        {
+          "ruleId": "session_time_display",
+          "status": "PASS",
+          "expected": true,
+          "observed": true,
+          "citation": "https://www.ncpg.org.sg/"
+        }
+      ]
+    }
+  ]
+}

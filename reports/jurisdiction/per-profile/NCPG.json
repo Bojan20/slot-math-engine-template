@@ -1,0 +1,88 @@
+{
+  "jurisdictionId": "NCPG",
+  "jurisdictionName": "Singapore — NCPG / Casino Control Act 2006",
+  "overallStatus": "WARN",
+  "failCount": 0,
+  "warnCount": 5,
+  "passCount": 5,
+  "naCount": 0,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.92,
+        0.985
+      ],
+      "observed": 0.96,
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "PASS",
+      "expected": 25000,
+      "observed": 5000,
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "PASS",
+      "expected": [
+        "buy_feature",
+        "gamble"
+      ],
+      "observed": [
+        "free_spins"
+      ]
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "WARN",
+      "expected": 4000,
+      "note": "Operator must enforce ≥4000 ms server-side spin gate (engine cannot self-verify).",
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Autoplay must be disabled in client UI.",
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Turbo / quick-spin must be disabled in client UI.",
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "WARN",
+      "expected": 5,
+      "note": "Promo wagering must not exceed 5× principal.",
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "WARN",
+      "expected": 100,
+      "note": "Default per-game-cycle stake cap 100 (operator must enforce).",
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.ncpg.org.sg/"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.ncpg.org.sg/"
+    }
+  ]
+}

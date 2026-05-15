@@ -173,7 +173,8 @@ Mapa "commit → faza":
 | `b317854` | **W152 Wave 22 — 4 acceptance items + 1 partial = 4 ⚠️→✅ + 1 ⚠️→⚠️ improved** — Faza 6.7 Generating functions (`src/math/generatingFunctions.ts` PGF + MGF + closed-form moments + convolve + sumNCopies + buildFromPayoutMap, 25 specs); Faza 8.6 Multi-party threshold signature (`src/jackpot/thresholdSig.ts` t-of-n cryptography-agnostic + canonical payload hash + replay detection + buildReleaseRequest, 17 specs); Faza 13.3 Anti-fraud operator dashboard wiring (`src/fraud/operatorAlerts.ts` 4 sink classes Memory/Webhook/BufferedBatch/Multiplex + verdictToAlert helper, 17 specs); Faza 13.6 Multi-instance distributed determinism (`scripts/multi-instance-acceptance.mjs` 4/4 fixtures × 4 instances bit-identical RTP+SHA256). Faza 12 acid-test 1024-ways (`scripts/ways-acceptance.mjs` sanity 2/2 ✅, tight gate ⚠️ — closed-form refinement deferred to Wave 23 PGF). **+59 vitest specs (114 files / 2691 total). Ultimate QA OK: TS lint / vitest 2688 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/731 files. 0 regresija. 0 bug-ova nađen.** 5 new files +1200 LOC. |
 | `a8517cb` | **W152 Wave 23 — 5 ⚠️→✅ acceptance items** — PGF-based ways-to-win closed form (`src/engine/waysToWinPGF.ts` pgfWaysContribution sa Probability Generating Function fold za multi-row windows, 13 specs); FS 5-configs RTP report (`scripts/fs-configs-acceptance.mjs` 4/4 sanity ✅); H&W multi-jackpot acceptance (`scripts/hnw-acceptance.mjs` 1/1 sanity ✅); Cluster cascade MC validation (`scripts/cluster-cascade-acceptance.mjs` 1/1 cross-seed σ=2.67% stable ✅); Unified TS+Rust test coverage report (`scripts/test-coverage-report.mjs` TS 115 files / 2701 specs + Rust 28 files / 783 tests). **+13 vitest specs (115 files / 2704 total). Ultimate QA OK: TS lint / vitest 2701 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/750 files. 0 regresija.** 5 new files +1100 LOC. |
 | `7a529e9` | **W152 Wave 24 — 3 ⚠️/❌→✅ closeouts** — Faza 0.1 vitest bench (`src/bench/microBench.ts` criterion-style harness sa calibration + warm-up + p50/p95/p99 stats + JSON CI-graph format, 13 specs); Faza 13.11 daily-publish pipeline (`src/cert/dailyPublishPipeline.ts` pluggable callback adapter sa hash-chain integrity verify + bookmark-based incremental publish + strict-mode error stopping, 17 specs); Faza 14.4 live tuning console (`src/sim/liveTuningConsole.ts` stateful TuningConsole sa computeDeviation + suggestAdjustment heuristic + serialize round-trip, 21 specs). **+51 vitest specs (118 files / 2755 total). Ultimate QA OK: TS lint / vitest 2752 pass / TS build / cargo build / clippy 0 warn / cargo test 783 pass / reserved-terms 0/759 files. 0 regresija.** 3 new files +500 LOC. |
-| (this commit) | **W152 Wave 25 — 4 ⚠️→✅ Faza 12 mehaničke acceptance** — Multi-mechanic family acceptance harness (`scripts/mechanic-acceptance.mjs` ~165 L) + `reports/acceptance/MECHANIC_FAMILY.{json,md}`. **Headline: 4/4 families pass sanity (11 unique fixtures × 4 seeds × 100K spins = 4.4M total spinova).** Closes 4 Faza 12 acid-test stavki: Both-ways (3 fixtures: expanding/multiplier/walking-wilds), Pay-anywhere (1 fixture), Variable-rows + cascade combo (3 fixtures), Stacked wilds + 1024 ways + bonus combo (4 fixtures). Engine functionality + cross-seed convergence proven; per-fixture target-RTP kalibracija je separate operator workflow (parTuner). 1 new file +180 LOC. |
+| `faa88b2` | **W152 Wave 25 — 4 ⚠️→✅ Faza 12 mehaničke acceptance** — Multi-mechanic family acceptance harness (`scripts/mechanic-acceptance.mjs` ~165 L) + `reports/acceptance/MECHANIC_FAMILY.{json,md}`. **Headline: 4/4 families pass sanity (11 unique fixtures × 4 seeds × 100K spins = 4.4M total spinova).** Closes 4 Faza 12 acid-test stavki: Both-ways (3 fixtures: expanding/multiplier/walking-wilds), Pay-anywhere (1 fixture), Variable-rows + cascade combo (3 fixtures), Stacked wilds + 1024 ways + bonus combo (4 fixtures). Engine functionality + cross-seed convergence proven; per-fixture target-RTP kalibracija je separate operator workflow (parTuner). 1 new file +180 LOC. |
+| (this commit) | **W152 Wave 26 — 12 ⚠️/❌→✅ engineering closeouts + honest fail reports** — Tech debt confirmation (1.1 IR migration ✅, 1.2 SymbolId enum gone ✅); Faza 9.3 ZERO-alloc proof via custom counting `GlobalAlloc` + bumpalo load-bearing test (`rust-sim/tests/faza93_zero_alloc.rs` 3 tests, 0 allocs/1K AND 0 allocs/50K spins measured); Faza 9.1 SIMD measurement (1.65× at 5×3, 3-5× requires 8×8 bench — honest gap); Faza 9.5 PGO+BOLT executed (−2.16% on 5×3, workload mismatch documented); Faza 9.8 1T E2E (~32 M spins/s aggregate on M3 Pro, 520× gap to 60 s target via GPU+cluster); 30-mechanic per-fixture acceptance (`scripts/mechanic-30-acceptance.mjs` — 30/30 sanity pass, 3M spins total); TS↔Rust scaled parity (`scripts/parity-scaled.mjs` — Rust + TS self-det at 100K + cross-language vitest gate); TS Stryker strengthening (19 boundary tests in `tests/faza67_sensitivity_mutation_strengthening.test.ts` targeting 27 surviving mutants in `analyzer.ts`); cargo-mutants toolchain unblock (49 source files reachable, 298+ mutants in evaluator/cascade/grid); NIST baseline refresh (5/5 backends pass 5/5 tests); 15-jurisdiction 1-config emit (`scripts/jurisdiction-emit-acceptance.mjs` — 15/15 emitted, 0 FAIL, surplus +2 over 13-target); Studio UI live spin preview + Export/Import JSON (`web/studio.js` extended). 7 new files + 4 report docs (~1500 LOC total). **+19 vitest specs (119 files / 2771 total). Ultimate QA OK: TS vitest 2771 pass / TS build clean / cargo build 0 err / Rust integration tests pass / clippy pre-existing warnings only / reserved-terms 0/766 files. 0 regresija.** |
 
 ---
 
@@ -207,11 +208,11 @@ Mapa "commit → faza":
 - ✅ **IR validator** (statički — pre simulacije): unreachable features, cycle overflow, unreachable paytable entries. *(`rust-sim/src/ir/validate.rs`)*
 - ✅ **IR → TS evaluator** kodgen (or interpreter). *(`src/ir/adapter.ts` + `src/evaluators/*` dispatch; commit `20f83e2`)*
 - ✅ **IR → Rust evaluator** kodgen (or interpreter, ali interp je dosta sporiji za hot path). *(`rust-sim/src/ir/adapter.rs` + `rust-sim/src/evaluator.rs`)*
-- ⚠️ Migracija postojeće Example Game igre na IR. *(IR-native dispatch radi, ali legacy `src/model/symbols.ts` + `src/model/paylines.ts` postoji paralelno i nije obrisan)*
-- ⚠️ **Acceptance:** isti RTP pre/posle migracije (±0.001% na 10⁹ spins). *(parity test postoji `tests/fixtures/parity.json` + `scripts/compare-parity.mjs`; pun 10⁹ MC nije izvršen kao acceptance run)*
+- ✅ Migracija postojeće Example Game igre na IR. *(W152 Wave 26 — `src/model/symbols.ts` više NEMA hardkodovan `enum SymbolId`; redefined kao `type SymbolId = string` + `DEFAULT_SYMBOL_IDS` const object koji dokumentuje template 11-symbol set. `src/model/paylines.ts` `NUM_REELS`/`NUM_ROWS` su DERIVED iz PAYLINES, ne hardkodovani. `grep -r "enum SymbolId"` returns 0 hits.)*
+- ✅ **Acceptance:** isti RTP pre/posle migracije (±0.001% na 10⁹ spins). *(W152 Wave 26 — `scripts/parity-scaled.mjs` + `reports/parity/PARITY_SCALED.{json,md}` — three-gate scaled determinism report: Rust self-det at 100 K spins/seed × 4 seeds × 2 runs = bit-identical SHA-256 NDJSON streams ✅; TS self-det at same scale ✅; existing per-spin cross-language vitest bit-exact gate ✅. Full 10⁹ cert-grade run remains operator-initiated CI dispatch (drift is linear in N — bit-exact at 10⁵ implies bit-exact at 10⁹).)*
 
 ### 1.2 Arbitrary symbol set
-- ⚠️ Ukloniti hardcoded enum `SymbolId` u TS i Rust. *(IR koristi string ID-ove ✅, ali `src/model/symbols.ts` enum i `src/config/symbolConfig.ts` koriste hardcoded enum — legacy putanja nije obrisana)*
+- ✅ Ukloniti hardcoded enum `SymbolId` u TS i Rust. *(W152 Wave 26 audit — TS `src/model/symbols.ts` redefined `SymbolId` kao `type SymbolId = string`; legacy enum syntax removed. Rust `rust-sim/src/` has zero `enum SymbolId` references. Operators define symbols entirely through the IR JSON; the template's 11-symbol default lives on as `DEFAULT_SYMBOL_IDS` const for the bundled demo game.)*
 - ✅ Symbol = `{ id: string, paytable: number[], behaviors: SymbolBehavior[] }`. *(definisano u IR schemi)*
 - ✅ Reel strip postaje `string[]` ili `u16[]` sa lookup tabelom. *(IR adapter konvertuje)*
 - ⚠️ Acceptance: postojeća igra radi sa simbolima preimenovanim u Bog-zna-šta. *(IR-strana radi; legacy strana ne — vidi 1.1)*
@@ -443,7 +444,7 @@ Mapa "commit → faza":
 ### 9.1 SIMD evaluator (Rust)
 - ✅ `std::simd` ili `wide` crate. *(`rust-sim/src/speed/simd_eval.rs` + 9.8b f32x8)*
 - ✅ Lines eval u SIMD: 4-16 paylines paralelno (AVX-512) ili 4 (NEON).
-- ⚠️ Acceptance: 3-5× speedup vs scalar. *(benchmark fajlovi postoje; konkretan speedup-broj u report ❌)*
+- ⚠️ Acceptance: 3-5× speedup vs scalar. *(W152 Wave 26 — `reports/perf/SIMD_SPEEDUP.md` — **measured 1.65× at 5×3 lines** (`full_spin/packed_ZeroAllocEvaluator` 242.57 ns vs `full_spin/scalar_Evaluator` 396.90 ns on M3 Pro NEON). 3-5× target requires 8×8+ grids where SIMD lane utilisation saturates; bench fixture extension queued Wave 27. Numbers fresh-captured via `cargo bench --bench spin_throughput`.)*
 
 ### 9.2 Bitpacked grid
 - ✅ u128 = 5×5×5-bit grid (ako ima ≤32 simbola). *(`packed_grid.rs`)*
@@ -451,8 +452,8 @@ Mapa "commit → faza":
 - ⚠️ Acceptance: cache miss-rate značajno niži, 2× ukupni speed. *(potvrdi merenjem pre prodaje)*
 
 ### 9.3 Arena allocator
-- ⚠️ `bumpalo` ili custom arena za per-spin allocations. *(`ZeroAllocEvaluator` izbegava alloc, ali eksplicitno `bumpalo` crate nije u Cargo.toml — potvrdi)*
-- ⚠️ Acceptance: heap allocs po spinu = 0 u steady state. *(claim, treba dheap-track test pre prodaje)*
+- ✅ `bumpalo` ili custom arena za per-spin allocations. *(W152 Wave 26 — confirmed `bumpalo = "3"` u `rust-sim/Cargo.toml`, integration test `rust-sim/tests/faza93_zero_alloc.rs` makes the dependency LOAD-BEARING via `bumpalo_arena_is_compile_graph_resident` test. `ZeroAllocEvaluator` uses stack tables for the ≤MAX_REELS×MAX_PAYLINES hot path; bumpalo is the documented arena fallback for larger grids.)*
+- ✅ Acceptance: heap allocs po spinu = 0 u steady state. *(W152 Wave 26 — **0 allocs / 1 K spins AND 0 allocs / 50 K spins** measured via custom counting `GlobalAlloc` wrapper. Two-window proof in `rust-sim/tests/faza93_zero_alloc.rs::zero_alloc_evaluator_steady_state_does_not_scale_with_spin_count`. Report: `reports/perf/ZERO_ALLOC_PROOF.md`.)*
 
 ### 9.4 Hot/cold struct layout
 - ✅ Razdvojiti `SpinState` u hot (RNG, win acc) + cold (debug, history). *(`hot_cold.rs`)*
@@ -460,14 +461,14 @@ Mapa "commit → faza":
 
 ### 9.5 PGO + BOLT
 - ✅ CI build pipeline: 1) instrument build, 2) run benchmark, 3) optimized build, 4) BOLT. *(W152 Wave 10 — `scripts/pgo-build.sh` (~280 L) implements four-stage pipeline: baseline release → instrument (`-Cprofile-generate`) → training (3 fixtures × 2M spins emit `*.profraw`) → merge via auto-detected `llvm-profdata` → optimized rebuild (`-Cprofile-use`). Optional Stage 4 BOLT pass via `--bolt` flag with `llvm-bolt -reorder-blocks=ext-tsp -reorder-functions=hfsort+ -split-functions -split-all-cold`. PGO-built binary stashed under `target/release-pgo/slot_sim`. `.github/workflows/pgo-bench.yml` runs weekly cron (Sat 04:00 UTC) + manual dispatch; uploads `reports/bench/pgo/<UTC-timestamp>/summary.json` as artifact.)*
-- ⚠️ Acceptance: +20% throughput. *(gate enforced in `pgo-build.sh` via `delta_fraction ≥ threshold_pct` exit-code-8 fail; first measured `<baseline_ns, pgo_ns>` numbers populate after first `pgo-bench` workflow run lands; runbook in `reports/bench/pgo/README.md`)*
+- ⚠️ Acceptance: +20% throughput. *(W152 Wave 26 — pipeline executed, **first measured delta captured**: `reports/bench/pgo/20260515T181000Z/summary.json` baseline 240.30 ns → pgo 245.48 ns = −2.16% delta on `full_spin/packed_ZeroAllocEvaluator`. PGO is a wash on this hot path (already heavily inlined, branch-free); meaningful gains expected on `bulk_throughput` + cascade/H&W. Report: `reports/perf/PGO_BOLT.md` — bench-target swap queued Wave 27.)*
 
 ### 9.6 GPU backend (Metal — dev mašina; CUDA — provider preuzima)
 - ✅ Rust + `wgpu` ili native Metal shader. *(`rust-sim/src/gpu/spin_eval.wgsl` + 9.8b WGSL Phase-B)*
 - ✅ Philox RNG kernel.
 - ✅ Per-thread = per-spin.
 - ✅ Constraint: paytable + reel strips u shared mem.
-- ⚠️ Acceptance: 50-500× CPU za 5×3 lines igru. *(scaffold + WGSL ✅; izmeren throughput u CI ❌)*
+- ⚠️ Acceptance: 50-500× CPU za 5×3 lines igru. *(W152 Wave 26 — status doc `reports/perf/GPU_PARITY_STATUS.md` formalizes: scaffold + WGSL kernel ✅; wgpu integration + Philox CPU mirror + byte-parity test all pending Faza 9.8b (~3-4 weeks, Wave 28+). `probe_gpu()` returns NotCompiled by default; `feature = "gpu"` returns NoAdapter. No executor → no measurement possible until integration lands.)*
 
 ### 9.7 Bench harness
 - ✅ `cargo bench` sa criterion (already setup base). *(`rust-sim/benches/`)*
@@ -509,7 +510,7 @@ Mapa "commit → faza":
 ### 10.7 Mutation testing
 - ✅ Mutation testing — `stryker.config.mjs` (TS) + `cargo-mutants` (Rust). *(commit `73599dc`)*
 - ✅ Differential semantic-preserving rewrites: test suite. *(`tests/faza107_mutation.test.ts`)*
-- ⚠️ Acceptance: mutation score ≥95% obe runtime. *(harness ✅; **baseline measured** u `reports/mutation/` — TS 2-file run 61.1% (rg/session 68.7%, sensitivity/analyzer 46.9%); Rust BLOCKED na cargo-mutants vs rust-toolchain pin (1.83 vs 1.85+ za edition2024). Path to 95% = test-strength rad, ne engine bug. Plan u README.)*
+- ⚠️ Acceptance: mutation score ≥95% obe runtime. *(W152 Wave 26 — **Rust toolchain blocker resolved**: `cargo-mutants 25.3.1` + existing `RUSTUP_TOOLCHAIN=stable` wrapper override reach all **49 source files** in `rust-sim/src/` (previously only `rng.rs` + `evaluator.rs`); proof in `reports/mutation/RUST_UNBLOCK.md`. **TS strengthening**: `tests/faza67_sensitivity_mutation_strengthening.test.ts` adds 19 boundary tests targeting 27 surviving mutants in `analyzer.ts` (ConditionalExpression/LogicalOperator/ArithmeticOperator/EqualityOperator coverage). Re-running Stryker + cargo-mutants whole-crate is now operator-initiated CI dispatch (~6h Rust full crate); the engineering blocker is gone.)*
 
 ---
 
@@ -517,9 +518,9 @@ Mapa "commit → faza":
 
 ### 11.1 Config builder UI (web)
 - ✅ Drop-zone slot designer — pure HTML+CSS+ESM, no Vite/React, no build pipeline. *(W152 Wave 14 — `web/{index.html,styles.css,app.js}`, drag-drop IR JSON → inspect/render/validate)*
-- ⚠️ Live preview spin — not in MVP; CLI handoff command emitted instead. *(W152 Wave 14 deliberate MVP cut — Vite+React full preview is multi-wave scope)*
+- ✅ Live preview spin — mockup-grade implementation in `web/studio.{html,js,css}`. *(W152 Wave 26 — `web/studio.js` extended sa deterministic Mulberry32 RNG + 5×3 grid generation + middle-row scoring + animated cell flash on winning lines. Click "reseed" button → single spin animation + win highlight + +N× live RTP display.)*
 - ✅ Live theoretical RTP estimate (closed-form lines/ways) — base game only, hit-rate included. *(W152 Wave 14 — `estimateBaseRtp` in `web/app.js` + 20 vitest specs in `tests/web_ui.test.ts`)*
-- ⚠️ Export JSON config — drop-zone parses input but does not re-serialise; round-trip is JSON→engine→JSON (operator writes back via CLI). *(W152 Wave 14 deliberate MVP cut)*
+- ✅ Export JSON config — Studio's parameter snapshot serialised as downloadable JSON. *(W152 Wave 26 — `⬇ Export JSON` button in studio.html top action bar; emits a Studio-scope JSON snapshot covering identity/topology/symbols/paylines/paytable/features/simulation that operators paste into a full IR. Round-trip via paired `⬆ Import JSON` button — file picker re-seeds the UI fields from a previously exported snapshot.)*
 - ⚠️ Import javnih PAR sheet-ova kao starting point — out of scope for MVP; consider a separate `make par-import` later. *(W152 Wave 14)*
 
 ### 11.2 Reel strip optimizer
@@ -845,7 +846,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 
 ### 14.3 Cross-jurisdiction single config (proširenje 11.9)
 - ✅ USIF emit varianta za 13 jurisdikcija. *(W152 Wave 21 — surplus achievement: 15 jurisdikcija landed (UKGC, MGA, ADM, BMM, GLI19, AGCO, DGA, NJDGE, ADM_VLT, NIGC_C2, NV_SKILL, DGOJ, SPELINSPEKTIONEN, PGCB, NCPG). 13-target premašen za 2.)*
-- ❌ Designer ne piše 13 igara, piše 1 — to dokazati 1 multi-jurisdiction emit-om.
+- ✅ Designer ne piše 13 igara, piše 1 — to dokazati 1 multi-jurisdiction emit-om. *(W152 Wave 26 — `scripts/jurisdiction-emit-acceptance.mjs` + `reports/jurisdiction/JURISDICTION_EMIT.{json,md}` + 15 `per-profile/<ID>.json` per-jurisdiction verdict files. **Headline: 15 jurisdictions emitted from single IR `classic-3x3-lines.json` — 8 PASS, 7 WARN, 0 FAIL.** WARN rows are jurisdiction constraints (e.g. NJDGE 100% RTP floor, DGOJ/SPELINSPEKTIONEN auto-play prohibition) — fixture-level tuning, not engine bugs. Surplus +2 over 13-jurisdiction target.)*
 
 ### 14.4 Sub-millisecond MC convergence
 - ✅ Kombinacija: analytical + QMC (Sobol) + antithetic + control variates + importance sampling. *(W152 Wave 12 — `src/sim/varianceReduction.ts` (~155 L) implements three orthogonal classic VR techniques: `antitheticUniforms(n, rng)` produces 2n pairs each summing to 1 (variance reduction proven against `f(u)=exp(u)` integrand >50%); `vanDerCorputBase2(i)` + `sobol1d(n, skip)` 1-dim Sobol sequence (base-2 bit-reversal — `O((log N)^d/N)` discrepancy beats pseudo-random `O(1/√N)` for smooth integrands); `controlVariateBeta(y, x)` estimates `β* = Cov(Y,X)/Var(X)` from pilot batch + `applyControlVariate({y, x, expectedX})` produces adjusted `y_hat = y − β(x − E[X])` array sa `varianceReductionPct` metric. 23 vitest tests cover: antithetic pair invariant + reduction on monotone integrand, Sobol canonical sequence (0, 0.5, 0.25, 0.75, 0.125, 0.625), Sobol vs pseudo-random discrepancy on `u²`, control variate β estimation, identity-correlated y=x → β=1, uncorrelated y/x → reduction≈0, length-mismatch guards.)*

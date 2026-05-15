@@ -1,0 +1,85 @@
+{
+  "jurisdictionId": "SPELINSPEKTIONEN",
+  "jurisdictionName": "Sweden — Spelinspektionen (Spellagen 2018:1138 + 2025 B2B reform)",
+  "overallStatus": "WARN",
+  "failCount": 0,
+  "warnCount": 5,
+  "passCount": 4,
+  "naCount": 1,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.9,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "N/A",
+      "note": "No max-win cap mandated by jurisdiction"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "PASS",
+      "expected": [
+        "buy_feature"
+      ],
+      "observed": [
+        "free_spins"
+      ]
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "WARN",
+      "expected": 3000,
+      "note": "Operator must enforce ≥3000 ms server-side spin gate (engine cannot self-verify).",
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Autoplay must be disabled in client UI.",
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "WARN",
+      "expected": false,
+      "note": "Turbo / quick-spin must be disabled in client UI.",
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "WARN",
+      "expected": 1,
+      "note": "Promo wagering must not exceed 1× principal.",
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "WARN",
+      "expected": 50,
+      "note": "Default per-game-cycle stake cap 50 (operator must enforce).",
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.spelinspektionen.se/"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.spelinspektionen.se/"
+    }
+  ]
+}

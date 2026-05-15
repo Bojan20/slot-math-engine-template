@@ -1,0 +1,70 @@
+{
+  "jurisdictionId": "ADM",
+  "jurisdictionName": "Agenzia delle Dogane e dei Monopoli (Italy)",
+  "overallStatus": "PASS",
+  "failCount": 0,
+  "warnCount": 0,
+  "passCount": 4,
+  "naCount": 6,
+  "checks": [
+    {
+      "ruleId": "rtp_range",
+      "status": "PASS",
+      "expected": [
+        0.9,
+        0.99
+      ],
+      "observed": 0.96,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+    },
+    {
+      "ruleId": "max_win_cap",
+      "status": "N/A",
+      "note": "No max-win cap mandated by jurisdiction"
+    },
+    {
+      "ruleId": "prohibited_features",
+      "status": "PASS",
+      "expected": [
+        "gamble"
+      ],
+      "observed": [
+        "free_spins"
+      ]
+    },
+    {
+      "ruleId": "min_spin_duration",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "autoplay_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "turbo_prohibition",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "bonus_wagering_cap",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "max_stake_default",
+      "status": "N/A"
+    },
+    {
+      "ruleId": "ldw_disclosure",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+    },
+    {
+      "ruleId": "session_time_display",
+      "status": "PASS",
+      "expected": true,
+      "observed": true,
+      "citation": "https://www.adm.gov.it/portale/monopoli/giochi"
+    }
+  ]
+}

@@ -127,12 +127,12 @@ run_bench_capture() {
     cd "${RUST_DIR}"
     cargo bench --bench spin_throughput -- --warm-up-time 1 --measurement-time 3 full_spin >/dev/null 2>&1 || true
   )
-  local est="${TARGET_DIR}/criterion/full_spin/packed_ZeroAlloc/new/estimates.json"
+  local est="${TARGET_DIR}/criterion/full_spin/packed_ZeroAllocEvaluator/new/estimates.json"
   local ns
   ns="$(extract_throughput_ns "${est}")"
   if [[ -z "${ns}" ]]; then
     # Try the `estimates.json` at the report dir (post-rename for the first run).
-    ns="$(extract_throughput_ns "${TARGET_DIR}/criterion/full_spin/packed_ZeroAlloc/base/estimates.json")"
+    ns="$(extract_throughput_ns "${TARGET_DIR}/criterion/full_spin/packed_ZeroAllocEvaluator/base/estimates.json")"
   fi
   if [[ -z "${ns}" ]]; then
     err "criterion estimates.json not found at ${est}"
@@ -297,7 +297,7 @@ cat > "${REPORT_DIR}/summary.json" <<EOF
 {
   "timestamp": "${TIMESTAMP}",
   "threshold_pct": "${THRESHOLD}",
-  "bench": "full_spin/packed_ZeroAlloc",
+  "bench": "full_spin/packed_ZeroAllocEvaluator",
   "baseline_median_ns": ${BASELINE_NS:-null},
   "pgo_median_ns": ${PGO_NS:-null},
   "delta_fraction": "${DELTA}",
