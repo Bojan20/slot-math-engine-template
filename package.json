@@ -37,7 +37,8 @@
     "both-ways-acceptance": "npm run build && node scripts/both-ways-acceptance.mjs",
     "varrows-cascade-acceptance": "npm run build && node scripts/varrows-cascade-acceptance.mjs",
     "sales-demo": "npm run build && node scripts/sales-demo.mjs",
-    "sales-demo:quick": "npm run build && node scripts/sales-demo.mjs --quick"
+    "sales-demo:quick": "npm run build && node scripts/sales-demo.mjs --quick",
+    "behaviors-compositional": "npm run build && node scripts/behaviors-compositional-acceptance.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

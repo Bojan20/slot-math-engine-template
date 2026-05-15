@@ -1,0 +1,172 @@
+{
+  "generatedAtUtc": "2026-05-15T21:08:22.733Z",
+  "compositionsTested": 6,
+  "seeds": [
+    12345,
+    67890,
+    11111,
+    99999
+  ],
+  "spinsPerSeed": 50000,
+  "relSigmaTolerance": 0.1,
+  "passCount": 6,
+  "overallPass": true,
+  "results": [
+    {
+      "id": "C1",
+      "name": "ExpandingWild + StickyWild",
+      "kinds": [
+        "expanding",
+        "sticky"
+      ],
+      "composite": {
+        "rtps": [
+          0.644861999999955,
+          0.6364559999999534,
+          0.6260339999999543,
+          0.6150699999999562
+        ],
+        "mean": 0.6306054999999547,
+        "std": 0.012906413328263724,
+        "n": 4
+      },
+      "relSigma": 0.020466699589941177,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 1086
+    },
+    {
+      "id": "C2",
+      "name": "ExpandingWild + MultiplierWild",
+      "kinds": [
+        "expanding",
+        "multiplier"
+      ],
+      "composite": {
+        "rtps": [
+          0.644861999999955,
+          0.6364559999999534,
+          0.6260339999999543,
+          0.6150699999999562
+        ],
+        "mean": 0.6306054999999547,
+        "std": 0.012906413328263724,
+        "n": 4
+      },
+      "relSigma": 0.020466699589941177,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 1080
+    },
+    {
+      "id": "C3",
+      "name": "WalkingWild + MultiplierWild",
+      "kinds": [
+        "chain_wild",
+        "multiplier"
+      ],
+      "composite": {
+        "rtps": [
+          1.6071140000001238,
+          1.589492000000118,
+          1.5810720000001113,
+          1.5721660000001023
+        ],
+        "mean": 1.587461000000114,
+        "std": 0.01488983675756493,
+        "n": 4
+      },
+      "relSigma": 0.009379655158497664,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 986
+    },
+    {
+      "id": "C4",
+      "name": "Mystery + MultiplierWild",
+      "kinds": [
+        "mystery",
+        "multiplier"
+      ],
+      "composite": {
+        "rtps": [
+          1.1977519999999704,
+          1.1870719999999657,
+          1.1783719999999671,
+          1.177805999999966
+        ],
+        "mean": 1.1852504999999673,
+        "std": 0.009351287023722003,
+        "n": 4
+      },
+      "relSigma": 0.00788971362907863,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 1009
+    },
+    {
+      "id": "C5",
+      "name": "ExpandingWild + WalkingWild",
+      "kinds": [
+        "expanding",
+        "chain_wild"
+      ],
+      "composite": {
+        "rtps": [
+          1.0207479999999731,
+          1.0251359999999763,
+          1.0044639999999756,
+          1.0169199999999694
+        ],
+        "mean": 1.0168169999999737,
+        "std": 0.00889317603559026,
+        "n": 4
+      },
+      "relSigma": 0.008746092989781339,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 1072
+    },
+    {
+      "id": "C6",
+      "name": "StickyWild + Mystery",
+      "kinds": [
+        "sticky",
+        "mystery"
+      ],
+      "composite": {
+        "rtps": [
+          1.205113999999971,
+          1.1943779999999717,
+          1.1871659999999693,
+          1.1737479999999643
+        ],
+        "mean": 1.190101499999969,
+        "std": 0.013162037975433168,
+        "n": 4
+      },
+      "relSigma": 0.011059592795600636,
+      "gates": {
+        "sanityPass": true,
+        "sigmaPass": true
+      },
+      "overallPass": true,
+      "wallMs": 965
+    }
+  ]
+}
