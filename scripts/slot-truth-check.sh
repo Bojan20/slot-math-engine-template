@@ -68,15 +68,15 @@ fi
 read_oracle() {
   cat <<'EOF'
 rust_lib_tests           ge   259
-rust_total_tests         ge   782
-ts_test_count            ge   2174
-ts_test_files            ge   83
+rust_total_tests         ge   783
+ts_test_count            ge   2688
+ts_test_files            ge   114
 ir_feature_stubs_closed  eq   20
 chacha20_kat_test        eq   1
 rng_submission_bin       eq   1
 report_adapters_count    eq   4
 holdandwin_solver        eq   1
-master_todo_lines        ge   900
+master_todo_lines        ge   1000
 EOF
 }
 
