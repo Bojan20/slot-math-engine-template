@@ -108,7 +108,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | **K6** | ✅ | **34** | `d23489a` — Mutation-score regression + strict CI gate |
 | K7 | ⚠️ scaffold | — | GPU Metal/WGSL scaffold + wgpu integration pending (very high effort, external GPU runner) |
 | **K8** | ✅ | **36** | `3f17c5e` — Jurisdiction auto-gate, 450-cell matrix, 11-rule gate |
-| **K9** | ✅ Phase 1 | **40** | `(this commit)` — Merkle commitment + HSM attestation + auditor verify; Phase 2 Groth16 zk-SNARK dokumentovan kao 12-18 nedelja future |
+| **K9** | ✅ Phase 1 | **40** | `d7d3b5a` — Merkle commitment + HSM attestation + auditor verify; Phase 2 Groth16 zk-SNARK dokumentovan kao 12-18 nedelja future |
 | **K10** | ✅ | **38** | `bf7a6cd` — HSM seed bridge + FIPS 140-3 IG D.K health tests |
 
 **Headline: 8/10 closed in 8 waves (Waves 33-40). Remaining 2 stavke su sve external-infra-blocked:**
@@ -194,7 +194,7 @@ Legenda:
 | 37 | `b46bdf2` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
 | 38 | `bf7a6cd` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
 | 39 | `0a396ff` | **Kimi K3 ❌→✅** — SP 800-90B entropy assessment: 4 non-IID estimators (§6.3.1-§6.3.4) + §5 IID test (4 stats × 200 perm) + `assessEntropy()` aggregator; 6 sources assessed (5 PRNG + Wave 38 HSM bridge), all PASS Low-bar (HSM bridge highest @ 5.03 bits); 21/21 vitest tests PASS |
-| 40 | `(this commit)` | **Kimi K9 ⚠️→✅ (Phase 1)** — PAR Commitment v1.0: Merkle commitment nad full IR + HSM-signed attestation + auditor verification protocol (root + RTP tolerance); detects post-cert tampering. 17/17 vitest + 30 fixtures × 6 gates = 180/180 acceptance PASS. Phase 2 Groth16 zk-SNARK dokumentovan kao future ext (12-18 nedelja) |
+| 40 | `d7d3b5a` | **Kimi K9 ⚠️→✅ (Phase 1)** — PAR Commitment v1.0: Merkle commitment nad full IR + HSM-signed attestation + auditor verification protocol (root + RTP tolerance); detects post-cert tampering. 17/17 vitest + 30 fixtures × 6 gates = 180/180 acceptance PASS. Phase 2 Groth16 zk-SNARK dokumentovan kao future ext (12-18 nedelja) |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
