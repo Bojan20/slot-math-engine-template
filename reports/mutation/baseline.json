@@ -1,0 +1,12 @@
+{
+  "schema": "mutation-gate-baseline/v1",
+  "updatedAtUtc": "2026-05-15T21:31:45.681Z",
+  "sourceSummaryGeneratedAt": "2026-05-15T01:45:58.242Z",
+  "scores": {
+    "ts": 0.8538011695906432,
+    "ts:src/rg/session.ts": 0.8925233644859814,
+    "ts:src/sensitivity/analyzer.ts": 0.7890625,
+    "rust:evaluator": 1,
+    "rust:rng": 0.9264705882352942
+  }
+}

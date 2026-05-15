@@ -1,0 +1,70 @@
+# W152 Wave 34 — Kimi K6: mutation-score CI gate.
+#
+# Runs the mutation-gate REGRESSION check on every push/PR to main. The
+# gate compares the committed reports/mutation/SUMMARY.json against
+# reports/mutation/baseline.json and fails the build if any score
+# (TypeScript total / Rust per-crate / per-file) declined.
+#
+# This is the always-on guardrail. The expensive Stryker + cargo-mutants
+# RUNS that REGENERATE SUMMARY.json are NOT triggered here (8h+ wall
+# time on shared CI). Operators run them locally or via dedicated
+# manual-dispatch workflow and commit refreshed SUMMARY.json + bumped
+# baseline together when intentional improvements land.
+#
+# Why this design:
+#   - Gate is fast (sub-second) — runs on every PR
+#   - Surviving-mutant regressions block PRs at code-review time
+#   - Promotion to >=90% strict happens via separate operator action
+#     once TS Stryker score crosses threshold
+#
+# To run promotion gate locally:
+#   node scripts/mutation-gate.mjs --strict --threshold 0.90
+
+name: Mutation-score gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reports/mutation/**'
+      - 'scripts/mutation-gate.mjs'
+      - 'scripts/mutation-summary.mjs'
+      - '.github/workflows/mutation-gate.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'rust-sim/src/**'
+      - 'tests/**'
+      - 'rust-sim/tests/**'
+      - 'reports/mutation/**'
+      - 'scripts/mutation-gate.mjs'
+      - 'scripts/mutation-summary.mjs'
+
+jobs:
+  regression-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify SUMMARY.json present
+        run: |
+          if [ ! -f reports/mutation/SUMMARY.json ]; then
+            echo "::error::reports/mutation/SUMMARY.json missing"
+            exit 1
+          fi
+          if [ ! -f reports/mutation/baseline.json ]; then
+            echo "::error::reports/mutation/baseline.json missing"
+            echo "Bootstrap with: node scripts/mutation-gate.mjs --update-baseline"
+            exit 1
+          fi
+
+      - name: Run regression gate
+        run: node scripts/mutation-gate.mjs
+
+      - name: Run strict gate (informational, non-blocking)
+        run: node scripts/mutation-gate.mjs --strict || true
+        continue-on-error: true

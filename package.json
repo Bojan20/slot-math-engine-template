@@ -39,7 +39,10 @@
     "sales-demo": "npm run build && node scripts/sales-demo.mjs",
     "sales-demo:quick": "npm run build && node scripts/sales-demo.mjs --quick",
     "behaviors-compositional": "npm run build && node scripts/behaviors-compositional-acceptance.mjs",
-    "metamorphic-rtp": "npm run build && node scripts/metamorphic-rtp-invariants.mjs"
+    "metamorphic-rtp": "npm run build && node scripts/metamorphic-rtp-invariants.mjs",
+    "mutation-gate": "node scripts/mutation-gate.mjs",
+    "mutation-gate:strict": "node scripts/mutation-gate.mjs --strict",
+    "mutation-gate:update-baseline": "node scripts/mutation-gate.mjs --update-baseline"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

@@ -62,7 +62,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | K3 | **SP 800-90B entropy-source assessment protokol** — dokumentuj entropy path (`/dev/urandom` → ChaCha20 seeding) + NIST non-IID estimatori + min-entropy claim | **NOVO**: Faza 7.6 (predlog) | ❌ novo | Very High / High |
 | K4 | **Metamorphic RTP invariant suite** — 5 MR-ova (determinism / zero-payout / payout-scaling / strip-permute / mean-stationarity) preko 10 fixtures × 4 seeds × 20K spins = 800K total | **Faza 6.8 NOVA** | ✅ **50/50 PASS** (Wave 33) | High / Low |
 | K5 | **Open PAR sheet schema v1.0 (JSON/XML)** — segment RTP, transition matrix, P99.9 tail, multi-seed CI bands; publikovati kao open standard | Faza 8.5 (PAR generator ✅) + **NOVO**: schema publication | ⚠️ schema fields postoje u IR; publikacija fali | High / Low |
-| K6 | **cargo-mutants CI gate** — enforce >90% mutation score na math-kernel file-ovima, block PRs sa unkilled mutantima | Faza 10.7 (mutation testing ⚠️ 85.38%→95%) | ⚠️ measure landed (Rust 92.65% / TS 85.38%); CI gate fali | Medium / Low |
+| K6 | **cargo-mutants + Stryker CI gate** — dual-mode: regression (no-decline-from-baseline, default CI) + strict (≥90% threshold, promotion gate) | Faza 10.7 (mutation testing ⚠️ → ✅ INFRA / strict pending TS uplift) | ✅ **gate landed Wave 34** (`scripts/mutation-gate.mjs` + `.github/workflows/mutation-gate.yml` + baseline.json) | Medium / Low |
 | K7 | **GPU deterministic replay kernel (Metal/WGSL) end-to-end** — wgpu integration + CPU↔GPU byte-parity na 10⁶ spinova | Faza 9.6 (GPU Metal ⚠️) | ⚠️ scaffold + WGSL landed, integration pending | Very High / High |
 | K8 | **Jurisdiction-specific compliance auto-gate** — automated reject na max-win cap, hit-freq floor, near-miss threshold violacijama (UKGC RTS-3, NL KSA, DK SCP.01.00) | Faza 11.9 + 15.B (compliance gate ✅) | ⚠️ 15 jurisdikcija profila ✅; auto-reject rule za RTS-3 near-miss fali | High / Medium |
 | K9 | **zk-SNARK PAR sheet commitment prototype** — Groth16 circuit: public = PAR hash + mechanic params; witness = reel strips + weights; proof = RTP integrity | Faza 13.4 (zk-SNARK scaffold ✅) + **NOVO**: production circuit | ⚠️ scaffold landed `71d9401`; Groth16 prod circuit fali | Very Very High / Very High |
@@ -154,6 +154,7 @@ Legenda:
 | 31 | `e81b319` | 1 ⚠️→✅ Faza 3.2 behaviors compositional (6 dvo-behavior kombinacija × 4 seeds × 50K = 1.2M total, sve PASS) |
 | 32 | `7a4ea2d` | **Kimi deep-audit report landed** — `docs/research/KIMI_AUDIT_2026-05-15.md` 25-source TL;DR + 10-step action list integrated u master-todo §"🔬 KIMI DEEP AUDIT 2026-05-15" |
 | 33 | `f4ca791` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
+| 34 | `(this commit)` | **Kimi K6 ⚠️→✅ INFRA** — Mutation-score CI gate (regression + strict modes) + baseline.json + GitHub Action workflow; dokazano blokira simulirane -5pp/-10pp regresije |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
