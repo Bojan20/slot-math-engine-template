@@ -30,7 +30,10 @@
     "fs-configs-acceptance": "npm run build && node scripts/fs-configs-acceptance.mjs",
     "hnw-acceptance": "npm run build && node scripts/hnw-acceptance.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
-    "test-coverage": "node scripts/test-coverage-report.mjs"
+    "test-coverage": "node scripts/test-coverage-report.mjs",
+    "chi-squared-sizes": "node scripts/chi-squared-sizes-report.mjs",
+    "random-config-sweep": "npm run build && node scripts/random-config-sweep.mjs",
+    "billion-spins-replay": "npm run build && node --max-old-space-size=4096 scripts/billion-spins-replay.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

@@ -1,0 +1,21 @@
+{
+  "generatedAtUtc": "2026-05-15T19:03:07.716Z",
+  "fixture": "5x3-20lines.json",
+  "reels": 5,
+  "rows": 3,
+  "paylines": 20,
+  "nSpins": 1000000000,
+  "nWarmup": 1000000,
+  "buildMs": 96575.25725000001,
+  "wallMs": 15764.560750000004,
+  "nsPerSpin": 15.764560750000005,
+  "spinsPerSec": 63433419.79889923,
+  "targetWallMs": 1000,
+  "pass": false,
+  "analyticalRtp": 3.193074287809068,
+  "observedRtp": 3.193268946072338,
+  "totalStates": 14348907,
+  "uniqueGrids": 759375,
+  "node": "v25.2.1",
+  "platform": "darwin/arm64"
+}

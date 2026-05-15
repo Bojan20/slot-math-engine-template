@@ -1,0 +1,278 @@
+{
+  "generated_at": "2026-05-15T18:48:48.793Z",
+  "gate": {
+    "small_n": {
+      "n_lt": 1000,
+      "threshold": 40,
+      "note": "small-N intrinsic variance: gate is 4× df for sanity, not strict"
+    },
+    "strict": {
+      "threshold": 27.877,
+      "df": 9,
+      "alpha": 0.001,
+      "note": "chi-squared critical value"
+    }
+  },
+  "summary": {
+    "total_cells": 30,
+    "pass_cells": 30,
+    "fail_cells": 0,
+    "backends": [
+      "ChaCha20",
+      "Pcg64",
+      "Philox4x32",
+      "Xoshiro256SS",
+      "Mulberry32"
+    ],
+    "sample_sizes": [
+      100,
+      1000,
+      10000,
+      100000,
+      1000000,
+      10000000
+    ]
+  },
+  "cells": [
+    {
+      "backend": "ChaCha20",
+      "n": 100,
+      "buckets": 10,
+      "chi2": 6.4,
+      "threshold": 40,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 100,
+      "buckets": 10,
+      "chi2": 23.2,
+      "threshold": 40,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 1000,
+      "buckets": 10,
+      "chi2": 8.5,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 100,
+      "buckets": 10,
+      "chi2": 18.8,
+      "threshold": 40,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 100,
+      "buckets": 10,
+      "chi2": 13.6,
+      "threshold": 40,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 100,
+      "buckets": 10,
+      "chi2": 7.2,
+      "threshold": 40,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 1000,
+      "buckets": 10,
+      "chi2": 2.76,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 1000,
+      "buckets": 10,
+      "chi2": 5.52,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 1000,
+      "buckets": 10,
+      "chi2": 17.14,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 10000,
+      "buckets": 10,
+      "chi2": 4.782,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 10000,
+      "buckets": 10,
+      "chi2": 7.284,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "ChaCha20",
+      "n": 1000,
+      "buckets": 10,
+      "chi2": 5.14,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 10000,
+      "buckets": 10,
+      "chi2": 6.078,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 10000,
+      "buckets": 10,
+      "chi2": 11.586,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 100000,
+      "buckets": 10,
+      "chi2": 11.0482,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 100000,
+      "buckets": 10,
+      "chi2": 6.0832,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "ChaCha20",
+      "n": 10000,
+      "buckets": 10,
+      "chi2": 2.97,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 100000,
+      "buckets": 10,
+      "chi2": 8.3206,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 100000,
+      "buckets": 10,
+      "chi2": 26.5062,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 1000000,
+      "buckets": 10,
+      "chi2": 6.1088,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "ChaCha20",
+      "n": 100000,
+      "buckets": 10,
+      "chi2": 4.1376,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 1000000,
+      "buckets": 10,
+      "chi2": 3.0991,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 1000000,
+      "buckets": 10,
+      "chi2": 13.324,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 1000000,
+      "buckets": 10,
+      "chi2": 14.1798,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "ChaCha20",
+      "n": 1000000,
+      "buckets": 10,
+      "chi2": 7.1156,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Mulberry32",
+      "n": 10000000,
+      "buckets": 10,
+      "chi2": 5.0037,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Xoshiro256SS",
+      "n": 10000000,
+      "buckets": 10,
+      "chi2": 2.2234,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Pcg64",
+      "n": 10000000,
+      "buckets": 10,
+      "chi2": 8.954,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "Philox4x32",
+      "n": 10000000,
+      "buckets": 10,
+      "chi2": 4.1829,
+      "threshold": 27.877,
+      "pass": true
+    },
+    {
+      "backend": "ChaCha20",
+      "n": 10000000,
+      "buckets": 10,
+      "chi2": 14.5334,
+      "threshold": 27.877,
+      "pass": true
+    }
+  ]
+}

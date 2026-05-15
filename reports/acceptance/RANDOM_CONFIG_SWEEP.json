@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T18:50:55.500Z",
+    "configs": 1000,
+    "spinsPerConfig": 200,
+    "totalSpins": 200000,
+    "seed": "0xc0dec0de",
+    "wallMs": 1677,
+    "spinsPerSec": 119261,
+    "okCount": 1000,
+    "rejectedCount": 0,
+    "crashCount": 0,
+    "overallPass": true
+  },
+  "crashes": [],
+  "sampleRejections": []
+}
