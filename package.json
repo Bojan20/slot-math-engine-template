@@ -35,7 +35,9 @@
     "random-config-sweep": "npm run build && node scripts/random-config-sweep.mjs",
     "billion-spins-replay": "npm run build && node --max-old-space-size=4096 scripts/billion-spins-replay.mjs",
     "both-ways-acceptance": "npm run build && node scripts/both-ways-acceptance.mjs",
-    "varrows-cascade-acceptance": "npm run build && node scripts/varrows-cascade-acceptance.mjs"
+    "varrows-cascade-acceptance": "npm run build && node scripts/varrows-cascade-acceptance.mjs",
+    "sales-demo": "npm run build && node scripts/sales-demo.mjs",
+    "sales-demo:quick": "npm run build && node scripts/sales-demo.mjs --quick"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
