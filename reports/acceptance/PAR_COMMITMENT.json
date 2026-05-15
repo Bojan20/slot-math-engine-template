@@ -1,0 +1,413 @@
+{
+  "schema": "par-commitment-acceptance/v1",
+  "generatedAtUtc": "2026-05-15T22:45:53.591Z",
+  "config": {
+    "fixtureCount": 30,
+    "gatesPerFixture": 6
+  },
+  "gates": {
+    "g1": "attestation builds without error",
+    "g2": "integrity check (canonical hash matches recomputed)",
+    "g3": "auditor PASS on identical IR + matching RTP",
+    "g4": "auditor FAIL on tampered IR (root mismatch)",
+    "g5": "auditor FAIL on RTP drift > 0.5pp tolerance",
+    "g6": "HSM signing produces non-empty signature"
+  },
+  "headline": {
+    "totalGates": 180,
+    "passGates": 180,
+    "allPass": true
+  },
+  "rows": [
+    {
+      "fixture": "3x5-5lines.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "8fe2580f5150dbe7bc03b0ea95abb289e11577ec9a39077f292c41d1e35695cc",
+      "canonicalHash": "52e990afdd58a5a9365d4945740bcf1f346bf12ca2c1b437fa70990579f922ed"
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "d53245b0637bd368ec100f5c7e72881a3b110f3b5425b3d89c10604c3c6901dc",
+      "canonicalHash": "7f92dcf627ec79d303f7cc99656e5a74fc4c0dc2b3c5d7893b2932887028f70e"
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "9e0e3f22fe2403b0322f43624fdd4904f64e9ed5d8e724b4e8845669ea329340",
+      "canonicalHash": "ce12aad999400bb0b4a726cd3bd03989b4995cabc3b7f4d6409ed935164b3126"
+    },
+    {
+      "fixture": "5x4-25lines.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "c391005617ca8eb0e58414dd9b3e731295bdaf65b7f10de65c2fea382aac5695",
+      "canonicalHash": "e61efd177b87f7cf4ac588249e851c4dec2d743373e55a09b1b949bbd59f18ea"
+    },
+    {
+      "fixture": "6x4-4096ways.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "dbff6e06587f9603383e577cfa904793103803a5a8f50dc84515c8421dcda0af",
+      "canonicalHash": "5b4a8bd5f7d69257506d2cb538b56cda4adff97f059c63c5d99ac5549d21926b"
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "0efcef40ea61e459f11fef6d7bd764a40909388e803b9b20467588eb9e1de9dc",
+      "canonicalHash": "dd8f3402e51736f82df4de36e062ee5dbd78e41db61ddf1a6240befca65f8db2"
+    },
+    {
+      "fixture": "cascade-fixed-strip.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "fbfe5855600b7054e61be5951f463d70f2d7557cafa62147591e861385359d05",
+      "canonicalHash": "4c7f7f7104f6b1f1e4a920990ea6c2ee11fe0857110ae79878fef0f5a4aeade0"
+    },
+    {
+      "fixture": "cascade-refill.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "4ff22802520e49369fc82b8b13f28c7719ecf6cdcac78458852249237c65ae81",
+      "canonicalHash": "b6e987c5dc064d646244ffefedae3cfefc052e1c1ffc092bbcc5c487fd206c03"
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "8513fe3b22cdc0f6a0e62c2aa6c96732f28300dd7b10cab695151982cddfd8a1",
+      "canonicalHash": "a74ec4763fa02d073081771b9224ec3c1a0b1007ff95f24e652ab02a4eae6e84"
+    },
+    {
+      "fixture": "cluster-7x7.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "0bd78b224696c616b8c79b83e00870b0924a337f50b2ed8e87530b5b5b9bd320",
+      "canonicalHash": "440f4da37022e8ef7f0083515287bced8906062de6ec92afe652319deb46a62d"
+    },
+    {
+      "fixture": "cluster-diagonal.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "b26317ec16be5da716bda04997e1efaaa524492852556e93b7a464654a5b557e",
+      "canonicalHash": "5b63cacea5eb6ec0d24a0960d2710d82754c45ae4fbd046bcfb3ab1effe64f19"
+    },
+    {
+      "fixture": "cluster-hexagonal.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "6333894a373449dfe3c843709e7452cfebad0159b1ac70d4b38f046c3a91d9a8",
+      "canonicalHash": "49581abbe699d1958318ec8b2dd598d86c25a6e046ee3d87d481ad53e4afc45f"
+    },
+    {
+      "fixture": "complex-variable-rows.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "88a0af46e66b6ab4f0d8fc6f0e05a25b740e1a76eb2bedc64d93a18e8b238af0",
+      "canonicalHash": "f9a87cb168fdd0e621682ce7f5ea7b1a1000b0c89185f26f8651400f79b7d41b"
+    },
+    {
+      "fixture": "expanding-wilds.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "661ebf9b3eebca7ad4577b8356ec2f2023a02011f293f6fd49f1552e22c5e828",
+      "canonicalHash": "c5b071bcda6dfb86d1ee230790b73f0c5034ae7ca405da52cd0b83b29c876a47"
+    },
+    {
+      "fixture": "fs-expanding-wilds.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "a5ec99fa4b84111c539defc8319725973ae12e9d959c70c2813ead3ae4690261",
+      "canonicalHash": "e7840f76c65f4aa5707bcfb10804c4a24d91aec361b552fc0c24832d975da81a"
+    },
+    {
+      "fixture": "fs-multiplier-ladder.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "ce9f5193ea995c62f93005b9f6f115dbe59ca3d7043e0962fb5141f98ae907f3",
+      "canonicalHash": "f34611dbc9fe08d1c8a202f7ca3052250a20c996f4a1ba9f8d1566732603fbb7"
+    },
+    {
+      "fixture": "fs-retrigger.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "89e7241c98963d0455b9f01ffcad052cc2fd6a8920760bef221d645192cbc0cf",
+      "canonicalHash": "a440913e51381a321eab89c3dd71c071c3c6c264c0750c3c2ae2dc0eced5cbd8"
+    },
+    {
+      "fixture": "fs-sticky-wilds.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "34ccf437dd9790d0c5b0fd58547b4b9ae42505c9b094822cf9559f8f9ea7ac16",
+      "canonicalHash": "e8111a8258a4d4714c9409d038b6e106a958ce531e706ddd368f275b4f9376a3"
+    },
+    {
+      "fixture": "hnw-classic.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "71d0ac9d62dc9fc1edbdcfb82e913730d979965de1fe669fc8721ab857f4277d",
+      "canonicalHash": "21ff385d1790f8633bb97d2a2d73bc19ed9a0655940091f65589183a6557f4e7"
+    },
+    {
+      "fixture": "hnw-full-grid.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "e4d1a2bc39a53173e49b6c65b5b79803cffde956921e538e96f40f67baed03e2",
+      "canonicalHash": "fd8c9a2da78ca874eb49ce4de4f7f42827c8c859085fa47bf00b1f2de504ed81"
+    },
+    {
+      "fixture": "hnw-grand-jackpot.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "ec29fd551a6238e1af1c730c7c97ae752b2885d982a2f63f223f15b234b825e9",
+      "canonicalHash": "135b77f5f6c02eb5e76b08fa078346822762a79c2baa8943d01e7c0023c9af44"
+    },
+    {
+      "fixture": "multiplier-wilds.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "cfe222b84aa0c9e6c4cd0a19a1d845b481193bc336acf61d523e73d1b6adc93c",
+      "canonicalHash": "01d0b3b20a563b8904a4a4f0d3b3a24ad3b22176afe2f6ad336df80e735b43b5"
+    },
+    {
+      "fixture": "mystery-symbol.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "ee138c6fcb4d2fa8971261ed5a6e467501c1ceaf03cfb1d75b4233b7bf4f044d",
+      "canonicalHash": "dd042bb1807d711783addbb7c743ea89c05c1b4d57cd1c19a1cfad7a4782d581"
+    },
+    {
+      "fixture": "pay-anywhere.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "b50c06ed1ef523ca41b7c921b23650135eb446aaf8aee804add41141feb3c762",
+      "canonicalHash": "218eab90bfa74d6cf69f558fdb4aaf98ab0638e57a939c6a8eb282163befe7b0"
+    },
+    {
+      "fixture": "pick-bonus.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "e5e989c53816d15fbc935d4e95eede870f4e25043e619a4d4d8075d61f0716b1",
+      "canonicalHash": "7c0cbfe7d70d328bd3e1a14cb11e3e55a954a03fffd1ffe7f8f7e950f9d3963d"
+    },
+    {
+      "fixture": "respin-feature.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "95714461ee9a61a0b47c0ffc81e59bc0b375775f2d200ad7375bb2677a52260e",
+      "canonicalHash": "5d089962b5ec70955dd4834db3f08b63648843f3e94aa7641261298b743ef80c"
+    },
+    {
+      "fixture": "symbol-upgrade.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "0dbf9b229c723a63683ce6d38246520fbf88c11f31e94cd8c4841c827baa0568",
+      "canonicalHash": "e48f0390ad3042b51c6426ff3fae1c4ed118761172ac8c5d5285b1b3eae6c8d1"
+    },
+    {
+      "fixture": "variable-rows-7reels.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "94ce0ab1cfd3d3e171b06f75371c5e9e0eabd140ea488faeaf45e9fa3d8ee023",
+      "canonicalHash": "6de3b909d79668483d3a8113f707a45bea726b60432e4e9f8d796c4125c54dc6"
+    },
+    {
+      "fixture": "walking-wilds.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "feb3b4522070641f373c7a92a69ad0464196eb7a71f0d793f23448a442d6116e",
+      "canonicalHash": "b3e0ccef4ea110300bd79eb464d3dd6f2960b6331c811d9f6705baccf714f0d9"
+    },
+    {
+      "fixture": "wheel-bonus.json",
+      "gates": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true
+      },
+      "parWitnessRoot": "a69f8813ad145de683199b9e4b0b7132a0e27d487916db152e56a23bda64578c",
+      "canonicalHash": "7854e4ceffd9bf8f38fc664e5338832f494b4c573d0d58c73e5906d7c84bca68"
+    }
+  ]
+}
