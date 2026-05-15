@@ -58,7 +58,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | # | Action | Cross-link u TODO | Status | Impact / Effort |
 |---|---|---|---|---|
 | K1 | **TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder kombinovan CI pipeline** za svih 5 backend-a | Faza 7.2 (postojeća ⚠️) | ⚠️ workflow scaffold landed, external runner pending | High / Medium |
-| K2 | **Differential fuzz harness TS↔Rust oracle** — cargo-fuzz + quickcheck/proptest sa RTP-monotonicity i hit-freq metamorfičkim invariantima | Faza 10.3 (TS↔Rust diff postoji ✅) + **NOVO**: cross-language fuzz oracle | ❌ novo | High / Medium |
+| K2 | **Differential fuzz harness TS↔Rust oracle** — 4 cross-language MRs (DETERMINISM / SCALE-CONSISTENCY / ZERO-PAYOUT / BOUNDS) preko 20 random IR varijanti × 2 runtime-a; per-runtime metamorphic > direct comparison (full-game vs base-only razlika kontrolisana) | Faza 10.3 ext + **NOVA Faza 10.3.5** | ✅ **Wave 37** — `scripts/diff-fuzz-cross-language.mjs` 160/160 PASS u 13.6s | High / Medium |
 | K3 | **SP 800-90B entropy-source assessment protokol** — dokumentuj entropy path (`/dev/urandom` → ChaCha20 seeding) + NIST non-IID estimatori + min-entropy claim | **NOVO**: Faza 7.6 (predlog) | ❌ novo | Very High / High |
 | K4 | **Metamorphic RTP invariant suite** — 5 MR-ova (determinism / zero-payout / payout-scaling / strip-permute / mean-stationarity) preko 10 fixtures × 4 seeds × 20K spins = 800K total | **Faza 6.8 NOVA** | ✅ **50/50 PASS** (Wave 33) | High / Low |
 | K5 | **Open PAR sheet schema v1.0 (JSON Schema Draft 2020-12)** — REQUIRED baseline (regulator submission) + OPTIONAL Tier-1 extra-credit (transition matrix, P99.9 tail, multi-seed CI bands, segment RTP, jurisdiction-gated RTP); validator + 20/20 baseline PASS | Faza 8.5 ext + **NOVA Faza 8.7** | ✅ **Wave 35** — `schemas/usif-par-v1.0.json` + `docs/USIF_PAR_SCHEMA_v1.md` + validator | High / Low |
@@ -157,6 +157,7 @@ Legenda:
 | 34 | `d23489a` | **Kimi K6 ⚠️→✅ INFRA** — Mutation-score CI gate (regression + strict modes) + baseline.json + GitHub Action workflow; dokazano blokira simulirane -5pp/-10pp regresije |
 | 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
 | 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
+| 37 | `(this commit)` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 

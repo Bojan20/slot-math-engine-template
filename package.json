@@ -45,7 +45,8 @@
     "mutation-gate:update-baseline": "node scripts/mutation-gate.mjs --update-baseline",
     "usif-par-validate": "node scripts/usif-par-validate.mjs",
     "usif-par-validate:strict": "node scripts/usif-par-validate.mjs --strict-tier1",
-    "jurisdiction-auto-gate": "npm run build && node scripts/jurisdiction-auto-gate-acceptance.mjs"
+    "jurisdiction-auto-gate": "npm run build && node scripts/jurisdiction-auto-gate-acceptance.mjs",
+    "diff-fuzz-cross-lang": "npm run build && node scripts/diff-fuzz-cross-language.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
