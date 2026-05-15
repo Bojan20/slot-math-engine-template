@@ -20,7 +20,8 @@
     "mutate:rust:whole": "./scripts/rust-mutate.sh --whole-crate",
     "par-samples": "npm run build && node scripts/par-samples-generate.mjs",
     "par-stress": "npm run build && node scripts/par-distribution-stress.mjs --verbose",
-    "rng-quality": "npm run build && node scripts/rng-quality.mjs"
+    "rng-quality": "npm run build && node scripts/rng-quality.mjs",
+    "optimizer-reproductions": "npm run build && node scripts/optimizer-reproductions.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestampUtc": "2026-05-15T01:31:29.289Z",
+    "node": "v25.2.1"
+  },
+  "results": [
+    {
+      "fixture": "3x5-5lines.json",
+      "targetRtp": 0.96,
+      "converged": true,
+      "iterations": 2,
+      "finalScale": 0.9734393030178139,
+      "finalRtp": 0.9599999999995785,
+      "rtpErrorAtOpt": 4.214406601477094e-13,
+      "crossValRtp": 0.9540142243812004,
+      "crossValRtpStd": 0.004703750582311754,
+      "crossValSamples": [
+        0.9573861207829182,
+        0.9556236115808948,
+        0.9559962441460775,
+        0.9470509210149113
+      ],
+      "crossValAbsError": 0.005985775618799538,
+      "optimisationMs": 2514,
+      "passToleranceAtOpt": true,
+      "passCrossVal": false,
+      "overall": false
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "targetRtp": 0.96,
+      "converged": true,
+      "iterations": 2,
+      "finalScale": 0.22230746581419827,
+      "finalRtp": 0.9600000000002924,
+      "rtpErrorAtOpt": 2.9243274468626623e-13,
+      "crossValRtp": 0.956519798854431,
+      "crossValRtpStd": 0.007564954971329496,
+      "crossValSamples": [
+        0.9616058379803128,
+        0.9640382373482995,
+        0.9479978199983737,
+        0.9524373000907378
+      ],
+      "crossValAbsError": 0.0034802011455690174,
+      "optimisationMs": 3602,
+      "passToleranceAtOpt": true,
+      "passCrossVal": true,
+      "overall": true
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "targetRtp": 0.96,
+      "converged": true,
+      "iterations": 2,
+      "finalScale": 0.0032162774245920005,
+      "finalRtp": 0.9599999999993375,
+      "rtpErrorAtOpt": 6.624700787938309e-13,
+      "crossValRtp": 0.9357563366301803,
+      "crossValRtpStd": 0.010218065240592605,
+      "crossValSamples": [
+        0.9434235554138434,
+        0.9452944466238518,
+        0.9243740035124193,
+        0.929933340970607
+      ],
+      "crossValAbsError": 0.024243663369819646,
+      "optimisationMs": 3401,
+      "passToleranceAtOpt": true,
+      "passCrossVal": false,
+      "overall": false
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "targetRtp": 0.96,
+      "converged": true,
+      "iterations": 2,
+      "finalScale": 0.08101176949109219,
+      "finalRtp": 0.9599999999995414,
+      "rtpErrorAtOpt": 4.585221091701897e-13,
+      "crossValRtp": 0.9623676013671469,
+      "crossValRtpStd": 0.0015796390403474108,
+      "crossValSamples": [
+        0.9621944792157171,
+        0.96446647049349,
+        0.9621781310406757,
+        0.9606313247187052
+      ],
+      "crossValAbsError": 0.0023676013671469764,
+      "optimisationMs": 26849,
+      "passToleranceAtOpt": true,
+      "passCrossVal": true,
+      "overall": true
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "targetRtp": 0.96,
+      "converged": true,
+      "iterations": 2,
+      "finalScale": 1.719054555807051,
+      "finalRtp": 0.9599999999999499,
+      "rtpErrorAtOpt": 5.007105841059456e-14,
+      "crossValRtp": 0.9526127068545469,
+      "crossValRtpStd": 0.0018778975677287905,
+      "crossValSamples": [
+        0.9529455158165546,
+        0.9526367736183257,
+        0.9547151105763001,
+        0.950153427407007
+      ],
+      "crossValAbsError": 0.0073872931454530555,
+      "optimisationMs": 1664,
+      "passToleranceAtOpt": true,
+      "passCrossVal": false,
+      "overall": false
+    }
+  ],
+  "summary": {
+    "totalFixtures": 5,
+    "passed": 2,
+    "failed": 3
+  }
+}
