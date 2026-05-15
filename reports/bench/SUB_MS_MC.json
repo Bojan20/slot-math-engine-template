@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T03:57:18.422Z",
+    "fixtureCount": 5,
+    "spinBudgets": [
+      10000,
+      100000
+    ],
+    "passWallMs": 1,
+    "passed": true,
+    "subMsRunCount": 2,
+    "totalRuns": 10
+  },
+  "results": [
+    {
+      "fixture": "3x5-5lines.json",
+      "targetRtp": 0.96,
+      "n": 10000,
+      "pureMc": {
+        "mean": 0.9785600000000033,
+        "varSample": 2.1740297293728306,
+        "wallMs": 0.6394170000000017,
+        "n": 10000,
+        "ciHalf": 0.028899398970149304
+      },
+      "antithetic": {
+        "mean": 0.9545599999999979,
+        "varSample": 2.143621568557087,
+        "wallMs": 1.6855830000000012,
+        "n": 10000,
+        "ciHalf": 0.028696579269607912
+      },
+      "varianceReductionRatio": 1.0141854146561007,
+      "equivPureMcN": 10141.854146561007,
+      "billionEquivalent": false,
+      "antitheticWallMs": 1.6855830000000012
+    },
+    {
+      "fixture": "3x5-5lines.json",
+      "targetRtp": 0.96,
+      "n": 100000,
+      "pureMc": {
+        "mean": 0.9653759999994725,
+        "varSample": 2.1572739513637043,
+        "wallMs": 3.2437090000000026,
+        "n": 100000,
+        "ciHalf": 0.009103506803182391
+      },
+      "antithetic": {
+        "mean": 0.9651839999994727,
+        "varSample": 2.15703021644484,
+        "wallMs": 175.97,
+        "n": 100000,
+        "ciHalf": 0.009102992518669065
+      },
+      "varianceReductionRatio": 1.0001129955978392,
+      "equivPureMcN": 100011.29955978392,
+      "billionEquivalent": false,
+      "antitheticWallMs": 175.97
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "targetRtp": 0.96,
+      "n": 10000,
+      "pureMc": {
+        "mean": 0.9785600000000033,
+        "varSample": 2.1740297293728306,
+        "wallMs": 0.27916700000000105,
+        "n": 10000,
+        "ciHalf": 0.028899398970149304
+      },
+      "antithetic": {
+        "mean": 0.9545599999999979,
+        "varSample": 2.143621568557087,
+        "wallMs": 0.49158400000001734,
+        "n": 10000,
+        "ciHalf": 0.028696579269607912
+      },
+      "varianceReductionRatio": 1.0141854146561007,
+      "equivPureMcN": 10141.854146561007,
+      "billionEquivalent": false,
+      "antitheticWallMs": 0.49158400000001734
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "targetRtp": 0.96,
+      "n": 100000,
+      "pureMc": {
+        "mean": 0.9653759999994725,
+        "varSample": 2.1572739513637043,
+        "wallMs": 2.7070420000000013,
+        "n": 100000,
+        "ciHalf": 0.009103506803182391
+      },
+      "antithetic": {
+        "mean": 0.9651839999994727,
+        "varSample": 2.15703021644484,
+        "wallMs": 174.026333,
+        "n": 100000,
+        "ciHalf": 0.009102992518669065
+      },
+      "varianceReductionRatio": 1.0001129955978392,
+      "equivPureMcN": 100011.29955978392,
+      "billionEquivalent": false,
+      "antitheticWallMs": 174.026333
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "targetRtp": 0.96,
+      "n": 10000,
+      "pureMc": {
+        "mean": 0.9785600000000033,
+        "varSample": 2.1740297293728306,
+        "wallMs": 0.3036250000000109,
+        "n": 10000,
+        "ciHalf": 0.028899398970149304
+      },
+      "antithetic": {
+        "mean": 0.9545599999999979,
+        "varSample": 2.143621568557087,
+        "wallMs": 0.6019999999999754,
+        "n": 10000,
+        "ciHalf": 0.028696579269607912
+      },
+      "varianceReductionRatio": 1.0141854146561007,
+      "equivPureMcN": 10141.854146561007,
+      "billionEquivalent": false,
+      "antitheticWallMs": 0.6019999999999754
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "targetRtp": 0.96,
+      "n": 100000,
+      "pureMc": {
+        "mean": 0.9653759999994725,
+        "varSample": 2.1572739513637043,
+        "wallMs": 2.7829169999999976,
+        "n": 100000,
+        "ciHalf": 0.009103506803182391
+      },
+      "antithetic": {
+        "mean": 0.9651839999994727,
+        "varSample": 2.15703021644484,
+        "wallMs": 177.01666600000004,
+        "n": 100000,
+        "ciHalf": 0.009102992518669065
+      },
+      "varianceReductionRatio": 1.0001129955978392,
+      "equivPureMcN": 100011.29955978392,
+      "billionEquivalent": false,
+      "antitheticWallMs": 177.01666600000004
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "targetRtp": 0.96,
+      "n": 10000,
+      "pureMc": {
+        "mean": 0.9785600000000033,
+        "varSample": 2.1740297293728306,
+        "wallMs": 0.5017920000000231,
+        "n": 10000,
+        "ciHalf": 0.028899398970149304
+      },
+      "antithetic": {
+        "mean": 0.9545599999999979,
+        "varSample": 2.143621568557087,
+        "wallMs": 1.903458999999998,
+        "n": 10000,
+        "ciHalf": 0.028696579269607912
+      },
+      "varianceReductionRatio": 1.0141854146561007,
+      "equivPureMcN": 10141.854146561007,
+      "billionEquivalent": false,
+      "antitheticWallMs": 1.903458999999998
+    },
+    {
+      "fixture": "cascade-drop.json",
+      "targetRtp": 0.96,
+      "n": 100000,
+      "pureMc": {
+        "mean": 0.9653759999994725,
+        "varSample": 2.1572739513637043,
+        "wallMs": 2.7582499999999754,
+        "n": 100000,
+        "ciHalf": 0.009103506803182391
+      },
+      "antithetic": {
+        "mean": 0.9651839999994727,
+        "varSample": 2.15703021644484,
+        "wallMs": 175.09287500000005,
+        "n": 100000,
+        "ciHalf": 0.009102992518669065
+      },
+      "varianceReductionRatio": 1.0001129955978392,
+      "equivPureMcN": 100011.29955978392,
+      "billionEquivalent": false,
+      "antitheticWallMs": 175.09287500000005
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "targetRtp": 0.96,
+      "n": 10000,
+      "pureMc": {
+        "mean": 0.9785600000000033,
+        "varSample": 2.1740297293728306,
+        "wallMs": 0.25195800000005875,
+        "n": 10000,
+        "ciHalf": 0.028899398970149304
+      },
+      "antithetic": {
+        "mean": 0.9545599999999979,
+        "varSample": 2.143621568557087,
+        "wallMs": 1.7921249999999418,
+        "n": 10000,
+        "ciHalf": 0.028696579269607912
+      },
+      "varianceReductionRatio": 1.0141854146561007,
+      "equivPureMcN": 10141.854146561007,
+      "billionEquivalent": false,
+      "antitheticWallMs": 1.7921249999999418
+    },
+    {
+      "fixture": "classic-3x3-lines.json",
+      "targetRtp": 0.96,
+      "n": 100000,
+      "pureMc": {
+        "mean": 0.9653759999994725,
+        "varSample": 2.1572739513637043,
+        "wallMs": 2.627707999999984,
+        "n": 100000,
+        "ciHalf": 0.009103506803182391
+      },
+      "antithetic": {
+        "mean": 0.9651839999994727,
+        "varSample": 2.15703021644484,
+        "wallMs": 175.297958,
+        "n": 100000,
+        "ciHalf": 0.009102992518669065
+      },
+      "varianceReductionRatio": 1.0001129955978392,
+      "equivPureMcN": 100011.29955978392,
+      "billionEquivalent": false,
+      "antitheticWallMs": 175.297958
+    }
+  ]
+}

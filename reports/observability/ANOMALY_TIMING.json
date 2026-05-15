@@ -1,0 +1,597 @@
+{
+  "meta": {
+    "generatedAtUtc": "2026-05-15T03:57:17.446Z",
+    "runsPerAnomaly": 30,
+    "spinsPerRun": 500,
+    "passLatencyMs": 60000,
+    "passed": true,
+    "overallP99WallMs": 0.021208000000001448
+  },
+  "results": [
+    {
+      "anomaly": "rtp_drift",
+      "summary": {
+        "runs": 30,
+        "detectedCount": 30,
+        "detectionRate": 1,
+        "p50WallMs": 0.002082999999998947,
+        "p95WallMs": 0.019167000000003043,
+        "p99WallMs": 0.021208000000001448,
+        "minWallMs": 0.001916000000001361,
+        "maxWallMs": 0.2044169999999994
+      },
+      "latencies": [
+        {
+          "run": 0,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.2044169999999994
+        },
+        {
+          "run": 1,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.014333000000000595
+        },
+        {
+          "run": 2,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.00854100000000102
+        },
+        {
+          "run": 3,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.015334000000002845
+        },
+        {
+          "run": 4,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.019167000000003043
+        },
+        {
+          "run": 5,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.007874999999998522
+        },
+        {
+          "run": 6,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.006583999999996593
+        },
+        {
+          "run": 7,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.005624999999994884
+        },
+        {
+          "run": 8,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.00941699999999912
+        },
+        {
+          "run": 9,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.021208000000001448
+        },
+        {
+          "run": 10,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.01070800000000105
+        },
+        {
+          "run": 11,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.003249999999994202
+        },
+        {
+          "run": 12,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002207999999995991
+        },
+        {
+          "run": 13,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0020000000000024443
+        },
+        {
+          "run": 14,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002082999999998947
+        },
+        {
+          "run": 15,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019580000000019027
+        },
+        {
+          "run": 16,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0020000000000024443
+        },
+        {
+          "run": 17,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001999999999995339
+        },
+        {
+          "run": 18,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002040999999998405
+        },
+        {
+          "run": 19,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019580000000019027
+        },
+        {
+          "run": 20,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019169999999988363
+        },
+        {
+          "run": 21,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002042000000002986
+        },
+        {
+          "run": 22,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002083999999996422
+        },
+        {
+          "run": 23,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019579999999947972
+        },
+        {
+          "run": 24,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002082999999998947
+        },
+        {
+          "run": 25,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001916000000001361
+        },
+        {
+          "run": 26,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0029169999999965057
+        },
+        {
+          "run": 27,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001958999999999378
+        },
+        {
+          "run": 28,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019580000000019027
+        },
+        {
+          "run": 29,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0019169999999988363
+        }
+      ]
+    },
+    {
+      "anomaly": "dry_spell",
+      "summary": {
+        "runs": 30,
+        "detectedCount": 30,
+        "detectionRate": 1,
+        "p50WallMs": 0.0012499999999988631,
+        "p95WallMs": 0.003124999999997158,
+        "p99WallMs": 0.005207999999996105,
+        "minWallMs": 0.0011249999999947136,
+        "maxWallMs": 0.04120799999999747
+      },
+      "latencies": [
+        {
+          "run": 0,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.04120799999999747
+        },
+        {
+          "run": 1,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.005207999999996105
+        },
+        {
+          "run": 2,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002625000000001876
+        },
+        {
+          "run": 3,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002291999999997074
+        },
+        {
+          "run": 4,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0022080000000030964
+        },
+        {
+          "run": 5,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.003124999999997158
+        },
+        {
+          "run": 6,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002375000000000682
+        },
+        {
+          "run": 7,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001667000000004748
+        },
+        {
+          "run": 8,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001667000000004748
+        },
+        {
+          "run": 9,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0025000000000048317
+        },
+        {
+          "run": 10,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0030000000000001137
+        },
+        {
+          "run": 11,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0013749999999959073
+        },
+        {
+          "run": 12,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011670000000023606
+        },
+        {
+          "run": 13,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011670000000023606
+        },
+        {
+          "run": 14,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002541999999998268
+        },
+        {
+          "run": 15,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012079999999983215
+        },
+        {
+          "run": 16,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001125000000001819
+        },
+        {
+          "run": 17,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 18,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002250000000003638
+        },
+        {
+          "run": 19,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012499999999988631
+        },
+        {
+          "run": 20,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 21,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 22,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 23,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012499999999988631
+        },
+        {
+          "run": 24,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001125000000001819
+        },
+        {
+          "run": 25,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 26,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.00116599999999778
+        },
+        {
+          "run": 27,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0024170000000012237
+        },
+        {
+          "run": 28,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011660000000048854
+        },
+        {
+          "run": 29,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001125000000001819
+        }
+      ]
+    },
+    {
+      "anomaly": "win_outlier",
+      "summary": {
+        "runs": 30,
+        "detectedCount": 30,
+        "detectionRate": 1,
+        "p50WallMs": 0.0012499999999988631,
+        "p95WallMs": 0.0034580000000019595,
+        "p99WallMs": 0.006166000000000338,
+        "minWallMs": 0.0011249999999947136,
+        "maxWallMs": 0.024250000000002103
+      },
+      "latencies": [
+        {
+          "run": 0,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.024250000000002103
+        },
+        {
+          "run": 1,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0022499999999965326
+        },
+        {
+          "run": 2,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0017920000000017922
+        },
+        {
+          "run": 3,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0016660000000001673
+        },
+        {
+          "run": 4,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0016250000000042064
+        },
+        {
+          "run": 5,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0015830000000036648
+        },
+        {
+          "run": 6,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.006166000000000338
+        },
+        {
+          "run": 7,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0017499999999941451
+        },
+        {
+          "run": 8,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0028750000000030695
+        },
+        {
+          "run": 9,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0034580000000019595
+        },
+        {
+          "run": 10,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002040999999998405
+        },
+        {
+          "run": 11,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012499999999988631
+        },
+        {
+          "run": 12,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001208000000005427
+        },
+        {
+          "run": 13,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012910000000019295
+        },
+        {
+          "run": 14,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012079999999983215
+        },
+        {
+          "run": 15,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012089999999957968
+        },
+        {
+          "run": 16,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011670000000023606
+        },
+        {
+          "run": 17,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0021249999999994884
+        },
+        {
+          "run": 18,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012499999999988631
+        },
+        {
+          "run": 19,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011249999999947136
+        },
+        {
+          "run": 20,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012079999999983215
+        },
+        {
+          "run": 21,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011669999999952552
+        },
+        {
+          "run": 22,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0013339999999999463
+        },
+        {
+          "run": 23,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011670000000023606
+        },
+        {
+          "run": 24,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012089999999957968
+        },
+        {
+          "run": 25,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.001125000000001819
+        },
+        {
+          "run": 26,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.002250000000003638
+        },
+        {
+          "run": 27,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011669999999952552
+        },
+        {
+          "run": 28,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0012079999999983215
+        },
+        {
+          "run": 29,
+          "anomalyAt": null,
+          "alertAt": 0,
+          "wallMs": 0.0011660000000048854
+        }
+      ]
+    }
+  ]
+}
