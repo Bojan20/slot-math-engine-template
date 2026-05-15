@@ -277,6 +277,123 @@ const NV_SKILL: JurisdictionProfile = {
   regulatorUrl: 'https://gaming.nv.gov/about/contact-information/',
 };
 
+// ───────────────────────────────────────────────────────────────────────────
+// W152 Wave 19 — Faza 15.B.5 — 4 nova jurisdikcijska profila
+// ───────────────────────────────────────────────────────────────────────────
+
+// DGOJ — Spain, Dirección General de Ordenación del Juego.
+// Online slot regulation under Real Decreto 1614/2011 + AT-08 technical
+// standard (Resolución 2014). Updated 2024 stake/bonus restrictions
+// per Real Decreto-ley 22/2023 + Real Decreto 176/2023.
+const DGOJ: JurisdictionProfile = {
+  id: 'DGOJ',
+  name: 'Spain — Dirección General de Ordenación del Juego (AT-08)',
+  rtpRange: [0.9, 0.99],
+  maxWinX: 50000,
+  prohibitedFeatures: [],
+  requireLdwDisclosure: true,
+  requireSessionTimeDisplay: true,
+  maxStakeDefault: 50,
+  minSpinDurationMs: 2500,
+  prohibitAutoplay: true,
+  prohibitTurbo: true,
+  bonusWageringCapX: 30,
+  requiredNearMissRule: 'must_be_random',
+  informationalNotes: [
+    'AT-08 §4.2 requires server-side spin pacing (≥ 2.5 s).',
+    'Real Decreto 176/2023 caps online slot stake at €50 per game cycle from 2024.',
+    'Bonus wagering must not exceed 30× principal per AT-08 §6.1.',
+    'Self-exclusion register integration (Registro General de Interdicciones de Acceso al Juego) mandatory.',
+    'Pre-commitment (deposit + loss limits) required per Real Decreto-ley 22/2023.',
+  ],
+  effectiveFrom: '2024-01-01',
+  regulatorUrl: 'https://www.ordenacionjuego.es/',
+};
+
+// SE — Sweden Spelinspektionen, online slot B2B/B2C licensing.
+// Spellagen (2018:1138) + amendments 2022/2025. Tighter measures
+// from B2B reform 2025-07-01 (B2B suppliers must hold license).
+const SPELINSPEKTIONEN: JurisdictionProfile = {
+  id: 'SPELINSPEKTIONEN',
+  name: 'Sweden — Spelinspektionen (Spellagen 2018:1138 + 2025 B2B reform)',
+  rtpRange: [0.9, 0.99],
+  maxWinX: undefined,
+  prohibitedFeatures: ['buy_feature'],
+  requireLdwDisclosure: true,
+  requireSessionTimeDisplay: true,
+  maxStakeDefault: 50,
+  minSpinDurationMs: 3000,
+  prohibitAutoplay: true,
+  prohibitTurbo: true,
+  bonusWageringCapX: 1,
+  requiredNearMissRule: 'must_be_random',
+  informationalNotes: [
+    'Spellagen §14.13b: bonus may only be offered to a NEW customer, capped at 1× wagering.',
+    'Spelinspektionen LIFS 2019:2 §17 mandates ≥ 3 s spin minimum.',
+    'Buy-feature prohibited under SOU 2024:23 anti-manipulation guidance.',
+    'Spelpaus (national self-exclusion) integration mandatory.',
+    'B2B licensing reform 2025-07-01: every B2B slot provider needs separate license.',
+  ],
+  effectiveFrom: '2025-07-01',
+  regulatorUrl: 'https://www.spelinspektionen.se/',
+};
+
+// PA — Pennsylvania Gaming Control Board (PGCB).
+// 58 Pa. Code §809a — Internet gaming technical standards.
+const PGCB: JurisdictionProfile = {
+  id: 'PGCB',
+  name: 'Pennsylvania — Gaming Control Board (58 Pa. Code §809a)',
+  rtpRange: [0.85, 1.0],
+  maxWinX: undefined,
+  prohibitedFeatures: [],
+  requireLdwDisclosure: true,
+  requireSessionTimeDisplay: true,
+  maxStakeDefault: undefined,
+  minSpinDurationMs: 2000,
+  prohibitAutoplay: false,
+  prohibitTurbo: false,
+  bonusWageringCapX: 25,
+  requiredNearMissRule: 'allowed_within_distribution',
+  informationalNotes: [
+    '58 Pa. Code §809a.6 minimum theoretical RTP 85 %.',
+    '§809a.4 minimum game cycle 2 s (substantially shorter than UK).',
+    '§809a.10 RNG must be tested by independent lab (BMM / GLI / iTechLabs).',
+    'Responsible gaming opt-out via PA Self-Exclusion List (CASE).',
+    'Promotional wagering capped at 25× — joint operator / regulator guidance 2024.',
+  ],
+  effectiveFrom: '2017-10-30',
+  regulatorUrl: 'https://gamingcontrolboard.pa.gov/',
+};
+
+// SG — Singapore National Council on Problem Gambling (NCPG).
+// Casino Control Act 2006 + 2022 NCPG online operator framework.
+// Singapore's online slot environment is restricted (Singapore Pools / TOTE
+// only) — relevant for B2B math engine deployments via licensed operators.
+const NCPG: JurisdictionProfile = {
+  id: 'NCPG',
+  name: 'Singapore — NCPG / Casino Control Act 2006',
+  rtpRange: [0.92, 0.985],
+  maxWinX: 25000,
+  prohibitedFeatures: ['buy_feature', 'gamble'],
+  requireLdwDisclosure: true,
+  requireSessionTimeDisplay: true,
+  maxStakeDefault: 100,
+  minSpinDurationMs: 4000,
+  prohibitAutoplay: true,
+  prohibitTurbo: true,
+  bonusWageringCapX: 5,
+  requiredNearMissRule: 'must_be_random',
+  informationalNotes: [
+    'Casino Control Act §172 mandates strict RTP envelope (92-98.5%).',
+    'NCPG online framework 2022: 4 s min spin duration + mandatory cooling-off prompts.',
+    '$100 max stake per game cycle (SGD); higher caps require pre-approved high-roller status.',
+    'Buy-feature + gamble side bets prohibited under §117.',
+    'NCPG Self-Exclusion Programme integration mandatory; Casino Exclusion Order overrides bypassed.',
+  ],
+  effectiveFrom: '2022-07-01',
+  regulatorUrl: 'https://www.ncpg.org.sg/',
+};
+
 export const PROFILES: ReadonlyMap<string, JurisdictionProfile> = new Map([
   ['UKGC', UKGC],
   ['MGA', MGA],
@@ -289,4 +406,8 @@ export const PROFILES: ReadonlyMap<string, JurisdictionProfile> = new Map([
   ['ADM_VLT', ADM_VLT],
   ['NIGC_C2', NIGC_C2],
   ['NV_SKILL', NV_SKILL],
+  ['DGOJ', DGOJ],
+  ['SPELINSPEKTIONEN', SPELINSPEKTIONEN],
+  ['PGCB', PGCB],
+  ['NCPG', NCPG],
 ]);
