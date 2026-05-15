@@ -1,0 +1,446 @@
+{
+  "schema": "metamorphic-rtp-invariants/v1",
+  "generated_at": "2026-05-15T21:24:56.905Z",
+  "config": {
+    "spins_per_seed": 20000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999
+    ],
+    "rel_tolerance": 0.1,
+    "scale_k": 2
+  },
+  "headline": {
+    "total_checks": 50,
+    "total_pass": 50,
+    "all_pass": true,
+    "wall_seconds": "124.4"
+  },
+  "metamorphic_relations": {
+    "MR1": "DETERMINISM      — same seed twice → bit-exact RTP",
+    "MR2": "ZERO-PAYOUT      — paytable[*]=0   → RTP == 0.0 exactly",
+    "MR3": "PAYOUT-SCALING   — paytable × k    → RTP × k (± MC tolerance)",
+    "MR4": "STRIP-PERMUTE    — shuffle stops   → RTP unchanged (± MC tolerance)",
+    "MR5": "MEAN-STATIONARITY — mean(rtp_4N) == mean(rtp_N) within max(REL_TOL × mean, 3σ_SE)"
+  },
+  "fixtures": [
+    {
+      "fixture": "classic-3x3-lines.json",
+      "class": "lines",
+      "wallMs": 2051,
+      "mr1": {
+        "pass": true,
+        "rtpA": 0.5605499999999898,
+        "rtpB": 0.5605499999999898,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 0.5529624999999908,
+        "meanScaled": 1.1059249999999816,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 0.5529624999999908,
+        "meanPerm": 0.5529624999999908,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 0.5561900000000021,
+        "mean4N": 0.5529624999999908,
+        "sigN": 0.008348836246248728,
+        "sig4N": 0.007780168699969345,
+        "absDiff": 0.003227500000011263,
+        "relErr": 0.005802873118918447,
+        "combinedSE": 0.0057060076162466535,
+        "tolerance": 0.05561900000000021
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "5x3-20lines.json",
+      "class": "lines",
+      "wallMs": 4370,
+      "mr1": {
+        "pass": true,
+        "rtpA": 4.227480000000083,
+        "rtpB": 4.227480000000083,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 4.284678750000113,
+        "meanScaled": 8.569357500000226,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 4.284678750000113,
+        "meanPerm": 4.284678750000113,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 4.333654999999977,
+        "mean4N": 4.284678750000113,
+        "sigN": 0.08169343731291548,
+        "sig4N": 0.10282002077864705,
+        "absDiff": 0.04897624999986405,
+        "relErr": 0.011301372628846623,
+        "combinedSE": 0.06566158384649402,
+        "tolerance": 0.43336549999999774
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "3x5-5lines.json",
+      "class": "lines",
+      "wallMs": 2973,
+      "mr1": {
+        "pass": true,
+        "rtpA": 0.9779199999999293,
+        "rtpB": 0.9779199999999293,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 0.9797887499999318,
+        "meanScaled": 1.9595774999998636,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 0.9797887499999318,
+        "meanPerm": 0.9797887499999318,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 0.9897650000000173,
+        "mean4N": 0.9797887499999318,
+        "sigN": 0.030388354677408382,
+        "sig4N": 0.01577757394479086,
+        "absDiff": 0.009976250000085507,
+        "relErr": 0.01007941278999089,
+        "combinedSE": 0.017120046287782863,
+        "tolerance": 0.09897650000000174
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "5x4-25lines.json",
+      "class": "lines",
+      "wallMs": 8506,
+      "mr1": {
+        "pass": true,
+        "rtpA": 29.664329999999353,
+        "rtpB": 29.664329999999353,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 29.193363749999143,
+        "meanScaled": 58.38672749999829,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 29.193363749999143,
+        "meanPerm": 29.193363749999143,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 29.00569000000023,
+        "mean4N": 29.193363749999143,
+        "sigN": 1.1550326495240522,
+        "sig4N": 0.6744917144460993,
+        "absDiff": 0.18767374999891473,
+        "relErr": 0.006470239115115456,
+        "combinedSE": 0.6687749050171871,
+        "tolerance": 2.900569000000023
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "5x3-243ways.json",
+      "class": "ways",
+      "wallMs": 4023,
+      "mr1": {
+        "pass": true,
+        "rtpA": 304.67501500000327,
+        "rtpB": 304.67501500000327,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 294.7895662500025,
+        "meanScaled": 589.579132500005,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 294.7895662500025,
+        "meanPerm": 294.7895662500025,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 292.9745449999991,
+        "mean4N": 294.7895662500025,
+        "sigN": 9.143838469197046,
+        "sig4N": 7.94323505542921,
+        "absDiff": 1.815021250003383,
+        "relErr": 0.006195149991626025,
+        "combinedSE": 6.056087125705988,
+        "tolerance": 29.297454499999915
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "6x4-4096ways.json",
+      "class": "ways",
+      "wallMs": 22890,
+      "mr1": {
+        "pass": true,
+        "rtpA": 14447.269284999918,
+        "rtpB": 14447.269284999918,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 14188.20110749993,
+        "meanScaled": 28376.38672749986,
+        "ratio": 1.9999989084239866,
+        "expected": 2,
+        "relErr": 5.457880066783716e-7
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 14188.20110749993,
+        "meanPerm": 14188.20110749993,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 14233.61433000002,
+        "mean4N": 14188.20110749993,
+        "sigN": 335.4442199841247,
+        "sig4N": 179.6592921174858,
+        "absDiff": 45.41322250009034,
+        "relErr": 0.00319056154306313,
+        "combinedSE": 190.2631637790891,
+        "tolerance": 1423.361433000002
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "variable-rows-7reels.json",
+      "class": "ways",
+      "wallMs": 19827,
+      "mr1": {
+        "pass": true,
+        "rtpA": 21545.99300999987,
+        "rtpB": 21545.99300999987,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 21321.737583749924,
+        "meanScaled": 42643.47516749985,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 21321.737583749924,
+        "meanPerm": 21321.737583749924,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 21295.335480000016,
+        "mean4N": 21321.737583749924,
+        "sigN": 310.7555446728359,
+        "sig4N": 187.25095346105698,
+        "absDiff": 26.402103749907837,
+        "relErr": 0.0012398068945522814,
+        "combinedSE": 181.40557331362908,
+        "tolerance": 2129.5335480000017
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "pay-anywhere.json",
+      "class": "pay-anywhere",
+      "wallMs": 4946,
+      "mr1": {
+        "pass": true,
+        "rtpA": 246.2898049999958,
+        "rtpB": 246.2898049999958,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 245.01284249999563,
+        "meanScaled": 490.02568499999126,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "meanOrig": 245.01284249999563,
+        "meanPerm": 245.01284249999563,
+        "relDiff": 0,
+        "trivial": true
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 242.76423500000107,
+        "mean4N": 245.01284249999563,
+        "sigN": 6.224296985360465,
+        "sig4N": 2.3489632870639925,
+        "absDiff": 2.248607499994563,
+        "relErr": 0.009262515543092882,
+        "combinedSE": 3.326390742454269,
+        "tolerance": 24.276423500000107
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "cluster-7x7.json",
+      "class": "cluster",
+      "wallMs": 44995,
+      "mr1": {
+        "pass": true,
+        "rtpA": 28.383774999997836,
+        "rtpB": 28.383774999997836,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 28.26641749999792,
+        "meanScaled": 56.53283499999584,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "skipped": true,
+        "reason": "unsafe for class=cluster"
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 28.1046350000005,
+        "mean4N": 28.26641749999792,
+        "sigN": 0.18610590846796504,
+        "sig4N": 0.12625082445272434,
+        "absDiff": 0.16178249999742178,
+        "relErr": 0.005756434837080037,
+        "combinedSE": 0.11244407481241418,
+        "tolerance": 2.81046350000005
+      },
+      "passes": 5
+    },
+    {
+      "fixture": "cluster-diagonal.json",
+      "class": "cluster",
+      "wallMs": 9799,
+      "mr1": {
+        "pass": true,
+        "rtpA": 1.6501999999998842,
+        "rtpB": 1.6501999999998842,
+        "diff": 0
+      },
+      "mr2": {
+        "pass": true,
+        "rtp": 0
+      },
+      "mr3": {
+        "pass": true,
+        "meanOrig": 1.6432237499998879,
+        "meanScaled": 3.2864474999997757,
+        "ratio": 2,
+        "expected": 2,
+        "relErr": 0
+      },
+      "mr4": {
+        "pass": true,
+        "skipped": true,
+        "reason": "unsafe for class=cluster"
+      },
+      "mr5": {
+        "pass": true,
+        "meanN": 1.6258250000000276,
+        "mean4N": 1.6432237499998879,
+        "sigN": 0.007881326030563249,
+        "sig4N": 0.006782646208030741,
+        "absDiff": 0.01739874999986024,
+        "relErr": 0.010701490012676607,
+        "combinedSE": 0.005199028505003306,
+        "tolerance": 0.16258250000000277
+      },
+      "passes": 5
+    }
+  ]
+}

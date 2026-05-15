@@ -60,7 +60,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | K1 | **TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder kombinovan CI pipeline** za svih 5 backend-a | Faza 7.2 (postojeća ⚠️) | ⚠️ workflow scaffold landed, external runner pending | High / Medium |
 | K2 | **Differential fuzz harness TS↔Rust oracle** — cargo-fuzz + quickcheck/proptest sa RTP-monotonicity i hit-freq metamorfičkim invariantima | Faza 10.3 (TS↔Rust diff postoji ✅) + **NOVO**: cross-language fuzz oracle | ❌ novo | High / Medium |
 | K3 | **SP 800-90B entropy-source assessment protokol** — dokumentuj entropy path (`/dev/urandom` → ChaCha20 seeding) + NIST non-IID estimatori + min-entropy claim | **NOVO**: Faza 7.6 (predlog) | ❌ novo | Very High / High |
-| K4 | **Metamorphic RTP invariant suite** — property: `RTP(base) + RTP(bonus) × P(trigger) == RTP(total) ± ε` za svaku mehaniku | **NOVO**: Faza 10.1 ekstenzija ili Faza 6.8 | ❌ novo | High / Low |
+| K4 | **Metamorphic RTP invariant suite** — 5 MR-ova (determinism / zero-payout / payout-scaling / strip-permute / mean-stationarity) preko 10 fixtures × 4 seeds × 20K spins = 800K total | **Faza 6.8 NOVA** | ✅ **50/50 PASS** (Wave 33) | High / Low |
 | K5 | **Open PAR sheet schema v1.0 (JSON/XML)** — segment RTP, transition matrix, P99.9 tail, multi-seed CI bands; publikovati kao open standard | Faza 8.5 (PAR generator ✅) + **NOVO**: schema publication | ⚠️ schema fields postoje u IR; publikacija fali | High / Low |
 | K6 | **cargo-mutants CI gate** — enforce >90% mutation score na math-kernel file-ovima, block PRs sa unkilled mutantima | Faza 10.7 (mutation testing ⚠️ 85.38%→95%) | ⚠️ measure landed (Rust 92.65% / TS 85.38%); CI gate fali | Medium / Low |
 | K7 | **GPU deterministic replay kernel (Metal/WGSL) end-to-end** — wgpu integration + CPU↔GPU byte-parity na 10⁶ spinova | Faza 9.6 (GPU Metal ⚠️) | ⚠️ scaffold + WGSL landed, integration pending | Very High / High |
@@ -153,6 +153,7 @@ Legenda:
 | 30 | `f7aedba` | 2 ❌→✅ Commercial Readiness closeouts (sales demo skripta + one-page pitch dokument) |
 | 31 | `e81b319` | 1 ⚠️→✅ Faza 3.2 behaviors compositional (6 dvo-behavior kombinacija × 4 seeds × 50K = 1.2M total, sve PASS) |
 | 32 | `7a4ea2d` | **Kimi deep-audit report landed** — `docs/research/KIMI_AUDIT_2026-05-15.md` 25-source TL;DR + 10-step action list integrated u master-todo §"🔬 KIMI DEEP AUDIT 2026-05-15" |
+| 33 | `(this commit)` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
