@@ -66,7 +66,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | K7 | **GPU deterministic replay kernel (Metal/WGSL) end-to-end** — wgpu integration + CPU↔GPU byte-parity na 10⁶ spinova | Faza 9.6 (GPU Metal ⚠️) | ⚠️ scaffold + WGSL landed, integration pending | Very High / High |
 | K8 | **Jurisdiction-specific compliance auto-gate** — `evaluateCompliance()` 11-rule gate (sad sa near-miss rule UKGC RTS-3) + 30 fixtures × 15 jurisdictions = 450-cell compliance matrix | Faza 11.9 + 15.B + **NOVA Faza 11.10** | ✅ **Wave 36** — `checkNearMissRule` landed + `scripts/jurisdiction-auto-gate-acceptance.mjs` + 24/24 unit tests | High / Medium |
 | K9 | **zk-SNARK PAR sheet commitment prototype** — Groth16 circuit: public = PAR hash + mechanic params; witness = reel strips + weights; proof = RTP integrity | Faza 13.4 (zk-SNARK scaffold ✅) + **NOVO**: production circuit | ⚠️ scaffold landed `71d9401`; Groth16 prod circuit fali | Very Very High / Very High |
-| K10 | **HSM-backed seed architecture design doc** — Thales Luna 7 / AWS CloudHSM / Vault za DRBG seed injection + side-channel resistance + multi-instance broadcast | Faza 7.x + P0 #10 (HSM bridge ✅ Mock) | ⚠️ MockHSMProvider ✅ + audit/health ✅; real PKCS#11 driver fali | High / High |
+| K10 | **HSM-backed DRBG seed bridge** — `HsmSeedBridge` sa multi-instance broadcast + FIPS 140-3 IG D.K continuous health tests (RCT + APT) + ChaCha20/u64 derivation + 8-vendor matrix doc + side-channel posture | Faza 7.x + P0 #10 ext + **NOVA Faza 7.7** | ✅ **Wave 38** — `src/rng/hsmSeedBridge.ts` + 15/15 tests + `docs/HSM_SEED_ARCHITECTURE.md` | High / High |
 
 **Industry-fact bullets (sales-pitch ammunition iz Kimi report-a):**
 
@@ -158,6 +158,7 @@ Legenda:
 | 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
 | 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 | 37 | `b46bdf2` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
+| 38 | `(this commit)` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
