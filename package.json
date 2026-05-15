@@ -21,7 +21,9 @@
     "par-samples": "npm run build && node scripts/par-samples-generate.mjs",
     "par-stress": "npm run build && node scripts/par-distribution-stress.mjs --verbose",
     "rng-quality": "npm run build && node scripts/rng-quality.mjs",
-    "optimizer-reproductions": "npm run build && node scripts/optimizer-reproductions.mjs"
+    "optimizer-reproductions": "npm run build && node scripts/optimizer-reproductions.mjs",
+    "mc-corpus": "npm run build && node scripts/mc-corpus-generate.mjs",
+    "mutation-summary": "node scripts/mutation-summary.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

@@ -1,0 +1,91 @@
+{
+  "generatedAtUtc": "2026-05-15T01:46:28.058Z",
+  "fixtures": [
+    {
+      "fixtureId": "3x5-5lines",
+      "file": "3x5-5lines.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "5x3-20lines",
+      "file": "5x3-20lines.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "5x3-243ways",
+      "file": "5x3-243ways.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "5x4-25lines",
+      "file": "5x4-25lines.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "6x4-4096ways",
+      "file": "6x4-4096ways.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "cascade-drop",
+      "file": "cascade-drop.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "cascade-fixed-strip",
+      "file": "cascade-fixed-strip.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "cascade-refill",
+      "file": "cascade-refill.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "classic-3x3-lines",
+      "file": "classic-3x3-lines.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    },
+    {
+      "fixtureId": "cluster-7x7",
+      "file": "cluster-7x7.jsonl",
+      "runs": 5,
+      "points": 20,
+      "spins": 50000
+    }
+  ],
+  "config": {
+    "runsPerFixture": 5,
+    "maxSpins": 10000,
+    "checkpoints": [
+      1000,
+      2000,
+      5000,
+      10000
+    ]
+  },
+  "totals": {
+    "fixtures": 10,
+    "runs": 50,
+    "points": 200,
+    "spins": 500000
+  }
+}

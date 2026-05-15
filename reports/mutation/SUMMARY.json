@@ -1,0 +1,72 @@
+{
+  "generatedAtUtc": "2026-05-15T01:45:58.242Z",
+  "typescript": {
+    "runtime": "typescript",
+    "tool": "stryker",
+    "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/scoped-2026-05-13.json",
+    "total": 342,
+    "killed": 290,
+    "survived": 50,
+    "timeout": 2,
+    "noCoverage": 0,
+    "ignored": 0,
+    "runtimeError": 0,
+    "other": 0,
+    "scoreStrict": 0.8538011695906432,
+    "scoreLenient": 0.8538011695906432,
+    "perFile": [
+      {
+        "file": "src/rg/session.ts",
+        "total": 214,
+        "killed": 191,
+        "survived": 23,
+        "timeout": 0,
+        "noCoverage": 0,
+        "ignored": 0,
+        "runtimeError": 0,
+        "scoreStrict": 0.8925233644859814,
+        "scoreLenient": 0.8925233644859814
+      },
+      {
+        "file": "src/sensitivity/analyzer.ts",
+        "total": 128,
+        "killed": 99,
+        "survived": 27,
+        "timeout": 2,
+        "noCoverage": 0,
+        "ignored": 0,
+        "runtimeError": 0,
+        "scoreStrict": 0.7890625,
+        "scoreLenient": 0.7890625
+      }
+    ]
+  },
+  "rust": [
+    {
+      "crate": "evaluator",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/evaluator/mutants.out/outcomes.json",
+      "total": 24,
+      "caught": 9,
+      "missed": 0,
+      "timeout": 12,
+      "unviable": 3,
+      "success": 0,
+      "scoreStrict": 1
+    },
+    {
+      "crate": "rng",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/rng/mutants.out/outcomes.json",
+      "total": 69,
+      "caught": 50,
+      "missed": 5,
+      "timeout": 13,
+      "unviable": 1,
+      "success": 0,
+      "scoreStrict": 0.9264705882352942
+    }
+  ]
+}
