@@ -27,6 +27,29 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
+## 🚫 FUTURISTIC PHASE — ODGOĐENO (Boki, 2026-05-15)
+
+**Pravilo:** sve futuristic stavke (Faza 10.8 LLM adversarial, 13.12-13.18 LLM/quantum/decentralized/federated, 14.5-14.8 USIF Hub/AI co-designer/predictive ML) su **trajno odgođene do eksplicitnog Boki zahteva**.
+
+Corti NE PREDLAŽE futuristic items u "sledeće wave" listama. Ne pokreće ih autonomno. Ne menjons ih kao "logical next" sufgestije.
+
+Ako Boki eksplicitno traži ("uradi USIF Hub", "kreni LLM agent" itd.) — tek tada krećem.
+
+Konkretne futuristic stavke koje ostaju ❌ ili ⚠️ (ne nudi ih dok Boki ne pita):
+- Faza 9.9 FPGA Verilog generator + dual-EPYC scaling
+- Faza 10.8 LLM adversarial test generator
+- Faza 13.12 LLM-driven game balancing (NL designer)
+- Faza 13.13 Holographic strip encoding (Bloom compression)
+- Faza 13.15 Quantum advantage research (Grover enumeration)
+- Faza 13.16 Decentralized WAP (mining-pool style)
+- Faza 13.17 Federated math ML
+- Faza 14.5 USIF Hub web portal (community library)
+- Faza 14.6 AI co-designer (multi-turn LLM dialog)
+- Faza 14.7 Predictive maintenance ML
+- Faza 14.2 MGA/UKGC sandbox pilot (regulator-side, ne moje)
+
+---
+
 Legenda:
 - ✅ uradjeno
 - ⚠️ delimično / stub
@@ -40,9 +63,18 @@ Legenda:
 
 ## STATE SNAPSHOT (overeno protiv git history-ja Wave 24, izvora i fixture-a — 2026-05-15, W152 Wave 24 landed; **FAZA 15 KOMPLETNA + 16 acceptance proofs (11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console)**)
 
-**Ukupno: ~99% kompletno na kodu, ~91% kompletno na "acceptance proof"-u.** **FAZA 15 KOMPLETIRANA: 15.A (14 schema primitives) + 15.B (5 cert blockers) + 15.C (5 competitive mehanike) + 15.X (3 anti-patent housekeeping) = 27/24 stavki landed (više od plana — 15.C delivered alongside 15.X).** Sve clean-room, zero vendor-marker u kod-u (verified **0/743 files** post-Wave 22), respinLockEvaluator dokumentovan sa 4-criteria differentiation od H&W Markov persistent u IP_REVIEW.md.
+**Ukupno: ~99% kompletno na kodu, ~95% kompletno na "acceptance proof"-u.** **FAZA 15 KOMPLETIRANA: 15.A (14 schema primitives) + 15.B (5 cert blockers) + 15.C (5 competitive mehanike) + 15.X (3 anti-patent housekeeping) = 27/24 stavki landed.** Plus **16 acceptance proof reports landed waves 21-24** (Faze 11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console). Sve clean-room, zero vendor-marker u kod-u (verified **0/757 files** post-Wave 24), respinLockEvaluator dokumentovan sa 4-criteria differentiation od H&W Markov persistent u IP_REVIEW.md.
 
-**Post-commit ultimate-QA pass (2026-05-15, 12:25, post `b317854`):** TS lint 0 err ✅ · vitest **2688 pass / 0 fail / 3 skipped / 114 files / 48.82s** ✅ · npm build clean ✅ · cargo build --release 0.08s (cached) ✅ · clippy --lib -D warnings 0 warnings ✅ · cargo test --release **783 pass / 0 fail** ✅ · check-reserved-terms **0/743 files** ✅ · slot-truth-check **10/10 OK** (rust_total=783, ts_test_count=2691, ts_test_files=114, master_todo_lines=1020) ✅. **Combined TS+Rust = 3471 testova / 0 fail / 0 regresija.** Oracle thresholds bumped (rust 783, ts 2688, files 114, todo 1000) — drift guard tight. *(W152 Wave 17: tehnički dug TS BASE_REELS/FREE_SPINS_REELS IR migration (`loadReelsFromIR` factory + materialiseWeightedReel), Faza 11.9 UK AWP Compensated math mode (CompensatedMathStateMachine cycleProgress sa CompensationHint + cycleVerdict), Faza 13.10 10k MC corpus generator za ConvergencePredictor training (200 convergence points / 500K spins default), Faza 10.7 mutation score consolidated report (TS 85.38% / Rust evaluator 100% / Rust rng 92.65% measured). **+35 vitest specs.** Wave 16: Faza 8.5 Storage adapter pluggable backend, Faza 8.5 Cross-version replay shim, Faza 13.18 3D RTP heatmap, Faza 11.2 reel/paytable reproductions report (+48 vitest specs). Wave 15: Faza 1.6 quick-RTP CLI, Faza 11.3 cancel/resume preserved state, Faza 14.2 daily replay guardian, tehnički dug TS parse-once IR cache. Wave 14: Faza 11.1 Web Config Builder UI MVP, Faza 14.5 MIT LICENSE + standards pitch, Faza 14.8 statistical fairness. Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items. Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
+**Post-Wave 24 ultimate-QA (2026-05-15, post `7a529e9`):** TS lint 0 err ✅ · vitest **2752 pass / 0 fail / 3 skipped / 118 files** ✅ · npm build clean ✅ · cargo build --release ✅ · clippy --lib -D warnings 0 ✅ · cargo test --release **783 pass / 0 fail** ✅ · check-reserved-terms **0/757 files** ✅. **Combined TS+Rust = 3535 testova / 0 fail / 0 regresija.**
+
+**Wave 21-24 closeouts:**
+
+| Wave | Commit | Items closed |
+|---|---|---|
+| 21 | `4120f8f` | 11.7 anomaly timing + 13.1 mass-validation + 14.4 sub-ms + 14.3 jurisdictions |
+| 22 | `b317854` | 6.7 generating functions + 8.6 threshold sig + 13.3 operator alerts + 13.6 multi-instance + 12 ways partial |
+| 23 | `a8517cb` | 6.7 PGF ways closeout + 12 FS configs + 12 H&W + 12 cluster + coverage report |
+| 24 | `7a529e9` | 0.1 vitest bench + 13.11 publish pipeline + 14.4 tuning console | *(W152 Wave 17: tehnički dug TS BASE_REELS/FREE_SPINS_REELS IR migration (`loadReelsFromIR` factory + materialiseWeightedReel), Faza 11.9 UK AWP Compensated math mode (CompensatedMathStateMachine cycleProgress sa CompensationHint + cycleVerdict), Faza 13.10 10k MC corpus generator za ConvergencePredictor training (200 convergence points / 500K spins default), Faza 10.7 mutation score consolidated report (TS 85.38% / Rust evaluator 100% / Rust rng 92.65% measured). **+35 vitest specs.** Wave 16: Faza 8.5 Storage adapter pluggable backend, Faza 8.5 Cross-version replay shim, Faza 13.18 3D RTP heatmap, Faza 11.2 reel/paytable reproductions report (+48 vitest specs). Wave 15: Faza 1.6 quick-RTP CLI, Faza 11.3 cancel/resume preserved state, Faza 14.2 daily replay guardian, tehnički dug TS parse-once IR cache. Wave 14: Faza 11.1 Web Config Builder UI MVP, Faza 14.5 MIT LICENSE + standards pitch, Faza 14.8 statistical fairness. Wave 13: ±0.001% precision unification + Faza 10.5/10.2/9.7/14.6. Wave 12: 9 items. Wave 11: 7.2 + 10.3 + 7.5 + 9.4 + 14.3.)*
 
 Šta to znači u praksi:
 - **Kod i moduli** za faze 0.1, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9, 10.1-10.7, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12 (mehanike), 13.1, 13.2, 13.3, 13.4, 13.5, 13.7, 13.9, 13.10, 14.1, 14.2 **postoje i commit-ovani**.
