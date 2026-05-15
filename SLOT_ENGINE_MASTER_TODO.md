@@ -156,7 +156,7 @@ Legenda:
 | 33 | `f4ca791` | **Kimi K4 ⚠️→✅** — Metamorphic RTP invariant suite (MR1-MR5) 50/50 PASS preko 10 fixtures, 800K spinova ukupno |
 | 34 | `d23489a` | **Kimi K6 ⚠️→✅ INFRA** — Mutation-score CI gate (regression + strict modes) + baseline.json + GitHub Action workflow; dokazano blokira simulirane -5pp/-10pp regresije |
 | 35 | `dc3fdc0` | **Kimi K5 ⚠️→✅** — USIF PAR Sheet Schema v1.0 (JSON Schema Draft 2020-12) — REQUIRED baseline + OPTIONAL Tier-1 extra-credit; 20/20 PAR sample-a validira; spec doc + validator + 2 npm aliases |
-| 36 | `(this commit)` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
+| 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
