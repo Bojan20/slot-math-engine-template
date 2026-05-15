@@ -101,7 +101,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 |---|---|---|---|
 | K1 | ⚠️ workflow scaffold | — | external-runner pending (operator-initiated, ~8-12h per backend) |
 | **K2** | ✅ | **37** | `b46bdf2` — 160/160 cells PASS, cross-language metamorphic |
-| **K3** | ✅ | **39** | `(this commit)` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
+| **K3** | ✅ | **39** | `0a396ff` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
 | **K4** | ✅ | **33** | `f4ca791` — 50/50 metamorphic invariants PASS |
 | **K5** | ✅ | **35** | `dc3fdc0` — USIF PAR Schema v1.0 + 20/20 baseline validation |
 | **K6** | ✅ | **34** | `d23489a` — Mutation-score regression + strict CI gate |
@@ -192,7 +192,7 @@ Legenda:
 | 36 | `3f17c5e` | **Kimi K8 ⚠️→✅** — Jurisdiction auto-gate: `checkNearMissRule` (UKGC RTS-3 / MGA PPD §11.f) dodat u `complianceGate.ts` (10→11 rules); acceptance harness 30×15=450 verdict-a (PASS=203/WARN=175/FAIL=72); per-rule failure attribution; 24/24 unit tests PASS |
 | 37 | `b46bdf2` | **Kimi K2 ❌→✅** — Differential fuzz cross-language harness: 4 MRs × 20 random IR varijanti × 2 runtime-a (TS irSimulator + Rust evaluator_parity) = 160/160 cells PASS u 13.6s; per-runtime metamorphic invariants (cross-language scaling agreement) |
 | 38 | `bf7a6cd` | **Kimi K10 ⚠️→✅** — HSM-backed DRBG seed bridge: `src/rng/hsmSeedBridge.ts` (~280 L) sa multi-instance broadcast + FIPS 140-3 IG D.K RCT/APT health tests + ChaCha20/u64 derivation; `docs/HSM_SEED_ARCHITECTURE.md` (~190 L) 8-vendor matrix + side-channel posture; 15/15 vitest tests PASS |
-| 39 | `(this commit)` | **Kimi K3 ❌→✅** — SP 800-90B entropy assessment: 4 non-IID estimators (§6.3.1-§6.3.4) + §5 IID test (4 stats × 200 perm) + `assessEntropy()` aggregator; 6 sources assessed (5 PRNG + Wave 38 HSM bridge), all PASS Low-bar (HSM bridge highest @ 5.03 bits); 21/21 vitest tests PASS |
+| 39 | `0a396ff` | **Kimi K3 ❌→✅** — SP 800-90B entropy assessment: 4 non-IID estimators (§6.3.1-§6.3.4) + §5 IID test (4 stats × 200 perm) + `assessEntropy()` aggregator; 6 sources assessed (5 PRNG + Wave 38 HSM bridge), all PASS Low-bar (HSM bridge highest @ 5.03 bits); 21/21 vitest tests PASS |
 
 (_Earlier wave history (11-17): see commit log + per-wave commit row tables below._)
 
