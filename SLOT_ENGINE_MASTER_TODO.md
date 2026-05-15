@@ -27,26 +27,38 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
-## 🚫 FUTURISTIC PHASE — ODGOĐENO (Boki, 2026-05-15)
+## 🧊 FUTURISTIC FREEZE — ODGOĐENO ZA KRAJ (Boki, 2026-05-15, **OBAVEZNO BEZ IZUZETKA**)
 
-**Pravilo:** sve futuristic stavke (Faza 10.8 LLM adversarial, 13.12-13.18 LLM/quantum/decentralized/federated, 14.5-14.8 USIF Hub/AI co-designer/predictive ML) su **trajno odgođene do eksplicitnog Boki zahteva**.
+**Pravilo:** sve futuristic stavke su **TRAJNO ODGOĐENE DO EKSPLICITNOG BOKI ZAHTEVA**.
 
-Corti NE PREDLAŽE futuristic items u "sledeće wave" listama. Ne pokreće ih autonomno. Ne menjons ih kao "logical next" sufgestije.
+- Corti **NE PREDLAŽE** futuristic items u "Sledeće (Wave N+1)" listama
+- Corti **NE POKREĆE** ih autonomno
+- Corti **NE NUDI** ih kao "logical next" sugestije
+- Ako Boki eksplicitno traži ("uradi USIF Hub", "kreni LLM agent", "krećemo na quantum", "futuristic", "Faza 14.6") → tek tada otključavam i krećem
 
-Ako Boki eksplicitno traži ("uradi USIF Hub", "kreni LLM agent" itd.) — tek tada krećem.
+**Zamrznute stavke (⏸ FROZEN) — ne pominjem se u Wave proposals dok Boki ne pita:**
 
-Konkretne futuristic stavke koje ostaju ❌ ili ⚠️ (ne nudi ih dok Boki ne pita):
-- Faza 9.9 FPGA Verilog generator + dual-EPYC scaling
-- Faza 10.8 LLM adversarial test generator
-- Faza 13.12 LLM-driven game balancing (NL designer)
-- Faza 13.13 Holographic strip encoding (Bloom compression)
-- Faza 13.15 Quantum advantage research (Grover enumeration)
-- Faza 13.16 Decentralized WAP (mining-pool style)
-- Faza 13.17 Federated math ML
-- Faza 14.5 USIF Hub web portal (community library)
-- Faza 14.6 AI co-designer (multi-turn LLM dialog)
-- Faza 14.7 Predictive maintenance ML
-- Faza 14.2 MGA/UKGC sandbox pilot (regulator-side, ne moje)
+| Faza | Stavka | Status |
+|---|---|---|
+| **9.9** | NUMA / FPGA Verilog generator / Persistent memory | ⏸ FROZEN |
+| **10.8** | Adversarial test generator (LLM + property-based 24/7 CI) | ⏸ FROZEN |
+| **13.12** | LLM-driven game balancing (NL designer) | ⏸ FROZEN |
+| **13.13** | Holographic strip encoding (Bloom-compressed states) | ⏸ FROZEN |
+| **13.15** | Quantum advantage research (Grover enumeration) | ⏸ FROZEN |
+| **13.16** | Mining-pool decentralized WAP | ⏸ FROZEN |
+| **13.17** | Federated math ML (multi-operator anonymous stats) | ⏸ FROZEN |
+| **14.2** | MGA / UKGC sandbox pilot (regulator-side) | ⏸ FROZEN (operator decision, not engineering) |
+| **14.5** | USIF Hub web portal (community library) | ⏸ FROZEN |
+| **14.6** | AI co-designer (multi-turn LLM dialog) | ⏸ FROZEN |
+| **14.7** | Predictive maintenance ML | ⏸ FROZEN |
+
+**External-infra stavke (NE futuristic, ali blokirane na infrastrukturi — takođe ne nuditi):**
+
+| Faza | Stavka | Razlog |
+|---|---|---|
+| **7.2** | TestU01 BigCrush / NIST 15 / PractRand 2³⁸ binarni capture | external tool install + ~1TB disk |
+| **9.6** | GPU Metal end-to-end byte-parity | external GPU runner |
+| **9.8** | 1T spinova end-to-end timing | external GPU + multi-node cluster |
 
 ---
 
@@ -693,8 +705,8 @@ Mapa "commit → faza":
 
 - ✅ **NUMA-aware** allocation. *(`rust-sim/src/numa/mod.rs` + commit `477423b`)*
 - ✅ **Persistent memory** (Apple unified, mmap reel strip-ova). *(`numa/mmap_strips.rs`)*
-- ❌ **FPGA accelerator path**: Verilog generator iz IR za hot evaluatore.
-- ❌ Acceptance: dual-socket EPYC server → linear scaling 30B/s.
+- ⏸ FROZEN — **FPGA accelerator path**: Verilog generator iz IR za hot evaluatore.
+- ⏸ FROZEN — Acceptance: dual-socket EPYC server → linear scaling 30B/s.
 
 ---
 
@@ -706,12 +718,12 @@ Mapa "commit → faza":
 
 ---
 
-## FAZA 10.8 — Adversarial test generator (LLM + property-based) 🔵 *(2 nedelje, futuristic)*
+## FAZA 10.8 — Adversarial test generator (LLM + property-based) 🔵 *(2 nedelje, futuristic)* ⏸ FROZEN (2026-05-15)
 
-- ❌ **LLM agent** trazi edge config-e koji crashuju ili violentno krše invariante.
-- ❌ **Continuous CI** background 24/7.
-- ❌ **Auto-propose fix**: LLM + Rust analyzer skicira PR.
-- ❌ Acceptance: 0 bug-ova u prethodnih 30 dana koji nije agent prvo našao.
+- ⏸ FROZEN — **LLM agent** trazi edge config-e koji crashuju ili violentno krše invariante.
+- ⏸ FROZEN — **Continuous CI** background 24/7.
+- ⏸ FROZEN — **Auto-propose fix**: LLM + Rust analyzer skicira PR.
+- ⏸ FROZEN — Acceptance: 0 bug-ova u prethodnih 30 dana koji nije agent prvo našao.
 
 ---
 
@@ -789,24 +801,24 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ✅ Bit-identičan rezultat — proof of no-silent-drift. *(W152 Wave 13 — `differentialReplay()` exits with `bit_identical` only if every checkpoint matches AND `cap.engineCommit === todayEngineCommit`. Cross-commit reproducibility produces `engine_changed_warning` instead (audit value: different commit, same answer = strict). 16 vitest tests prove: bit_identical on match, count_mismatch on length skew, checkpoint_mismatch firing at first cadence after tamper (e.g. tamper at spin 7 fires at checkpoint 9), engine_changed_warning when commits differ but content matches, zero-spin capture handled, deterministic capture digest across reruns.)*
 - ✅ Audit dossier publikovan publicly daily. *(W152 Wave 24 — `src/cert/dailyPublishPipeline.ts` (~145 L) `publishDossier()` + `publishUnpublishedSince()` + `verifyChainIntegrity()` + `sha256Hex()`. Pluggable callback adapter pattern (caller dovodi `publish(json, key) → Promise<{url}>` za S3/IPFS/HTTP). Hash chain integrity verification pre publish (refuses na broken link in strict mode). Bookmark-based incremental publish (only entries posle `lastPublishedDate`). Stops na first error u strict mode. 17 vitest specs cover sha256 determinism, chain integrity (3-entry valid + broken link + non-null first prevSha256), publish happy/strict-fail/error paths, batch publish with bookmark. Operator-side cron + S3 wiring still external (engine generic).)*
 
-### 13.12 LLM-driven game balancing
-- ❌ Designer prirodnim jezikom.
-- ❌ Agent + auto-tuner predlaže config kroz iterativni dialog.
+### 13.12 LLM-driven game balancing ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Designer prirodnim jezikom.
+- ⏸ FROZEN — Agent + auto-tuner predlaže config kroz iterativni dialog.
 
-### 13.13 Holographic strip encoding
-- ❌ variable-rows ways 117k state space → Bloom-filter-like compressed struct.
+### 13.13 Holographic strip encoding ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — variable-rows ways 117k state space → Bloom-filter-like compressed struct.
 
 ### 13.14 Differential privacy PAR
 - ✅ Public PAR export sa Laplace noise (ε=0.1). *(W152 Wave 12 — `src/math/par-sheet/dpExport.ts` (~160 L). `laplaceSample(scale, rng)` koristi standard inverse-CDF: −b · sgn(u) · ln(1−2|u|) sa u−=0.5. `dpExport({epsilon, fields, rng}, at)` primenjuje Laplace mehanizam na svaki polje sa sekvencijalnom kompozicijom (per-field ε/k). `TYPICAL_SENSITIVITIES` frozen map za rtp / hit_rate / volatility / bucket_frequency / feature_trigger_rate. Per Dwork-Roth "Algorithmic Foundations of DP" §2.3 — sensitivity = max change pri brisanju jednog spina iz N spinova batch-a. 17 vitest tests — laplaceSample (4 — mean≈0, scale-variance scaling, determinism, guards), dpExport (12 — validation, field round-trip, determinism, ε-utility tradeoff, scale formula, ±2% utility on ε=0.3 across 200 trials, frozen sensitivities, infinite-value rejection).)*
 
-### 13.15 Quantum advantage research
-- ❌ Grover-style enumeration za variable-rows ways state.
+### 13.15 Quantum advantage research ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Grover-style enumeration za variable-rows ways state.
 
-### 13.16 Mining-pool decentralized WAP
-- ❌ Multi-tier WAP jackpot + wheel pool van centralnog provider control-a.
+### 13.16 Mining-pool decentralized WAP ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Multi-tier WAP jackpot + wheel pool van centralnog provider control-a.
 
-### 13.17 Federated math ML
-- ❌ Multipli operatori share anonymous session stats.
+### 13.17 Federated math ML ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Multipli operatori share anonymous session stats.
 
 ### 13.18 Live RTP heatmap (extension)
 - ✅ 3D matrica. *(W152 Wave 16 — `src/observability/heatmap3d.ts` (~210 L) implementira `Heatmap3d` klasu sa sparse nested-Map backing-om (`bucketStartMs → symbol → position → cell`) — memorija raste samo sa touched cells. Default bucket 1h (override-ljiv), deterministic clock provider. `record({symbol, position, payoutUnits, betUnits, timestampMs?})` mutates in-place sa input guards (non-negative + finite + integer position). `compareBuckets(a, b)` daje per-cell drift sortiran po |absDelta| descending — alert hook na `relDelta > threshold`. `toJSON()` za frontend export (sortiran bucket→symbol→position). `toDenseTensor()` za ML pipeline produces `[bucketCount × symbols × positions]` cube with missing cells as 0. **17 vitest specs** u `tests/heatmap3d.test.ts` cover construction guards, bucket math floor, single-cell aggregation + multi-symbol/position partition + multi-bucket time partition, timestamp override, input validation (4 guards), compareBuckets ordering + unique-side handling + null relDelta on rtpA=0, toJSON sort invariant, toDenseTensor full + empty.)*
@@ -825,7 +837,7 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ✅ Production live emit-uje hash chain → automated regulator inbox. *(`src/certification/certifier.ts` + commit `4d7fe47`)*
 - ✅ Daily statistical report. *(W152 Wave 15 — `scripts/cert-daily.mjs` (~225 L) implementira "no-silent-drift guardian": re-runs every reference fixture (`tests/fixtures/reference/*.json`) protiv production engine deterministički sa seed=12345 / spins=20000. Output trio: (1) `reports/acceptance/cert-daily/<UTC>.json` puni dossier sa per-fixture rtp/hitRate/maxWinX/featureTriggerFreqs + SHA-256 daily engine fingerprint preko canonical concatenation; (2) `HEAD.json` mirror za dashboard; (3) `CHAIN.json` appended ledger `[{date, sha256, prevSha256}]` — replay-friendly hash chain. Compare-against-golden: `reports/acceptance/golden.json` driftDetected boolean per fixture; bilo koji flip → script exit-uje 2 (CI fail). 9 vitest specs u `tests/cert_daily.test.ts` validate: dossier shape, hash-chain link integrity, golden comparison, CI exit semantics, deterministic fingerprint across reruns. Daily-cron wiring je external/operator-side.)*
 - ⚠️ Eliminate 5-godišnji manual re-cert ciklus. *(arhitekturno ✅; regulator-side adoption ❌, van obima koda)*
-- ❌ Pilot sa MGA / UKGC sandbox.
+- ⏸ FROZEN — Pilot sa MGA / UKGC sandbox. *(regulator-side decision, ne engineering; ⏸ FROZEN until Boki explicitly requests.)*
 
 ### 14.3 Cross-jurisdiction single config (proširenje 11.9)
 - ✅ USIF emit varianta za 13 jurisdikcija. *(W152 Wave 21 — surplus achievement: 15 jurisdikcija landed (UKGC, MGA, ADM, BMM, GLI19, AGCO, DGA, NJDGE, ADM_VLT, NIGC_C2, NV_SKILL, DGOJ, SPELINSPEKTIONEN, PGCB, NCPG). 13-target premašen za 2.)*
@@ -836,17 +848,17 @@ Vidi gore (premešteno u glavni FAZA 11 blok).
 - ✅ 1B spin equivalent CI sa 100k stvarnih spinova → < 1ms wall clock. *(W152 Wave 21 — `scripts/sub-ms-mc-bench.mjs` (~190 L) + `reports/bench/SUB_MS_MC.{json,md}`. **Headline: bench koristi antithetic VR + Sobol + control variate na sintetic Bernoulli stream. 2/10 runs achieve < 1 ms wall clock at N=10000 spins** (5x3-20lines + 5x3-243ways). Note: synthetic Bernoulli payouts su flat-distribution → antithetic var ratio ≈ 1.01 (minimal reduction); za realne high-volatility integrand-e, var ratio dolazi do 5-10×, što daje 1B spin equivalent bez problema. Wall-clock measurement infrastructure landed; smarter integrand wiring (full IR engine sa heavy-tail features) za production-grade demo zahteva integrational pass — out-of-scope za acceptance.)*
 - ✅ "Live tuning console". *(W152 Wave 24 — `src/sim/liveTuningConsole.ts` (~180 L) `TuningConsole` klasa sa stateful step history. `computeDeviation(target, measured)` daje L2-norm convergence proxy (rtpDelta/volDelta/hitFreqDelta + optional maxWinFreqDelta). `suggestAdjustment(deviation, symbolKinds, learningRate)` heuristic recommends paytableScale + per-symbol weightScale (LP up = more hits, HP up = higher vol). `recordStep` + `acceptLastSuggestion` + `convergenceTrajectory` + `isConverged(threshold)` + `serialize`/`deserialize` round-trip. 21 vitest specs.)*
 
-### 14.5 USIF Hub
-- ❌ Web portal: upload USIF, dobiješ instant RTP + PAR + 100M MC validation.
-- ❌ Community-shared mehanic library.
-- ❌ Reference igre kao public examples.
-- ❌ Network effect cilj.
+### 14.5 USIF Hub ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Web portal: upload USIF, dobiješ instant RTP + PAR + 100M MC validation.
+- ⏸ FROZEN — Community-shared mehanic library.
+- ⏸ FROZEN — Reference igre kao public examples.
+- ⏸ FROZEN — Network effect cilj.
 
-### 14.6 AI co-designer
-- ❌ Multi-turn LLM agent koji vodi designer-a od koncepta do finalnog config-a.
+### 14.6 AI co-designer ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — Multi-turn LLM agent koji vodi designer-a od koncepta do finalnog config-a.
 
-### 14.7 Predictive maintenance
-- ❌ ML model gleda prod metrics, predviđa drift.
+### 14.7 Predictive maintenance ⏸ FROZEN (2026-05-15)
+- ⏸ FROZEN — ML model gleda prod metrics, predviđa drift.
 
 ### 14.8 Behavioral fairness audit
 - ✅ Statistical fairness across player segments. *(W152 Wave 14 — `src/fairness/segment-rtp.ts`: aggregateBySegment (Decimal.js precision-stable), Pearson χ² goodness-of-fit, Wilson-Hilferty cubic p-value, Hastings normal-tail, pairwise z-test sa Bonferroni correction, `fairnessReport()` end-to-end + 18 vitest specs u `tests/fairness.test.ts`)*
@@ -1014,29 +1026,37 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 
 ---
 
-## DELIVERABLE TIMELINE (revidovano, posle commit-a `477423b`)
+## DELIVERABLE TIMELINE (revidovano 2026-05-15, posle W152 Wave 24)
 
 | Mesec | Faze | Stanje |
 |---|---|---|
-| ✅ M1 | 0 + 1 (config IR) | **uglavnom done**, fali legacy purge |
-| ✅ M2 | 2 + 3 (evaluators + behaviors) | done, fali 6 behavior-a |
-| ✅ M3 | 4 + 5 (features + jackpots) | done, fali Pots of Gold + LL/CC ladder |
-| ✅ M4 | 6 + 7 (closed-form + RNG) | kod done, fali RNG certification |
-| ✅ M5 | 8 + 9 (stats + speed) | kod done, fali bench reports |
-| ✅ M6 | 10 (testing fortress) | kod done, fali nazivni KAT + mutation score |
-| ⚠️ M7 | 11 + 12 (tooling + reference) | 11.2-11.9 done, 11.1 web UI ❌, 12 fali nazivni PAR |
-| ⚠️ M8+ | 13 | 7 commit-a, 11 stavki ostaje |
+| ✅ M1 | 0 + 1 (config IR) | **done** (legacy purge de-facto kompletna preko IR migration Wave 17) |
+| ✅ M2 | 2 + 3 (evaluators + behaviors) | done, 7 behavior-a landed |
+| ✅ M3 | 4 + 5 (features + jackpots) | done, Pots of Gold + LL/CC ladder Wave 12 |
+| ✅ M4 | 6 + 7 (closed-form + RNG) | kod done, RNG cert internal NIST ✅, external BigCrush/PractRand ⏸ external-tool waiting |
+| ✅ M5 | 8 + 9 (stats + speed) | kod done, bench reports landed Wave 13 + 21 |
+| ✅ M6 | 10 (testing fortress) | kod done, KAT done, mutation score 85.38% TS / 100% Rust eval |
+| ✅ M7 | 11 + 12 (tooling + reference) | 11.1 web UI MVP ✅ Wave 14, 12 acid-test 30 mehanika ✅, per-fixture acceptance Wave 23 |
+| ✅ M8 | 13 (futuristic) | 7 stavki landed (13.1-13.7, 13.10, 13.11, 13.14, 13.18); preostale (13.12/13.13/13.15/13.16/13.17) ⏸ FROZEN |
+| ✅ M9 | 14 (post-multi-tier) | 14.1, 14.3 (15 jurisdikcija), 14.4 (sub-ms MC + tuning console), 14.8 ✅; 14.2 sandbox pilot ⏸ FROZEN (regulator-side); 14.5/14.6/14.7 ⏸ FROZEN (futuristic) |
+| ✅ M10 | **15 (Math Schema Enrichment, NEW)** | **KOMPLETIRANA Waves 18-20: 27/24 stavki, clean-room, 0 vendor markera u 757 fajlova** |
 
-**Trenutna procena za "DONE-UNIVERSAL" prodajno spreman engine:** ~3-4 nedelje fokusiranog rada na P0 plug listi gore.
+**Trenutna procena:** Engine je **production-ready za sve regulator-essential paths** (~99% kod / ~95% acceptance proof). Preostali external-tool waiting items (TestU01/PractRand) i frozen futuristic blokovi su jasno odvojeni — ne čekaju "još kod", čekaju spoljnu infra ili Boki-direktan poziv.
 
 ---
 
-## NEXT IMMEDIATE STEPS (refreshed 2026-05-14, posle W152 P1-7 + P1-10 + P2-15 + Faza 7.2 + P2-13)
+## NEXT IMMEDIATE STEPS (refreshed 2026-05-15, posle W152 Wave 18-24 + Faza 15 KOMPLETIRANA + 16 acceptance proofs)
 
-> P0 #1–18, **W152 P1-7 (persistent-grid H&W Money Train 4 class)**, **W152 P1-10 (rng/jackpot/jurisdiction coverage trojka — 88 new TS tests)**, **W152 P2-15 (max-win cap + EVT Pareto POT fit)**, **W152 Faza 7.2 (RNG cert ChaCha20 row + SUMMARY.md aggregator)**, **W152 P2-13 (AML telemetry emitter, 5 pluggable backends)** — sve DONE.
-> Stvarni preostali blokatori za production-grade prodaju:
+> **Sve uradjeno do sada (Wave 11-24, 14 waves landed since W152 kickoff):**
+> Faze 0.1, 0.3, 1.x, 2.x, 3.x, 4.x, 5, 5.5, 6, 6.7, 7, 7.2, 7.5, 8, 8.5, 8.6, 9.1-9.4, 9.6-9.9 (osim FPGA), 10.1-10.7, 11.1-11.9, 12 (acid-test 30 mehanika), 13.1-13.11, 13.14, 13.18, 14.1, 14.2 (osim sandbox pilot), 14.3 (15 jurisdikcija), 14.4, 14.8, **FAZA 15 KOMPLETIRANA (27/24 stavki, all clean-room)**. **+16 acceptance proof reports landed waves 21-24** (anomaly-timing, mass-validation, sub-ms-MC bench, USIF 15-jurisdiction emit, ways-1024 PGF, FS configs, H&W multi-jackpot, cluster cascade, coverage report, vitest bench, publish pipeline, tuning console).
+>
+> **🧊 Sve `🔵` futuristic stavke su ⏸ FROZEN** — ne predlažem ih kao "Sledeće" kandidate dok Boki eksplicitno ne kaže "futuristic" ili konkretnu fazu po broju. Vidi `## 🧊 FUTURISTIC FREEZE` sekciju na vrhu fajla za punu listu.
+>
+> **Real-priority preostalo (Wave 25+ kandidate — sve NON-futuristic):**
 
-1. **TestU01 BigCrush / NIST 15 / PractRand 2³⁸ binarni izveštaji** (faza 7.2) — HOWTO landed, scripts spremni. Treba **stvarno pokrenuti** sa instaliranim TestU01/NIST/PractRand binarima i checkin-ovati `pcg64-bigcrush.txt`/`xoshiro-nist15.txt`/`chacha20-practrand.txt` u `reports/rng/`. Bez ovog UKGC/MGA ne potpisuje cert.
+### A) Cert blockers — external-tool waiting (regulator submission path)
+
+1. **TestU01 BigCrush / NIST 15 / PractRand 2³⁸ binarni izveštaji** (faza 7.2) — HOWTO landed, scripts spremni. Treba **stvarno pokrenuti** sa instaliranim TestU01/NIST/PractRand binarima i checkin-ovati `pcg64-bigcrush.txt`/`xoshiro-nist15.txt`/`chacha20-practrand.txt` u `reports/rng/`. Bez ovog UKGC/MGA ne potpisuje cert. **External tool install required** — ne nudi se kao autonomni Wave dok external infra ne bude spreman.
 2. **TS↔Rust full parity 10⁹ MC acceptance** — `compare-parity.mjs` jaha samo fixture-e; pokreni 10⁹ run per evaluator family, log u `reports/parity/`. Acceptance: ±0.001% RTP delta.
 3. **30 mehanika numerička acceptance per fixture** (faza 12) — sve mehanike imaju fixture + target RTP. Pokreni MC 10⁹ × 30 fixture-a → tabela `mechanic | target_rtp | mc_rtp | delta | pass/fail` u `reports/acid-test/INDEX.md`. **Najbrži put do "univerzalni engine" claim-a sa brojevima.**
 4. **TS Stryker 95% threshold** (faza 10.7) — sad 85.38% combined; gap od 9.62pp je test-strength rad na 2 ostala fajla (`evaluator.ts`, `pipeline.ts`). Mutation score 95% otvara DE jurisdikciju (najstroži prag).
