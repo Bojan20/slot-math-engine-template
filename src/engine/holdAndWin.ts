@@ -1,7 +1,7 @@
 /**
  * SLOT MATH ENGINE TEMPLATE - Hold & Win Engine
  *
- * Cash Eruption style Hold & Win feature:
+ * Generic collect-and-respin style Hold & Win feature:
  * - Triggered by configurable number of Special symbols
  * - Respins (reset on new symbol)
  * - Each symbol carries cash value or jackpot tier

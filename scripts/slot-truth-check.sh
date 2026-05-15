@@ -22,6 +22,18 @@
 
 set -uo pipefail
 
+# W152 Wave 18 QA fix — non-login subshells (CI runners, `bash scripts/...`
+# invocation, npm script context) frequently miss `~/.cargo/bin` on macOS
+# because cargo's installer only patches `.zshenv` / `.profile`. Without
+# this prefix the `measure_rust_total_tests` cargo call silently returns 0
+# and the metric drifts to a false-fail. Prepend known-good cargo dirs.
+for cargo_dir in "$HOME/.cargo/bin" /usr/local/cargo/bin /opt/cargo/bin; do
+  if [ -x "$cargo_dir/cargo" ] && [[ ":$PATH:" != *":$cargo_dir:"* ]]; then
+    PATH="$cargo_dir:$PATH"
+  fi
+done
+export PATH
+
 CI_MODE=0
 EMIT_CACHE=0
 for arg in "$@"; do
