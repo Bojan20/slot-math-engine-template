@@ -345,3 +345,55 @@ with bounded numerical error. Used in `statistics/welford.ts` and
 **Wild** — Symbol that substitutes for one or more paying symbols.
 Variants: standard, expanding, sticky, multiplier, walking / chain,
 nudge, bomb.
+
+---
+
+## RESERVED TERMS (W152 Wave 18 — Anti-Patent Housekeeping)
+
+The following identifiers are **reserved** and MUST NOT appear in:
+
+* Source code (`src/**/*.ts`, `rust-sim/src/**/*.rs`)
+* Tests (`tests/**/*.ts`, `rust-sim/tests/**/*.rs`)
+* Configuration (`*.json`, `*.yaml`, `*.toml`)
+* Documentation (`docs/**/*.md`, `README.md`)
+* Commit messages or PR descriptions
+
+They are vendor- or product-specific terms whose use risks trademark
+or trade-dress confusion. The right side of each row gives the
+engine-generic equivalent we use instead.
+
+| Reserved (NEVER use) | Engine-generic equivalent |
+|---|---|
+| `GLE` / `GLR` | `RuntimeEngine` / `GameRuntime` |
+| `IXF` / `MXF` / `CEC` | `WireProtocol` / `GameEvents` |
+| `GCM` / `GCM3` / `GCM4` | `OperatorBridge` / `RgsBridge` |
+| `TAF` | `AcceptanceHarness` |
+| `PPH` | `hitProbability` |
+| `PSD` (when used as IGT term) | `LayoutSource` (or avoid entirely) |
+| `Pattern Slider` | `paylineLadder` |
+| `Stepper` (when meant as brand-mechanic) | `mechanicalReel` / `discreteStop` |
+| `Cool Catch` / `Cleopatra` / `Wheel of Fortune` / `Fort Knox` / `MegaJackpots` / `Cash Eruption` | Generic — never name commercial games |
+| `Cash Link` (when used as brand) | `collectAndPersist` |
+| `Spaghetti rendering` | `bitmapPaylineRender` |
+| `MegaWin` / `Colossal` / `BigBass` (as brand labels) | `winTier1/2/3` or generic descriptors |
+| `@foundry/*` / `@igt/*` npm scope | our scope or no scope |
+| `gc_*` SQL prefix / `load_gc_*_data.sql` | any other prefix |
+| `200-1xxx-xxx` game ID format | UUID or semver |
+| Force-string keys (`BaseGameReelSetSelect`, `WheelBonus.wheelPointer`, `CashLink1-16`) | `scenarioForce` JSON schema |
+| `JSTAFService` / `/api/startGame` | our harness API |
+| `playadev.com` / `gsdev02` / `Reno` / `Las Vegas` / `GIT Belgrade` | NEVER mention |
+| `GameFlow FSM` (vendor term) | `spinOrchestrator` (W152 Wave 18) |
+| `Sequencer` (when meant as proprietary) | `spinOrchestrator` |
+
+CI gate: `scripts/check-reserved-terms.sh` runs on staged files in
+the pre-commit hook (`.husky/pre-commit`). Block-on-match — engineer
+must replace before commit lands.
+
+Acceptable use (whitelist in `scripts/check-reserved-terms.sh`):
+* Inside `docs/IP_REVIEW.md` source-rationale citations (educational
+  context).
+* Inside `SLOT_ENGINE_MASTER_TODO.md` planning entries that document
+  rebrand history.
+* Inside private memory (`~/.cortex/research/*.md`) — never committed.
+* Inside this glossary's reserved-terms table itself (for reference).
+* Inside legacy `docs/W152/` research bundle and `docs/research.md`.
