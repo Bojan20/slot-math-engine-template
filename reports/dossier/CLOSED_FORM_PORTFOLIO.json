@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T07:08:04.564Z",
-  "solvers_total": 31,
-  "solvers_passed": 31,
+  "generated_utc": "2026-05-16T07:17:47.561Z",
+  "solvers_total": 32,
+  "solvers_passed": 32,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 45
+      "elapsed_ms": 44
     },
     {
       "wave": 50,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 52
+      "elapsed_ms": 54
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 35
     },
     {
       "wave": 55,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 86,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 93,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 97,
@@ -211,7 +211,7 @@
       "cf": 35.25,
       "mc": 35.14041666666663,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 101,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 102,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 47
+      "elapsed_ms": 58
     },
     {
       "wave": 112,
@@ -284,6 +284,15 @@
       "mc": 37.68944,
       "ok": true,
       "elapsed_ms": 4
+    },
+    {
+      "wave": 118,
+      "solver": "Bonus Collect-N Trigger Tracker",
+      "metric": "E[T_N] spins",
+      "cf": 200,
+      "mc": 199.0234,
+      "ok": true,
+      "elapsed_ms": 7
     }
   ]
 }

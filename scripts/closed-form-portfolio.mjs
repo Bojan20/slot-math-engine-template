@@ -94,6 +94,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'stickyWildCountdownMultiplier.js'));
   const { solveMysterySymbolReveal, simulateMysterySymbolReveal } =
     await import(join(REPO_ROOT, 'dist', 'features', 'mysterySymbolReveal.js'));
+  const { solveBonusCollectN, simulateBonusCollectN } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'bonusCollectN.js'));
 
   const showcase = [];
 
@@ -612,6 +614,19 @@ async function main() {
     const mc = simulateMysterySymbolReveal(cfg, 50_000, SEED);
     const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
     showcase.push({ wave: 116, solver: 'Mystery Symbol Reveal Aggregator', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W118: Bonus Collect-N Trigger Tracker ──────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      collectProbabilityPerSpin: 0.05,
+      triggerThreshold: 10,
+    };
+    const cf = solveBonusCollectN(cfg);
+    const mc = simulateBonusCollectN(cfg, 5_000, SEED);
+    const ok = relErr(cf.expectedWaitTime, mc.observedMeanWaitTime) < 0.05;
+    showcase.push({ wave: 118, solver: 'Bonus Collect-N Trigger Tracker', metric: 'E[T_N] spins', cf: cf.expectedWaitTime, mc: mc.observedMeanWaitTime, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

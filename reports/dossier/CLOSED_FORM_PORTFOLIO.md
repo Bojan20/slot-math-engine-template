@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-16T07:08:04.564Z`
+Generated: `2026-05-16T07:17:47.561Z`
 
 ## Headline
 
-**31/31 solvers PASS** in single end-to-end runner.
+**32/32 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -44,6 +44,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 112 | Variable Reel Height Ways | E[Ways] | 8303.76563 | 8349.20310 | ✅ |
 | 114 | Sticky Wild Countdown Multiplier | E[Y] per spin | 1.10385 | 1.11608 | ✅ |
 | 116 | Mystery Symbol Reveal Aggregator | E[Y] per spin | 38.32500 | 37.68944 | ✅ |
+| 118 | Bonus Collect-N Trigger Tracker | E[T_N] spins | 200.00000 | 199.02340 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
