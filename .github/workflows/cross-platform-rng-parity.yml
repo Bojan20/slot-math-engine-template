@@ -1,0 +1,69 @@
+# Cross-Platform RNG Byte-Parity Gate — Wave 48 (Faza 7.3)
+#
+# Verifies the engine claim "same seed → same first 100,000 RNG outputs on
+# linux-x64, macos-arm64, macos-x64, AND windows-x64" by running the same
+# RNG parity script on a 4-OS matrix and confirming every backend's SHA-256
+# matches the committed golden snapshot.
+#
+# Prior gap: tests/rng_parity.test.ts asserts TS↔Rust same-OS parity but
+# did NOT capture a windows-x64 vs linux-x64 cross-OS comparison.
+# `compare-parity.mjs` (the differential analytical-RTP comparator) only
+# ran on ubuntu-latest. Auditors who asked "does Windows produce the same
+# bits?" had only an inference from "TS is pure-spec arithmetic", not a CI
+# artifact.
+#
+# What this workflow does:
+#   1. Run `scripts/cross-platform-rng-parity.mjs` on each of the 4 runners
+#   2. Each runner SHA-256-hashes 100k outputs from 5 backends (mulberry32,
+#      pcg64, xoshiro256ss, philox4x32, chacha20)
+#   3. Each runner compares hashes to reports/parity/CROSS_PLATFORM_GOLDEN.json
+#   4. If ANY runner drifts from golden → job fails → engine determinism
+#      claim broken
+#
+# Cadence: every push to main + PR + manual dispatch. Fast (~30s end-to-end
+# including npm install + tsc build on the slowest OS — usually Windows).
+
+name: cross-platform-rng-parity
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  rng-parity:
+    name: RNG byte-parity · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # linux-x64, macos-arm64, macos-x64, windows-x64 — the full claim.
+        # If any of these drifts, "cross-platform determinism" is false.
+        os: [ubuntu-latest, macos-14, macos-13, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build TS (compile RNG backends)
+        run: npm run build
+      - name: Cross-platform RNG byte-parity check
+        run: node scripts/cross-platform-rng-parity.mjs
+      - name: Upload parity report (on failure for debugging)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rng-parity-report-${{ matrix.os }}
+          path: reports/parity/CROSS_PLATFORM_RNG_PARITY.json
+          retention-days: 7

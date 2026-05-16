@@ -1,0 +1,38 @@
+{
+  "note": "Cross-platform RNG byte-parity golden snapshot. SHA-256 of first 100,000 outputs per backend at seed=12345. Bit-identical across linux-x64, macos-arm64, macos-x64, windows-x64 is the engine determinism contract. Verify on every CI run; update ONLY when intentionally changing an RNG algorithm.",
+  "generatedAtOS": {
+    "os": "darwin",
+    "arch": "arm64",
+    "nodeVersion": "v25.2.1",
+    "timestamp": "2026-05-16T01:20:56.414Z"
+  },
+  "samples": 100000,
+  "seed": 12345,
+  "backends": {
+    "mulberry32": {
+      "sha256": "e2b7d1966a544c7b454d9c1eca038ea5c0453018987db5964b780ba983069209",
+      "samples": 100000,
+      "encoder": "u32"
+    },
+    "pcg64": {
+      "sha256": "34ee2425b3d906945413e58a3a82ea1160a769eb6bbf6379ba252db54987b511",
+      "samples": 100000,
+      "encoder": "u32x2"
+    },
+    "xoshiro256ss": {
+      "sha256": "aebc5bfaffed4b964a677a98ab088089b3902cc36ec3f6be0b9c33d5d6cd0999",
+      "samples": 100000,
+      "encoder": "u32x2"
+    },
+    "philox4x32": {
+      "sha256": "fee80e7bb9ae479017d94052bf4ea0acbd2bcdfe39bedd2dcb37a99077ed0a1d",
+      "samples": 100000,
+      "encoder": "u32x2"
+    },
+    "chacha20": {
+      "sha256": "ba6ea56f906d00c862d029453f4c73bfd19fb2094485b03c9c55911ac5838369",
+      "samples": 100000,
+      "encoder": "u32x2"
+    }
+  }
+}

@@ -52,3 +52,10 @@ reports/mutation/rust/*/mutants.out/debug.log
 # Per-day timestamped dossiers + HEAD/CHAIN are operator-side cron output,
 # regenerated daily. Tracking them would commit-noise every CI run.
 reports/acceptance/cert-daily/
+
+# ─── Cross-platform RNG parity transient report (W152 Wave 48) ────────
+# CROSS_PLATFORM_RNG_PARITY.json is regenerated on every `npm run
+# cross-platform-rng-parity` run; the committed source-of-truth is
+# CROSS_PLATFORM_GOLDEN.json. Tracking the transient report would create
+# diff noise on every developer run.
+reports/parity/CROSS_PLATFORM_RNG_PARITY.json

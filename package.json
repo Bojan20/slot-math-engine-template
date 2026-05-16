@@ -56,7 +56,9 @@
     "par-samples-extra-credit": "npm run build && node scripts/par-samples-extra-credit.mjs",
     "industry-patterns": "npm run build && node scripts/industry-patterns-acceptance.mjs",
     "par-sample-kit": "node scripts/par-sample-kit-build.mjs",
-    "par-sample-kit:verify": "node scripts/par-sample-kit-acceptance.mjs"
+    "par-sample-kit:verify": "node scripts/par-sample-kit-acceptance.mjs",
+    "cross-platform-rng-parity": "npm run build && node scripts/cross-platform-rng-parity.mjs",
+    "cross-platform-rng-parity:update-golden": "npm run build && node scripts/cross-platform-rng-parity.mjs --update-golden"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
