@@ -51,3 +51,6 @@ export * from './crashMultiplier.js';
 
 // W152 Wave 58: Parallel screens aggregate distribution (Faza 12)
 export * from './parallelScreens.js';
+
+// W152 Wave 59: Class-II bingo coordinator mode (Faza 12)
+export * from './classIIBingoCoordinator.js';

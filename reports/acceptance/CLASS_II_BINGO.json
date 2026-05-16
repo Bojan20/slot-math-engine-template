@@ -1,0 +1,1521 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CLASS_II_BINGO",
+  "generated_utc": "2026-05-16T02:52:05.259Z",
+  "games_per_config": 50000,
+  "seed": 12345,
+  "tolerances": {
+    "hit_rel": 0.05,
+    "per_pattern_abs": 0.01,
+    "ey_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_50balls_5rows_all_match",
+      "description": "50 balls, 5 row patterns, all_matches",
+      "cfg": {
+        "ballPoolSize": 75,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          }
+        ],
+        "totalBallsDrawn": 50,
+        "prizeMode": "all_matches",
+        "patterns_count": 5
+      },
+      "closed_form": {
+        "hitRate": 0.5398770407352066,
+        "probAnyMatch": 0.5398770407352066,
+        "expectedPayoutPerGame": 6.805165188341318,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 1.8947714838126963
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.53652,
+        "observedMeanPayout": 6.757,
+        "observedPatternHits": {
+          "ROW_0": 0.12304,
+          "ROW_1": 0.12234,
+          "ROW_2": 0.18558,
+          "ROW_3": 0.12116,
+          "ROW_4": 0.12358
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.006218157991373304,
+        "ey_rel": 0.007077739776814774,
+        "max_pattern_abs": 0.003897148381269644
+      },
+      "pass": true,
+      "elapsed_ms": 183
+    },
+    {
+      "name": "B_50balls_12patterns_all",
+      "description": "50 balls, 12 standard patterns (rows+cols+diags), all_matches",
+      "cfg": {
+        "ballPoolSize": 75,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_B",
+            "requiredNumbers": [
+              3,
+              7,
+              12,
+              14,
+              5
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_I",
+            "requiredNumbers": [
+              16,
+              19,
+              22,
+              25,
+              28
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_N",
+            "requiredNumbers": [
+              31,
+              35,
+              42,
+              45
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_G",
+            "requiredNumbers": [
+              46,
+              49,
+              53,
+              55,
+              58
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_O",
+            "requiredNumbers": [
+              61,
+              65,
+              67,
+              71,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "requiredNumbers": [
+              3,
+              19,
+              55,
+              73
+            ],
+            "payoutX": 20
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "requiredNumbers": [
+              61,
+              49,
+              25,
+              5
+            ],
+            "payoutX": 20
+          }
+        ],
+        "totalBallsDrawn": 50,
+        "prizeMode": "all_matches",
+        "patterns_count": 12
+      },
+      "closed_form": {
+        "hitRate": 0.8143919120911357,
+        "probAnyMatch": 0.8143919120911357,
+        "expectedPayoutPerGame": 21.189416311933424,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 1.8947714838126963
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_B",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_I",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_N",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 1.8947714838126963
+          },
+          {
+            "id": "COL_G",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_O",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 3.7895429676253927
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 3.7895429676253927
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.81576,
+        "observedMeanPayout": 21.2718,
+        "observedPatternHits": {
+          "ROW_0": 0.12304,
+          "ROW_1": 0.12234,
+          "ROW_2": 0.18558,
+          "ROW_3": 0.12116,
+          "ROW_4": 0.12358,
+          "COL_B": 0.12084,
+          "COL_I": 0.12402,
+          "COL_N": 0.18932,
+          "COL_G": 0.12446,
+          "COL_O": 0.12424,
+          "DIAG_TL_BR": 0.1922,
+          "DIAG_TR_BL": 0.1921
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.0016798888699071917,
+        "ey_rel": 0.003887964012495132,
+        "max_pattern_abs": 0.003897148381269644
+      },
+      "pass": true,
+      "elapsed_ms": 215
+    },
+    {
+      "name": "C_30balls_rare_hits",
+      "description": "30 balls (rare hits regime), 12 patterns, all_matches",
+      "cfg": {
+        "ballPoolSize": 75,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_B",
+            "requiredNumbers": [
+              3,
+              7,
+              12,
+              14,
+              5
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_I",
+            "requiredNumbers": [
+              16,
+              19,
+              22,
+              25,
+              28
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_N",
+            "requiredNumbers": [
+              31,
+              35,
+              42,
+              45
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_G",
+            "requiredNumbers": [
+              46,
+              49,
+              53,
+              55,
+              58
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_O",
+            "requiredNumbers": [
+              61,
+              65,
+              67,
+              71,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "requiredNumbers": [
+              3,
+              19,
+              55,
+              73
+            ],
+            "payoutX": 20
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "requiredNumbers": [
+              61,
+              49,
+              25,
+              5
+            ],
+            "payoutX": 20
+          }
+        ],
+        "totalBallsDrawn": 30,
+        "prizeMode": "all_matches",
+        "patterns_count": 12
+      },
+      "closed_form": {
+        "hitRate": 0.14353946948796392,
+        "probAnyMatch": 0.14353946948796392,
+        "expectedPayoutPerGame": 2.0133701133123614,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.022547204738986998,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 0.22547204738986998
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "COL_B",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "COL_I",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "COL_N",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.022547204738986998,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 0.22547204738986998
+          },
+          {
+            "id": "COL_G",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "COL_O",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.008256722862164272,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 0.08256722862164272
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.022547204738986998,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 0.45094409477973996
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.022547204738986998,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 0.45094409477973996
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.14192,
+        "observedMeanPayout": 1.988,
+        "observedPatternHits": {
+          "ROW_0": 0.00806,
+          "ROW_1": 0.00742,
+          "ROW_2": 0.02246,
+          "ROW_3": 0.0083,
+          "ROW_4": 0.00798,
+          "COL_B": 0.00824,
+          "COL_I": 0.00848,
+          "COL_N": 0.02304,
+          "COL_G": 0.00784,
+          "COL_O": 0.00786,
+          "DIAG_TL_BR": 0.02198,
+          "DIAG_TR_BL": 0.02258
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.011282398449297093,
+        "ey_rel": 0.012600819464148556,
+        "max_pattern_abs": 0.0008367228621642712
+      },
+      "pass": true,
+      "elapsed_ms": 102
+    },
+    {
+      "name": "D_60balls_dense_hits",
+      "description": "60 balls (most patterns hit), 12 patterns, all_matches",
+      "cfg": {
+        "ballPoolSize": 75,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_B",
+            "requiredNumbers": [
+              3,
+              7,
+              12,
+              14,
+              5
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_I",
+            "requiredNumbers": [
+              16,
+              19,
+              22,
+              25,
+              28
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_N",
+            "requiredNumbers": [
+              31,
+              35,
+              42,
+              45
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_G",
+            "requiredNumbers": [
+              46,
+              49,
+              53,
+              55,
+              58
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_O",
+            "requiredNumbers": [
+              61,
+              65,
+              67,
+              71,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "requiredNumbers": [
+              3,
+              19,
+              55,
+              73
+            ],
+            "payoutX": 20
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "requiredNumbers": [
+              61,
+              49,
+              25,
+              5
+            ],
+            "payoutX": 20
+          }
+        ],
+        "totalBallsDrawn": 60,
+        "prizeMode": "all_matches",
+        "patterns_count": 12
+      },
+      "closed_form": {
+        "hitRate": 0.9859263939500834,
+        "probAnyMatch": 0.9859263939500834,
+        "expectedPayoutPerGame": 49.38679640474249,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.40119708749848726,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 4.011970874984873
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "COL_B",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "COL_I",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "COL_N",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.40119708749848726,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 4.011970874984873
+          },
+          {
+            "id": "COL_G",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "COL_O",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.31643713943541574,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 3.1643713943541574
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.40119708749848726,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 8.023941749969746
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.40119708749848726,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 8.023941749969746
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.98618,
+        "observedMeanPayout": 49.4076,
+        "observedPatternHits": {
+          "ROW_0": 0.31574,
+          "ROW_1": 0.31708,
+          "ROW_2": 0.39872,
+          "ROW_3": 0.3135,
+          "ROW_4": 0.31642,
+          "COL_B": 0.31482,
+          "COL_I": 0.31738,
+          "COL_N": 0.4038,
+          "COL_G": 0.31702,
+          "COL_O": 0.3168,
+          "DIAG_TL_BR": 0.40244,
+          "DIAG_TR_BL": 0.4023
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.00025722614940905267,
+        "ey_rel": 0.00042123799824995154,
+        "max_pattern_abs": 0.0029371394354157365
+      },
+      "pass": true,
+      "elapsed_ms": 184
+    },
+    {
+      "name": "E_90ball_pool",
+      "description": "90-ball pool (90 numbers, draw 60), 5 row patterns, all_matches",
+      "cfg": {
+        "ballPoolSize": 90,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73,
+          76,
+          78,
+          80,
+          82,
+          84,
+          86,
+          88,
+          89
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          }
+        ],
+        "totalBallsDrawn": 60,
+        "prizeMode": "all_matches",
+        "patterns_count": 5
+      },
+      "closed_form": {
+        "hitRate": 0.5406294095894856,
+        "probAnyMatch": 0.5406294095894856,
+        "expectedPayoutPerGame": 6.879152116936466,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12426855437046591,
+            "expectedBallsToFirstHit": 15.166666666666666,
+            "expectedPayoutContribution": 1.2426855437046591
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12426855437046591,
+            "expectedBallsToFirstHit": 15.166666666666666,
+            "expectedPayoutContribution": 1.2426855437046591
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.19084099421178305,
+            "expectedBallsToFirstHit": 18.2,
+            "expectedPayoutContribution": 1.9084099421178304
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12426855437046591,
+            "expectedBallsToFirstHit": 15.166666666666666,
+            "expectedPayoutContribution": 1.2426855437046591
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12426855437046591,
+            "expectedBallsToFirstHit": 15.166666666666666,
+            "expectedPayoutContribution": 1.2426855437046591
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.53946,
+        "observedMeanPayout": 6.8814,
+        "observedPatternHits": {
+          "ROW_0": 0.12434,
+          "ROW_1": 0.12374,
+          "ROW_2": 0.1905,
+          "ROW_3": 0.12396,
+          "ROW_4": 0.1256
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.0021630521180368086,
+        "ey_rel": 0.00032676745990246035,
+        "max_pattern_abs": 0.0013314456295340782
+      },
+      "pass": true,
+      "elapsed_ms": 226
+    },
+    {
+      "name": "F_50balls_highest_match",
+      "description": "50 balls, 12 patterns, highest_match (only top-payout matched pattern pays)",
+      "cfg": {
+        "ballPoolSize": 75,
+        "cardNumbers": [
+          3,
+          7,
+          12,
+          14,
+          5,
+          16,
+          19,
+          22,
+          25,
+          28,
+          31,
+          35,
+          42,
+          45,
+          46,
+          49,
+          53,
+          55,
+          58,
+          61,
+          65,
+          67,
+          71,
+          73
+        ],
+        "patterns": [
+          {
+            "id": "ROW_0",
+            "requiredNumbers": [
+              3,
+              16,
+              31,
+              46,
+              61
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_1",
+            "requiredNumbers": [
+              7,
+              19,
+              35,
+              49,
+              65
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_2",
+            "requiredNumbers": [
+              12,
+              22,
+              53,
+              67
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_3",
+            "requiredNumbers": [
+              14,
+              25,
+              42,
+              55,
+              71
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "ROW_4",
+            "requiredNumbers": [
+              5,
+              28,
+              45,
+              58,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_B",
+            "requiredNumbers": [
+              3,
+              7,
+              12,
+              14,
+              5
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_I",
+            "requiredNumbers": [
+              16,
+              19,
+              22,
+              25,
+              28
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_N",
+            "requiredNumbers": [
+              31,
+              35,
+              42,
+              45
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_G",
+            "requiredNumbers": [
+              46,
+              49,
+              53,
+              55,
+              58
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "COL_O",
+            "requiredNumbers": [
+              61,
+              65,
+              67,
+              71,
+              73
+            ],
+            "payoutX": 10
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "requiredNumbers": [
+              3,
+              19,
+              55,
+              73
+            ],
+            "payoutX": 20
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "requiredNumbers": [
+              61,
+              49,
+              25,
+              5
+            ],
+            "payoutX": 20
+          }
+        ],
+        "totalBallsDrawn": 50,
+        "prizeMode": "highest_match",
+        "patterns_count": 12
+      },
+      "closed_form": {
+        "hitRate": 0.8143919120911357,
+        "probAnyMatch": 0.8143919120911357,
+        "expectedPayoutPerGame": 11.916934148682863,
+        "patternResults": [
+          {
+            "id": "ROW_0",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_1",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_2",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 1.8947714838126963
+          },
+          {
+            "id": "ROW_3",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "ROW_4",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_B",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_I",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_N",
+            "patternSize": 4,
+            "payoutX": 10,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 1.8947714838126963
+          },
+          {
+            "id": "COL_G",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "COL_O",
+            "patternSize": 5,
+            "payoutX": 10,
+            "hitProbability": 0.12275984261321554,
+            "expectedBallsToFirstHit": 12.666666666666666,
+            "expectedPayoutContribution": 1.2275984261321553
+          },
+          {
+            "id": "DIAG_TL_BR",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 3.7895429676253927
+          },
+          {
+            "id": "DIAG_TR_BL",
+            "patternSize": 4,
+            "payoutX": 20,
+            "hitProbability": 0.18947714838126964,
+            "expectedBallsToFirstHit": 15.2,
+            "expectedPayoutContribution": 3.7895429676253927
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedHitRate": 0.81576,
+        "observedMeanPayout": 11.665,
+        "observedPatternHits": {
+          "ROW_0": 0.12304,
+          "ROW_1": 0.12234,
+          "ROW_2": 0.18558,
+          "ROW_3": 0.12116,
+          "ROW_4": 0.12358,
+          "COL_B": 0.12084,
+          "COL_I": 0.12402,
+          "COL_N": 0.18932,
+          "COL_G": 0.12446,
+          "COL_O": 0.12424,
+          "DIAG_TL_BR": 0.1922,
+          "DIAG_TR_BL": 0.1921
+        },
+        "games": 50000
+      },
+      "checks": {
+        "hit_rel": 0.0016798888699071917,
+        "ey_rel": 0.021140852633704372,
+        "max_pattern_abs": 0.003897148381269644
+      },
+      "pass": true,
+      "elapsed_ms": 212
+    }
+  ]
+}
