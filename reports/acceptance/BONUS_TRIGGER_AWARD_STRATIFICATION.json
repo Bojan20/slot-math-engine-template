@@ -1,0 +1,365 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BONUS_TRIGGER_AWARD_STRATIFICATION",
+  "generated_utc": "2026-05-16T11:29:02.330Z",
+  "spins_per_config": 300000,
+  "seed": 3405644114,
+  "tolerances": {
+    "trigger_abs": 0.01,
+    "award_rel": 0.1,
+    "tier_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_sweet_bonanza_3_4_5",
+      "description": "Pragmatic Sweet Bonanza family: 3/4/5 = 10/15/20 FS, q=0.13",
+      "cfg": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.13,
+        "minScattersForTrigger": 3,
+        "awardTiers": [
+          {
+            "scatterCount": 3,
+            "freeSpinsAward": 10
+          },
+          {
+            "scatterCount": 4,
+            "freeSpinsAward": 15
+          },
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 20
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.13,
+        "minScattersForTrigger": 3,
+        "probTriggerPerSpin": 0.017908625800000005,
+        "oneInNTriggerFrequency": 55.83901362213955,
+        "expectedAwardGivenTrigger": 10.367605564688274,
+        "varianceAwardGivenTrigger": 1.8065571466756154,
+        "expectedFreeSpinsAwardedPerSpin": 0.18566956850000005,
+        "probTierBreakdownConditional": [
+          0.9285521505508256,
+          0.06937458596069386,
+          0.002073263488480506
+        ],
+        "probMaxScatterTier": 0.002073263488480506
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.017803333333333334,
+        "observedMeanScattersPerSpin": 0.65042,
+        "observedMeanAwardGivenTrigger": 10.35948324283842,
+        "observedMeanFreeSpinsAwardedPerSpin": 0.18443333333333334,
+        "observedTierFractions": [
+          0.9299756599887662,
+          0.06815203145478375,
+          0.001872308556450103
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.00010529246666667047,
+        "award_rel": 0.00665825410515084,
+        "max_tier_abs": 0.0014235094379405622
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "B_netent_vikings_3_4_5_high_top",
+      "description": "NetEnt Vikings 3/4/5 sa premium 5-scatter (21 FS), q=0.10",
+      "cfg": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.1,
+        "minScattersForTrigger": 3,
+        "awardTiers": [
+          {
+            "scatterCount": 3,
+            "freeSpinsAward": 7
+          },
+          {
+            "scatterCount": 4,
+            "freeSpinsAward": 11
+          },
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 21
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.1,
+        "minScattersForTrigger": 3,
+        "probTriggerPerSpin": 0.008560000000000002,
+        "oneInNTriggerFrequency": 116.82242990654203,
+        "expectedAwardGivenTrigger": 7.2266355140186915,
+        "varianceAwardGivenTrigger": 1.0187298017294069,
+        "expectedFreeSpinsAwardedPerSpin": 0.06186000000000001,
+        "probTierBreakdownConditional": [
+          0.9462616822429907,
+          0.052570093457943924,
+          0.0011682242990654207
+        ],
+        "probMaxScatterTier": 0.0011682242990654207
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.008286666666666666,
+        "observedMeanScattersPerSpin": 0.49967666666666666,
+        "observedMeanAwardGivenTrigger": 7.2349155269509255,
+        "observedMeanFreeSpinsAwardedPerSpin": 0.05995333333333333,
+        "observedTierFractions": [
+          0.9432823813354787,
+          0.055913113435237326,
+          0.0008045052292839903
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.0002733333333333355,
+        "award_rel": 0.03082228688436277,
+        "max_tier_abs": 0.0033430199772934016
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "C_microgaming_mega_moolah_4_scatter_only",
+      "description": "Microgaming Mega Moolah-style: 4-scatter trigger only, q=0.12",
+      "cfg": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.12,
+        "minScattersForTrigger": 4,
+        "awardTiers": [
+          {
+            "scatterCount": 4,
+            "freeSpinsAward": 25
+          },
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 50
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.12,
+        "minScattersForTrigger": 4,
+        "probTriggerPerSpin": 0.0009372671999999998,
+        "oneInNTriggerFrequency": 1066.9316071233477,
+        "expectedAwardGivenTrigger": 25.66371681415929,
+        "varianceAwardGivenTrigger": 16.152400344584635,
+        "expectedFreeSpinsAwardedPerSpin": 0.024053759999999997,
+        "probTierBreakdownConditional": [
+          0.9734513274336283,
+          0.02654867256637168
+        ],
+        "probMaxScatterTier": 0.02654867256637168
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.00088,
+        "observedMeanScattersPerSpin": 0.60036,
+        "observedMeanAwardGivenTrigger": 25.568181818181817,
+        "observedMeanFreeSpinsAwardedPerSpin": 0.0225,
+        "observedTierFractions": [
+          0.9772727272727273,
+          0.022727272727272728
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.0000572671999999998,
+        "award_rel": 0.06459530651340988,
+        "max_tier_abs": 0.0038213998390990156
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "D_btg_megaways_6reel_3_4_5_6",
+      "description": "BTG Megaways 6-reel: 3/4/5/6 → 10/15/20/30 FS, q=0.10",
+      "cfg": {
+        "reelCount": 6,
+        "scatterProbabilityPerReel": 0.1,
+        "minScattersForTrigger": 3,
+        "awardTiers": [
+          {
+            "scatterCount": 3,
+            "freeSpinsAward": 10
+          },
+          {
+            "scatterCount": 4,
+            "freeSpinsAward": 15
+          },
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 20
+          },
+          {
+            "scatterCount": 6,
+            "freeSpinsAward": 30
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 6,
+        "scatterProbabilityPerReel": 0.1,
+        "minScattersForTrigger": 3,
+        "probTriggerPerSpin": 0.015850000000000003,
+        "oneInNTriggerFrequency": 63.09148264984226,
+        "expectedAwardGivenTrigger": 10.418611987381704,
+        "varianceAwardGivenTrigger": 2.1070983888783985,
+        "expectedFreeSpinsAwardedPerSpin": 0.16513500000000003,
+        "probTierBreakdownConditional": [
+          0.9198738170347004,
+          0.07665615141955837,
+          0.003406940063091483,
+          0.00006309148264984229
+        ],
+        "probMaxScatterTier": 0.00006309148264984229
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.01593,
+        "observedMeanScattersPerSpin": 0.6000066666666667,
+        "observedMeanAwardGivenTrigger": 10.417451349654739,
+        "observedMeanFreeSpinsAwardedPerSpin": 0.16595,
+        "observedTierFractions": [
+          0.9202762084118016,
+          0.07595731324544884,
+          0.003766478342749529,
+          0
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.00007999999999999674,
+        "award_rel": 0.004935355920912917,
+        "max_tier_abs": 0.0006988381741095256
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "E_corner_5_scatter_only_rare",
+      "description": "Corner: only 5-scatter triggers (rarest), max FS=100",
+      "cfg": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.15,
+        "minScattersForTrigger": 5,
+        "awardTiers": [
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 100
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.15,
+        "minScattersForTrigger": 5,
+        "probTriggerPerSpin": 0.00007593749999999998,
+        "oneInNTriggerFrequency": 13168.724279835395,
+        "expectedAwardGivenTrigger": 100,
+        "varianceAwardGivenTrigger": 0,
+        "expectedFreeSpinsAwardedPerSpin": 0.007593749999999998,
+        "probTierBreakdownConditional": [
+          1
+        ],
+        "probMaxScatterTier": 1
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.00007333333333333333,
+        "observedMeanScattersPerSpin": 0.75026,
+        "observedMeanAwardGivenTrigger": 100,
+        "observedMeanFreeSpinsAwardedPerSpin": 0.007333333333333333,
+        "observedTierFractions": [
+          1
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.000002604166666666651,
+        "award_rel": 0.0342935528120711,
+        "max_tier_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "F_corner_1_scatter_almost_always_triggers",
+      "description": "Corner: 1-scatter triggers (high-frequency low award)",
+      "cfg": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.2,
+        "minScattersForTrigger": 1,
+        "awardTiers": [
+          {
+            "scatterCount": 1,
+            "freeSpinsAward": 1
+          },
+          {
+            "scatterCount": 2,
+            "freeSpinsAward": 2
+          },
+          {
+            "scatterCount": 3,
+            "freeSpinsAward": 5
+          },
+          {
+            "scatterCount": 4,
+            "freeSpinsAward": 10
+          },
+          {
+            "scatterCount": 5,
+            "freeSpinsAward": 30
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "scatterProbabilityPerReel": 0.2,
+        "minScattersForTrigger": 1,
+        "probTriggerPerSpin": 0.6723200000000001,
+        "oneInNTriggerFrequency": 1.4873869585911468,
+        "expectedAwardGivenTrigger": 1.7087101380295102,
+        "varianceAwardGivenTrigger": 2.192161163481227,
+        "expectedFreeSpinsAwardedPerSpin": 1.1488000000000005,
+        "probTierBreakdownConditional": [
+          0.6092336982389338,
+          0.304616849119467,
+          0.07615421227986675,
+          0.009519276534983342,
+          0.0004759638267491671
+        ],
+        "probMaxScatterTier": 0.0004759638267491671
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedTriggerFraction": 0.67321,
+        "observedMeanScattersPerSpin": 1.00061,
+        "observedMeanAwardGivenTrigger": 1.7077979629932216,
+        "observedMeanFreeSpinsAwardedPerSpin": 1.1497066666666667,
+        "observedTierFractions": [
+          0.6103890316543129,
+          0.3035357961606829,
+          0.07588518689066809,
+          0.00973940771329402,
+          0.00045057758104207206
+        ]
+      },
+      "checks": {
+        "trigger_abs": 0.0008899999999998354,
+        "award_rel": 0.000789229340760939,
+        "max_tier_abs": 0.0011553334153791006
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    }
+  ]
+}

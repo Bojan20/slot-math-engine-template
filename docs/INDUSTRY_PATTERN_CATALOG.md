@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.33
+# Industry Pattern Catalog v2.34
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -50,6 +50,7 @@
 > - v2.31 (Wave 147) — adds 1 cascade meter charge-up trigger kernel landed in Wave 146/147 (Play'n GO Reactoonz Quantum Leap / Hacksaw Stack 'Em / Push Aztec Bonanza / Yggdrasil Vault of Anubis / NetEnt Wildbeast charge meter sa F = ⌊L/T⌋ ~ Geometric(1-p^T))
 > - v2.32 (Wave 149) — adds 1 max win cap truncation analyzer kernel landed in Wave 148/149 (UNIVERSALNI regulatory disclosure: Pragmatic 5000x / Hacksaw 7500x / Nolimit City 25000x / NetEnt 10000x / Stake.com 5000x / Push 10000-15000x sa RTP loss + 1-in-N cap-hit frequency + E[overflow | cap-hit])
 > - v2.33 (Wave 151) — adds 1 voltage/XP meter multi-tier reward levels kernel landed in Wave 150/151 (Hacksaw Stack 'Em / Push Wild Swarm / NetEnt Charged / Yggdrasil multi-step charge / Inspired XP bar K-tier extension sa highest-only + cumulative reward modes)
+> - v2.34 (Wave 153) — adds 1 bonus trigger award tier stratification kernel landed in Wave 152/153 (STANDARD industry: Pragmatic Sweet Bonanza 3/4/5 = 10/15/20 FS / NetEnt Vikings / Hacksaw RIP City / Microgaming Mega Moolah / BTG Megaways 6-reel scatter-Binomial trigger sa multi-tier FS award + stratification)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -528,8 +529,23 @@ upgrades no tier rewards), W50 (stationary steady-state).
 |----|---------|-------------|---------------|------------------|
 | P-067 | **Voltage/XP Meter Multi-Tier Reward Levels** | L ~ Geometric(1−p); K tier thresholds T_1<T_2<...<T_K sa rewards R_k; **highest tier reached** H = max{k: L ≥ T_k}; **`P(L ≥ T_k) = p^{T_k}`** strictly decreasing; **`P(H = k) = p^{T_k} − p^{T_{k+1}}`** difference of geometric tails; **MODE 1 highest-only**: E[R] = Σ_k R_k·(p^{T_k}−p^{T_{k+1}}) = telescoping R_1·p^{T_1} + Σ_{k≥2}(R_k−R_{k-1})·p^{T_k}; **MODE 2 cumulative**: E[R] = Σ_k R_k·p^{T_k} (direct sum); E[R²] sa cross-terms +2·Σ_{i<j} R_i·R_j·p^{T_j} jer I(L≥T_i)·I(L≥T_j) = I(L≥T_j) | `src/features/voltageMeterMultiTier.ts` | 36 vitest specs (Wave 150) + 6 PAR-style configs × 300K spins (Wave 151); portfolio entry W150 |
 
+## Pattern Catalog v2.34 — Bonus Trigger Award Tier Stratification Kernel (Wave 152/153)
+
+This pattern targets the **STANDARD industry "scatter-Binomial trigger
+sa multi-tier FS award" family** — Pragmatic Sweet Bonanza family (3 =
+10 FS, 4 = 15 FS, 5 = 20 FS), NetEnt Vikings (variable FS by scatter),
+Hacksaw RIP City scatter tiers, IGT Cleopatra family, Microgaming Mega
+Moolah (4-scatter only → 25 FS), BTG Megaways (3/4/5/6 → 10/15/20/30 FS),
+Push Gaming Razor Shark. Distinct from W110 (wait time), W118 (collect-N
+threshold), W84 (FS retrigger during), W130 (paid mode), W127 (Bayesian
+per-reel reveal).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-068 | **Bonus Trigger Award Tier Stratification** | S ~ Binomial(N, q); **`P(S = s) = C(N, s)·q^s·(1−q)^(N−s)`**; **`P(trigger) = Σ_{s≥S_min} P(S=s)`**; conditional **`P(S=s \| trigger) = P(S=s) / P(trigger)`**; **`E[K \| trigger] = Σ_{s≥S_min} K(s)·P(S=s\|trigger)`**; Var[K \| trig] = E[K²\|trig] − E[K\|trig]²; **`E[FS per spin] = P(trig)·E[K\|trig] = Σ K(s)·P(S=s)`** (unconditional); stratification metrics probTierBreakdownConditional + probMaxScatterTier = P(S=N\|trig); regulator "1 in X" form oneInNTriggerFrequency = 1/P(trig) | `src/features/bonusTriggerAwardStratification.ts` | 44 vitest specs (Wave 152) + 6 PAR-style configs × 300K spins (Wave 153); portfolio entry W152 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 47 P-021..P-067 kernels in ~10 seconds and emits unified report
+all 48 P-021..P-068 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

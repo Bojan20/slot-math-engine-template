@@ -236,6 +236,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 150 Voltage/XP Meter Multi-Tier (W152 Wave 151)
   { kind: 'reports/acceptance', src: 'reports/acceptance/VOLTAGE_METER_MULTI_TIER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/VOLTAGE_METER_MULTI_TIER.md' },
+  // REPORTS — Wave 152 Bonus Trigger Award Stratification (W152 Wave 153)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_TRIGGER_AWARD_STRATIFICATION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_TRIGGER_AWARD_STRATIFICATION.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
