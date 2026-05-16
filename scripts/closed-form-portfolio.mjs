@@ -120,6 +120,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'symbolMultiplierReelStop.js'));
   const { solveTrailBonusTracker, simulateTrailBonusTracker } =
     await import(join(REPO_ROOT, 'dist', 'features', 'trailBonusTracker.js'));
+  const { solveCascadeMeterChargeUp, simulateCascadeMeterChargeUp } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMeterChargeUp.js'));
 
   const showcase = [];
 
@@ -909,6 +911,27 @@ async function main() {
       Math.max(cf.expectedTotalRewardX, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 144, solver: 'Trail Bonus Progression', metric: 'E[reward]/episode', cf: cf.expectedTotalRewardX, mc: mc.observedMeanTotalRewardX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W146: Cascade Meter Charge-Up Trigger ──────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      cascadeContinuationProbability: 0.5,
+      meterThreshold: 5,
+      fireRewardX: 50,
+      winValuePmf: [
+        { value: 1,  probability: 0.6 },
+        { value: 3,  probability: 0.3 },
+        { value: 10, probability: 0.1 },
+      ],
+    };
+    const cf = solveCascadeMeterChargeUp(cfg);
+    const mc = simulateCascadeMeterChargeUp(cfg, 300_000, SEED);
+    const rel = Math.abs(cf.expectedFiresPerSpin - mc.observedMeanFiresPerSpin) /
+      Math.max(cf.expectedFiresPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 146, solver: 'Cascade Meter Charge-Up Trigger', metric: 'E[F] per spin', cf: cf.expectedFiresPerSpin, mc: mc.observedMeanFiresPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

@@ -153,3 +153,6 @@ export * from './symbolMultiplierReelStop.js';
 
 // W152 Wave 144: Trail/Board Bonus Progression Tracker (Faza 12 ext, post-W100)
 export * from './trailBonusTracker.js';
+
+// W152 Wave 146: Cascade Meter Charge-Up Trigger (Faza 12 ext, post-W100)
+export * from './cascadeMeterChargeUp.js';
