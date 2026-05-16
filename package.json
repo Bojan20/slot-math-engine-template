@@ -75,6 +75,7 @@
     "trail-bonus-tracker-acceptance": "npm run build && node scripts/trail-bonus-tracker-acceptance.mjs",
     "cascade-meter-charge-up-acceptance": "npm run build && node scripts/cascade-meter-charge-up-acceptance.mjs",
     "max-win-cap-truncation-acceptance": "npm run build && node scripts/max-win-cap-truncation-acceptance.mjs",
+    "voltage-meter-multi-tier-acceptance": "npm run build && node scripts/voltage-meter-multi-tier-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

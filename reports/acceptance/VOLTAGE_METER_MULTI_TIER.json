@@ -1,0 +1,381 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "VOLTAGE_METER_MULTI_TIER",
+  "generated_utc": "2026-05-16T11:18:46.037Z",
+  "spins_per_config": 300000,
+  "seed": 3405644112,
+  "tolerances": {
+    "reward_rel": 0.06,
+    "no_tier_abs": 0.01,
+    "hit_abs": 0.005
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_hacksaw_stack_em_3tier_cumulative",
+      "description": "Hacksaw Stack 'Em: 3-tier cumulative, p=0.55",
+      "cfg": {
+        "cascadeContinuationProbability": 0.55,
+        "tiers": [
+          {
+            "threshold": 3,
+            "rewardX": 5
+          },
+          {
+            "threshold": 6,
+            "rewardX": 20
+          },
+          {
+            "threshold": 10,
+            "rewardX": 100
+          }
+        ],
+        "rewardMode": "cumulative"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.55,
+        "rewardMode": "cumulative",
+        "tierCount": 3,
+        "perTierHitProbability": [
+          0.16637500000000005,
+          0.027680640625000013,
+          0.0025329516211914085
+        ],
+        "perTierExactHighestProbability": [
+          0.13869435937500005,
+          0.025147689003808604,
+          0.0025329516211914085
+        ],
+        "probNoTierReached": 0.833625,
+        "expectedRewardPerSpin": 1.6387829746191414,
+        "varianceRewardPerSpin": 56.07642405496957
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 1.64225,
+        "observedPerTierHitFraction": [
+          0.16587666666666667,
+          0.027843333333333335,
+          0.00256
+        ],
+        "observedPerTierExactHighestFraction": [
+          0.13803333333333334,
+          0.025283333333333335,
+          0.00256
+        ],
+        "observedNoTierReachedFraction": 0.8341233333333333
+      },
+      "checks": {
+        "reward_rel": 0.0021156098364180182,
+        "no_tier_abs": 0.0004983333333333784,
+        "max_hit_abs": 0.0004983333333333784
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "B_push_wild_swarm_4tier_highest_only",
+      "description": "Push Wild Swarm: 4-tier highest-only, p=0.5",
+      "cfg": {
+        "cascadeContinuationProbability": 0.5,
+        "tiers": [
+          {
+            "threshold": 2,
+            "rewardX": 10
+          },
+          {
+            "threshold": 5,
+            "rewardX": 50
+          },
+          {
+            "threshold": 10,
+            "rewardX": 250
+          },
+          {
+            "threshold": 15,
+            "rewardX": 1000
+          }
+        ],
+        "rewardMode": "highest-only"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.5,
+        "rewardMode": "highest-only",
+        "tierCount": 4,
+        "perTierHitProbability": [
+          0.25,
+          0.03125,
+          0.0009765625,
+          0.000030517578125
+        ],
+        "perTierExactHighestProbability": [
+          0.21875,
+          0.0302734375,
+          0.000946044921875,
+          0.000030517578125
+        ],
+        "probNoTierReached": 0.75,
+        "expectedRewardPerSpin": 3.96820068359375,
+        "varianceRewardPerSpin": 171.4573628269136
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 3.9648666666666665,
+        "observedPerTierHitFraction": [
+          0.25004,
+          0.031036666666666667,
+          0.00099,
+          0.000033333333333333335
+        ],
+        "observedPerTierExactHighestFraction": [
+          0.21900333333333333,
+          0.030046666666666666,
+          0.0009566666666666666,
+          0.000033333333333333335
+        ],
+        "observedNoTierReachedFraction": 0.74996
+      },
+      "checks": {
+        "reward_rel": 0.0008401835473865327,
+        "no_tier_abs": 0.000040000000000040004,
+        "max_hit_abs": 0.00021333333333333274
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "C_netent_charged_5tier_deep_cumulative",
+      "description": "NetEnt Charged 5-tier deep cumulative, p=0.6",
+      "cfg": {
+        "cascadeContinuationProbability": 0.6,
+        "tiers": [
+          {
+            "threshold": 2,
+            "rewardX": 1
+          },
+          {
+            "threshold": 5,
+            "rewardX": 5
+          },
+          {
+            "threshold": 10,
+            "rewardX": 25
+          },
+          {
+            "threshold": 15,
+            "rewardX": 100
+          },
+          {
+            "threshold": 25,
+            "rewardX": 1000
+          }
+        ],
+        "rewardMode": "cumulative"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.6,
+        "rewardMode": "cumulative",
+        "tierCount": 5,
+        "perTierHitProbability": [
+          0.36,
+          0.07775999999999998,
+          0.006046617599999997,
+          0.00047018498457599973,
+          0.0000028430288029929676
+        ],
+        "perTierExactHighestProbability": [
+          0.28224,
+          0.07171338239999998,
+          0.0055764326154239974,
+          0.00046734195577300677,
+          0.0000028430288029929676
+        ],
+        "probNoTierReached": 0.64,
+        "expectedRewardPerSpin": 0.9498269672605928,
+        "varianceRewardPerSpin": 18.977449111772863
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 0.95913,
+        "observedPerTierHitFraction": [
+          0.3604966666666667,
+          0.07772666666666667,
+          0.00616,
+          0.00046,
+          0.00001
+        ],
+        "observedPerTierExactHighestFraction": [
+          0.28277,
+          0.07156666666666667,
+          0.0057,
+          0.00045,
+          0.00001
+        ],
+        "observedNoTierReachedFraction": 0.6395033333333333
+      },
+      "checks": {
+        "reward_rel": 0.009794449999917599,
+        "no_tier_abs": 0.0004966666666667008,
+        "max_hit_abs": 0.0004966666666667008
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "D_yggdrasil_vault_anubis_3tier_balanced",
+      "description": "Yggdrasil Vault of Anubis 3-tier balanced highest-only, p=0.45",
+      "cfg": {
+        "cascadeContinuationProbability": 0.45,
+        "tiers": [
+          {
+            "threshold": 4,
+            "rewardX": 5
+          },
+          {
+            "threshold": 8,
+            "rewardX": 25
+          },
+          {
+            "threshold": 12,
+            "rewardX": 150
+          }
+        ],
+        "rewardMode": "highest-only"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.45,
+        "rewardMode": "highest-only",
+        "tierCount": 3,
+        "perTierHitProbability": [
+          0.04100625,
+          0.0016815125390625004,
+          0.00006895252355493167
+        ],
+        "perTierExactHighestProbability": [
+          0.0393247374609375,
+          0.0016125600155075686,
+          0.00006895252355493167
+        ],
+        "probNoTierReached": 0.95899375,
+        "expectedRewardPerSpin": 0.24728056622561648,
+        "varianceRewardPerSpin": 3.481252547768769
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 0.2503,
+        "observedPerTierHitFraction": [
+          0.04115666666666667,
+          0.0017466666666666668,
+          0.00007666666666666667
+        ],
+        "observedPerTierExactHighestFraction": [
+          0.03941,
+          0.00167,
+          0.00007666666666666667
+        ],
+        "observedNoTierReachedFraction": 0.9588433333333334
+      },
+      "checks": {
+        "reward_rel": 0.012210558316291795,
+        "no_tier_abs": 0.00015041666666659737,
+        "max_hit_abs": 0.00015041666666666675
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "E_corner_single_tier_T1",
+      "description": "Corner: single tier T=1, reward=20 (every win triggers)",
+      "cfg": {
+        "cascadeContinuationProbability": 0.4,
+        "tiers": [
+          {
+            "threshold": 1,
+            "rewardX": 20
+          }
+        ],
+        "rewardMode": "highest-only"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.4,
+        "rewardMode": "highest-only",
+        "tierCount": 1,
+        "perTierHitProbability": [
+          0.4
+        ],
+        "perTierExactHighestProbability": [
+          0.4
+        ],
+        "probNoTierReached": 0.6,
+        "expectedRewardPerSpin": 8,
+        "varianceRewardPerSpin": 96
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 7.9974,
+        "observedPerTierHitFraction": [
+          0.39987
+        ],
+        "observedPerTierExactHighestFraction": [
+          0.39987
+        ],
+        "observedNoTierReachedFraction": 0.60013
+      },
+      "checks": {
+        "reward_rel": 0.0003250000000000197,
+        "no_tier_abs": 0.0001300000000000745,
+        "max_hit_abs": 0.000130000000000019
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "F_corner_rare_extreme_high_threshold",
+      "description": "Corner: very high threshold T=20 sa p=0.3 → tier almost never hit",
+      "cfg": {
+        "cascadeContinuationProbability": 0.3,
+        "tiers": [
+          {
+            "threshold": 20,
+            "rewardX": 100000
+          }
+        ],
+        "rewardMode": "highest-only"
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.3,
+        "rewardMode": "highest-only",
+        "tierCount": 1,
+        "perTierHitProbability": [
+          3.4867844009999975e-11
+        ],
+        "perTierExactHighestProbability": [
+          3.4867844009999975e-11
+        ],
+        "probNoTierReached": 0.9999999999651321,
+        "expectedRewardPerSpin": 0.0000034867844009999973,
+        "varianceRewardPerSpin": 0.3486784400878421
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanRewardPerSpin": 0,
+        "observedPerTierHitFraction": [
+          0
+        ],
+        "observedPerTierExactHighestFraction": [
+          0
+        ],
+        "observedNoTierReachedFraction": 1
+      },
+      "checks": {
+        "reward_rel": 0,
+        "no_tier_abs": 3.486788635598259e-11,
+        "max_hit_abs": 3.4867844009999975e-11
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}

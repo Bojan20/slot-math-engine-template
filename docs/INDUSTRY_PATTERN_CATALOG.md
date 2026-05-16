@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.32
+# Industry Pattern Catalog v2.33
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -49,6 +49,7 @@
 > - v2.30 (Wave 145) — adds 1 trail/board bonus progression tracker kernel landed in Wave 144/145 (Konami Stairway to Heaven / IGT Wheel of Fortune Multi-Tier Trail / Microgaming Lord of the Rings / Inspired ladder climb sequential step-based progression sa step PMF + bust + end bonus)
 > - v2.31 (Wave 147) — adds 1 cascade meter charge-up trigger kernel landed in Wave 146/147 (Play'n GO Reactoonz Quantum Leap / Hacksaw Stack 'Em / Push Aztec Bonanza / Yggdrasil Vault of Anubis / NetEnt Wildbeast charge meter sa F = ⌊L/T⌋ ~ Geometric(1-p^T))
 > - v2.32 (Wave 149) — adds 1 max win cap truncation analyzer kernel landed in Wave 148/149 (UNIVERSALNI regulatory disclosure: Pragmatic 5000x / Hacksaw 7500x / Nolimit City 25000x / NetEnt 10000x / Stake.com 5000x / Push 10000-15000x sa RTP loss + 1-in-N cap-hit frequency + E[overflow | cap-hit])
+> - v2.33 (Wave 151) — adds 1 voltage/XP meter multi-tier reward levels kernel landed in Wave 150/151 (Hacksaw Stack 'Em / Push Wild Swarm / NetEnt Charged / Yggdrasil multi-step charge / Inspired XP bar K-tier extension sa highest-only + cumulative reward modes)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -512,8 +513,23 @@ post-2023 reform, BE Belgian Gaming Commission. Distinct from W138
 |----|---------|-------------|---------------|------------------|
 | P-066 | **Max Win Cap Truncation Analyzer** | Y ~ payoutPmf discrete, cap C → Y_capped = min(Y, C); **`E[Y_capped] = Σ_{y<C} y·π_y + C·P_cap`**; **`Var[Y_capped] = E[Y²_capped] − E[Y_capped]² ≤ Var[Y]`** (tail clipping); **rtpLossRelative = (E[Y]−E[Y_capped])/E[Y]**; **oneInNCapHitFrequency = 1/P_cap** (regulator "1 in X"); **E[overflow \| Y≥C] = (Σ_{y≥C}(y−C)·π_y)/P_cap**; capBucketRtpContributionFraction = C·P_cap/E[Y_capped] | `src/features/maxWinCapTruncation.ts` | 38 vitest specs (Wave 148) + 6 PAR-style configs × 200K spins (Wave 149); portfolio entry W148 |
 
+## Pattern Catalog v2.33 — Voltage/XP Meter Multi-Tier Reward Kernel (Wave 150/151)
+
+This pattern targets the **K-tier voltage/XP meter reward family** —
+Hacksaw Stack 'Em multi-tier boost levels, Push Wild Swarm power-up
+tiers, NetEnt Charged XP bar 3-tier reward, Yggdrasil Vault of Anubis
+multi-step charge, Inspired XP bar, Hacksaw Aztec Magic Deluxe Bonanza
+voltage meter, Push Aztec Bonanza multi-tier. K-tier extension of W146
+single-threshold cascade meter. Distinct from W146 (single T), W138
+(per-cascade ladder), W118 (collect-N tokens), W101 (count-based
+upgrades no tier rewards), W50 (stationary steady-state).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-067 | **Voltage/XP Meter Multi-Tier Reward Levels** | L ~ Geometric(1−p); K tier thresholds T_1<T_2<...<T_K sa rewards R_k; **highest tier reached** H = max{k: L ≥ T_k}; **`P(L ≥ T_k) = p^{T_k}`** strictly decreasing; **`P(H = k) = p^{T_k} − p^{T_{k+1}}`** difference of geometric tails; **MODE 1 highest-only**: E[R] = Σ_k R_k·(p^{T_k}−p^{T_{k+1}}) = telescoping R_1·p^{T_1} + Σ_{k≥2}(R_k−R_{k-1})·p^{T_k}; **MODE 2 cumulative**: E[R] = Σ_k R_k·p^{T_k} (direct sum); E[R²] sa cross-terms +2·Σ_{i<j} R_i·R_j·p^{T_j} jer I(L≥T_i)·I(L≥T_j) = I(L≥T_j) | `src/features/voltageMeterMultiTier.ts` | 36 vitest specs (Wave 150) + 6 PAR-style configs × 300K spins (Wave 151); portfolio entry W150 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 46 P-021..P-066 kernels in ~10 seconds and emits unified report
+all 47 P-021..P-067 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

@@ -216,3 +216,5 @@ jobs:
         run: npm run cascade-meter-charge-up-acceptance
       - name: Max Win Cap Truncation Analyzer acceptance (6/6 configs × 200K spins, Wave 148/149)
         run: npm run max-win-cap-truncation-acceptance
+      - name: Voltage/XP Meter Multi-Tier acceptance (6/6 configs × 300K spins, Wave 150/151)
+        run: npm run voltage-meter-multi-tier-acceptance

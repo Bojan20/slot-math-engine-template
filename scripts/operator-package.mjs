@@ -233,6 +233,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 148 Max Win Cap Truncation Analyzer (W152 Wave 149)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MAX_WIN_CAP_TRUNCATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MAX_WIN_CAP_TRUNCATION.md' },
+  // REPORTS — Wave 150 Voltage/XP Meter Multi-Tier (W152 Wave 151)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/VOLTAGE_METER_MULTI_TIER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/VOLTAGE_METER_MULTI_TIER.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
