@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "EXACT_ENUMERATION",
+  "generated_utc": "2026-05-16T03:16:07.533Z",
+  "method": "Direct analytical: per-cell weighted PMF × per-line enumeration over |symbols|^N combos.",
+  "note": "Base-game RTP only (features contribution excluded). Exact within IEEE 754 precision.",
+  "mc_spins": 2000000,
+  "overall_pass": true,
+  "fixtures_total": 3,
+  "fixtures_passed": 3,
+  "fixtures": [
+    {
+      "fixture": "classic-3x3-lines",
+      "exact_rtp": 0.5191663967174174,
+      "mc_rtp": 0.5195079000034911,
+      "mc_spins": 2000000,
+      "rel_err": 0.0006577915832630853,
+      "ok": true,
+      "elapsed_ms": 926
+    },
+    {
+      "fixture": "3x5-5lines",
+      "exact_rtp": 0.6980609418282547,
+      "mc_rtp": 0.6976597500064705,
+      "mc_spins": 2000000,
+      "rel_err": 0.0005747232050162823,
+      "ok": true,
+      "elapsed_ms": 1239
+    },
+    {
+      "fixture": "5x3-20lines",
+      "exact_rtp": 1.4469757173839128,
+      "mc_rtp": 1.446906,
+      "mc_spins": 2000000,
+      "rel_err": 0.00004818144705210533,
+      "ok": true,
+      "elapsed_ms": 3062
+    }
+  ]
+}
