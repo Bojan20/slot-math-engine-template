@@ -60,3 +60,6 @@ export * from './stickyCashCollector.js';
 
 // W152 Wave 71: Must-Hit-By Jackpot (mystery progressive, Faza 12)
 export * from './mustHitByJackpot.js';
+
+// W152 Wave 72: Pseudo-Must-Hit + Level Progression (Faza 12)
+export * from './pseudoMustHitLevel.js';
