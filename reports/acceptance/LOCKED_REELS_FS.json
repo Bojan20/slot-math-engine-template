@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "LOCKED_REELS_FS",
+  "generated_utc": "2026-05-16T10:02:41.766Z",
+  "episodes_per_config": 50000,
+  "seed": 3405644086,
+  "tolerances": {
+    "retrig_abs": 0.05,
+    "any_abs": 0.02,
+    "fresh_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_wolf_gold_5reel_3held",
+      "description": "Pragmatic Wolf Gold: 5-reel sa 3 held + 8 FS, q=0.20",
+      "cfg": {
+        "totalReels": 5,
+        "heldReels": 3,
+        "freeSpins": 8,
+        "freshScatterProbabilityPerReel": 0.2,
+        "retriggerScatterThreshold": 5
+      },
+      "closed_form": {
+        "totalReels": 5,
+        "heldReels": 3,
+        "freeSpins": 8,
+        "retriggerScatterThreshold": 5,
+        "probRetriggerPerSpin": 0.04000000000000001,
+        "expectedFreshScattersPerSpin": 0.4,
+        "expectedTotalScattersPerSpin": 3.4,
+        "expectedRetriggersAcrossFs": 0.32000000000000006,
+        "probAnyRetriggerAcrossFs": 0.2786104210161666,
+        "varianceRetriggers": 0.30720000000000003,
+        "expectedTimeToFirstRetrigger": 6.965260525404164
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 0.31434,
+        "observedAnyRetriggerFraction": 0.27452,
+        "observedMeanFreshScattersPerSpin": 0.3990625
+      },
+      "checks": {
+        "retrig_abs": 0.005660000000000054,
+        "any_abs": 0.004090421016166634,
+        "fresh_rel": 0.002343750000000089
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_buffalo_king_6reel_4held",
+      "description": "Buffalo King: 6-reel sa 4 held + 10 FS, q=0.18",
+      "cfg": {
+        "totalReels": 6,
+        "heldReels": 4,
+        "freeSpins": 10,
+        "freshScatterProbabilityPerReel": 0.18,
+        "retriggerScatterThreshold": 5
+      },
+      "closed_form": {
+        "totalReels": 6,
+        "heldReels": 4,
+        "freeSpins": 10,
+        "retriggerScatterThreshold": 5,
+        "probRetriggerPerSpin": 0.3276,
+        "expectedFreshScattersPerSpin": 0.36,
+        "expectedTotalScattersPerSpin": 4.36,
+        "expectedRetriggersAcrossFs": 3.276,
+        "probAnyRetriggerAcrossFs": 0.9811080386818688,
+        "varianceRetriggers": 2.2027824,
+        "expectedTimeToFirstRetrigger": 2.9948352829116875
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 3.26842,
+        "observedAnyRetriggerFraction": 0.98116,
+        "observedMeanFreshScattersPerSpin": 0.358692
+      },
+      "checks": {
+        "retrig_abs": 0.00757999999999992,
+        "any_abs": 0.000051961318131232836,
+        "fresh_rel": 0.0036333333333332662
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "C_john_hunter_tomb_6reel_long_fs",
+      "description": "John Hunter Tomb: 6-reel 4-held + 15 FS, q=0.12",
+      "cfg": {
+        "totalReels": 6,
+        "heldReels": 4,
+        "freeSpins": 15,
+        "freshScatterProbabilityPerReel": 0.12,
+        "retriggerScatterThreshold": 6
+      },
+      "closed_form": {
+        "totalReels": 6,
+        "heldReels": 4,
+        "freeSpins": 15,
+        "retriggerScatterThreshold": 6,
+        "probRetriggerPerSpin": 0.0144,
+        "expectedFreshScattersPerSpin": 0.24,
+        "expectedTotalScattersPerSpin": 4.24,
+        "expectedRetriggersAcrossFs": 0.216,
+        "probAnyRetriggerAcrossFs": 0.19552894578629687,
+        "varianceRetriggers": 0.2128896,
+        "expectedTimeToFirstRetrigger": 13.578399012937282
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 0.21232,
+        "observedAnyRetriggerFraction": 0.1927,
+        "observedMeanFreshScattersPerSpin": 0.239436
+      },
+      "checks": {
+        "retrig_abs": 0.003679999999999989,
+        "any_abs": 0.0028289457862968603,
+        "fresh_rel": 0.0023499999999999216
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "D_high_threshold_rare_retrigger",
+      "description": "Rare retrigger: T=N (need full reel scatter), low q",
+      "cfg": {
+        "totalReels": 5,
+        "heldReels": 2,
+        "freeSpins": 10,
+        "freshScatterProbabilityPerReel": 0.08,
+        "retriggerScatterThreshold": 5
+      },
+      "closed_form": {
+        "totalReels": 5,
+        "heldReels": 2,
+        "freeSpins": 10,
+        "retriggerScatterThreshold": 5,
+        "probRetriggerPerSpin": 0.0005120000000000001,
+        "expectedFreshScattersPerSpin": 0.24,
+        "expectedTotalScattersPerSpin": 2.24,
+        "expectedRetriggersAcrossFs": 0.005120000000000001,
+        "probAnyRetriggerAcrossFs": 0.005108219611704712,
+        "varianceRetriggers": 0.005117378560000002,
+        "expectedTimeToFirstRetrigger": 9.976991429110763
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 0.00564,
+        "observedAnyRetriggerFraction": 0.00564,
+        "observedMeanFreshScattersPerSpin": 0.23961
+      },
+      "checks": {
+        "retrig_abs": 0.0005199999999999988,
+        "any_abs": 0.0005317803882952882,
+        "fresh_rel": 0.0016250000000000062
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "E_corner_held_already_at_threshold",
+      "description": "Corner: held = T → every spin retriggers (P_re=1)",
+      "cfg": {
+        "totalReels": 5,
+        "heldReels": 5,
+        "freeSpins": 5,
+        "freshScatterProbabilityPerReel": 0.2,
+        "retriggerScatterThreshold": 5
+      },
+      "closed_form": {
+        "totalReels": 5,
+        "heldReels": 5,
+        "freeSpins": 5,
+        "retriggerScatterThreshold": 5,
+        "probRetriggerPerSpin": 1,
+        "expectedFreshScattersPerSpin": 0,
+        "expectedTotalScattersPerSpin": 5,
+        "expectedRetriggersAcrossFs": 5,
+        "probAnyRetriggerAcrossFs": 1,
+        "varianceRetriggers": 0,
+        "expectedTimeToFirstRetrigger": 1
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 5,
+        "observedAnyRetriggerFraction": 1,
+        "observedMeanFreshScattersPerSpin": 0
+      },
+      "checks": {
+        "retrig_abs": 0,
+        "any_abs": 0,
+        "fresh_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_impossible_threshold",
+      "description": "Corner: T > N (impossible retrigger, P_re=0)",
+      "cfg": {
+        "totalReels": 5,
+        "heldReels": 1,
+        "freeSpins": 10,
+        "freshScatterProbabilityPerReel": 0.1,
+        "retriggerScatterThreshold": 5
+      },
+      "closed_form": {
+        "totalReels": 5,
+        "heldReels": 1,
+        "freeSpins": 10,
+        "retriggerScatterThreshold": 5,
+        "probRetriggerPerSpin": 0.00010000000000000002,
+        "expectedFreshScattersPerSpin": 0.4,
+        "expectedTotalScattersPerSpin": 1.4,
+        "expectedRetriggersAcrossFs": 0.0010000000000000002,
+        "probAnyRetriggerAcrossFs": 0.0009995501199788759,
+        "varianceRetriggers": 0.0009999000000000002,
+        "expectedTimeToFirstRetrigger": 9.995501199788757
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanRetriggersPerEpisode": 0.00072,
+        "observedAnyRetriggerFraction": 0.00072,
+        "observedMeanFreshScattersPerSpin": 0.399328
+      },
+      "checks": {
+        "retrig_abs": 0.0002800000000000002,
+        "any_abs": 0.00027955011997887584,
+        "fresh_rel": 0.0016800000000000148
+      },
+      "pass": true,
+      "elapsed_ms": 16
+    }
+  ]
+}

@@ -202,3 +202,5 @@ jobs:
         run: npm run multi-level-wild-markov-acceptance
       - name: Hold-and-Win Value Jackpot acceptance (6/6 configs × 30K episodes, Wave 134/135)
         run: npm run hold-win-value-jackpot-acceptance
+      - name: Locked/Held Reels During FS acceptance (6/6 configs × 50K episodes, Wave 136/137)
+        run: npm run locked-reels-during-fs-acceptance

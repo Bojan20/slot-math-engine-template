@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.25
+# Industry Pattern Catalog v2.26
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -42,6 +42,7 @@
 > - v2.23 (Wave 131) — adds 1 free spins buy + tier escalation trade-off kernel landed in Wave 130/131 (Australian NCRG / Belgian Bonus Buy ban impact)
 > - v2.24 (Wave 133) — adds 1 multi-level wild tier Markov kernel landed in Wave 132/133 (4-state probabilistic upgrade stationary)
 > - v2.25 (Wave 135) — adds 1 hold-and-win multi-tier value-based jackpot kernel landed in Wave 134/135 (Aristocrat Lightning Link / IGT Hold & Win; distinct od W49 filled-count ladder)
+> - v2.26 (Wave 137) — adds 1 locked/held reels during FS retrigger analyzer kernel landed in Wave 136/137 (Pragmatic Wolf Gold / Buffalo King lock-and-spin)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -404,8 +405,20 @@ tier triggered by **TOTAL ACCUMULATED VALUE** threshold.
 |----|---------|-------------|---------------|------------------|
 | P-059 | **Hold-and-Win Multi-Tier Value-Based Jackpot** | Grid K cells, R respins sa reset-on-landing, money symbols V ~ valuePmf; **Step 1** Markov (filled, respinsRemaining) → P(F_final = k); **Step 2** k-fold convolution valuePmf → V_total \| F=k (sparse Map); **Step 3** P(tier reached) = Σ_k P(F=k)·P(V_total ≥ T \| k); **Step 4** **`E[V_total] = (E[F] − F_init)·E[V]`** (industry semantics: only NEWLY landed cells get money); P(exactly tier) = P(reach t) − P(reach t+1); fullGridBonus + tier bonusPayoutX | `src/features/holdWinValueJackpot.ts` | 36 vitest specs (Wave 134) + 6 PAR-style configs × 30K episodes (Wave 135); portfolio entry W134 |
 
+## Pattern Catalog v2.26 — Locked/Held Reels During FS Analyzer Kernel (Wave 136/137)
+
+This pattern targets the **lock-and-spin during free spins family** —
+Pragmatic Wolf Gold / Buffalo King / John Hunter's Tomb of the Scarab
+Queen / Push Gaming Mount Magmas / Yggdrasil Vault of Anubis. K trigger
+scatter reels held throughout M FS spins, non-held reels respin sa fresh
+scatter density q; retrigger fires kada total scatters ≥ T u single FS spin.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-060 | **Locked/Held Reels During FS Analyzer** | N reels, K held throughout M FS, q fresh-scatter prob per non-held reel; **`P_re = P(Bin(N-K, q) ≥ T-K)`** Binomial tail; **`E[retriggers across FS] = M·P_re`**, **`P(any retrigger) = 1−(1−P_re)^M`**, Var = M·P_re·(1−P_re); **`E[time-to-first] = (1−(1−P_re)^M)/P_re`** truncated; E[fresh per spin]=(N-K)·q, E[total scatters per spin]=K+(N-K)·q | `src/features/lockedReelsDuringFs.ts` | 34 vitest specs (Wave 136) + 6 PAR-style configs × 50K episodes (Wave 137); portfolio entry W136 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 39 P-021..P-059 kernels in ~10 seconds and emits unified report
+all 40 P-021..P-060 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
