@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T04:14:26.427Z",
-  "solvers_total": 15,
-  "solvers_passed": 15,
+  "generated_utc": "2026-05-16T04:24:39.668Z",
+  "solvers_total": 16,
+  "solvers_passed": 16,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 49
     },
     {
       "wave": 50,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 34
+      "elapsed_ms": 35
     },
     {
       "wave": 55,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 56,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 59,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 68
+      "elapsed_ms": 71
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 71,
@@ -138,6 +138,15 @@
       "metric": "total RTP/spin",
       "cf": 1.6665,
       "mc": 1.6790952970006168,
+      "ok": true,
+      "elapsed_ms": 5
+    },
+    {
+      "wave": 81,
+      "solver": "Bonus Buy Variance Analyzer",
+      "metric": "RTP / buy",
+      "cf": 3.3,
+      "mc": 3.3126075,
       "ok": true,
       "elapsed_ms": 5
     }

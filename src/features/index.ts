@@ -66,3 +66,6 @@ export * from './pseudoMustHitLevel.js';
 
 // W152 Wave 75: Multi-tier WAP jackpot + wheel acceptance (Faza 4.6/5)
 export * from './multiTierWapWheel.js';
+
+// W152 Wave 81: Bonus Buy / Feature Buy Variance Analyzer (Faza 4.7 ext)
+export * from './bonusBuyVariance.js';

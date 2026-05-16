@@ -62,6 +62,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'pseudoMustHitLevel.js'));
   const { solveMultiTierWapWheel, simulateMultiTierWapWheel } =
     await import(join(REPO_ROOT, 'dist', 'features', 'multiTierWapWheel.js'));
+  const { solveBonusBuyVariance, simulateBonusBuy } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'bonusBuyVariance.js'));
 
   const showcase = [];
 
@@ -291,6 +293,25 @@ async function main() {
     showcase.push({ wave: 75, solver: 'Multi-tier WAP Jackpot + Wheel', metric: 'total RTP/spin', cf: cf.totalExpectedPayoutPerSpin, mc: mc.observedTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W81: Bonus Buy Variance Analyzer ──────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      costPerBuyX: 100,
+      outcomes: [
+        { label: 'bust',   payoutX: 0,    probability: 0.40 },
+        { label: '50x',    payoutX: 50,   probability: 0.30 },
+        { label: '100x',   payoutX: 100,  probability: 0.15 },
+        { label: '500x',   payoutX: 500,  probability: 0.10 },
+        { label: 'maxwin', payoutX: 5000, probability: 0.05 },
+      ],
+    };
+    const cf = solveBonusBuyVariance(cfg);
+    const mc = simulateBonusBuy(cfg, 200_000, SEED);
+    const ok = relErr(cf.effectiveRtp, mc.observedRtp) < 0.05;
+    showcase.push({ wave: 81, solver: 'Bonus Buy Variance Analyzer', metric: 'RTP / buy', cf: cf.effectiveRtp, mc: mc.observedRtp, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -309,7 +330,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 15 Closed-Form Math Kernels (Wave 49-75)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 16 Closed-Form Math Kernels (Wave 49-81)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -347,9 +368,10 @@ async function main() {
   md.push('- W60: `STICKY_CASH_COLLECTOR.{json,md}` — 6 configs × 10K episodes');
   md.push('- W71: Must-Hit-By Jackpot — closed-form NIGC mystery progressive (no acceptance script — 14 vitest specs)');
   md.push('- W72: Pseudo-Must-Hit + Level Progression — closed-form escalating hazard (no acceptance script — 20 vitest specs)');
-  md.push('- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (no acceptance script — 27 vitest specs)');
+  md.push('- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (acceptance script W77 — 27 vitest specs)');
+  md.push('- W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (no acceptance script — 29 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 12 dedicated solvers + 1 streaming compliance monitor.**');
+  md.push('**Aggregate ~30M MC verification across 13 dedicated solvers + 1 streaming compliance monitor + jackpot trio acceptance (W77).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 
