@@ -68,6 +68,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsRetriggerCompound.js'));
   const { solveCascadeMultiplierPyramid, simulateCascadeMultiplierPyramid } =
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMultiplierPyramid.js'));
+  const { solvePersistentMultiplier, simulatePersistentMultiplier } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'persistentMultiplierAccumulator.js'));
 
   const showcase = [];
 
@@ -346,6 +348,23 @@ async function main() {
     showcase.push({ wave: 86, solver: 'Cascade Multiplier Pyramid', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W89: Persistent Multiplier Accumulator ────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      freeSpinsK: 10,
+      multiplierInit: 1,
+      multiplierDropIncrement: 1,
+      dropProbabilityPerSpin: 0.30,
+      meanBaseWinPerSpinX: 0.5,
+      varianceBaseWinPerSpinX: 1.0,
+    };
+    const cf = solvePersistentMultiplier(cfg);
+    const mc = simulatePersistentMultiplier(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedTotalPayoutX, mc.observedMeanPayoutX) < 0.05;
+    showcase.push({ wave: 89, solver: 'Persistent Multiplier Accumulator', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -364,7 +383,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 18 Closed-Form Math Kernels (Wave 49-86)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 19 Closed-Form Math Kernels (Wave 49-89)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -405,9 +424,10 @@ async function main() {
   md.push('- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (acceptance script W77 — 27 vitest specs)');
   md.push('- W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (acceptance script W82 — 29 vitest specs)');
   md.push('- W84: Free Spins Retrigger Compound — Wald + compound-sum variance over geometric batch chain (acceptance script W85 — 33 vitest specs)');
-  md.push('- W86: Cascade Sequential Multiplier Pyramid — closed-form ladder × geometric cascade chain (no acceptance script — 25 vitest specs)');
+  md.push('- W86: Cascade Sequential Multiplier Pyramid — closed-form ladder × geometric cascade chain (acceptance script W87 — 25 vitest specs)');
+  md.push('- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (no acceptance script — 28 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 15 dedicated solvers + 1 streaming compliance monitor + jackpot trio acceptance (W77) + bonus-buy acceptance (W82) + FS retrigger acceptance (W85).**');
+  md.push('**Aggregate ~30M MC verification across 16 dedicated solvers + 1 streaming compliance monitor + 4 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 

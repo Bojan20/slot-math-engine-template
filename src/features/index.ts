@@ -75,3 +75,6 @@ export * from './freeSpinsRetriggerCompound.js';
 
 // W152 Wave 86: Cascade Sequential Multiplier Pyramid (Faza 12 ext)
 export * from './cascadeMultiplierPyramid.js';
+
+// W152 Wave 89: Persistent Multiplier Accumulator (Faza 4.3 ext)
+export * from './persistentMultiplierAccumulator.js';
