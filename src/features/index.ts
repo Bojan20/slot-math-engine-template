@@ -78,3 +78,6 @@ export * from './cascadeMultiplierPyramid.js';
 
 // W152 Wave 89: Persistent Multiplier Accumulator (Faza 4.3 ext)
 export * from './persistentMultiplierAccumulator.js';
+
+// W152 Wave 91: Coin Accumulator with Mystery Values (Faza 12 ext)
+export * from './coinAccumulatorMystery.js';

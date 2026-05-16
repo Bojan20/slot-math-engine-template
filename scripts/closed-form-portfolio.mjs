@@ -70,6 +70,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMultiplierPyramid.js'));
   const { solvePersistentMultiplier, simulatePersistentMultiplier } =
     await import(join(REPO_ROOT, 'dist', 'features', 'persistentMultiplierAccumulator.js'));
+  const { solveCoinAccumulatorMystery, simulateCoinAccumulatorMystery } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'coinAccumulatorMystery.js'));
 
   const showcase = [];
 
@@ -365,6 +367,26 @@ async function main() {
     showcase.push({ wave: 89, solver: 'Persistent Multiplier Accumulator', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W91: Coin Accumulator with Mystery Values ─────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      freeSpinsK: 10,
+      coinLandingProbabilityPerSpin: 0.4,
+      coinValueOutcomes: [
+        { label: 'cash_low',  valueX: 1,   weight: 50 },
+        { label: 'cash_mid',  valueX: 5,   weight: 30 },
+        { label: 'cash_high', valueX: 25,  weight: 15 },
+        { label: 'mini',      valueX: 50,  weight: 4 },
+        { label: 'major',     valueX: 500, weight: 1 },
+      ],
+    };
+    const cf = solveCoinAccumulatorMystery(cfg);
+    const mc = simulateCoinAccumulatorMystery(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedTotalPayoutX, mc.observedMeanPayoutX) < 0.10;
+    showcase.push({ wave: 91, solver: 'Coin Accumulator + Mystery Values', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -383,7 +405,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 19 Closed-Form Math Kernels (Wave 49-89)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 20 Closed-Form Math Kernels (Wave 49-91)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -425,9 +447,10 @@ async function main() {
   md.push('- W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (acceptance script W82 — 29 vitest specs)');
   md.push('- W84: Free Spins Retrigger Compound — Wald + compound-sum variance over geometric batch chain (acceptance script W85 — 33 vitest specs)');
   md.push('- W86: Cascade Sequential Multiplier Pyramid — closed-form ladder × geometric cascade chain (acceptance script W87 — 25 vitest specs)');
-  md.push('- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (no acceptance script — 28 vitest specs)');
+  md.push('- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (acceptance script W90 — 28 vitest specs)');
+  md.push('- W91: Coin Accumulator + Mystery Values — Money-Train-style Binomial coins × discrete mystery distribution (no acceptance script — 30 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 16 dedicated solvers + 1 streaming compliance monitor + 4 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87).**');
+  md.push('**Aggregate ~30M MC verification across 17 dedicated solvers + 1 streaming compliance monitor + 5 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 

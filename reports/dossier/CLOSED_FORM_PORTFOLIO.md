@@ -1,10 +1,10 @@
-# CLOSED_FORM_PORTFOLIO — 19 Closed-Form Math Kernels (Wave 49-89)
+# CLOSED_FORM_PORTFOLIO — 20 Closed-Form Math Kernels (Wave 49-91)
 
-Generated: `2026-05-16T04:52:53.566Z`
+Generated: `2026-05-16T05:00:00.502Z`
 
 ## Headline
 
-**19/19 solvers PASS** in single end-to-end runner.
+**20/20 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -32,6 +32,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 84 | Free Spins Retrigger Compound | E[Y] per episode | 18.75000 | 18.75418 | ✅ |
 | 86 | Cascade Multiplier Pyramid | E[Y] per episode | 3.90773 | 3.84990 | ✅ |
 | 89 | Persistent Multiplier Accumulator | E[Y] per episode | 13.25000 | 13.27215 | ✅ |
+| 91 | Coin Accumulator + Mystery Values | E[Y] per episode | 51.00000 | 50.72352 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
@@ -55,6 +56,7 @@ Each wave has dedicated full acceptance script + report in `reports/acceptance/`
 - W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (acceptance script W82 — 29 vitest specs)
 - W84: Free Spins Retrigger Compound — Wald + compound-sum variance over geometric batch chain (acceptance script W85 — 33 vitest specs)
 - W86: Cascade Sequential Multiplier Pyramid — closed-form ladder × geometric cascade chain (acceptance script W87 — 25 vitest specs)
-- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (no acceptance script — 28 vitest specs)
+- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (acceptance script W90 — 28 vitest specs)
+- W91: Coin Accumulator + Mystery Values — Money-Train-style Binomial coins × discrete mystery distribution (no acceptance script — 30 vitest specs)
 
-**Aggregate ~30M MC verification across 16 dedicated solvers + 1 streaming compliance monitor + 4 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87).**
+**Aggregate ~30M MC verification across 17 dedicated solvers + 1 streaming compliance monitor + 5 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90).**
