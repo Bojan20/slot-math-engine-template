@@ -59,6 +59,8 @@ const ACCEPTANCE_SUITES = [
   { id: 'par-commitment-acceptance', cmd: 'node scripts/par-commitment-acceptance.mjs', wave: 40 },
   // Wave 43 — ENT
   { id: 'ent-assess', cmd: 'node scripts/ent-assess.mjs', wave: 43 },
+  // Wave 61 — closed-form portfolio runner (12 closed-form solvers landed W49-60)
+  { id: 'closed-form-portfolio', cmd: 'node scripts/closed-form-portfolio.mjs', wave: 61 },
 ];
 
 // ─── Files to package ──────────────────────────────────────────────────────
@@ -104,6 +106,33 @@ const PACKAGE_FILES = [
   { kind: 'reports/mutation', src: 'reports/mutation/SUMMARY.json' },
   { kind: 'reports/mutation', src: 'reports/mutation/SUMMARY.md' },
   { kind: 'reports/mutation', src: 'reports/mutation/baseline.json' },
+  // REPORTS — Wave 49-61 closed-form portfolio (W152)
+  { kind: 'reports/dossier', src: 'reports/dossier/CLOSED_FORM_PORTFOLIO.json' },
+  { kind: 'reports/dossier', src: 'reports/dossier/CLOSED_FORM_PORTFOLIO.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/HNW_LADDER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/HNW_LADDER.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CHARGE_METER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CHARGE_METER.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/SUPERMETER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/SUPERMETER.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_REVEAL.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_REVEAL.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/WALKING_WILD_RESPIN.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/WALKING_WILD_RESPIN.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MEGACLUSTER_STACK_WAYS.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MEGACLUSTER_STACK_WAYS.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ENTROPY_HEALTH_MONITOR.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ENTROPY_HEALTH_MONITOR.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DEMO_MODE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DEMO_MODE.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CRASH_MULTIPLIER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CRASH_MULTIPLIER.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PARALLEL_SCREENS.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PARALLEL_SCREENS.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CLASS_II_BINGO.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CLASS_II_BINGO.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.md' },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
