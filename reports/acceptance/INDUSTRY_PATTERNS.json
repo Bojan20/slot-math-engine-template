@@ -1,0 +1,466 @@
+{
+  "schema": "industry-patterns/v1",
+  "generatedAtUtc": "2026-05-16T00:42:45.489Z",
+  "config": {
+    "spinsPerSeed": 50000,
+    "seeds": [
+      12345,
+      67890,
+      11111,
+      99999,
+      24680
+    ],
+    "relSigmaTol": 0.1,
+    "patternCount": 20
+  },
+  "headline": {
+    "patternsTotal": 20,
+    "patternsPass": 20,
+    "checksTotal": 60,
+    "checksPass": 60,
+    "allPass": true,
+    "wallSeconds": "197.1"
+  },
+  "patterns": [
+    {
+      "id": "P-001",
+      "name": "Variable-Ways Cascade",
+      "fixtures": [
+        "complex-variable-rows.json",
+        "variable-rows-7reels.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "complex-variable-rows.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 523614.77273360256,
+          "stdDev": 5136.338667299372,
+          "relSigma": 0.00980938456049361
+        },
+        {
+          "fixture": "variable-rows-7reels.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 21235.629813600237,
+          "stdDev": 239.14536359649708,
+          "relSigma": 0.011261514996053369
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-002",
+      "name": "Persistent-Grid Cash-Collect",
+      "fixtures": [
+        "hnw-classic.json",
+        "hnw-full-grid.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "hnw-classic.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 1.6148160000001455,
+          "stdDev": 0.00907559419542454,
+          "relSigma": 0.005620203289677414
+        },
+        {
+          "fixture": "hnw-full-grid.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 3.3153396000007893,
+          "stdDev": 0.07303866189080246,
+          "relSigma": 0.022030521968484037
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-003",
+      "name": "Multi-Tier Pool Jackpot",
+      "fixtures": [
+        "hnw-grand-jackpot.json",
+        "wheel-bonus.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "hnw-grand-jackpot.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 188.93354759999733,
+          "stdDev": 0.8168008361212119,
+          "relSigma": 0.004323217588919203
+        },
+        {
+          "fixture": "wheel-bonus.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 59.83935680000128,
+          "stdDev": 0.4046752934973542,
+          "relSigma": 0.006762694573236882
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-004",
+      "name": "Cascading Cluster",
+      "fixtures": [
+        "cluster-7x7.json",
+        "cluster-diagonal.json",
+        "cluster-hexagonal.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "cluster-7x7.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 28.224176800001384,
+          "stdDev": 0.11089570323141563,
+          "relSigma": 0.0039291031946558025
+        },
+        {
+          "fixture": "cluster-diagonal.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 1.6533612000000453,
+          "stdDev": 0.015126367944763028,
+          "relSigma": 0.009148858667278882
+        },
+        {
+          "fixture": "cluster-hexagonal.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 33.38951880000435,
+          "stdDev": 0.3444401632348258,
+          "relSigma": 0.010315816927400011
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-005",
+      "name": "Sticky-Wild Free Spins",
+      "fixtures": [
+        "fs-sticky-wilds.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "fs-sticky-wilds.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 2.229888000000218,
+          "stdDev": 0.02785732305875765,
+          "relSigma": 0.012492700556599672
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-006",
+      "name": "Mystery-Symbol Reveal",
+      "fixtures": [
+        "mystery-symbol.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "mystery-symbol.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 5.347291999999643,
+          "stdDev": 0.057350669324766096,
+          "relSigma": 0.010725180020984439
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-007",
+      "name": "Walking-Wild Cascade",
+      "fixtures": [
+        "walking-wilds.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "walking-wilds.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 4.491032399999592,
+          "stdDev": 0.05825293212189407,
+          "relSigma": 0.012970944525338842
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-008",
+      "name": "Expanding-Wild Free Spins",
+      "fixtures": [
+        "fs-expanding-wilds.json",
+        "expanding-wilds.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "fs-expanding-wilds.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 3.3533783999999422,
+          "stdDev": 0.035608242849088534,
+          "relSigma": 0.010618617585503965
+        },
+        {
+          "fixture": "expanding-wilds.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 11402.884921200164,
+          "stdDev": 99.93480294367528,
+          "relSigma": 0.008763992939881135
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-009",
+      "name": "Multiplier-Ladder Free Spins",
+      "fixtures": [
+        "fs-multiplier-ladder.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "fs-multiplier-ladder.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 7.830690799999144,
+          "stdDev": 0.19347008499816568,
+          "relSigma": 0.024706643377898005
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-010",
+      "name": "Pick-Bonus Mini-Game",
+      "fixtures": [
+        "pick-bonus.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "pick-bonus.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 3.0744208000000297,
+          "stdDev": 0.022974419757629712,
+          "relSigma": 0.0074727635714764516
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-011",
+      "name": "Pay-Anywhere Scatter",
+      "fixtures": [
+        "pay-anywhere.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "pay-anywhere.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 243.78743000000145,
+          "stdDev": 1.1289294968357637,
+          "relSigma": 0.004630794527985946
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-012",
+      "name": "Both-Ways Line Evaluation",
+      "fixtures": [
+        "5x4-25lines.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "5x4-25lines.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 28.900741600004466,
+          "stdDev": 0.35808993428879776,
+          "relSigma": 0.012390337218500387
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-013",
+      "name": "Symbol-Upgrade Cascade",
+      "fixtures": [
+        "symbol-upgrade.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "symbol-upgrade.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 311.59107359999496,
+          "stdDev": 3.3075992371265808,
+          "relSigma": 0.010615192530748526
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-014",
+      "name": "Respin-Lock Bonus",
+      "fixtures": [
+        "respin-feature.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "respin-feature.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 2.797830855465952,
+          "stdDev": 0.009567383609649831,
+          "relSigma": 0.00341957184114923
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-015",
+      "name": "Hexagonal Cluster",
+      "fixtures": [
+        "cluster-hexagonal.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "cluster-hexagonal.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 33.38951880000435,
+          "stdDev": 0.3444401632348258,
+          "relSigma": 0.010315816927400011
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-016",
+      "name": "Diagonal Cluster",
+      "fixtures": [
+        "cluster-diagonal.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "cluster-diagonal.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 1.6533612000000453,
+          "stdDev": 0.015126367944763028,
+          "relSigma": 0.009148858667278882
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-017",
+      "name": "Multi-Reel Wild-Spread",
+      "fixtures": [
+        "multiplier-wilds.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "multiplier-wilds.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 1.6576424000001506,
+          "stdDev": 0.012670630086941857,
+          "relSigma": 0.007643765680065077
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-018",
+      "name": "Asymmetric Variable-Rows",
+      "fixtures": [
+        "complex-variable-rows.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "complex-variable-rows.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 526670.0915664018,
+          "stdDev": 6602.2167646211,
+          "relSigma": 0.012535773096560397
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-019",
+      "name": "High-Volatility Heavy-Tail",
+      "fixtures": [
+        "5x3-243ways.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "5x3-243ways.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 293.2974551999897,
+          "stdDev": 11.41715677270048,
+          "relSigma": 0.038926886579754
+        }
+      ],
+      "allPass": true
+    },
+    {
+      "id": "P-020",
+      "name": "Classic 3x3 Lines",
+      "fixtures": [
+        "classic-3x3-lines.json"
+      ],
+      "fixtureResults": [
+        {
+          "fixture": "classic-3x3-lines.json",
+          "sanityPass": true,
+          "stabilityPass": true,
+          "mechanicPass": true,
+          "mean": 0.5575007999999291,
+          "stdDev": 0.007022763928824098,
+          "relSigma": 0.012596867894763544
+        }
+      ],
+      "allPass": true
+    }
+  ]
+}

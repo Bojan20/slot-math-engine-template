@@ -53,7 +53,8 @@
     "ent-assess": "npm run build && node scripts/ent-assess.mjs",
     "operator-package": "node scripts/operator-package.mjs",
     "operator-package:cached": "node scripts/operator-package.mjs --skip-acceptance",
-    "par-samples-extra-credit": "npm run build && node scripts/par-samples-extra-credit.mjs"
+    "par-samples-extra-credit": "npm run build && node scripts/par-samples-extra-credit.mjs",
+    "industry-patterns": "npm run build && node scripts/industry-patterns-acceptance.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
