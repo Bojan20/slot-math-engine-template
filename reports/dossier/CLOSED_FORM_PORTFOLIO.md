@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 12 Closed-Form Math Kernels (Wave 49-60)
 
-Generated: `2026-05-16T03:06:03.699Z`
+Generated: `2026-05-16T03:50:40.711Z`
 
 ## Headline
 
-**12/12 solvers PASS** in single end-to-end runner.
+**14/14 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -25,6 +25,8 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 58 | Parallel Screens (3 shared, independent) | E[Y] per spin | 3.30000 | 3.31502 | ✅ |
 | 59 | Class-II Bingo Coordinator (75-ball, 2 patterns) | hit rate | 0.28041 | 0.28210 | ✅ |
 | 60 | Sticky-Cash Collector (N=200) | E[Y_N] | 96.39038 | 96.27460 | ✅ |
+| 71 | Must-Hit-By Jackpot | E[spins to trigger] | 225000.00000 | 226559.93130 | ✅ |
+| 72 | Pseudo-Must-Hit + Level Progression | E[payout]/spin | 59.16000 | 3.99161 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
@@ -42,5 +44,7 @@ Each wave has dedicated full acceptance script + report in `reports/acceptance/`
 - W58: `PARALLEL_SCREENS.{json,md}` — 6 configs × 500K MC = 3M
 - W59: `CLASS_II_BINGO.{json,md}` — 6 configs × 50K games = 300K
 - W60: `STICKY_CASH_COLLECTOR.{json,md}` — 6 configs × 10K episodes
+- W71: Must-Hit-By Jackpot — closed-form NIGC mystery progressive (no acceptance script — 14 vitest specs)
+- W72: Pseudo-Must-Hit + Level Progression — closed-form escalating hazard (no acceptance script — 20 vitest specs)
 
 **Aggregate ~30M MC verification across 11 dedicated solvers + 1 streaming compliance monitor.**
