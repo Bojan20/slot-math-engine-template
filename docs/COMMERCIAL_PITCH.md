@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 13 Industry-Firsts (Wave 33-65, all attested)
+## 🏆 16 Industry-Firsts (Wave 33-79, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -59,12 +59,19 @@ or in 5 years.
 | 55 | **General Entropy Health Monitor (streaming)** — sliding-window O(1) amortized χ² + entropy sa pluggable alert sinks; UKGC RTS 8.A.1 compliance | 7/7 sources verified |
 | 56 | **Demo Mode controller w/ auditor attestation** — `assertNoRngCall()` arhitekturni guard + SHA-256 script digest + tamper-evident audit log; GLI-19 §3.3.9 + UKGC RTS 9 | 6/6 scenarios + tamper-detect PASS |
 | 61 | **Closed-Form Portfolio (12 hybrid math kernels)** — N-tier H&W ladder · charge meter · supermeter · sticky cash+reveal · walking-wild · megacluster · crash · parallel screens · Class-II bingo · sticky-collector + 2 compliance | 12/12 PASS in single runner |
-| 63 | **Exact Enumeration ground-truth RTP** — closed-form analytical sum over \|symbols\|^N per-line combos; auditor-pinnable, not statistical | 3/3 fixtures EXACT |
+| 63 | **Exact Enumeration ground-truth RTP** — closed-form analytical sum over \|symbols\|^N per-line combos; auditor-pinnable, not statistical | 11/11 fixtures EXACT |
+| 71 | **Must-Hit-By Jackpot (Mystery Progressive)** — closed-form E[N*] = span/(2c), Var[N*] = span²/(12c²); effective RTP = c·(seed+cap)/(cap−seed); NIGC 25 CFR 542.7(c) compliant | 6/6 configs × 5K cycles PASS |
+| 72 | **Pseudo-Must-Hit + Level Progression** — soft-cap escalating-hazard pool + N-level Markov chain stationary (π_maxL = 1/(1+maxL·r), π_other = r·π_maxL); per-level RTP share disclosure | 6/6 configs × 100K spins PASS |
+| 75 | **Multi-tier WAP Jackpot + Wheel** — per-tier renewal: λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i; normalized RTP share Σ=1; operator-funded portion disclosable (UKGC RTS 12, MGA PPD 2018) | 6/6 configs × 2M spins PASS (12M MC) |
 
-These thirteen are deliberately vendor-disjoint. They exist in OUR engine
+These sixteen are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
+
+> **CI-enforced**: every push runs `closed-form-truth` job — 15 portfolio
+> solvers + 11 exact-enum fixtures + 18 progressive-jackpot configs =
+> **44 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 
