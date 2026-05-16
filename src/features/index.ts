@@ -150,3 +150,6 @@ export * from './adjacentPaysAggregator.js';
 
 // W152 Wave 142: Symbol Multiplier on Reel-Stop (Faza 12 ext, post-W100)
 export * from './symbolMultiplierReelStop.js';
+
+// W152 Wave 144: Trail/Board Bonus Progression Tracker (Faza 12 ext, post-W100)
+export * from './trailBonusTracker.js';

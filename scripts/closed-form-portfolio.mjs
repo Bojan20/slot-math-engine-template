@@ -118,6 +118,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'adjacentPaysAggregator.js'));
   const { solveSymbolMultiplierReelStop, simulateSymbolMultiplierReelStop } =
     await import(join(REPO_ROOT, 'dist', 'features', 'symbolMultiplierReelStop.js'));
+  const { solveTrailBonusTracker, simulateTrailBonusTracker } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'trailBonusTracker.js'));
 
   const showcase = [];
 
@@ -884,6 +886,29 @@ async function main() {
       Math.max(cf.expectedPayoutPerSpin, 1e-9);
     const ok = rel < 0.06;
     showcase.push({ wave: 142, solver: 'Symbol Multiplier on Reel-Stop', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W144: Trail/Board Bonus Progression Tracker ────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      trailLength: 10,
+      maxPicks: 15,
+      stepPmf: [
+        { step: 1, probability: 0.5 },
+        { step: 2, probability: 0.3 },
+        { step: 3, probability: 0.2 },
+      ],
+      positionRewardX: [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 0],
+      endBonusX: 100,
+      bustPositions: [4, 7],
+    };
+    const cf = solveTrailBonusTracker(cfg);
+    const mc = simulateTrailBonusTracker(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedTotalRewardX - mc.observedMeanTotalRewardX) /
+      Math.max(cf.expectedTotalRewardX, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 144, solver: 'Trail Bonus Progression', metric: 'E[reward]/episode', cf: cf.expectedTotalRewardX, mc: mc.observedMeanTotalRewardX, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
