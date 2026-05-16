@@ -1,0 +1,328 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CASCADE_METER_CHARGE_UP",
+  "generated_utc": "2026-05-16T11:00:40.869Z",
+  "spins_per_config": 300000,
+  "seed": 3405644102,
+  "tolerances": {
+    "fires_rel": 0.04,
+    "chain_rel": 0.02,
+    "fire_abs": 0.01,
+    "meter_rel": 0.04
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_reactoonz_quantum_leap_T4",
+      "description": "Play'n GO Reactoonz Quantum Leap: T=4, p=0.5",
+      "cfg": {
+        "cascadeContinuationProbability": 0.5,
+        "meterThreshold": 4,
+        "fireRewardX": 25,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.7
+          },
+          {
+            "value": 5,
+            "probability": 0.2
+          },
+          {
+            "value": 50,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.5,
+        "meterThreshold": 4,
+        "fireRewardX": 25,
+        "expectedChainLength": 1,
+        "expectedFiresPerSpin": 0.06666666666666667,
+        "varianceFiresPerSpin": 0.07111111111111111,
+        "probAtLeastOneFire": 0.0625,
+        "expectedMeterEndOfSpin": 0.7333333333333333,
+        "expectedBasePayoutPerSpin": 6.7,
+        "expectedFeaturePayoutPerSpin": 1.6666666666666667,
+        "expectedTotalPayoutPerSpin": 8.366666666666667
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0.06688666666666666,
+        "observedMeanChainLength": 1.0049366666666666,
+        "observedAtLeastOneFireFraction": 0.06267333333333333,
+        "observedMeanTotalPayoutPerSpin": 8.424383333333333,
+        "observedMeanMeterEndOfSpin": 0.73739,
+        "observedMaxFiresInSingleSpin": 4
+      },
+      "checks": {
+        "fires_rel": 0.0032999999999999696,
+        "chain_rel": 0.004936666666666589,
+        "fire_abs": 0.0001733333333333309,
+        "meter_rel": 0.005531818181818239
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "B_hacksaw_stack_em_T3",
+      "description": "Hacksaw Stack 'Em: T=3 (every 3 wins boost), p=0.55",
+      "cfg": {
+        "cascadeContinuationProbability": 0.55,
+        "meterThreshold": 3,
+        "fireRewardX": 10,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.65
+          },
+          {
+            "value": 3,
+            "probability": 0.25
+          },
+          {
+            "value": 20,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.55,
+        "meterThreshold": 3,
+        "fireRewardX": 10,
+        "expectedChainLength": 1.2222222222222225,
+        "expectedFiresPerSpin": 0.19958014694856807,
+        "varianceFiresPerSpin": 0.23941238200458012,
+        "probAtLeastOneFire": 0.16637500000000005,
+        "expectedMeterEndOfSpin": 0.6234817813765183,
+        "expectedBasePayoutPerSpin": 4.155555555555557,
+        "expectedFeaturePayoutPerSpin": 1.9958014694856807,
+        "expectedTotalPayoutPerSpin": 6.1513570250412375
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0.19994666666666666,
+        "observedMeanChainLength": 1.2257233333333333,
+        "observedAtLeastOneFireFraction": 0.1667,
+        "observedMeanTotalPayoutPerSpin": 6.172116666666667,
+        "observedMeanMeterEndOfSpin": 0.6258833333333333,
+        "observedMaxFiresInSingleSpin": 6
+      },
+      "checks": {
+        "fires_rel": 0.0018364537941393667,
+        "chain_rel": 0.002864545454545144,
+        "fire_abs": 0.00032499999999993645,
+        "meter_rel": 0.0038518398268396706
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "C_push_aztec_bonanza_T10_high_threshold",
+      "description": "Push Aztec Bonanza-style high threshold T=10, p=0.6",
+      "cfg": {
+        "cascadeContinuationProbability": 0.6,
+        "meterThreshold": 10,
+        "fireRewardX": 500,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.5
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 50,
+            "probability": 0.15
+          },
+          {
+            "value": 500,
+            "probability": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.6,
+        "meterThreshold": 10,
+        "fireRewardX": 500,
+        "expectedChainLength": 1.4999999999999998,
+        "expectedFiresPerSpin": 0.006083401603201786,
+        "varianceFiresPerSpin": 0.006120409378267623,
+        "probAtLeastOneFire": 0.006046617599999997,
+        "expectedMeterEndOfSpin": 1.439165983967982,
+        "expectedBasePayoutPerSpin": 51.74999999999999,
+        "expectedFeaturePayoutPerSpin": 3.041700801600893,
+        "expectedTotalPayoutPerSpin": 54.79170080160088
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0.006263333333333333,
+        "observedMeanChainLength": 1.5048466666666667,
+        "observedAtLeastOneFireFraction": 0.00623,
+        "observedMeanTotalPayoutPerSpin": 54.98645333333333,
+        "observedMeanMeterEndOfSpin": 1.4422133333333333,
+        "observedMaxFiresInSingleSpin": 2
+      },
+      "checks": {
+        "fires_rel": 0.029577486720069053,
+        "chain_rel": 0.003231111111111259,
+        "fire_abs": 0.0001833824000000029,
+        "meter_rel": 0.002117441211992357
+      },
+      "pass": true,
+      "elapsed_ms": 19
+    },
+    {
+      "name": "D_yggdrasil_vault_anubis_T6",
+      "description": "Yggdrasil Vault of Anubis-style T=6, p=0.45",
+      "cfg": {
+        "cascadeContinuationProbability": 0.45,
+        "meterThreshold": 6,
+        "fireRewardX": 100,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.7
+          },
+          {
+            "value": 4,
+            "probability": 0.2
+          },
+          {
+            "value": 25,
+            "probability": 0.08
+          },
+          {
+            "value": 200,
+            "probability": 0.02
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.45,
+        "meterThreshold": 6,
+        "fireRewardX": 100,
+        "expectedChainLength": 0.8181818181818181,
+        "expectedFiresPerSpin": 0.008373295508410709,
+        "varianceFiresPerSpin": 0.008443407586081881,
+        "probAtLeastOneFire": 0.008303765625,
+        "expectedMeterEndOfSpin": 0.7679420451313541,
+        "expectedBasePayoutPerSpin": 6.136363636363636,
+        "expectedFeaturePayoutPerSpin": 0.8373295508410709,
+        "expectedTotalPayoutPerSpin": 6.973693187204707
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0.008293333333333333,
+        "observedMeanChainLength": 0.8193,
+        "observedAtLeastOneFireFraction": 0.008226666666666667,
+        "observedMeanTotalPayoutPerSpin": 6.9494,
+        "observedMeanMeterEndOfSpin": 0.76954,
+        "observedMaxFiresInSingleSpin": 2
+      },
+      "checks": {
+        "fires_rel": 0.009549665958529248,
+        "chain_rel": 0.0013666666666667753,
+        "fire_abs": 0.00007709895833333397,
+        "meter_rel": 0.002080827425424486
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "E_corner_T1_every_win_fires",
+      "description": "Corner: T=1 → every cascade win triggers fire, E[F] = E[L]",
+      "cfg": {
+        "cascadeContinuationProbability": 0.4,
+        "meterThreshold": 1,
+        "fireRewardX": 5,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.4,
+        "meterThreshold": 1,
+        "fireRewardX": 5,
+        "expectedChainLength": 0.6666666666666667,
+        "expectedFiresPerSpin": 0.6666666666666667,
+        "varianceFiresPerSpin": 1.1111111111111112,
+        "probAtLeastOneFire": 0.4,
+        "expectedMeterEndOfSpin": 0,
+        "expectedBasePayoutPerSpin": 0.6666666666666667,
+        "expectedFeaturePayoutPerSpin": 3.333333333333334,
+        "expectedTotalPayoutPerSpin": 4.000000000000001
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0.66827,
+        "observedMeanChainLength": 0.66827,
+        "observedAtLeastOneFireFraction": 0.4010433333333333,
+        "observedMeanTotalPayoutPerSpin": 4.00962,
+        "observedMeanMeterEndOfSpin": 0,
+        "observedMaxFiresInSingleSpin": 15
+      },
+      "checks": {
+        "fires_rel": 0.0024049999999999345,
+        "chain_rel": 0.0024049999999999345,
+        "fire_abs": 0.001043333333333285,
+        "meter_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "F_corner_huge_T_almost_never_fires",
+      "description": "Corner: T=20 sa p=0.3 → P(fire) ≈ 0 (3.5e-11)",
+      "cfg": {
+        "cascadeContinuationProbability": 0.3,
+        "meterThreshold": 20,
+        "fireRewardX": 100000,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "cascadeContinuationProbability": 0.3,
+        "meterThreshold": 20,
+        "fireRewardX": 100000,
+        "expectedChainLength": 0.4285714285714286,
+        "expectedFiresPerSpin": 3.486784401121574e-11,
+        "varianceFiresPerSpin": 3.486784401243151e-11,
+        "probAtLeastOneFire": 3.4867844009999975e-11,
+        "expectedMeterEndOfSpin": 0.42857142787407176,
+        "expectedBasePayoutPerSpin": 0.4285714285714286,
+        "expectedFeaturePayoutPerSpin": 0.000003486784401121574,
+        "expectedTotalPayoutPerSpin": 0.4285749153558297
+      },
+      "monte_carlo": {
+        "spins": 300000,
+        "observedMeanFiresPerSpin": 0,
+        "observedMeanChainLength": 0.43051,
+        "observedAtLeastOneFireFraction": 0,
+        "observedMeanTotalPayoutPerSpin": 0.43051,
+        "observedMeanMeterEndOfSpin": 0.43051,
+        "observedMaxFiresInSingleSpin": 0
+      },
+      "checks": {
+        "fires_rel": 3.486784401121574e-11,
+        "chain_rel": 0.004523333333333268,
+        "fire_abs": 3.4867844009999975e-11,
+        "meter_rel": 0.004523334967859442
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}

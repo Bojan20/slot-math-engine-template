@@ -73,6 +73,7 @@
     "adjacent-pays-aggregator-acceptance": "npm run build && node scripts/adjacent-pays-aggregator-acceptance.mjs",
     "symbol-multiplier-reel-stop-acceptance": "npm run build && node scripts/symbol-multiplier-reel-stop-acceptance.mjs",
     "trail-bonus-tracker-acceptance": "npm run build && node scripts/trail-bonus-tracker-acceptance.mjs",
+    "cascade-meter-charge-up-acceptance": "npm run build && node scripts/cascade-meter-charge-up-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

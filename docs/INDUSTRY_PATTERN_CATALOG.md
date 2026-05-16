@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.30
+# Industry Pattern Catalog v2.31
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -47,6 +47,7 @@
 > - v2.28 (Wave 141) — adds 1 adjacent pays aggregator kernel landed in Wave 140/141 (Aristocrat Buffalo / Konami Roman Tribune / NextGen Foxin' Wins pay-anywhere-on-consecutive-reels family)
 > - v2.29 (Wave 143) — adds 1 symbol multiplier on reel-stop kernel landed in Wave 142/143 (Pragmatic Sweet Bonanza / Bigger Bass / Hacksaw RIP City / NetEnt Asgardian Stones random multiplier symbol landing additive vs multiplicative)
 > - v2.30 (Wave 145) — adds 1 trail/board bonus progression tracker kernel landed in Wave 144/145 (Konami Stairway to Heaven / IGT Wheel of Fortune Multi-Tier Trail / Microgaming Lord of the Rings / Inspired ladder climb sequential step-based progression sa step PMF + bust + end bonus)
+> - v2.31 (Wave 147) — adds 1 cascade meter charge-up trigger kernel landed in Wave 146/147 (Play'n GO Reactoonz Quantum Leap / Hacksaw Stack 'Em / Push Aztec Bonanza / Yggdrasil Vault of Anubis / NetEnt Wildbeast charge meter sa F = ⌊L/T⌋ ~ Geometric(1-p^T))
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -478,8 +479,25 @@ W107 (tree branching), W118 (collect-N threshold), W134 (grid filling).
 |----|---------|-------------|---------------|------------------|
 | P-064 | **Trail/Board Bonus Progression Tracker** | DP over (position, picksRemaining) state-space; V(p, r) = E[total reward \| start at p with r picks]; per step Δ → newPos = min(p+Δ, N); **end** → V = endBonusX, **bust** → V = 0, **advance** → V = stepReward + V(pNew, r-1); boundary r=0 → V = 0; second moment E[Y²] same DP pass → Var[Y]; plus **P_reach + P_bust + P_timeout = 1** invariant | `src/features/trailBonusTracker.ts` | 34 vitest specs (Wave 144) + 6 PAR-style configs × 100K episodes (Wave 145); portfolio entry W144 |
 
+## Pattern Catalog v2.31 — Cascade Meter Charge-Up Trigger Kernel (Wave 146/147)
+
+This pattern targets the **cascade-charged meter trigger / Quantum-Leap
+family** — Play'n GO Reactoonz / Reactoonz 2 (Quantum Leap meter),
+Hacksaw Stack 'Em (boost meter every N wins), Push Aztec Bonanza
+(charging meter), Yggdrasil Vault of Anubis (FS charge meter), NetEnt
+Wildbeast (charge meter). Per spin cascade chain L ~ Geometric(1−p);
+per-win meter +1; threshold T integer → number of feature fires
+F = ⌊L/T⌋ ~ Geometric(1 − p^T) — elegant nested-geometric closed form.
+Distinct from W50 (stationary steady-state, no chain), W138 (per-level
+ladder), W118 (token collector), W84 (multiplicative chain), W121
+(multiplier per cascade level, no meter).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-065 | **Cascade Meter Charge-Up Trigger** | L ~ Geometric(1−p); per-win meter +1; T threshold; **`F = ⌊L/T⌋ ~ Geometric(1−p^T)`** elegant distribution; **`E[F] = p^T/(1−p^T)`**, Var[F] = p^T/(1−p^T)²; **`E[L mod T] = (1−p)·Σ_{r=0..T-1} r·p^r / (1−p^T)`** finite series; **conservation identity** `E[L] = T·E[F] + E[meterEnd]`; plus Wald base payout E[Y_base] = E[L]·μ_V, Var[Y_base] = E[L]·σ_V² + Var[L]·μ_V²; feature payout E[Y_feature] = B·E[F]; total E[Y] = E[Y_base] + E[Y_feature] | `src/features/cascadeMeterChargeUp.ts` | 42 vitest specs (Wave 146) + 6 PAR-style configs × 300K spins (Wave 147); portfolio entry W146 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 44 P-021..P-064 kernels in ~10 seconds and emits unified report
+all 45 P-021..P-065 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

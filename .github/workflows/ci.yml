@@ -212,3 +212,5 @@ jobs:
         run: npm run symbol-multiplier-reel-stop-acceptance
       - name: Trail Bonus Tracker acceptance (6/6 configs × 100K episodes, Wave 144/145)
         run: npm run trail-bonus-tracker-acceptance
+      - name: Cascade Meter Charge-Up Trigger acceptance (6/6 configs × 300K spins, Wave 146/147)
+        run: npm run cascade-meter-charge-up-acceptance
