@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:25:54.870Z",
+  "generatedAt": "2026-05-16T00:17:09.143Z",
   "configHash": null,
   "game": {
     "name": "5x3 243 Ways",
@@ -17,7 +17,8 @@
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
     "paytableScaleFactor": 0.0031480059286002975,
-    "preScaleRTP": 304.95495299999203
+    "preScaleRTP": 304.95495299999203,
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.96000000000005,
@@ -39,25 +40,62 @@
     "deadSpinRate": 0.20779999999999998,
     "maxObservedWin": 133.07565461972038
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 3193.8630739624004,
+    "vi99": 4197.6486114934405,
+    "stdDev": 1629.5219765114289,
+    "p99": 9034.821999999987,
+    "p999": 18694.524000000478,
+    "p9999": 29148.002060000097,
+    "paretoTail": {
+      "alpha": 0.44666449535580277,
+      "xm": 288,
+      "ksPValue": 6.685447598500635e-293
+    }
+  },
   "features": [
     {
       "id": "free_spins",
       "name": "Free Spins",
       "triggerRate": 0.06642,
       "frequency": "1 in 15",
-      "rtpContribution": 0.8125786273751935
+      "rtpContribution": 0.8125786273751935,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Ways; mechanic: ways.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 3.1480e-3 to match target_rtp = 96.00% (pre-scale observed RTP = 30495.50%)."
+    "Two-pass auto-scale: paytable multiplied by 3.1480e-3 to match target_rtp = 96.00% (pre-scale observed RTP = 30495.50%).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      304.95495299999203,
+      287.9808869999894,
+      287.36966099999046,
+      299.1730689999916,
+      282.82214899998957
+    ],
+    "meanRtp": 292.4601437999906,
+    "stdDev": 9.220240263511977,
+    "se95Lower": 284.378246872738,
+    "se95Upper": 300.5420407272432
   }
 }

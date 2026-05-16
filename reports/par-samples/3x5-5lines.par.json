@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:25:47.788Z",
+  "generatedAt": "2026-05-16T00:16:59.710Z",
   "configHash": null,
   "game": {
     "name": "3 Reel 5 Row Lines",
@@ -22,7 +22,8 @@
       "iterations": 2,
       "converged": true,
       "finalScale": 0.974874637214262
-    }
+    },
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.959999999999605,
@@ -44,14 +45,36 @@
     "deadSpinRate": 0.39463000000000004,
     "maxObservedWin": 27.393977305720764
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 3.7639164911895158,
+    "vi99": 4.946861674134792,
+    "stdDev": 1.9203655567293447,
+    "p99": 10,
+    "p999": 16.2,
+    "p9999": 21.700020000000947,
+    "paretoTail": {
+      "alpha": 2.523243194747515,
+      "xm": 5,
+      "ksPValue": 5.711391018260506e-97
+    }
+  },
   "features": [
     {
       "id": "free_spins",
       "name": "Free Spins",
       "triggerRate": 0.08458,
       "frequency": "1 in 12",
-      "rtpContribution": 0.2849558564577284
+      "rtpContribution": 0.2849558564577284,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
@@ -59,11 +82,26 @@
     "Family: Lines; mechanic: lines.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
     "Two-pass auto-scale: paytable multiplied by 9.7487e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 98.47%).",
-    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
+    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      0.9847420000003623,
+      0.9875190000003632,
+      0.9708980000003518,
+      0.980397000000349,
+      0.9753240000003479
+    ],
+    "meanRtp": 0.9797760000003548,
+    "stdDev": 0.006775692473841923,
+    "se95Lower": 0.9738368436856263,
+    "se95Upper": 0.9857151563150833
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:27:09.948Z",
+  "generatedAt": "2026-05-16T00:20:58.085Z",
   "configHash": null,
   "game": {
     "name": "Cluster 6x6 Hex",
@@ -17,7 +17,8 @@
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
     "paytableScaleFactor": 0.02862028834402681,
-    "preScaleRTP": 33.542639000014006
+    "preScaleRTP": 33.542639000014006,
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.9599999999996937,
@@ -39,25 +40,62 @@
     "deadSpinRate": 0.0005800000000000249,
     "maxObservedWin": 8.1109897166972
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 83.50714040885865,
+    "vi99": 109.75224168021421,
+    "stdDev": 42.605683882070736,
+    "p99": 145.7,
+    "p999": 189.80020000000079,
+    "p9999": 235.50023000001093,
+    "paretoTail": {
+      "alpha": 8.308436510083505,
+      "xm": 119.8,
+      "ksPValue": 0.1344721483110735
+    }
+  },
   "features": [
     {
       "id": "free_spins",
       "name": "Free Spins",
       "triggerRate": 0.48928,
       "frequency": "1 in 2",
-      "rtpContribution": 0.6818127720955489
+      "rtpContribution": 0.6818127720955489,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Cluster; mechanic: cluster.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 2.8620e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 3354.26%)."
+    "Two-pass auto-scale: paytable multiplied by 2.8620e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 3354.26%).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      33.542639000014006,
+      33.72929800001411,
+      33.37975400001374,
+      33.49975200001395,
+      33.26742700001395
+    ],
+    "meanRtp": 33.48377400001395,
+    "stdDev": 0.17437646350219413,
+    "se95Lower": 33.33092629059572,
+    "se95Upper": 33.636621709432184
   }
 }

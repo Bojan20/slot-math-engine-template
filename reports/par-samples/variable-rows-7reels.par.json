@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:27:20.562Z",
+  "generatedAt": "2026-05-16T00:22:35.327Z",
   "configHash": null,
   "game": {
     "name": "Variable-Rows 7 Reels",
@@ -17,7 +17,8 @@
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
     "paytableScaleFactor": 0.000044841218380058414,
-    "preScaleRTP": 21408.874127000236
+    "preScaleRTP": 21408.874127000236,
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.960000000000132,
@@ -39,25 +40,62 @@
     "deadSpinRate": 0.08460000000000001,
     "maxObservedWin": 44.280855610450175
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 86744.82427791948,
+    "vi99": 114007.48333669417,
+    "stdDev": 44257.56340710178,
+    "p99": 201798.04399999997,
+    "p999": 391817.4145000016,
+    "p9999": 657033.3498800546,
+    "paretoTail": {
+      "alpha": 2.537268171864233,
+      "xm": 107263.2799999998,
+      "ksPValue": 1.8414190639181316e-12
+    }
+  },
   "features": [
     {
       "id": "free_spins",
       "name": "Free Spins",
       "triggerRate": 0.38254,
       "frequency": "1 in 3",
-      "rtpContribution": 0.6684521777383704
+      "rtpContribution": 0.6684521777383704,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Variable-Rows; mechanic: variable_ways.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 4.4841e-5 to match target_rtp = 96.00% (pre-scale observed RTP = 2140887.41%)."
+    "Two-pass auto-scale: paytable multiplied by 4.4841e-5 to match target_rtp = 96.00% (pre-scale observed RTP = 2140887.41%).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      21408.874127000236,
+      21280.372814000224,
+      20979.097095000147,
+      21370.91331400032,
+      21175.374211000315
+    ],
+    "meanRtp": 21242.92631220025,
+    "stdDev": 172.83715788905386,
+    "se95Lower": 21091.427863641755,
+    "se95Upper": 21394.424760758742
   }
 }

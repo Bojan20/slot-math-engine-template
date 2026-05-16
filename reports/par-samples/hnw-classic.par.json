@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:29:29.662Z",
+  "generatedAt": "2026-05-16T00:22:08.561Z",
   "configHash": null,
   "game": {
     "name": "Hold and Win Classic",
@@ -22,7 +22,8 @@
       "iterations": 2,
       "converged": true,
       "finalScale": 0.5780394716529066
-    }
+    },
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.9610395728900132,
@@ -44,14 +45,36 @@
     "deadSpinRate": 0.54529,
     "maxObservedWin": 51
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 7.500900930723569,
+    "vi99": 9.858326937522405,
+    "stdDev": 3.826990270777331,
+    "p99": 16,
+    "p999": 50,
+    "p9999": 53,
+    "paretoTail": {
+      "alpha": 2.341655477997858,
+      "xm": 8.8,
+      "ksPValue": 4.0065209062109695e-287
+    }
+  },
   "features": [
     {
       "id": "hold_and_win",
       "name": "Hold And Win",
       "triggerRate": 0.0044,
       "frequency": "1 in 227",
-      "rtpContribution": 0.04988
+      "rtpContribution": 0.04988,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
@@ -59,11 +82,26 @@
     "Family: Hold-and-Win; mechanic: hold_and_win.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
     "Two-pass auto-scale: paytable multiplied by 5.7804e-1 to match target_rtp = 96.00% (pre-scale observed RTP = 162.62%).",
-    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
+    "Non-linear PAR tuner (P0 #4.2): 2 bisection iter(s), converged=true (tolerance ±0.5% RTP).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      1.6261729999999728,
+      1.6196389999999725,
+      1.6118449999999964,
+      1.6284089999999634,
+      1.5924669999999839
+    ],
+    "meanRtp": 1.6157065999999776,
+    "stdDev": 0.014503027504620031,
+    "se95Lower": 1.6029941358910649,
+    "se95Upper": 1.6284190641088903
   }
 }

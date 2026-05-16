@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:28:56.821Z",
+  "generatedAt": "2026-05-16T00:21:51.225Z",
   "configHash": null,
   "game": {
     "name": "Complex 6x4 Variable-Rows",
@@ -22,7 +22,8 @@
       "iterations": 6,
       "converged": true,
       "finalScale": 0.0000016314854642676238
-    }
+    },
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.9574834520198652,
@@ -44,7 +45,19 @@
     "deadSpinRate": 0.54547,
     "maxObservedWin": 266.4636735698813
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 2213974.4379054965,
+    "vi99": 2909794.9755329383,
+    "stdDev": 1129578.7948497431,
+    "p99": 5030934.079999989,
+    "p999": 11138135.297600126,
+    "p9999": 21205649.4900033,
+    "paretoTail": {
+      "alpha": 2.2145913089428455,
+      "xm": 2425688.5999999987,
+      "ksPValue": 1.5180347155596383e-10
+    }
+  },
   "features": [
     {
       "id": "free_spins",
@@ -58,14 +71,34 @@
       "name": "Hold And Win",
       "triggerRate": 0.00232,
       "frequency": "1 in 431",
-      "rtpContribution": 0.09562
+      "rtpContribution": 0.09562,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     },
     {
       "id": "cascade",
       "name": "Cascade",
       "triggerRate": 0.8702699999999999,
       "frequency": "1 in 1",
-      "rtpContribution": 0.8189739782842067
+      "rtpContribution": 0.8189739782842067,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     },
     {
       "id": "gamble",
@@ -80,11 +113,26 @@
     "Family: Variable-Rows; mechanic: variable_ways.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
     "Two-pass auto-scale: paytable multiplied by 1.6315e-6 to match target_rtp = 96.00% (pre-scale observed RTP = 52775014.47%).",
-    "Non-linear PAR tuner (P0 #4.2): 6 bisection iter(s), converged=true (tolerance ±0.5% RTP)."
+    "Non-linear PAR tuner (P0 #4.2): 6 bisection iter(s), converged=true (tolerance ±0.5% RTP).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      523093.4160339984,
+      526765.9795260018,
+      522014.24060600175,
+      517814.134062004,
+      527504.0357540024
+    ],
+    "meanRtp": 523438.3611964017,
+    "stdDev": 3917.3266022944313,
+    "se95Lower": 520004.67303586466,
+    "se95Upper": 526872.0493569388
   }
 }

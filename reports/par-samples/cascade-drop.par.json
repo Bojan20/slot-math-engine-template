@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-13T03:29:10.337Z",
+  "generatedAt": "2026-05-16T00:18:17.880Z",
   "configHash": null,
   "game": {
     "name": "Cascade Drop 6x5",
@@ -17,7 +17,8 @@
     "seed": 12345,
     "engineVersion": "slot-math-engine-template @ a5679c9+",
     "paytableScaleFactor": 0.08064593360522278,
-    "preScaleRTP": 11.903885999998252
+    "preScaleRTP": 11.903885999998252,
+    "rngBackend": "mulberry32"
   },
   "results": {
     "observedRTP": 0.9599999999999393,
@@ -39,25 +40,62 @@
     "deadSpinRate": 0.11556999999999995,
     "maxObservedWin": 48.76659605107821
   },
-  "volatility": {},
+  "volatility": {
+    "vi95": 37.8847660366125,
+    "vi99": 49.791406790976424,
+    "stdDev": 19.328962263577804,
+    "p99": 88.3,
+    "p999": 164.30030000000116,
+    "p9999": 283.2000100000004,
+    "paretoTail": {
+      "alpha": 2.5796931539243637,
+      "xm": 47.7,
+      "ksPValue": 3.1709550559709673e-9
+    }
+  },
   "features": [
     {
       "id": "cascade",
       "name": "Cascade",
       "triggerRate": 0.8844299999999999,
       "frequency": "1 in 1",
-      "rtpContribution": 0.9599999999999393
+      "rtpContribution": 0.9599999999999393,
+      "transitionMatrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "notes": [
     "Generic-mechanic sample — no game / vendor IP.",
     "Family: Cascade; mechanic: cascade.",
     "Sampled by scripts/par-samples-generate.mjs at 100,000 spins, seed 12345.",
-    "Two-pass auto-scale: paytable multiplied by 8.0646e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 1190.39%)."
+    "Two-pass auto-scale: paytable multiplied by 8.0646e-2 to match target_rtp = 96.00% (pre-scale observed RTP = 1190.39%).",
+    "Wave 45 extra-credit fields backfilled (volatility quantiles, Pareto tail fit, CI bands, transition matrix placeholders)."
   ],
   "compliance": {
     "standard": "GLI-16",
     "submitter": "Slot Math Engine Template (P0 #4 sample set)",
     "cycleSize": 100000
+  },
+  "ciBands": {
+    "seedCount": 5,
+    "seedRtps": [
+      11.903885999998252,
+      11.984898999998178,
+      11.849802999998092,
+      11.849136999998079,
+      11.90045599999813
+    ],
+    "meanRtp": 11.897636199998146,
+    "stdDev": 0.05545717933419105,
+    "se95Lower": 11.84902583904814,
+    "se95Upper": 11.946246560948152
   }
 }
