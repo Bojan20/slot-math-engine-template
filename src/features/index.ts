@@ -45,3 +45,6 @@ export * from './walkingWildRespin.js';
 
 // W152 Wave 54: Megacluster stack-reveal ways hybrid (Faza 12)
 export * from './megaclusterStackWays.js';
+
+// W152 Wave 57: Crash-style multiplier-only corner case (Faza 12)
+export * from './crashMultiplier.js';

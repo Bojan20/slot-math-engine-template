@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CRASH_MULTIPLIER",
+  "generated_utc": "2026-05-16T02:38:07.805Z",
+  "spins_per_strategy": 1000000,
+  "seed": 12345,
+  "config": {
+    "houseEdge": 0.01,
+    "maxMultiplier": 10000
+  },
+  "house_statistics": {
+    "medianBust": 1.98,
+    "expectedBustTruncated": 9.129090580718879,
+    "probBustBefore2x": 0.505,
+    "probBustBefore10x": 0.901,
+    "probBustBefore100x": 0.9901,
+    "probReachCap": 0.000099
+  },
+  "rtp_invariance_check": {
+    "all_rtps": [
+      0.99,
+      0.99,
+      0.99,
+      0.9899999999999999,
+      0.99,
+      0.99
+    ],
+    "mean": 0.9899999999999999,
+    "max_spread": 1.1102230246251565e-16,
+    "invariant": true
+  },
+  "overall_pass": true,
+  "strategies_total": 6,
+  "strategies_passed": 6,
+  "strategies": [
+    {
+      "name": "A_target_2x",
+      "target": 2,
+      "closed_form": {
+        "rtp": 0.99,
+        "hitFrequency": 0.495,
+        "variancePerSpin": 0.9999,
+        "stdDevPerSpin": 0.9999499987499375,
+        "volatilityIndex": 1.0100505037878156
+      },
+      "monte_carlo": {
+        "observedRtp": 0.990594,
+        "observedHitFrequency": 0.495297,
+        "observedVariancePayout": 0.999911527164,
+        "observedStdDevPayout": 0.9999557626035264,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.0005999999999999833,
+        "hit_abs": 0.0002969999999999917,
+        "tolerance": 0.02
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "B_target_5x",
+      "target": 5,
+      "closed_form": {
+        "rtp": 0.99,
+        "hitFrequency": 0.198,
+        "variancePerSpin": 3.9699,
+        "stdDevPerSpin": 1.9924607900784397,
+        "volatilityIndex": 2.0125866566448884
+      },
+      "monte_carlo": {
+        "observedRtp": 0.990575,
+        "observedHitFrequency": 0.198115,
+        "observedVariancePayout": 3.9716361693749995,
+        "observedStdDevPayout": 1.9928964271569658,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.000580808080808073,
+        "hit_abs": 0.00011500000000000399,
+        "tolerance": 0.02
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "C_target_10x",
+      "target": 10,
+      "closed_form": {
+        "rtp": 0.99,
+        "hitFrequency": 0.099,
+        "variancePerSpin": 8.9199,
+        "stdDevPerSpin": 2.9866201633284404,
+        "volatilityIndex": 3.0167880437661014
+      },
+      "monte_carlo": {
+        "observedRtp": 0.99423,
+        "observedHitFrequency": 0.099423,
+        "observedVariancePayout": 8.9538067071,
+        "observedStdDevPayout": 2.992291213618755,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.004272727272727228,
+        "hit_abs": 0.0004229999999999928,
+        "tolerance": 0.05
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "D_target_50x",
+      "target": 50,
+      "closed_form": {
+        "rtp": 0.9899999999999999,
+        "hitFrequency": 0.019799999999999998,
+        "variancePerSpin": 48.51989999999999,
+        "stdDevPerSpin": 6.965622728801782,
+        "volatilityIndex": 7.035982554345235
+      },
+      "monte_carlo": {
+        "observedRtp": 0.9971,
+        "observedHitFrequency": 0.019942,
+        "observedVariancePayout": 48.86079159,
+        "observedStdDevPayout": 6.9900494697820275,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.0071717171717172795,
+        "hit_abs": 0.00014200000000000323,
+        "tolerance": 0.05
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_target_500x",
+      "target": 500,
+      "closed_form": {
+        "rtp": 0.99,
+        "hitFrequency": 0.00198,
+        "variancePerSpin": 494.0199,
+        "stdDevPerSpin": 22.226558438048837,
+        "volatilityIndex": 22.451069129342258
+      },
+      "monte_carlo": {
+        "observedRtp": 0.985,
+        "observedHitFrequency": 0.00197,
+        "observedVariancePayout": 491.529775,
+        "observedStdDevPayout": 22.170470788866886,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.005050505050505055,
+        "hit_abs": 0.000010000000000000026,
+        "tolerance": 0.1
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "F_target_5000x",
+      "target": 5000,
+      "closed_form": {
+        "rtp": 0.99,
+        "hitFrequency": 0.000198,
+        "variancePerSpin": 4949.0199,
+        "stdDevPerSpin": 70.34927078513323,
+        "volatilityIndex": 71.05986947993256
+      },
+      "monte_carlo": {
+        "observedRtp": 1.02,
+        "observedHitFrequency": 0.000204,
+        "observedVariancePayout": 5098.9596,
+        "observedStdDevPayout": 71.40699965689639,
+        "observedMaxBust": 10000,
+        "spins": 1000000
+      },
+      "checks": {
+        "rtp_rel": 0.03030303030303033,
+        "hit_abs": 0.00000600000000000001,
+        "tolerance": 0.3
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    }
+  ]
+}
