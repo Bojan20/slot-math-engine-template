@@ -1,6 +1,6 @@
 # Differential Fuzz Cross-Language — Acceptance Report
 
-> Closes **Kimi K2** (deep-audit 2026-05-15). Generated `2026-05-16T04:04:11.419Z`.
+> Closes **Kimi K2** (deep-audit 2026-05-15). Generated `2026-05-16T04:14:16.538Z`.
 > Variants: `5` · spins/run: `1000` · wall: `0.8s`
 
 ## Headline: **40/40 cells pass** ✅

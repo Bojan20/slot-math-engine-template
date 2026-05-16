@@ -1,7 +1,7 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T04:04:21.391Z` · repo SHA: `a34f36ef9d90`
+> Generated: `2026-05-16T04:14:26.499Z` · repo SHA: `91b25371ef12`
 
 ## Headline: **13/13 industry-firsts attested** ✅
 
@@ -30,7 +30,7 @@
 - **Acceptance**: 50/50 cells PASS
 - **Industry-first claim**: No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators
 - **Commit**: `f4ca791`
-- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"117.3"}`
+- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"120.7"}`
 
 ### Wave 34 · Mutation-Score CI Gate (K6)
 

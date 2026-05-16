@@ -1,6 +1,6 @@
 # SP 800-90B Entropy Assessment — Acceptance Report
 
-> Closes **Kimi K3** (deep-audit 2026-05-15). Generated `2026-05-16T04:04:12.136Z`.
+> Closes **Kimi K3** (deep-audit 2026-05-15). Generated `2026-05-16T04:14:17.253Z`.
 > Sample size: `50,000` bytes/source · IID permutations: `200`
 
 ## Headline: 6 sources assessed — CSPRNG-bar (≥7.0): ❌ · Low-bar (≥0.5): ✅

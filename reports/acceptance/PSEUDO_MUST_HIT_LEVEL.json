@@ -1,0 +1,322 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PSEUDO_MUST_HIT_LEVEL",
+  "generated_utc": "2026-05-16T04:10:43.973Z",
+  "spins_per_config": 100000,
+  "seed": 3203381950,
+  "tolerances": {
+    "trig_rel": 0.3,
+    "mc_positive": true
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_classic_4_level",
+      "description": "4-level [1,2,5,25] ladder, r=0.5, seed 100 softCap 1000",
+      "cfg": {
+        "poolSeedX": 100,
+        "poolSoftCapX": 1000,
+        "contributionPerSpinX": 0.05,
+        "lambdaMin": 0.001,
+        "lambdaMax": 0.1,
+        "levelMultipliers": [
+          1,
+          2,
+          5,
+          25
+        ],
+        "resetProbabilityAtMax": 0.5
+      },
+      "closed_form": {
+        "averageLambda": 0.0505,
+        "expectedSpinsBetweenTriggers": 19.801980198019802,
+        "expectedPoolAtTrigger": 100.99009900990099,
+        "levelStationaryDistribution": [
+          0.2,
+          0.2,
+          0.2,
+          0.4
+        ],
+        "expectedLevelMultiplier": 11.6,
+        "expectedPayoutPerSpin": 59.160000000000004
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.00269,
+        "observedMeanPoolAtTrigger": 118.49814126394007,
+        "observedLevelHistogram": [
+          0.20074349442379183,
+          0.20074349442379183,
+          0.20074349442379183,
+          0.39776951672862454
+        ],
+        "observedPayoutPerSpin": 3.66131999999999,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9467326732673268,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "B_no_reset_absorbing",
+      "description": "r=0 → absorbing at max level (Wave 72 spec corner case)",
+      "cfg": {
+        "poolSeedX": 100,
+        "poolSoftCapX": 1000,
+        "contributionPerSpinX": 0.05,
+        "lambdaMin": 0.001,
+        "lambdaMax": 0.1,
+        "levelMultipliers": [
+          1,
+          2,
+          5,
+          25
+        ],
+        "resetProbabilityAtMax": 0
+      },
+      "closed_form": {
+        "averageLambda": 0.0505,
+        "expectedSpinsBetweenTriggers": 19.801980198019802,
+        "expectedPoolAtTrigger": 100.99009900990099,
+        "levelStationaryDistribution": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "expectedLevelMultiplier": 25,
+        "expectedPayoutPerSpin": 127.5
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.00269,
+        "observedMeanPoolAtTrigger": 118.4687732342003,
+        "observedLevelHistogram": [
+          0.0037174721189591076,
+          0.0037174721189591076,
+          0.0037174721189591076,
+          0.9888475836431226
+        ],
+        "observedPayoutPerSpin": 7.888385499999991,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9467326732673268,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_always_reset",
+      "description": "r=1 → uniform stationary (π_i = 1/(maxL+1))",
+      "cfg": {
+        "poolSeedX": 100,
+        "poolSoftCapX": 1000,
+        "contributionPerSpinX": 0.05,
+        "lambdaMin": 0.001,
+        "lambdaMax": 0.1,
+        "levelMultipliers": [
+          1,
+          2,
+          5,
+          25
+        ],
+        "resetProbabilityAtMax": 1
+      },
+      "closed_form": {
+        "averageLambda": 0.0505,
+        "expectedSpinsBetweenTriggers": 19.801980198019802,
+        "expectedPoolAtTrigger": 100.99009900990099,
+        "levelStationaryDistribution": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "expectedLevelMultiplier": 8.25,
+        "expectedPayoutPerSpin": 42.075
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.00269,
+        "observedMeanPoolAtTrigger": 118.50557620817803,
+        "observedLevelHistogram": [
+          0.2527881040892193,
+          0.24907063197026022,
+          0.24907063197026022,
+          0.24907063197026022
+        ],
+        "observedPayoutPerSpin": 2.6630664999999945,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9467326732673268,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_high_hazard",
+      "description": "Frequent triggers (λ_max=0.5), 3-level [1,3,10]",
+      "cfg": {
+        "poolSeedX": 50,
+        "poolSoftCapX": 500,
+        "contributionPerSpinX": 0.1,
+        "lambdaMin": 0.01,
+        "lambdaMax": 0.5,
+        "levelMultipliers": [
+          1,
+          3,
+          10
+        ],
+        "resetProbabilityAtMax": 0.5
+      },
+      "closed_form": {
+        "averageLambda": 0.255,
+        "expectedSpinsBetweenTriggers": 3.9215686274509802,
+        "expectedPoolAtTrigger": 50.3921568627451,
+        "levelStationaryDistribution": [
+          0.25,
+          0.25,
+          0.5
+        ],
+        "expectedLevelMultiplier": 6,
+        "expectedPayoutPerSpin": 77.10000000000001
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.01597,
+        "observedMeanPoolAtTrigger": 56.25979962429559,
+        "observedLevelHistogram": [
+          0.24796493425172197,
+          0.24796493425172197,
+          0.504070131496556
+        ],
+        "observedPayoutPerSpin": 5.427668999999999,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9373725490196078,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_low_hazard",
+      "description": "Rare triggers (λ_max=0.01), 5-level [1,2,5,10,50]",
+      "cfg": {
+        "poolSeedX": 100,
+        "poolSoftCapX": 2000,
+        "contributionPerSpinX": 0.02,
+        "lambdaMin": 0.0001,
+        "lambdaMax": 0.01,
+        "levelMultipliers": [
+          1,
+          2,
+          5,
+          10,
+          50
+        ],
+        "resetProbabilityAtMax": 0.5
+      },
+      "closed_form": {
+        "averageLambda": 0.00505,
+        "expectedSpinsBetweenTriggers": 198.01980198019803,
+        "expectedPoolAtTrigger": 103.96039603960396,
+        "levelStationaryDistribution": [
+          0.16666666666666666,
+          0.16666666666666666,
+          0.16666666666666666,
+          0.16666666666666666,
+          0.3333333333333333
+        ],
+        "expectedLevelMultiplier": 19.666666666666664,
+        "expectedPayoutPerSpin": 10.325
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.00031,
+        "observedMeanPoolAtTrigger": 162.7070967742073,
+        "observedLevelHistogram": [
+          0.16129032258064516,
+          0.16129032258064516,
+          0.16129032258064516,
+          0.16129032258064516,
+          0.3548387096774194
+        ],
+        "observedPayoutPerSpin": 1.0808154000001042,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9386138613861386,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_partial_reset",
+      "description": "r=0.25 (heavy max-level dwell), 4-level [1,2,5,25]",
+      "cfg": {
+        "poolSeedX": 100,
+        "poolSoftCapX": 1000,
+        "contributionPerSpinX": 0.05,
+        "lambdaMin": 0.001,
+        "lambdaMax": 0.1,
+        "levelMultipliers": [
+          1,
+          2,
+          5,
+          25
+        ],
+        "resetProbabilityAtMax": 0.25
+      },
+      "closed_form": {
+        "averageLambda": 0.0505,
+        "expectedSpinsBetweenTriggers": 19.801980198019802,
+        "expectedPoolAtTrigger": 100.99009900990099,
+        "levelStationaryDistribution": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.5714285714285714
+        ],
+        "expectedLevelMultiplier": 15.428571428571427,
+        "expectedPayoutPerSpin": 78.68571428571428
+      },
+      "monte_carlo": {
+        "observedTriggersPerSpin": 0.00269,
+        "observedMeanPoolAtTrigger": 118.48921933085452,
+        "observedLevelHistogram": [
+          0.1412639405204461,
+          0.1412639405204461,
+          0.1412639405204461,
+          0.5762081784386617
+        ],
+        "observedPayoutPerSpin": 4.949226999999989,
+        "spins": 100000
+      },
+      "checks": {
+        "trig_rel": 0.9467326732673268,
+        "mc_le_cf_lambda": true,
+        "mc_positive": true,
+        "cf_positive": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # USIF PAR v1.0 — Validation Report
 
-> Closes **Kimi K5** (Open PAR sheet schema). Generated `2026-05-16T04:02:13.074Z`.
+> Closes **Kimi K5** (Open PAR sheet schema). Generated `2026-05-16T04:12:14.886Z`.
 > Mode: `baseline` · Schema: `schemas/usif-par-v1.0.json`
 
 ## Headline: **20/20 samples valid** ✅

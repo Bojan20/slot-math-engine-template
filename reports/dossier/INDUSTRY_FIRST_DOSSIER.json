@@ -1,7 +1,7 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T04:04:21.391Z",
-  "repo_sha": "a34f36ef9d908d27cca8315c1b06649069c57c24",
+  "generatedAtUtc": "2026-05-16T04:14:26.499Z",
+  "repo_sha": "91b25371ef12e7fb7eb6b056d8658c3072a727e1",
   "headline": {
     "waves": 13,
     "industry_firsts": 13,
@@ -15,7 +15,7 @@
       "name": "Metamorphic RTP Invariant Suite",
       "reportPath": "reports/acceptance/METAMORPHIC_RTP.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:10.547Z",
+      "reportMtime": "2026-05-16T04:14:15.688Z",
       "headline": "50/50 cells PASS",
       "detail": {
         "mrs": [
@@ -28,7 +28,7 @@
         "fixtures": 10,
         "seeds": 4,
         "spinsPerSeed": 20000,
-        "wallSeconds": "117.3"
+        "wallSeconds": "120.7"
       },
       "industry_first": "No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators"
     },
@@ -39,7 +39,7 @@
       "name": "Mutation-Score CI Gate",
       "reportPath": "reports/mutation/SUMMARY.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:02:13.020Z",
+      "reportMtime": "2026-05-16T04:12:14.832Z",
       "headline": "TS 85.4% + Rust evaluator=100.0% / rng=92.6%",
       "detail": {
         "ts_total": 342,
@@ -69,7 +69,7 @@
       "name": "USIF PAR Sheet Schema v1.0",
       "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:02:13.076Z",
+      "reportMtime": "2026-05-16T04:12:14.887Z",
       "headline": "20/20 samples valid",
       "detail": {
         "mode": "baseline",
@@ -85,7 +85,7 @@
       "name": "Jurisdiction Auto-Gate Matrix",
       "reportPath": "reports/acceptance/JURISDICTION_AUTO_GATE.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:02:13.138Z",
+      "reportMtime": "2026-05-16T04:12:14.943Z",
       "headline": "450 verdicts (PASS=203 / WARN=175 / FAIL=72)",
       "detail": {
         "jurisdictions": 15,
@@ -101,7 +101,7 @@
       "name": "Differential Fuzz Cross-Language",
       "reportPath": "reports/acceptance/DIFF_FUZZ_CROSS_LANG.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:11.421Z",
+      "reportMtime": "2026-05-16T04:14:16.539Z",
       "headline": "40/40 cells PASS",
       "detail": {
         "mrs": [
@@ -143,7 +143,7 @@
       "name": "SP 800-90B Entropy Assessment",
       "reportPath": "reports/rng/SP_800_90B_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:12.138Z",
+      "reportMtime": "2026-05-16T04:14:17.254Z",
       "headline": "6 sources, all Low-bar (≥0.5 bits) ✅",
       "detail": {
         "sources": [
@@ -189,7 +189,7 @@
       "name": "PAR Sheet Commitment v1.0",
       "reportPath": "reports/acceptance/PAR_COMMITMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:16.227Z",
+      "reportMtime": "2026-05-16T04:14:21.333Z",
       "headline": "180/180 gates PASS",
       "detail": {
         "fixtures": 30,
@@ -212,7 +212,7 @@
       "name": "ENT Entropy Battery (in-process)",
       "reportPath": "reports/rng/ENT_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:16.991Z",
+      "reportMtime": "2026-05-16T04:14:22.095Z",
       "headline": "6/6 sources PASS all 5 ENT stats",
       "detail": {
         "sampleBytes": 100000,
@@ -328,7 +328,7 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:04:21.320Z",
+      "reportMtime": "2026-05-16T04:14:26.429Z",
       "headline": "15/15 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [

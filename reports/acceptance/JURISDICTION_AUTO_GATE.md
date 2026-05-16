@@ -1,6 +1,6 @@
 # Jurisdiction Auto-Gate — Acceptance Report
 
-> Closes **Kimi K8** (deep-audit 2026-05-15). Generated `2026-05-16T04:02:13.136Z`.
+> Closes **Kimi K8** (deep-audit 2026-05-15). Generated `2026-05-16T04:12:14.942Z`.
 
 ## Headline: 450 verdicts — 45.11% PASS / 38.89% WARN / 16.00% FAIL
 

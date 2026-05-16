@@ -1,7 +1,7 @@
 # Metamorphic RTP Invariant Suite — Acceptance Report
 
 > Closes **Kimi K4** (deep-audit 2026-05-15) and opens **Faza 6.8**.
-> Generated: `2026-05-16T04:04:10.546Z` · spins/seed: `20,000` · seeds: `4` · rel-tolerance: `0.1` · wall: `117.3s`
+> Generated: `2026-05-16T04:14:15.686Z` · spins/seed: `20,000` · seeds: `4` · rel-tolerance: `0.1` · wall: `120.7s`
 
 ## Headline: **50/50 checks pass** ✅
 
@@ -17,16 +17,16 @@
 
 | Fixture | Class | MR1 det | MR2 zero | MR3 scale | MR4 permute | MR5 CLT | Pass | Wall |
 |---|---|---|---|---|---|---|---|---|
-| `classic-3x3-lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 1.9s |
-| `5x3-20lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 3.9s |
-| `3x5-5lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 2.7s |
-| `5x4-25lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 7.9s |
-| `5x3-243ways.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 3.8s |
-| `6x4-4096ways.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 21.9s |
-| `variable-rows-7reels.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 18.8s |
-| `pay-anywhere.json` | pay-anywhere | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 4.9s |
-| `cluster-7x7.json` | cluster | ✅ | ✅ | ✅ | ⏭ | ✅ | 5/5 | 42.3s |
-| `cluster-diagonal.json` | cluster | ✅ | ✅ | ✅ | ⏭ | ✅ | 5/5 | 9.2s |
+| `classic-3x3-lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 2.0s |
+| `5x3-20lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 4.1s |
+| `3x5-5lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 2.9s |
+| `5x4-25lines.json` | lines | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 8.0s |
+| `5x3-243ways.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 4.0s |
+| `6x4-4096ways.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 22.4s |
+| `variable-rows-7reels.json` | ways | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 19.4s |
+| `pay-anywhere.json` | pay-anywhere | ✅ | ✅ | ✅ | ✅ | ✅ | 5/5 | 5.2s |
+| `cluster-7x7.json` | cluster | ✅ | ✅ | ✅ | ⏭ | ✅ | 5/5 | 43.0s |
+| `cluster-diagonal.json` | cluster | ✅ | ✅ | ✅ | ⏭ | ✅ | 5/5 | 9.5s |
 
 ## Detail (numeric)
 

@@ -1,6 +1,6 @@
 {
   "schema": "sp-800-90b-assessment/v1",
-  "generatedAtUtc": "2026-05-16T04:04:12.136Z",
+  "generatedAtUtc": "2026-05-16T04:14:17.253Z",
   "config": {
     "sampleBytes": 50000,
     "iidPermutations": 200
@@ -16,7 +16,7 @@
       "label": "Mulberry32 (legacy)",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.505Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.623Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -71,7 +71,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.544Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.661Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [
@@ -122,7 +122,7 @@
       "label": "PCG64",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.559Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.676Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -177,7 +177,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.588Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.705Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [
@@ -228,7 +228,7 @@
       "label": "Xoshiro256SS",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.603Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.720Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -283,7 +283,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.632Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.749Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [
@@ -334,7 +334,7 @@
       "label": "Philox4x32",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.655Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.771Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -389,7 +389,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.685Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.801Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [
@@ -440,7 +440,7 @@
       "label": "ChaCha20 (CSPRNG)",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.699Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.815Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -495,7 +495,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:11.728Z",
+        "generatedAtUtc": "2026-05-16T04:14:16.844Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [
@@ -546,7 +546,7 @@
       "label": "HSM Mock Bridge (Wave 38)",
       "assessment": {
         "schema": "sp-800-90b/v1",
-        "generatedAtUtc": "2026-05-16T04:04:12.107Z",
+        "generatedAtUtc": "2026-05-16T04:14:17.222Z",
         "sampleCount": 50000,
         "alphabetSize": 256,
         "estimators": [
@@ -601,7 +601,7 @@
       },
       "iid": {
         "schema": "sp-800-90b-iid-test/v1",
-        "generatedAtUtc": "2026-05-16T04:04:12.136Z",
+        "generatedAtUtc": "2026-05-16T04:14:17.253Z",
         "sampleCount": 5000,
         "permutations": 200,
         "tests": [

@@ -1,6 +1,6 @@
 # Mutation Testing Consolidated Report
 
-> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-16T04:02:13.018Z from stored mutation artifacts. Pure read — no mutation engine spawned.
+> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-16T04:12:14.831Z from stored mutation artifacts. Pure read — no mutation engine spawned.
 
 ## Headline
 

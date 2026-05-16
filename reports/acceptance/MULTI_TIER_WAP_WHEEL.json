@@ -1,0 +1,681 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_TIER_WAP_WHEEL",
+  "generated_utc": "2026-05-16T04:11:40.997Z",
+  "spins_per_config": 2000000,
+  "seed": 4277009102,
+  "tolerances": {
+    "rtp_rel": 0.25,
+    "tier_share_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_classic_4tier",
+      "description": "Mini/Minor/Major/Grand 4-tier, p_trigger=0.005, balanced weights",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.005,
+        "tiers": [
+          {
+            "id": "MINI",
+            "seedX": 10,
+            "contributionPerSpinX": 0.0005,
+            "wheelWeight": 600
+          },
+          {
+            "id": "MINOR",
+            "seedX": 50,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 300
+          },
+          {
+            "id": "MAJOR",
+            "seedX": 500,
+            "contributionPerSpinX": 0.002,
+            "wheelWeight": 95
+          },
+          {
+            "id": "GRAND",
+            "seedX": 10000,
+            "contributionPerSpinX": 0.003,
+            "wheelWeight": 5
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 1000,
+        "totalExpectedPayoutPerSpin": 0.599,
+        "totalContributionPerSpin": 0.006500000000000001,
+        "operatorFundedPortion": 0.5925,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "MINI",
+            "hitProbabilityPerSpin": 0.003,
+            "expectedSpinsBetweenHits": 333.3333333333333,
+            "expectedPoolAtHit": 10.166666666666666,
+            "expectedPayoutPerHit": 10.166666666666666,
+            "expectedPayoutPerSpin": 0.0305,
+            "variancePoolAtHit": 0.02769444444444444,
+            "rtpShare": 0.05091819699499165
+          },
+          {
+            "id": "MINOR",
+            "hitProbabilityPerSpin": 0.0015,
+            "expectedSpinsBetweenHits": 666.6666666666666,
+            "expectedPoolAtHit": 50.666666666666664,
+            "expectedPayoutPerHit": 50.666666666666664,
+            "expectedPayoutPerSpin": 0.076,
+            "variancePoolAtHit": 0.44377777777777777,
+            "rtpShare": 0.12687813021702837
+          },
+          {
+            "id": "MAJOR",
+            "hitProbabilityPerSpin": 0.000475,
+            "expectedSpinsBetweenHits": 2105.2631578947367,
+            "expectedPoolAtHit": 504.2105263157895,
+            "expectedPayoutPerHit": 504.2105263157895,
+            "expectedPayoutPerSpin": 0.2395,
+            "variancePoolAtHit": 17.720110803324097,
+            "rtpShare": 0.3998330550918197
+          },
+          {
+            "id": "GRAND",
+            "hitProbabilityPerSpin": 0.000025,
+            "expectedSpinsBetweenHits": 40000,
+            "expectedPoolAtHit": 10120,
+            "expectedPayoutPerHit": 10120,
+            "expectedPayoutPerSpin": 0.253,
+            "variancePoolAtHit": 14399.64,
+            "rtpShare": 0.4223706176961603
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 10139,
+        "observedTriggerProbability": 0.0050695,
+        "observedTotalPayoutPerSpin": 0.6314061382506125,
+        "observedTierPayoutPerSpin": [
+          0.03087493425000067,
+          0.07579999049999751,
+          0.2567485040000064,
+          0.2679827095006077
+        ],
+        "observedTierHits": [
+          6075,
+          2992,
+          1019,
+          53
+        ],
+        "observedMeanPoolAtHit": [
+          10.164587407407627,
+          50.66844284759192,
+          503.9224808636043,
+          10112.555075494629
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.054100397747266375,
+        "trigger_prob_rel": 0.013900000000000023,
+        "max_tier_share_abs": 0.005503008186211661,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "B_5tier_with_mega",
+      "description": "5-tier with MEGA top end, p_trigger=0.01",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.01,
+        "tiers": [
+          {
+            "id": "MINI",
+            "seedX": 10,
+            "contributionPerSpinX": 0.0001,
+            "wheelWeight": 500
+          },
+          {
+            "id": "MINOR",
+            "seedX": 50,
+            "contributionPerSpinX": 0.0002,
+            "wheelWeight": 300
+          },
+          {
+            "id": "MAJOR",
+            "seedX": 500,
+            "contributionPerSpinX": 0.0005,
+            "wheelWeight": 150
+          },
+          {
+            "id": "GRAND",
+            "seedX": 10000,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 49
+          },
+          {
+            "id": "MEGA",
+            "seedX": 1000000,
+            "contributionPerSpinX": 0.0001,
+            "wheelWeight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 1000,
+        "totalExpectedPayoutPerSpin": 15.8519,
+        "totalContributionPerSpin": 0.0019,
+        "operatorFundedPortion": 15.85,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "MINI",
+            "hitProbabilityPerSpin": 0.005,
+            "expectedSpinsBetweenHits": 200,
+            "expectedPoolAtHit": 10.02,
+            "expectedPayoutPerHit": 10.02,
+            "expectedPayoutPerSpin": 0.0501,
+            "variancePoolAtHit": 0.00039799999999999997,
+            "rtpShare": 0.0031605044190286336
+          },
+          {
+            "id": "MINOR",
+            "hitProbabilityPerSpin": 0.003,
+            "expectedSpinsBetweenHits": 333.3333333333333,
+            "expectedPoolAtHit": 50.06666666666667,
+            "expectedPayoutPerHit": 50.06666666666667,
+            "expectedPayoutPerSpin": 0.1502,
+            "variancePoolAtHit": 0.004431111111111111,
+            "rtpShare": 0.009475204865031952
+          },
+          {
+            "id": "MAJOR",
+            "hitProbabilityPerSpin": 0.0015,
+            "expectedSpinsBetweenHits": 666.6666666666666,
+            "expectedPoolAtHit": 500.3333333333333,
+            "expectedPayoutPerHit": 500.3333333333333,
+            "expectedPayoutPerSpin": 0.7505,
+            "variancePoolAtHit": 0.11094444444444444,
+            "rtpShare": 0.04734448236489001
+          },
+          {
+            "id": "GRAND",
+            "hitProbabilityPerSpin": 0.00049,
+            "expectedSpinsBetweenHits": 2040.8163265306123,
+            "expectedPoolAtHit": 10002.040816326531,
+            "expectedPayoutPerHit": 10002.040816326531,
+            "expectedPayoutPerSpin": 4.901,
+            "variancePoolAtHit": 4.162890462307372,
+            "rtpShare": 0.30917429456405854
+          },
+          {
+            "id": "MEGA",
+            "hitProbabilityPerSpin": 0.00001,
+            "expectedSpinsBetweenHits": 99999.99999999999,
+            "expectedPoolAtHit": 1000010,
+            "expectedPayoutPerHit": 1000010,
+            "expectedPayoutPerSpin": 10.000100000000002,
+            "variancePoolAtHit": 99.999,
+            "rtpShare": 0.6308455137869909
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 20084,
+        "observedTriggerProbability": 0.010042,
+        "observedTotalPayoutPerSpin": 16.01329504524883,
+        "observedTierPayoutPerSpin": [
+          0.05022499929999943,
+          0.1492248858999988,
+          0.7677497274999879,
+          5.0459995585002,
+          10.000095874048748
+        ],
+        "observedTierHits": [
+          10025,
+          5961,
+          3069,
+          1009,
+          20
+        ],
+        "observedMeanPoolAtHit": [
+          10.019949985037293,
+          50.06706455292696,
+          500.32566145323426,
+          10001.981285431515,
+          1000009.5874048747
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.010181432209945248,
+        "trigger_prob_rel": 0.004200000000000037,
+        "max_tier_share_abs": 0.003196574387572204,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 23
+    },
+    {
+      "name": "C_zero_seed_pure_contribution",
+      "description": "Zero seed (no operator funding) — RTP = total contribution",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.01,
+        "tiers": [
+          {
+            "id": "A",
+            "seedX": 0,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 70
+          },
+          {
+            "id": "B",
+            "seedX": 0,
+            "contributionPerSpinX": 0.002,
+            "wheelWeight": 25
+          },
+          {
+            "id": "C",
+            "seedX": 0,
+            "contributionPerSpinX": 0.003,
+            "wheelWeight": 5
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 100,
+        "totalExpectedPayoutPerSpin": 0.006,
+        "totalContributionPerSpin": 0.006,
+        "operatorFundedPortion": 0,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "A",
+            "hitProbabilityPerSpin": 0.006999999999999999,
+            "expectedSpinsBetweenHits": 142.85714285714286,
+            "expectedPoolAtHit": 0.14285714285714288,
+            "expectedPayoutPerHit": 0.14285714285714288,
+            "expectedPayoutPerSpin": 0.001,
+            "variancePoolAtHit": 0.02026530612244898,
+            "rtpShare": 0.16666666666666666
+          },
+          {
+            "id": "B",
+            "hitProbabilityPerSpin": 0.0025,
+            "expectedSpinsBetweenHits": 400,
+            "expectedPoolAtHit": 0.8,
+            "expectedPayoutPerHit": 0.8,
+            "expectedPayoutPerSpin": 0.002,
+            "variancePoolAtHit": 0.6384,
+            "rtpShare": 0.3333333333333333
+          },
+          {
+            "id": "C",
+            "hitProbabilityPerSpin": 0.0005,
+            "expectedSpinsBetweenHits": 2000,
+            "expectedPoolAtHit": 6,
+            "expectedPayoutPerHit": 6,
+            "expectedPayoutPerSpin": 0.003,
+            "variancePoolAtHit": 35.982000000000006,
+            "rtpShare": 0.5
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 20084,
+        "observedTriggerProbability": 0.010042,
+        "observedTotalPayoutPerSpin": 0.005997578500000096,
+        "observedTierPayoutPerSpin": [
+          0.0009999929999999946,
+          0.00199890999999998,
+          0.0029986755000000675
+        ],
+        "observedTierHits": [
+          13995,
+          5060,
+          1029
+        ],
+        "observedMeanPoolAtHit": [
+          0.14290718113611928,
+          0.7900830039525613,
+          5.828329446064271
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.0004035833333173623,
+        "trigger_prob_rel": 0.004200000000000037,
+        "max_tier_share_abs": 0.0031766580362476704,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "D_high_seed_grand_dominant",
+      "description": "GRAND tier dominates RTP share via high seed",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.005,
+        "tiers": [
+          {
+            "id": "MINI",
+            "seedX": 5,
+            "contributionPerSpinX": 0.0001,
+            "wheelWeight": 700
+          },
+          {
+            "id": "MINOR",
+            "seedX": 25,
+            "contributionPerSpinX": 0.0002,
+            "wheelWeight": 200
+          },
+          {
+            "id": "MAJOR",
+            "seedX": 250,
+            "contributionPerSpinX": 0.0005,
+            "wheelWeight": 90
+          },
+          {
+            "id": "GRAND",
+            "seedX": 500000,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 10
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 1000,
+        "totalExpectedPayoutPerSpin": 25.1568,
+        "totalContributionPerSpin": 0.0018,
+        "operatorFundedPortion": 25.155,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "MINI",
+            "hitProbabilityPerSpin": 0.0034999999999999996,
+            "expectedSpinsBetweenHits": 285.7142857142857,
+            "expectedPoolAtHit": 5.0285714285714285,
+            "expectedPayoutPerHit": 5.0285714285714285,
+            "expectedPayoutPerSpin": 0.017599999999999998,
+            "variancePoolAtHit": 0.0008134693877551022,
+            "rtpShare": 0.0006996120333269731
+          },
+          {
+            "id": "MINOR",
+            "hitProbabilityPerSpin": 0.001,
+            "expectedSpinsBetweenHits": 1000,
+            "expectedPoolAtHit": 25.2,
+            "expectedPayoutPerHit": 25.2,
+            "expectedPayoutPerSpin": 0.0252,
+            "variancePoolAtHit": 0.03996,
+            "rtpShare": 0.001001717229536348
+          },
+          {
+            "id": "MAJOR",
+            "hitProbabilityPerSpin": 0.00045,
+            "expectedSpinsBetweenHits": 2222.222222222222,
+            "expectedPoolAtHit": 251.11111111111111,
+            "expectedPayoutPerHit": 251.11111111111111,
+            "expectedPayoutPerSpin": 0.113,
+            "variancePoolAtHit": 1.2340123456790124,
+            "rtpShare": 0.004491827259428862
+          },
+          {
+            "id": "GRAND",
+            "hitProbabilityPerSpin": 0.00005,
+            "expectedSpinsBetweenHits": 20000,
+            "expectedPoolAtHit": 500020,
+            "expectedPayoutPerHit": 500020,
+            "expectedPayoutPerSpin": 25.001,
+            "variancePoolAtHit": 399.98,
+            "rtpShare": 0.9938068434777079
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 10139,
+        "observedTriggerProbability": 0.0050695,
+        "observedTotalPayoutPerSpin": 25.166221154939397,
+        "observedTierPayoutPerSpin": [
+          0.0177024990499998,
+          0.025524793399999558,
+          0.1219996259999883,
+          25.00099423648936
+        ],
+        "observedTierHits": [
+          7041,
+          2026,
+          972,
+          100
+        ],
+        "observedMeanPoolAtHit": [
+          5.028404786251896,
+          25.197229417571133,
+          251.02803703701298,
+          500019.8847297872
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.00037449735019541846,
+        "trigger_prob_rel": 0.013900000000000023,
+        "max_tier_share_abs": 0.005867442548574811,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 19
+    },
+    {
+      "name": "E_3tier_frequent",
+      "description": "3-tier with high trigger rate (p_trigger=0.05) — frequent hits",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.05,
+        "tiers": [
+          {
+            "id": "A",
+            "seedX": 10,
+            "contributionPerSpinX": 0.005,
+            "wheelWeight": 70
+          },
+          {
+            "id": "B",
+            "seedX": 100,
+            "contributionPerSpinX": 0.005,
+            "wheelWeight": 25
+          },
+          {
+            "id": "C",
+            "seedX": 1000,
+            "contributionPerSpinX": 0.005,
+            "wheelWeight": 5
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 100,
+        "totalExpectedPayoutPerSpin": 4.115,
+        "totalContributionPerSpin": 0.015,
+        "operatorFundedPortion": 4.1000000000000005,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "A",
+            "hitProbabilityPerSpin": 0.034999999999999996,
+            "expectedSpinsBetweenHits": 28.571428571428573,
+            "expectedPoolAtHit": 10.142857142857142,
+            "expectedPayoutPerHit": 10.142857142857142,
+            "expectedPayoutPerSpin": 0.3549999999999999,
+            "variancePoolAtHit": 0.019693877551020412,
+            "rtpShare": 0.08626974483596596
+          },
+          {
+            "id": "B",
+            "hitProbabilityPerSpin": 0.0125,
+            "expectedSpinsBetweenHits": 80,
+            "expectedPoolAtHit": 100.4,
+            "expectedPayoutPerHit": 100.4,
+            "expectedPayoutPerSpin": 1.2550000000000001,
+            "variancePoolAtHit": 0.158,
+            "rtpShare": 0.30498177399756987
+          },
+          {
+            "id": "C",
+            "hitProbabilityPerSpin": 0.0025000000000000005,
+            "expectedSpinsBetweenHits": 399.99999999999994,
+            "expectedPoolAtHit": 1002,
+            "expectedPayoutPerHit": 1002,
+            "expectedPayoutPerSpin": 2.5050000000000003,
+            "variancePoolAtHit": 3.989999999999999,
+            "rtpShare": 0.6087484811664642
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 100200,
+        "observedTriggerProbability": 0.0501,
+        "observedTotalPayoutPerSpin": 4.135078889999501,
+        "observedTierPayoutPerSpin": [
+          0.35502995500006196,
+          1.2635499874999803,
+          2.5164989474999997
+        ],
+        "observedTierHits": [
+          70006,
+          25171,
+          5023
+        ],
+        "observedMeanPoolAtHit": [
+          10.142843613406335,
+          100.39728159389617,
+          1001.9904230539518
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.004879438639003786,
+        "trigger_prob_rel": 0.0019999999999999185,
+        "max_tier_share_abs": 0.0013373253493013104,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 20
+    },
+    {
+      "name": "F_equal_weight_tiers",
+      "description": "4 equal-weight tiers (each w=1) — exposes tier mixing",
+      "cfg": {
+        "triggerProbabilityPerSpin": 0.01,
+        "tiers": [
+          {
+            "id": "A",
+            "seedX": 100,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 1
+          },
+          {
+            "id": "B",
+            "seedX": 500,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 1
+          },
+          {
+            "id": "C",
+            "seedX": 2000,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 1
+          },
+          {
+            "id": "D",
+            "seedX": 10000,
+            "contributionPerSpinX": 0.001,
+            "wheelWeight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "totalWheelWeight": 4,
+        "totalExpectedPayoutPerSpin": 31.504,
+        "totalContributionPerSpin": 0.004,
+        "operatorFundedPortion": 31.5,
+        "totalRtpShare": 1,
+        "tierResults": [
+          {
+            "id": "A",
+            "hitProbabilityPerSpin": 0.0025,
+            "expectedSpinsBetweenHits": 400,
+            "expectedPoolAtHit": 100.4,
+            "expectedPayoutPerHit": 100.4,
+            "expectedPayoutPerSpin": 0.251,
+            "variancePoolAtHit": 0.1596,
+            "rtpShare": 0.007967242254951752
+          },
+          {
+            "id": "B",
+            "hitProbabilityPerSpin": 0.0025,
+            "expectedSpinsBetweenHits": 400,
+            "expectedPoolAtHit": 500.4,
+            "expectedPayoutPerHit": 500.4,
+            "expectedPayoutPerSpin": 1.251,
+            "variancePoolAtHit": 0.1596,
+            "rtpShare": 0.039709243270695777
+          },
+          {
+            "id": "C",
+            "hitProbabilityPerSpin": 0.0025,
+            "expectedSpinsBetweenHits": 400,
+            "expectedPoolAtHit": 2000.4,
+            "expectedPayoutPerHit": 2000.4,
+            "expectedPayoutPerSpin": 5.001,
+            "variancePoolAtHit": 0.1596,
+            "rtpShare": 0.1587417470797359
+          },
+          {
+            "id": "D",
+            "hitProbabilityPerSpin": 0.0025,
+            "expectedSpinsBetweenHits": 400,
+            "expectedPoolAtHit": 10000.4,
+            "expectedPayoutPerHit": 10000.4,
+            "expectedPayoutPerSpin": 25.001,
+            "variancePoolAtHit": 0.1596,
+            "rtpShare": 0.7935817673946166
+          }
+        ]
+      },
+      "monte_carlo": {
+        "triggers": 20084,
+        "observedTriggerProbability": 0.010042,
+        "observedTotalPayoutPerSpin": 31.865448862999898,
+        "observedTierPayoutPerSpin": [
+          0.2549499930000043,
+          1.2374998819999787,
+          4.981999429499973,
+          25.390999558500056
+        ],
+        "observedTierHits": [
+          5079,
+          4946,
+          4981,
+          5078
+        ],
+        "observedMeanPoolAtHit": [
+          100.3937755463691,
+          500.40431945005207,
+          2000.4012967275542,
+          10000.393681961425
+        ],
+        "spins": 2000000
+      },
+      "checks": {
+        "rtp_rel": 0.011473110176482245,
+        "trigger_prob_rel": 0.004200000000000037,
+        "max_tier_share_abs": 0.003734315873332006,
+        "rtp_share_sum_check": true
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    }
+  ]
+}

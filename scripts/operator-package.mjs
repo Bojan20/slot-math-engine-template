@@ -133,6 +133,13 @@ const PACKAGE_FILES = [
   { kind: 'reports/acceptance', src: 'reports/acceptance/CLASS_II_BINGO.md' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.md' },
+  // REPORTS — Wave 71/72/75 progressive jackpot family (W152 Wave 77)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MUST_HIT_BY_JACKPOT.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MUST_HIT_BY_JACKPOT.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_TIER_WAP_WHEEL.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_TIER_WAP_WHEEL.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
