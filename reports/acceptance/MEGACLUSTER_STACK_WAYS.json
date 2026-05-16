@@ -1,0 +1,575 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MEGACLUSTER_STACK_WAYS",
+  "generated_utc": "2026-05-16T02:13:52.111Z",
+  "spins_per_config": 1000000,
+  "seed": 12345,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "hit_abs": 0.005,
+    "ek_rel": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_6reel_classic",
+      "description": "6 reels, baseline stack, p=0.30, k_min=3",
+      "cfg": {
+        "numReels": 6,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 60
+          },
+          {
+            "stackSize": 2,
+            "weight": 25
+          },
+          {
+            "stackSize": 3,
+            "weight": 10
+          },
+          {
+            "stackSize": 4,
+            "weight": 4
+          },
+          {
+            "stackSize": 6,
+            "weight": 1
+          }
+        ],
+        "pTargetPerReel": 0.3,
+        "paytableByMatches": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          25,
+          100
+        ]
+      },
+      "closed_form": {
+        "expectedStackSize": 1.62,
+        "expectedStackSizeSquared": 3.5,
+        "expectedPayoutPerSpin": 7.002290217082233,
+        "variancePayoutPerSpin": 16933.45402046574,
+        "stdDevPayoutPerSpin": 130.12860569631005,
+        "hitRate": 0.25568999999999986,
+        "probAnyPayout": 0.25568999999999986,
+        "expectedMeanK": 1.7999999999999998,
+        "matchCountPmf": [
+          0.11764899999999995,
+          0.30252599999999985,
+          0.32413499999999984,
+          0.1852199999999999,
+          0.05953499999999999,
+          0.010206,
+          0.0007289999999999992
+        ],
+        "expectedWaysByK": [
+          1,
+          1.62,
+          2.6244000000000005,
+          4.251528,
+          6.887475360000002,
+          11.157710083200003,
+          18.075490334784007
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          0,
+          4.251528,
+          34.43737680000001,
+          278.9427520800001,
+          1807.5490334784008
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 6.985474,
+        "observedVariancePayout": 12762.352332995324,
+        "observedStdDevPayout": 112.97058171486648,
+        "observedHitRate": 0.255848,
+        "observedMeanWays": 2.66681,
+        "observedMeanK": 1.799448,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.0024015310078422556,
+        "hit_abs": 0.00015800000000015801,
+        "ek_rel": 0.0003066666666666033
+      },
+      "pass": true,
+      "elapsed_ms": 164
+    },
+    {
+      "name": "B_6reel_heavy_stacks",
+      "description": "6 reels, heavy stacks (max=8), p=0.25, k_min=3",
+      "cfg": {
+        "numReels": 6,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 30
+          },
+          {
+            "stackSize": 2,
+            "weight": 30
+          },
+          {
+            "stackSize": 3,
+            "weight": 20
+          },
+          {
+            "stackSize": 4,
+            "weight": 12
+          },
+          {
+            "stackSize": 6,
+            "weight": 6
+          },
+          {
+            "stackSize": 8,
+            "weight": 2
+          }
+        ],
+        "pTargetPerReel": 0.25,
+        "paytableByMatches": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          25,
+          100
+        ]
+      },
+      "closed_form": {
+        "expectedStackSize": 2.5,
+        "expectedStackSizeSquared": 8.66,
+        "expectedPayoutPerSpin": 25.18653869628908,
+        "variancePayoutPerSpin": 1167649.7512896135,
+        "stdDevPayoutPerSpin": 1080.5784336593126,
+        "hitRate": 0.1694335937500001,
+        "probAnyPayout": 0.1694335937500001,
+        "expectedMeanK": 1.5,
+        "matchCountPmf": [
+          0.17797851562500003,
+          0.3559570312500001,
+          0.29663085937500006,
+          0.13183593750000008,
+          0.03295898437500003,
+          0.004394531250000003,
+          0.00024414062500000016
+        ],
+        "expectedWaysByK": [
+          1,
+          2.5,
+          6.25,
+          15.625,
+          39.0625,
+          97.65625,
+          244.140625
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          0,
+          15.625,
+          195.3125,
+          2441.40625,
+          24414.0625
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 25.265179,
+        "observedVariancePayout": 935143.5115010979,
+        "observedStdDevPayout": 967.0281854739799,
+        "observedHitRate": 0.169235,
+        "observedMeanWays": 6.59234,
+        "observedMeanK": 1.498478,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.0031223148467997403,
+        "hit_abs": 0.00019859375000011448,
+        "ek_rel": 0.0010146666666666822
+      },
+      "pass": true,
+      "elapsed_ms": 245
+    },
+    {
+      "name": "C_8reel_low_p",
+      "description": "8 reels, baseline stack, p=0.20 (rare full-match)",
+      "cfg": {
+        "numReels": 8,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 60
+          },
+          {
+            "stackSize": 2,
+            "weight": 25
+          },
+          {
+            "stackSize": 3,
+            "weight": 10
+          },
+          {
+            "stackSize": 4,
+            "weight": 4
+          },
+          {
+            "stackSize": 6,
+            "weight": 1
+          }
+        ],
+        "pTargetPerReel": 0.2,
+        "paytableByMatches": [
+          0,
+          0,
+          0,
+          1,
+          3,
+          10,
+          50,
+          200,
+          1000
+        ]
+      },
+      "closed_form": {
+        "expectedStackSize": 1.62,
+        "expectedStackSizeSquared": 3.5,
+        "expectedPayoutPerSpin": 4.233465882860287,
+        "variancePayoutPerSpin": 84533.60547285873,
+        "stdDevPayoutPerSpin": 290.7466344996254,
+        "hitRate": 0.20308224000000022,
+        "probAnyPayout": 0.20308224000000022,
+        "expectedMeanK": 1.6,
+        "matchCountPmf": [
+          0.16777216000000006,
+          0.33554432000000006,
+          0.2936012800000001,
+          0.14680064000000018,
+          0.045875200000000046,
+          0.009175040000000008,
+          0.0011468800000000016,
+          0.0000819200000000001,
+          0.0000025600000000000017
+        ],
+        "expectedWaysByK": [
+          1,
+          1.62,
+          2.6244000000000005,
+          4.251528,
+          6.887475360000002,
+          11.157710083200003,
+          18.075490334784007,
+          29.282294342350095,
+          47.43731683460715
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          0,
+          4.251528,
+          20.662426080000003,
+          111.57710083200003,
+          903.7745167392004,
+          5856.458868470019,
+          47437.316834607154
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 4.297049,
+        "observedVariancePayout": 33310.9449208916,
+        "observedStdDevPayout": 182.51286234370332,
+        "observedHitRate": 0.202852,
+        "observedMeanWays": 2.37568,
+        "observedMeanK": 1.599376,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.015019163706299745,
+        "hit_abs": 0.00023024000000021472,
+        "ek_rel": 0.0003900000000001125
+      },
+      "pass": true,
+      "elapsed_ms": 255
+    },
+    {
+      "name": "D_4reel_high_p",
+      "description": "4 reels, baseline stack, p=0.40 (frequent matches)",
+      "cfg": {
+        "numReels": 4,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 60
+          },
+          {
+            "stackSize": 2,
+            "weight": 25
+          },
+          {
+            "stackSize": 3,
+            "weight": 10
+          },
+          {
+            "stackSize": 4,
+            "weight": 4
+          },
+          {
+            "stackSize": 6,
+            "weight": 1
+          }
+        ],
+        "pTargetPerReel": 0.4,
+        "paytableByMatches": [
+          0,
+          0,
+          1,
+          5,
+          25
+        ]
+      },
+      "closed_form": {
+        "expectedStackSize": 1.62,
+        "expectedStackSizeSquared": 3.5,
+        "expectedPayoutPerSpin": 8.580150374400006,
+        "variancePayoutPerSpin": 2496.254619552685,
+        "stdDevPayoutPerSpin": 49.96253215713436,
+        "hitRate": 0.5248000000000002,
+        "probAnyPayout": 0.5248000000000002,
+        "expectedMeanK": 1.6,
+        "matchCountPmf": [
+          0.1296,
+          0.3455999999999999,
+          0.3456,
+          0.15360000000000007,
+          0.02560000000000002
+        ],
+        "expectedWaysByK": [
+          1,
+          1.62,
+          2.6244000000000005,
+          4.251528,
+          6.887475360000002
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          2.6244000000000005,
+          21.257640000000002,
+          172.18688400000005
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 8.600356,
+        "observedVariancePayout": 2703.099810673264,
+        "observedStdDevPayout": 51.99134361288679,
+        "observedHitRate": 0.52472,
+        "observedMeanWays": 2.299088,
+        "observedMeanK": 1.599819,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.002354926745838855,
+        "hit_abs": 0.00008000000000019103,
+        "ek_rel": 0.0001131249999999917
+      },
+      "pass": true,
+      "elapsed_ms": 148
+    },
+    {
+      "name": "E_capped_ways",
+      "description": "6 reels, baseline stack, p=0.30, maxWaysCap=20",
+      "cfg": {
+        "numReels": 6,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 60
+          },
+          {
+            "stackSize": 2,
+            "weight": 25
+          },
+          {
+            "stackSize": 3,
+            "weight": 10
+          },
+          {
+            "stackSize": 4,
+            "weight": 4
+          },
+          {
+            "stackSize": 6,
+            "weight": 1
+          }
+        ],
+        "pTargetPerReel": 0.3,
+        "paytableByMatches": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          25,
+          100
+        ],
+        "maxWaysCap": 20
+      },
+      "closed_form": {
+        "expectedStackSize": 1.62,
+        "expectedStackSizeSquared": 3.5,
+        "expectedPayoutPerSpin": 5.2497278346149985,
+        "variancePayoutPerSpin": 1792.6068122815673,
+        "stdDevPayoutPerSpin": 42.339187666765255,
+        "hitRate": 0.25568999999999986,
+        "probAnyPayout": 0.25568999999999986,
+        "expectedMeanK": 1.7999999999999998,
+        "matchCountPmf": [
+          0.11764899999999995,
+          0.30252599999999985,
+          0.32413499999999984,
+          0.1852199999999999,
+          0.05953499999999999,
+          0.010206,
+          0.0007289999999999992
+        ],
+        "expectedWaysByK": [
+          1,
+          1.62,
+          2.6195999999999997,
+          4.07918,
+          5.8981509999999995,
+          7.9005410000000005,
+          9.9125786
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          0,
+          4.07918,
+          29.490754999999996,
+          197.51352500000002,
+          991.2578599999999
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 5.207354,
+        "observedVariancePayout": 1726.645310318684,
+        "observedStdDevPayout": 41.55292180242785,
+        "observedHitRate": 0.255848,
+        "observedMeanWays": 2.530517,
+        "observedMeanK": 1.799448,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.008071625034654101,
+        "hit_abs": 0.00015800000000015801,
+        "ek_rel": 0.0003066666666666033
+      },
+      "pass": true,
+      "elapsed_ms": 213
+    },
+    {
+      "name": "F_full_match_bonus",
+      "description": "6 reels, baseline stack, p=0.30, bonusOnFullMatchX=5000",
+      "cfg": {
+        "numReels": 6,
+        "stackSizePmf": [
+          {
+            "stackSize": 1,
+            "weight": 60
+          },
+          {
+            "stackSize": 2,
+            "weight": 25
+          },
+          {
+            "stackSize": 3,
+            "weight": 10
+          },
+          {
+            "stackSize": 4,
+            "weight": 4
+          },
+          {
+            "stackSize": 6,
+            "weight": 1
+          }
+        ],
+        "pTargetPerReel": 0.3,
+        "paytableByMatches": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          25,
+          100
+        ],
+        "bonusOnFullMatchX": 5000
+      },
+      "closed_form": {
+        "expectedStackSize": 1.62,
+        "expectedStackSizeSquared": 3.5,
+        "expectedPayoutPerSpin": 10.64729021708223,
+        "variancePayoutPerSpin": 48271.153753840714,
+        "stdDevPayoutPerSpin": 219.70697247434072,
+        "hitRate": 0.25568999999999986,
+        "probAnyPayout": 0.25568999999999986,
+        "expectedMeanK": 1.7999999999999998,
+        "matchCountPmf": [
+          0.11764899999999995,
+          0.30252599999999985,
+          0.32413499999999984,
+          0.1852199999999999,
+          0.05953499999999999,
+          0.010206,
+          0.0007289999999999992
+        ],
+        "expectedWaysByK": [
+          1,
+          1.62,
+          2.6244000000000005,
+          4.251528,
+          6.887475360000002,
+          11.157710083200003,
+          18.075490334784007
+        ],
+        "expectedPayoutByK": [
+          0,
+          0,
+          0,
+          4.251528,
+          34.43737680000001,
+          278.9427520800001,
+          6807.549033478401
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 10.505474,
+        "observedVariancePayout": 42516.784196035325,
+        "observedStdDevPayout": 206.19598491734828,
+        "observedHitRate": 0.255848,
+        "observedMeanWays": 2.66681,
+        "observedMeanK": 1.799448,
+        "spins": 1000000
+      },
+      "checks": {
+        "ey_rel": 0.01331946572233973,
+        "hit_abs": 0.00015800000000015801,
+        "ek_rel": 0.0003066666666666033
+      },
+      "pass": true,
+      "elapsed_ms": 379
+    }
+  ]
+}

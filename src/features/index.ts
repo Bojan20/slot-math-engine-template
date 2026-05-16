@@ -42,3 +42,6 @@ export * from './stickyCashReveal.js';
 
 // W152 Wave 53: Walking-wild respin variant (Faza 12)
 export * from './walkingWildRespin.js';
+
+// W152 Wave 54: Megacluster stack-reveal ways hybrid (Faza 12)
+export * from './megaclusterStackWays.js';
