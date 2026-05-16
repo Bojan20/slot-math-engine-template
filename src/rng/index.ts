@@ -23,3 +23,6 @@ export { ChaCha20 } from './backends/ChaCha20.js';
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 export { createRng } from './RngFactory.js';
+
+// W152 Wave 55 — General Entropy Health Monitor (continuous sliding-window).
+export * from './entropyHealthMonitor.js';
