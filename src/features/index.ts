@@ -156,3 +156,6 @@ export * from './trailBonusTracker.js';
 
 // W152 Wave 146: Cascade Meter Charge-Up Trigger (Faza 12 ext, post-W100)
 export * from './cascadeMeterChargeUp.js';
+
+// W152 Wave 148: Max Win Cap Truncation Analyzer (Faza 12 ext, post-W100)
+export * from './maxWinCapTruncation.js';

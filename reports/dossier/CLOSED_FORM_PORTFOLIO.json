@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T10:55:53.902Z",
-  "solvers_total": 45,
-  "solvers_passed": 45,
+  "generated_utc": "2026-05-16T11:04:43.934Z",
+  "solvers_total": 46,
+  "solvers_passed": 46,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 45
+      "elapsed_ms": 43
     },
     {
       "wave": 50,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 50
+      "elapsed_ms": 51
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 37
+      "elapsed_ms": 35
     },
     {
       "wave": 55,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 57,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -139,7 +139,7 @@
       "cf": 1.6665,
       "mc": 1.6790952970006168,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 6
     },
     {
       "wave": 81,
@@ -175,7 +175,7 @@
       "cf": 13.25,
       "mc": 13.27215,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 91,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 97,
@@ -211,7 +211,7 @@
       "cf": 35.25,
       "mc": 35.14041666666663,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 101,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 102,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 107,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 116,
@@ -346,7 +346,7 @@
       "cf": 1.6666666666666665,
       "mc": 1.66926,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 134,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 136,
@@ -364,7 +364,7 @@
       "cf": 0.18,
       "mc": 0.17652,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 138,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 246
+      "elapsed_ms": 248
     },
     {
       "wave": 142,
@@ -409,7 +409,16 @@
       "cf": 0.03225806451612903,
       "mc": 0.03227666666666667,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
+    },
+    {
+      "wave": 148,
+      "solver": "Max Win Cap Truncation",
+      "metric": "E[Y_capped] per spin",
+      "cf": 20.48,
+      "mc": 20.24096,
+      "ok": true,
+      "elapsed_ms": 3
     }
   ]
 }

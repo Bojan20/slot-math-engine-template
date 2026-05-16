@@ -122,6 +122,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'trailBonusTracker.js'));
   const { solveCascadeMeterChargeUp, simulateCascadeMeterChargeUp } =
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMeterChargeUp.js'));
+  const { solveMaxWinCapTruncation, simulateMaxWinCapTruncation } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'maxWinCapTruncation.js'));
 
   const showcase = [];
 
@@ -932,6 +934,29 @@ async function main() {
       Math.max(cf.expectedFiresPerSpin, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 146, solver: 'Cascade Meter Charge-Up Trigger', metric: 'E[F] per spin', cf: cf.expectedFiresPerSpin, mc: mc.observedMeanFiresPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W148: Max Win Cap Truncation Analyzer ──────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      payoutPmf: [
+        { value: 0,    probability: 0.85 },
+        { value: 1,    probability: 0.08 },
+        { value: 10,   probability: 0.04 },
+        { value: 100,  probability: 0.02 },
+        { value: 1000, probability: 0.008 },
+        { value: 5000, probability: 0.001 },
+        { value: 50000, probability: 0.001 },
+      ],
+      maxWinCapX: 5000,
+    };
+    const cf = solveMaxWinCapTruncation(cfg);
+    const mc = simulateMaxWinCapTruncation(cfg, 200_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutCapped - mc.observedMeanPayoutCapped) /
+      Math.max(cf.expectedPayoutCapped, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 148, solver: 'Max Win Cap Truncation', metric: 'E[Y_capped] per spin', cf: cf.expectedPayoutCapped, mc: mc.observedMeanPayoutCapped, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
