@@ -135,3 +135,6 @@ export * from './freeSpinsBuyTierTradeOff.js';
 
 // W152 Wave 132: Multi-Level Wild Tier Markov (Faza 12 ext, post-W100)
 export * from './multiLevelWildMarkov.js';
+
+// W152 Wave 134: Hold-and-Win Multi-Tier Value-Based Jackpot (Faza 5 ext, post-W100)
+export * from './holdWinValueJackpot.js';

@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T08:30:54.159Z",
-  "solvers_total": 38,
-  "solvers_passed": 38,
+  "generated_utc": "2026-05-16T09:47:41.738Z",
+  "solvers_total": 39,
+  "solvers_passed": 39,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 43
+      "elapsed_ms": 46
     },
     {
       "wave": 50,
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 51,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 51
+      "elapsed_ms": 53
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 35
+      "elapsed_ms": 37
     },
     {
       "wave": 55,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 71
+      "elapsed_ms": 75
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 16
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 86,
@@ -166,7 +166,7 @@
       "cf": 3.907733333333334,
       "mc": 3.8499,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 89,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 97,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 105,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 58
+      "elapsed_ms": 52
     },
     {
       "wave": 112,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 114,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 127,
@@ -328,7 +328,7 @@
       "cf": 0.05792000000000003,
       "mc": 0.05868,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 130,
@@ -347,6 +347,15 @@
       "mc": 1.66926,
       "ok": true,
       "elapsed_ms": 3
+    },
+    {
+      "wave": 134,
+      "solver": "Hold-and-Win Multi-Tier Value Jackpot",
+      "metric": "E[filled] cells",
+      "cf": 8.28328283286117,
+      "mc": 8.3132,
+      "ok": true,
+      "elapsed_ms": 9
     }
   ]
 }

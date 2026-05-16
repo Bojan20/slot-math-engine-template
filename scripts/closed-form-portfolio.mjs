@@ -108,6 +108,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsBuyTierTradeOff.js'));
   const { solveMultiLevelWildMarkov, simulateMultiLevelWildMarkov } =
     await import(join(REPO_ROOT, 'dist', 'features', 'multiLevelWildMarkov.js'));
+  const { solveHoldWinValueJackpot, simulateHoldWinValueJackpot } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'holdWinValueJackpot.js'));
 
   const showcase = [];
 
@@ -758,6 +760,34 @@ async function main() {
     const mc = simulateMultiLevelWildMarkov(cfg, 50_000, SEED);
     const ok = relErr(cf.expectedMultiplierPerSpin, mc.observedMeanMultiplierPerSpin) < 0.10;
     showcase.push({ wave: 132, solver: 'Multi-Level Wild Tier Markov', metric: 'E[M] per spin', cf: cf.expectedMultiplierPerSpin, mc: mc.observedMeanMultiplierPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W134: Hold-and-Win Multi-Tier Value-Based Jackpot ──────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      gridCells: 15,
+      initialFilledCells: 6,
+      landingProbabilityPerCell: 0.05,
+      maxRespins: 3,
+      valuePmf: [
+        { value: 1,  probability: 0.50 },
+        { value: 2,  probability: 0.25 },
+        { value: 5,  probability: 0.15 },
+        { value: 10, probability: 0.08 },
+        { value: 50, probability: 0.02 },
+      ],
+      tiers: [
+        { label: 'mini',  thresholdX: 50,  bonusPayoutX: 100 },
+        { label: 'major', thresholdX: 200, bonusPayoutX: 500 },
+        { label: 'mega',  thresholdX: 500, bonusPayoutX: 5000 },
+      ],
+      fullGridBonusX: 10000,
+    };
+    const cf = solveHoldWinValueJackpot(cfg);
+    const mc = simulateHoldWinValueJackpot(cfg, 10_000, SEED);
+    const ok = Math.abs(cf.expectedFilledCount - mc.observedMeanFilledCount) < 0.3;
+    showcase.push({ wave: 134, solver: 'Hold-and-Win Multi-Tier Value Jackpot', metric: 'E[filled] cells', cf: cf.expectedFilledCount, mc: mc.observedMeanFilledCount, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
