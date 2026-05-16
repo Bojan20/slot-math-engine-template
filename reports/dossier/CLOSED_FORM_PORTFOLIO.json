@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T05:07:19.561Z",
-  "solvers_total": 21,
-  "solvers_passed": 21,
+  "generated_utc": "2026-05-16T05:14:45.498Z",
+  "solvers_total": 22,
+  "solvers_passed": 22,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 46
     },
     {
       "wave": 50,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 58,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 70
+      "elapsed_ms": 71
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 16
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 75,
@@ -175,7 +175,7 @@
       "cf": 13.25,
       "mc": 13.27215,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 91,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 93,
@@ -193,7 +193,16 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
+    },
+    {
+      "wave": 95,
+      "solver": "Ante Bet Trade-Off Analyzer",
+      "metric": "ante RTP",
+      "cf": 0.9720000000000001,
+      "mc": 0.9710220622221776,
+      "ok": true,
+      "elapsed_ms": 3
     }
   ]
 }

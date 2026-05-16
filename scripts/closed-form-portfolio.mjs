@@ -74,6 +74,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'coinAccumulatorMystery.js'));
   const { solveMultiplicativeWildStack, simulateMultiplicativeWildStack } =
     await import(join(REPO_ROOT, 'dist', 'features', 'multiplicativeWildStack.js'));
+  const { solveAnteBetTradeOff, simulateAnteBetTradeOff } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'anteBetTradeOff.js'));
 
   const showcase = [];
 
@@ -410,6 +412,22 @@ async function main() {
     showcase.push({ wave: 93, solver: 'Multiplicative Wild Stack Bonus', metric: 'E[Y] per spin', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W95: Ante Bet / Bet Boost Trade-Off ───────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      baseMeanWinPerSpinX: 0.96,
+      baseVarianceWinPerSpinX: 10,
+      antePremiumRatio: 0.25,
+      anteMeanWinPerSpinX: 1.215,
+      anteVarianceWinPerSpinX: 18,
+    };
+    const cf = solveAnteBetTradeOff(cfg);
+    const mc = simulateAnteBetTradeOff(cfg, 100_000, SEED);
+    const ok = relErr(cf.anteRtp, mc.anteObservedRtp) < 0.05;
+    showcase.push({ wave: 95, solver: 'Ante Bet Trade-Off Analyzer', metric: 'ante RTP', cf: cf.anteRtp, mc: mc.anteObservedRtp, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -428,7 +446,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 21 Closed-Form Math Kernels (Wave 49-93)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 22 Closed-Form Math Kernels (Wave 49-95)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -472,9 +490,10 @@ async function main() {
   md.push('- W86: Cascade Sequential Multiplier Pyramid — closed-form ladder × geometric cascade chain (acceptance script W87 — 25 vitest specs)');
   md.push('- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (acceptance script W90 — 28 vitest specs)');
   md.push('- W91: Coin Accumulator + Mystery Values — Money-Train-style Binomial coins × discrete mystery distribution (acceptance script W92 — 30 vitest specs)');
-  md.push('- W93: Multiplicative Wild Stack Bonus — Π M_i over Binomial wild reels; E[W]=(p·μ_M+1-p)^R (no acceptance script — 33 vitest specs)');
+  md.push('- W93: Multiplicative Wild Stack Bonus — Π M_i over Binomial wild reels; E[W]=(p·μ_M+1-p)^R (acceptance script W94 — 33 vitest specs)');
+  md.push('- W95: Ante Bet Trade-Off Analyzer — RTP comparison base vs ante; CLT crossover N* (no acceptance script — 27 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 18 dedicated solvers + 1 streaming compliance monitor + 6 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92).**');
+  md.push('**Aggregate ~30M MC verification across 19 dedicated solvers + 1 streaming compliance monitor + 7 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92, multiplicative wild stack W94).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 

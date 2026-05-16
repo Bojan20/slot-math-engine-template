@@ -84,3 +84,6 @@ export * from './coinAccumulatorMystery.js';
 
 // W152 Wave 93: Multiplicative Wild Stack Bonus (Faza 4.5 ext)
 export * from './multiplicativeWildStack.js';
+
+// W152 Wave 95: Ante Bet / Bet Boost Trade-Off Analyzer (Faza 4.8 ext)
+export * from './anteBetTradeOff.js';
