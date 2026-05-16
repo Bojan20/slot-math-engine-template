@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CLOSED_FORM_PORTFOLIO",
+  "generated_utc": "2026-05-16T03:06:03.699Z",
+  "solvers_total": 12,
+  "solvers_passed": 12,
+  "overall_pass": true,
+  "showcase": [
+    {
+      "wave": 49,
+      "solver": "N-tier H&W Jackpot Ladder",
+      "metric": "expectedTotalX",
+      "cf": 345.17012909371675,
+      "mc": 345.0901,
+      "ok": true,
+      "elapsed_ms": 44
+    },
+    {
+      "wave": 50,
+      "solver": "Charge Meter steady-state",
+      "metric": "RTP per spin",
+      "cf": 0.8500000000000001,
+      "mc": 0.848,
+      "ok": true,
+      "elapsed_ms": 2
+    },
+    {
+      "wave": 51,
+      "solver": "Supermeter state-switch",
+      "metric": "long-run RTP",
+      "cf": 0.9500000000013147,
+      "mc": 0.950963599998923,
+      "ok": true,
+      "elapsed_ms": 2
+    },
+    {
+      "wave": 52,
+      "solver": "Sticky Cash + Reveal Mult hybrid",
+      "metric": "E[Y] per episode",
+      "cf": 66.4347991098,
+      "mc": 66.97443333333334,
+      "ok": true,
+      "elapsed_ms": 56
+    },
+    {
+      "wave": 53,
+      "solver": "Walking-Wild Respin variant",
+      "metric": "E[Y] per episode",
+      "cf": 11.9,
+      "mc": 12.029133333333334,
+      "ok": true,
+      "elapsed_ms": 9
+    },
+    {
+      "wave": 54,
+      "solver": "Megacluster Stack-Reveal Ways",
+      "metric": "E[Y] per spin",
+      "cf": 7.002290217082233,
+      "mc": 7.270355,
+      "ok": true,
+      "elapsed_ms": 36
+    },
+    {
+      "wave": 55,
+      "solver": "Entropy Health Monitor (streaming)",
+      "metric": "healthy assessments",
+      "cf": 13,
+      "mc": 13,
+      "ok": true,
+      "elapsed_ms": 2
+    },
+    {
+      "wave": 56,
+      "solver": "Demo Mode Controller",
+      "metric": "auditor verify",
+      "cf": "OK",
+      "mc": "OK",
+      "ok": true,
+      "elapsed_ms": 1
+    },
+    {
+      "wave": 57,
+      "solver": "Crash-style Multiplier (target=10×)",
+      "metric": "RTP",
+      "cf": 0.99,
+      "mc": 0.9993,
+      "ok": true,
+      "elapsed_ms": 2
+    },
+    {
+      "wave": 58,
+      "solver": "Parallel Screens (3 shared, independent)",
+      "metric": "E[Y] per spin",
+      "cf": 3.3000000000000003,
+      "mc": 3.31502,
+      "ok": true,
+      "elapsed_ms": 5
+    },
+    {
+      "wave": 59,
+      "solver": "Class-II Bingo Coordinator (75-ball, 2 patterns)",
+      "metric": "hit rate",
+      "cf": 0.28041451809200957,
+      "mc": 0.2821,
+      "ok": true,
+      "elapsed_ms": 72
+    },
+    {
+      "wave": 60,
+      "solver": "Sticky-Cash Collector (N=200)",
+      "metric": "E[Y_N]",
+      "cf": 96.39037541405543,
+      "mc": 96.2746,
+      "ok": true,
+      "elapsed_ms": 14
+    }
+  ]
+}
