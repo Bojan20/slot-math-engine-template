@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 24 Industry-Firsts (Wave 33-97, all attested)
+## 🏆 28 Industry-Firsts (Wave 33-107, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -71,15 +71,19 @@ or in 5 years.
 | 93 | **Multiplicative Wild Stack Bonus** — NetEnt Hotline / Wanted Dead PRODUCT wilds: W=Π M_i over Binomial wild reels; **E[W]=(p·μ_M+1-p)^R** (interchange product); max combined = m_max^R | 6/6 configs × 100K episodes PASS (600K MC) |
 | 95 | **Ante Bet / Bet Boost Trade-Off Analyzer** — Pragmatic Ante / NetEnt Bet Boost decision math: base RTP=μ_0/1, **ante RTP=μ_a/(1+a)**; boost premium=(RTP_a−RTP_b)/RTP_b; **2-sigma crossover N\*=4σ²/μ_net²**; regulator-flag "player-trap" detection | 6/6 configs × 100K spins PASS (600K MC) |
 | 97 | **Free Spins Lookback Multiplier Aggregator** — Push Money Cart 4 / Hacksaw POST-HOC multiplier: S_K=Σ W_i, M~discrete; **E[Y]=μ_M·K·μ_W** (Wald-like); **Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M** | 6/6 configs × 100K episodes PASS (600K MC) |
+| 101 | **Symbol Upgrade Chain Markov** — Pragmatic / BTG / Push Gaming ladder: A~Binomial(K,p), F=min(A,L); **P(F=i)=C(K,i)·p^i·(1-p)^(K-i)** za i<L, P(F=L)=1−Σ; log-space PMF numerička stabilnost | 6/6 configs × 100K episodes PASS (600K MC) |
+| 102 | **Cluster Compound Variance** — Sweet Bonanza / Reactoonz / Jammin Jars Wald compound-sum: **E[Y_total]=E[N]·μ_Y**, **Var[Y_total]=E[N]·σ²_Y+Var[N]·μ²_Y**; 3 input modes (explicit / geometric / bridge) | 6/6 configs × 100K episodes PASS (600K MC) |
+| 105 | **Bonus Wheel + Respin Markov** — NetEnt / Pragmatic / IGT wheel features: N~shifted-geometric, **E[N]=1/(1-p_respin)**; conditional **μ_V = Σ p_i·v_i / (1-p_respin)**; tail P(N≥k)=p_respin^(k-1) | 6/6 configs × 100K episodes PASS (600K MC) |
+| 107 | **Pick Bonus N-Stage Tree** — NetEnt classic / Microgaming "pick til pop": L stages, per-stage outcomes p_advance/p_collect/p_end; **P(reach i)=Π advance_{j<i}**; **E[Y]=Σ P(reach i)·collect_i·v_i** | 6/6 configs × 100K episodes PASS (600K MC) |
 
-These twenty-four are deliberately vendor-disjoint. They exist in OUR engine
+These twenty-eight are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — 23 portfolio
-> solvers + 11 exact-enum fixtures + 48 commerce/cascade/jackpot/wild/coin configs =
-> **52 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — 27 portfolio
+> solvers + 11 exact-enum fixtures + 72 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick configs =
+> **56 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 

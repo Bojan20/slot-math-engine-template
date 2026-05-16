@@ -358,6 +358,54 @@ const WAVES = [
     }),
     industry_first: 'Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win).',
   },
+  {
+    wave: 101,
+    kimi: '—',
+    name: 'Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming ladder',
+    commit: 'f9e9fb0',
+    reportPath: 'reports/acceptance/SYMBOL_UPGRADE_CHAIN.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Closed-form Markov chain za sticky symbol upgrade kroz L+1 tier ladder: A ~ Binomial(K, p), final state F = min(A, L). P(F=i) = C(K,i)·p^i·(1-p)^(K-i) za i<L, P(F=L) = 1 − Σ_{i<L} P(F=i); E[Y]=Σ P(F=i)·v_i; log-space binomial PMF za numeričku stabilnost. Tail: P(reach top), P(stay at base)=(1-p)^K. No vendor publishes closed-form ladder Markov.',
+  },
+  {
+    wave: 102,
+    kimi: '—',
+    name: 'Cluster Compound Variance — Wald compound-sum identity',
+    commit: '87aacad',
+    reportPath: 'reports/acceptance/CLUSTER_COMPOUND_VARIANCE.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Closed-form Wald compound-sum identity za Sweet Bonanza / Reactoonz / Jammin Jars / Wild Swarm style: μ_Y = Σ clusterPmf[k]·paytable[k]; E[Y_total] = E[N]·μ_Y; **Var[Y_total] = E[N]·σ²_Y + Var[N]·μ²_Y**; 3 input modes (explicit chainPmf+clusterPmf, geometric pKill, bridge helper). No vendor publishes formal compound-sum decomposition for cluster cascade families.',
+  },
+  {
+    wave: 105,
+    kimi: '—',
+    name: 'Bonus Wheel + Respin Markov — shifted-geometric chain',
+    commit: '2ecc0f3',
+    reportPath: 'reports/acceptance/BONUS_WHEEL_RESPIN.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'NetEnt / Pragmatic / IGT wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget.',
+  },
+  {
+    wave: 107,
+    kimi: '—',
+    name: 'Pick Bonus N-Stage Tree — NetEnt classic / Microgaming "pick til pop"',
+    commit: '2ec7f20',
+    reportPath: 'reports/acceptance/PICK_BONUS_N_STAGE.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

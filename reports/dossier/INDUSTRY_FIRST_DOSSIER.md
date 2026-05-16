@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T05:27:27.572Z` · repo SHA: `36983540b266`
+> Generated: `2026-05-16T06:22:51.974Z` · repo SHA: `4399bd2d7c49`
 
-## Headline: **24/24 industry-firsts attested** ✅
+## Headline: **28/28 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -20,7 +20,7 @@
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 23/23 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 27/27 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
 | 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 | 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
 | 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
@@ -33,6 +33,10 @@
 | 93 | — | **Multiplicative Wild Stack Bonus — product moment formula** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/MULTIPLICATIVE_WILD_STACK.json`](../../reports/acceptance/MULTIPLICATIVE_WILD_STACK.md) |
 | 95 | — | **Ante Bet / Bet Boost Trade-Off Analyzer — decision math** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/ANTE_BET_TRADEOFF.json`](../../reports/acceptance/ANTE_BET_TRADEOFF.md) |
 | 97 | — | **Free Spins Lookback Multiplier Aggregator — Wald + compound variance** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json`](../../reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.md) |
+| 101 | — | **Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming ladder** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/SYMBOL_UPGRADE_CHAIN.json`](../../reports/acceptance/SYMBOL_UPGRADE_CHAIN.md) |
+| 102 | — | **Cluster Compound Variance — Wald compound-sum identity** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/CLUSTER_COMPOUND_VARIANCE.json`](../../reports/acceptance/CLUSTER_COMPOUND_VARIANCE.md) |
+| 105 | — | **Bonus Wheel + Respin Markov — shifted-geometric chain** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/BONUS_WHEEL_RESPIN.json`](../../reports/acceptance/BONUS_WHEEL_RESPIN.md) |
+| 107 | — | **Pick Bonus N-Stage Tree — NetEnt classic / Microgaming "pick til pop"** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/PICK_BONUS_N_STAGE.json`](../../reports/acceptance/PICK_BONUS_N_STAGE.md) |
 
 ## Why each is industry-first
 
@@ -115,7 +119,7 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
-- **Acceptance**: 23/23 closed-form solvers PASS in single runner
+- **Acceptance**: 27/27 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
@@ -203,6 +207,34 @@
 - **Industry-first claim**: Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win).
 - **Commit**: `3dbf42a`
 - **Detail**: `{"configs":[{"name":"A_money_cart_4_style","pass":true},{"name":"B_hacksaw_deterministic","pass":true},{"name":"C_low_K_high_mult_range","pass":true},{"name":"D_long_K_modest_mult","pass":true},{"name":"E_balanced_mid_vo`…
+
+### Wave 101 · Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming ladder (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Closed-form Markov chain za sticky symbol upgrade kroz L+1 tier ladder: A ~ Binomial(K, p), final state F = min(A, L). P(F=i) = C(K,i)·p^i·(1-p)^(K-i) za i<L, P(F=L) = 1 − Σ_{i<L} P(F=i); E[Y]=Σ P(F=i)·v_i; log-space binomial PMF za numeričku stabilnost. Tail: P(reach top), P(stay at base)=(1-p)^K. No vendor publishes closed-form ladder Markov.
+- **Commit**: `f9e9fb0`
+- **Detail**: `{"configs":[{"name":"A_pragmatic_6tier_K20","pass":true},{"name":"B_btg_aggressive_3tier_K8","pass":true},{"name":"C_high_p_short_K","pass":true},{"name":"D_long_K_low_p","pass":true},{"name":"E_p0_corner","pass":true},{`…
+
+### Wave 102 · Cluster Compound Variance — Wald compound-sum identity (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Closed-form Wald compound-sum identity za Sweet Bonanza / Reactoonz / Jammin Jars / Wild Swarm style: μ_Y = Σ clusterPmf[k]·paytable[k]; E[Y_total] = E[N]·μ_Y; **Var[Y_total] = E[N]·σ²_Y + Var[N]·μ²_Y**; 3 input modes (explicit chainPmf+clusterPmf, geometric pKill, bridge helper). No vendor publishes formal compound-sum decomposition for cluster cascade families.
+- **Commit**: `87aacad`
+- **Detail**: `{"configs":[{"name":"A_sweet_bonanza_geometric_pkill_0.5","pass":true},{"name":"B_reactoonz_long_chain_pkill_0.3","pass":true},{"name":"C_aggressive_short_chain_pkill_0.7","pass":true},{"name":"D_explicit_uniform_chain_p`…
+
+### Wave 105 · Bonus Wheel + Respin Markov — shifted-geometric chain (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: NetEnt / Pragmatic / IGT wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget.
+- **Commit**: `2ecc0f3`
+- **Detail**: `{"configs":[{"name":"A_netent_4tier_p30_respin","pass":true},{"name":"B_pragmatic_low_respin","pass":true},{"name":"C_high_respin_60pct","pass":true},{"name":"D_p_respin_0_no_loop","pass":true},{"name":"E_balanced_5tier_`…
+
+### Wave 107 · Pick Bonus N-Stage Tree — NetEnt classic / Microgaming "pick til pop" (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form.
+- **Commit**: `2ec7f20`
+- **Detail**: `{"configs":[{"name":"A_netent_classic_3tier","pass":true},{"name":"B_microgaming_5tier_grand","pass":true},{"name":"C_2tier_simple","pass":true},{"name":"D_single_stage_deterministic","pass":true},{"name":"E_high_end_low`…
 
 ## Auditor Q&A Map
 

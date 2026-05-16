@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T05:27:27.572Z",
-  "repo_sha": "36983540b2661b03f01071ee92e598c0e46afa4f",
+  "generatedAtUtc": "2026-05-16T06:22:51.974Z",
+  "repo_sha": "4399bd2d7c498448f8ae63d8178d3617404ac33b",
   "headline": {
-    "waves": 24,
-    "industry_firsts": 24,
+    "waves": 28,
+    "industry_firsts": 28,
     "all_present": true
   },
   "waves": [
@@ -331,8 +331,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T05:22:39.638Z",
-      "headline": "23/23 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T06:17:59.009Z",
+      "headline": "27/27 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -448,6 +448,26 @@
           {
             "wave": 97,
             "solver": "Free Spins Lookback Multiplier",
+            "ok": true
+          },
+          {
+            "wave": 101,
+            "solver": "Symbol Upgrade Chain Markov",
+            "ok": true
+          },
+          {
+            "wave": 102,
+            "solver": "Cluster Compound Variance",
+            "ok": true
+          },
+          {
+            "wave": 105,
+            "solver": "Bonus Wheel + Respin Markov",
+            "ok": true
+          },
+          {
+            "wave": 107,
+            "solver": "Pick Bonus N-Stage Tree",
             "ok": true
           }
         ]
@@ -963,6 +983,162 @@
         ]
       },
       "industry_first": "Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win)."
+    },
+    {
+      "wave": 101,
+      "kimi": "—",
+      "commit": "f9e9fb0",
+      "name": "Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming ladder",
+      "reportPath": "reports/acceptance/SYMBOL_UPGRADE_CHAIN.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:01:15.632Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_pragmatic_6tier_K20",
+            "pass": true
+          },
+          {
+            "name": "B_btg_aggressive_3tier_K8",
+            "pass": true
+          },
+          {
+            "name": "C_high_p_short_K",
+            "pass": true
+          },
+          {
+            "name": "D_long_K_low_p",
+            "pass": true
+          },
+          {
+            "name": "E_p0_corner",
+            "pass": true
+          },
+          {
+            "name": "F_p1_full_advance",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Closed-form Markov chain za sticky symbol upgrade kroz L+1 tier ladder: A ~ Binomial(K, p), final state F = min(A, L). P(F=i) = C(K,i)·p^i·(1-p)^(K-i) za i<L, P(F=L) = 1 − Σ_{i<L} P(F=i); E[Y]=Σ P(F=i)·v_i; log-space binomial PMF za numeričku stabilnost. Tail: P(reach top), P(stay at base)=(1-p)^K. No vendor publishes closed-form ladder Markov."
+    },
+    {
+      "wave": 102,
+      "kimi": "—",
+      "commit": "87aacad",
+      "name": "Cluster Compound Variance — Wald compound-sum identity",
+      "reportPath": "reports/acceptance/CLUSTER_COMPOUND_VARIANCE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:06:17.711Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_sweet_bonanza_geometric_pkill_0.5",
+            "pass": true
+          },
+          {
+            "name": "B_reactoonz_long_chain_pkill_0.3",
+            "pass": true
+          },
+          {
+            "name": "C_aggressive_short_chain_pkill_0.7",
+            "pass": true
+          },
+          {
+            "name": "D_explicit_uniform_chain_pmf",
+            "pass": true
+          },
+          {
+            "name": "E_pkill_1_immediate_kill",
+            "pass": true
+          },
+          {
+            "name": "F_pkill_0.1_extreme_long_tail",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Closed-form Wald compound-sum identity za Sweet Bonanza / Reactoonz / Jammin Jars / Wild Swarm style: μ_Y = Σ clusterPmf[k]·paytable[k]; E[Y_total] = E[N]·μ_Y; **Var[Y_total] = E[N]·σ²_Y + Var[N]·μ²_Y**; 3 input modes (explicit chainPmf+clusterPmf, geometric pKill, bridge helper). No vendor publishes formal compound-sum decomposition for cluster cascade families."
+    },
+    {
+      "wave": 105,
+      "kimi": "—",
+      "commit": "2ecc0f3",
+      "name": "Bonus Wheel + Respin Markov — shifted-geometric chain",
+      "reportPath": "reports/acceptance/BONUS_WHEEL_RESPIN.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:13:21.626Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_netent_4tier_p30_respin",
+            "pass": true
+          },
+          {
+            "name": "B_pragmatic_low_respin",
+            "pass": true
+          },
+          {
+            "name": "C_high_respin_60pct",
+            "pass": true
+          },
+          {
+            "name": "D_p_respin_0_no_loop",
+            "pass": true
+          },
+          {
+            "name": "E_balanced_5tier_p25",
+            "pass": true
+          },
+          {
+            "name": "F_extreme_long_tail_p75",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "NetEnt / Pragmatic / IGT wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget."
+    },
+    {
+      "wave": 107,
+      "kimi": "—",
+      "commit": "2ec7f20",
+      "name": "Pick Bonus N-Stage Tree — NetEnt classic / Microgaming \"pick til pop\"",
+      "reportPath": "reports/acceptance/PICK_BONUS_N_STAGE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:20:01.668Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_netent_classic_3tier",
+            "pass": true
+          },
+          {
+            "name": "B_microgaming_5tier_grand",
+            "pass": true
+          },
+          {
+            "name": "C_2tier_simple",
+            "pass": true
+          },
+          {
+            "name": "D_single_stage_deterministic",
+            "pass": true
+          },
+          {
+            "name": "E_high_end_low_advance",
+            "pass": true
+          },
+          {
+            "name": "F_aggressive_advance",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form."
     }
   ],
   "auditor_qa": [
