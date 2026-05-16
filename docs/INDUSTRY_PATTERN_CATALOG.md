@@ -1,12 +1,14 @@
-# Industry Pattern Catalog v2.1
+# Industry Pattern Catalog v2.2
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1 expansion).** Operator-facing catalog
-> of **35 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2 expansion).** Operator-facing catalog
+> of **36 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
 > - v2.1 (Wave 76) — adds 3 progressive-jackpot kernels landed in
 >   Wave 71, 72, 75 (Must-Hit-By, Pseudo-Must-Hit + Level, Multi-tier WAP + Wheel).
+> - v2.2 (Wave 83) — adds 1 commerce-side kernel landed in Wave 81/82
+>   (Bonus Buy / Feature Buy Variance Analyzer with CLT convergence).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -97,8 +99,19 @@ closes a previously-open ⚠️ acceptance row in the master TODO.
 | P-034 | **Pseudo-Must-Hit + Level Progression** | Escalating linear hazard `λ(pool) = λ_min + (λ_max−λ_min)·(pool−seed)/(softCap−seed)`; level Markov chain stationary `π_maxL = 1/(1+maxL·r), π_other = r·π_maxL` | `src/features/pseudoMustHitLevel.ts` | 20 vitest specs (Wave 72); portfolio entry W72 |
 | P-035 | **Multi-tier WAP Jackpot + Wheel** | Per-tier `λ_i = p_trigger·w_i/Σw`; **E[pool_i@hit] = seed_i + c_i/λ_i**; **E[payout_i/spin] = c_i + λ_i·seed_i**; normalized RTP share per tier | `src/features/multiTierWapWheel.ts` | 27 vitest specs (Wave 75); portfolio entry W75 |
 
+## Pattern Catalog v2.2 — Commerce-Side Math Kernels (Wave 81-82)
+
+This pattern targets the **buy-feature / feature-buy commerce family** —
+mechanics where the player exchanges a fixed cost for guaranteed feature
+entry. Solver provides RTP, variance, risk metrics, and CLT convergence
+required for jurisdictional disclosure (UKGC, MGA, AU).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-036 | **Bonus Buy / Feature Buy Variance Analyzer** | `E[Y]=Σp_i·payout_i`, `Var[Y]=E[Y²]−E[Y]²`, `RTP=E[Y]/C`, hit freq, win/loss ratio, **CLT convergence N\* = (z·√Var[Y]/(tol·C))²**, risk: P(bust), P(below cost), P(break-even) | `src/features/bonusBuyVariance.ts` | 29 vitest specs (Wave 81) + 6 PAR-style configs × 200K MC (Wave 82); portfolio entry W81 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 15 P-021..P-035 kernels in ~10 seconds and emits unified report
+all 16 P-021..P-036 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
