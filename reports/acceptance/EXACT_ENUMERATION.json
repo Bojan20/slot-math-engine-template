@@ -1,40 +1,112 @@
 {
   "schema_version": "1.0.0",
   "report_id": "EXACT_ENUMERATION",
-  "generated_utc": "2026-05-16T03:16:07.533Z",
+  "generated_utc": "2026-05-16T03:32:41.070Z",
   "method": "Direct analytical: per-cell weighted PMF × per-line enumeration over |symbols|^N combos.",
   "note": "Base-game RTP only (features contribution excluded). Exact within IEEE 754 precision.",
-  "mc_spins": 2000000,
+  "mc_spins": 1000000,
   "overall_pass": true,
-  "fixtures_total": 3,
-  "fixtures_passed": 3,
+  "fixtures_total": 11,
+  "fixtures_passed": 11,
   "fixtures": [
     {
       "fixture": "classic-3x3-lines",
       "exact_rtp": 0.5191663967174174,
-      "mc_rtp": 0.5195079000034911,
-      "mc_spins": 2000000,
-      "rel_err": 0.0006577915832630853,
+      "mc_rtp": 0.5200518999984858,
+      "mc_spins": 1000000,
+      "rel_err": 0.001705625184270893,
       "ok": true,
-      "elapsed_ms": 926
+      "elapsed_ms": 506
     },
     {
       "fixture": "3x5-5lines",
       "exact_rtp": 0.6980609418282547,
-      "mc_rtp": 0.6976597500064705,
-      "mc_spins": 2000000,
-      "rel_err": 0.0005747232050162823,
+      "mc_rtp": 0.6971010000013443,
+      "mc_spins": 1000000,
+      "rel_err": 0.0013751547599787778,
       "ok": true,
-      "elapsed_ms": 1239
+      "elapsed_ms": 680
     },
     {
       "fixture": "5x3-20lines",
-      "exact_rtp": 1.4469757173839128,
-      "mc_rtp": 1.446906,
-      "mc_spins": 2000000,
-      "rel_err": 0.00004818144705210533,
+      "exact_rtp": 3.195128102788596,
+      "mc_rtp": 3.1961022000101305,
+      "mc_spins": 1000000,
+      "rel_err": 0.000304869535804988,
       "ok": true,
-      "elapsed_ms": 3062
+      "elapsed_ms": 1771
+    },
+    {
+      "fixture": "5x4-25lines",
+      "exact_rtp": 8.435579825278522,
+      "mc_rtp": 8.433346399921925,
+      "mc_spins": 1000000,
+      "rel_err": 0.00026476251815005486,
+      "ok": true,
+      "elapsed_ms": 2219
+    },
+    {
+      "fixture": "fs-multiplier-ladder",
+      "exact_rtp": 2.3713567187741686,
+      "mc_rtp": 2.366658500001202,
+      "mc_spins": 1000000,
+      "rel_err": 0.001981236621116786,
+      "ok": true,
+      "elapsed_ms": 724
+    },
+    {
+      "fixture": "fs-retrigger",
+      "exact_rtp": 2.3713567187741686,
+      "mc_rtp": 2.366658500001202,
+      "mc_spins": 1000000,
+      "rel_err": 0.001981236621116786,
+      "ok": true,
+      "elapsed_ms": 722
+    },
+    {
+      "fixture": "fs-sticky-wilds",
+      "exact_rtp": 1.6871159650557055,
+      "mc_rtp": 1.688497100003632,
+      "mc_spins": 1000000,
+      "rel_err": 0.0008186366417799046,
+      "ok": true,
+      "elapsed_ms": 755
+    },
+    {
+      "fixture": "fs-expanding-wilds",
+      "exact_rtp": 2.3713567187741686,
+      "mc_rtp": 2.366658500001202,
+      "mc_spins": 1000000,
+      "rel_err": 0.001981236621116786,
+      "ok": true,
+      "elapsed_ms": 723
+    },
+    {
+      "fixture": "hnw-classic",
+      "exact_rtp": 1.5615534483598692,
+      "mc_rtp": 1.5625809000034583,
+      "mc_spins": 1000000,
+      "rel_err": 0.0006579676441227397,
+      "ok": true,
+      "elapsed_ms": 725
+    },
+    {
+      "fixture": "multiplier-wilds",
+      "exact_rtp": 1.2889744552967826,
+      "mc_rtp": 1.2874289000026267,
+      "mc_spins": 1000000,
+      "rel_err": 0.0011990581254770008,
+      "ok": true,
+      "elapsed_ms": 748
+    },
+    {
+      "fixture": "pick-bonus",
+      "exact_rtp": 1.5615534483598692,
+      "mc_rtp": 1.5625809000034583,
+      "mc_spins": 1000000,
+      "rel_err": 0.0006579676441227397,
+      "ok": true,
+      "elapsed_ms": 732
     }
   ]
 }
