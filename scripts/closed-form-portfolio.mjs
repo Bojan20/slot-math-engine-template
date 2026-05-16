@@ -126,6 +126,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'maxWinCapTruncation.js'));
   const { solveVoltageMeterMultiTier, simulateVoltageMeterMultiTier } =
     await import(join(REPO_ROOT, 'dist', 'features', 'voltageMeterMultiTier.js'));
+  const { solveBonusTriggerAwardStratification, simulateBonusTriggerAwardStratification } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerAwardStratification.js'));
 
   const showcase = [];
 
@@ -979,6 +981,27 @@ async function main() {
       Math.max(cf.expectedRewardPerSpin, 1e-9);
     const ok = rel < 0.06;
     showcase.push({ wave: 150, solver: 'Voltage Meter Multi-Tier', metric: 'E[R] per spin', cf: cf.expectedRewardPerSpin, mc: mc.observedMeanRewardPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W152: Bonus Trigger Award Tier Stratification ──────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      reelCount: 5,
+      scatterProbabilityPerReel: 0.15,
+      minScattersForTrigger: 3,
+      awardTiers: [
+        { scatterCount: 3, freeSpinsAward: 10 },
+        { scatterCount: 4, freeSpinsAward: 15 },
+        { scatterCount: 5, freeSpinsAward: 25 },
+      ],
+    };
+    const cf = solveBonusTriggerAwardStratification(cfg);
+    const mc = simulateBonusTriggerAwardStratification(cfg, 300_000, SEED);
+    const rel = Math.abs(cf.expectedFreeSpinsAwardedPerSpin - mc.observedMeanFreeSpinsAwardedPerSpin) /
+      Math.max(cf.expectedFreeSpinsAwardedPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 152, solver: 'Bonus Trigger Award Stratification', metric: 'E[FS]/spin', cf: cf.expectedFreeSpinsAwardedPerSpin, mc: mc.observedMeanFreeSpinsAwardedPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

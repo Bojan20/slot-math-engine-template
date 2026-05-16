@@ -162,3 +162,6 @@ export * from './maxWinCapTruncation.js';
 
 // W152 Wave 150: Voltage/XP Meter Multi-Tier Reward Levels (Faza 12 ext, post-W100)
 export * from './voltageMeterMultiTier.js';
+
+// W152 Wave 152: Bonus Trigger Award Tier Stratification (Faza 12 ext, post-W100)
+export * from './bonusTriggerAwardStratification.js';
