@@ -1,10 +1,10 @@
-# CLOSED_FORM_PORTFOLIO — 12 Closed-Form Math Kernels (Wave 49-60)
+# CLOSED_FORM_PORTFOLIO — 15 Closed-Form Math Kernels (Wave 49-75)
 
-Generated: `2026-05-16T03:50:40.711Z`
+Generated: `2026-05-16T03:58:46.899Z`
 
 ## Headline
 
-**14/14 solvers PASS** in single end-to-end runner.
+**15/15 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -27,6 +27,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 60 | Sticky-Cash Collector (N=200) | E[Y_N] | 96.39038 | 96.27460 | ✅ |
 | 71 | Must-Hit-By Jackpot | E[spins to trigger] | 225000.00000 | 226559.93130 | ✅ |
 | 72 | Pseudo-Must-Hit + Level Progression | E[payout]/spin | 59.16000 | 3.99161 | ✅ |
+| 75 | Multi-tier WAP Jackpot + Wheel | total RTP/spin | 1.66650 | 1.67910 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
@@ -46,5 +47,6 @@ Each wave has dedicated full acceptance script + report in `reports/acceptance/`
 - W60: `STICKY_CASH_COLLECTOR.{json,md}` — 6 configs × 10K episodes
 - W71: Must-Hit-By Jackpot — closed-form NIGC mystery progressive (no acceptance script — 14 vitest specs)
 - W72: Pseudo-Must-Hit + Level Progression — closed-form escalating hazard (no acceptance script — 20 vitest specs)
+- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (no acceptance script — 27 vitest specs)
 
-**Aggregate ~30M MC verification across 11 dedicated solvers + 1 streaming compliance monitor.**
+**Aggregate ~30M MC verification across 12 dedicated solvers + 1 streaming compliance monitor.**

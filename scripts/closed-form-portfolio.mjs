@@ -60,6 +60,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'mustHitByJackpot.js'));
   const { solvePseudoMustHit, simulatePseudoMustHit } =
     await import(join(REPO_ROOT, 'dist', 'features', 'pseudoMustHitLevel.js'));
+  const { solveMultiTierWapWheel, simulateMultiTierWapWheel } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'multiTierWapWheel.js'));
 
   const showcase = [];
 
@@ -271,6 +273,24 @@ async function main() {
     showcase.push({ wave: 72, solver: 'Pseudo-Must-Hit + Level Progression', metric: 'E[payout]/spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W75: Multi-tier WAP Jackpot + Wheel ────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      triggerProbabilityPerSpin: 0.01,
+      tiers: [
+        { id: 'MINI', seedX: 10, contributionPerSpinX: 0.0005, wheelWeight: 60 },
+        { id: 'MINOR', seedX: 50, contributionPerSpinX: 0.001, wheelWeight: 30 },
+        { id: 'MAJOR', seedX: 500, contributionPerSpinX: 0.002, wheelWeight: 9 },
+        { id: 'GRAND', seedX: 10000, contributionPerSpinX: 0.003, wheelWeight: 1 },
+      ],
+    };
+    const cf = solveMultiTierWapWheel(cfg);
+    const mc = simulateMultiTierWapWheel(cfg, 500_000, SEED);
+    const ok = relErr(cf.totalExpectedPayoutPerSpin, mc.observedTotalPayoutPerSpin) < 0.10;
+    showcase.push({ wave: 75, solver: 'Multi-tier WAP Jackpot + Wheel', metric: 'total RTP/spin', cf: cf.totalExpectedPayoutPerSpin, mc: mc.observedTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -289,7 +309,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 12 Closed-Form Math Kernels (Wave 49-60)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 15 Closed-Form Math Kernels (Wave 49-75)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -327,8 +347,9 @@ async function main() {
   md.push('- W60: `STICKY_CASH_COLLECTOR.{json,md}` — 6 configs × 10K episodes');
   md.push('- W71: Must-Hit-By Jackpot — closed-form NIGC mystery progressive (no acceptance script — 14 vitest specs)');
   md.push('- W72: Pseudo-Must-Hit + Level Progression — closed-form escalating hazard (no acceptance script — 20 vitest specs)');
+  md.push('- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (no acceptance script — 27 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 11 dedicated solvers + 1 streaming compliance monitor.**');
+  md.push('**Aggregate ~30M MC verification across 12 dedicated solvers + 1 streaming compliance monitor.**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 

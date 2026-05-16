@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "EXACT_ENUMERATION",
-  "generated_utc": "2026-05-16T03:32:41.070Z",
+  "generated_utc": "2026-05-16T03:35:24.502Z",
   "method": "Direct analytical: per-cell weighted PMF × per-line enumeration over |symbols|^N combos.",
   "note": "Base-game RTP only (features contribution excluded). Exact within IEEE 754 precision.",
   "mc_spins": 1000000,
@@ -16,7 +16,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.001705625184270893,
       "ok": true,
-      "elapsed_ms": 506
+      "elapsed_ms": 498
     },
     {
       "fixture": "3x5-5lines",
@@ -25,7 +25,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.0013751547599787778,
       "ok": true,
-      "elapsed_ms": 680
+      "elapsed_ms": 676
     },
     {
       "fixture": "5x3-20lines",
@@ -34,7 +34,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.000304869535804988,
       "ok": true,
-      "elapsed_ms": 1771
+      "elapsed_ms": 1759
     },
     {
       "fixture": "5x4-25lines",
@@ -43,7 +43,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.00026476251815005486,
       "ok": true,
-      "elapsed_ms": 2219
+      "elapsed_ms": 2222
     },
     {
       "fixture": "fs-multiplier-ladder",
@@ -52,7 +52,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.001981236621116786,
       "ok": true,
-      "elapsed_ms": 724
+      "elapsed_ms": 722
     },
     {
       "fixture": "fs-retrigger",
@@ -61,7 +61,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.001981236621116786,
       "ok": true,
-      "elapsed_ms": 722
+      "elapsed_ms": 724
     },
     {
       "fixture": "fs-sticky-wilds",
@@ -70,7 +70,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.0008186366417799046,
       "ok": true,
-      "elapsed_ms": 755
+      "elapsed_ms": 753
     },
     {
       "fixture": "fs-expanding-wilds",
@@ -79,7 +79,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.001981236621116786,
       "ok": true,
-      "elapsed_ms": 723
+      "elapsed_ms": 724
     },
     {
       "fixture": "hnw-classic",
@@ -88,7 +88,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.0006579676441227397,
       "ok": true,
-      "elapsed_ms": 725
+      "elapsed_ms": 727
     },
     {
       "fixture": "multiplier-wilds",
@@ -97,7 +97,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.0011990581254770008,
       "ok": true,
-      "elapsed_ms": 748
+      "elapsed_ms": 744
     },
     {
       "fixture": "pick-bonus",
@@ -106,7 +106,7 @@
       "mc_spins": 1000000,
       "rel_err": 0.0006579676441227397,
       "ok": true,
-      "elapsed_ms": 732
+      "elapsed_ms": 722
     }
   ]
 }

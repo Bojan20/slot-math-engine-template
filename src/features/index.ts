@@ -63,3 +63,6 @@ export * from './mustHitByJackpot.js';
 
 // W152 Wave 72: Pseudo-Must-Hit + Level Progression (Faza 12)
 export * from './pseudoMustHitLevel.js';
+
+// W152 Wave 75: Multi-tier WAP jackpot + wheel acceptance (Faza 4.6/5)
+export * from './multiTierWapWheel.js';
