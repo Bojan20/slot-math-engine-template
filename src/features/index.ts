@@ -147,3 +147,6 @@ export * from './tumbleMultiplierWithCap.js';
 
 // W152 Wave 140: Adjacent Pays Aggregator (Faza 12 ext, post-W100)
 export * from './adjacentPaysAggregator.js';
+
+// W152 Wave 142: Symbol Multiplier on Reel-Stop (Faza 12 ext, post-W100)
+export * from './symbolMultiplierReelStop.js';

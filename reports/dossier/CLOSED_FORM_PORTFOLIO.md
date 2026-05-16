@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-16T10:25:45.494Z`
+Generated: `2026-05-16T10:35:29.648Z`
 
 ## Headline
 
-**42/42 solvers PASS** in single end-to-end runner.
+**43/43 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -55,6 +55,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 136 | Locked/Held Reels During FS | E[retriggers] | 0.18000 | 0.17652 | ✅ |
 | 138 | Tumble Multiplier with Cap | E[Y] per spin | 5.05877 | 5.09678 | ✅ |
 | 140 | Adjacent Pays Aggregator | E[pay] per spin | 2.08556 | 2.08893 | ✅ |
+| 142 | Symbol Multiplier on Reel-Stop | E[Y] per spin | 15.22342 | 14.81615 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

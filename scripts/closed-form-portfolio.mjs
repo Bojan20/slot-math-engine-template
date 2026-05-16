@@ -116,6 +116,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'tumbleMultiplierWithCap.js'));
   const { solveAdjacentPaysAggregator, simulateAdjacentPaysAggregator } =
     await import(join(REPO_ROOT, 'dist', 'features', 'adjacentPaysAggregator.js'));
+  const { solveSymbolMultiplierReelStop, simulateSymbolMultiplierReelStop } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'symbolMultiplierReelStop.js'));
 
   const showcase = [];
 
@@ -853,6 +855,35 @@ async function main() {
       Math.max(cf.expectedPayPerSpin, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 140, solver: 'Adjacent Pays Aggregator', metric: 'E[pay] per spin', cf: cf.expectedPayPerSpin, mc: mc.observedMeanPayPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W142: Symbol Multiplier on Reel-Stop ───────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      positionCount: 30,
+      multiplierLandingProbability: 0.05,
+      aggregationMode: 'additive',
+      multiplierValuePmf: [
+        { value: 2,   probability: 0.50 },
+        { value: 3,   probability: 0.25 },
+        { value: 5,   probability: 0.15 },
+        { value: 10,  probability: 0.07 },
+        { value: 100, probability: 0.03 },
+      ],
+      baseWinPmf: [
+        { value: 0,  probability: 0.7 },
+        { value: 1,  probability: 0.2 },
+        { value: 5,  probability: 0.08 },
+        { value: 50, probability: 0.02 },
+      ],
+    };
+    const cf = solveSymbolMultiplierReelStop(cfg);
+    const mc = simulateSymbolMultiplierReelStop(cfg, 200_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.observedMeanPayoutPerSpin) /
+      Math.max(cf.expectedPayoutPerSpin, 1e-9);
+    const ok = rel < 0.06;
+    showcase.push({ wave: 142, solver: 'Symbol Multiplier on Reel-Stop', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
