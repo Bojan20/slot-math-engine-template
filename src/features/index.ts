@@ -72,3 +72,6 @@ export * from './bonusBuyVariance.js';
 
 // W152 Wave 84: Free Spins Retrigger Compound Variance (Faza 4.3 ext)
 export * from './freeSpinsRetriggerCompound.js';
+
+// W152 Wave 86: Cascade Sequential Multiplier Pyramid (Faza 12 ext)
+export * from './cascadeMultiplierPyramid.js';
