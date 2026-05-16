@@ -98,6 +98,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusCollectN.js'));
   const { solveCascadeMultiplierChain, simulateCascadeMultiplierChain } =
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMultiplierChain.js'));
+  const { solveMegaSymbolExpansion, simulateMegaSymbolExpansion } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'megaSymbolExpansion.js'));
 
   const showcase = [];
 
@@ -649,6 +651,32 @@ async function main() {
     const mc = simulateCascadeMultiplierChain(cfg, 50_000, SEED);
     const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
     showcase.push({ wave: 121, solver: 'Cascade Multiplier Chain', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W123: Mega Symbol Multi-Cell Expansion ─────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      countPmf: [
+        { count: 0, probability: 0.6 },
+        { count: 1, probability: 0.3 },
+        { count: 2, probability: 0.1 },
+      ],
+      sizePmf: [
+        { size: 1, probability: 0.5 },
+        { size: 2, probability: 0.3 },
+        { size: 3, probability: 0.2 },
+      ],
+      targetPmf: [
+        { label: 'low', payoutX: 5, probability: 0.6 },
+        { label: 'mid', payoutX: 25, probability: 0.3 },
+        { label: 'mega', payoutX: 200, probability: 0.1 },
+      ],
+    };
+    const cf = solveMegaSymbolExpansion(cfg);
+    const mc = simulateMegaSymbolExpansion(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
+    showcase.push({ wave: 123, solver: 'Mega Symbol Multi-Cell Expansion', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

@@ -120,3 +120,6 @@ export * from './bonusCollectN.js';
 
 // W152 Wave 121: Cascade Multiplier Chain (Faza 12 ext, post-W100)
 export * from './cascadeMultiplierChain.js';
+
+// W152 Wave 123: Mega Symbol Multi-Cell Expansion Aggregator (Faza 12 ext, post-W100)
+export * from './megaSymbolExpansion.js';

@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-16T07:31:58.442Z`
+Generated: `2026-05-16T07:42:44.102Z`
 
 ## Headline
 
-**33/33 solvers PASS** in single end-to-end runner.
+**34/34 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -46,6 +46,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 116 | Mystery Symbol Reveal Aggregator | E[Y] per spin | 38.32500 | 37.68944 | ✅ |
 | 118 | Bonus Collect-N Trigger Tracker | E[T_N] spins | 200.00000 | 199.02340 | ✅ |
 | 121 | Cascade Multiplier Chain | E[Y] per spin | 5.11111 | 5.20790 | ✅ |
+| 123 | Mega Symbol Multi-Cell Expansion | E[Y] per spin | 53.37500 | 54.27970 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
