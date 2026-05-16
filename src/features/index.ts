@@ -69,3 +69,6 @@ export * from './multiTierWapWheel.js';
 
 // W152 Wave 81: Bonus Buy / Feature Buy Variance Analyzer (Faza 4.7 ext)
 export * from './bonusBuyVariance.js';
+
+// W152 Wave 84: Free Spins Retrigger Compound Variance (Faza 4.3 ext)
+export * from './freeSpinsRetriggerCompound.js';

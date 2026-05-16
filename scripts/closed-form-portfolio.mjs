@@ -64,6 +64,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'multiTierWapWheel.js'));
   const { solveBonusBuyVariance, simulateBonusBuy } =
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusBuyVariance.js'));
+  const { solveFreeSpinsRetrigger, simulateFreeSpinsRetrigger } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsRetriggerCompound.js'));
 
   const showcase = [];
 
@@ -312,6 +314,21 @@ async function main() {
     showcase.push({ wave: 81, solver: 'Bonus Buy Variance Analyzer', metric: 'RTP / buy', cf: cf.effectiveRtp, mc: mc.observedRtp, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W84: Free Spins Retrigger Compound Variance ───────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      spinsPerBatchK: 10,
+      retriggerProbability: 0.20,
+      meanPayoutPerFreeSpinX: 1.5,
+      variancePayoutPerFreeSpinX: 25,
+    };
+    const cf = solveFreeSpinsRetrigger(cfg);
+    const mc = simulateFreeSpinsRetrigger(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedTotalPayoutX, mc.observedMeanPayoutX) < 0.05;
+    showcase.push({ wave: 84, solver: 'Free Spins Retrigger Compound', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -330,7 +347,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 16 Closed-Form Math Kernels (Wave 49-81)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 17 Closed-Form Math Kernels (Wave 49-84)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -369,9 +386,10 @@ async function main() {
   md.push('- W71: Must-Hit-By Jackpot — closed-form NIGC mystery progressive (no acceptance script — 14 vitest specs)');
   md.push('- W72: Pseudo-Must-Hit + Level Progression — closed-form escalating hazard (no acceptance script — 20 vitest specs)');
   md.push('- W75: Multi-tier WAP Jackpot + Wheel — closed-form multi-pool + wheel selection (acceptance script W77 — 27 vitest specs)');
-  md.push('- W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (no acceptance script — 29 vitest specs)');
+  md.push('- W81: Bonus Buy Variance Analyzer — closed-form RTP + variance + CLT convergence + loss prob (acceptance script W82 — 29 vitest specs)');
+  md.push('- W84: Free Spins Retrigger Compound — Wald + compound-sum variance over geometric batch chain (no acceptance script — 33 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 13 dedicated solvers + 1 streaming compliance monitor + jackpot trio acceptance (W77).**');
+  md.push('**Aggregate ~30M MC verification across 14 dedicated solvers + 1 streaming compliance monitor + jackpot trio acceptance (W77) + bonus-buy acceptance (W82).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 
