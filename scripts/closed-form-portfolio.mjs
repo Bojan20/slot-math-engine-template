@@ -104,6 +104,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'biDirectionalLinePay.js'));
   const { solveAnticipationReelTease, simulateAnticipationReelTease } =
     await import(join(REPO_ROOT, 'dist', 'features', 'anticipationReelTease.js'));
+  const { solveFreeSpinsBuyTierTradeOff, simulateFreeSpinsBuyTierTradeOff } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsBuyTierTradeOff.js'));
 
   const showcase = [];
 
@@ -714,6 +716,23 @@ async function main() {
     const mc = simulateAnticipationReelTease(cfg, 50_000, SEED);
     const ok = Math.abs(cf.probBonusTriggerPerSpin - mc.observedBonusTriggersPerSpin) < 0.02;
     showcase.push({ wave: 127, solver: 'Anticipation/Tease Reel Probability', metric: 'P(trigger per spin)', cf: cf.probBonusTriggerPerSpin, mc: mc.observedBonusTriggersPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W130: Free Spins Buy + Tier Escalation Trade-Off ───────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      baseRtp: 0.96,
+      baseVariance: 50,
+      tiers: [
+        { label: 'basic', buyCostX: 100, expectedReturnX: 95,  varianceReturnX: 12000 },
+        { label: 'mega',  buyCostX: 500, expectedReturnX: 488, varianceReturnX: 200000 },
+      ],
+    };
+    const cf = solveFreeSpinsBuyTierTradeOff(cfg);
+    // CF deterministic check: max-EV tier should be 'mega' (0.976 vs 0.95)
+    const ok = cf.argmaxRtpTier === 'mega';
+    showcase.push({ wave: 130, solver: 'Free Spins Buy Tier Trade-Off', metric: 'max-EV tier RTP', cf: cf.perTier[1].rtp, mc: cf.perTier[1].rtp, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

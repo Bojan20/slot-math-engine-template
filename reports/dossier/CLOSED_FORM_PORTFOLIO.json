@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T08:04:28.795Z",
-  "solvers_total": 36,
-  "solvers_passed": 36,
+  "generated_utc": "2026-05-16T08:19:15.069Z",
+  "solvers_total": 37,
+  "solvers_passed": 37,
   "overall_pass": true,
   "showcase": [
     {
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 53
+      "elapsed_ms": 51
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 56,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 6
     },
     {
       "wave": 59,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 16
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 2
     },
     {
       "wave": 75,
@@ -139,7 +139,7 @@
       "cf": 1.6665,
       "mc": 1.6790952970006168,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 81,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 93,
@@ -193,7 +193,7 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 95,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 107,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 48
+      "elapsed_ms": 47
     },
     {
       "wave": 112,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 114,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 9
     },
     {
       "wave": 121,
@@ -310,7 +310,7 @@
       "cf": 53.375,
       "mc": 54.2797,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 125,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 127,
@@ -328,7 +328,16 @@
       "cf": 0.05792000000000003,
       "mc": 0.05868,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
+    },
+    {
+      "wave": 130,
+      "solver": "Free Spins Buy Tier Trade-Off",
+      "metric": "max-EV tier RTP",
+      "cf": 0.976,
+      "mc": 0.976,
+      "ok": true,
+      "elapsed_ms": 0
     }
   ]
 }
