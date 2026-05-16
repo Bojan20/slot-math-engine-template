@@ -224,6 +224,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 142 Symbol Multiplier on Reel-Stop (W152 Wave 143)
   { kind: 'reports/acceptance', src: 'reports/acceptance/SYMBOL_MULT_REEL_STOP.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/SYMBOL_MULT_REEL_STOP.md' },
+  // REPORTS — Wave 144 Trail/Board Bonus Progression Tracker (W152 Wave 145)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TRAIL_BONUS_TRACKER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TRAIL_BONUS_TRACKER.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

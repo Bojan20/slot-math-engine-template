@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.29
+# Industry Pattern Catalog v2.30
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -46,6 +46,7 @@
 > - v2.27 (Wave 139) — adds 1 tumble multiplier with cap kernel landed in Wave 138/139 (NetEnt Gonzo's Quest 5× / BTG Bonanza 10× / Pragmatic Sweet Bonanza Xmas 100× cascade-with-ceiling)
 > - v2.28 (Wave 141) — adds 1 adjacent pays aggregator kernel landed in Wave 140/141 (Aristocrat Buffalo / Konami Roman Tribune / NextGen Foxin' Wins pay-anywhere-on-consecutive-reels family)
 > - v2.29 (Wave 143) — adds 1 symbol multiplier on reel-stop kernel landed in Wave 142/143 (Pragmatic Sweet Bonanza / Bigger Bass / Hacksaw RIP City / NetEnt Asgardian Stones random multiplier symbol landing additive vs multiplicative)
+> - v2.30 (Wave 145) — adds 1 trail/board bonus progression tracker kernel landed in Wave 144/145 (Konami Stairway to Heaven / IGT Wheel of Fortune Multi-Tier Trail / Microgaming Lord of the Rings / Inspired ladder climb sequential step-based progression sa step PMF + bust + end bonus)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -463,8 +464,22 @@ block).
 |----|---------|-------------|---------------|------------------|
 | P-063 | **Symbol Multiplier on Reel-Stop** | N positions, per-position P(land) = q (independent); value V ~ multiplierValuePmf when landed; configurable aggregation: **additive** T = max(1, Σ v_i), **multiplicative** T = Π v_i; **`E[T]_additive = (1−q)^N + N·q·μ_V`**; **`E[T]_multiplicative = (q·μ_V + (1−q))^N`**; E[T²] similarly closed-form; **`E[Y] = E[T]·μ_W`** (T ⊥ W); Var[Y] = σ_W²·E[T²] + μ_W²·Var[T]; P(any landing) = 1−(1−q)^N | `src/features/symbolMultiplierReelStop.ts` | 33 vitest specs (Wave 142) + 6 PAR-style configs × 200K spins (Wave 143); portfolio entry W142 |
 
+## Pattern Catalog v2.30 — Trail/Board Bonus Progression Tracker Kernel (Wave 144/145)
+
+This pattern targets the **trail/board sequential progression family** —
+Konami Stairway to Heaven, IGT Wheel of Fortune Multi-Tier Trail,
+Microgaming Lord of the Rings, Inspired ladder climb series, Bally Quick
+Hit Cash trail, IGT Mystical Mermaid. Linear trail positions {0..N};
+per pick advance Δ ~ stepPmf; per-position rewards + optional bust
+positions + end bonus. Distinct from W101 (count-based), W105 (wheel),
+W107 (tree branching), W118 (collect-N threshold), W134 (grid filling).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-064 | **Trail/Board Bonus Progression Tracker** | DP over (position, picksRemaining) state-space; V(p, r) = E[total reward \| start at p with r picks]; per step Δ → newPos = min(p+Δ, N); **end** → V = endBonusX, **bust** → V = 0, **advance** → V = stepReward + V(pNew, r-1); boundary r=0 → V = 0; second moment E[Y²] same DP pass → Var[Y]; plus **P_reach + P_bust + P_timeout = 1** invariant | `src/features/trailBonusTracker.ts` | 34 vitest specs (Wave 144) + 6 PAR-style configs × 100K episodes (Wave 145); portfolio entry W144 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 43 P-021..P-063 kernels in ~10 seconds and emits unified report
+all 44 P-021..P-064 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

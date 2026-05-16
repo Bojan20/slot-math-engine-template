@@ -1,0 +1,421 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "TRAIL_BONUS_TRACKER",
+  "generated_utc": "2026-05-16T10:50:36.611Z",
+  "episodes_per_config": 100000,
+  "seed": 3405644100,
+  "tolerances": {
+    "reward_rel": 0.04,
+    "reach_abs": 0.01,
+    "bust_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_konami_stairway_12_step",
+      "description": "Konami Stairway to Heaven 12-step trail w/ 1 bust @ 6",
+      "cfg": {
+        "trailLength": 12,
+        "maxPicks": 8,
+        "stepPmf": [
+          {
+            "step": 1,
+            "probability": 0.6
+          },
+          {
+            "step": 2,
+            "probability": 0.3
+          },
+          {
+            "step": 3,
+            "probability": 0.1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          2,
+          5,
+          10,
+          20,
+          50,
+          0,
+          100,
+          250,
+          500,
+          1000,
+          2000,
+          0
+        ],
+        "endBonusX": 5000,
+        "bustPositions": [
+          6
+        ]
+      },
+      "closed_form": {
+        "trailLength": 12,
+        "maxPicks": 8,
+        "expectedTotalRewardX": 2046.79816,
+        "varianceTotalRewardX": 9738376.045980614,
+        "probReachEnd": 0.23656607999999996,
+        "probBust": 0.6668559999999999,
+        "probTimeout": 0.0965779200000001,
+        "expectedFinalPosition": 7.854696959999999,
+        "expectedPicksUsed": 5.2958504
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 2023.16917,
+        "observedReachEndFraction": 0.23352,
+        "observedBustFraction": 0.66897,
+        "observedTimeoutFraction": 0.09751,
+        "observedMeanFinalPosition": 7.8394,
+        "observedMeanPicksUsed": 5.28704
+      },
+      "checks": {
+        "reward_rel": 0.011544367423117166,
+        "reach_abs": 0.003046079999999951,
+        "bust_abs": 0.0021140000000000603
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "B_igt_wof_multi_tier_trail_20step",
+      "description": "IGT Wheel of Fortune Multi-Tier Trail 20-step no bust",
+      "cfg": {
+        "trailLength": 20,
+        "maxPicks": 12,
+        "stepPmf": [
+          {
+            "step": 1,
+            "probability": 0.7
+          },
+          {
+            "step": 3,
+            "probability": 0.2
+          },
+          {
+            "step": 5,
+            "probability": 0.1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          8,
+          13,
+          21,
+          34,
+          55,
+          89,
+          144,
+          233,
+          377,
+          610,
+          987,
+          1597,
+          2584,
+          4181,
+          6765,
+          0
+        ],
+        "endBonusX": 10000,
+        "bustPositions": []
+      },
+      "closed_form": {
+        "trailLength": 20,
+        "maxPicks": 12,
+        "expectedTotalRewardX": 14804.690976935688,
+        "varianceTotalRewardX": 55118972.67703152,
+        "probReachEnd": 0.6948056702589996,
+        "probBust": 0,
+        "probTimeout": 0.30519432974100036,
+        "expectedFinalPosition": 18.92013747668,
+        "expectedPicksUsed": 10.83933156805
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 14767.51011,
+        "observedReachEndFraction": 0.69207,
+        "observedBustFraction": 0,
+        "observedTimeoutFraction": 0.30793,
+        "observedMeanFinalPosition": 18.91036,
+        "observedMeanPicksUsed": 10.8439
+      },
+      "checks": {
+        "reward_rel": 0.00251142472298902,
+        "reach_abs": 0.0027356702589996784,
+        "bust_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 22
+    },
+    {
+      "name": "C_microgaming_lotr_30step_deep",
+      "description": "Microgaming Lord of the Rings 30-step deep w/ 2 bust positions",
+      "cfg": {
+        "trailLength": 30,
+        "maxPicks": 20,
+        "stepPmf": [
+          {
+            "step": 1,
+            "probability": 0.4
+          },
+          {
+            "step": 2,
+            "probability": 0.3
+          },
+          {
+            "step": 3,
+            "probability": 0.2
+          },
+          {
+            "step": 5,
+            "probability": 0.1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120,
+          125,
+          130,
+          135,
+          140,
+          145,
+          150
+        ],
+        "endBonusX": 50000,
+        "bustPositions": [
+          10,
+          20
+        ]
+      },
+      "closed_form": {
+        "trailLength": 30,
+        "maxPicks": 20,
+        "expectedTotalRewardX": 14117.682915986194,
+        "varianceTotalRewardX": 512653518.2399694,
+        "probReachEnd": 0.2738314258869671,
+        "probBust": 0.7257286771322055,
+        "probTimeout": 0.00043989698082747,
+        "expectedFinalPosition": 17.95693316382129,
+        "expectedPicksUsed": 8.669370554013774
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 14058.65215,
+        "observedReachEndFraction": 0.27268,
+        "observedBustFraction": 0.72683,
+        "observedTimeoutFraction": 0.00049,
+        "observedMeanFinalPosition": 17.91793,
+        "observedMeanPicksUsed": 8.65676
+      },
+      "checks": {
+        "reward_rel": 0.004181335303922296,
+        "reach_abs": 0.0011514258869670946,
+        "bust_abs": 0.0011013228677945186
+      },
+      "pass": true,
+      "elapsed_ms": 28
+    },
+    {
+      "name": "D_inspired_ladder_climb_short",
+      "description": "Inspired ladder climb 5-step compact, deterministic step=1",
+      "cfg": {
+        "trailLength": 5,
+        "maxPicks": 5,
+        "stepPmf": [
+          {
+            "step": 1,
+            "probability": 1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          10,
+          25,
+          50,
+          100,
+          0
+        ],
+        "endBonusX": 500,
+        "bustPositions": []
+      },
+      "closed_form": {
+        "trailLength": 5,
+        "maxPicks": 5,
+        "expectedTotalRewardX": 685,
+        "varianceTotalRewardX": 0,
+        "probReachEnd": 1,
+        "probBust": 0,
+        "probTimeout": 0,
+        "expectedFinalPosition": 5,
+        "expectedPicksUsed": 5
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 685,
+        "observedReachEndFraction": 1,
+        "observedBustFraction": 0,
+        "observedTimeoutFraction": 0,
+        "observedMeanFinalPosition": 5,
+        "observedMeanPicksUsed": 5
+      },
+      "checks": {
+        "reward_rel": 0,
+        "reach_abs": 0,
+        "bust_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_corner_always_bust_at_first_advance",
+      "description": "Corner: every advancing position is bust → P_bust=1",
+      "cfg": {
+        "trailLength": 10,
+        "maxPicks": 5,
+        "stepPmf": [
+          {
+            "step": 1,
+            "probability": 1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          0
+        ],
+        "endBonusX": 100,
+        "bustPositions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      "closed_form": {
+        "trailLength": 10,
+        "maxPicks": 5,
+        "expectedTotalRewardX": 0,
+        "varianceTotalRewardX": 0,
+        "probReachEnd": 0,
+        "probBust": 1,
+        "probTimeout": 0,
+        "expectedFinalPosition": 1,
+        "expectedPicksUsed": 1
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 0,
+        "observedReachEndFraction": 0,
+        "observedBustFraction": 1,
+        "observedTimeoutFraction": 0,
+        "observedMeanFinalPosition": 1,
+        "observedMeanPicksUsed": 1
+      },
+      "checks": {
+        "reward_rel": 0,
+        "reach_abs": 0,
+        "bust_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_giant_step_reaches_end_p1",
+      "description": "Corner: single step = trailLength → P_reach=1 in 1 pick",
+      "cfg": {
+        "trailLength": 8,
+        "maxPicks": 5,
+        "stepPmf": [
+          {
+            "step": 8,
+            "probability": 1
+          }
+        ],
+        "positionRewardX": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "endBonusX": 1000,
+        "bustPositions": []
+      },
+      "closed_form": {
+        "trailLength": 8,
+        "maxPicks": 5,
+        "expectedTotalRewardX": 1000,
+        "varianceTotalRewardX": 0,
+        "probReachEnd": 1,
+        "probBust": 0,
+        "probTimeout": 0,
+        "expectedFinalPosition": 8,
+        "expectedPicksUsed": 1
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanTotalRewardX": 1000,
+        "observedReachEndFraction": 1,
+        "observedBustFraction": 0,
+        "observedTimeoutFraction": 0,
+        "observedMeanFinalPosition": 8,
+        "observedMeanPicksUsed": 1
+      },
+      "checks": {
+        "reward_rel": 0,
+        "reach_abs": 0,
+        "bust_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
