@@ -124,3 +124,26 @@ jobs:
           else
             echo "::warning::Parity fixture not yet wired — Faza 1.1 IR delivery"
           fi
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Closed-form math truth gate — Wave 49-68 solvers + exact enumeration
+  # Validates 12 closed-form solvers + 11 exact-enum fixtures on every
+  # push. If any solver drifts from MC or any exact RTP changes, CI fails.
+  # ─────────────────────────────────────────────────────────────────────
+  closed-form-truth:
+    name: Closed-form portfolio + exact enumeration
+    needs: [ts]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build TS
+        run: npm run build
+      - name: Closed-form portfolio (12/12 solvers, Wave 49-60)
+        run: npm run closed-form-portfolio
+      - name: Exact enumeration (11/11 fixtures, Wave 63/68)
+        run: npm run exact-enumeration
