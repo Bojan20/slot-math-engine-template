@@ -152,6 +152,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 89 Persistent Multiplier Accumulator (W152 Wave 90)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PERSISTENT_MULTIPLIER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PERSISTENT_MULTIPLIER.md' },
+  // REPORTS — Wave 91 Coin Accumulator + Mystery (W152 Wave 92)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/COIN_ACCUMULATOR_MYSTERY.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/COIN_ACCUMULATOR_MYSTERY.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },

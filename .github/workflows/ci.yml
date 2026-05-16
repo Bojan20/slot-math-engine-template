@@ -162,3 +162,5 @@ jobs:
         run: npm run cascade-multiplier-pyramid-acceptance
       - name: Persistent Multiplier acceptance (6/6 configs × 50K episodes, Wave 89/90)
         run: npm run persistent-multiplier-accumulator-acceptance
+      - name: Coin Accumulator + Mystery acceptance (6/6 configs × 100K episodes, Wave 91/92)
+        run: npm run coin-accumulator-mystery-acceptance

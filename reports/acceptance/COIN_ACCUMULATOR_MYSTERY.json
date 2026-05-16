@@ -1,0 +1,312 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "COIN_ACCUMULATOR_MYSTERY",
+  "generated_utc": "2026-05-16T05:02:04.016Z",
+  "episodes_per_config": 100000,
+  "seed": 3223177982,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.2,
+    "n_rel": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_money_train_classic",
+      "description": "Money-Train classic: K=8, q=0.3, 5-tier mystery values",
+      "cfg": {
+        "freeSpinsK": 8,
+        "coinLandingProbabilityPerSpin": 0.3,
+        "coinValueOutcomes": [
+          {
+            "label": "small",
+            "valueX": 1,
+            "weight": 60
+          },
+          {
+            "label": "mid",
+            "valueX": 5,
+            "weight": 25
+          },
+          {
+            "label": "big",
+            "valueX": 20,
+            "weight": 12
+          },
+          {
+            "label": "mini",
+            "valueX": 50,
+            "weight": 2
+          },
+          {
+            "label": "major",
+            "valueX": 500,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 2.4,
+        "varianceCoinsTotal": 1.68,
+        "expectedCoinValue": 10.25,
+        "varianceCoinValue": 2499.7875,
+        "expectedTotalPayoutX": 24.599999999999998,
+        "varianceTotalPayoutX": 6175.995,
+        "probZeroCoins": 0.05764800999999997,
+        "probAllCoins": 0.00006560999999999998,
+        "probAtLeastOneMaxValue": 0.023749506343587634
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 2.40725,
+        "observedMeanPayoutX": 25.15461,
+        "observedVariancePayoutX": 6406.8182057479,
+        "observedMaxValueCount": 2488
+      },
+      "checks": {
+        "ey_rel": 0.02254512195121967,
+        "var_rel": 0.03737425398626455,
+        "n_rel": 0.0030208333333333246
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "B_high_density_low_value",
+      "description": "High q=0.7, low value range — high RTP low variance",
+      "cfg": {
+        "freeSpinsK": 10,
+        "coinLandingProbabilityPerSpin": 0.7,
+        "coinValueOutcomes": [
+          {
+            "label": "a",
+            "valueX": 1,
+            "weight": 50
+          },
+          {
+            "label": "b",
+            "valueX": 2,
+            "weight": 30
+          },
+          {
+            "label": "c",
+            "valueX": 5,
+            "weight": 20
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 7,
+        "varianceCoinsTotal": 2.1000000000000005,
+        "expectedCoinValue": 2.1,
+        "varianceCoinValue": 2.29,
+        "expectedTotalPayoutX": 14.700000000000001,
+        "varianceTotalPayoutX": 25.291000000000004,
+        "probZeroCoins": 0.0000059049000000000085,
+        "probAllCoins": 0.02824752489999998,
+        "probAtLeastOneMaxValue": 0.7786984211119693
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 7.00294,
+        "observedMeanPayoutX": 14.72912,
+        "observedVariancePayoutX": 25.347884025599996,
+        "observedMaxValueCount": 140601
+      },
+      "checks": {
+        "ey_rel": 0.0019809523809523077,
+        "var_rel": 0.002249180562255016,
+        "n_rel": 0.00041999999999996006
+      },
+      "pass": true,
+      "elapsed_ms": 25
+    },
+    {
+      "name": "C_rare_grand_long_session",
+      "description": "K=15, rare q=0.15, grand multi-tier with heavy tail",
+      "cfg": {
+        "freeSpinsK": 15,
+        "coinLandingProbabilityPerSpin": 0.15,
+        "coinValueOutcomes": [
+          {
+            "label": "small",
+            "valueX": 1,
+            "weight": 70
+          },
+          {
+            "label": "mid",
+            "valueX": 10,
+            "weight": 20
+          },
+          {
+            "label": "big",
+            "valueX": 100,
+            "weight": 8
+          },
+          {
+            "label": "mega",
+            "valueX": 1000,
+            "weight": 2
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 2.25,
+        "varianceCoinsTotal": 1.9124999999999999,
+        "expectedCoinValue": 30.7,
+        "varianceCoinValue": 19878.21,
+        "expectedTotalPayoutX": 69.075,
+        "varianceTotalPayoutX": 46528.484625,
+        "probZeroCoins": 0.08735421910125167,
+        "probAllCoins": 4.3789389038085913e-13,
+        "probAtLeastOneMaxValue": 0.044067175161094374
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 2.24835,
+        "observedMeanPayoutX": 70.32939,
+        "observedVariancePayoutX": 47973.6835122279,
+        "observedMaxValueCount": 4626
+      },
+      "checks": {
+        "ey_rel": 0.0181598262757872,
+        "var_rel": 0.03106051913952492,
+        "n_rel": 0.0007333333333334006
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "D_short_session_high_q",
+      "description": "Short K=3, very high q=0.9 — guaranteed-ish coins",
+      "cfg": {
+        "freeSpinsK": 3,
+        "coinLandingProbabilityPerSpin": 0.9,
+        "coinValueOutcomes": [
+          {
+            "label": "x",
+            "valueX": 10,
+            "weight": 1
+          },
+          {
+            "label": "y",
+            "valueX": 50,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 2.7,
+        "varianceCoinsTotal": 0.26999999999999996,
+        "expectedCoinValue": 30,
+        "varianceCoinValue": 400,
+        "expectedTotalPayoutX": 81,
+        "varianceTotalPayoutX": 1323,
+        "probZeroCoins": 0.0009999999999999994,
+        "probAllCoins": 0.7290000000000001,
+        "probAtLeastOneMaxValue": 0.833625
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 2.69877,
+        "observedMeanPayoutX": 81.1337,
+        "observedVariancePayoutX": 1320.8497243099991,
+        "observedMaxValueCount": 135365
+      },
+      "checks": {
+        "ey_rel": 0.001650617283950674,
+        "var_rel": 0.0016253028647020813,
+        "n_rel": 0.00045555555555557936
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "E_q1_guaranteed",
+      "description": "q=1 deterministic coin landing every spin",
+      "cfg": {
+        "freeSpinsK": 5,
+        "coinLandingProbabilityPerSpin": 1,
+        "coinValueOutcomes": [
+          {
+            "label": "a",
+            "valueX": 5,
+            "weight": 60
+          },
+          {
+            "label": "b",
+            "valueX": 20,
+            "weight": 40
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 5,
+        "varianceCoinsTotal": 0,
+        "expectedCoinValue": 11,
+        "varianceCoinValue": 54,
+        "expectedTotalPayoutX": 55,
+        "varianceTotalPayoutX": 270,
+        "probZeroCoins": 0,
+        "probAllCoins": 1,
+        "probAtLeastOneMaxValue": 0.9222400000000001
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 5,
+        "observedMeanPayoutX": 55.01005,
+        "observedVariancePayoutX": 270.90214899750026,
+        "observedMaxValueCount": 200067
+      },
+      "checks": {
+        "ey_rel": 0.00018272727272726673,
+        "var_rel": 0.003341292583334305,
+        "n_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "F_q0_no_coins",
+      "description": "q=0 corner case — never lands, E[Y]=0",
+      "cfg": {
+        "freeSpinsK": 10,
+        "coinLandingProbabilityPerSpin": 0,
+        "coinValueOutcomes": [
+          {
+            "label": "x",
+            "valueX": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCoinsTotal": 0,
+        "varianceCoinsTotal": 0,
+        "expectedCoinValue": 100,
+        "varianceCoinValue": 0,
+        "expectedTotalPayoutX": 0,
+        "varianceTotalPayoutX": 0,
+        "probZeroCoins": 1,
+        "probAllCoins": 0,
+        "probAtLeastOneMaxValue": 0
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCoins": 0,
+        "observedMeanPayoutX": 0,
+        "observedVariancePayoutX": 0,
+        "observedMaxValueCount": 0
+      },
+      "checks": {
+        "ey_rel": 0,
+        "var_rel": 0,
+        "n_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.5
+# Industry Pattern Catalog v2.6
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5 expansion).** Operator-facing catalog
-> of **39 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6 expansion).** Operator-facing catalog
+> of **40 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -15,6 +15,8 @@
 >   (Cascade Sequential Multiplier Pyramid — geometric chain × ladder).
 > - v2.5 (Wave 90) — adds 1 sticky-multiplier kernel landed in Wave 89/90
 >   (Persistent Multiplier Accumulator — Binomial drop chain × running multiplier).
+> - v2.6 (Wave 92) — adds 1 coin-accumulator kernel landed in Wave 91/92
+>   (Money-Train-style Coin Accumulator with discrete mystery value distribution).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -148,8 +150,19 @@ applies to all subsequent spins in the session.
 |----|---------|-------------|---------------|------------------|
 | P-039 | **Persistent Multiplier Accumulator** | D_n ~ Binomial(n,q): `E[D_n]=n·q`, `Var[D_n]=n·q·(1-q)`; M_n = m_init + D_n·m_drop; **`E[Y] = μ_W · (K·m_init + q·m_drop · K(K+1)/2)`**; `Var[Y] = Σ Var[W_n·M_n] + 2·μ²·m_drop²·q(1-q)·Σ n·(K-n)`; tail `P(no drops)=(1-q)^K`, `P(all drops)=q^K` | `src/features/persistentMultiplierAccumulator.ts` | 28 vitest specs (Wave 89) + 6 PAR-style configs × 50K episodes (Wave 90); portfolio entry W89 |
 
+## Pattern Catalog v2.6 — Coin Accumulator Kernel (Wave 91-92)
+
+This pattern targets the **Money-Train-style coin accumulator family** —
+Relax / Hacksaw / similar features where each spin lands a coin symbol
+with probability q and the coin reveals a value drawn from a discrete
+mystery distribution (cash multi-tier + jackpot tiers).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-040 | **Coin Accumulator + Mystery Values** | N ~ Binomial(K, q): `E[N]=K·q`, `Var[N]=K·q·(1-q)`; mystery moments μ_V, σ²_V from discrete distribution; **`E[Y] = E[N]·μ_V` (Wald)**, `Var[Y] = E[N]·σ²_V + Var[N]·μ²_V` (compound-sum); **`P(≥1 max-value) = 1 − (1 − q·p_max)^K`** (Bernoulli-Binomial nesting) | `src/features/coinAccumulatorMystery.ts` | 30 vitest specs (Wave 91) + 6 PAR-style configs × 100K episodes (Wave 92); portfolio entry W91 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 19 P-021..P-039 kernels in ~10 seconds and emits unified report
+all 20 P-021..P-040 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
