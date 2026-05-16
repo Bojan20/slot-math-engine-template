@@ -36,6 +36,7 @@
     "walking-wild-respin-acceptance": "npm run build && node scripts/walking-wild-respin-acceptance.mjs",
     "megacluster-stack-ways-acceptance": "npm run build && node scripts/megacluster-stack-ways-acceptance.mjs",
     "entropy-health-monitor-acceptance": "npm run build && node scripts/entropy-health-monitor-acceptance.mjs",
+    "demo-mode-acceptance": "npm run build && node scripts/demo-mode-acceptance.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
     "test-coverage": "node scripts/test-coverage-report.mjs",
     "chi-squared-sizes": "node scripts/chi-squared-sizes-report.mjs",

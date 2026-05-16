@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "DEMO_MODE",
+  "generated_utc": "2026-05-16T02:30:17.854Z",
+  "overall_pass": true,
+  "scenarios_total": 6,
+  "scenarios_passed": 6,
+  "scenarios": [
+    {
+      "name": "A_basic_50_spins_halt",
+      "description": "50-spin script, cycleMode=halt, full playback",
+      "cycleMode": "halt",
+      "script_length": 50,
+      "attestation": {
+        "sessionId": "d3e8d9db-3592-dd79-c4a1-59d5bee58124",
+        "startTimestampMs": 1778898617851,
+        "scriptDigest": "409cfc780fdccede794e00a05ae7f48ebf344f3a51f0deb6782c7cb2b4b2c432",
+        "scriptLength": 50,
+        "cycleMode": "halt",
+        "metadata": {
+          "label": "A_basic_50_spins_halt",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 50,
+      "actually_served": 50,
+      "last_spin_id": "spin_0049",
+      "cycle_count": 0,
+      "audit_callback_count": 50,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "409cfc780fdccede794e00a05ae7f48ebf344f3a51f0deb6782c7cb2b4b2c432",
+        "recomputedScriptDigest": "409cfc780fdccede794e00a05ae7f48ebf344f3a51f0deb6782c7cb2b4b2c432",
+        "reportedAuditDigest": "332ba20e1bd836f27ffa8a4a8f46a07fe988a74d37b6e04ee454e1f4c9fbb05c",
+        "recomputedAuditDigest": "332ba20e1bd836f27ffa8a4a8f46a07fe988a74d37b6e04ee454e1f4c9fbb05c",
+        "errors": []
+      },
+      "tamper_test": null,
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": null
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "B_loop_3x_pass",
+      "description": "20-spin script, cycleMode=loop, 3 cycles = 60 spins",
+      "cycleMode": "loop",
+      "script_length": 20,
+      "attestation": {
+        "sessionId": "0c7dd30f-5d6e-eb29-1b4e-e13a9061b861",
+        "startTimestampMs": 1778898617852,
+        "scriptDigest": "1492b816057512e22bb51950983755d187955151edcae73c38a6cb8b3ae5c6ab",
+        "scriptLength": 20,
+        "cycleMode": "loop",
+        "metadata": {
+          "label": "B_loop_3x_pass",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 60,
+      "actually_served": 60,
+      "last_spin_id": "spin_0019",
+      "cycle_count": 2,
+      "audit_callback_count": 60,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "1492b816057512e22bb51950983755d187955151edcae73c38a6cb8b3ae5c6ab",
+        "recomputedScriptDigest": "1492b816057512e22bb51950983755d187955151edcae73c38a6cb8b3ae5c6ab",
+        "reportedAuditDigest": "5e0f3760f361c09558a5983624b30c86acfd612880e5bec9d8e8766ce3de6e37",
+        "recomputedAuditDigest": "5e0f3760f361c09558a5983624b30c86acfd612880e5bec9d8e8766ce3de6e37",
+        "errors": []
+      },
+      "tamper_test": null,
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": null
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "C_partial_halt",
+      "description": "100-spin script, halt mode, only 75 spins served (early termination)",
+      "cycleMode": "halt",
+      "script_length": 100,
+      "attestation": {
+        "sessionId": "3ea18dba-d8b1-7238-86aa-cc406773dc56",
+        "startTimestampMs": 1778898617853,
+        "scriptDigest": "0d1130b149e8db2c42adb1c6f27e25756eed09204ec929460543fe1513255fe7",
+        "scriptLength": 100,
+        "cycleMode": "halt",
+        "metadata": {
+          "label": "C_partial_halt",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 75,
+      "actually_served": 75,
+      "last_spin_id": "spin_0074",
+      "cycle_count": 0,
+      "audit_callback_count": 75,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "0d1130b149e8db2c42adb1c6f27e25756eed09204ec929460543fe1513255fe7",
+        "recomputedScriptDigest": "0d1130b149e8db2c42adb1c6f27e25756eed09204ec929460543fe1513255fe7",
+        "reportedAuditDigest": "eaff569575c693f6ca513ecf51ed4c787111aba0c52ccb12740e9cba03ea1e6c",
+        "recomputedAuditDigest": "eaff569575c693f6ca513ecf51ed4c787111aba0c52ccb12740e9cba03ea1e6c",
+        "errors": []
+      },
+      "tamper_test": null,
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": null
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "D_single_spin_loop",
+      "description": "Single-spin script in loop mode, 50 cycles",
+      "cycleMode": "loop",
+      "script_length": 1,
+      "attestation": {
+        "sessionId": "24de2b4a-ac8c-a7d9-82c8-7c8791495562",
+        "startTimestampMs": 1778898617854,
+        "scriptDigest": "689a3072b5ef1115be2b3e137a3ab7b1dbc0fc0624b3ed1581d9b9017a277cf9",
+        "scriptLength": 1,
+        "cycleMode": "loop",
+        "metadata": {
+          "label": "D_single_spin_loop",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 50,
+      "actually_served": 50,
+      "last_spin_id": "lone_jackpot",
+      "cycle_count": 49,
+      "audit_callback_count": 50,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "689a3072b5ef1115be2b3e137a3ab7b1dbc0fc0624b3ed1581d9b9017a277cf9",
+        "recomputedScriptDigest": "689a3072b5ef1115be2b3e137a3ab7b1dbc0fc0624b3ed1581d9b9017a277cf9",
+        "reportedAuditDigest": "3d07315767d62e96073def19f44bda47c950fcf962f9cd15c8df032e17aefa80",
+        "recomputedAuditDigest": "3d07315767d62e96073def19f44bda47c950fcf962f9cd15c8df032e17aefa80",
+        "errors": []
+      },
+      "tamper_test": null,
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": null
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "E_jackpot_demo_script",
+      "description": "Showcase script: 5 normal + 1 big-win + 5 normal + 1 jackpot (12 spins)",
+      "cycleMode": "halt",
+      "script_length": 12,
+      "attestation": {
+        "sessionId": "2e25fce9-719d-2572-c808-ec0caa10fd75",
+        "startTimestampMs": 1778898617854,
+        "scriptDigest": "1b9e8611b7c62f843a3ab6411705eb15e9b08d5c5ada637c148cf58ba73649b2",
+        "scriptLength": 12,
+        "cycleMode": "halt",
+        "metadata": {
+          "label": "E_jackpot_demo_script",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 12,
+      "actually_served": 12,
+      "last_spin_id": "showcase_jackpot",
+      "cycle_count": 0,
+      "audit_callback_count": 12,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "1b9e8611b7c62f843a3ab6411705eb15e9b08d5c5ada637c148cf58ba73649b2",
+        "recomputedScriptDigest": "1b9e8611b7c62f843a3ab6411705eb15e9b08d5c5ada637c148cf58ba73649b2",
+        "reportedAuditDigest": "0229319d389a1ef594ada1f231ad6a6e6f3c109b96f5163f696e09b0bd7e6a56",
+        "recomputedAuditDigest": "0229319d389a1ef594ada1f231ad6a6e6f3c109b96f5163f696e09b0bd7e6a56",
+        "errors": []
+      },
+      "tamper_test": null,
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": null
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "F_audit_tamper_detection",
+      "description": "30-spin script + auditor tampering test (mutated outcome must FAIL verify)",
+      "cycleMode": "halt",
+      "script_length": 30,
+      "attestation": {
+        "sessionId": "d5a52963-9453-e7a7-3a8e-7737c6e75af6",
+        "startTimestampMs": 1778898617854,
+        "scriptDigest": "a4ecbdebb0d50c594c2bb5c0e5fcc11d701405d586cea74ef3301900a7e9d032",
+        "scriptLength": 30,
+        "cycleMode": "halt",
+        "metadata": {
+          "label": "F_audit_tamper_detection",
+          "reason": "acceptance test"
+        }
+      },
+      "spins_to_serve": 30,
+      "actually_served": 30,
+      "last_spin_id": "spin_0029",
+      "cycle_count": 0,
+      "audit_callback_count": 30,
+      "verify_result": {
+        "ok": true,
+        "scriptDigestMatch": true,
+        "auditDigestMatch": true,
+        "outcomeMismatches": 0,
+        "reportedScriptDigest": "a4ecbdebb0d50c594c2bb5c0e5fcc11d701405d586cea74ef3301900a7e9d032",
+        "recomputedScriptDigest": "a4ecbdebb0d50c594c2bb5c0e5fcc11d701405d586cea74ef3301900a7e9d032",
+        "reportedAuditDigest": "69dd63f46562ef4e6b950ea9c424e13ddfcaa96f2e406ef8c2b691addeaf4df5",
+        "recomputedAuditDigest": "69dd63f46562ef4e6b950ea9c424e13ddfcaa96f2e406ef8c2b691addeaf4df5",
+        "errors": []
+      },
+      "tamper_test": {
+        "tampered_verify_ok_should_be_false": false,
+        "tamper_detected": true
+      },
+      "checks": {
+        "rng_blocked_during_session": true,
+        "served_count_matches": true,
+        "attestation_digest_valid": true,
+        "audit_digest_valid": true,
+        "auditor_verify_ok": true,
+        "audit_sink_called": true,
+        "tamper_detected": true
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    }
+  ]
+}
