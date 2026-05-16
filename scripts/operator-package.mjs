@@ -176,6 +176,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 107 Pick Bonus N-Stage Tree (W152 Wave 108)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_BONUS_N_STAGE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_BONUS_N_STAGE.md' },
+  // REPORTS — Wave 110 Bonus Trigger Wait Time Analyzer (W152 Wave 111)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_TRIGGER_WAIT_TIME.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_TRIGGER_WAIT_TIME.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

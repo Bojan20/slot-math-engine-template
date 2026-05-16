@@ -56,6 +56,7 @@
     "cluster-compound-variance-acceptance": "npm run build && node scripts/cluster-compound-variance-acceptance.mjs",
     "bonus-wheel-respin-acceptance": "npm run build && node scripts/bonus-wheel-respin-acceptance.mjs",
     "pick-bonus-n-stage-tree-acceptance": "npm run build && node scripts/pick-bonus-n-stage-tree-acceptance.mjs",
+    "bonus-trigger-wait-time-acceptance": "npm run build && node scripts/bonus-trigger-wait-time-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

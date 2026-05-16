@@ -178,3 +178,5 @@ jobs:
         run: npm run bonus-wheel-respin-acceptance
       - name: Pick Bonus N-Stage Tree acceptance (6/6 configs × 100K episodes, Wave 107/108)
         run: npm run pick-bonus-n-stage-tree-acceptance
+      - name: Bonus Trigger Wait Time acceptance (6/6 configs × 100K episodes, Wave 110/111)
+        run: npm run bonus-trigger-wait-time-acceptance

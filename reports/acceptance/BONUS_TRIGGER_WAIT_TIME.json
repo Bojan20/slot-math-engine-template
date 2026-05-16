@@ -1,0 +1,475 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BONUS_TRIGGER_WAIT_TIME",
+  "generated_utc": "2026-05-16T06:33:07.218Z",
+  "episodes_per_config": 100000,
+  "seed": 2960255511,
+  "tolerances": {
+    "e_per_feature_rel": 0.05,
+    "e_any_feature_rel": 0.05,
+    "median_rel": 0.1
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_typical_slot_3features",
+      "description": "Typical commercial slot: ~1/100 FS, ~1/500 wheel, ~1/2000 pick",
+      "cfg": {
+        "features": [
+          {
+            "label": "free_spins",
+            "triggerProbabilityPerSpin": 0.01
+          },
+          {
+            "label": "wheel_bonus",
+            "triggerProbabilityPerSpin": 0.002
+          },
+          {
+            "label": "pick_bonus",
+            "triggerProbabilityPerSpin": 0.0005
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.75,
+          0.95,
+          0.99
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "free_spins",
+            "triggerProbabilityPerSpin": 0.01,
+            "expectedWaitTime": 100,
+            "varianceWaitTime": 9900,
+            "stdWaitTime": 99.498743710662,
+            "medianWaitTime": 69,
+            "percentileWaitTimes": {
+              "0.5": 69,
+              "0.75": 138,
+              "0.95": 299,
+              "0.99": 459
+            }
+          },
+          {
+            "label": "wheel_bonus",
+            "triggerProbabilityPerSpin": 0.002,
+            "expectedWaitTime": 500,
+            "varianceWaitTime": 249500,
+            "stdWaitTime": 499.49974974968706,
+            "medianWaitTime": 347,
+            "percentileWaitTimes": {
+              "0.5": 347,
+              "0.75": 693,
+              "0.95": 1497,
+              "0.99": 2301
+            }
+          },
+          {
+            "label": "pick_bonus",
+            "triggerProbabilityPerSpin": 0.0005,
+            "expectedWaitTime": 2000,
+            "varianceWaitTime": 3998000.0000000005,
+            "stdWaitTime": 1999.4999374843703,
+            "medianWaitTime": 1386,
+            "percentileWaitTimes": {
+              "0.5": 1386,
+              "0.75": 2772,
+              "0.95": 5990,
+              "0.99": 9209
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.012474009999999924,
+        "expectedAnyFeatureWaitTime": 80.16668256639252,
+        "varianceAnyFeatureWaitTime": 6346.530311134351,
+        "medianAnyFeatureWaitTime": 56,
+        "expectedFeaturesTriggeredPerSpin": 0.0125,
+        "probMultipleFeaturesPerSpin": 0.000025979999999923772
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 79.88831,
+        "observedVarianceAnyFeatureWaitTime": 6273.9638753438985,
+        "observedMaxObserved": 883,
+        "observedPerFeatureMeanWaitTime": [
+          99.57091,
+          499.71295,
+          1999.10047
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.004290900000000022,
+        "any_feature_e_rel": 0.003472422176905933,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 1429
+    },
+    {
+      "name": "B_high_freq_single_feature",
+      "description": "High-frequency single feature, p=1/50 (frequent FS)",
+      "cfg": {
+        "features": [
+          {
+            "label": "free_spins",
+            "triggerProbabilityPerSpin": 0.02
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.95
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "free_spins",
+            "triggerProbabilityPerSpin": 0.02,
+            "expectedWaitTime": 50,
+            "varianceWaitTime": 2450,
+            "stdWaitTime": 49.49747468305833,
+            "medianWaitTime": 35,
+            "percentileWaitTimes": {
+              "0.5": 35,
+              "0.95": 149
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.020000000000000018,
+        "expectedAnyFeatureWaitTime": 49.99999999999996,
+        "varianceAnyFeatureWaitTime": 2449.9999999999955,
+        "medianAnyFeatureWaitTime": 35,
+        "expectedFeaturesTriggeredPerSpin": 0.02,
+        "probMultipleFeaturesPerSpin": 1.734723475976807e-17
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 49.93474,
+        "observedVarianceAnyFeatureWaitTime": 2424.6832811324,
+        "observedMaxObserved": 585,
+        "observedPerFeatureMeanWaitTime": [
+          49.93474
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.001305200000000042,
+        "any_feature_e_rel": 0.0013051999999991904,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 43
+    },
+    {
+      "name": "C_rare_jackpot_only",
+      "description": "Rare jackpot trigger p=1/10000 (long tail)",
+      "cfg": {
+        "features": [
+          {
+            "label": "jackpot",
+            "triggerProbabilityPerSpin": 0.0001
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.9,
+          0.95,
+          0.99
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "jackpot",
+            "triggerProbabilityPerSpin": 0.0001,
+            "expectedWaitTime": 10000,
+            "varianceWaitTime": 99990000,
+            "stdWaitTime": 9999.499987499375,
+            "medianWaitTime": 6932,
+            "percentileWaitTimes": {
+              "0.5": 6932,
+              "0.9": 23025,
+              "0.95": 29956,
+              "0.99": 46050
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.00009999999999998899,
+        "expectedAnyFeatureWaitTime": 10000.0000000011,
+        "varianceAnyFeatureWaitTime": 99990000.00002204,
+        "medianAnyFeatureWaitTime": 6932,
+        "expectedFeaturesTriggeredPerSpin": 0.0001,
+        "probMultipleFeaturesPerSpin": 0
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 9959.24722,
+        "observedVarianceAnyFeatureWaitTime": 99498269.99918227,
+        "observedMaxObserved": 121747,
+        "observedPerFeatureMeanWaitTime": [
+          9959.24722
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.004075278000000071,
+        "any_feature_e_rel": 0.004075278000109672,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 6668
+    },
+    {
+      "name": "D_5feature_clustered",
+      "description": "5 features clustered around p~0.01 (operator dashboard)",
+      "cfg": {
+        "features": [
+          {
+            "label": "feat_a",
+            "triggerProbabilityPerSpin": 0.012
+          },
+          {
+            "label": "feat_b",
+            "triggerProbabilityPerSpin": 0.01
+          },
+          {
+            "label": "feat_c",
+            "triggerProbabilityPerSpin": 0.008
+          },
+          {
+            "label": "feat_d",
+            "triggerProbabilityPerSpin": 0.006
+          },
+          {
+            "label": "feat_e",
+            "triggerProbabilityPerSpin": 0.004
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.95
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "feat_a",
+            "triggerProbabilityPerSpin": 0.012,
+            "expectedWaitTime": 83.33333333333333,
+            "varianceWaitTime": 6861.111111111111,
+            "stdWaitTime": 82.83182426526119,
+            "medianWaitTime": 58,
+            "percentileWaitTimes": {
+              "0.5": 58,
+              "0.95": 249
+            }
+          },
+          {
+            "label": "feat_b",
+            "triggerProbabilityPerSpin": 0.01,
+            "expectedWaitTime": 100,
+            "varianceWaitTime": 9900,
+            "stdWaitTime": 99.498743710662,
+            "medianWaitTime": 69,
+            "percentileWaitTimes": {
+              "0.5": 69,
+              "0.95": 299
+            }
+          },
+          {
+            "label": "feat_c",
+            "triggerProbabilityPerSpin": 0.008,
+            "expectedWaitTime": 125,
+            "varianceWaitTime": 15500,
+            "stdWaitTime": 124.49899597988733,
+            "medianWaitTime": 87,
+            "percentileWaitTimes": {
+              "0.5": 87,
+              "0.95": 373
+            }
+          },
+          {
+            "label": "feat_d",
+            "triggerProbabilityPerSpin": 0.006,
+            "expectedWaitTime": 166.66666666666666,
+            "varianceWaitTime": 27611.11111111111,
+            "stdWaitTime": 166.16591440819357,
+            "medianWaitTime": 116,
+            "percentileWaitTimes": {
+              "0.5": 116,
+              "0.95": 498
+            }
+          },
+          {
+            "label": "feat_e",
+            "triggerProbabilityPerSpin": 0.004,
+            "expectedWaitTime": 250,
+            "varianceWaitTime": 62250,
+            "stdWaitTime": 249.499498997493,
+            "medianWaitTime": 173,
+            "percentileWaitTimes": {
+              "0.5": 173,
+              "0.95": 748
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.039384623319040024,
+        "expectedAnyFeatureWaitTime": 25.3906198848057,
+        "varianceAnyFeatureWaitTime": 619.292958249885,
+        "medianAnyFeatureWaitTime": 18,
+        "expectedFeaturesTriggeredPerSpin": 0.039999999999999994,
+        "probMultipleFeaturesPerSpin": 0.000610770019840029
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 25.34499,
+        "observedVarianceAnyFeatureWaitTime": 622.2577318999,
+        "observedMaxObserved": 295,
+        "observedPerFeatureMeanWaitTime": [
+          83.26437,
+          99.52334,
+          125.4612,
+          165.55721,
+          249.88862
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.006656739999999957,
+        "any_feature_e_rel": 0.001797115825163777,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 678
+    },
+    {
+      "name": "E_two_feature_wide_spread",
+      "description": "Two features, wide-spread probabilities (1/50 vs 1/5000)",
+      "cfg": {
+        "features": [
+          {
+            "label": "common",
+            "triggerProbabilityPerSpin": 0.02
+          },
+          {
+            "label": "rare",
+            "triggerProbabilityPerSpin": 0.0002
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.95,
+          0.99
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "common",
+            "triggerProbabilityPerSpin": 0.02,
+            "expectedWaitTime": 50,
+            "varianceWaitTime": 2450,
+            "stdWaitTime": 49.49747468305833,
+            "medianWaitTime": 35,
+            "percentileWaitTimes": {
+              "0.5": 35,
+              "0.95": 149,
+              "0.99": 228
+            }
+          },
+          {
+            "label": "rare",
+            "triggerProbabilityPerSpin": 0.0002,
+            "expectedWaitTime": 5000,
+            "varianceWaitTime": 24995000,
+            "stdWaitTime": 4999.4999749974995,
+            "medianWaitTime": 3466,
+            "percentileWaitTimes": {
+              "0.5": 3466,
+              "0.95": 14978,
+              "0.99": 23024
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.020195999999999992,
+        "expectedAnyFeatureWaitTime": 49.51475539710836,
+        "varianceAnyFeatureWaitTime": 2402.196246638363,
+        "medianAnyFeatureWaitTime": 34,
+        "expectedFeaturesTriggeredPerSpin": 0.0202,
+        "probMultipleFeaturesPerSpin": 0.0000039999999999901226
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 49.38462,
+        "observedVarianceAnyFeatureWaitTime": 2397.2975474556006,
+        "observedMaxObserved": 609,
+        "observedPerFeatureMeanWaitTime": [
+          49.84788,
+          4996.25874
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.0030423999999999295,
+        "any_feature_e_rel": 0.002628214480000466,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 4040
+    },
+    {
+      "name": "F_deterministic_corner",
+      "description": "Edge: p=0.5 single feature (each spin coin-flip trigger)",
+      "cfg": {
+        "features": [
+          {
+            "label": "flip",
+            "triggerProbabilityPerSpin": 0.5
+          }
+        ],
+        "percentileTargets": [
+          0.5,
+          0.95
+        ]
+      },
+      "closed_form": {
+        "perFeature": [
+          {
+            "label": "flip",
+            "triggerProbabilityPerSpin": 0.5,
+            "expectedWaitTime": 2,
+            "varianceWaitTime": 2,
+            "stdWaitTime": 1.4142135623730951,
+            "medianWaitTime": 1,
+            "percentileWaitTimes": {
+              "0.5": 1,
+              "0.95": 5
+            }
+          }
+        ],
+        "anyFeatureTriggerProbability": 0.5,
+        "expectedAnyFeatureWaitTime": 2,
+        "varianceAnyFeatureWaitTime": 2,
+        "medianAnyFeatureWaitTime": 1,
+        "expectedFeaturesTriggeredPerSpin": 0.5,
+        "probMultipleFeaturesPerSpin": 0
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanAnyFeatureWaitTime": 2.00336,
+        "observedVarianceAnyFeatureWaitTime": 2.0147087104000008,
+        "observedMaxObserved": 18,
+        "observedPerFeatureMeanWaitTime": [
+          2.00336
+        ]
+      },
+      "checks": {
+        "max_per_feature_e_rel": 0.0016799999999999038,
+        "any_feature_e_rel": 0.0016799999999999038,
+        "median_structural_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    }
+  ]
+}

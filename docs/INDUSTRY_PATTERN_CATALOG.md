@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.13
+# Industry Pattern Catalog v2.14
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -30,6 +30,7 @@
 > - v2.12 (Wave 106) — adds 1 wheel-respin kernel landed in Wave 105/106
 >   (Bonus Wheel + Respin Markov — NetEnt / Pragmatic / IGT wheel features).
 > - v2.13 (Wave 108) — adds 1 pick-bonus tree kernel landed in Wave 107/108
+> - v2.14 (Wave 111) — adds 1 bonus-trigger wait-time kernel landed in Wave 110/111
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -254,8 +255,19 @@ where player advances through L stages with per-stage outcomes
 |----|---------|-------------|---------------|------------------|
 | P-047 | **Pick Bonus N-Stage Tree** | Stages 1..L, per-stage outcomes p_advance / p_collect / p_end (must sum to 1); **`P(reach i) = Π advance_{j<i}`**, P(reach 1)=1; **`P(collect at i) = P(reach i)·collect_i`**; **`E[Y] = Σ P(collect at i)·v_i`**; Var[Y] = Σ P(collect at i)·v_i² − E[Y]²; tail: P(reach top), P(collect anywhere), P(end with 0) | `src/features/pickBonusNStageTree.ts` | 26 vitest specs (Wave 107) + 6 PAR-style configs × 100K episodes (Wave 108); portfolio entry W107 |
 
+## Pattern Catalog v2.14 — Bonus Trigger Wait Time Kernel (Wave 110/111)
+
+This pattern targets the **bonus-trigger frequency disclosure family** —
+UKGC RTS 14 + MGA PPD §11.f compliance: median + 95th/99th percentile
+wait time per feature MUST match engine math so marketing claims like
+"~1 in 100 spins" don't mismatch the tail.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-048 | **Bonus Trigger Wait Time Analyzer** | T_i ~ shifted-geometric(p_i): **`E[T_i] = 1/p_i`**, Var[T_i] = (1−p_i)/p_i², Median = ⌈log(0.5)/log(1−p_i)⌉, **`Percentile_q = ⌈log(1−q)/log(1−p_i)⌉`**; any-feature: **`p_any = 1 − Π(1−p_i)`**, E[T_any] = 1/p_any; aggregate rate Σ p_i; P(multiple per spin) = 1 − P(0) − P(1) | `src/features/bonusTriggerWaitTime.ts` | 24 vitest specs (Wave 110) + 6 PAR-style configs × 100K episodes (Wave 111); portfolio entry W110 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 27 P-021..P-047 kernels in ~10 seconds and emits unified report
+all 28 P-021..P-048 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
