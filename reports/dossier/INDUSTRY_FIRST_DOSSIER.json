@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T06:22:51.974Z",
-  "repo_sha": "4399bd2d7c498448f8ae63d8178d3617404ac33b",
+  "generatedAtUtc": "2026-05-16T07:25:14.727Z",
+  "repo_sha": "99edb2cacf1f62f182c50de6b22195ea50b02c07",
   "headline": {
-    "waves": 28,
-    "industry_firsts": 28,
+    "waves": 33,
+    "industry_firsts": 33,
     "all_present": true
   },
   "waves": [
@@ -331,8 +331,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T06:17:59.009Z",
-      "headline": "27/27 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T07:17:47.563Z",
+      "headline": "32/32 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -468,6 +468,31 @@
           {
             "wave": 107,
             "solver": "Pick Bonus N-Stage Tree",
+            "ok": true
+          },
+          {
+            "wave": 110,
+            "solver": "Bonus Trigger Wait Time",
+            "ok": true
+          },
+          {
+            "wave": 112,
+            "solver": "Variable Reel Height Ways",
+            "ok": true
+          },
+          {
+            "wave": 114,
+            "solver": "Sticky Wild Countdown Multiplier",
+            "ok": true
+          },
+          {
+            "wave": 116,
+            "solver": "Mystery Symbol Reveal Aggregator",
+            "ok": true
+          },
+          {
+            "wave": 118,
+            "solver": "Bonus Collect-N Trigger Tracker",
             "ok": true
           }
         ]
@@ -1139,6 +1164,201 @@
         ]
       },
       "industry_first": "Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form."
+    },
+    {
+      "wave": 110,
+      "kimi": "—",
+      "commit": "ea519a7",
+      "name": "Bonus Trigger Wait Time Analyzer — UKGC RTS 14 + MGA PPD §11.f compliance",
+      "reportPath": "reports/acceptance/BONUS_TRIGGER_WAIT_TIME.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:33:07.219Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_typical_slot_3features",
+            "pass": true
+          },
+          {
+            "name": "B_high_freq_single_feature",
+            "pass": true
+          },
+          {
+            "name": "C_rare_jackpot_only",
+            "pass": true
+          },
+          {
+            "name": "D_5feature_clustered",
+            "pass": true
+          },
+          {
+            "name": "E_two_feature_wide_spread",
+            "pass": true
+          },
+          {
+            "name": "F_deterministic_corner",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Multi-feature bonus-trigger wait time closed-form: T_i ~ shifted-geometric(p_i) gives E[T_i]=1/p_i, Var[T_i]=(1-p_i)/p_i², Median=⌈log(0.5)/log(1-p_i)⌉, custom percentile k_q=⌈log(1-q)/log(1-p_i)⌉; any-feature combined p_any=1−Π(1-p_i), E[T_any]=1/p_any; aggregate rate Σ p_i; multi-feature simultaneous P(multiple)=1−P(0)−P(1). UKGC RTS 14 mandatory disclosure first published with auditor-pinnable closed-form across multi-feature trigger structures."
+    },
+    {
+      "wave": 112,
+      "kimi": "—",
+      "commit": "03fae66",
+      "name": "Variable Reel Height Ways — BTG Megaways patent EXPIRED 2023, clean-room naming",
+      "reportPath": "reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T06:48:13.515Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_6reel_uniform_2_7_megaways_classic",
+            "pass": true
+          },
+          {
+            "name": "B_6reel_weighted_skew_low",
+            "pass": true
+          },
+          {
+            "name": "C_6reel_weighted_skew_high",
+            "pass": true
+          },
+          {
+            "name": "D_5reel_fixed_edge_variable_middle",
+            "pass": true
+          },
+          {
+            "name": "E_4reel_dense_grid",
+            "pass": true
+          },
+          {
+            "name": "F_deterministic_corner",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Megaways-style variable reel height ways closed-form (BTG patent expired 2023, naming standardized \"variable reel height ways\"): per-reel H_i ~ discrete pmf, ways W = Π_i H_i cross-reel independence; E[W] = Π_i E[H_i], Var[W] = Π_i E[H_i²] − (Π_i E[H_i])²; sparse PMF via multiplicative convolution (Cartesian × value-merge); tail maxWays, probMaxWays = Π P(H_i=max), P(W ≥ threshold) for \"epic ways\" disclosure. First public auditor-verifiable closed-form post patent-expiration."
+    },
+    {
+      "wave": 114,
+      "kimi": "—",
+      "commit": "bf000a9",
+      "name": "Sticky Wild Countdown Multiplier — Markov stationary chain",
+      "reportPath": "reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:01:15.394Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_classic_linear_N4_step1",
+            "pass": true
+          },
+          {
+            "name": "B_pragmatic_hot_fiesta_geom_N6",
+            "pass": true
+          },
+          {
+            "name": "C_netent_vikings_N7_step1",
+            "pass": true
+          },
+          {
+            "name": "D_high_freq_short_N3",
+            "pass": true
+          },
+          {
+            "name": "E_rare_long_aggressive_geom",
+            "pass": true
+          },
+          {
+            "name": "F_corner_deterministic_constant",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre."
+    },
+    {
+      "wave": 116,
+      "kimi": "—",
+      "commit": "c982aeb",
+      "name": "Mystery Symbol Reveal Aggregator — Wald-style K ⊥ S decomposition",
+      "reportPath": "reports/acceptance/MYSTERY_SYMBOL_REVEAL.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:11:24.120Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_pragmatic_big_bass_classic",
+            "pass": true
+          },
+          {
+            "name": "B_wolf_gold_3tier_jackpot",
+            "pass": true
+          },
+          {
+            "name": "C_high_freq_low_value",
+            "pass": true
+          },
+          {
+            "name": "D_rare_jackpot_heavy_tail",
+            "pass": true
+          },
+          {
+            "name": "E_single_symbol_deterministic",
+            "pass": true
+          },
+          {
+            "name": "F_zero_count_corner",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / NetEnt Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika."
+    },
+    {
+      "wave": 118,
+      "kimi": "—",
+      "commit": "2cc56e6",
+      "name": "Bonus Collect-N Trigger Tracker — Negative Binomial NB(N, p)",
+      "reportPath": "reports/acceptance/BONUS_COLLECT_N.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:20:48.461Z",
+      "headline": "6/6 configs PASS at 50000 episodes each (300K MC episodes)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_money_cart_6coin",
+            "pass": true
+          },
+          {
+            "name": "B_money_train_12coin_retrigger",
+            "pass": true
+          },
+          {
+            "name": "C_rare_high_threshold",
+            "pass": true
+          },
+          {
+            "name": "D_high_freq_short_threshold",
+            "pass": true
+          },
+          {
+            "name": "E_geometric_corner_N1",
+            "pass": true
+          },
+          {
+            "name": "F_deterministic_p1",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku."
     }
   ],
   "auditor_qa": [

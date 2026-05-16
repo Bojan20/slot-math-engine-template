@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T06:22:51.974Z` · repo SHA: `4399bd2d7c49`
+> **Unified operator deliverable** — aggregates 33 industry-first acceptance proofs from Waves 33-118.
+> Generated: `2026-05-16T07:25:14.727Z` · repo SHA: `99edb2cacf1f`
 
-## Headline: **28/28 industry-firsts attested** ✅
+## Headline: **33/33 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -20,7 +20,7 @@
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 27/27 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 32/32 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
 | 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 | 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
 | 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
@@ -37,6 +37,11 @@
 | 102 | — | **Cluster Compound Variance — Wald compound-sum identity** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/CLUSTER_COMPOUND_VARIANCE.json`](../../reports/acceptance/CLUSTER_COMPOUND_VARIANCE.md) |
 | 105 | — | **Bonus Wheel + Respin Markov — shifted-geometric chain** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/BONUS_WHEEL_RESPIN.json`](../../reports/acceptance/BONUS_WHEEL_RESPIN.md) |
 | 107 | — | **Pick Bonus N-Stage Tree — NetEnt classic / Microgaming "pick til pop"** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/PICK_BONUS_N_STAGE.json`](../../reports/acceptance/PICK_BONUS_N_STAGE.md) |
+| 110 | — | **Bonus Trigger Wait Time Analyzer — UKGC RTS 14 + MGA PPD §11.f compliance** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/BONUS_TRIGGER_WAIT_TIME.json`](../../reports/acceptance/BONUS_TRIGGER_WAIT_TIME.md) |
+| 112 | — | **Variable Reel Height Ways — BTG Megaways patent EXPIRED 2023, clean-room naming** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.json`](../../reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.md) |
+| 114 | — | **Sticky Wild Countdown Multiplier — Markov stationary chain** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json`](../../reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.md) |
+| 116 | — | **Mystery Symbol Reveal Aggregator — Wald-style K ⊥ S decomposition** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/MYSTERY_SYMBOL_REVEAL.json`](../../reports/acceptance/MYSTERY_SYMBOL_REVEAL.md) |
+| 118 | — | **Bonus Collect-N Trigger Tracker — Negative Binomial NB(N, p)** | ✅ 6/6 configs PASS at 50000 episodes each (300K MC episodes) | [`reports/acceptance/BONUS_COLLECT_N.json`](../../reports/acceptance/BONUS_COLLECT_N.md) |
 
 ## Why each is industry-first
 
@@ -119,7 +124,7 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
-- **Acceptance**: 27/27 closed-form solvers PASS in single runner
+- **Acceptance**: 32/32 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
@@ -235,6 +240,41 @@
 - **Industry-first claim**: Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form.
 - **Commit**: `2ec7f20`
 - **Detail**: `{"configs":[{"name":"A_netent_classic_3tier","pass":true},{"name":"B_microgaming_5tier_grand","pass":true},{"name":"C_2tier_simple","pass":true},{"name":"D_single_stage_deterministic","pass":true},{"name":"E_high_end_low`…
+
+### Wave 110 · Bonus Trigger Wait Time Analyzer — UKGC RTS 14 + MGA PPD §11.f compliance (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Multi-feature bonus-trigger wait time closed-form: T_i ~ shifted-geometric(p_i) gives E[T_i]=1/p_i, Var[T_i]=(1-p_i)/p_i², Median=⌈log(0.5)/log(1-p_i)⌉, custom percentile k_q=⌈log(1-q)/log(1-p_i)⌉; any-feature combined p_any=1−Π(1-p_i), E[T_any]=1/p_any; aggregate rate Σ p_i; multi-feature simultaneous P(multiple)=1−P(0)−P(1). UKGC RTS 14 mandatory disclosure first published with auditor-pinnable closed-form across multi-feature trigger structures.
+- **Commit**: `ea519a7`
+- **Detail**: `{"configs":[{"name":"A_typical_slot_3features","pass":true},{"name":"B_high_freq_single_feature","pass":true},{"name":"C_rare_jackpot_only","pass":true},{"name":"D_5feature_clustered","pass":true},{"name":"E_two_feature_`…
+
+### Wave 112 · Variable Reel Height Ways — BTG Megaways patent EXPIRED 2023, clean-room naming (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Megaways-style variable reel height ways closed-form (BTG patent expired 2023, naming standardized "variable reel height ways"): per-reel H_i ~ discrete pmf, ways W = Π_i H_i cross-reel independence; E[W] = Π_i E[H_i], Var[W] = Π_i E[H_i²] − (Π_i E[H_i])²; sparse PMF via multiplicative convolution (Cartesian × value-merge); tail maxWays, probMaxWays = Π P(H_i=max), P(W ≥ threshold) for "epic ways" disclosure. First public auditor-verifiable closed-form post patent-expiration.
+- **Commit**: `03fae66`
+- **Detail**: `{"configs":[{"name":"A_6reel_uniform_2_7_megaways_classic","pass":true},{"name":"B_6reel_weighted_skew_low","pass":true},{"name":"C_6reel_weighted_skew_high","pass":true},{"name":"D_5reel_fixed_edge_variable_middle","pas`…
+
+### Wave 114 · Sticky Wild Countdown Multiplier — Markov stationary chain (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre.
+- **Commit**: `bf000a9`
+- **Detail**: `{"configs":[{"name":"A_classic_linear_N4_step1","pass":true},{"name":"B_pragmatic_hot_fiesta_geom_N6","pass":true},{"name":"C_netent_vikings_N7_step1","pass":true},{"name":"D_high_freq_short_N3","pass":true},{"name":"E_r`…
+
+### Wave 116 · Mystery Symbol Reveal Aggregator — Wald-style K ⊥ S decomposition (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / NetEnt Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika.
+- **Commit**: `c982aeb`
+- **Detail**: `{"configs":[{"name":"A_pragmatic_big_bass_classic","pass":true},{"name":"B_wolf_gold_3tier_jackpot","pass":true},{"name":"C_high_freq_low_value","pass":true},{"name":"D_rare_jackpot_heavy_tail","pass":true},{"name":"E_si`…
+
+### Wave 118 · Bonus Collect-N Trigger Tracker — Negative Binomial NB(N, p) (—)
+
+- **Acceptance**: 6/6 configs PASS at 50000 episodes each (300K MC episodes)
+- **Industry-first claim**: Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku.
+- **Commit**: `2cc56e6`
+- **Detail**: `{"configs":[{"name":"A_money_cart_6coin","pass":true},{"name":"B_money_train_12coin_retrigger","pass":true},{"name":"C_rare_high_threshold","pass":true},{"name":"D_high_freq_short_threshold","pass":true},{"name":"E_geome`…
 
 ## Auditor Q&A Map
 

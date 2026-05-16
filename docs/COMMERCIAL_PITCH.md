@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 28 Industry-Firsts (Wave 33-107, all attested)
+## 🏆 33 Industry-Firsts (Wave 33-118, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -75,8 +75,13 @@ or in 5 years.
 | 102 | **Cluster Compound Variance** — Sweet Bonanza / Reactoonz / Jammin Jars Wald compound-sum: **E[Y_total]=E[N]·μ_Y**, **Var[Y_total]=E[N]·σ²_Y+Var[N]·μ²_Y**; 3 input modes (explicit / geometric / bridge) | 6/6 configs × 100K episodes PASS (600K MC) |
 | 105 | **Bonus Wheel + Respin Markov** — NetEnt / Pragmatic / IGT wheel features: N~shifted-geometric, **E[N]=1/(1-p_respin)**; conditional **μ_V = Σ p_i·v_i / (1-p_respin)**; tail P(N≥k)=p_respin^(k-1) | 6/6 configs × 100K episodes PASS (600K MC) |
 | 107 | **Pick Bonus N-Stage Tree** — NetEnt classic / Microgaming "pick til pop": L stages, per-stage outcomes p_advance/p_collect/p_end; **P(reach i)=Π advance_{j<i}**; **E[Y]=Σ P(reach i)·collect_i·v_i** | 6/6 configs × 100K episodes PASS (600K MC) |
+| 110 | **Bonus Trigger Wait Time Analyzer** — UKGC RTS 14 + MGA PPD §11.f compliance: T_i ~ shifted-geometric(p_i), **E[T_i]=1/p_i**, **Median = ⌈log(0.5)/log(1-p_i)⌉**, percentile k_q; any-feature **p_any=1−Π(1-p_i)**; multi-feature P(multi)=1−P(0)−P(1) | 6/6 configs × 100K episodes PASS (600K MC) |
+| 112 | **Variable Reel Height Ways** — BTG Megaways patent EXPIRED 2023, clean-room: per-reel H_i ~ discrete pmf, **W=Π_i H_i** (cross-reel independence); **E[W]=Π_i E[H_i]**, **Var[W]=Π_i E[H_i²]−(Π_i E[H_i])²**; sparse PMF via multiplicative convolution | 6/6 configs × 100K episodes PASS (600K MC) |
+| 114 | **Sticky Wild Countdown Multiplier** — Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Wild Swarm Markov-chain stationary: **π_0=1/(1+Np)**, π_k=p/(1+Np); M_k linear or geometric; **E[Y per spin]=E[V]·E[M]** cross-independence | 6/6 configs × 100K spins PASS (600K MC) |
+| 116 | **Mystery Symbol Reveal Aggregator** — Pragmatic Big Bass / Wolf Gold / Wild-O-Tron Wald-style K ⊥ S: Y=K·paytable[S]; **E[Y]=E[K]·E[paytable[S]]**, **Var[Y]=E[K²]·E[paytable²]−E[K]²·E[paytable]²**; probFullGridMaxSymbol joint tail | 6/6 configs × 100K spins PASS (600K MC) |
+| 118 | **Bonus Collect-N Trigger Tracker** — Pragmatic Money Cart / Money Train / Wild Swarm Negative Binomial NB(N,p): **E[T_N]=N/p**, **Var[T_N]=N(1-p)/p²**; tail P(T_N>k)=P(C_k<N) via log-space Lanczos logGamma; CDF binary-search percentile | 6/6 configs × 50K episodes PASS (300K MC episodes) |
 
-These twenty-eight are deliberately vendor-disjoint. They exist in OUR engine
+These thirty-three are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**

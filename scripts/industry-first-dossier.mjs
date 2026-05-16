@@ -406,6 +406,66 @@ const WAVES = [
     }),
     industry_first: 'Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=Π advance_{j<i}; P(collect at i) = P(reach i)·collect_i; E[Y] = Σ P(collect at i)·v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form.',
   },
+  {
+    wave: 110,
+    kimi: '—',
+    name: 'Bonus Trigger Wait Time Analyzer — UKGC RTS 14 + MGA PPD §11.f compliance',
+    commit: 'ea519a7',
+    reportPath: 'reports/acceptance/BONUS_TRIGGER_WAIT_TIME.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Multi-feature bonus-trigger wait time closed-form: T_i ~ shifted-geometric(p_i) gives E[T_i]=1/p_i, Var[T_i]=(1-p_i)/p_i², Median=⌈log(0.5)/log(1-p_i)⌉, custom percentile k_q=⌈log(1-q)/log(1-p_i)⌉; any-feature combined p_any=1−Π(1-p_i), E[T_any]=1/p_any; aggregate rate Σ p_i; multi-feature simultaneous P(multiple)=1−P(0)−P(1). UKGC RTS 14 mandatory disclosure first published with auditor-pinnable closed-form across multi-feature trigger structures.',
+  },
+  {
+    wave: 112,
+    kimi: '—',
+    name: 'Variable Reel Height Ways — BTG Megaways patent EXPIRED 2023, clean-room naming',
+    commit: '03fae66',
+    reportPath: 'reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Megaways-style variable reel height ways closed-form (BTG patent expired 2023, naming standardized "variable reel height ways"): per-reel H_i ~ discrete pmf, ways W = Π_i H_i cross-reel independence; E[W] = Π_i E[H_i], Var[W] = Π_i E[H_i²] − (Π_i E[H_i])²; sparse PMF via multiplicative convolution (Cartesian × value-merge); tail maxWays, probMaxWays = Π P(H_i=max), P(W ≥ threshold) for "epic ways" disclosure. First public auditor-verifiable closed-form post patent-expiration.',
+  },
+  {
+    wave: 114,
+    kimi: '—',
+    name: 'Sticky Wild Countdown Multiplier — Markov stationary chain',
+    commit: 'bf000a9',
+    reportPath: 'reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre.',
+  },
+  {
+    wave: 116,
+    kimi: '—',
+    name: 'Mystery Symbol Reveal Aggregator — Wald-style K ⊥ S decomposition',
+    commit: 'c982aeb',
+    reportPath: 'reports/acceptance/MYSTERY_SYMBOL_REVEAL.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / NetEnt Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika.',
+  },
+  {
+    wave: 118,
+    kimi: '—',
+    name: 'Bonus Collect-N Trigger Tracker — Negative Binomial NB(N, p)',
+    commit: '2cc56e6',
+    reportPath: 'reports/acceptance/BONUS_COLLECT_N.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC episodes)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
@@ -426,7 +486,7 @@ const AUDITOR_QA = [
 function main() {
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
 
-  console.log('Industry-First Acceptance Dossier — aggregating Waves 33-40');
+  console.log('Industry-First Acceptance Dossier — aggregating Waves 33-118');
   console.log();
 
   const waves = [];
@@ -524,7 +584,7 @@ function renderMd(j) {
   const out = [];
   out.push('# Industry-First Acceptance Dossier');
   out.push('');
-  out.push(`> **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.`);
+  out.push(`> **Unified operator deliverable** — aggregates 33 industry-first acceptance proofs from Waves 33-118.`);
   out.push(`> Generated: \`${j.generatedAtUtc}\` · repo SHA: \`${j.repo_sha.slice(0, 12)}\``);
   out.push('');
   out.push(`## Headline: **${j.headline.industry_firsts}/${j.headline.waves} industry-firsts attested** ${j.headline.all_present ? '✅' : '⚠️'}`);
