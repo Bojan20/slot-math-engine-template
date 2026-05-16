@@ -154,3 +154,5 @@ jobs:
         run: npm run pseudo-must-hit-level-acceptance
       - name: Multi-tier WAP + Wheel acceptance (6/6 configs × 2M spins, Wave 75/77)
         run: npm run multi-tier-wap-wheel-acceptance
+      - name: Bonus Buy Variance acceptance (6/6 configs × 200K buys, Wave 81/82)
+        run: npm run bonus-buy-variance-acceptance

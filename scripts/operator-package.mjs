@@ -140,6 +140,9 @@ const PACKAGE_FILES = [
   { kind: 'reports/acceptance', src: 'reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_TIER_WAP_WHEEL.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_TIER_WAP_WHEEL.md' },
+  // REPORTS — Wave 81/82 Bonus Buy Variance Analyzer (W152 Wave 82)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_BUY_VARIANCE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_BUY_VARIANCE.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },

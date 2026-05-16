@@ -1,0 +1,369 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BONUS_BUY_VARIANCE",
+  "generated_utc": "2026-05-16T04:27:17.774Z",
+  "buys_per_config": 200000,
+  "seed": 3133078222,
+  "tolerances": {
+    "rtp_rel": 0.1,
+    "var_rel": 0.1,
+    "hit_rel": 0.1
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_typical_pragmatic_style",
+      "description": "Typical 100× cost, RTP ≈ 0.73, hit ≈ 50%",
+      "cfg": {
+        "costPerBuyX": 100,
+        "outcomes": [
+          {
+            "label": "0x",
+            "payoutX": 0,
+            "probability": 0.5
+          },
+          {
+            "label": "30x",
+            "payoutX": 30,
+            "probability": 0.2
+          },
+          {
+            "label": "80x",
+            "payoutX": 80,
+            "probability": 0.15
+          },
+          {
+            "label": "150x",
+            "payoutX": 150,
+            "probability": 0.08
+          },
+          {
+            "label": "300x",
+            "payoutX": 300,
+            "probability": 0.05
+          },
+          {
+            "label": "1000x",
+            "payoutX": 1000,
+            "probability": 0.018
+          },
+          {
+            "label": "maxwin",
+            "payoutX": 5000,
+            "probability": 0.002
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 73,
+        "varianceOutcomeX": 70111,
+        "stdOutcomeX": 264.7848182959136,
+        "effectiveRtp": 0.73,
+        "houseEdge": 0.27,
+        "hitFrequency": 0.5,
+        "maxPayoutX": 5000,
+        "winLossRatio": 50,
+        "requiredBuysForConvergence": 269339,
+        "probZeroPayout": 0.5,
+        "probBelowCost": 0.85,
+        "probBreakEven": 0.15
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 0.729668,
+        "observedVariance": 69585.50009776,
+        "observedHitFreq": 0.500725,
+        "observedMaxPayoutX": 5000
+      },
+      "checks": {
+        "rtp_rel": 0.0004547945205479438,
+        "var_rel": 0.007495256125857578,
+        "hit_rel": 0.0014499999999999513
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_high_volatility_maxwin_chase",
+      "description": "High-volatility: 95% bust, 5% maxwin 10000x",
+      "cfg": {
+        "costPerBuyX": 100,
+        "outcomes": [
+          {
+            "label": "bust",
+            "payoutX": 0,
+            "probability": 0.95
+          },
+          {
+            "label": "maxwin",
+            "payoutX": 10000,
+            "probability": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 500,
+        "varianceOutcomeX": 4750000,
+        "stdOutcomeX": 2179.449471770337,
+        "effectiveRtp": 5,
+        "houseEdge": -4,
+        "hitFrequency": 0.05,
+        "maxPayoutX": 10000,
+        "winLossRatio": 100,
+        "requiredBuysForConvergence": 18247600,
+        "probZeroPayout": 0.95,
+        "probBelowCost": 0.95,
+        "probBreakEven": 0.05
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 5.0585,
+        "observedVariance": 4802615.7775,
+        "observedHitFreq": 0.050585,
+        "observedMaxPayoutX": 10000
+      },
+      "checks": {
+        "rtp_rel": 0.011700000000000089,
+        "var_rel": 0.011077005789473652,
+        "hit_rel": 0.011699999999999905
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_low_volatility_low_house_edge",
+      "description": "Low-volatility: tight distribution around cost, RTP ≈ 0.97",
+      "cfg": {
+        "costPerBuyX": 100,
+        "outcomes": [
+          {
+            "label": "0x",
+            "payoutX": 0,
+            "probability": 0.1
+          },
+          {
+            "label": "80x",
+            "payoutX": 80,
+            "probability": 0.5
+          },
+          {
+            "label": "120x",
+            "payoutX": 120,
+            "probability": 0.3
+          },
+          {
+            "label": "200x",
+            "payoutX": 200,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 96,
+        "varianceOutcomeX": 2304,
+        "stdOutcomeX": 48,
+        "effectiveRtp": 0.96,
+        "houseEdge": 0.040000000000000036,
+        "hitFrequency": 0.9,
+        "maxPayoutX": 200,
+        "winLossRatio": 2,
+        "requiredBuysForConvergence": 8852,
+        "probZeroPayout": 0.1,
+        "probBelowCost": 0.6,
+        "probBreakEven": 0.4
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 0.961196,
+        "observedVariance": 2291.5504958399997,
+        "observedHitFreq": 0.901605,
+        "observedMaxPayoutX": 200
+      },
+      "checks": {
+        "rtp_rel": 0.001245833333333423,
+        "var_rel": 0.005403430625000125,
+        "hit_rel": 0.0017833333333332972
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_expensive_buy_high_max",
+      "description": "Premium buy: cost 500, max 10000x (20× ratio), RTP ≈ 0.965",
+      "cfg": {
+        "costPerBuyX": 500,
+        "outcomes": [
+          {
+            "label": "0x",
+            "payoutX": 0,
+            "probability": 0.4
+          },
+          {
+            "label": "200x",
+            "payoutX": 200,
+            "probability": 0.25
+          },
+          {
+            "label": "500x",
+            "payoutX": 500,
+            "probability": 0.15
+          },
+          {
+            "label": "1000x",
+            "payoutX": 1000,
+            "probability": 0.1
+          },
+          {
+            "label": "2500x",
+            "payoutX": 2500,
+            "probability": 0.08
+          },
+          {
+            "label": "maxwin",
+            "payoutX": 10000,
+            "probability": 0.02
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 625,
+        "varianceOutcomeX": 2256875,
+        "stdOutcomeX": 1502.2899187573616,
+        "effectiveRtp": 1.25,
+        "houseEdge": -0.25,
+        "hitFrequency": 0.6,
+        "maxPayoutX": 10000,
+        "winLossRatio": 20,
+        "requiredBuysForConvergence": 346801,
+        "probZeroPayout": 0.4,
+        "probBelowCost": 0.65,
+        "probBreakEven": 0.35000000000000003
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 1.250745,
+        "observedVariance": 2262261.48624375,
+        "observedHitFreq": 0.60072,
+        "observedMaxPayoutX": 10000
+      },
+      "checks": {
+        "rtp_rel": 0.0005959999999999965,
+        "var_rel": 0.002386701188036541,
+        "hit_rel": 0.0012000000000000899
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_super_high_volatility",
+      "description": "Super-volatility: 99.9% bust, 0.1% mega-maxwin 100000x (cost 100)",
+      "cfg": {
+        "costPerBuyX": 100,
+        "outcomes": [
+          {
+            "label": "bust",
+            "payoutX": 0,
+            "probability": 0.999
+          },
+          {
+            "label": "maxwin",
+            "payoutX": 100000,
+            "probability": 0.001
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 100,
+        "varianceOutcomeX": 9990000,
+        "stdOutcomeX": 3160.6961258558217,
+        "effectiveRtp": 1,
+        "houseEdge": 0,
+        "hitFrequency": 0.001,
+        "maxPayoutX": 100000,
+        "winLossRatio": 1000,
+        "requiredBuysForConvergence": 38377585,
+        "probZeroPayout": 0.999,
+        "probBelowCost": 0.999,
+        "probBreakEven": 0.001
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 1.02,
+        "observedVariance": 10189596,
+        "observedHitFreq": 0.00102,
+        "observedMaxPayoutX": 100000
+      },
+      "checks": {
+        "rtp_rel": 0.020000000000000018,
+        "var_rel": 0.01997957957957958,
+        "hit_rel": 0.020000000000000052
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_break_even_skew_high_RTP",
+      "description": "Player-positive (rare): RTP > 1 (operator subsidy), hit freq 70%",
+      "cfg": {
+        "costPerBuyX": 100,
+        "outcomes": [
+          {
+            "label": "0x",
+            "payoutX": 0,
+            "probability": 0.3
+          },
+          {
+            "label": "50x",
+            "payoutX": 50,
+            "probability": 0.3
+          },
+          {
+            "label": "100x",
+            "payoutX": 100,
+            "probability": 0.2
+          },
+          {
+            "label": "300x",
+            "payoutX": 300,
+            "probability": 0.1
+          },
+          {
+            "label": "1000x",
+            "payoutX": 1000,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedOutcomeX": 165,
+        "varianceOutcomeX": 84525,
+        "stdOutcomeX": 290.73183520213263,
+        "effectiveRtp": 1.65,
+        "houseEdge": -0.6499999999999999,
+        "hitFrequency": 0.7,
+        "maxPayoutX": 1000,
+        "winLossRatio": 10,
+        "requiredBuysForConvergence": 324712,
+        "probZeroPayout": 0.3,
+        "probBelowCost": 0.6,
+        "probBreakEven": 0.4
+      },
+      "monte_carlo": {
+        "buys": 200000,
+        "observedRtp": 1.651,
+        "observedVariance": 84662.49,
+        "observedHitFreq": 0.70056,
+        "observedMaxPayoutX": 1000
+      },
+      "checks": {
+        "rtp_rel": 0.0006060606060606739,
+        "var_rel": 0.0016266193433895917,
+        "hit_rel": 0.0008000000000000071
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}
