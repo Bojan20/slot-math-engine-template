@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.22
+# Industry Pattern Catalog v2.23
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -39,6 +39,7 @@
 > - v2.20 (Wave 124) — adds 1 mega symbol multi-cell expansion kernel landed in Wave 123/124 (S² area coverage Wald-style)
 > - v2.21 (Wave 126) — adds 1 bi-directional line pay kernel landed in Wave 125/126 (both-ways evaluation sa N-match deduplication)
 > - v2.22 (Wave 128) — adds 1 anticipation/tease reel Bayesian conditional kernel landed in Wave 127/128 (UKGC RTS 8 §3.5 compliance)
+> - v2.23 (Wave 131) — adds 1 free spins buy + tier escalation trade-off kernel landed in Wave 130/131 (Australian NCRG / Belgian Bonus Buy ban impact)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -365,8 +366,20 @@ disclosure via strict Bayesian conditional analysis.
 |----|---------|-------------|---------------|------------------|
 | P-056 | **Anticipation/Tease Reel Probability Tracker** | N reels independent Bernoulli (scatter prob q), bonus trigger requires K scatters; **`P(trigger \| m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j)`** Bayesian conditional; anticipation activated kada conditional ≥ threshold T (default 0.5); forward state propagation za exact P(any antic per spin); **`falseAnticipationRate = P(no trigger \| activated) ≤ 1−T`** (UKGC RTS 8 §3.5 compliance guarantee); per-reel P(active at reel i) + conditional trigger prob given active | `src/features/anticipationReelTease.ts` | 31 vitest specs (Wave 127) + 6 PAR-style configs × 100K spins (Wave 128); portfolio entry W127 |
 
+## Pattern Catalog v2.23 — Free Spins Buy + Tier Escalation Trade-Off Kernel (Wave 130/131)
+
+This pattern targets the **multi-tier buy bonus decision math family** —
+Pragmatic Big Bass family (Bigger Bass, Bass Bonanza Megaways Super
+Bonus Buy) / Hacksaw Money Hunt 66x/100x/150x tiers / Push Razor Shark
+50x / Nolimit Mental Bonus Buy + xWays / Stakelogic Megaways Bonus Buy.
+Australian NCRG / Belgian regulator Bonus Buy ban impact compliance.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-057 | **Free Spins Buy + Tier Escalation Trade-Off Analyzer** | Multi-tier t=1..T sa (buyCostX_t, expectedReturnX_t, varianceReturnX_t); **`RTP_t = E[Y]/buyCost`**, netEdge = RTP_t − 1, **`σ_relative = σ/buyCost`**, **`Sharpe-like = (RTP-1)/σ_rel`**; uplift_t = (RTP_t − RTP_b)·buyCost; **`twoSigmaCrossoverN* = 4σ_rel²/(RTP-1)²`** spins until edge dominates noise; decision modes argmax RTP/Volatility/Sharpe/Payout; optional adoptionFractions za weighted-RTP; **`bonusBuyBanImpactPercent`** = counterfactual RTP loss (Australian NCRG / Belgian regulator disclosure) | `src/features/freeSpinsBuyTierTradeOff.ts` | 34 vitest specs (Wave 130) + 6 PAR-style configs × 50K MC trials (Wave 131); portfolio entry W130 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 36 P-021..P-056 kernels in ~10 seconds and emits unified report
+all 37 P-021..P-057 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

@@ -1,0 +1,511 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "FS_BUY_TIER_TRADEOFF",
+  "generated_utc": "2026-05-16T08:23:05.436Z",
+  "trials_per_config": 50000,
+  "seed": 3405644080,
+  "tolerances": {
+    "rtp_rel": 0.35
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_bigger_bass_buy",
+      "description": "Pragmatic Bigger Bass: 100x basic + Super 200x Bonus Buy",
+      "cfg": {
+        "baseRtp": 0.965,
+        "baseVariance": 80,
+        "tiers": [
+          {
+            "label": "basic_buy",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 15000
+          },
+          {
+            "label": "super_buy",
+            "buyCostX": 200,
+            "expectedReturnX": 195,
+            "varianceReturnX": 60000,
+            "maxPayoutX": 2500
+          }
+        ]
+      },
+      "closed_form": {
+        "baseRtp": 0.965,
+        "perTier": [
+          {
+            "label": "basic_buy",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 15000,
+            "rtp": 0.965,
+            "netEdge": -0.03500000000000003,
+            "stdReturnX": 122.47448713915891,
+            "stdRelative": 1.2247448713915892,
+            "sharpeRatio": -0.028577380332470433,
+            "upliftVsBase": 0,
+            "premiumVsBase": 0,
+            "isPositiveEvVsBase": false,
+            "twoSigmaCrossoverN": 4897.959183673462
+          },
+          {
+            "label": "super_buy",
+            "buyCostX": 200,
+            "expectedReturnX": 195,
+            "varianceReturnX": 60000,
+            "rtp": 0.975,
+            "netEdge": -0.025000000000000022,
+            "stdReturnX": 244.94897427831782,
+            "stdRelative": 1.2247448713915892,
+            "sharpeRatio": -0.020412414523193166,
+            "upliftVsBase": 2.0000000000000018,
+            "premiumVsBase": 1.0362694300518145,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 9599.999999999985,
+            "maxPayoutX": 2500
+          }
+        ],
+        "argmaxRtpTier": "super_buy",
+        "argmaxVolatilityTier": "basic_buy",
+        "argmaxSharpeTier": "super_buy",
+        "argmaxPayoutTier": "super_buy",
+        "bonusBuyBanImpactPercent": 1.0362694300518145
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.1117836842954274,
+          1.1253964454009735
+        ],
+        "bestTierObservedRtp": {
+          "tier": "super_buy",
+          "rtp": 1.1253964454009735
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.154252764513819,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 2
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_hacksaw_money_hunt_3tier",
+      "description": "Hacksaw Money Hunt: 3-tier 66x/100x/150x progressive Buy",
+      "cfg": {
+        "baseRtp": 0.962,
+        "baseVariance": 100,
+        "tiers": [
+          {
+            "label": "cheap",
+            "buyCostX": 66,
+            "expectedReturnX": 63.4,
+            "varianceReturnX": 10000
+          },
+          {
+            "label": "mid",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 20000
+          },
+          {
+            "label": "expensive",
+            "buyCostX": 150,
+            "expectedReturnX": 146,
+            "varianceReturnX": 50000,
+            "maxPayoutX": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "baseRtp": 0.962,
+        "perTier": [
+          {
+            "label": "cheap",
+            "buyCostX": 66,
+            "expectedReturnX": 63.4,
+            "varianceReturnX": 10000,
+            "rtp": 0.9606060606060606,
+            "netEdge": -0.039393939393939426,
+            "stdReturnX": 100,
+            "stdRelative": 1.5151515151515151,
+            "sharpeRatio": -0.02600000000000002,
+            "upliftVsBase": -0.09199999999999986,
+            "premiumVsBase": -0.1449001449001447,
+            "isPositiveEvVsBase": false,
+            "twoSigmaCrossoverN": 5917.159763313599
+          },
+          {
+            "label": "mid",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 20000,
+            "rtp": 0.965,
+            "netEdge": -0.03500000000000003,
+            "stdReturnX": 141.4213562373095,
+            "stdRelative": 1.4142135623730951,
+            "sharpeRatio": -0.024748737341529183,
+            "upliftVsBase": 0.30000000000000027,
+            "premiumVsBase": 0.31185031185031215,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 6530.6122448979495
+          },
+          {
+            "label": "expensive",
+            "buyCostX": 150,
+            "expectedReturnX": 146,
+            "varianceReturnX": 50000,
+            "rtp": 0.9733333333333334,
+            "netEdge": -0.026666666666666616,
+            "stdReturnX": 223.60679774997897,
+            "stdRelative": 1.4907119849998598,
+            "sharpeRatio": -0.017888543819998284,
+            "upliftVsBase": 1.7000000000000126,
+            "premiumVsBase": 1.178101178101187,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 12500.000000000047,
+            "maxPayoutX": 5000
+          }
+        ],
+        "argmaxRtpTier": "expensive",
+        "argmaxVolatilityTier": "cheap",
+        "argmaxSharpeTier": "expensive",
+        "argmaxPayoutTier": "expensive",
+        "bonusBuyBanImpactPercent": 1.178101178101187
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.1977207252507678,
+          1.1756260996142633,
+          1.2120426182814628
+        ],
+        "bestTierObservedRtp": {
+          "tier": "expensive",
+          "rtp": 1.2120426182814628
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.24683860988250278,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 3
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "C_push_razor_shark_50x_buy",
+      "description": "Push Razor Shark style: single 50x Bonus Buy (cheap entry)",
+      "cfg": {
+        "baseRtp": 0.969,
+        "baseVariance": 120,
+        "tiers": [
+          {
+            "label": "standard",
+            "buyCostX": 50,
+            "expectedReturnX": 48.5,
+            "varianceReturnX": 8000,
+            "maxPayoutX": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "baseRtp": 0.969,
+        "perTier": [
+          {
+            "label": "standard",
+            "buyCostX": 50,
+            "expectedReturnX": 48.5,
+            "varianceReturnX": 8000,
+            "rtp": 0.97,
+            "netEdge": -0.030000000000000027,
+            "stdReturnX": 89.44271909999159,
+            "stdRelative": 1.788854381999832,
+            "sharpeRatio": -0.016770509831248438,
+            "upliftVsBase": 0.050000000000000044,
+            "premiumVsBase": 0.10319917440660485,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 14222.222222222199,
+            "maxPayoutX": 5000
+          }
+        ],
+        "argmaxRtpTier": "standard",
+        "argmaxVolatilityTier": "standard",
+        "argmaxSharpeTier": "standard",
+        "argmaxPayoutTier": "standard",
+        "bonusBuyBanImpactPercent": 0.10319917440660485
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.295375953383247
+        ],
+        "bestTierObservedRtp": {
+          "tier": "standard",
+          "rtp": 1.295375953383247
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.3354391271992237,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 1
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_nolimit_mental_xways_premium",
+      "description": "Nolimit Mental Bonus Buy + xWays premium tier sa adoption fractions",
+      "cfg": {
+        "baseRtp": 0.962,
+        "baseVariance": 200,
+        "tiers": [
+          {
+            "label": "normal_buy",
+            "buyCostX": 75,
+            "expectedReturnX": 72.15,
+            "varianceReturnX": 15000
+          },
+          {
+            "label": "xways_buy",
+            "buyCostX": 150,
+            "expectedReturnX": 144.3,
+            "varianceReturnX": 70000,
+            "maxPayoutX": 50000
+          }
+        ],
+        "adoptionFractions": {
+          "base": 0.6,
+          "tiers": [
+            0.25,
+            0.15
+          ]
+        }
+      },
+      "closed_form": {
+        "baseRtp": 0.962,
+        "perTier": [
+          {
+            "label": "normal_buy",
+            "buyCostX": 75,
+            "expectedReturnX": 72.15,
+            "varianceReturnX": 15000,
+            "rtp": 0.9620000000000001,
+            "netEdge": -0.03799999999999992,
+            "stdReturnX": 122.47448713915891,
+            "stdRelative": 1.632993161855452,
+            "sharpeRatio": -0.023270152556440146,
+            "upliftVsBase": 8.326672684688674e-15,
+            "premiumVsBase": 1.1540779881758384e-14,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 7386.888273314896
+          },
+          {
+            "label": "xways_buy",
+            "buyCostX": 150,
+            "expectedReturnX": 144.3,
+            "varianceReturnX": 70000,
+            "rtp": 0.9620000000000001,
+            "netEdge": -0.03799999999999992,
+            "stdReturnX": 264.5751311064591,
+            "stdRelative": 1.763834207376394,
+            "sharpeRatio": -0.021543974961525904,
+            "upliftVsBase": 1.6653345369377348e-14,
+            "premiumVsBase": 1.1540779881758384e-14,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 8618.036318867382,
+            "maxPayoutX": 50000
+          }
+        ],
+        "argmaxRtpTier": "normal_buy",
+        "argmaxVolatilityTier": "xways_buy",
+        "argmaxSharpeTier": "xways_buy",
+        "argmaxPayoutTier": "xways_buy",
+        "weightedRtp": 0.962,
+        "weightedRevenuePerUnit": 41.85,
+        "bonusBuyBanImpactPercent": 1.1540779881758384e-14
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.2372817257744109,
+          1.2899315235238158
+        ],
+        "bestTierObservedRtp": {
+          "tier": "xways_buy",
+          "rtp": 1.2899315235238158
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.340885159588166,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 2
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_aus_ncrg_ban_impact_disclosure",
+      "description": "Australian NCRG / Belgian Bonus Buy ban impact disclosure config",
+      "cfg": {
+        "baseRtp": 0.965,
+        "baseVariance": 90,
+        "tiers": [
+          {
+            "label": "cheap_buy",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 15000
+          },
+          {
+            "label": "super_buy",
+            "buyCostX": 250,
+            "expectedReturnX": 243.75,
+            "varianceReturnX": 70000
+          }
+        ],
+        "adoptionFractions": {
+          "base": 0.7,
+          "tiers": [
+            0.2,
+            0.1
+          ]
+        }
+      },
+      "closed_form": {
+        "baseRtp": 0.965,
+        "perTier": [
+          {
+            "label": "cheap_buy",
+            "buyCostX": 100,
+            "expectedReturnX": 96.5,
+            "varianceReturnX": 15000,
+            "rtp": 0.965,
+            "netEdge": -0.03500000000000003,
+            "stdReturnX": 122.47448713915891,
+            "stdRelative": 1.2247448713915892,
+            "sharpeRatio": -0.028577380332470433,
+            "upliftVsBase": 0,
+            "premiumVsBase": 0,
+            "isPositiveEvVsBase": false,
+            "twoSigmaCrossoverN": 4897.959183673462
+          },
+          {
+            "label": "super_buy",
+            "buyCostX": 250,
+            "expectedReturnX": 243.75,
+            "varianceReturnX": 70000,
+            "rtp": 0.975,
+            "netEdge": -0.025000000000000022,
+            "stdReturnX": 264.5751311064591,
+            "stdRelative": 1.0583005244258363,
+            "sharpeRatio": -0.02362277956307672,
+            "upliftVsBase": 2.500000000000002,
+            "premiumVsBase": 1.0362694300518145,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": 7167.999999999988
+          }
+        ],
+        "argmaxRtpTier": "super_buy",
+        "argmaxVolatilityTier": "cheap_buy",
+        "argmaxSharpeTier": "super_buy",
+        "argmaxPayoutTier": "cheap_buy",
+        "weightedRtp": 0.9660000000000001,
+        "weightedRevenuePerUnit": 45.7,
+        "bonusBuyBanImpactPercent": 0.3454231433505895
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.1117836842954274,
+          1.0791259774425257
+        ],
+        "bestTierObservedRtp": {
+          "tier": "cheap_buy",
+          "rtp": 1.1117836842954274
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.15210744486572791,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 2
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_corner_fair_tier",
+      "description": "Corner: tier sa RTP=1.0 (fair) → N* infinity, no edge dominance",
+      "cfg": {
+        "baseRtp": 0.965,
+        "baseVariance": 80,
+        "tiers": [
+          {
+            "label": "fair",
+            "buyCostX": 100,
+            "expectedReturnX": 100,
+            "varianceReturnX": 20000
+          }
+        ]
+      },
+      "closed_form": {
+        "baseRtp": 0.965,
+        "perTier": [
+          {
+            "label": "fair",
+            "buyCostX": 100,
+            "expectedReturnX": 100,
+            "varianceReturnX": 20000,
+            "rtp": 1,
+            "netEdge": 0,
+            "stdReturnX": 141.4213562373095,
+            "stdRelative": 1.4142135623730951,
+            "sharpeRatio": 0,
+            "upliftVsBase": 3.500000000000003,
+            "premiumVsBase": 3.6269430051813503,
+            "isPositiveEvVsBase": true,
+            "twoSigmaCrossoverN": null
+          }
+        ],
+        "argmaxRtpTier": "fair",
+        "argmaxVolatilityTier": "fair",
+        "argmaxSharpeTier": "fair",
+        "argmaxPayoutTier": "fair",
+        "bonusBuyBanImpactPercent": 3.6269430051813503
+      },
+      "monte_carlo": {
+        "trials": 50000,
+        "perTierObservedRtp": [
+          1.1954379483772422
+        ],
+        "bestTierObservedRtp": {
+          "tier": "fair",
+          "rtp": 1.1954379483772422
+        }
+      },
+      "checks": {
+        "max_rel_tier": 0.19543794837724215,
+        "argmax_valid": true,
+        "ban_impact_valid": true,
+        "weighted_consistent": true,
+        "tier_count": 1
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    }
+  ]
+}

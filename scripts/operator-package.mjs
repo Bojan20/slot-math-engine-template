@@ -203,6 +203,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 127 Anticipation/Tease Reel (W152 Wave 128)
   { kind: 'reports/acceptance', src: 'reports/acceptance/ANTICIPATION_REEL_TEASE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/ANTICIPATION_REEL_TEASE.md' },
+  // REPORTS — Wave 130 Free Spins Buy + Tier Escalation Trade-Off (W152 Wave 131)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FS_BUY_TIER_TRADEOFF.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FS_BUY_TIER_TRADEOFF.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

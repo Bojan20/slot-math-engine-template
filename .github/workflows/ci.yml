@@ -196,3 +196,5 @@ jobs:
         run: npm run bi-directional-line-pay-acceptance
       - name: Anticipation/Tease Reel acceptance (6/6 configs × 100K spins, Wave 127/128)
         run: npm run anticipation-reel-tease-acceptance
+      - name: Free Spins Buy Tier Trade-Off acceptance (6/6 configs × 50K MC trials, Wave 130/131)
+        run: npm run free-spins-buy-tier-tradeoff-acceptance
