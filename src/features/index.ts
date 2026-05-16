@@ -99,3 +99,6 @@ export * from './clusterCompoundVariance.js';
 
 // W152 Wave 105: Bonus Wheel + Respin Markov (Faza 4.6 ext)
 export * from './bonusWheelRespin.js';
+
+// W152 Wave 107: Pick Bonus N-Stage Tree (Faza 4.6 ext, post-W100 roadmap)
+export * from './pickBonusNStageTree.js';

@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T06:11:11.579Z",
-  "solvers_total": 26,
-  "solvers_passed": 26,
+  "generated_utc": "2026-05-16T06:17:59.007Z",
+  "solvers_total": 27,
+  "solvers_passed": 27,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 45
+      "elapsed_ms": 46
     },
     {
       "wave": 50,
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 51,
@@ -31,7 +31,7 @@
       "cf": 0.9500000000013147,
       "mc": 0.950963599998923,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 52,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 54
+      "elapsed_ms": 51
     },
     {
       "wave": 53,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 37
+      "elapsed_ms": 35
     },
     {
       "wave": 55,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 58,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 73
+      "elapsed_ms": 70
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 14
     },
     {
       "wave": 71,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 86,
@@ -175,7 +175,7 @@
       "cf": 13.25,
       "mc": 13.27215,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 91,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 93,
@@ -193,7 +193,7 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 95,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 105,
@@ -237,6 +237,15 @@
       "metric": "E[V] final payout",
       "cf": 12,
       "mc": 11.99538,
+      "ok": true,
+      "elapsed_ms": 3
+    },
+    {
+      "wave": 107,
+      "solver": "Pick Bonus N-Stage Tree",
+      "metric": "E[Y] per bonus",
+      "cf": 58.250000000000014,
+      "mc": 56.0795,
       "ok": true,
       "elapsed_ms": 2
     }

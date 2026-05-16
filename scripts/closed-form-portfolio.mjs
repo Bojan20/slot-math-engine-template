@@ -84,6 +84,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'clusterCompoundVariance.js'));
   const { solveBonusWheelRespin, simulateBonusWheelRespin } =
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusWheelRespin.js'));
+  const { solvePickBonusNStageTree, simulatePickBonusNStageTree } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'pickBonusNStageTree.js'));
 
   const showcase = [];
 
@@ -502,6 +504,23 @@ async function main() {
     showcase.push({ wave: 105, solver: 'Bonus Wheel + Respin Markov', metric: 'E[V] final payout', cf: cf.expectedFinalPayoutX, mc: mc.observedMeanFinalPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W107: Pick Bonus N-Stage Tree ─────────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      stages: [
+        { label: 'tier_1', advanceProbability: 0.50, collectProbability: 0.40, collectPayoutX: 5 },
+        { label: 'tier_2', advanceProbability: 0.40, collectProbability: 0.50, collectPayoutX: 25 },
+        { label: 'tier_3', advanceProbability: 0.20, collectProbability: 0.70, collectPayoutX: 100 },
+        { label: 'grand',  advanceProbability: 0,    collectProbability: 0.90, collectPayoutX: 1000 },
+      ],
+    };
+    const cf = solvePickBonusNStageTree(cfg);
+    const mc = simulatePickBonusNStageTree(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedPayoutX, mc.observedMeanPayoutX) < 0.05;
+    showcase.push({ wave: 107, solver: 'Pick Bonus N-Stage Tree', metric: 'E[Y] per bonus', cf: cf.expectedPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -520,7 +539,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 26 Closed-Form Math Kernels (Wave 49-105)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 27 Closed-Form Math Kernels (Wave 49-107)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
