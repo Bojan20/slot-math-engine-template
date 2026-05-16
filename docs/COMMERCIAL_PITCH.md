@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 8 Industry-Firsts (Wave 33-40, all attested)
+## 🏆 13 Industry-Firsts (Wave 33-65, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -55,11 +55,38 @@ or in 5 years.
 | 38 | **HSM-backed DRBG seed bridge** — multi-instance broadcast bez koordinacije + FIPS 140-3 IG D.K health tests | 15/15 vitest PASS |
 | 39 | **SP 800-90B entropy assessment** — 4 non-IID estimators + IID test per RNG backend + HSM bridge | 6 sources Low-bar PASS |
 | 40 | **PAR sheet cryptographic commitment** — Merkle root + HSM-signed attestation; tamper detection | 180/180 gates PASS |
+| 43 | **ENT 5-stat battery in-process** — Shannon / χ² / mean / MC π / lag-1 ρ na svih 5 PRNG backend-a + HSM bridge | 6/6 sources PASS |
+| 55 | **General Entropy Health Monitor (streaming)** — sliding-window O(1) amortized χ² + entropy sa pluggable alert sinks; UKGC RTS 8.A.1 compliance | 7/7 sources verified |
+| 56 | **Demo Mode controller w/ auditor attestation** — `assertNoRngCall()` arhitekturni guard + SHA-256 script digest + tamper-evident audit log; GLI-19 §3.3.9 + UKGC RTS 9 | 6/6 scenarios + tamper-detect PASS |
+| 61 | **Closed-Form Portfolio (12 hybrid math kernels)** — N-tier H&W ladder · charge meter · supermeter · sticky cash+reveal · walking-wild · megacluster · crash · parallel screens · Class-II bingo · sticky-collector + 2 compliance | 12/12 PASS in single runner |
+| 63 | **Exact Enumeration ground-truth RTP** — closed-form analytical sum over \|symbols\|^N per-line combos; auditor-pinnable, not statistical | 3/3 fixtures EXACT |
 
-These eight are deliberately vendor-disjoint. They exist in OUR engine
+These thirteen are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
+
+### Hybrid math kernel portfolio (Wave 49-60)
+
+In addition to the industry-firsts above, **12 closed-form solvers** for
+hybrid slot-mechanics with MC verification at ~30M aggregate spinova:
+
+| Wave | Math kernel | Algorithm |
+|---:|---|---|
+| 49 | N-tier H&W jackpot ladder | Forward propagation on `(respins, filled)` DAG |
+| 50 | Charge meter | Renewal theory + exact finite-horizon convolution |
+| 51 | Supermeter state-switch | Power-iter stationary + Gaussian-elim first-passage |
+| 52 | Sticky cash + reveal mult | Binomial × Wald-product variance |
+| 53 | Walking-wild respin | Fundamental matrix `N = (I − Q)^{-1}` |
+| 54 | Megacluster stack-ways | Binomial × stack-product expectation E[S]^k |
+| 55 | Entropy monitor (compliance) | Streaming sliding-window Shannon + χ² |
+| 56 | Demo mode (compliance) | SHA-256 attestation + auditor verify |
+| 57 | Crash multiplier (non-reel) | Pareto α=1 + RTP invariance theorem |
+| 58 | Parallel screens aggregate | Convolution + correlated-mixture decomposition |
+| 59 | Class-II bingo coordinator | Hypergeometric + inclusion-exclusion |
+| 60 | Sticky-cash collector | Renewal-reward + moment propagation E[T_n] |
+
+Run `npm run closed-form-portfolio` to see all 12 verified in ~10 seconds.
 
 ---
 
