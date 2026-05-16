@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "FREE_SPINS_RETRIGGER",
+  "generated_utc": "2026-05-16T04:38:06.731Z",
+  "episodes_per_config": 50000,
+  "seed": 3405707982,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.15,
+    "batches_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_typical_10fs_p20",
+      "description": "Typical 10 FS + p=0.20 retrigger, μ=1.5, σ²=25",
+      "cfg": {
+        "spinsPerBatchK": 10,
+        "retriggerProbability": 0.2,
+        "meanPayoutPerFreeSpinX": 1.5,
+        "variancePayoutPerFreeSpinX": 25
+      },
+      "closed_form": {
+        "expectedBatches": 1.25,
+        "varianceBatches": 0.31249999999999994,
+        "expectedTotalFreeSpins": 12.5,
+        "varianceTotalFreeSpins": 31.249999999999993,
+        "expectedTotalPayoutX": 18.75,
+        "varianceTotalPayoutX": 382.8125,
+        "probAtLeastTwoBatches": 0.2,
+        "probAtLeastFiveBatches": 0.0016000000000000003,
+        "probAtLeastTenBatches": 5.120000000000002e-7
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 1.25144,
+        "observedMeanFreeSpins": 12.5144,
+        "observedMeanPayoutX": 18.815216666664057,
+        "observedVariancePayoutX": 385.7976901196298,
+        "observedMaxBatches": 7
+      },
+      "checks": {
+        "ey_rel": 0.0034782222220830286,
+        "var_rel": 0.007798047659441126,
+        "batches_rel": 0.0011520000000000863,
+        "spins_rel": 0.0011520000000000152
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_no_retrigger",
+      "description": "No retrigger (p=0) — deterministic K spins",
+      "cfg": {
+        "spinsPerBatchK": 10,
+        "retriggerProbability": 0,
+        "meanPayoutPerFreeSpinX": 2,
+        "variancePayoutPerFreeSpinX": 16
+      },
+      "closed_form": {
+        "expectedBatches": 1,
+        "varianceBatches": 0,
+        "expectedTotalFreeSpins": 10,
+        "varianceTotalFreeSpins": 0,
+        "expectedTotalPayoutX": 20,
+        "varianceTotalPayoutX": 160,
+        "probAtLeastTwoBatches": 0,
+        "probAtLeastFiveBatches": 0,
+        "probAtLeastTenBatches": 0
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 1,
+        "observedMeanFreeSpins": 10,
+        "observedMeanPayoutX": 20.0398,
+        "observedVariancePayoutX": 160.05641595999998,
+        "observedMaxBatches": 1
+      },
+      "checks": {
+        "ey_rel": 0.0019899999999999805,
+        "var_rel": 0.0003525997499998823,
+        "batches_rel": 0,
+        "spins_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "C_high_retrigger",
+      "description": "High retrigger p=0.50 — long tail",
+      "cfg": {
+        "spinsPerBatchK": 8,
+        "retriggerProbability": 0.5,
+        "meanPayoutPerFreeSpinX": 1,
+        "variancePayoutPerFreeSpinX": 9
+      },
+      "closed_form": {
+        "expectedBatches": 2,
+        "varianceBatches": 2,
+        "expectedTotalFreeSpins": 16,
+        "varianceTotalFreeSpins": 128,
+        "expectedTotalPayoutX": 16,
+        "varianceTotalPayoutX": 272,
+        "probAtLeastTwoBatches": 0.5,
+        "probAtLeastFiveBatches": 0.0625,
+        "probAtLeastTenBatches": 0.001953125
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 1.9922,
+        "observedMeanFreeSpins": 15.9376,
+        "observedMeanPayoutX": 15.9248,
+        "observedVariancePayoutX": 269.14474496,
+        "observedMaxBatches": 15
+      },
+      "checks": {
+        "ey_rel": 0.0047000000000000375,
+        "var_rel": 0.010497261176470495,
+        "batches_rel": 0.0039000000000000146,
+        "spins_rel": 0.0039000000000000146
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_big_K_low_p",
+      "description": "Big batch K=20, low p=0.10",
+      "cfg": {
+        "spinsPerBatchK": 20,
+        "retriggerProbability": 0.1,
+        "meanPayoutPerFreeSpinX": 3,
+        "variancePayoutPerFreeSpinX": 400
+      },
+      "closed_form": {
+        "expectedBatches": 1.1111111111111112,
+        "varianceBatches": 0.12345679012345678,
+        "expectedTotalFreeSpins": 22.22222222222222,
+        "varianceTotalFreeSpins": 49.382716049382715,
+        "expectedTotalPayoutX": 66.66666666666666,
+        "varianceTotalPayoutX": 9333.333333333334,
+        "probAtLeastTwoBatches": 0.1,
+        "probAtLeastFiveBatches": 0.00010000000000000002,
+        "probAtLeastTenBatches": 1.0000000000000005e-9
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 1.1109,
+        "observedMeanFreeSpins": 22.218,
+        "observedMeanPayoutX": 66.39433333334209,
+        "observedVariancePayoutX": 9264.226234558002,
+        "observedMaxBatches": 5
+      },
+      "checks": {
+        "ey_rel": 0.004084999999868516,
+        "var_rel": 0.007404332011642704,
+        "batches_rel": 0.00019000000000004568,
+        "spins_rel": 0.00018999999999996575
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "E_small_K_moderate_p",
+      "description": "Small batch K=5, moderate p=0.30",
+      "cfg": {
+        "spinsPerBatchK": 5,
+        "retriggerProbability": 0.3,
+        "meanPayoutPerFreeSpinX": 0.8,
+        "variancePayoutPerFreeSpinX": 4
+      },
+      "closed_form": {
+        "expectedBatches": 1.4285714285714286,
+        "varianceBatches": 0.6122448979591837,
+        "expectedTotalFreeSpins": 7.142857142857143,
+        "varianceTotalFreeSpins": 15.306122448979592,
+        "expectedTotalPayoutX": 5.714285714285715,
+        "varianceTotalPayoutX": 38.36734693877551,
+        "probAtLeastTwoBatches": 0.3,
+        "probAtLeastFiveBatches": 0.0081,
+        "probAtLeastTenBatches": 0.000019682999999999994
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 1.42884,
+        "observedMeanFreeSpins": 7.1442,
+        "observedMeanPayoutX": 5.7208879999982845,
+        "observedVariancePayoutX": 38.05941969148971,
+        "observedMaxBatches": 9
+      },
+      "checks": {
+        "ey_rel": 0.001155399999699602,
+        "var_rel": 0.008025763360108712,
+        "batches_rel": 0.0001880000000000548,
+        "spins_rel": 0.00018799999999989935
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_super_high_retrigger",
+      "description": "Aggressive p=0.70 retrigger (rare in industry)",
+      "cfg": {
+        "spinsPerBatchK": 6,
+        "retriggerProbability": 0.7,
+        "meanPayoutPerFreeSpinX": 0.5,
+        "variancePayoutPerFreeSpinX": 2
+      },
+      "closed_form": {
+        "expectedBatches": 3.333333333333333,
+        "varianceBatches": 7.777777777777775,
+        "expectedTotalFreeSpins": 20,
+        "varianceTotalFreeSpins": 279.9999999999999,
+        "expectedTotalPayoutX": 10,
+        "varianceTotalPayoutX": 109.99999999999997,
+        "probAtLeastTwoBatches": 0.7,
+        "probAtLeastFiveBatches": 0.24009999999999995,
+        "probAtLeastTenBatches": 0.04035360699999998
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanBatches": 3.32288,
+        "observedMeanFreeSpins": 19.93728,
+        "observedMeanPayoutX": 9.97011,
+        "observedVariancePayoutX": 108.89124158789998,
+        "observedMaxBatches": 34
+      },
+      "checks": {
+        "ey_rel": 0.0029889999999999973,
+        "var_rel": 0.01007962192818171,
+        "batches_rel": 0.0031359999999998945,
+        "spins_rel": 0.0031359999999999387
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    }
+  ]
+}

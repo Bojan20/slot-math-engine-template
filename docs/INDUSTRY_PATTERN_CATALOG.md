@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.2
+# Industry Pattern Catalog v2.3
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2 expansion).** Operator-facing catalog
-> of **36 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3 expansion).** Operator-facing catalog
+> of **37 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -9,6 +9,8 @@
 >   Wave 71, 72, 75 (Must-Hit-By, Pseudo-Must-Hit + Level, Multi-tier WAP + Wheel).
 > - v2.2 (Wave 83) — adds 1 commerce-side kernel landed in Wave 81/82
 >   (Bonus Buy / Feature Buy Variance Analyzer with CLT convergence).
+> - v2.3 (Wave 85) — adds 1 free-spins variance kernel landed in Wave 84/85
+>   (Free Spins Retrigger Compound Variance — Wald + compound-sum).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -110,8 +112,19 @@ required for jurisdictional disclosure (UKGC, MGA, AU).
 |----|---------|-------------|---------------|------------------|
 | P-036 | **Bonus Buy / Feature Buy Variance Analyzer** | `E[Y]=Σp_i·payout_i`, `Var[Y]=E[Y²]−E[Y]²`, `RTP=E[Y]/C`, hit freq, win/loss ratio, **CLT convergence N\* = (z·√Var[Y]/(tol·C))²**, risk: P(bust), P(below cost), P(break-even) | `src/features/bonusBuyVariance.ts` | 29 vitest specs (Wave 81) + 6 PAR-style configs × 200K MC (Wave 82); portfolio entry W81 |
 
+## Pattern Catalog v2.3 — Free-Spins Variance Kernel (Wave 84-85)
+
+This pattern targets the **free-spins compound-variance family** — Wald's
+identity + compound-sum for batched FS with geometric retrigger chain.
+Required for PAR sheet variance disclosure and player-protection limit
+calculations.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-037 | **Free Spins Retrigger Compound Variance** | N ~ shifted-geometric: `E[N]=1/(1-p)`, `Var[N]=p/(1-p)²`; T=K·N: `E[T]=K/(1-p)`, `Var[T]=K²·p/(1-p)²`; **`E[Y]=E[T]·μ` (Wald), `Var[Y]=E[T]·σ² + Var[T]·μ²` (compound-sum)**; tail `P(N≥k)=p^(k-1)` | `src/features/freeSpinsRetriggerCompound.ts` | 33 vitest specs (Wave 84) + 6 PAR-style configs × 50K episodes (Wave 85); portfolio entry W84 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 16 P-021..P-036 kernels in ~10 seconds and emits unified report
+all 17 P-021..P-037 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

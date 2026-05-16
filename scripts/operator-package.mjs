@@ -143,6 +143,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 81/82 Bonus Buy Variance Analyzer (W152 Wave 82)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_BUY_VARIANCE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_BUY_VARIANCE.md' },
+  // REPORTS — Wave 84 Free Spins Retrigger Compound (W152 Wave 85)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_RETRIGGER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_RETRIGGER.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },

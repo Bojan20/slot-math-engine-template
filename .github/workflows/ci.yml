@@ -156,3 +156,5 @@ jobs:
         run: npm run multi-tier-wap-wheel-acceptance
       - name: Bonus Buy Variance acceptance (6/6 configs × 200K buys, Wave 81/82)
         run: npm run bonus-buy-variance-acceptance
+      - name: Free Spins Retrigger acceptance (6/6 configs × 50K episodes, Wave 84/85)
+        run: npm run free-spins-retrigger-acceptance
