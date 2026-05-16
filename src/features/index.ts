@@ -159,3 +159,6 @@ export * from './cascadeMeterChargeUp.js';
 
 // W152 Wave 148: Max Win Cap Truncation Analyzer (Faza 12 ext, post-W100)
 export * from './maxWinCapTruncation.js';
+
+// W152 Wave 150: Voltage/XP Meter Multi-Tier Reward Levels (Faza 12 ext, post-W100)
+export * from './voltageMeterMultiTier.js';

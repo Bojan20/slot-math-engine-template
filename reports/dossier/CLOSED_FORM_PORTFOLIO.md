@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-16T11:04:43.934Z`
+Generated: `2026-05-16T11:13:52.159Z`
 
 ## Headline
 
-**46/46 solvers PASS** in single end-to-end runner.
+**47/47 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -59,6 +59,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 144 | Trail Bonus Progression | E[reward]/episode | 40.77244 | 41.18446 | ✅ |
 | 146 | Cascade Meter Charge-Up Trigger | E[F] per spin | 0.03226 | 0.03228 | ✅ |
 | 148 | Max Win Cap Truncation | E[Y_capped] per spin | 20.48000 | 20.24096 | ✅ |
+| 150 | Voltage Meter Multi-Tier | E[R] per spin | 1.10840 | 1.13498 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

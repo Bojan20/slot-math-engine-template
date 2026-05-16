@@ -124,6 +124,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMeterChargeUp.js'));
   const { solveMaxWinCapTruncation, simulateMaxWinCapTruncation } =
     await import(join(REPO_ROOT, 'dist', 'features', 'maxWinCapTruncation.js'));
+  const { solveVoltageMeterMultiTier, simulateVoltageMeterMultiTier } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'voltageMeterMultiTier.js'));
 
   const showcase = [];
 
@@ -957,6 +959,26 @@ async function main() {
       Math.max(cf.expectedPayoutCapped, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 148, solver: 'Max Win Cap Truncation', metric: 'E[Y_capped] per spin', cf: cf.expectedPayoutCapped, mc: mc.observedMeanPayoutCapped, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W150: Voltage/XP Meter Multi-Tier Reward Levels ────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      cascadeContinuationProbability: 0.5,
+      tiers: [
+        { threshold: 3,  rewardX: 5 },
+        { threshold: 6,  rewardX: 25 },
+        { threshold: 10, rewardX: 200 },
+      ],
+      rewardMode: 'highest-only',
+    };
+    const cf = solveVoltageMeterMultiTier(cfg);
+    const mc = simulateVoltageMeterMultiTier(cfg, 500_000, SEED);
+    const rel = Math.abs(cf.expectedRewardPerSpin - mc.observedMeanRewardPerSpin) /
+      Math.max(cf.expectedRewardPerSpin, 1e-9);
+    const ok = rel < 0.06;
+    showcase.push({ wave: 150, solver: 'Voltage Meter Multi-Tier', metric: 'E[R] per spin', cf: cf.expectedRewardPerSpin, mc: mc.observedMeanRewardPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
