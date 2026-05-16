@@ -57,3 +57,6 @@ export * from './classIIBingoCoordinator.js';
 
 // W152 Wave 60: Sticky-cash collector variant (Faza 12)
 export * from './stickyCashCollector.js';
+
+// W152 Wave 71: Must-Hit-By Jackpot (mystery progressive, Faza 12)
+export * from './mustHitByJackpot.js';
