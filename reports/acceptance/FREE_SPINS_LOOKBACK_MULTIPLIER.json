@@ -1,0 +1,334 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "FREE_SPINS_LOOKBACK_MULTIPLIER",
+  "generated_utc": "2026-05-16T05:24:49.440Z",
+  "episodes_per_config": 100000,
+  "seed": 3740978706,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.3,
+    "m_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_money_cart_4_style",
+      "description": "Money Cart 4 style: K=12 FS + lookback x1/x5/x10/x100 weighted",
+      "cfg": {
+        "freeSpinsK": 12,
+        "meanBaseWinPerSpinX": 2,
+        "varianceBaseWinPerSpinX": 8,
+        "multiplierDistribution": [
+          {
+            "label": "x1",
+            "valueX": 1,
+            "weight": 50
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 30
+          },
+          {
+            "label": "x10",
+            "valueX": 10,
+            "weight": 15
+          },
+          {
+            "label": "x100",
+            "valueX": 100,
+            "weight": 5
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 24,
+        "varianceSumOverK": 96,
+        "expectedMultiplier": 8.5,
+        "varianceMultiplier": 450.75,
+        "maxMultiplier": 100,
+        "probMaxMultiplier": 0.05,
+        "expectedTotalPayoutX": 204,
+        "varianceTotalPayoutX": 309840,
+        "expectedTotalIfMaxMultiplier": 2400
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 201.96708,
+        "observedVariancePayoutX": 306828.9777962736,
+        "observedMeanSumS": 23.97288,
+        "observedMeanMultiplier": 8.42189,
+        "observedMaxMultObserved": 100
+      },
+      "checks": {
+        "ey_rel": 0.00996529411764701,
+        "var_rel": 0.009717990587807911,
+        "m_rel": 0.00918941176470595
+      },
+      "pass": true,
+      "elapsed_ms": 19
+    },
+    {
+      "name": "B_hacksaw_deterministic",
+      "description": "Hacksaw-style deterministic lookback x5 (no Var[M])",
+      "cfg": {
+        "freeSpinsK": 8,
+        "meanBaseWinPerSpinX": 1,
+        "varianceBaseWinPerSpinX": 0,
+        "multiplierDistribution": [
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 8,
+        "varianceSumOverK": 0,
+        "expectedMultiplier": 5,
+        "varianceMultiplier": 0,
+        "maxMultiplier": 5,
+        "probMaxMultiplier": 1,
+        "expectedTotalPayoutX": 40,
+        "varianceTotalPayoutX": 0,
+        "expectedTotalIfMaxMultiplier": 40
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 40,
+        "observedVariancePayoutX": 0,
+        "observedMeanSumS": 8,
+        "observedMeanMultiplier": 5,
+        "observedMaxMultObserved": 5
+      },
+      "checks": {
+        "ey_rel": 0,
+        "var_rel": 0,
+        "m_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_low_K_high_mult_range",
+      "description": "K=5, low base win, wide mult range x1..x50",
+      "cfg": {
+        "freeSpinsK": 5,
+        "meanBaseWinPerSpinX": 0.5,
+        "varianceBaseWinPerSpinX": 2,
+        "multiplierDistribution": [
+          {
+            "label": "x1",
+            "valueX": 1,
+            "weight": 70
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 20
+          },
+          {
+            "label": "x15",
+            "valueX": 15,
+            "weight": 8
+          },
+          {
+            "label": "x50",
+            "valueX": 50,
+            "weight": 2
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 2.5,
+        "varianceSumOverK": 10,
+        "expectedMultiplier": 3.9,
+        "varianceMultiplier": 58.49,
+        "maxMultiplier": 50,
+        "probMaxMultiplier": 0.02,
+        "expectedTotalPayoutX": 9.75,
+        "varianceTotalPayoutX": 1102.5625,
+        "expectedTotalIfMaxMultiplier": 125
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 9.920205,
+        "observedVariancePayoutX": 1153.9457202579752,
+        "observedMeanSumS": 2.50623,
+        "observedMeanMultiplier": 3.94642,
+        "observedMaxMultObserved": 50
+      },
+      "checks": {
+        "ey_rel": 0.017456923076923002,
+        "var_rel": 0.046603453552950654,
+        "m_rel": 0.011902564102564078
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_long_K_modest_mult",
+      "description": "Long K=25, modest multiplier range x1..x10",
+      "cfg": {
+        "freeSpinsK": 25,
+        "meanBaseWinPerSpinX": 1.2,
+        "varianceBaseWinPerSpinX": 3,
+        "multiplierDistribution": [
+          {
+            "label": "x1",
+            "valueX": 1,
+            "weight": 60
+          },
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 25
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 12
+          },
+          {
+            "label": "x10",
+            "valueX": 10,
+            "weight": 3
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 30,
+        "varianceSumOverK": 75,
+        "expectedMultiplier": 2,
+        "varianceMultiplier": 3.5999999999999996,
+        "maxMultiplier": 10,
+        "probMaxMultiplier": 0.03,
+        "expectedTotalPayoutX": 60,
+        "varianceTotalPayoutX": 3810,
+        "expectedTotalIfMaxMultiplier": 300
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 59.93859400000009,
+        "observedVariancePayoutX": 3795.5783995015245,
+        "observedMeanSumS": 30.02553699999971,
+        "observedMeanMultiplier": 1.99572,
+        "observedMaxMultObserved": 10
+      },
+      "checks": {
+        "ey_rel": 0.0010234333333318801,
+        "var_rel": 0.0037851969812271727,
+        "m_rel": 0.0021400000000000308
+      },
+      "pass": true,
+      "elapsed_ms": 36
+    },
+    {
+      "name": "E_balanced_mid_volatility",
+      "description": "Balanced 10-FS, moderate var, mult x1/x2/x5",
+      "cfg": {
+        "freeSpinsK": 10,
+        "meanBaseWinPerSpinX": 1.5,
+        "varianceBaseWinPerSpinX": 4,
+        "multiplierDistribution": [
+          {
+            "label": "x1",
+            "valueX": 1,
+            "weight": 50
+          },
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 30
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 15
+          },
+          {
+            "label": "x10",
+            "valueX": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 15,
+        "varianceSumOverK": 40,
+        "expectedMultiplier": 2.35,
+        "varianceMultiplier": 4.927499999999998,
+        "maxMultiplier": 10,
+        "probMaxMultiplier": 0.05,
+        "expectedTotalPayoutX": 35.25,
+        "varianceTotalPayoutX": 1526.6875,
+        "expectedTotalIfMaxMultiplier": 150
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 35.285333333333384,
+        "observedVariancePayoutX": 1544.5594876678258,
+        "observedMeanSumS": 15.005333333333258,
+        "observedMeanMultiplier": 2.34601,
+        "observedMaxMultObserved": 10
+      },
+      "checks": {
+        "ey_rel": 0.00100236406619528,
+        "var_rel": 0.011706382391829242,
+        "m_rel": 0.0016978723404255055
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "F_low_K_high_K_extreme",
+      "description": "K=20 with no per-FS variance — checks Var only from M",
+      "cfg": {
+        "freeSpinsK": 20,
+        "meanBaseWinPerSpinX": 1,
+        "varianceBaseWinPerSpinX": 0,
+        "multiplierDistribution": [
+          {
+            "label": "x1",
+            "valueX": 1,
+            "weight": 80
+          },
+          {
+            "label": "x10",
+            "valueX": 10,
+            "weight": 20
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedSumOverK": 20,
+        "varianceSumOverK": 0,
+        "expectedMultiplier": 2.8,
+        "varianceMultiplier": 12.96,
+        "maxMultiplier": 10,
+        "probMaxMultiplier": 0.2,
+        "expectedTotalPayoutX": 56,
+        "varianceTotalPayoutX": 5184,
+        "expectedTotalIfMaxMultiplier": 200
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 56.3582,
+        "observedVariancePayoutX": 5222.557292760001,
+        "observedMeanSumS": 20,
+        "observedMeanMultiplier": 2.81791,
+        "observedMaxMultObserved": 10
+      },
+      "checks": {
+        "ey_rel": 0.0063964285714285096,
+        "var_rel": 0.007437749375000109,
+        "m_rel": 0.006396428571428605
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}

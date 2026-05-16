@@ -168,3 +168,5 @@ jobs:
         run: npm run multiplicative-wild-stack-acceptance
       - name: Ante Bet Trade-Off acceptance (6/6 configs × 100K spins, Wave 95/96)
         run: npm run ante-bet-tradeoff-acceptance
+      - name: FS Lookback Multiplier acceptance (6/6 configs × 100K episodes, Wave 97/98)
+        run: npm run free-spins-lookback-multiplier-acceptance

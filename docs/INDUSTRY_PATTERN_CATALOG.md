@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.8
+# Industry Pattern Catalog v2.9
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8 expansion).** Operator-facing catalog
-> of **42 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9 expansion).** Operator-facing catalog
+> of **43 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -21,6 +21,8 @@
 >   (Multiplicative Wild Stack Bonus — product of Binomial wilds × multipliers).
 > - v2.8 (Wave 96) — adds 1 commerce decision kernel landed in Wave 95/96
 >   (Ante Bet / Bet Boost Trade-Off Analyzer — per-mode RTP + crossover N*).
+> - v2.9 (Wave 98) — adds 1 lookback-multiplier kernel landed in Wave 97/98
+>   (FS Lookback Multiplier Aggregator — Wald-like M·S_K aggregator).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -189,8 +191,19 @@ comparison (MGA PPD §11.f), and player-trap regulator-flag detection.
 |----|---------|-------------|---------------|------------------|
 | P-042 | **Ante Bet / Bet Boost Trade-Off Analyzer** | base RTP = μ_0/1, **ante RTP = μ_a/(1+a)**; anteIsPositiveEV iff RTP_a > RTP_b; **boost premium = (RTP_a − RTP_b) / RTP_b**; **2-sigma crossover N\* = 4σ² / μ_net²**; aggregate revenue-weighted RTP w/ adoption fraction f | `src/features/anteBetTradeOff.ts` | 27 vitest specs (Wave 95) + 6 PAR-style configs × 100K spins (Wave 96); portfolio entry W95 |
 
+## Pattern Catalog v2.9 — Lookback Multiplier Kernel (Wave 97-98)
+
+This pattern targets the **post-hoc multiplier aggregator family** —
+Push Money Cart 4, Hacksaw bonus games, Pragmatic post-FS multipliers.
+After K free spins accumulate, ONE multiplier is drawn from a discrete
+distribution and applied to the total summed wins.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-043 | **Free Spins Lookback Multiplier Aggregator** | S_K = Σ_{i=1..K} W_i, iid: E[S_K]=K·μ_W, Var[S_K]=K·σ²_W; M ~ discrete distribution; **`E[Y] = μ_M · K · μ_W`** (Wald-like); **`Var[Y] = K·σ²_W·(σ²_M + μ²_M) + K²·μ²_W·σ²_M`** (compound variance decomposition); tail: max M, P(max), E[Y\|M=max] | `src/features/freeSpinsLookbackMultiplier.ts` | 28 vitest specs (Wave 97) + 6 PAR-style configs × 100K episodes (Wave 98); portfolio entry W97 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 22 P-021..P-042 kernels in ~10 seconds and emits unified report
+all 23 P-021..P-043 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

@@ -161,6 +161,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 95 Ante Bet Trade-Off (W152 Wave 96)
   { kind: 'reports/acceptance', src: 'reports/acceptance/ANTE_BET_TRADEOFF.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/ANTE_BET_TRADEOFF.md' },
+  // REPORTS — Wave 97 FS Lookback Multiplier (W152 Wave 98)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
