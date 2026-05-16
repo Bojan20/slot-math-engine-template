@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.23
+# Industry Pattern Catalog v2.24
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -40,6 +40,7 @@
 > - v2.21 (Wave 126) — adds 1 bi-directional line pay kernel landed in Wave 125/126 (both-ways evaluation sa N-match deduplication)
 > - v2.22 (Wave 128) — adds 1 anticipation/tease reel Bayesian conditional kernel landed in Wave 127/128 (UKGC RTS 8 §3.5 compliance)
 > - v2.23 (Wave 131) — adds 1 free spins buy + tier escalation trade-off kernel landed in Wave 130/131 (Australian NCRG / Belgian Bonus Buy ban impact)
+> - v2.24 (Wave 133) — adds 1 multi-level wild tier Markov kernel landed in Wave 132/133 (4-state probabilistic upgrade stationary)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -378,8 +379,20 @@ Australian NCRG / Belgian regulator Bonus Buy ban impact compliance.
 |----|---------|-------------|---------------|------------------|
 | P-057 | **Free Spins Buy + Tier Escalation Trade-Off Analyzer** | Multi-tier t=1..T sa (buyCostX_t, expectedReturnX_t, varianceReturnX_t); **`RTP_t = E[Y]/buyCost`**, netEdge = RTP_t − 1, **`σ_relative = σ/buyCost`**, **`Sharpe-like = (RTP-1)/σ_rel`**; uplift_t = (RTP_t − RTP_b)·buyCost; **`twoSigmaCrossoverN* = 4σ_rel²/(RTP-1)²`** spins until edge dominates noise; decision modes argmax RTP/Volatility/Sharpe/Payout; optional adoptionFractions za weighted-RTP; **`bonusBuyBanImpactPercent`** = counterfactual RTP loss (Australian NCRG / Belgian regulator disclosure) | `src/features/freeSpinsBuyTierTradeOff.ts` | 34 vitest specs (Wave 130) + 6 PAR-style configs × 50K MC trials (Wave 131); portfolio entry W130 |
 
+## Pattern Catalog v2.24 — Multi-Level Wild Tier Markov Kernel (Wave 132/133)
+
+This pattern targets the **multi-level wild tier probabilistic upgrade
+family** — NetEnt Vikings Berzerk (basic → super) / Push Gaming Mount
+Magmas (3-tier wild) / Pragmatic Da Vinci's Mystery / Quickspin Sakura
+Fortune wild progression. 4-state Markov chain sa probabilistic per-level
+upgrades, distinct od W101 count-based.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-058 | **Multi-Level Wild Tier Markov** | 4-state Markov chain {idle, basic, super, mega}; per-spin transitions p_land/p_up1/p_up2/p_expire; chain ratios **`π_basic = π_idle·p_land/(p_up1+p_exp)`**, **`π_super = π_basic·p_up1/(p_up2+p_exp)`**, **`π_mega = π_super·p_up2/p_exp`**; **`E[M per spin] = π_idle·1 + π_basic·M_b + π_super·M_s + π_mega·M_m`**; **`E[Y] = E[V]·E[M]`** (cross-independence) | `src/features/multiLevelWildMarkov.ts` | 37 vitest specs (Wave 132) + 6 PAR-style configs × 100K spins (Wave 133); portfolio entry W132 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 37 P-021..P-057 kernels in ~10 seconds and emits unified report
+all 38 P-021..P-058 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

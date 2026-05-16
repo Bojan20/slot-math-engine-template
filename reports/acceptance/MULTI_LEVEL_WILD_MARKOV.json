@@ -1,0 +1,365 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_LEVEL_WILD_MARKOV",
+  "generated_utc": "2026-05-16T08:34:25.913Z",
+  "spins_per_config": 100000,
+  "seed": 3405644082,
+  "tolerances": {
+    "pi_abs": 0.01,
+    "em_rel": 0.05,
+    "ey_rel": 0.07
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_netent_vikings_2tier",
+      "description": "NetEnt Vikings Berzerk: 2-tier basic + super (no mega)",
+      "cfg": {
+        "landProbability": 0.05,
+        "upgradeProbabilityBasicToSuper": 0.15,
+        "upgradeProbabilitySuperToMega": 0,
+        "expireProbability": 0.2,
+        "basicMultiplier": 2,
+        "superMultiplier": 5,
+        "megaMultiplier": 5,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.8,
+        "probBasic": 0.1142857142857143,
+        "probSuper": 0.08571428571428572,
+        "probMega": 0,
+        "probAnyActive": 0.2,
+        "expectedMultiplierPerSpin": 1.4571428571428573,
+        "varianceMultiplierPerSpin": 1.2767346938775508,
+        "maxMultiplier": 5,
+        "expectedPayoutPerSpin": 1.02,
+        "variancePayoutPerSpin": 8.139600000000002,
+        "conditionalProbBasicGivenActive": 0.5714285714285714,
+        "conditionalProbSuperGivenActive": 0.42857142857142855,
+        "conditionalProbMegaGivenActive": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.80105,
+        "observedFractionBasic": 0.11415,
+        "observedFractionSuper": 0.0848,
+        "observedFractionMega": 0,
+        "observedMeanMultiplierPerSpin": 1.45335,
+        "observedMeanPayoutPerSpin": 1.01786
+      },
+      "checks": {
+        "max_pi_abs": 0.0010499999999999954,
+        "em_rel": 0.0026029411764707474,
+        "ey_rel": 0.0020980392156863046
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_push_mount_magmas_3tier_aggressive",
+      "description": "Push Mount Magmas: 3-tier aggressive mega 100x",
+      "cfg": {
+        "landProbability": 0.03,
+        "upgradeProbabilityBasicToSuper": 0.2,
+        "upgradeProbabilitySuperToMega": 0.1,
+        "expireProbability": 0.3,
+        "basicMultiplier": 2,
+        "superMultiplier": 10,
+        "megaMultiplier": 100,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.9090909090909091,
+        "probBasic": 0.054545454545454536,
+        "probSuper": 0.027272727272727268,
+        "probMega": 0.00909090909090909,
+        "probAnyActive": 0.0909090909090909,
+        "expectedMultiplierPerSpin": 2.1999999999999997,
+        "varianceMultiplierPerSpin": 89.92363636363636,
+        "maxMultiplier": 100,
+        "expectedPayoutPerSpin": 1.5399999999999998,
+        "variancePayoutPerSpin": 253.4902181818182,
+        "conditionalProbBasicGivenActive": 0.6,
+        "conditionalProbSuperGivenActive": 0.3,
+        "conditionalProbMegaGivenActive": 0.1
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.90668,
+        "observedFractionBasic": 0.05606,
+        "observedFractionSuper": 0.02728,
+        "observedFractionMega": 0.00998,
+        "observedMeanMultiplierPerSpin": 2.2896,
+        "observedMeanPayoutPerSpin": 1.56529
+      },
+      "checks": {
+        "max_pi_abs": 0.002410909090909019,
+        "em_rel": 0.04072727272727289,
+        "ey_rel": 0.01642207792207809
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "C_pragmatic_da_vinci_high_freq",
+      "description": "Pragmatic Da Vinci: high-freq low-tier wilds",
+      "cfg": {
+        "landProbability": 0.2,
+        "upgradeProbabilityBasicToSuper": 0.05,
+        "upgradeProbabilitySuperToMega": 0.02,
+        "expireProbability": 0.4,
+        "basicMultiplier": 2,
+        "superMultiplier": 3,
+        "megaMultiplier": 5,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.6666666666666666,
+        "probBasic": 0.29629629629629634,
+        "probSuper": 0.035273368606701945,
+        "probMega": 0.001763668430335097,
+        "probAnyActive": 0.33333333333333337,
+        "expectedMultiplierPerSpin": 1.3738977072310405,
+        "varianceMultiplierPerSpin": 0.3258089701358371,
+        "maxMultiplier": 5,
+        "expectedPayoutPerSpin": 0.9617283950617284,
+        "variancePayoutPerSpin": 5.05126897032247,
+        "conditionalProbBasicGivenActive": 0.888888888888889,
+        "conditionalProbSuperGivenActive": 0.10582010582010583,
+        "conditionalProbMegaGivenActive": 0.00529100529100529
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.66339,
+        "observedFractionBasic": 0.29701,
+        "observedFractionSuper": 0.03704,
+        "observedFractionMega": 0.00256,
+        "observedMeanMultiplierPerSpin": 1.38133,
+        "observedMeanPayoutPerSpin": 0.95976
+      },
+      "checks": {
+        "max_pi_abs": 0.0032766666666665945,
+        "em_rel": 0.005409640564826677,
+        "ey_rel": 0.0020467265725289006
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_balanced_5_15_5_25",
+      "description": "Balanced default sa 25x mega multiplier",
+      "cfg": {
+        "landProbability": 0.05,
+        "upgradeProbabilityBasicToSuper": 0.1,
+        "upgradeProbabilitySuperToMega": 0.05,
+        "expireProbability": 0.2,
+        "basicMultiplier": 2,
+        "superMultiplier": 5,
+        "megaMultiplier": 25,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.8,
+        "probBasic": 0.13333333333333333,
+        "probSuper": 0.05333333333333333,
+        "probMega": 0.013333333333333332,
+        "probAnyActive": 0.19999999999999998,
+        "expectedMultiplierPerSpin": 1.6666666666666665,
+        "varianceMultiplierPerSpin": 8.222222222222223,
+        "maxMultiplier": 25,
+        "expectedPayoutPerSpin": 1.1666666666666665,
+        "variancePayoutPerSpin": 28.338888888888892,
+        "conditionalProbBasicGivenActive": 0.6666666666666667,
+        "conditionalProbSuperGivenActive": 0.26666666666666666,
+        "conditionalProbMegaGivenActive": 0.06666666666666667
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.80105,
+        "observedFractionBasic": 0.13379,
+        "observedFractionSuper": 0.05386,
+        "observedFractionMega": 0.0113,
+        "observedMeanMultiplierPerSpin": 1.62043,
+        "observedMeanPayoutPerSpin": 1.12041
+      },
+      "checks": {
+        "max_pi_abs": 0.002033333333333333,
+        "em_rel": 0.027741999999999892,
+        "ey_rel": 0.03964857142857139
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "E_corner_no_upgrades",
+      "description": "Corner: p_up1 = p_up2 = 0 → only basic wilds reachable",
+      "cfg": {
+        "landProbability": 0.1,
+        "upgradeProbabilityBasicToSuper": 0,
+        "upgradeProbabilitySuperToMega": 0,
+        "expireProbability": 0.3,
+        "basicMultiplier": 3,
+        "superMultiplier": 3,
+        "megaMultiplier": 3,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.7499999999999999,
+        "probBasic": 0.25,
+        "probSuper": 0,
+        "probMega": 0,
+        "probAnyActive": 0.25,
+        "expectedMultiplierPerSpin": 1.5,
+        "varianceMultiplierPerSpin": 0.75,
+        "maxMultiplier": 3,
+        "expectedPayoutPerSpin": 1.0499999999999998,
+        "variancePayoutPerSpin": 6.997500000000002,
+        "conditionalProbBasicGivenActive": 1,
+        "conditionalProbSuperGivenActive": 0,
+        "conditionalProbMegaGivenActive": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.75179,
+        "observedFractionBasic": 0.24821,
+        "observedFractionSuper": 0,
+        "observedFractionMega": 0,
+        "observedMeanMultiplierPerSpin": 1.49642,
+        "observedMeanPayoutPerSpin": 1.04963
+      },
+      "checks": {
+        "max_pi_abs": 0.0017900000000000693,
+        "em_rel": 0.002386666666666611,
+        "ey_rel": 0.0003523809523807233
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_high_persistence_low_expire",
+      "description": "Long-lived wilds: low p_expire=0.05 → mega persists",
+      "cfg": {
+        "landProbability": 0.04,
+        "upgradeProbabilityBasicToSuper": 0.15,
+        "upgradeProbabilitySuperToMega": 0.1,
+        "expireProbability": 0.05,
+        "basicMultiplier": 2,
+        "superMultiplier": 8,
+        "megaMultiplier": 50,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "probIdle": 0.5555555555555556,
+        "probBasic": 0.11111111111111112,
+        "probSuper": 0.11111111111111108,
+        "probMega": 0.22222222222222215,
+        "probAnyActive": 0.44444444444444436,
+        "expectedMultiplierPerSpin": 12.777777777777773,
+        "varianceMultiplierPerSpin": 400.3950617283949,
+        "maxMultiplier": 50,
+        "expectedPayoutPerSpin": 8.944444444444441,
+        "variancePayoutPerSpin": 1441.8969135802463,
+        "conditionalProbBasicGivenActive": 0.25000000000000006,
+        "conditionalProbSuperGivenActive": 0.24999999999999997,
+        "conditionalProbMegaGivenActive": 0.49999999999999994
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedFractionIdle": 0.55825,
+        "observedFractionBasic": 0.11164,
+        "observedFractionSuper": 0.11196,
+        "observedFractionMega": 0.21815,
+        "observedMeanMultiplierPerSpin": 12.58471,
+        "observedMeanPayoutPerSpin": 8.79486
+      },
+      "checks": {
+        "max_pi_abs": 0.004072222222222144,
+        "em_rel": 0.015109652173912741,
+        "ey_rel": 0.016723726708074177
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}
