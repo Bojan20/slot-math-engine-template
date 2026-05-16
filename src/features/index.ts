@@ -108,3 +108,6 @@ export * from './bonusTriggerWaitTime.js';
 
 // W152 Wave 112: Variable Reel Height Ways (Faza 12 ext, post-W100)
 export * from './variableReelHeightWays.js';
+
+// W152 Wave 114: Sticky Wild Countdown Multiplier (Faza 12 ext, post-W100)
+export * from './stickyWildCountdownMultiplier.js';

@@ -90,6 +90,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerWaitTime.js'));
   const { solveVariableReelHeightWays, simulateVariableReelHeightWays } =
     await import(join(REPO_ROOT, 'dist', 'features', 'variableReelHeightWays.js'));
+  const { solveStickyWildCountdownMultiplier, simulateStickyWildCountdownMultiplier } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'stickyWildCountdownMultiplier.js'));
 
   const showcase = [];
 
@@ -563,6 +565,27 @@ async function main() {
     const mc = simulateVariableReelHeightWays(cfg, 10_000, SEED);
     const ok = relErr(cf.expectedWays, mc.observedMeanWays) < 0.05;
     showcase.push({ wave: 112, solver: 'Variable Reel Height Ways', metric: 'E[Ways]', cf: cf.expectedWays, mc: mc.observedMeanWays, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W114: Sticky Wild Countdown Multiplier ─────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      landProbability: 0.05,
+      stickyDuration: 6,
+      baseMultiplier: 1,
+      growthMode: 'linear',
+      linearStep: 1,
+      baseWinPmf: [
+        { value: 0, probability: 0.7 },
+        { value: 1, probability: 0.2 },
+        { value: 5, probability: 0.1 },
+      ],
+    };
+    const cf = solveStickyWildCountdownMultiplier(cfg);
+    const mc = simulateStickyWildCountdownMultiplier(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.05;
+    showcase.push({ wave: 114, solver: 'Sticky Wild Countdown Multiplier', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
