@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T09:59:24.036Z",
-  "solvers_total": 40,
-  "solvers_passed": 40,
+  "generated_utc": "2026-05-16T10:12:45.949Z",
+  "solvers_total": 41,
+  "solvers_passed": 41,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 43
+      "elapsed_ms": 44
     },
     {
       "wave": 50,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 58,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 86,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 49
+      "elapsed_ms": 47
     },
     {
       "wave": 112,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 116,
@@ -283,7 +283,7 @@
       "cf": 38.325,
       "mc": 37.68944,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 118,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 7
     },
     {
       "wave": 121,
@@ -301,7 +301,7 @@
       "cf": 5.111111111111113,
       "mc": 5.2079,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 123,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 127,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 136,
@@ -365,6 +365,15 @@
       "mc": 0.17652,
       "ok": true,
       "elapsed_ms": 7
+    },
+    {
+      "wave": 138,
+      "solver": "Tumble Multiplier with Cap",
+      "metric": "E[Y] per spin",
+      "cf": 5.0587733333333365,
+      "mc": 5.096785,
+      "ok": true,
+      "elapsed_ms": 8
     }
   ]
 }

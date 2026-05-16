@@ -112,6 +112,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'holdWinValueJackpot.js'));
   const { solveLockedReelsDuringFs, simulateLockedReelsDuringFs } =
     await import(join(REPO_ROOT, 'dist', 'features', 'lockedReelsDuringFs.js'));
+  const { solveTumbleMultiplierWithCap, simulateTumbleMultiplierWithCap } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'tumbleMultiplierWithCap.js'));
 
   const showcase = [];
 
@@ -806,6 +808,28 @@ async function main() {
     const mc = simulateLockedReelsDuringFs(cfg, 50_000, SEED);
     const ok = Math.abs(cf.expectedRetriggersAcrossFs - mc.observedMeanRetriggersPerEpisode) < 0.05;
     showcase.push({ wave: 136, solver: 'Locked/Held Reels During FS', metric: 'E[retriggers]', cf: cf.expectedRetriggersAcrossFs, mc: mc.observedMeanRetriggersPerEpisode, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W138: Tumble Multiplier with Cap ───────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      winContinuationProbability: 0.4,
+      baseMultiplier: 1,
+      multiplierStep: 1,
+      maximumMultiplier: 5,
+      winValuePmf: [
+        { value: 1,  probability: 0.6 },
+        { value: 5,  probability: 0.3 },
+        { value: 25, probability: 0.1 },
+      ],
+    };
+    const cf = solveTumbleMultiplierWithCap(cfg);
+    const mc = simulateTumbleMultiplierWithCap(cfg, 200_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.observedMeanPayoutPerSpin) /
+      Math.max(cf.expectedPayoutPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 138, solver: 'Tumble Multiplier with Cap', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
