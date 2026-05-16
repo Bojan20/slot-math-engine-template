@@ -1,0 +1,429 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PICK_BONUS_N_STAGE",
+  "generated_utc": "2026-05-16T06:20:01.667Z",
+  "episodes_per_config": 100000,
+  "seed": 3235826430,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.25,
+    "max_reach_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_netent_classic_3tier",
+      "description": "NetEnt classic 3-tier silver/gold/platinum pick-til-pop",
+      "cfg": {
+        "stages": [
+          {
+            "label": "silver",
+            "advanceProbability": 0.4,
+            "collectProbability": 0.5,
+            "collectPayoutX": 10
+          },
+          {
+            "label": "gold",
+            "advanceProbability": 0.2,
+            "collectProbability": 0.7,
+            "collectPayoutX": 50
+          },
+          {
+            "label": "platinum",
+            "advanceProbability": 0,
+            "collectProbability": 0.85,
+            "collectPayoutX": 500
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1,
+          0.4,
+          0.08000000000000002
+        ],
+        "collectProbabilities": [
+          0.5,
+          0.27999999999999997,
+          0.068
+        ],
+        "expectedPayoutX": 53,
+        "variancePayoutX": 14941,
+        "probReachTopStage": 0.08000000000000002,
+        "probCollectAnywhere": 0.8480000000000001,
+        "probEndWithZero": 0.1519999999999999,
+        "maxPayoutX": 500
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 52.6709,
+        "observedVariancePayoutX": 14833.165293189999,
+        "observedReachHistogram": [
+          1,
+          0.3981,
+          0.07911
+        ],
+        "observedCollectHistogram": [
+          0.50039,
+          0.27894,
+          0.06744
+        ],
+        "observedEndRate": 0.15323
+      },
+      "checks": {
+        "ey_rel": 0.006209433962264092,
+        "var_rel": 0.007217368771166661,
+        "max_reach_rel": 0.011125000000000195
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "B_microgaming_5tier_grand",
+      "description": "Microgaming 5-tier ladder with grand jackpot",
+      "cfg": {
+        "stages": [
+          {
+            "label": "tier_1",
+            "advanceProbability": 0.5,
+            "collectProbability": 0.4,
+            "collectPayoutX": 5
+          },
+          {
+            "label": "tier_2",
+            "advanceProbability": 0.4,
+            "collectProbability": 0.5,
+            "collectPayoutX": 25
+          },
+          {
+            "label": "tier_3",
+            "advanceProbability": 0.3,
+            "collectProbability": 0.6,
+            "collectPayoutX": 100
+          },
+          {
+            "label": "tier_4",
+            "advanceProbability": 0.2,
+            "collectProbability": 0.7,
+            "collectPayoutX": 500
+          },
+          {
+            "label": "grand",
+            "advanceProbability": 0,
+            "collectProbability": 0.95,
+            "collectPayoutX": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1,
+          0.5,
+          0.2,
+          0.06,
+          0.012
+        ],
+        "collectProbabilities": [
+          0.4,
+          0.25,
+          0.12,
+          0.041999999999999996,
+          0.0114
+        ],
+        "expectedPayoutX": 98.25,
+        "variancePayoutX": 287213.1875,
+        "probReachTopStage": 0.012,
+        "probCollectAnywhere": 0.8234,
+        "probEndWithZero": 0.17659999999999998,
+        "maxPayoutX": 5000
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 97.84355,
+        "observedVariancePayoutX": 285966.4024733975,
+        "observedReachHistogram": [
+          1,
+          0.49996,
+          0.19966,
+          0.05974,
+          0.01205
+        ],
+        "observedCollectHistogram": [
+          0.39976,
+          0.25051,
+          0.11982,
+          0.0417,
+          0.01135
+        ],
+        "observedEndRate": 0.17686
+      },
+      "checks": {
+        "ey_rel": 0.004136895674300322,
+        "var_rel": 0.004340974164365295,
+        "max_reach_rel": 0.004333333333333272
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "C_2tier_simple",
+      "description": "Simple 2-stage advance/collect",
+      "cfg": {
+        "stages": [
+          {
+            "label": "first",
+            "advanceProbability": 0.6,
+            "collectProbability": 0.35,
+            "collectPayoutX": 10
+          },
+          {
+            "label": "second",
+            "advanceProbability": 0,
+            "collectProbability": 0.9,
+            "collectPayoutX": 200
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1,
+          0.6
+        ],
+        "collectProbabilities": [
+          0.35,
+          0.54
+        ],
+        "expectedPayoutX": 111.5,
+        "variancePayoutX": 9202.75,
+        "probReachTopStage": 0.6,
+        "probCollectAnywhere": 0.89,
+        "probEndWithZero": 0.10999999999999999,
+        "maxPayoutX": 200
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 111.5968,
+        "observedVariancePayoutX": 9202.26222976,
+        "observedReachHistogram": [
+          1,
+          0.60045
+        ],
+        "observedCollectHistogram": [
+          0.34908,
+          0.54053
+        ],
+        "observedEndRate": 0.11039
+      },
+      "checks": {
+        "ey_rel": 0.0008681614349775944,
+        "var_rel": 0.0000530026611611559,
+        "max_reach_rel": 0.0007500000000001025
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_single_stage_deterministic",
+      "description": "Single-stage deterministic collect (corner case)",
+      "cfg": {
+        "stages": [
+          {
+            "label": "only",
+            "advanceProbability": 0,
+            "collectProbability": 1,
+            "collectPayoutX": 100
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1
+        ],
+        "collectProbabilities": [
+          1
+        ],
+        "expectedPayoutX": 100,
+        "variancePayoutX": 0,
+        "probReachTopStage": 1,
+        "probCollectAnywhere": 1,
+        "probEndWithZero": 0,
+        "maxPayoutX": 100
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 100,
+        "observedVariancePayoutX": 0,
+        "observedReachHistogram": [
+          1
+        ],
+        "observedCollectHistogram": [
+          1
+        ],
+        "observedEndRate": 0
+      },
+      "checks": {
+        "ey_rel": 0,
+        "var_rel": 0,
+        "max_reach_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_high_end_low_advance",
+      "description": "High end probability — most episodes terminate at 0",
+      "cfg": {
+        "stages": [
+          {
+            "label": "a",
+            "advanceProbability": 0.1,
+            "collectProbability": 0.2,
+            "collectPayoutX": 50
+          },
+          {
+            "label": "b",
+            "advanceProbability": 0.1,
+            "collectProbability": 0.3,
+            "collectPayoutX": 200
+          },
+          {
+            "label": "c",
+            "advanceProbability": 0,
+            "collectProbability": 0.5,
+            "collectPayoutX": 1000
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1,
+          0.1,
+          0.010000000000000002
+        ],
+        "collectProbabilities": [
+          0.2,
+          0.03,
+          0.005000000000000001
+        ],
+        "expectedPayoutX": 21,
+        "variancePayoutX": 6259.000000000001,
+        "probReachTopStage": 0.010000000000000002,
+        "probCollectAnywhere": 0.23500000000000001,
+        "probEndWithZero": 0.765,
+        "maxPayoutX": 1000
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 20.9405,
+        "observedVariancePayoutX": 6205.62045975,
+        "observedReachHistogram": [
+          1,
+          0.09897,
+          0.01
+        ],
+        "observedCollectHistogram": [
+          0.20053,
+          0.02982,
+          0.00495
+        ],
+        "observedEndRate": 0.7647
+      },
+      "checks": {
+        "ey_rel": 0.002833333333333328,
+        "var_rel": 0.008528445478511087,
+        "max_reach_rel": 0.010300000000000031
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_aggressive_advance",
+      "description": "Aggressive advance, easy reach top — long ladder",
+      "cfg": {
+        "stages": [
+          {
+            "label": "s1",
+            "advanceProbability": 0.8,
+            "collectProbability": 0.15,
+            "collectPayoutX": 5
+          },
+          {
+            "label": "s2",
+            "advanceProbability": 0.7,
+            "collectProbability": 0.2,
+            "collectPayoutX": 20
+          },
+          {
+            "label": "s3",
+            "advanceProbability": 0.6,
+            "collectProbability": 0.3,
+            "collectPayoutX": 100
+          },
+          {
+            "label": "s4",
+            "advanceProbability": 0.5,
+            "collectProbability": 0.4,
+            "collectPayoutX": 500
+          },
+          {
+            "label": "s5",
+            "advanceProbability": 0,
+            "collectProbability": 0.8,
+            "collectPayoutX": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "reachProbabilities": [
+          1,
+          0.8,
+          0.5599999999999999,
+          0.33599999999999997,
+          0.16799999999999998
+        ],
+        "collectProbabilities": [
+          0.15,
+          0.16000000000000003,
+          0.16799999999999998,
+          0.1344,
+          0.1344
+        ],
+        "expectedPayoutX": 759.95,
+        "variancePayoutX": 2817823.7475,
+        "probReachTopStage": 0.16799999999999998,
+        "probCollectAnywhere": 0.7468,
+        "probEndWithZero": 0.2532,
+        "maxPayoutX": 5000
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 761.60285,
+        "observedVariancePayoutX": 2820038.6561218775,
+        "observedReachHistogram": [
+          1,
+          0.79998,
+          0.56114,
+          0.33842,
+          0.16816
+        ],
+        "observedCollectHistogram": [
+          0.15013,
+          0.15901,
+          0.16627,
+          0.13639,
+          0.13457
+        ],
+        "observedEndRate": 0.25363
+      },
+      "checks": {
+        "ey_rel": 0.0021749457201130913,
+        "var_rel": 0.000786035188979623,
+        "max_reach_rel": 0.007202380952381052
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}

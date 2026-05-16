@@ -173,6 +173,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 105 Bonus Wheel + Respin (W152 Wave 106)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_WHEEL_RESPIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_WHEEL_RESPIN.md' },
+  // REPORTS — Wave 107 Pick Bonus N-Stage Tree (W152 Wave 108)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_BONUS_N_STAGE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_BONUS_N_STAGE.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

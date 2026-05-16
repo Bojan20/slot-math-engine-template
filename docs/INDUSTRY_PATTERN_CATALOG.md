@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.12
+# Industry Pattern Catalog v2.13
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12 expansion).** Operator-facing catalog
-> of **46 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13 expansion).** Operator-facing catalog
+> of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -29,6 +29,8 @@
 >   (Cluster Compound Variance — Sweet Bonanza / Reactoonz / Jammin' Jars Wald-identity).
 > - v2.12 (Wave 106) — adds 1 wheel-respin kernel landed in Wave 105/106
 >   (Bonus Wheel + Respin Markov — NetEnt / Pragmatic / IGT wheel features).
+> - v2.13 (Wave 108) — adds 1 pick-bonus tree kernel landed in Wave 107/108
+>   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -241,8 +243,19 @@ segment lands.
 |----|---------|-------------|---------------|------------------|
 | P-046 | **Bonus Wheel + Respin Markov** | N ~ shifted-geometric: **`E[N] = 1/(1-p_respin)`**, Var[N] = p_respin/(1-p_respin)²; conditional payout V (given terminate): **`μ_V = Σ p_i·v_i / (1-p_respin)`**, σ²_V via E[V²] − μ²_V; tail `P(N≥k) = p_respin^(k-1)`; max payout + P(hit max) | `src/features/bonusWheelRespin.ts` | 26 vitest specs (Wave 105) + 6 PAR-style configs × 100K episodes (Wave 106); portfolio entry W105 |
 
+## Pattern Catalog v2.13 — Pick Bonus N-Stage Tree Kernel (Wave 107/108)
+
+This pattern targets the **multi-stage pick bonus tree family** —
+NetEnt classic / Microgaming "pick til pop" / Play'n GO style features
+where player advances through L stages with per-stage outcomes
+(advance / collect / end with 0).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-047 | **Pick Bonus N-Stage Tree** | Stages 1..L, per-stage outcomes p_advance / p_collect / p_end (must sum to 1); **`P(reach i) = Π advance_{j<i}`**, P(reach 1)=1; **`P(collect at i) = P(reach i)·collect_i`**; **`E[Y] = Σ P(collect at i)·v_i`**; Var[Y] = Σ P(collect at i)·v_i² − E[Y]²; tail: P(reach top), P(collect anywhere), P(end with 0) | `src/features/pickBonusNStageTree.ts` | 26 vitest specs (Wave 107) + 6 PAR-style configs × 100K episodes (Wave 108); portfolio entry W107 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 26 P-021..P-046 kernels in ~10 seconds and emits unified report
+all 27 P-021..P-047 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
