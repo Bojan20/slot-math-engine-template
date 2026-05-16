@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T10:12:45.949Z",
-  "solvers_total": 41,
-  "solvers_passed": 41,
+  "generated_utc": "2026-05-16T10:25:45.494Z",
+  "solvers_total": 42,
+  "solvers_passed": 42,
   "overall_pass": true,
   "showcase": [
     {
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 51
+      "elapsed_ms": 56
     },
     {
       "wave": 53,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 2
     },
     {
       "wave": 75,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 102,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 47
+      "elapsed_ms": 57
     },
     {
       "wave": 112,
@@ -301,7 +301,7 @@
       "cf": 5.111111111111113,
       "mc": 5.2079,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 123,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 127,
@@ -337,7 +337,7 @@
       "cf": 0.976,
       "mc": 0.976,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 132,
@@ -346,7 +346,7 @@
       "cf": 1.6666666666666665,
       "mc": 1.66926,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 134,
@@ -364,7 +364,7 @@
       "cf": 0.18,
       "mc": 0.17652,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 138,
@@ -374,6 +374,15 @@
       "mc": 5.096785,
       "ok": true,
       "elapsed_ms": 8
+    },
+    {
+      "wave": 140,
+      "solver": "Adjacent Pays Aggregator",
+      "metric": "E[pay] per spin",
+      "cf": 2.0855562500000002,
+      "mc": 2.088925,
+      "ok": true,
+      "elapsed_ms": 246
     }
   ]
 }

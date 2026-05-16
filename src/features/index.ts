@@ -144,3 +144,6 @@ export * from './lockedReelsDuringFs.js';
 
 // W152 Wave 138: Tumble Multiplier with Cap (Faza 12 ext, post-W100)
 export * from './tumbleMultiplierWithCap.js';
+
+// W152 Wave 140: Adjacent Pays Aggregator (Faza 12 ext, post-W100)
+export * from './adjacentPaysAggregator.js';

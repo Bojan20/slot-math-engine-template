@@ -114,6 +114,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'lockedReelsDuringFs.js'));
   const { solveTumbleMultiplierWithCap, simulateTumbleMultiplierWithCap } =
     await import(join(REPO_ROOT, 'dist', 'features', 'tumbleMultiplierWithCap.js'));
+  const { solveAdjacentPaysAggregator, simulateAdjacentPaysAggregator } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'adjacentPaysAggregator.js'));
 
   const showcase = [];
 
@@ -830,6 +832,27 @@ async function main() {
       Math.max(cf.expectedPayoutPerSpin, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 138, solver: 'Tumble Multiplier with Cap', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W140: Adjacent Pays Aggregator ─────────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      reelCount: 5,
+      paylineCount: 10,
+      minMatchLength: 3,
+      symbols: [
+        { label: 'HI',  density: 0.15, paytable: [0, 0, 5,  20, 100] },
+        { label: 'MID', density: 0.20, paytable: [0, 0, 2,  10, 50] },
+        { label: 'LO',  density: 0.25, paytable: [0, 0, 1,  4,  10] },
+      ],
+    };
+    const cf = solveAdjacentPaysAggregator(cfg);
+    const mc = simulateAdjacentPaysAggregator(cfg, 200_000, SEED);
+    const rel = Math.abs(cf.expectedPayPerSpin - mc.observedMeanPayPerSpin) /
+      Math.max(cf.expectedPayPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 140, solver: 'Adjacent Pays Aggregator', metric: 'E[pay] per spin', cf: cf.expectedPayPerSpin, mc: mc.observedMeanPayPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
