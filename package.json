@@ -64,6 +64,7 @@
     "cascade-multiplier-chain-acceptance": "npm run build && node scripts/cascade-multiplier-chain-acceptance.mjs",
     "mega-symbol-expansion-acceptance": "npm run build && node scripts/mega-symbol-expansion-acceptance.mjs",
     "bi-directional-line-pay-acceptance": "npm run build && node scripts/bi-directional-line-pay-acceptance.mjs",
+    "anticipation-reel-tease-acceptance": "npm run build && node scripts/anticipation-reel-tease-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

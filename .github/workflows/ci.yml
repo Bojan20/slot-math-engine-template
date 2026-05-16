@@ -194,3 +194,5 @@ jobs:
         run: npm run mega-symbol-expansion-acceptance
       - name: Bi-Directional Line Pay acceptance (6/6 configs × 100K spins, Wave 125/126)
         run: npm run bi-directional-line-pay-acceptance
+      - name: Anticipation/Tease Reel acceptance (6/6 configs × 100K spins, Wave 127/128)
+        run: npm run anticipation-reel-tease-acceptance

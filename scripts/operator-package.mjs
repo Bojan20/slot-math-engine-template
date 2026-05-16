@@ -200,6 +200,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 125 Bi-Directional Line Pay Aggregator (W152 Wave 126)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIDIRECTIONAL_LINE_PAY.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIDIRECTIONAL_LINE_PAY.md' },
+  // REPORTS — Wave 127 Anticipation/Tease Reel (W152 Wave 128)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ANTICIPATION_REEL_TEASE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ANTICIPATION_REEL_TEASE.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
