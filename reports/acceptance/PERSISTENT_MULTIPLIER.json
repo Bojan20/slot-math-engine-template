@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PERSISTENT_MULTIPLIER",
+  "generated_utc": "2026-05-16T04:55:03.369Z",
+  "episodes_per_config": 50000,
+  "seed": 3235822270,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.15,
+    "mk_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_15fs_q025",
+      "description": "Pragmatic-style 15 FS, q=0.25, m_drop=1, sticky multiplier",
+      "cfg": {
+        "freeSpinsK": 15,
+        "multiplierInit": 1,
+        "multiplierDropIncrement": 1,
+        "dropProbabilityPerSpin": 0.25,
+        "meanBaseWinPerSpinX": 0.6,
+        "varianceBaseWinPerSpinX": 2
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 4.75,
+        "varianceFinalMultiplier": 2.8125,
+        "expectedTotalPayoutX": 27,
+        "varianceTotalPayoutX": 433.70000000000005,
+        "probNoDrops": 0.013363461010158062,
+        "probAllDrops": 9.313225746154785e-10,
+        "probAtLeastHalfDrops": 0.017299838364124326,
+        "expectedDropsTotal": 3.75
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 4.75096,
+        "observedVarianceFinalMult": 2.837259078399999,
+        "observedMeanPayoutX": 26.97802533333649,
+        "observedVariancePayoutX": 436.3108329362186,
+        "observedMeanDrops": 3.75096
+      },
+      "checks": {
+        "ey_rel": 0.0008138765430929754,
+        "var_rel": 0.006019905317543397,
+        "mk_rel": 0.00020210526315790988
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "B_btg_megaways_big_drops",
+      "description": "BTG-Megaways-style 12 FS, q=0.08, m_drop=10, rare big drops",
+      "cfg": {
+        "freeSpinsK": 12,
+        "multiplierInit": 1,
+        "multiplierDropIncrement": 10,
+        "dropProbabilityPerSpin": 0.08,
+        "meanBaseWinPerSpinX": 0.4,
+        "varianceBaseWinPerSpinX": 3
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 10.6,
+        "varianceFinalMultiplier": 88.32000000000001,
+        "expectedTotalPayoutX": 29.760000000000005,
+        "varianceTotalPayoutX": 4146.08,
+        "probNoDrops": 0.3676663876548824,
+        "probAllDrops": 6.871947673600002e-14,
+        "probAtLeastHalfDrops": 0.00015843747310530131,
+        "expectedDropsTotal": 0.96
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 10.6518,
+        "observedVarianceFinalMult": 89.48875676000002,
+        "observedMeanPayoutX": 30.118117999996738,
+        "observedVariancePayoutX": 4326.138485937928,
+        "observedMeanDrops": 0.96518
+      },
+      "checks": {
+        "ey_rel": 0.012033534946126764,
+        "var_rel": 0.043428608694942646,
+        "mk_rel": 0.004886792452830195
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "C_aggressive_short_session",
+      "description": "Short K=5, high q=0.5 sticky multiplier feature",
+      "cfg": {
+        "freeSpinsK": 5,
+        "multiplierInit": 1,
+        "multiplierDropIncrement": 2,
+        "dropProbabilityPerSpin": 0.5,
+        "meanBaseWinPerSpinX": 1,
+        "varianceBaseWinPerSpinX": 4
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 6,
+        "varianceFinalMultiplier": 5,
+        "expectedTotalPayoutX": 20,
+        "varianceTotalPayoutX": 475,
+        "probNoDrops": 0.03125,
+        "probAllDrops": 0.03125,
+        "probAtLeastHalfDrops": 0.49999999999999994,
+        "expectedDropsTotal": 2.5
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 5.9968,
+        "observedVarianceFinalMult": 4.985589759999996,
+        "observedMeanPayoutX": 19.9499,
+        "observedVariancePayoutX": 470.80798999000007,
+        "observedMeanDrops": 2.4984
+      },
+      "checks": {
+        "ey_rel": 0.0025050000000000237,
+        "var_rel": 0.008825284231578807,
+        "mk_rel": 0.0005333333333332746
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "D_low_drop_rate",
+      "description": "Long K=20, rare q=0.05 — exponential tail risk",
+      "cfg": {
+        "freeSpinsK": 20,
+        "multiplierInit": 1,
+        "multiplierDropIncrement": 1,
+        "dropProbabilityPerSpin": 0.05,
+        "meanBaseWinPerSpinX": 0.3,
+        "varianceBaseWinPerSpinX": 1
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 2,
+        "varianceFinalMultiplier": 0.95,
+        "expectedTotalPayoutX": 9.15,
+        "varianceTotalPayoutX": 70.41925,
+        "probNoDrops": 0.3584859224085419,
+        "probAllDrops": 9.536743164062511e-27,
+        "probAtLeastHalfDrops": 1.1340718060930304e-8,
+        "expectedDropsTotal": 1
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 1.99944,
+        "observedVarianceFinalMult": 0.9661996863999995,
+        "observedMeanPayoutX": 9.11959400000201,
+        "observedVariancePayoutX": 70.46674431951868,
+        "observedMeanDrops": 0.99944
+      },
+      "checks": {
+        "ey_rel": 0.003323060109069968,
+        "var_rel": 0.0006744508002950439,
+        "mk_rel": 0.00027999999999994696
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "E_guaranteed_drops",
+      "description": "q=1 (guaranteed drop every spin) — deterministic limit",
+      "cfg": {
+        "freeSpinsK": 10,
+        "multiplierInit": 1,
+        "multiplierDropIncrement": 1,
+        "dropProbabilityPerSpin": 1,
+        "meanBaseWinPerSpinX": 0.5,
+        "varianceBaseWinPerSpinX": 1
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 11,
+        "varianceFinalMultiplier": 0,
+        "expectedTotalPayoutX": 32.5,
+        "varianceTotalPayoutX": 505,
+        "probNoDrops": 0,
+        "probAllDrops": 1,
+        "probAtLeastHalfDrops": 1,
+        "expectedDropsTotal": 10
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 11,
+        "observedVarianceFinalMult": 0,
+        "observedMeanPayoutX": 32.51045,
+        "observedVariancePayoutX": 501.56226579750023,
+        "observedMeanDrops": 10
+      },
+      "checks": {
+        "ey_rel": 0.0003215384615384227,
+        "var_rel": 0.0068073944603955815,
+        "mk_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "F_no_initial_mult",
+      "description": "Starting m_init=0 (only drops contribute), q=0.3",
+      "cfg": {
+        "freeSpinsK": 10,
+        "multiplierInit": 0,
+        "multiplierDropIncrement": 1,
+        "dropProbabilityPerSpin": 0.3,
+        "meanBaseWinPerSpinX": 1,
+        "varianceBaseWinPerSpinX": 2
+      },
+      "closed_form": {
+        "expectedFinalMultiplier": 3,
+        "varianceFinalMultiplier": 2.0999999999999996,
+        "expectedTotalPayoutX": 16.5,
+        "varianceTotalPayoutX": 173.25,
+        "probNoDrops": 0.02824752489999998,
+        "probAllDrops": 0.0000059048999999999975,
+        "probAtLeastHalfDrops": 0.1502683326,
+        "expectedDropsTotal": 3
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanFinalMult": 3.00396,
+        "observedVarianceFinalMult": 2.0937843183999973,
+        "observedMeanPayoutX": 16.46844,
+        "observedVariancePayoutX": 172.66940396639995,
+        "observedMeanDrops": 3.00396
+      },
+      "checks": {
+        "ey_rel": 0.0019127272727272075,
+        "var_rel": 0.0033512036571431186,
+        "mk_rel": 0.0013200000000000618
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    }
+  ]
+}

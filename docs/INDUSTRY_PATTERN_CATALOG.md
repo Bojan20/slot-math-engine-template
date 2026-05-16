@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.4
+# Industry Pattern Catalog v2.5
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4 expansion).** Operator-facing catalog
-> of **38 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5 expansion).** Operator-facing catalog
+> of **39 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -13,6 +13,8 @@
 >   (Free Spins Retrigger Compound Variance — Wald + compound-sum).
 > - v2.4 (Wave 87) — adds 1 cascade-multiplier kernel landed in Wave 86/87
 >   (Cascade Sequential Multiplier Pyramid — geometric chain × ladder).
+> - v2.5 (Wave 90) — adds 1 sticky-multiplier kernel landed in Wave 89/90
+>   (Persistent Multiplier Accumulator — Binomial drop chain × running multiplier).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -135,8 +137,19 @@ where each cascade step applies an escalating multiplier from a ladder.
 |----|---------|-------------|---------------|------------------|
 | P-038 | **Cascade Sequential Multiplier Pyramid** | N ~ shifted-geometric `E[N]=1/(1-q)`; ladder ceiling m_max beyond L: **`E[Y] = μ_W · [Σ q^(k-1)·m_k + m_max·q^L/(1-q)]`** (geometric-sum interchange); `Var[Y]` via `E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²]`; tail `P(N≥k)=q^(k-1)`, mega-hit `μ_W·m_max·q^(L-1)` | `src/features/cascadeMultiplierPyramid.ts` | 25 vitest specs (Wave 86) + 6 PAR-style configs × 100K episodes (Wave 87); portfolio entry W86 |
 
+## Pattern Catalog v2.5 — Sticky Multiplier Kernel (Wave 89-90)
+
+This pattern targets the **sticky running multiplier family** — Pragmatic /
+BTG-Megaways / Nolimit City style features where each free spin has a
+chance to "drop" a multiplier increment onto a running stack which
+applies to all subsequent spins in the session.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-039 | **Persistent Multiplier Accumulator** | D_n ~ Binomial(n,q): `E[D_n]=n·q`, `Var[D_n]=n·q·(1-q)`; M_n = m_init + D_n·m_drop; **`E[Y] = μ_W · (K·m_init + q·m_drop · K(K+1)/2)`**; `Var[Y] = Σ Var[W_n·M_n] + 2·μ²·m_drop²·q(1-q)·Σ n·(K-n)`; tail `P(no drops)=(1-q)^K`, `P(all drops)=q^K` | `src/features/persistentMultiplierAccumulator.ts` | 28 vitest specs (Wave 89) + 6 PAR-style configs × 50K episodes (Wave 90); portfolio entry W89 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 18 P-021..P-038 kernels in ~10 seconds and emits unified report
+all 19 P-021..P-039 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

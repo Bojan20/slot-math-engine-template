@@ -149,6 +149,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 86 Cascade Multiplier Pyramid (W152 Wave 87)
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.md' },
+  // REPORTS — Wave 89 Persistent Multiplier Accumulator (W152 Wave 90)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PERSISTENT_MULTIPLIER.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PERSISTENT_MULTIPLIER.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
