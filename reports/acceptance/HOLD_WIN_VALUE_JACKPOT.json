@@ -1,0 +1,487 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "HOLD_WIN_VALUE_JACKPOT",
+  "generated_utc": "2026-05-16T09:51:29.824Z",
+  "episodes_per_config": 30000,
+  "seed": 3405644084,
+  "tolerances": {
+    "filled_abs": 0.3,
+    "value_rel": 0.1,
+    "max_tier_abs": 0.05,
+    "fullgrid_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_lightning_link_15cell_classic",
+      "description": "Aristocrat Lightning Link: 15-cell, 6-trigger, 3 respins, MMM+Grand",
+      "cfg": {
+        "gridCells": 15,
+        "initialFilledCells": 6,
+        "landingProbabilityPerCell": 0.05,
+        "maxRespins": 3,
+        "valuePmf": [
+          {
+            "value": 1,
+            "probability": 0.55
+          },
+          {
+            "value": 2,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.12
+          },
+          {
+            "value": 10,
+            "probability": 0.08
+          },
+          {
+            "value": 50,
+            "probability": 0.04
+          },
+          {
+            "value": 200,
+            "probability": 0.01
+          }
+        ],
+        "tiers": [
+          {
+            "label": "mini",
+            "thresholdX": 30,
+            "bonusPayoutX": 50
+          },
+          {
+            "label": "minor",
+            "thresholdX": 100,
+            "bonusPayoutX": 250
+          },
+          {
+            "label": "major",
+            "thresholdX": 300,
+            "bonusPayoutX": 1000
+          }
+        ],
+        "fullGridBonusX": 10000
+      },
+      "closed_form": {
+        "gridCells": 15,
+        "initialFilledCells": 6,
+        "maxRespins": 3,
+        "expectedFilledCount": 8.28328283286117,
+        "probFullGridReached": 0.0016394699673946294,
+        "expectedTotalValue": 14.498845988668428,
+        "perTier": [
+          {
+            "label": "mini",
+            "thresholdX": 30,
+            "probReachTier": 0.10919170309367597,
+            "probExactlyTier": 0.08170072234152666,
+            "bonusPayoutX": 50
+          },
+          {
+            "label": "minor",
+            "thresholdX": 100,
+            "probReachTier": 0.02749098075214931,
+            "probExactlyTier": 0.02698674039298379,
+            "bonusPayoutX": 250
+          },
+          {
+            "label": "major",
+            "thresholdX": 300,
+            "probReachTier": 0.0005042403591655197,
+            "probExactlyTier": 0.0005042403591655197,
+            "bonusPayoutX": 1000
+          }
+        ],
+        "probAnyTierReached": 0.10919170309367597,
+        "expectedJackpotPayout": 42.229507237102524
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 8.300466666666667,
+        "observedMeanTotalValue": 14.668366666666667,
+        "observedTierHits": {
+          "mini": 3332,
+          "minor": 829,
+          "major": 19
+        },
+        "observedFullGridFraction": 0.0019666666666666665
+      },
+      "checks": {
+        "filled_abs": 0.017183833805496818,
+        "value_rel": 0.011692011773263065,
+        "max_tier_abs": 0.00187496357299069,
+        "fullgrid_abs": 0.00032719669927203706
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "B_igt_hold_win_12cell",
+      "description": "IGT Hold & Win: 12-cell, 5-trigger, 3 respins",
+      "cfg": {
+        "gridCells": 12,
+        "initialFilledCells": 5,
+        "landingProbabilityPerCell": 0.08,
+        "maxRespins": 3,
+        "valuePmf": [
+          {
+            "value": 2,
+            "probability": 0.6
+          },
+          {
+            "value": 10,
+            "probability": 0.3
+          },
+          {
+            "value": 50,
+            "probability": 0.1
+          }
+        ],
+        "tiers": [
+          {
+            "label": "jp",
+            "thresholdX": 100,
+            "bonusPayoutX": 500
+          }
+        ]
+      },
+      "closed_form": {
+        "gridCells": 12,
+        "initialFilledCells": 5,
+        "maxRespins": 3,
+        "expectedFilledCount": 7.718979576997406,
+        "probFullGridReached": 0.023150418868033488,
+        "expectedTotalValue": 25.014612108376138,
+        "perTier": [
+          {
+            "label": "jp",
+            "thresholdX": 100,
+            "probReachTier": 0.03520265508661909,
+            "probExactlyTier": 0.03520265508661909,
+            "bonusPayoutX": 500
+          }
+        ],
+        "probAnyTierReached": 0.03520265508661909,
+        "expectedJackpotPayout": 42.615939651685686
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 7.7329,
+        "observedMeanTotalValue": 25.1586,
+        "observedTierHits": {
+          "jp": 1077
+        },
+        "observedFullGridFraction": 0.0239
+      },
+      "checks": {
+        "filled_abs": 0.013920423002593552,
+        "value_rel": 0.0057561512846984195,
+        "max_tier_abs": 0.0006973449133809081,
+        "fullgrid_abs": 0.0007495811319665133
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "C_buffalo_link_dense_grid",
+      "description": "Buffalo Link 4×5=20 cell aggressive landing",
+      "cfg": {
+        "gridCells": 20,
+        "initialFilledCells": 6,
+        "landingProbabilityPerCell": 0.1,
+        "maxRespins": 3,
+        "valuePmf": [
+          {
+            "value": 1,
+            "probability": 0.55
+          },
+          {
+            "value": 5,
+            "probability": 0.25
+          },
+          {
+            "value": 25,
+            "probability": 0.15
+          },
+          {
+            "value": 100,
+            "probability": 0.04
+          },
+          {
+            "value": 1000,
+            "probability": 0.01
+          }
+        ],
+        "tiers": [
+          {
+            "label": "mini",
+            "thresholdX": 50,
+            "bonusPayoutX": 100
+          },
+          {
+            "label": "major",
+            "thresholdX": 250,
+            "bonusPayoutX": 1000
+          },
+          {
+            "label": "mega",
+            "thresholdX": 1000,
+            "bonusPayoutX": 10000
+          }
+        ],
+        "fullGridBonusX": 25000
+      },
+      "closed_form": {
+        "gridCells": 20,
+        "initialFilledCells": 6,
+        "maxRespins": 3,
+        "expectedFilledCount": 15.536317093460081,
+        "probFullGridReached": 0.047349189795185785,
+        "expectedTotalValue": 186.4349991771446,
+        "perTier": [
+          {
+            "label": "mini",
+            "thresholdX": 50,
+            "probReachTier": 0.6844094276870766,
+            "probExactlyTier": 0.564933469704918,
+            "bonusPayoutX": 100
+          },
+          {
+            "label": "major",
+            "thresholdX": 250,
+            "probReachTier": 0.11947595798215865,
+            "probExactlyTier": 0.028512193278774592,
+            "bonusPayoutX": 1000
+          },
+          {
+            "label": "mega",
+            "thresholdX": 1000,
+            "probReachTier": 0.09096376470338406,
+            "probExactlyTier": 0.09096376470338406,
+            "bonusPayoutX": 10000
+          }
+        ],
+        "probAnyTierReached": 0.6844094276870766,
+        "expectedJackpotPayout": 2364.807931339896
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 15.530566666666667,
+        "observedMeanTotalValue": 187.44336666666666,
+        "observedTierHits": {
+          "mini": 20593,
+          "major": 3635,
+          "mega": 2753
+        },
+        "observedFullGridFraction": 0.04716666666666667
+      },
+      "checks": {
+        "filled_abs": 0.005750426793413865,
+        "value_rel": 0.005408681277510313,
+        "max_tier_abs": 0.002023905646256763,
+        "fullgrid_abs": 0.0001825231285191159
+      },
+      "pass": true,
+      "elapsed_ms": 36
+    },
+    {
+      "name": "D_pragmatic_big_bass_hold_spin",
+      "description": "Pragmatic Big Bass Hold & Spin small 9-cell grid",
+      "cfg": {
+        "gridCells": 9,
+        "initialFilledCells": 3,
+        "landingProbabilityPerCell": 0.12,
+        "maxRespins": 2,
+        "valuePmf": [
+          {
+            "value": 2,
+            "probability": 0.5
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.15
+          },
+          {
+            "value": 100,
+            "probability": 0.05
+          }
+        ],
+        "tiers": [
+          {
+            "label": "jackpot",
+            "thresholdX": 100,
+            "bonusPayoutX": 500
+          }
+        ]
+      },
+      "closed_form": {
+        "gridCells": 9,
+        "initialFilledCells": 3,
+        "maxRespins": 2,
+        "expectedFilledCount": 5.304949891528753,
+        "probFullGridReached": 0.03498040451571013,
+        "expectedTotalValue": 25.930686279698467,
+        "perTier": [
+          {
+            "label": "jackpot",
+            "thresholdX": 100,
+            "probReachTier": 0.10836847594645026,
+            "probExactlyTier": 0.10836847594645026,
+            "bonusPayoutX": 500
+          }
+        ],
+        "probAnyTierReached": 0.10836847594645026,
+        "expectedJackpotPayout": 80.1149242529236
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 5.3128,
+        "observedMeanTotalValue": 26.137833333333333,
+        "observedTierHits": {
+          "jackpot": 3292
+        },
+        "observedFullGridFraction": 0.033666666666666664
+      },
+      "checks": {
+        "filled_abs": 0.007850108471247452,
+        "value_rel": 0.007988490987106843,
+        "max_tier_abs": 0.0013648573868830782,
+        "fullgrid_abs": 0.0013137378490434629
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_high_freq_short_respins",
+      "description": "High-freq landing q=0.20, short respins=2, tiny grid",
+      "cfg": {
+        "gridCells": 8,
+        "initialFilledCells": 2,
+        "landingProbabilityPerCell": 0.2,
+        "maxRespins": 2,
+        "valuePmf": [
+          {
+            "value": 1,
+            "probability": 0.7
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          }
+        ],
+        "tiers": [
+          {
+            "label": "jp",
+            "thresholdX": 10,
+            "bonusPayoutX": 50
+          }
+        ]
+      },
+      "closed_form": {
+        "gridCells": 8,
+        "initialFilledCells": 2,
+        "maxRespins": 2,
+        "expectedFilledCount": 5.819640292870618,
+        "probFullGridReached": 0.17844794498152922,
+        "expectedTotalValue": 8.403208644315361,
+        "perTier": [
+          {
+            "label": "jp",
+            "thresholdX": 10,
+            "probReachTier": 0.38601766926451614,
+            "probExactlyTier": 0.38601766926451614,
+            "bonusPayoutX": 50
+          }
+        ],
+        "probAnyTierReached": 0.38601766926451614,
+        "expectedJackpotPayout": 27.70409210754117
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 5.813533333333333,
+        "observedMeanTotalValue": 8.394333333333334,
+        "observedTierHits": {
+          "jp": 11619
+        },
+        "observedFullGridFraction": 0.1776
+      },
+      "checks": {
+        "filled_abs": 0.006106959537285128,
+        "value_rel": 0.001056181199074646,
+        "max_tier_abs": 0.0012823307354838387,
+        "fullgrid_abs": 0.0008479449815292084
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "F_corner_trigger_equals_grid",
+      "description": "Corner: initialFilled = gridCells (game starts full)",
+      "cfg": {
+        "gridCells": 9,
+        "initialFilledCells": 9,
+        "landingProbabilityPerCell": 0.1,
+        "maxRespins": 2,
+        "valuePmf": [
+          {
+            "value": 10,
+            "probability": 1
+          }
+        ],
+        "tiers": [
+          {
+            "label": "always",
+            "thresholdX": 0,
+            "bonusPayoutX": 100
+          }
+        ],
+        "fullGridBonusX": 5000
+      },
+      "closed_form": {
+        "gridCells": 9,
+        "initialFilledCells": 9,
+        "maxRespins": 2,
+        "expectedFilledCount": 9,
+        "probFullGridReached": 1,
+        "expectedTotalValue": 0,
+        "perTier": [
+          {
+            "label": "always",
+            "thresholdX": 0,
+            "probReachTier": 1,
+            "probExactlyTier": 1,
+            "bonusPayoutX": 100
+          }
+        ],
+        "probAnyTierReached": 1,
+        "expectedJackpotPayout": 5100
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedMeanFilledCount": 9,
+        "observedMeanTotalValue": 0,
+        "observedTierHits": {
+          "always": 30000
+        },
+        "observedFullGridFraction": 1
+      },
+      "checks": {
+        "filled_abs": 0,
+        "value_rel": 0,
+        "max_tier_abs": 0,
+        "fullgrid_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

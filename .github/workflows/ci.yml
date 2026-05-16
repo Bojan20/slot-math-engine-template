@@ -200,3 +200,5 @@ jobs:
         run: npm run free-spins-buy-tier-tradeoff-acceptance
       - name: Multi-Level Wild Markov acceptance (6/6 configs × 100K spins, Wave 132/133)
         run: npm run multi-level-wild-markov-acceptance
+      - name: Hold-and-Win Value Jackpot acceptance (6/6 configs × 30K episodes, Wave 134/135)
+        run: npm run hold-win-value-jackpot-acceptance

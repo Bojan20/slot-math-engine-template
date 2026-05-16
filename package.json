@@ -67,6 +67,7 @@
     "anticipation-reel-tease-acceptance": "npm run build && node scripts/anticipation-reel-tease-acceptance.mjs",
     "free-spins-buy-tier-tradeoff-acceptance": "npm run build && node scripts/free-spins-buy-tier-tradeoff-acceptance.mjs",
     "multi-level-wild-markov-acceptance": "npm run build && node scripts/multi-level-wild-markov-acceptance.mjs",
+    "hold-win-value-jackpot-acceptance": "npm run build && node scripts/hold-win-value-jackpot-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

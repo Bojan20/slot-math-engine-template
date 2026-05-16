@@ -209,6 +209,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 132 Multi-Level Wild Tier Markov (W152 Wave 133)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_LEVEL_WILD_MARKOV.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_LEVEL_WILD_MARKOV.md' },
+  // REPORTS — Wave 134 Hold-and-Win Multi-Tier Value-Based Jackpot (W152 Wave 135)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/HOLD_WIN_VALUE_JACKPOT.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/HOLD_WIN_VALUE_JACKPOT.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
