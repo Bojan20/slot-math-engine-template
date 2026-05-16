@@ -96,6 +96,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'mysterySymbolReveal.js'));
   const { solveBonusCollectN, simulateBonusCollectN } =
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusCollectN.js'));
+  const { solveCascadeMultiplierChain, simulateCascadeMultiplierChain } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMultiplierChain.js'));
 
   const showcase = [];
 
@@ -627,6 +629,26 @@ async function main() {
     const mc = simulateBonusCollectN(cfg, 5_000, SEED);
     const ok = relErr(cf.expectedWaitTime, mc.observedMeanWaitTime) < 0.05;
     showcase.push({ wave: 118, solver: 'Bonus Collect-N Trigger Tracker', metric: 'E[T_N] spins', cf: cf.expectedWaitTime, mc: mc.observedMeanWaitTime, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W121: Cascade Multiplier Chain (Lockstep Conditional) ──────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      winContinuationProbability: 0.4,
+      baseMultiplier: 1,
+      growthMode: 'linear',
+      linearStep: 1,
+      winValuePmf: [
+        { value: 1, probability: 0.6 },
+        { value: 5, probability: 0.3 },
+        { value: 25, probability: 0.1 },
+      ],
+    };
+    const cf = solveCascadeMultiplierChain(cfg);
+    const mc = simulateCascadeMultiplierChain(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
+    showcase.push({ wave: 121, solver: 'Cascade Multiplier Chain', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

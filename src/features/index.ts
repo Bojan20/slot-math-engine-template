@@ -117,3 +117,6 @@ export * from './mysterySymbolReveal.js';
 
 // W152 Wave 118: Bonus Collect-N Trigger Tracker (Faza 4.6 ext, post-W100)
 export * from './bonusCollectN.js';
+
+// W152 Wave 121: Cascade Multiplier Chain (Faza 12 ext, post-W100)
+export * from './cascadeMultiplierChain.js';
