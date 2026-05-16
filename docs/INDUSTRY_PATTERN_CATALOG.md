@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.7
+# Industry Pattern Catalog v2.8
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7 expansion).** Operator-facing catalog
-> of **41 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8 expansion).** Operator-facing catalog
+> of **42 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -19,6 +19,8 @@
 >   (Money-Train-style Coin Accumulator with discrete mystery value distribution).
 > - v2.7 (Wave 94) — adds 1 multiplicative-wild kernel landed in Wave 93/94
 >   (Multiplicative Wild Stack Bonus — product of Binomial wilds × multipliers).
+> - v2.8 (Wave 96) — adds 1 commerce decision kernel landed in Wave 95/96
+>   (Ante Bet / Bet Boost Trade-Off Analyzer — per-mode RTP + crossover N*).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -175,8 +177,20 @@ MULTIPLICATIVELY across reels (product, not sum).
 |----|---------|-------------|---------------|------------------|
 | P-041 | **Multiplicative Wild Stack Bonus** | N ~ Binomial(R, p_wild); W = Π M_i over active wilds; **`E[W] = (p·μ_M + 1-p)^R`** (interchange product); `E[W²] = (p·E[M²] + 1-p)^R`; `Var[W] = E[W²] − E[W]²`; **`E[Y] = μ_B · E[W]`**, `Var[Y] = (σ²_B + μ²_B)·E[W²] − E[Y]²`; tail `P(all wilds)=p^R`, max combined = `m_max^R` | `src/features/multiplicativeWildStack.ts` | 33 vitest specs (Wave 93) + 6 PAR-style configs × 100K episodes (Wave 94); portfolio entry W93 |
 
+## Pattern Catalog v2.8 — Commerce Decision Kernel (Wave 95-96)
+
+This pattern targets the **ante-bet / bet-boost decision-math family** —
+Pragmatic Ante Bet, Wazdan Ante Bet, NetEnt Bet Boost. Operator and
+regulator decision math for "pay (1+a)·B for boosted feature trigger"
+features — required for per-mode RTP disclosure (UKGC RTS 12), variance
+comparison (MGA PPD §11.f), and player-trap regulator-flag detection.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-042 | **Ante Bet / Bet Boost Trade-Off Analyzer** | base RTP = μ_0/1, **ante RTP = μ_a/(1+a)**; anteIsPositiveEV iff RTP_a > RTP_b; **boost premium = (RTP_a − RTP_b) / RTP_b**; **2-sigma crossover N\* = 4σ² / μ_net²**; aggregate revenue-weighted RTP w/ adoption fraction f | `src/features/anteBetTradeOff.ts` | 27 vitest specs (Wave 95) + 6 PAR-style configs × 100K spins (Wave 96); portfolio entry W95 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 21 P-021..P-041 kernels in ~10 seconds and emits unified report
+all 22 P-021..P-042 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

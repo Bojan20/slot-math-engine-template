@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "ANTE_BET_TRADEOFF",
+  "generated_utc": "2026-05-16T05:17:00.608Z",
+  "spins_per_config": 100000,
+  "seed": 2882400018,
+  "tolerances": {
+    "rtp_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_ante_positive_EV",
+      "description": "Pragmatic-style: ante +2pp RTP boost (0.96 → 0.98), 0.25 premium",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.96,
+        "baseVarianceWinPerSpinX": 10,
+        "antePremiumRatio": 0.25,
+        "anteMeanWinPerSpinX": 1.225,
+        "anteVarianceWinPerSpinX": 18
+      },
+      "closed_form": {
+        "baseRtp": 0.96,
+        "anteRtp": 0.9800000000000001,
+        "anteIsPositiveEV": true,
+        "boostPremium": 0.020833333333333467,
+        "baseHouseEdge": 0.040000000000000036,
+        "anteHouseEdge": 0.019999999999999907,
+        "baseCrossover2Sigma": 25000,
+        "anteCrossover2Sigma": 115201,
+        "aggregateRtp": null
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9471074999998289,
+        "anteObservedRtp": 0.9913003428572961
+      },
+      "checks": {
+        "base_rtp_rel": 0.013429687500178186,
+        "ante_rtp_rel": 0.011530962099281606
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_neutral_player_trap",
+      "description": "Player-trap: ante same RTP as base (regulator-flagged)",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.96,
+        "baseVarianceWinPerSpinX": 10,
+        "antePremiumRatio": 0.5,
+        "anteMeanWinPerSpinX": 1.44,
+        "anteVarianceWinPerSpinX": 25
+      },
+      "closed_form": {
+        "baseRtp": 0.96,
+        "anteRtp": 0.96,
+        "anteIsPositiveEV": false,
+        "boostPremium": 0,
+        "baseHouseEdge": 0.040000000000000036,
+        "anteHouseEdge": 0.040000000000000036,
+        "baseCrossover2Sigma": 25000,
+        "anteCrossover2Sigma": 27778,
+        "aggregateRtp": null
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9471074999998289,
+        "anteObservedRtp": 0.9721427851851434
+      },
+      "checks": {
+        "base_rtp_rel": 0.013429687500178186,
+        "ante_rtp_rel": 0.012648734567857756
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_negative_EV_ante",
+      "description": "Ante lower RTP than base — −EV decision flag",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.96,
+        "baseVarianceWinPerSpinX": 10,
+        "antePremiumRatio": 0.5,
+        "anteMeanWinPerSpinX": 1,
+        "anteVarianceWinPerSpinX": 20
+      },
+      "closed_form": {
+        "baseRtp": 0.96,
+        "anteRtp": 0.6666666666666666,
+        "anteIsPositiveEV": false,
+        "boostPremium": -0.3055555555555556,
+        "baseHouseEdge": 0.040000000000000036,
+        "anteHouseEdge": 0.33333333333333337,
+        "baseCrossover2Sigma": 25000,
+        "anteCrossover2Sigma": 320,
+        "aggregateRtp": null
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9471074999998289,
+        "anteObservedRtp": 0.67102
+      },
+      "checks": {
+        "base_rtp_rel": 0.013429687500178186,
+        "ante_rtp_rel": 0.00652999999999998
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_high_boost_aggressive",
+      "description": "Aggressive +5pp boost (0.96 → 1.01), 0.25 premium",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.96,
+        "baseVarianceWinPerSpinX": 10,
+        "antePremiumRatio": 0.25,
+        "anteMeanWinPerSpinX": 1.2625,
+        "anteVarianceWinPerSpinX": 30
+      },
+      "closed_form": {
+        "baseRtp": 0.96,
+        "anteRtp": 1.01,
+        "anteIsPositiveEV": true,
+        "boostPremium": 0.052083333333333384,
+        "baseHouseEdge": 0.040000000000000036,
+        "anteHouseEdge": -0.010000000000000009,
+        "baseCrossover2Sigma": 25000,
+        "anteCrossover2Sigma": 768001,
+        "aggregateRtp": null
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9471074999998289,
+        "anteObservedRtp": 1.012606592079283
+      },
+      "checks": {
+        "base_rtp_rel": 0.013429687500178186,
+        "ante_rtp_rel": 0.0025807842369139043
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "E_with_adoption_30pct",
+      "description": "Pragmatic ante + 30% adoption fraction (aggregate RTP weighting)",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.96,
+        "baseVarianceWinPerSpinX": 10,
+        "antePremiumRatio": 0.25,
+        "anteMeanWinPerSpinX": 1.225,
+        "anteVarianceWinPerSpinX": 18,
+        "anteAdoptionFraction": 0.3
+      },
+      "closed_form": {
+        "baseRtp": 0.96,
+        "anteRtp": 0.9800000000000001,
+        "anteIsPositiveEV": true,
+        "boostPremium": 0.020833333333333467,
+        "baseHouseEdge": 0.040000000000000036,
+        "anteHouseEdge": 0.019999999999999907,
+        "baseCrossover2Sigma": 25000,
+        "anteCrossover2Sigma": 115201,
+        "aggregateRtp": 0.9669767441860464
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9471074999998289,
+        "anteObservedRtp": 0.9913003428572961
+      },
+      "checks": {
+        "base_rtp_rel": 0.013429687500178186,
+        "ante_rtp_rel": 0.011530962099281606
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_low_premium_minor_boost",
+      "description": "Low 0.1 ante premium, minor +1pp RTP boost (player-favorable)",
+      "cfg": {
+        "baseMeanWinPerSpinX": 0.95,
+        "baseVarianceWinPerSpinX": 8,
+        "antePremiumRatio": 0.1,
+        "anteMeanWinPerSpinX": 1.056,
+        "anteVarianceWinPerSpinX": 12
+      },
+      "closed_form": {
+        "baseRtp": 0.95,
+        "anteRtp": 0.96,
+        "anteIsPositiveEV": true,
+        "boostPremium": 0.010526315789473694,
+        "baseHouseEdge": 0.050000000000000044,
+        "anteHouseEdge": 0.040000000000000036,
+        "baseCrossover2Sigma": 12800,
+        "anteCrossover2Sigma": 24794,
+        "aggregateRtp": null
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "baseObservedRtp": 0.9352310526316522,
+        "anteObservedRtp": 0.9716671867766516
+      },
+      "checks": {
+        "base_rtp_rel": 0.015546260387734498,
+        "ante_rtp_rel": 0.01215331955901217
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

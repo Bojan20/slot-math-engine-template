@@ -158,6 +158,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 93 Multiplicative Wild Stack (W152 Wave 94)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTIPLICATIVE_WILD_STACK.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTIPLICATIVE_WILD_STACK.md' },
+  // REPORTS — Wave 95 Ante Bet Trade-Off (W152 Wave 96)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ANTE_BET_TRADEOFF.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ANTE_BET_TRADEOFF.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
