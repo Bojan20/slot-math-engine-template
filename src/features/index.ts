@@ -48,3 +48,6 @@ export * from './megaclusterStackWays.js';
 
 // W152 Wave 57: Crash-style multiplier-only corner case (Faza 12)
 export * from './crashMultiplier.js';
+
+// W152 Wave 58: Parallel screens aggregate distribution (Faza 12)
+export * from './parallelScreens.js';

@@ -1,0 +1,423 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PARALLEL_SCREENS",
+  "generated_utc": "2026-05-16T02:44:47.224Z",
+  "spins_per_config": 500000,
+  "seed": 12345,
+  "tolerances": {
+    "ey_rel": 0.02,
+    "var_rel": 0.1,
+    "p0_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_3screens_shared_indep",
+      "description": "3 shared identical screens, independent (pShared=0)",
+      "cfg": {
+        "numScreens": 3,
+        "shared": true,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ]
+        ]
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 3.3000000000000003,
+        "variancePayoutPerSpin": 40.47,
+        "stdDevPayoutPerSpin": 6.361603571427569,
+        "volatilityIndex": 1.927758658008354,
+        "probZeroPayout": 0.3429999999999999,
+        "hitRate": 0.657,
+        "perScreenExpected": [
+          1.1,
+          1.1,
+          1.1
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998
+        ],
+        "aggregatePmfSize": 20
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 3.308404,
+        "observedVariancePayout": 40.830770972784,
+        "observedStdDevPayout": 6.389896006413876,
+        "observedHitRate": 0.656948,
+        "observedZeroPayoutFraction": 0.343052,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.0025466666666665557,
+        "var_rel": 0.008914528608450783,
+        "p0_abs": 0.000052000000000107516
+      },
+      "pass": true,
+      "elapsed_ms": 27
+    },
+    {
+      "name": "B_5screens_shared_indep",
+      "description": "5 shared screens, independent",
+      "cfg": {
+        "numScreens": 5,
+        "shared": true,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ]
+        ]
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 5.5,
+        "variancePayoutPerSpin": 67.44999999999999,
+        "stdDevPayoutPerSpin": 8.212794895770866,
+        "volatilityIndex": 1.4932354355947028,
+        "probZeroPayout": 0.16806999999999994,
+        "hitRate": 0.8319300000000001,
+        "perScreenExpected": [
+          1.1,
+          1.1,
+          1.1,
+          1.1,
+          1.1
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998
+        ],
+        "aggregatePmfSize": 54
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 5.523216,
+        "observedVariancePayout": 68.093949017344,
+        "observedStdDevPayout": 8.251905780929881,
+        "observedHitRate": 0.832274,
+        "observedZeroPayoutFraction": 0.167726,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.0042210909090908515,
+        "var_rel": 0.009547057336456836,
+        "p0_abs": 0.00034399999999995545
+      },
+      "pass": true,
+      "elapsed_ms": 50
+    },
+    {
+      "name": "C_3screens_correlated_30pct",
+      "description": "3 shared screens, pSharedOutcome=0.30",
+      "cfg": {
+        "numScreens": 3,
+        "shared": true,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ]
+        ],
+        "pSharedOutcome": 0.3
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 3.3,
+        "variancePayoutPerSpin": 64.752,
+        "stdDevPayoutPerSpin": 8.046862742709111,
+        "volatilityIndex": 2.4384432553663973,
+        "probZeroPayout": 0.45009999999999994,
+        "hitRate": 0.5499,
+        "perScreenExpected": [
+          1.1,
+          1.1,
+          1.1
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998
+        ],
+        "aggregatePmfSize": null
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 3.30617,
+        "observedVariancePayout": 65.1614539311,
+        "observedStdDevPayout": 8.072264485948166,
+        "observedHitRate": 0.550064,
+        "observedZeroPayoutFraction": 0.449936,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.0018696969696969724,
+        "var_rel": 0.006323417517605686,
+        "p0_abs": 0.00016399999999994197
+      },
+      "pass": true,
+      "elapsed_ms": 30
+    },
+    {
+      "name": "D_2screens_fully_correlated",
+      "description": "2 shared screens, pSharedOutcome=1.0 (always shared)",
+      "cfg": {
+        "numScreens": 2,
+        "shared": true,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ]
+        ],
+        "pSharedOutcome": 1
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 2.2,
+        "variancePayoutPerSpin": 53.959999999999994,
+        "stdDevPayoutPerSpin": 7.345747068882782,
+        "volatilityIndex": 3.3389759404012644,
+        "probZeroPayout": 0.7,
+        "hitRate": 0.30000000000000004,
+        "perScreenExpected": [
+          1.1,
+          1.1
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          13.489999999999998
+        ],
+        "aggregatePmfSize": null
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 2.206604,
+        "observedVariancePayout": 54.226506787184,
+        "observedStdDevPayout": 7.363864935425147,
+        "observedHitRate": 0.300126,
+        "observedZeroPayoutFraction": 0.699874,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.003001818181818105,
+        "var_rel": 0.0049389693696072386,
+        "p0_abs": 0.00012599999999995948
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "E_heterogeneous_2screen",
+      "description": "2 heterogeneous screens (stdDist + richDist)",
+      "cfg": {
+        "numScreens": 2,
+        "shared": false,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ],
+          [
+            {
+              "valueX": 0,
+              "weight": 60
+            },
+            {
+              "valueX": 2,
+              "weight": 20
+            },
+            {
+              "valueX": 10,
+              "weight": 12
+            },
+            {
+              "valueX": 50,
+              "weight": 6
+            },
+            {
+              "valueX": 250,
+              "weight": 2
+            }
+          ]
+        ]
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 10.7,
+        "variancePayoutPerSpin": 1334.1299999999999,
+        "stdDevPayoutPerSpin": 36.52574434559821,
+        "volatilityIndex": 3.4136209668783377,
+        "probZeroPayout": 0.42,
+        "hitRate": 0.5800000000000001,
+        "perScreenExpected": [
+          1.1,
+          9.6
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          1320.6399999999999
+        ],
+        "aggregatePmfSize": 20
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 10.73943,
+        "observedVariancePayout": 1341.4661052750998,
+        "observedStdDevPayout": 36.62603043294618,
+        "observedHitRate": 0.580514,
+        "observedZeroPayoutFraction": 0.419486,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.0036850467289720737,
+        "var_rel": 0.0054987934272521825,
+        "p0_abs": 0.0005139999999999589
+      },
+      "pass": true,
+      "elapsed_ms": 23
+    },
+    {
+      "name": "F_8screens_max_independence",
+      "description": "8 shared screens, independent (large N regime)",
+      "cfg": {
+        "numScreens": 8,
+        "shared": true,
+        "screenDistributions": [
+          [
+            {
+              "valueX": 0,
+              "weight": 70
+            },
+            {
+              "valueX": 1,
+              "weight": 20
+            },
+            {
+              "valueX": 5,
+              "weight": 8
+            },
+            {
+              "valueX": 25,
+              "weight": 2
+            }
+          ]
+        ]
+      },
+      "closed_form": {
+        "expectedPayoutPerSpin": 8.799999999999999,
+        "variancePayoutPerSpin": 107.91999999999997,
+        "stdDevPayoutPerSpin": 10.38845513057644,
+        "volatilityIndex": 1.180506264838232,
+        "probZeroPayout": 0.05764800999999997,
+        "hitRate": 0.94235199,
+        "perScreenExpected": [
+          1.1,
+          1.1,
+          1.1,
+          1.1,
+          1.1,
+          1.1,
+          1.1,
+          1.1
+        ],
+        "perScreenVariance": [
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998,
+          13.489999999999998
+        ],
+        "aggregatePmfSize": 125
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 8.825614,
+        "observedVariancePayout": 108.872319523004,
+        "observedStdDevPayout": 10.434189931326916,
+        "observedHitRate": 0.94177,
+        "observedZeroPayoutFraction": 0.05823,
+        "spins": 500000
+      },
+      "checks": {
+        "ey_rel": 0.0029106818181819224,
+        "var_rel": 0.008824309886990565,
+        "p0_abs": 0.0005819900000000253
+      },
+      "pass": true,
+      "elapsed_ms": 77
+    }
+  ]
+}
