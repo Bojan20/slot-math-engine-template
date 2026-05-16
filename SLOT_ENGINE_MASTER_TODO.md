@@ -27,7 +27,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 
 ---
 
-## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-43, **9 stavki landed**; Wave 41 unified dossier; Wave 42 LIVE sales demo proof; Wave 43 ENT in-process)
+## 🏆 INDUSTRY-FIRST WORLD-FIRSTS (Wave 33-45, **9 stavki landed**; Wave 41 unified dossier; Wave 42 LIVE sales demo proof; Wave 43 ENT in-process; Wave 44 operator package; Wave 45 K5 strict-tier1 backfill)
 
 > **Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`** (Wave 41).
 > Refresh: `npm run industry-first-dossier`. Aggregates svih 8 wave acceptance reports + auditor Q&A map + cert paper trail.
@@ -46,7 +46,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | 8 | **PAR Sheet Commitment v1.0** | 40 | Merkle commitment nad full IR + HSM-signed attestation + auditor verification; detects post-cert tampering. 30 fixtures × 6 gates = 180/180 PASS | ✅ | Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable |
 | 9 | **ENT entropy battery (in-process)** | 43 | 5 ENT statistika (entropy / χ² / mean / MC π / serial ρ) na svih 5 PRNG + HSM bridge; 6/6 PASS sve 5 stats; HSM bridge ima MOST ACCURATE π estimate (3.14125 vs π=3.14159) | ✅ | Three-of-six Kimi-cited batteries (NIST SP 800-22 + ENT + SP 800-90B) sad in-process landed; nijedan vendor ne objavljuje ENT supplement uz NIST + SP 800-90B |
 
-**Sales-pitch power**: Ovih 6 stavki kombinovanih daju operator-u materijal koji direktno odgovara Tier-1 math direktoru / GLI-19 auditor-u / UKGC compliance officer-u sa "**već landed, već testirano, javno verifikovano**" pozicijom umesto "u development-u". Stoji u commercial pitch dokumentu.
+**Sales-pitch power**: Ovih 9 stavki kombinovanih daju operator-u materijal koji direktno odgovara Tier-1 math direktoru / GLI-19 auditor-u / UKGC compliance officer-u sa "**već landed, već testirano, javno verifikovano**" pozicijom umesto "u development-u". Stoji u commercial pitch dokumentu.
 
 ---
 
@@ -100,7 +100,7 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 - Provably-fair sa zk-SNARK postoji za crash/dice (GammaStack 2026), **0 major slot vendor-a** (IGT/SG/Aristocrat/NetEnt/Pragmatic) — EP4046329 patent (2023) otvara prostor incumbent-i nisu uzeli
 - cargo-mutants je active u Rust (ThoughtWorks Radar 2026); **0 slot vendor-a** advertise mutation-tested math kernel — kombinacija sa diff-fuzzing + property-based = unique verifiability story
 
-### 🎯 K1-K10 LIVE PROGRESS (post-Wave 38)
+### 🎯 K1-K10 LIVE PROGRESS (post-Wave 45)
 
 | # | Status | Wave | Note |
 |---|---|---|---|
@@ -108,14 +108,14 @@ Ako QA pronađe bug — fix odmah u istom commit-u (ili odvojen "fix(WaveN QA): 
 | **K2** | ✅ | **37** | `b46bdf2` — 160/160 cells PASS, cross-language metamorphic |
 | **K3** | ✅ | **39** | `0a396ff` — SP 800-90B Non-IID + IID assessment, 6 sources, all Low-bar PASS |
 | **K4** | ✅ | **33** | `f4ca791` — 50/50 metamorphic invariants PASS |
-| **K5** | ✅ | **35** | `dc3fdc0` — USIF PAR Schema v1.0 + 20/20 baseline validation |
+| **K5** | ✅ | **35+45** | `dc3fdc0` baseline + `4759b04` strict-tier1 — USIF PAR Schema v1.0 + 20/20 baseline + 20/20 strict-tier1 |
 | **K6** | ✅ | **34** | `d23489a` — Mutation-score regression + strict CI gate |
 | K7 | ⚠️ scaffold | — | GPU Metal/WGSL scaffold + wgpu integration pending (very high effort, external GPU runner) |
 | **K8** | ✅ | **36** | `3f17c5e` — Jurisdiction auto-gate, 450-cell matrix, 11-rule gate |
 | **K9** | ✅ Phase 1 | **40** | `d7d3b5a` — Merkle commitment + HSM attestation + auditor verify; Phase 2 Groth16 zk-SNARK dokumentovan kao 12-18 nedelja future |
 | **K10** | ✅ | **38** | `bf7a6cd` — HSM seed bridge + FIPS 140-3 IG D.K health tests |
 
-**Headline: 9/10 closed (8 full + K1 ENT partial) in 9 waves (Waves 33-40 + 43). Remaining is 1 full + 2 external-only:**
+**Headline: 9/10 closed (8 full + K1 ENT partial) in 13 waves (Waves 33-45). Remaining is 1 full + 2 external-only:**
 - K1 partial ✅ ENT in-process (Wave 43); TestU01/PractRand/Dieharder external i dalje pending (operator-initiated, ~8-12h per backend)
 - K7 → GPU determinism end-to-end (external GPU runner, wgpu integration ~3-4 nedelje + cluster setup)
 
