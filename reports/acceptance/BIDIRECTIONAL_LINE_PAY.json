@@ -1,0 +1,349 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BIDIRECTIONAL_LINE_PAY",
+  "generated_utc": "2026-05-16T07:57:24.039Z",
+  "spins_per_config": 100000,
+  "seed": 3405644069,
+  "tolerances": {
+    "pay_rel": 0.05,
+    "hit_abs": 0.01,
+    "uplift_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_microgaming_avalon_5reel_k3",
+      "description": "Microgaming Avalon style: 5-reel both-ways, kMin=3, mid-density paytable",
+      "cfg": {
+        "reelCount": 5,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "low",
+            "density": 0.2,
+            "paytable": [
+              0,
+              0,
+              5,
+              20,
+              50
+            ]
+          },
+          {
+            "label": "mid",
+            "density": 0.15,
+            "paytable": [
+              0,
+              0,
+              10,
+              50,
+              200
+            ]
+          },
+          {
+            "label": "high",
+            "density": 0.1,
+            "paytable": [
+              0,
+              0,
+              25,
+              100,
+              500
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "minMatchLength": 3,
+        "totalExpectedPayLeft": 0.175490625,
+        "totalExpectedPayRight": 0.175490625,
+        "totalExpectedPayBidirectional": 0.31479375,
+        "totalHitFrequencyLeft": 0.012375000000000004,
+        "totalHitFrequencyRight": 0.012375000000000004,
+        "totalHitFrequencyBidirectional": 0.024344062500000006,
+        "varianceBidirectional": 13.232717394960938,
+        "bidirectionalUpliftRatio": 1.7937924034403545
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 0.1712,
+        "observedTotalPayBidirectional": 0.3101,
+        "observedHitsLeft": 0.01243,
+        "observedHitsBidirectional": 0.02436,
+        "observedUpliftRatio": 1.8113317757009346
+      },
+      "checks": {
+        "pay_rel": 0.014910556515178579,
+        "hit_abs": 0.000015937499999993388,
+        "uplift_rel": 0.009777816110125652
+      },
+      "pass": true,
+      "elapsed_ms": 20
+    },
+    {
+      "name": "B_netent_lights_5reel_k2",
+      "description": "NetEnt Lights style: 5-reel both-ways, kMin=2 (scatter-like)",
+      "cfg": {
+        "reelCount": 5,
+        "minMatchLength": 2,
+        "symbols": [
+          {
+            "label": "lights",
+            "density": 0.2,
+            "paytable": [
+              0,
+              3,
+              10,
+              50,
+              200
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "minMatchLength": 2,
+        "totalExpectedPayLeft": 0.28800000000000003,
+        "totalExpectedPayRight": 0.28800000000000003,
+        "totalExpectedPayBidirectional": 0.512,
+        "totalHitFrequencyLeft": 0.040000000000000015,
+        "totalHitFrequencyRight": 0.040000000000000015,
+        "totalHitFrequencyBidirectional": 0.07968000000000003,
+        "varianceBidirectional": 20.793856000000005,
+        "bidirectionalUpliftRatio": 1.7777777777777777
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 0.28307,
+        "observedTotalPayBidirectional": 0.51342,
+        "observedHitsLeft": 0.04017,
+        "observedHitsBidirectional": 0.07922,
+        "observedUpliftRatio": 1.8137563146924789
+      },
+      "checks": {
+        "pay_rel": 0.0027734374999999548,
+        "hit_abs": 0.00046000000000002983,
+        "uplift_rel": 0.02023792701451943
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "C_4reel_both_ways",
+      "description": "4-reel game, both-ways, mid-density",
+      "cfg": {
+        "reelCount": 4,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "a",
+            "density": 0.25,
+            "paytable": [
+              0,
+              0,
+              8,
+              40
+            ]
+          },
+          {
+            "label": "b",
+            "density": 0.2,
+            "paytable": [
+              0,
+              0,
+              12,
+              60
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 4,
+        "minMatchLength": 3,
+        "totalExpectedPayLeft": 0.42280000000000006,
+        "totalExpectedPayRight": 0.42280000000000006,
+        "totalExpectedPayBidirectional": 0.59335,
+        "totalHitFrequencyLeft": 0.023625,
+        "totalHitFrequencyRight": 0.023625,
+        "totalHitFrequencyBidirectional": 0.04174375,
+        "varianceBidirectional": 15.001135777500002,
+        "bidirectionalUpliftRatio": 1.4033822138126772
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 0.42332,
+        "observedTotalPayBidirectional": 0.59584,
+        "observedHitsLeft": 0.02364,
+        "observedHitsBidirectional": 0.04186,
+        "observedUpliftRatio": 1.4075403949730703
+      },
+      "checks": {
+        "pay_rel": 0.00419651133395128,
+        "hit_abs": 0.0001162499999999983,
+        "uplift_rel": 0.0029629712557751194
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "D_high_density_low_uplift",
+      "description": "High-density symbol (q=0.5) → uplift drops jer N-match dominates",
+      "cfg": {
+        "reelCount": 5,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "hd",
+            "density": 0.5,
+            "paytable": [
+              0,
+              0,
+              2,
+              10,
+              100
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "minMatchLength": 3,
+        "totalExpectedPayLeft": 3.5625,
+        "totalExpectedPayRight": 3.5625,
+        "totalExpectedPayBidirectional": 4,
+        "totalHitFrequencyLeft": 0.125,
+        "totalHitFrequencyRight": 0.125,
+        "totalHitFrequencyBidirectional": 0.21875,
+        "varianceBidirectional": 303.25,
+        "bidirectionalUpliftRatio": 1.1228070175438596
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 3.5755,
+        "observedTotalPayBidirectional": 4.01998,
+        "observedHitsLeft": 0.12457,
+        "observedHitsBidirectional": 0.21973,
+        "observedUpliftRatio": 1.1243126835407637
+      },
+      "checks": {
+        "pay_rel": 0.004995000000000083,
+        "hit_abs": 0.0009800000000000086,
+        "uplift_rel": 0.0013409837784927672
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_2reel_all_or_nothing",
+      "description": "Edge: 2-reel game kMin=2 → all-or-nothing, P(L_2)=q^2",
+      "cfg": {
+        "reelCount": 2,
+        "minMatchLength": 2,
+        "symbols": [
+          {
+            "label": "two",
+            "density": 0.5,
+            "paytable": [
+              0,
+              10
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 2,
+        "minMatchLength": 2,
+        "totalExpectedPayLeft": 2.5,
+        "totalExpectedPayRight": 2.5,
+        "totalExpectedPayBidirectional": 2.5,
+        "totalHitFrequencyLeft": 0.25,
+        "totalHitFrequencyRight": 0.25,
+        "totalHitFrequencyBidirectional": 0.25,
+        "varianceBidirectional": 18.75,
+        "bidirectionalUpliftRatio": 1
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 2.5092,
+        "observedTotalPayBidirectional": 2.5092,
+        "observedHitsLeft": 0.25092,
+        "observedHitsBidirectional": 0.25092,
+        "observedUpliftRatio": 1
+      },
+      "checks": {
+        "pay_rel": 0.00367999999999995,
+        "hit_abs": 0.0009199999999999764,
+        "uplift_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "F_3reel_classic_slot",
+      "description": "Classic 3-reel both-ways, kMin=3 → only full-match pays (P(L_3)=q^3)",
+      "cfg": {
+        "reelCount": 3,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "cherry",
+            "density": 0.3,
+            "paytable": [
+              0,
+              0,
+              5
+            ]
+          },
+          {
+            "label": "bar",
+            "density": 0.2,
+            "paytable": [
+              0,
+              0,
+              20
+            ]
+          },
+          {
+            "label": "seven",
+            "density": 0.05,
+            "paytable": [
+              0,
+              0,
+              500
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 3,
+        "minMatchLength": 3,
+        "totalExpectedPayLeft": 0.35750000000000004,
+        "totalExpectedPayRight": 0.35750000000000004,
+        "totalExpectedPayBidirectional": 0.35750000000000004,
+        "totalHitFrequencyLeft": 0.035124999999999997,
+        "totalHitFrequencyRight": 0.035124999999999997,
+        "totalHitFrequencyBidirectional": 0.035124999999999997,
+        "varianceBidirectional": 34.99719375000001,
+        "bidirectionalUpliftRatio": 1
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedTotalPayLeft": 0.34085,
+        "observedTotalPayBidirectional": 0.34085,
+        "observedHitsLeft": 0.03457,
+        "observedHitsBidirectional": 0.03457,
+        "observedUpliftRatio": 1
+      },
+      "checks": {
+        "pay_rel": 0.04657342657342672,
+        "hit_abs": 0.0005549999999999999,
+        "uplift_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    }
+  ]
+}

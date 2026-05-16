@@ -197,6 +197,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 123 Mega Symbol Multi-Cell Expansion (W152 Wave 124)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MEGA_SYMBOL_EXPANSION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MEGA_SYMBOL_EXPANSION.md' },
+  // REPORTS — Wave 125 Bi-Directional Line Pay Aggregator (W152 Wave 126)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BIDIRECTIONAL_LINE_PAY.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BIDIRECTIONAL_LINE_PAY.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

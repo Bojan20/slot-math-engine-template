@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.20
+# Industry Pattern Catalog v2.21
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -37,6 +37,7 @@
 > - v2.18 (Wave 119) — adds 1 bonus-collect-N trigger tracker kernel landed in Wave 118/119 (Negative Binomial NB(N,p))
 > - v2.19 (Wave 122) — adds 1 cascade multiplier chain (lockstep conditional) kernel landed in Wave 121/122 (Wald-style Σ M_k·p^k)
 > - v2.20 (Wave 124) — adds 1 mega symbol multi-cell expansion kernel landed in Wave 123/124 (S² area coverage Wald-style)
+> - v2.21 (Wave 126) — adds 1 bi-directional line pay kernel landed in Wave 125/126 (both-ways evaluation sa N-match deduplication)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -340,8 +341,20 @@ Super-symbol drops sa S × S area coverage, supstituira base sa target T.
 |----|---------|-------------|---------------|------------------|
 | P-054 | **Mega Symbol Multi-Cell Expansion Aggregator** | K ~ countPmf super-symbol drops per spin; S ~ sizePmf (1=1×1, 2=2×2, ...); T ~ targetPmf sa payoutX; **Y = Σ_{i=1..K} S_i² · paytable[T_i]** (S² area term); K ⊥ S ⊥ T daje **`E[Y] = E[K]·E[S²]·E[paytable[T]]`**; **`E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])²`** (S⁴ area-of-area + cross-drop); **`probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max`** joint extreme | `src/features/megaSymbolExpansion.ts` | 39 vitest specs (Wave 123) + 6 PAR-style configs × 100K spins (Wave 124); portfolio entry W123 |
 
+## Pattern Catalog v2.21 — Bi-Directional Line Pay Aggregator Kernel (Wave 125/126)
+
+This pattern targets the **both-ways line pay evaluation family** —
+Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra
+Bi-Way / Stakelogic Witchcraft Academy. Pays match from LEFT (reels
+1..k) AND from RIGHT (reels N-k+1..N) — bi-directional uplift sa
+N-match deduplication.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-055 | **Bi-Directional Line Pay Aggregator** | N reels independent, per-symbol density q; **`P(L_k) = q^k·(1−q)`** za k<N, **`P(L_N) = q^N`**; P(R_k) symetrično; **`E[pay_BD] = E[L] + E[R] − paytable[N]·q^N`** (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); **`bidirectionalUpliftRatio = E[pay_BD] / E[pay_L]`** (typically 1.5-2 za non-degenerate, drops sa density→1) | `src/features/biDirectionalLinePay.ts` | 32 vitest specs (Wave 125) + 6 PAR-style configs × 100K spins (Wave 126); portfolio entry W125 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 34 P-021..P-054 kernels in ~10 seconds and emits unified report
+all 35 P-021..P-055 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

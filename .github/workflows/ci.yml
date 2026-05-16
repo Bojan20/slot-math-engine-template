@@ -192,3 +192,5 @@ jobs:
         run: npm run cascade-multiplier-chain-acceptance
       - name: Mega Symbol Multi-Cell Expansion acceptance (6/6 configs × 100K spins, Wave 123/124)
         run: npm run mega-symbol-expansion-acceptance
+      - name: Bi-Directional Line Pay acceptance (6/6 configs × 100K spins, Wave 125/126)
+        run: npm run bi-directional-line-pay-acceptance
