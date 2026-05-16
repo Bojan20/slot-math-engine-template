@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.6
+# Industry Pattern Catalog v2.7
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6 expansion).** Operator-facing catalog
-> of **40 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7 expansion).** Operator-facing catalog
+> of **41 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -17,6 +17,8 @@
 >   (Persistent Multiplier Accumulator — Binomial drop chain × running multiplier).
 > - v2.6 (Wave 92) — adds 1 coin-accumulator kernel landed in Wave 91/92
 >   (Money-Train-style Coin Accumulator with discrete mystery value distribution).
+> - v2.7 (Wave 94) — adds 1 multiplicative-wild kernel landed in Wave 93/94
+>   (Multiplicative Wild Stack Bonus — product of Binomial wilds × multipliers).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -161,8 +163,20 @@ mystery distribution (cash multi-tier + jackpot tiers).
 |----|---------|-------------|---------------|------------------|
 | P-040 | **Coin Accumulator + Mystery Values** | N ~ Binomial(K, q): `E[N]=K·q`, `Var[N]=K·q·(1-q)`; mystery moments μ_V, σ²_V from discrete distribution; **`E[Y] = E[N]·μ_V` (Wald)**, `Var[Y] = E[N]·σ²_V + Var[N]·μ²_V` (compound-sum); **`P(≥1 max-value) = 1 − (1 − q·p_max)^K`** (Bernoulli-Binomial nesting) | `src/features/coinAccumulatorMystery.ts` | 30 vitest specs (Wave 91) + 6 PAR-style configs × 100K episodes (Wave 92); portfolio entry W91 |
 
+## Pattern Catalog v2.7 — Multiplicative Wild Stack Kernel (Wave 93-94)
+
+This pattern targets the **multiplicative wild-stack family** — NetEnt
+Hotline / Push Wanted Dead or a Wild / Hacksaw Multiplier Mayhem style
+features where each reel has a chance to land a wild stack carrying a
+random multiplier, and ALL active wild multipliers COMBINE
+MULTIPLICATIVELY across reels (product, not sum).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-041 | **Multiplicative Wild Stack Bonus** | N ~ Binomial(R, p_wild); W = Π M_i over active wilds; **`E[W] = (p·μ_M + 1-p)^R`** (interchange product); `E[W²] = (p·E[M²] + 1-p)^R`; `Var[W] = E[W²] − E[W]²`; **`E[Y] = μ_B · E[W]`**, `Var[Y] = (σ²_B + μ²_B)·E[W²] − E[Y]²`; tail `P(all wilds)=p^R`, max combined = `m_max^R` | `src/features/multiplicativeWildStack.ts` | 33 vitest specs (Wave 93) + 6 PAR-style configs × 100K episodes (Wave 94); portfolio entry W93 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 20 P-021..P-040 kernels in ~10 seconds and emits unified report
+all 21 P-021..P-041 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

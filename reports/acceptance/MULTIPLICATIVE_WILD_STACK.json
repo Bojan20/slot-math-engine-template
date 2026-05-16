@@ -1,0 +1,306 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTIPLICATIVE_WILD_STACK",
+  "generated_utc": "2026-05-16T05:09:51.091Z",
+  "episodes_per_config": 100000,
+  "seed": 4208904958,
+  "tolerances": {
+    "ey_rel": 0.1,
+    "var_rel": 0.4,
+    "w_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_netent_hotline_style",
+      "description": "NetEnt-Hotline 5x reels, rare q=0.1, fixed x2 wilds",
+      "cfg": {
+        "reelsR": 5,
+        "wildLandingProbabilityPerReel": 0.1,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 1
+          }
+        ],
+        "meanBaseWinX": 0.5,
+        "varianceBaseWinX": 1
+      },
+      "closed_form": {
+        "expectedActiveWilds": 0.5,
+        "expectedMultiplierPerStack": 2,
+        "expectedCombinedMultiplier": 1.6105100000000006,
+        "expectedCombinedMultiplierSquared": 3.7129300000000005,
+        "varianceCombinedMultiplier": 1.1191875398999986,
+        "expectedTotalPayoutX": 0.8052550000000003,
+        "varianceTotalPayoutX": 3.9927268849750006,
+        "probAllWilds": 0.000010000000000000003,
+        "probZeroWilds": 0.5904900000000001,
+        "maxCombinedMultiplier": 32
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 0.50014,
+        "observedMeanCombinedMultiplier": 1.60933,
+        "observedMeanPayoutX": 0.801725,
+        "observedVariancePayoutX": 3.930924524375,
+        "observedMaxObservedMult": 16
+      },
+      "checks": {
+        "ey_rel": 0.004383704540797951,
+        "var_rel": 0.01547873480466912,
+        "w_rel": 0.0007326871612101909
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_classic_5reel_multi_tier",
+      "description": "5 reels, q=0.2, multi-tier x2/x3/x5/x10 distribution",
+      "cfg": {
+        "reelsR": 5,
+        "wildLandingProbabilityPerReel": 0.2,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 60
+          },
+          {
+            "label": "x3",
+            "valueX": 3,
+            "weight": 25
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 12
+          },
+          {
+            "label": "x10",
+            "valueX": 10,
+            "weight": 3
+          }
+        ],
+        "meanBaseWinX": 1,
+        "varianceBaseWinX": 2
+      },
+      "closed_form": {
+        "expectedActiveWilds": 1,
+        "expectedMultiplierPerStack": 2.8499999999999996,
+        "expectedCombinedMultiplier": 4.826172445700002,
+        "expectedCombinedMultiplierSquared": 215.94248846930023,
+        "varianceCombinedMultiplier": 192.6505479936663,
+        "expectedTotalPayoutX": 4.826172445700002,
+        "varianceTotalPayoutX": 624.5355249322668,
+        "probAllWilds": 0.0003200000000000001,
+        "probZeroWilds": 0.3276800000000001,
+        "maxCombinedMultiplier": 100000
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 0.99891,
+        "observedMeanCombinedMultiplier": 4.82557,
+        "observedMeanPayoutX": 4.7466,
+        "observedVariancePayoutX": 576.96320844,
+        "observedMaxObservedMult": 1000
+      },
+      "checks": {
+        "ey_rel": 0.016487692181596004,
+        "var_rel": 0.07617231461320977,
+        "w_rel": 0.00012482887977589193
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "C_high_density_low_mult",
+      "description": "High q=0.6, simple x2 wilds — moderate stacking",
+      "cfg": {
+        "reelsR": 5,
+        "wildLandingProbabilityPerReel": 0.6,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 1
+          }
+        ],
+        "meanBaseWinX": 0.5,
+        "varianceBaseWinX": 1
+      },
+      "closed_form": {
+        "expectedActiveWilds": 3,
+        "expectedMultiplierPerStack": 2,
+        "expectedCombinedMultiplier": 10.485760000000003,
+        "expectedCombinedMultiplierSquared": 172.10367999999994,
+        "varianceCombinedMultiplier": 62.15251722239988,
+        "expectedTotalPayoutX": 5.242880000000001,
+        "varianceTotalPayoutX": 187.6418093055999,
+        "probAllWilds": 0.07775999999999998,
+        "probZeroWilds": 0.010240000000000003,
+        "maxCombinedMultiplier": 32
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 2.99646,
+        "observedMeanCombinedMultiplier": 10.47508,
+        "observedMeanPayoutX": 5.18345,
+        "observedVariancePayoutX": 185.32122109750003,
+        "observedMaxObservedMult": 32
+      },
+      "checks": {
+        "ey_rel": 0.011335372924805,
+        "var_rel": 0.012367116991077867,
+        "w_rel": 0.0010185241699221098
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "D_moderate_5reel_balanced",
+      "description": "5 reels, q=0.25, balanced x2/x3/x5 — moderate variance regime",
+      "cfg": {
+        "reelsR": 5,
+        "wildLandingProbabilityPerReel": 0.25,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 50
+          },
+          {
+            "label": "x3",
+            "valueX": 3,
+            "weight": 30
+          },
+          {
+            "label": "x5",
+            "valueX": 5,
+            "weight": 20
+          }
+        ],
+        "meanBaseWinX": 0.5,
+        "varianceBaseWinX": 1
+      },
+      "closed_form": {
+        "expectedActiveWilds": 1.25,
+        "expectedMultiplierPerStack": 2.9,
+        "expectedCombinedMultiplier": 6.981682607421877,
+        "expectedCombinedMultiplierSquared": 322.6403262402343,
+        "varianceCombinedMultiplier": 273.89643420945714,
+        "expectedTotalPayoutX": 3.4908413037109387,
+        "varianceTotalPayoutX": 391.11443479259856,
+        "probAllWilds": 0.0009765625,
+        "probZeroWilds": 0.2373046875,
+        "maxCombinedMultiplier": 3125
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 1.24965,
+        "observedMeanCombinedMultiplier": 6.9413,
+        "observedMeanPayoutX": 3.4184,
+        "observedVariancePayoutX": 392.41241644,
+        "observedMaxObservedMult": 1250
+      },
+      "checks": {
+        "ey_rel": 0.020751818088645242,
+        "var_rel": 0.0033186748734798164,
+        "w_rel": 0.005784079525320823
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "E_p1_guaranteed",
+      "description": "p=1 (guaranteed wilds every reel) — deterministic mult product",
+      "cfg": {
+        "reelsR": 3,
+        "wildLandingProbabilityPerReel": 1,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 1
+          }
+        ],
+        "meanBaseWinX": 1,
+        "varianceBaseWinX": 1
+      },
+      "closed_form": {
+        "expectedActiveWilds": 3,
+        "expectedMultiplierPerStack": 2,
+        "expectedCombinedMultiplier": 8,
+        "expectedCombinedMultiplierSquared": 64,
+        "varianceCombinedMultiplier": 0,
+        "expectedTotalPayoutX": 8,
+        "varianceTotalPayoutX": 64,
+        "probAllWilds": 1,
+        "probZeroWilds": 0,
+        "maxCombinedMultiplier": 8
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 3,
+        "observedMeanCombinedMultiplier": 8,
+        "observedMeanPayoutX": 7.96304,
+        "observedVariancePayoutX": 63.9986339584,
+        "observedMaxObservedMult": 8
+      },
+      "checks": {
+        "ey_rel": 0.0046199999999999575,
+        "var_rel": 0.00002134440000001181,
+        "w_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_p0_no_wilds",
+      "description": "p=0 corner — no wilds, Y = B (baseline)",
+      "cfg": {
+        "reelsR": 5,
+        "wildLandingProbabilityPerReel": 0,
+        "multiplierDistribution": [
+          {
+            "label": "x2",
+            "valueX": 2,
+            "weight": 1
+          }
+        ],
+        "meanBaseWinX": 1,
+        "varianceBaseWinX": 1
+      },
+      "closed_form": {
+        "expectedActiveWilds": 0,
+        "expectedMultiplierPerStack": 2,
+        "expectedCombinedMultiplier": 1,
+        "expectedCombinedMultiplierSquared": 1,
+        "varianceCombinedMultiplier": 0,
+        "expectedTotalPayoutX": 1,
+        "varianceTotalPayoutX": 1,
+        "probAllWilds": 0,
+        "probZeroWilds": 1,
+        "maxCombinedMultiplier": 32
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWilds": 0,
+        "observedMeanCombinedMultiplier": 1,
+        "observedMeanPayoutX": 1.00164,
+        "observedVariancePayoutX": 0.9999973104,
+        "observedMaxObservedMult": 1
+      },
+      "checks": {
+        "ey_rel": 0.0016400000000000858,
+        "var_rel": 0.0000026896000000498077,
+        "w_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}

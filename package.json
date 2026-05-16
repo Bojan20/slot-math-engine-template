@@ -49,6 +49,7 @@
     "cascade-multiplier-pyramid-acceptance": "npm run build && node scripts/cascade-multiplier-pyramid-acceptance.mjs",
     "persistent-multiplier-accumulator-acceptance": "npm run build && node scripts/persistent-multiplier-accumulator-acceptance.mjs",
     "coin-accumulator-mystery-acceptance": "npm run build && node scripts/coin-accumulator-mystery-acceptance.mjs",
+    "multiplicative-wild-stack-acceptance": "npm run build && node scripts/multiplicative-wild-stack-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
