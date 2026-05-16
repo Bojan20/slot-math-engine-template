@@ -172,3 +172,5 @@ jobs:
         run: npm run free-spins-lookback-multiplier-acceptance
       - name: Symbol Upgrade Chain acceptance (6/6 configs × 100K episodes, Wave 101/103)
         run: npm run symbol-upgrade-chain-acceptance
+      - name: Cluster Compound Variance acceptance (6/6 configs × 100K episodes, Wave 102/104)
+        run: npm run cluster-compound-variance-acceptance

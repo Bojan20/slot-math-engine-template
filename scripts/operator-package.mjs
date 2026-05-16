@@ -167,6 +167,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 101 Symbol Upgrade Chain Markov (W152 Wave 103)
   { kind: 'reports/acceptance', src: 'reports/acceptance/SYMBOL_UPGRADE_CHAIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/SYMBOL_UPGRADE_CHAIN.md' },
+  // REPORTS — Wave 102 Cluster Compound Variance (W152 Wave 104)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CLUSTER_COMPOUND_VARIANCE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CLUSTER_COMPOUND_VARIANCE.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

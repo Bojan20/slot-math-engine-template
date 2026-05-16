@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.10
+# Industry Pattern Catalog v2.11
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10 expansion).** Operator-facing catalog
-> of **44 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11 expansion).** Operator-facing catalog
+> of **45 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -25,6 +25,8 @@
 >   (FS Lookback Multiplier Aggregator — Wald-like M·S_K aggregator).
 > - v2.10 (Wave 103) — adds 1 symbol-upgrade-ladder kernel landed in Wave 101/103
 >   (Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming tier advance).
+> - v2.11 (Wave 104) — adds 1 cluster-cascade-variance kernel landed in Wave 102/104
+>   (Cluster Compound Variance — Sweet Bonanza / Reactoonz / Jammin' Jars Wald-identity).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -214,8 +216,20 @@ through L+1 tiers during K free spins, with per-state payout escalation.
 |----|---------|-------------|---------------|------------------|
 | P-044 | **Symbol Upgrade Chain Markov** | A ~ Binomial(K, p): E[A]=K·p, Var[A]=K·p·(1-p); F = min(A, L); **`P(F=i) = C(K,i)·p^i·(1-p)^(K-i)`** for i<L, **`P(F=L) = 1 − Σ_{i<L} P(F=i)`**; `E[Y] = Σ P(F=i)·v_i`; tail: P(reach top), P(stay at base) = (1-p)^K | `src/features/symbolUpgradeChainMarkov.ts` | 27 vitest specs (Wave 101) + 6 PAR-style configs × 100K episodes (Wave 103); portfolio entry W101 |
 
+## Pattern Catalog v2.11 — Cluster Cascade Variance Kernel (Wave 102/104)
+
+This pattern targets the **cluster cascade compound payout family** —
+Sweet Bonanza / Reactoonz / Jammin' Jars / Wild Swarm style features
+where chain length N + per-step cluster size K_i + per-step payout f(K_i)
+compose into total payout Y = Σ f(K_i). Closed-form via Wald's
+compound-sum identity.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-045 | **Cluster Compound Variance** | μ_Y = Σ clusterPmf[k]·paytable[k]; σ²_Y = Σ clusterPmf[k]·paytable[k]² − μ_Y²; **`E[Y_total] = E[N] · μ_Y`** (Wald); **`Var[Y_total] = E[N]·σ²_Y + Var[N]·μ²_Y`** (compound-sum); 3 input modes (explicit chainPmf+clusterPmf, geometric pKill, bridge helper) | `src/features/clusterCompoundVariance.ts` | 31 vitest specs (Wave 102) + 6 PAR-style configs × 100K episodes (Wave 104); portfolio entry W102 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 25 P-021..P-045 kernels (incl. W101 + W102) in ~10 seconds and emits unified report
+all 25 P-021..P-045 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
