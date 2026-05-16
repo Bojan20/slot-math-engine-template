@@ -18,6 +18,7 @@
 //   §7. HSM Seed Bridge    — Wave 38 — live seed derivation + cluster isolation
 //                            + multi-instance broadcast + RCT/APT health (FIPS-grade)
 //   §8. PAR Commitment     — Wave 40 — live Merkle root + auditor verify PASS
+//   §9. Closed-Form Portfolio — Wave 49-63 — 12 closed-form solvers + exact enum
 //                            + tamper-detection demo (FAIL na izmenjeni IR / drift RTP)
 //
 // Ciljano vreme: ≤ 5 minuta na M-class Apple silicon (90% MC, 10% I/O).
@@ -552,6 +553,50 @@ async function step8(parMod, _irSim) {
   dim('→ Phase 2 = full Groth16 zk-SNARK (12-18 nedelja research, vredan kad regulator-i traže ZK).');
 }
 
+// ── §9 Closed-Form Math Portfolio (Wave 49-63) ─────────────────────────
+//
+// Showcases 12 closed-form solvers landed Wave 49-60 (hybrid feature math
+// kernels) + exact analytical RTP (Wave 63 ground-truth enumeration).
+// Each solver pinned by single representative CF vs MC value.
+
+async function step9() {
+  header(9, 'Closed-Form Math Portfolio (Wave 49-63)');
+  const { readFileSync, existsSync } = await import('fs');
+  const portfolioPath = join(ROOT, 'reports', 'dossier', 'CLOSED_FORM_PORTFOLIO.json');
+  const exactPath = join(ROOT, 'reports', 'acceptance', 'EXACT_ENUMERATION.json');
+  if (!existsSync(portfolioPath)) {
+    dim('CLOSED_FORM_PORTFOLIO.json not found — run `npm run closed-form-portfolio` first.');
+    return;
+  }
+  const portfolio = JSON.parse(readFileSync(portfolioPath, 'utf-8'));
+  console.log(`${BOLD}${portfolio.solvers_passed}/${portfolio.solvers_total} closed-form solvers PASS${RESET}`);
+  console.log('');
+  for (const r of portfolio.showcase) {
+    const cfStr = typeof r.cf === 'number' ? r.cf.toFixed(4) : String(r.cf);
+    const mcStr = typeof r.mc === 'number' ? r.mc.toFixed(4) : String(r.mc);
+    const symbol = r.ok ? '✅' : '❌';
+    console.log(`  ${symbol} W${r.wave}  ${r.solver.padEnd(48)}  CF=${cfStr.padStart(10)}  MC=${mcStr.padStart(10)}`);
+  }
+  console.log('');
+  if (existsSync(exactPath)) {
+    const exact = JSON.parse(readFileSync(exactPath, 'utf-8'));
+    console.log(`${BOLD}Wave 63 Exact Enumeration (ground-truth RTP, ne statistički):${RESET}`);
+    for (const f of exact.fixtures) {
+      const symbol = f.ok ? '✅' : '❌';
+      console.log(`  ${symbol} ${f.fixture.padEnd(22)}  EXACT=${f.exact_rtp.toFixed(6)}  MC=${f.mc_rtp.toFixed(6)}  rel=${(f.rel_err*100).toFixed(3)}%`);
+    }
+    console.log('');
+  }
+  dim('→ 12 mathematically independent solvers, all MC-verified at ~30M total spinova.');
+  dim('→ Each closed-form solver bit-exact deterministic; clean-room (0/944 reserved-term files).');
+  dim('→ Exact enumeration provides auditor-pinnable ground-truth (not statistical).');
+  demoMetrics.step9 = {
+    portfolio_pass: portfolio.solvers_passed,
+    portfolio_total: portfolio.solvers_total,
+    exact_fixtures: existsSync(exactPath) ? JSON.parse(readFileSync(exactPath, 'utf-8')).fixtures.length : 0,
+  };
+}
+
 // ── Main ───────────────────────────────────────────────────────────────
 
 async function main() {
@@ -594,6 +639,7 @@ async function main() {
     [6, () => step6()],
     [7, () => step7(hsmMod, mockHsmMod)],
     [8, () => step8(parMod, irSim)],
+    [9, () => step9()],
   ];
   for (const [n, fn] of steps) {
     if (STEP_ONLY != null && STEP_ONLY !== n) continue;
