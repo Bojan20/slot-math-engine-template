@@ -1,0 +1,317 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SYMBOL_UPGRADE_CHAIN",
+  "generated_utc": "2026-05-16T06:01:15.631Z",
+  "episodes_per_config": 100000,
+  "seed": 3235806812,
+  "tolerances": {
+    "ey_rel": 0.03,
+    "var_rel": 0.15,
+    "max_dist_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_6tier_K20",
+      "description": "Pragmatic 6-tier ladder, K=20 FS, p=0.15 advance",
+      "cfg": {
+        "freeSpinsK": 20,
+        "advanceProbabilityPerSpin": 0.15,
+        "payoutValuesPerState": [
+          1,
+          3,
+          10,
+          25,
+          75,
+          250
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 3,
+        "varianceAdvances": 2.55,
+        "finalStateDistribution": [
+          0.03875953108451434,
+          0.1367983450041682,
+          0.22933840191875268,
+          0.2428288961492676,
+          0.18212167211195088,
+          0.17015315373134632
+        ],
+        "expectedPayoutX": 65.01067483024913,
+        "variancePayoutX": 7608.590516875772,
+        "probReachTopState": 0.17015315373134632,
+        "probStayAtBase": 0.03875953108451433,
+        "probReachHalfway": 0.8244421239113174
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 64.95163,
+        "observedVariancePayoutX": 7594.027450343102,
+        "observedStateHistogram": [
+          0.0377,
+          0.13561,
+          0.23071,
+          0.24427,
+          0.18191,
+          0.1698
+        ],
+        "observedMaxState": 5
+      },
+      "checks": {
+        "ey_rel": 0.000908232846425739,
+        "var_rel": 0.0019140294776501786,
+        "max_dist_rel": 0.027336014003989297
+      },
+      "pass": true,
+      "elapsed_ms": 21
+    },
+    {
+      "name": "B_btg_aggressive_3tier_K8",
+      "description": "BTG aggressive 3-tier ladder, K=8 FS, p=0.4",
+      "cfg": {
+        "freeSpinsK": 8,
+        "advanceProbabilityPerSpin": 0.4,
+        "payoutValuesPerState": [
+          1,
+          5,
+          50
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 3.2,
+        "varianceAdvances": 1.92,
+        "finalStateDistribution": [
+          0.016796159999999994,
+          0.08957951999999994,
+          0.89362432
+        ],
+        "expectedPayoutX": 45.14590976,
+        "variancePayoutX": 198.16391610193637,
+        "probReachTopState": 0.89362432,
+        "probStayAtBase": 0.016796159999999994,
+        "probReachHalfway": 0.9832038399999999
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 45.14479,
+        "observedVariancePayoutX": 198.0944258559,
+        "observedStateHistogram": [
+          0.01624,
+          0.09021,
+          0.89355
+        ],
+        "observedMaxState": 2
+      },
+      "checks": {
+        "ey_rel": 0.000024803132907376158,
+        "var_rel": 0.0003506705327756056,
+        "max_dist_rel": 0.03311233043743292
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "C_high_p_short_K",
+      "description": "High p=0.6 + short K=5, easily reach top tier",
+      "cfg": {
+        "freeSpinsK": 5,
+        "advanceProbabilityPerSpin": 0.6,
+        "payoutValuesPerState": [
+          1,
+          4,
+          20,
+          100
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 3,
+        "varianceAdvances": 1.2000000000000002,
+        "finalStateDistribution": [
+          0.010240000000000006,
+          0.07680000000000001,
+          0.2304,
+          0.6825600000000001
+        ],
+        "expectedPayoutX": 73.18144,
+        "variancePayoutX": 1563.4758795264015,
+        "probReachTopState": 0.6825600000000001,
+        "probStayAtBase": 0.010240000000000003,
+        "probReachHalfway": 0.9897600000000001
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 73.0865,
+        "observedVariancePayoutX": 1566.5785777500005,
+        "observedStateHistogram": [
+          0.01058,
+          0.07678,
+          0.23119,
+          0.68145
+        ],
+        "observedMaxState": 3
+      },
+      "checks": {
+        "ey_rel": 0.0012973234743671898,
+        "var_rel": 0.0019844874258877687,
+        "max_dist_rel": 0.03320312499999947
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "D_long_K_low_p",
+      "description": "Long K=30, low p=0.1, rare top tier",
+      "cfg": {
+        "freeSpinsK": 30,
+        "advanceProbabilityPerSpin": 0.1,
+        "payoutValuesPerState": [
+          1,
+          2,
+          5,
+          10,
+          50,
+          200,
+          1000
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 3,
+        "varianceAdvances": 2.7,
+        "finalStateDistribution": [
+          0.04239115827521624,
+          0.1413038609173875,
+          0.22765622036690214,
+          0.2360879322323428,
+          0.17706594917425722,
+          0.10230477063401539,
+          0.07319010839987872
+        ],
+        "expectedPayoutX": 106.32851928966258,
+        "variancePayoutX": 66449.11788917717,
+        "probReachTopState": 0.07319010839987872,
+        "probStayAtBase": 0.04239115827521624,
+        "probReachHalfway": 0.5886487604404942
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 105.18389,
+        "observedVariancePayoutX": 65486.99889446789,
+        "observedStateHistogram": [
+          0.04132,
+          0.14201,
+          0.22661,
+          0.238,
+          0.17767,
+          0.10241,
+          0.07198
+        ],
+        "observedMaxState": 6
+      },
+      "checks": {
+        "ey_rel": 0.010765026140769907,
+        "var_rel": 0.01447903336074207,
+        "max_dist_rel": 0.025268436126749602
+      },
+      "pass": true,
+      "elapsed_ms": 24
+    },
+    {
+      "name": "E_p0_corner",
+      "description": "p=0 deterministic stay at base, P(F=0)=1",
+      "cfg": {
+        "freeSpinsK": 10,
+        "advanceProbabilityPerSpin": 0,
+        "payoutValuesPerState": [
+          1,
+          5,
+          25
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 0,
+        "varianceAdvances": 0,
+        "finalStateDistribution": [
+          1,
+          0,
+          0
+        ],
+        "expectedPayoutX": 1,
+        "variancePayoutX": 0,
+        "probReachTopState": 0,
+        "probStayAtBase": 1,
+        "probReachHalfway": 0
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 1,
+        "observedVariancePayoutX": 0,
+        "observedStateHistogram": [
+          1,
+          0,
+          0
+        ],
+        "observedMaxState": 0
+      },
+      "checks": {
+        "ey_rel": 0,
+        "var_rel": 0,
+        "max_dist_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_p1_full_advance",
+      "description": "p=1 deterministic reach top (K=10 ≥ L=4)",
+      "cfg": {
+        "freeSpinsK": 10,
+        "advanceProbabilityPerSpin": 1,
+        "payoutValuesPerState": [
+          1,
+          5,
+          25,
+          100,
+          500
+        ]
+      },
+      "closed_form": {
+        "expectedAdvances": 10,
+        "varianceAdvances": 0,
+        "finalStateDistribution": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "expectedPayoutX": 500,
+        "variancePayoutX": 0,
+        "probReachTopState": 1,
+        "probStayAtBase": 0,
+        "probReachHalfway": 1
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanPayoutX": 500,
+        "observedVariancePayoutX": 0,
+        "observedStateHistogram": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "observedMaxState": 4
+      },
+      "checks": {
+        "ey_rel": 0,
+        "var_rel": 0,
+        "max_dist_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.9
+# Industry Pattern Catalog v2.10
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9 expansion).** Operator-facing catalog
-> of **43 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10 expansion).** Operator-facing catalog
+> of **44 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -23,6 +23,8 @@
 >   (Ante Bet / Bet Boost Trade-Off Analyzer — per-mode RTP + crossover N*).
 > - v2.9 (Wave 98) — adds 1 lookback-multiplier kernel landed in Wave 97/98
 >   (FS Lookback Multiplier Aggregator — Wald-like M·S_K aggregator).
+> - v2.10 (Wave 103) — adds 1 symbol-upgrade-ladder kernel landed in Wave 101/103
+>   (Symbol Upgrade Chain Markov — Pragmatic / BTG / Push Gaming tier advance).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -202,8 +204,18 @@ distribution and applied to the total summed wins.
 |----|---------|-------------|---------------|------------------|
 | P-043 | **Free Spins Lookback Multiplier Aggregator** | S_K = Σ_{i=1..K} W_i, iid: E[S_K]=K·μ_W, Var[S_K]=K·σ²_W; M ~ discrete distribution; **`E[Y] = μ_M · K · μ_W`** (Wald-like); **`Var[Y] = K·σ²_W·(σ²_M + μ²_M) + K²·μ²_W·σ²_M`** (compound variance decomposition); tail: max M, P(max), E[Y\|M=max] | `src/features/freeSpinsLookbackMultiplier.ts` | 28 vitest specs (Wave 97) + 6 PAR-style configs × 100K episodes (Wave 98); portfolio entry W97 |
 
+## Pattern Catalog v2.10 — Symbol Upgrade Ladder Kernel (Wave 101/103)
+
+This pattern targets the **symbol upgrade ladder Markov family** —
+Pragmatic / BTG / Push Gaming style features where a symbol advances
+through L+1 tiers during K free spins, with per-state payout escalation.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-044 | **Symbol Upgrade Chain Markov** | A ~ Binomial(K, p): E[A]=K·p, Var[A]=K·p·(1-p); F = min(A, L); **`P(F=i) = C(K,i)·p^i·(1-p)^(K-i)`** for i<L, **`P(F=L) = 1 − Σ_{i<L} P(F=i)`**; `E[Y] = Σ P(F=i)·v_i`; tail: P(reach top), P(stay at base) = (1-p)^K | `src/features/symbolUpgradeChainMarkov.ts` | 27 vitest specs (Wave 101) + 6 PAR-style configs × 100K episodes (Wave 103); portfolio entry W101 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 23 P-021..P-043 kernels in ~10 seconds and emits unified report
+all 25 P-021..P-045 kernels (incl. W101 + W102) in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
