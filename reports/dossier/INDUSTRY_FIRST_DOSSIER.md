@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 33 industry-first acceptance proofs from Waves 33-118.
-> Generated: `2026-05-16T07:25:14.727Z` · repo SHA: `99edb2cacf1f`
+> **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
+> Generated: `2026-05-16T08:12:40.708Z` · repo SHA: `48017001fd0f`
 
-## Headline: **33/33 industry-firsts attested** ✅
+## Headline: **37/37 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -20,7 +20,7 @@
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 32/32 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 36/36 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
 | 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 | 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
 | 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
@@ -42,6 +42,10 @@
 | 114 | — | **Sticky Wild Countdown Multiplier — Markov stationary chain** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json`](../../reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.md) |
 | 116 | — | **Mystery Symbol Reveal Aggregator — Wald-style K ⊥ S decomposition** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/MYSTERY_SYMBOL_REVEAL.json`](../../reports/acceptance/MYSTERY_SYMBOL_REVEAL.md) |
 | 118 | — | **Bonus Collect-N Trigger Tracker — Negative Binomial NB(N, p)** | ✅ 6/6 configs PASS at 50000 episodes each (300K MC episodes) | [`reports/acceptance/BONUS_COLLECT_N.json`](../../reports/acceptance/BONUS_COLLECT_N.md) |
+| 121 | — | **Cascade Multiplier Chain Lockstep Conditional — Wald-style Σ M_k·p^k** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/CASCADE_MULTIPLIER_CHAIN.json`](../../reports/acceptance/CASCADE_MULTIPLIER_CHAIN.md) |
+| 123 | — | **Mega Symbol Multi-Cell Expansion Aggregator — S² area Wald-style** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/MEGA_SYMBOL_EXPANSION.json`](../../reports/acceptance/MEGA_SYMBOL_EXPANSION.md) |
+| 125 | — | **Bi-Directional Line Pay Aggregator — both-ways evaluation sa N-match deduplication** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/BIDIRECTIONAL_LINE_PAY.json`](../../reports/acceptance/BIDIRECTIONAL_LINE_PAY.md) |
+| 127 | — | **Anticipation/Tease Reel Probability Tracker — Bayesian conditional + UKGC RTS 8 §3.5** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/ANTICIPATION_REEL_TEASE.json`](../../reports/acceptance/ANTICIPATION_REEL_TEASE.md) |
 
 ## Why each is industry-first
 
@@ -124,7 +128,7 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
-- **Acceptance**: 32/32 closed-form solvers PASS in single runner
+- **Acceptance**: 36/36 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
@@ -275,6 +279,34 @@
 - **Industry-first claim**: Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku.
 - **Commit**: `2cc56e6`
 - **Detail**: `{"configs":[{"name":"A_money_cart_6coin","pass":true},{"name":"B_money_train_12coin_retrigger","pass":true},{"name":"C_rare_high_threshold","pass":true},{"name":"D_high_freq_short_threshold","pass":true},{"name":"E_geome`…
+
+### Wave 121 · Cascade Multiplier Chain Lockstep Conditional — Wald-style Σ M_k·p^k (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Lockstep conditional cascade multiplier chain (Quickspin Reactor Wilds / Push Gaming Token of Life / Hacksaw cascade / BTG Megaways multiplier-on-win): chain length L ~ Geometric(1-p) sa support {0,1,2,...}, P(L≥k)=p^k; M_k linear (base+(k-1)·step) ili geometric (base·r^(k-1)) sa r·p<1 convergence guard; Y = Σ_{k=1..L} V_k·M_k; Wald-style E[Y] = E[V]·Σ M_k·p^k = E[V]·[base·p/(1-p)+step·p²/(1-p)²] za linear; Var[Y] = E[Y²]−E[Y]² sa cross-term 2·E[V]²·Σ_{j<k} M_j·M_k·p^k. Distinct od W86 (deterministic ladder), W89 (Binomial drop), W102 (no multiplier), W114 (time-based, not win-based). First Wxxx za skip-on-empty conditional chain closed-form.
+- **Commit**: `2bf760c`
+- **Detail**: `{"configs":[{"name":"A_quickspin_reactor_wilds_p06","pass":true},{"name":"B_push_token_of_life_geom","pass":true},{"name":"C_hacksaw_cascade_p04","pass":true},{"name":"D_rare_chain_aggressive_step","pass":true},{"name":"`…
+
+### Wave 123 · Mega Symbol Multi-Cell Expansion Aggregator — S² area Wald-style (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Super-symbol multi-cell expansion aggregator (NetEnt Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form.
+- **Commit**: `3a43fa4`
+- **Detail**: `{"configs":[{"name":"A_sweet_bonanza_super_symbols","pass":true},{"name":"B_razor_shark_jumbo_5x5_rare","pass":true},{"name":"C_high_freq_small_supers","pass":true},{"name":"D_heavy_tail_jackpot_giant","pass":true},{"nam`…
+
+### Wave 125 · Bi-Directional Line Pay Aggregator — both-ways evaluation sa N-match deduplication (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Both-ways line pay aggregator (Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based.
+- **Commit**: `70be8cd`
+- **Detail**: `{"configs":[{"name":"A_microgaming_avalon_5reel_k3","pass":true},{"name":"B_netent_lights_5reel_k2","pass":true},{"name":"C_4reel_both_ways","pass":true},{"name":"D_high_density_low_uplift","pass":true},{"name":"E_2reel_`…
+
+### Wave 127 · Anticipation/Tease Reel Probability Tracker — Bayesian conditional + UKGC RTS 8 §3.5 (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / NetEnt suspense reels) — UKGC RTS 8 §3.5 "false anticipation" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation).
+- **Commit**: `d693c72`
+- **Detail**: `{"configs":[{"name":"A_pragmatic_5reel_K3_classic","pass":true},{"name":"B_btg_megaways_6reel_K4","pass":true},{"name":"C_netent_suspense_5reel_lowT","pass":true},{"name":"D_high_freq_low_K","pass":true},{"name":"E_ukgc_`…
 
 ## Auditor Q&A Map
 

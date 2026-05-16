@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T07:25:14.727Z",
-  "repo_sha": "99edb2cacf1f62f182c50de6b22195ea50b02c07",
+  "generatedAtUtc": "2026-05-16T08:12:40.708Z",
+  "repo_sha": "48017001fd0f2bb8d5fdb84d74973327445c1f9f",
   "headline": {
-    "waves": 33,
-    "industry_firsts": 33,
+    "waves": 37,
+    "industry_firsts": 37,
     "all_present": true
   },
   "waves": [
@@ -331,8 +331,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T07:17:47.563Z",
-      "headline": "32/32 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T08:04:28.796Z",
+      "headline": "36/36 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -493,6 +493,26 @@
           {
             "wave": 118,
             "solver": "Bonus Collect-N Trigger Tracker",
+            "ok": true
+          },
+          {
+            "wave": 121,
+            "solver": "Cascade Multiplier Chain",
+            "ok": true
+          },
+          {
+            "wave": 123,
+            "solver": "Mega Symbol Multi-Cell Expansion",
+            "ok": true
+          },
+          {
+            "wave": 125,
+            "solver": "Bi-Directional Line Pay Aggregator",
+            "ok": true
+          },
+          {
+            "wave": 127,
+            "solver": "Anticipation/Tease Reel Probability",
             "ok": true
           }
         ]
@@ -1359,6 +1379,162 @@
         ]
       },
       "industry_first": "Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku."
+    },
+    {
+      "wave": 121,
+      "kimi": "—",
+      "commit": "2bf760c",
+      "name": "Cascade Multiplier Chain Lockstep Conditional — Wald-style Σ M_k·p^k",
+      "reportPath": "reports/acceptance/CASCADE_MULTIPLIER_CHAIN.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:35:42.454Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_quickspin_reactor_wilds_p06",
+            "pass": true
+          },
+          {
+            "name": "B_push_token_of_life_geom",
+            "pass": true
+          },
+          {
+            "name": "C_hacksaw_cascade_p04",
+            "pass": true
+          },
+          {
+            "name": "D_rare_chain_aggressive_step",
+            "pass": true
+          },
+          {
+            "name": "E_constant_multiplier_corner",
+            "pass": true
+          },
+          {
+            "name": "F_heavy_tail_geom_r2_p03",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Lockstep conditional cascade multiplier chain (Quickspin Reactor Wilds / Push Gaming Token of Life / Hacksaw cascade / BTG Megaways multiplier-on-win): chain length L ~ Geometric(1-p) sa support {0,1,2,...}, P(L≥k)=p^k; M_k linear (base+(k-1)·step) ili geometric (base·r^(k-1)) sa r·p<1 convergence guard; Y = Σ_{k=1..L} V_k·M_k; Wald-style E[Y] = E[V]·Σ M_k·p^k = E[V]·[base·p/(1-p)+step·p²/(1-p)²] za linear; Var[Y] = E[Y²]−E[Y]² sa cross-term 2·E[V]²·Σ_{j<k} M_j·M_k·p^k. Distinct od W86 (deterministic ladder), W89 (Binomial drop), W102 (no multiplier), W114 (time-based, not win-based). First Wxxx za skip-on-empty conditional chain closed-form."
+    },
+    {
+      "wave": 123,
+      "kimi": "—",
+      "commit": "3a43fa4",
+      "name": "Mega Symbol Multi-Cell Expansion Aggregator — S² area Wald-style",
+      "reportPath": "reports/acceptance/MEGA_SYMBOL_EXPANSION.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:46:20.827Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_sweet_bonanza_super_symbols",
+            "pass": true
+          },
+          {
+            "name": "B_razor_shark_jumbo_5x5_rare",
+            "pass": true
+          },
+          {
+            "name": "C_high_freq_small_supers",
+            "pass": true
+          },
+          {
+            "name": "D_heavy_tail_jackpot_giant",
+            "pass": true
+          },
+          {
+            "name": "E_single_size_single_target_corner",
+            "pass": true
+          },
+          {
+            "name": "F_zero_drop_corner",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Super-symbol multi-cell expansion aggregator (NetEnt Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form."
+    },
+    {
+      "wave": 125,
+      "kimi": "—",
+      "commit": "70be8cd",
+      "name": "Bi-Directional Line Pay Aggregator — both-ways evaluation sa N-match deduplication",
+      "reportPath": "reports/acceptance/BIDIRECTIONAL_LINE_PAY.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T07:57:24.041Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_microgaming_avalon_5reel_k3",
+            "pass": true
+          },
+          {
+            "name": "B_netent_lights_5reel_k2",
+            "pass": true
+          },
+          {
+            "name": "C_4reel_both_ways",
+            "pass": true
+          },
+          {
+            "name": "D_high_density_low_uplift",
+            "pass": true
+          },
+          {
+            "name": "E_2reel_all_or_nothing",
+            "pass": true
+          },
+          {
+            "name": "F_3reel_classic_slot",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Both-ways line pay aggregator (Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based."
+    },
+    {
+      "wave": 127,
+      "kimi": "—",
+      "commit": "d693c72",
+      "name": "Anticipation/Tease Reel Probability Tracker — Bayesian conditional + UKGC RTS 8 §3.5",
+      "reportPath": "reports/acceptance/ANTICIPATION_REEL_TEASE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T08:07:45.611Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_pragmatic_5reel_K3_classic",
+            "pass": true
+          },
+          {
+            "name": "B_btg_megaways_6reel_K4",
+            "pass": true
+          },
+          {
+            "name": "C_netent_suspense_5reel_lowT",
+            "pass": true
+          },
+          {
+            "name": "D_high_freq_low_K",
+            "pass": true
+          },
+          {
+            "name": "E_ukgc_strict_bayesian_T1",
+            "pass": true
+          },
+          {
+            "name": "F_rare_trigger_long_tease",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / NetEnt suspense reels) — UKGC RTS 8 §3.5 \"false anticipation\" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation)."
     }
   ],
   "auditor_qa": [

@@ -466,6 +466,54 @@ const WAVES = [
     }),
     industry_first: 'Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N), E[T_N] = N/p, Var[T_N] = N(1−p)/p²; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K·p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku.',
   },
+  {
+    wave: 121,
+    kimi: '—',
+    name: 'Cascade Multiplier Chain Lockstep Conditional — Wald-style Σ M_k·p^k',
+    commit: '2bf760c',
+    reportPath: 'reports/acceptance/CASCADE_MULTIPLIER_CHAIN.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Lockstep conditional cascade multiplier chain (Quickspin Reactor Wilds / Push Gaming Token of Life / Hacksaw cascade / BTG Megaways multiplier-on-win): chain length L ~ Geometric(1-p) sa support {0,1,2,...}, P(L≥k)=p^k; M_k linear (base+(k-1)·step) ili geometric (base·r^(k-1)) sa r·p<1 convergence guard; Y = Σ_{k=1..L} V_k·M_k; Wald-style E[Y] = E[V]·Σ M_k·p^k = E[V]·[base·p/(1-p)+step·p²/(1-p)²] za linear; Var[Y] = E[Y²]−E[Y]² sa cross-term 2·E[V]²·Σ_{j<k} M_j·M_k·p^k. Distinct od W86 (deterministic ladder), W89 (Binomial drop), W102 (no multiplier), W114 (time-based, not win-based). First Wxxx za skip-on-empty conditional chain closed-form.',
+  },
+  {
+    wave: 123,
+    kimi: '—',
+    name: 'Mega Symbol Multi-Cell Expansion Aggregator — S² area Wald-style',
+    commit: '3a43fa4',
+    reportPath: 'reports/acceptance/MEGA_SYMBOL_EXPANSION.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Super-symbol multi-cell expansion aggregator (NetEnt Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form.',
+  },
+  {
+    wave: 125,
+    kimi: '—',
+    name: 'Bi-Directional Line Pay Aggregator — both-ways evaluation sa N-match deduplication',
+    commit: '70be8cd',
+    reportPath: 'reports/acceptance/BIDIRECTIONAL_LINE_PAY.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Both-ways line pay aggregator (Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based.',
+  },
+  {
+    wave: 127,
+    kimi: '—',
+    name: 'Anticipation/Tease Reel Probability Tracker — Bayesian conditional + UKGC RTS 8 §3.5',
+    commit: 'd693c72',
+    reportPath: 'reports/acceptance/ANTICIPATION_REEL_TEASE.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / NetEnt suspense reels) — UKGC RTS 8 §3.5 "false anticipation" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation).',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
@@ -486,7 +534,7 @@ const AUDITOR_QA = [
 function main() {
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
 
-  console.log('Industry-First Acceptance Dossier — aggregating Waves 33-118');
+  console.log('Industry-First Acceptance Dossier — aggregating Waves 33-127');
   console.log();
 
   const waves = [];
@@ -584,7 +632,7 @@ function renderMd(j) {
   const out = [];
   out.push('# Industry-First Acceptance Dossier');
   out.push('');
-  out.push(`> **Unified operator deliverable** — aggregates 33 industry-first acceptance proofs from Waves 33-118.`);
+  out.push(`> **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.`);
   out.push(`> Generated: \`${j.generatedAtUtc}\` · repo SHA: \`${j.repo_sha.slice(0, 12)}\``);
   out.push('');
   out.push(`## Headline: **${j.headline.industry_firsts}/${j.headline.waves} industry-firsts attested** ${j.headline.all_present ? '✅' : '⚠️'}`);

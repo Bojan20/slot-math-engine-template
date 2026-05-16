@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 33 Industry-Firsts (Wave 33-118, all attested)
+## 🏆 37 Industry-Firsts (Wave 33-127, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -80,8 +80,12 @@ or in 5 years.
 | 114 | **Sticky Wild Countdown Multiplier** — Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Wild Swarm Markov-chain stationary: **π_0=1/(1+Np)**, π_k=p/(1+Np); M_k linear or geometric; **E[Y per spin]=E[V]·E[M]** cross-independence | 6/6 configs × 100K spins PASS (600K MC) |
 | 116 | **Mystery Symbol Reveal Aggregator** — Pragmatic Big Bass / Wolf Gold / Wild-O-Tron Wald-style K ⊥ S: Y=K·paytable[S]; **E[Y]=E[K]·E[paytable[S]]**, **Var[Y]=E[K²]·E[paytable²]−E[K]²·E[paytable]²**; probFullGridMaxSymbol joint tail | 6/6 configs × 100K spins PASS (600K MC) |
 | 118 | **Bonus Collect-N Trigger Tracker** — Pragmatic Money Cart / Money Train / Wild Swarm Negative Binomial NB(N,p): **E[T_N]=N/p**, **Var[T_N]=N(1-p)/p²**; tail P(T_N>k)=P(C_k<N) via log-space Lanczos logGamma; CDF binary-search percentile | 6/6 configs × 50K episodes PASS (300K MC episodes) |
+| 121 | **Cascade Multiplier Chain Lockstep Conditional** — Quickspin Reactor Wilds / Push Token of Life / Hacksaw cascade Wald-style; chain L ~ Geometric(1-p), **P(L≥k)=p^k**, **E[Y]=E[V]·Σ M_k·p^k** (linear ili geometric M_k sa r·p<1 convergence) | 6/6 configs × 100K spins PASS (600K MC) |
+| 123 | **Mega Symbol Multi-Cell Expansion Aggregator** — Pragmatic Sweet Bonanza / Push Razor Shark / Slot Mountain Megaways jumbo S² area: **E[Y] = E[K]·E[S²]·E[paytable[T]]** (K ⊥ S ⊥ T); E[Y²] sa S⁴ area-of-area + K(K-1) cross-drop | 6/6 configs × 100K spins PASS (600K MC) |
+| 125 | **Bi-Directional Line Pay Aggregator** — Microgaming Avalon / NetEnt Lights / IGT Cleopatra Bi-Way both-ways; **P(L_k) = q^k·(1−q)** za k<N, **P(L_N) = q^N**; **E[pay_BD] = E[L] + E[R] − paytable[N]·q^N** (deduct N-match overlap) | 6/6 configs × 100K spins PASS (600K MC) |
+| 127 | **Anticipation/Tease Reel Probability Tracker** — BTG Megaways tease / Pragmatic anticipation / NetEnt suspense; **P(trigger \| m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j)** Bayesian conditional; UKGC RTS 8 §3.5 "false anticipation" compliance: falseRate ≤ 1−T (threshold=1.0 → zero false) | 6/6 configs × 100K spins PASS (600K MC) |
 
-These thirty-three are deliberately vendor-disjoint. They exist in OUR engine
+These thirty-seven are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
