@@ -1,0 +1,327 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "TUMBLE_MULTIPLIER_CAP",
+  "generated_utc": "2026-05-16T10:21:26.510Z",
+  "spins_per_config": 200000,
+  "seed": 3405644088,
+  "tolerances": {
+    "payout_rel": 0.05,
+    "chain_rel": 0.03,
+    "zero_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_gonzos_quest_5x_cap",
+      "description": "NetEnt Gonzo's Quest style: 1×→2×→3×→4×→5× cap",
+      "cfg": {
+        "winContinuationProbability": 0.4,
+        "baseMultiplier": 1,
+        "multiplierStep": 1,
+        "maximumMultiplier": 5,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.4,
+        "maximumMultiplier": 5,
+        "cascadesToCap": 5,
+        "expectedChainLength": 0.6666666666666667,
+        "probZeroChain": 0.6,
+        "expectedPayoutPerSpin": 5.0587733333333365,
+        "variancePayoutPerSpin": 259.60972258417786,
+        "expectedRampPayoutContribution": 4.66624,
+        "expectedCappedTailContribution": 0.3925333333333334,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 5.029615,
+        "observedMeanChainLength": 0.663855,
+        "observedZeroChainFraction": 0.602685,
+        "observedMaxMultiplierSeen": 5
+      },
+      "checks": {
+        "payout_rel": 0.005763913781470747,
+        "chain_rel": 0.004217500000000151,
+        "zero_abs": 0.0026850000000000485,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "B_btg_bonanza_fs_10x_cap",
+      "description": "BTG Bonanza FS style: 1×..10× cap, sticky during FS",
+      "cfg": {
+        "winContinuationProbability": 0.45,
+        "baseMultiplier": 1,
+        "multiplierStep": 1,
+        "maximumMultiplier": 10,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.55
+          },
+          {
+            "value": 4,
+            "probability": 0.3
+          },
+          {
+            "value": 20,
+            "probability": 0.13
+          },
+          {
+            "value": 100,
+            "probability": 0.02
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.45,
+        "maximumMultiplier": 10,
+        "cascadesToCap": 10,
+        "expectedChainLength": 0.8181818181818181,
+        "probZeroChain": 0.55,
+        "expectedPayoutPerSpin": 9.443064473648674,
+        "variancePayoutPerSpin": 1351.0088247152435,
+        "expectedRampPayoutContribution": 9.40375147480928,
+        "expectedCappedTailContribution": 0.03931299883939987,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 9.455195,
+        "observedMeanChainLength": 0.81801,
+        "observedZeroChainFraction": 0.55193,
+        "observedMaxMultiplierSeen": 10
+      },
+      "checks": {
+        "payout_rel": 0.001284596370720212,
+        "chain_rel": 0.0002099999999999078,
+        "zero_abs": 0.0019299999999999873,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "C_sweet_bonanza_xmas_100x_cap",
+      "description": "Pragmatic Sweet Bonanza Xmas: step=2, max=100, p=0.5",
+      "cfg": {
+        "winContinuationProbability": 0.5,
+        "baseMultiplier": 2,
+        "multiplierStep": 2,
+        "maximumMultiplier": 100,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.5
+          },
+          {
+            "value": 5,
+            "probability": 0.35
+          },
+          {
+            "value": 50,
+            "probability": 0.13
+          },
+          {
+            "value": 500,
+            "probability": 0.02
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.5,
+        "maximumMultiplier": 100,
+        "cascadesToCap": 50,
+        "expectedChainLength": 1,
+        "probZeroChain": 0.5,
+        "expectedPayoutPerSpin": 74.99999999999993,
+        "variancePayoutPerSpin": 150521.99999998897,
+        "expectedRampPayoutContribution": 74.9999999999966,
+        "expectedCappedTailContribution": 3.3306690738754696e-12,
+        "truncationProbabilityRemaining": 9.332636185032189e-302
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 75.85955,
+        "observedMeanChainLength": 1.000915,
+        "observedZeroChainFraction": 0.502095,
+        "observedMaxMultiplierSeen": 40
+      },
+      "checks": {
+        "payout_rel": 0.011460666666667608,
+        "chain_rel": 0.0009149999999999991,
+        "zero_abs": 0.002094999999999958,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "D_money_cart_4_20x_cap",
+      "description": "Push Money Cart 4: step=5, max=20, p=0.35 (rare-extreme)",
+      "cfg": {
+        "winContinuationProbability": 0.35,
+        "baseMultiplier": 1,
+        "multiplierStep": 5,
+        "maximumMultiplier": 20,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.7
+          },
+          {
+            "value": 10,
+            "probability": 0.25
+          },
+          {
+            "value": 100,
+            "probability": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.35,
+        "maximumMultiplier": 20,
+        "cascadesToCap": 5,
+        "expectedChainLength": 0.5384615384615384,
+        "probZeroChain": 0.65,
+        "expectedPayoutPerSpin": 16.0583123076923,
+        "variancePayoutPerSpin": 10787.346269517964,
+        "expectedRampPayoutContribution": 14.733144999999999,
+        "expectedCappedTailContribution": 1.325167307692307,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 15.841705,
+        "observedMeanChainLength": 0.53597,
+        "observedZeroChainFraction": 0.6526,
+        "observedMaxMultiplierSeen": 20
+      },
+      "checks": {
+        "payout_rel": 0.013488796552333943,
+        "chain_rel": 0.0046271428571429095,
+        "zero_abs": 0.0025999999999999357,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_corner_no_cap_effect",
+      "description": "Corner: M_max=1e6 (no practical cap, ramp dominates)",
+      "cfg": {
+        "winContinuationProbability": 0.3,
+        "baseMultiplier": 1,
+        "multiplierStep": 1,
+        "maximumMultiplier": 1000000,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.7
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.3,
+        "maximumMultiplier": 1000000,
+        "cascadesToCap": 1000000,
+        "expectedChainLength": 0.4285714285714286,
+        "probZeroChain": 0.7,
+        "expectedPayoutPerSpin": 1.3469387755102045,
+        "variancePayoutPerSpin": 15.854893794252387,
+        "expectedRampPayoutContribution": 1.3469387755102045,
+        "expectedCappedTailContribution": 0,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 1.34541,
+        "observedMeanChainLength": 0.427165,
+        "observedZeroChainFraction": 0.70162,
+        "observedMaxMultiplierSeen": 11
+      },
+      "checks": {
+        "payout_rel": 0.0011350000000002894,
+        "chain_rel": 0.003281666666666701,
+        "zero_abs": 0.0016200000000000658,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_corner_constant_multiplier",
+      "description": "Corner: base=cap, step=0 → constant M (k*=1, tail only)",
+      "cfg": {
+        "winContinuationProbability": 0.4,
+        "baseMultiplier": 3,
+        "multiplierStep": 0,
+        "maximumMultiplier": 3,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.4,
+        "maximumMultiplier": 3,
+        "cascadesToCap": 1,
+        "expectedChainLength": 0.6666666666666667,
+        "probZeroChain": 0.6,
+        "expectedPayoutPerSpin": 9.200000000000003,
+        "variancePayoutPerSpin": 508.2400000000002,
+        "expectedRampPayoutContribution": 0,
+        "expectedCappedTailContribution": 9.200000000000003,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 9.148965,
+        "observedMeanChainLength": 0.663855,
+        "observedZeroChainFraction": 0.602685,
+        "observedMaxMultiplierSeen": 3
+      },
+      "checks": {
+        "payout_rel": 0.005547282608695909,
+        "chain_rel": 0.004217500000000151,
+        "zero_abs": 0.0026850000000000485,
+        "max_mult_within_cap": true
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    }
+  ]
+}

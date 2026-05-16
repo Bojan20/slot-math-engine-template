@@ -204,3 +204,5 @@ jobs:
         run: npm run hold-win-value-jackpot-acceptance
       - name: Locked/Held Reels During FS acceptance (6/6 configs × 50K episodes, Wave 136/137)
         run: npm run locked-reels-during-fs-acceptance
+      - name: Tumble Multiplier with Cap acceptance (6/6 configs × 200K spins, Wave 138/139)
+        run: npm run tumble-multiplier-cap-acceptance

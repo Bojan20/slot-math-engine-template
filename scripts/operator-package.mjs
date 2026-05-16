@@ -215,6 +215,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 136 Locked/Held Reels During FS (W152 Wave 137)
   { kind: 'reports/acceptance', src: 'reports/acceptance/LOCKED_REELS_FS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/LOCKED_REELS_FS.md' },
+  // REPORTS — Wave 138 Tumble Multiplier with Cap (W152 Wave 139)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLE_MULTIPLIER_CAP.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLE_MULTIPLIER_CAP.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
