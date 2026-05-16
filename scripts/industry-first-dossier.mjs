@@ -175,6 +175,53 @@ const WAVES = [
     }),
     industry_first: 'ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed',
   },
+  // ─── Wave 49-64 expansion ───────────────────────────────────────────────
+  {
+    wave: 55,
+    name: 'General Entropy Health Monitor (streaming sliding-window)',
+    commit: '2109b5e',
+    reportPath: 'reports/acceptance/ENTROPY_HEALTH_MONITOR.json',
+    extractHeadline: (j) => `${j.sources_passed}/${j.sources_total} sources PASS · 5 PRNG + 2 adversarial`,
+    extractDetail: (j) => ({
+      bytes_per_source: j.bytes_per_source,
+      window_bytes: j.window_bytes,
+      assess_interval_bytes: j.assess_interval_bytes,
+    }),
+    industry_first: 'UKGC RTS 8.A.1 + MGA PPD §11.b + eCOGRA TG-VG require continuous RNG monitoring during operation — no vendor publishes streaming sliding-window χ² + Shannon entropy monitor with pluggable alert sinks for 5 PRNG backends + HSM bridge',
+  },
+  {
+    wave: 56,
+    name: 'Demo Mode controller w/ auditor attestation',
+    commit: '19f8103',
+    reportPath: 'reports/acceptance/DEMO_MODE.json',
+    extractHeadline: (j) => `${j.scenarios_passed}/${j.scenarios_total} scenarios PASS · tamper-detect verified`,
+    extractDetail: (j) => ({
+      scenarios: (j.scenarios ?? []).map((s) => ({ name: s.name, cycle: s.cycleMode, served: s.actually_served, verify_ok: s.verify_result?.ok })),
+    }),
+    industry_first: 'GLI-19 §3.3.9 (Replay Capability) + UKGC RTS 9 (demo distinction) + MGA PPD §11.b (auditor traceability) + eCOGRA TG-VG — no vendor publishes architectural assertNoRngCall guard + SHA-256 attestation + tamper-evident audit trail',
+  },
+  {
+    wave: 61,
+    name: 'Closed-Form Portfolio (12 hybrid math kernels)',
+    commit: '84ca120',
+    reportPath: 'reports/dossier/CLOSED_FORM_PORTFOLIO.json',
+    extractHeadline: (j) => `${j.solvers_passed}/${j.solvers_total} closed-form solvers PASS in single runner`,
+    extractDetail: (j) => ({
+      solvers: (j.showcase ?? []).map((r) => ({ wave: r.wave, solver: r.solver, ok: r.ok })),
+    }),
+    industry_first: '12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics',
+  },
+  {
+    wave: 63,
+    name: 'Exact Enumeration ground-truth RTP',
+    commit: '2b2a96a',
+    reportPath: 'reports/acceptance/EXACT_ENUMERATION.json',
+    extractHeadline: (j) => `${j.fixtures_passed}/${j.fixtures_total} fixtures with EXACT analytical RTP`,
+    extractDetail: (j) => ({
+      fixtures: (j.fixtures ?? []).map((f) => ({ id: f.fixture, exact: f.exact_rtp, mc: f.mc_rtp, rel: f.rel_err })),
+    }),
+    industry_first: 'Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

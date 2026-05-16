@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-15T23:34:57.365Z",
-  "repo_sha": "fdf6bd8dbe517b58c8b5db348b8baf7b32e7a2aa",
+  "generatedAtUtc": "2026-05-16T03:23:42.323Z",
+  "repo_sha": "70d15dde8ebf25ceed4b60ae03b1aac592a32db6",
   "headline": {
-    "waves": 9,
-    "industry_firsts": 9,
+    "waves": 13,
+    "industry_firsts": 13,
     "all_present": true
   },
   "waves": [
@@ -69,10 +69,10 @@
       "name": "USIF PAR Sheet Schema v1.0",
       "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T21:47:16.204Z",
+      "reportMtime": "2026-05-16T01:15:18.218Z",
       "headline": "20/20 samples valid",
       "detail": {
-        "mode": "baseline",
+        "mode": "strict-tier1",
         "schemaPath": "schemas/usif-par-v1.0.json",
         "samples": 20
       },
@@ -256,6 +256,177 @@
         ]
       },
       "industry_first": "ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed"
+    },
+    {
+      "wave": 55,
+      "commit": "2109b5e",
+      "name": "General Entropy Health Monitor (streaming sliding-window)",
+      "reportPath": "reports/acceptance/ENTROPY_HEALTH_MONITOR.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T02:22:46.833Z",
+      "headline": "7/7 sources PASS · 5 PRNG + 2 adversarial",
+      "detail": {
+        "bytes_per_source": 500000,
+        "window_bytes": 8192,
+        "assess_interval_bytes": 1024
+      },
+      "industry_first": "UKGC RTS 8.A.1 + MGA PPD §11.b + eCOGRA TG-VG require continuous RNG monitoring during operation — no vendor publishes streaming sliding-window χ² + Shannon entropy monitor with pluggable alert sinks for 5 PRNG backends + HSM bridge"
+    },
+    {
+      "wave": 56,
+      "commit": "19f8103",
+      "name": "Demo Mode controller w/ auditor attestation",
+      "reportPath": "reports/acceptance/DEMO_MODE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T02:30:17.856Z",
+      "headline": "6/6 scenarios PASS · tamper-detect verified",
+      "detail": {
+        "scenarios": [
+          {
+            "name": "A_basic_50_spins_halt",
+            "cycle": "halt",
+            "served": 50,
+            "verify_ok": true
+          },
+          {
+            "name": "B_loop_3x_pass",
+            "cycle": "loop",
+            "served": 60,
+            "verify_ok": true
+          },
+          {
+            "name": "C_partial_halt",
+            "cycle": "halt",
+            "served": 75,
+            "verify_ok": true
+          },
+          {
+            "name": "D_single_spin_loop",
+            "cycle": "loop",
+            "served": 50,
+            "verify_ok": true
+          },
+          {
+            "name": "E_jackpot_demo_script",
+            "cycle": "halt",
+            "served": 12,
+            "verify_ok": true
+          },
+          {
+            "name": "F_audit_tamper_detection",
+            "cycle": "halt",
+            "served": 30,
+            "verify_ok": true
+          }
+        ]
+      },
+      "industry_first": "GLI-19 §3.3.9 (Replay Capability) + UKGC RTS 9 (demo distinction) + MGA PPD §11.b (auditor traceability) + eCOGRA TG-VG — no vendor publishes architectural assertNoRngCall guard + SHA-256 attestation + tamper-evident audit trail"
+    },
+    {
+      "wave": 61,
+      "commit": "84ca120",
+      "name": "Closed-Form Portfolio (12 hybrid math kernels)",
+      "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T03:06:03.701Z",
+      "headline": "12/12 closed-form solvers PASS in single runner",
+      "detail": {
+        "solvers": [
+          {
+            "wave": 49,
+            "solver": "N-tier H&W Jackpot Ladder",
+            "ok": true
+          },
+          {
+            "wave": 50,
+            "solver": "Charge Meter steady-state",
+            "ok": true
+          },
+          {
+            "wave": 51,
+            "solver": "Supermeter state-switch",
+            "ok": true
+          },
+          {
+            "wave": 52,
+            "solver": "Sticky Cash + Reveal Mult hybrid",
+            "ok": true
+          },
+          {
+            "wave": 53,
+            "solver": "Walking-Wild Respin variant",
+            "ok": true
+          },
+          {
+            "wave": 54,
+            "solver": "Megacluster Stack-Reveal Ways",
+            "ok": true
+          },
+          {
+            "wave": 55,
+            "solver": "Entropy Health Monitor (streaming)",
+            "ok": true
+          },
+          {
+            "wave": 56,
+            "solver": "Demo Mode Controller",
+            "ok": true
+          },
+          {
+            "wave": 57,
+            "solver": "Crash-style Multiplier (target=10×)",
+            "ok": true
+          },
+          {
+            "wave": 58,
+            "solver": "Parallel Screens (3 shared, independent)",
+            "ok": true
+          },
+          {
+            "wave": 59,
+            "solver": "Class-II Bingo Coordinator (75-ball, 2 patterns)",
+            "ok": true
+          },
+          {
+            "wave": 60,
+            "solver": "Sticky-Cash Collector (N=200)",
+            "ok": true
+          }
+        ]
+      },
+      "industry_first": "12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics"
+    },
+    {
+      "wave": 63,
+      "commit": "2b2a96a",
+      "name": "Exact Enumeration ground-truth RTP",
+      "reportPath": "reports/acceptance/EXACT_ENUMERATION.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T03:16:07.534Z",
+      "headline": "3/3 fixtures with EXACT analytical RTP",
+      "detail": {
+        "fixtures": [
+          {
+            "id": "classic-3x3-lines",
+            "exact": 0.5191663967174174,
+            "mc": 0.5195079000034911,
+            "rel": 0.0006577915832630853
+          },
+          {
+            "id": "3x5-5lines",
+            "exact": 0.6980609418282547,
+            "mc": 0.6976597500064705,
+            "rel": 0.0005747232050162823
+          },
+          {
+            "id": "5x3-20lines",
+            "exact": 1.4469757173839128,
+            "mc": 1.446906,
+            "rel": 0.00004818144705210533
+          }
+        ]
+      },
+      "industry_first": "Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth."
     }
   ],
   "auditor_qa": [

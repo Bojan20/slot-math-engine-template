@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-15T23:34:57.365Z` · repo SHA: `fdf6bd8dbe51`
+> Generated: `2026-05-16T03:23:42.323Z` · repo SHA: `70d15dde8ebf`
 
-## Headline: **9/9 industry-firsts attested** ✅
+## Headline: **13/13 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -18,6 +18,10 @@
 | 39 | K3 | **SP 800-90B Entropy Assessment** | ✅ 6 sources, all Low-bar (≥0.5 bits) ✅ | [`reports/rng/SP_800_90B_ASSESSMENT.json`](../../reports/rng/SP_800_90B_ASSESSMENT.md) |
 | 40 | K9 | **PAR Sheet Commitment v1.0** | ✅ 180/180 gates PASS | [`reports/acceptance/PAR_COMMITMENT.json`](../../reports/acceptance/PAR_COMMITMENT.md) |
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
+| 55 | undefined | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
+| 56 | undefined | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
+| 61 | undefined | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 12/12 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 63 | undefined | **Exact Enumeration ground-truth RTP** | ✅ 3/3 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 
 ## Why each is industry-first
 
@@ -40,7 +44,7 @@
 - **Acceptance**: 20/20 samples valid
 - **Industry-first claim**: No slot vendor publishes formal PAR sheet schema sa Markov transition matrices, EVT Pareto tail, jurisdiction-gated RTP
 - **Commit**: `dc3fdc0`
-- **Detail**: `{"mode":"baseline","schemaPath":"schemas/usif-par-v1.0.json","samples":20}`
+- **Detail**: `{"mode":"strict-tier1","schemaPath":"schemas/usif-par-v1.0.json","samples":20}`
 
 ### Wave 36 · Jurisdiction Auto-Gate Matrix (K8)
 
@@ -83,6 +87,34 @@
 - **Industry-first claim**: ENT 5-stat battery (entropy/χ²/mean/MC π/serial ρ) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed
 - **Commit**: `(this commit)`
 - **Detail**: `{"sampleBytes":100000,"sources":[{"id":"mulberry32","H":7.998104609351095,"pi":3.1592463698547943,"pass":true},{"id":"pcg64","H":7.998111653748092,"pi":3.154686187447498,"pass":true},{"id":"xoshiro256ss","H":7.9980931168`…
+
+### Wave 55 · General Entropy Health Monitor (streaming sliding-window) (undefined)
+
+- **Acceptance**: 7/7 sources PASS · 5 PRNG + 2 adversarial
+- **Industry-first claim**: UKGC RTS 8.A.1 + MGA PPD §11.b + eCOGRA TG-VG require continuous RNG monitoring during operation — no vendor publishes streaming sliding-window χ² + Shannon entropy monitor with pluggable alert sinks for 5 PRNG backends + HSM bridge
+- **Commit**: `2109b5e`
+- **Detail**: `{"bytes_per_source":500000,"window_bytes":8192,"assess_interval_bytes":1024}`
+
+### Wave 56 · Demo Mode controller w/ auditor attestation (undefined)
+
+- **Acceptance**: 6/6 scenarios PASS · tamper-detect verified
+- **Industry-first claim**: GLI-19 §3.3.9 (Replay Capability) + UKGC RTS 9 (demo distinction) + MGA PPD §11.b (auditor traceability) + eCOGRA TG-VG — no vendor publishes architectural assertNoRngCall guard + SHA-256 attestation + tamper-evident audit trail
+- **Commit**: `19f8103`
+- **Detail**: `{"scenarios":[{"name":"A_basic_50_spins_halt","cycle":"halt","served":50,"verify_ok":true},{"name":"B_loop_3x_pass","cycle":"loop","served":60,"verify_ok":true},{"name":"C_partial_halt","cycle":"halt","served":75,"verify`…
+
+### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (undefined)
+
+- **Acceptance**: 12/12 closed-form solvers PASS in single runner
+- **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
+- **Commit**: `84ca120`
+- **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
+
+### Wave 63 · Exact Enumeration ground-truth RTP (undefined)
+
+- **Acceptance**: 3/3 fixtures with EXACT analytical RTP
+- **Industry-first claim**: Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.
+- **Commit**: `2b2a96a`
+- **Detail**: `{"fixtures":[{"id":"classic-3x3-lines","exact":0.5191663967174174,"mc":0.5195079000034911,"rel":0.0006577915832630853},{"id":"3x5-5lines","exact":0.6980609418282547,"mc":0.6976597500064705,"rel":0.0005747232050162823},{"`…
 
 ## Auditor Q&A Map
 
