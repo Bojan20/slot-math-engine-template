@@ -133,6 +133,11 @@ const PACKAGE_FILES = [
   { kind: 'reports/acceptance', src: 'reports/acceptance/CLASS_II_BINGO.md' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_CASH_COLLECTOR.md' },
+  // REPORTS — Wave 63/68 exact-enumeration ground-truth
+  { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
+  // DOCS — Wave 67 industry pattern catalog v2
+  { kind: 'docs', src: 'docs/INDUSTRY_PATTERN_CATALOG.md' },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
