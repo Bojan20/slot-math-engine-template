@@ -81,3 +81,6 @@ export * from './persistentMultiplierAccumulator.js';
 
 // W152 Wave 91: Coin Accumulator with Mystery Values (Faza 12 ext)
 export * from './coinAccumulatorMystery.js';
+
+// W152 Wave 93: Multiplicative Wild Stack Bonus (Faza 4.5 ext)
+export * from './multiplicativeWildStack.js';
