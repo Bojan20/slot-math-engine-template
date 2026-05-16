@@ -1,10 +1,10 @@
-# CLOSED_FORM_PORTFOLIO — 22 Closed-Form Math Kernels (Wave 49-95)
+# CLOSED_FORM_PORTFOLIO — 23 Closed-Form Math Kernels (Wave 49-97)
 
-Generated: `2026-05-16T05:14:45.498Z`
+Generated: `2026-05-16T05:22:39.636Z`
 
 ## Headline
 
-**22/22 solvers PASS** in single end-to-end runner.
+**23/23 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -35,6 +35,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 91 | Coin Accumulator + Mystery Values | E[Y] per episode | 51.00000 | 50.72352 | ✅ |
 | 93 | Multiplicative Wild Stack Bonus | E[Y] per spin | 4.82617 | 5.03532 | ✅ |
 | 95 | Ante Bet Trade-Off Analyzer | ante RTP | 0.97200 | 0.97102 | ✅ |
+| 97 | Free Spins Lookback Multiplier | E[Y] per episode | 35.25000 | 35.14042 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
@@ -61,6 +62,7 @@ Each wave has dedicated full acceptance script + report in `reports/acceptance/`
 - W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (acceptance script W90 — 28 vitest specs)
 - W91: Coin Accumulator + Mystery Values — Money-Train-style Binomial coins × discrete mystery distribution (acceptance script W92 — 30 vitest specs)
 - W93: Multiplicative Wild Stack Bonus — Π M_i over Binomial wild reels; E[W]=(p·μ_M+1-p)^R (acceptance script W94 — 33 vitest specs)
-- W95: Ante Bet Trade-Off Analyzer — RTP comparison base vs ante; CLT crossover N* (no acceptance script — 27 vitest specs)
+- W95: Ante Bet Trade-Off Analyzer — RTP comparison base vs ante; CLT crossover N* (acceptance script W96 — 27 vitest specs)
+- W97: Free Spins Lookback Multiplier — M·S_K aggregator; Var = K·σ_W·(σ_M+μ_M)+K²·μ_W·σ_M (no acceptance script — 28 vitest specs)
 
-**Aggregate ~30M MC verification across 19 dedicated solvers + 1 streaming compliance monitor + 7 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92, multiplicative wild stack W94).**
+**Aggregate ~30M MC verification across 20 dedicated solvers + 1 streaming compliance monitor + 8 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92, multiplicative wild stack W94, ante bet trade-off W96).**

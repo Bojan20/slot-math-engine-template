@@ -76,6 +76,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'multiplicativeWildStack.js'));
   const { solveAnteBetTradeOff, simulateAnteBetTradeOff } =
     await import(join(REPO_ROOT, 'dist', 'features', 'anteBetTradeOff.js'));
+  const { solveFreeSpinsLookbackMultiplier, simulateFreeSpinsLookbackMultiplier } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsLookbackMultiplier.js'));
 
   const showcase = [];
 
@@ -428,6 +430,26 @@ async function main() {
     showcase.push({ wave: 95, solver: 'Ante Bet Trade-Off Analyzer', metric: 'ante RTP', cf: cf.anteRtp, mc: mc.anteObservedRtp, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W97: Free Spins Lookback Multiplier ───────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      freeSpinsK: 10,
+      meanBaseWinPerSpinX: 1.5,
+      varianceBaseWinPerSpinX: 4,
+      multiplierDistribution: [
+        { label: 'x1', valueX: 1, weight: 50 },
+        { label: 'x2', valueX: 2, weight: 30 },
+        { label: 'x5', valueX: 5, weight: 15 },
+        { label: 'x10', valueX: 10, weight: 5 },
+      ],
+    };
+    const cf = solveFreeSpinsLookbackMultiplier(cfg);
+    const mc = simulateFreeSpinsLookbackMultiplier(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedTotalPayoutX, mc.observedMeanPayoutX) < 0.05;
+    showcase.push({ wave: 97, solver: 'Free Spins Lookback Multiplier', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -446,7 +468,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 22 Closed-Form Math Kernels (Wave 49-95)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 23 Closed-Form Math Kernels (Wave 49-97)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -491,9 +513,10 @@ async function main() {
   md.push('- W89: Persistent Multiplier Accumulator — Binomial drop chain × sticky running multiplier (acceptance script W90 — 28 vitest specs)');
   md.push('- W91: Coin Accumulator + Mystery Values — Money-Train-style Binomial coins × discrete mystery distribution (acceptance script W92 — 30 vitest specs)');
   md.push('- W93: Multiplicative Wild Stack Bonus — Π M_i over Binomial wild reels; E[W]=(p·μ_M+1-p)^R (acceptance script W94 — 33 vitest specs)');
-  md.push('- W95: Ante Bet Trade-Off Analyzer — RTP comparison base vs ante; CLT crossover N* (no acceptance script — 27 vitest specs)');
+  md.push('- W95: Ante Bet Trade-Off Analyzer — RTP comparison base vs ante; CLT crossover N* (acceptance script W96 — 27 vitest specs)');
+  md.push('- W97: Free Spins Lookback Multiplier — M·S_K aggregator; Var = K·σ_W·(σ_M+μ_M)+K²·μ_W·σ_M (no acceptance script — 28 vitest specs)');
   md.push('');
-  md.push('**Aggregate ~30M MC verification across 19 dedicated solvers + 1 streaming compliance monitor + 7 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92, multiplicative wild stack W94).**');
+  md.push('**Aggregate ~30M MC verification across 20 dedicated solvers + 1 streaming compliance monitor + 8 acceptance suites (jackpot trio W77, bonus-buy W82, FS retrigger W85, cascade pyramid W87, persistent mult W90, coin accumulator W92, multiplicative wild stack W94, ante bet trade-off W96).**');
 
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.md'), md.join('\n'));
 
