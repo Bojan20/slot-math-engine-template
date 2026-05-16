@@ -31,6 +31,7 @@
     "hnw-acceptance": "npm run build && node scripts/hnw-acceptance.mjs",
     "hnw-ladder-acceptance": "npm run build && node scripts/hnw-ladder-acceptance.mjs",
     "charge-meter-acceptance": "npm run build && node scripts/charge-meter-acceptance.mjs",
+    "supermeter-acceptance": "npm run build && node scripts/supermeter-acceptance.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
     "test-coverage": "node scripts/test-coverage-report.mjs",
     "chi-squared-sizes": "node scripts/chi-squared-sizes-report.mjs",

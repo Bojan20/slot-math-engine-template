@@ -1,0 +1,777 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SUPERMETER",
+  "generated_utc": "2026-05-16T01:51:04.842Z",
+  "spins_per_config": 500000,
+  "seed": 12345,
+  "fh_N": 2000,
+  "fh_episodes": 500,
+  "tolerances": {
+    "rtp_rel": 0.015,
+    "state_abs": 0.01,
+    "fh_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_2state_classic",
+      "description": "2-state BASE↔SUPER, BASE=0.92 RTP, SUPER=1.10, p_up=0.02, p_down=0.10",
+      "cfg": {
+        "states": [
+          {
+            "id": "BASE",
+            "rtpPerSpin": 0.92
+          },
+          {
+            "id": "SUPER",
+            "rtpPerSpin": 1.1
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "BASE",
+            "toId": "BASE",
+            "probability": 0.98
+          },
+          {
+            "fromId": "BASE",
+            "toId": "SUPER",
+            "probability": 0.02
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "BASE",
+            "probability": 0.1
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "SUPER",
+            "probability": 0.9
+          }
+        ],
+        "initialStateId": "BASE"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 0.9500000000013147,
+        "stationaryDistribution": [
+          {
+            "id": "BASE",
+            "probability": 0.8333333333260294
+          },
+          {
+            "id": "SUPER",
+            "probability": 0.16666666667397056
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "BASE",
+            "expectedSpins": 49.99999999999996
+          },
+          {
+            "id": "SUPER",
+            "expectedSpins": 10.000000000000002
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "BASE",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "SUPER",
+            "expectedSpins": 49.99999999999996
+          }
+        ],
+        "powerIterations": 191,
+        "residualInfNorm": 8.764655667903298e-13,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 0.9499350799951586,
+        "observedStateProportions": {
+          "BASE": 0.833694,
+          "SUPER": 0.166306
+        },
+        "observedSwitchCount": 16672,
+        "spins": 500000
+      },
+      "finite_horizon": {
+        "N": 2000,
+        "episodes": 500,
+        "cf_expected_rtp_per_spin": 0.9498749999999828,
+        "mc_expected_rtp_per_spin": 0.9499133000000114,
+        "rel": 0.00004032109491099361,
+        "pass": true
+      },
+      "checks": {
+        "rtp_rel": 0.00006833684858527332,
+        "max_state_abs": 0.00036066667397061103,
+        "fh_rel": 0.00004032109491099361
+      },
+      "pass": true,
+      "elapsed_ms": 22
+    },
+    {
+      "name": "B_3state_ladder",
+      "description": "3-state ladder BASE/BOOST/SUPER (forward escalation, backward fallback)",
+      "cfg": {
+        "states": [
+          {
+            "id": "BASE",
+            "rtpPerSpin": 0.9
+          },
+          {
+            "id": "BOOST",
+            "rtpPerSpin": 1
+          },
+          {
+            "id": "SUPER",
+            "rtpPerSpin": 1.2
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "BASE",
+            "toId": "BASE",
+            "probability": 0.95
+          },
+          {
+            "fromId": "BASE",
+            "toId": "BOOST",
+            "probability": 0.05
+          },
+          {
+            "fromId": "BOOST",
+            "toId": "BASE",
+            "probability": 0.2
+          },
+          {
+            "fromId": "BOOST",
+            "toId": "BOOST",
+            "probability": 0.7
+          },
+          {
+            "fromId": "BOOST",
+            "toId": "SUPER",
+            "probability": 0.1
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "BOOST",
+            "probability": 0.3
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "SUPER",
+            "probability": 0.7
+          }
+        ],
+        "initialStateId": "BASE"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 0.9375000000008086,
+        "stationaryDistribution": [
+          {
+            "id": "BASE",
+            "probability": 0.7499999999956315
+          },
+          {
+            "id": "BOOST",
+            "probability": 0.18750000000251021
+          },
+          {
+            "id": "SUPER",
+            "probability": 0.06250000000185833
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "BASE",
+            "expectedSpins": 19.999999999999982
+          },
+          {
+            "id": "BOOST",
+            "expectedSpins": 3.333333333333333
+          },
+          {
+            "id": "SUPER",
+            "expectedSpins": 3.333333333333333
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "BASE",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "BOOST",
+            "expectedSpins": 19.999999999999982
+          },
+          {
+            "targetId": "SUPER",
+            "expectedSpins": 69.99999999999979
+          }
+        ],
+        "powerIterations": 140,
+        "residualInfNorm": 7.204237206792641e-13,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 0.9375880000064629,
+        "observedStateProportions": {
+          "BASE": 0.750884,
+          "BOOST": 0.185734,
+          "SUPER": 0.063382
+        },
+        "observedSwitchCount": 56258,
+        "spins": 500000
+      },
+      "finite_horizon": {
+        "N": 2000,
+        "episodes": 500,
+        "cf_expected_rtp_per_spin": 0.9373789062499995,
+        "mc_expected_rtp_per_spin": 0.9374503000000268,
+        "rel": 0.00007616317110538057,
+        "pass": true
+      },
+      "checks": {
+        "rtp_rel": 0.00009386667269788475,
+        "max_state_abs": 0.001766000002510204,
+        "fh_rel": 0.00007616317110538057
+      },
+      "pass": true,
+      "elapsed_ms": 26
+    },
+    {
+      "name": "C_4state_cycle",
+      "description": "4-state with mixed cycles (LOW/MID/HIGH/MAX) - asymmetric transitions",
+      "cfg": {
+        "states": [
+          {
+            "id": "LOW",
+            "rtpPerSpin": 0.85
+          },
+          {
+            "id": "MID",
+            "rtpPerSpin": 0.95
+          },
+          {
+            "id": "HIGH",
+            "rtpPerSpin": 1.1
+          },
+          {
+            "id": "MAX",
+            "rtpPerSpin": 1.3
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "LOW",
+            "toId": "LOW",
+            "probability": 0.9
+          },
+          {
+            "fromId": "LOW",
+            "toId": "MID",
+            "probability": 0.1
+          },
+          {
+            "fromId": "MID",
+            "toId": "LOW",
+            "probability": 0.15
+          },
+          {
+            "fromId": "MID",
+            "toId": "MID",
+            "probability": 0.75
+          },
+          {
+            "fromId": "MID",
+            "toId": "HIGH",
+            "probability": 0.1
+          },
+          {
+            "fromId": "HIGH",
+            "toId": "MID",
+            "probability": 0.3
+          },
+          {
+            "fromId": "HIGH",
+            "toId": "HIGH",
+            "probability": 0.65
+          },
+          {
+            "fromId": "HIGH",
+            "toId": "MAX",
+            "probability": 0.05
+          },
+          {
+            "fromId": "MAX",
+            "toId": "HIGH",
+            "probability": 0.4
+          },
+          {
+            "fromId": "MAX",
+            "toId": "MAX",
+            "probability": 0.6
+          }
+        ],
+        "initialStateId": "LOW"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 0.9202898550734606,
+        "stationaryDistribution": [
+          {
+            "id": "LOW",
+            "probability": 0.5217391304298684
+          },
+          {
+            "id": "MID",
+            "probability": 0.34782608695870976
+          },
+          {
+            "id": "HIGH",
+            "probability": 0.11594202898775224
+          },
+          {
+            "id": "MAX",
+            "probability": 0.014492753623669719
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "LOW",
+            "expectedSpins": 10.000000000000002
+          },
+          {
+            "id": "MID",
+            "expectedSpins": 4
+          },
+          {
+            "id": "HIGH",
+            "expectedSpins": 2.857142857142857
+          },
+          {
+            "id": "MAX",
+            "expectedSpins": 2.5
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "LOW",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "MID",
+            "expectedSpins": 10.000000000000002
+          },
+          {
+            "targetId": "HIGH",
+            "expectedSpins": 35.00000000000003
+          },
+          {
+            "targetId": "MAX",
+            "expectedSpins": 205.0000000000007
+          }
+        ],
+        "powerIterations": 138,
+        "residualInfNorm": 8.195666367782906e-13,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 0.9207006999976528,
+        "observedStateProportions": {
+          "LOW": 0.52068,
+          "MID": 0.347182,
+          "HIGH": 0.117398,
+          "MAX": 0.01474
+        },
+        "observedSwitchCount": 93143,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.00044642991762567405,
+        "max_state_abs": 0.0014559710122477587
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_asymmetric",
+      "description": "Heavy SUPER bias once entered (p_down=0.005 vs p_up=0.05)",
+      "cfg": {
+        "states": [
+          {
+            "id": "BASE",
+            "rtpPerSpin": 0.85
+          },
+          {
+            "id": "SUPER",
+            "rtpPerSpin": 1.2
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "BASE",
+            "toId": "BASE",
+            "probability": 0.95
+          },
+          {
+            "fromId": "BASE",
+            "toId": "SUPER",
+            "probability": 0.05
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "BASE",
+            "probability": 0.005
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "SUPER",
+            "probability": 0.995
+          }
+        ],
+        "initialStateId": "BASE"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 1.1681818181760166,
+        "stationaryDistribution": [
+          {
+            "id": "BASE",
+            "probability": 0.09090909092566665
+          },
+          {
+            "id": "SUPER",
+            "probability": 0.9090909090743334
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "BASE",
+            "expectedSpins": 19.999999999999982
+          },
+          {
+            "id": "SUPER",
+            "expectedSpins": 199.99999999999983
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "BASE",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "SUPER",
+            "expectedSpins": 19.999999999999982
+          }
+        ],
+        "powerIterations": 422,
+        "residualInfNorm": 9.116735144587551e-13,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 1.1689949000013775,
+        "observedStateProportions": {
+          "BASE": 0.088586,
+          "SUPER": 0.911414
+        },
+        "observedSwitchCount": 4463,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.0006960233524524624,
+        "max_state_abs": 0.0023230909256666543
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "E_near_absorbing_super",
+      "description": "SUPER nearly absorbing (P[SUPER][SUPER]=0.999) — long sojourn",
+      "cfg": {
+        "states": [
+          {
+            "id": "BASE",
+            "rtpPerSpin": 0.8
+          },
+          {
+            "id": "SUPER",
+            "rtpPerSpin": 1.5
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "BASE",
+            "toId": "BASE",
+            "probability": 0.99
+          },
+          {
+            "fromId": "BASE",
+            "toId": "SUPER",
+            "probability": 0.01
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "BASE",
+            "probability": 0.001
+          },
+          {
+            "fromId": "SUPER",
+            "toId": "SUPER",
+            "probability": 0.999
+          }
+        ],
+        "initialStateId": "BASE"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 1.436363636301024,
+        "stationaryDistribution": [
+          {
+            "id": "BASE",
+            "probability": 0.09090909099853721
+          },
+          {
+            "id": "SUPER",
+            "probability": 0.9090909090014628
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "BASE",
+            "expectedSpins": 99.99999999999991
+          },
+          {
+            "id": "SUPER",
+            "expectedSpins": 999.9999999999991
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "BASE",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "SUPER",
+            "expectedSpins": 99.99999999999991
+          }
+        ],
+        "powerIterations": 2010,
+        "residualInfNorm": 9.839073999984294e-13,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 1.4331416000008528,
+        "observedStateProportions": {
+          "BASE": 0.095512,
+          "SUPER": 0.904488
+        },
+        "observedSwitchCount": 903,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.0022431898293308614,
+        "max_state_abs": 0.004602909001462874
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_symmetric_uniform",
+      "description": "Symmetric 4-state uniform — π should be uniform 0.25 each",
+      "cfg": {
+        "states": [
+          {
+            "id": "A",
+            "rtpPerSpin": 0.92
+          },
+          {
+            "id": "B",
+            "rtpPerSpin": 0.96
+          },
+          {
+            "id": "C",
+            "rtpPerSpin": 1
+          },
+          {
+            "id": "D",
+            "rtpPerSpin": 1.04
+          }
+        ],
+        "transitions": [
+          {
+            "fromId": "A",
+            "toId": "A",
+            "probability": 0.25
+          },
+          {
+            "fromId": "A",
+            "toId": "B",
+            "probability": 0.25
+          },
+          {
+            "fromId": "A",
+            "toId": "C",
+            "probability": 0.25
+          },
+          {
+            "fromId": "A",
+            "toId": "D",
+            "probability": 0.25
+          },
+          {
+            "fromId": "B",
+            "toId": "A",
+            "probability": 0.25
+          },
+          {
+            "fromId": "B",
+            "toId": "B",
+            "probability": 0.25
+          },
+          {
+            "fromId": "B",
+            "toId": "C",
+            "probability": 0.25
+          },
+          {
+            "fromId": "B",
+            "toId": "D",
+            "probability": 0.25
+          },
+          {
+            "fromId": "C",
+            "toId": "A",
+            "probability": 0.25
+          },
+          {
+            "fromId": "C",
+            "toId": "B",
+            "probability": 0.25
+          },
+          {
+            "fromId": "C",
+            "toId": "C",
+            "probability": 0.25
+          },
+          {
+            "fromId": "C",
+            "toId": "D",
+            "probability": 0.25
+          },
+          {
+            "fromId": "D",
+            "toId": "A",
+            "probability": 0.25
+          },
+          {
+            "fromId": "D",
+            "toId": "B",
+            "probability": 0.25
+          },
+          {
+            "fromId": "D",
+            "toId": "C",
+            "probability": 0.25
+          },
+          {
+            "fromId": "D",
+            "toId": "D",
+            "probability": 0.25
+          }
+        ],
+        "initialStateId": "A"
+      },
+      "steady_state": {
+        "expectedRtpPerSpinLongRun": 0.98,
+        "stationaryDistribution": [
+          {
+            "id": "A",
+            "probability": 0.25
+          },
+          {
+            "id": "B",
+            "probability": 0.25
+          },
+          {
+            "id": "C",
+            "probability": 0.25
+          },
+          {
+            "id": "D",
+            "probability": 0.25
+          }
+        ],
+        "expectedSojournPerState": [
+          {
+            "id": "A",
+            "expectedSpins": 1.3333333333333333
+          },
+          {
+            "id": "B",
+            "expectedSpins": 1.3333333333333333
+          },
+          {
+            "id": "C",
+            "expectedSpins": 1.3333333333333333
+          },
+          {
+            "id": "D",
+            "expectedSpins": 1.3333333333333333
+          }
+        ],
+        "expectedFirstPassageFromInitial": [
+          {
+            "targetId": "A",
+            "expectedSpins": 0
+          },
+          {
+            "targetId": "B",
+            "expectedSpins": 4
+          },
+          {
+            "targetId": "C",
+            "expectedSpins": 4
+          },
+          {
+            "targetId": "D",
+            "expectedSpins": 4
+          }
+        ],
+        "powerIterations": 0,
+        "residualInfNorm": 0,
+        "isIrreducible": true,
+        "isAperiodic": true
+      },
+      "monte_carlo": {
+        "observedRtpPerSpin": 0.9800578399988498,
+        "observedStateProportions": {
+          "A": 0.249622,
+          "B": 0.249552,
+          "C": 0.250584,
+          "D": 0.250242
+        },
+        "observedSwitchCount": 374569,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.00005902040698957616,
+        "max_state_abs": 0.0005839999999999734
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    }
+  ]
+}

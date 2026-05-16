@@ -33,3 +33,6 @@ export * from './progressiveReset.js';
 
 // W152 Wave 50: Charge meter (Faza 12 cluster cascade + charge meter)
 export * from './chargeMeter.js';
+
+// W152 Wave 51: Supermeter state-switch (Faza 12)
+export * from './supermeter.js';
