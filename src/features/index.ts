@@ -30,3 +30,6 @@ export * from './retrigger.js';
 
 // Progressive jackpot reset cycle analysis
 export * from './progressiveReset.js';
+
+// W152 Wave 50: Charge meter (Faza 12 cluster cascade + charge meter)
+export * from './chargeMeter.js';

@@ -1,0 +1,401 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CHARGE_METER",
+  "generated_utc": "2026-05-16T01:42:38.111Z",
+  "spins_per_config": 500000,
+  "seed": 12345,
+  "fh_episodes": 5000,
+  "fh_N": 200,
+  "tolerances": {
+    "subtract_rel": 0.02,
+    "drain_rel": 0.05,
+    "pmf_l1": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 7,
+  "configs_passed": 7,
+  "configs": [
+    {
+      "name": "A_small_T10_subtract",
+      "description": "threshold=10, subtract, p=0.25 (frequent triggers, ~1 every 24 spins)",
+      "cfg": {
+        "pClusterWin": 0.25,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 10,
+        "rewardX": 50,
+        "meterResetMode": "subtract_threshold"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.425,
+        "triggersPerSpin": 0.042499999999999996,
+        "spinsPerTrigger": 23.529411764705884,
+        "expectedRtpContributionPerSpin": 2.125,
+        "expectedOverflowPerTrigger": 0
+      },
+      "monte_carlo": {
+        "observedTriggers": 21289,
+        "observedTriggerRatePerSpin": 0.042578,
+        "observedRtpPerSpin": 2.1289,
+        "totalCharge": 212897,
+        "totalOverflow": 0,
+        "spins": 500000
+      },
+      "finite_horizon": {
+        "N": 200,
+        "episodes": 5000,
+        "cf_expected_triggers": 8.049999999994306,
+        "mc_expected_triggers": 8.061600000000002,
+        "expected_rel": 0.001440993789528521,
+        "pmf_l1": 0.017277529728786056,
+        "cf_pmf_first8": [
+          1.7010650485828045e-16,
+          4.4737806137835476e-11,
+          1.4351427425265398e-7,
+          0.00003507404017238261,
+          0.0015437411195400287,
+          0.019786956306749277,
+          0.09878968996388111,
+          0.23197466894596727
+        ],
+        "mc_pmf_first8": [
+          0,
+          0,
+          0,
+          0.0002,
+          0.0016,
+          0.0222,
+          0.0928,
+          0.2306
+        ],
+        "pass": true
+      },
+      "checks": {
+        "rtp_rel": 0.001835294117646961,
+        "rate_rel": 0.0018352941176470986,
+        "fh_pmf_l1": 0.017277529728786056,
+        "fh_expected_rel": 0.001440993789528521
+      },
+      "pass": true,
+      "elapsed_ms": 32
+    },
+    {
+      "name": "B_mid_T50_subtract",
+      "description": "threshold=50, subtract, p=0.25 (~1 every 118 spins, baseline)",
+      "cfg": {
+        "pClusterWin": 0.25,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 50,
+        "rewardX": 100,
+        "meterResetMode": "subtract_threshold"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.425,
+        "triggersPerSpin": 0.0085,
+        "spinsPerTrigger": 117.6470588235294,
+        "expectedRtpContributionPerSpin": 0.8500000000000001,
+        "expectedOverflowPerTrigger": 0
+      },
+      "monte_carlo": {
+        "observedTriggers": 4257,
+        "observedTriggerRatePerSpin": 0.008514,
+        "observedRtpPerSpin": 0.8514,
+        "totalCharge": 212897,
+        "totalOverflow": 0,
+        "spins": 500000
+      },
+      "finite_horizon": {
+        "N": 200,
+        "episodes": 5000,
+        "cf_expected_triggers": 1.1387280559909219,
+        "mc_expected_triggers": 1.1392,
+        "expected_rel": 0.0004144483896705637,
+        "pmf_l1": 0.0018751764891978121,
+        "cf_pmf_first8": [
+          0.0015789587187246404,
+          0.8581258074090423,
+          0.14028345303667578,
+          0.000011780833695474434,
+          1.8604114071667834e-12,
+          2.6627723916857884e-21,
+          8.441968806670353e-32,
+          1.0129684953954945e-43
+        ],
+        "mc_pmf_first8": [
+          0.0018,
+          0.8572,
+          0.141,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pass": true
+      },
+      "checks": {
+        "rtp_rel": 0.0016470588235293609,
+        "rate_rel": 0.0016470588235294261,
+        "fh_pmf_l1": 0.0018751764891978121,
+        "fh_expected_rel": 0.0004144483896705637
+      },
+      "pass": true,
+      "elapsed_ms": 27
+    },
+    {
+      "name": "C_large_T200_subtract",
+      "description": "threshold=200, subtract, p=0.25 (rare, variance stress)",
+      "cfg": {
+        "pClusterWin": 0.25,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 200,
+        "rewardX": 500,
+        "meterResetMode": "subtract_threshold"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.425,
+        "triggersPerSpin": 0.002125,
+        "spinsPerTrigger": 470.5882352941176,
+        "expectedRtpContributionPerSpin": 1.0625,
+        "expectedOverflowPerTrigger": 0
+      },
+      "monte_carlo": {
+        "observedTriggers": 1064,
+        "observedTriggerRatePerSpin": 0.002128,
+        "observedRtpPerSpin": 1.064,
+        "totalCharge": 212897,
+        "totalOverflow": 0,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.0014117647058824064,
+        "rate_rel": 0.0014117647058823361
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "D_small_T10_drain",
+      "description": "threshold=10, full_drain, p=0.25 (overflow loss measurable)",
+      "cfg": {
+        "pClusterWin": 0.25,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 10,
+        "rewardX": 50,
+        "meterResetMode": "full_drain"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.425,
+        "triggersPerSpin": 0.04106280193236715,
+        "spinsPerTrigger": 24.352941176470587,
+        "expectedRtpContributionPerSpin": 2.0531400966183577,
+        "expectedOverflowPerTrigger": 0.35
+      },
+      "monte_carlo": {
+        "observedTriggers": 19763,
+        "observedTriggerRatePerSpin": 0.039526,
+        "observedRtpPerSpin": 1.9763,
+        "totalCharge": 212897,
+        "totalOverflow": 15267,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.03742564705882367,
+        "rate_rel": 0.037425647058823605
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "E_mid_T50_drain",
+      "description": "threshold=50, full_drain, p=0.25",
+      "cfg": {
+        "pClusterWin": 0.25,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 50,
+        "rewardX": 100,
+        "meterResetMode": "full_drain"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.425,
+        "triggersPerSpin": 0.008440913604766634,
+        "spinsPerTrigger": 118.47058823529412,
+        "expectedRtpContributionPerSpin": 0.8440913604766633,
+        "expectedOverflowPerTrigger": 0.35
+      },
+      "monte_carlo": {
+        "observedTriggers": 4195,
+        "observedTriggerRatePerSpin": 0.00839,
+        "observedRtpPerSpin": 0.839,
+        "totalCharge": 212897,
+        "totalOverflow": 3147,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.006031764705882363,
+        "rate_rel": 0.006031764705882403
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "F_low_pwin",
+      "description": "threshold=20, subtract, p=0.05 (sparse charge events)",
+      "cfg": {
+        "pClusterWin": 0.05,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 20,
+        "rewardX": 100,
+        "meterResetMode": "subtract_threshold"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 0.085,
+        "triggersPerSpin": 0.00425,
+        "spinsPerTrigger": 235.2941176470588,
+        "expectedRtpContributionPerSpin": 0.42500000000000004,
+        "expectedOverflowPerTrigger": 0
+      },
+      "monte_carlo": {
+        "observedTriggers": 2158,
+        "observedTriggerRatePerSpin": 0.004316,
+        "observedRtpPerSpin": 0.4316,
+        "totalCharge": 43178,
+        "totalOverflow": 0,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.015529411764705738,
+        "rate_rel": 0.015529411764705901
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "G_high_pwin",
+      "description": "threshold=30, subtract, p=0.60 (dense, ~1 every 18 spins)",
+      "cfg": {
+        "pClusterWin": 0.6,
+        "chargeDistribution": [
+          {
+            "chargePoints": 1,
+            "weight": 6
+          },
+          {
+            "chargePoints": 2,
+            "weight": 3
+          },
+          {
+            "chargePoints": 5,
+            "weight": 1
+          }
+        ],
+        "meterThreshold": 30,
+        "rewardX": 75,
+        "meterResetMode": "subtract_threshold"
+      },
+      "steady_state": {
+        "expectedChargePerSpin": 1.02,
+        "triggersPerSpin": 0.034,
+        "spinsPerTrigger": 29.41176470588235,
+        "expectedRtpContributionPerSpin": 2.5500000000000003,
+        "expectedOverflowPerTrigger": 0
+      },
+      "monte_carlo": {
+        "observedTriggers": 17005,
+        "observedTriggerRatePerSpin": 0.03401,
+        "observedRtpPerSpin": 2.55075,
+        "totalCharge": 510169,
+        "totalOverflow": 0,
+        "spins": 500000
+      },
+      "finite_horizon": null,
+      "checks": {
+        "rtp_rel": 0.0002941176470586605,
+        "rate_rel": 0.0002941176470587095
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    }
+  ]
+}
