@@ -106,6 +106,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'anticipationReelTease.js'));
   const { solveFreeSpinsBuyTierTradeOff, simulateFreeSpinsBuyTierTradeOff } =
     await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsBuyTierTradeOff.js'));
+  const { solveMultiLevelWildMarkov, simulateMultiLevelWildMarkov } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'multiLevelWildMarkov.js'));
 
   const showcase = [];
 
@@ -733,6 +735,29 @@ async function main() {
     // CF deterministic check: max-EV tier should be 'mega' (0.976 vs 0.95)
     const ok = cf.argmaxRtpTier === 'mega';
     showcase.push({ wave: 130, solver: 'Free Spins Buy Tier Trade-Off', metric: 'max-EV tier RTP', cf: cf.perTier[1].rtp, mc: cf.perTier[1].rtp, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W132: Multi-Level Wild Tier Markov ─────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      landProbability: 0.05,
+      upgradeProbabilityBasicToSuper: 0.10,
+      upgradeProbabilitySuperToMega: 0.05,
+      expireProbability: 0.20,
+      basicMultiplier: 2,
+      superMultiplier: 5,
+      megaMultiplier: 25,
+      baseWinPmf: [
+        { value: 0, probability: 0.7 },
+        { value: 1, probability: 0.2 },
+        { value: 5, probability: 0.1 },
+      ],
+    };
+    const cf = solveMultiLevelWildMarkov(cfg);
+    const mc = simulateMultiLevelWildMarkov(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedMultiplierPerSpin, mc.observedMeanMultiplierPerSpin) < 0.10;
+    showcase.push({ wave: 132, solver: 'Multi-Level Wild Tier Markov', metric: 'E[M] per spin', cf: cf.expectedMultiplierPerSpin, mc: mc.observedMeanMultiplierPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

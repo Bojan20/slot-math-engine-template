@@ -132,3 +132,6 @@ export * from './anticipationReelTease.js';
 
 // W152 Wave 130: Free Spins Buy + Tier Escalation Trade-Off (Faza 4.8 ext, post-W100)
 export * from './freeSpinsBuyTierTradeOff.js';
+
+// W152 Wave 132: Multi-Level Wild Tier Markov (Faza 12 ext, post-W100)
+export * from './multiLevelWildMarkov.js';

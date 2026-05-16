@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T08:19:15.069Z",
-  "solvers_total": 37,
-  "solvers_passed": 37,
+  "generated_utc": "2026-05-16T08:30:54.159Z",
+  "solvers_total": 38,
+  "solvers_passed": 38,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 43
     },
     {
       "wave": 50,
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 51,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 35
     },
     {
       "wave": 55,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 56,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 58,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 59,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 16
     },
     {
       "wave": 71,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 86,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 97,
@@ -211,7 +211,7 @@
       "cf": 35.25,
       "mc": 35.14041666666663,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 101,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 47
+      "elapsed_ms": 58
     },
     {
       "wave": 112,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 114,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 116,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 7
     },
     {
       "wave": 121,
@@ -310,7 +310,7 @@
       "cf": 53.375,
       "mc": 54.2797,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 125,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 127,
@@ -328,7 +328,7 @@
       "cf": 0.05792000000000003,
       "mc": 0.05868,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 130,
@@ -338,6 +338,15 @@
       "mc": 0.976,
       "ok": true,
       "elapsed_ms": 0
+    },
+    {
+      "wave": 132,
+      "solver": "Multi-Level Wild Tier Markov",
+      "metric": "E[M] per spin",
+      "cf": 1.6666666666666665,
+      "mc": 1.66926,
+      "ok": true,
+      "elapsed_ms": 3
     }
   ]
 }
