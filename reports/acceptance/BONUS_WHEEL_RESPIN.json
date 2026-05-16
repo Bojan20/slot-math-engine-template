@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BONUS_WHEEL_RESPIN",
+  "generated_utc": "2026-05-16T06:13:21.624Z",
+  "episodes_per_config": 100000,
+  "seed": 3735929054,
+  "tolerances": {
+    "ev_rel": 0.05,
+    "var_rel": 0.2,
+    "en_rel": 0.03
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_netent_4tier_p30_respin",
+      "description": "NetEnt-style 4-tier wheel + 30% respin (mini/minor/major/grand)",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "mini",
+            "probability": 0.3,
+            "payoutX": 5
+          },
+          {
+            "label": "minor",
+            "probability": 0.25,
+            "payoutX": 25
+          },
+          {
+            "label": "major",
+            "probability": 0.1,
+            "payoutX": 100
+          },
+          {
+            "label": "grand",
+            "probability": 0.05,
+            "payoutX": 1000
+          }
+        ],
+        "respinProbability": 0.3
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 1.4285714285714286,
+        "varianceSpinsUntilTerminate": 0.6122448979591837,
+        "expectedFinalPayoutX": 96.7857142857143,
+        "varianceFinalPayoutX": 63723.596938775525,
+        "probAtLeastTwoSpins": 0.3,
+        "probAtLeastFiveSpins": 0.0081,
+        "probAtLeastTenSpins": 0.000019682999999999994,
+        "maxPayoutX": 1000,
+        "probHitMax": 0.07142857142857144
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 1.43166,
+        "observedMeanFinalPayoutX": 95.9315,
+        "observedVarianceFinalPayoutX": 63046.59980775,
+        "observedMaxSpinsObserved": 12
+      },
+      "checks": {
+        "ev_rel": 0.008825830258302794,
+        "var_rel": 0.010623962920297395,
+        "en_rel": 0.0021619999999999305
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_pragmatic_low_respin",
+      "description": "Pragmatic-style low respin p=0.10 + tiered payouts",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "small",
+            "probability": 0.5,
+            "payoutX": 2
+          },
+          {
+            "label": "mid",
+            "probability": 0.25,
+            "payoutX": 10
+          },
+          {
+            "label": "big",
+            "probability": 0.1,
+            "payoutX": 50
+          },
+          {
+            "label": "mega",
+            "probability": 0.05,
+            "payoutX": 500
+          }
+        ],
+        "respinProbability": 0.1
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 1.1111111111111112,
+        "varianceSpinsUntilTerminate": 0.12345679012345678,
+        "expectedFinalPayoutX": 37.22222222222222,
+        "varianceFinalPayoutX": 12811.172839506173,
+        "probAtLeastTwoSpins": 0.1,
+        "probAtLeastFiveSpins": 0.00010000000000000002,
+        "probAtLeastTenSpins": 1.0000000000000005e-9,
+        "maxPayoutX": 500,
+        "probHitMax": 0.05555555555555556
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 1.11235,
+        "observedMeanFinalPayoutX": 37.18694,
+        "observedVarianceFinalPayoutX": 12819.4737734364,
+        "observedMaxSpinsObserved": 6
+      },
+      "checks": {
+        "ev_rel": 0.0009478805970149072,
+        "var_rel": 0.0006479448864065093,
+        "en_rel": 0.0011149999999999106
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_high_respin_60pct",
+      "description": "Aggressive 60% respin wheel — long chains expected",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "win10",
+            "probability": 0.3,
+            "payoutX": 10
+          },
+          {
+            "label": "win100",
+            "probability": 0.1,
+            "payoutX": 100
+          }
+        ],
+        "respinProbability": 0.6
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 2.5,
+        "varianceSpinsUntilTerminate": 3.749999999999999,
+        "expectedFinalPayoutX": 32.5,
+        "varianceFinalPayoutX": 1518.75,
+        "probAtLeastTwoSpins": 0.6,
+        "probAtLeastFiveSpins": 0.1296,
+        "probAtLeastTenSpins": 0.010077695999999997,
+        "maxPayoutX": 100,
+        "probHitMax": 0.25
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 2.50702,
+        "observedMeanFinalPayoutX": 32.4325,
+        "observedVarianceFinalPayoutX": 1515.70794375,
+        "observedMaxSpinsObserved": 19
+      },
+      "checks": {
+        "ev_rel": 0.002076923076923156,
+        "var_rel": 0.0020030000000000573,
+        "en_rel": 0.0028079999999999217
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_p_respin_0_no_loop",
+      "description": "No respin p=0 — single-spin deterministic terminate",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "a",
+            "probability": 0.5,
+            "payoutX": 5
+          },
+          {
+            "label": "b",
+            "probability": 0.3,
+            "payoutX": 20
+          },
+          {
+            "label": "c",
+            "probability": 0.2,
+            "payoutX": 100
+          }
+        ],
+        "respinProbability": 0
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 1,
+        "varianceSpinsUntilTerminate": 0,
+        "expectedFinalPayoutX": 28.5,
+        "varianceFinalPayoutX": 1320.25,
+        "probAtLeastTwoSpins": 0,
+        "probAtLeastFiveSpins": 0,
+        "probAtLeastTenSpins": 0,
+        "maxPayoutX": 100,
+        "probHitMax": 0.2
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 1,
+        "observedMeanFinalPayoutX": 28.45145,
+        "observedVarianceFinalPayoutX": 1319.1412428974998,
+        "observedMaxSpinsObserved": 1
+      },
+      "checks": {
+        "ev_rel": 0.001703508771929781,
+        "var_rel": 0.0008398084472639644,
+        "en_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "E_balanced_5tier_p25",
+      "description": "Balanced 5-tier with 25% respin",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "cash_1",
+            "probability": 0.25,
+            "payoutX": 1
+          },
+          {
+            "label": "cash_5",
+            "probability": 0.2,
+            "payoutX": 5
+          },
+          {
+            "label": "cash_25",
+            "probability": 0.15,
+            "payoutX": 25
+          },
+          {
+            "label": "cash_100",
+            "probability": 0.1,
+            "payoutX": 100
+          },
+          {
+            "label": "cash_500",
+            "probability": 0.05,
+            "payoutX": 500
+          }
+        ],
+        "respinProbability": 0.25
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 1.3333333333333333,
+        "varianceSpinsUntilTerminate": 0.4444444444444444,
+        "expectedFinalPayoutX": 53.333333333333336,
+        "varianceFinalPayoutX": 15287.555555555555,
+        "probAtLeastTwoSpins": 0.25,
+        "probAtLeastFiveSpins": 0.00390625,
+        "probAtLeastTenSpins": 0.000003814697265625,
+        "maxPayoutX": 500,
+        "probHitMax": 0.06666666666666667
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 1.33437,
+        "observedMeanFinalPayoutX": 52.73779,
+        "observedVarianceFinalPayoutX": 15055.409295915899,
+        "observedMaxSpinsObserved": 9
+      },
+      "checks": {
+        "ev_rel": 0.011166437500000103,
+        "var_rel": 0.015185309305730902,
+        "en_rel": 0.0007775000000000976
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "F_extreme_long_tail_p75",
+      "description": "Extreme p=0.75 respin — very long expected chains",
+      "cfg": {
+        "paySegments": [
+          {
+            "label": "small",
+            "probability": 0.2,
+            "payoutX": 5
+          },
+          {
+            "label": "mega",
+            "probability": 0.05,
+            "payoutX": 1000
+          }
+        ],
+        "respinProbability": 0.75
+      },
+      "closed_form": {
+        "expectedSpinsUntilTerminate": 4,
+        "varianceSpinsUntilTerminate": 12,
+        "expectedFinalPayoutX": 204,
+        "varianceFinalPayoutX": 158404,
+        "probAtLeastTwoSpins": 0.75,
+        "probAtLeastFiveSpins": 0.31640625,
+        "probAtLeastTenSpins": 0.07508468627929688,
+        "maxPayoutX": 1000,
+        "probHitMax": 0.2
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanSpins": 4.00975,
+        "observedMeanFinalPayoutX": 201.9105,
+        "observedVarianceFinalPayoutX": 157152.20248975,
+        "observedMaxSpinsObserved": 38
+      },
+      "checks": {
+        "ev_rel": 0.010242647058823464,
+        "var_rel": 0.007902562500000036,
+        "en_rel": 0.0024375000000000924
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}

@@ -54,6 +54,7 @@
     "free-spins-lookback-multiplier-acceptance": "npm run build && node scripts/free-spins-lookback-multiplier-acceptance.mjs",
     "symbol-upgrade-chain-acceptance": "npm run build && node scripts/symbol-upgrade-chain-acceptance.mjs",
     "cluster-compound-variance-acceptance": "npm run build && node scripts/cluster-compound-variance-acceptance.mjs",
+    "bonus-wheel-respin-acceptance": "npm run build && node scripts/bonus-wheel-respin-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

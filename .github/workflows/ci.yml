@@ -174,3 +174,5 @@ jobs:
         run: npm run symbol-upgrade-chain-acceptance
       - name: Cluster Compound Variance acceptance (6/6 configs × 100K episodes, Wave 102/104)
         run: npm run cluster-compound-variance-acceptance
+      - name: Bonus Wheel + Respin acceptance (6/6 configs × 100K episodes, Wave 105/106)
+        run: npm run bonus-wheel-respin-acceptance
