@@ -93,3 +93,6 @@ export * from './freeSpinsLookbackMultiplier.js';
 
 // W152 Wave 101: Symbol Upgrade Chain Markov (Faza 12 ext)
 export * from './symbolUpgradeChainMarkov.js';
+
+// W152 Wave 102: Cluster Compound Variance (Faza 12 ext, post-W100 roadmap)
+export * from './clusterCompoundVariance.js';

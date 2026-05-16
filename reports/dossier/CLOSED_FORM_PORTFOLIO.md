@@ -1,10 +1,10 @@
-# CLOSED_FORM_PORTFOLIO — 24 Closed-Form Math Kernels (Wave 49-101)
+# CLOSED_FORM_PORTFOLIO — 25 Closed-Form Math Kernels (Wave 49-102)
 
-Generated: `2026-05-16T05:34:31.813Z`
+Generated: `2026-05-16T05:56:54.521Z`
 
 ## Headline
 
-**24/24 solvers PASS** in single end-to-end runner.
+**25/25 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -37,6 +37,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 95 | Ante Bet Trade-Off Analyzer | ante RTP | 0.97200 | 0.97102 | ✅ |
 | 97 | Free Spins Lookback Multiplier | E[Y] per episode | 35.25000 | 35.14042 | ✅ |
 | 101 | Symbol Upgrade Chain Markov | E[Y] per episode | 40.15991 | 39.96452 | ✅ |
+| 102 | Cluster Compound Variance | E[Y] per episode | 6.90000 | 6.90836 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

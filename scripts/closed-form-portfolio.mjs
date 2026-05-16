@@ -80,6 +80,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'freeSpinsLookbackMultiplier.js'));
   const { solveSymbolUpgradeChain, simulateSymbolUpgradeChain } =
     await import(join(REPO_ROOT, 'dist', 'features', 'symbolUpgradeChainMarkov.js'));
+  const { solveClusterCompoundGeometric, simulateClusterCompoundGeometric } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'clusterCompoundVariance.js'));
 
   const showcase = [];
 
@@ -466,6 +468,20 @@ async function main() {
     showcase.push({ wave: 101, solver: 'Symbol Upgrade Chain Markov', metric: 'E[Y] per episode', cf: cf.expectedPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W102: Cluster Compound Variance ────────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      pKill: 0.4,
+      clusterPmf: [0.5, 0.3, 0.15, 0.05],
+      paytable: [0, 2, 10, 50],
+    };
+    const cf = solveClusterCompoundGeometric(cfg);
+    const mc = simulateClusterCompoundGeometric(cfg, { episodes: MC_SPINS_SMALL, seed: SEED });
+    const ok = relErr(cf.expectedTotalPayoutX, mc.observedMeanPayoutX) < 0.05;
+    showcase.push({ wave: 102, solver: 'Cluster Compound Variance', metric: 'E[Y] per episode', cf: cf.expectedTotalPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -484,7 +500,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 24 Closed-Form Math Kernels (Wave 49-101)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 25 Closed-Form Math Kernels (Wave 49-102)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
