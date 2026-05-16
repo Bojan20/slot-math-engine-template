@@ -39,3 +39,6 @@ export * from './supermeter.js';
 
 // W152 Wave 52: Sticky cash + reveal multiplier hybrid (Faza 12)
 export * from './stickyCashReveal.js';
+
+// W152 Wave 53: Walking-wild respin variant (Faza 12)
+export * from './walkingWildRespin.js';

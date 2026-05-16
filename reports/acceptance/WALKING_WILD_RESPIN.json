@@ -1,0 +1,530 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "WALKING_WILD_RESPIN",
+  "generated_utc": "2026-05-16T02:05:57.559Z",
+  "episodes_per_config": 100000,
+  "seed": 12345,
+  "tolerances": {
+    "ey_rel": 0.02,
+    "ek_rel": 0.015,
+    "varK_rel": 0.1
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_5col_symmetric",
+      "description": "5 cols, uniform start, symmetric ±0.5/±0.5, base reward",
+      "cfg": {
+        "gridCols": 5,
+        "startColumnPmf": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "stepPmf": {
+          "left": 0.5,
+          "stay": 0,
+          "right": 0.5
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 6
+          },
+          {
+            "rewardX": 2,
+            "weight": 3
+          },
+          {
+            "rewardX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 7,
+        "varianceRespins": 47.599999999999994,
+        "expectedRewardPerRespin": 1.7,
+        "varianceRewardPerRespin": 1.4099999999999997,
+        "expectedPayoutPerEpisode": 11.9,
+        "variancePayoutPerEpisode": 147.43399999999997,
+        "stdDevPayoutPerEpisode": 12.142240320468046,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 4.999999999999999
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 7.999999999999999
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 8.999999999999998
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 8
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 5
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 11.97287,
+        "observedVariancePayout": 149.3328339631,
+        "observedStdDevPayout": 12.220181421038724,
+        "observedMeanRespins": 7.03779,
+        "observedVarianceRespins": 48.0010819159,
+        "observedMaxRespins": 73,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.006123529411764705,
+        "ek_rel": 0.005398571428571459,
+        "varK_rel": 0.008426090670168234
+      },
+      "pass": true,
+      "elapsed_ms": 25
+    },
+    {
+      "name": "B_7col_with_stay",
+      "description": "7 cols, uniform start, 30% stay (sticky walk)",
+      "cfg": {
+        "gridCols": 7,
+        "startColumnPmf": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285
+        ],
+        "stepPmf": {
+          "left": 0.35,
+          "stay": 0.3,
+          "right": 0.35
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 6
+          },
+          {
+            "rewardX": 2,
+            "weight": 3
+          },
+          {
+            "rewardX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 17.142857142857142,
+        "varianceRespins": 325.7142857142857,
+        "expectedRewardPerRespin": 1.7,
+        "varianceRewardPerRespin": 1.4099999999999997,
+        "expectedPayoutPerEpisode": 29.142857142857142,
+        "variancePayoutPerEpisode": 965.4857142857142,
+        "stdDevPayoutPerEpisode": 31.072265998567183,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 10.000000000000002
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 17.142857142857146
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 21.42857142857143
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 22.857142857142854
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 21.42857142857143
+          },
+          {
+            "startCol": 5,
+            "expectedRespins": 17.14285714285714
+          },
+          {
+            "startCol": 6,
+            "expectedRespins": 9.999999999999998
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 29.15372,
+        "observedVariancePayout": 961.3303701616,
+        "observedStdDevPayout": 31.005328093113285,
+        "observedMeanRespins": 17.14352,
+        "observedVarianceRespins": 323.7010220096001,
+        "observedMaxRespins": 216,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.00037274509803922817,
+        "ek_rel": 0.00003866666666662392,
+        "varK_rel": 0.006181072777543636
+      },
+      "pass": true,
+      "elapsed_ms": 67
+    },
+    {
+      "name": "C_strict_right",
+      "description": "5 cols, start at col 0, always RIGHT (deterministic K=5)",
+      "cfg": {
+        "gridCols": 5,
+        "startColumnPmf": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "stepPmf": {
+          "left": 0,
+          "stay": 0,
+          "right": 1
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 6
+          },
+          {
+            "rewardX": 2,
+            "weight": 3
+          },
+          {
+            "rewardX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 5,
+        "varianceRespins": 0,
+        "expectedRewardPerRespin": 1.7,
+        "varianceRewardPerRespin": 1.4099999999999997,
+        "expectedPayoutPerEpisode": 8.5,
+        "variancePayoutPerEpisode": 7.049999999999999,
+        "stdDevPayoutPerEpisode": 2.6551836094703507,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 5
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 4
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 3
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 2
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 1
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 8.50629,
+        "observedVariancePayout": 7.066460435899998,
+        "observedStdDevPayout": 2.6582814816907554,
+        "observedMeanRespins": 5,
+        "observedVarianceRespins": 0,
+        "observedMaxRespins": 5,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.000739999999999989,
+        "ek_rel": 0,
+        "varK_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "D_center_start_high_stay",
+      "description": "7 cols, center start, 70% stay (long walks)",
+      "cfg": {
+        "gridCols": 7,
+        "startColumnPmf": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "stepPmf": {
+          "left": 0.15,
+          "stay": 0.7,
+          "right": 0.15
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 6
+          },
+          {
+            "rewardX": 2,
+            "weight": 3
+          },
+          {
+            "rewardX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 53.333333333333215,
+        "varianceRespins": 1902.2222222222144,
+        "expectedRewardPerRespin": 1.7,
+        "varianceRewardPerRespin": 1.4099999999999997,
+        "expectedPayoutPerEpisode": 90.66666666666646,
+        "variancePayoutPerEpisode": 5572.6222222221995,
+        "stdDevPayoutPerEpisode": 74.64999813946548,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 23.333333333333286
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 39.999999999999915
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 49.999999999999886
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 53.333333333333215
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 49.999999999999886
+          },
+          {
+            "startCol": 5,
+            "expectedRespins": 39.999999999999915
+          },
+          {
+            "startCol": 6,
+            "expectedRespins": 23.333333333333286
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 90.56076,
+        "observedVariancePayout": 5569.8122082224,
+        "observedStdDevPayout": 74.63117450651839,
+        "observedMeanRespins": 53.23997,
+        "observedVarianceRespins": 1899.4274843990997,
+        "observedMaxRespins": 624,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.0011680882352918002,
+        "ek_rel": 0.0017505624999977914,
+        "varK_rel": 0.001469196285515912
+      },
+      "pass": true,
+      "elapsed_ms": 163
+    },
+    {
+      "name": "E_biased_right",
+      "description": "6 cols, start at col 0, biased RIGHT (drift)",
+      "cfg": {
+        "gridCols": 6,
+        "startColumnPmf": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "stepPmf": {
+          "left": 0.2,
+          "stay": 0.1,
+          "right": 0.7
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 6
+          },
+          {
+            "rewardX": 2,
+            "weight": 3
+          },
+          {
+            "rewardX": 5,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 8.001554501678982,
+        "varianceRespins": 28.876803498728933,
+        "expectedRewardPerRespin": 1.7,
+        "varianceRewardPerRespin": 1.4099999999999997,
+        "expectedPayoutPerEpisode": 13.602642652854268,
+        "variancePayoutPerEpisode": 94.73615395869396,
+        "stdDevPayoutPerEpisode": 9.733249917611998,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 8.001554501678982
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 8.859141502158689
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 7.67559493086718
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 5.908867339069606
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 3.9755165985560135
+          },
+          {
+            "startCol": 5,
+            "expectedRespins": 1.9945592441235587
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 13.56093,
+        "observedVariancePayout": 94.92682753509996,
+        "observedStdDevPayout": 9.74303995347961,
+        "observedMeanRespins": 7.97694,
+        "observedVarianceRespins": 28.947788236399994,
+        "observedMaxRespins": 59,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.0030665109654640834,
+        "ek_rel": 0.003076214962207243,
+        "varK_rel": 0.0024581923575504403
+      },
+      "pass": true,
+      "elapsed_ms": 26
+    },
+    {
+      "name": "F_heavy_tail_reward",
+      "description": "5 cols, uniform start, symmetric, Pareto-like reward",
+      "cfg": {
+        "gridCols": 5,
+        "startColumnPmf": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "stepPmf": {
+          "left": 0.5,
+          "stay": 0,
+          "right": 0.5
+        },
+        "rewardDistribution": [
+          {
+            "rewardX": 1,
+            "weight": 50
+          },
+          {
+            "rewardX": 5,
+            "weight": 20
+          },
+          {
+            "rewardX": 25,
+            "weight": 5
+          },
+          {
+            "rewardX": 100,
+            "weight": 1
+          },
+          {
+            "rewardX": 500,
+            "weight": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedRespins": 7,
+        "varianceRespins": 47.599999999999994,
+        "expectedRewardPerRespin": 5.259697567389876,
+        "varianceRewardPerRespin": 316.51704106566797,
+        "expectedPayoutPerEpisode": 36.81788297172913,
+        "variancePayoutPerEpisode": 3532.445608079048,
+        "stdDevPayoutPerEpisode": 59.43438069063266,
+        "expectedRespinsByStart": [
+          {
+            "startCol": 0,
+            "expectedRespins": 4.999999999999999
+          },
+          {
+            "startCol": 1,
+            "expectedRespins": 7.999999999999999
+          },
+          {
+            "startCol": 2,
+            "expectedRespins": 8.999999999999998
+          },
+          {
+            "startCol": 3,
+            "expectedRespins": 8
+          },
+          {
+            "startCol": 4,
+            "expectedRespins": 5
+          }
+        ]
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 37.1017,
+        "observedVariancePayout": 3607.9460171099995,
+        "observedStdDevPayout": 60.066180310637364,
+        "observedMeanRespins": 7.03779,
+        "observedVarianceRespins": 48.0010819159,
+        "observedMaxRespins": 73,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.007708673214285717,
+        "ek_rel": 0.005398571428571459,
+        "varK_rel": 0.008426090670168234
+      },
+      "pass": true,
+      "elapsed_ms": 28
+    }
+  ]
+}
