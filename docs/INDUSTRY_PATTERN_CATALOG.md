@@ -1,13 +1,19 @@
-# Industry Pattern Catalog v1.0
+# Industry Pattern Catalog v2.0
 
-> **Wave 46.** Operator-facing catalog of 20 industry-style slot patterns
-> the engine ships ready-to-run. Each pattern uses **mechanical
-> descriptive naming** (no vendor TM, no patented brand names — see
-> `docs/IP_REVIEW.md` for clean-room derivation policy).
+> **Wave 46 (v1.0) + Wave 67 (v2.0 expansion).** Operator-facing catalog
+> of **32 industry-style slot patterns** the engine ships ready-to-run:
+> - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
+> - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
+>   Wave 49-60 (each with dedicated solver + MC acceptance proof).
+>
+> Each pattern uses **mechanical descriptive naming** (no vendor TM, no
+> patented brand names — see `docs/IP_REVIEW.md` for clean-room
+> derivation policy).
 >
 > Operator workflow: math director identifies the pattern they want,
-> follows the link to the reference fixture, runs `runIRSimulation` on
-> it, customizes paytable/reels/features for their game.
+> follows the link to the reference fixture (or closed-form solver),
+> runs `runIRSimulation` (fixture-based) or invokes the solver
+> (closed-form-based), customizes parameters for their game.
 
 ## Why this catalog exists
 
@@ -54,6 +60,34 @@ hold rights to.
 | P-018 | **Asymmetric Variable-Rows** | variable-rows ways + asymmetric grid | `complex-variable-rows.json` | `VARROWS_CASCADE.md` (Wave 28) — gates ✅ |
 | P-019 | **High-Volatility Heavy-Tail** | 243-ways + high-multiplier paytable + Pareto α<1 | `5x3-243ways.json` | `MECHANIC_30.md` (Wave 26); PAR sample shows Pareto α=0.447 (heavy tail) |
 | P-020 | **Classic 3x3 Lines** | classic 3-reel lines evaluator | `classic-3x3-lines.json` | `MECHANIC_30.md` (Wave 26) — classic-3x3 row |
+
+## Pattern Catalog v2.0 — Closed-Form Math Kernels (Wave 49-60)
+
+These 12 patterns are **dedicated math solvers**, not fixtures. Each
+provides a closed-form analytical computation of expected payout
+distribution + MC verification at scale. Operators integrate them as
+math library calls in their feature builder.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-021 | **N-Tier Hold-and-Win Ladder** | Forward propagation on `(respins, filled)` state DAG; per-tier payout & PMF | `src/jackpot/ladderJackpot.ts` | `HNW_LADDER.md` (Wave 49) — 6/6 PASS @ 250K MC each |
+| P-022 | **Charge Meter (Renewal Reward)** | Steady-state + finite-horizon exact PMF via discrete convolution; 3 reset modes | `src/features/chargeMeter.ts` | `CHARGE_METER.md` (Wave 50) — 7/7 PASS @ 500K MC |
+| P-023 | **Supermeter State-Switch** | Power-iter stationary distribution + Gaussian-elim first-passage on row-stochastic P | `src/features/supermeter.ts` | `SUPERMETER.md` (Wave 51) — 6/6 PASS @ 500K MC + FH N=2000 |
+| P-024 | **Sticky Cash + Reveal Multiplier** | Binomial occupancy × Wald-product variance; closed-form `P(Y=0)` | `src/features/stickyCashReveal.ts` | `STICKY_CASH_REVEAL.md` (Wave 52) — 6/6 PASS @ 100K episodes |
+| P-025 | **Walking-Wild Respin (1D Markov)** | Fundamental matrix `N = (I − Q)^{-1}` + Wald + compound-sum variance | `src/features/walkingWildRespin.ts` | `WALKING_WILD_RESPIN.md` (Wave 53) — 6/6 PASS @ 100K episodes |
+| P-026 | **Megacluster Stack-Reveal Ways** | Binomial × stack-product `E[S]^k`; optional cap-DP enumeration | `src/features/megaclusterStackWays.ts` | `MEGACLUSTER_STACK_WAYS.md` (Wave 54) — 6/6 PASS @ 1M MC |
+| P-027 | **Streaming Entropy Health Monitor** | O(1) sliding-window χ² + Shannon entropy w/ pluggable alert sinks (UKGC RTS 8.A.1) | `src/rng/entropyHealthMonitor.ts` | `ENTROPY_HEALTH_MONITOR.md` (Wave 55) — 7/7 sources @ 500K bytes |
+| P-028 | **Demo Mode Controller (zero-RNG)** | SHA-256 script attestation + tamper-evident audit log (GLI-19 §3.3.9) | `src/sim/demoMode.ts` | `DEMO_MODE.md` (Wave 56) — 6/6 scenarios + tamper-detect verified |
+| P-029 | **Crash-Style Multiplier (Pareto)** | Bust ∼ Pareto(α=1, x_m=1−HE); RTP invariance theorem at any cash-out target | `src/features/crashMultiplier.ts` | `CRASH_MULTIPLIER.md` (Wave 57) — 6/6 strategies @ 1M MC |
+| P-030 | **Parallel Screens Aggregate** | Independent ⇒ convolution; correlated ⇒ mixture w/ Var[Y²] decomposition | `src/features/parallelScreens.ts` | `PARALLEL_SCREENS.md` (Wave 58) — 6/6 configs @ 500K MC |
+| P-031 | **Class-II Bingo Coordinator** | Hypergeometric `C(N−\|P\|, k−\|P\|)/C(N,k)` + inclusion-exclusion (NIGC 25 CFR 502) | `src/features/classIIBingoCoordinator.ts` | `CLASS_II_BINGO.md` (Wave 59) — 6/6 configs @ 50K games |
+| P-032 | **Sticky-Cash Collector (Renewal Reward)** | Long-run RTP = `p_cash·E[V]·E[M]` (indep p_collect); finite-horizon moment propagation | `src/features/stickyCashCollector.ts` | `STICKY_CASH_COLLECTOR.md` (Wave 60) — 6/6 configs @ 10K episodes |
+
+**One-button portfolio runner:** `npm run closed-form-portfolio` exercises
+all 12 P-021..P-032 kernels in ~10 seconds and emits unified report
+`reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
+
+
 
 ## Pattern composition (operator workflow)
 
