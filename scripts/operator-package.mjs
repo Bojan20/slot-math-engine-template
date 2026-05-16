@@ -191,6 +191,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 118 Bonus Collect-N Trigger Tracker (W152 Wave 119)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_COLLECT_N.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_COLLECT_N.md' },
+  // REPORTS — Wave 121 Cascade Multiplier Chain Lockstep Conditional (W152 Wave 122)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_CHAIN.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_CHAIN.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

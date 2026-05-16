@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.18
+# Industry Pattern Catalog v2.19
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -35,6 +35,7 @@
 > - v2.16 (Wave 115) — adds 1 sticky-wild countdown multiplier kernel landed in Wave 114/115 (Markov stationary)
 > - v2.17 (Wave 117) — adds 1 mystery-symbol reveal aggregator kernel landed in Wave 116/117 (Wald-style K ⊥ S)
 > - v2.18 (Wave 119) — adds 1 bonus-collect-N trigger tracker kernel landed in Wave 118/119 (Negative Binomial NB(N,p))
+> - v2.19 (Wave 122) — adds 1 cascade multiplier chain (lockstep conditional) kernel landed in Wave 121/122 (Wald-style Σ M_k·p^k)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -316,8 +317,19 @@ event sa probability p; bonus triggers kada cumulative count reaches N.
 |----|---------|-------------|---------------|------------------|
 | P-052 | **Bonus Collect-N Trigger Tracker** | T_N ~ NB(N, p) sa support {N, N+1, ...}; **`P(T_N = k) = C(k−1, N−1)·p^N·(1−p)^(k−N)`**; **`E[T_N] = N/p`**, **`Var[T_N] = N(1−p)/p²`**; tail P(T_N > k) = P(C_k < N) via log-space binomial aggregation (Lanczos logGamma); median/percentile via monotone CDF binary search; operator disclosure **`probTriggerWithinHorizon = P(T_N ≤ K)`**, expectedTriggersInHorizon = K·p/N | `src/features/bonusCollectN.ts` | 32 vitest specs (Wave 118) + 6 PAR-style configs × 50K episodes (Wave 119); portfolio entry W118 |
 
+## Pattern Catalog v2.19 — Cascade Multiplier Chain Lockstep Conditional Kernel (Wave 121/122)
+
+This pattern targets the **lockstep conditional cascade multiplier
+family** — Quickspin Reactor Wilds / Push Gaming Token of Life / Hacksaw
+Cascade Multiplier / BTG Megaways multiplier-on-win. Multiplier raste
+SAMO kada cascade ima win (skip-on-empty), chain se lomi na prazno.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-053 | **Cascade Multiplier Chain Lockstep Conditional** | Chain length L ~ Geometric(1-p) sa support {0,1,...}; **`P(L=0)=1-p`**, **`P(L≥k)=p^k`**, **`E[L]=p/(1-p)`**; M_k linear (base+(k-1)·step) ili geometric (base·r^(k-1)) sa convergence guard r·p<1; Wald-style **`E[Y]=E[V]·Σ M_k·p^k`** (linear: base·p/(1-p)+step·p²/(1-p)²; geometric: base·p/(1-rp)); **`Var[Y]=E[Y²]−E[Y]²`** sa cross-term 2·E[V]²·Σ_{j<k} M_j·M_k·p^k; truncation cap + tail prob disclosure | `src/features/cascadeMultiplierChain.ts` | 32 vitest specs (Wave 121) + 6 PAR-style configs × 100K spins (Wave 122); portfolio entry W121 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 32 P-021..P-052 kernels in ~10 seconds and emits unified report
+all 33 P-021..P-053 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

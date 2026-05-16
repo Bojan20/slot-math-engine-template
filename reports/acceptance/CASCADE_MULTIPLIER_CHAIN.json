@@ -1,0 +1,324 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CASCADE_MULTIPLIER_CHAIN",
+  "generated_utc": "2026-05-16T07:35:42.453Z",
+  "spins_per_config": 100000,
+  "seed": 3405643809,
+  "tolerances": {
+    "el_rel": 0.03,
+    "ey_rel": 0.05,
+    "ey_rel_heavytail": 0.15,
+    "zero_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_quickspin_reactor_wilds_p06",
+      "description": "Quickspin Reactor Wilds style: high-frequency cascade p=0.6, linear +1",
+      "cfg": {
+        "winContinuationProbability": 0.6,
+        "baseMultiplier": 1,
+        "growthMode": "linear",
+        "linearStep": 1,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.6,
+        "expectedChainLength": 1.4999999999999998,
+        "varianceChainLength": 3.749999999999999,
+        "probZeroChain": 0.4,
+        "maxMultiplier": 1000,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 17.249999999999996,
+        "variancePayoutPerSpin": 2308.762499999999,
+        "truncationProbabilityRemaining": 8.499661574300596e-223
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 1.50492,
+        "observedMeanPayoutPerSpin": 17.37861,
+        "observedVariancePayoutPerSpin": 2411.0162244679,
+        "observedZeroChainFraction": 0.40046,
+        "observedMaxChainLength": 24,
+        "observedMaxPayoutSeen": 2142
+      },
+      "checks": {
+        "el_rel": 0.003280000000000172,
+        "ey_rel": 0.007455652173913155,
+        "zero_abs": 0.00045999999999996044
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_push_token_of_life_geom",
+      "description": "Push Gaming Token of Life style: geometric ratio=1.5, p=0.5 (r·p=0.75 < 1)",
+      "cfg": {
+        "winContinuationProbability": 0.5,
+        "baseMultiplier": 1,
+        "growthMode": "geometric",
+        "geometricRatio": 1.5,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.5,
+        "expectedChainLength": 1,
+        "varianceChainLength": 2,
+        "probZeroChain": 0.5,
+        "maxMultiplier": 8.225603979374499e+175,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 9.199999999999996,
+        "variancePayoutPerSpin": null,
+        "truncationProbabilityRemaining": 4.6663180925160944e-302
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 0.99899,
+        "observedMeanPayoutPerSpin": 9.115141351928711,
+        "observedVariancePayoutPerSpin": 2624.3517210232503,
+        "observedZeroChainFraction": 0.501,
+        "observedMaxChainLength": 16,
+        "observedMaxPayoutSeen": 6005.049835205078
+      },
+      "checks": {
+        "el_rel": 0.0010099999999999554,
+        "ey_rel": 0.009223766094704818,
+        "zero_abs": 0.0010000000000000009
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "C_hacksaw_cascade_p04",
+      "description": "Hacksaw cascade style: moderate p=0.4, base=1 step=1",
+      "cfg": {
+        "winContinuationProbability": 0.4,
+        "baseMultiplier": 1,
+        "growthMode": "linear",
+        "linearStep": 1,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.4,
+        "expectedChainLength": 0.6666666666666667,
+        "varianceChainLength": 1.1111111111111112,
+        "probZeroChain": 0.6,
+        "maxMultiplier": 1000,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 5.111111111111113,
+        "variancePayoutPerSpin": 282.30617283950613,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 0.66906,
+        "observedMeanPayoutPerSpin": 5.16129,
+        "observedVariancePayoutPerSpin": 290.7012555359,
+        "observedZeroChainFraction": 0.59949,
+        "observedMaxChainLength": 13,
+        "observedMaxPayoutSeen": 658
+      },
+      "checks": {
+        "el_rel": 0.0035899999999998706,
+        "ey_rel": 0.009817608695651755,
+        "zero_abs": 0.0005100000000000104
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_rare_chain_aggressive_step",
+      "description": "Rare chain p=0.2, aggressive linear step=5 (high variance)",
+      "cfg": {
+        "winContinuationProbability": 0.2,
+        "baseMultiplier": 1,
+        "growthMode": "linear",
+        "linearStep": 5,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.2,
+        "expectedChainLength": 0.25,
+        "varianceChainLength": 0.31249999999999994,
+        "probZeroChain": 0.8,
+        "maxMultiplier": 4996,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 2.5875000000000004,
+        "variancePayoutPerSpin": 291.79828125000006,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 0.25039,
+        "observedMeanPayoutPerSpin": 2.58416,
+        "observedVariancePayoutPerSpin": 311.4189970944,
+        "observedZeroChainFraction": 0.79977,
+        "observedMaxChainLength": 7,
+        "observedMaxPayoutSeen": 1316
+      },
+      "checks": {
+        "el_rel": 0.0015600000000000058,
+        "ey_rel": 0.0012908212560388654,
+        "zero_abs": 0.0002300000000000635
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_constant_multiplier_corner",
+      "description": "Corner: step=0 constant base mult, E[Y] = E[V]·base·E[L]",
+      "cfg": {
+        "winContinuationProbability": 0.5,
+        "baseMultiplier": 3,
+        "growthMode": "linear",
+        "linearStep": 0,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.5,
+        "expectedChainLength": 1,
+        "varianceChainLength": 2,
+        "probZeroChain": 0.5,
+        "maxMultiplier": 3,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 13.799999999999997,
+        "variancePayoutPerSpin": 825.8399999999999,
+        "truncationProbabilityRemaining": 4.6663180925160944e-302
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 0.99899,
+        "observedMeanPayoutPerSpin": 13.80285,
+        "observedVariancePayoutPerSpin": 821.7045818775,
+        "observedZeroChainFraction": 0.501,
+        "observedMaxChainLength": 16,
+        "observedMaxPayoutSeen": 429
+      },
+      "checks": {
+        "el_rel": 0.0010099999999999554,
+        "ey_rel": 0.00020652173913059712,
+        "zero_abs": 0.0010000000000000009
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_heavy_tail_geom_r2_p03",
+      "description": "Heavy-tail geometric r=2 @ p=0.3 (r·p=0.6, moderate)",
+      "cfg": {
+        "winContinuationProbability": 0.3,
+        "baseMultiplier": 1,
+        "growthMode": "geometric",
+        "geometricRatio": 2,
+        "winValuePmf": [
+          {
+            "value": 1,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "winContinuationProbability": 0.3,
+        "expectedChainLength": 0.4285714285714286,
+        "varianceChainLength": 0.6122448979591837,
+        "probZeroChain": 0.7,
+        "maxMultiplier": 5.357543035931337e+300,
+        "expectedWinValuePerCascade": 4.6,
+        "expectedPayoutPerSpin": 3.450000000000001,
+        "variancePayoutPerSpin": null,
+        "truncationProbabilityRemaining": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanChainLength": 0.42816,
+        "observedMeanPayoutPerSpin": 3.46811,
+        "observedVariancePayoutPerSpin": 688.2789430279,
+        "observedZeroChainFraction": 0.70063,
+        "observedMaxChainLength": 8,
+        "observedMaxPayoutSeen": 3423
+      },
+      "checks": {
+        "el_rel": 0.0009600000000001089,
+        "ey_rel": 0.005249275362318473,
+        "zero_abs": 0.0006300000000000194
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}

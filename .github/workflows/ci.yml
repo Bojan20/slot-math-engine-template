@@ -188,3 +188,5 @@ jobs:
         run: npm run mystery-symbol-reveal-acceptance
       - name: Bonus Collect-N acceptance (6/6 configs × 50K episodes, Wave 118/119)
         run: npm run bonus-collect-n-acceptance
+      - name: Cascade Multiplier Chain acceptance (6/6 configs × 100K spins, Wave 121/122)
+        run: npm run cascade-multiplier-chain-acceptance
