@@ -105,3 +105,6 @@ export * from './pickBonusNStageTree.js';
 
 // W152 Wave 110: Bonus Trigger Wait Time Analyzer (Faza 4.6 ext, post-W100)
 export * from './bonusTriggerWaitTime.js';
+
+// W152 Wave 112: Variable Reel Height Ways (Faza 12 ext, post-W100)
+export * from './variableReelHeightWays.js';

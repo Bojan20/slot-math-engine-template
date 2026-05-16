@@ -88,6 +88,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'pickBonusNStageTree.js'));
   const { solveBonusTriggerWaitTime, simulateBonusTriggerWaitTime } =
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerWaitTime.js'));
+  const { solveVariableReelHeightWays, simulateVariableReelHeightWays } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'variableReelHeightWays.js'));
 
   const showcase = [];
 
@@ -537,6 +539,30 @@ async function main() {
     const mc = simulateBonusTriggerWaitTime(cfg, 10_000, SEED);
     const ok = relErr(cf.expectedAnyFeatureWaitTime, mc.observedMeanAnyFeatureWaitTime) < 0.05;
     showcase.push({ wave: 110, solver: 'Bonus Trigger Wait Time', metric: 'E[T_any] spins', cf: cf.expectedAnyFeatureWaitTime, mc: mc.observedMeanAnyFeatureWaitTime, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W112: Variable Reel Height Ways ────────────────────────────────
+  {
+    const t0 = Date.now();
+    const uniformReel = (label) => ({
+      label,
+      pmf: [
+        { height: 2, probability: 1 / 6 },
+        { height: 3, probability: 1 / 6 },
+        { height: 4, probability: 1 / 6 },
+        { height: 5, probability: 1 / 6 },
+        { height: 6, probability: 1 / 6 },
+        { height: 7, probability: 1 / 6 },
+      ],
+    });
+    const cfg = {
+      reels: [uniformReel('r1'), uniformReel('r2'), uniformReel('r3'), uniformReel('r4'), uniformReel('r5'), uniformReel('r6')],
+      waysThresholds: [50_000],
+    };
+    const cf = solveVariableReelHeightWays(cfg);
+    const mc = simulateVariableReelHeightWays(cfg, 10_000, SEED);
+    const ok = relErr(cf.expectedWays, mc.observedMeanWays) < 0.05;
+    showcase.push({ wave: 112, solver: 'Variable Reel Height Ways', metric: 'E[Ways]', cf: cf.expectedWays, mc: mc.observedMeanWays, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
