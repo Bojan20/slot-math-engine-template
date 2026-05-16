@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 19 Industry-Firsts (Wave 33-86, all attested)
+## 🏆 24 Industry-Firsts (Wave 33-97, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -66,15 +66,20 @@ or in 5 years.
 | 81 | **Bonus Buy / Feature Buy Variance Analyzer** — closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N\* = (z·√Var[Y]/(tol·C))²** + risk (P(bust), P(below cost), P(break-even)); UKGC/MGA/AU compliance | 6/6 configs × 200K buys PASS (1.2M MC) |
 | 84 | **Free Spins Retrigger Compound Variance** — Wald + compound-sum: N~shifted-geometric E[N]=1/(1-p), Var[N]=p/(1-p)²; T=K·N; **E[Y]=E[T]·μ (Wald), Var[Y]=E[T]·σ² + Var[T]·μ²** | 6/6 configs × 50K episodes PASS (300K MC) |
 | 86 | **Cascade Sequential Multiplier Pyramid** — Sweet Bonanza / Sugar Rush style: N~shifted-geometric; **E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)]** (interchange); tail P(reach max) = q^(L-1); mega-hit μ_W·m_max·q^(L-1) | 6/6 configs × 100K episodes PASS (600K MC) |
+| 89 | **Persistent Multiplier Accumulator** — Pragmatic / BTG-Megaways sticky mult: D_n~Binomial(n,q); **E[Y] = μ_W·(K·m_init + q·m_drop·K(K+1)/2)**; Var[Y] handles cross-spin Cov via 2μ²·m_drop²·q(1-q)·Σn(K-n) | 6/6 configs × 50K episodes PASS (300K MC) |
+| 91 | **Coin Accumulator + Mystery Values** — Money Train / Money Cart style: N~Binomial(K,q), V~discrete mystery; **E[Y]=E[N]·μ_V (Wald)**, Var[Y]=E[N]·σ²_V+Var[N]·μ²_V; **P(≥1 max-value)=1−(1−q·p_max)^K** (Bernoulli-Binomial nesting) | 6/6 configs × 100K episodes PASS (600K MC) |
+| 93 | **Multiplicative Wild Stack Bonus** — NetEnt Hotline / Wanted Dead PRODUCT wilds: W=Π M_i over Binomial wild reels; **E[W]=(p·μ_M+1-p)^R** (interchange product); max combined = m_max^R | 6/6 configs × 100K episodes PASS (600K MC) |
+| 95 | **Ante Bet / Bet Boost Trade-Off Analyzer** — Pragmatic Ante / NetEnt Bet Boost decision math: base RTP=μ_0/1, **ante RTP=μ_a/(1+a)**; boost premium=(RTP_a−RTP_b)/RTP_b; **2-sigma crossover N\*=4σ²/μ_net²**; regulator-flag "player-trap" detection | 6/6 configs × 100K spins PASS (600K MC) |
+| 97 | **Free Spins Lookback Multiplier Aggregator** — Push Money Cart 4 / Hacksaw POST-HOC multiplier: S_K=Σ W_i, M~discrete; **E[Y]=μ_M·K·μ_W** (Wald-like); **Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M** | 6/6 configs × 100K episodes PASS (600K MC) |
 
-These nineteen are deliberately vendor-disjoint. They exist in OUR engine
+These twenty-four are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — 18 portfolio
-> solvers + 11 exact-enum fixtures + 30 commerce/cascade/jackpot configs =
-> **47 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — 23 portfolio
+> solvers + 11 exact-enum fixtures + 48 commerce/cascade/jackpot/wild/coin configs =
+> **52 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 

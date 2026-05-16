@@ -298,6 +298,66 @@ const WAVES = [
     }),
     industry_first: 'Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products.',
   },
+  {
+    wave: 89,
+    kimi: '—',
+    name: 'Persistent Multiplier Accumulator — Binomial drop chain',
+    commit: '29f9dec',
+    reportPath: 'reports/acceptance/PERSISTENT_MULTIPLIER.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Pragmatic / BTG-Megaways sticky multiplier closed-form: D_n ~ Binomial(n,q), running M_n = m_init + D_n·m_drop; E[Y] = μ_W·(K·m_init + q·m_drop·K(K+1)/2) (linearity + arithmetic sum); Var[Y] handles cross-spin Cov(M_n, M_m) = min(n,m)·q(1-q)·m_drop² via 2μ²·m_drop²·q(1-q)·Σn(K-n) crossSum.',
+  },
+  {
+    wave: 91,
+    kimi: '—',
+    name: 'Coin Accumulator + Mystery Values — Wald + Bernoulli-Binomial nesting',
+    commit: '2f212d6',
+    reportPath: 'reports/acceptance/COIN_ACCUMULATOR_MYSTERY.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Money-Train/Money-Cart style coin-collect closed-form: N ~ Binomial(K,q), V from mystery distribution; E[Y]=E[N]·μ_V (Wald), Var[Y]=E[N]·σ²_V+Var[N]·μ²_V; P(≥1 max-value)=1−(1−q·p_max)^K (Bernoulli-Binomial nesting identity).',
+  },
+  {
+    wave: 93,
+    kimi: '—',
+    name: 'Multiplicative Wild Stack Bonus — product moment formula',
+    commit: '58cc38f',
+    reportPath: 'reports/acceptance/MULTIPLICATIVE_WILD_STACK.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'NetEnt Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak.',
+  },
+  {
+    wave: 95,
+    kimi: '—',
+    name: 'Ante Bet / Bet Boost Trade-Off Analyzer — decision math',
+    commit: 'd3ccf3e',
+    reportPath: 'reports/acceptance/ANTE_BET_TRADEOFF.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Operator + regulator ante-bet decision math: base RTP=μ_0/1, ante RTP=μ_a/(1+a); anteIsPositiveEV iff RTP_a>RTP_b; boost premium=(RTP_a−RTP_b)/RTP_b; 2-sigma crossover N*=4σ²/μ_net² (long-run convergence budget); aggregate revenue-weighted RTP w/ adoption fraction f. UKGC RTS 12 + MGA PPD §11.f compliance + regulator-flag "player-trap" detection.',
+  },
+  {
+    wave: 97,
+    kimi: '—',
+    name: 'Free Spins Lookback Multiplier Aggregator — Wald + compound variance',
+    commit: '3dbf42a',
+    reportPath: 'reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win).',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

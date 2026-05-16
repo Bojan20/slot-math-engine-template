@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T04:48:16.754Z",
-  "repo_sha": "6e3bedfe4c5348e27481002af10bdc44abb2f92d",
+  "generatedAtUtc": "2026-05-16T05:27:27.572Z",
+  "repo_sha": "36983540b2661b03f01071ee92e598c0e46afa4f",
   "headline": {
-    "waves": 19,
-    "industry_firsts": 19,
+    "waves": 24,
+    "industry_firsts": 24,
     "all_present": true
   },
   "waves": [
@@ -331,8 +331,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:43:30.787Z",
-      "headline": "18/18 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T05:22:39.638Z",
+      "headline": "23/23 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -423,6 +423,31 @@
           {
             "wave": 86,
             "solver": "Cascade Multiplier Pyramid",
+            "ok": true
+          },
+          {
+            "wave": 89,
+            "solver": "Persistent Multiplier Accumulator",
+            "ok": true
+          },
+          {
+            "wave": 91,
+            "solver": "Coin Accumulator + Mystery Values",
+            "ok": true
+          },
+          {
+            "wave": 93,
+            "solver": "Multiplicative Wild Stack Bonus",
+            "ok": true
+          },
+          {
+            "wave": 95,
+            "solver": "Ante Bet Trade-Off Analyzer",
+            "ok": true
+          },
+          {
+            "wave": 97,
+            "solver": "Free Spins Lookback Multiplier",
             "ok": true
           }
         ]
@@ -743,6 +768,201 @@
         ]
       },
       "industry_first": "Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products."
+    },
+    {
+      "wave": 89,
+      "kimi": "—",
+      "commit": "29f9dec",
+      "name": "Persistent Multiplier Accumulator — Binomial drop chain",
+      "reportPath": "reports/acceptance/PERSISTENT_MULTIPLIER.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:55:03.371Z",
+      "headline": "6/6 configs PASS at 50000 episodes each (300K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_pragmatic_15fs_q025",
+            "pass": true
+          },
+          {
+            "name": "B_btg_megaways_big_drops",
+            "pass": true
+          },
+          {
+            "name": "C_aggressive_short_session",
+            "pass": true
+          },
+          {
+            "name": "D_low_drop_rate",
+            "pass": true
+          },
+          {
+            "name": "E_guaranteed_drops",
+            "pass": true
+          },
+          {
+            "name": "F_no_initial_mult",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Pragmatic / BTG-Megaways sticky multiplier closed-form: D_n ~ Binomial(n,q), running M_n = m_init + D_n·m_drop; E[Y] = μ_W·(K·m_init + q·m_drop·K(K+1)/2) (linearity + arithmetic sum); Var[Y] handles cross-spin Cov(M_n, M_m) = min(n,m)·q(1-q)·m_drop² via 2μ²·m_drop²·q(1-q)·Σn(K-n) crossSum."
+    },
+    {
+      "wave": 91,
+      "kimi": "—",
+      "commit": "2f212d6",
+      "name": "Coin Accumulator + Mystery Values — Wald + Bernoulli-Binomial nesting",
+      "reportPath": "reports/acceptance/COIN_ACCUMULATOR_MYSTERY.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T05:02:04.018Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_money_train_classic",
+            "pass": true
+          },
+          {
+            "name": "B_high_density_low_value",
+            "pass": true
+          },
+          {
+            "name": "C_rare_grand_long_session",
+            "pass": true
+          },
+          {
+            "name": "D_short_session_high_q",
+            "pass": true
+          },
+          {
+            "name": "E_q1_guaranteed",
+            "pass": true
+          },
+          {
+            "name": "F_q0_no_coins",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Money-Train/Money-Cart style coin-collect closed-form: N ~ Binomial(K,q), V from mystery distribution; E[Y]=E[N]·μ_V (Wald), Var[Y]=E[N]·σ²_V+Var[N]·μ²_V; P(≥1 max-value)=1−(1−q·p_max)^K (Bernoulli-Binomial nesting identity)."
+    },
+    {
+      "wave": 93,
+      "kimi": "—",
+      "commit": "58cc38f",
+      "name": "Multiplicative Wild Stack Bonus — product moment formula",
+      "reportPath": "reports/acceptance/MULTIPLICATIVE_WILD_STACK.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T05:09:51.093Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_netent_hotline_style",
+            "pass": true
+          },
+          {
+            "name": "B_classic_5reel_multi_tier",
+            "pass": true
+          },
+          {
+            "name": "C_high_density_low_mult",
+            "pass": true
+          },
+          {
+            "name": "D_moderate_5reel_balanced",
+            "pass": true
+          },
+          {
+            "name": "E_p1_guaranteed",
+            "pass": true
+          },
+          {
+            "name": "F_p0_no_wilds",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "NetEnt Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak."
+    },
+    {
+      "wave": 95,
+      "kimi": "—",
+      "commit": "d3ccf3e",
+      "name": "Ante Bet / Bet Boost Trade-Off Analyzer — decision math",
+      "reportPath": "reports/acceptance/ANTE_BET_TRADEOFF.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T05:17:00.610Z",
+      "headline": "6/6 configs PASS at 100000 spins each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_pragmatic_ante_positive_EV",
+            "pass": true
+          },
+          {
+            "name": "B_neutral_player_trap",
+            "pass": true
+          },
+          {
+            "name": "C_negative_EV_ante",
+            "pass": true
+          },
+          {
+            "name": "D_high_boost_aggressive",
+            "pass": true
+          },
+          {
+            "name": "E_with_adoption_30pct",
+            "pass": true
+          },
+          {
+            "name": "F_low_premium_minor_boost",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Operator + regulator ante-bet decision math: base RTP=μ_0/1, ante RTP=μ_a/(1+a); anteIsPositiveEV iff RTP_a>RTP_b; boost premium=(RTP_a−RTP_b)/RTP_b; 2-sigma crossover N*=4σ²/μ_net² (long-run convergence budget); aggregate revenue-weighted RTP w/ adoption fraction f. UKGC RTS 12 + MGA PPD §11.f compliance + regulator-flag \"player-trap\" detection."
+    },
+    {
+      "wave": 97,
+      "kimi": "—",
+      "commit": "3dbf42a",
+      "name": "Free Spins Lookback Multiplier Aggregator — Wald + compound variance",
+      "reportPath": "reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T05:24:49.441Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_money_cart_4_style",
+            "pass": true
+          },
+          {
+            "name": "B_hacksaw_deterministic",
+            "pass": true
+          },
+          {
+            "name": "C_low_K_high_mult_range",
+            "pass": true
+          },
+          {
+            "name": "D_long_K_modest_mult",
+            "pass": true
+          },
+          {
+            "name": "E_balanced_mid_volatility",
+            "pass": true
+          },
+          {
+            "name": "F_low_K_high_K_extreme",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win)."
     }
   ],
   "auditor_qa": [

@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T04:48:16.754Z` · repo SHA: `6e3bedfe4c53`
+> Generated: `2026-05-16T05:27:27.572Z` · repo SHA: `36983540b266`
 
-## Headline: **19/19 industry-firsts attested** ✅
+## Headline: **24/24 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -20,7 +20,7 @@
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 18/18 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 23/23 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
 | 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 | 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
 | 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
@@ -28,6 +28,11 @@
 | 81 | — | **Bonus Buy / Feature Buy Variance Analyzer with CLT convergence** | ✅ 6/6 configs PASS at 200000 buys each (1.2M MC) | [`reports/acceptance/BONUS_BUY_VARIANCE.json`](../../reports/acceptance/BONUS_BUY_VARIANCE.md) |
 | 84 | — | **Free Spins Retrigger Compound Variance — Wald + compound-sum** | ✅ 6/6 configs PASS at 50000 episodes each (300K MC) | [`reports/acceptance/FREE_SPINS_RETRIGGER.json`](../../reports/acceptance/FREE_SPINS_RETRIGGER.md) |
 | 86 | — | **Cascade Sequential Multiplier Pyramid — geometric × ladder** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json`](../../reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.md) |
+| 89 | — | **Persistent Multiplier Accumulator — Binomial drop chain** | ✅ 6/6 configs PASS at 50000 episodes each (300K MC) | [`reports/acceptance/PERSISTENT_MULTIPLIER.json`](../../reports/acceptance/PERSISTENT_MULTIPLIER.md) |
+| 91 | — | **Coin Accumulator + Mystery Values — Wald + Bernoulli-Binomial nesting** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/COIN_ACCUMULATOR_MYSTERY.json`](../../reports/acceptance/COIN_ACCUMULATOR_MYSTERY.md) |
+| 93 | — | **Multiplicative Wild Stack Bonus — product moment formula** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/MULTIPLICATIVE_WILD_STACK.json`](../../reports/acceptance/MULTIPLICATIVE_WILD_STACK.md) |
+| 95 | — | **Ante Bet / Bet Boost Trade-Off Analyzer — decision math** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/ANTE_BET_TRADEOFF.json`](../../reports/acceptance/ANTE_BET_TRADEOFF.md) |
+| 97 | — | **Free Spins Lookback Multiplier Aggregator — Wald + compound variance** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json`](../../reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.md) |
 
 ## Why each is industry-first
 
@@ -110,7 +115,7 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
-- **Acceptance**: 18/18 closed-form solvers PASS in single runner
+- **Acceptance**: 23/23 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
@@ -163,6 +168,41 @@
 - **Industry-first claim**: Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products.
 - **Commit**: `75c9d61`
 - **Detail**: `{"configs":[{"name":"A_sweet_bonanza_style","pass":true},{"name":"B_sugar_rush_style","pass":true},{"name":"C_no_continuation","pass":true},{"name":"D_high_continuation_flat_ladder","pass":true},{"name":"E_arithmetic_lad`…
+
+### Wave 89 · Persistent Multiplier Accumulator — Binomial drop chain (—)
+
+- **Acceptance**: 6/6 configs PASS at 50000 episodes each (300K MC)
+- **Industry-first claim**: Pragmatic / BTG-Megaways sticky multiplier closed-form: D_n ~ Binomial(n,q), running M_n = m_init + D_n·m_drop; E[Y] = μ_W·(K·m_init + q·m_drop·K(K+1)/2) (linearity + arithmetic sum); Var[Y] handles cross-spin Cov(M_n, M_m) = min(n,m)·q(1-q)·m_drop² via 2μ²·m_drop²·q(1-q)·Σn(K-n) crossSum.
+- **Commit**: `29f9dec`
+- **Detail**: `{"configs":[{"name":"A_pragmatic_15fs_q025","pass":true},{"name":"B_btg_megaways_big_drops","pass":true},{"name":"C_aggressive_short_session","pass":true},{"name":"D_low_drop_rate","pass":true},{"name":"E_guaranteed_drop`…
+
+### Wave 91 · Coin Accumulator + Mystery Values — Wald + Bernoulli-Binomial nesting (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Money-Train/Money-Cart style coin-collect closed-form: N ~ Binomial(K,q), V from mystery distribution; E[Y]=E[N]·μ_V (Wald), Var[Y]=E[N]·σ²_V+Var[N]·μ²_V; P(≥1 max-value)=1−(1−q·p_max)^K (Bernoulli-Binomial nesting identity).
+- **Commit**: `2f212d6`
+- **Detail**: `{"configs":[{"name":"A_money_train_classic","pass":true},{"name":"B_high_density_low_value","pass":true},{"name":"C_rare_grand_long_session","pass":true},{"name":"D_short_session_high_q","pass":true},{"name":"E_q1_guaran`…
+
+### Wave 93 · Multiplicative Wild Stack Bonus — product moment formula (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: NetEnt Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak.
+- **Commit**: `58cc38f`
+- **Detail**: `{"configs":[{"name":"A_netent_hotline_style","pass":true},{"name":"B_classic_5reel_multi_tier","pass":true},{"name":"C_high_density_low_mult","pass":true},{"name":"D_moderate_5reel_balanced","pass":true},{"name":"E_p1_gu`…
+
+### Wave 95 · Ante Bet / Bet Boost Trade-Off Analyzer — decision math (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each (600K MC)
+- **Industry-first claim**: Operator + regulator ante-bet decision math: base RTP=μ_0/1, ante RTP=μ_a/(1+a); anteIsPositiveEV iff RTP_a>RTP_b; boost premium=(RTP_a−RTP_b)/RTP_b; 2-sigma crossover N*=4σ²/μ_net² (long-run convergence budget); aggregate revenue-weighted RTP w/ adoption fraction f. UKGC RTS 12 + MGA PPD §11.f compliance + regulator-flag "player-trap" detection.
+- **Commit**: `d3ccf3e`
+- **Detail**: `{"configs":[{"name":"A_pragmatic_ante_positive_EV","pass":true},{"name":"B_neutral_player_trap","pass":true},{"name":"C_negative_EV_ante","pass":true},{"name":"D_high_boost_aggressive","pass":true},{"name":"E_with_adopti`…
+
+### Wave 97 · Free Spins Lookback Multiplier Aggregator — Wald + compound variance (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=Σ W_i, M ~ discrete distribution; E[Y]=μ_M·K·μ_W (Wald-like); Var[Y]=K·σ²_W·(σ²_M+μ²_M)+K²·μ²_W·σ²_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win).
+- **Commit**: `3dbf42a`
+- **Detail**: `{"configs":[{"name":"A_money_cart_4_style","pass":true},{"name":"B_hacksaw_deterministic","pass":true},{"name":"C_low_K_high_mult_range","pass":true},{"name":"D_long_K_modest_mult","pass":true},{"name":"E_balanced_mid_vo`…
 
 ## Auditor Q&A Map
 
