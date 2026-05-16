@@ -182,6 +182,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 112 Variable Reel Height Ways (W152 Wave 113)
   { kind: 'reports/acceptance', src: 'reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/VARIABLE_REEL_HEIGHT_WAYS.md' },
+  // REPORTS — Wave 114 Sticky Wild Countdown Multiplier (W152 Wave 115)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

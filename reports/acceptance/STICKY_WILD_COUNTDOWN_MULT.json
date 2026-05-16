@@ -1,0 +1,429 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "STICKY_WILD_COUNTDOWN_MULT",
+  "generated_utc": "2026-05-16T07:01:15.392Z",
+  "spins_per_config": 100000,
+  "seed": 1472310032,
+  "tolerances": {
+    "em_rel": 0.05,
+    "ey_rel": 0.05,
+    "active_abs": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_classic_linear_N4_step1",
+      "description": "Classic sticky wild N=4 spins, linear M=[1,2,3,4]",
+      "cfg": {
+        "landProbability": 0.05,
+        "stickyDuration": 4,
+        "baseMultiplier": 1,
+        "growthMode": "linear",
+        "linearStep": 1,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.8333333333333334,
+          0.04166666666666667,
+          0.04166666666666667,
+          0.04166666666666667,
+          0.04166666666666667
+        ],
+        "probSpinIsActive": 0.16666666666666663,
+        "perActiveSpinMultipliers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "maxMultiplier": 4,
+        "expectedMultiplierPerSpin": 1.25,
+        "varianceMultiplierPerSpin": 0.5208333333333335,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 0.875,
+        "variancePayoutPerSpin": 4.859375000000001,
+        "expectedCycleLength": 24,
+        "totalMultiplierPerActiveCycle": 10,
+        "expectedPayoutPerActiveCycle": 7
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.16815,
+        "observedMeanMultiplierPerSpin": 1.25221,
+        "observedMeanPayoutPerSpin": 0.88201,
+        "observedVariancePayoutPerSpin": 4.9039083599,
+        "observedMaxMultiplierSeen": 4
+      },
+      "checks": {
+        "em_rel": 0.0017680000000000363,
+        "ey_rel": 0.008011428571428527,
+        "active_abs": 0.0014833333333333643,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_pragmatic_hot_fiesta_geom_N6",
+      "description": "Pragmatic Hot Fiesta style: N=6, geometric ratio=1.5",
+      "cfg": {
+        "landProbability": 0.03,
+        "stickyDuration": 6,
+        "baseMultiplier": 1,
+        "growthMode": "geometric",
+        "geometricRatio": 1.5,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.8474576271186441,
+          0.025423728813559324,
+          0.025423728813559324,
+          0.025423728813559324,
+          0.025423728813559324,
+          0.025423728813559324,
+          0.025423728813559324
+        ],
+        "probSpinIsActive": 0.15254237288135586,
+        "perActiveSpinMultipliers": [
+          1,
+          1.5,
+          2.25,
+          3.375,
+          5.0625,
+          7.59375
+        ],
+        "maxMultiplier": 7.59375,
+        "expectedMultiplierPerSpin": 1.3757944915254239,
+        "varianceMultiplierPerSpin": 1.5732167284230465,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 0.9630561440677966,
+        "variancePayoutPerSpin": 8.430796333977083,
+        "expectedCycleLength": 39.333333333333336,
+        "totalMultiplierPerActiveCycle": 20.78125,
+        "expectedPayoutPerActiveCycle": 14.546874999999998
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.15635,
+        "observedMeanMultiplierPerSpin": 1.3851334375,
+        "observedMeanPayoutPerSpin": 0.9720325,
+        "observedVariancePayoutPerSpin": 8.65389578769375,
+        "observedMaxMultiplierSeen": 7.59375
+      },
+      "checks": {
+        "em_rel": 0.00678803849855616,
+        "ey_rel": 0.009320698473807202,
+        "active_abs": 0.00380762711864413,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_netent_vikings_N7_step1",
+      "description": "NetEnt Vikings Berzerk style: N=7, M=[1..7]",
+      "cfg": {
+        "landProbability": 0.02,
+        "stickyDuration": 7,
+        "baseMultiplier": 1,
+        "growthMode": "linear",
+        "linearStep": 1,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.8771929824561403,
+          0.017543859649122806,
+          0.017543859649122806,
+          0.017543859649122806,
+          0.017543859649122806,
+          0.017543859649122806,
+          0.017543859649122806,
+          0.017543859649122806
+        ],
+        "probSpinIsActive": 0.1228070175438597,
+        "perActiveSpinMultipliers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "maxMultiplier": 7,
+        "expectedMultiplierPerSpin": 1.3684210526315788,
+        "varianceMultiplierPerSpin": 1.460757156048015,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 0.957894736842105,
+        "variancePayoutPerSpin": 8.082437673130194,
+        "expectedCycleLength": 57,
+        "totalMultiplierPerActiveCycle": 28,
+        "expectedPayoutPerActiveCycle": 19.599999999999998
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.126,
+        "observedMeanMultiplierPerSpin": 1.378,
+        "observedMeanPayoutPerSpin": 0.95731,
+        "observedVariancePayoutPerSpin": 7.9336475639,
+        "observedMaxMultiplierSeen": 7
+      },
+      "checks": {
+        "em_rel": 0.007000000000000058,
+        "ey_rel": 0.000610439560439314,
+        "active_abs": 0.003192982456140303,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "D_high_freq_short_N3",
+      "description": "High-frequency p=0.20, short sticky N=3",
+      "cfg": {
+        "landProbability": 0.2,
+        "stickyDuration": 3,
+        "baseMultiplier": 2,
+        "growthMode": "linear",
+        "linearStep": 2,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.625,
+          0.125,
+          0.125,
+          0.125
+        ],
+        "probSpinIsActive": 0.375,
+        "perActiveSpinMultipliers": [
+          2,
+          4,
+          6
+        ],
+        "maxMultiplier": 6,
+        "expectedMultiplierPerSpin": 2.125,
+        "varianceMultiplierPerSpin": 3.109375,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 1.4874999999999998,
+        "variancePayoutPerSpin": 18.374843750000004,
+        "expectedCycleLength": 8,
+        "totalMultiplierPerActiveCycle": 12,
+        "expectedPayoutPerActiveCycle": 8.399999999999999
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.37345,
+        "observedMeanMultiplierPerSpin": 2.12033,
+        "observedMeanPayoutPerSpin": 1.50745,
+        "observedVariancePayoutPerSpin": 18.8271244975,
+        "observedMaxMultiplierSeen": 6
+      },
+      "checks": {
+        "em_rel": 0.002197647058823507,
+        "ey_rel": 0.013411764705882444,
+        "active_abs": 0.0015499999999999958,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_rare_long_aggressive_geom",
+      "description": "Rare wild p=0.005, long N=10 sticky, aggressive geom ratio=2",
+      "cfg": {
+        "landProbability": 0.005,
+        "stickyDuration": 10,
+        "baseMultiplier": 1,
+        "growthMode": "geometric",
+        "geometricRatio": 2,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.9523809523809523,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615,
+          0.0047619047619047615
+        ],
+        "probSpinIsActive": 0.04761904761904767,
+        "perActiveSpinMultipliers": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256,
+          512
+        ],
+        "maxMultiplier": 512,
+        "expectedMultiplierPerSpin": 5.8238095238095235,
+        "varianceMultiplierPerSpin": 1631.4403854875281,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 4.076666666666666,
+        "variancePayoutPerSpin": 4479.845074603174,
+        "expectedCycleLength": 210,
+        "totalMultiplierPerActiveCycle": 1023,
+        "expectedPayoutPerActiveCycle": 716.0999999999999
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.0491,
+        "observedMeanMultiplierPerSpin": 5.97383,
+        "observedMeanPayoutPerSpin": 4.40683,
+        "observedVariancePayoutPerSpin": 5179.0204793511,
+        "observedMaxMultiplierSeen": 512
+      },
+      "checks": {
+        "em_rel": 0.025759852820932252,
+        "ey_rel": 0.08098855273916616,
+        "active_abs": 0.001480952380952326,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_deterministic_constant",
+      "description": "Corner: p=0.5, N=2, base=5 constant (step=0)",
+      "cfg": {
+        "landProbability": 0.5,
+        "stickyDuration": 2,
+        "baseMultiplier": 5,
+        "growthMode": "linear",
+        "linearStep": 0,
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.2
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "stationaryDistribution": [
+          0.5,
+          0.25,
+          0.25
+        ],
+        "probSpinIsActive": 0.5,
+        "perActiveSpinMultipliers": [
+          5,
+          5
+        ],
+        "maxMultiplier": 5,
+        "expectedMultiplierPerSpin": 3,
+        "varianceMultiplierPerSpin": 4,
+        "expectedBaseWin": 0.7,
+        "expectedPayoutPerSpin": 2.0999999999999996,
+        "variancePayoutPerSpin": 30.690000000000005,
+        "expectedCycleLength": 4,
+        "totalMultiplierPerActiveCycle": 10,
+        "expectedPayoutPerActiveCycle": 7
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedActiveFraction": 0.50053,
+        "observedMeanMultiplierPerSpin": 3.00212,
+        "observedMeanPayoutPerSpin": 2.08701,
+        "observedVariancePayoutPerSpin": 30.498999259900003,
+        "observedMaxMultiplierSeen": 5
+      },
+      "checks": {
+        "em_rel": 0.0007066666666667073,
+        "ey_rel": 0.0061857142857142085,
+        "active_abs": 0.0005300000000000304,
+        "max_ok": true
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    }
+  ]
+}

@@ -182,3 +182,5 @@ jobs:
         run: npm run bonus-trigger-wait-time-acceptance
       - name: Variable Reel Height Ways acceptance (6/6 configs × 100K episodes, Wave 112/113)
         run: npm run variable-reel-height-ways-acceptance
+      - name: Sticky Wild Countdown Multiplier acceptance (6/6 configs × 100K spins, Wave 114/115)
+        run: npm run sticky-wild-countdown-multiplier-acceptance

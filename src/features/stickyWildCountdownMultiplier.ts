@@ -301,28 +301,17 @@ export function simulateStickyWildCountdownMultiplier(
   let maxMultSeen = 0;
 
   for (let t = 0; t < spins; t++) {
-    // Transition into this spin first
+    // Determine multiplier from CURRENT state at top of spin.
+    // (Convention: state s_t reflects the spin's identity.
+    //  s_t=0 → idle this spin, s_t=k>0 → k-th active spin.)
     let currentMult: number;
     let isActive: boolean;
     if (state === 0) {
-      // Idle — wild may land this spin
-      if (rng() < p) {
-        state = 1;
-        currentMult = M[0];
-        isActive = true;
-      } else {
-        currentMult = 1;
-        isActive = false;
-      }
-    } else if (state < N) {
-      state += 1;
+      currentMult = 1;
+      isActive = false;
+    } else {
       currentMult = M[state - 1];
       isActive = true;
-    } else {
-      // state === N — last active spin, then expires
-      currentMult = M[N - 1];
-      isActive = true;
-      // Will reset to 0 after this spin
     }
 
     const V = sampleBaseWin(config.baseWinPmf, rng());
@@ -334,8 +323,18 @@ export function simulateStickyWildCountdownMultiplier(
     sumPayout += payout;
     sumPayoutSq += payout * payout;
 
-    // Post-spin: if state == N, expire
-    if (state === N) state = 0;
+    // Transition at end of spin (matches CF stationary derivation):
+    //   state 0 → state 1 sa prob p, → state 0 sa prob (1-p)
+    //   state k (1 ≤ k < N) → state k+1 (deterministic)
+    //   state N → state 0 (deterministic expire)
+    if (state === 0) {
+      if (rng() < p) state = 1;
+    } else if (state < N) {
+      state += 1;
+    } else {
+      // state === N
+      state = 0;
+    }
   }
 
   const meanPay = sumPayout / spins;

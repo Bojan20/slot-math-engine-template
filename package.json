@@ -58,6 +58,7 @@
     "pick-bonus-n-stage-tree-acceptance": "npm run build && node scripts/pick-bonus-n-stage-tree-acceptance.mjs",
     "bonus-trigger-wait-time-acceptance": "npm run build && node scripts/bonus-trigger-wait-time-acceptance.mjs",
     "variable-reel-height-ways-acceptance": "npm run build && node scripts/variable-reel-height-ways-acceptance.mjs",
+    "sticky-wild-countdown-multiplier-acceptance": "npm run build && node scripts/sticky-wild-countdown-multiplier-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

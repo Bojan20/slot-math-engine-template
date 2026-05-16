@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.15
+# Industry Pattern Catalog v2.16
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -32,6 +32,7 @@
 > - v2.13 (Wave 108) — adds 1 pick-bonus tree kernel landed in Wave 107/108
 > - v2.14 (Wave 111) — adds 1 bonus-trigger wait-time kernel landed in Wave 110/111
 > - v2.15 (Wave 113) — adds 1 variable-reel-height ways kernel landed in Wave 112/113 (BTG Megaways patent expired 2023)
+> - v2.16 (Wave 115) — adds 1 sticky-wild countdown multiplier kernel landed in Wave 114/115 (Markov stationary)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -278,8 +279,20 @@ iSoftBet, Stakelogic ship the same pattern under various brands.
 |----|---------|-------------|---------------|------------------|
 | P-049 | **Variable Reel Height Ways** | Per-reel H_i ~ discrete pmf; **`W = Π_i H_i`** (cross-reel independence); **`E[W] = Π_i E[H_i]`**; **`E[W²] = Π_i E[H_i²]`**; Var[W] = E[W²] − E[W]²; sparse PMF via multiplicative convolution (Cartesian × value-merge); tail: maxWays = Π max(supp(H_i)), **`probMaxWays = Π P(H_i=max)`**, P(W ≥ threshold) for "epic ways" disclosure | `src/features/variableReelHeightWays.ts` | 31 vitest specs (Wave 112) + 6 PAR-style configs × 100K episodes (Wave 113); portfolio entry W112 |
 
+## Pattern Catalog v2.16 — Sticky Wild Countdown Multiplier Kernel (Wave 114/115)
+
+This pattern targets the **sticky wild with countdown-growing multiplier
+family** — Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming
+Wild Swarm / Quickspin Sakura Fortune / Yggdrasil Vault of Anubis style.
+Wild lands sa probability p, stays sticky N spins, multiplier raste
+linearno ili geometrijski tokom aktive periode.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-050 | **Sticky Wild Countdown Multiplier** | Discrete Markov chain sa (N+1) stanjima (idle + N active phases); **`π_0 = 1/(1 + N·p)`**, **`π_k = p/(1 + N·p)`** za k=1..N; M_k = base + (k−1)·step (linear) ili base·ratio^(k−1) (geometric); **`E[M per spin] = π_0 + π_1·ΣM_k`**; **`E[Y per spin] = E[V]·E[M]`** (cross-independence); Var[Y] = E[V²]·E[M²] − E[Y]²; cycle: 1/p + N | `src/features/stickyWildCountdownMultiplier.ts` | 34 vitest specs (Wave 114) + 6 PAR-style configs × 100K spins (Wave 115); portfolio entry W114 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 29 P-021..P-049 kernels in ~10 seconds and emits unified report
+all 30 P-021..P-050 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
