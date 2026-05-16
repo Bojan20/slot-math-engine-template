@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.31
+# Industry Pattern Catalog v2.32
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -48,6 +48,7 @@
 > - v2.29 (Wave 143) — adds 1 symbol multiplier on reel-stop kernel landed in Wave 142/143 (Pragmatic Sweet Bonanza / Bigger Bass / Hacksaw RIP City / NetEnt Asgardian Stones random multiplier symbol landing additive vs multiplicative)
 > - v2.30 (Wave 145) — adds 1 trail/board bonus progression tracker kernel landed in Wave 144/145 (Konami Stairway to Heaven / IGT Wheel of Fortune Multi-Tier Trail / Microgaming Lord of the Rings / Inspired ladder climb sequential step-based progression sa step PMF + bust + end bonus)
 > - v2.31 (Wave 147) — adds 1 cascade meter charge-up trigger kernel landed in Wave 146/147 (Play'n GO Reactoonz Quantum Leap / Hacksaw Stack 'Em / Push Aztec Bonanza / Yggdrasil Vault of Anubis / NetEnt Wildbeast charge meter sa F = ⌊L/T⌋ ~ Geometric(1-p^T))
+> - v2.32 (Wave 149) — adds 1 max win cap truncation analyzer kernel landed in Wave 148/149 (UNIVERSALNI regulatory disclosure: Pragmatic 5000x / Hacksaw 7500x / Nolimit City 25000x / NetEnt 10000x / Stake.com 5000x / Push 10000-15000x sa RTP loss + 1-in-N cap-hit frequency + E[overflow | cap-hit])
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -496,8 +497,23 @@ ladder), W118 (token collector), W84 (multiplicative chain), W121
 |----|---------|-------------|---------------|------------------|
 | P-065 | **Cascade Meter Charge-Up Trigger** | L ~ Geometric(1−p); per-win meter +1; T threshold; **`F = ⌊L/T⌋ ~ Geometric(1−p^T)`** elegant distribution; **`E[F] = p^T/(1−p^T)`**, Var[F] = p^T/(1−p^T)²; **`E[L mod T] = (1−p)·Σ_{r=0..T-1} r·p^r / (1−p^T)`** finite series; **conservation identity** `E[L] = T·E[F] + E[meterEnd]`; plus Wald base payout E[Y_base] = E[L]·μ_V, Var[Y_base] = E[L]·σ_V² + Var[L]·μ_V²; feature payout E[Y_feature] = B·E[F]; total E[Y] = E[Y_base] + E[Y_feature] | `src/features/cascadeMeterChargeUp.ts` | 42 vitest specs (Wave 146) + 6 PAR-style configs × 300K spins (Wave 147); portfolio entry W146 |
 
+## Pattern Catalog v2.32 — Max Win Cap Truncation Analyzer Kernel (Wave 148/149)
+
+This pattern targets the **UNIVERSAL regulatory max-win cap disclosure
+family** — Pragmatic Play 5000x cap (large catalog), Hacksaw Gaming
+7500x cap, Nolimit City 25000x cap (Mental, Tombstone RIP), NetEnt
+10000x cap, Stake.com originals 5000x cap, Push Gaming 10000-15000x,
+Yggdrasil 7777x, Quickspin 10000x, BTG Megaways često 50000x.
+Mandatory under UKGC RTS 14 / §5.A.E B3-LCCP, MGA PPD §11.f, AU NCRG
+post-2023 reform, BE Belgian Gaming Commission. Distinct from W138
+(caps per-cascade multiplier M_max, ne payout), W81 (no cap operator).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-066 | **Max Win Cap Truncation Analyzer** | Y ~ payoutPmf discrete, cap C → Y_capped = min(Y, C); **`E[Y_capped] = Σ_{y<C} y·π_y + C·P_cap`**; **`Var[Y_capped] = E[Y²_capped] − E[Y_capped]² ≤ Var[Y]`** (tail clipping); **rtpLossRelative = (E[Y]−E[Y_capped])/E[Y]**; **oneInNCapHitFrequency = 1/P_cap** (regulator "1 in X"); **E[overflow \| Y≥C] = (Σ_{y≥C}(y−C)·π_y)/P_cap**; capBucketRtpContributionFraction = C·P_cap/E[Y_capped] | `src/features/maxWinCapTruncation.ts` | 38 vitest specs (Wave 148) + 6 PAR-style configs × 200K spins (Wave 149); portfolio entry W148 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 45 P-021..P-065 kernels in ~10 seconds and emits unified report
+all 46 P-021..P-066 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

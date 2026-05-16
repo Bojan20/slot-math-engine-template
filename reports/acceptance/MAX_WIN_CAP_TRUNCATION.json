@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MAX_WIN_CAP_TRUNCATION",
+  "generated_utc": "2026-05-16T11:09:38.072Z",
+  "spins_per_config": 200000,
+  "seed": 3405644104,
+  "tolerances": {
+    "capped_rel": 0.05,
+    "cap_hit_abs": 0.005
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_5000x_sweet_bonanza_tail",
+      "description": "Pragmatic Play 5000x cap, Sweet Bonanza-like heavy tail",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 1,
+            "probability": 0.15
+          },
+          {
+            "value": 5,
+            "probability": 0.08
+          },
+          {
+            "value": 20,
+            "probability": 0.04
+          },
+          {
+            "value": 100,
+            "probability": 0.018
+          },
+          {
+            "value": 500,
+            "probability": 0.008
+          },
+          {
+            "value": 2500,
+            "probability": 0.003
+          },
+          {
+            "value": 5000,
+            "probability": 0.0008
+          },
+          {
+            "value": 10000,
+            "probability": 0.0002
+          }
+        ],
+        "maxWinCapX": 5000
+      },
+      "closed_form": {
+        "maxWinCapX": 5000,
+        "expectedPayoutUncapped": 20.65,
+        "expectedPayoutCapped": 19.65,
+        "variancePayoutCapped": 45562.027500000004,
+        "rtpLossAbsolute": 1,
+        "rtpLossRelative": 0.04842615012106538,
+        "probCapHit": 0.001,
+        "oneInNCapHitFrequency": 1000,
+        "expectedConditionalOverflow": 1000,
+        "capBucketRtpContributionFraction": 0.2544529262086514
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 19.600745,
+        "observedMeanPayoutUncapped": 20.525745,
+        "observedCapHitFraction": 0.00101,
+        "observedMaxPayoutUncappedSeen": 10000
+      },
+      "checks": {
+        "capped_rel": 0.00250661577608136,
+        "cap_hit_abs": 0.000010000000000000026
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_hacksaw_7500x_rare_extreme",
+      "description": "Hacksaw Gaming 7500x cap, rare-extreme tail",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.8
+          },
+          {
+            "value": 10,
+            "probability": 0.1
+          },
+          {
+            "value": 100,
+            "probability": 0.07
+          },
+          {
+            "value": 1000,
+            "probability": 0.025
+          },
+          {
+            "value": 5000,
+            "probability": 0.0049
+          },
+          {
+            "value": 7500,
+            "probability": 0.0001
+          }
+        ],
+        "maxWinCapX": 7500
+      },
+      "closed_form": {
+        "maxWinCapX": 7500,
+        "expectedPayoutUncapped": 58.25,
+        "expectedPayoutCapped": 58.25,
+        "variancePayoutCapped": 150441.9375,
+        "rtpLossAbsolute": 0,
+        "rtpLossRelative": 0,
+        "probCapHit": 0.0001,
+        "oneInNCapHitFrequency": 10000,
+        "expectedConditionalOverflow": 0,
+        "capBucketRtpContributionFraction": 0.012875536480686695
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 58.39385,
+        "observedMeanPayoutUncapped": 58.39385,
+        "observedCapHitFraction": 0.00009,
+        "observedMaxPayoutUncappedSeen": 7500
+      },
+      "checks": {
+        "capped_rel": 0.0024695278969957164,
+        "cap_hit_abs": 0.000009999999999999999
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_nolimit_city_25000x_deep_tail",
+      "description": "Nolimit City 25000x cap, deep tail (Mental, Tombstone RIP)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.75
+          },
+          {
+            "value": 50,
+            "probability": 0.15
+          },
+          {
+            "value": 1000,
+            "probability": 0.07
+          },
+          {
+            "value": 10000,
+            "probability": 0.028
+          },
+          {
+            "value": 25000,
+            "probability": 0.002
+          }
+        ],
+        "maxWinCapX": 25000
+      },
+      "closed_form": {
+        "maxWinCapX": 25000,
+        "expectedPayoutUncapped": 407.5,
+        "expectedPayoutCapped": 407.5,
+        "variancePayoutCapped": 3954318.75,
+        "rtpLossAbsolute": 0,
+        "rtpLossRelative": 0,
+        "probCapHit": 0.002,
+        "oneInNCapHitFrequency": 500,
+        "expectedConditionalOverflow": 0,
+        "capBucketRtpContributionFraction": 0.12269938650306748
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 405.986,
+        "observedMeanPayoutUncapped": 405.986,
+        "observedCapHitFraction": 0.00199,
+        "observedMaxPayoutUncappedSeen": 25000
+      },
+      "checks": {
+        "capped_rel": 0.003715337423312908,
+        "cap_hit_abs": 0.000010000000000000026
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_netent_10000x_classic",
+      "description": "NetEnt 10000x cap, classic distribution",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.78
+          },
+          {
+            "value": 2,
+            "probability": 0.12
+          },
+          {
+            "value": 25,
+            "probability": 0.06
+          },
+          {
+            "value": 200,
+            "probability": 0.025
+          },
+          {
+            "value": 2000,
+            "probability": 0.012
+          },
+          {
+            "value": 10000,
+            "probability": 0.002
+          },
+          {
+            "value": 50000,
+            "probability": 0.001
+          }
+        ],
+        "maxWinCapX": 10000
+      },
+      "closed_form": {
+        "maxWinCapX": 10000,
+        "expectedPayoutUncapped": 100.74000000000001,
+        "expectedPayoutCapped": 60.74,
+        "variancePayoutCapped": 345348.6324,
+        "rtpLossAbsolute": 40.00000000000001,
+        "rtpLossRelative": 0.39706174310105224,
+        "probCapHit": 0.003,
+        "oneInNCapHitFrequency": 333.3333333333333,
+        "expectedConditionalOverflow": 13333.333333333334,
+        "capBucketRtpContributionFraction": 0.4939084622983207
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 61.03928,
+        "observedMeanPayoutUncapped": 101.43928,
+        "observedCapHitFraction": 0.003065,
+        "observedMaxPayoutUncappedSeen": 50000
+      },
+      "checks": {
+        "capped_rel": 0.004927230819887982,
+        "cap_hit_abs": 0.00006499999999999995
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "E_corner_no_loss_cap_above_max",
+      "description": "Corner: cap above max PMF value → zero RTP loss",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.9
+          },
+          {
+            "value": 100,
+            "probability": 0.08
+          },
+          {
+            "value": 1000,
+            "probability": 0.02
+          }
+        ],
+        "maxWinCapX": 100000
+      },
+      "closed_form": {
+        "maxWinCapX": 100000,
+        "expectedPayoutUncapped": 28,
+        "expectedPayoutCapped": 28,
+        "variancePayoutCapped": 20016,
+        "rtpLossAbsolute": 0,
+        "rtpLossRelative": 0,
+        "probCapHit": 0,
+        "oneInNCapHitFrequency": null,
+        "expectedConditionalOverflow": 0,
+        "capBucketRtpContributionFraction": 0
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 27.8465,
+        "observedMeanPayoutUncapped": 27.8465,
+        "observedCapHitFraction": 0,
+        "observedMaxPayoutUncappedSeen": 1000
+      },
+      "checks": {
+        "capped_rel": 0.0054821428571428955,
+        "cap_hit_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_aggressive_low_cap_high_loss",
+      "description": "Corner: aggressive low cap → catches many tail values",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "value": 0,
+            "probability": 0.5
+          },
+          {
+            "value": 100,
+            "probability": 0.2
+          },
+          {
+            "value": 1000,
+            "probability": 0.15
+          },
+          {
+            "value": 5000,
+            "probability": 0.1
+          },
+          {
+            "value": 50000,
+            "probability": 0.05
+          }
+        ],
+        "maxWinCapX": 100
+      },
+      "closed_form": {
+        "maxWinCapX": 100,
+        "expectedPayoutUncapped": 3170,
+        "expectedPayoutCapped": 49.99999999999999,
+        "variancePayoutCapped": 2500,
+        "rtpLossAbsolute": 3120,
+        "rtpLossRelative": 0.9842271293375394,
+        "probCapHit": 0.49999999999999994,
+        "oneInNCapHitFrequency": 2.0000000000000004,
+        "expectedConditionalOverflow": 6240.000000000001,
+        "capBucketRtpContributionFraction": 1
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutCapped": 50.0415,
+        "observedMeanPayoutUncapped": 3176.666,
+        "observedCapHitFraction": 0.500415,
+        "observedMaxPayoutUncappedSeen": 50000
+      },
+      "checks": {
+        "capped_rel": 0.0008300000000001263,
+        "cap_hit_abs": 0.0004150000000001097
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}

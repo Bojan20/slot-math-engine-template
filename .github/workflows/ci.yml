@@ -214,3 +214,5 @@ jobs:
         run: npm run trail-bonus-tracker-acceptance
       - name: Cascade Meter Charge-Up Trigger acceptance (6/6 configs × 300K spins, Wave 146/147)
         run: npm run cascade-meter-charge-up-acceptance
+      - name: Max Win Cap Truncation Analyzer acceptance (6/6 configs × 200K spins, Wave 148/149)
+        run: npm run max-win-cap-truncation-acceptance

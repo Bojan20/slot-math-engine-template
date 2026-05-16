@@ -230,6 +230,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 146 Cascade Meter Charge-Up Trigger (W152 Wave 147)
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_METER_CHARGE_UP.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_METER_CHARGE_UP.md' },
+  // REPORTS — Wave 148 Max Win Cap Truncation Analyzer (W152 Wave 149)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MAX_WIN_CAP_TRUNCATION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MAX_WIN_CAP_TRUNCATION.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
