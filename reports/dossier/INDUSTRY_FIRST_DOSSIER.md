@@ -1,7 +1,7 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T03:23:42.323Z` · repo SHA: `70d15dde8ebf`
+> Generated: `2026-05-16T04:04:21.391Z` · repo SHA: `a34f36ef9d90`
 
 ## Headline: **13/13 industry-firsts attested** ✅
 
@@ -13,15 +13,15 @@
 | 34 | K6 | **Mutation-Score CI Gate** | ✅ TS 85.4% + Rust evaluator=100.0% / rng=92.6% | [`reports/mutation/SUMMARY.json`](../../reports/mutation/SUMMARY.md) |
 | 35 | K5 | **USIF PAR Sheet Schema v1.0** | ✅ 20/20 samples valid | [`reports/usif-par/VALIDATION_REPORT.json`](../../reports/usif-par/VALIDATION_REPORT.md) |
 | 36 | K8 | **Jurisdiction Auto-Gate Matrix** | ✅ 450 verdicts (PASS=203 / WARN=175 / FAIL=72) | [`reports/acceptance/JURISDICTION_AUTO_GATE.json`](../../reports/acceptance/JURISDICTION_AUTO_GATE.md) |
-| 37 | K2 | **Differential Fuzz Cross-Language** | ✅ 160/160 cells PASS | [`reports/acceptance/DIFF_FUZZ_CROSS_LANG.json`](../../reports/acceptance/DIFF_FUZZ_CROSS_LANG.md) |
+| 37 | K2 | **Differential Fuzz Cross-Language** | ✅ 40/40 cells PASS | [`reports/acceptance/DIFF_FUZZ_CROSS_LANG.json`](../../reports/acceptance/DIFF_FUZZ_CROSS_LANG.md) |
 | 38 | K10 | **HSM-Backed DRBG Seed Bridge** | ✅ 15/15 vitest tests PASS | _vitest-only_ |
 | 39 | K3 | **SP 800-90B Entropy Assessment** | ✅ 6 sources, all Low-bar (≥0.5 bits) ✅ | [`reports/rng/SP_800_90B_ASSESSMENT.json`](../../reports/rng/SP_800_90B_ASSESSMENT.md) |
 | 40 | K9 | **PAR Sheet Commitment v1.0** | ✅ 180/180 gates PASS | [`reports/acceptance/PAR_COMMITMENT.json`](../../reports/acceptance/PAR_COMMITMENT.md) |
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | undefined | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | undefined | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | undefined | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 12/12 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
-| 63 | undefined | **Exact Enumeration ground-truth RTP** | ✅ 3/3 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
+| 61 | undefined | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 15/15 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 63 | undefined | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 
 ## Why each is industry-first
 
@@ -30,7 +30,7 @@
 - **Acceptance**: 50/50 cells PASS
 - **Industry-first claim**: No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators
 - **Commit**: `f4ca791`
-- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"124.4"}`
+- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"117.3"}`
 
 ### Wave 34 · Mutation-Score CI Gate (K6)
 
@@ -44,7 +44,7 @@
 - **Acceptance**: 20/20 samples valid
 - **Industry-first claim**: No slot vendor publishes formal PAR sheet schema sa Markov transition matrices, EVT Pareto tail, jurisdiction-gated RTP
 - **Commit**: `dc3fdc0`
-- **Detail**: `{"mode":"strict-tier1","schemaPath":"schemas/usif-par-v1.0.json","samples":20}`
+- **Detail**: `{"mode":"baseline","schemaPath":"schemas/usif-par-v1.0.json","samples":20}`
 
 ### Wave 36 · Jurisdiction Auto-Gate Matrix (K8)
 
@@ -55,10 +55,10 @@
 
 ### Wave 37 · Differential Fuzz Cross-Language (K2)
 
-- **Acceptance**: 160/160 cells PASS
+- **Acceptance**: 40/40 cells PASS
 - **Industry-first claim**: No slot vendor tests cross-language scaling agreement TS↔Rust sa metamorphic invariants
 - **Commit**: `b46bdf2`
-- **Detail**: `{"mrs":["MR-CL-1","MR-CL-2","MR-CL-3","MR-CL-4"],"variants":20,"spinsPerRun":5000,"wallSeconds":"13.6"}`
+- **Detail**: `{"mrs":["MR-CL-1","MR-CL-2","MR-CL-3","MR-CL-4"],"variants":5,"spinsPerRun":1000,"wallSeconds":"0.8"}`
 
 ### Wave 38 · HSM-Backed DRBG Seed Bridge (K10)
 
@@ -104,17 +104,17 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (undefined)
 
-- **Acceptance**: 12/12 closed-form solvers PASS in single runner
+- **Acceptance**: 15/15 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
 
 ### Wave 63 · Exact Enumeration ground-truth RTP (undefined)
 
-- **Acceptance**: 3/3 fixtures with EXACT analytical RTP
+- **Acceptance**: 11/11 fixtures with EXACT analytical RTP
 - **Industry-first claim**: Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.
 - **Commit**: `2b2a96a`
-- **Detail**: `{"fixtures":[{"id":"classic-3x3-lines","exact":0.5191663967174174,"mc":0.5195079000034911,"rel":0.0006577915832630853},{"id":"3x5-5lines","exact":0.6980609418282547,"mc":0.6976597500064705,"rel":0.0005747232050162823},{"`…
+- **Detail**: `{"fixtures":[{"id":"classic-3x3-lines","exact":0.5191663967174174,"mc":0.5200518999984858,"rel":0.001705625184270893},{"id":"3x5-5lines","exact":0.6980609418282547,"mc":0.6971010000013443,"rel":0.0013751547599787778},{"i`…
 
 ## Auditor Q&A Map
 

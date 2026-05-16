@@ -18,7 +18,7 @@
 //   §7. HSM Seed Bridge    — Wave 38 — live seed derivation + cluster isolation
 //                            + multi-instance broadcast + RCT/APT health (FIPS-grade)
 //   §8. PAR Commitment     — Wave 40 — live Merkle root + auditor verify PASS
-//   §9. Closed-Form Portfolio — Wave 49-63 — 12 closed-form solvers + exact enum
+//   §9. Closed-Form Portfolio — Wave 49-75 — 15 closed-form solvers + exact enum
 //                            + tamper-detection demo (FAIL na izmenjeni IR / drift RTP)
 //
 // Ciljano vreme: ≤ 5 minuta na M-class Apple silicon (90% MC, 10% I/O).
@@ -553,14 +553,15 @@ async function step8(parMod, _irSim) {
   dim('→ Phase 2 = full Groth16 zk-SNARK (12-18 nedelja research, vredan kad regulator-i traže ZK).');
 }
 
-// ── §9 Closed-Form Math Portfolio (Wave 49-63) ─────────────────────────
+// ── §9 Closed-Form Math Portfolio (Wave 49-75) ─────────────────────────
 //
-// Showcases 12 closed-form solvers landed Wave 49-60 (hybrid feature math
-// kernels) + exact analytical RTP (Wave 63 ground-truth enumeration).
-// Each solver pinned by single representative CF vs MC value.
+// Showcases 15 closed-form solvers landed Wave 49-60 + 71/72/75 (hybrid
+// feature + progressive jackpot math kernels) + exact analytical RTP
+// (Wave 63 ground-truth enumeration). Each solver pinned by single
+// representative CF vs MC value.
 
 async function step9() {
-  header(9, 'Closed-Form Math Portfolio (Wave 49-63)');
+  header(9, 'Closed-Form Math Portfolio (Wave 49-75)');
   const { readFileSync, existsSync } = await import('fs');
   const portfolioPath = join(ROOT, 'reports', 'dossier', 'CLOSED_FORM_PORTFOLIO.json');
   const exactPath = join(ROOT, 'reports', 'acceptance', 'EXACT_ENUMERATION.json');

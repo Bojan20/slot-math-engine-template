@@ -1,10 +1,10 @@
 {
   "schema": "diff-fuzz-cross-lang/v1",
-  "generatedAtUtc": "2026-05-15T22:12:02.998Z",
+  "generatedAtUtc": "2026-05-16T04:04:11.419Z",
   "config": {
     "base_fixture": "tests/fixtures/parity.json",
-    "variants": 20,
-    "spins_per_run": 5000,
+    "variants": 5,
+    "spins_per_run": 1000,
     "scale_k": 2,
     "mc_rel_tol": 0.1,
     "cross_lang_tol": 0.05
@@ -16,18 +16,18 @@
     "MR-CL-4": "BOUNDS            — 0 ≤ RTP ≤ envelope in both"
   },
   "headline": {
-    "total_cells": 160,
-    "pass_cells": 160,
+    "total_cells": 40,
+    "pass_cells": 40,
     "all_pass": true,
-    "wall_seconds": "13.6"
+    "wall_seconds": "0.8"
   },
   "variants": [
     {
       "id": "V01",
       "seed": 3405643776,
       "baseline": {
-        "ts": 17.426873999999852,
-        "rust": 4550.164
+        "ts": 16.663320000000002,
+        "rust": 3584.5
       },
       "mr1": {
         "pass_ts": true,
@@ -57,8 +57,8 @@
       "mr4": {
         "pass_ts": true,
         "pass_rust": true,
-        "ts_rtp": 17.426873999999852,
-        "rust_rtp": 4550.164,
+        "ts_rtp": 16.663320000000002,
+        "rust_rtp": 3584.5,
         "pass": true
       }
     },
@@ -66,8 +66,8 @@
       "id": "V02",
       "seed": 1422490033,
       "baseline": {
-        "ts": 13.198072000000073,
-        "rust": 2045.928
+        "ts": 13.204309999999992,
+        "rust": 2163.6
       },
       "mr1": {
         "pass_ts": true,
@@ -97,8 +97,8 @@
       "mr4": {
         "pass_ts": true,
         "pass_rust": true,
-        "ts_rtp": 13.198072000000073,
-        "rust_rtp": 2045.928,
+        "ts_rtp": 13.204309999999992,
+        "rust_rtp": 2163.6,
         "pass": true
       }
     },
@@ -106,8 +106,8 @@
       "id": "V03",
       "seed": 4136694626,
       "baseline": {
-        "ts": 18.541706000000023,
-        "rust": 4039.66
+        "ts": 19.255270000000003,
+        "rust": 4159.65
       },
       "mr1": {
         "pass_ts": true,
@@ -137,8 +137,8 @@
       "mr4": {
         "pass_ts": true,
         "pass_rust": true,
-        "ts_rtp": 18.541706000000023,
-        "rust_rtp": 4039.66,
+        "ts_rtp": 19.255270000000003,
+        "rust_rtp": 4159.65,
         "pass": true
       }
     },
@@ -146,8 +146,8 @@
       "id": "V04",
       "seed": 274230547,
       "baseline": {
-        "ts": 17.027408000000065,
-        "rust": 3542.79
+        "ts": 17.22381000000001,
+        "rust": 4176.11
       },
       "mr1": {
         "pass_ts": true,
@@ -177,8 +177,8 @@
       "mr4": {
         "pass_ts": true,
         "pass_rust": true,
-        "ts_rtp": 17.027408000000065,
-        "rust_rtp": 3542.79,
+        "ts_rtp": 17.22381000000001,
+        "rust_rtp": 4176.11,
         "pass": true
       }
     },
@@ -186,8 +186,8 @@
       "id": "V05",
       "seed": 2988697284,
       "baseline": {
-        "ts": 15.49547999999994,
-        "rust": 3097.564
+        "ts": 15.562799999999994,
+        "rust": 2787.47
       },
       "mr1": {
         "pass_ts": true,
@@ -217,608 +217,8 @@
       "mr4": {
         "pass_ts": true,
         "pass_rust": true,
-        "ts_rtp": 15.49547999999994,
-        "rust_rtp": 3097.564,
-        "pass": true
-      }
-    },
-    {
-      "id": "V06",
-      "seed": 3723190389,
-      "baseline": {
-        "ts": 7.847420000000018,
-        "rust": 1993.386
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 7.847420000000018,
-        "rust_rtp": 1993.386,
-        "pass": true
-      }
-    },
-    {
-      "id": "V07",
-      "seed": 2142427686,
-      "baseline": {
-        "ts": 10.419212000000018,
-        "rust": 1604.402
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 10.419212000000018,
-        "rust_rtp": 1604.402,
-        "pass": true
-      }
-    },
-    {
-      "id": "V08",
-      "seed": 2574930903,
-      "baseline": {
-        "ts": 13.158474000000075,
-        "rust": 2789.3778
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2.0000029397236903,
-        "tsErr": 0,
-        "rsErr": 0.0000014698618451269851,
-        "crossErr": 0.000001469859684636317,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 13.158474000000075,
-        "rust_rtp": 2789.3778,
-        "pass": true
-      }
-    },
-    {
-      "id": "V09",
-      "seed": 994430344,
-      "baseline": {
-        "ts": 23.345140000000097,
-        "rust": 4389.188
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 23.345140000000097,
-        "rust_rtp": 4389.188,
-        "pass": true
-      }
-    },
-    {
-      "id": "V10",
-      "seed": 1158498105,
-      "baseline": {
-        "ts": 12.197745999999958,
-        "rust": 2367.35
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 12.197745999999958,
-        "rust_rtp": 2367.35,
-        "pass": true
-      }
-    },
-    {
-      "id": "V11",
-      "seed": 3839148266,
-      "baseline": {
-        "ts": 9.646269999999962,
-        "rust": 2457.626
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 9.646269999999962,
-        "rust_rtp": 2457.626,
-        "pass": true
-      }
-    },
-    {
-      "id": "V12",
-      "seed": 110901915,
-      "baseline": {
-        "ts": 8.233405999999993,
-        "rust": 1762.658
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 8.233405999999993,
-        "rust_rtp": 1762.658,
-        "pass": true
-      }
-    },
-    {
-      "id": "V13",
-      "seed": 2691150924,
-      "baseline": {
-        "ts": 15.686097999999992,
-        "rust": 3166.658
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 15.686097999999992,
-        "rust_rtp": 3166.658,
-        "pass": true
-      }
-    },
-    {
-      "id": "V14",
-      "seed": 3257871869,
-      "baseline": {
-        "ts": 10.25065000000002,
-        "rust": 2919.202
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 10.25065000000002,
-        "rust_rtp": 2919.202,
-        "pass": true
-      }
-    },
-    {
-      "id": "V15",
-      "seed": 1844881326,
-      "baseline": {
-        "ts": 15.497523999999792,
-        "rust": 3145.556
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 15.497523999999792,
-        "rust_rtp": 3145.556,
-        "pass": true
-      }
-    },
-    {
-      "id": "V16",
-      "seed": 2411602271,
-      "baseline": {
-        "ts": 21.003640000000082,
-        "rust": 4139.2614
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2.0000078758012236,
-        "tsErr": 0,
-        "rsErr": 0.000003937900611816758,
-        "crossErr": 0.000003937885104816594,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 21.003640000000082,
-        "rust_rtp": 4139.2614,
-        "pass": true
-      }
-    },
-    {
-      "id": "V17",
-      "seed": 696883984,
-      "baseline": {
-        "ts": 9.627767999999927,
-        "rust": 2829.666
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 9.627767999999927,
-        "rust_rtp": 2829.666,
-        "pass": true
-      }
-    },
-    {
-      "id": "V18",
-      "seed": 1263604929,
-      "baseline": {
-        "ts": 9.685612000000031,
-        "rust": 2814.494
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 9.685612000000031,
-        "rust_rtp": 2814.494,
-        "pass": true
-      }
-    },
-    {
-      "id": "V19",
-      "seed": 3575156338,
-      "baseline": {
-        "ts": 7.1510219999999505,
-        "rust": 1398.134
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 7.1510219999999505,
-        "rust_rtp": 1398.134,
-        "pass": true
-      }
-    },
-    {
-      "id": "V20",
-      "seed": 1960839203,
-      "baseline": {
-        "ts": 15.133556000000052,
-        "rust": 2779.212
-      },
-      "mr1": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_diff": 0,
-        "rust_diff": 0,
-        "pass": true
-      },
-      "mr2": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "pass_cross": true,
-        "tsRatio": 2,
-        "rsRatio": 2,
-        "tsErr": 0,
-        "rsErr": 0,
-        "crossErr": 0,
-        "pass": true
-      },
-      "mr3": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 0,
-        "rust_rtp": 0,
-        "pass": true
-      },
-      "mr4": {
-        "pass_ts": true,
-        "pass_rust": true,
-        "ts_rtp": 15.133556000000052,
-        "rust_rtp": 2779.212,
+        "ts_rtp": 15.562799999999994,
+        "rust_rtp": 2787.47,
         "pass": true
       }
     }

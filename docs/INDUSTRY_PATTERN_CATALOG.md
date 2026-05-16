@@ -1,10 +1,12 @@
-# Industry Pattern Catalog v2.0
+# Industry Pattern Catalog v2.1
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0 expansion).** Operator-facing catalog
-> of **32 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1 expansion).** Operator-facing catalog
+> of **35 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
+> - v2.1 (Wave 76) — adds 3 progressive-jackpot kernels landed in
+>   Wave 71, 72, 75 (Must-Hit-By, Pseudo-Must-Hit + Level, Multi-tier WAP + Wheel).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -83,8 +85,20 @@ math library calls in their feature builder.
 | P-031 | **Class-II Bingo Coordinator** | Hypergeometric `C(N−\|P\|, k−\|P\|)/C(N,k)` + inclusion-exclusion (NIGC 25 CFR 502) | `src/features/classIIBingoCoordinator.ts` | `CLASS_II_BINGO.md` (Wave 59) — 6/6 configs @ 50K games |
 | P-032 | **Sticky-Cash Collector (Renewal Reward)** | Long-run RTP = `p_cash·E[V]·E[M]` (indep p_collect); finite-horizon moment propagation | `src/features/stickyCashCollector.ts` | `STICKY_CASH_COLLECTOR.md` (Wave 60) — 6/6 configs @ 10K episodes |
 
+## Pattern Catalog v2.1 — Progressive Jackpot Math Kernels (Wave 71-75)
+
+These 3 patterns target the **progressive jackpot family** — operator-funded
+seeded pools with deterministic or probabilistic trigger mechanics. Each
+closes a previously-open ⚠️ acceptance row in the master TODO.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-033 | **Must-Hit-By Jackpot (Mystery Progressive)** | `U ∼ Uniform[seed, cap]` → `N* = (U − seed)/c`; **E[N*] = span/(2c)**, **Var[N*] = span²/(12c²)** (NIGC 25 CFR 542.7(c) compliant) | `src/features/mustHitByJackpot.ts` | 14 vitest specs (Wave 71); portfolio entry W71 |
+| P-034 | **Pseudo-Must-Hit + Level Progression** | Escalating linear hazard `λ(pool) = λ_min + (λ_max−λ_min)·(pool−seed)/(softCap−seed)`; level Markov chain stationary `π_maxL = 1/(1+maxL·r), π_other = r·π_maxL` | `src/features/pseudoMustHitLevel.ts` | 20 vitest specs (Wave 72); portfolio entry W72 |
+| P-035 | **Multi-tier WAP Jackpot + Wheel** | Per-tier `λ_i = p_trigger·w_i/Σw`; **E[pool_i@hit] = seed_i + c_i/λ_i**; **E[payout_i/spin] = c_i + λ_i·seed_i**; normalized RTP share per tier | `src/features/multiTierWapWheel.ts` | 27 vitest specs (Wave 75); portfolio entry W75 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 12 P-021..P-032 kernels in ~10 seconds and emits unified report
+all 15 P-021..P-035 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

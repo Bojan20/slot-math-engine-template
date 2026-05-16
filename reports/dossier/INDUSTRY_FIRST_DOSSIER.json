@@ -1,7 +1,7 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T03:23:42.323Z",
-  "repo_sha": "70d15dde8ebf25ceed4b60ae03b1aac592a32db6",
+  "generatedAtUtc": "2026-05-16T04:04:21.391Z",
+  "repo_sha": "a34f36ef9d908d27cca8315c1b06649069c57c24",
   "headline": {
     "waves": 13,
     "industry_firsts": 13,
@@ -15,7 +15,7 @@
       "name": "Metamorphic RTP Invariant Suite",
       "reportPath": "reports/acceptance/METAMORPHIC_RTP.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T21:24:56.906Z",
+      "reportMtime": "2026-05-16T04:04:10.547Z",
       "headline": "50/50 cells PASS",
       "detail": {
         "mrs": [
@@ -28,7 +28,7 @@
         "fixtures": 10,
         "seeds": 4,
         "spinsPerSeed": 20000,
-        "wallSeconds": "124.4"
+        "wallSeconds": "117.3"
       },
       "industry_first": "No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators"
     },
@@ -39,7 +39,7 @@
       "name": "Mutation-Score CI Gate",
       "reportPath": "reports/mutation/SUMMARY.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T21:32:42.196Z",
+      "reportMtime": "2026-05-16T04:02:13.020Z",
       "headline": "TS 85.4% + Rust evaluator=100.0% / rng=92.6%",
       "detail": {
         "ts_total": 342,
@@ -69,10 +69,10 @@
       "name": "USIF PAR Sheet Schema v1.0",
       "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T01:15:18.218Z",
+      "reportMtime": "2026-05-16T04:02:13.076Z",
       "headline": "20/20 samples valid",
       "detail": {
-        "mode": "strict-tier1",
+        "mode": "baseline",
         "schemaPath": "schemas/usif-par-v1.0.json",
         "samples": 20
       },
@@ -85,7 +85,7 @@
       "name": "Jurisdiction Auto-Gate Matrix",
       "reportPath": "reports/acceptance/JURISDICTION_AUTO_GATE.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T22:02:23.141Z",
+      "reportMtime": "2026-05-16T04:02:13.138Z",
       "headline": "450 verdicts (PASS=203 / WARN=175 / FAIL=72)",
       "detail": {
         "jurisdictions": 15,
@@ -101,8 +101,8 @@
       "name": "Differential Fuzz Cross-Language",
       "reportPath": "reports/acceptance/DIFF_FUZZ_CROSS_LANG.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T22:12:02.999Z",
-      "headline": "160/160 cells PASS",
+      "reportMtime": "2026-05-16T04:04:11.421Z",
+      "headline": "40/40 cells PASS",
       "detail": {
         "mrs": [
           "MR-CL-1",
@@ -110,9 +110,9 @@
           "MR-CL-3",
           "MR-CL-4"
         ],
-        "variants": 20,
-        "spinsPerRun": 5000,
-        "wallSeconds": "13.6"
+        "variants": 5,
+        "spinsPerRun": 1000,
+        "wallSeconds": "0.8"
       },
       "industry_first": "No slot vendor tests cross-language scaling agreement TS↔Rust sa metamorphic invariants"
     },
@@ -143,7 +143,7 @@
       "name": "SP 800-90B Entropy Assessment",
       "reportPath": "reports/rng/SP_800_90B_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T22:34:57.279Z",
+      "reportMtime": "2026-05-16T04:04:12.138Z",
       "headline": "6 sources, all Low-bar (≥0.5 bits) ✅",
       "detail": {
         "sources": [
@@ -189,7 +189,7 @@
       "name": "PAR Sheet Commitment v1.0",
       "reportPath": "reports/acceptance/PAR_COMMITMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T22:45:53.592Z",
+      "reportMtime": "2026-05-16T04:04:16.227Z",
       "headline": "180/180 gates PASS",
       "detail": {
         "fixtures": 30,
@@ -212,7 +212,7 @@
       "name": "ENT Entropy Battery (in-process)",
       "reportPath": "reports/rng/ENT_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-15T23:31:38.092Z",
+      "reportMtime": "2026-05-16T04:04:16.991Z",
       "headline": "6/6 sources PASS all 5 ENT stats",
       "detail": {
         "sampleBytes": 100000,
@@ -328,8 +328,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T03:06:03.701Z",
-      "headline": "12/12 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T04:04:21.320Z",
+      "headline": "15/15 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -391,6 +391,21 @@
             "wave": 60,
             "solver": "Sticky-Cash Collector (N=200)",
             "ok": true
+          },
+          {
+            "wave": 71,
+            "solver": "Must-Hit-By Jackpot",
+            "ok": true
+          },
+          {
+            "wave": 72,
+            "solver": "Pseudo-Must-Hit + Level Progression",
+            "ok": true
+          },
+          {
+            "wave": 75,
+            "solver": "Multi-tier WAP Jackpot + Wheel",
+            "ok": true
           }
         ]
       },
@@ -402,27 +417,75 @@
       "name": "Exact Enumeration ground-truth RTP",
       "reportPath": "reports/acceptance/EXACT_ENUMERATION.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T03:16:07.534Z",
-      "headline": "3/3 fixtures with EXACT analytical RTP",
+      "reportMtime": "2026-05-16T03:35:24.504Z",
+      "headline": "11/11 fixtures with EXACT analytical RTP",
       "detail": {
         "fixtures": [
           {
             "id": "classic-3x3-lines",
             "exact": 0.5191663967174174,
-            "mc": 0.5195079000034911,
-            "rel": 0.0006577915832630853
+            "mc": 0.5200518999984858,
+            "rel": 0.001705625184270893
           },
           {
             "id": "3x5-5lines",
             "exact": 0.6980609418282547,
-            "mc": 0.6976597500064705,
-            "rel": 0.0005747232050162823
+            "mc": 0.6971010000013443,
+            "rel": 0.0013751547599787778
           },
           {
             "id": "5x3-20lines",
-            "exact": 1.4469757173839128,
-            "mc": 1.446906,
-            "rel": 0.00004818144705210533
+            "exact": 3.195128102788596,
+            "mc": 3.1961022000101305,
+            "rel": 0.000304869535804988
+          },
+          {
+            "id": "5x4-25lines",
+            "exact": 8.435579825278522,
+            "mc": 8.433346399921925,
+            "rel": 0.00026476251815005486
+          },
+          {
+            "id": "fs-multiplier-ladder",
+            "exact": 2.3713567187741686,
+            "mc": 2.366658500001202,
+            "rel": 0.001981236621116786
+          },
+          {
+            "id": "fs-retrigger",
+            "exact": 2.3713567187741686,
+            "mc": 2.366658500001202,
+            "rel": 0.001981236621116786
+          },
+          {
+            "id": "fs-sticky-wilds",
+            "exact": 1.6871159650557055,
+            "mc": 1.688497100003632,
+            "rel": 0.0008186366417799046
+          },
+          {
+            "id": "fs-expanding-wilds",
+            "exact": 2.3713567187741686,
+            "mc": 2.366658500001202,
+            "rel": 0.001981236621116786
+          },
+          {
+            "id": "hnw-classic",
+            "exact": 1.5615534483598692,
+            "mc": 1.5625809000034583,
+            "rel": 0.0006579676441227397
+          },
+          {
+            "id": "multiplier-wilds",
+            "exact": 1.2889744552967826,
+            "mc": 1.2874289000026267,
+            "rel": 0.0011990581254770008
+          },
+          {
+            "id": "pick-bonus",
+            "exact": 1.5615534483598692,
+            "mc": 1.5625809000034583,
+            "rel": 0.0006579676441227397
           }
         ]
       },

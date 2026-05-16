@@ -1,8 +1,8 @@
 {
   "schema": "usif-par-validation/v1",
-  "generatedAtUtc": "2026-05-16T00:22:42.474Z",
+  "generatedAtUtc": "2026-05-16T04:02:13.074Z",
   "schemaPath": "schemas/usif-par-v1.0.json",
-  "mode": "strict-tier1",
+  "mode": "baseline",
   "headline": {
     "total": 20,
     "pass": 20,

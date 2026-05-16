@@ -2,7 +2,7 @@
 
 > Closes **Kimi K1 partial** (deep-audit 2026-05-15) — ENT in-process battery.
 > External TestU01 BigCrush + PractRand 2⁴⁸ + Dieharder remain operator-initiated via `.github/workflows/rng-cert.yml`.
-> Generated: `2026-05-15T23:31:38.091Z` · sample: `100,000` bytes/source
+> Generated: `2026-05-16T04:04:16.990Z` · sample: `100,000` bytes/source
 
 ## Headline: **6/6 sources PASS all 5 ENT stats** ✅
 

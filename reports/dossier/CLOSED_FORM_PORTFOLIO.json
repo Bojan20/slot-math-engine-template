@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T03:58:46.899Z",
+  "generated_utc": "2026-05-16T04:04:21.319Z",
   "solvers_total": 15,
   "solvers_passed": 15,
   "overall_pass": true,
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 43
     },
     {
       "wave": 50,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 48
+      "elapsed_ms": 49
     },
     {
       "wave": 53,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 59,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 71,

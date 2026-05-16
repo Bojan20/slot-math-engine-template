@@ -68,8 +68,8 @@ differentiator.**
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 
-In addition to the industry-firsts above, **12 closed-form solvers** for
-hybrid slot-mechanics with MC verification at ~30M aggregate spinova:
+In addition to the industry-firsts above, **15 closed-form solvers** for
+hybrid slot-mechanics with MC verification at ~30M+ aggregate spinova:
 
 | Wave | Math kernel | Algorithm |
 |---:|---|---|
@@ -85,8 +85,11 @@ hybrid slot-mechanics with MC verification at ~30M aggregate spinova:
 | 58 | Parallel screens aggregate | Convolution + correlated-mixture decomposition |
 | 59 | Class-II bingo coordinator | Hypergeometric + inclusion-exclusion |
 | 60 | Sticky-cash collector | Renewal-reward + moment propagation E[T_n] |
+| 71 | Must-Hit-By jackpot (mystery) | U ∼ Uniform[seed, cap]; E[N*] = span/(2c) |
+| 72 | Pseudo-Must-Hit + Level | Linear hazard + level Markov chain stationary |
+| 75 | Multi-tier WAP + Wheel | Per-tier λ_i = p_trigger·w_i/Σw; renewal RTP=c+λ·seed |
 
-Run `npm run closed-form-portfolio` to see all 12 verified in ~10 seconds.
+Run `npm run closed-form-portfolio` to see all 15 verified in ~10 seconds.
 
 ---
 
