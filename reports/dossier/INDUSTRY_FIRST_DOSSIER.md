@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T04:14:26.499Z` · repo SHA: `91b25371ef12`
+> Generated: `2026-05-16T04:18:22.027Z` · repo SHA: `743d34dd207c`
 
-## Headline: **13/13 industry-firsts attested** ✅
+## Headline: **16/16 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -18,10 +18,13 @@
 | 39 | K3 | **SP 800-90B Entropy Assessment** | ✅ 6 sources, all Low-bar (≥0.5 bits) ✅ | [`reports/rng/SP_800_90B_ASSESSMENT.json`](../../reports/rng/SP_800_90B_ASSESSMENT.md) |
 | 40 | K9 | **PAR Sheet Commitment v1.0** | ✅ 180/180 gates PASS | [`reports/acceptance/PAR_COMMITMENT.json`](../../reports/acceptance/PAR_COMMITMENT.md) |
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
-| 55 | undefined | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
-| 56 | undefined | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | undefined | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 15/15 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
-| 63 | undefined | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
+| 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
+| 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 15/15 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
+| 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
+| 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
+| 75 | — | **Multi-tier WAP Jackpot + Wheel — per-tier renewal solver** | ✅ 6/6 configs PASS at 2000000 spins each (12.0M MC) | [`reports/acceptance/MULTI_TIER_WAP_WHEEL.json`](../../reports/acceptance/MULTI_TIER_WAP_WHEEL.md) |
 
 ## Why each is industry-first
 
@@ -88,33 +91,54 @@
 - **Commit**: `(this commit)`
 - **Detail**: `{"sampleBytes":100000,"sources":[{"id":"mulberry32","H":7.998104609351095,"pi":3.1592463698547943,"pass":true},{"id":"pcg64","H":7.998111653748092,"pi":3.154686187447498,"pass":true},{"id":"xoshiro256ss","H":7.9980931168`…
 
-### Wave 55 · General Entropy Health Monitor (streaming sliding-window) (undefined)
+### Wave 55 · General Entropy Health Monitor (streaming sliding-window) (—)
 
 - **Acceptance**: 7/7 sources PASS · 5 PRNG + 2 adversarial
 - **Industry-first claim**: UKGC RTS 8.A.1 + MGA PPD §11.b + eCOGRA TG-VG require continuous RNG monitoring during operation — no vendor publishes streaming sliding-window χ² + Shannon entropy monitor with pluggable alert sinks for 5 PRNG backends + HSM bridge
 - **Commit**: `2109b5e`
 - **Detail**: `{"bytes_per_source":500000,"window_bytes":8192,"assess_interval_bytes":1024}`
 
-### Wave 56 · Demo Mode controller w/ auditor attestation (undefined)
+### Wave 56 · Demo Mode controller w/ auditor attestation (—)
 
 - **Acceptance**: 6/6 scenarios PASS · tamper-detect verified
 - **Industry-first claim**: GLI-19 §3.3.9 (Replay Capability) + UKGC RTS 9 (demo distinction) + MGA PPD §11.b (auditor traceability) + eCOGRA TG-VG — no vendor publishes architectural assertNoRngCall guard + SHA-256 attestation + tamper-evident audit trail
 - **Commit**: `19f8103`
 - **Detail**: `{"scenarios":[{"name":"A_basic_50_spins_halt","cycle":"halt","served":50,"verify_ok":true},{"name":"B_loop_3x_pass","cycle":"loop","served":60,"verify_ok":true},{"name":"C_partial_halt","cycle":"halt","served":75,"verify`…
 
-### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (undefined)
+### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
 - **Acceptance**: 15/15 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
 
-### Wave 63 · Exact Enumeration ground-truth RTP (undefined)
+### Wave 63 · Exact Enumeration ground-truth RTP (—)
 
 - **Acceptance**: 11/11 fixtures with EXACT analytical RTP
 - **Industry-first claim**: Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.
 - **Commit**: `2b2a96a`
 - **Detail**: `{"fixtures":[{"id":"classic-3x3-lines","exact":0.5191663967174174,"mc":0.5200518999984858,"rel":0.001705625184270893},{"id":"3x5-5lines","exact":0.6980609418282547,"mc":0.6971010000013443,"rel":0.0013751547599787778},{"i`…
+
+### Wave 71 · Must-Hit-By Jackpot (Mystery Progressive) — closed-form (—)
+
+- **Acceptance**: 6/6 configs PASS at 5000 trigger cycles each
+- **Industry-first claim**: NIGC 25 CFR 542.7(c)-compliant Must-Hit-By Jackpot solver with provable E[N*] = span/(2c) + Var[N*] = span²/(12c²) closed-form. Effective per-spin RTP = c·(seed+cap)/(cap−seed) exactly disclosable to auditor.
+- **Commit**: `e0083a1`
+- **Detail**: `{"configs":[{"name":"A_classic_500_5000","pass":true},{"name":"B_zero_seed","pass":true},{"name":"C_high_seed","pass":true},{"name":"D_wide_span","pass":true},{"name":"E_narrow_span","pass":true},{"name":"F_micro_contrib`…
+
+### Wave 72 · Pseudo-Must-Hit + Level Progression — escalating-hazard Markov (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 spins each
+- **Industry-first claim**: Soft-cap progressive with linear escalating hazard rate + N-level Markov chain stationary distribution (π_maxL = 1/(1+maxL·r), π_other = r·π_maxL) — closed-form per-level RTP share disclosure. No vendor publishes analytical level-chain solver.
+- **Commit**: `4ae47bb`
+- **Detail**: `{"configs":[{"name":"A_classic_4_level","pass":true},{"name":"B_no_reset_absorbing","pass":true},{"name":"C_always_reset","pass":true},{"name":"D_high_hazard","pass":true},{"name":"E_low_hazard","pass":true},{"name":"F_p`…
+
+### Wave 75 · Multi-tier WAP Jackpot + Wheel — per-tier renewal solver (—)
+
+- **Acceptance**: 6/6 configs PASS at 2000000 spins each (12.0M MC)
+- **Industry-first claim**: WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018.
+- **Commit**: `efabc0e`
+- **Detail**: `{"configs":[{"name":"A_classic_4tier","pass":true},{"name":"B_5tier_with_mega","pass":true},{"name":"C_zero_seed_pure_contribution","pass":true},{"name":"D_high_seed_grand_dominant","pass":true},{"name":"E_3tier_frequent`…
 
 ## Auditor Q&A Map
 

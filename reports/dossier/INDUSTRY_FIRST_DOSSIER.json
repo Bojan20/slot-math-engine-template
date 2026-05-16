@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T04:14:26.499Z",
-  "repo_sha": "91b25371ef12e7fb7eb6b056d8658c3072a727e1",
+  "generatedAtUtc": "2026-05-16T04:18:22.027Z",
+  "repo_sha": "743d34dd207c0a62a3319d020cc02af2024a152e",
   "headline": {
-    "waves": 13,
-    "industry_firsts": 13,
+    "waves": 16,
+    "industry_firsts": 16,
     "all_present": true
   },
   "waves": [
@@ -259,6 +259,7 @@
     },
     {
       "wave": 55,
+      "kimi": "—",
       "commit": "2109b5e",
       "name": "General Entropy Health Monitor (streaming sliding-window)",
       "reportPath": "reports/acceptance/ENTROPY_HEALTH_MONITOR.json",
@@ -274,6 +275,7 @@
     },
     {
       "wave": 56,
+      "kimi": "—",
       "commit": "19f8103",
       "name": "Demo Mode controller w/ auditor attestation",
       "reportPath": "reports/acceptance/DEMO_MODE.json",
@@ -324,6 +326,7 @@
     },
     {
       "wave": 61,
+      "kimi": "—",
       "commit": "84ca120",
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
@@ -413,6 +416,7 @@
     },
     {
       "wave": 63,
+      "kimi": "—",
       "commit": "2b2a96a",
       "name": "Exact Enumeration ground-truth RTP",
       "reportPath": "reports/acceptance/EXACT_ENUMERATION.json",
@@ -490,6 +494,123 @@
         ]
       },
       "industry_first": "Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth."
+    },
+    {
+      "wave": 71,
+      "kimi": "—",
+      "commit": "e0083a1",
+      "name": "Must-Hit-By Jackpot (Mystery Progressive) — closed-form",
+      "reportPath": "reports/acceptance/MUST_HIT_BY_JACKPOT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:15:52.934Z",
+      "headline": "6/6 configs PASS at 5000 trigger cycles each",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_classic_500_5000",
+            "pass": true
+          },
+          {
+            "name": "B_zero_seed",
+            "pass": true
+          },
+          {
+            "name": "C_high_seed",
+            "pass": true
+          },
+          {
+            "name": "D_wide_span",
+            "pass": true
+          },
+          {
+            "name": "E_narrow_span",
+            "pass": true
+          },
+          {
+            "name": "F_micro_contribution",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "NIGC 25 CFR 542.7(c)-compliant Must-Hit-By Jackpot solver with provable E[N*] = span/(2c) + Var[N*] = span²/(12c²) closed-form. Effective per-spin RTP = c·(seed+cap)/(cap−seed) exactly disclosable to auditor."
+    },
+    {
+      "wave": 72,
+      "kimi": "—",
+      "commit": "4ae47bb",
+      "name": "Pseudo-Must-Hit + Level Progression — escalating-hazard Markov",
+      "reportPath": "reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:15:54.073Z",
+      "headline": "6/6 configs PASS at 100000 spins each",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_classic_4_level",
+            "pass": true
+          },
+          {
+            "name": "B_no_reset_absorbing",
+            "pass": true
+          },
+          {
+            "name": "C_always_reset",
+            "pass": true
+          },
+          {
+            "name": "D_high_hazard",
+            "pass": true
+          },
+          {
+            "name": "E_low_hazard",
+            "pass": true
+          },
+          {
+            "name": "F_partial_reset",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Soft-cap progressive with linear escalating hazard rate + N-level Markov chain stationary distribution (π_maxL = 1/(1+maxL·r), π_other = r·π_maxL) — closed-form per-level RTP share disclosure. No vendor publishes analytical level-chain solver."
+    },
+    {
+      "wave": 75,
+      "kimi": "—",
+      "commit": "efabc0e",
+      "name": "Multi-tier WAP Jackpot + Wheel — per-tier renewal solver",
+      "reportPath": "reports/acceptance/MULTI_TIER_WAP_WHEEL.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:15:55.202Z",
+      "headline": "6/6 configs PASS at 2000000 spins each (12.0M MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_classic_4tier",
+            "pass": true
+          },
+          {
+            "name": "B_5tier_with_mega",
+            "pass": true
+          },
+          {
+            "name": "C_zero_seed_pure_contribution",
+            "pass": true
+          },
+          {
+            "name": "D_high_seed_grand_dominant",
+            "pass": true
+          },
+          {
+            "name": "E_3tier_frequent",
+            "pass": true
+          },
+          {
+            "name": "F_equal_weight_tiers",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018."
     }
   ],
   "auditor_qa": [

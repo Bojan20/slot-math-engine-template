@@ -178,6 +178,7 @@ const WAVES = [
   // ─── Wave 49-64 expansion ───────────────────────────────────────────────
   {
     wave: 55,
+    kimi: '—',
     name: 'General Entropy Health Monitor (streaming sliding-window)',
     commit: '2109b5e',
     reportPath: 'reports/acceptance/ENTROPY_HEALTH_MONITOR.json',
@@ -191,6 +192,7 @@ const WAVES = [
   },
   {
     wave: 56,
+    kimi: '—',
     name: 'Demo Mode controller w/ auditor attestation',
     commit: '19f8103',
     reportPath: 'reports/acceptance/DEMO_MODE.json',
@@ -202,6 +204,7 @@ const WAVES = [
   },
   {
     wave: 61,
+    kimi: '—',
     name: 'Closed-Form Portfolio (12 hybrid math kernels)',
     commit: '84ca120',
     reportPath: 'reports/dossier/CLOSED_FORM_PORTFOLIO.json',
@@ -213,6 +216,7 @@ const WAVES = [
   },
   {
     wave: 63,
+    kimi: '—',
     name: 'Exact Enumeration ground-truth RTP',
     commit: '2b2a96a',
     reportPath: 'reports/acceptance/EXACT_ENUMERATION.json',
@@ -221,6 +225,42 @@ const WAVES = [
       fixtures: (j.fixtures ?? []).map((f) => ({ id: f.fixture, exact: f.exact_rtp, mc: f.mc_rtp, rel: f.rel_err })),
     }),
     industry_first: 'Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) — not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.',
+  },
+  {
+    wave: 71,
+    kimi: '—',
+    name: 'Must-Hit-By Jackpot (Mystery Progressive) — closed-form',
+    commit: 'e0083a1',
+    reportPath: 'reports/acceptance/MUST_HIT_BY_JACKPOT.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.cycles_per_config} trigger cycles each`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'NIGC 25 CFR 542.7(c)-compliant Must-Hit-By Jackpot solver with provable E[N*] = span/(2c) + Var[N*] = span²/(12c²) closed-form. Effective per-spin RTP = c·(seed+cap)/(cap−seed) exactly disclosable to auditor.',
+  },
+  {
+    wave: 72,
+    kimi: '—',
+    name: 'Pseudo-Must-Hit + Level Progression — escalating-hazard Markov',
+    commit: '4ae47bb',
+    reportPath: 'reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Soft-cap progressive with linear escalating hazard rate + N-level Markov chain stationary distribution (π_maxL = 1/(1+maxL·r), π_other = r·π_maxL) — closed-form per-level RTP share disclosure. No vendor publishes analytical level-chain solver.',
+  },
+  {
+    wave: 75,
+    kimi: '—',
+    name: 'Multi-tier WAP Jackpot + Wheel — per-tier renewal solver',
+    commit: 'efabc0e',
+    reportPath: 'reports/acceptance/MULTI_TIER_WAP_WHEEL.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.spins_per_config} spins each (${(j.configs_total * j.spins_per_config / 1e6).toFixed(1)}M MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018.',
   },
 ];
 
