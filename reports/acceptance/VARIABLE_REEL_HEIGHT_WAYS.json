@@ -1,0 +1,1247 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "VARIABLE_REEL_HEIGHT_WAYS",
+  "generated_utc": "2026-05-16T06:48:13.513Z",
+  "episodes_per_config": 100000,
+  "seed": 3203364778,
+  "tolerances": {
+    "ew_rel": 0.02,
+    "var_rel": 0.1,
+    "max_tail_abs": 0.02,
+    "p_max_rel": 0.3
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_6reel_uniform_2_7_megaways_classic",
+      "description": "Classic Megaways-style 6 reels, uniform heights {2..7}, max 117649 ways",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          },
+          {
+            "label": "r3",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          },
+          {
+            "label": "r5",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          },
+          {
+            "label": "r6",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 3,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 7,
+                "probability": 0.16666666666666666
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          10000,
+          50000,
+          100000
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r3",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r5",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r6",
+            "expectedHeight": 4.5,
+            "varianceHeight": 2.9166666666666643,
+            "minHeight": 2,
+            "maxHeight": 7
+          }
+        ],
+        "expectedWays": 8303.765625,
+        "varianceWays": 85637441.57626253,
+        "stdWays": 9254.050009388458,
+        "minWays": 64,
+        "maxWays": 117649,
+        "probMinWays": 0.000021433470507544577,
+        "probMaxWays": 0.000021433470507544577,
+        "tailProbabilities": {
+          "10000": 0.27458419067215306,
+          "50000": 0.00720164609053498,
+          "100000": 0.00015003429355281206
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 8254.07428,
+        "observedVarianceWays": 84630281.48762247,
+        "observedMinObserved": 64,
+        "observedMaxObserved": 117649,
+        "observedTailHits": {
+          "10000": 27250,
+          "50000": 724,
+          "100000": 10
+        }
+      },
+      "checks": {
+        "ew_rel": 0.005984194068579491,
+        "var_rel": 0.011760744717521247,
+        "max_tail_abs": 0.002084190672153041,
+        "p_max_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    },
+    {
+      "name": "B_6reel_weighted_skew_low",
+      "description": "Same 6 reels but skewed toward low heights (commercial volatility tweak)",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r3",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r5",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r6",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.3333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 5,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 6,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 7,
+                "probability": 0.08333333333333333
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          5000,
+          20000,
+          50000
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r3",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r5",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r6",
+            "expectedHeight": 3.583333333333333,
+            "varianceHeight": 2.5763888888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          }
+        ],
+        "expectedWays": 2117.0116949722424,
+        "varianceWays": 8944145.59412461,
+        "stdWays": 2990.676444238763,
+        "minWays": 64,
+        "maxWays": 117649,
+        "probMinWays": 0.001371742112482853,
+        "probMaxWays": 3.34897976680384e-7,
+        "tailProbabilities": {
+          "5000": 0.0965651523919754,
+          "20000": 0.004317169817386829,
+          "50000": 0.00012860082304526745
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 2099.52266,
+        "observedVarianceWays": 8741832.673426524,
+        "observedMinObserved": 64,
+        "observedMaxObserved": 100842,
+        "observedTailHits": {
+          "5000": 9496,
+          "20000": 427,
+          "50000": 8
+        }
+      },
+      "checks": {
+        "ew_rel": 0.008261189588029929,
+        "var_rel": 0.022619591616552477,
+        "max_tail_abs": 0.0016051523919753952,
+        "p_max_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 19
+    },
+    {
+      "name": "C_6reel_weighted_skew_high",
+      "description": "6 reels skewed toward HIGH heights (high-volatility marketing version)",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r3",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r5",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          },
+          {
+            "label": "r6",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 3,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 4,
+                "probability": 0.08333333333333333
+              },
+              {
+                "height": 5,
+                "probability": 0.16666666666666666
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              },
+              {
+                "height": 7,
+                "probability": 0.3333333333333333
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          50000,
+          100000
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r3",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r5",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          },
+          {
+            "label": "r6",
+            "expectedHeight": 5.416666666666666,
+            "varianceHeight": 2.576388888888893,
+            "minHeight": 2,
+            "maxHeight": 7
+          }
+        ],
+        "expectedWays": 25257.633873791674,
+        "varianceWays": 419125387.2448678,
+        "stdWays": 20472.552045235294,
+        "minWays": 64,
+        "maxWays": 117649,
+        "probMinWays": 3.34897976680384e-7,
+        "probMaxWays": 0.001371742112482853,
+        "tailProbabilities": {
+          "50000": 0.1316202632030178,
+          "100000": 0.007544581618655691
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 25202.16401,
+        "observedVarianceWays": 415628699.1822307,
+        "observedMinObserved": 160,
+        "observedMaxObserved": 117649,
+        "observedTailHits": {
+          "50000": 12995,
+          "100000": 767
+        }
+      },
+      "checks": {
+        "ew_rel": 0.002196162319433702,
+        "var_rel": 0.008342820952991336,
+        "max_tail_abs": 0.0016702632030178022,
+        "p_max_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "D_5reel_fixed_edge_variable_middle",
+      "description": "Asymmetric: fixed outer reels (3 high), only middle reel varies — engineered edge case",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r3_mid",
+            "pmf": [
+              {
+                "height": 2,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 3,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 4,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 5,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 6,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 7,
+                "probability": 0.14285714285714285
+              },
+              {
+                "height": 8,
+                "probability": 0.14285714285714285
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r5",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 1
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          200,
+          400,
+          600
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 3,
+            "varianceHeight": 0,
+            "minHeight": 3,
+            "maxHeight": 3
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 3,
+            "varianceHeight": 0,
+            "minHeight": 3,
+            "maxHeight": 3
+          },
+          {
+            "label": "r3_mid",
+            "expectedHeight": 5,
+            "varianceHeight": 3.9999999999999964,
+            "minHeight": 2,
+            "maxHeight": 8
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 3,
+            "varianceHeight": 0,
+            "minHeight": 3,
+            "maxHeight": 3
+          },
+          {
+            "label": "r5",
+            "expectedHeight": 3,
+            "varianceHeight": 0,
+            "minHeight": 3,
+            "maxHeight": 3
+          }
+        ],
+        "expectedWays": 405,
+        "varianceWays": 26243.99999999997,
+        "stdWays": 161.99999999999991,
+        "minWays": 162,
+        "maxWays": 648,
+        "probMinWays": 0.14285714285714285,
+        "probMaxWays": 0.14285714285714285,
+        "tailProbabilities": {
+          "200": 0.857142857142857,
+          "400": 0.5714285714285714,
+          "600": 0.14285714285714285
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 404.63064,
+        "observedVarianceWays": 26142.299293190386,
+        "observedMinObserved": 162,
+        "observedMaxObserved": 648,
+        "observedTailHits": {
+          "200": 85697,
+          "400": 57114,
+          "600": 14072
+        }
+      },
+      "checks": {
+        "ew_rel": 0.0009119999999999307,
+        "var_rel": 0.0038751983999994145,
+        "max_tail_abs": 0.0021371428571428375,
+        "p_max_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "E_4reel_dense_grid",
+      "description": "4 dense reels, {3..6} heavy weighting (smaller game variant)",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.25
+              },
+              {
+                "height": 5,
+                "probability": 0.25
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.25
+              },
+              {
+                "height": 5,
+                "probability": 0.25
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              }
+            ]
+          },
+          {
+            "label": "r3",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.25
+              },
+              {
+                "height": 5,
+                "probability": 0.25
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 3,
+                "probability": 0.25
+              },
+              {
+                "height": 4,
+                "probability": 0.25
+              },
+              {
+                "height": 5,
+                "probability": 0.25
+              },
+              {
+                "height": 6,
+                "probability": 0.25
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          500,
+          1000,
+          1296
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 4.5,
+            "varianceHeight": 1.25,
+            "minHeight": 3,
+            "maxHeight": 6
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 4.5,
+            "varianceHeight": 1.25,
+            "minHeight": 3,
+            "maxHeight": 6
+          },
+          {
+            "label": "r3",
+            "expectedHeight": 4.5,
+            "varianceHeight": 1.25,
+            "minHeight": 3,
+            "maxHeight": 6
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 4.5,
+            "varianceHeight": 1.25,
+            "minHeight": 3,
+            "maxHeight": 6
+          }
+        ],
+        "expectedWays": 410.0625,
+        "varianceWays": 45523.80859375,
+        "stdWays": 213.3630909828361,
+        "minWays": 81,
+        "maxWays": 1296,
+        "probMinWays": 0.00390625,
+        "probMaxWays": 0.00390625,
+        "tailProbabilities": {
+          "500": 0.2734375,
+          "1000": 0.01953125,
+          "1296": 0.00390625
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 409.01046,
+        "observedVarianceWays": 45265.11729058839,
+        "observedMinObserved": 81,
+        "observedMaxObserved": 1296,
+        "observedTailHits": {
+          "500": 27221,
+          "1000": 1872,
+          "1296": 403
+        }
+      },
+      "checks": {
+        "ew_rel": 0.002565560128029207,
+        "var_rel": 0.00568254966253261,
+        "max_tail_abs": 0.0012274999999999925,
+        "p_max_rel": 0.03167999999999993
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "F_deterministic_corner",
+      "description": "Corner: every reel deterministic h=4 → W=1024 always",
+      "cfg": {
+        "reels": [
+          {
+            "label": "r1",
+            "pmf": [
+              {
+                "height": 4,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r2",
+            "pmf": [
+              {
+                "height": 4,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r3",
+            "pmf": [
+              {
+                "height": 4,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r4",
+            "pmf": [
+              {
+                "height": 4,
+                "probability": 1
+              }
+            ]
+          },
+          {
+            "label": "r5",
+            "pmf": [
+              {
+                "height": 4,
+                "probability": 1
+              }
+            ]
+          }
+        ],
+        "waysThresholds": [
+          1024
+        ]
+      },
+      "closed_form": {
+        "reelStats": [
+          {
+            "label": "r1",
+            "expectedHeight": 4,
+            "varianceHeight": 0,
+            "minHeight": 4,
+            "maxHeight": 4
+          },
+          {
+            "label": "r2",
+            "expectedHeight": 4,
+            "varianceHeight": 0,
+            "minHeight": 4,
+            "maxHeight": 4
+          },
+          {
+            "label": "r3",
+            "expectedHeight": 4,
+            "varianceHeight": 0,
+            "minHeight": 4,
+            "maxHeight": 4
+          },
+          {
+            "label": "r4",
+            "expectedHeight": 4,
+            "varianceHeight": 0,
+            "minHeight": 4,
+            "maxHeight": 4
+          },
+          {
+            "label": "r5",
+            "expectedHeight": 4,
+            "varianceHeight": 0,
+            "minHeight": 4,
+            "maxHeight": 4
+          }
+        ],
+        "expectedWays": 1024,
+        "varianceWays": 0,
+        "stdWays": 0,
+        "minWays": 1024,
+        "maxWays": 1024,
+        "probMinWays": 1,
+        "probMaxWays": 1,
+        "tailProbabilities": {
+          "1024": 1
+        }
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanWays": 1024,
+        "observedVarianceWays": 0,
+        "observedMinObserved": 1024,
+        "observedMaxObserved": 1024,
+        "observedTailHits": {
+          "1024": 100000
+        }
+      },
+      "checks": {
+        "ew_rel": 0,
+        "var_rel": 0,
+        "max_tail_abs": 0,
+        "p_max_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    }
+  ]
+}

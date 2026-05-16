@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.14
+# Industry Pattern Catalog v2.15
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -31,6 +31,7 @@
 >   (Bonus Wheel + Respin Markov — NetEnt / Pragmatic / IGT wheel features).
 > - v2.13 (Wave 108) — adds 1 pick-bonus tree kernel landed in Wave 107/108
 > - v2.14 (Wave 111) — adds 1 bonus-trigger wait-time kernel landed in Wave 110/111
+> - v2.15 (Wave 113) — adds 1 variable-reel-height ways kernel landed in Wave 112/113 (BTG Megaways patent expired 2023)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -266,8 +267,19 @@ wait time per feature MUST match engine math so marketing claims like
 |----|---------|-------------|---------------|------------------|
 | P-048 | **Bonus Trigger Wait Time Analyzer** | T_i ~ shifted-geometric(p_i): **`E[T_i] = 1/p_i`**, Var[T_i] = (1−p_i)/p_i², Median = ⌈log(0.5)/log(1−p_i)⌉, **`Percentile_q = ⌈log(1−q)/log(1−p_i)⌉`**; any-feature: **`p_any = 1 − Π(1−p_i)`**, E[T_any] = 1/p_any; aggregate rate Σ p_i; P(multiple per spin) = 1 − P(0) − P(1) | `src/features/bonusTriggerWaitTime.ts` | 24 vitest specs (Wave 110) + 6 PAR-style configs × 100K episodes (Wave 111); portfolio entry W110 |
 
+## Pattern Catalog v2.15 — Variable Reel Height Ways Kernel (Wave 112/113)
+
+This pattern targets the **variable reel height ways family** — BTG
+Megaways patent **EXPIRED 2023**, naming clean-room "variable reel
+height ways" / "ways count" / "reel modifier". Pragmatic, Blueprint,
+iSoftBet, Stakelogic ship the same pattern under various brands.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-049 | **Variable Reel Height Ways** | Per-reel H_i ~ discrete pmf; **`W = Π_i H_i`** (cross-reel independence); **`E[W] = Π_i E[H_i]`**; **`E[W²] = Π_i E[H_i²]`**; Var[W] = E[W²] − E[W]²; sparse PMF via multiplicative convolution (Cartesian × value-merge); tail: maxWays = Π max(supp(H_i)), **`probMaxWays = Π P(H_i=max)`**, P(W ≥ threshold) for "epic ways" disclosure | `src/features/variableReelHeightWays.ts` | 31 vitest specs (Wave 112) + 6 PAR-style configs × 100K episodes (Wave 113); portfolio entry W112 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 28 P-021..P-048 kernels in ~10 seconds and emits unified report
+all 29 P-021..P-049 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

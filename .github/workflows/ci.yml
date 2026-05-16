@@ -180,3 +180,5 @@ jobs:
         run: npm run pick-bonus-n-stage-tree-acceptance
       - name: Bonus Trigger Wait Time acceptance (6/6 configs × 100K episodes, Wave 110/111)
         run: npm run bonus-trigger-wait-time-acceptance
+      - name: Variable Reel Height Ways acceptance (6/6 configs × 100K episodes, Wave 112/113)
+        run: npm run variable-reel-height-ways-acceptance
