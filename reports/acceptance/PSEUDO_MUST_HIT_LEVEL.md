@@ -1,6 +1,6 @@
 # PSEUDO_MUST_HIT_LEVEL — Escalating-Hazard Progressive + Level Acceptance
 
-Generated: `2026-05-16T04:10:43.973Z`
+Generated: `2026-05-16T04:15:54.072Z`
 
 ## Headline
 

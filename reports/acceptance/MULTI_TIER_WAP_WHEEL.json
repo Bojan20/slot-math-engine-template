@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "MULTI_TIER_WAP_WHEEL",
-  "generated_utc": "2026-05-16T04:11:40.997Z",
+  "generated_utc": "2026-05-16T04:15:55.201Z",
   "spins_per_config": 2000000,
   "seed": 4277009102,
   "tolerances": {
@@ -124,7 +124,7 @@
         "rtp_share_sum_check": true
       },
       "pass": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 16
     },
     {
       "name": "B_5tier_with_mega",
@@ -257,7 +257,7 @@
         "rtp_share_sum_check": true
       },
       "pass": true,
-      "elapsed_ms": 23
+      "elapsed_ms": 27
     },
     {
       "name": "C_zero_seed_pure_contribution",
@@ -352,7 +352,7 @@
         "rtp_share_sum_check": true
       },
       "pass": true,
-      "elapsed_ms": 17
+      "elapsed_ms": 19
     },
     {
       "name": "D_high_seed_grand_dominant",
@@ -561,7 +561,7 @@
         "rtp_share_sum_check": true
       },
       "pass": true,
-      "elapsed_ms": 20
+      "elapsed_ms": 21
     },
     {
       "name": "F_equal_weight_tiers",
@@ -675,7 +675,7 @@
         "rtp_share_sum_check": true
       },
       "pass": true,
-      "elapsed_ms": 18
+      "elapsed_ms": 20
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "MUST_HIT_BY_JACKPOT",
-  "generated_utc": "2026-05-16T04:10:41.828Z",
+  "generated_utc": "2026-05-16T04:15:52.933Z",
   "cycles_per_config": 5000,
   "seed": 12648430,
   "tolerances": {
@@ -179,7 +179,7 @@
         "rtp_rel": 0.0010624865245610947
       },
       "pass": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     }
   ]
 }

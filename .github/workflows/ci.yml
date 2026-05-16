@@ -127,11 +127,12 @@ jobs:
 
   # ─────────────────────────────────────────────────────────────────────
   # Closed-form math truth gate — Wave 49-68 solvers + exact enumeration
-  # Validates 12 closed-form solvers + 11 exact-enum fixtures on every
-  # push. If any solver drifts from MC or any exact RTP changes, CI fails.
+  # Validates 15 closed-form solvers + 11 exact-enum fixtures + 3
+  # progressive-jackpot acceptance scripts on every push. If any solver
+  # drifts from MC or any exact RTP changes, CI fails.
   # ─────────────────────────────────────────────────────────────────────
   closed-form-truth:
-    name: Closed-form portfolio + exact enumeration
+    name: Closed-form portfolio + exact enumeration + jackpot acceptance
     needs: [ts]
     runs-on: ubuntu-latest
     steps:
@@ -143,7 +144,13 @@ jobs:
       - run: npm ci
       - name: Build TS
         run: npm run build
-      - name: Closed-form portfolio (12/12 solvers, Wave 49-60)
+      - name: Closed-form portfolio (15/15 solvers, Wave 49-75)
         run: npm run closed-form-portfolio
       - name: Exact enumeration (11/11 fixtures, Wave 63/68)
         run: npm run exact-enumeration
+      - name: Must-Hit-By Jackpot acceptance (6/6 configs × 5K cycles, Wave 71/77)
+        run: npm run must-hit-by-jackpot-acceptance
+      - name: Pseudo-Must-Hit + Level acceptance (6/6 configs × 100K spins, Wave 72/77)
+        run: npm run pseudo-must-hit-level-acceptance
+      - name: Multi-tier WAP + Wheel acceptance (6/6 configs × 2M spins, Wave 75/77)
+        run: npm run multi-tier-wap-wheel-acceptance

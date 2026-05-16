@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "report_id": "PSEUDO_MUST_HIT_LEVEL",
-  "generated_utc": "2026-05-16T04:10:43.973Z",
+  "generated_utc": "2026-05-16T04:15:54.072Z",
   "spins_per_config": 100000,
   "seed": 3203381950,
   "tolerances": {
@@ -61,7 +61,7 @@
         "cf_positive": true
       },
       "pass": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 4
     },
     {
       "name": "B_no_reset_absorbing",
@@ -265,7 +265,7 @@
         "cf_positive": true
       },
       "pass": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 2
     },
     {
       "name": "F_partial_reset",
