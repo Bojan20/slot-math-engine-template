@@ -186,3 +186,5 @@ jobs:
         run: npm run sticky-wild-countdown-multiplier-acceptance
       - name: Mystery Symbol Reveal acceptance (6/6 configs × 100K spins, Wave 116/117)
         run: npm run mystery-symbol-reveal-acceptance
+      - name: Bonus Collect-N acceptance (6/6 configs × 50K episodes, Wave 118/119)
+        run: npm run bonus-collect-n-acceptance

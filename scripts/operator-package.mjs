@@ -188,6 +188,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 116 Mystery Symbol Reveal Aggregator (W152 Wave 117)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MYSTERY_SYMBOL_REVEAL.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MYSTERY_SYMBOL_REVEAL.md' },
+  // REPORTS — Wave 118 Bonus Collect-N Trigger Tracker (W152 Wave 119)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_COLLECT_N.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/BONUS_COLLECT_N.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

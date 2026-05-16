@@ -1,0 +1,261 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BONUS_COLLECT_N",
+  "generated_utc": "2026-05-16T07:20:48.459Z",
+  "episodes_per_config": 50000,
+  "seed": 3405643783,
+  "tolerances": {
+    "e_rel": 0.02,
+    "var_rel": 0.1,
+    "horizon_abs": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_money_cart_6coin",
+      "description": "Pragmatic Money Cart style: collect 6 coins @ p=0.03",
+      "cfg": {
+        "collectProbabilityPerSpin": 0.03,
+        "triggerThreshold": 6,
+        "percentileTargets": [
+          0.5,
+          0.75,
+          0.95
+        ],
+        "horizonSpins": 500
+      },
+      "closed_form": {
+        "expectedWaitTime": 200,
+        "varianceWaitTime": 6466.666666666667,
+        "stdWaitTime": 80.4155872120988,
+        "medianWaitTime": 189,
+        "percentileWaitTimes": {
+          "0.5": 189,
+          "0.75": 247,
+          "0.95": 348
+        },
+        "probTriggerWithinHorizon": 0.9974894209527606,
+        "triggerRatePerSpin": 0.005,
+        "expectedTriggersInHorizon": 2.5
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 199.83136,
+        "observedVarianceWaitTime": 6433.073280550401,
+        "observedMaxObserved": 821,
+        "observedTriggerWithinHorizonFraction": 0.9975
+      },
+      "checks": {
+        "e_rel": 0.0008432000000000528,
+        "var_rel": 0.005194853523133874,
+        "horizon_abs": 0.000010579047239445138
+      },
+      "pass": true,
+      "elapsed_ms": 58
+    },
+    {
+      "name": "B_money_train_12coin_retrigger",
+      "description": "Money Train style: collect 12 coins for retrigger @ p=0.04",
+      "cfg": {
+        "collectProbabilityPerSpin": 0.04,
+        "triggerThreshold": 12,
+        "percentileTargets": [
+          0.5,
+          0.95
+        ],
+        "horizonSpins": 800
+      },
+      "closed_form": {
+        "expectedWaitTime": 300,
+        "varianceWaitTime": 7199.999999999999,
+        "stdWaitTime": 84.85281374238569,
+        "medianWaitTime": 292,
+        "percentileWaitTimes": {
+          "0.5": 292,
+          "0.95": 452
+        },
+        "probTriggerWithinHorizon": 0.9999872559301337,
+        "triggerRatePerSpin": 0.0033333333333333335,
+        "expectedTriggersInHorizon": 2.6666666666666665
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 299.86364,
+        "observedVarianceWaitTime": 7206.444805950421,
+        "observedMaxObserved": 816,
+        "observedTriggerWithinHorizonFraction": 0.99998
+      },
+      "checks": {
+        "e_rel": 0.00045453333333341563,
+        "var_rel": 0.0008951119375586183,
+        "horizon_abs": 0.000007255930133731603
+      },
+      "pass": true,
+      "elapsed_ms": 93
+    },
+    {
+      "name": "C_rare_high_threshold",
+      "description": "Rare 20-collect @ p=0.01 (long-tail compliance disclosure)",
+      "cfg": {
+        "collectProbabilityPerSpin": 0.01,
+        "triggerThreshold": 20,
+        "percentileTargets": [
+          0.5,
+          0.95,
+          0.99
+        ],
+        "horizonSpins": 5000
+      },
+      "closed_form": {
+        "expectedWaitTime": 2000,
+        "varianceWaitTime": 198000,
+        "stdWaitTime": 444.97190922573975,
+        "medianWaitTime": 1967,
+        "percentileWaitTimes": {
+          "0.5": 1967,
+          "0.95": 2784,
+          "0.99": 3179
+        },
+        "probTriggerWithinHorizon": 0.9999995658548894,
+        "triggerRatePerSpin": 0.0005,
+        "expectedTriggersInHorizon": 2.5
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 1996.1557,
+        "observedVarianceWaitTime": 196400.44081750978,
+        "observedMaxObserved": 4508,
+        "observedTriggerWithinHorizonFraction": 1
+      },
+      "checks": {
+        "e_rel": 0.0019221499999999877,
+        "var_rel": 0.008078581729748596,
+        "horizon_abs": 4.341451106393279e-7
+      },
+      "pass": true,
+      "elapsed_ms": 558
+    },
+    {
+      "name": "D_high_freq_short_threshold",
+      "description": "High-frequency p=0.20, short threshold N=3",
+      "cfg": {
+        "collectProbabilityPerSpin": 0.2,
+        "triggerThreshold": 3,
+        "percentileTargets": [
+          0.5,
+          0.95
+        ],
+        "horizonSpins": 50
+      },
+      "closed_form": {
+        "expectedWaitTime": 15,
+        "varianceWaitTime": 60,
+        "stdWaitTime": 7.745966692414834,
+        "medianWaitTime": 14,
+        "percentileWaitTimes": {
+          "0.5": 14,
+          "0.95": 30
+        },
+        "probTriggerWithinHorizon": 0.9987145850467535,
+        "triggerRatePerSpin": 0.06666666666666667,
+        "expectedTriggersInHorizon": 3.3333333333333335
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 14.98414,
+        "observedVarianceWaitTime": 60.071088460400034,
+        "observedMaxObserved": 70,
+        "observedTriggerWithinHorizonFraction": 0.99848
+      },
+      "checks": {
+        "e_rel": 0.0010573333333333324,
+        "var_rel": 0.0011848076733339023,
+        "horizon_abs": 0.00023458504675344383
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_geometric_corner_N1",
+      "description": "Corner N=1 → reduces to shifted-Geometric",
+      "cfg": {
+        "collectProbabilityPerSpin": 0.05,
+        "triggerThreshold": 1,
+        "percentileTargets": [
+          0.5,
+          0.95
+        ],
+        "horizonSpins": 100
+      },
+      "closed_form": {
+        "expectedWaitTime": 20,
+        "varianceWaitTime": 379.9999999999999,
+        "stdWaitTime": 19.493588689617926,
+        "medianWaitTime": 14,
+        "percentileWaitTimes": {
+          "0.5": 14,
+          "0.95": 59
+        },
+        "probTriggerWithinHorizon": 0.994079470779666,
+        "triggerRatePerSpin": 0.05,
+        "expectedTriggersInHorizon": 5
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 20.02494,
+        "observedVarianceWaitTime": 377.35851799639994,
+        "observedMaxObserved": 207,
+        "observedTriggerWithinHorizonFraction": 0.9941
+      },
+      "checks": {
+        "e_rel": 0.0012470000000000426,
+        "var_rel": 0.006951268430526178,
+        "horizon_abs": 0.00002052922033402016
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "F_deterministic_p1",
+      "description": "Deterministic corner: p=1 → triggers at exactly N spins",
+      "cfg": {
+        "collectProbabilityPerSpin": 1,
+        "triggerThreshold": 5,
+        "percentileTargets": [
+          0.5,
+          0.95
+        ],
+        "horizonSpins": 10
+      },
+      "closed_form": {
+        "expectedWaitTime": 5,
+        "varianceWaitTime": 0,
+        "stdWaitTime": 0,
+        "medianWaitTime": 5,
+        "percentileWaitTimes": {
+          "0.5": 5,
+          "0.95": 5
+        },
+        "probTriggerWithinHorizon": 1,
+        "triggerRatePerSpin": 0.2,
+        "expectedTriggersInHorizon": 2
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedMeanWaitTime": 5,
+        "observedVarianceWaitTime": 0,
+        "observedMaxObserved": 5,
+        "observedTriggerWithinHorizonFraction": 1
+      },
+      "checks": {
+        "e_rel": 0,
+        "var_rel": 0,
+        "horizon_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
