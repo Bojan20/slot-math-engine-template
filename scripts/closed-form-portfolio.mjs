@@ -100,6 +100,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'cascadeMultiplierChain.js'));
   const { solveMegaSymbolExpansion, simulateMegaSymbolExpansion } =
     await import(join(REPO_ROOT, 'dist', 'features', 'megaSymbolExpansion.js'));
+  const { solveBiDirectionalLinePay, simulateBiDirectionalLinePay } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'biDirectionalLinePay.js'));
 
   const showcase = [];
 
@@ -677,6 +679,24 @@ async function main() {
     const mc = simulateMegaSymbolExpansion(cfg, 50_000, SEED);
     const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
     showcase.push({ wave: 123, solver: 'Mega Symbol Multi-Cell Expansion', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W125: Bi-Directional Line Pay Aggregator ───────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      reelCount: 5,
+      minMatchLength: 3,
+      symbols: [
+        { label: 'low_A',  density: 0.20, paytable: [0, 0, 5,  20,  50] },
+        { label: 'mid_B',  density: 0.15, paytable: [0, 0, 10, 50,  200] },
+        { label: 'high_C', density: 0.10, paytable: [0, 0, 25, 100, 500] },
+      ],
+    };
+    const cf = solveBiDirectionalLinePay(cfg);
+    const mc = simulateBiDirectionalLinePay(cfg, 50_000, SEED);
+    const ok = relErr(cf.totalExpectedPayBidirectional, mc.observedTotalPayBidirectional) < 0.10;
+    showcase.push({ wave: 125, solver: 'Bi-Directional Line Pay Aggregator', metric: 'E[pay_BD] per spin', cf: cf.totalExpectedPayBidirectional, mc: mc.observedTotalPayBidirectional, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

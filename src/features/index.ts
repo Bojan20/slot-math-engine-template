@@ -123,3 +123,6 @@ export * from './cascadeMultiplierChain.js';
 
 // W152 Wave 123: Mega Symbol Multi-Cell Expansion Aggregator (Faza 12 ext, post-W100)
 export * from './megaSymbolExpansion.js';
+
+// W152 Wave 125: Bi-Directional Line Pay Aggregator (Faza 12 ext, post-W100)
+export * from './biDirectionalLinePay.js';
