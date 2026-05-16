@@ -138,3 +138,6 @@ export * from './multiLevelWildMarkov.js';
 
 // W152 Wave 134: Hold-and-Win Multi-Tier Value-Based Jackpot (Faza 5 ext, post-W100)
 export * from './holdWinValueJackpot.js';
+
+// W152 Wave 136: Locked/Held Reels During FS Analyzer (Faza 4.3 ext, post-W100)
+export * from './lockedReelsDuringFs.js';

@@ -110,6 +110,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'multiLevelWildMarkov.js'));
   const { solveHoldWinValueJackpot, simulateHoldWinValueJackpot } =
     await import(join(REPO_ROOT, 'dist', 'features', 'holdWinValueJackpot.js'));
+  const { solveLockedReelsDuringFs, simulateLockedReelsDuringFs } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'lockedReelsDuringFs.js'));
 
   const showcase = [];
 
@@ -788,6 +790,22 @@ async function main() {
     const mc = simulateHoldWinValueJackpot(cfg, 10_000, SEED);
     const ok = Math.abs(cf.expectedFilledCount - mc.observedMeanFilledCount) < 0.3;
     showcase.push({ wave: 134, solver: 'Hold-and-Win Multi-Tier Value Jackpot', metric: 'E[filled] cells', cf: cf.expectedFilledCount, mc: mc.observedMeanFilledCount, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W136: Locked/Held Reels During FS Analyzer ─────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      totalReels: 5,
+      heldReels: 3,
+      freeSpins: 8,
+      freshScatterProbabilityPerReel: 0.15,
+      retriggerScatterThreshold: 5,
+    };
+    const cf = solveLockedReelsDuringFs(cfg);
+    const mc = simulateLockedReelsDuringFs(cfg, 50_000, SEED);
+    const ok = Math.abs(cf.expectedRetriggersAcrossFs - mc.observedMeanRetriggersPerEpisode) < 0.05;
+    showcase.push({ wave: 136, solver: 'Locked/Held Reels During FS', metric: 'E[retriggers]', cf: cf.expectedRetriggersAcrossFs, mc: mc.observedMeanRetriggersPerEpisode, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
