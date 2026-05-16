@@ -164,6 +164,8 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 97 FS Lookback Multiplier (W152 Wave 98)
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.md' },
+  // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
+  { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
