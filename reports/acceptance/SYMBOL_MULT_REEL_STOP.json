@@ -1,0 +1,390 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SYMBOL_MULT_REEL_STOP",
+  "generated_utc": "2026-05-16T10:40:08.346Z",
+  "spins_per_config": 200000,
+  "seed": 3405644098,
+  "tolerances": {
+    "pay_rel_additive": 0.1,
+    "pay_rel_additive_heavy_tail": 0.15,
+    "pay_rel_multiplicative": 0.2,
+    "land_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_sweet_bonanza_5x6_additive",
+      "description": "Pragmatic Sweet Bonanza-style: 5×6 grid, q=0.025, additive heavy-tail",
+      "cfg": {
+        "positionCount": 30,
+        "multiplierLandingProbability": 0.025,
+        "aggregationMode": "additive",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 0.5
+          },
+          {
+            "value": 5,
+            "probability": 0.3
+          },
+          {
+            "value": 25,
+            "probability": 0.15
+          },
+          {
+            "value": 100,
+            "probability": 0.04
+          },
+          {
+            "value": 500,
+            "probability": 0.01
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.75
+          },
+          {
+            "value": 5,
+            "probability": 0.2
+          },
+          {
+            "value": 50,
+            "probability": 0.05
+          }
+        ]
+      },
+      "tolerance_rel": 0.15,
+      "closed_form": {
+        "positionCount": 30,
+        "multiplierLandingProbability": 0.025,
+        "aggregationMode": "additive",
+        "expectedMultiplierValue": 15.25,
+        "expectedTotalMultiplier": 11.90538429827934,
+        "varianceTotalMultiplier": 2237.623068383563,
+        "expectedPayoutPerSpin": 41.66884504397769,
+        "variancePayoutPerSpin": 307580.6690302273,
+        "probAnyMultiplierLands": 0.5321157017206601,
+        "expectedLandedCount": 0.75
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 39.61585,
+        "observedMeanTotalMultiplier": 11.82974,
+        "observedMeanLandedCount": 0.75139,
+        "observedAnyMultiplierLandsFraction": 0.53207,
+        "observedMaxMultiplierSeen": 1100
+      },
+      "checks": {
+        "pay_rel": 0.04926930520418644,
+        "land_rel": 0.0018533333333333364
+      },
+      "pass": true,
+      "elapsed_ms": 41
+    },
+    {
+      "name": "B_bigger_bass_5x3_additive",
+      "description": "Pragmatic Bigger Bass fish multipliers: 5×3 grid, q=0.02, additive",
+      "cfg": {
+        "positionCount": 15,
+        "multiplierLandingProbability": 0.02,
+        "aggregationMode": "additive",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 0.6
+          },
+          {
+            "value": 4,
+            "probability": 0.25
+          },
+          {
+            "value": 10,
+            "probability": 0.13
+          },
+          {
+            "value": 50,
+            "probability": 0.02
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.85
+          },
+          {
+            "value": 1,
+            "probability": 0.1
+          },
+          {
+            "value": 10,
+            "probability": 0.05
+          }
+        ]
+      },
+      "tolerance_rel": 0.1,
+      "closed_form": {
+        "positionCount": 15,
+        "multiplierLandingProbability": 0.02,
+        "aggregationMode": "additive",
+        "expectedMultiplierValue": 4.5,
+        "expectedTotalMultiplier": 2.088569102645404,
+        "varianceTotalMultiplier": 18.89744820612038,
+        "expectedPayoutPerSpin": 1.2531414615872423,
+        "variancePayoutPerSpin": 117.05343890074256,
+        "probAnyMultiplierLands": 0.26143089735459624,
+        "expectedLandedCount": 0.3
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 1.23701,
+        "observedMeanTotalMultiplier": 2.085455,
+        "observedMeanLandedCount": 0.301165,
+        "observedAnyMultiplierLandsFraction": 0.262205,
+        "observedMaxMultiplierSeen": 104
+      },
+      "checks": {
+        "pay_rel": 0.012872817699934725,
+        "land_rel": 0.003883333333333424
+      },
+      "pass": true,
+      "elapsed_ms": 26
+    },
+    {
+      "name": "C_hacksaw_rip_city_5x5_additive",
+      "description": "Hacksaw RIP City-style: 5×5 grid, q=0.04, additive",
+      "cfg": {
+        "positionCount": 25,
+        "multiplierLandingProbability": 0.04,
+        "aggregationMode": "additive",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 0.55
+          },
+          {
+            "value": 3,
+            "probability": 0.25
+          },
+          {
+            "value": 5,
+            "probability": 0.15
+          },
+          {
+            "value": 20,
+            "probability": 0.05
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.7
+          },
+          {
+            "value": 2,
+            "probability": 0.2
+          },
+          {
+            "value": 10,
+            "probability": 0.08
+          },
+          {
+            "value": 100,
+            "probability": 0.02
+          }
+        ]
+      },
+      "tolerance_rel": 0.1,
+      "closed_form": {
+        "positionCount": 25,
+        "multiplierLandingProbability": 0.04,
+        "aggregationMode": "additive",
+        "expectedMultiplierValue": 3.6,
+        "expectedTotalMultiplier": 3.960396716858018,
+        "varianceTotalMultiplier": 25.317254561958247,
+        "expectedPayoutPerSpin": 12.673269493945659,
+        "variancePayoutPerSpin": 8400.60515481378,
+        "probAnyMultiplierLands": 0.639603283141982,
+        "expectedLandedCount": 1
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 12.69708,
+        "observedMeanTotalMultiplier": 3.954065,
+        "observedMeanLandedCount": 1.00093,
+        "observedAnyMultiplierLandsFraction": 0.63996,
+        "observedMaxMultiplierSeen": 62
+      },
+      "checks": {
+        "pay_rel": 0.0018787974220634733,
+        "land_rel": 0.0009300000000000974
+      },
+      "pass": true,
+      "elapsed_ms": 38
+    },
+    {
+      "name": "D_asgardian_stones_avalanche_multiplicative",
+      "description": "NetEnt Asgardian Stones avalanche multipliers: 5×3 grid, q=0.10, multiplicative (low-variance)",
+      "cfg": {
+        "positionCount": 15,
+        "multiplierLandingProbability": 0.1,
+        "aggregationMode": "multiplicative",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 0.7
+          },
+          {
+            "value": 3,
+            "probability": 0.25
+          },
+          {
+            "value": 5,
+            "probability": 0.05
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 0,
+            "probability": 0.8
+          },
+          {
+            "value": 5,
+            "probability": 0.15
+          },
+          {
+            "value": 50,
+            "probability": 0.05
+          }
+        ]
+      },
+      "tolerance_rel": 0.2,
+      "closed_form": {
+        "positionCount": 15,
+        "multiplierLandingProbability": 0.1,
+        "aggregationMode": "multiplicative",
+        "expectedMultiplierValue": 2.4,
+        "expectedTotalMultiplier": 7.13793797838799,
+        "varianceTotalMultiplier": 538.3973640258623,
+        "expectedPayoutPerSpin": 23.198298429760968,
+        "variancePayoutPerSpin": 75340.33248589515,
+        "probAnyMultiplierLands": 0.794108867905351,
+        "expectedLandedCount": 1.5
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 23.234,
+        "observedMeanTotalMultiplier": 7.137775,
+        "observedMeanLandedCount": 1.50341,
+        "observedAnyMultiplierLandsFraction": 0.79403,
+        "observedMaxMultiplierSeen": 2700
+      },
+      "checks": {
+        "pay_rel": 0.0015389736599488199,
+        "land_rel": 0.0022733333333332753
+      },
+      "pass": true,
+      "elapsed_ms": 33
+    },
+    {
+      "name": "E_corner_no_multipliers_baseline",
+      "description": "Corner: q=tiny → almost never lands, E[Y] ≈ μ_W baseline",
+      "cfg": {
+        "positionCount": 10,
+        "multiplierLandingProbability": 0.001,
+        "aggregationMode": "additive",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 1
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 1,
+            "probability": 1
+          }
+        ]
+      },
+      "tolerance_rel": 0.05,
+      "closed_form": {
+        "positionCount": 10,
+        "multiplierLandingProbability": 0.001,
+        "aggregationMode": "additive",
+        "expectedMultiplierValue": 2,
+        "expectedTotalMultiplier": 1.0100448802097481,
+        "varianceTotalMultiplier": 0.010214220171823829,
+        "expectedPayoutPerSpin": 1.0100448802097481,
+        "variancePayoutPerSpin": 0.010214220171823829,
+        "probAnyMultiplierLands": 0.009955119790251765,
+        "expectedLandedCount": 0.01
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 1.00991,
+        "observedMeanTotalMultiplier": 1.00991,
+        "observedMeanLandedCount": 0.009885,
+        "observedAnyMultiplierLandsFraction": 0.00986,
+        "observedMaxMultiplierSeen": 4
+      },
+      "checks": {
+        "pay_rel": 0.00013353882821528349,
+        "land_rel": 0.011500000000000052
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "F_corner_always_lands_additive",
+      "description": "Corner: q=0.99, additive → ~N multipliers most spins",
+      "cfg": {
+        "positionCount": 5,
+        "multiplierLandingProbability": 0.99,
+        "aggregationMode": "additive",
+        "multiplierValuePmf": [
+          {
+            "value": 2,
+            "probability": 1
+          }
+        ],
+        "baseWinPmf": [
+          {
+            "value": 1,
+            "probability": 1
+          }
+        ]
+      },
+      "tolerance_rel": 0.05,
+      "closed_form": {
+        "positionCount": 5,
+        "multiplierLandingProbability": 0.99,
+        "aggregationMode": "additive",
+        "expectedMultiplierValue": 2,
+        "expectedTotalMultiplier": 9.9000000001,
+        "varianceTotalMultiplier": 0.1979999981199967,
+        "expectedPayoutPerSpin": 9.9000000001,
+        "variancePayoutPerSpin": 0.1979999981199967,
+        "probAnyMultiplierLands": 0.9999999999,
+        "expectedLandedCount": 4.95
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayoutPerSpin": 9.89788,
+        "observedMeanTotalMultiplier": 9.89788,
+        "observedMeanLandedCount": 4.94894,
+        "observedAnyMultiplierLandsFraction": 1,
+        "observedMaxMultiplierSeen": 10
+      },
+      "checks": {
+        "pay_rel": 0.00021414142424022948,
+        "land_rel": 0.00021414141414138158
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    }
+  ]
+}

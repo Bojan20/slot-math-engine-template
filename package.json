@@ -71,6 +71,7 @@
     "locked-reels-during-fs-acceptance": "npm run build && node scripts/locked-reels-during-fs-acceptance.mjs",
     "tumble-multiplier-cap-acceptance": "npm run build && node scripts/tumble-multiplier-cap-acceptance.mjs",
     "adjacent-pays-aggregator-acceptance": "npm run build && node scripts/adjacent-pays-aggregator-acceptance.mjs",
+    "symbol-multiplier-reel-stop-acceptance": "npm run build && node scripts/symbol-multiplier-reel-stop-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

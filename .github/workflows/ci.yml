@@ -208,3 +208,5 @@ jobs:
         run: npm run tumble-multiplier-cap-acceptance
       - name: Adjacent Pays Aggregator acceptance (6/6 configs × 200K spins, Wave 140/141)
         run: npm run adjacent-pays-aggregator-acceptance
+      - name: Symbol Multiplier on Reel-Stop acceptance (6/6 configs × 200K spins, Wave 142/143)
+        run: npm run symbol-multiplier-reel-stop-acceptance
