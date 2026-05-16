@@ -1,0 +1,1309 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "HNW_LADDER",
+  "generated_utc": "2026-05-16T01:32:05.860Z",
+  "spins_per_config": 250000,
+  "seed": 12345,
+  "tolerances": {
+    "total_ev_rel": 0.02,
+    "cash_ev_rel": 0.02,
+    "tier_ev_rel": 0.05,
+    "filled_rel": 0.01,
+    "tier_prob_abs": 0.005
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_classic_reset_p015_r3",
+      "description": "5×4 grid, 4 tiers, reset on land, p=0.15, R0=3 (baseline)",
+      "config": {
+        "gridSize": 20,
+        "initialRespins": 3,
+        "pLand": 0.15,
+        "initialFilled": 6,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 4
+          },
+          {
+            "valueX": 5,
+            "weight": 2
+          },
+          {
+            "valueX": 10,
+            "weight": 1
+          }
+        ],
+        "tiers": [
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "payoutX": 25
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "payoutX": 100
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "payoutX": 500
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "payoutX": 2000
+          }
+        ],
+        "resetOnLanding": true
+      },
+      "closed_form": {
+        "expectedTotalX": 655.2292236942014,
+        "expectedCashValueX": 30.610496733978827,
+        "expectedTierPayoutX": 624.6187269602226,
+        "expectedFilled": 17.70401345710954,
+        "expectedRespins": 11.900118732265126,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.01521402341683712
+          },
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "probability": 0.06310595900663109
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "probability": 0.2887249506248424
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "probability": 0.44782770065386795
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "probability": 0.1851273662978193
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 6,
+            "probability": 0.0010854126530465602
+          },
+          {
+            "filled": 7,
+            "probability": 0.0004996062248704011
+          },
+          {
+            "filled": 8,
+            "probability": 0.0011893907741263442
+          },
+          {
+            "filled": 9,
+            "probability": 0.0021925155577860495
+          },
+          {
+            "filled": 10,
+            "probability": 0.0037711180847114878
+          },
+          {
+            "filled": 11,
+            "probability": 0.006475980122296276
+          },
+          {
+            "filled": 12,
+            "probability": 0.011158108550349275
+          },
+          {
+            "filled": 13,
+            "probability": 0.01918288901950342
+          },
+          {
+            "filled": 14,
+            "probability": 0.03276496143677839
+          },
+          {
+            "filled": 15,
+            "probability": 0.055245574297706504
+          },
+          {
+            "filled": 16,
+            "probability": 0.09087126747304099
+          },
+          {
+            "filled": 17,
+            "probability": 0.14260810885409492
+          },
+          {
+            "filled": 18,
+            "probability": 0.20441069369467055
+          },
+          {
+            "filled": 19,
+            "probability": 0.2434170069591974
+          },
+          {
+            "filled": 20,
+            "probability": 0.1851273662978193
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 656.717228,
+        "expectedCashValueX": 30.578128,
+        "expectedTierPayoutX": 626.1391,
+        "expectedFilled": 17.705432,
+        "expectedRespins": 11.89468,
+        "tierProbabilities": {
+          "NONE": 0.01496,
+          "MINI": 0.063052,
+          "MINOR": 0.290108,
+          "MAJOR": 0.445472,
+          "GRAND": 0.186408
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.0022709675514915664,
+        "cash_ev_rel": 0.001057439030151293,
+        "tier_ev_rel": 0.0024340817432363087,
+        "filled_rel": 0.0000801254977519968,
+        "tier_prob_max_abs": 0.002355700653867976
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.01521402341683712,
+          "mc_prob": 0.01496,
+          "abs_err": 0.00025402341683712117
+        },
+        {
+          "id": "MINI",
+          "threshold": 12,
+          "cf_prob": 0.06310595900663109,
+          "mc_prob": 0.063052,
+          "abs_err": 0.00005395900663109077
+        },
+        {
+          "id": "MINOR",
+          "threshold": 15,
+          "cf_prob": 0.2887249506248424,
+          "mc_prob": 0.290108,
+          "abs_err": 0.0013830493751575967
+        },
+        {
+          "id": "MAJOR",
+          "threshold": 18,
+          "cf_prob": 0.44782770065386795,
+          "mc_prob": 0.445472,
+          "abs_err": 0.002355700653867976
+        },
+        {
+          "id": "GRAND",
+          "threshold": 20,
+          "cf_prob": 0.1851273662978193,
+          "mc_prob": 0.186408,
+          "abs_err": 0.001280633702180678
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 243
+    },
+    {
+      "name": "B_no_reset_p015_r5",
+      "description": "5×4 grid, 4 tiers, NO reset on land, p=0.15, R0=5",
+      "config": {
+        "gridSize": 20,
+        "initialRespins": 5,
+        "pLand": 0.15,
+        "initialFilled": 6,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 4
+          },
+          {
+            "valueX": 5,
+            "weight": 2
+          },
+          {
+            "valueX": 10,
+            "weight": 1
+          }
+        ],
+        "tiers": [
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "payoutX": 25
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "payoutX": 100
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "payoutX": 500
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "payoutX": 2000
+          }
+        ],
+        "resetOnLanding": false
+      },
+      "closed_form": {
+        "expectedTotalX": 77.28288520233959,
+        "expectedCashValueX": 20.36894394230767,
+        "expectedTierPayoutX": 56.91394126003192,
+        "expectedFilled": 13.788125624999983,
+        "expectedRespins": 4.99996585911195,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.10952423790021315
+          },
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "probability": 0.5354464923968656
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "probability": 0.33598643510402526
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "probability": 0.01877102250538796
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "probability": 0.00027181209350688926
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 6,
+            "probability": 0.000011463699676873282
+          },
+          {
+            "filled": 7,
+            "probability": 0.00020121628183291382
+          },
+          {
+            "filled": 8,
+            "probability": 0.0016397844369825806
+          },
+          {
+            "filled": 9,
+            "probability": 0.008223506415092455
+          },
+          {
+            "filled": 10,
+            "probability": 0.028353064988780777
+          },
+          {
+            "filled": 11,
+            "probability": 0.07109520207784754
+          },
+          {
+            "filled": 12,
+            "probability": 0.13370321058296622
+          },
+          {
+            "filled": 13,
+            "probability": 0.19157730825552405
+          },
+          {
+            "filled": 14,
+            "probability": 0.21016597355837535
+          },
+          {
+            "filled": 15,
+            "probability": 0.17566345844129705
+          },
+          {
+            "filled": 16,
+            "probability": 0.11011886263900726
+          },
+          {
+            "filled": 17,
+            "probability": 0.05020411402372091
+          },
+          {
+            "filled": 18,
+            "probability": 0.01573582800072976
+          },
+          {
+            "filled": 19,
+            "probability": 0.0030351945046581973
+          },
+          {
+            "filled": 20,
+            "probability": 0.00027181209350688926
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 77.332856,
+        "expectedCashValueX": 20.368856,
+        "expectedTierPayoutX": 56.964,
+        "expectedFilled": 13.787556,
+        "expectedRespins": 4.99998,
+        "tierProbabilities": {
+          "NONE": 0.108748,
+          "MINI": 0.536896,
+          "MINOR": 0.335216,
+          "MAJOR": 0.01884,
+          "GRAND": 0.0003
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.0006465959122720301,
+        "cash_ev_rel": 0.000004317470160359727,
+        "tier_ev_rel": 0.0008795514571617555,
+        "filled_rel": 0.000041312721937353343,
+        "tier_prob_max_abs": 0.0014495076031344478
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.10952423790021315,
+          "mc_prob": 0.108748,
+          "abs_err": 0.0007762379002131531
+        },
+        {
+          "id": "MINI",
+          "threshold": 12,
+          "cf_prob": 0.5354464923968656,
+          "mc_prob": 0.536896,
+          "abs_err": 0.0014495076031344478
+        },
+        {
+          "id": "MINOR",
+          "threshold": 15,
+          "cf_prob": 0.33598643510402526,
+          "mc_prob": 0.335216,
+          "abs_err": 0.0007704351040252466
+        },
+        {
+          "id": "MAJOR",
+          "threshold": 18,
+          "cf_prob": 0.01877102250538796,
+          "mc_prob": 0.01884,
+          "abs_err": 0.00006897749461204014
+        },
+        {
+          "id": "GRAND",
+          "threshold": 20,
+          "cf_prob": 0.00027181209350688926,
+          "mc_prob": 0.0003,
+          "abs_err": 0.00002818790649311071
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 195
+    },
+    {
+      "name": "C_high_p030",
+      "description": "5×4 grid, 4 tiers, reset, p=0.30, R0=3 (frequent landings)",
+      "config": {
+        "gridSize": 20,
+        "initialRespins": 3,
+        "pLand": 0.3,
+        "initialFilled": 6,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 4
+          },
+          {
+            "valueX": 5,
+            "weight": 2
+          },
+          {
+            "valueX": 10,
+            "weight": 1
+          }
+        ],
+        "tiers": [
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "payoutX": 25
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "payoutX": 100
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "payoutX": 500
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "payoutX": 2000
+          }
+        ],
+        "resetOnLanding": true
+      },
+      "closed_form": {
+        "expectedTotalX": 1463.4290429212697,
+        "expectedCashValueX": 35.2074401580486,
+        "expectedTierPayoutX": 1428.2216027632212,
+        "expectedFilled": 19.461668295724444,
+        "expectedRespins": 8.174787519532922,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.000029155486552584143
+          },
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "probability": 0.0009383363475157457
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "probability": 0.03410454434774518
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "probability": 0.3367121584777376
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "probability": 0.628215805340445
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 6,
+            "probability": 3.119734822845415e-7
+          },
+          {
+            "filled": 7,
+            "probability": 3.7265139807094164e-8
+          },
+          {
+            "filled": 8,
+            "probability": 3.085752819602945e-7
+          },
+          {
+            "filled": 9,
+            "probability": 0.000001621971123650088
+          },
+          {
+            "filled": 10,
+            "probability": 0.000006296876632899827
+          },
+          {
+            "filled": 11,
+            "probability": 0.000020578824891982298
+          },
+          {
+            "filled": 12,
+            "probability": 0.00006411780609032579
+          },
+          {
+            "filled": 13,
+            "probability": 0.00020458237680005898
+          },
+          {
+            "filled": 14,
+            "probability": 0.0006696361646253609
+          },
+          {
+            "filled": 15,
+            "probability": 0.0022127598488785277
+          },
+          {
+            "filled": 16,
+            "probability": 0.00735301768526352
+          },
+          {
+            "filled": 17,
+            "probability": 0.02453876681360313
+          },
+          {
+            "filled": 18,
+            "probability": 0.08128996444574067
+          },
+          {
+            "filled": 19,
+            "probability": 0.25542219403199695
+          },
+          {
+            "filled": 20,
+            "probability": 0.628215805340445
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 1465.178856,
+        "expectedCashValueX": 35.212156,
+        "expectedTierPayoutX": 1429.9667,
+        "expectedFilled": 19.462632,
+        "expectedRespins": 8.169772,
+        "tierProbabilities": {
+          "NONE": 0.000024,
+          "MINI": 0.000908,
+          "MINOR": 0.03454,
+          "MAJOR": 0.335044,
+          "GRAND": 0.629484
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.0011956938310021294,
+        "cash_ev_rel": 0.0001339444711183835,
+        "tier_ev_rel": 0.001221867274239836,
+        "filled_rel": 0.00004951807115977906,
+        "tier_prob_max_abs": 0.0016681584777376024
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.000029155486552584143,
+          "mc_prob": 0.000024,
+          "abs_err": 0.000005155486552584142
+        },
+        {
+          "id": "MINI",
+          "threshold": 12,
+          "cf_prob": 0.0009383363475157457,
+          "mc_prob": 0.000908,
+          "abs_err": 0.00003033634751574573
+        },
+        {
+          "id": "MINOR",
+          "threshold": 15,
+          "cf_prob": 0.03410454434774518,
+          "mc_prob": 0.03454,
+          "abs_err": 0.00043545565225482086
+        },
+        {
+          "id": "MAJOR",
+          "threshold": 18,
+          "cf_prob": 0.3367121584777376,
+          "mc_prob": 0.335044,
+          "abs_err": 0.0016681584777376024
+        },
+        {
+          "id": "GRAND",
+          "threshold": 20,
+          "cf_prob": 0.628215805340445,
+          "mc_prob": 0.629484,
+          "abs_err": 0.0012681946595550775
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 250
+    },
+    {
+      "name": "D_long_respin_r8",
+      "description": "5×4 grid, 4 tiers, reset, p=0.10, R0=8 (endurance)",
+      "config": {
+        "gridSize": 20,
+        "initialRespins": 8,
+        "pLand": 0.1,
+        "initialFilled": 6,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 4
+          },
+          {
+            "valueX": 5,
+            "weight": 2
+          },
+          {
+            "valueX": 10,
+            "weight": 1
+          }
+        ],
+        "tiers": [
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "payoutX": 25
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "payoutX": 100
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "payoutX": 500
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "payoutX": 2000
+          }
+        ],
+        "resetOnLanding": true
+      },
+      "closed_form": {
+        "expectedTotalX": 1144.4054658619496,
+        "expectedCashValueX": 33.9604093947824,
+        "expectedTierPayoutX": 1110.4450564671672,
+        "expectedFilled": 18.984862415652124,
+        "expectedRespins": 23.97775642558394,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.0005569558894566035
+          },
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "probability": 0.007431981470653348
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "probability": 0.10408636826182148
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "probability": 0.45066584576795243
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "probability": 0.4372588486101212
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 6,
+            "probability": 0.000007501723576108305
+          },
+          {
+            "filled": 7,
+            "probability": 0.000008041059923699693
+          },
+          {
+            "filled": 8,
+            "probability": 0.000022686785289530813
+          },
+          {
+            "filled": 9,
+            "probability": 0.0000558272619172248
+          },
+          {
+            "filled": 10,
+            "probability": 0.00013511197431351676
+          },
+          {
+            "filled": 11,
+            "probability": 0.0003277870844365231
+          },
+          {
+            "filled": 12,
+            "probability": 0.0007962216934598465
+          },
+          {
+            "filled": 13,
+            "probability": 0.0019348962067861329
+          },
+          {
+            "filled": 14,
+            "probability": 0.0047008635704073685
+          },
+          {
+            "filled": 15,
+            "probability": 0.011399613118460043
+          },
+          {
+            "filled": 16,
+            "probability": 0.027481752393143054
+          },
+          {
+            "filled": 17,
+            "probability": 0.06520500275021839
+          },
+          {
+            "filled": 18,
+            "probability": 0.14841532403017346
+          },
+          {
+            "filled": 19,
+            "probability": 0.302250521737779
+          },
+          {
+            "filled": 20,
+            "probability": 0.4372588486101212
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 1145.27484,
+        "expectedCashValueX": 33.95014,
+        "expectedTierPayoutX": 1111.3247,
+        "expectedFilled": 18.98542,
+        "expectedRespins": 23.974472,
+        "tierProbabilities": {
+          "NONE": 0.000568,
+          "MINI": 0.007372,
+          "MINOR": 0.104184,
+          "MAJOR": 0.45002,
+          "GRAND": 0.437856
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.0007596731787677097,
+        "cash_ev_rel": 0.0003023931385227305,
+        "tier_ev_rel": 0.0007921540356361581,
+        "filled_rel": 0.00002936994409912794,
+        "tier_prob_max_abs": 0.0006458457679524576
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.0005569558894566035,
+          "mc_prob": 0.000568,
+          "abs_err": 0.000011044110543396578
+        },
+        {
+          "id": "MINI",
+          "threshold": 12,
+          "cf_prob": 0.007431981470653348,
+          "mc_prob": 0.007372,
+          "abs_err": 0.00005998147065334764
+        },
+        {
+          "id": "MINOR",
+          "threshold": 15,
+          "cf_prob": 0.10408636826182148,
+          "mc_prob": 0.104184,
+          "abs_err": 0.00009763173817851911
+        },
+        {
+          "id": "MAJOR",
+          "threshold": 18,
+          "cf_prob": 0.45066584576795243,
+          "mc_prob": 0.45002,
+          "abs_err": 0.0006458457679524576
+        },
+        {
+          "id": "GRAND",
+          "threshold": 20,
+          "cf_prob": 0.4372588486101212,
+          "mc_prob": 0.437856,
+          "abs_err": 0.0005971513898788139
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 373
+    },
+    {
+      "name": "E_big_grid_5x7",
+      "description": "5×7=35 grid, 3 tiers, reset, p=0.10, R0=3",
+      "config": {
+        "gridSize": 35,
+        "initialRespins": 3,
+        "pLand": 0.1,
+        "initialFilled": 8,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 4
+          },
+          {
+            "valueX": 5,
+            "weight": 2
+          },
+          {
+            "valueX": 10,
+            "weight": 1
+          }
+        ],
+        "tiers": [
+          {
+            "id": "A",
+            "threshold": 18,
+            "payoutX": 50
+          },
+          {
+            "id": "B",
+            "threshold": 26,
+            "payoutX": 250
+          },
+          {
+            "id": "C",
+            "threshold": 35,
+            "payoutX": 1500
+          }
+        ],
+        "resetOnLanding": true
+      },
+      "closed_form": {
+        "expectedTotalX": 350.0452478783125,
+        "expectedCashValueX": 58.561021205198074,
+        "expectedTierPayoutX": 291.48422667311445,
+        "expectedFilled": 30.390978696105208,
+        "expectedRespins": 18.155346079261214,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.005029809856533218
+          },
+          {
+            "id": "A",
+            "threshold": 18,
+            "probability": 0.07915830419661402
+          },
+          {
+            "id": "B",
+            "threshold": 26,
+            "probability": 0.8689532139656053
+          },
+          {
+            "id": "C",
+            "threshold": 35,
+            "probability": 0.04685867198125498
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 8,
+            "probability": 0.00019662705047555313
+          },
+          {
+            "filled": 9,
+            "probability": 0.00004994792834680447
+          },
+          {
+            "filled": 10,
+            "probability": 0.00011263545272175617
+          },
+          {
+            "filled": 11,
+            "probability": 0.00018492401957940973
+          },
+          {
+            "filled": 12,
+            "probability": 0.000265999989612522
+          },
+          {
+            "filled": 13,
+            "probability": 0.00037268049351010167
+          },
+          {
+            "filled": 14,
+            "probability": 0.0005262697731395873
+          },
+          {
+            "filled": 15,
+            "probability": 0.0007475068847785019
+          },
+          {
+            "filled": 16,
+            "probability": 0.0010626451979554464
+          },
+          {
+            "filled": 17,
+            "probability": 0.0015105730664135358
+          },
+          {
+            "filled": 18,
+            "probability": 0.002147800078384242
+          },
+          {
+            "filled": 19,
+            "probability": 0.00305444465574584
+          },
+          {
+            "filled": 20,
+            "probability": 0.004343489416067829
+          },
+          {
+            "filled": 21,
+            "probability": 0.006173659552137439
+          },
+          {
+            "filled": 22,
+            "probability": 0.00876603821903579
+          },
+          {
+            "filled": 23,
+            "probability": 0.012424279703493399
+          },
+          {
+            "filled": 24,
+            "probability": 0.017556461446293557
+          },
+          {
+            "filled": 25,
+            "probability": 0.024692131125455936
+          },
+          {
+            "filled": 26,
+            "probability": 0.03447877118558282
+          },
+          {
+            "filled": 27,
+            "probability": 0.047623901059822824
+          },
+          {
+            "filled": 28,
+            "probability": 0.06471786366555929
+          },
+          {
+            "filled": 29,
+            "probability": 0.08582794205915567
+          },
+          {
+            "filled": 30,
+            "probability": 0.10971927270974888
+          },
+          {
+            "filled": 31,
+            "probability": 0.13262513858827973
+          },
+          {
+            "filled": 32,
+            "probability": 0.1469126764269414
+          },
+          {
+            "filled": 33,
+            "probability": 0.14122534323637798
+          },
+          {
+            "filled": 34,
+            "probability": 0.10582230503413667
+          },
+          {
+            "filled": 35,
+            "probability": 0.04685867198125498
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 350.6328,
+        "expectedCashValueX": 58.5984,
+        "expectedTierPayoutX": 292.0344,
+        "expectedFilled": 30.401708,
+        "expectedRespins": 18.160196,
+        "tierProbabilities": {
+          "NONE": 0.004908,
+          "A": 0.078868,
+          "B": 0.868996,
+          "C": 0.047228
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.0016785033513487507,
+        "cash_ev_rel": 0.000638287960705957,
+        "tier_ev_rel": 0.0018874891899469707,
+        "filled_rel": 0.0003530423946553116,
+        "tier_prob_max_abs": 0.0003693280187450215
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.005029809856533218,
+          "mc_prob": 0.004908,
+          "abs_err": 0.00012180985653321812
+        },
+        {
+          "id": "A",
+          "threshold": 18,
+          "cf_prob": 0.07915830419661402,
+          "mc_prob": 0.078868,
+          "abs_err": 0.00029030419661402185
+        },
+        {
+          "id": "B",
+          "threshold": 26,
+          "cf_prob": 0.8689532139656053,
+          "mc_prob": 0.868996,
+          "abs_err": 0.00004278603439467066
+        },
+        {
+          "id": "C",
+          "threshold": 35,
+          "cf_prob": 0.04685867198125498,
+          "mc_prob": 0.047228,
+          "abs_err": 0.0003693280187450215
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 624
+    },
+    {
+      "name": "F_heavy_tail_coin",
+      "description": "5×4 grid, 4 tiers, reset, p=0.15, R0=3, Pareto-like coin dist",
+      "config": {
+        "gridSize": 20,
+        "initialRespins": 3,
+        "pLand": 0.15,
+        "initialFilled": 6,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 50
+          },
+          {
+            "valueX": 2,
+            "weight": 20
+          },
+          {
+            "valueX": 5,
+            "weight": 8
+          },
+          {
+            "valueX": 10,
+            "weight": 3
+          },
+          {
+            "valueX": 25,
+            "weight": 1
+          },
+          {
+            "valueX": 100,
+            "weight": 0.2
+          }
+        ],
+        "tiers": [
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "payoutX": 25
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "payoutX": 100
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "payoutX": 500
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "payoutX": 2000
+          }
+        ],
+        "resetOnLanding": true
+      },
+      "closed_form": {
+        "expectedTotalX": 653.8075683070286,
+        "expectedCashValueX": 29.188841346806065,
+        "expectedTierPayoutX": 624.6187269602226,
+        "expectedFilled": 17.70401345710954,
+        "expectedRespins": 11.900118732265126,
+        "tierProbabilities": [
+          {
+            "id": "NONE",
+            "threshold": 0,
+            "probability": 0.01521402341683712
+          },
+          {
+            "id": "MINI",
+            "threshold": 12,
+            "probability": 0.06310595900663109
+          },
+          {
+            "id": "MINOR",
+            "threshold": 15,
+            "probability": 0.2887249506248424
+          },
+          {
+            "id": "MAJOR",
+            "threshold": 18,
+            "probability": 0.44782770065386795
+          },
+          {
+            "id": "GRAND",
+            "threshold": 20,
+            "probability": 0.1851273662978193
+          }
+        ],
+        "filledTerminationPmf": [
+          {
+            "filled": 6,
+            "probability": 0.0010854126530465602
+          },
+          {
+            "filled": 7,
+            "probability": 0.0004996062248704011
+          },
+          {
+            "filled": 8,
+            "probability": 0.0011893907741263442
+          },
+          {
+            "filled": 9,
+            "probability": 0.0021925155577860495
+          },
+          {
+            "filled": 10,
+            "probability": 0.0037711180847114878
+          },
+          {
+            "filled": 11,
+            "probability": 0.006475980122296276
+          },
+          {
+            "filled": 12,
+            "probability": 0.011158108550349275
+          },
+          {
+            "filled": 13,
+            "probability": 0.01918288901950342
+          },
+          {
+            "filled": 14,
+            "probability": 0.03276496143677839
+          },
+          {
+            "filled": 15,
+            "probability": 0.055245574297706504
+          },
+          {
+            "filled": 16,
+            "probability": 0.09087126747304099
+          },
+          {
+            "filled": 17,
+            "probability": 0.14260810885409492
+          },
+          {
+            "filled": 18,
+            "probability": 0.20441069369467055
+          },
+          {
+            "filled": 19,
+            "probability": 0.2434170069591974
+          },
+          {
+            "filled": 20,
+            "probability": 0.1851273662978193
+          }
+        ]
+      },
+      "monte_carlo": {
+        "expectedTotalX": 655.279876,
+        "expectedCashValueX": 29.140776,
+        "expectedTierPayoutX": 626.1391,
+        "expectedFilled": 17.705432,
+        "expectedRespins": 11.89468,
+        "tierProbabilities": {
+          "NONE": 0.01496,
+          "MINI": 0.063052,
+          "MINOR": 0.290108,
+          "MAJOR": 0.445472,
+          "GRAND": 0.186408
+        },
+        "spins": 250000
+      },
+      "checks": {
+        "total_ev_rel": 0.002251897598529942,
+        "cash_ev_rel": 0.0016467028010800214,
+        "tier_ev_rel": 0.0024340817432363087,
+        "filled_rel": 0.0000801254977519968,
+        "tier_prob_max_abs": 0.002355700653867976
+      },
+      "tier_checks": [
+        {
+          "id": "NONE",
+          "threshold": 0,
+          "cf_prob": 0.01521402341683712,
+          "mc_prob": 0.01496,
+          "abs_err": 0.00025402341683712117
+        },
+        {
+          "id": "MINI",
+          "threshold": 12,
+          "cf_prob": 0.06310595900663109,
+          "mc_prob": 0.063052,
+          "abs_err": 0.00005395900663109077
+        },
+        {
+          "id": "MINOR",
+          "threshold": 15,
+          "cf_prob": 0.2887249506248424,
+          "mc_prob": 0.290108,
+          "abs_err": 0.0013830493751575967
+        },
+        {
+          "id": "MAJOR",
+          "threshold": 18,
+          "cf_prob": 0.44782770065386795,
+          "mc_prob": 0.445472,
+          "abs_err": 0.002355700653867976
+        },
+        {
+          "id": "GRAND",
+          "threshold": 20,
+          "cf_prob": 0.1851273662978193,
+          "mc_prob": 0.186408,
+          "abs_err": 0.001280633702180678
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 263
+    }
+  ]
+}
