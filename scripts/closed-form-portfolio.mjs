@@ -86,6 +86,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusWheelRespin.js'));
   const { solvePickBonusNStageTree, simulatePickBonusNStageTree } =
     await import(join(REPO_ROOT, 'dist', 'features', 'pickBonusNStageTree.js'));
+  const { solveBonusTriggerWaitTime, simulateBonusTriggerWaitTime } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerWaitTime.js'));
 
   const showcase = [];
 
@@ -521,6 +523,22 @@ async function main() {
     showcase.push({ wave: 107, solver: 'Pick Bonus N-Stage Tree', metric: 'E[Y] per bonus', cf: cf.expectedPayoutX, mc: mc.observedMeanPayoutX, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W110: Bonus Trigger Wait Time ─────────────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      features: [
+        { label: 'free_spins',  triggerProbabilityPerSpin: 0.01 },
+        { label: 'wheel_bonus', triggerProbabilityPerSpin: 0.005 },
+        { label: 'pick_bonus',  triggerProbabilityPerSpin: 0.002 },
+      ],
+    };
+    const cf = solveBonusTriggerWaitTime(cfg);
+    const mc = simulateBonusTriggerWaitTime(cfg, 10_000, SEED);
+    const ok = relErr(cf.expectedAnyFeatureWaitTime, mc.observedMeanAnyFeatureWaitTime) < 0.05;
+    showcase.push({ wave: 110, solver: 'Bonus Trigger Wait Time', metric: 'E[T_any] spins', cf: cf.expectedAnyFeatureWaitTime, mc: mc.observedMeanAnyFeatureWaitTime, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
@@ -539,7 +557,7 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'CLOSED_FORM_PORTFOLIO.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# CLOSED_FORM_PORTFOLIO — 27 Closed-Form Math Kernels (Wave 49-107)');
+  md.push('# CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');

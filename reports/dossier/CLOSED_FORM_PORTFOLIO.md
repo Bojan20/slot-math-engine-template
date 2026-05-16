@@ -1,10 +1,10 @@
-# CLOSED_FORM_PORTFOLIO — 27 Closed-Form Math Kernels (Wave 49-107)
+# CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-16T06:17:59.007Z`
+Generated: `2026-05-16T06:27:55.257Z`
 
 ## Headline
 
-**27/27 solvers PASS** in single end-to-end runner.
+**28/28 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -40,6 +40,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 102 | Cluster Compound Variance | E[Y] per episode | 6.90000 | 6.90836 | ✅ |
 | 105 | Bonus Wheel + Respin Markov | E[V] final payout | 12.00000 | 11.99538 | ✅ |
 | 107 | Pick Bonus N-Stage Tree | E[Y] per bonus | 58.25000 | 56.07950 | ✅ |
+| 110 | Bonus Trigger Wait Time | E[T_any] spins | 59.10131 | 58.92050 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

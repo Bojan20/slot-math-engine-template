@@ -102,3 +102,6 @@ export * from './bonusWheelRespin.js';
 
 // W152 Wave 107: Pick Bonus N-Stage Tree (Faza 4.6 ext, post-W100 roadmap)
 export * from './pickBonusNStageTree.js';
+
+// W152 Wave 110: Bonus Trigger Wait Time Analyzer (Faza 4.6 ext, post-W100)
+export * from './bonusTriggerWaitTime.js';
