@@ -36,3 +36,6 @@ export * from './chargeMeter.js';
 
 // W152 Wave 51: Supermeter state-switch (Faza 12)
 export * from './supermeter.js';
+
+// W152 Wave 52: Sticky cash + reveal multiplier hybrid (Faza 12)
+export * from './stickyCashReveal.js';

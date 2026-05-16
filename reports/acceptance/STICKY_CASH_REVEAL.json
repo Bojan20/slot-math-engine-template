@@ -1,0 +1,479 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "STICKY_CASH_REVEAL",
+  "generated_utc": "2026-05-16T01:58:31.710Z",
+  "episodes_per_config": 100000,
+  "seed": 12345,
+  "tolerances": {
+    "ey_rel": 0.02,
+    "var_rel": 0.1,
+    "occ_rel": 0.01,
+    "p0_abs": 0.01,
+    "em_rel": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_classic_5x4_10spins",
+      "description": "5×4 grid, 10 spins, p=0.10, base cash, 5-tier reveal",
+      "cfg": {
+        "gridSize": 20,
+        "spinsInWindow": 10,
+        "pCapturePerEmptyPerSpin": 0.1,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 4
+          },
+          {
+            "multiplier": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.6513215599,
+        "expectedOccupiedCells": 13.026431198,
+        "expectedCashPerOccupiedCell": 1.7,
+        "expectedRevealMultiplier": 3,
+        "varianceRevealMultiplier": 99.1,
+        "expectedTotalCash": 22.144933036599998,
+        "varianceTotalCash": 31.493751191625094,
+        "expectedPayoutPerEpisode": 66.4347991098,
+        "variancePayoutPerEpisode": 52002.922170088525,
+        "stdDevPayoutPerEpisode": 228.04149221158968,
+        "probZeroPayout": 7.05507910865535e-10
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 66.71646,
+        "observedVariancePayout": 52284.061025068404,
+        "observedStdDevPayout": 228.65708172953754,
+        "observedMeanOccupiedCells": 13.02118,
+        "observedZeroPayoutFraction": 0,
+        "observedMeanRevealMult": 3.01457,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.004239658943417391,
+        "var_rel": 0.005406212636673467,
+        "occ_rel": 0.00040311869921871494,
+        "p0_abs": 7.05507910865535e-10,
+        "em_rel": 0.004856666666666658
+      },
+      "pass": true,
+      "elapsed_ms": 181
+    },
+    {
+      "name": "B_short_window_low_p",
+      "description": "5×4, 5 spins, p=0.05 (low fill rate)",
+      "cfg": {
+        "gridSize": 20,
+        "spinsInWindow": 5,
+        "pCapturePerEmptyPerSpin": 0.05,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 4
+          },
+          {
+            "multiplier": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.22621906250000023,
+        "expectedOccupiedCells": 4.524381250000005,
+        "expectedCashPerOccupiedCell": 1.7,
+        "expectedRevealMultiplier": 3,
+        "varianceRevealMultiplier": 99.1,
+        "expectedTotalCash": 7.691448125000008,
+        "varianceTotalCash": 16.49692066202171,
+        "expectedPayoutPerEpisode": 23.074344375000024,
+        "variancePayoutPerEpisode": 7645.9120126875505,
+        "stdDevPayoutPerEpisode": 87.4409058318105,
+        "probZeroPayout": 0.00592052922033399
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 23.28127,
+        "observedVariancePayout": 7708.193917187101,
+        "observedStdDevPayout": 87.79632063581651,
+        "observedMeanOccupiedCells": 4.52288,
+        "observedZeroPayoutFraction": 0.00583,
+        "observedMeanRevealMult": 3.02304,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.008967779176606622,
+        "var_rel": 0.00814577834484629,
+        "occ_rel": 0.0003318133280666595,
+        "p0_abs": 0.00009052922033398955,
+        "em_rel": 0.007679999999999983
+      },
+      "pass": true,
+      "elapsed_ms": 109
+    },
+    {
+      "name": "C_long_window_high_p",
+      "description": "5×4, 20 spins, p=0.20 (near-saturation)",
+      "cfg": {
+        "gridSize": 20,
+        "spinsInWindow": 20,
+        "pCapturePerEmptyPerSpin": 0.2,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 4
+          },
+          {
+            "multiplier": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.9884707849539315,
+        "expectedOccupiedCells": 19.76941569907863,
+        "expectedCashPerOccupiedCell": 1.7,
+        "expectedRevealMultiplier": 3,
+        "varianceRevealMultiplier": 99.1,
+        "expectedTotalCash": 33.60800668843367,
+        "varianceTotalCash": 28.53358182754798,
+        "expectedPayoutPerEpisode": 100.824020065301,
+        "variancePayoutPerEpisode": 115017.74325032532,
+        "stdDevPayoutPerEpisode": 339.14265914261705,
+        "probZeroPayout": 1.7218479456387234e-39
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 100.97433,
+        "observedVariancePayout": 116617.7105510511,
+        "observedStdDevPayout": 341.49335359718367,
+        "observedMeanOccupiedCells": 19.76713,
+        "observedZeroPayoutFraction": 0,
+        "observedMeanRevealMult": 3.00004,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.0014908147344416922,
+        "var_rel": 0.013910612880341445,
+        "occ_rel": 0.0001156179380017368,
+        "p0_abs": 1.7218479456387234e-39,
+        "em_rel": 0.000013333333333272654
+      },
+      "pass": true,
+      "elapsed_ms": 250
+    },
+    {
+      "name": "D_big_grid_5x7",
+      "description": "5×7=35 grid, 10 spins, p=0.10",
+      "cfg": {
+        "gridSize": 35,
+        "spinsInWindow": 10,
+        "pCapturePerEmptyPerSpin": 0.1,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 4
+          },
+          {
+            "multiplier": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.6513215599,
+        "expectedOccupiedCells": 22.7962545965,
+        "expectedCashPerOccupiedCell": 1.7,
+        "expectedRevealMultiplier": 3,
+        "varianceRevealMultiplier": 99.1,
+        "expectedTotalCash": 38.75363281405,
+        "varianceTotalCash": 55.11406458534391,
+        "expectedPayoutPerEpisode": 116.26089844215,
+        "variancePayoutPerEpisode": 154790.57635963938,
+        "stdDevPayoutPerEpisode": 393.4343355118353,
+        "probZeroPayout": 9.6578021405918e-17
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 117.30281,
+        "observedVariancePayout": 157501.6666361039,
+        "observedStdDevPayout": 396.86479641825616,
+        "observedMeanOccupiedCells": 22.78946,
+        "observedZeroPayoutFraction": 0,
+        "observedMeanRevealMult": 3.03582,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.00896183989467828,
+        "var_rel": 0.017514569298880314,
+        "occ_rel": 0.0002980575809608608,
+        "p0_abs": 9.6578021405918e-17,
+        "em_rel": 0.011940000000000062
+      },
+      "pass": true,
+      "elapsed_ms": 359
+    },
+    {
+      "name": "E_heavy_tail_cash",
+      "description": "5×4, 10 spins, p=0.10, Pareto-like cash",
+      "cfg": {
+        "gridSize": 20,
+        "spinsInWindow": 10,
+        "pCapturePerEmptyPerSpin": 0.1,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 50
+          },
+          {
+            "valueX": 2,
+            "weight": 20
+          },
+          {
+            "valueX": 5,
+            "weight": 8
+          },
+          {
+            "valueX": 10,
+            "weight": 3
+          },
+          {
+            "valueX": 25,
+            "weight": 1
+          },
+          {
+            "valueX": 100,
+            "weight": 0.2
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 4
+          },
+          {
+            "multiplier": 100,
+            "weight": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.6513215599,
+        "expectedOccupiedCells": 13.026431198,
+        "expectedCashPerOccupiedCell": 2.4939172749391725,
+        "expectedRevealMultiplier": 3,
+        "varianceRevealMultiplier": 99.1,
+        "expectedTotalCash": 32.486841795498776,
+        "varianceTotalCash": 463.0579142606314,
+        "expectedPayoutPerEpisode": 97.46052538649633,
+        "variancePayoutPerEpisode": 154646.19411528966,
+        "stdDevPayoutPerEpisode": 393.2508030701141,
+        "probZeroPayout": 7.05507910865535e-10
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 98.65714,
+        "observedVariancePayout": 165970.05608702038,
+        "observedStdDevPayout": 407.3942268700188,
+        "observedMeanOccupiedCells": 13.02118,
+        "observedZeroPayoutFraction": 0,
+        "observedMeanRevealMult": 3.01457,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.012277941338385877,
+        "var_rel": 0.0732243172003878,
+        "occ_rel": 0.00040311869921871494,
+        "p0_abs": 7.05507910865535e-10,
+        "em_rel": 0.004856666666666658
+      },
+      "pass": true,
+      "elapsed_ms": 219
+    },
+    {
+      "name": "F_flat_reveal",
+      "description": "5×4, 10 spins, p=0.10, 3-tier flat reveal (1/2/3×)",
+      "cfg": {
+        "gridSize": 20,
+        "spinsInWindow": 10,
+        "pCapturePerEmptyPerSpin": 0.1,
+        "cashValueDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "revealMultiplierDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 50
+          },
+          {
+            "multiplier": 2,
+            "weight": 30
+          },
+          {
+            "multiplier": 3,
+            "weight": 20
+          }
+        ]
+      },
+      "closed_form": {
+        "pCellOccupied": 0.6513215599,
+        "expectedOccupiedCells": 13.026431198,
+        "expectedCashPerOccupiedCell": 1.7,
+        "expectedRevealMultiplier": 1.7,
+        "varianceRevealMultiplier": 0.61,
+        "expectedTotalCash": 22.144933036599998,
+        "varianceTotalCash": 31.493751191625094,
+        "expectedPayoutPerEpisode": 37.64638616222,
+        "variancePayoutPerEpisode": 409.37094527994157,
+        "stdDevPayoutPerEpisode": 20.232917369473476,
+        "probZeroPayout": 7.05507910865535e-10
+      },
+      "monte_carlo": {
+        "observedMeanPayout": 37.70615,
+        "observedVariancePayout": 411.10356217749995,
+        "observedStdDevPayout": 20.27568894458336,
+        "observedMeanOccupiedCells": 13.02118,
+        "observedZeroPayoutFraction": 0,
+        "observedMeanRevealMult": 1.70117,
+        "episodes": 100000
+      },
+      "checks": {
+        "ey_rel": 0.0015875053058872297,
+        "var_rel": 0.004232388540358099,
+        "occ_rel": 0.00040311869921871494,
+        "p0_abs": 7.05507910865535e-10,
+        "em_rel": 0.0006882352941177149
+      },
+      "pass": true,
+      "elapsed_ms": 208
+    }
+  ]
+}
