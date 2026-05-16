@@ -1,0 +1,429 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "STICKY_CASH_COLLECTOR",
+  "generated_utc": "2026-05-16T03:00:13.742Z",
+  "episodes_per_config": 10000,
+  "seed": 12345,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "collectors_rel": 0.05,
+    "stranded_rel": 0.15
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_short_N50_classic",
+      "description": "N=50, p_cash=0.15, p_collect=0.05, base dists",
+      "spins": 50,
+      "cfg": {
+        "pCash": 0.15,
+        "pCollect": 0.05,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 0.5355000000000001,
+        "expectedStickyTotalAtCollector": 5.1,
+        "expectedPayoutPerCollector": 10.709999999999999
+      },
+      "closed_form": {
+        "expectedPayoutInN": 16.88908068521359,
+        "expectedPayoutPerSpinInN": 0.3377816137042718,
+        "asymptoticRtpInN": 26.775000000000002,
+        "efficiencyVsAsymptotic": 0.6307779901106849,
+        "expectedStrandedAtEnd": 4.707580626088758
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 17.0255,
+        "observedVariancePayoutInN": 446.9354497499999,
+        "observedStdDevPayoutInN": 21.140847895720736,
+        "observedMeanCollectors": 2.5256,
+        "observedMeanStrandedAtEnd": 4.7349,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.008077367698636635,
+        "collectors_rel": 0.010239999999999938,
+        "stranded_rel": 0.0058032726534393625
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "B_long_N500_classic",
+      "description": "N=500 (asymptotic regime)",
+      "spins": 500,
+      "cfg": {
+        "pCash": 0.15,
+        "pCollect": 0.05,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 0.5355000000000001,
+        "expectedStickyTotalAtCollector": 5.1,
+        "expectedPayoutPerCollector": 10.709999999999999
+      },
+      "closed_form": {
+        "expectedPayoutInN": 257.0400000000777,
+        "expectedPayoutPerSpinInN": 0.5140800000001554,
+        "asymptoticRtpInN": 267.75,
+        "efficiencyVsAsymptotic": 0.9600000000002903,
+        "expectedStrandedAtEnd": 5.099999999962892
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 257.5132,
+        "observedVariancePayoutInN": 8709.634225760019,
+        "observedStdDevPayoutInN": 93.32542111214939,
+        "observedMeanCollectors": 25.0112,
+        "observedMeanStrandedAtEnd": 5.106,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.0018409586053614805,
+        "collectors_rel": 0.00044799999999995066,
+        "stranded_rel": 0.0011764705955198214
+      },
+      "pass": true,
+      "elapsed_ms": 71
+    },
+    {
+      "name": "C_high_collect_rate",
+      "description": "p_collect=0.20 (frequent collections)",
+      "spins": 100,
+      "cfg": {
+        "pCash": 0.3,
+        "pCollect": 0.2,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 1.0710000000000002,
+        "expectedStickyTotalAtCollector": 2.55,
+        "expectedPayoutPerCollector": 5.3549999999999995
+      },
+      "closed_form": {
+        "expectedPayoutInN": 101.74500000109089,
+        "expectedPayoutPerSpinInN": 1.0174500000109088,
+        "asymptoticRtpInN": 107.10000000000001,
+        "efficiencyVsAsymptotic": 0.9500000000101856,
+        "expectedStrandedAtEnd": 2.5499999994805567
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 101.9678,
+        "observedVariancePayoutInN": 2155.9407631600006,
+        "observedStdDevPayoutInN": 46.432109182762744,
+        "observedMeanCollectors": 20.0064,
+        "observedMeanStrandedAtEnd": 2.5178,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.0021897881852348663,
+        "collectors_rel": 0.00031999999999996474,
+        "stranded_rel": 0.012627450779261215
+      },
+      "pass": true,
+      "elapsed_ms": 26
+    },
+    {
+      "name": "D_rare_collector",
+      "description": "p_collect=0.01 (rare collections, big build-ups)",
+      "spins": 200,
+      "cfg": {
+        "pCash": 0.3,
+        "pCollect": 0.01,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 1.0710000000000002,
+        "expectedStickyTotalAtCollector": 51,
+        "expectedPayoutPerCollector": 107.10000000000001
+      },
+      "closed_form": {
+        "expectedPayoutInN": 121.44922317728769,
+        "expectedPayoutPerSpinInN": 0.6072461158864385,
+        "asymptoticRtpInN": 214.20000000000002,
+        "efficiencyVsAsymptotic": 0.5669898374289808,
+        "expectedStrandedAtEnd": 44.167036582243824
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 120.7675,
+        "observedVariancePayoutInN": 18716.047443749998,
+        "observedStdDevPayoutInN": 136.80660599455715,
+        "observedMeanCollectors": 2.0001,
+        "observedMeanStrandedAtEnd": 43.556,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.0056132362105975435,
+        "collectors_rel": 0.000050000000000105516,
+        "stranded_rel": 0.01383467466978479
+      },
+      "pass": true,
+      "elapsed_ms": 34
+    },
+    {
+      "name": "E_heavy_mult",
+      "description": "Heavy-tail collector multipliers (up to 200×)",
+      "spins": 100,
+      "cfg": {
+        "pCash": 0.2,
+        "pCollect": 0.05,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 40
+          },
+          {
+            "multiplier": 3,
+            "weight": 30
+          },
+          {
+            "multiplier": 10,
+            "weight": 20
+          },
+          {
+            "multiplier": 50,
+            "weight": 8
+          },
+          {
+            "multiplier": 200,
+            "weight": 2
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 3.8420000000000005,
+        "expectedStickyTotalAtCollector": 6.8,
+        "expectedPayoutPerCollector": 76.84
+      },
+      "closed_form": {
+        "expectedPayoutInN": 307.8149334652902,
+        "expectedPayoutPerSpinInN": 3.078149334652902,
+        "asymptoticRtpInN": 384.20000000000005,
+        "efficiencyVsAsymptotic": 0.8011841058440661,
+        "expectedStrandedAtEnd": 6.759740401301719
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 309.2544,
+        "observedVariancePayoutInN": 335735.52588064,
+        "observedStdDevPayoutInN": 579.4268943366712,
+        "observedMeanCollectors": 4.9908,
+        "observedMeanStrandedAtEnd": 6.7588,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.004676402533511529,
+        "collectors_rel": 0.001839999999999975,
+        "stranded_rel": 0.0001391179610296595
+      },
+      "pass": true,
+      "elapsed_ms": 17
+    },
+    {
+      "name": "F_tiny_episode",
+      "description": "N=20 (transient-dominated)",
+      "spins": 20,
+      "cfg": {
+        "pCash": 0.2,
+        "pCollect": 0.1,
+        "cashDistribution": [
+          {
+            "valueX": 1,
+            "weight": 6
+          },
+          {
+            "valueX": 2,
+            "weight": 3
+          },
+          {
+            "valueX": 5,
+            "weight": 1
+          }
+        ],
+        "multDistribution": [
+          {
+            "multiplier": 1,
+            "weight": 60
+          },
+          {
+            "multiplier": 2,
+            "weight": 25
+          },
+          {
+            "multiplier": 5,
+            "weight": 10
+          },
+          {
+            "multiplier": 10,
+            "weight": 5
+          }
+        ]
+      },
+      "steady_state": {
+        "longRunRtpPerSpin": 0.7140000000000001,
+        "expectedStickyTotalAtCollector": 3.4,
+        "expectedPayoutPerCollector": 7.14
+      },
+      "closed_form": {
+        "expectedPayoutInN": 8.008057313776668,
+        "expectedPayoutPerSpinInN": 0.4004028656888334,
+        "asymptoticRtpInN": 14.28,
+        "efficiencyVsAsymptotic": 0.5607883272952848,
+        "expectedStrandedAtEnd": 2.9866393743920643
+      },
+      "monte_carlo": {
+        "observedMeanPayoutInN": 8.2051,
+        "observedVariancePayoutInN": 162.85423399,
+        "observedStdDevPayoutInN": 12.761435420437625,
+        "observedMeanCollectors": 2.0128,
+        "observedMeanStrandedAtEnd": 2.9814,
+        "episodes": 10000
+      },
+      "checks": {
+        "ey_rel": 0.02460555394431925,
+        "collectors_rel": 0.006399999999999961,
+        "stranded_rel": 0.0017542708493659162
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}

@@ -54,3 +54,6 @@ export * from './parallelScreens.js';
 
 // W152 Wave 59: Class-II bingo coordinator mode (Faza 12)
 export * from './classIIBingoCoordinator.js';
+
+// W152 Wave 60: Sticky-cash collector variant (Faza 12)
+export * from './stickyCashCollector.js';

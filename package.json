@@ -40,6 +40,7 @@
     "crash-multiplier-acceptance": "npm run build && node scripts/crash-multiplier-acceptance.mjs",
     "parallel-screens-acceptance": "npm run build && node scripts/parallel-screens-acceptance.mjs",
     "class-ii-bingo-acceptance": "npm run build && node scripts/class-ii-bingo-acceptance.mjs",
+    "sticky-cash-collector-acceptance": "npm run build && node scripts/sticky-cash-collector-acceptance.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",
     "test-coverage": "node scripts/test-coverage-report.mjs",
     "chi-squared-sizes": "node scripts/chi-squared-sizes-report.mjs",
