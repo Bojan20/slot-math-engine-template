@@ -185,6 +185,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 114 Sticky Wild Countdown Multiplier (W152 Wave 115)
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_WILD_COUNTDOWN_MULT.md' },
+  // REPORTS — Wave 116 Mystery Symbol Reveal Aggregator (W152 Wave 117)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MYSTERY_SYMBOL_REVEAL.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MYSTERY_SYMBOL_REVEAL.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

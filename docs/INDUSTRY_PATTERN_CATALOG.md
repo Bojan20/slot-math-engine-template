@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.16
+# Industry Pattern Catalog v2.17
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -33,6 +33,7 @@
 > - v2.14 (Wave 111) — adds 1 bonus-trigger wait-time kernel landed in Wave 110/111
 > - v2.15 (Wave 113) — adds 1 variable-reel-height ways kernel landed in Wave 112/113 (BTG Megaways patent expired 2023)
 > - v2.16 (Wave 115) — adds 1 sticky-wild countdown multiplier kernel landed in Wave 114/115 (Markov stationary)
+> - v2.17 (Wave 117) — adds 1 mystery-symbol reveal aggregator kernel landed in Wave 116/117 (Wald-style K ⊥ S)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -291,8 +292,20 @@ linearno ili geometrijski tokom aktive periode.
 |----|---------|-------------|---------------|------------------|
 | P-050 | **Sticky Wild Countdown Multiplier** | Discrete Markov chain sa (N+1) stanjima (idle + N active phases); **`π_0 = 1/(1 + N·p)`**, **`π_k = p/(1 + N·p)`** za k=1..N; M_k = base + (k−1)·step (linear) ili base·ratio^(k−1) (geometric); **`E[M per spin] = π_0 + π_1·ΣM_k`**; **`E[Y per spin] = E[V]·E[M]`** (cross-independence); Var[Y] = E[V²]·E[M²] − E[Y]²; cycle: 1/p + N | `src/features/stickyWildCountdownMultiplier.ts` | 34 vitest specs (Wave 114) + 6 PAR-style configs × 100K spins (Wave 115); portfolio entry W114 |
 
+## Pattern Catalog v2.17 — Mystery Symbol Reveal Aggregator Kernel (Wave 116/117)
+
+This pattern targets the **pre-spin mystery → in-spin uniform reveal
+family** — Pragmatic Big Bass Bonanza (i sve Pragmatic-licensed branded
+clones) / Wolf Gold (3-tier MMM jackpot) / NetEnt Wild-O-Tron 3000 /
+Yggdrasil Vault of Anubis style. K mystery positions land pre-spin sa
+K~countPmf; in-spin, sve K se reveal-uju kao ISTI simbol S~symbolPmf.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-051 | **Mystery Symbol Reveal Aggregator** | K ~ countPmf (discrete, k=0..K_max); S ~ symbolPmf (independent of K); per-spin payout **`Y = K · paytable[S]`**; cross-independence (K ⊥ S) Wald-style: **`E[Y] = E[K]·E[paytable[S]]`**, **`Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²`**; tail: P(K=0), P(K=K_max), **`probFullGridMaxSymbol = P(K=K_max)·P(S=max)`** joint; per-symbol conditional E[Y\|S=s] = E[K]·paytable[s] | `src/features/mysterySymbolReveal.ts` | 35 vitest specs (Wave 116) + 6 PAR-style configs × 100K spins (Wave 117); portfolio entry W116 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 30 P-021..P-050 kernels in ~10 seconds and emits unified report
+all 31 P-021..P-051 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

@@ -81,9 +81,9 @@ because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — 30 portfolio
-> solvers + 11 exact-enum fixtures + 90 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky configs =
-> **59 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — 31 portfolio
+> solvers + 11 exact-enum fixtures + 96 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery configs =
+> **60 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 

@@ -1,0 +1,474 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MYSTERY_SYMBOL_REVEAL",
+  "generated_utc": "2026-05-16T07:11:24.118Z",
+  "spins_per_config": 100000,
+  "seed": 3405682806,
+  "tolerances": {
+    "ek_rel": 0.03,
+    "ey_rel": 0.05,
+    "ey_rel_heavytail": 0.2,
+    "zero_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_pragmatic_big_bass_classic",
+      "description": "Pragmatic Big Bass Bonanza style: 0..10 fish + 6-tier payouts",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.4
+          },
+          {
+            "count": 1,
+            "probability": 0.25
+          },
+          {
+            "count": 2,
+            "probability": 0.15
+          },
+          {
+            "count": 3,
+            "probability": 0.1
+          },
+          {
+            "count": 4,
+            "probability": 0.05
+          },
+          {
+            "count": 5,
+            "probability": 0.03
+          },
+          {
+            "count": 8,
+            "probability": 0.015
+          },
+          {
+            "count": 10,
+            "probability": 0.005
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "2x",
+            "payoutX": 2,
+            "probability": 0.5
+          },
+          {
+            "label": "5x",
+            "payoutX": 5,
+            "probability": 0.25
+          },
+          {
+            "label": "10x",
+            "payoutX": 10,
+            "probability": 0.15
+          },
+          {
+            "label": "25x",
+            "payoutX": 25,
+            "probability": 0.07
+          },
+          {
+            "label": "100x",
+            "payoutX": 100,
+            "probability": 0.025
+          },
+          {
+            "label": "2000x",
+            "payoutX": 2000,
+            "probability": 0.005
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 1.3699999999999999,
+        "varianceCount": 2.8830999999999998,
+        "maxCount": 10,
+        "probZeroCount": 0.4,
+        "probMaxCount": 0.005,
+        "expectedPayoutPerPosition": 18,
+        "maxSymbolPayout": 2000,
+        "probHitMaxSymbol": 0.005,
+        "expectedPayoutPerSpin": 24.659999999999997,
+        "variancePayoutPerSpin": 96100.8044,
+        "probFullGridMaxSymbol": 0.000025,
+        "conditionalExpectedPayoutBySymbol": {
+          "2x": 2.7399999999999998,
+          "5x": 6.85,
+          "10x": 13.7,
+          "25x": 34.25,
+          "100x": 137,
+          "2000x": 2739.9999999999995
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 1.37761,
+        "observedMeanPayoutPerSpin": 24.58507,
+        "observedVariancePayoutPerSpin": 100941.9899230951,
+        "observedZeroCountFraction": 0.39845,
+        "observedMaxCountFraction": 0.00476,
+        "observedMaxPayoutSeen": 20000
+      },
+      "checks": {
+        "ek_rel": 0.005554744525547531,
+        "ey_rel": 0.0030385239253850303,
+        "zero_abs": 0.0015499999999999958
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_wolf_gold_3tier_jackpot",
+      "description": "Wolf Gold style: 3-tier Mini/Major/Mega jackpot, 5-position max",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.7
+          },
+          {
+            "count": 3,
+            "probability": 0.2
+          },
+          {
+            "count": 5,
+            "probability": 0.1
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "mini",
+            "payoutX": 50,
+            "probability": 0.85
+          },
+          {
+            "label": "major",
+            "payoutX": 200,
+            "probability": 0.12
+          },
+          {
+            "label": "mega",
+            "payoutX": 1000,
+            "probability": 0.03
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 1.1,
+        "varianceCount": 3.09,
+        "maxCount": 5,
+        "probZeroCount": 0.7,
+        "probMaxCount": 0.1,
+        "expectedPayoutPerPosition": 96.5,
+        "maxSymbolPayout": 1000,
+        "probHitMaxSymbol": 0.03,
+        "expectedPayoutPerSpin": 106.15,
+        "variancePayoutPerSpin": 147509.6775,
+        "probFullGridMaxSymbol": 0.003,
+        "conditionalExpectedPayoutBySymbol": {
+          "mini": 55.00000000000001,
+          "major": 220.00000000000003,
+          "mega": 1100
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 1.10922,
+        "observedMeanPayoutPerSpin": 106.396,
+        "observedVariancePayoutPerSpin": 149832.241184,
+        "observedZeroCountFraction": 0.69768,
+        "observedMaxCountFraction": 0.10113,
+        "observedMaxPayoutSeen": 5000
+      },
+      "checks": {
+        "ek_rel": 0.008381818181818186,
+        "ey_rel": 0.0023174752708431004,
+        "zero_abs": 0.0023199999999999887
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_high_freq_low_value",
+      "description": "High-frequency mystery (E[K]≈3), low-value paytable",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 1,
+            "probability": 0.3
+          },
+          {
+            "count": 2,
+            "probability": 0.3
+          },
+          {
+            "count": 3,
+            "probability": 0.2
+          },
+          {
+            "count": 4,
+            "probability": 0.15
+          },
+          {
+            "count": 5,
+            "probability": 0.05
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "low_a",
+            "payoutX": 1,
+            "probability": 0.6
+          },
+          {
+            "label": "low_b",
+            "payoutX": 2,
+            "probability": 0.3
+          },
+          {
+            "label": "med",
+            "payoutX": 5,
+            "probability": 0.1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 2.35,
+        "varianceCount": 1.4274999999999984,
+        "maxCount": 5,
+        "probZeroCount": 0,
+        "probMaxCount": 0.05,
+        "expectedPayoutPerPosition": 1.7,
+        "maxSymbolPayout": 5,
+        "probHitMaxSymbol": 0.1,
+        "expectedPayoutPerSpin": 3.995,
+        "variancePayoutPerSpin": 13.924974999999993,
+        "probFullGridMaxSymbol": 0.005000000000000001,
+        "conditionalExpectedPayoutBySymbol": {
+          "low_a": 2.35,
+          "low_b": 4.7,
+          "med": 11.75
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 2.35562,
+        "observedMeanPayoutPerSpin": 3.9986,
+        "observedVariancePayoutPerSpin": 13.868158039999999,
+        "observedZeroCountFraction": 0,
+        "observedMaxCountFraction": 0.05085,
+        "observedMaxPayoutSeen": 25
+      },
+      "checks": {
+        "ek_rel": 0.00239148936170211,
+        "ey_rel": 0.0009011264080100245,
+        "zero_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_rare_jackpot_heavy_tail",
+      "description": "Rare jackpot heavy-tail: low-freq mystery + Mega payout (5000x)",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.9
+          },
+          {
+            "count": 1,
+            "probability": 0.06
+          },
+          {
+            "count": 5,
+            "probability": 0.03
+          },
+          {
+            "count": 12,
+            "probability": 0.01
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "small",
+            "payoutX": 5,
+            "probability": 0.85
+          },
+          {
+            "label": "med",
+            "payoutX": 50,
+            "probability": 0.12
+          },
+          {
+            "label": "big",
+            "payoutX": 500,
+            "probability": 0.025
+          },
+          {
+            "label": "mega",
+            "payoutX": 5000,
+            "probability": 0.005
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 0.32999999999999996,
+        "varianceCount": 2.1411000000000002,
+        "maxCount": 12,
+        "probZeroCount": 0.9,
+        "probMaxCount": 0.01,
+        "expectedPayoutPerPosition": 47.75,
+        "maxSymbolPayout": 5000,
+        "probHitMaxSymbol": 0.005,
+        "expectedPayoutPerSpin": 15.757499999999999,
+        "variancePayoutPerSpin": 295787.01369375,
+        "probFullGridMaxSymbol": 0.00005,
+        "conditionalExpectedPayoutBySymbol": {
+          "small": 1.65,
+          "med": 16.499999999999996,
+          "big": 164.99999999999997,
+          "mega": 1649.9999999999998
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 0.33646,
+        "observedMeanPayoutPerSpin": 16.85135,
+        "observedVariancePayoutPerSpin": 329295.1047531775,
+        "observedZeroCountFraction": 0.89887,
+        "observedMaxCountFraction": 0.01027,
+        "observedMaxPayoutSeen": 60000
+      },
+      "checks": {
+        "ek_rel": 0.019575757575757642,
+        "ey_rel": 0.06941773758527696,
+        "zero_abs": 0.0011300000000000754
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_single_symbol_deterministic",
+      "description": "Single symbol pmf (no symbol variance, only K varies)",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.5
+          },
+          {
+            "count": 2,
+            "probability": 0.3
+          },
+          {
+            "count": 5,
+            "probability": 0.2
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "only",
+            "payoutX": 10,
+            "probability": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 1.6,
+        "varianceCount": 3.6399999999999997,
+        "maxCount": 5,
+        "probZeroCount": 0.5,
+        "probMaxCount": 0.2,
+        "expectedPayoutPerPosition": 10,
+        "maxSymbolPayout": 10,
+        "probHitMaxSymbol": 1,
+        "expectedPayoutPerSpin": 16,
+        "variancePayoutPerSpin": 364,
+        "probFullGridMaxSymbol": 0.2,
+        "conditionalExpectedPayoutBySymbol": {
+          "only": 16
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 1.6095,
+        "observedMeanPayoutPerSpin": 16.095,
+        "observedVariancePayoutPerSpin": 364.17097500000006,
+        "observedZeroCountFraction": 0.49657,
+        "observedMaxCountFraction": 0.20088,
+        "observedMaxPayoutSeen": 50
+      },
+      "checks": {
+        "ek_rel": 0.005937499999999901,
+        "ey_rel": 0.005937499999999929,
+        "zero_abs": 0.0034299999999999886
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_zero_count_corner",
+      "description": "Corner: K=0 always → E[Y]=0",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 1
+          }
+        ],
+        "symbolPmf": [
+          {
+            "label": "unused_low",
+            "payoutX": 5,
+            "probability": 0.95
+          },
+          {
+            "label": "unused_jp",
+            "payoutX": 1000,
+            "probability": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedCount": 0,
+        "varianceCount": 0,
+        "maxCount": 0,
+        "probZeroCount": 1,
+        "probMaxCount": 1,
+        "expectedPayoutPerPosition": 54.75,
+        "maxSymbolPayout": 1000,
+        "probHitMaxSymbol": 0.05,
+        "expectedPayoutPerSpin": 0,
+        "variancePayoutPerSpin": 0,
+        "probFullGridMaxSymbol": 0.05,
+        "conditionalExpectedPayoutBySymbol": {
+          "unused_low": 0,
+          "unused_jp": 0
+        }
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanCount": 0,
+        "observedMeanPayoutPerSpin": 0,
+        "observedVariancePayoutPerSpin": 0,
+        "observedZeroCountFraction": 1,
+        "observedMaxCountFraction": 1,
+        "observedMaxPayoutSeen": 0
+      },
+      "checks": {
+        "ek_rel": 0,
+        "ey_rel": 0,
+        "zero_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
