@@ -206,3 +206,5 @@ jobs:
         run: npm run locked-reels-during-fs-acceptance
       - name: Tumble Multiplier with Cap acceptance (6/6 configs × 200K spins, Wave 138/139)
         run: npm run tumble-multiplier-cap-acceptance
+      - name: Adjacent Pays Aggregator acceptance (6/6 configs × 200K spins, Wave 140/141)
+        run: npm run adjacent-pays-aggregator-acceptance

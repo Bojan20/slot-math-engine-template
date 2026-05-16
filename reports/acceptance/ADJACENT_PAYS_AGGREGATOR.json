@@ -1,0 +1,456 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "ADJACENT_PAYS_AGGREGATOR",
+  "generated_utc": "2026-05-16T10:31:02.545Z",
+  "spins_per_config": 200000,
+  "seed": 3405644096,
+  "tolerances": {
+    "pay_rel": 0.06,
+    "hit_abs": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_aristocrat_buffalo_1024_adjacent",
+      "description": "Aristocrat Buffalo style: 1024-ways adjacent k_min=3",
+      "cfg": {
+        "reelCount": 5,
+        "paylineCount": 1024,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "BUFFALO",
+            "density": 0.04,
+            "paytable": [
+              0,
+              0,
+              50,
+              250,
+              2000
+            ]
+          },
+          {
+            "label": "EAGLE",
+            "density": 0.08,
+            "paytable": [
+              0,
+              0,
+              25,
+              100,
+              500
+            ]
+          },
+          {
+            "label": "WOLF",
+            "density": 0.1,
+            "paytable": [
+              0,
+              0,
+              15,
+              60,
+              300
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "paylineCount": 1024,
+        "minMatchLength": 3,
+        "expectedPayPerPayline": 0.10703768000000002,
+        "expectedPayPerSpin": 109.60658432000002,
+        "hitFrequencyPerPayline": 0.004440960000000001,
+        "hitFrequencyPerSpin": 4.547543040000001,
+        "variancePayPerSpin": 5872.031670712238,
+        "perSymbolRunDistribution": [
+          {
+            "label": "BUFFALO",
+            "density": 0.04,
+            "expectedPay": 0.01052672,
+            "hitFrequency": 0.00018688,
+            "variancePay": 1.1713451881660417
+          },
+          {
+            "label": "EAGLE",
+            "density": 0.08,
+            "expectedPay": 0.043560959999999996,
+            "hitFrequency": 0.0014540800000000002,
+            "variancePay": 2.4306144427638783
+          },
+          {
+            "label": "WOLF",
+            "density": 0.1,
+            "expectedPay": 0.05295000000000002,
+            "hitFrequency": 0.002800000000000001,
+            "variancePay": 2.1324462975000005
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 109.643175,
+        "observedHitRatePerSpin": 0.98963,
+        "observedMaxRunSeen": 5
+      },
+      "checks": {
+        "pay_rel": 0.00033383651380967407
+      },
+      "pass": true,
+      "elapsed_ms": 19923
+    },
+    {
+      "name": "B_nextgen_foxin_wins_25line",
+      "description": "NextGen Foxin' Wins style: 5-reel 25-line k_min=3",
+      "cfg": {
+        "reelCount": 5,
+        "paylineCount": 25,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "FOX",
+            "density": 0.1,
+            "paytable": [
+              0,
+              0,
+              10,
+              50,
+              500
+            ]
+          },
+          {
+            "label": "CARD_A",
+            "density": 0.12,
+            "paytable": [
+              0,
+              0,
+              5,
+              20,
+              100
+            ]
+          },
+          {
+            "label": "CARD_B",
+            "density": 0.15,
+            "paytable": [
+              0,
+              0,
+              2,
+              10,
+              50
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "paylineCount": 25,
+        "minMatchLength": 3,
+        "expectedPayPerPayline": 0.100539608,
+        "expectedPayPerSpin": 2.5134902,
+        "hitFrequencyPerPayline": 0.01668178,
+        "hitFrequencyPerSpin": 0.4170445,
+        "variancePayPerSpin": 100.51176863977219,
+        "perSymbolRunDistribution": [
+          {
+            "label": "FOX",
+            "density": 0.1,
+            "expectedPay": 0.04010000000000001,
+            "hitFrequency": 0.002800000000000001,
+            "variancePay": 3.209391990000001
+          },
+          {
+            "label": "CARD_A",
+            "density": 0.12,
+            "expectedPay": 0.031684607999999996,
+            "hitFrequency": 0.004769279999999999,
+            "variancePay": 0.5032956056158864
+          },
+          {
+            "label": "CARD_B",
+            "density": 0.15,
+            "expectedPay": 0.028754999999999996,
+            "hitFrequency": 0.009112499999999999,
+            "variancePay": 0.30778314997499995
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 2.487635,
+        "observedHitRatePerSpin": 0.341905,
+        "observedMaxRunSeen": 5
+      },
+      "checks": {
+        "pay_rel": 0.010286572830083076
+      },
+      "pass": true,
+      "elapsed_ms": 646
+    },
+    {
+      "name": "C_konami_6reel_kmin2",
+      "description": "Konami 6-reel adjacent k_min=2 (Roman Tribune family)",
+      "cfg": {
+        "reelCount": 6,
+        "paylineCount": 50,
+        "minMatchLength": 2,
+        "symbols": [
+          {
+            "label": "ROMAN",
+            "density": 0.12,
+            "paytable": [
+              0,
+              2,
+              5,
+              20,
+              100,
+              500
+            ]
+          },
+          {
+            "label": "EAGLE",
+            "density": 0.15,
+            "paytable": [
+              0,
+              1,
+              3,
+              10,
+              50,
+              200
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 6,
+        "paylineCount": 50,
+        "minMatchLength": 2,
+        "expectedPayPerPayline": 0.300148427637,
+        "expectedPayPerSpin": 15.00742138185,
+        "hitFrequencyPerPayline": 0.162336076191,
+        "hitFrequencyPerSpin": 8.11680380955,
+        "variancePayPerSpin": 140.38488671075487,
+        "perSymbolRunDistribution": [
+          {
+            "label": "ROMAN",
+            "density": 0.12,
+            "expectedPay": 0.161516224512,
+            "hitFrequency": 0.06456246681600002,
+            "variancePay": 1.7445964500833888
+          },
+          {
+            "label": "EAGLE",
+            "density": 0.15,
+            "expectedPay": 0.138632203125,
+            "hitFrequency": 0.09777360937499999,
+            "variancePay": 1.0631012841317085
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 15.005045,
+        "observedHitRatePerSpin": 0.999875,
+        "observedMaxRunSeen": 6
+      },
+      "checks": {
+        "pay_rel": 0.00015834711304052977
+      },
+      "pass": true,
+      "elapsed_ms": 1225
+    },
+    {
+      "name": "D_pragmatic_big_bass_5x3",
+      "description": "Pragmatic Big Bass adjacent variant 5-reel 10-line",
+      "cfg": {
+        "reelCount": 5,
+        "paylineCount": 10,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "HI",
+            "density": 0.15,
+            "paytable": [
+              0,
+              0,
+              5,
+              20,
+              100
+            ]
+          },
+          {
+            "label": "MID",
+            "density": 0.2,
+            "paytable": [
+              0,
+              0,
+              2,
+              10,
+              50
+            ]
+          },
+          {
+            "label": "LO",
+            "density": 0.25,
+            "paytable": [
+              0,
+              0,
+              1,
+              4,
+              10
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "paylineCount": 10,
+        "minMatchLength": 3,
+        "expectedPayPerPayline": 0.20855562500000002,
+        "expectedPayPerSpin": 2.0855562500000002,
+        "hitFrequencyPerPayline": 0.06897500000000001,
+        "hitFrequencyPerSpin": 0.6897500000000001,
+        "variancePayPerSpin": 26.44743610008399,
+        "perSymbolRunDistribution": [
+          {
+            "label": "HI",
+            "density": 0.15,
+            "expectedPay": 0.0656859375,
+            "hitFrequency": 0.009112499999999999,
+            "variancePay": 1.3037087951147461
+          },
+          {
+            "label": "MID",
+            "density": 0.2,
+            "expectedPay": 0.07744000000000004,
+            "hitFrequency": 0.020800000000000006,
+            "variancePay": 1.1216830464000005
+          },
+          {
+            "label": "LO",
+            "density": 0.25,
+            "expectedPay": 0.0654296875,
+            "hitFrequency": 0.0390625,
+            "variancePay": 0.21935176849365234
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 2.07322,
+        "observedHitRatePerSpin": 0.51001,
+        "observedMaxRunSeen": 5
+      },
+      "checks": {
+        "pay_rel": 0.005915088600463382
+      },
+      "pass": true,
+      "elapsed_ms": 313
+    },
+    {
+      "name": "E_corner_single_symbol_all_match",
+      "description": "Corner: 1 symbol density=1 → always max run",
+      "cfg": {
+        "reelCount": 5,
+        "paylineCount": 1,
+        "minMatchLength": 3,
+        "symbols": [
+          {
+            "label": "ONLY",
+            "density": 1,
+            "paytable": [
+              0,
+              0,
+              5,
+              20,
+              100
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "paylineCount": 1,
+        "minMatchLength": 3,
+        "expectedPayPerPayline": 100,
+        "expectedPayPerSpin": 100,
+        "hitFrequencyPerPayline": 1,
+        "hitFrequencyPerSpin": 1,
+        "variancePayPerSpin": 0,
+        "perSymbolRunDistribution": [
+          {
+            "label": "ONLY",
+            "density": 1,
+            "expectedPay": 100,
+            "hitFrequency": 1,
+            "variancePay": 0
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 100,
+        "observedHitRatePerSpin": 1,
+        "observedMaxRunSeen": 5
+      },
+      "checks": {
+        "pay_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "F_corner_kmin_equals_N",
+      "description": "Corner: k_min = N → only full-reel runs pay",
+      "cfg": {
+        "reelCount": 5,
+        "paylineCount": 20,
+        "minMatchLength": 5,
+        "symbols": [
+          {
+            "label": "X",
+            "density": 0.4,
+            "paytable": [
+              0,
+              0,
+              0,
+              0,
+              200
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "reelCount": 5,
+        "paylineCount": 20,
+        "minMatchLength": 5,
+        "expectedPayPerPayline": 2.048000000000001,
+        "expectedPayPerSpin": 40.96000000000002,
+        "hitFrequencyPerPayline": 0.010240000000000004,
+        "hitFrequencyPerSpin": 0.2048000000000001,
+        "variancePayPerSpin": 8108.113920000004,
+        "perSymbolRunDistribution": [
+          {
+            "label": "X",
+            "density": 0.4,
+            "expectedPay": 2.048000000000001,
+            "hitFrequency": 0.010240000000000004,
+            "variancePay": 405.4056960000002
+          }
+        ]
+      },
+      "monte_carlo": {
+        "spins": 200000,
+        "observedMeanPayPerSpin": 41.219,
+        "observedHitRatePerSpin": 0.18718,
+        "observedMaxRunSeen": 5
+      },
+      "checks": {
+        "pay_rel": 0.0063232421874994844
+      },
+      "pass": true,
+      "elapsed_ms": 449
+    }
+  ]
+}

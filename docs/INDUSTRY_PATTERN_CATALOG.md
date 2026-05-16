@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.27
+# Industry Pattern Catalog v2.28
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -44,6 +44,7 @@
 > - v2.25 (Wave 135) — adds 1 hold-and-win multi-tier value-based jackpot kernel landed in Wave 134/135 (Aristocrat Lightning Link / IGT Hold & Win; distinct od W49 filled-count ladder)
 > - v2.26 (Wave 137) — adds 1 locked/held reels during FS retrigger analyzer kernel landed in Wave 136/137 (Pragmatic Wolf Gold / Buffalo King lock-and-spin)
 > - v2.27 (Wave 139) — adds 1 tumble multiplier with cap kernel landed in Wave 138/139 (NetEnt Gonzo's Quest 5× / BTG Bonanza 10× / Pragmatic Sweet Bonanza Xmas 100× cascade-with-ceiling)
+> - v2.28 (Wave 141) — adds 1 adjacent pays aggregator kernel landed in Wave 140/141 (Aristocrat Buffalo / Konami Roman Tribune / NextGen Foxin' Wins pay-anywhere-on-consecutive-reels family)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -432,8 +433,22 @@ FS-only), and W114 (time-based countdown).
 |----|---------|-------------|---------------|------------------|
 | P-061 | **Tumble Multiplier with Cap** | L ~ Geometric(1−p): E[L]=p/(1−p); ladder M_k = min(base + (k−1)·step, M_max); **`k* = ceil((M_max − base)/step) + 1`** smallest k where ladder hits cap; **`E[Y] = E[V] · (A + B)`** where **A = Σ_{k=1..k*-1} M_k·p^k** (ramp) + **B = M_max · p^k\* / (1−p)** (saturated tail); Var[Y] via E[V²]·second-moment-mult − E[Y]²; truncationProbabilityRemaining for safety check | `src/features/tumbleMultiplierWithCap.ts` | 30 vitest specs (Wave 138) + 6 PAR-style configs × 200K spins (Wave 139); portfolio entry W138 |
 
+## Pattern Catalog v2.28 — Adjacent Pays Aggregator Kernel (Wave 140/141)
+
+This pattern targets the **pay-adjacent / pay-anywhere on consecutive
+reels family** — Aristocrat Buffalo (pay-adjacent classic), Konami Roman
+Tribune (6-reel adjacent k_min=2), NextGen Foxin' Wins (25-line
+adjacent), IGT Cleopatra adjacent variants, Pragmatic Big Bass families.
+Per payline, the longest run of consecutive reels showing symbol s can
+start at ANY reel position (not just reel 1 like LTR-anchored, not just
+reels 1 or N like W125 bi-directional).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-062 | **Adjacent Pays Aggregator** | DP on (position, current_run, max_run) state-space: per reel match (p_s) c→c+1 m→max(m, c+1); no-match (1-p_s) c→0; marginalize → **`P(longest_run_s = k)`** for k=0..N; per symbol: **`E[pay_s] = Σ_{k=k_min..N} paytable[s][k]·P(run=k)`**; per spin: × paylineCount; Var via E[pay²]−E[pay]²; cross-symbol indep approx | `src/features/adjacentPaysAggregator.ts` | 33 vitest specs (Wave 140) + 6 PAR-style configs × 200K spins (Wave 141); portfolio entry W140 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 41 P-021..P-061 kernels in ~10 seconds and emits unified report
+all 42 P-021..P-062 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
