@@ -90,3 +90,6 @@ export * from './anteBetTradeOff.js';
 
 // W152 Wave 97: Free Spins Lookback Multiplier Aggregator (Faza 4.3 ext)
 export * from './freeSpinsLookbackMultiplier.js';
+
+// W152 Wave 101: Symbol Upgrade Chain Markov (Faza 12 ext)
+export * from './symbolUpgradeChainMarkov.js';
