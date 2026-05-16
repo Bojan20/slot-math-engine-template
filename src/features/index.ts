@@ -126,3 +126,6 @@ export * from './megaSymbolExpansion.js';
 
 // W152 Wave 125: Bi-Directional Line Pay Aggregator (Faza 12 ext, post-W100)
 export * from './biDirectionalLinePay.js';
+
+// W152 Wave 127: Anticipation/Tease Reel Probability Tracker (Faza 12 ext, post-W100)
+export * from './anticipationReelTease.js';

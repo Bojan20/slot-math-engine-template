@@ -102,6 +102,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'megaSymbolExpansion.js'));
   const { solveBiDirectionalLinePay, simulateBiDirectionalLinePay } =
     await import(join(REPO_ROOT, 'dist', 'features', 'biDirectionalLinePay.js'));
+  const { solveAnticipationReelTease, simulateAnticipationReelTease } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'anticipationReelTease.js'));
 
   const showcase = [];
 
@@ -697,6 +699,21 @@ async function main() {
     const mc = simulateBiDirectionalLinePay(cfg, 50_000, SEED);
     const ok = relErr(cf.totalExpectedPayBidirectional, mc.observedTotalPayBidirectional) < 0.10;
     showcase.push({ wave: 125, solver: 'Bi-Directional Line Pay Aggregator', metric: 'E[pay_BD] per spin', cf: cf.totalExpectedPayBidirectional, mc: mc.observedTotalPayBidirectional, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W127: Anticipation/Tease Reel Probability Tracker ──────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      reelCount: 5,
+      scatterProbabilityPerReel: 0.2,
+      triggerScatterCount: 3,
+      anticipationThreshold: 0.5,
+    };
+    const cf = solveAnticipationReelTease(cfg);
+    const mc = simulateAnticipationReelTease(cfg, 50_000, SEED);
+    const ok = Math.abs(cf.probBonusTriggerPerSpin - mc.observedBonusTriggersPerSpin) < 0.02;
+    showcase.push({ wave: 127, solver: 'Anticipation/Tease Reel Probability', metric: 'P(trigger per spin)', cf: cf.probBonusTriggerPerSpin, mc: mc.observedBonusTriggersPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
