@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-16T06:55:16.954Z",
-  "solvers_total": 30,
-  "solvers_passed": 30,
+  "generated_utc": "2026-05-16T07:08:04.564Z",
+  "solvers_total": 31,
+  "solvers_passed": 31,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 45
     },
     {
       "wave": 50,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 53
+      "elapsed_ms": 52
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 75,
@@ -175,7 +175,7 @@
       "cf": 13.25,
       "mc": 13.27215,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 91,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 46
+      "elapsed_ms": 47
     },
     {
       "wave": 112,
@@ -272,9 +272,18 @@
       "solver": "Sticky Wild Countdown Multiplier",
       "metric": "E[Y] per spin",
       "cf": 1.1038461538461537,
-      "mc": 1.13844,
+      "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
+    },
+    {
+      "wave": 116,
+      "solver": "Mystery Symbol Reveal Aggregator",
+      "metric": "E[Y] per spin",
+      "cf": 38.325,
+      "mc": 37.68944,
+      "ok": true,
+      "elapsed_ms": 4
     }
   ]
 }

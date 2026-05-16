@@ -92,6 +92,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'variableReelHeightWays.js'));
   const { solveStickyWildCountdownMultiplier, simulateStickyWildCountdownMultiplier } =
     await import(join(REPO_ROOT, 'dist', 'features', 'stickyWildCountdownMultiplier.js'));
+  const { solveMysterySymbolReveal, simulateMysterySymbolReveal } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'mysterySymbolReveal.js'));
 
   const showcase = [];
 
@@ -586,6 +588,30 @@ async function main() {
     const mc = simulateStickyWildCountdownMultiplier(cfg, 50_000, SEED);
     const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.05;
     showcase.push({ wave: 114, solver: 'Sticky Wild Countdown Multiplier', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W116: Mystery Symbol Reveal Aggregator ─────────────────────────
+  {
+    const t0 = Date.now();
+    const cfg = {
+      countPmf: [
+        { count: 0, probability: 0.5 },
+        { count: 1, probability: 0.2 },
+        { count: 2, probability: 0.15 },
+        { count: 3, probability: 0.1 },
+        { count: 5, probability: 0.05 },
+      ],
+      symbolPmf: [
+        { label: 'low',    payoutX: 2,    probability: 0.5 },
+        { label: 'mid',    payoutX: 10,   probability: 0.3 },
+        { label: 'high',   payoutX: 50,   probability: 0.15 },
+        { label: 'jackpot', payoutX: 500,  probability: 0.05 },
+      ],
+    };
+    const cf = solveMysterySymbolReveal(cfg);
+    const mc = simulateMysterySymbolReveal(cfg, 50_000, SEED);
+    const ok = relErr(cf.expectedPayoutPerSpin, mc.observedMeanPayoutPerSpin) < 0.10;
+    showcase.push({ wave: 116, solver: 'Mystery Symbol Reveal Aggregator', metric: 'E[Y] per spin', cf: cf.expectedPayoutPerSpin, mc: mc.observedMeanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
