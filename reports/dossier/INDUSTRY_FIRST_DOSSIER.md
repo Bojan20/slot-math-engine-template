@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 8 industry-first acceptance proofs from Waves 33-40.
-> Generated: `2026-05-16T04:18:22.027Z` · repo SHA: `743d34dd207c`
+> Generated: `2026-05-16T04:48:16.754Z` · repo SHA: `6e3bedfe4c53`
 
-## Headline: **16/16 industry-firsts attested** ✅
+## Headline: **19/19 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -20,11 +20,14 @@
 | 43 | K1 partial | **ENT Entropy Battery (in-process)** | ✅ 6/6 sources PASS all 5 ENT stats | [`reports/rng/ENT_ASSESSMENT.json`](../../reports/rng/ENT_ASSESSMENT.md) |
 | 55 | — | **General Entropy Health Monitor (streaming sliding-window)** | ✅ 7/7 sources PASS · 5 PRNG + 2 adversarial | [`reports/acceptance/ENTROPY_HEALTH_MONITOR.json`](../../reports/acceptance/ENTROPY_HEALTH_MONITOR.md) |
 | 56 | — | **Demo Mode controller w/ auditor attestation** | ✅ 6/6 scenarios PASS · tamper-detect verified | [`reports/acceptance/DEMO_MODE.json`](../../reports/acceptance/DEMO_MODE.md) |
-| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 15/15 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
+| 61 | — | **Closed-Form Portfolio (12 hybrid math kernels)** | ✅ 18/18 closed-form solvers PASS in single runner | [`reports/dossier/CLOSED_FORM_PORTFOLIO.json`](../../reports/dossier/CLOSED_FORM_PORTFOLIO.md) |
 | 63 | — | **Exact Enumeration ground-truth RTP** | ✅ 11/11 fixtures with EXACT analytical RTP | [`reports/acceptance/EXACT_ENUMERATION.json`](../../reports/acceptance/EXACT_ENUMERATION.md) |
 | 71 | — | **Must-Hit-By Jackpot (Mystery Progressive) — closed-form** | ✅ 6/6 configs PASS at 5000 trigger cycles each | [`reports/acceptance/MUST_HIT_BY_JACKPOT.json`](../../reports/acceptance/MUST_HIT_BY_JACKPOT.md) |
 | 72 | — | **Pseudo-Must-Hit + Level Progression — escalating-hazard Markov** | ✅ 6/6 configs PASS at 100000 spins each | [`reports/acceptance/PSEUDO_MUST_HIT_LEVEL.json`](../../reports/acceptance/PSEUDO_MUST_HIT_LEVEL.md) |
 | 75 | — | **Multi-tier WAP Jackpot + Wheel — per-tier renewal solver** | ✅ 6/6 configs PASS at 2000000 spins each (12.0M MC) | [`reports/acceptance/MULTI_TIER_WAP_WHEEL.json`](../../reports/acceptance/MULTI_TIER_WAP_WHEEL.md) |
+| 81 | — | **Bonus Buy / Feature Buy Variance Analyzer with CLT convergence** | ✅ 6/6 configs PASS at 200000 buys each (1.2M MC) | [`reports/acceptance/BONUS_BUY_VARIANCE.json`](../../reports/acceptance/BONUS_BUY_VARIANCE.md) |
+| 84 | — | **Free Spins Retrigger Compound Variance — Wald + compound-sum** | ✅ 6/6 configs PASS at 50000 episodes each (300K MC) | [`reports/acceptance/FREE_SPINS_RETRIGGER.json`](../../reports/acceptance/FREE_SPINS_RETRIGGER.md) |
+| 86 | — | **Cascade Sequential Multiplier Pyramid — geometric × ladder** | ✅ 6/6 configs PASS at 100000 episodes each (600K MC) | [`reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json`](../../reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.md) |
 
 ## Why each is industry-first
 
@@ -107,7 +110,7 @@
 
 ### Wave 61 · Closed-Form Portfolio (12 hybrid math kernels) (—)
 
-- **Acceptance**: 15/15 closed-form solvers PASS in single runner
+- **Acceptance**: 18/18 closed-form solvers PASS in single runner
 - **Industry-first claim**: 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) — no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics
 - **Commit**: `84ca120`
 - **Detail**: `{"solvers":[{"wave":49,"solver":"N-tier H&W Jackpot Ladder","ok":true},{"wave":50,"solver":"Charge Meter steady-state","ok":true},{"wave":51,"solver":"Supermeter state-switch","ok":true},{"wave":52,"solver":"Sticky Cash `…
@@ -139,6 +142,27 @@
 - **Industry-first claim**: WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018.
 - **Commit**: `efabc0e`
 - **Detail**: `{"configs":[{"name":"A_classic_4tier","pass":true},{"name":"B_5tier_with_mega","pass":true},{"name":"C_zero_seed_pure_contribution","pass":true},{"name":"D_high_seed_grand_dominant","pass":true},{"name":"E_3tier_frequent`…
+
+### Wave 81 · Bonus Buy / Feature Buy Variance Analyzer with CLT convergence (—)
+
+- **Acceptance**: 6/6 configs PASS at 200000 buys each (1.2M MC)
+- **Industry-first claim**: Closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N* = (z·√Var[Y]/(tol·C))²** + risk metrics (P(bust), P(below cost), P(break-even)). UKGC (banned 2022) / MGA (disclosure required) / AU (banned 2024) compliance. No vendor publishes formal CLT convergence formula for feature-buy pricing transparency.
+- **Commit**: `df4f9a8`
+- **Detail**: `{"configs":[{"name":"A_typical_pragmatic_style","pass":true},{"name":"B_high_volatility_maxwin_chase","pass":true},{"name":"C_low_volatility_low_house_edge","pass":true},{"name":"D_expensive_buy_high_max","pass":true},{"`…
+
+### Wave 84 · Free Spins Retrigger Compound Variance — Wald + compound-sum (—)
+
+- **Acceptance**: 6/6 configs PASS at 50000 episodes each (300K MC)
+- **Industry-first claim**: Closed-form Wald + compound-sum identities: N ~ shifted-geometric with E[N]=1/(1-p), Var[N]=p/(1-p)²; T=K·N: E[T]=K/(1-p), Var[T]=K²·p/(1-p)²; E[Y]=E[T]·μ (Wald), Var[Y]=E[T]·σ² + Var[T]·μ² (compound-sum). Required for UKGC RTS 14 variance disclosure + MGA PPD §11.f player protection limits.
+- **Commit**: `64e2f98`
+- **Detail**: `{"configs":[{"name":"A_typical_10fs_p20","pass":true},{"name":"B_no_retrigger","pass":true},{"name":"C_high_retrigger","pass":true},{"name":"D_big_K_low_p","pass":true},{"name":"E_small_K_moderate_p","pass":true},{"name"`…
+
+### Wave 86 · Cascade Sequential Multiplier Pyramid — geometric × ladder (—)
+
+- **Acceptance**: 6/6 configs PASS at 100000 episodes each (600K MC)
+- **Industry-first claim**: Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products.
+- **Commit**: `75c9d61`
+- **Detail**: `{"configs":[{"name":"A_sweet_bonanza_style","pass":true},{"name":"B_sugar_rush_style","pass":true},{"name":"C_no_continuation","pass":true},{"name":"D_high_continuation_flat_ladder","pass":true},{"name":"E_arithmetic_lad`…
 
 ## Auditor Q&A Map
 

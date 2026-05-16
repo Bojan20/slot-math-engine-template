@@ -262,6 +262,42 @@ const WAVES = [
     }),
     industry_first: 'WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018.',
   },
+  {
+    wave: 81,
+    kimi: '—',
+    name: 'Bonus Buy / Feature Buy Variance Analyzer with CLT convergence',
+    commit: 'df4f9a8',
+    reportPath: 'reports/acceptance/BONUS_BUY_VARIANCE.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.buys_per_config} buys each (${(j.configs_total * j.buys_per_config / 1e6).toFixed(1)}M MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N* = (z·√Var[Y]/(tol·C))²** + risk metrics (P(bust), P(below cost), P(break-even)). UKGC (banned 2022) / MGA (disclosure required) / AU (banned 2024) compliance. No vendor publishes formal CLT convergence formula for feature-buy pricing transparency.',
+  },
+  {
+    wave: 84,
+    kimi: '—',
+    name: 'Free Spins Retrigger Compound Variance — Wald + compound-sum',
+    commit: '64e2f98',
+    reportPath: 'reports/acceptance/FREE_SPINS_RETRIGGER.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Closed-form Wald + compound-sum identities: N ~ shifted-geometric with E[N]=1/(1-p), Var[N]=p/(1-p)²; T=K·N: E[T]=K/(1-p), Var[T]=K²·p/(1-p)²; E[Y]=E[T]·μ (Wald), Var[Y]=E[T]·σ² + Var[T]·μ² (compound-sum). Required for UKGC RTS 14 variance disclosure + MGA PPD §11.f player protection limits.',
+  },
+  {
+    wave: 86,
+    kimi: '—',
+    name: 'Cascade Sequential Multiplier Pyramid — geometric × ladder',
+    commit: '75c9d61',
+    reportPath: 'reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json',
+    extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
+    extractDetail: (j) => ({
+      configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
+    }),
+    industry_first: 'Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

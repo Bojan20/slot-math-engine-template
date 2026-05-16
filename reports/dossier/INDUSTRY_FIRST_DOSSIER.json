@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T04:18:22.027Z",
-  "repo_sha": "743d34dd207c0a62a3319d020cc02af2024a152e",
+  "generatedAtUtc": "2026-05-16T04:48:16.754Z",
+  "repo_sha": "6e3bedfe4c5348e27481002af10bdc44abb2f92d",
   "headline": {
-    "waves": 16,
-    "industry_firsts": 16,
+    "waves": 19,
+    "industry_firsts": 19,
     "all_present": true
   },
   "waves": [
@@ -331,8 +331,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:26.429Z",
-      "headline": "15/15 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-16T04:43:30.787Z",
+      "headline": "18/18 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -408,6 +408,21 @@
           {
             "wave": 75,
             "solver": "Multi-tier WAP Jackpot + Wheel",
+            "ok": true
+          },
+          {
+            "wave": 81,
+            "solver": "Bonus Buy Variance Analyzer",
+            "ok": true
+          },
+          {
+            "wave": 84,
+            "solver": "Free Spins Retrigger Compound",
+            "ok": true
+          },
+          {
+            "wave": 86,
+            "solver": "Cascade Multiplier Pyramid",
             "ok": true
           }
         ]
@@ -611,6 +626,123 @@
         ]
       },
       "industry_first": "WAP progressive with wheel-selection: per-tier λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i, normalized RTP share (Σ=1). Operator-funded portion = p_trigger·E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018."
+    },
+    {
+      "wave": 81,
+      "kimi": "—",
+      "commit": "df4f9a8",
+      "name": "Bonus Buy / Feature Buy Variance Analyzer with CLT convergence",
+      "reportPath": "reports/acceptance/BONUS_BUY_VARIANCE.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:27:17.776Z",
+      "headline": "6/6 configs PASS at 200000 buys each (1.2M MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_typical_pragmatic_style",
+            "pass": true
+          },
+          {
+            "name": "B_high_volatility_maxwin_chase",
+            "pass": true
+          },
+          {
+            "name": "C_low_volatility_low_house_edge",
+            "pass": true
+          },
+          {
+            "name": "D_expensive_buy_high_max",
+            "pass": true
+          },
+          {
+            "name": "E_super_high_volatility",
+            "pass": true
+          },
+          {
+            "name": "F_break_even_skew_high_RTP",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N* = (z·√Var[Y]/(tol·C))²** + risk metrics (P(bust), P(below cost), P(break-even)). UKGC (banned 2022) / MGA (disclosure required) / AU (banned 2024) compliance. No vendor publishes formal CLT convergence formula for feature-buy pricing transparency."
+    },
+    {
+      "wave": 84,
+      "kimi": "—",
+      "commit": "64e2f98",
+      "name": "Free Spins Retrigger Compound Variance — Wald + compound-sum",
+      "reportPath": "reports/acceptance/FREE_SPINS_RETRIGGER.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:38:06.733Z",
+      "headline": "6/6 configs PASS at 50000 episodes each (300K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_typical_10fs_p20",
+            "pass": true
+          },
+          {
+            "name": "B_no_retrigger",
+            "pass": true
+          },
+          {
+            "name": "C_high_retrigger",
+            "pass": true
+          },
+          {
+            "name": "D_big_K_low_p",
+            "pass": true
+          },
+          {
+            "name": "E_small_K_moderate_p",
+            "pass": true
+          },
+          {
+            "name": "F_super_high_retrigger",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Closed-form Wald + compound-sum identities: N ~ shifted-geometric with E[N]=1/(1-p), Var[N]=p/(1-p)²; T=K·N: E[T]=K/(1-p), Var[T]=K²·p/(1-p)²; E[Y]=E[T]·μ (Wald), Var[Y]=E[T]·σ² + Var[T]·μ² (compound-sum). Required for UKGC RTS 14 variance disclosure + MGA PPD §11.f player protection limits."
+    },
+    {
+      "wave": 86,
+      "kimi": "—",
+      "commit": "75c9d61",
+      "name": "Cascade Sequential Multiplier Pyramid — geometric × ladder",
+      "reportPath": "reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-16T04:45:30.385Z",
+      "headline": "6/6 configs PASS at 100000 episodes each (600K MC)",
+      "detail": {
+        "configs": [
+          {
+            "name": "A_sweet_bonanza_style",
+            "pass": true
+          },
+          {
+            "name": "B_sugar_rush_style",
+            "pass": true
+          },
+          {
+            "name": "C_no_continuation",
+            "pass": true
+          },
+          {
+            "name": "D_high_continuation_flat_ladder",
+            "pass": true
+          },
+          {
+            "name": "E_arithmetic_ladder",
+            "pass": true
+          },
+          {
+            "name": "F_long_tail_aggressive",
+            "pass": true
+          }
+        ]
+      },
+      "industry_first": "Closed-form Sweet-Bonanza/Sugar-Rush-style cascade × multiplier-ladder: E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products."
     }
   ],
   "auditor_qa": [

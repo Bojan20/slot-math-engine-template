@@ -40,7 +40,7 @@ or in 5 years.
 
 ---
 
-## 🏆 16 Industry-Firsts (Wave 33-79, all attested)
+## 🏆 19 Industry-Firsts (Wave 33-86, all attested)
 
 > Single source of truth: `reports/dossier/INDUSTRY_FIRST_DOSSIER.md`
 > Refresh anytime: `npm run industry-first-dossier`
@@ -63,15 +63,18 @@ or in 5 years.
 | 71 | **Must-Hit-By Jackpot (Mystery Progressive)** — closed-form E[N*] = span/(2c), Var[N*] = span²/(12c²); effective RTP = c·(seed+cap)/(cap−seed); NIGC 25 CFR 542.7(c) compliant | 6/6 configs × 5K cycles PASS |
 | 72 | **Pseudo-Must-Hit + Level Progression** — soft-cap escalating-hazard pool + N-level Markov chain stationary (π_maxL = 1/(1+maxL·r), π_other = r·π_maxL); per-level RTP share disclosure | 6/6 configs × 100K spins PASS |
 | 75 | **Multi-tier WAP Jackpot + Wheel** — per-tier renewal: λ_i = p_trigger·w_i/Σw, E[pool_i@hit] = seed_i + c_i/λ_i, E[payout_i/spin] = c_i + λ_i·seed_i; normalized RTP share Σ=1; operator-funded portion disclosable (UKGC RTS 12, MGA PPD 2018) | 6/6 configs × 2M spins PASS (12M MC) |
+| 81 | **Bonus Buy / Feature Buy Variance Analyzer** — closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N\* = (z·√Var[Y]/(tol·C))²** + risk (P(bust), P(below cost), P(break-even)); UKGC/MGA/AU compliance | 6/6 configs × 200K buys PASS (1.2M MC) |
+| 84 | **Free Spins Retrigger Compound Variance** — Wald + compound-sum: N~shifted-geometric E[N]=1/(1-p), Var[N]=p/(1-p)²; T=K·N; **E[Y]=E[T]·μ (Wald), Var[Y]=E[T]·σ² + Var[T]·μ²** | 6/6 configs × 50K episodes PASS (300K MC) |
+| 86 | **Cascade Sequential Multiplier Pyramid** — Sweet Bonanza / Sugar Rush style: N~shifted-geometric; **E[Y] = μ_W·[Σ q^(k-1)·m_k + m_max·q^L/(1-q)]** (interchange); tail P(reach max) = q^(L-1); mega-hit μ_W·m_max·q^(L-1) | 6/6 configs × 100K episodes PASS (600K MC) |
 
-These sixteen are deliberately vendor-disjoint. They exist in OUR engine
+These nineteen are deliberately vendor-disjoint. They exist in OUR engine
 because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — 15 portfolio
-> solvers + 11 exact-enum fixtures + 18 progressive-jackpot configs =
-> **44 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — 18 portfolio
+> solvers + 11 exact-enum fixtures + 30 commerce/cascade/jackpot configs =
+> **47 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 
