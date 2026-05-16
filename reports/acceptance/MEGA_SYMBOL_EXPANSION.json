@@ -1,0 +1,476 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MEGA_SYMBOL_EXPANSION",
+  "generated_utc": "2026-05-16T07:46:20.825Z",
+  "spins_per_config": 100000,
+  "seed": 3405644067,
+  "tolerances": {
+    "ek_rel": 0.03,
+    "ey_rel": 0.05,
+    "ey_rel_heavytail": 0.2,
+    "zero_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_sweet_bonanza_super_symbols",
+      "description": "Pragmatic Sweet Bonanza style: 1×1 + 2×2 + 3×3 + 4×4 super-symbols",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.5
+          },
+          {
+            "count": 1,
+            "probability": 0.3
+          },
+          {
+            "count": 2,
+            "probability": 0.15
+          },
+          {
+            "count": 3,
+            "probability": 0.05
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 1,
+            "probability": 0.7
+          },
+          {
+            "size": 2,
+            "probability": 0.2
+          },
+          {
+            "size": 3,
+            "probability": 0.08
+          },
+          {
+            "size": 4,
+            "probability": 0.02
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "low",
+            "payoutX": 5,
+            "probability": 0.55
+          },
+          {
+            "label": "mid",
+            "payoutX": 25,
+            "probability": 0.3
+          },
+          {
+            "label": "high",
+            "payoutX": 100,
+            "probability": 0.15
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 0.75,
+        "varianceDropCount": 0.7874999999999999,
+        "probZeroDropCount": 0.5,
+        "maxDropCount": 3,
+        "expectedSize": 1.4200000000000002,
+        "expectedSizeSquared": 2.5399999999999996,
+        "expectedSizeFourth": 15.5,
+        "maxSize": 4,
+        "maxArea": 16,
+        "expectedPayoutPerCell": 25.25,
+        "maxSymbolPayout": 100,
+        "expectedPayoutPerSpin": 48.10124999999999,
+        "variancePayoutPerSpin": 19931.2799334375,
+        "probMaxConfig": 1.35e-9,
+        "maxPossibleCellsCovered": 48
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 0.75013,
+        "observedMeanPayoutPerSpin": 48.1143,
+        "observedVariancePayoutPerSpin": 19933.278135509998,
+        "observedZeroDropFraction": 0.50036,
+        "observedMaxSizeSeen": 4,
+        "observedMaxPayoutSeen": 3225
+      },
+      "checks": {
+        "ek_rel": 0.00017333333333328463,
+        "ey_rel": 0.00027130272082340667,
+        "zero_abs": 0.00036000000000002697
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_razor_shark_jumbo_5x5_rare",
+      "description": "Push Razor Shark jumbo: rare 5×5 giant, jackpot target",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.95
+          },
+          {
+            "count": 1,
+            "probability": 0.05
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 1,
+            "probability": 0.7
+          },
+          {
+            "size": 2,
+            "probability": 0.2
+          },
+          {
+            "size": 3,
+            "probability": 0.07
+          },
+          {
+            "size": 5,
+            "probability": 0.03
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "wild",
+            "payoutX": 10,
+            "probability": 0.8
+          },
+          {
+            "label": "jackpot",
+            "payoutX": 1000,
+            "probability": 0.2
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 0.05,
+        "varianceDropCount": 0.0475,
+        "probZeroDropCount": 0.95,
+        "maxDropCount": 1,
+        "expectedSize": 1.46,
+        "expectedSizeSquared": 2.88,
+        "expectedSizeFourth": 28.32,
+        "maxSize": 5,
+        "maxArea": 25,
+        "expectedPayoutPerCell": 208,
+        "maxSymbolPayout": 1000,
+        "expectedPayoutPerSpin": 29.951999999999998,
+        "variancePayoutPerSpin": 282416.157696,
+        "probMaxConfig": 0.00030000000000000003,
+        "maxPossibleCellsCovered": 25
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 0.05047,
+        "observedMeanPayoutPerSpin": 27.1974,
+        "observedVariancePayoutPerSpin": 250180.61943324,
+        "observedZeroDropFraction": 0.94953,
+        "observedMaxSizeSeen": 5,
+        "observedMaxPayoutSeen": 25000
+      },
+      "checks": {
+        "ek_rel": 0.009399999999999964,
+        "ey_rel": 0.09196714743589744,
+        "zero_abs": 0.00046999999999997044
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "C_high_freq_small_supers",
+      "description": "High-frequency 1×1 + 2×2, no big sizes",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 1,
+            "probability": 0.4
+          },
+          {
+            "count": 2,
+            "probability": 0.35
+          },
+          {
+            "count": 3,
+            "probability": 0.2
+          },
+          {
+            "count": 4,
+            "probability": 0.05
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 1,
+            "probability": 0.8
+          },
+          {
+            "size": 2,
+            "probability": 0.2
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "low_a",
+            "payoutX": 2,
+            "probability": 0.7
+          },
+          {
+            "label": "low_b",
+            "payoutX": 5,
+            "probability": 0.3
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 1.9000000000000001,
+        "varianceDropCount": 0.7899999999999991,
+        "probZeroDropCount": 0,
+        "maxDropCount": 4,
+        "expectedSize": 1.2000000000000002,
+        "expectedSizeSquared": 1.6,
+        "expectedSizeFourth": 4,
+        "maxSize": 2,
+        "maxArea": 4,
+        "expectedPayoutPerCell": 2.9,
+        "maxSymbolPayout": 5,
+        "expectedPayoutPerSpin": 8.816,
+        "variancePayoutPerSpin": 54.38214399999997,
+        "probMaxConfig": 6.48e-7,
+        "maxPossibleCellsCovered": 16
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 1.89685,
+        "observedMeanPayoutPerSpin": 8.77388,
+        "observedVariancePayoutPerSpin": 53.8106897456,
+        "observedZeroDropFraction": 0,
+        "observedMaxSizeSeen": 2,
+        "observedMaxPayoutSeen": 68
+      },
+      "checks": {
+        "ek_rel": 0.0016578947368422147,
+        "ey_rel": 0.004777676950998253,
+        "zero_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_heavy_tail_jackpot_giant",
+      "description": "Heavy-tail: rare 4×4 + Mega 5000x payout (super-rare)",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.85
+          },
+          {
+            "count": 1,
+            "probability": 0.12
+          },
+          {
+            "count": 2,
+            "probability": 0.03
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 1,
+            "probability": 0.85
+          },
+          {
+            "size": 2,
+            "probability": 0.1
+          },
+          {
+            "size": 4,
+            "probability": 0.05
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "small",
+            "payoutX": 5,
+            "probability": 0.85
+          },
+          {
+            "label": "med",
+            "payoutX": 50,
+            "probability": 0.1
+          },
+          {
+            "label": "mega",
+            "payoutX": 5000,
+            "probability": 0.05
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 0.18,
+        "varianceDropCount": 0.2076,
+        "probZeroDropCount": 0.85,
+        "maxDropCount": 2,
+        "expectedSize": 1.25,
+        "expectedSizeSquared": 2.05,
+        "expectedSizeFourth": 15.25,
+        "maxSize": 4,
+        "maxArea": 16,
+        "expectedPayoutPerCell": 259.25,
+        "maxSymbolPayout": 5000,
+        "expectedPayoutPerSpin": 95.66324999999999,
+        "variancePayoutPerSpin": 3439790.267183813,
+        "probMaxConfig": 1.8750000000000008e-7,
+        "maxPossibleCellsCovered": 32
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 0.18053,
+        "observedMeanPayoutPerSpin": 92.93425,
+        "observedVariancePayoutPerSpin": 3298629.3309269375,
+        "observedZeroDropFraction": 0.8494,
+        "observedMaxSizeSeen": 4,
+        "observedMaxPayoutSeen": 85000
+      },
+      "checks": {
+        "ek_rel": 0.0029444444444444596,
+        "ey_rel": 0.02852715123101071,
+        "zero_abs": 0.0005999999999999339
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_single_size_single_target_corner",
+      "description": "Corner: fixed 2×2, single target (no variance from S or T)",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 0.5
+          },
+          {
+            "count": 1,
+            "probability": 0.3
+          },
+          {
+            "count": 2,
+            "probability": 0.2
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 2,
+            "probability": 1
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "fixed",
+            "payoutX": 20,
+            "probability": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 0.7,
+        "varianceDropCount": 0.6100000000000001,
+        "probZeroDropCount": 0.5,
+        "maxDropCount": 2,
+        "expectedSize": 2,
+        "expectedSizeSquared": 4,
+        "expectedSizeFourth": 16,
+        "maxSize": 2,
+        "maxArea": 4,
+        "expectedPayoutPerCell": 20,
+        "maxSymbolPayout": 20,
+        "expectedPayoutPerSpin": 56,
+        "variancePayoutPerSpin": 3904.000000000001,
+        "probMaxConfig": 0.2,
+        "maxPossibleCellsCovered": 8
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 0.699,
+        "observedMeanPayoutPerSpin": 55.92,
+        "observedVariancePayoutPerSpin": 3907.4496,
+        "observedZeroDropFraction": 0.50107,
+        "observedMaxSizeSeen": 2,
+        "observedMaxPayoutSeen": 160
+      },
+      "checks": {
+        "ek_rel": 0.0014285714285714299,
+        "ey_rel": 0.0014285714285713982,
+        "zero_abs": 0.0010700000000000154
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "F_zero_drop_corner",
+      "description": "Corner: K=0 always → E[Y]=0",
+      "cfg": {
+        "countPmf": [
+          {
+            "count": 0,
+            "probability": 1
+          }
+        ],
+        "sizePmf": [
+          {
+            "size": 3,
+            "probability": 1
+          }
+        ],
+        "targetPmf": [
+          {
+            "label": "unused",
+            "payoutX": 100,
+            "probability": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "expectedDropCount": 0,
+        "varianceDropCount": 0,
+        "probZeroDropCount": 1,
+        "maxDropCount": 0,
+        "expectedSize": 3,
+        "expectedSizeSquared": 9,
+        "expectedSizeFourth": 81,
+        "maxSize": 3,
+        "maxArea": 9,
+        "expectedPayoutPerCell": 100,
+        "maxSymbolPayout": 100,
+        "expectedPayoutPerSpin": 0,
+        "variancePayoutPerSpin": 0,
+        "probMaxConfig": 1,
+        "maxPossibleCellsCovered": 0
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "observedMeanDropCount": 0,
+        "observedMeanPayoutPerSpin": 0,
+        "observedVariancePayoutPerSpin": 0,
+        "observedZeroDropFraction": 1,
+        "observedMaxSizeSeen": 0,
+        "observedMaxPayoutSeen": 0
+      },
+      "checks": {
+        "ek_rel": 0,
+        "ey_rel": 0,
+        "zero_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

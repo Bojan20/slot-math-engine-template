@@ -194,6 +194,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 121 Cascade Multiplier Chain Lockstep Conditional (W152 Wave 122)
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_CHAIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_CHAIN.md' },
+  // REPORTS — Wave 123 Mega Symbol Multi-Cell Expansion (W152 Wave 124)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MEGA_SYMBOL_EXPANSION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MEGA_SYMBOL_EXPANSION.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

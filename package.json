@@ -62,6 +62,7 @@
     "mystery-symbol-reveal-acceptance": "npm run build && node scripts/mystery-symbol-reveal-acceptance.mjs",
     "bonus-collect-n-acceptance": "npm run build && node scripts/bonus-collect-n-acceptance.mjs",
     "cascade-multiplier-chain-acceptance": "npm run build && node scripts/cascade-multiplier-chain-acceptance.mjs",
+    "mega-symbol-expansion-acceptance": "npm run build && node scripts/mega-symbol-expansion-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

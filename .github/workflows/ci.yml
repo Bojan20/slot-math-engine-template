@@ -190,3 +190,5 @@ jobs:
         run: npm run bonus-collect-n-acceptance
       - name: Cascade Multiplier Chain acceptance (6/6 configs × 100K spins, Wave 121/122)
         run: npm run cascade-multiplier-chain-acceptance
+      - name: Mega Symbol Multi-Cell Expansion acceptance (6/6 configs × 100K spins, Wave 123/124)
+        run: npm run mega-symbol-expansion-acceptance

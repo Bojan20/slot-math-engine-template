@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.19
+# Industry Pattern Catalog v2.20
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -36,6 +36,7 @@
 > - v2.17 (Wave 117) — adds 1 mystery-symbol reveal aggregator kernel landed in Wave 116/117 (Wald-style K ⊥ S)
 > - v2.18 (Wave 119) — adds 1 bonus-collect-N trigger tracker kernel landed in Wave 118/119 (Negative Binomial NB(N,p))
 > - v2.19 (Wave 122) — adds 1 cascade multiplier chain (lockstep conditional) kernel landed in Wave 121/122 (Wald-style Σ M_k·p^k)
+> - v2.20 (Wave 124) — adds 1 mega symbol multi-cell expansion kernel landed in Wave 123/124 (S² area coverage Wald-style)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -328,8 +329,19 @@ SAMO kada cascade ima win (skip-on-empty), chain se lomi na prazno.
 |----|---------|-------------|---------------|------------------|
 | P-053 | **Cascade Multiplier Chain Lockstep Conditional** | Chain length L ~ Geometric(1-p) sa support {0,1,...}; **`P(L=0)=1-p`**, **`P(L≥k)=p^k`**, **`E[L]=p/(1-p)`**; M_k linear (base+(k-1)·step) ili geometric (base·r^(k-1)) sa convergence guard r·p<1; Wald-style **`E[Y]=E[V]·Σ M_k·p^k`** (linear: base·p/(1-p)+step·p²/(1-p)²; geometric: base·p/(1-rp)); **`Var[Y]=E[Y²]−E[Y]²`** sa cross-term 2·E[V]²·Σ_{j<k} M_j·M_k·p^k; truncation cap + tail prob disclosure | `src/features/cascadeMultiplierChain.ts` | 32 vitest specs (Wave 121) + 6 PAR-style configs × 100K spins (Wave 122); portfolio entry W121 |
 
+## Pattern Catalog v2.20 — Mega Symbol Multi-Cell Expansion Aggregator Kernel (Wave 123/124)
+
+This pattern targets the **super-symbol multi-cell expansion family** —
+Pragmatic Sweet Bonanza super-symbols / NetEnt Mega Joker / Slot Mountain
+Megaways jumbo / Push Razor Shark jumbo blocks / BTG Megaways multi-cell.
+Super-symbol drops sa S × S area coverage, supstituira base sa target T.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-054 | **Mega Symbol Multi-Cell Expansion Aggregator** | K ~ countPmf super-symbol drops per spin; S ~ sizePmf (1=1×1, 2=2×2, ...); T ~ targetPmf sa payoutX; **Y = Σ_{i=1..K} S_i² · paytable[T_i]** (S² area term); K ⊥ S ⊥ T daje **`E[Y] = E[K]·E[S²]·E[paytable[T]]`**; **`E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])²`** (S⁴ area-of-area + cross-drop); **`probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max`** joint extreme | `src/features/megaSymbolExpansion.ts` | 39 vitest specs (Wave 123) + 6 PAR-style configs × 100K spins (Wave 124); portfolio entry W123 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 33 P-021..P-053 kernels in ~10 seconds and emits unified report
+all 34 P-021..P-054 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
