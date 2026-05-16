@@ -146,6 +146,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 84 Free Spins Retrigger Compound (W152 Wave 85)
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_RETRIGGER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_SPINS_RETRIGGER.md' },
+  // REPORTS — Wave 86 Cascade Multiplier Pyramid (W152 Wave 87)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/CASCADE_MULTIPLIER_PYRAMID.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },

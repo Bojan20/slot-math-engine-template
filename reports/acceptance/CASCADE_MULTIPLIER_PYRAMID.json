@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CASCADE_MULTIPLIER_PYRAMID",
+  "generated_utc": "2026-05-16T04:45:30.384Z",
+  "episodes_per_config": 100000,
+  "seed": 3735931646,
+  "tolerances": {
+    "ey_rel": 0.05,
+    "var_rel": 0.25,
+    "n_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_sweet_bonanza_style",
+      "description": "Sweet-Bonanza-style: q=0.4, ladder [1,2,4,8,16,32]",
+      "cfg": {
+        "cascadeContinuationProbability": 0.4,
+        "multiplierLadder": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "meanBaseWinPerStepX": 1,
+        "varianceBaseWinPerStepX": 4
+      },
+      "closed_form": {
+        "expectedCascades": 1.6666666666666667,
+        "varianceCascades": 1.1111111111111112,
+        "expectedTotalPayoutX": 3.907733333333334,
+        "varianceTotalPayoutX": 233.21690908444452,
+        "expectedFinalMultiplier": 2.3446400000000005,
+        "probReachMaxLadder": 0.010240000000000003,
+        "probAtLeastFiveCascades": 0.025600000000000005,
+        "probAtLeastTenCascades": 0.0002621440000000001,
+        "expectedMegaHitContribution": 0.3276800000000001
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 1.66513,
+        "observedMaxCascades": 13,
+        "observedMeanPayoutX": 3.8404,
+        "observedVariancePayoutX": 216.41682784,
+        "observedFinalMultiplierAvg": 2.33815
+      },
+      "checks": {
+        "ey_rel": 0.017230790227924373,
+        "var_rel": 0.07203629149531973,
+        "n_rel": 0.000922000000000045
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_sugar_rush_style",
+      "description": "Sugar-Rush-style: q=0.45, deep ladder [1,2,4,8,16,32,64]",
+      "cfg": {
+        "cascadeContinuationProbability": 0.45,
+        "multiplierLadder": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "meanBaseWinPerStepX": 0.3,
+        "varianceBaseWinPerStepX": 0.5
+      },
+      "closed_form": {
+        "expectedCascades": 1.8181818181818181,
+        "varianceCascades": 1.4876033057851237,
+        "expectedTotalPayoutX": 1.6955539090909093,
+        "varianceTotalPayoutX": 84.60654923062273,
+        "expectedFinalMultiplier": 3.1085155000000007,
+        "probReachMaxLadder": 0.008303765625,
+        "probAtLeastFiveCascades": 0.04100625,
+        "probAtLeastTenCascades": 0.0007566806425781252,
+        "expectedMegaHitContribution": 0.1594323
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 1.81976,
+        "observedMaxCascades": 14,
+        "observedMeanPayoutX": 1.6895436666664665,
+        "observedVariancePayoutX": 82.37064916510819,
+        "observedFinalMultiplierAvg": 3.10925
+      },
+      "checks": {
+        "ey_rel": 0.00354470736212998,
+        "var_rel": 0.026427032964314236,
+        "n_rel": 0.0008680000000000576
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_no_continuation",
+      "description": "Single-shot (q=0) — baseline μ_W · m_1",
+      "cfg": {
+        "cascadeContinuationProbability": 0,
+        "multiplierLadder": [
+          3
+        ],
+        "meanBaseWinPerStepX": 2,
+        "varianceBaseWinPerStepX": 1
+      },
+      "closed_form": {
+        "expectedCascades": 1,
+        "varianceCascades": 0,
+        "expectedTotalPayoutX": 6,
+        "varianceTotalPayoutX": 9,
+        "expectedFinalMultiplier": 3,
+        "probReachMaxLadder": 1,
+        "probAtLeastFiveCascades": 0,
+        "probAtLeastTenCascades": 0,
+        "expectedMegaHitContribution": 6
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 1,
+        "observedMaxCascades": 1,
+        "observedMeanPayoutX": 5.999775,
+        "observedVariancePayoutX": 9.001012449375004,
+        "observedFinalMultiplierAvg": 3
+      },
+      "checks": {
+        "ey_rel": 0.00003750000000006063,
+        "var_rel": 0.00011249437500045663,
+        "n_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "D_high_continuation_flat_ladder",
+      "description": "High q=0.7, flat ladder [2,2,2,2,2]",
+      "cfg": {
+        "cascadeContinuationProbability": 0.7,
+        "multiplierLadder": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "meanBaseWinPerStepX": 0.5,
+        "varianceBaseWinPerStepX": 1
+      },
+      "closed_form": {
+        "expectedCascades": 3.333333333333333,
+        "varianceCascades": 7.777777777777775,
+        "expectedTotalPayoutX": 3.333333333333333,
+        "varianceTotalPayoutX": 21.111111111111107,
+        "expectedFinalMultiplier": 2,
+        "probReachMaxLadder": 0.24009999999999995,
+        "probAtLeastFiveCascades": 0.24009999999999995,
+        "probAtLeastTenCascades": 0.04035360699999998,
+        "expectedMegaHitContribution": 0.24009999999999995
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 3.33187,
+        "observedMaxCascades": 30,
+        "observedMeanPayoutX": 3.32955,
+        "observedVariancePayoutX": 21.0328467975,
+        "observedFinalMultiplierAvg": 2
+      },
+      "checks": {
+        "ey_rel": 0.001134999999999975,
+        "var_rel": 0.003707256960526152,
+        "n_rel": 0.000438999999999945
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_arithmetic_ladder",
+      "description": "Arithmetic ladder [2,4,6,8,10] q=0.5",
+      "cfg": {
+        "cascadeContinuationProbability": 0.5,
+        "multiplierLadder": [
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "meanBaseWinPerStepX": 0.5,
+        "varianceBaseWinPerStepX": 1
+      },
+      "closed_form": {
+        "expectedCascades": 2,
+        "varianceCascades": 2,
+        "expectedTotalPayoutX": 3.875,
+        "varianceTotalPayoutX": 68.109375,
+        "expectedFinalMultiplier": 3.875,
+        "probReachMaxLadder": 0.0625,
+        "probAtLeastFiveCascades": 0.0625,
+        "probAtLeastTenCascades": 0.001953125,
+        "expectedMegaHitContribution": 0.3125
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 2.00283,
+        "observedMaxCascades": 16,
+        "observedMeanPayoutX": 3.88695,
+        "observedVariancePayoutX": 68.4053696975,
+        "observedFinalMultiplierAvg": 3.88012
+      },
+      "checks": {
+        "ey_rel": 0.0030838709677419684,
+        "var_rel": 0.004345873053452722,
+        "n_rel": 0.001414999999999944
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_long_tail_aggressive",
+      "description": "q=0.8 — long-tail mega cascade chance",
+      "cfg": {
+        "cascadeContinuationProbability": 0.8,
+        "multiplierLadder": [
+          1,
+          1.5,
+          2,
+          3,
+          5,
+          8
+        ],
+        "meanBaseWinPerStepX": 0.4,
+        "varianceBaseWinPerStepX": 0.5
+      },
+      "closed_form": {
+        "expectedCascades": 5.000000000000001,
+        "varianceCascades": 20.00000000000001,
+        "expectedTotalPayoutX": 8.068480000000005,
+        "varianceTotalPayoutX": 212.62449448960012,
+        "expectedFinalMultiplier": 4.0342400000000005,
+        "probReachMaxLadder": 0.3276800000000001,
+        "probAtLeastFiveCascades": 0.4096000000000001,
+        "probAtLeastTenCascades": 0.13421772800000006,
+        "expectedMegaHitContribution": 1.0485760000000004
+      },
+      "monte_carlo": {
+        "episodes": 100000,
+        "observedMeanCascades": 5.00225,
+        "observedMaxCascades": 49,
+        "observedMeanPayoutX": 8.067716250000812,
+        "observedVariancePayoutX": 210.8068443157416,
+        "observedFinalMultiplierAvg": 4.03611
+      },
+      "checks": {
+        "ey_rel": 0.0000946584733670527,
+        "var_rel": 0.00854863960157429,
+        "n_rel": 0.00044999999999983936
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    }
+  ]
+}

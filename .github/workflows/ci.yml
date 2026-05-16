@@ -158,3 +158,5 @@ jobs:
         run: npm run bonus-buy-variance-acceptance
       - name: Free Spins Retrigger acceptance (6/6 configs × 50K episodes, Wave 84/85)
         run: npm run free-spins-retrigger-acceptance
+      - name: Cascade Multiplier Pyramid acceptance (6/6 configs × 100K episodes, Wave 86/87)
+        run: npm run cascade-multiplier-pyramid-acceptance

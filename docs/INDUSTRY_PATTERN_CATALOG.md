@@ -1,7 +1,7 @@
-# Industry Pattern Catalog v2.3
+# Industry Pattern Catalog v2.4
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3 expansion).** Operator-facing catalog
-> of **37 industry-style slot patterns** the engine ships ready-to-run:
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4 expansion).** Operator-facing catalog
+> of **38 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
 >   Wave 49-60 (each with dedicated solver + MC acceptance proof).
@@ -11,6 +11,8 @@
 >   (Bonus Buy / Feature Buy Variance Analyzer with CLT convergence).
 > - v2.3 (Wave 85) — adds 1 free-spins variance kernel landed in Wave 84/85
 >   (Free Spins Retrigger Compound Variance — Wald + compound-sum).
+> - v2.4 (Wave 87) — adds 1 cascade-multiplier kernel landed in Wave 86/87
+>   (Cascade Sequential Multiplier Pyramid — geometric chain × ladder).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
 > patented brand names — see `docs/IP_REVIEW.md` for clean-room
@@ -123,8 +125,18 @@ calculations.
 |----|---------|-------------|---------------|------------------|
 | P-037 | **Free Spins Retrigger Compound Variance** | N ~ shifted-geometric: `E[N]=1/(1-p)`, `Var[N]=p/(1-p)²`; T=K·N: `E[T]=K/(1-p)`, `Var[T]=K²·p/(1-p)²`; **`E[Y]=E[T]·μ` (Wald), `Var[Y]=E[T]·σ² + Var[T]·μ²` (compound-sum)**; tail `P(N≥k)=p^(k-1)` | `src/features/freeSpinsRetriggerCompound.ts` | 33 vitest specs (Wave 84) + 6 PAR-style configs × 50K episodes (Wave 85); portfolio entry W84 |
 
+## Pattern Catalog v2.4 — Cascade Multiplier Kernel (Wave 86-87)
+
+This pattern targets the **cascade-chain × multiplier-ladder family** —
+Sweet Bonanza / Sugar Rush / Wanted Dead or a Wild style cascade games
+where each cascade step applies an escalating multiplier from a ladder.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-038 | **Cascade Sequential Multiplier Pyramid** | N ~ shifted-geometric `E[N]=1/(1-q)`; ladder ceiling m_max beyond L: **`E[Y] = μ_W · [Σ q^(k-1)·m_k + m_max·q^L/(1-q)]`** (geometric-sum interchange); `Var[Y]` via `E[Y²] = σ²·E[Σm_k²] + μ²·E[S_N²]`; tail `P(N≥k)=q^(k-1)`, mega-hit `μ_W·m_max·q^(L-1)` | `src/features/cascadeMultiplierPyramid.ts` | 25 vitest specs (Wave 86) + 6 PAR-style configs × 100K episodes (Wave 87); portfolio entry W86 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 17 P-021..P-037 kernels in ~10 seconds and emits unified report
+all 18 P-021..P-038 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
