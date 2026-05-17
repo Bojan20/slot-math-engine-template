@@ -257,6 +257,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 165 Reverse Martingale (Paroli) Streak Cash-Out (W152 Wave 166, 54. solver, INDUSTRY-FIRST let-it-ride DUAL W163 NHS #2)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PAROLI_STREAK_CASH_OUT.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PAROLI_STREAK_CASH_OUT.md' },
+  // REPORTS — Wave 167 AWP Cycle Convergence (W152 Wave 168, 55. solver, INDUSTRY-FIRST UK Class III B3 UKGC LCCP)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

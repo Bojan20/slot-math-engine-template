@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.40
+# Industry Pattern Catalog v2.41
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38) + Wave 164 (v2.39) + Wave 166 (v2.40 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38) + Wave 164 (v2.39) + Wave 166 (v2.40) + Wave 168 (v2.41 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -57,6 +57,7 @@
 > - v2.38 (Wave 162) — adds 1 max drop from starting bankroll during session analyzer kernel landed in Wave 161/162 (**INDUSTRY-FIRST** UKGC LCCP 3.4.3 / MGA Player Protection §17 / EU EBA Responsible Gambling Directive 2024 / AU NCPF Reform 2022 — **52. closed-form solver, COMPLETES responsible-gambling math triad** sa W154 (bonus WR) + W157 (terminal bust) + W161 (intra-session max drop); Karatzas-Shreve §3.5 Bachelier/Reflection-Principle one-sided survival fn P(MaxDrop_T ≥ d) = Φ(−(d+μT)/(σ√T)) + exp(−2μd/σ²)·Φ(−(d−μT)/(σ√T)); composite Simpson integration za E[MaxDrop], bisection percentile p90/p95/p99; 3 drift regimes; regulator disclosure metrics probMaxDrawdownExceedsLimit + oneInNSessionsExceedsLimit)
 > - v2.39 (Wave 164) — adds 1 Martingale wager progression bust time analyzer kernel landed in Wave 163/164 (**INDUSTRY-FIRST chase-pattern detection** UKGC LCCP 3.4.3 / MGA Player Protection §18 / AU NCPF Reform 2022 Schedule 4 "mandatory by 2025" — **53. closed-form solver, first SEQUENTIAL bet-progression strategy kernel** u portfolio; Markov chain over consecutive-loss streak; k_max = ⌊log₂(B/b_0+1)⌋−1 max survivable doubles; P(bust per round) = q^(k_max+1) geometric tail; E[T_rounds_bust] = 1/q^(k_max+1); chasePatternRiskScore ∈ [0,1] regulator alert metric; NHS Gambling Harms 2024 cites Martingale as #1 chase pattern)
 > - v2.40 (Wave 166) — adds 1 Reverse Martingale (Paroli) Streak Cash-Out analyzer kernel landed in Wave 165/166 (**INDUSTRY-FIRST let-it-ride chase pattern** UKGC LCCP 3.4.3 / MGA PPD §18 / AU NCPF Schedule 4 — **54. solver, DUAL of W163 Martingale**, NHS Gambling Harms 2024 cites Paroli as **#2 chase pattern** after Martingale; Markov over consecutive-WIN streak; probReachStreak=p^k geometric; cashOutPayout=b_0·(2^k−1); E[roundProfit] closed-form sa geometric sum (2p)^j; bankroll cap k_max; chasePatternRiskScore. Together with P-073 covers complete sequential bet-progression pair = #1 + #2 NHS chase patterns)
+> - v2.41 (Wave 168) — adds 1 AWP Cycle Convergence analyzer kernel landed in Wave 167/168 (**INDUSTRY-FIRST UK Class III B3/B3A/C/D finite-cycle disclosure** UKGC LCCP / MGA AWP §15 / EU GA 2024 compensated math — **55. solver, first analyzer ABOVE existing IR state machine** (`src/jurisdiction/compensatedMath.ts`); čita partial-cycle snapshot (n, P_n) i projektuje analytical regulator stats: E[r_N]=(P_n+m·R*·b)/(N·b), stdDev=σ·√m/N (shrinks → 0 as cycle completes), P(|D_N|>τ) Bachelier-CLT, compensationHintRecommended, cycleHealthScore ∈ [0,1])
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -646,8 +647,19 @@ UKGC LCCP 3.4.3 chase-pattern detection mandate applies equally to both.
 |----|---------|-------------|---------------|------------------|
 | P-074 | **Reverse Martingale (Paroli) Streak Cash-Out (INDUSTRY-FIRST let-it-ride, 54th solver, DUAL of P-073)** | Per-spin P(win)=p. Paroli: base bet b_0, doubles on WIN (let it ride), cash out at k_target wins in a row, reset on any loss. Bankroll cap **k_max = ⌊log₂(B/b_0+1)⌋**; effective target = min(targetStreak, k_max). Per round: **probReachStreak = p^k** geometric; cashOutPayout = b_0·(2^k − 1) profit; **P(loss at step j) = p^(j−1)·q**; sum check p^k + Σ_{j=1..k} p^(j−1)·q = 1 ✓. **E[roundProfit]** = cashOutPayout·p^k − b_0·q·Σ_{j=0..k−1}(2p)^j closed-form sa geometric sum (special case p=½ → linear sum). **E[(profit)²]** za varijansu sa Σ(4p)^j. **E[spins/round]** = k·p^k + Σ j·p^(j−1)·q. **riskRewardRatio** = cashOutPayout / E[abs loss | loss-end]. **chasePatternRiskScore ∈ [0,1]** heuristic (deep target + high p). | `src/features/paroliStreakCashOut.ts` | 30 vitest specs (Wave 165) + 6 industry let-it-ride configs × 5K MC rounds (Wave 166); portfolio entry W165 |
 
+## Pattern Catalog v2.41 — AWP Cycle Convergence Analyzer Kernel (Wave 167/168) — INDUSTRY-FIRST UK Class III B3/B3A/C/D, 55th solver
+
+First analyzer ABOVE existing IR state machine (`src/jurisdiction/compensatedMath.ts`).
+UK Class III machines (B3 70% RTP, B3A, C, D 90%) obavezno publikuju cycle
+convergence within tolerance band (typical τ=4pp). UKGC LCCP / MGA AWP §15 /
+EU GA 2024 / AU NCPF require finite-cycle proof.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-075 | **AWP Cycle Convergence (INDUSTRY-FIRST UK Class III, 55th solver, first above-IR kernel)** | Cycle N spins, base bet b, target R*, tolerance τ. Current snapshot (n=spinsPlayed, P_n=cumPay). Remaining m=N−n. Per-spin under target: Y ~ N(R*·b, σ²·b²). Remaining sum S_m ~ N(m·R*·b, m·σ²·b²) (CLT). **E[r_N] = (P_n + m·R*·b)/(N·b)**. **stdDev[r_N] = σ·√m / N** (shrinks → 0 as m → 0). Deviation D_N = r_N − R*. **P(|D_N|>τ)** = (1−Φ((τ−μ_D)/σ_D)) + Φ((−τ−μ_D)/σ_D) Bachelier-CLT. **oneInNCyclesExceeds = 1/P(exceeds)**. **compensationHintRecommended = −E[D_N]** (nudge that offsets projected drift). **maxAchievableDeviationNoCompensation = |μ_D| + 3σ_D** envelope (99.7%). **cycleHealthScore = 1 − P(exceeds)** ∈ [0, 1]. | `src/features/awpCycleConvergence.ts` | 30 vitest specs (Wave 167) + 6 UK Class III configs × 3K MC cycles (Wave 168); portfolio entry W167 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 54 P-021..P-074 kernels in ~10 seconds and emits unified report
+all 55 P-021..P-075 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

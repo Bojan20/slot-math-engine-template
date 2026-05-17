@@ -232,3 +232,5 @@ jobs:
         run: npm run martingale-bust-time-acceptance
       - name: Reverse Martingale (Paroli) Streak Cash-Out Analyzer acceptance (6/6 configs × 5K rounds, Wave 165/166, INDUSTRY-FIRST let-it-ride DUAL W163 NHS #2 chase)
         run: npm run paroli-streak-cash-out-acceptance
+      - name: AWP Cycle Convergence Analyzer acceptance (6/6 configs × 3K cycles, Wave 167/168, INDUSTRY-FIRST UK Class III B3/B3A/C/D UKGC LCCP)
+        run: npm run awp-cycle-convergence-acceptance

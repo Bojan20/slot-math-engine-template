@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "AWP_CYCLE_CONVERGENCE",
+  "generated_utc": "2026-05-17T09:58:04.297Z",
+  "cycles_per_config": 3000,
+  "seed": 3405644135,
+  "tolerances": {
+    "rtp_abs": 0.005,
+    "std_rel": 0.2,
+    "prob_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_b3_mid_cycle_on_track",
+      "description": "UK B3 (70% RTP, τ=4pp), N=10K spins, mid-cycle, realised 70.0% — on target",
+      "cfg": {
+        "cycleLengthSpins": 10000,
+        "baseBet": 1,
+        "targetRtp": 0.7,
+        "toleranceAbs": 0.04,
+        "payoutStdDevPerBet": 3,
+        "spinsPlayed": 5000,
+        "cumulativePayout": 3500
+      },
+      "closed_form": {
+        "cycleProgressFraction": 0.5,
+        "spinsRemaining": 5000,
+        "realisedRtpCurrent": 0.7,
+        "deviationCurrent": 0,
+        "expectedFinalRtp": 0.7,
+        "stdDevFinalRtp": 0.021213203435596427,
+        "meanDeviationFinal": 0,
+        "probExceedsToleranceAtEnd": 0.059346309624901394,
+        "oneInNCyclesExceeds": 16.850247409156598,
+        "compensationHintRecommended": 0,
+        "maxAchievableDeviationNoCompensation": 0.06363961030678927,
+        "cycleHealthScore": 0.9406536903750986,
+        "withinToleranceCurrent": true
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.7003056089895505,
+        "observedStdDevFinalRtp": 0.021146741632657756,
+        "observedProbExceedsToleranceAtEnd": 0.05433333333333333
+      },
+      "checks": {
+        "rtp_abs": 0.00030560898955056537,
+        "std_rel": 0.0031330394365212044,
+        "prob_abs": 0.005012976291568064
+      },
+      "pass": true,
+      "elapsed_ms": 511
+    },
+    {
+      "name": "B_uk_b3_early_cycle_below_target",
+      "description": "UK B3 early cycle (n=1K), realised 65% — below target, compensation hint needed",
+      "cfg": {
+        "cycleLengthSpins": 10000,
+        "baseBet": 1,
+        "targetRtp": 0.7,
+        "toleranceAbs": 0.04,
+        "payoutStdDevPerBet": 3,
+        "spinsPlayed": 1000,
+        "cumulativePayout": 650
+      },
+      "closed_form": {
+        "cycleProgressFraction": 0.1,
+        "spinsRemaining": 9000,
+        "realisedRtpCurrent": 0.65,
+        "deviationCurrent": -0.04999999999999993,
+        "expectedFinalRtp": 0.695,
+        "stdDevFinalRtp": 0.02846049894151541,
+        "meanDeviationFinal": -0.0050000000000000044,
+        "probExceedsToleranceAtEnd": 0.1663139745524596,
+        "oneInNCyclesExceeds": 6.012723841703241,
+        "compensationHintRecommended": 0.0050000000000000044,
+        "maxAchievableDeviationNoCompensation": 0.09038149682454624,
+        "cycleHealthScore": 0.8336860254475404,
+        "withinToleranceCurrent": false
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.694447284890214,
+        "observedStdDevFinalRtp": 0.028428240755050297,
+        "observedProbExceedsToleranceAtEnd": 0.16566666666666666
+      },
+      "checks": {
+        "rtp_abs": 0.0005527151097859395,
+        "std_rel": 0.0011334371379575275,
+        "prob_abs": 0.0006473078857929526
+      },
+      "pass": true,
+      "elapsed_ms": 1013
+    },
+    {
+      "name": "C_uk_d_high_rtp_late_cycle",
+      "description": "UK Category D (90% RTP, τ=3pp), N=20K spins, late cycle (n=18K), realised 89.5%",
+      "cfg": {
+        "cycleLengthSpins": 20000,
+        "baseBet": 1,
+        "targetRtp": 0.9,
+        "toleranceAbs": 0.03,
+        "payoutStdDevPerBet": 2,
+        "spinsPlayed": 18000,
+        "cumulativePayout": 16110
+      },
+      "closed_form": {
+        "cycleProgressFraction": 0.9,
+        "spinsRemaining": 2000,
+        "realisedRtpCurrent": 0.895,
+        "deviationCurrent": -0.0050000000000000044,
+        "expectedFinalRtp": 0.8955,
+        "stdDevFinalRtp": 0.00447213595499958,
+        "meanDeviationFinal": -0.0045000000000000595,
+        "probExceedsToleranceAtEnd": 5.9385323325500394e-9,
+        "oneInNCyclesExceeds": 168391774.9371913,
+        "compensationHintRecommended": 0.0045000000000000595,
+        "maxAchievableDeviationNoCompensation": 0.017916407864998797,
+        "cycleHealthScore": 0.9999999940614677,
+        "withinToleranceCurrent": true
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.8955355934180816,
+        "observedStdDevFinalRtp": 0.0044067357304145,
+        "observedProbExceedsToleranceAtEnd": 0
+      },
+      "checks": {
+        "rtp_abs": 0.000035593418081680817,
+        "std_rel": 0.014623934791599158,
+        "prob_abs": 5.9385323325500394e-9
+      },
+      "pass": true,
+      "elapsed_ms": 226
+    },
+    {
+      "name": "D_uk_b3a_high_vol_early",
+      "description": "UK B3A (85% RTP, τ=5pp), N=15K spins, early cycle high-volatility",
+      "cfg": {
+        "cycleLengthSpins": 15000,
+        "baseBet": 1,
+        "targetRtp": 0.85,
+        "toleranceAbs": 0.05,
+        "payoutStdDevPerBet": 5,
+        "spinsPlayed": 3000,
+        "cumulativePayout": 2400
+      },
+      "closed_form": {
+        "cycleProgressFraction": 0.2,
+        "spinsRemaining": 12000,
+        "realisedRtpCurrent": 0.8,
+        "deviationCurrent": -0.04999999999999993,
+        "expectedFinalRtp": 0.84,
+        "stdDevFinalRtp": 0.03651483716701107,
+        "meanDeviationFinal": -0.010000000000000009,
+        "probExceedsToleranceAtEnd": 0.18683499193577924,
+        "oneInNCyclesExceeds": 5.352316445860044,
+        "compensationHintRecommended": 0.010000000000000009,
+        "maxAchievableDeviationNoCompensation": 0.11954451150103323,
+        "cycleHealthScore": 0.8131650080642208,
+        "withinToleranceCurrent": true
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.839843921925253,
+        "observedStdDevFinalRtp": 0.03640789925251374,
+        "observedProbExceedsToleranceAtEnd": 0.18666666666666668
+      },
+      "checks": {
+        "rtp_abs": 0.0001560780747469348,
+        "std_rel": 0.002928615401137412,
+        "prob_abs": 0.00016832526911256251
+      },
+      "pass": true,
+      "elapsed_ms": 1345
+    },
+    {
+      "name": "E_corner_cycle_just_started",
+      "description": "Corner: n=0 (cycle just reset) — full uncertainty, project to end",
+      "cfg": {
+        "cycleLengthSpins": 10000,
+        "baseBet": 1,
+        "targetRtp": 0.7,
+        "toleranceAbs": 0.04,
+        "payoutStdDevPerBet": 3,
+        "spinsPlayed": 0,
+        "cumulativePayout": 0
+      },
+      "closed_form": {
+        "cycleProgressFraction": 0,
+        "spinsRemaining": 10000,
+        "realisedRtpCurrent": "NaN",
+        "deviationCurrent": 0,
+        "expectedFinalRtp": 0.7,
+        "stdDevFinalRtp": 0.03,
+        "meanDeviationFinal": 0,
+        "probExceedsToleranceAtEnd": 0.18242256953891567,
+        "oneInNCyclesExceeds": 5.481777844307104,
+        "compensationHintRecommended": 0,
+        "maxAchievableDeviationNoCompensation": 0.09,
+        "cycleHealthScore": 0.8175774304610843,
+        "withinToleranceCurrent": true
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.6996104078710679,
+        "observedStdDevFinalRtp": 0.02964836972501725,
+        "observedProbExceedsToleranceAtEnd": 0.16733333333333333
+      },
+      "checks": {
+        "rtp_abs": 0.0003895921289320814,
+        "std_rel": 0.011721009166091683,
+        "prob_abs": 0.015089236205582335
+      },
+      "pass": true,
+      "elapsed_ms": 1142
+    },
+    {
+      "name": "F_corner_cycle_at_end_outside_band",
+      "description": "Corner: n=N (cycle complete), realised 60% — outside tolerance, P(exceeds)=1",
+      "cfg": {
+        "cycleLengthSpins": 10000,
+        "baseBet": 1,
+        "targetRtp": 0.7,
+        "toleranceAbs": 0.04,
+        "payoutStdDevPerBet": 3,
+        "spinsPlayed": 10000,
+        "cumulativePayout": 6000
+      },
+      "closed_form": {
+        "cycleProgressFraction": 1,
+        "spinsRemaining": 0,
+        "realisedRtpCurrent": 0.6,
+        "deviationCurrent": -0.09999999999999998,
+        "expectedFinalRtp": 0.6,
+        "stdDevFinalRtp": 0,
+        "meanDeviationFinal": -0.09999999999999998,
+        "probExceedsToleranceAtEnd": 1,
+        "oneInNCyclesExceeds": 1,
+        "compensationHintRecommended": 0.09999999999999998,
+        "maxAchievableDeviationNoCompensation": 0.09999999999999998,
+        "cycleHealthScore": 0,
+        "withinToleranceCurrent": false
+      },
+      "monte_carlo": {
+        "cycles": 3000,
+        "observedExpectedFinalRtp": 0.5999999999999699,
+        "observedStdDevFinalRtp": 3.008704396734174e-14,
+        "observedProbExceedsToleranceAtEnd": 1
+      },
+      "checks": {
+        "rtp_abs": 3.008704396734174e-14,
+        "std_rel": 0,
+        "prob_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    }
+  ]
+}

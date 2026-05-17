@@ -90,9 +90,9 @@ because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — **54 portfolio
-> solvers** (🎯 50-solver milestone @ Wave 157, 51 @ Wave 159, 52 @ Wave 161 = responsible-gambling math triad, 53 @ Wave 163 + 54 @ Wave 165 = complete sequential bet-progression chase-pattern pair Martingale + Paroli #1+#2 NHS) + 11 exact-enum fixtures + 234 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery/collect/chain/mega/bi-dir/anticipation/buy-tier/multi-level-wild/hold-win-value/locked-reels/tumble-mult-cap/adjacent-pays/symbol-mult-stop/trail-bonus/cascade-meter/max-win-cap/voltage-meter/bonus-trigger-strat/free-bet-wagering-req/session-bankroll-drawdown/hit-frequency-distribution/running-max-drawdown/martingale-bust-time/paroli-streak configs =
-> **83 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — **55 portfolio
+> solvers** (🎯 50-solver milestone @ Wave 157, 51 @ Wave 159, 52 @ Wave 161 = responsible-gambling math triad, 53 @ Wave 163 + 54 @ Wave 165 = complete sequential bet-progression chase-pattern pair Martingale + Paroli #1+#2 NHS, 55 @ Wave 167 = first ABOVE-IR analyzer for UK Class III AWP cycle convergence) + 11 exact-enum fixtures + 240 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery/collect/chain/mega/bi-dir/anticipation/buy-tier/multi-level-wild/hold-win-value/locked-reels/tumble-mult-cap/adjacent-pays/symbol-mult-stop/trail-bonus/cascade-meter/max-win-cap/voltage-meter/bonus-trigger-strat/free-bet-wagering-req/session-bankroll-drawdown/hit-frequency-distribution/running-max-drawdown/martingale-bust-time/paroli-streak/awp-cycle configs =
+> **84 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 
