@@ -222,3 +222,5 @@ jobs:
         run: npm run bonus-trigger-award-stratification-acceptance
       - name: Free Bet Wagering Requirement Aggregator acceptance (6/6 configs × 5K episodes, Wave 154/155)
         run: npm run free-bet-wagering-requirement-acceptance
+      - name: Session Bankroll Drawdown Analyzer acceptance (6/6 configs × 3K episodes, Wave 157/158, INDUSTRY-FIRST UKGC LCCP 3.4.3)
+        run: npm run session-bankroll-drawdown-acceptance

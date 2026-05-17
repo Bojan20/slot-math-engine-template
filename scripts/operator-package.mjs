@@ -242,6 +242,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 154 Free Bet Wagering Requirement Aggregator (W152 Wave 155)
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_BET_WAGERING_REQUIREMENT.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/FREE_BET_WAGERING_REQUIREMENT.md' },
+  // REPORTS — Wave 157 Session Bankroll Drawdown Analyzer (W152 Wave 158, 50. solver MILESTONE, INDUSTRY-FIRST UKGC LCCP 3.4.3)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/SESSION_BANKROLL_DRAWDOWN.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/SESSION_BANKROLL_DRAWDOWN.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

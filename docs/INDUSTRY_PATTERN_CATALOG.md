@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.35
+# Industry Pattern Catalog v2.36
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -52,6 +52,7 @@
 > - v2.33 (Wave 151) — adds 1 voltage/XP meter multi-tier reward levels kernel landed in Wave 150/151 (Hacksaw Stack 'Em / Push Wild Swarm / NetEnt Charged / Yggdrasil multi-step charge / Inspired XP bar K-tier extension sa highest-only + cumulative reward modes)
 > - v2.34 (Wave 153) — adds 1 bonus trigger award tier stratification kernel landed in Wave 152/153 (STANDARD industry: Pragmatic Sweet Bonanza 3/4/5 = 10/15/20 FS / NetEnt Vikings / Hacksaw RIP City / Microgaming Mega Moolah / BTG Megaways 6-reel scatter-Binomial trigger sa multi-tier FS award + stratification)
 > - v2.35 (Wave 155) — adds 1 free bet wagering requirement aggregator kernel landed in Wave 154/155 (**INDUSTRY-FIRST** UKGC RTS-12 / MGA Player Protection §15 / EU GambleAware bonus play-through closed-form sa Bachelier first-passage exact bust probability + joint-density truncated normal E[withdrawable] disclosure metric)
+> - v2.36 (Wave 158) — adds 1 session bankroll drawdown analyzer kernel landed in Wave 157/158 (**INDUSTRY-FIRST** UKGC LCCP 3.4.3 / MGA Player Protection §16 / EU EBA 2024 Responsible Gambling Directive / AU NCPF Reform 2022 — **50. closed-form solver milestone** — real-money session bankroll first-passage time via Inverse Gaussian distribution τ ~ IG(B/|μ|, B²/σ²); 3 drift regime branches (negative=IG sure bust, zero=driftless BM half-normal first-passage, positive=P_ever_bust=exp(−2B|μ|/σ²)); regulator disclosure metrics medianMinutesToBust + oneInNHoursBust + expectedLossPerHour + survivalProbByHorizon grid)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -566,8 +567,27 @@ bet without running balance constraint).
 |----|---------|-------------|---------------|------------------|
 | P-069 | **Free Bet Wagering Requirement Aggregator (INDUSTRY-FIRST)** | Required wagering **W = x·B**; required spins **N = ⌈W/b⌉**; per-spin drift **μ = b·(R−1)**; per-spin variance **σ² = (volIdx·b)²**; **`E[X_N] = B + N·μ`**; **`stdDev[X_N] = σ·√N`**; **Bachelier first-passage** (Reflection Principle, exact for continuous BM): **`P_bust = Φ((−B−μN)/(σ√N)) + exp(−2Bμ/σ²)·Φ((−B+μN)/(σ√N))`** universal for μ<0, μ=0, μ>0; **E[withdrawable]** via joint-density closed-form: ∫₀^∞ x·p(X_N=x, min≥0) dx = σ√N·φ(m₁/σ√N) + m₁·Φ(m₁/σ√N) − exp(−2Bμ/σ²)·[σ√N·φ(m₂/σ√N) + m₂·Φ(m₂/σ√N)] gde m₁ = B+μN, m₂ = −B+μN; disclosure metrics **trueBonusValueRatio = E[wd]/B** (0 = pure house-pull, 1 = full bonus value), **playerLossRate = (B − E[wd])/B**; numerical: Φ via Abramowitz-Stegun erf (≤1.5e-7 error) | `src/features/freeBetWageringRequirement.ts` | 23 vitest specs (Wave 154) + 6 industry-representative configs × 5K MC episodes (Wave 155); portfolio entry W154 |
 
+## Pattern Catalog v2.36 — Session Bankroll Drawdown Analyzer Kernel (Wave 157/158) — INDUSTRY-FIRST, 50th SOLVER MILESTONE
+
+This pattern is the **real-money** companion to P-069 — operators
+disclose bankroll-depletion economics under UKGC LCCP 3.4.3, MGA PPD §16,
+EU EBA 2024 Responsible Gambling Directive, and AU NCPF Reform 2022.
+Question: "Player has B bankroll, bets b per spin at game with RTP R
+and volatility v. What is: median minutes to bust, 1-in-N hourly bust
+frequency, expected loss per hour, survival probability over horizon
+H?" No vendor or aggregator publishes a formal closed-form Inverse
+Gaussian first-passage time analyzer for player sessions. Operators
+currently rely on heuristic "average session length" tables that ignore
+variance entirely. Distinct from P-069 (BONUS pool fixed-horizon WR
+completion), P-061-style cap analyzers (payout truncation not bust),
+classic Ante/Buy/Crash kernels (no bankroll dynamics).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-070 | **Session Bankroll Drawdown Analyzer (INDUSTRY-FIRST, 50th solver MILESTONE)** | Per-spin drift **μ = b·(R−1)**; per-spin variance **σ² = (v·b)²**; bankroll process X_n = B + Σ ΔX_i ≈ BM(B, μ, σ²). **First-passage time τ_bust = inf{n ≥ 0 : X_n ≤ 0}**. **Drift regimes**: (1) **μ<0** (house edge): **τ ~ IG(μ_IG=B/\|μ\|, λ=B²/σ²)** Inverse Gaussian; CDF `F(t) = Φ(√(λ/t)·(t/μ_IG−1)) + exp(2λ/μ_IG)·Φ(−√(λ/t)·(t/μ_IG+1))` Chhikara-Folks 1989; **E[τ]=B/\|μ\|**, **Var[τ]=B·σ²/\|μ\|³**; median via numerical CDF inversion (60-iter bisection). (2) **μ=0** (fair): driftless BM hitting 0 from B, **P(τ≤t) = 2·(1−Φ(B/(σ√t)))** half-normal; **median = B²/(σ²·Φ⁻¹(0.75)²)** ≈ B²/(σ²·0.4549). (3) **μ>0** (player edge): **P(τ<∞) = exp(−2B\|μ\|/σ²)** < 1; finite-horizon via Bachelier reflection (P-069 helper reused). Disclosure metrics: **medianMinutesToBust**, **expectedHoursPlayed = E[τ]/sph**, **expectedLossPerHour = \|μ\|·sph** (deterministic mean rate), **survivalProbByHorizon** grid [1h, 2h, 4h, 8h], **oneInNHoursBust = 1/P(bust within 1h)** regulator "1 in X" form, **expectedBankrollAfter1Hour** conditional+unconditional. | `src/features/sessionBankrollDrawdown.ts` | 32 vitest specs (Wave 157) + 6 industry-representative configs × 3K MC episodes (Wave 158); portfolio entry W157 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 49 P-021..P-069 kernels in ~10 seconds and emits unified report
+all 50 P-021..P-070 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

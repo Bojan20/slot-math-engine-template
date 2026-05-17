@@ -1,0 +1,395 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SESSION_BANKROLL_DRAWDOWN",
+  "generated_utc": "2026-05-17T02:10:38.348Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644119,
+  "tolerances": {
+    "survive_1h_abs": 0.06,
+    "median_tau_rel": 0.3,
+    "loss_rate_self_consistent": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_responsible_low_stake_med_vol",
+      "description": "UK LCCP 3.4.3 baseline: £100 bankroll / £1 spin / R=96% / vol-index 5 (NetEnt Starburst-class)",
+      "cfg": {
+        "bankroll": 100,
+        "betPerSpin": 1,
+        "rtp": 0.96,
+        "volatilityIndex": 5,
+        "spinsPerHour": 600
+      },
+      "closed_form": {
+        "driftPerSpin": -0.040000000000000036,
+        "sigmaPerSpin": 5,
+        "driftRegime": "negative",
+        "probEverBust": 1,
+        "expectedSpinsToBust": 2499.9999999999977,
+        "stdDevSpinsToBust": 6249.999999999992,
+        "medianSpinsToBust": 642.2996484680391,
+        "medianMinutesToBust": 64.22996484680391,
+        "expectedHoursPlayed": 4.1666666666666625,
+        "expectedLossPerHour": 24.00000000000002,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 600,
+            "probSurvive": 0.5181841776554853
+          },
+          {
+            "hours": 2,
+            "spins": 1200,
+            "probSurvive": 0.34750071754396417
+          },
+          {
+            "hours": 4,
+            "spins": 2400,
+            "probSurvive": 0.21482905544347974
+          },
+          {
+            "hours": 8,
+            "spins": 4800,
+            "probSurvive": 0.12036033227677057
+          }
+        ],
+        "oneInNHoursBust": 2.075481861791093,
+        "expectedBankrollAfter1Hour": 158.73655096452603,
+        "expectedBankrollAfter1HourUnconditional": 82.25476912542095
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.9186666666666666,
+        "observedMeanSpinsToBustGivenBust": 1203.2278664731496,
+        "observedMedianSpinsToBustGivenBust": 581,
+        "observedSurvive1Hour": 0.5316666666666666,
+        "observedExpectedBankroll1HourGivenSurvive": 154.53397882336196
+      },
+      "checks": {
+        "survive_1h_abs": 0.01348248901118132,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 173
+    },
+    {
+      "name": "B_au_ncpf_high_vol_fast_bust",
+      "description": "AU NCPF disclosure: £50 / £2 / R=88% / vol-index 10 (Aristocrat high-vol) — rapid bust",
+      "cfg": {
+        "bankroll": 50,
+        "betPerSpin": 2,
+        "rtp": 0.88,
+        "volatilityIndex": 10,
+        "spinsPerHour": 600
+      },
+      "closed_form": {
+        "driftPerSpin": -0.24,
+        "sigmaPerSpin": 20,
+        "driftRegime": "negative",
+        "probEverBust": 1,
+        "expectedSpinsToBust": 208.33333333333334,
+        "stdDevSpinsToBust": 1202.8130608117203,
+        "medianSpinsToBust": 12.841871844055442,
+        "medianMinutesToBust": 1.2841871844055441,
+        "expectedHoursPlayed": 0.34722222222222227,
+        "expectedLossPerHour": 144,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 600,
+            "probSurvive": 0.056468483558790306
+          },
+          {
+            "hours": 2,
+            "spins": 1200,
+            "probSurvive": 0.03343430331160402
+          },
+          {
+            "hours": 4,
+            "spins": 2400,
+            "probSurvive": 0.018079040518642064
+          },
+          {
+            "hours": 8,
+            "spins": 4800,
+            "probSurvive": 0.008452164226589454
+          }
+        ],
+        "oneInNHoursBust": 1.0598480099231626,
+        "expectedBankrollAfter1Hour": 556.7186092245325,
+        "expectedBankrollAfter1HourUnconditional": 31.43705563186812
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.9903333333333333,
+        "observedMeanSpinsToBustGivenBust": 156.62167620329856,
+        "observedMedianSpinsToBustGivenBust": 19,
+        "observedSurvive1Hour": 0.072,
+        "observedExpectedBankroll1HourGivenSurvive": 550.4589188316821
+      },
+      "checks": {
+        "survive_1h_abs": 0.015531516441209689,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 26
+    },
+    {
+      "name": "C_eu_high_roller_low_vol_long_session",
+      "description": "EU EBA 2024 high-stake: £500 / £5 / R=97% / vol-index 3 — long expected session",
+      "cfg": {
+        "bankroll": 500,
+        "betPerSpin": 5,
+        "rtp": 0.97,
+        "volatilityIndex": 3,
+        "spinsPerHour": 600
+      },
+      "closed_form": {
+        "driftPerSpin": -0.15000000000000013,
+        "sigmaPerSpin": 15,
+        "driftRegime": "negative",
+        "probEverBust": 1,
+        "expectedSpinsToBust": 3333.3333333333303,
+        "stdDevSpinsToBust": 5773.50269189625,
+        "medianSpinsToBust": 1385.8602538970458,
+        "medianMinutesToBust": 138.58602538970456,
+        "expectedHoursPlayed": 5.555555555555551,
+        "expectedLossPerHour": 90.00000000000009,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 600,
+            "probSurvive": 0.7622707179513056
+          },
+          {
+            "hours": 2,
+            "spins": 1200,
+            "probSurvive": 0.5453328499355616
+          },
+          {
+            "hours": 4,
+            "spins": 2400,
+            "probSurvive": 0.33999280964570855
+          },
+          {
+            "hours": 8,
+            "spins": 4800,
+            "probSurvive": 0.18203834151962983
+          }
+        ],
+        "oneInNHoursBust": 4.2064654020835714,
+        "expectedBankrollAfter1Hour": 548.3920336065647,
+        "expectedBankrollAfter1HourUnconditional": 418.0231891760526
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.9213333333333333,
+        "observedMeanSpinsToBustGivenBust": 2082.0246020260493,
+        "observedMedianSpinsToBustGivenBust": 1289,
+        "observedSurvive1Hour": 0.7776666666666666,
+        "observedExpectedBankroll1HourGivenSurvive": 547.5864047272485
+      },
+      "checks": {
+        "survive_1h_abs": 0.015395948715360985,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 313
+    },
+    {
+      "name": "D_table_game_low_vol_slow_pace",
+      "description": "Table game (blackjack/baccarat-class): £200 / £10 / R=98.5% / vol-index 1.2 / 60 spins/hour",
+      "cfg": {
+        "bankroll": 200,
+        "betPerSpin": 10,
+        "rtp": 0.985,
+        "volatilityIndex": 1.2,
+        "spinsPerHour": 60
+      },
+      "closed_form": {
+        "driftPerSpin": -0.15000000000000013,
+        "sigmaPerSpin": 12,
+        "driftRegime": "negative",
+        "probEverBust": 1,
+        "expectedSpinsToBust": 1333.3333333333321,
+        "stdDevSpinsToBust": 2921.186973360882,
+        "medianSpinsToBust": 412.81266685025946,
+        "medianMinutesToBust": 412.81266685025946,
+        "expectedHoursPlayed": 22.222222222222204,
+        "expectedLossPerHour": 9.000000000000007,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 60,
+            "probSurvive": 0.9614360751108059
+          },
+          {
+            "hours": 2,
+            "spins": 120,
+            "probSurvive": 0.843148677125036
+          },
+          {
+            "hours": 4,
+            "spins": 240,
+            "probSurvive": 0.6562313015181617
+          },
+          {
+            "hours": 8,
+            "spins": 480,
+            "probSurvive": 0.45863462662928944
+          }
+        ],
+        "oneInNHoursBust": 25.930970534594277,
+        "expectedBankrollAfter1Hour": 198.74525314303702,
+        "expectedBankrollAfter1HourUnconditional": 191.08085612874507
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.9223333333333333,
+        "observedMeanSpinsToBustGivenBust": 727.9100108420672,
+        "observedMedianSpinsToBustGivenBust": 402,
+        "observedSurvive1Hour": 0.9673333333333334,
+        "observedExpectedBankroll1HourGivenSurvive": 199.90745693529004
+      },
+      "checks": {
+        "survive_1h_abs": 0.005897258222527513,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 114
+    },
+    {
+      "name": "E_corner_zero_drift_fair_game",
+      "description": "Corner case: RTP=1.00 (fair game), driftless BM closed-form verified — sure bust, no integrable mean",
+      "cfg": {
+        "bankroll": 100,
+        "betPerSpin": 1,
+        "rtp": 1,
+        "volatilityIndex": 2,
+        "spinsPerHour": 600
+      },
+      "closed_form": {
+        "driftPerSpin": 0,
+        "sigmaPerSpin": 2,
+        "driftRegime": "zero",
+        "probEverBust": 1,
+        "expectedSpinsToBust": "Infinity",
+        "stdDevSpinsToBust": "NaN",
+        "medianSpinsToBust": 5495.273345794326,
+        "medianMinutesToBust": 549.5273345794326,
+        "expectedHoursPlayed": "Infinity",
+        "expectedLossPerHour": 0,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 600,
+            "probSurvive": 0.9587733015299218
+          },
+          {
+            "hours": 2,
+            "spins": 1200,
+            "probSurvive": 0.8510852371179791
+          },
+          {
+            "hours": 4,
+            "spins": 2400,
+            "probSurvive": 0.6925657985741167
+          },
+          {
+            "hours": 8,
+            "spins": 4800,
+            "probSurvive": 0.5295137167400725
+          }
+        ],
+        "oneInNHoursBust": 24.256126178180065,
+        "expectedBankrollAfter1Hour": 104.29994227042957,
+        "expectedBankrollAfter1HourUnconditional": 100
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.4666666666666667,
+        "observedMeanSpinsToBustGivenBust": 2089.95,
+        "observedMedianSpinsToBustGivenBust": 1870,
+        "observedSurvive1Hour": 0.9636666666666667,
+        "observedExpectedBankroll1HourGivenSurvive": 103.928150057539
+      },
+      "checks": {
+        "survive_1h_abs": 0.004893365136744876,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 404
+    },
+    {
+      "name": "F_corner_player_edge_finite_bust_prob",
+      "description": "Corner case: RTP>1 (player edge from promo/cashback), P_ever_bust = exp(-2B|μ|/σ²) < 1",
+      "cfg": {
+        "bankroll": 100,
+        "betPerSpin": 1,
+        "rtp": 1.02,
+        "volatilityIndex": 3,
+        "spinsPerHour": 600
+      },
+      "closed_form": {
+        "driftPerSpin": 0.020000000000000018,
+        "sigmaPerSpin": 3,
+        "driftRegime": "positive",
+        "probEverBust": 0.6411803884299543,
+        "expectedSpinsToBust": "Infinity",
+        "stdDevSpinsToBust": "NaN",
+        "medianSpinsToBust": "Infinity",
+        "medianMinutesToBust": "Infinity",
+        "expectedHoursPlayed": "Infinity",
+        "expectedLossPerHour": 0,
+        "survivalProbByHorizon": [
+          {
+            "hours": 1,
+            "spins": 600,
+            "probSurvive": 0.8621728180754906
+          },
+          {
+            "hours": 2,
+            "spins": 1200,
+            "probSurvive": 0.7346597291419186
+          },
+          {
+            "hours": 4,
+            "spins": 2400,
+            "probSurvive": 0.6110957926109329
+          },
+          {
+            "hours": 8,
+            "spins": 4800,
+            "probSurvive": 0.511493236613346
+          }
+        ],
+        "oneInNHoursBust": 7.255462863252325,
+        "expectedBankrollAfter1Hour": 129.1864983442779,
+        "expectedBankrollAfter1HourUnconditional": 111.38108733479078
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedBustRateInHorizon": 0.48333333333333334,
+        "observedMeanSpinsToBustGivenBust": 1439.0048275862068,
+        "observedMedianSpinsToBustGivenBust": 1057,
+        "observedSurvive1Hour": 0.8593333333333333,
+        "observedExpectedBankroll1HourGivenSurvive": 129.58441404202574
+      },
+      "checks": {
+        "survive_1h_abs": 0.002839484742157339,
+        "median_tau_rel": 0,
+        "loss_rate_self_consistent": 0
+      },
+      "pass": true,
+      "elapsed_ms": 368
+    }
+  ]
+}
