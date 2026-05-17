@@ -134,6 +134,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'sessionBankrollDrawdown.js'));
   const { solveHitFrequencyDistribution, simulateHitFrequencyDistribution } =
     await import(join(REPO_ROOT, 'dist', 'features', 'hitFrequencyDistribution.js'));
+  const { solveRunningMaxDrawdown, simulateRunningMaxDrawdown } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'runningMaxDrawdown.js'));
 
   const showcase = [];
 
@@ -1076,6 +1078,24 @@ async function main() {
     const rel = Math.abs(cf.totalRtp - mc.observedRtp) / Math.max(cf.totalRtp, 1e-9);
     const ok = rel < 0.10; // 10% rel at 100K, broad to absorb tail-event MC noise
     showcase.push({ wave: 159, solver: 'Hit Frequency Distribution', metric: 'total RTP', cf: cf.totalRtp, mc: mc.observedRtp, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W161: Max Drop From Starting Bankroll During Session (INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §17) ──
+  {
+    const t0 = Date.now();
+    // UK responsible-gambling baseline: £1 stake, 96% RTP, vol=5, 600 spins (1h)
+    const cfg = {
+      betPerSpin: 1,
+      rtp: 0.96,
+      volatilityIndex: 5,
+      horizonSpins: 600,
+    };
+    const cf = solveRunningMaxDrawdown(cfg);
+    const mc = simulateRunningMaxDrawdown(cfg, 1_500, SEED);
+    const rel = Math.abs(cf.expectedMaxDrawdown - mc.observedExpectedMaxDrawdown) /
+      Math.max(cf.expectedMaxDrawdown, 1e-9);
+    const ok = rel < 0.20;
+    showcase.push({ wave: 161, solver: 'Max Drop From Starting Bankroll', metric: 'E[MaxDrop]', cf: cf.expectedMaxDrawdown, mc: mc.observedExpectedMaxDrawdown, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

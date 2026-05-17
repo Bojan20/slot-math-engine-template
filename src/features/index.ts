@@ -174,3 +174,6 @@ export * from './sessionBankrollDrawdown.js';
 
 // W152 Wave 159: Hit Frequency Distribution Decomposition Analyzer (51. solver, INDUSTRY-STANDARD UKGC RTS 14 / MGA PPD §11.f / eCOGRA / AU NCPF 2022)
 export * from './hitFrequencyDistribution.js';
+
+// W152 Wave 161: Max Drop From Starting Bankroll During Session Analyzer (52. solver, INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §17 — third side of responsible-gambling triad)
+export * from './runningMaxDrawdown.js';
