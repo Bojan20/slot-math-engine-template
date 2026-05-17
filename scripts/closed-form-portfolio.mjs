@@ -146,6 +146,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'dropStickWildExpansion.js'));
   const { solveTumblingCascadeChainLength, simulateTumblingCascadeChainLength } =
     await import(join(REPO_ROOT, 'dist', 'features', 'tumblingCascadeChainLength.js'));
+  const { solvePickClickPooperBonus, simulatePickClickPooperBonus } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'pickClickPooperBonus.js'));
 
   const showcase = [];
 
@@ -1192,6 +1194,23 @@ async function main() {
       Math.max(cf.expectedChainLength, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 171, solver: 'Tumbling Cascade Chain Length', metric: 'E[chainLen]', cf: cf.expectedChainLength, mc: mc.observedExpectedChainLength, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W173: Pick-and-Click Pooper Bonus (Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      totalBoxes: 20,
+      pooperBoxes: 5,
+      prizeValueMean: 10,
+      prizeValueVar: 9,
+    };
+    const cf = solvePickClickPooperBonus(cfg);
+    const mc = simulatePickClickPooperBonus(cfg, 20_000, SEED);
+    const rel = Math.abs(cf.expectedReveals - mc.meanReveals) /
+      Math.max(cf.expectedReveals, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 173, solver: 'Pick-and-Click Pooper Bonus', metric: 'E[reveals]', cf: cf.expectedReveals, mc: mc.meanReveals, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

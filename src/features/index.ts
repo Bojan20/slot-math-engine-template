@@ -192,3 +192,6 @@ export * from './dropStickWildExpansion.js';
 
 // W152 Wave 171: Tumbling Cascade Chain Length Analyzer (57. solver, Wald identity — Sweet Bonanza / Gonzo Quest / Reactoonz / Big Bass tumble)
 export * from './tumblingCascadeChainLength.js';
+
+// W152 Wave 173: Pick-and-Click Pooper Bonus Analyzer (58. solver, Negative Hypergeometric — Aristocrat 5 Dragons / IGT WoF / Bally Quick Hit / NetEnt Gonzo / Konami China Shores)
+export * from './pickClickPooperBonus.js';
