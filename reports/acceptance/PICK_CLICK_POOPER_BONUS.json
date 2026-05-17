@@ -1,0 +1,509 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PICK_CLICK_POOPER_BONUS",
+  "generated_utc": "2026-05-17T10:40:18.501Z",
+  "rounds_per_config": 20000,
+  "seed": 3405644147,
+  "tolerances": {
+    "reveals_rel": 0.05,
+    "payout_rel": 0.1,
+    "zero_abs": 0.01,
+    "survival_abs": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_aristocrat_5dragons_n20_k5",
+      "description": "Aristocrat 5 Dragons pick-prize bonus: N=20 boxes, K=5 poopers, prize μ=10, σ²=9; E[T]=2.5, P(T=0)=0.25 (1-in-4 immediate bust).",
+      "cfg": {
+        "totalBoxes": 20,
+        "pooperBoxes": 5,
+        "prizeValueMean": 10,
+        "prizeValueVar": 9,
+        "disclosureRevealThresholds": [
+          1,
+          3,
+          5
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 15,
+        "effectiveCap": 15,
+        "expectedReveals": 2.4999999999999996,
+        "varianceReveals": 6.25,
+        "stdDevReveals": 2.5,
+        "expectedTotalPayout": 24.999999999999996,
+        "varianceTotalPayout": 647.5,
+        "stdDevTotalPayout": 25.446021299998947,
+        "probZeroReveals": 0.25,
+        "oneInNRoundsZeroPicks": 4,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.7499999999999999,
+            "oneInNRounds": 1.3333333333333335
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.3991228070175438,
+            "oneInNRounds": 2.505494505494506
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.19369195046439627,
+            "oneInNRounds": 5.162837162837163
+          }
+        ],
+        "probReachesCap": 0.00006449948400412793
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 2.5222,
+        "stdDevReveals": 2.511037068623241,
+        "meanTotalPayout": 25.215764343063917,
+        "stdDevTotalPayout": 25.51584332316575,
+        "probZeroReveals": 0.24485,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.75515
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.40095
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.1936
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.008801839663785846,
+        "payout_rel": 0.008556724282810431,
+        "zero_abs": 0.005149999999999988,
+        "survival_abs": 0.0018271929824561495
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_bally_quick_hit_n12_k2",
+      "description": "Bally Quick Hit pick-a-prize: N=12 K=2 (low pooper density, long picks). E[T]=10/3≈3.33, P(T=0)=1/6≈16.7%.",
+      "cfg": {
+        "totalBoxes": 12,
+        "pooperBoxes": 2,
+        "prizeValueMean": 8,
+        "prizeValueVar": 6,
+        "disclosureRevealThresholds": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 10,
+        "effectiveCap": 10,
+        "expectedReveals": 3.333333333333334,
+        "varianceReveals": 7.222222222222221,
+        "stdDevReveals": 2.6874192494328497,
+        "expectedTotalPayout": 26.66666666666667,
+        "varianceTotalPayout": 482.2222222222222,
+        "stdDevTotalPayout": 21.95955878933414,
+        "probZeroReveals": 0.16666666666666666,
+        "oneInNRoundsZeroPicks": 6,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.8333333333333334,
+            "oneInNRounds": 1.2
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.5454545454545455,
+            "oneInNRounds": 1.833333333333333
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.31818181818181823,
+            "oneInNRounds": 3.1428571428571423
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.09090909090909093,
+            "oneInNRounds": 10.999999999999998
+          }
+        ],
+        "probReachesCap": 0.015151515151515154
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 3.3579,
+        "stdDevReveals": 2.6804677931286545,
+        "meanTotalPayout": 26.851088813612815,
+        "stdDevTotalPayout": 21.88549465287981,
+        "probZeroReveals": 0.16295,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.83705
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.55195
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.32025
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.0897
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.007316080486811984,
+        "payout_rel": 0.006868330302220239,
+        "zero_abs": 0.003716666666666646,
+        "survival_abs": 0.0064954545454545265
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_netent_gonzo_n15_k3",
+      "description": "NetEnt Gonzo's Quest Bonus hieroglyph reveal: N=15 K=3 (3 free-fall-pooper masks). E[T]=12/4=3.0, P(T=0)=0.20.",
+      "cfg": {
+        "totalBoxes": 15,
+        "pooperBoxes": 3,
+        "prizeValueMean": 6,
+        "prizeValueVar": 4,
+        "disclosureRevealThresholds": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 12,
+        "effectiveCap": 12,
+        "expectedReveals": 2.999999999999999,
+        "varianceReveals": 7.200000000000001,
+        "stdDevReveals": 2.6832815729997477,
+        "expectedTotalPayout": 17.999999999999993,
+        "varianceTotalPayout": 271.20000000000005,
+        "stdDevTotalPayout": 16.468151080191124,
+        "probZeroReveals": 0.2,
+        "oneInNRoundsZeroPicks": 5,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.7999999999999999,
+            "oneInNRounds": 1.25
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.48351648351648346,
+            "oneInNRounds": 2.0681818181818183
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.2637362637362637,
+            "oneInNRounds": 3.7916666666666674
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.07692307692307691,
+            "oneInNRounds": 13.000000000000002
+          }
+        ],
+        "probReachesCap": 0.0021978021978021974
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 2.97275,
+        "stdDevReveals": 2.6919337728666353,
+        "meanTotalPayout": 17.86060738266406,
+        "stdDevTotalPayout": 16.58715693724468,
+        "probZeroReveals": 0.2047,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.7953
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.47855
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.2584
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.07525
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.009083333333333039,
+        "payout_rel": 0.0077440342964407004,
+        "zero_abs": 0.004699999999999982,
+        "survival_abs": 0.004966483516483489
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_igt_wof_pick_a_pack_n10_k1",
+      "description": "IGT Wheel of Fortune Pick-a-Pack: N=10 K=1 (single pooper, all-can-be-revealed in expectation). E[T]=9/2=4.5, P(T=0)=0.10.",
+      "cfg": {
+        "totalBoxes": 10,
+        "pooperBoxes": 1,
+        "prizeValueMean": 15,
+        "prizeValueVar": 12,
+        "disclosureRevealThresholds": [
+          1,
+          3,
+          5,
+          7
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 9,
+        "effectiveCap": 9,
+        "expectedReveals": 4.500000000000001,
+        "varianceReveals": 8.249999999999993,
+        "stdDevReveals": 2.872281323269013,
+        "expectedTotalPayout": 67.50000000000001,
+        "varianceTotalPayout": 1910.2499999999982,
+        "stdDevTotalPayout": 43.706406853000374,
+        "probZeroReveals": 0.1,
+        "oneInNRoundsZeroPicks": 10,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.8999999999999999,
+            "oneInNRounds": 1.1111111111111112
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.7,
+            "oneInNRounds": 1.4285714285714286
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.5,
+            "oneInNRounds": 2
+          },
+          {
+            "k": 7,
+            "probAtLeastK": 0.30000000000000004,
+            "oneInNRounds": 3.333333333333333
+          }
+        ],
+        "probReachesCap": 0.1
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 4.53375,
+        "stdDevReveals": 2.8733536046752057,
+        "meanTotalPayout": 68.0188764255124,
+        "stdDevTotalPayout": 43.71376973384974,
+        "probZeroReveals": 0.1011,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.8989
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.70495
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.5054
+          },
+          {
+            "k": 7,
+            "probAtLeastK": 0.3037
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.007444168734491205,
+        "payout_rel": 0.007628418062456693,
+        "zero_abs": 0.0010999999999999899,
+        "survival_abs": 0.00495000000000001
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "E_konami_china_shores_n8_k4_high_pooper",
+      "description": "Konami China Shores high-pooper density: N=8 K=4 (half poopers). E[T]=4/5=0.8, P(T=0)=0.50.",
+      "cfg": {
+        "totalBoxes": 8,
+        "pooperBoxes": 4,
+        "prizeValueMean": 5,
+        "prizeValueVar": 4,
+        "disclosureRevealThresholds": [
+          1,
+          2,
+          3
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 4,
+        "effectiveCap": 4,
+        "expectedReveals": 0.8,
+        "varianceReveals": 0.96,
+        "stdDevReveals": 0.9797958971132712,
+        "expectedTotalPayout": 4,
+        "varianceTotalPayout": 27.2,
+        "stdDevTotalPayout": 5.215361924162119,
+        "probZeroReveals": 0.5,
+        "oneInNRoundsZeroPicks": 2,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.5,
+            "oneInNRounds": 2
+          },
+          {
+            "k": 2,
+            "probAtLeastK": 0.21428571428571427,
+            "oneInNRounds": 4.666666666666667
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.07142857142857142,
+            "oneInNRounds": 14
+          }
+        ],
+        "probReachesCap": 0.014285714285714285
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 0.80895,
+        "stdDevReveals": 0.983539474296787,
+        "meanTotalPayout": 4.066808991631767,
+        "stdDevTotalPayout": 5.286884185790629,
+        "probZeroReveals": 0.4959,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.5041
+          },
+          {
+            "k": 2,
+            "probAtLeastK": 0.2179
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.07235
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.011063724581247176,
+        "payout_rel": 0.016427865623696393,
+        "zero_abs": 0.0040999999999999925,
+        "survival_abs": 0.000921428571428573
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_buffalo_gold_n25_k2_capped_8",
+      "description": "Aristocrat Buffalo Gold pick-coin bonus capped at 8 UI reveals (N=25 K=2 prize-rich, cap=8). E[T] capped.",
+      "cfg": {
+        "totalBoxes": 25,
+        "pooperBoxes": 2,
+        "prizeValueMean": 12,
+        "prizeValueVar": 10,
+        "maxReveals": 8,
+        "disclosureRevealThresholds": [
+          1,
+          3,
+          5,
+          8
+        ]
+      },
+      "closed_form": {
+        "prizeBoxes": 23,
+        "effectiveCap": 8,
+        "expectedReveals": 5.3999999999999995,
+        "varianceReveals": 8.440000000000001,
+        "stdDevReveals": 2.90516780926679,
+        "expectedTotalPayout": 64.8,
+        "varianceTotalPayout": 1269.3600000000001,
+        "stdDevTotalPayout": 35.628078814328454,
+        "probZeroReveals": 0.08,
+        "oneInNRoundsZeroPicks": 12.5,
+        "survivalAtThresholds": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.9199999999999999,
+            "oneInNRounds": 1.0869565217391306
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.7699999999999999,
+            "oneInNRounds": 1.298701298701299
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.6333333333333333,
+            "oneInNRounds": 1.5789473684210527
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.45333333333333325,
+            "oneInNRounds": 2.205882352941177
+          }
+        ],
+        "probReachesCap": 0.45333333333333325
+      },
+      "monte_carlo": {
+        "rounds": 20000,
+        "meanReveals": 5.37875,
+        "stdDevReveals": 2.916915911969352,
+        "meanTotalPayout": 64.5472410768708,
+        "stdDevTotalPayout": 35.74359102641189,
+        "probZeroReveals": 0.08445,
+        "empiricalSurvival": [
+          {
+            "k": 1,
+            "probAtLeastK": 0.91555
+          },
+          {
+            "k": 3,
+            "probAtLeastK": 0.7678
+          },
+          {
+            "k": 5,
+            "probAtLeastK": 0.63135
+          },
+          {
+            "k": 8,
+            "probAtLeastK": 0.45035
+          }
+        ]
+      },
+      "checks": {
+        "reveals_rel": 0.003935185185185061,
+        "payout_rel": 0.003900600665573961,
+        "zero_abs": 0.004449999999999996,
+        "survival_abs": 0.0021999999999998687
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    }
+  ]
+}

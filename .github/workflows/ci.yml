@@ -238,3 +238,5 @@ jobs:
         run: npm run drop-stick-wild-expansion-acceptance
       - name: Tumbling Cascade Chain Length Analyzer acceptance (6/6 configs × 10K spins, Wave 171/172, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
         run: npm run tumbling-cascade-chain-length-acceptance
+      - name: Pick-and-Click Pooper Bonus Analyzer acceptance (6/6 configs × 20K rounds, Wave 173/174, Negative Hypergeometric Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF)
+        run: npm run pick-click-pooper-bonus-acceptance

@@ -1,4 +1,4 @@
-# Industry Pattern Catalog v2.43
+# Industry Pattern Catalog v2.44
 
 > **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38) + Wave 164 (v2.39) + Wave 166 (v2.40) + Wave 168 (v2.41) + Wave 170 (v2.42) + Wave 172 (v2.43 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
@@ -60,6 +60,7 @@
 > - v2.41 (Wave 168) — adds 1 AWP Cycle Convergence analyzer kernel landed in Wave 167/168 (**INDUSTRY-FIRST UK Class III B3/B3A/C/D finite-cycle disclosure** UKGC LCCP / MGA AWP §15 / EU GA 2024 compensated math — **55. solver, first analyzer ABOVE existing IR state machine** (`src/jurisdiction/compensatedMath.ts`); čita partial-cycle snapshot (n, P_n) i projektuje analytical regulator stats: E[r_N]=(P_n+m·R*·b)/(N·b), stdDev=σ·√m/N (shrinks → 0 as cycle completes), P(|D_N|>τ) Bachelier-CLT, compensationHintRecommended, cycleHealthScore ∈ [0,1])
 > - v2.42 (Wave 170) — adds 1 Drop-and-Stick Wild Expansion analyzer kernel landed in Wave 169/170 (**per-cell sticky accumulation** NetEnt Witchcraft Academy / Pragmatic Wild West Gold / Hacksaw Tombstone / Push Mount Magmas / Yggdrasil Vikings Go Berzerk iconic — **56. solver**; N×M grid iid Bernoulli(q) per cell, wild stays sticky S spins; perCellActiveSteady=1−(1−q)^S geometric saturation; E[W_∞]=N·M·perCellSteady; Var=N·M·p·(1−p) iid; time-averaged closed-form; gridFillProb=perCellSteady^(N·M); distinct od W53/W93/W114/W132)
 > - v2.43 (Wave 172) — adds 1 Tumbling Cascade Chain Length analyzer kernel landed in Wave 171/172 (**Wald identity** za tumbling slot chain — Pragmatic Sweet Bonanza / NetEnt Gonzo Quest / Reactoonz / Big Bass tumble FS / Hacksaw Tombstone tumble — **57. solver**; chain C ~ Geometric(p), E[C]=p/(1−p), Var[C]=p/(1−p)², P(C≥k)=p^k survival; Wald: E[total]=E[C]·E[Y], Var[total]=E[C]·Var[Y]+Var[C]·(E[Y])²; distinct od W86/W102/W121/W138/W146)
+> - v2.44 (Wave 174) — adds 1 Pick-and-Click Pooper Bonus analyzer kernel landed in Wave 173/174 (**Negative Hypergeometric** za pick-bonus terminator mechanic — Aristocrat 5 Dragons / IGT Wheel of Fortune Pick-a-Pack / Bally Quick Hit pick-a-prize / NetEnt Gonzo's Quest Bonus / Konami China Shores / Aristocrat Buffalo Gold pick-coin / Light & Wonder Wonder 4 — **58. solver**; T ~ NHG(N, K, r=1), E[T]=M/(K+1), Var[T]=M(N+1)K/((K+1)²(K+2)), P(T=0)=K/N first-pick-pooper; Wald compound za total payout S = Σ V_i: E[S]=E[T]·μ_V, Var[S]=E[T]·σ²_V + Var[T]·μ_V²; cap truncation residual mass; distinct od W107 N-stage tree / W118 collect-N Markov / W116 mystery / W160 baseline single-reveal / W171 Geometric WITH replacement — NHG = WITHOUT replacement)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -683,8 +684,20 @@ za chain length × per-cascade payout.
 |----|---------|-------------|---------------|------------------|
 | P-077 | **Tumbling Cascade Chain Length (57th solver, Wald identity)** | Per-cascade P(at least one win) = p ∈ (0, 1), iid (stationary ergodic). Chain length **C ~ Geometric(p)**: P(C=k) = p^k·(1−p) for k = 0, 1, 2, ... **E[C] = p/(1−p)**, **Var[C] = p/(1−p)²**. **Survival**: P(C≥k) = p^k. Per-cascade payout Y_i iid sa E[Y], Var[Y]. **Wald identity**: E[total spin payout] = E[C]·E[Y]; **Var[total] = E[C]·Var[Y] + Var[C]·(E[Y])²**. Disclosure tier thresholds [3, 5, 10, 20]: regulatorni "1 in N spins for k-cascade chain" form. probAtLeastOneWinPerSpin = p, oneInNSpinsAnyWin = 1/p. | `src/features/tumblingCascadeChainLength.ts` | 30 vitest specs (Wave 171) + 6 industry tumbling-slot configs × 10K MC spins (Wave 172); portfolio entry W171 |
 
+## Pattern Catalog v2.44 — Pick-and-Click Pooper Bonus Analyzer Kernel (Wave 173/174) — 58th solver, Negative Hypergeometric
+
+Iconic za Aristocrat 5 Dragons pick-prize / IGT Wheel of Fortune Pick-a-Pack /
+Bally Quick Hit pick-a-prize / NetEnt Gonzo's Quest Bonus hieroglyph reveal /
+Konami China Shores pick-and-click / Aristocrat Buffalo Gold Collection
+pick-coin bonus / Light & Wonder Wonder 4 pick-a-game. First pick-bonus
+kernel modeling sample-without-replacement until terminator hit.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-078 | **Pick-and-Click Pooper Bonus (58th solver, Negative Hypergeometric)** | Pool sa N total boxes, K poopers (terminators), M = N − K prize boxes. Player reveals without replacement until first pooper hit (ili maxReveals cap). T = number of prize reveals before first pooper, T ∈ {0, 1, ..., M}. **T ~ NHG(N, K, r=1)** (Johnson-Kotz-Kemp "Univariate Discrete Distributions" §6.2.4). Closed form: **E[T] = M/(K+1)**; **Var[T] = M·(N+1)·K / ((K+1)²·(K+2))**; **P(T = 0) = K/N** (first pick je pooper). PMF recursion `P(T=t) = ∏_{j=0..t−1}(M−j)/(N−j) · K/(N−t)` numerically stable. Per-prize value V iid sa (μ_V, σ²_V). **Wald compound**: E[S] = E[T]·μ_V, Var[S] = E[T]·σ²_V + Var[T]·μ_V². Cap truncation lumps residual mass u cap bucket (truncated PMF sums to 1). Disclosure: survivalAtThresholds (P(T≥k), oneInNRounds), probZeroReveals + oneInNRoundsZeroPicks (regulatorni "1 in X rounds first pick busts"), probReachesCap. Distinct od W107 N-stage tree (no terminator), W118 collect-N Markov, W116 mystery, W160 baseline single-reveal, W171 Geometric WITH replacement (NHG = WITHOUT replacement). | `src/features/pickClickPooperBonus.ts` | 36 vitest specs (Wave 173) + 6 industry pick-bonus configs × 20K MC rounds (Wave 174); portfolio entry W173 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 57 P-021..P-077 kernels in ~10 seconds and emits unified report
+all 58 P-021..P-078 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

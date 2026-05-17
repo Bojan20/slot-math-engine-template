@@ -266,6 +266,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 171 Tumbling Cascade Chain Length (W152 Wave 172, 57. solver, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
   { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.md' },
+  // REPORTS — Wave 173 Pick-and-Click Pooper Bonus (W152 Wave 174, 58. solver, Negative Hypergeometric Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_CLICK_POOPER_BONUS.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_CLICK_POOPER_BONUS.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
