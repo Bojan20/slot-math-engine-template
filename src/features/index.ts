@@ -183,3 +183,6 @@ export * from './martingaleBustTime.js';
 
 // W152 Wave 165: Reverse Martingale (Paroli) Streak Cash-Out Analyzer (54. solver, INDUSTRY-FIRST let-it-ride chase pattern — dual W163, NHS #2 chase pattern)
 export * from './paroliStreakCashOut.js';
+
+// W152 Wave 167: AWP Cycle Convergence Analyzer (55. solver, INDUSTRY-FIRST UK Class III B3/B3A/C/D finite-cycle disclosure UKGC LCCP / MGA AWP §15)
+export * from './awpCycleConvergence.js';

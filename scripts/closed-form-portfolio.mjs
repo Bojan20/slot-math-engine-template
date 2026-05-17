@@ -140,6 +140,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'martingaleBustTime.js'));
   const { solveParoliStreakCashOut, simulateParoliStreakCashOut } =
     await import(join(REPO_ROOT, 'dist', 'features', 'paroliStreakCashOut.js'));
+  const { solveAwpCycleConvergence, simulateAwpCycleConvergence } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'awpCycleConvergence.js'));
 
   const showcase = [];
 
@@ -1134,6 +1136,26 @@ async function main() {
     const abs = Math.abs(cf.probReachStreak - mc.observedProbReachStreak);
     const ok = abs < 0.02;
     showcase.push({ wave: 165, solver: 'Paroli Streak Cash-Out', metric: 'P(reach streak)', cf: cf.probReachStreak, mc: mc.observedProbReachStreak, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W167: AWP Cycle Convergence (INDUSTRY-FIRST UK Class III B3 UKGC LCCP) ──
+  {
+    const t0 = Date.now();
+    // UK B3 AWP baseline: N=10000, b=£1, R*=70%, tolerance 4pp, mid-cycle 50%
+    const cfg = {
+      cycleLengthSpins: 10000,
+      baseBet: 1,
+      targetRtp: 0.70,
+      toleranceAbs: 0.04,
+      payoutStdDevPerBet: 3,
+      spinsPlayed: 5000,
+      cumulativePayout: 3450,
+    };
+    const cf = solveAwpCycleConvergence(cfg);
+    const mc = simulateAwpCycleConvergence(cfg, 2000, SEED);
+    const abs = Math.abs(cf.expectedFinalRtp - mc.observedExpectedFinalRtp);
+    const ok = abs < 0.005;
+    showcase.push({ wave: 167, solver: 'AWP Cycle Convergence', metric: 'E[finalRTP]', cf: cf.expectedFinalRtp, mc: mc.observedExpectedFinalRtp, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
