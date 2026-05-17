@@ -144,6 +144,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'awpCycleConvergence.js'));
   const { solveDropStickWildExpansion, simulateDropStickWildExpansion } =
     await import(join(REPO_ROOT, 'dist', 'features', 'dropStickWildExpansion.js'));
+  const { solveTumblingCascadeChainLength, simulateTumblingCascadeChainLength } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'tumblingCascadeChainLength.js'));
 
   const showcase = [];
 
@@ -1174,6 +1176,22 @@ async function main() {
       Math.max(cf.expectedActiveWildsSteadyState, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 169, solver: 'Drop-and-Stick Wild Expansion', metric: 'E[wilds steady]', cf: cf.expectedActiveWildsSteadyState, mc: mc.observedActiveWildsAtSteadyState, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W171: Tumbling Cascade Chain Length (Sweet Bonanza / Gonzo / Reactoonz) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      probCascadeWin: 0.30,
+      expectedPayoutPerCascade: 2,
+      variancePayoutPerCascade: 10,
+    };
+    const cf = solveTumblingCascadeChainLength(cfg);
+    const mc = simulateTumblingCascadeChainLength(cfg, 20_000, SEED);
+    const rel = Math.abs(cf.expectedChainLength - mc.observedExpectedChainLength) /
+      Math.max(cf.expectedChainLength, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 171, solver: 'Tumbling Cascade Chain Length', metric: 'E[chainLen]', cf: cf.expectedChainLength, mc: mc.observedExpectedChainLength, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

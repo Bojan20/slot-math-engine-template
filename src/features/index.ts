@@ -189,3 +189,6 @@ export * from './awpCycleConvergence.js';
 
 // W152 Wave 169: Drop-and-Stick Wild Expansion Analyzer (56. solver, per-cell sticky accumulation — NetEnt Witchcraft / Pragmatic Wild West Gold / Hacksaw Tombstone / Push Mount Magmas)
 export * from './dropStickWildExpansion.js';
+
+// W152 Wave 171: Tumbling Cascade Chain Length Analyzer (57. solver, Wald identity — Sweet Bonanza / Gonzo Quest / Reactoonz / Big Bass tumble)
+export * from './tumblingCascadeChainLength.js';
