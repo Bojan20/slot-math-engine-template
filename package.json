@@ -77,6 +77,7 @@
     "max-win-cap-truncation-acceptance": "npm run build && node scripts/max-win-cap-truncation-acceptance.mjs",
     "voltage-meter-multi-tier-acceptance": "npm run build && node scripts/voltage-meter-multi-tier-acceptance.mjs",
     "bonus-trigger-award-stratification-acceptance": "npm run build && node scripts/bonus-trigger-award-stratification-acceptance.mjs",
+    "free-bet-wagering-requirement-acceptance": "npm run build && node scripts/free-bet-wagering-requirement-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

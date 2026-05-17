@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.34
+# Industry Pattern Catalog v2.35
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -51,6 +51,7 @@
 > - v2.32 (Wave 149) — adds 1 max win cap truncation analyzer kernel landed in Wave 148/149 (UNIVERSALNI regulatory disclosure: Pragmatic 5000x / Hacksaw 7500x / Nolimit City 25000x / NetEnt 10000x / Stake.com 5000x / Push 10000-15000x sa RTP loss + 1-in-N cap-hit frequency + E[overflow | cap-hit])
 > - v2.33 (Wave 151) — adds 1 voltage/XP meter multi-tier reward levels kernel landed in Wave 150/151 (Hacksaw Stack 'Em / Push Wild Swarm / NetEnt Charged / Yggdrasil multi-step charge / Inspired XP bar K-tier extension sa highest-only + cumulative reward modes)
 > - v2.34 (Wave 153) — adds 1 bonus trigger award tier stratification kernel landed in Wave 152/153 (STANDARD industry: Pragmatic Sweet Bonanza 3/4/5 = 10/15/20 FS / NetEnt Vikings / Hacksaw RIP City / Microgaming Mega Moolah / BTG Megaways 6-reel scatter-Binomial trigger sa multi-tier FS award + stratification)
+> - v2.35 (Wave 155) — adds 1 free bet wagering requirement aggregator kernel landed in Wave 154/155 (**INDUSTRY-FIRST** UKGC RTS-12 / MGA Player Protection §15 / EU GambleAware bonus play-through closed-form sa Bachelier first-passage exact bust probability + joint-density truncated normal E[withdrawable] disclosure metric)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -544,8 +545,29 @@ per-reel reveal).
 |----|---------|-------------|---------------|------------------|
 | P-068 | **Bonus Trigger Award Tier Stratification** | S ~ Binomial(N, q); **`P(S = s) = C(N, s)·q^s·(1−q)^(N−s)`**; **`P(trigger) = Σ_{s≥S_min} P(S=s)`**; conditional **`P(S=s \| trigger) = P(S=s) / P(trigger)`**; **`E[K \| trigger] = Σ_{s≥S_min} K(s)·P(S=s\|trigger)`**; Var[K \| trig] = E[K²\|trig] − E[K\|trig]²; **`E[FS per spin] = P(trig)·E[K\|trig] = Σ K(s)·P(S=s)`** (unconditional); stratification metrics probTierBreakdownConditional + probMaxScatterTier = P(S=N\|trig); regulator "1 in X" form oneInNTriggerFrequency = 1/P(trig) | `src/features/bonusTriggerAwardStratification.ts` | 44 vitest specs (Wave 152) + 6 PAR-style configs × 300K spins (Wave 153); portfolio entry W152 |
 
+## Pattern Catalog v2.35 — Free Bet Wagering Requirement Aggregator Kernel (Wave 154/155) — INDUSTRY-FIRST
+
+This pattern targets the **operator bonus play-through economy** —
+the regulatory disclosure problem nije addressed by any vendor or
+aggregator publicly: "Player gets B units of bonus with wagering
+requirement x. They wager bet b per spin on game with RTP R. Compute
+P(bust before WR completion), expected withdrawable amount, true bonus
+value ratio." UKGC RTS-12 (responsible gambling, bonus terms
+transparency), MGA Player Protection Directives §15 (max x35 WR cap,
+prominent disclosure), EU GambleAware-driven realistic expected return
+mandates this disclosure. Industry use: UKGC x35 standard (Sky Vegas /
+William Hill / Bet365 promotions), MGA x30 capped offers, Pragmatic
+Sweet Bonanza high-volatility x50 predatory scenarios, cashback-boost
+RTP>1 promo edge cases. Distinct from W081 (Bonus Buy paid mode without
+WR), W095 (Ante Bet decision EV without bonus pool), W130 (FS Buy per-
+bet without running balance constraint).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-069 | **Free Bet Wagering Requirement Aggregator (INDUSTRY-FIRST)** | Required wagering **W = x·B**; required spins **N = ⌈W/b⌉**; per-spin drift **μ = b·(R−1)**; per-spin variance **σ² = (volIdx·b)²**; **`E[X_N] = B + N·μ`**; **`stdDev[X_N] = σ·√N`**; **Bachelier first-passage** (Reflection Principle, exact for continuous BM): **`P_bust = Φ((−B−μN)/(σ√N)) + exp(−2Bμ/σ²)·Φ((−B+μN)/(σ√N))`** universal for μ<0, μ=0, μ>0; **E[withdrawable]** via joint-density closed-form: ∫₀^∞ x·p(X_N=x, min≥0) dx = σ√N·φ(m₁/σ√N) + m₁·Φ(m₁/σ√N) − exp(−2Bμ/σ²)·[σ√N·φ(m₂/σ√N) + m₂·Φ(m₂/σ√N)] gde m₁ = B+μN, m₂ = −B+μN; disclosure metrics **trueBonusValueRatio = E[wd]/B** (0 = pure house-pull, 1 = full bonus value), **playerLossRate = (B − E[wd])/B**; numerical: Φ via Abramowitz-Stegun erf (≤1.5e-7 error) | `src/features/freeBetWageringRequirement.ts` | 23 vitest specs (Wave 154) + 6 industry-representative configs × 5K MC episodes (Wave 155); portfolio entry W154 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 48 P-021..P-068 kernels in ~10 seconds and emits unified report
+all 49 P-021..P-069 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

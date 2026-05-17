@@ -136,6 +136,56 @@ function normalCdf(z: number): number {
   return 0.5 * (1 + erf(z / Math.SQRT2));
 }
 
+/** Standard normal PDF φ(z) = exp(−z²/2) / √(2π). */
+function normalPdf(z: number): number {
+  return Math.exp(-0.5 * z * z) / Math.sqrt(2 * Math.PI);
+}
+
+/**
+ * Mean of N(μ, σ²) conditioned on X > 0 — closed-form (truncated normal):
+ *   E[X | X > 0] = μ + σ · φ(α) / Φ(−α),   where α = −μ/σ.
+ * Returns 0 when σ ≤ 0.
+ */
+function truncatedNormalMeanPositive(mu: number, sigma: number): number {
+  if (sigma <= 0) return mu > 0 ? mu : 0;
+  const alpha = -mu / sigma;
+  const denom = normalCdf(-alpha);
+  if (denom < 1e-15) return 0; // numerical guard — survival negligible
+  return mu + sigma * (normalPdf(alpha) / denom);
+}
+
+/**
+ * E[X_T · 1{min_{[0,T]} X(s) ≥ 0} · 1{X_T ≥ 0}] — exact closed-form for
+ * Brownian motion with drift starting at B > 0. Derived from the joint
+ * Reflection-Principle density of (X_T, min):
+ *
+ *   p(X_T = x, min ≥ 0)/dx = (1/(σ√T)) ·
+ *       [ φ((x − B − μT)/(σ√T)) − exp(−2Bμ/σ²) · φ((x + B − μT)/(σ√T)) ]
+ *
+ * Integrating x · p over x ∈ (0, ∞) and using standard truncated-normal
+ * integrals ∫₀^∞ x·φ((x − m)/s)/s dx = s·φ(−m/s) + m·Φ(m/s).
+ */
+function expectedPositiveBalanceWithSurvival(
+  bonus: number,
+  drift: number,
+  variancePerUnit: number,
+  T: number,
+): number {
+  if (T <= 0 || variancePerUnit <= 0 || bonus <= 0) return Math.max(0, bonus);
+  const sigmaT = Math.sqrt(variancePerUnit * T); // σ√T
+  const muT = drift * T; // E[X_T] − B contribution
+  const m1 = bonus + muT; // mean of unreflected component
+  const m2 = -bonus + muT; // mean of reflected component
+  // α used for Φ(m/σ√T) — note Φ(−α) form aligns with truncated mean convention.
+  const a1 = m1 / sigmaT;
+  const a2 = m2 / sigmaT;
+  const intUnreflected = sigmaT * normalPdf(a1) + m1 * normalCdf(a1);
+  const intReflected = sigmaT * normalPdf(a2) + m2 * normalCdf(a2);
+  const reflectionWeight = Math.exp((-2 * bonus * drift) / variancePerUnit);
+  const value = intUnreflected - reflectionWeight * intReflected;
+  return Math.max(0, value);
+}
+
 /** ── Validation ─────────────────────────────────────────────────────────── */
 
 function validateConfig(cfg: FreeBetWrConfig): void {
@@ -177,34 +227,30 @@ export function solveFreeBetWageringRequirement(cfg: FreeBetWrConfig): FreeBetWr
   const stdDevBalance = Math.sqrt(varBalance);
   const expectedNetProfit = expectedBalance - cfg.bonusAmount;
 
-  // Bust probability — Bachelier first-passage for Brownian motion
-  // with drift μ and variance σ² over [0, N], starting at B:
+  // Bust probability — Bachelier first-passage for Brownian motion with
+  // drift μ and per-unit variance σ² over [0, N], starting at B (Borodin-
+  // Salminen / Reflection Principle, exact for continuous BM):
   //
-  //   P_bust = P(min_{0≤t≤N} X(t) ≤ 0)
-  //          = Φ((-B - μN)/(σ√N)) + exp(2Bμ/σ²) · Φ((-B + μN)/(σ√N))
+  //   P(min_{0≤t≤N} X(t) ≤ 0) = Φ((−B − μN)/(σ√N))
+  //                            + exp(−2 B μ / σ²) · Φ((−B + μN)/(σ√N))
   //
-  // (Reflection-principle formula, exact for continuous BM with drift.)
-  //
-  // For μ < 0 (negative drift): both terms positive, sums to bust prob.
-  // For μ > 0 (positive drift): first term ↓ to 0 in N; second term has
-  //   exp(positive)·Φ(positive) — but exp grows >1 multiplied by small Φ.
-  //   Use Reflection Principle: P(M_T ≤ 0) = exp(2Bμ/σ²) if μ < 0, else
-  //   bounded by Φ approximation.
+  // Sign convention (verified by limits):
+  //   - μ = 0 (zero drift): exp(0)=1, both terms = Φ(−B/(σ√N)) → 2·Φ(−B/σ√N)
+  //     (known result for standard BM hitting 0 from B > 0).
+  //   - μ < 0 (negative drift): exp(−2Bμ/σ²) = exp(positive) > 1, term1 ↑
+  //     toward 1, term2 small → bust ↑ correctly.
+  //   - μ > 0 (positive drift): exp(−2Bμ/σ²) = exp(negative) < 1, both
+  //     terms shrink → bust ↓ correctly.
   let bustProb: number;
   const sqrtN = Math.sqrt(N);
   if (sigmaPerSpin < 1e-12 || sqrtN < 1e-12) {
-    bustProb = -cfg.bonusAmount - N * driftPerSpin > 0 ? 1 : 0;
-  } else if (driftPerSpin >= 0) {
-    // Positive drift — first-passage prob = exp(−2·B·μ/σ²·N) form for
-    // discrete random walk; equivalent reflection: P(M_T ≤ 0) → 0.
-    // Use simpler upper bound via Φ on final balance.
-    const z = (-cfg.bonusAmount - N * driftPerSpin) / (sqrtN * sigmaPerSpin);
-    bustProb = normalCdf(z);
+    // Degenerate σ=0: deterministic bust iff final balance ≤ 0.
+    bustProb = cfg.bonusAmount + N * driftPerSpin <= 0 ? 1 : 0;
   } else {
-    // Negative drift: full Bachelier reflection formula.
+    // Universal Bachelier reflection formula (covers μ < 0, μ = 0, μ > 0).
     const sigmaN = sqrtN * sigmaPerSpin;
     const term1 = normalCdf((-cfg.bonusAmount - N * driftPerSpin) / sigmaN);
-    const exponent = (2 * cfg.bonusAmount * driftPerSpin) / variancePerSpin;
+    const exponent = (-2 * cfg.bonusAmount * driftPerSpin) / variancePerSpin;
     const reflectionWeight = Math.exp(exponent);
     const term2 = normalCdf((-cfg.bonusAmount + N * driftPerSpin) / sigmaN);
     bustProb = term1 + reflectionWeight * term2;
@@ -212,10 +258,18 @@ export function solveFreeBetWageringRequirement(cfg: FreeBetWrConfig): FreeBetWr
   bustProb = Math.max(0, Math.min(1, bustProb));
   const survivalProb = 1 - bustProb;
 
-  // Expected withdrawable — conservative lower bound:
-  // max(0, E[balance | completion]) · P(survive)
-  const expectedBalancePos = Math.max(0, expectedBalance);
-  const expectedWithdrawable = expectedBalancePos * survivalProb;
+  // Expected withdrawable — exact closed-form using Bachelier joint density
+  // (X_N, min) integrated over the surviving-positive path region:
+  //   E[withdrawable] = ∫₀^∞ x · p(X_N=x, min≥0) dx
+  // (See `expectedPositiveBalanceWithSurvival`.)
+  // Materially tighter than the prior max(0, μ_X)·P(survive) bound — captures
+  // the upward bias of surviving paths when μ_X < 0.
+  const expectedWithdrawable =
+    sigmaPerSpin > 0
+      ? expectedPositiveBalanceWithSurvival(cfg.bonusAmount, driftPerSpin, variancePerSpin, N)
+      : Math.max(0, expectedBalance) * survivalProb;
+  // Keep truncated-normal helper exported via re-use of the name (lint guard).
+  void truncatedNormalMeanPositive;
   const effectiveEV = expectedWithdrawable; // since locked bonus has 0 baseline value
   const playerLossRate = (cfg.bonusAmount - expectedWithdrawable) / cfg.bonusAmount;
   const trueBonusValueRatio = effectiveEV / cfg.bonusAmount;

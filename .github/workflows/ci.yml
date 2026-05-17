@@ -220,3 +220,5 @@ jobs:
         run: npm run voltage-meter-multi-tier-acceptance
       - name: Bonus Trigger Award Stratification acceptance (6/6 configs × 300K spins, Wave 152/153)
         run: npm run bonus-trigger-award-stratification-acceptance
+      - name: Free Bet Wagering Requirement Aggregator acceptance (6/6 configs × 5K episodes, Wave 154/155)
+        run: npm run free-bet-wagering-requirement-acceptance

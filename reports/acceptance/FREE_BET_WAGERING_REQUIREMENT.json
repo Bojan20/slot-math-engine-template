@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "FREE_BET_WAGERING_REQUIREMENT",
+  "generated_utc": "2026-05-17T01:24:50.542Z",
+  "episodes_per_config": 5000,
+  "seed": 3405644116,
+  "tolerances": {
+    "bust_abs": 0.04,
+    "balance_rel": 0.2,
+    "withdrawable_rel": 0.25
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_mga_x35_standard_96pct_med_vol",
+      "description": "UK / MGA standard: bonus £10 x35 WR @ 96% RTP, vol-index 5 (medium-vol slots like NetEnt Starburst)",
+      "cfg": {
+        "bonusAmount": 10,
+        "wagerMultiplier": 35,
+        "betPerSpin": 0.2,
+        "rtp": 0.96,
+        "volatilityIndex": 5
+      },
+      "closed_form": {
+        "requiredWagering": 350,
+        "requiredSpins": 1750,
+        "expectedBalanceAtCompletion": -4.000000000000012,
+        "expectedNetProfit": -14.000000000000012,
+        "stdDevBalanceAtCompletion": 41.83300132670378,
+        "bustProbability": 0.8702880917129584,
+        "survivalProbability": 0.1297119082870416,
+        "expectedWithdrawable": 6.125150400989266,
+        "effectiveEV": 6.125150400989266,
+        "playerLossRate": 0.38748495990107334,
+        "trueBonusValueRatio": 0.6125150400989267
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.8726,
+        "observedMeanBalanceAtCompletion": 46.00243430771308,
+        "observedMeanWithdrawable": 5.860710130802647,
+        "observedStdDevBalanceAtCompletion": 25.436297132634344
+      },
+      "checks": {
+        "bust_abs": 0.002311908287041642,
+        "balance_rel": 0.02580946601098949,
+        "withdrawable_rel": 0.04317286154212799
+      },
+      "pass": true,
+      "elapsed_ms": 83
+    },
+    {
+      "name": "B_mga_capped_x30_high_rtp_low_vol",
+      "description": "MGA-cap x30 @ 97% RTP low-volatility — favorable disclosure case",
+      "cfg": {
+        "bonusAmount": 20,
+        "wagerMultiplier": 30,
+        "betPerSpin": 0.4,
+        "rtp": 0.97,
+        "volatilityIndex": 3
+      },
+      "closed_form": {
+        "requiredWagering": 600,
+        "requiredSpins": 1500,
+        "expectedBalanceAtCompletion": 1.9999999999999858,
+        "expectedNetProfit": -18.000000000000014,
+        "stdDevBalanceAtCompletion": 46.47580015448901,
+        "bustProbability": 0.7714281488388885,
+        "survivalProbability": 0.22857185116111145,
+        "expectedWithdrawable": 12.000770015590668,
+        "effectiveEV": 12.000770015590668,
+        "playerLossRate": 0.39996149922046664,
+        "trueBonusValueRatio": 0.6000385007795334
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.7732,
+        "observedMeanBalanceAtCompletion": 50.021115007337656,
+        "observedMeanWithdrawable": 11.34478888366418,
+        "observedStdDevBalanceAtCompletion": 27.920168808337355
+      },
+      "checks": {
+        "bust_abs": 0.0017718511611114485,
+        "balance_rel": 0.04727622981555167,
+        "withdrawable_rel": 0.05466158680436984
+      },
+      "pass": true,
+      "elapsed_ms": 125
+    },
+    {
+      "name": "C_predatory_x50_96pct_high_vol",
+      "description": "Predatory x50 WR @ 96% RTP high-volatility (Pragmatic Sweet Bonanza-style) — near-zero withdrawable",
+      "cfg": {
+        "bonusAmount": 10,
+        "wagerMultiplier": 50,
+        "betPerSpin": 0.2,
+        "rtp": 0.96,
+        "volatilityIndex": 12
+      },
+      "closed_form": {
+        "requiredWagering": 500,
+        "requiredSpins": 2500,
+        "expectedBalanceAtCompletion": -10.000000000000018,
+        "expectedNetProfit": -20.000000000000018,
+        "stdDevBalanceAtCompletion": 120.00000000000001,
+        "bustProbability": 0.9458038585023009,
+        "survivalProbability": 0.054196141497699135,
+        "expectedWithdrawable": 7.709979404906392,
+        "effectiveEV": 7.709979404906392,
+        "playerLossRate": 0.22900205950936084,
+        "trueBonusValueRatio": 0.7709979404906392
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.9452,
+        "observedMeanBalanceAtCompletion": 136.98613036267943,
+        "observedMeanWithdrawable": 7.506839943874833,
+        "observedStdDevBalanceAtCompletion": 79.06871719942532
+      },
+      "checks": {
+        "bust_abs": 0.0006038585023008247,
+        "balance_rel": 0.03707658419508159,
+        "withdrawable_rel": 0.026347600993886864
+      },
+      "pass": true,
+      "elapsed_ms": 56
+    },
+    {
+      "name": "D_favorable_x10_high_rtp_low_vol",
+      "description": "Promotional x10 WR @ 97.5% RTP very-low-vol — strong \"real money\" bonus",
+      "cfg": {
+        "bonusAmount": 50,
+        "wagerMultiplier": 10,
+        "betPerSpin": 1,
+        "rtp": 0.975,
+        "volatilityIndex": 2
+      },
+      "closed_form": {
+        "requiredWagering": 500,
+        "requiredSpins": 500,
+        "expectedBalanceAtCompletion": 37.499999999999986,
+        "expectedNetProfit": -12.500000000000014,
+        "stdDevBalanceAtCompletion": 44.721359549995796,
+        "bustProbability": 0.352429791564872,
+        "survivalProbability": 0.647570208435128,
+        "expectedWithdrawable": 39.44008512345209,
+        "effectiveEV": 39.44008512345209,
+        "playerLossRate": 0.21119829753095815,
+        "trueBonusValueRatio": 0.7888017024690419
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.354,
+        "observedMeanBalanceAtCompletion": 59.45850971689661,
+        "observedMeanWithdrawable": 38.41019727711521,
+        "observedStdDevBalanceAtCompletion": 32.13843187363328
+      },
+      "checks": {
+        "bust_abs": 0.0015702084351280066,
+        "balance_rel": 0.023745526661715786,
+        "withdrawable_rel": 0.026112718649394743
+      },
+      "pass": true,
+      "elapsed_ms": 79
+    },
+    {
+      "name": "E_corner_positive_rtp_promo",
+      "description": "Edge case: RTP=1.00 (zero drift) x20 WR — should preserve bonus EV",
+      "cfg": {
+        "bonusAmount": 25,
+        "wagerMultiplier": 20,
+        "betPerSpin": 0.5,
+        "rtp": 1,
+        "volatilityIndex": 4
+      },
+      "closed_form": {
+        "requiredWagering": 500,
+        "requiredSpins": 1000,
+        "expectedBalanceAtCompletion": 25,
+        "expectedNetProfit": 0,
+        "stdDevBalanceAtCompletion": 63.245553203367585,
+        "bustProbability": 0.6926328864037374,
+        "survivalProbability": 0.30736711359626256,
+        "expectedWithdrawable": 25,
+        "effectiveEV": 25,
+        "playerLossRate": 0,
+        "trueBonusValueRatio": 1
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.6908,
+        "observedMeanBalanceAtCompletion": 79.07885717708714,
+        "observedMeanWithdrawable": 24.451182639155345,
+        "observedStdDevBalanceAtCompletion": 42.85336614437975
+      },
+      "checks": {
+        "bust_abs": 0.001832886403737466,
+        "balance_rel": 0.027750396919505364,
+        "withdrawable_rel": 0.021952694433786207
+      },
+      "pass": true,
+      "elapsed_ms": 94
+    },
+    {
+      "name": "F_high_rtp_promotional_advantage",
+      "description": "RTP>1 promo (e.g. cashback boost) x15 WR — player advantage scenario",
+      "cfg": {
+        "bonusAmount": 30,
+        "wagerMultiplier": 15,
+        "betPerSpin": 0.6,
+        "rtp": 1.02,
+        "volatilityIndex": 4
+      },
+      "closed_form": {
+        "requiredWagering": 450,
+        "requiredSpins": 750,
+        "expectedBalanceAtCompletion": 39.00000000000001,
+        "expectedNetProfit": 9.000000000000007,
+        "stdDevBalanceAtCompletion": 65.72670690061993,
+        "bustProbability": 0.6071148610005925,
+        "survivalProbability": 0.39288513899940747,
+        "expectedWithdrawable": 35.16132976741274,
+        "effectiveEV": 35.16132976741274,
+        "playerLossRate": -0.1720443255804246,
+        "trueBonusValueRatio": 1.1720443255804247
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedBustRate": 0.6042,
+        "observedMeanBalanceAtCompletion": 87.10519603345728,
+        "observedMeanWithdrawable": 34.47623659004239,
+        "observedStdDevBalanceAtCompletion": 44.64717075634485
+      },
+      "checks": {
+        "bust_abs": 0.0029148610005925724,
+        "balance_rel": 0.02670526747562014,
+        "withdrawable_rel": 0.019484279516791405
+      },
+      "pass": true,
+      "elapsed_ms": 82
+    }
+  ]
+}
