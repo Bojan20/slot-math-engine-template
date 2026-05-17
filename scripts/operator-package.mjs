@@ -263,6 +263,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 169 Drop-and-Stick Wild Expansion (W152 Wave 170, 56. solver, per-cell sticky NetEnt Witchcraft / Pragmatic / Hacksaw)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.md' },
+  // REPORTS — Wave 171 Tumbling Cascade Chain Length (W152 Wave 172, 57. solver, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

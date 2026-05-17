@@ -236,3 +236,5 @@ jobs:
         run: npm run awp-cycle-convergence-acceptance
       - name: Drop-and-Stick Wild Expansion Analyzer acceptance (6/6 configs × 2K episodes, Wave 169/170, per-cell sticky NetEnt Witchcraft / Pragmatic Wild West Gold / Hacksaw Tombstone)
         run: npm run drop-stick-wild-expansion-acceptance
+      - name: Tumbling Cascade Chain Length Analyzer acceptance (6/6 configs × 10K spins, Wave 171/172, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
+        run: npm run tumbling-cascade-chain-length-acceptance

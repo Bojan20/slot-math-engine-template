@@ -1,0 +1,449 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "TUMBLING_CASCADE_CHAIN_LENGTH",
+  "generated_utc": "2026-05-17T10:26:12.121Z",
+  "spins_per_config": 10000,
+  "seed": 3405644145,
+  "tolerances": {
+    "chain_rel": 0.05,
+    "total_rel": 0.1,
+    "survival_abs": 0.02
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_sweet_bonanza_p030",
+      "description": "Pragmatic Sweet Bonanza-class p=0.30 (medium-vol tumble), E[Y]=2, Var[Y]=10",
+      "cfg": {
+        "probCascadeWin": 0.3,
+        "expectedPayoutPerCascade": 2,
+        "variancePayoutPerCascade": 10
+      },
+      "closed_form": {
+        "expectedChainLength": 0.4285714285714286,
+        "varianceChainLength": 0.6122448979591837,
+        "stdDevChainLength": 0.7824607964359516,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.026999999999999996,
+            "oneInN": 37.037037037037045
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 0.0024299999999999994,
+            "oneInN": 411.5226337448561
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 0.0000059048999999999975,
+            "oneInN": 169350.87808430294
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 3.4867844009999975e-11,
+            "oneInN": 28679719907.924435
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 0.8571428571428572,
+        "varianceTotalPayoutPerSpin": 6.734693877551021,
+        "stdDevTotalPayoutPerSpin": 2.5951288749407073,
+        "probAtLeastOneWinPerSpin": 0.3,
+        "oneInNSpinsAnyWin": 3.3333333333333335
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.4215,
+        "observedExpectedTotalPayoutPerSpin": 0.8376309316885779,
+        "observedStdDevTotalPayoutPerSpin": 2.5418661612725755,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0.026
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0.0023
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.016500000000000105,
+        "total_rel": 0.022763913029992477,
+        "survival_abs": 0.0009999999999999974
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "B_gonzo_quest_p020",
+      "description": "NetEnt Gonzos Quest-class p=0.20 (low-vol tumble, classic mechanic)",
+      "cfg": {
+        "probCascadeWin": 0.2,
+        "expectedPayoutPerCascade": 1.5,
+        "variancePayoutPerCascade": 5
+      },
+      "closed_form": {
+        "expectedChainLength": 0.25,
+        "varianceChainLength": 0.31249999999999994,
+        "stdDevChainLength": 0.5590169943749473,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.008000000000000002,
+            "oneInN": 124.99999999999997
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 0.0003200000000000001,
+            "oneInN": 3124.999999999999
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 1.0240000000000006e-7,
+            "oneInN": 9765624.999999994
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 1.0485760000000012e-14,
+            "oneInN": 95367431640624.89
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 0.375,
+        "varianceTotalPayoutPerSpin": 1.9531249999999998,
+        "stdDevTotalPayoutPerSpin": 1.3975424859373684,
+        "probAtLeastOneWinPerSpin": 0.2,
+        "oneInNSpinsAnyWin": 5
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.2502,
+        "observedExpectedTotalPayoutPerSpin": 0.3745337344502402,
+        "observedStdDevTotalPayoutPerSpin": 1.395375639405633,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0.008
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0.0007
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.0007993605115906395,
+        "total_rel": 0.0012433747993595052,
+        "survival_abs": 1.734723475976807e-18
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "C_reactoonz_p050",
+      "description": "Play'n GO Reactoonz-class p=0.50 (high-vol tumble, long chains possible)",
+      "cfg": {
+        "probCascadeWin": 0.5,
+        "expectedPayoutPerCascade": 3,
+        "variancePayoutPerCascade": 25
+      },
+      "closed_form": {
+        "expectedChainLength": 1,
+        "varianceChainLength": 2,
+        "stdDevChainLength": 1.4142135623730951,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.125,
+            "oneInN": 8
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 0.03125,
+            "oneInN": 32
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 0.0009765625,
+            "oneInN": 1024
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 9.5367431640625e-7,
+            "oneInN": 1048576
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 3,
+        "varianceTotalPayoutPerSpin": 43,
+        "stdDevTotalPayoutPerSpin": 6.557438524302,
+        "probAtLeastOneWinPerSpin": 0.5,
+        "oneInNSpinsAnyWin": 2
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.9786,
+        "observedExpectedTotalPayoutPerSpin": 2.9454432491194567,
+        "observedStdDevTotalPayoutPerSpin": 6.515767316279993,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0.1176
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0.0303
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0.0008
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.021399999999999975,
+        "total_rel": 0.018185583626847784,
+        "survival_abs": 0.007400000000000004
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_big_bass_tumble_p035",
+      "description": "Pragmatic Big Bass Bonanza tumble FS p=0.35, medium chains",
+      "cfg": {
+        "probCascadeWin": 0.35,
+        "expectedPayoutPerCascade": 2.5,
+        "variancePayoutPerCascade": 15
+      },
+      "closed_form": {
+        "expectedChainLength": 0.5384615384615384,
+        "varianceChainLength": 0.8284023668639052,
+        "stdDevChainLength": 0.910166120476864,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.04287499999999999,
+            "oneInN": 23.32361516034986
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 0.005252187499999998,
+            "oneInN": 190.3968584518356
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 0.00002758547353515623,
+            "oneInN": 36250.96370832832
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 7.609583501588048e-10,
+            "oneInN": 1314132369.7825372
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 1.346153846153846,
+        "varianceTotalPayoutPerSpin": 13.254437869822485,
+        "stdDevTotalPayoutPerSpin": 3.640664481907456,
+        "probAtLeastOneWinPerSpin": 0.35,
+        "oneInNSpinsAnyWin": 2.857142857142857
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.5283,
+        "observedExpectedTotalPayoutPerSpin": 1.3122765408001829,
+        "observedStdDevTotalPayoutPerSpin": 3.583322924277949,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0.043
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0.0052
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0.0001
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.01887142857142854,
+        "total_rel": 0.02516599826272122,
+        "survival_abs": 0.00012500000000000705
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_hacksaw_tombstone_p040_high_vol",
+      "description": "Hacksaw Tombstone tumble p=0.40 high-vol skull cascade",
+      "cfg": {
+        "probCascadeWin": 0.4,
+        "expectedPayoutPerCascade": 5,
+        "variancePayoutPerCascade": 50
+      },
+      "closed_form": {
+        "expectedChainLength": 0.6666666666666667,
+        "varianceChainLength": 1.1111111111111112,
+        "stdDevChainLength": 1.0540925533894598,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.06400000000000002,
+            "oneInN": 15.624999999999996
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 0.010240000000000003,
+            "oneInN": 97.65624999999997
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 0.00010485760000000006,
+            "oneInN": 9536.743164062495
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 1.0995116277760013e-8,
+            "oneInN": 90949470.17729272
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 3.333333333333334,
+        "varianceTotalPayoutPerSpin": 61.111111111111114,
+        "stdDevTotalPayoutPerSpin": 7.817359599705716,
+        "probAtLeastOneWinPerSpin": 0.4,
+        "oneInNSpinsAnyWin": 2.5
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.6582,
+        "observedExpectedTotalPayoutPerSpin": 3.2799075158323774,
+        "observedStdDevTotalPayoutPerSpin": 7.695078745962859,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0.0625
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0.0104
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0.0001
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.012700000000000098,
+        "total_rel": 0.01602774525028696,
+        "survival_abs": 0.0015000000000000152
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_low_p005_rare_chain",
+      "description": "Corner low-p=0.05 rare chains (E[C]≈0.053, P(C≥3) very small)",
+      "cfg": {
+        "probCascadeWin": 0.05,
+        "expectedPayoutPerCascade": 1,
+        "variancePayoutPerCascade": 2
+      },
+      "closed_form": {
+        "expectedChainLength": 0.052631578947368425,
+        "varianceChainLength": 0.0554016620498615,
+        "stdDevChainLength": 0.23537557657892524,
+        "chainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "survivalProb": 0.00012500000000000003,
+            "oneInN": 7999.999999999998
+          },
+          {
+            "threshold": 5,
+            "survivalProb": 3.125000000000001e-7,
+            "oneInN": 3199999.999999999
+          },
+          {
+            "threshold": 10,
+            "survivalProb": 9.765625000000005e-14,
+            "oneInN": 10239999999999.994
+          },
+          {
+            "threshold": 20,
+            "survivalProb": 9.536743164062511e-27,
+            "oneInN": 1.0485759999999988e+26
+          }
+        ],
+        "expectedTotalPayoutPerSpin": 0.052631578947368425,
+        "varianceTotalPayoutPerSpin": 0.16066481994459836,
+        "stdDevTotalPayoutPerSpin": 0.4008301634665215,
+        "probAtLeastOneWinPerSpin": 0.05,
+        "oneInNSpinsAnyWin": 20
+      },
+      "monte_carlo": {
+        "spins": 10000,
+        "observedExpectedChainLength": 0.0549,
+        "observedExpectedTotalPayoutPerSpin": 0.049564733473866696,
+        "observedStdDevTotalPayoutPerSpin": 0.388408296379139,
+        "observedChainSurvivalProbabilities": [
+          {
+            "threshold": 3,
+            "observedSurvivalProb": 0
+          },
+          {
+            "threshold": 5,
+            "observedSurvivalProb": 0
+          },
+          {
+            "threshold": 10,
+            "observedSurvivalProb": 0
+          },
+          {
+            "threshold": 20,
+            "observedSurvivalProb": 0
+          }
+        ]
+      },
+      "checks": {
+        "chain_rel": 0.04131914485667709,
+        "total_rel": 0.05827006399653285,
+        "survival_abs": 0.00012500000000000003
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    }
+  ]
+}
