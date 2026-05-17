@@ -195,3 +195,6 @@ export * from './tumblingCascadeChainLength.js';
 
 // W152 Wave 173: Pick-and-Click Pooper Bonus Analyzer (58. solver, Negative Hypergeometric — Aristocrat 5 Dragons / IGT WoF / Bally Quick Hit / NetEnt Gonzo / Konami China Shores)
 export * from './pickClickPooperBonus.js';
+
+// W152 Wave 175: Skill-Stop Near-Miss Rate Analyzer (59. solver, INDUSTRY-FIRST anti-near-miss regulatory detector — UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario)
+export * from './skillStopNearMiss.js';

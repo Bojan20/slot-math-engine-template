@@ -148,6 +148,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'tumblingCascadeChainLength.js'));
   const { solvePickClickPooperBonus, simulatePickClickPooperBonus } =
     await import(join(REPO_ROOT, 'dist', 'features', 'pickClickPooperBonus.js'));
+  const { solveSkillStopNearMiss, simulateSkillStopNearMiss } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'skillStopNearMiss.js'));
 
   const showcase = [];
 
@@ -1211,6 +1213,23 @@ async function main() {
       Math.max(cf.expectedReveals, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 173, solver: 'Pick-and-Click Pooper Bonus', metric: 'E[reveals]', cf: cf.expectedReveals, mc: mc.meanReveals, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W175: Skill-Stop Near-Miss Rate (UKGC RTS 12 / JP Pachislot / AU NCPF) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      symbolsPerReel: 20,
+      jackpotSymbolsPerReel: 2,
+      nearMissBand: 1,
+      observedNearMissRatePerReel: 0.20,
+      numReels: 5,
+    };
+    const cf = solveSkillStopNearMiss(cfg);
+    const mc = simulateSkillStopNearMiss(cfg, 50_000, SEED);
+    const abs = Math.abs(cf.anyReelNearMissProb - mc.observedAnyReelNearMissProb);
+    const ok = abs < 0.02;
+    showcase.push({ wave: 175, solver: 'Skill-Stop Near-Miss Rate', metric: 'P(any reel NM)', cf: cf.anyReelNearMissProb, mc: mc.observedAnyReelNearMissProb, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
