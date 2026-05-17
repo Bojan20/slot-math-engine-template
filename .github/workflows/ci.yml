@@ -244,3 +244,5 @@ jobs:
         run: npm run skill-stop-near-miss-acceptance
       - name: 🎯 Avalanche Reactor Remove-and-Drop Wave Aggregator acceptance (6/6 configs × 50K spins, Wave 177/178, 60. solver MILESTONE doubly-compound Wald Reactoonz Quantum Leap / ELK Reactor / BTG Megaways / Tombstone Rip / Sweet Bonanza ante-bet)
         run: npm run avalanche-reactor-wave-aggregator-acceptance
+      - name: Sticky Multiplier FS Trail Aggregator acceptance (6/6 configs × 20K FS-bonus runs, Wave 179/180, 61. solver compound Binomial trail quadratic-in-N BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf)
+        run: npm run sticky-multiplier-fs-trail-acceptance

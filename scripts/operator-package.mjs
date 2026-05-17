@@ -275,6 +275,9 @@ const PACKAGE_FILES = [
   // REPORTS — 🎯 Wave 177 Avalanche Reactor Wave Aggregator (W152 Wave 178, 60. solver MILESTONE, doubly-compound Wald Reactoonz Quantum Leap / ELK Reactor / BTG Megaways / Tombstone Rip / Sweet Bonanza ante-bet)
   { kind: 'reports/acceptance', src: 'reports/acceptance/AVALANCHE_REACTOR_WAVE_AGGREGATOR.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/AVALANCHE_REACTOR_WAVE_AGGREGATOR.md' },
+  // REPORTS — Wave 179 Sticky Multiplier FS Trail Aggregator (W152 Wave 180, 61. solver compound Binomial trail quadratic-in-N BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_MULTIPLIER_FS_TRAIL.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_MULTIPLIER_FS_TRAIL.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

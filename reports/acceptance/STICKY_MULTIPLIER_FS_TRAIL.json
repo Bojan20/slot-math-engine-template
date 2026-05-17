@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "STICKY_MULTIPLIER_FS_TRAIL",
+  "generated_utc": "2026-05-17T22:44:18.935Z",
+  "fs_runs_per_config": 20000,
+  "seed": 3405644153,
+  "tolerances": {
+    "inc_rel": 0.03,
+    "final_m_rel": 0.03,
+    "final_m_std_rel": 0.1,
+    "trail_rel": 0.05,
+    "trail_std_rel": 0.7
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_btg_bonanza_megaways_fs_increment_per_cluster",
+      "description": "Big Time Gaming Bonanza Megaways FS — M_0=1, +1 sticky per cluster win, q=0.40 cluster-event prob, μ_Δ=1 σ²_Δ=0 deterministic. N=12 spinova base, μ_Y=0.5× bet.",
+      "cfg": {
+        "numFreeSpins": 12,
+        "startMultiplier": 1,
+        "probIncrementPerSpin": 0.4,
+        "expectedIncrementValue": 1,
+        "varianceIncrementValue": 0,
+        "baseFsWinMean": 0.5,
+        "baseFsWinVar": 0.04,
+        "multiplierTargetForSpinDisclosure": 10
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 4.800000000000001,
+        "varianceIncrementsPerFs": 2.8800000000000003,
+        "expectedFinalMultiplier": 5.800000000000001,
+        "varianceFinalMultiplier": 2.8800000000000003,
+        "stdDevFinalMultiplier": 1.6970562748477143,
+        "expectedTrailSumPayoutPerFs": 19.200000000000003,
+        "varianceTrailSumPayoutPerFs": 10.424,
+        "stdDevTrailSumPayoutPerFs": 3.2286219970755323,
+        "commercialUpliftRatio": 3.2000000000000006,
+        "expectedSpinsToReachMultiplierTarget": 22.5
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 4.79715,
+        "meanFinalMultiplier": 5.79715,
+        "stdDevFinalMultiplier": 1.6860610539064123,
+        "meanTrailSumPayoutPerFs": 19.227999191585756,
+        "stdDevTrailSumPayoutPerFs": 6.077806764539242
+      },
+      "checks": {
+        "inc_rel": 0.0005937500000000965,
+        "final_m_rel": 0.0004913793103449074,
+        "final_m_std_rel": 0.006478996073532486,
+        "trail_rel": 0.001456167711823364,
+        "trail_std_rel": 0.4687850202950153
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "B_pragmatic_sweet_bonanza_fs_mult_coin",
+      "description": "Pragmatic Sweet Bonanza FS — M_0=1, mult-coin lands sa avg Δ=15× (range 2-100), q=0.30 mult-coin appearance prob, σ²_Δ=300. N=10 spinova FS, μ_Y=0.8×, high-vol.",
+      "cfg": {
+        "numFreeSpins": 10,
+        "startMultiplier": 1,
+        "probIncrementPerSpin": 0.3,
+        "expectedIncrementValue": 15,
+        "varianceIncrementValue": 25,
+        "baseFsWinMean": 0.8,
+        "baseFsWinVar": 0.16,
+        "multiplierTargetForSpinDisclosure": 50
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 3,
+        "varianceIncrementsPerFs": 2.0999999999999996,
+        "expectedFinalMultiplier": 46,
+        "varianceFinalMultiplier": 547.5,
+        "stdDevFinalMultiplier": 23.39871791359518,
+        "expectedTrailSumPayoutPerFs": 170,
+        "varianceTrailSumPayoutPerFs": 2960.7999999999997,
+        "stdDevTrailSumPayoutPerFs": 54.413233684463194,
+        "commercialUpliftRatio": 21.25,
+        "expectedSpinsToReachMultiplierTarget": 10.88888888888889
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 3.0077,
+        "meanFinalMultiplier": 46.100400724071946,
+        "stdDevFinalMultiplier": 23.43926780292115,
+        "meanTrailSumPayoutPerFs": 171.3546244880825,
+        "stdDevTrailSumPayoutPerFs": 107.42848599820935
+      },
+      "checks": {
+        "inc_rel": 0.0025600957542307474,
+        "final_m_rel": 0.0021778709619658556,
+        "final_m_std_rel": 0.0017299981239565904,
+        "trail_rel": 0.007905386225375583,
+        "trail_std_rel": 0.49349343259505524
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "C_btg_white_rabbit_xmult_per_scatter",
+      "description": "BTG White Rabbit FS — M_0=1, xMult per scatter, q=0.20 scatter-during-FS prob, μ_Δ=3 σ²_Δ=4. N=15 FS, μ_Y=0.4× lower base (Megaways volatility).",
+      "cfg": {
+        "numFreeSpins": 15,
+        "startMultiplier": 1,
+        "probIncrementPerSpin": 0.2,
+        "expectedIncrementValue": 3,
+        "varianceIncrementValue": 4,
+        "baseFsWinMean": 0.4,
+        "baseFsWinVar": 0.04,
+        "multiplierTargetForSpinDisclosure": 20
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 3,
+        "varianceIncrementsPerFs": 2.4000000000000004,
+        "expectedFinalMultiplier": 10,
+        "varianceFinalMultiplier": 33.6,
+        "stdDevFinalMultiplier": 5.796550698475776,
+        "expectedTrailSumPayoutPerFs": 31.200000000000003,
+        "varianceTrailSumPayoutPerFs": 67.29600000000002,
+        "stdDevTrailSumPayoutPerFs": 8.203413923483321,
+        "commercialUpliftRatio": 5.2,
+        "expectedSpinsToReachMultiplierTarget": 31.66666666666666
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 2.99395,
+        "meanFinalMultiplier": 10.16287926313718,
+        "stdDevFinalMultiplier": 5.78063597795782,
+        "meanTrailSumPayoutPerFs": 31.722263875684916,
+        "stdDevTrailSumPayoutPerFs": 19.91393153197496
+      },
+      "checks": {
+        "inc_rel": 0.0020166666666667035,
+        "final_m_rel": 0.016026881646422374,
+        "final_m_std_rel": 0.002745550129000128,
+        "trail_rel": 0.01646363821105556,
+        "trail_std_rel": 0.5880565366858149
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "D_hacksaw_wanted_dead_bounty_chain",
+      "description": "Hacksaw Wanted Dead or a Wild Bounty FS — M_0=1, xMult chain za bounty hit, q=0.50 bounty-event high, μ_Δ=2 σ²_Δ=1. N=8 FS, μ_Y=0.6×.",
+      "cfg": {
+        "numFreeSpins": 8,
+        "startMultiplier": 1,
+        "probIncrementPerSpin": 0.5,
+        "expectedIncrementValue": 2,
+        "varianceIncrementValue": 1,
+        "baseFsWinMean": 0.6,
+        "baseFsWinVar": 0.09,
+        "multiplierTargetForSpinDisclosure": 10
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 4,
+        "varianceIncrementsPerFs": 2,
+        "expectedFinalMultiplier": 9,
+        "varianceFinalMultiplier": 12,
+        "stdDevFinalMultiplier": 3.4641016151377544,
+        "expectedTrailSumPayoutPerFs": 21.599999999999998,
+        "varianceTrailSumPayoutPerFs": 37.26,
+        "stdDevTrailSumPayoutPerFs": 6.104096984812741,
+        "commercialUpliftRatio": 4.5,
+        "expectedSpinsToReachMultiplierTarget": 9
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 4.00295,
+        "meanFinalMultiplier": 9.05130632832489,
+        "stdDevFinalMultiplier": 3.467654171703069,
+        "meanTrailSumPayoutPerFs": 21.814892624613066,
+        "stdDevTrailSumPayoutPerFs": 9.858814493949444
+      },
+      "checks": {
+        "inc_rel": 0.0007369564945853009,
+        "final_m_rel": 0.005668389342246969,
+        "final_m_std_rel": 0.001024484100607402,
+        "trail_rel": 0.009850730338714165,
+        "trail_std_rel": 0.38084878373977415
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "E_pragmatic_money_cart_extra_shift_persistent",
+      "description": "Pragmatic Money Cart 4 EXTRA SHIFT — persistent multiplier across re-spins, M_0=1, +1 fixed per shift trigger, q=0.15 shift-trigger low, σ²_Δ=0. N=6 spinova re-spin, μ_Y=1.0×.",
+      "cfg": {
+        "numFreeSpins": 6,
+        "startMultiplier": 1,
+        "probIncrementPerSpin": 0.15,
+        "expectedIncrementValue": 1,
+        "varianceIncrementValue": 0,
+        "baseFsWinMean": 1,
+        "baseFsWinVar": 0.25
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 0.8999999999999999,
+        "varianceIncrementsPerFs": 0.7649999999999999,
+        "expectedFinalMultiplier": 1.9,
+        "varianceFinalMultiplier": 0.7649999999999999,
+        "stdDevFinalMultiplier": 0.874642784226795,
+        "expectedTrailSumPayoutPerFs": 8.25,
+        "varianceTrailSumPayoutPerFs": 5.325,
+        "stdDevTrailSumPayoutPerFs": 2.307596151842865,
+        "commercialUpliftRatio": 1.375
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 0.8993,
+        "meanFinalMultiplier": 1.8993,
+        "stdDevFinalMultiplier": 0.8758764239320525,
+        "meanTrailSumPayoutPerFs": 8.291469303488045,
+        "stdDevTrailSumPayoutPerFs": 3.22626072945496
+      },
+      "checks": {
+        "inc_rel": 0.0007777777777776922,
+        "final_m_rel": 0.0003684210526315384,
+        "final_m_std_rel": 0.0014084631936082043,
+        "trail_rel": 0.0050014420810313345,
+        "trail_std_rel": 0.28474591939359245
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_quickspin_big_bad_wolf_pigs_turned_wild",
+      "description": "Quickspin Big Bad Wolf FS Pigs Turned Wild — M_0=2 (FS-start boost), q=0.25 pig-turn prob, μ_Δ=0.5 σ²_Δ=0.25. N=10 FS, μ_Y=0.7×, balanced commercial.",
+      "cfg": {
+        "numFreeSpins": 10,
+        "startMultiplier": 2,
+        "probIncrementPerSpin": 0.25,
+        "expectedIncrementValue": 0.5,
+        "varianceIncrementValue": 0.04,
+        "baseFsWinMean": 0.7,
+        "baseFsWinVar": 0.04,
+        "multiplierTargetForSpinDisclosure": 5
+      },
+      "closed_form": {
+        "expectedIncrementsPerFs": 2.5,
+        "varianceIncrementsPerFs": 1.875,
+        "expectedFinalMultiplier": 3.25,
+        "varianceFinalMultiplier": 0.56875,
+        "stdDevFinalMultiplier": 0.7541551564499178,
+        "expectedTrailSumPayoutPerFs": 17.9375,
+        "varianceTrailSumPayoutPerFs": 4.03459375,
+        "stdDevTrailSumPayoutPerFs": 2.0086298190557663,
+        "commercialUpliftRatio": 1.28125,
+        "expectedSpinsToReachMultiplierTarget": 24
+      },
+      "monte_carlo": {
+        "runs": 20000,
+        "meanIncrementsPerFs": 2.508,
+        "meanFinalMultiplier": 3.2571567003993223,
+        "stdDevFinalMultiplier": 0.7592355640277129,
+        "meanTrailSumPayoutPerFs": 17.963947058687804,
+        "stdDevTrailSumPayoutPerFs": 3.2897444069379134
+      },
+      "checks": {
+        "inc_rel": 0.0031897926634768766,
+        "final_m_rel": 0.0021972232402711414,
+        "final_m_std_rel": 0.006691477347088029,
+        "trail_rel": 0.0014722298279660991,
+        "trail_std_rel": 0.389426785005041
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    }
+  ]
+}
