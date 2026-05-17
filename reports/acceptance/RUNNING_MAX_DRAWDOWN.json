@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "RUNNING_MAX_DRAWDOWN",
+  "generated_utc": "2026-05-17T02:43:47.385Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644129,
+  "tolerances": {
+    "expected_rel": 0.15,
+    "p95_rel": 0.2,
+    "prob_exceeds_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_responsible_1h_baseline",
+      "description": "UK LCCP 3.4.3 baseline: £1 stake / 96% RTP / vol-index 5 / 1h (600 spins)",
+      "cfg": {
+        "betPerSpin": 1,
+        "rtp": 0.96,
+        "volatilityIndex": 5,
+        "horizonSpins": 600
+      },
+      "closed_form": {
+        "driftPerSpin": -0.040000000000000036,
+        "sigmaPerSpin": 5,
+        "driftRegime": "negative",
+        "expectedMaxDrawdown": 110.34474847738295,
+        "varMaxDrawdown": 6251.110449513759,
+        "stdDevMaxDrawdown": 79.06396429166551,
+        "percentileMaxDrawdown90": 220.97650816396532,
+        "percentileMaxDrawdown95": 260.46444360327246,
+        "percentileMaxDrawdown99": 337.0356169014957,
+        "drawdownLimit": 48.98979485566356,
+        "probMaxDrawdownExceedsLimit": 0.7415380132899612,
+        "oneInNSessionsExceedsLimit": 1.3485485330189988
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 105.57913677094983,
+        "observedStdDevMaxDrawdown": 78.53246172890222,
+        "observedPercentile90": 214.7527647446898,
+        "observedPercentile95": 256.26069824453987,
+        "observedPercentile99": 330.98975167026055,
+        "observedProbExceedsLimit": 0.7176666666666667
+      },
+      "checks": {
+        "expected_rel": 0.04318838705232913,
+        "p95_rel": 0.016139421183858565,
+        "prob_exceeds_abs": 0.023871346623294487
+      },
+      "pass": true,
+      "elapsed_ms": 67
+    },
+    {
+      "name": "B_au_ncpf_long_session_high_vol",
+      "description": "AU NCPF 2022: £2 stake / 88% RTP / vol-index 10 / 4h (2400 spins) — high vol fast loser",
+      "cfg": {
+        "betPerSpin": 2,
+        "rtp": 0.88,
+        "volatilityIndex": 10,
+        "horizonSpins": 2400
+      },
+      "closed_form": {
+        "driftPerSpin": -0.24,
+        "sigmaPerSpin": 20,
+        "driftRegime": "negative",
+        "expectedMaxDrawdown": 1114.0360931423054,
+        "varMaxDrawdown": 505715.78998883674,
+        "stdDevMaxDrawdown": 711.1369699212921,
+        "percentileMaxDrawdown90": 2095.623710140306,
+        "percentileMaxDrawdown95": 2422.2948561464855,
+        "percentileMaxDrawdown99": 3048.68677384286,
+        "drawdownLimit": 195.95917942265424,
+        "probMaxDrawdownExceedsLimit": 0.923429008048702,
+        "oneInNSessionsExceedsLimit": 1.0829202800474074
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 1099.0762626051592,
+        "observedStdDevMaxDrawdown": 707.5057329678283,
+        "observedPercentile90": 2076.9361782497726,
+        "observedPercentile95": 2385.5740735787435,
+        "observedPercentile99": 3005.338489886118,
+        "observedProbExceedsLimit": 0.9183333333333333
+      },
+      "checks": {
+        "expected_rel": 0.01342849718176525,
+        "p95_rel": 0.015159501525821384,
+        "prob_exceeds_abs": 0.005095674715368648
+      },
+      "pass": true,
+      "elapsed_ms": 287
+    },
+    {
+      "name": "C_eu_high_roller_low_vol_8h",
+      "description": "EU EBA 2024: £5 stake / 97% RTP / vol-index 3 / 8h (4800 spins) — long-session high-stakes",
+      "cfg": {
+        "betPerSpin": 5,
+        "rtp": 0.97,
+        "volatilityIndex": 3,
+        "horizonSpins": 4800
+      },
+      "closed_form": {
+        "driftPerSpin": -0.15000000000000013,
+        "sigmaPerSpin": 15,
+        "driftRegime": "negative",
+        "expectedMaxDrawdown": 1253.9847867976555,
+        "varMaxDrawdown": 600331.4130954987,
+        "stdDevMaxDrawdown": 774.810565942088,
+        "percentileMaxDrawdown90": 2318.7952010880344,
+        "percentileMaxDrawdown95": 2667.6621291905485,
+        "percentileMaxDrawdown99": 3335.1382068076073,
+        "drawdownLimit": 692.820323027551,
+        "probMaxDrawdownExceedsLimit": 0.7295538876317194,
+        "oneInNSessionsExceedsLimit": 1.3707006664664674
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 1256.0633095832864,
+        "observedStdDevMaxDrawdown": 778.054297989432,
+        "observedPercentile90": 2331.7076252720626,
+        "observedPercentile95": 2681.740264033545,
+        "observedPercentile99": 3401.0277001739337,
+        "observedProbExceedsLimit": 0.7286666666666667
+      },
+      "checks": {
+        "expected_rel": 0.0016547914183724073,
+        "p95_rel": 0.005249626532370365,
+        "prob_exceeds_abs": 0.0008872209650526708
+      },
+      "pass": true,
+      "elapsed_ms": 562
+    },
+    {
+      "name": "D_table_game_low_vol_60sph_2h",
+      "description": "Table game (BJ/baccarat): £10 stake / 98.5% RTP / vol-index 1.2 / 120 spins (2h @ 60sph)",
+      "cfg": {
+        "betPerSpin": 10,
+        "rtp": 0.985,
+        "volatilityIndex": 1.2,
+        "horizonSpins": 120
+      },
+      "closed_form": {
+        "driftPerSpin": -0.15000000000000013,
+        "sigmaPerSpin": 12,
+        "driftRegime": "negative",
+        "expectedMaxDrawdown": 114.21213333297145,
+        "varMaxDrawdown": 6919.560017194033,
+        "stdDevMaxDrawdown": 83.18389277494792,
+        "percentileMaxDrawdown90": 230.7810658080587,
+        "percentileMaxDrawdown95": 272.89368254346016,
+        "percentileMaxDrawdown99": 354.7333258016581,
+        "drawdownLimit": 219.08902300206645,
+        "probMaxDrawdownExceedsLimit": 0.11930790376999942,
+        "oneInNSessionsExceedsLimit": 8.381674376978326
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 104.26561813616438,
+        "observedStdDevMaxDrawdown": 82.14005107168823,
+        "observedPercentile90": 222.14123583417052,
+        "observedPercentile95": 262.89274332185994,
+        "observedPercentile99": 339.0175286393304,
+        "observedProbExceedsLimit": 0.10466666666666667
+      },
+      "checks": {
+        "expected_rel": 0.08708807818000586,
+        "p95_rel": 0.03664774914680373,
+        "prob_exceeds_abs": 0.014641237103332747
+      },
+      "pass": true,
+      "elapsed_ms": 16
+    },
+    {
+      "name": "E_corner_zero_drift_driftless_BM",
+      "description": "Corner case: RTP=1.00 driftless BM, E[MaxDrop]=σ·√(2T/π) closed-form half-normal",
+      "cfg": {
+        "betPerSpin": 1,
+        "rtp": 1,
+        "volatilityIndex": 2,
+        "horizonSpins": 1000
+      },
+      "closed_form": {
+        "driftPerSpin": 0,
+        "sigmaPerSpin": 2,
+        "driftRegime": "zero",
+        "expectedMaxDrawdown": 50.46265691969118,
+        "varMaxDrawdown": 1453.5233294235131,
+        "stdDevMaxDrawdown": 38.12510104148595,
+        "percentileMaxDrawdown90": 104.02966905698486,
+        "percentileMaxDrawdown95": 123.95893175112977,
+        "percentileMaxDrawdown99": 162.90987881393994,
+        "drawdownLimit": 63.245553203367585,
+        "probMaxDrawdownExceedsLimit": 0.31731052766472745,
+        "oneInNSessionsExceedsLimit": 3.151486990865324
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 47.934486517167514,
+        "observedStdDevMaxDrawdown": 37.69050149023776,
+        "observedPercentile90": 99.51138244164099,
+        "observedPercentile95": 123.40344315020467,
+        "observedPercentile99": 163.93477720225377,
+        "observedProbExceedsLimit": 0.298
+      },
+      "checks": {
+        "expected_rel": 0.05009982741390573,
+        "p95_rel": 0.004481230945425918,
+        "prob_exceeds_abs": 0.01931052766472746
+      },
+      "pass": true,
+      "elapsed_ms": 119
+    },
+    {
+      "name": "F_corner_player_edge_suppressed_DD",
+      "description": "Corner case: RTP=1.05 promo/cashback player-edge, exp(−2μd/σ²) suppresses tail",
+      "cfg": {
+        "betPerSpin": 1,
+        "rtp": 1.05,
+        "volatilityIndex": 3,
+        "horizonSpins": 600
+      },
+      "closed_form": {
+        "driftPerSpin": 0.050000000000000044,
+        "sigmaPerSpin": 3,
+        "driftRegime": "positive",
+        "expectedMaxDrawdown": 45.2475669293154,
+        "varMaxDrawdown": 1418.5098837799321,
+        "stdDevMaxDrawdown": 37.66311038376852,
+        "percentileMaxDrawdown90": 98.15588411085304,
+        "percentileMaxDrawdown95": 119.81990885631382,
+        "percentileMaxDrawdown99": 163.15131116947828,
+        "drawdownLimit": 48.98979485566356,
+        "probMaxDrawdownExceedsLimit": 0.3721623118943506,
+        "oneInNSessionsExceedsLimit": 2.686999645154504
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedMaxDrawdown": 42.80574027970249,
+        "observedStdDevMaxDrawdown": 37.23991211181249,
+        "observedPercentile90": 95.18947126650207,
+        "observedPercentile95": 117.05649367399211,
+        "observedPercentile99": 162.10607727000763,
+        "observedProbExceedsLimit": 0.35533333333333333
+      },
+      "checks": {
+        "expected_rel": 0.05396592160253536,
+        "p95_rel": 0.023063071977759163,
+        "prob_exceeds_abs": 0.016828978561017283
+      },
+      "pass": true,
+      "elapsed_ms": 70
+    }
+  ]
+}

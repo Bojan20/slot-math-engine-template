@@ -80,6 +80,7 @@
     "free-bet-wagering-requirement-acceptance": "npm run build && node scripts/free-bet-wagering-requirement-acceptance.mjs",
     "session-bankroll-drawdown-acceptance": "npm run build && node scripts/session-bankroll-drawdown-acceptance.mjs",
     "hit-frequency-distribution-acceptance": "npm run build && node scripts/hit-frequency-distribution-acceptance.mjs",
+    "running-max-drawdown-acceptance": "npm run build && node scripts/running-max-drawdown-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

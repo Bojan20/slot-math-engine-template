@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.37
+# Industry Pattern Catalog v2.38
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -54,6 +54,7 @@
 > - v2.35 (Wave 155) — adds 1 free bet wagering requirement aggregator kernel landed in Wave 154/155 (**INDUSTRY-FIRST** UKGC RTS-12 / MGA Player Protection §15 / EU GambleAware bonus play-through closed-form sa Bachelier first-passage exact bust probability + joint-density truncated normal E[withdrawable] disclosure metric)
 > - v2.36 (Wave 158) — adds 1 session bankroll drawdown analyzer kernel landed in Wave 157/158 (**INDUSTRY-FIRST** UKGC LCCP 3.4.3 / MGA Player Protection §16 / EU EBA 2024 Responsible Gambling Directive / AU NCPF Reform 2022 — **50. closed-form solver milestone** — real-money session bankroll first-passage time via Inverse Gaussian distribution τ ~ IG(B/|μ|, B²/σ²); 3 drift regime branches (negative=IG sure bust, zero=driftless BM half-normal first-passage, positive=P_ever_bust=exp(−2B|μ|/σ²)); regulator disclosure metrics medianMinutesToBust + oneInNHoursBust + expectedLossPerHour + survivalProbByHorizon grid)
 > - v2.37 (Wave 160) — adds 1 hit frequency distribution decomposition analyzer kernel landed in Wave 159/160 (**INDUSTRY-STANDARD** UKGC RTS 14 Tag 12 / MGA Player Protection §11.f / eCOGRA Generic Slots Audit / AU NCPF Reform 2022 Schedule 3 — **51. closed-form solver, first explicit distribution-decomposition kernel** u portfolio; per-tier hitFreq + 1-in-N + condEV + rtpContribution + rtpShareOfTotal + top-X% RTP concentration (1%/5%/10%) + Hill-estimator Pareto α heavy-tail diagnostic; automates UKGC operator hit-rate disclosure that is currently compiled manually in spreadsheets)
+> - v2.38 (Wave 162) — adds 1 max drop from starting bankroll during session analyzer kernel landed in Wave 161/162 (**INDUSTRY-FIRST** UKGC LCCP 3.4.3 / MGA Player Protection §17 / EU EBA Responsible Gambling Directive 2024 / AU NCPF Reform 2022 — **52. closed-form solver, COMPLETES responsible-gambling math triad** sa W154 (bonus WR) + W157 (terminal bust) + W161 (intra-session max drop); Karatzas-Shreve §3.5 Bachelier/Reflection-Principle one-sided survival fn P(MaxDrop_T ≥ d) = Φ(−(d+μT)/(σ√T)) + exp(−2μd/σ²)·Φ(−(d−μT)/(σ√T)); composite Simpson integration za E[MaxDrop], bisection percentile p90/p95/p99; 3 drift regimes; regulator disclosure metrics probMaxDrawdownExceedsLimit + oneInNSessionsExceedsLimit)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -603,8 +604,25 @@ variance classifier, eCOGRA pre-launch audit harness, NCPF info-card builder.
 |----|---------|-------------|---------------|------------------|
 | P-071 | **Hit Frequency Distribution Decomposition Analyzer (INDUSTRY-STANDARD, 51st solver)** | Input discrete PMF {(m_k, p_k)} on multiples-of-bet sa Σ p_k = 1. **Total moments**: RTP = Σ m·p, Var = Σ m²·p − RTP², HF = 1 − π(0), oneInN = 1/HF. **Per-tier survival decomposition** za threshold C: **`tierProb = Σ_{m_k ≥ C} p_k`**, **`oneInN = 1/tierProb`**, **`condEV = Σ_{m_k ≥ C} m_k·p_k / tierProb`**, **`rtpContribution = Σ_{m_k ≥ C} m_k·p_k`**, **`rtpShareOfTotal = rtpContribution/totalRtp`**. **Top-X% RTP concentration**: sort positive outcomes descending by multiple, cumulative do target frakcije (1%/5%/10%), report % RTP from top events. **Hill-estimator Pareto α** za heavy-tail diagnostic: **`α̂ = totalTailMass / Σ p·ln(m/m_min)`** za m ≥ paretoTailStartMultiplier (NaN if <3 outcomes; right-skewed if α<2, very-heavy-tail if α<1). | `src/features/hitFrequencyDistribution.ts` | 32 vitest specs (Wave 159) + 6 industry-representative PMF configs × 200K spins (Wave 160); portfolio entry W159 |
 
+## Pattern Catalog v2.38 — Max Drop From Starting Bankroll Analyzer Kernel (Wave 161/162) — INDUSTRY-FIRST, 52nd solver, COMPLETES responsible-gambling math triad
+
+Third side of responsible-gambling math triad — together with P-069 (Free Bet
+WR, bonus pool fixed-horizon WR completion) and P-070 (Session Bankroll
+Drawdown, terminal first-passage to 0), P-072 NEW answers regulator question
+"What is the deepest single-session drop from starting bankroll, even if
+player doesn't bust?" This intra-session drawdown matters for harm-prevention
+messaging — a player who never busts but watches £50 evaporate from start
+feels the harm just as acutely. UKGC LCCP 3.4.3 zahteva intra-session loss
+tracking, MGA PPD §17 traži running drawdown disclosure, EU EBA 2024 traži
+VaR-style drawdown harm-prevention, AU NCPF Reform 2022 traži peak-loss
+disclosure. No vendor publishes a formal closed-form analyzer.
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-072 | **Max Drop From Starting Bankroll During Session (INDUSTRY-FIRST, 52nd solver, COMPLETES responsible-gambling triad)** | Define W_t = X_t − X_0 (position relative to start, W_0=0); BM with drift μ = b·(R−1) per spin, variance σ² = (v·b)². Max drop **MaxDrop_T = max_{[0,T]}(−W_s) = −min_{[0,T]} W_s**. **Survival fn (Karatzas-Shreve §3.5 one-sided reflection)**: **`P(MaxDrop_T ≥ d) = Φ(−(d+μT)/(σ√T)) + exp(−2μd/σ²) · Φ(−(d−μT)/(σ√T))`**. Sanity: d=0→S=1, d→∞→S=0, μ=0→S=2·Φ(−d/(σ√T)) classical driftless half-normal, μ<0 (house) → exp>1 inflate tail, μ>0 (player) → exp<1 suppress tail. **Moments**: E[MaxDrop] = ∫₀^∞ S(d) dd via composite Simpson (1024 intervala, auto-truncated upper bound at S(d*)≤1e-12); E[MaxDrop²] = ∫₀^∞ 2d·S(d) dd; Var = E[X²]−E[X]². **Percentiles**: p90/p95/p99 via bisection na survival function (60 iter). **Disclosure metrics**: expectedMaxDrawdown, p90/p95/p99 VaR thresholds, probMaxDrawdownExceedsLimit, oneInNSessionsExceedsLimit "1 in X" regulator form. **3 drift regimes** (negative house edge, zero fair driftless, positive player edge from promo). | `src/features/runningMaxDrawdown.ts` | 30 vitest specs (Wave 161) + 6 industry-representative session configs × 3K MC episodes (Wave 162); portfolio entry W161 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 51 P-021..P-071 kernels in ~10 seconds and emits unified report
+all 52 P-021..P-072 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 
