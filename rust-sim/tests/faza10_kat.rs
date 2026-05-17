@@ -298,8 +298,8 @@ fn kat_05_mulberry32_canonical_vectors() {
 
     let v3 = rng.next_f64();
     assert!(
-        (v3 - 0.4842054215259850).abs() < tolerance,
-        "v3={v3:.16} expected=0.4842054215259850"
+        (v3 - 0.484_205_421_525_985_f64).abs() < tolerance,
+        "v3={v3:.16} expected=0.484205421525985"
     );
 }
 

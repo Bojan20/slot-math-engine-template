@@ -116,8 +116,8 @@ fn sas_crc16_known_vector() {
     let crc = SASAdapter::crc16(&data);
     // Determinism check
     assert_eq!(crc, SASAdapter::crc16(&data));
-    // Range check
-    assert!(crc <= 0xffff);
+    // Range check — crc is u16, max value is 0xffff (tautology by type, kept as documentation)
+    let _: u16 = crc;
 }
 
 #[test]
@@ -126,7 +126,7 @@ fn sas_crc16_of_ff_ff() {
     let data = [0xffu8, 0xff];
     let crc = SASAdapter::crc16(&data);
     assert_eq!(crc, SASAdapter::crc16(&data));
-    assert!(crc <= 0xffff);
+    let _: u16 = crc;
 }
 
 #[test]
@@ -225,6 +225,6 @@ fn bridge_crc16_of_ff_ff_known_value() {
     // init=0x0000
     // byte 0xFF: crc=0xFF00, then 8 shifts...
     //   0xFF00: msb=1 → (0xFF00<<1)^0x1021 = 0xFE00^0x1021=0xEE21 (but shifts are on u16)
-    // Just check range
-    assert!(crc <= 0xffff);
+    // Just check range — crc is u16, tautology by type, kept for documentation
+    let _: u16 = crc;
 }

@@ -8,10 +8,7 @@
 //!   - MmapReelStrips heap and mmap paths
 //!   - edge cases
 
-use slot_sim::numa::{
-    mmap_strips::MmapReelStrips,
-    NumaNode, NumaTopology, WorkChunk,
-};
+use slot_sim::numa::{mmap_strips::MmapReelStrips, NumaTopology};
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
 

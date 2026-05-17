@@ -68,9 +68,15 @@ fn run_into_tmp(bin: &Path, suffix: &str) -> PathBuf {
 }
 
 fn hex_sha256(bytes: &[u8]) -> String {
+    use std::fmt::Write as _;
     let mut h = Sha256::new();
     h.update(bytes);
-    h.finalize().iter().map(|b| format!("{b:02x}")).collect()
+    let digest = h.finalize();
+    let mut out = String::with_capacity(digest.len() * 2);
+    for b in digest.iter() {
+        write!(&mut out, "{b:02x}").expect("writing to String never fails");
+    }
+    out
 }
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
