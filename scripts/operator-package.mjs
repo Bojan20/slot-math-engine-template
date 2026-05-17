@@ -260,6 +260,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 167 AWP Cycle Convergence (W152 Wave 168, 55. solver, INDUSTRY-FIRST UK Class III B3 UKGC LCCP)
   { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.md' },
+  // REPORTS — Wave 169 Drop-and-Stick Wild Expansion (W152 Wave 170, 56. solver, per-cell sticky NetEnt Witchcraft / Pragmatic / Hacksaw)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

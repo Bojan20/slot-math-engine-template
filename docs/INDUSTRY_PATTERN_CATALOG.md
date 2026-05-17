@@ -1,6 +1,6 @@
-# Industry Pattern Catalog v2.41
+# Industry Pattern Catalog v2.42
 
-> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38) + Wave 164 (v2.39) + Wave 166 (v2.40) + Wave 168 (v2.41 expansion).** Operator-facing catalog
+> **Wave 46 (v1.0) + Wave 67 (v2.0) + Wave 76 (v2.1) + Wave 83 (v2.2) + Wave 85 (v2.3) + Wave 87 (v2.4) + Wave 90 (v2.5) + Wave 92 (v2.6) + Wave 94 (v2.7) + Wave 96 (v2.8) + Wave 98 (v2.9) + Wave 103 (v2.10) + Wave 104 (v2.11) + Wave 106 (v2.12) + Wave 108 (v2.13) + Wave 111 (v2.14) + Wave 113 (v2.15) + Wave 115 (v2.16) + Wave 117 (v2.17) + Wave 119 (v2.18) + Wave 122 (v2.19) + Wave 124 (v2.20) + Wave 126 (v2.21) + Wave 128 (v2.22) + Wave 131 (v2.23) + Wave 133 (v2.24) + Wave 135 (v2.25) + Wave 137 (v2.26) + Wave 139 (v2.27) + Wave 141 (v2.28) + Wave 143 (v2.29) + Wave 145 (v2.30) + Wave 147 (v2.31) + Wave 149 (v2.32) + Wave 151 (v2.33) + Wave 153 (v2.34) + Wave 155 (v2.35) + Wave 158 (v2.36) + Wave 160 (v2.37) + Wave 162 (v2.38) + Wave 164 (v2.39) + Wave 166 (v2.40) + Wave 168 (v2.41) + Wave 170 (v2.42 expansion).** Operator-facing catalog
 > of **47 industry-style slot patterns** the engine ships ready-to-run:
 > - v1.0 (Wave 46) — 20 patterns mapped to reference fixtures.
 > - v2.0 (Wave 67) — adds 12 closed-form math kernels landed in
@@ -58,6 +58,7 @@
 > - v2.39 (Wave 164) — adds 1 Martingale wager progression bust time analyzer kernel landed in Wave 163/164 (**INDUSTRY-FIRST chase-pattern detection** UKGC LCCP 3.4.3 / MGA Player Protection §18 / AU NCPF Reform 2022 Schedule 4 "mandatory by 2025" — **53. closed-form solver, first SEQUENTIAL bet-progression strategy kernel** u portfolio; Markov chain over consecutive-loss streak; k_max = ⌊log₂(B/b_0+1)⌋−1 max survivable doubles; P(bust per round) = q^(k_max+1) geometric tail; E[T_rounds_bust] = 1/q^(k_max+1); chasePatternRiskScore ∈ [0,1] regulator alert metric; NHS Gambling Harms 2024 cites Martingale as #1 chase pattern)
 > - v2.40 (Wave 166) — adds 1 Reverse Martingale (Paroli) Streak Cash-Out analyzer kernel landed in Wave 165/166 (**INDUSTRY-FIRST let-it-ride chase pattern** UKGC LCCP 3.4.3 / MGA PPD §18 / AU NCPF Schedule 4 — **54. solver, DUAL of W163 Martingale**, NHS Gambling Harms 2024 cites Paroli as **#2 chase pattern** after Martingale; Markov over consecutive-WIN streak; probReachStreak=p^k geometric; cashOutPayout=b_0·(2^k−1); E[roundProfit] closed-form sa geometric sum (2p)^j; bankroll cap k_max; chasePatternRiskScore. Together with P-073 covers complete sequential bet-progression pair = #1 + #2 NHS chase patterns)
 > - v2.41 (Wave 168) — adds 1 AWP Cycle Convergence analyzer kernel landed in Wave 167/168 (**INDUSTRY-FIRST UK Class III B3/B3A/C/D finite-cycle disclosure** UKGC LCCP / MGA AWP §15 / EU GA 2024 compensated math — **55. solver, first analyzer ABOVE existing IR state machine** (`src/jurisdiction/compensatedMath.ts`); čita partial-cycle snapshot (n, P_n) i projektuje analytical regulator stats: E[r_N]=(P_n+m·R*·b)/(N·b), stdDev=σ·√m/N (shrinks → 0 as cycle completes), P(|D_N|>τ) Bachelier-CLT, compensationHintRecommended, cycleHealthScore ∈ [0,1])
+> - v2.42 (Wave 170) — adds 1 Drop-and-Stick Wild Expansion analyzer kernel landed in Wave 169/170 (**per-cell sticky accumulation** NetEnt Witchcraft Academy / Pragmatic Wild West Gold / Hacksaw Tombstone / Push Mount Magmas / Yggdrasil Vikings Go Berzerk iconic — **56. solver**; N×M grid iid Bernoulli(q) per cell, wild stays sticky S spins; perCellActiveSteady=1−(1−q)^S geometric saturation; E[W_∞]=N·M·perCellSteady; Var=N·M·p·(1−p) iid; time-averaged closed-form; gridFillProb=perCellSteady^(N·M); distinct od W53/W93/W114/W132)
 >   (Pick Bonus N-Stage Tree — NetEnt classic / Microgaming pick-til-pop).
 >
 > Each pattern uses **mechanical descriptive naming** (no vendor TM, no
@@ -658,8 +659,20 @@ EU GA 2024 / AU NCPF require finite-cycle proof.
 |----|---------|-------------|---------------|------------------|
 | P-075 | **AWP Cycle Convergence (INDUSTRY-FIRST UK Class III, 55th solver, first above-IR kernel)** | Cycle N spins, base bet b, target R*, tolerance τ. Current snapshot (n=spinsPlayed, P_n=cumPay). Remaining m=N−n. Per-spin under target: Y ~ N(R*·b, σ²·b²). Remaining sum S_m ~ N(m·R*·b, m·σ²·b²) (CLT). **E[r_N] = (P_n + m·R*·b)/(N·b)**. **stdDev[r_N] = σ·√m / N** (shrinks → 0 as m → 0). Deviation D_N = r_N − R*. **P(|D_N|>τ)** = (1−Φ((τ−μ_D)/σ_D)) + Φ((−τ−μ_D)/σ_D) Bachelier-CLT. **oneInNCyclesExceeds = 1/P(exceeds)**. **compensationHintRecommended = −E[D_N]** (nudge that offsets projected drift). **maxAchievableDeviationNoCompensation = |μ_D| + 3σ_D** envelope (99.7%). **cycleHealthScore = 1 − P(exceeds)** ∈ [0, 1]. | `src/features/awpCycleConvergence.ts` | 30 vitest specs (Wave 167) + 6 UK Class III configs × 3K MC cycles (Wave 168); portfolio entry W167 |
 
+## Pattern Catalog v2.42 — Drop-and-Stick Wild Expansion Analyzer Kernel (Wave 169/170) — 56th solver, per-cell sticky accumulation
+
+Iconic mehanika za NetEnt Witchcraft Academy (spreading sticky wilds),
+Pragmatic Wild West Gold (money wilds), Hacksaw Tombstone (skull wilds),
+Push Mount Magmas (lava wilds), Yggdrasil Vikings Go Berzerk (rage wilds).
+Per-cell iid geometric saturation distinct from prior wild kernels P-013
+(Walking Wild), P-029 (Multi Wild Stack), P-053 (Sticky Wild Countdown).
+
+| ID | Pattern | Math Kernel | Solver Module | Acceptance Proof |
+|----|---------|-------------|---------------|------------------|
+| P-076 | **Drop-and-Stick Wild Expansion (56th solver, per-cell sticky)** | N×M grid, iid Bernoulli(q) per cell per spin, wild stays sticky exactly S spins. Per cell P(wild active at t) = 1−(1−q)^min(t,S). Saturates at t=S. **E[W_t] = N·M·[1−(1−q)^min(t,S)]**, **E[W_∞] = N·M·[1−(1−q)^S]**. **Var = N·M·p·(1−p)** iid Bernoulli. **Time-averaged over [1, T]**: phase-1 sum Σ_{t=1..min(T,S)}[1−(1−q)^t] = min(T,S) − (1−q)·(1−(1−q)^min(T,S))/q; phase-2 (T>S only): (T−S)·perCellSteady. **gridFillProbSteadyState = perCellSteady^(N·M)** (all cells active by iid). **expectedSpinsToFullGridFill = 1/fillProb** Geometric approx. payoutPerSpinProxy = baseline + perWildBonus·E[W_t] linear approx. | `src/features/dropStickWildExpansion.ts` | 30 vitest specs (Wave 169) + 6 industry-iconic sticky configs × 2K MC episodes (Wave 170); portfolio entry W169 |
+
 **One-button portfolio runner:** `npm run closed-form-portfolio` exercises
-all 55 P-021..P-075 kernels in ~10 seconds and emits unified report
+all 56 P-021..P-076 kernels in ~10 seconds and emits unified report
 `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}`.
 
 

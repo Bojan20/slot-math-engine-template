@@ -84,6 +84,7 @@
     "martingale-bust-time-acceptance": "npm run build && node scripts/martingale-bust-time-acceptance.mjs",
     "paroli-streak-cash-out-acceptance": "npm run build && node scripts/paroli-streak-cash-out-acceptance.mjs",
     "awp-cycle-convergence-acceptance": "npm run build && node scripts/awp-cycle-convergence-acceptance.mjs",
+    "drop-stick-wild-expansion-acceptance": "npm run build && node scripts/drop-stick-wild-expansion-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
     "exact-enumeration": "node scripts/exact-enumeration.mjs",
     "cluster-cascade-acceptance": "npm run build && node scripts/cluster-cascade-acceptance.mjs",

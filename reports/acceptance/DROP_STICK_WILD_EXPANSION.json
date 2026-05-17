@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "DROP_STICK_WILD_EXPANSION",
+  "generated_utc": "2026-05-17T10:12:02.093Z",
+  "episodes_per_config": 2000,
+  "seed": 3405644137,
+  "tolerances": {
+    "expected_rel": 0.05,
+    "std_rel": 0.2,
+    "time_avg_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_netent_witchcraft_3x5_S5",
+      "description": "NetEnt Witchcraft Academy-class: 3×5 grid, q=0.08 per-cell, sticky=5 spins (full FS)",
+      "cfg": {
+        "gridRows": 3,
+        "gridCols": 5,
+        "probWildLandPerCellPerSpin": 0.08,
+        "stickyDurationSpins": 5
+      },
+      "closed_form": {
+        "gridCellCount": 15,
+        "perCellActiveProbSteadyState": 0.34091847679999987,
+        "expectedActiveWildsSteadyState": 5.113777151999998,
+        "stdDevActiveWildsSteadyState": 1.8358638388087276,
+        "fillFraction": 0.34091847679999987,
+        "timeToSteadyState": 5,
+        "timeAveragedActiveWildsOverHorizon": 4.4886222848,
+        "gridFillProbSteadyState": 9.766930349439935e-8,
+        "expectedSpinsToFullGridFill": 10238631.424840078
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 5.1235,
+        "observedStdDevActiveWildsAtSteadyState": 1.8279080255855205,
+        "observedTimeAveragedActiveWildsOverHorizon": 4.465333333333327
+      },
+      "checks": {
+        "expected_rel": 0.0018976964965359193,
+        "std_rel": 0.004333552987442465,
+        "time_avg_rel": 0.005188440904358747
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_pragmatic_wild_west_gold_6x5_S10",
+      "description": "Pragmatic Wild West Gold-class: 6×5 money wild grid, q=0.05, sticky=10 (long FS)",
+      "cfg": {
+        "gridRows": 5,
+        "gridCols": 6,
+        "probWildLandPerCellPerSpin": 0.05,
+        "stickyDurationSpins": 10
+      },
+      "closed_form": {
+        "gridCellCount": 30,
+        "perCellActiveProbSteadyState": 0.4012630607616213,
+        "expectedActiveWildsSteadyState": 12.03789182284864,
+        "stdDevActiveWildsSteadyState": 2.6846844330191026,
+        "fillFraction": 0.4012630607616213,
+        "timeToSteadyState": 10,
+        "timeAveragedActiveWildsOverHorizon": 10.401263060761623,
+        "gridFillProbSteadyState": 1.2672883615944479e-12,
+        "expectedSpinsToFullGridFill": 789086391310.2168
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 12.0735,
+        "observedStdDevActiveWildsAtSteadyState": 2.755194684591283,
+        "observedTimeAveragedActiveWildsOverHorizon": 10.389866666666661
+      },
+      "checks": {
+        "expected_rel": 0.0029492837330815517,
+        "std_rel": 0.02559174927511167,
+        "time_avg_rel": 0.0010956740569282278
+      },
+      "pass": true,
+      "elapsed_ms": 28
+    },
+    {
+      "name": "C_hacksaw_tombstone_5x5_S3_high_q",
+      "description": "Hacksaw Tombstone-class: 5×5 skull wilds, q=0.15 high-freq, sticky=3 (short FS)",
+      "cfg": {
+        "gridRows": 5,
+        "gridCols": 5,
+        "probWildLandPerCellPerSpin": 0.15,
+        "stickyDurationSpins": 3
+      },
+      "closed_form": {
+        "gridCellCount": 25,
+        "perCellActiveProbSteadyState": 0.3858750000000001,
+        "expectedActiveWildsSteadyState": 9.646875000000001,
+        "stdDevActiveWildsSteadyState": 2.434006390578094,
+        "fillFraction": 0.3858750000000001,
+        "timeToSteadyState": 3,
+        "timeAveragedActiveWildsOverHorizon": 8.690625,
+        "gridFillProbSteadyState": 4.5831710105584884e-11,
+        "expectedSpinsToFullGridFill": 21818954555.617676
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 9.7055,
+        "observedStdDevActiveWildsAtSteadyState": 2.4246174440517225,
+        "observedTimeAveragedActiveWildsOverHorizon": 8.686166666666667
+      },
+      "checks": {
+        "expected_rel": 0.006040389469888131,
+        "std_rel": 0.0038574042215811575,
+        "time_avg_rel": 0.0005130049142994776
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "D_push_mount_magmas_4x5_S8",
+      "description": "Push Mount Magmas-class: 4×5 lava wild stays through FS, q=0.06, sticky=8",
+      "cfg": {
+        "gridRows": 4,
+        "gridCols": 5,
+        "probWildLandPerCellPerSpin": 0.06,
+        "stickyDurationSpins": 8
+      },
+      "closed_form": {
+        "gridCellCount": 20,
+        "perCellActiveProbSteadyState": 0.3904310614589187,
+        "expectedActiveWildsSteadyState": 7.8086212291783745,
+        "stdDevActiveWildsSteadyState": 2.1817178905943857,
+        "fillFraction": 0.3904310614589187,
+        "timeToSteadyState": 8,
+        "timeAveragedActiveWildsOverHorizon": 6.775119739294144,
+        "gridFillProbSteadyState": 6.774655711929156e-9,
+        "expectedSpinsToFullGridFill": 147608977.12324324
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 7.834,
+        "observedStdDevActiveWildsAtSteadyState": 2.178174465005037,
+        "observedTimeAveragedActiveWildsOverHorizon": 6.772208333333342
+      },
+      "checks": {
+        "expected_rel": 0.0032395673757499486,
+        "std_rel": 0.0016241447185379944,
+        "time_avg_rel": 0.0004297202223477296
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "E_corner_small_grid_high_fill",
+      "description": "Corner: 2×2 small grid, q=0.30, sticky=5 → high fill prob (saturated)",
+      "cfg": {
+        "gridRows": 2,
+        "gridCols": 2,
+        "probWildLandPerCellPerSpin": 0.3,
+        "stickyDurationSpins": 5
+      },
+      "closed_form": {
+        "gridCellCount": 4,
+        "perCellActiveProbSteadyState": 0.8319300000000001,
+        "expectedActiveWildsSteadyState": 3.3277200000000002,
+        "stdDevActiveWildsSteadyState": 0.7478568716004419,
+        "fillFraction": 0.8319300000000001,
+        "timeToSteadyState": 5,
+        "timeAveragedActiveWildsOverHorizon": 3.034168,
+        "gridFillProbSteadyState": 0.4790128260232043,
+        "expectedSpinsToFullGridFill": 2.08762677254817
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 3.3275,
+        "observedStdDevActiveWildsAtSteadyState": 0.755806688247724,
+        "observedTimeAveragedActiveWildsOverHorizon": 3.031000000000005
+      },
+      "checks": {
+        "expected_rel": 0.0000661113314822488,
+        "std_rel": 0.010518320055771292,
+        "time_avg_rel": 0.0010441083025050605
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_large_grid_low_freq",
+      "description": "Corner: 7×7 large grid (Megaways-class), q=0.02 low-freq, sticky=4",
+      "cfg": {
+        "gridRows": 7,
+        "gridCols": 7,
+        "probWildLandPerCellPerSpin": 0.02,
+        "stickyDurationSpins": 4
+      },
+      "closed_form": {
+        "gridCellCount": 49,
+        "perCellActiveProbSteadyState": 0.07763184000000012,
+        "expectedActiveWildsSteadyState": 3.8039601600000057,
+        "stdDevActiveWildsSteadyState": 1.8731395392475463,
+        "fillFraction": 0.07763184000000012,
+        "timeToSteadyState": 4,
+        "timeAveragedActiveWildsOverHorizon": 3.3364694533333137,
+        "gridFillProbSteadyState": 4.092174158527604e-55,
+        "expectedSpinsToFullGridFill": 2.4436887611836338e+54
+      },
+      "monte_carlo": {
+        "episodes": 2000,
+        "observedActiveWildsAtSteadyState": 3.8335,
+        "observedStdDevActiveWildsAtSteadyState": 1.8726392471589444,
+        "observedTimeAveragedActiveWildsOverHorizon": 3.33095833333333
+      },
+      "checks": {
+        "expected_rel": 0.00770571018651212,
+        "std_rel": 0.00026708746365093964,
+        "time_avg_rel": 0.001651781944077936
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    }
+  ]
+}
