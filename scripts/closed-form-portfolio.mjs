@@ -132,6 +132,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'freeBetWageringRequirement.js'));
   const { solveSessionBankrollDrawdown, simulateSessionBankrollDrawdown } =
     await import(join(REPO_ROOT, 'dist', 'features', 'sessionBankrollDrawdown.js'));
+  const { solveHitFrequencyDistribution, simulateHitFrequencyDistribution } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'hitFrequencyDistribution.js'));
 
   const showcase = [];
 
@@ -1048,6 +1050,32 @@ async function main() {
     const absDiff = Math.abs(mc.observedSurvive1Hour - cfSurvive1h);
     const ok = absDiff < 0.05;
     showcase.push({ wave: 157, solver: 'Session Bankroll Drawdown', metric: 'P(survive 1h)', cf: cfSurvive1h, mc: mc.observedSurvive1Hour, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W159: Hit Frequency Distribution Decomposition Analyzer (INDUSTRY-STANDARD UKGC RTS 14 / eCOGRA) ──
+  {
+    const t0 = Date.now();
+    // Starburst-class PMF: medium-vol slot
+    const cfg = {
+      payoutPmf: [
+        { multiple: 0, probability: 0.732 },
+        { multiple: 1, probability: 0.10 },
+        { multiple: 2, probability: 0.07 },
+        { multiple: 5, probability: 0.05 },
+        { multiple: 10, probability: 0.03 },
+        { multiple: 25, probability: 0.012 },
+        { multiple: 50, probability: 0.004 },
+        { multiple: 100, probability: 0.0015 },
+        { multiple: 500, probability: 0.0004 },
+        { multiple: 1000, probability: 0.0001 },
+      ],
+      tierThresholds: [1, 5, 10, 50, 100, 500, 1000],
+    };
+    const cf = solveHitFrequencyDistribution(cfg);
+    const mc = simulateHitFrequencyDistribution(cfg, 100_000, SEED);
+    const rel = Math.abs(cf.totalRtp - mc.observedRtp) / Math.max(cf.totalRtp, 1e-9);
+    const ok = rel < 0.10; // 10% rel at 100K, broad to absorb tail-event MC noise
+    showcase.push({ wave: 159, solver: 'Hit Frequency Distribution', metric: 'total RTP', cf: cf.totalRtp, mc: mc.observedRtp, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

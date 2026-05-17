@@ -171,3 +171,6 @@ export * from './freeBetWageringRequirement.js';
 
 // W152 Wave 157: Session Bankroll Drawdown Analyzer (50. solver MILESTONE, INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §16 / EU EBA 2024)
 export * from './sessionBankrollDrawdown.js';
+
+// W152 Wave 159: Hit Frequency Distribution Decomposition Analyzer (51. solver, INDUSTRY-STANDARD UKGC RTS 14 / MGA PPD §11.f / eCOGRA / AU NCPF 2022)
+export * from './hitFrequencyDistribution.js';
