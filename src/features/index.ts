@@ -186,3 +186,6 @@ export * from './paroliStreakCashOut.js';
 
 // W152 Wave 167: AWP Cycle Convergence Analyzer (55. solver, INDUSTRY-FIRST UK Class III B3/B3A/C/D finite-cycle disclosure UKGC LCCP / MGA AWP §15)
 export * from './awpCycleConvergence.js';
+
+// W152 Wave 169: Drop-and-Stick Wild Expansion Analyzer (56. solver, per-cell sticky accumulation — NetEnt Witchcraft / Pragmatic Wild West Gold / Hacksaw Tombstone / Push Mount Magmas)
+export * from './dropStickWildExpansion.js';

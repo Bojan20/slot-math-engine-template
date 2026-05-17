@@ -142,6 +142,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'paroliStreakCashOut.js'));
   const { solveAwpCycleConvergence, simulateAwpCycleConvergence } =
     await import(join(REPO_ROOT, 'dist', 'features', 'awpCycleConvergence.js'));
+  const { solveDropStickWildExpansion, simulateDropStickWildExpansion } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'dropStickWildExpansion.js'));
 
   const showcase = [];
 
@@ -1156,6 +1158,22 @@ async function main() {
     const abs = Math.abs(cf.expectedFinalRtp - mc.observedExpectedFinalRtp);
     const ok = abs < 0.005;
     showcase.push({ wave: 167, solver: 'AWP Cycle Convergence', metric: 'E[finalRTP]', cf: cf.expectedFinalRtp, mc: mc.observedExpectedFinalRtp, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W169: Drop-and-Stick Wild Expansion ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      gridRows: 3, gridCols: 5,
+      probWildLandPerCellPerSpin: 0.08,
+      stickyDurationSpins: 5,
+    };
+    const cf = solveDropStickWildExpansion(cfg);
+    const mc = simulateDropStickWildExpansion(cfg, 1_000, SEED);
+    const rel = Math.abs(cf.expectedActiveWildsSteadyState - mc.observedActiveWildsAtSteadyState) /
+      Math.max(cf.expectedActiveWildsSteadyState, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 169, solver: 'Drop-and-Stick Wild Expansion', metric: 'E[wilds steady]', cf: cf.expectedActiveWildsSteadyState, mc: mc.observedActiveWildsAtSteadyState, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
