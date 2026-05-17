@@ -198,3 +198,6 @@ export * from './pickClickPooperBonus.js';
 
 // W152 Wave 175: Skill-Stop Near-Miss Rate Analyzer (59. solver, INDUSTRY-FIRST anti-near-miss regulatory detector — UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario)
 export * from './skillStopNearMiss.js';
+
+// W152 Wave 177: Avalanche Reactor Remove-and-Drop Wave Aggregator (🎯 60. solver MILESTONE, doubly-compound Wald — Play'n GO Reactoonz Quantum Leap / ELK Reactor Energy / BTG Megaways evolution / Hacksaw Tombstone Rip)
+export * from './avalancheReactorWaveAggregator.js';

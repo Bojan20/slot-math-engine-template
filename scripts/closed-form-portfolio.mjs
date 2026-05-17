@@ -150,6 +150,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'pickClickPooperBonus.js'));
   const { solveSkillStopNearMiss, simulateSkillStopNearMiss } =
     await import(join(REPO_ROOT, 'dist', 'features', 'skillStopNearMiss.js'));
+  const { solveAvalancheReactorWaveAggregator, simulateAvalancheReactorWaveAggregator } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'avalancheReactorWaveAggregator.js'));
 
   const showcase = [];
 
@@ -1230,6 +1232,23 @@ async function main() {
     const abs = Math.abs(cf.anyReelNearMissProb - mc.observedAnyReelNearMissProb);
     const ok = abs < 0.02;
     showcase.push({ wave: 175, solver: 'Skill-Stop Near-Miss Rate', metric: 'P(any reel NM)', cf: cf.anyReelNearMissProb, mc: mc.observedAnyReelNearMissProb, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W177: Avalanche Reactor Wave Aggregator (🎯 60. solver MILESTONE, doubly-compound Wald — Reactoonz / ELK / BTG / Tombstone) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      probWaveContinues: 0.50,
+      expectedRemovalsPerWave: 8,
+      varianceRemovalsPerWave: 20,
+      activationThreshold: 40,
+    };
+    const cf = solveAvalancheReactorWaveAggregator(cfg);
+    const mc = simulateAvalancheReactorWaveAggregator(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedSymbolsRemovedPerSpin - mc.meanSymbolsRemovedPerSpin) /
+      Math.max(cf.expectedSymbolsRemovedPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 177, solver: 'Avalanche Reactor Wave Aggregator (60. MILESTONE)', metric: 'E[symbols/spin]', cf: cf.expectedSymbolsRemovedPerSpin, mc: mc.meanSymbolsRemovedPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
