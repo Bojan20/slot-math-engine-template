@@ -242,3 +242,5 @@ jobs:
         run: npm run pick-click-pooper-bonus-acceptance
       - name: Skill-Stop Near-Miss Rate Analyzer acceptance (6/6 configs × 50K spins, Wave 175/176, INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario)
         run: npm run skill-stop-near-miss-acceptance
+      - name: 🎯 Avalanche Reactor Remove-and-Drop Wave Aggregator acceptance (6/6 configs × 50K spins, Wave 177/178, 60. solver MILESTONE doubly-compound Wald Reactoonz Quantum Leap / ELK Reactor / BTG Megaways / Tombstone Rip / Sweet Bonanza ante-bet)
+        run: npm run avalanche-reactor-wave-aggregator-acceptance

@@ -272,6 +272,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 175 Skill-Stop Near-Miss Rate (W152 Wave 176, 59. solver, INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 / JP Pachislot 風営法 / AU NCPF / AGCO)
   { kind: 'reports/acceptance', src: 'reports/acceptance/SKILL_STOP_NEAR_MISS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/SKILL_STOP_NEAR_MISS.md' },
+  // REPORTS — 🎯 Wave 177 Avalanche Reactor Wave Aggregator (W152 Wave 178, 60. solver MILESTONE, doubly-compound Wald Reactoonz Quantum Leap / ELK Reactor / BTG Megaways / Tombstone Rip / Sweet Bonanza ante-bet)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/AVALANCHE_REACTOR_WAVE_AGGREGATOR.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/AVALANCHE_REACTOR_WAVE_AGGREGATOR.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

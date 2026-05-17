@@ -1,0 +1,517 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "AVALANCHE_REACTOR_WAVE_AGGREGATOR",
+  "generated_utc": "2026-05-17T11:02:50.281Z",
+  "spins_per_config": 50000,
+  "seed": 3405644151,
+  "tolerances": {
+    "waves_rel": 0.05,
+    "symbols_rel": 0.05,
+    "stddev_rel": 0.2,
+    "activation_abs_clt_strict": 0.05,
+    "activation_abs_low_ew_documented": 0.15
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_playngo_reactoonz_quantum_leap",
+      "description": "Play'n GO Reactoonz Quantum Leap — p=0.45 chain-prob, E[L]=7 avg cluster, σ²=16, T=40 destruction-Quantum-Leap threshold. Low activation by design.",
+      "cfg": {
+        "probWaveContinues": 0.45,
+        "expectedRemovalsPerWave": 7,
+        "varianceRemovalsPerWave": 16,
+        "activationThreshold": 40,
+        "disclosureRemovalThresholds": [
+          10,
+          20,
+          40,
+          60
+        ]
+      },
+      "clt_strict_mode": false,
+      "closed_form": {
+        "expectedWavesPerSpin": 0.8181818181818181,
+        "varianceWavesPerSpin": 1.4876033057851237,
+        "expectedSymbolsRemovedPerSpin": 5.727272727272727,
+        "varianceSymbolsRemovedPerSpin": 85.98347107438016,
+        "stdDevSymbolsRemovedPerSpin": 9.272727272727273,
+        "probActivationCLT": 0.00010950834624923189,
+        "probActivationConservativeMarkov": 0.14318181818181816,
+        "oneInNSpinsActivation": 9131.724058037395,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.3224766981779723,
+            "oneInNSpins": 3.1009992525044647
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.06187584284169234,
+            "oneInNSpins": 16.16139601618798
+          },
+          {
+            "k": 40,
+            "probAtLeastK": 0.00010950834624923189,
+            "oneInNSpins": 9131.724058037395
+          },
+          {
+            "k": 60,
+            "probAtLeastK": 2.4225748074258036e-9,
+            "oneInNSpins": 412783950.75138545
+          }
+        ],
+        "meanToThresholdRatio": 0.14318181818181816
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 0.8165,
+        "meanSymbolsRemovedPerSpin": 5.764064001597342,
+        "stdDevSymbolsRemovedPerSpin": 9.233160139171154,
+        "probActivation": 0.01072,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.2306
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.08088
+          },
+          {
+            "k": 40,
+            "probAtLeastK": 0.01072
+          },
+          {
+            "k": 60,
+            "probAtLeastK": 0.00124
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.002055555555555477,
+        "symbols_rel": 0.0063828705431480046,
+        "stddev_rel": 0.004267043814875574,
+        "activation_abs_clt": 0.010610491653750768
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_playngo_reactoonz2_quantoom_high_chain",
+      "description": "Play'n GO Reactoonz 2 Quantoom multi-tier — p=0.55 sustained chain, E[L]=8, σ²=24, T=35. Higher chain prob enables Quantoom activations more frequently.",
+      "cfg": {
+        "probWaveContinues": 0.55,
+        "expectedRemovalsPerWave": 8,
+        "varianceRemovalsPerWave": 24,
+        "activationThreshold": 35,
+        "disclosureRemovalThresholds": [
+          10,
+          20,
+          35,
+          50
+        ]
+      },
+      "clt_strict_mode": false,
+      "closed_form": {
+        "expectedWavesPerSpin": 1.2222222222222225,
+        "varianceWavesPerSpin": 2.7160493827160503,
+        "expectedSymbolsRemovedPerSpin": 9.77777777777778,
+        "varianceSymbolsRemovedPerSpin": 203.16049382716056,
+        "stdDevSymbolsRemovedPerSpin": 14.253437965177403,
+        "probActivationCLT": 0.038400722318626235,
+        "probActivationConservativeMarkov": 0.2793650793650794,
+        "oneInNSpinsActivation": 26.041176822211778,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.49378039706482224,
+            "oneInNSpins": 2.0251917774466097
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.23663271398199504,
+            "oneInNSpins": 4.225958377319242
+          },
+          {
+            "k": 35,
+            "probAtLeastK": 0.038400722318626235,
+            "oneInNSpins": 26.041176822211778
+          },
+          {
+            "k": 50,
+            "probAtLeastK": 0.002386832582776166,
+            "oneInNSpins": 418.9652878112141
+          }
+        ],
+        "meanToThresholdRatio": 0.2793650793650794
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 1.2188,
+        "meanSymbolsRemovedPerSpin": 9.862155918301143,
+        "stdDevSymbolsRemovedPerSpin": 14.328092809156695,
+        "probActivation": 0.06356,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.35878
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.1781
+          },
+          {
+            "k": 35,
+            "probAtLeastK": 0.06356
+          },
+          {
+            "k": 50,
+            "probAtLeastK": 0.02398
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.002800000000000175,
+        "symbols_rel": 0.008555750002571222,
+        "stddev_rel": 0.005210382496376808,
+        "activation_abs_clt": 0.02515927768137377
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_elk_reactor_energy_burst",
+      "description": "ELK Reactor Energy — p=0.60 cluster-form, E[L]=5 small cluster, σ²=9, T=10 energy-burst threshold. Frequent activation.",
+      "cfg": {
+        "probWaveContinues": 0.6,
+        "expectedRemovalsPerWave": 5,
+        "varianceRemovalsPerWave": 9,
+        "activationThreshold": 10,
+        "disclosureRemovalThresholds": [
+          5,
+          10,
+          15,
+          20
+        ]
+      },
+      "clt_strict_mode": false,
+      "closed_form": {
+        "expectedWavesPerSpin": 1.4999999999999998,
+        "varianceWavesPerSpin": 3.749999999999999,
+        "expectedSymbolsRemovedPerSpin": 7.499999999999999,
+        "varianceSymbolsRemovedPerSpin": 107.24999999999999,
+        "stdDevSymbolsRemovedPerSpin": 10.356157588603988,
+        "probActivationCLT": 0.4046217258846896,
+        "probActivationConservativeMarkov": 0.7499999999999999,
+        "oneInNSpinsActivation": 2.4714441564242233,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 5,
+            "probAtLeastK": 0.5953782741153104,
+            "oneInNSpins": 1.679604452288637
+          },
+          {
+            "k": 10,
+            "probAtLeastK": 0.4046217258846896,
+            "oneInNSpins": 2.4714441564242233
+          },
+          {
+            "k": 15,
+            "probAtLeastK": 0.23446931540017812,
+            "oneInNSpins": 4.264950397851677
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.11371394747105623,
+            "oneInNSpins": 8.793996006994053
+          }
+        ],
+        "meanToThresholdRatio": 0.7499999999999999
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 1.4989,
+        "meanSymbolsRemovedPerSpin": 7.582643279462569,
+        "stdDevSymbolsRemovedPerSpin": 10.387282970826183,
+        "probActivation": 0.2844,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 5,
+            "probAtLeastK": 0.46382
+          },
+          {
+            "k": 10,
+            "probAtLeastK": 0.2844
+          },
+          {
+            "k": 15,
+            "probAtLeastK": 0.17818
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.11034
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.0007333333333332527,
+        "symbols_rel": 0.01089900664144483,
+        "stddev_rel": 0.0029964892946128126,
+        "activation_abs_clt": 0.1202217258846896
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_btg_megaways_evolution",
+      "description": "Big Time Gaming Megaways evolution — p=0.40 low chain, E[L]=10 big cluster, σ²=30, T=60 evolution-tier threshold. Very rare activation.",
+      "cfg": {
+        "probWaveContinues": 0.4,
+        "expectedRemovalsPerWave": 10,
+        "varianceRemovalsPerWave": 30,
+        "activationThreshold": 60,
+        "disclosureRemovalThresholds": [
+          10,
+          20,
+          40,
+          60
+        ]
+      },
+      "clt_strict_mode": false,
+      "closed_form": {
+        "expectedWavesPerSpin": 0.6666666666666667,
+        "varianceWavesPerSpin": 1.1111111111111112,
+        "expectedSymbolsRemovedPerSpin": 6.666666666666668,
+        "varianceSymbolsRemovedPerSpin": 131.11111111111111,
+        "stdDevSymbolsRemovedPerSpin": 11.450376024878446,
+        "probActivationCLT": 0.0000015999551754575236,
+        "probActivationConservativeMarkov": 0.11111111111111113,
+        "oneInNSpinsActivation": 625017.5100774555,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.38548318337253074,
+            "oneInNSpins": 2.5941468866453783
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.1221219155456994,
+            "oneInNSpins": 8.188538441536226
+          },
+          {
+            "k": 40,
+            "probAtLeastK": 0.0018007886920712313,
+            "oneInNSpins": 555.3122386890491
+          },
+          {
+            "k": 60,
+            "probAtLeastK": 0.0000015999551754575236,
+            "oneInNSpins": 625017.5100774555
+          }
+        ],
+        "meanToThresholdRatio": 0.11111111111111113
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 0.66438,
+        "meanSymbolsRemovedPerSpin": 6.664918200173845,
+        "stdDevSymbolsRemovedPerSpin": 11.353399274840532,
+        "probActivation": 0.0041,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 10,
+            "probAtLeastK": 0.26932
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.11414
+          },
+          {
+            "k": 40,
+            "probAtLeastK": 0.02202
+          },
+          {
+            "k": 60,
+            "probAtLeastK": 0.0041
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.0034300000000001547,
+        "symbols_rel": 0.0002622699739234679,
+        "stddev_rel": 0.008469307019019373,
+        "activation_abs_clt": 0.004098400044824543
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_hacksaw_tombstone_rip",
+      "description": "Hacksaw Tombstone Rip — p=0.70 high cascade, E[L]=6 skull cluster, σ²=12, T=20 rip-collect threshold. High p sustained cascade → moderate activation rate.",
+      "cfg": {
+        "probWaveContinues": 0.7,
+        "expectedRemovalsPerWave": 6,
+        "varianceRemovalsPerWave": 12,
+        "activationThreshold": 20,
+        "disclosureRemovalThresholds": [
+          5,
+          10,
+          20,
+          30
+        ]
+      },
+      "clt_strict_mode": false,
+      "closed_form": {
+        "expectedWavesPerSpin": 2.333333333333333,
+        "varianceWavesPerSpin": 7.777777777777775,
+        "expectedSymbolsRemovedPerSpin": 13.999999999999998,
+        "varianceSymbolsRemovedPerSpin": 307.9999999999999,
+        "stdDevSymbolsRemovedPerSpin": 17.54992877478424,
+        "probActivationCLT": 0.36622001661259884,
+        "probActivationConservativeMarkov": 0.7,
+        "oneInNSpinsActivation": 2.730598969574722,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 5,
+            "probAtLeastK": 0.695962296539377,
+            "oneInNSpins": 1.436859446226367
+          },
+          {
+            "k": 10,
+            "probAtLeastK": 0.5901461874662777,
+            "oneInNSpins": 1.6944954000183934
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.36622001661259884,
+            "oneInNSpins": 2.730598969574722
+          },
+          {
+            "k": 30,
+            "probAtLeastK": 0.1809673586575835,
+            "oneInNSpins": 5.5258584057257805
+          }
+        ],
+        "meanToThresholdRatio": 0.7
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 2.331,
+        "meanSymbolsRemovedPerSpin": 14.130089593627282,
+        "stdDevSymbolsRemovedPerSpin": 17.68602374566057,
+        "probActivation": 0.26072,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 5,
+            "probAtLeastK": 0.60734
+          },
+          {
+            "k": 10,
+            "probAtLeastK": 0.45848
+          },
+          {
+            "k": 20,
+            "probAtLeastK": 0.26072
+          },
+          {
+            "k": 30,
+            "probAtLeastK": 0.14846
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.00099999999999989,
+        "symbols_rel": 0.009206565377048632,
+        "stddev_rel": 0.007695057568251924,
+        "activation_abs_clt": 0.10550001661259883
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_pragmatic_sweet_bonanza_antebet_evolution",
+      "description": "Pragmatic Sweet Bonanza ante-bet sa multiplier-evolution — p=0.95 ULTRA-high sustained tumble + ante-bet, E[L]=12 cluster pool, σ²=40, T=80 multiplier-evolution. CLT-valid (E[W]=19).",
+      "cfg": {
+        "probWaveContinues": 0.95,
+        "expectedRemovalsPerWave": 12,
+        "varianceRemovalsPerWave": 40,
+        "activationThreshold": 80,
+        "disclosureRemovalThresholds": [
+          40,
+          80,
+          150,
+          250
+        ]
+      },
+      "clt_strict_mode": true,
+      "closed_form": {
+        "expectedWavesPerSpin": 18.999999999999982,
+        "varianceWavesPerSpin": 379.9999999999993,
+        "expectedSymbolsRemovedPerSpin": 227.99999999999977,
+        "varianceSymbolsRemovedPerSpin": 55479.9999999999,
+        "stdDevSymbolsRemovedPerSpin": 235.54192832699638,
+        "probActivationCLT": 0.7351088630336139,
+        "probActivationConservativeMarkov": 1,
+        "oneInNSpinsActivation": 1.3603427332834015,
+        "removalSurvivalAtThresholds": [
+          {
+            "k": 40,
+            "probAtLeastK": 0.7876110579189781,
+            "oneInNSpins": 1.2696622145481233
+          },
+          {
+            "k": 80,
+            "probAtLeastK": 0.7351088630336139,
+            "oneInNSpins": 1.3603427332834015
+          },
+          {
+            "k": 150,
+            "probAtLeastK": 0.6297348047830607,
+            "oneInNSpins": 1.5879700350125847
+          },
+          {
+            "k": 250,
+            "probAtLeastK": 0.46279218692884583,
+            "oneInNSpins": 2.1607970666837333
+          }
+        ],
+        "meanToThresholdRatio": 2.849999999999997
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "meanWavesPerSpin": 19.10426,
+        "meanSymbolsRemovedPerSpin": 230.71059750069696,
+        "stdDevSymbolsRemovedPerSpin": 238.04755144130192,
+        "probActivation": 0.69076,
+        "empiricalRemovalSurvival": [
+          {
+            "k": 40,
+            "probAtLeastK": 0.81732
+          },
+          {
+            "k": 80,
+            "probAtLeastK": 0.69076
+          },
+          {
+            "k": 150,
+            "probAtLeastK": 0.51516
+          },
+          {
+            "k": 250,
+            "probAtLeastK": 0.33914
+          }
+        ]
+      },
+      "checks": {
+        "waves_rel": 0.005457421538443142,
+        "symbols_rel": 0.011748907636065576,
+        "stddev_rel": 0.010525725213869195,
+        "activation_abs_clt": 0.04434886303361385
+      },
+      "pass": true,
+      "elapsed_ms": 37
+    }
+  ]
+}
