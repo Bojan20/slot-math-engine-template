@@ -152,6 +152,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'skillStopNearMiss.js'));
   const { solveAvalancheReactorWaveAggregator, simulateAvalancheReactorWaveAggregator } =
     await import(join(REPO_ROOT, 'dist', 'features', 'avalancheReactorWaveAggregator.js'));
+  const { solveStickyMultiplierFsTrail, simulateStickyMultiplierFsTrail } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'stickyMultiplierFsTrail.js'));
 
   const showcase = [];
 
@@ -1249,6 +1251,26 @@ async function main() {
       Math.max(cf.expectedSymbolsRemovedPerSpin, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 177, solver: 'Avalanche Reactor Wave Aggregator (60. MILESTONE)', metric: 'E[symbols/spin]', cf: cf.expectedSymbolsRemovedPerSpin, mc: mc.meanSymbolsRemovedPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W179: Sticky Multiplier FS Trail (BTG Bonanza Megaways / Sweet Bonanza / Hacksaw Wanted Dead) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      numFreeSpins: 12,
+      startMultiplier: 1,
+      probIncrementPerSpin: 0.40,
+      expectedIncrementValue: 1,
+      varianceIncrementValue: 0,
+      baseFsWinMean: 2,
+      baseFsWinVar: 4,
+    };
+    const cf = solveStickyMultiplierFsTrail(cfg);
+    const mc = simulateStickyMultiplierFsTrail(cfg, 20_000, SEED);
+    const rel = Math.abs(cf.expectedFinalMultiplier - mc.meanFinalMultiplier) /
+      Math.max(cf.expectedFinalMultiplier, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 179, solver: 'Sticky Multiplier FS Trail (BTG Bonanza-class)', metric: 'E[M_N]', cf: cf.expectedFinalMultiplier, mc: mc.meanFinalMultiplier, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

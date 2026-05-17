@@ -201,3 +201,6 @@ export * from './skillStopNearMiss.js';
 
 // W152 Wave 177: Avalanche Reactor Remove-and-Drop Wave Aggregator (🎯 60. solver MILESTONE, doubly-compound Wald — Play'n GO Reactoonz Quantum Leap / ELK Reactor Energy / BTG Megaways evolution / Hacksaw Tombstone Rip)
 export * from './avalancheReactorWaveAggregator.js';
+
+// W152 Wave 179: Sticky Multiplier FS Trail Aggregator (61. solver post-milestone, compound Binomial trail sa quadratic-in-N payout — BTG Bonanza Megaways / Pragmatic Sweet Bonanza FS / Big Bass Money Collect / Hacksaw Wanted Dead bounty xMult chain / BTG White Rabbit / Money Cart 4 EXTRA SHIFT)
+export * from './stickyMultiplierFsTrail.js';
