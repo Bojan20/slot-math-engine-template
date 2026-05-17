@@ -1,0 +1,1320 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "HIT_FREQUENCY_DISTRIBUTION",
+  "generated_utc": "2026-05-17T02:23:59.824Z",
+  "spins_per_config": 200000,
+  "seed": 3405644121,
+  "tolerances": {
+    "rtp_rel": 0.1,
+    "hf_abs": 0.005,
+    "tier_prob_rel": 0.2,
+    "tier_prob_abs_floor": 0.001
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_starburst_class_medium_vol",
+      "description": "NetEnt Starburst-class medium-vol slot (96% RTP, classic operator baseline)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.732
+          },
+          {
+            "multiple": 1,
+            "probability": 0.1
+          },
+          {
+            "multiple": 2,
+            "probability": 0.07
+          },
+          {
+            "multiple": 5,
+            "probability": 0.05
+          },
+          {
+            "multiple": 10,
+            "probability": 0.03
+          },
+          {
+            "multiple": 25,
+            "probability": 0.012
+          },
+          {
+            "multiple": 50,
+            "probability": 0.004
+          },
+          {
+            "multiple": 100,
+            "probability": 0.0015
+          },
+          {
+            "multiple": 500,
+            "probability": 0.0004
+          },
+          {
+            "multiple": 1000,
+            "probability": 0.0001
+          }
+        ],
+        "tierThresholds": [
+          1,
+          5,
+          10,
+          50,
+          100,
+          500,
+          1000
+        ],
+        "paretoTailStartMultiplier": 10
+      },
+      "closed_form": {
+        "totalRtp": 1.74,
+        "totalVariance": 234.1024,
+        "totalStdDev": 15.30040522339196,
+        "overallHitFrequency": 0.268,
+        "overallOneInN": 3.731343283582089,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.268,
+            "oneInN": 3.731343283582089,
+            "condEV": 6.492537313432836,
+            "rtpContribution": 1.74,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 5,
+            "tierProb": 0.098,
+            "oneInN": 10.204081632653061,
+            "condEV": 15.306122448979592,
+            "rtpContribution": 1.5,
+            "rtpShareOfTotal": 0.8620689655172414
+          },
+          {
+            "threshold": 10,
+            "tierProb": 0.048,
+            "oneInN": 20.833333333333332,
+            "condEV": 26.04166666666667,
+            "rtpContribution": 1.2500000000000002,
+            "rtpShareOfTotal": 0.7183908045977013
+          },
+          {
+            "threshold": 50,
+            "tierProb": 0.006,
+            "oneInN": 166.66666666666666,
+            "condEV": 108.33333333333333,
+            "rtpContribution": 0.65,
+            "rtpShareOfTotal": 0.3735632183908046
+          },
+          {
+            "threshold": 100,
+            "tierProb": 0.002,
+            "oneInN": 500,
+            "condEV": 224.99999999999997,
+            "rtpContribution": 0.44999999999999996,
+            "rtpShareOfTotal": 0.2586206896551724
+          },
+          {
+            "threshold": 500,
+            "tierProb": 0.0005,
+            "oneInN": 2000,
+            "condEV": 600.0000000000001,
+            "rtpContribution": 0.30000000000000004,
+            "rtpShareOfTotal": 0.17241379310344832
+          },
+          {
+            "threshold": 1000,
+            "tierProb": 0.0001,
+            "oneInN": 10000,
+            "condEV": 1000,
+            "rtpContribution": 0.1,
+            "rtpShareOfTotal": 0.0574712643678161
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.2781609195402299,
+            "eventCount": 4
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.4798850574712645,
+            "eventCount": 5
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.5965517241379312,
+            "eventCount": 6
+          }
+        ],
+        "paretoTailAlpha": 2.0949314436844424,
+        "paretoTailRowCount": 6
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 1.741835,
+        "observedHitFrequency": 0.26685,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.26685
+          },
+          {
+            "threshold": 5,
+            "observedProb": 0.09735
+          },
+          {
+            "threshold": 10,
+            "observedProb": 0.04752
+          },
+          {
+            "threshold": 50,
+            "observedProb": 0.00592
+          },
+          {
+            "threshold": 100,
+            "observedProb": 0.002005
+          },
+          {
+            "threshold": 500,
+            "observedProb": 0.000505
+          },
+          {
+            "threshold": 1000,
+            "observedProb": 0.00012
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.0010534866965011215,
+        "hf_abs": 0.0011500000000000399,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.268,
+          "mc": 0.26685,
+          "rel": 0.004291044776119551,
+          "abs": 0.0011500000000000399,
+          "ok": true
+        },
+        {
+          "threshold": 5,
+          "cf": 0.098,
+          "mc": 0.09735,
+          "rel": 0.006632653061224467,
+          "abs": 0.0006499999999999978,
+          "ok": true
+        },
+        {
+          "threshold": 10,
+          "cf": 0.048,
+          "mc": 0.04752,
+          "rel": 0.010000000000000026,
+          "abs": 0.00048000000000000126,
+          "ok": true
+        },
+        {
+          "threshold": 50,
+          "cf": 0.006,
+          "mc": 0.00592,
+          "rel": 0.013333333333333369,
+          "abs": 0.00008000000000000021,
+          "ok": true
+        },
+        {
+          "threshold": 100,
+          "cf": 0.002,
+          "mc": 0.002005,
+          "rel": 0.002493765586034811,
+          "abs": 0.000004999999999999796,
+          "ok": true
+        },
+        {
+          "threshold": 500,
+          "cf": 0.0005,
+          "mc": 0.000505,
+          "rel": 0.009900990099009927,
+          "abs": 0.000005000000000000013,
+          "ok": true
+        },
+        {
+          "threshold": 1000,
+          "cf": 0.0001,
+          "mc": 0.00012,
+          "rel": 0.16666666666666666,
+          "abs": 0.000019999999999999998,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "B_pragmatic_sweet_bonanza_high_vol",
+      "description": "Pragmatic Sweet Bonanza-class high-vol heavy-tail tumbling slot (96.5% RTP)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.82
+          },
+          {
+            "multiple": 1,
+            "probability": 0.05
+          },
+          {
+            "multiple": 2,
+            "probability": 0.04
+          },
+          {
+            "multiple": 5,
+            "probability": 0.035
+          },
+          {
+            "multiple": 10,
+            "probability": 0.025
+          },
+          {
+            "multiple": 50,
+            "probability": 0.018
+          },
+          {
+            "multiple": 100,
+            "probability": 0.008
+          },
+          {
+            "multiple": 500,
+            "probability": 0.003
+          },
+          {
+            "multiple": 1000,
+            "probability": 0.0008
+          },
+          {
+            "multiple": 5000,
+            "probability": 0.0002
+          }
+        ],
+        "tierThresholds": [
+          1,
+          5,
+          10,
+          100,
+          500,
+          1000,
+          5000
+        ],
+        "paretoTailStartMultiplier": 50
+      },
+      "closed_form": {
+        "totalRtp": 5.555,
+        "totalVariance": 6647.726975,
+        "totalStdDev": 81.53359414989627,
+        "overallHitFrequency": 0.18000000000000005,
+        "overallOneInN": 5.5555555555555545,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.18,
+            "oneInN": 5.555555555555555,
+            "condEV": 30.86111111111111,
+            "rtpContribution": 5.555,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 5,
+            "tierProb": 0.09,
+            "oneInN": 11.11111111111111,
+            "condEV": 60.27777777777778,
+            "rtpContribution": 5.425,
+            "rtpShareOfTotal": 0.9765976597659766
+          },
+          {
+            "threshold": 10,
+            "tierProb": 0.055,
+            "oneInN": 18.181818181818183,
+            "condEV": 95.45454545454545,
+            "rtpContribution": 5.25,
+            "rtpShareOfTotal": 0.9450945094509452
+          },
+          {
+            "threshold": 100,
+            "tierProb": 0.012,
+            "oneInN": 83.33333333333333,
+            "condEV": 341.66666666666663,
+            "rtpContribution": 4.1,
+            "rtpShareOfTotal": 0.738073807380738
+          },
+          {
+            "threshold": 500,
+            "tierProb": 0.004,
+            "oneInN": 250,
+            "condEV": 824.9999999999999,
+            "rtpContribution": 3.3,
+            "rtpShareOfTotal": 0.594059405940594
+          },
+          {
+            "threshold": 1000,
+            "tierProb": 0.001,
+            "oneInN": 1000,
+            "condEV": 1800,
+            "rtpContribution": 1.8,
+            "rtpShareOfTotal": 0.32403240324032406
+          },
+          {
+            "threshold": 5000,
+            "tierProb": 0.0002,
+            "oneInN": 5000,
+            "condEV": 5000,
+            "rtpContribution": 1,
+            "rtpShareOfTotal": 0.18001800180018002
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.3960396039603961,
+            "eventCount": 3
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.684068406840684,
+            "eventCount": 4
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.792079207920792,
+            "eventCount": 5
+          }
+        ],
+        "paretoTailAlpha": 1.9022795712936493,
+        "paretoTailRowCount": 5
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 5.720525,
+        "observedHitFrequency": 0.17866,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.17866
+          },
+          {
+            "threshold": 5,
+            "observedProb": 0.089445
+          },
+          {
+            "threshold": 10,
+            "observedProb": 0.05459
+          },
+          {
+            "threshold": 100,
+            "observedProb": 0.01184
+          },
+          {
+            "threshold": 500,
+            "observedProb": 0.0041
+          },
+          {
+            "threshold": 1000,
+            "observedProb": 0.00102
+          },
+          {
+            "threshold": 5000,
+            "observedProb": 0.000235
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.028935281289741866,
+        "hf_abs": 0.0013400000000000356,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.18,
+          "mc": 0.17866,
+          "rel": 0.007444444444444334,
+          "abs": 0.00133999999999998,
+          "ok": true
+        },
+        {
+          "threshold": 5,
+          "cf": 0.09,
+          "mc": 0.089445,
+          "rel": 0.006166666666666666,
+          "abs": 0.0005549999999999999,
+          "ok": true
+        },
+        {
+          "threshold": 10,
+          "cf": 0.055,
+          "mc": 0.05459,
+          "rel": 0.007454545454545466,
+          "abs": 0.00041000000000000064,
+          "ok": true
+        },
+        {
+          "threshold": 100,
+          "cf": 0.012,
+          "mc": 0.01184,
+          "rel": 0.013333333333333369,
+          "abs": 0.00016000000000000042,
+          "ok": true
+        },
+        {
+          "threshold": 500,
+          "cf": 0.004,
+          "mc": 0.0041,
+          "rel": 0.024390243902439088,
+          "abs": 0.00010000000000000026,
+          "ok": true
+        },
+        {
+          "threshold": 1000,
+          "cf": 0.001,
+          "mc": 0.00102,
+          "rel": 0.01960784313725495,
+          "abs": 0.000020000000000000052,
+          "ok": true
+        },
+        {
+          "threshold": 5000,
+          "cf": 0.0002,
+          "mc": 0.000235,
+          "rel": 0.1489361702127659,
+          "abs": 0.00003499999999999998,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_hacksaw_extreme_max_win",
+      "description": "Hacksaw extreme max-win slot (Mining Pots / Wanted Dead — 25000× max, 96.4% RTP)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.85
+          },
+          {
+            "multiple": 1,
+            "probability": 0.05
+          },
+          {
+            "multiple": 3,
+            "probability": 0.04
+          },
+          {
+            "multiple": 10,
+            "probability": 0.03
+          },
+          {
+            "multiple": 50,
+            "probability": 0.018
+          },
+          {
+            "multiple": 200,
+            "probability": 0.008
+          },
+          {
+            "multiple": 1000,
+            "probability": 0.003
+          },
+          {
+            "multiple": 5000,
+            "probability": 0.0009
+          },
+          {
+            "multiple": 25000,
+            "probability": 0.0001
+          }
+        ],
+        "tierThresholds": [
+          1,
+          10,
+          200,
+          1000,
+          5000,
+          25000
+        ],
+        "paretoTailStartMultiplier": 50
+      },
+      "closed_form": {
+        "totalRtp": 12.969999999999999,
+        "totalVariance": 88200.1891,
+        "totalStdDev": 296.9851664645896,
+        "overallHitFrequency": 0.15000000000000002,
+        "overallOneInN": 6.666666666666666,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.15,
+            "oneInN": 6.666666666666667,
+            "condEV": 86.46666666666667,
+            "rtpContribution": 12.969999999999999,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 10,
+            "tierProb": 0.060000000000000005,
+            "oneInN": 16.666666666666664,
+            "condEV": 213.33333333333331,
+            "rtpContribution": 12.8,
+            "rtpShareOfTotal": 0.986892829606785
+          },
+          {
+            "threshold": 200,
+            "tierProb": 0.011999999999999999,
+            "oneInN": 83.33333333333334,
+            "condEV": 966.6666666666667,
+            "rtpContribution": 11.6,
+            "rtpShareOfTotal": 0.8943716268311489
+          },
+          {
+            "threshold": 1000,
+            "tierProb": 0.004,
+            "oneInN": 250,
+            "condEV": 2500,
+            "rtpContribution": 10,
+            "rtpShareOfTotal": 0.7710100231303008
+          },
+          {
+            "threshold": 5000,
+            "tierProb": 0.001,
+            "oneInN": 1000,
+            "condEV": 7000,
+            "rtpContribution": 7,
+            "rtpShareOfTotal": 0.5397070161912105
+          },
+          {
+            "threshold": 25000,
+            "tierProb": 0.0001,
+            "oneInN": 10000,
+            "condEV": 25000,
+            "rtpContribution": 2.5,
+            "rtpShareOfTotal": 0.1927525057825752
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.5782575173477256,
+            "eventCount": 3
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.8249807247494219,
+            "eventCount": 4
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.9059367771781034,
+            "eventCount": 5
+          }
+        ],
+        "paretoTailAlpha": 1.2075512679224372,
+        "paretoTailRowCount": 5
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 13.489645,
+        "observedHitFrequency": 0.14889,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.14889
+          },
+          {
+            "threshold": 10,
+            "observedProb": 0.059515
+          },
+          {
+            "threshold": 200,
+            "observedProb": 0.01184
+          },
+          {
+            "threshold": 1000,
+            "observedProb": 0.0041
+          },
+          {
+            "threshold": 5000,
+            "observedProb": 0.00102
+          },
+          {
+            "threshold": 25000,
+            "observedProb": 0.00012
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.03852176984642669,
+        "hf_abs": 0.0011100000000000276,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.15,
+          "mc": 0.14889,
+          "rel": 0.0073999999999999995,
+          "abs": 0.0011099999999999999,
+          "ok": true
+        },
+        {
+          "threshold": 10,
+          "cf": 0.060000000000000005,
+          "mc": 0.059515,
+          "rel": 0.008083333333333437,
+          "abs": 0.00048500000000000626,
+          "ok": true
+        },
+        {
+          "threshold": 200,
+          "cf": 0.011999999999999999,
+          "mc": 0.01184,
+          "rel": 0.013333333333333225,
+          "abs": 0.00015999999999999868,
+          "ok": true
+        },
+        {
+          "threshold": 1000,
+          "cf": 0.004,
+          "mc": 0.0041,
+          "rel": 0.024390243902439088,
+          "abs": 0.00010000000000000026,
+          "ok": true
+        },
+        {
+          "threshold": 5000,
+          "cf": 0.001,
+          "mc": 0.00102,
+          "rel": 0.01960784313725495,
+          "abs": 0.000020000000000000052,
+          "ok": true
+        },
+        {
+          "threshold": 25000,
+          "cf": 0.0001,
+          "mc": 0.00012,
+          "rel": 0.16666666666666666,
+          "abs": 0.000019999999999999998,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_netent_classic_96pct_low_vol",
+      "description": "NetEnt classic 96% RTP low-vol slot (Gonzo classic / Twin Spin — operator default)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.6
+          },
+          {
+            "multiple": 1,
+            "probability": 0.15
+          },
+          {
+            "multiple": 2,
+            "probability": 0.1
+          },
+          {
+            "multiple": 3,
+            "probability": 0.07
+          },
+          {
+            "multiple": 5,
+            "probability": 0.05
+          },
+          {
+            "multiple": 10,
+            "probability": 0.018
+          },
+          {
+            "multiple": 25,
+            "probability": 0.008
+          },
+          {
+            "multiple": 50,
+            "probability": 0.003
+          },
+          {
+            "multiple": 100,
+            "probability": 0.0009
+          },
+          {
+            "multiple": 500,
+            "probability": 0.0001
+          }
+        ],
+        "tierThresholds": [
+          1,
+          3,
+          10,
+          50,
+          100,
+          500
+        ],
+        "paretoTailStartMultiplier": 10
+      },
+      "closed_form": {
+        "totalRtp": 1.48,
+        "totalVariance": 48.53960000000001,
+        "totalStdDev": 6.967036672789947,
+        "overallHitFrequency": 0.4,
+        "overallOneInN": 2.5,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.4,
+            "oneInN": 2.5,
+            "condEV": 3.6999999999999997,
+            "rtpContribution": 1.48,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 3,
+            "tierProb": 0.15000000000000002,
+            "oneInN": 6.666666666666666,
+            "condEV": 7.533333333333333,
+            "rtpContribution": 1.1300000000000001,
+            "rtpShareOfTotal": 0.7635135135135136
+          },
+          {
+            "threshold": 10,
+            "tierProb": 0.03,
+            "oneInN": 33.333333333333336,
+            "condEV": 22.333333333333336,
+            "rtpContribution": 0.67,
+            "rtpShareOfTotal": 0.45270270270270274
+          },
+          {
+            "threshold": 50,
+            "tierProb": 0.004,
+            "oneInN": 250,
+            "condEV": 72.5,
+            "rtpContribution": 0.29,
+            "rtpShareOfTotal": 0.19594594594594594
+          },
+          {
+            "threshold": 100,
+            "tierProb": 0.001,
+            "oneInN": 1000,
+            "condEV": 140,
+            "rtpContribution": 0.14,
+            "rtpShareOfTotal": 0.0945945945945946
+          },
+          {
+            "threshold": 500,
+            "tierProb": 0.0001,
+            "oneInN": 10000,
+            "condEV": 500,
+            "rtpContribution": 0.05,
+            "rtpShareOfTotal": 0.033783783783783786
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.19594594594594597,
+            "eventCount": 3
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.3851351351351352,
+            "eventCount": 5
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.48648648648648657,
+            "eventCount": 6
+          }
+        ],
+        "paretoTailAlpha": 2.051679273710104,
+        "paretoTailRowCount": 5
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 1.482985,
+        "observedHitFrequency": 0.399285,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.399285
+          },
+          {
+            "threshold": 3,
+            "observedProb": 0.14889
+          },
+          {
+            "threshold": 10,
+            "observedProb": 0.029735
+          },
+          {
+            "threshold": 50,
+            "observedProb": 0.0041
+          },
+          {
+            "threshold": 100,
+            "observedProb": 0.00102
+          },
+          {
+            "threshold": 500,
+            "observedProb": 0.00012
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.0020128322268937416,
+        "hf_abs": 0.0007150000000000212,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.4,
+          "mc": 0.399285,
+          "rel": 0.001787500000000053,
+          "abs": 0.0007150000000000212,
+          "ok": true
+        },
+        {
+          "threshold": 3,
+          "cf": 0.15000000000000002,
+          "mc": 0.14889,
+          "rel": 0.007400000000000183,
+          "abs": 0.0011100000000000276,
+          "ok": true
+        },
+        {
+          "threshold": 10,
+          "cf": 0.03,
+          "mc": 0.029735,
+          "rel": 0.008833333333333263,
+          "abs": 0.0002649999999999979,
+          "ok": true
+        },
+        {
+          "threshold": 50,
+          "cf": 0.004,
+          "mc": 0.0041,
+          "rel": 0.024390243902439088,
+          "abs": 0.00010000000000000026,
+          "ok": true
+        },
+        {
+          "threshold": 100,
+          "cf": 0.001,
+          "mc": 0.00102,
+          "rel": 0.01960784313725495,
+          "abs": 0.000020000000000000052,
+          "ok": true
+        },
+        {
+          "threshold": 500,
+          "cf": 0.0001,
+          "mc": 0.00012,
+          "rel": 0.16666666666666666,
+          "abs": 0.000019999999999999998,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "E_big_time_megaways_megaway_class",
+      "description": "BTG Megaways-class slot (Bonanza Megaways / Extra Chilli — variable ways, 96-97% RTP)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.755
+          },
+          {
+            "multiple": 1,
+            "probability": 0.09
+          },
+          {
+            "multiple": 2,
+            "probability": 0.06
+          },
+          {
+            "multiple": 5,
+            "probability": 0.045
+          },
+          {
+            "multiple": 10,
+            "probability": 0.025
+          },
+          {
+            "multiple": 20,
+            "probability": 0.015
+          },
+          {
+            "multiple": 50,
+            "probability": 0.007
+          },
+          {
+            "multiple": 200,
+            "probability": 0.0022
+          },
+          {
+            "multiple": 1000,
+            "probability": 0.0007
+          },
+          {
+            "multiple": 10000,
+            "probability": 0.0001
+          }
+        ],
+        "tierThresholds": [
+          1,
+          10,
+          50,
+          200,
+          1000,
+          10000
+        ],
+        "paretoTailStartMultiplier": 50
+      },
+      "closed_form": {
+        "totalRtp": 3.4749999999999996,
+        "totalVariance": 10803.379375,
+        "totalStdDev": 103.93930620799814,
+        "overallHitFrequency": 0.245,
+        "overallOneInN": 4.081632653061225,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.245,
+            "oneInN": 4.081632653061225,
+            "condEV": 14.183673469387754,
+            "rtpContribution": 3.4749999999999996,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 10,
+            "tierProb": 0.05,
+            "oneInN": 20,
+            "condEV": 60.8,
+            "rtpContribution": 3.04,
+            "rtpShareOfTotal": 0.8748201438848922
+          },
+          {
+            "threshold": 50,
+            "tierProb": 0.009999999999999998,
+            "oneInN": 100.00000000000001,
+            "condEV": 249.00000000000006,
+            "rtpContribution": 2.49,
+            "rtpShareOfTotal": 0.7165467625899282
+          },
+          {
+            "threshold": 200,
+            "tierProb": 0.003,
+            "oneInN": 333.3333333333333,
+            "condEV": 713.3333333333333,
+            "rtpContribution": 2.1399999999999997,
+            "rtpShareOfTotal": 0.6158273381294964
+          },
+          {
+            "threshold": 1000,
+            "tierProb": 0.0008,
+            "oneInN": 1250,
+            "condEV": 2125,
+            "rtpContribution": 1.7,
+            "rtpShareOfTotal": 0.4892086330935252
+          },
+          {
+            "threshold": 10000,
+            "tierProb": 0.0001,
+            "oneInN": 10000,
+            "condEV": 10000,
+            "rtpContribution": 1,
+            "rtpShareOfTotal": 0.2877697841726619
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.5841726618705037,
+            "eventCount": 3
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.7294964028776979,
+            "eventCount": 5
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.8000000000000002,
+            "eventCount": 5
+          }
+        ],
+        "paretoTailAlpha": 1.7615893439939696,
+        "paretoTailRowCount": 4
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 3.659125,
+        "observedHitFrequency": 0.243285,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.243285
+          },
+          {
+            "threshold": 10,
+            "observedProb": 0.04944
+          },
+          {
+            "threshold": 50,
+            "observedProb": 0.009765
+          },
+          {
+            "threshold": 200,
+            "observedProb": 0.00313
+          },
+          {
+            "threshold": 1000,
+            "observedProb": 0.0008
+          },
+          {
+            "threshold": 10000,
+            "observedProb": 0.00012
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.05031940696204702,
+        "hf_abs": 0.0017149999999999943,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.245,
+          "mc": 0.243285,
+          "rel": 0.006999999999999977,
+          "abs": 0.0017149999999999943,
+          "ok": true
+        },
+        {
+          "threshold": 10,
+          "cf": 0.05,
+          "mc": 0.04944,
+          "rel": 0.011200000000000099,
+          "abs": 0.0005600000000000049,
+          "ok": true
+        },
+        {
+          "threshold": 50,
+          "cf": 0.009999999999999998,
+          "mc": 0.009765,
+          "rel": 0.023499999999999913,
+          "abs": 0.0002349999999999991,
+          "ok": true
+        },
+        {
+          "threshold": 200,
+          "cf": 0.003,
+          "mc": 0.00313,
+          "rel": 0.041533546325878565,
+          "abs": 0.0001299999999999999,
+          "ok": true
+        },
+        {
+          "threshold": 1000,
+          "cf": 0.0008,
+          "mc": 0.0008,
+          "rel": 0,
+          "abs": 0,
+          "ok": true
+        },
+        {
+          "threshold": 10000,
+          "cf": 0.0001,
+          "mc": 0.00012,
+          "rel": 0.16666666666666666,
+          "abs": 0.000019999999999999998,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_uniform_pmf_sanity",
+      "description": "Corner case: uniform PMF over {0, 1, 2, 3, 4} (sanity check — HF=80%, RTP=2.0)",
+      "cfg": {
+        "payoutPmf": [
+          {
+            "multiple": 0,
+            "probability": 0.2
+          },
+          {
+            "multiple": 1,
+            "probability": 0.2
+          },
+          {
+            "multiple": 2,
+            "probability": 0.2
+          },
+          {
+            "multiple": 3,
+            "probability": 0.2
+          },
+          {
+            "multiple": 4,
+            "probability": 0.2
+          }
+        ],
+        "tierThresholds": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "paretoTailStartMultiplier": 1
+      },
+      "closed_form": {
+        "totalRtp": 2,
+        "totalVariance": 2,
+        "totalStdDev": 1.4142135623730951,
+        "overallHitFrequency": 0.8,
+        "overallOneInN": 1.25,
+        "tierBreakdown": [
+          {
+            "threshold": 1,
+            "tierProb": 0.8,
+            "oneInN": 1.25,
+            "condEV": 2.5,
+            "rtpContribution": 2,
+            "rtpShareOfTotal": 1
+          },
+          {
+            "threshold": 2,
+            "tierProb": 0.6000000000000001,
+            "oneInN": 1.6666666666666665,
+            "condEV": 2.9999999999999996,
+            "rtpContribution": 1.8,
+            "rtpShareOfTotal": 0.9
+          },
+          {
+            "threshold": 3,
+            "tierProb": 0.4,
+            "oneInN": 2.5,
+            "condEV": 3.5,
+            "rtpContribution": 1.4000000000000001,
+            "rtpShareOfTotal": 0.7000000000000001
+          },
+          {
+            "threshold": 4,
+            "tierProb": 0.2,
+            "oneInN": 5,
+            "condEV": 4,
+            "rtpContribution": 0.8,
+            "rtpShareOfTotal": 0.4
+          }
+        ],
+        "rtpConcentration": [
+          {
+            "topFraction": 0.01,
+            "rtpShare": 0.016,
+            "eventCount": 1
+          },
+          {
+            "topFraction": 0.05,
+            "rtpShare": 0.08000000000000002,
+            "eventCount": 1
+          },
+          {
+            "topFraction": 0.1,
+            "rtpShare": 0.16000000000000003,
+            "eventCount": 1
+          }
+        ],
+        "paretoTailAlpha": 1.2586319217764996,
+        "paretoTailRowCount": 4
+      },
+      "monte_carlo": {
+        "spinsSimulated": 200000,
+        "observedRtp": 1.997195,
+        "observedHitFrequency": 0.79975,
+        "observedTierProbabilities": [
+          {
+            "threshold": 1,
+            "observedProb": 0.79975
+          },
+          {
+            "threshold": 2,
+            "observedProb": 0.599255
+          },
+          {
+            "threshold": 3,
+            "observedProb": 0.399285
+          },
+          {
+            "threshold": 4,
+            "observedProb": 0.198905
+          }
+        ]
+      },
+      "checks": {
+        "rtp_rel": 0.0014024999999999732,
+        "hf_abs": 0.0002500000000000835,
+        "all_tiers_ok": true
+      },
+      "tier_mismatches": [
+        {
+          "threshold": 1,
+          "cf": 0.8,
+          "mc": 0.79975,
+          "rel": 0.00031250000000010436,
+          "abs": 0.0002500000000000835,
+          "ok": true
+        },
+        {
+          "threshold": 2,
+          "cf": 0.6000000000000001,
+          "mc": 0.599255,
+          "rel": 0.0012416666666668443,
+          "abs": 0.0007450000000001067,
+          "ok": true
+        },
+        {
+          "threshold": 3,
+          "cf": 0.4,
+          "mc": 0.399285,
+          "rel": 0.001787500000000053,
+          "abs": 0.0007150000000000212,
+          "ok": true
+        },
+        {
+          "threshold": 4,
+          "cf": 0.2,
+          "mc": 0.198905,
+          "rel": 0.005475000000000063,
+          "abs": 0.0010950000000000126,
+          "ok": true
+        }
+      ],
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}

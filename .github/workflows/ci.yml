@@ -224,3 +224,5 @@ jobs:
         run: npm run free-bet-wagering-requirement-acceptance
       - name: Session Bankroll Drawdown Analyzer acceptance (6/6 configs × 3K episodes, Wave 157/158, INDUSTRY-FIRST UKGC LCCP 3.4.3)
         run: npm run session-bankroll-drawdown-acceptance
+      - name: Hit Frequency Distribution Decomposition Analyzer acceptance (6/6 configs × 200K spins, Wave 159/160, INDUSTRY-STANDARD UKGC RTS 14 Tag 12)
+        run: npm run hit-frequency-distribution-acceptance
