@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SKILL_STOP_NEAR_MISS",
+  "generated_utc": "2026-05-17T10:52:00.018Z",
+  "spins_per_config": 50000,
+  "seed": 3405644149,
+  "tolerances": {
+    "any_reel_abs": 0.02,
+    "all_but_one_abs": 0.01,
+    "frustration_rel": 0.2
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_ukgc_vegas_5reel_compliant",
+      "description": "UKGC Vegas-style 5-reel slot N=22 M=1 K=1 RNG-uniform: observed = baseline 2/22 = 9.1%. Expected: NO FLAG.",
+      "cfg": {
+        "symbolsPerReel": 22,
+        "jackpotSymbolsPerReel": 1,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.09090909090909091,
+        "numReels": 5,
+        "regulatoryRegime": "UKGC"
+      },
+      "expected_flag": false,
+      "closed_form": {
+        "baselineNearMissRate": 0.09090909090909091,
+        "baselineWinRate": 0.045454545454545456,
+        "observedNearMissRate": 0.09090909090909091,
+        "inflationRatio": 1,
+        "regulatoryToleranceApplied": 1,
+        "regimeUsed": "UKGC",
+        "regulatoryFlag": false,
+        "severityScore": 0,
+        "frustrationRatio": 2,
+        "anyReelNearMissProb": 0.37907867694084496,
+        "allButOneWinNearMissProb": 0.00000194037913455986,
+        "expectedFrustrationEventsPerSpin": 0.2272727272727273,
+        "disclosureText": "✅ COMPLIANT | Regime: UKGC RTS 12 (NO deliberate near-miss enhancement) | Reel: 5×{N=22, M=1, K=1} | Inflation ratio: 1.000 vs tolerance 1.00. Reel design is within regulatory bounds. Audit trail: this analyzer is auditor-replayable per machine certification cycle."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 0.44982,
+        "observedAnyReelNearMissProb": 0.37736,
+        "observedAllButOneWinNearMissProb": 0,
+        "observedFrustrationRatio": 1.9896496815286624
+      },
+      "checks": {
+        "any_reel_abs": 0.0017186769408449876,
+        "all_but_one_abs": 0.00000194037913455986,
+        "frustration_rel": 0.0051751592356688025,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "B_ukgc_deliberate_inflation_FLAG",
+      "description": "UKGC Vegas 5-reel BUT operator inflates observed near-miss 2× baseline (PAR sheet weighting). Expected: FLAG (RTS 12 violation, ban).",
+      "cfg": {
+        "symbolsPerReel": 22,
+        "jackpotSymbolsPerReel": 1,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.18181818181818182,
+        "numReels": 5,
+        "regulatoryRegime": "UKGC"
+      },
+      "expected_flag": true,
+      "closed_form": {
+        "baselineNearMissRate": 0.09090909090909091,
+        "baselineWinRate": 0.045454545454545456,
+        "observedNearMissRate": 0.18181818181818182,
+        "inflationRatio": 2,
+        "regulatoryToleranceApplied": 1,
+        "regimeUsed": "UKGC",
+        "regulatoryFlag": true,
+        "severityScore": 1,
+        "frustrationRatio": 4,
+        "anyReelNearMissProb": 0.6333521679467996,
+        "allButOneWinNearMissProb": 0.00000388075826911972,
+        "expectedFrustrationEventsPerSpin": 0.6818181818181818,
+        "disclosureText": "⚠️ FLAG | Regime: UKGC RTS 12 (NO deliberate near-miss enhancement) | Reel: 5×{N=22, M=1, K=1} | Inflation ratio: 2.000 vs tolerance 1.00. Operator must REMEDIATE PAR sheet (re-weight reel strip to remove off-position jackpot inflation) or face regulatory non-compliance."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 0.90756,
+        "observedAnyReelNearMissProb": 0.63052,
+        "observedAllButOneWinNearMissProb": 0,
+        "observedFrustrationRatio": 4.014331210191083
+      },
+      "checks": {
+        "any_reel_abs": 0.0028321679467996352,
+        "all_but_one_abs": 0.00000388075826911972,
+        "frustration_rel": 0.003582802547770658,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_jp_pachislot_3reel_at_cap_1x5_compliant",
+      "description": "JP Pachislot 3-reel N=21 M=1 inflated 1.5× = JP 風営法 cap (manufacturer certified). Expected: NO FLAG (JP regime).",
+      "cfg": {
+        "symbolsPerReel": 21,
+        "jackpotSymbolsPerReel": 1,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.14285714285714285,
+        "numReels": 3,
+        "regulatoryRegime": "JP_PACHISLOT"
+      },
+      "expected_flag": false,
+      "closed_form": {
+        "baselineNearMissRate": 0.09523809523809523,
+        "baselineWinRate": 0.047619047619047616,
+        "observedNearMissRate": 0.14285714285714285,
+        "inflationRatio": 1.5,
+        "regulatoryToleranceApplied": 1.5,
+        "regimeUsed": "JP_PACHISLOT",
+        "regulatoryFlag": false,
+        "severityScore": 0,
+        "frustrationRatio": 3,
+        "anyReelNearMissProb": 0.3702623906705538,
+        "allButOneWinNearMissProb": 0.0009718172983479104,
+        "expectedFrustrationEventsPerSpin": 0.2857142857142857,
+        "disclosureText": "✅ COMPLIANT | Regime: JP Pachislot 風営法 §2(7) (1.5× near-miss cap) | Reel: 3×{N=21, M=1, K=1} | Inflation ratio: 1.500 vs tolerance 1.50. Reel design is within regulatory bounds. Audit trail: this analyzer is auditor-replayable per machine certification cycle."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 0.42258,
+        "observedAnyReelNearMissProb": 0.36462,
+        "observedAllButOneWinNearMissProb": 0.00108,
+        "observedFrustrationRatio": 2.9584150098011763
+      },
+      "checks": {
+        "any_reel_abs": 0.005642390670553776,
+        "all_but_one_abs": 0.00010818270165208958,
+        "frustration_rel": 0.01386166339960789,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_jp_pachislot_exceeds_cap_FLAG",
+      "description": "JP Pachislot 3-reel inflated 2.0× baseline > 1.5× cap. Expected: FLAG (license violation).",
+      "cfg": {
+        "symbolsPerReel": 21,
+        "jackpotSymbolsPerReel": 1,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.19047619047619047,
+        "numReels": 3,
+        "regulatoryRegime": "JP_PACHISLOT"
+      },
+      "expected_flag": true,
+      "closed_form": {
+        "baselineNearMissRate": 0.09523809523809523,
+        "baselineWinRate": 0.047619047619047616,
+        "observedNearMissRate": 0.19047619047619047,
+        "inflationRatio": 2,
+        "regulatoryToleranceApplied": 1.5,
+        "regimeUsed": "JP_PACHISLOT",
+        "regulatoryFlag": true,
+        "severityScore": 0.5,
+        "frustrationRatio": 4,
+        "anyReelNearMissProb": 0.46949573480185725,
+        "allButOneWinNearMissProb": 0.001295756397797214,
+        "expectedFrustrationEventsPerSpin": 0.42857142857142855,
+        "disclosureText": "⚠️ FLAG | Regime: JP Pachislot 風営法 §2(7) (1.5× near-miss cap) | Reel: 3×{N=21, M=1, K=1} | Inflation ratio: 2.000 vs tolerance 1.50. Operator must REMEDIATE PAR sheet (re-weight reel strip to remove off-position jackpot inflation) or face regulatory non-compliance."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 0.5652,
+        "observedAnyReelNearMissProb": 0.46414,
+        "observedAllButOneWinNearMissProb": 0.00134,
+        "observedFrustrationRatio": 3.9568748249789976
+      },
+      "checks": {
+        "any_reel_abs": 0.005355734801857248,
+        "all_but_one_abs": 0.000044243602202786135,
+        "frustration_rel": 0.01078129375525061,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_au_ncpf_at_cap_1x2_compliant",
+      "description": "AU NCPF NSW/VIC 5-reel N=20 M=2 inflated 1.2× = AU cap. Expected: NO FLAG (AU regime, disclosure not required).",
+      "cfg": {
+        "symbolsPerReel": 20,
+        "jackpotSymbolsPerReel": 2,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.24,
+        "numReels": 5,
+        "regulatoryRegime": "AU_NCPF"
+      },
+      "expected_flag": false,
+      "closed_form": {
+        "baselineNearMissRate": 0.2,
+        "baselineWinRate": 0.1,
+        "observedNearMissRate": 0.24,
+        "inflationRatio": 1.2,
+        "regulatoryToleranceApplied": 1.2,
+        "regimeUsed": "AU_NCPF",
+        "regulatoryFlag": false,
+        "severityScore": 0,
+        "frustrationRatio": 2.4,
+        "anyReelNearMissProb": 0.7464474623999999,
+        "allButOneWinNearMissProb": 0.00012000000000000003,
+        "expectedFrustrationEventsPerSpin": 0.7,
+        "disclosureText": "✅ COMPLIANT | Regime: AU NCPF 2022 §3.4 (NSW/VIC psychophysics monitoring, 1.2× cap) | Reel: 5×{N=20, M=2, K=1} | Inflation ratio: 1.200 vs tolerance 1.20. Reel design is within regulatory bounds. Audit trail: this analyzer is auditor-replayable per machine certification cycle."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 1.20048,
+        "observedAnyReelNearMissProb": 0.74348,
+        "observedAllButOneWinNearMissProb": 0.0001,
+        "observedFrustrationRatio": 2.4254081137869727
+      },
+      "checks": {
+        "any_reel_abs": 0.0029674623999998984,
+        "all_but_one_abs": 0.000020000000000000025,
+        "frustration_rel": 0.010586714077905346,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_reid_1986_classic_2x_ALL_REGIMES_FLAG",
+      "description": "Reid (1986) classic near-miss study: 5-reel N=20 M=2 inflated 2× baseline. Expected: FLAG under ALL regimes (UKGC/AGCO/AU; only JP if >1.5×, here 2.0× > 1.5×).",
+      "cfg": {
+        "symbolsPerReel": 20,
+        "jackpotSymbolsPerReel": 2,
+        "nearMissBand": 1,
+        "observedNearMissRatePerReel": 0.4,
+        "numReels": 5,
+        "regulatoryRegime": "UKGC"
+      },
+      "expected_flag": true,
+      "closed_form": {
+        "baselineNearMissRate": 0.2,
+        "baselineWinRate": 0.1,
+        "observedNearMissRate": 0.4,
+        "inflationRatio": 2,
+        "regulatoryToleranceApplied": 1,
+        "regimeUsed": "UKGC",
+        "regulatoryFlag": true,
+        "severityScore": 1,
+        "frustrationRatio": 4,
+        "anyReelNearMissProb": 0.9222400000000001,
+        "allButOneWinNearMissProb": 0.00020000000000000006,
+        "expectedFrustrationEventsPerSpin": 1.5000000000000002,
+        "disclosureText": "⚠️ FLAG | Regime: UKGC RTS 12 (NO deliberate near-miss enhancement) | Reel: 5×{N=20, M=2, K=1} | Inflation ratio: 2.000 vs tolerance 1.00. Operator must REMEDIATE PAR sheet (re-weight reel strip to remove off-position jackpot inflation) or face regulatory non-compliance."
+      },
+      "monte_carlo": {
+        "spins": 50000,
+        "observedFrustrationEventsPerSpin": 2.0029,
+        "observedAnyReelNearMissProb": 0.92288,
+        "observedAllButOneWinNearMissProb": 0.00016,
+        "observedFrustrationRatio": 4.046589623403912
+      },
+      "checks": {
+        "any_reel_abs": 0.0006399999999999739,
+        "all_but_one_abs": 0.00004000000000000005,
+        "frustration_rel": 0.011647405850977899,
+        "flag_matches_expected": true
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}

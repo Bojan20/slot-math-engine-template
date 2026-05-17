@@ -240,3 +240,5 @@ jobs:
         run: npm run tumbling-cascade-chain-length-acceptance
       - name: Pick-and-Click Pooper Bonus Analyzer acceptance (6/6 configs × 20K rounds, Wave 173/174, Negative Hypergeometric Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF)
         run: npm run pick-click-pooper-bonus-acceptance
+      - name: Skill-Stop Near-Miss Rate Analyzer acceptance (6/6 configs × 50K spins, Wave 175/176, INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario)
+        run: npm run skill-stop-near-miss-acceptance
