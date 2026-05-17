@@ -251,6 +251,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 161 Max Drop From Starting Bankroll During Session Analyzer (W152 Wave 162, 52. solver, INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §17 — completes responsible-gambling triad)
   { kind: 'reports/acceptance', src: 'reports/acceptance/RUNNING_MAX_DRAWDOWN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/RUNNING_MAX_DRAWDOWN.md' },
+  // REPORTS — Wave 163 Martingale Wager Progression Bust Time Analyzer (W152 Wave 164, 53. solver, INDUSTRY-FIRST chase-pattern UKGC LCCP 3.4.3 / MGA PPD §18 / AU NCPF Schedule 4)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MARTINGALE_BUST_TIME.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MARTINGALE_BUST_TIME.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

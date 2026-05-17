@@ -90,9 +90,9 @@ because operator workflows and regulator workflows DEMAND them — not
 because anyone else built them and we copied. **The dossier is the
 differentiator.**
 
-> **CI-enforced**: every push runs `closed-form-truth` job — **52 portfolio
-> solvers** (🎯 50-solver milestone @ Wave 157, 51 @ Wave 159, 52 @ Wave 161 = responsible-gambling math triad COMPLETED) + 11 exact-enum fixtures + 222 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery/collect/chain/mega/bi-dir/anticipation/buy-tier/multi-level-wild/hold-win-value/locked-reels/tumble-mult-cap/adjacent-pays/symbol-mult-stop/trail-bonus/cascade-meter/max-win-cap/voltage-meter/bonus-trigger-strat/free-bet-wagering-req/session-bankroll-drawdown/hit-frequency-distribution/running-max-drawdown configs =
-> **81 math verification gates** before any merge can land.
+> **CI-enforced**: every push runs `closed-form-truth` job — **53 portfolio
+> solvers** (🎯 50-solver milestone @ Wave 157, 51 @ Wave 159, 52 @ Wave 161 = responsible-gambling math triad, 53 @ Wave 163 = first sequential bet-progression strategy kernel) + 11 exact-enum fixtures + 228 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery/collect/chain/mega/bi-dir/anticipation/buy-tier/multi-level-wild/hold-win-value/locked-reels/tumble-mult-cap/adjacent-pays/symbol-mult-stop/trail-bonus/cascade-meter/max-win-cap/voltage-meter/bonus-trigger-strat/free-bet-wagering-req/session-bankroll-drawdown/hit-frequency-distribution/running-max-drawdown/martingale-bust-time configs =
+> **82 math verification gates** before any merge can land.
 
 ### Hybrid math kernel portfolio (Wave 49-60)
 

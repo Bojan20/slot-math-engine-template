@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MARTINGALE_BUST_TIME",
+  "generated_utc": "2026-05-17T03:02:56.519Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644131,
+  "tolerances": {
+    "expected_rounds_rel": 0.2,
+    "bust_horizon_min": 0.85,
+    "net_profit_negative_p_threshold": 0.5
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_roulette_red_black_£100",
+      "description": "UK LCCP roulette red/black chase (American 18/38=47.4%), £100 bankroll £1 base bet",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.47368421052631576
+      },
+      "closed_form": {
+        "kMax": 5,
+        "probBustPerRound": 0.021255845968747,
+        "oneInNRoundsBust": 47.045880999999945,
+        "expectedRoundsToBust": 47.045880999999945,
+        "expectedSpinsPerRound": 2.0662376585104236,
+        "expectedSpinsToBust": 97.20797099999992,
+        "expectedWinsBeforeBust": 46.045880999999945,
+        "expectedNetProfitToBust": -16.954119000000055,
+        "chasePatternRiskScore": 0.5921899358203112
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 43.88406779661017,
+        "observedExpectedSpinsToBust": 90.90101694915255,
+        "observedExpectedNetProfitToBust": -20.115932203389832,
+        "observedProbBustWithinHorizon": 0.9833333333333333,
+        "horizonRounds": 189
+      },
+      "checks": {
+        "expected_rounds_rel": 0.06720701443320362,
+        "bust_within_horizon_min": 0.9833333333333333,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_uk_roulette_european_£100",
+      "description": "UK European roulette (18/37=48.6%), £100 bankroll £1 base bet — slightly better odds",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.4864864864864865
+      },
+      "closed_form": {
+        "kMax": 5,
+        "probBustPerRound": 0.01833628123208049,
+        "oneInNRoundsBust": 54.53668534765034,
+        "expectedRoundsToBust": 54.53668534765034,
+        "expectedSpinsPerRound": 2.017864310800723,
+        "expectedSpinsToBust": 110.04763099239233,
+        "expectedWinsBeforeBust": 53.53668534765034,
+        "expectedNetProfitToBust": -9.46331465234966,
+        "chasePatternRiskScore": 0.5909734505133668
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 50.84017645062776,
+        "observedExpectedSpinsToBust": 102.83406854428232,
+        "observedExpectedNetProfitToBust": -13.159823549372243,
+        "observedProbBustWithinHorizon": 0.9823333333333333,
+        "horizonRounds": 219
+      },
+      "checks": {
+        "expected_rounds_rel": 0.06778022671269372,
+        "bust_within_horizon_min": 0.9823333333333333,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "C_au_ncpf_high_house_edge_£50",
+      "description": "AU NCPF high house edge (p=0.40, e.g. side bets), £50 bankroll £1 base — fast bust",
+      "cfg": {
+        "bankroll": 50,
+        "baseBet": 1,
+        "probWinPerSpin": 0.4
+      },
+      "closed_form": {
+        "kMax": 4,
+        "probBustPerRound": 0.07776,
+        "oneInNRoundsBust": 12.860082304526749,
+        "expectedRoundsToBust": 12.860082304526749,
+        "expectedSpinsPerRound": 2.3055999999999996,
+        "expectedSpinsToBust": 29.65020576131687,
+        "expectedWinsBeforeBust": 11.860082304526749,
+        "expectedNetProfitToBust": -19.13991769547325,
+        "chasePatternRiskScore": 0.6925866666666667
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 12.313625552157662,
+        "observedExpectedSpinsToBust": 28.514441046551138,
+        "observedExpectedNetProfitToBust": -19.686374447842336,
+        "observedProbBustWithinHorizon": 0.981,
+        "horizonRounds": 52
+      },
+      "checks": {
+        "expected_rounds_rel": 0.04249247706422021,
+        "bust_within_horizon_min": 0.981,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "D_high_roller_£10000_deep_chain",
+      "description": "High-roller £10000 bankroll £10 base bet (k_max=8) — deep chase chain",
+      "cfg": {
+        "bankroll": 10000,
+        "baseBet": 10,
+        "probWinPerSpin": 0.48
+      },
+      "closed_form": {
+        "kMax": 8,
+        "probBustPerRound": 0.002779905883635714,
+        "oneInNRoundsBust": 359.7244086163611,
+        "expectedRoundsToBust": 359.7244086163611,
+        "expectedSpinsPerRound": 2.0775418627424256,
+        "expectedSpinsToBust": 747.3425179507523,
+        "expectedWinsBeforeBust": 358.7244086163611,
+        "expectedNetProfitToBust": -1522.7559138363895,
+        "chasePatternRiskScore": 0.33518660392242383
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 337.62210095497954,
+        "observedExpectedSpinsToBust": 702.0675306957708,
+        "observedExpectedNetProfitToBust": -1743.7789904502047,
+        "observedProbBustWithinHorizon": 0.9773333333333334,
+        "horizonRounds": 1439
+      },
+      "checks": {
+        "expected_rounds_rel": 0.061442335109801245,
+        "bust_within_horizon_min": 0.9773333333333334,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 38
+    },
+    {
+      "name": "E_corner_shallow_chain_£3",
+      "description": "Corner: shallow chain (B=3, b=1, k_max=1 only one double) — extreme risk",
+      "cfg": {
+        "bankroll": 3,
+        "baseBet": 1,
+        "probWinPerSpin": 0.5
+      },
+      "closed_form": {
+        "kMax": 1,
+        "probBustPerRound": 0.25,
+        "oneInNRoundsBust": 4,
+        "expectedRoundsToBust": 4,
+        "expectedSpinsPerRound": 1.5,
+        "expectedSpinsToBust": 6,
+        "expectedWinsBeforeBust": 3,
+        "expectedNetProfitToBust": 0,
+        "chasePatternRiskScore": 0.9375
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 3.8967025572005385,
+        "observedExpectedSpinsToBust": 5.859690444145357,
+        "observedExpectedNetProfitToBust": -0.10329744279946164,
+        "observedProbBustWithinHorizon": 0.9906666666666667,
+        "horizonRounds": 16
+      },
+      "checks": {
+        "expected_rounds_rel": 0.02582436069986538,
+        "bust_within_horizon_min": 0.9906666666666667,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_high_p_long_session",
+      "description": "Corner: high p=0.6 (player advantage but Martingale still busts), £100 bankroll",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.6
+      },
+      "closed_form": {
+        "kMax": 5,
+        "probBustPerRound": 0.004096000000000002,
+        "oneInNRoundsBust": 244.14062499999986,
+        "expectedRoundsToBust": 244.14062499999986,
+        "expectedSpinsPerRound": 1.65984,
+        "expectedSpinsToBust": 405.2343749999998,
+        "expectedWinsBeforeBust": 243.14062499999986,
+        "expectedNetProfitToBust": 180.14062499999986,
+        "chasePatternRiskScore": 0.58504
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedExpectedRoundsToBust": 222.77517802644965,
+        "observedExpectedSpinsToBust": 370.18243472363514,
+        "observedExpectedNetProfitToBust": 158.77517802644965,
+        "observedProbBustWithinHorizon": 0.983,
+        "horizonRounds": 977
+      },
+      "checks": {
+        "expected_rounds_rel": 0.0875128708036617,
+        "bust_within_horizon_min": 0.983,
+        "net_profit_negative": true
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    }
+  ]
+}
