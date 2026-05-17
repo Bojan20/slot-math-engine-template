@@ -246,3 +246,5 @@ jobs:
         run: npm run avalanche-reactor-wave-aggregator-acceptance
       - name: Sticky Multiplier FS Trail Aggregator acceptance (6/6 configs × 20K FS-bonus runs, Wave 179/180, 61. solver compound Binomial trail quadratic-in-N BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf)
         run: npm run sticky-multiplier-fs-trail-acceptance
+      - name: Reel-Bound Mystery Progressive acceptance (6/6 configs × 500K spins, Wave 181, 62. solver L&W M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
+        run: npm run reel-bound-mystery-progressive-acceptance

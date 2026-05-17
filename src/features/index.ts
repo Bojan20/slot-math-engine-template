@@ -204,3 +204,6 @@ export * from './avalancheReactorWaveAggregator.js';
 
 // W152 Wave 179: Sticky Multiplier FS Trail Aggregator (61. solver post-milestone, compound Binomial trail sa quadratic-in-N payout — BTG Bonanza Megaways / Pragmatic Sweet Bonanza FS / Big Bass Money Collect / Hacksaw Wanted Dead bounty xMult chain / BTG White Rabbit / Money Cart 4 EXTRA SHIFT)
 export * from './stickyMultiplierFsTrail.js';
+
+// W152 Wave 181: Reel-Bound Mystery Progressive Analyzer (62. solver, L&W M5 GAP CLOSURE — Quick Hit family 8+ titles: Platinum / Black Gold / Pro / Wild / Blitz / Cash Wheel / Triple Cash Wheel / Smokin' 7s)
+export * from './reelBoundMysteryProgressive.js';

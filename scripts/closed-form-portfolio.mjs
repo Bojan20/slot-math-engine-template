@@ -154,6 +154,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'avalancheReactorWaveAggregator.js'));
   const { solveStickyMultiplierFsTrail, simulateStickyMultiplierFsTrail } =
     await import(join(REPO_ROOT, 'dist', 'features', 'stickyMultiplierFsTrail.js'));
+  const { solveReelBoundMysteryProgressive, simulateReelBoundMysteryProgressive } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'reelBoundMysteryProgressive.js'));
 
   const showcase = [];
 
@@ -1271,6 +1273,24 @@ async function main() {
       Math.max(cf.expectedFinalMultiplier, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 179, solver: 'Sticky Multiplier FS Trail (BTG Bonanza-class)', metric: 'E[M_N]', cf: cf.expectedFinalMultiplier, mc: mc.meanFinalMultiplier, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W181: Reel-Bound Mystery Progressive (L&W M5 — Quick Hit family) ──
+  {
+    const t0 = Date.now();
+    const cfg = {
+      numReels: 5,
+      perReelScatterPresenceProb: [0.30, 0.30, 0.30, 0.20, 0.10],
+      minTier: 3,
+      tierPayouts: [25, 250, 2500],
+    };
+    const cf = solveReelBoundMysteryProgressive(cfg);
+    const mc = simulateReelBoundMysteryProgressive(cfg, 500_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.observedExpectedPayoutPerSpin) /
+      Math.max(cf.expectedPayoutPerSpin, 1e-9);
+    // Heavy-tail aggregator — 10% tol (top-tier prize dominates RTP)
+    const ok = rel < 0.10;
+    showcase.push({ wave: 181, solver: 'Reel-Bound Mystery Progressive (L&W Quick Hit M5)', metric: 'E[RTP/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.observedExpectedPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

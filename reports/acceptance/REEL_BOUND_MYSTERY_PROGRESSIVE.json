@@ -1,0 +1,546 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "REEL_BOUND_MYSTERY_PROGRESSIVE",
+  "generated_utc": "2026-05-17T23:30:37.629Z",
+  "spins_per_config": 500000,
+  "seed": 3405644161,
+  "tolerances": {
+    "rtp_rel": 0.1,
+    "any_tier_abs": 0.005,
+    "top_tier_abs": 0.005
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_quick_hit_platinum_5tier",
+      "description": "SG Quick Hit Platinum 5-reel sa tier 3/4/5 (Mini/Minor/Major). Industry-iconic baseline.",
+      "cfg": {
+        "numReels": 5,
+        "perReelScatterPresenceProb": [
+          0.3,
+          0.3,
+          0.3,
+          0.2,
+          0.1
+        ],
+        "minTier": 3,
+        "tierPayouts": [
+          25,
+          250,
+          2500
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 3,
+            "prefixProb": 0.027,
+            "tierProb": 0.0216,
+            "payoutX": 25,
+            "rtpShare": 0.54,
+            "oneInNSpins": 46.29629629629629
+          },
+          {
+            "tier": 4,
+            "prefixProb": 0.0054,
+            "tierProb": 0.004860000000000001,
+            "payoutX": 250,
+            "rtpShare": 1.215,
+            "oneInNSpins": 205.76131687242795
+          },
+          {
+            "tier": 5,
+            "prefixProb": 0.00054,
+            "tierProb": 0.00054,
+            "payoutX": 2500,
+            "rtpShare": 1.35,
+            "oneInNSpins": 1851.8518518518517
+          }
+        ],
+        "expectedPayoutPerSpin": 3.1050000000000004,
+        "topTierProb": 0.00054,
+        "oneInNSpinsTopTier": 1851.8518518518517,
+        "anyTierTriggerProb": 0.027,
+        "oneInNSpinsAnyTier": 37.03703703703704,
+        "maxPayoutX": 2500
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 3.16085,
+        "observedTierFreqs": [
+          {
+            "tier": 3,
+            "observedProb": 0.021314
+          },
+          {
+            "tier": 4,
+            "observedProb": 0.004772
+          },
+          {
+            "tier": 5,
+            "observedProb": 0.000574
+          }
+        ],
+        "observedTopTierProb": 0.000574,
+        "observedAnyTierTriggerProb": 0.02666
+      },
+      "checks": {
+        "rtp_rel": 0.017669297815460876,
+        "any_tier_abs": 0.00034,
+        "top_tier_abs": 0.00003399999999999996
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "B_quick_hit_black_gold_high_top_tier",
+      "description": "Quick Hit Black Gold sa visok Black Gold top tier payout (10K× bet).",
+      "cfg": {
+        "numReels": 5,
+        "perReelScatterPresenceProb": [
+          0.25,
+          0.25,
+          0.2,
+          0.15,
+          0.08
+        ],
+        "minTier": 3,
+        "tierPayouts": [
+          20,
+          200,
+          10000
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 3,
+            "prefixProb": 0.0125,
+            "tierProb": 0.010625,
+            "payoutX": 20,
+            "rtpShare": 0.21250000000000002,
+            "oneInNSpins": 94.11764705882352
+          },
+          {
+            "tier": 4,
+            "prefixProb": 0.001875,
+            "tierProb": 0.001725,
+            "payoutX": 200,
+            "rtpShare": 0.345,
+            "oneInNSpins": 579.7101449275362
+          },
+          {
+            "tier": 5,
+            "prefixProb": 0.00015,
+            "tierProb": 0.00015,
+            "payoutX": 10000,
+            "rtpShare": 1.4999999999999998,
+            "oneInNSpins": 6666.666666666667
+          }
+        ],
+        "expectedPayoutPerSpin": 2.0574999999999997,
+        "topTierProb": 0.00015,
+        "oneInNSpinsTopTier": 6666.666666666667,
+        "anyTierTriggerProb": 0.0125,
+        "oneInNSpinsAnyTier": 80,
+        "maxPayoutX": 10000
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 2.20876,
+        "observedTierFreqs": [
+          {
+            "tier": 3,
+            "observedProb": 0.010558
+          },
+          {
+            "tier": 4,
+            "observedProb": 0.001688
+          },
+          {
+            "tier": 5,
+            "observedProb": 0.000166
+          }
+        ],
+        "observedTopTierProb": 0.000166,
+        "observedAnyTierTriggerProb": 0.012412
+      },
+      "checks": {
+        "rtp_rel": 0.06848186312682238,
+        "any_tier_abs": 0.00008800000000000127,
+        "top_tier_abs": 0.00001600000000000001
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "C_quick_hit_pro_9tier_extended",
+      "description": "Quick Hit Pro 9-tier extended ladder, mehanika za hyper-vol titles.",
+      "cfg": {
+        "numReels": 9,
+        "perReelScatterPresenceProb": [
+          0.4,
+          0.35,
+          0.3,
+          0.25,
+          0.2,
+          0.15,
+          0.1,
+          0.07,
+          0.05
+        ],
+        "minTier": 3,
+        "tierPayouts": [
+          10,
+          50,
+          250,
+          1000,
+          5000,
+          25000,
+          100000
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 3,
+            "prefixProb": 0.041999999999999996,
+            "tierProb": 0.0315,
+            "payoutX": 10,
+            "rtpShare": 0.315,
+            "oneInNSpins": 31.746031746031747
+          },
+          {
+            "tier": 4,
+            "prefixProb": 0.010499999999999999,
+            "tierProb": 0.0084,
+            "payoutX": 50,
+            "rtpShare": 0.42,
+            "oneInNSpins": 119.04761904761905
+          },
+          {
+            "tier": 5,
+            "prefixProb": 0.0021,
+            "tierProb": 0.001785,
+            "payoutX": 250,
+            "rtpShare": 0.44625,
+            "oneInNSpins": 560.2240896358544
+          },
+          {
+            "tier": 6,
+            "prefixProb": 0.00031499999999999996,
+            "tierProb": 0.00028349999999999995,
+            "payoutX": 1000,
+            "rtpShare": 0.2835,
+            "oneInNSpins": 3527.3368606701947
+          },
+          {
+            "tier": 7,
+            "prefixProb": 0.0000315,
+            "tierProb": 0.000029295,
+            "payoutX": 5000,
+            "rtpShare": 0.146475,
+            "oneInNSpins": 34135.51800648575
+          },
+          {
+            "tier": 8,
+            "prefixProb": 0.000002205,
+            "tierProb": 0.00000209475,
+            "payoutX": 25000,
+            "rtpShare": 0.052368750000000006,
+            "oneInNSpins": 477383.93603055255
+          },
+          {
+            "tier": 9,
+            "prefixProb": 1.1025000000000001e-7,
+            "tierProb": 1.1025000000000001e-7,
+            "payoutX": 100000,
+            "rtpShare": 0.011025000000000002,
+            "oneInNSpins": 9070294.784580497
+          }
+        ],
+        "expectedPayoutPerSpin": 1.67461875,
+        "topTierProb": 1.1025000000000001e-7,
+        "oneInNSpinsTopTier": 9070294.784580497,
+        "anyTierTriggerProb": 0.041999999999999996,
+        "oneInNSpinsAnyTier": 23.809523809523814,
+        "maxPayoutX": 100000
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 1.5979,
+        "observedTierFreqs": [
+          {
+            "tier": 3,
+            "observedProb": 0.03146
+          },
+          {
+            "tier": 4,
+            "observedProb": 0.008256
+          },
+          {
+            "tier": 5,
+            "observedProb": 0.001746
+          },
+          {
+            "tier": 6,
+            "observedProb": 0.000274
+          },
+          {
+            "tier": 7,
+            "observedProb": 0.000022
+          },
+          {
+            "tier": 8,
+            "observedProb": 0.000002
+          },
+          {
+            "tier": 9,
+            "observedProb": 0
+          }
+        ],
+        "observedTopTierProb": 0,
+        "observedAnyTierTriggerProb": 0.04176
+      },
+      "checks": {
+        "rtp_rel": 0.045812666315840515,
+        "any_tier_abs": 0.00023999999999999716,
+        "top_tier_abs": 1.1025000000000001e-7
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "D_quick_hit_wild_baseline_low_var",
+      "description": "Quick Hit Wild low-variance variant sa visoke per-reel prob.",
+      "cfg": {
+        "numReels": 5,
+        "perReelScatterPresenceProb": [
+          0.4,
+          0.4,
+          0.4,
+          0.3,
+          0.2
+        ],
+        "minTier": 3,
+        "tierPayouts": [
+          15,
+          150,
+          1500
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 3,
+            "prefixProb": 0.06400000000000002,
+            "tierProb": 0.044800000000000006,
+            "payoutX": 15,
+            "rtpShare": 0.6720000000000002,
+            "oneInNSpins": 22.32142857142857
+          },
+          {
+            "tier": 4,
+            "prefixProb": 0.019200000000000005,
+            "tierProb": 0.015360000000000004,
+            "payoutX": 150,
+            "rtpShare": 2.3040000000000007,
+            "oneInNSpins": 65.10416666666666
+          },
+          {
+            "tier": 5,
+            "prefixProb": 0.0038400000000000014,
+            "tierProb": 0.0038400000000000014,
+            "payoutX": 1500,
+            "rtpShare": 5.7600000000000025,
+            "oneInNSpins": 260.4166666666666
+          }
+        ],
+        "expectedPayoutPerSpin": 8.736000000000004,
+        "topTierProb": 0.0038400000000000014,
+        "oneInNSpinsTopTier": 260.4166666666666,
+        "anyTierTriggerProb": 0.06400000000000002,
+        "oneInNSpinsAnyTier": 15.624999999999996,
+        "maxPayoutX": 1500
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 8.52762,
+        "observedTierFreqs": [
+          {
+            "tier": 3,
+            "observedProb": 0.044708
+          },
+          {
+            "tier": 4,
+            "observedProb": 0.01526
+          },
+          {
+            "tier": 5,
+            "observedProb": 0.003712
+          }
+        ],
+        "observedTopTierProb": 0.003712,
+        "observedAnyTierTriggerProb": 0.06368
+      },
+      "checks": {
+        "rtp_rel": 0.023853021978022373,
+        "any_tier_abs": 0.0003200000000000147,
+        "top_tier_abs": 0.00012800000000000138
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "E_bally_smokin_7s_single_tier",
+      "description": "Bally Smokin 7s — degenerate 1-tier mehanika (only top), all reels equal.",
+      "cfg": {
+        "numReels": 5,
+        "perReelScatterPresenceProb": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "minTier": 5,
+        "tierPayouts": [
+          5000
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 5,
+            "prefixProb": 0.00032000000000000013,
+            "tierProb": 0.00032000000000000013,
+            "payoutX": 5000,
+            "rtpShare": 1.6000000000000008,
+            "oneInNSpins": 3124.9999999999986
+          }
+        ],
+        "expectedPayoutPerSpin": 1.6000000000000008,
+        "topTierProb": 0.00032000000000000013,
+        "oneInNSpinsTopTier": 3124.9999999999986,
+        "anyTierTriggerProb": 0.00032000000000000013,
+        "oneInNSpinsAnyTier": 3124.9999999999986,
+        "maxPayoutX": 5000
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 1.64,
+        "observedTierFreqs": [
+          {
+            "tier": 5,
+            "observedProb": 0.000328
+          }
+        ],
+        "observedTopTierProb": 0.000328,
+        "observedAnyTierTriggerProb": 0.000328
+      },
+      "checks": {
+        "rtp_rel": 0.024390243902438505,
+        "any_tier_abs": 0.00000799999999999987,
+        "top_tier_abs": 0.00000799999999999987
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_quick_hit_blitz_high_vol_4tier",
+      "description": "Quick Hit Blitz 4-tier hyper-low top-tier prob za max volatility.",
+      "cfg": {
+        "numReels": 5,
+        "perReelScatterPresenceProb": [
+          0.2,
+          0.2,
+          0.15,
+          0.1,
+          0.05
+        ],
+        "minTier": 2,
+        "tierPayouts": [
+          5,
+          25,
+          200,
+          2500
+        ]
+      },
+      "closed_form": {
+        "tierBreakdown": [
+          {
+            "tier": 2,
+            "prefixProb": 0.04000000000000001,
+            "tierProb": 0.03400000000000001,
+            "payoutX": 5,
+            "rtpShare": 0.17000000000000004,
+            "oneInNSpins": 29.411764705882344
+          },
+          {
+            "tier": 3,
+            "prefixProb": 0.006000000000000001,
+            "tierProb": 0.005400000000000001,
+            "payoutX": 25,
+            "rtpShare": 0.13500000000000004,
+            "oneInNSpins": 185.18518518518513
+          },
+          {
+            "tier": 4,
+            "prefixProb": 0.0006000000000000002,
+            "tierProb": 0.0005700000000000002,
+            "payoutX": 200,
+            "rtpShare": 0.11400000000000005,
+            "oneInNSpins": 1754.38596491228
+          },
+          {
+            "tier": 5,
+            "prefixProb": 0.00003000000000000001,
+            "tierProb": 0.00003000000000000001,
+            "payoutX": 2500,
+            "rtpShare": 0.07500000000000002,
+            "oneInNSpins": 33333.33333333332
+          }
+        ],
+        "expectedPayoutPerSpin": 0.4940000000000001,
+        "topTierProb": 0.00003000000000000001,
+        "oneInNSpinsTopTier": 33333.33333333332,
+        "anyTierTriggerProb": 0.04000000000000001,
+        "oneInNSpinsAnyTier": 24.999999999999996,
+        "maxPayoutX": 2500
+      },
+      "monte_carlo": {
+        "spins": 500000,
+        "observedExpectedPayoutPerSpin": 0.45355,
+        "observedTierFreqs": [
+          {
+            "tier": 2,
+            "observedProb": 0.03377
+          },
+          {
+            "tier": 3,
+            "observedProb": 0.005388
+          },
+          {
+            "tier": 4,
+            "observedProb": 0.00055
+          },
+          {
+            "tier": 5,
+            "observedProb": 0.000016
+          }
+        ],
+        "observedTopTierProb": 0.000016,
+        "observedAnyTierTriggerProb": 0.039724
+      },
+      "checks": {
+        "rtp_rel": 0.08188259109311759,
+        "any_tier_abs": 0.0002760000000000054,
+        "top_tier_abs": 0.000014000000000000012
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}
