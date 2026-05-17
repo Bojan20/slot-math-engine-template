@@ -168,3 +168,6 @@ export * from './bonusTriggerAwardStratification.js';
 
 // W152 Wave 154: Free Bet Wagering Requirement Aggregator (Faza 12 ext, post-W100, INDUSTRY-FIRST UKGC RTS-12 / MGA §15)
 export * from './freeBetWageringRequirement.js';
+
+// W152 Wave 157: Session Bankroll Drawdown Analyzer (50. solver MILESTONE, INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §16 / EU EBA 2024)
+export * from './sessionBankrollDrawdown.js';

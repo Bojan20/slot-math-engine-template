@@ -130,6 +130,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerAwardStratification.js'));
   const { solveFreeBetWageringRequirement, simulateFreeBetWageringRequirement } =
     await import(join(REPO_ROOT, 'dist', 'features', 'freeBetWageringRequirement.js'));
+  const { solveSessionBankrollDrawdown, simulateSessionBankrollDrawdown } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'sessionBankrollDrawdown.js'));
 
   const showcase = [];
 
@@ -1025,6 +1027,27 @@ async function main() {
       Math.max(Math.abs(cf.expectedBalanceAtCompletion), 1);
     const ok = rel < 0.05;
     showcase.push({ wave: 154, solver: 'Free Bet Wagering Requirement', metric: 'E[balance@WR]', cf: cf.expectedBalanceAtCompletion, mc: mc.observedMeanBalanceAtCompletion, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W157: Session Bankroll Drawdown Analyzer (50. solver MILESTONE, INDUSTRY-FIRST UKGC LCCP 3.4.3) ──
+  {
+    const t0 = Date.now();
+    // Moderate-RTP / low-vol config so discrete RW and continuous BM agree.
+    // B=10, b=1, R=0.97, v=1 → |μ|=0.03, σ=1, E[τ] ≈ 333 spins.
+    // CF P(survive 1h) ≈ 0.14; MC should agree within ~5pp at 3K episodes.
+    const cfg = {
+      bankroll: 10,
+      betPerSpin: 1,
+      rtp: 0.97,
+      volatilityIndex: 1,
+      spinsPerHour: 600,
+    };
+    const cf = solveSessionBankrollDrawdown(cfg);
+    const mc = simulateSessionBankrollDrawdown(cfg, 3_000, SEED);
+    const cfSurvive1h = cf.survivalProbByHorizon[0].probSurvive;
+    const absDiff = Math.abs(mc.observedSurvive1Hour - cfSurvive1h);
+    const ok = absDiff < 0.05;
+    showcase.push({ wave: 157, solver: 'Session Bankroll Drawdown', metric: 'P(survive 1h)', cf: cfSurvive1h, mc: mc.observedSurvive1Hour, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
