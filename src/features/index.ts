@@ -207,3 +207,6 @@ export * from './stickyMultiplierFsTrail.js';
 
 // W152 Wave 181: Reel-Bound Mystery Progressive Analyzer (62. solver, L&W M5 GAP CLOSURE — Quick Hit family 8+ titles: Platinum / Black Gold / Pro / Wild / Blitz / Cash Wheel / Triple Cash Wheel / Smokin' 7s)
 export * from './reelBoundMysteryProgressive.js';
+
+// W152 Wave 182: Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Lock It Link Eureka Reel Blast)
+export * from './dynamicGridExpansionHoldSpin.js';

@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-17T01:10:38.614Z`
+Generated: `2026-05-17T23:45:57.945Z`
 
 ## Headline
 
-**49/49 solvers PASS** in single end-to-end runner.
+**63/63 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -62,6 +62,20 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 150 | Voltage Meter Multi-Tier | E[R] per spin | 1.10840 | 1.13498 | ✅ |
 | 152 | Bonus Trigger Award Stratification | E[FS]/spin | 0.27802 | 0.27388 | ✅ |
 | 154 | Free Bet Wagering Requirement | E[balance@WR] | 975.00000 | 976.17203 | ✅ |
+| 157 | Session Bankroll Drawdown | P(survive 1h) | 0.14149 | 0.16167 | ✅ |
+| 159 | Hit Frequency Distribution | total RTP | 1.74000 | 1.70570 | ✅ |
+| 161 | Max Drop From Starting Bankroll | E[MaxDrop] | 110.34475 | 108.41044 | ✅ |
+| 163 | Martingale Bust Time | E[T_rounds] | 21.43347 | 20.25470 | ✅ |
+| 165 | Paroli Streak Cash-Out | P(reach streak) | 0.10628 | 0.09800 | ✅ |
+| 167 | AWP Cycle Convergence | E[finalRTP] | 0.69500 | 0.69500 | ✅ |
+| 169 | Drop-and-Stick Wild Expansion | E[wilds steady] | 5.11378 | 5.14100 | ✅ |
+| 171 | Tumbling Cascade Chain Length | E[chainLen] | 0.42857 | 0.43155 | ✅ |
+| 173 | Pick-and-Click Pooper Bonus | E[reveals] | 2.50000 | 2.51230 | ✅ |
+| 175 | Skill-Stop Near-Miss Rate | P(any reel NM) | 0.67232 | 0.67406 | ✅ |
+| 177 | Avalanche Reactor Wave Aggregator (60. MILESTONE) | E[symbols/spin] | 8.00000 | 8.10615 | ✅ |
+| 179 | Sticky Multiplier FS Trail (BTG Bonanza-class) | E[M_N] | 5.80000 | 5.79635 | ✅ |
+| 181 | Reel-Bound Mystery Progressive (L&W Quick Hit M5) | E[RTP/spin] | 3.10500 | 3.19990 | ✅ |
+| 182 | Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3) | E[bags] | 22.29839 | 22.33830 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

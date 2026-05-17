@@ -1,0 +1,355 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "DYNAMIC_GRID_EXPANSION_HOLD_SPIN",
+  "generated_utc": "2026-05-17T23:47:08.924Z",
+  "features_per_config": 30000,
+  "seed": 3405644162,
+  "tolerances": {
+    "bags_rel": 0.05,
+    "row_ext_abs": 0.1,
+    "spins_rel": 0.08,
+    "payout_rel": 0.08,
+    "full_grid_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_ultimate_fire_link_olvera_street",
+      "description": "SG Gaming Ultimate Fire Link Olvera Street — 5 reels × 3 rows initial, +4 extension rows (max 5×7), q=0.10, thresholds [5,9,14,20], μ_V=2.5× bet.",
+      "cfg": {
+        "numReels": 5,
+        "initialRows": 3,
+        "maxExtraRows": 4,
+        "probLandingPerEmptyCell": 0.1,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [
+          5,
+          9,
+          14,
+          20
+        ],
+        "expectedValuePerBag": 2.5,
+        "varianceValuePerBag": 2
+      },
+      "closed_form": {
+        "expectedTotalBags": 26.898037631970933,
+        "varianceTotalBags": 76.40958984605527,
+        "expectedFinalActiveCells": 26.898037631970933,
+        "rowExtensionProbabilities": [
+          0.9454036516052788,
+          0.9139020480632547,
+          0.8761229979310206,
+          0.8229378589109949
+        ],
+        "expectedRowExtensions": 3.5583665565105487,
+        "expectedFinalRowCount": 6.558366556510549,
+        "expectedSpinsToTermination": 24.337132779746298,
+        "varianceSpinsToTermination": 67.53361361927034,
+        "expectedTotalPayout": 67.24509407992733,
+        "stdDevTotalPayout": 23.051160747385094,
+        "probFullMaxGridAchieved": 0.8229378589109949,
+        "oneInNFeaturesMaxGrid": 1.2151585799240223,
+        "commercialUpliftVsFixedGrid": 2.5623000024512916,
+        "effectiveSteadyStateLandingProb": 0.7320638158643269
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 27.092166666666667,
+        "meanFinalActiveCells": 27.092166666666667,
+        "meanRowExtensions": 3.5857666666666668,
+        "meanFinalRowCount": 6.585766666666666,
+        "meanSpinsToTermination": 24.415866666666666,
+        "meanTotalPayout": 68.35471868297924,
+        "stdDevTotalPayout": 22.906100844736773,
+        "probFullMaxGridAchieved": 0.8361
+      },
+      "checks": {
+        "bags_rel": 0.007165504224310883,
+        "row_ext_abs": 0.027400110156118096,
+        "spins_rel": 0.00322470170710172,
+        "payout_rel": 0.016233328502136258,
+        "full_grid_abs": 0.013162141089005042
+      },
+      "pass": true,
+      "elapsed_ms": 94
+    },
+    {
+      "name": "B_lock_it_link_eureka_reel_blast",
+      "description": "Bally Lock It Link Eureka Reel Blast — 5×4 initial, +3 rows (max 5×7), q=0.12 (dynamite scatters more frequent), thresholds [6,12,18], μ_V=3× bet high-vol.",
+      "cfg": {
+        "numReels": 5,
+        "initialRows": 4,
+        "maxExtraRows": 3,
+        "probLandingPerEmptyCell": 0.12,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [
+          6,
+          12,
+          18
+        ],
+        "expectedValuePerBag": 3,
+        "varianceValuePerBag": 4
+      },
+      "closed_form": {
+        "expectedTotalBags": 31.193776083429736,
+        "varianceTotalBags": 15.846386284003302,
+        "expectedFinalActiveCells": 31.193776083429736,
+        "rowExtensionProbabilities": [
+          0.9957944844181812,
+          0.9890307047871267,
+          0.9791270099208746
+        ],
+        "expectedRowExtensions": 2.9639521991261826,
+        "expectedFinalRowCount": 6.963952199126183,
+        "expectedSpinsToTermination": 22.64013113204402,
+        "varianceSpinsToTermination": 22.28313119293182,
+        "expectedTotalPayout": 93.5813282502892,
+        "stdDevTotalPayout": 16.35214300603284,
+        "probFullMaxGridAchieved": 0.9791270099208746,
+        "oneInNFeaturesMaxGrid": 1.0213179596391813,
+        "commercialUpliftVsFixedGrid": 1.8791824809092523,
+        "effectiveSteadyStateLandingProb": 0.8275605051032164
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 31.2516,
+        "meanFinalActiveCells": 31.2516,
+        "meanRowExtensions": 2.969333333333333,
+        "meanFinalRowCount": 6.969333333333333,
+        "meanSpinsToTermination": 22.645766666666667,
+        "meanTotalPayout": 95.65544157803313,
+        "stdDevTotalPayout": 15.78416451782741,
+        "probFullMaxGridAchieved": 0.9817333333333333
+      },
+      "checks": {
+        "bags_rel": 0.0018502705963939156,
+        "row_ext_abs": 0.005381134207150584,
+        "spins_rel": 0.0002488559873286784,
+        "payout_rel": 0.02168317132331593,
+        "full_grid_abs": 0.0026063234124587
+      },
+      "pass": true,
+      "elapsed_ms": 100
+    },
+    {
+      "name": "C_ultimate_fire_link_power4_high_vol",
+      "description": "Ultimate Fire Link Power 4 — 4 reels × 4 rows, +2 extension rows, q=0.18 high-freq, thresholds [5,11], μ_V=4× bet high-vol.",
+      "cfg": {
+        "numReels": 4,
+        "initialRows": 4,
+        "maxExtraRows": 2,
+        "probLandingPerEmptyCell": 0.18,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [
+          5,
+          11
+        ],
+        "expectedValuePerBag": 4,
+        "varianceValuePerBag": 8
+      },
+      "closed_form": {
+        "expectedTotalBags": 22.316532094676145,
+        "varianceTotalBags": 3.549320902747411,
+        "expectedFinalActiveCells": 22.316532094676145,
+        "rowExtensionProbabilities": [
+          0.9993516098200141,
+          0.9963314086177619
+        ],
+        "expectedRowExtensions": 1.995683018437776,
+        "expectedFinalRowCount": 5.995683018437776,
+        "expectedSpinsToTermination": 15.416319489381875,
+        "varianceSpinsToTermination": 9.04365051425529,
+        "expectedTotalPayout": 89.26612837870458,
+        "stdDevTotalPayout": 15.340188760291307,
+        "probFullMaxGridAchieved": 0.9963314086177619,
+        "oneInNFeaturesMaxGrid": 1.003682099500735,
+        "commercialUpliftVsFixedGrid": 1.5535127914110887,
+        "effectiveSteadyStateLandingProb": 0.8625519686640393
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 22.3355,
+        "meanFinalActiveCells": 22.3355,
+        "meanRowExtensions": 1.9967,
+        "meanFinalRowCount": 5.9967,
+        "meanSpinsToTermination": 15.691166666666666,
+        "meanTotalPayout": 91.57329403930801,
+        "stdDevTotalPayout": 14.524450390439583,
+        "probFullMaxGridAchieved": 0.9972
+      },
+      "checks": {
+        "bags_rel": 0.0008492268059302433,
+        "row_ext_abs": 0.001016981562223851,
+        "spins_rel": 0.017516044735453536,
+        "payout_rel": 0.025194743563697466,
+        "full_grid_abs": 0.0008685913822380487
+      },
+      "pass": true,
+      "elapsed_ms": 61
+    },
+    {
+      "name": "D_ultimate_fire_link_china_street_low_vol",
+      "description": "Ultimate Fire Link China Street — 5×3, +3 rows, q=0.08 low-vol, thresholds [4,9,16], μ_V=2× bet (frequent low-payout features).",
+      "cfg": {
+        "numReels": 5,
+        "initialRows": 3,
+        "maxExtraRows": 3,
+        "probLandingPerEmptyCell": 0.08,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [
+          4,
+          9,
+          16
+        ],
+        "expectedValuePerBag": 2,
+        "varianceValuePerBag": 1
+      },
+      "closed_form": {
+        "expectedTotalBags": 18.471170756703792,
+        "varianceTotalBags": 72.78681241019956,
+        "expectedFinalActiveCells": 18.471170756703792,
+        "rowExtensionProbabilities": [
+          0.8967951367073643,
+          0.8093066556257509,
+          0.6370206493714189
+        ],
+        "expectedRowExtensions": 2.343122441704534,
+        "expectedFinalRowCount": 5.3431224417045335,
+        "expectedSpinsToTermination": 20.13760481147407,
+        "varianceSpinsToTermination": 80.35045903362135,
+        "expectedTotalPayout": 36.942341513407584,
+        "stdDevTotalPayout": 17.59597739250372,
+        "probFullMaxGridAchieved": 0.6370206493714189,
+        "oneInNFeaturesMaxGrid": 1.5698078248903728,
+        "commercialUpliftVsFixedGrid": 2.0809297551863706,
+        "effectiveSteadyStateLandingProb": 0.6086069968168457
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 18.829366666666665,
+        "meanFinalActiveCells": 18.829366666666665,
+        "meanRowExtensions": 2.401866666666667,
+        "meanFinalRowCount": 5.401866666666667,
+        "meanSpinsToTermination": 20.348433333333332,
+        "meanTotalPayout": 37.771105763023705,
+        "stdDevTotalPayout": 17.56758869215688,
+        "probFullMaxGridAchieved": 0.6729666666666667
+      },
+      "checks": {
+        "bags_rel": 0.019023258525045453,
+        "row_ext_abs": 0.05874422496213283,
+        "spins_rel": 0.010360921570993805,
+        "payout_rel": 0.02194175237589803,
+        "full_grid_abs": 0.03594601729524782
+      },
+      "pass": true,
+      "elapsed_ms": 72
+    },
+    {
+      "name": "E_corner_single_extension_aggressive_threshold",
+      "description": "Corner: 3×3 with only 1 extension at threshold 8 — sparse activation case (P(full max grid) small).",
+      "cfg": {
+        "numReels": 3,
+        "initialRows": 3,
+        "maxExtraRows": 1,
+        "probLandingPerEmptyCell": 0.1,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [
+          8
+        ],
+        "expectedValuePerBag": 1.5,
+        "varianceValuePerBag": 1
+      },
+      "closed_form": {
+        "expectedTotalBags": 5.188784140646989,
+        "varianceTotalBags": 7.476230929537564,
+        "expectedFinalActiveCells": 5.188784140646989,
+        "rowExtensionProbabilities": [
+          0.1442378298219323
+        ],
+        "expectedRowExtensions": 0.1442378298219323,
+        "expectedFinalRowCount": 3.1442378298219325,
+        "expectedSpinsToTermination": 9.285232490893565,
+        "varianceSpinsToTermination": 16.46089397329004,
+        "expectedTotalPayout": 7.783176210970484,
+        "stdDevTotalPayout": 4.6915140127795105,
+        "probFullMaxGridAchieved": 0.1442378298219323,
+        "oneInNFeaturesMaxGrid": 6.932993939485517,
+        "commercialUpliftVsFixedGrid": 1.0353242662444821,
+        "effectiveSteadyStateLandingProb": 0.4248605277733264
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 5.2225,
+        "meanFinalActiveCells": 5.2225,
+        "meanRowExtensions": 0.16236666666666666,
+        "meanFinalRowCount": 3.1623666666666668,
+        "meanSpinsToTermination": 9.3671,
+        "meanTotalPayout": 7.974561202885311,
+        "stdDevTotalPayout": 4.7178731443190225,
+        "probFullMaxGridAchieved": 0.16236666666666666
+      },
+      "checks": {
+        "bags_rel": 0.0064558849886090786,
+        "row_ext_abs": 0.018128836844734347,
+        "spins_rel": 0.008739899126350315,
+        "payout_rel": 0.02399943859551559,
+        "full_grid_abs": 0.018128836844734347
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    },
+    {
+      "name": "F_corner_fixed_grid_no_extension",
+      "description": "Corner: maxExtraRows=0, no expansion — pure baseline H&S (validates engine degenerates to fixed-grid).",
+      "cfg": {
+        "numReels": 5,
+        "initialRows": 3,
+        "maxExtraRows": 0,
+        "probLandingPerEmptyCell": 0.15,
+        "staleSpinsBeforeBust": 3,
+        "rowExtensionThresholds": [],
+        "expectedValuePerBag": 2,
+        "varianceValuePerBag": 1
+      },
+      "closed_form": {
+        "expectedTotalBags": 12.702429779736045,
+        "varianceTotalBags": 4.400618002232534,
+        "expectedFinalActiveCells": 12.702429779736045,
+        "rowExtensionProbabilities": [],
+        "expectedRowExtensions": 0,
+        "expectedFinalRowCount": 3,
+        "expectedSpinsToTermination": 12.308959060391357,
+        "varianceSpinsToTermination": 9.636099581541572,
+        "expectedTotalPayout": 25.40485955947209,
+        "stdDevTotalPayout": 5.504988809131784,
+        "probFullMaxGridAchieved": 1,
+        "oneInNFeaturesMaxGrid": 1,
+        "commercialUpliftVsFixedGrid": 1,
+        "effectiveSteadyStateLandingProb": 0.704442528260151
+      },
+      "monte_carlo": {
+        "features": 30000,
+        "meanTotalBags": 12.707733333333334,
+        "meanFinalActiveCells": 12.707733333333334,
+        "meanRowExtensions": 0,
+        "meanFinalRowCount": 3,
+        "meanSpinsToTermination": 12.5051,
+        "meanTotalPayout": 25.4875905575131,
+        "stdDevTotalPayout": 5.45424793309268,
+        "probFullMaxGridAchieved": 1
+      },
+      "checks": {
+        "bags_rel": 0.00041734851197867804,
+        "row_ext_abs": 0,
+        "spins_rel": 0.015684875739389776,
+        "payout_rel": 0.0032459324805272478,
+        "full_grid_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 33
+    }
+  ]
+}

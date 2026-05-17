@@ -281,6 +281,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 181 Reel-Bound Mystery Progressive (W152 Wave 181, 62. solver L&W M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
   { kind: 'reports/acceptance', src: 'reports/acceptance/REEL_BOUND_MYSTERY_PROGRESSIVE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/REEL_BOUND_MYSTERY_PROGRESSIVE.md' },
+  // REPORTS — Wave 182 Dynamic Grid-Expansion H&S (L&W M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Lock It Link Eureka Reel Blast)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

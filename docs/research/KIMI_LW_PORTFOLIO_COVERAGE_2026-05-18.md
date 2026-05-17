@@ -86,11 +86,11 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 8 | Huff N' Even More Puff Hard Hat Edition | LNW | 2024 | Even More Puff variant | as #5 | YES (M2) | P2 |
 | 9 | Huff N' Even More Puff Grand | LNW | 2024 | Same + escalated grand jackpot | as #5 | YES (M2) | P2 |
 | 10 | Huff N' Puff Money Mansion | LNW | 2024 | as Even More Puff + Mansion bonus stage | + P-047 ✅ | YES (M2) | P1 |
-| 11 | Ultimate Fire Link (China Street, Olvera, Rue Royale, Power 4, By the Bay, Explosion, Glacier Gold, Add Em Up Gold) | Bally (under LNW) | 2017–2025 | A (4+ fireball trigger, sticky fireballs, expanding rows up to 4 extra) + B (4-tier MMMS prize bag) + G (sticky H&W) + **M: dynamic row-expansion during H&S** | P-002 ✅ + P-035 ✅ + ❌ **dynamic grid-expansion / row-addition during H&S** (rows added as fireballs collected — changes state space) | YES (M3) | **P0** |
+| 11 | Ultimate Fire Link (China Street, Olvera, Rue Royale, Power 4, By the Bay, Explosion, Glacier Gold, Add Em Up Gold) | Bally (under LNW) | 2017–2025 | A (4+ fireball trigger, sticky fireballs, expanding rows up to 4 extra) + B (4-tier MMMS prize bag) + G (sticky H&W) + **M: dynamic row-expansion during H&S** | P-002 ✅ + P-035 ✅ + ❌ **dynamic grid-expansion / row-addition during H&S** (rows added as fireballs collected — changes state space) |  ✅ **CLOSED (M3) W182**| **P0** |
 | 12 | Cash Falls (Outback Fortune, Pirate's Trove, Add Em Up Gold, By the Bay, Glacier Gold, Explosion, China Street) | LNW | 2020–2025 | A (jackpot-symbol collect bag fill) + B (4-tier MMMG) + H (FS with persistent multiplier) | P-002 ✅ + P-035 ✅ + P-068 ✅ (scatter-trigger tiers) + P-005 ✅ | NO | n/a |
 | 13 | Lock It Link Diamonds | LNW (ex-SG / Bally) | 2022 | A (sticky-heart H&S over secondary grid) + B (Mini 40x, Minor 100x, Major 200x, Grand 5000x — fixed multiples, not WAP) + H (FS) | P-002 ✅ + P-049 ✅ + **P-035 ⚠ (fixed-value tiers, not progressives — partial)** + P-014 ✅ | ⚠ (verify) | P1 |
 | 14 | Lock It Link Night Life | LNW (Bally) | 2017 | A + B (same as Diamonds) + H | as #13 | ⚠ | P1 |
-| 15 | Lock It Link Eureka Reel Blast | LNW (Bally) | 2019 | A (dynamite scatters + Lock It Link feature) + B + H + **M: reel-explosion add row** | as #13 + ❌ row-add (same as Ultimate Fire Link gap M3) | YES (M3) | P0 |
+| 15 | Lock It Link Eureka Reel Blast | LNW (Bally) | 2019 | A (dynamite scatters + Lock It Link feature) + B + H + **M: reel-explosion add row** | as #13 + ❌ row-add (same as Ultimate Fire Link gap M3) |  ✅ **CLOSED (M3) W182**| P0 |
 | 16 | Lock It Link Hold Onto Your Hat | LNW (Bally) | 2018 | A + B + H | as #13 | ⚠ | P2 |
 | 17 | Jewel of the Dragon | LNW (in-house digital, 2024; commercialisation paused 2025 per g3newswire) | 2024 | A (6-gem H&S, 3 respin reset, fill 15 = grand) + B (4-tier MMMG, "what-you-see-is-what-you-get") + smaller-bonus secondary gem triggers | P-002 ✅ + P-035 ✅ + P-059 ✅ | NO | n/a |
 | 18 | Dancing Drums | LNW (Bally) | 2017 | A (gong scatters trigger FS + jackpot picker) + B (4-tier MMMG WAP) + D (pick-a-drum) + H (8/10/15 FS) + G (stacked wilds during FS) | P-002 ✅ + P-035 ✅ + P-010/P-047 ✅ + P-068 ✅ + P-005 ✅ | NO | n/a |
@@ -198,9 +198,10 @@ Each landed coin contributes to its reel-specific bag AND ramps its row-specific
 **Example:** Huff N' Puff family (Straw → Wood → Brick → Mansion frame upgrades).
 Each cell on the grid has an independent 3-or-4-state Markov chain (Idle/Straw/Wood/Brick/House) with vendor-specific upgrade probabilities per spin; payouts gated by current state. P-058 covers 4-state Markov wild tier (single wild's state); this is **N×M independent per-cell Markov on grid** — N×M Kronecker product of small Markov chains.
 
-### M3 — Dynamic grid-expansion during Hold-and-Spin
+### M3 — Dynamic grid-expansion during Hold-and-Spin — ✅ **CLOSED in W182** (P-083)
 **Example:** Ultimate Fire Link family, Lock It Link Eureka Reel Blast.
 H&S starts with N rows; as fireballs/dynamites collected past thresholds, **rows are added** (up to 4 extra rows). State space changes mid-feature. P-002/P-049/P-059 all assume fixed grid. Requires a kernel handling rectangular grid-expansion Markov where occupied rows trigger row-extend events with their own probability.
+**Resolution:** W182 ships `src/features/dynamicGridExpansionHoldSpin.ts` — exact Markov DP over state (active, m_idx, stale_streak) sa per-spin Binomial(empty, q) landing PMF + deterministic cumulative-landing-threshold row extensions + classic H&S 3-stale termination. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC features (Ultimate Fire Link Olvera/Power 4/China Street + Lock It Link Eureka + 2 corners) — CF/MC slaganje ~0.5-3% rel.
 
 ### M4 — Deterministic-grid explosion adds free-position multipliers
 **Example:** Dancing Drums Explosion, Dancing Drums Revolution.

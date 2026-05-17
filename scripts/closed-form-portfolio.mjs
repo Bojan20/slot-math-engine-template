@@ -1293,6 +1293,28 @@ async function main() {
     showcase.push({ wave: 181, solver: 'Reel-Bound Mystery Progressive (L&W Quick Hit M5)', metric: 'E[RTP/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.observedExpectedPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W182: Dynamic Grid-Expansion Hold-and-Spin (L&W M3 — Ultimate Fire Link / Lock It Link Eureka) ──
+  {
+    const { analyzeDynamicGridExpansion, simulateDynamicGridExpansion } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'dynamicGridExpansionHoldSpin.js'));
+    const t0 = Date.now();
+    const cfg = {
+      numReels: 5,
+      initialRows: 3,
+      maxExtraRows: 2,
+      probLandingPerEmptyCell: 0.15,
+      staleSpinsBeforeBust: 3,
+      rowExtensionThresholds: [6, 12],
+      expectedValuePerBag: 2,
+      varianceValuePerBag: 1,
+    };
+    const cf = analyzeDynamicGridExpansion(cfg);
+    const mc = simulateDynamicGridExpansion(cfg, 30_000, SEED);
+    const rel = Math.abs(cf.expectedTotalBags - mc.meanTotalBags) / Math.max(mc.meanTotalBags, 1e-9);
+    const ok = rel < 0.08; // DP exact — tight tolerance vs MC
+    showcase.push({ wave: 182, solver: 'Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3)', metric: 'E[bags]', cf: cf.expectedTotalBags, mc: mc.meanTotalBags, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
