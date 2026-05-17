@@ -165,3 +165,6 @@ export * from './voltageMeterMultiTier.js';
 
 // W152 Wave 152: Bonus Trigger Award Tier Stratification (Faza 12 ext, post-W100)
 export * from './bonusTriggerAwardStratification.js';
+
+// W152 Wave 154: Free Bet Wagering Requirement Aggregator (Faza 12 ext, post-W100, INDUSTRY-FIRST UKGC RTS-12 / MGA §15)
+export * from './freeBetWageringRequirement.js';

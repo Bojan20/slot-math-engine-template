@@ -128,6 +128,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'voltageMeterMultiTier.js'));
   const { solveBonusTriggerAwardStratification, simulateBonusTriggerAwardStratification } =
     await import(join(REPO_ROOT, 'dist', 'features', 'bonusTriggerAwardStratification.js'));
+  const { solveFreeBetWageringRequirement, simulateFreeBetWageringRequirement } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'freeBetWageringRequirement.js'));
 
   const showcase = [];
 
@@ -1002,6 +1004,27 @@ async function main() {
       Math.max(cf.expectedFreeSpinsAwardedPerSpin, 1e-9);
     const ok = rel < 0.05;
     showcase.push({ wave: 152, solver: 'Bonus Trigger Award Stratification', metric: 'E[FS]/spin', cf: cf.expectedFreeSpinsAwardedPerSpin, mc: mc.observedMeanFreeSpinsAwardedPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W154: Free Bet Wagering Requirement Aggregator (INDUSTRY-FIRST UKGC RTS-12) ──
+  {
+    const t0 = Date.now();
+    // Highly favorable config (very large bonus, low WR, near-1 RTP) so CF
+    // and MC converge — MC bust rate ≈ 0, MC mean ≈ CF expected balance.
+    const cfg = {
+      bonusAmount: 1000,
+      wagerMultiplier: 5,
+      betPerSpin: 1,
+      rtp: 0.995,
+      volatilityIndex: 2,
+    };
+    const cf = solveFreeBetWageringRequirement(cfg);
+    const mc = simulateFreeBetWageringRequirement(cfg, 5_000, SEED);
+    // Tolerance ~5% rel
+    const rel = Math.abs(cf.expectedBalanceAtCompletion - mc.observedMeanBalanceAtCompletion) /
+      Math.max(Math.abs(cf.expectedBalanceAtCompletion), 1);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 154, solver: 'Free Bet Wagering Requirement', metric: 'E[balance@WR]', cf: cf.expectedBalanceAtCompletion, mc: mc.observedMeanBalanceAtCompletion, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
