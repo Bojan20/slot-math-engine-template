@@ -180,3 +180,6 @@ export * from './runningMaxDrawdown.js';
 
 // W152 Wave 163: Martingale Wager Progression Bust Time Analyzer (53. solver, INDUSTRY-FIRST chase-pattern detection — UKGC LCCP 3.4.3 / MGA PPD §18 / AU NCPF Schedule 4)
 export * from './martingaleBustTime.js';
+
+// W152 Wave 165: Reverse Martingale (Paroli) Streak Cash-Out Analyzer (54. solver, INDUSTRY-FIRST let-it-ride chase pattern — dual W163, NHS #2 chase pattern)
+export * from './paroliStreakCashOut.js';

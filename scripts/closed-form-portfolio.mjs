@@ -138,6 +138,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'runningMaxDrawdown.js'));
   const { solveMartingaleBustTime, simulateMartingaleBustTime } =
     await import(join(REPO_ROOT, 'dist', 'features', 'martingaleBustTime.js'));
+  const { solveParoliStreakCashOut, simulateParoliStreakCashOut } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'paroliStreakCashOut.js'));
 
   const showcase = [];
 
@@ -1115,6 +1117,23 @@ async function main() {
       Math.max(cf.expectedRoundsToBust, 1e-9);
     const ok = rel < 0.20;
     showcase.push({ wave: 163, solver: 'Martingale Bust Time', metric: 'E[T_rounds]', cf: cf.expectedRoundsToBust, mc: mc.observedExpectedRoundsToBust, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W165: Paroli Streak Cash-Out (INDUSTRY-FIRST let-it-ride NHS #2 chase) ──
+  {
+    const t0 = Date.now();
+    // Roulette R/B class with 3-streak target
+    const cfg = {
+      bankroll: 100,
+      baseBet: 1,
+      probWinPerSpin: 18 / 38,
+      targetStreak: 3,
+    };
+    const cf = solveParoliStreakCashOut(cfg);
+    const mc = simulateParoliStreakCashOut(cfg, 5_000, SEED);
+    const abs = Math.abs(cf.probReachStreak - mc.observedProbReachStreak);
+    const ok = abs < 0.02;
+    showcase.push({ wave: 165, solver: 'Paroli Streak Cash-Out', metric: 'P(reach streak)', cf: cf.probReachStreak, mc: mc.observedProbReachStreak, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {
