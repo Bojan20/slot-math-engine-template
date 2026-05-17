@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PAROLI_STREAK_CASH_OUT",
+  "generated_utc": "2026-05-17T03:17:42.065Z",
+  "rounds_per_config": 5000,
+  "seed": 3405644133,
+  "tolerances": {
+    "prob_reach_abs": 0.02,
+    "profit_rel": 0.3,
+    "spins_rel": 0.1
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_roulette_red_black_3streak",
+      "description": "UK LCCP let-it-ride: roulette R/B (18/38=47.4%), 3-streak target, £100 bankroll",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.47368421052631576,
+        "targetStreak": 3
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 3,
+        "cappedByBankroll": false,
+        "probReachStreak": 0.10628371482723427,
+        "oneInNRoundsCashOut": 9.408779149519892,
+        "cashOutPayout": 7,
+        "expectedRoundProfit": -0.7533168100306173,
+        "varianceRoundProfit": 8.053449780226241,
+        "stdDevRoundProfit": 2.8378600705859762,
+        "expectedSpinsPerRound": 1.698060941828255,
+        "riskRewardRatio": 4.1781888997078855,
+        "chasePatternRiskScore": 0.3717105263157894
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.1092,
+        "observedExpectedRoundProfit": -0.7154,
+        "observedStdDevRoundProfit": 2.860000496503492,
+        "observedExpectedSpinsPerRound": 1.6936
+      },
+      "checks": {
+        "prob_reach_abs": 0.002916285172765737,
+        "profit_rel": 0.05033315269982657,
+        "spins_rel": 0.0026270799347472766
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "B_uk_european_4streak",
+      "description": "UK European roulette (18/37=48.6%), 4-streak target (deeper let-it-ride)",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.4864864864864865,
+        "targetStreak": 4
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 4,
+        "cappedByBankroll": false,
+        "probReachStreak": 0.05601226362089491,
+        "oneInNRoundsCashOut": 17.853233119951224,
+        "cashOutPayout": 15,
+        "expectedRoundProfit": -1.1320879049345272,
+        "varianceRoundProfit": 18.562383440260387,
+        "stdDevRoundProfit": 4.308408457918119,
+        "expectedSpinsPerRound": 1.8382919076856261,
+        "riskRewardRatio": 7.179444344496133,
+        "chasePatternRiskScore": 0.46621621621621623
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.0592,
+        "observedExpectedRoundProfit": -1.0716,
+        "observedStdDevRoundProfit": 4.398462622326143,
+        "observedExpectedSpinsPerRound": 1.842
+      },
+      "checks": {
+        "prob_reach_abs": 0.003187736379105091,
+        "profit_rel": 0.05343039588257529,
+        "spins_rel": 0.0020130794323420017
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "C_au_ncpf_high_house_edge_2streak",
+      "description": "AU NCPF p=0.40 high house edge, 2-streak short let-it-ride",
+      "cfg": {
+        "bankroll": 50,
+        "baseBet": 1,
+        "probWinPerSpin": 0.4,
+        "targetStreak": 2
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 2,
+        "cappedByBankroll": false,
+        "probReachStreak": 0.16000000000000003,
+        "oneInNRoundsCashOut": 6.249999999999999,
+        "cashOutPayout": 3,
+        "expectedRoundProfit": -0.5999999999999998,
+        "varianceRoundProfit": 2.640000000000001,
+        "stdDevRoundProfit": 1.6248076809271923,
+        "expectedSpinsPerRound": 1.4,
+        "riskRewardRatio": 2.3333333333333335,
+        "chasePatternRiskScore": 0.125
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.1604,
+        "observedExpectedRoundProfit": -0.5914,
+        "observedStdDevRoundProfit": 1.6224814451944183,
+        "observedExpectedSpinsPerRound": 1.3934
+      },
+      "checks": {
+        "prob_reach_abs": 0.00039999999999995595,
+        "profit_rel": 0.01433333333333287,
+        "spins_rel": 0.004714285714285671
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_high_roller_deep_streak_5",
+      "description": "High-roller £10000/£10, deep 5-streak (cash-out 31× base bet)",
+      "cfg": {
+        "bankroll": 10000,
+        "baseBet": 10,
+        "probWinPerSpin": 0.49,
+        "targetStreak": 5
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 5,
+        "cappedByBankroll": false,
+        "probReachStreak": 0.028247524899999998,
+        "oneInNRoundsCashOut": 35.40133174641436,
+        "cashOutPayout": 310,
+        "expectedRoundProfit": -15.743464096999993,
+        "varianceRoundProfit": 3950.2708356764715,
+        "stdDevRoundProfit": 62.85118006590228,
+        "expectedSpinsPerRound": 1.90539701,
+        "riskRewardRatio": 12.29554478861457,
+        "chasePatternRiskScore": 0.5374999999999999
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.0296,
+        "observedExpectedRoundProfit": -15.438,
+        "observedStdDevRoundProfit": 64.11277685454054,
+        "observedExpectedSpinsPerRound": 1.9144
+      },
+      "checks": {
+        "prob_reach_abs": 0.0013524751000000036,
+        "profit_rel": 0.019402597491755363,
+        "spins_rel": 0.00470277371500217
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "E_corner_player_edge_3streak",
+      "description": "Corner: player advantage p=0.60 — Paroli pozitivni EV per round",
+      "cfg": {
+        "bankroll": 100,
+        "baseBet": 1,
+        "probWinPerSpin": 0.6,
+        "targetStreak": 3
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 3,
+        "cappedByBankroll": false,
+        "probReachStreak": 0.21599999999999997,
+        "oneInNRoundsCashOut": 4.629629629629631,
+        "cashOutPayout": 7,
+        "expectedRoundProfit": 0.05599999999999983,
+        "varianceRoundProfit": 14.244863999999998,
+        "stdDevRoundProfit": 3.774236876508945,
+        "expectedSpinsPerRound": 1.96,
+        "riskRewardRatio": 3.7692307692307696,
+        "chasePatternRiskScore": 0.6874999999999999
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.2182,
+        "observedExpectedRoundProfit": 0.062,
+        "observedStdDevRoundProfit": 3.7977567062675197,
+        "observedExpectedSpinsPerRound": 1.9696
+      },
+      "checks": {
+        "prob_reach_abs": 0.0022000000000000353,
+        "profit_rel": 0.006000000000000172,
+        "spins_rel": 0.004874086108854617
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_bankroll_capped",
+      "description": "Corner: small bankroll caps target streak — B=3 b=1 target=10 (k_max=2)",
+      "cfg": {
+        "bankroll": 3,
+        "baseBet": 1,
+        "probWinPerSpin": 0.5,
+        "targetStreak": 10
+      },
+      "closed_form": {
+        "effectiveTargetStreak": 2,
+        "cappedByBankroll": true,
+        "probReachStreak": 0.25,
+        "oneInNRoundsCashOut": 4,
+        "cashOutPayout": 3,
+        "expectedRoundProfit": -0.25,
+        "varianceRoundProfit": 3.6875,
+        "stdDevRoundProfit": 1.920286436967152,
+        "expectedSpinsPerRound": 1.5,
+        "riskRewardRatio": 2.25,
+        "chasePatternRiskScore": 0.37499999999999994
+      },
+      "monte_carlo": {
+        "rounds": 5000,
+        "observedProbReachStreak": 0.248,
+        "observedExpectedRoundProfit": -0.2562,
+        "observedStdDevRoundProfit": 1.913886506561926,
+        "observedExpectedSpinsPerRound": 1.4962
+      },
+      "checks": {
+        "prob_reach_abs": 0.0020000000000000018,
+        "profit_rel": 0.024199843871974956,
+        "spins_rel": 0.0025333333333333505
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    }
+  ]
+}
