@@ -136,6 +136,8 @@ async function main() {
     await import(join(REPO_ROOT, 'dist', 'features', 'hitFrequencyDistribution.js'));
   const { solveRunningMaxDrawdown, simulateRunningMaxDrawdown } =
     await import(join(REPO_ROOT, 'dist', 'features', 'runningMaxDrawdown.js'));
+  const { solveMartingaleBustTime, simulateMartingaleBustTime } =
+    await import(join(REPO_ROOT, 'dist', 'features', 'martingaleBustTime.js'));
 
   const showcase = [];
 
@@ -1096,6 +1098,23 @@ async function main() {
       Math.max(cf.expectedMaxDrawdown, 1e-9);
     const ok = rel < 0.20;
     showcase.push({ wave: 161, solver: 'Max Drop From Starting Bankroll', metric: 'E[MaxDrop]', cf: cf.expectedMaxDrawdown, mc: mc.observedExpectedMaxDrawdown, ok, elapsed_ms: Date.now() - t0 });
+  }
+
+  // ── W163: Martingale Wager Progression Bust Time (INDUSTRY-FIRST chase-pattern UKGC LCCP 3.4.3 / MGA PPD §18) ──
+  {
+    const t0 = Date.now();
+    // High-bust config za stable MC: B=63, b=1, p=0.4 → k_max=5, p_bust=0.6^6≈4.67%
+    const cfg = {
+      bankroll: 63,
+      baseBet: 1,
+      probWinPerSpin: 0.4,
+    };
+    const cf = solveMartingaleBustTime(cfg);
+    const mc = simulateMartingaleBustTime(cfg, 2_000, SEED);
+    const rel = Math.abs(cf.expectedRoundsToBust - mc.observedExpectedRoundsToBust) /
+      Math.max(cf.expectedRoundsToBust, 1e-9);
+    const ok = rel < 0.20;
+    showcase.push({ wave: 163, solver: 'Martingale Bust Time', metric: 'E[T_rounds]', cf: cf.expectedRoundsToBust, mc: mc.observedExpectedRoundsToBust, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

@@ -177,3 +177,6 @@ export * from './hitFrequencyDistribution.js';
 
 // W152 Wave 161: Max Drop From Starting Bankroll During Session Analyzer (52. solver, INDUSTRY-FIRST UKGC LCCP 3.4.3 / MGA PPD §17 — third side of responsible-gambling triad)
 export * from './runningMaxDrawdown.js';
+
+// W152 Wave 163: Martingale Wager Progression Bust Time Analyzer (53. solver, INDUSTRY-FIRST chase-pattern detection — UKGC LCCP 3.4.3 / MGA PPD §18 / AU NCPF Schedule 4)
+export * from './martingaleBustTime.js';
