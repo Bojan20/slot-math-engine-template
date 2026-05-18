@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-18T00:27:01.038Z",
-  "solvers_total": 66,
-  "solvers_passed": 66,
+  "generated_utc": "2026-05-18T00:38:29.072Z",
+  "solvers_total": 67,
+  "solvers_passed": 67,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 45
+      "elapsed_ms": 44
     },
     {
       "wave": 50,
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 51,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 54
+      "elapsed_ms": 56
     },
     {
       "wave": 53,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 86,
@@ -193,7 +193,7 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 95,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 97,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 102,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 105,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 48
+      "elapsed_ms": 47
     },
     {
       "wave": 112,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 116,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 127,
@@ -364,7 +364,7 @@
       "cf": 0.18,
       "mc": 0.17652,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 138,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 244
+      "elapsed_ms": 250
     },
     {
       "wave": 142,
@@ -391,7 +391,7 @@
       "cf": 15.223422022308704,
       "mc": 14.81615,
       "ok": true,
-      "elapsed_ms": 43
+      "elapsed_ms": 44
     },
     {
       "wave": 144,
@@ -418,7 +418,7 @@
       "cf": 20.48,
       "mc": 20.24096,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 150,
@@ -436,7 +436,7 @@
       "cf": 0.27801562499999993,
       "mc": 0.2738833333333333,
       "ok": true,
-      "elapsed_ms": 12
+      "elapsed_ms": 13
     },
     {
       "wave": 154,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 854
+      "elapsed_ms": 875
     },
     {
       "wave": 157,
@@ -454,7 +454,7 @@
       "cf": 0.14148853381835558,
       "mc": 0.16166666666666665,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 39
     },
     {
       "wave": 159,
@@ -463,7 +463,7 @@
       "cf": 1.74,
       "mc": 1.7057,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 161,
@@ -472,7 +472,7 @@
       "cf": 110.34474847738295,
       "mc": 108.41043902029095,
       "ok": true,
-      "elapsed_ms": 34
+      "elapsed_ms": 35
     },
     {
       "wave": 163,
@@ -481,7 +481,7 @@
       "cf": 21.433470507544587,
       "mc": 20.254702592780884,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 165,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 343
+      "elapsed_ms": 333
     },
     {
       "wave": 169,
@@ -535,7 +535,7 @@
       "cf": 0.6723199999999999,
       "mc": 0.67406,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 177,
@@ -544,7 +544,7 @@
       "cf": 8,
       "mc": 8.106148865304313,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 179,
@@ -553,7 +553,7 @@
       "cf": 5.800000000000001,
       "mc": 5.79635,
       "ok": true,
-      "elapsed_ms": 12
+      "elapsed_ms": 13
     },
     {
       "wave": 181,
@@ -571,7 +571,7 @@
       "cf": 22.298391355206938,
       "mc": 22.3383,
       "ok": true,
-      "elapsed_ms": 63
+      "elapsed_ms": 64
     },
     {
       "wave": 183,
@@ -580,7 +580,7 @@
       "cf": 1666.94888061,
       "mc": 1669.1233333333332,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 184,
@@ -589,7 +589,7 @@
       "cf": 0.442,
       "mc": 0.43822,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 185,
@@ -599,6 +599,15 @@
       "mc": 11.818918420259651,
       "ok": true,
       "elapsed_ms": 17
+    },
+    {
+      "wave": 186,
+      "solver": "Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9)",
+      "metric": "E[total payout]",
+      "cf": 18.84,
+      "mc": 18.836108799908672,
+      "ok": true,
+      "elapsed_ms": 6
     }
   ]
 }

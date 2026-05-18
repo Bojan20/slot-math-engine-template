@@ -1,0 +1,493 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "BIG_BET_PAID_PACKAGE_MULTI_SPIN",
+  "generated_utc": "2026-05-18T00:34:28.355Z",
+  "packages_per_config": 30000,
+  "seed": 3405644166,
+  "tolerances": {
+    "payout_rel": 0.1,
+    "rtp_rel": 0.1,
+    "profit_prob_abs": 0.05,
+    "std_dev_rel": 0.2
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_monopoly_big_event_5spin_98pct_top",
+      "description": "LNW Barcrest Monopoly Big Event (2010, defining UK Big Bet title) — 5-spin progressive RTP 90→98%, stake £4/spin.",
+      "cfg": {
+        "packageSpinCount": 5,
+        "perSpinStakeAllocation": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "perSpinRtp": [
+          0.9,
+          0.92,
+          0.95,
+          0.96,
+          0.98
+        ],
+        "perSpinVariance": [
+          9,
+          9,
+          16,
+          25,
+          49
+        ],
+        "baseGameRtpForSubsidyComparison": 0.94,
+        "harmThresholdLossPerPackage": 2
+      },
+      "closed_form": {
+        "totalPackageCost": 20,
+        "perSpinExpectedPayout": [
+          3.6,
+          3.68,
+          3.8,
+          3.84,
+          3.92
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.18,
+          0.184,
+          0.19,
+          0.192,
+          0.196
+        ],
+        "expectedTotalPayout": 18.84,
+        "varianceTotalPayout": 108,
+        "stdDevTotalPayout": 10.392304845413264,
+        "packageRtp": 0.942,
+        "expectedNetProfitPerPackage": -1.1600000000000001,
+        "probProfitCltApprox": 0.4555618903806915,
+        "oneInNPackagesAtLeastBreakEven": 2.1950914269065556,
+        "operatorSubsidyAmount": 0.040000000000000036,
+        "operatorSubsidyFraction": 0.0020000000000000018,
+        "bestSpinIndex": 4,
+        "bestSpinRtp": 0.98,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.9,
+        "rtpEscalationSlope": 0.019999999999999858,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 18.9042399721465,
+        "stdDevTotalPayoutPerPackage": 10.407397251638475,
+        "meanNetProfit": -1.0957600278535011,
+        "observedProbProfit": 0.4588333333333333,
+        "observedPackageRtp": 0.945211998607325
+      },
+      "checks": {
+        "payout_rel": 0.0033981779876445795,
+        "rtp_rel": 0.00339817798764465,
+        "profit_prob_abs": 0.003271442952641812,
+        "std_dev_rel": 0.0014501614438552207
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_rainbow_riches_pick_n_mix_flat_96pct",
+      "description": "LNW Barcrest Rainbow Riches Pick n Mix Big Bet — flat 96% RTP, stake £5/spin, 5 spins.",
+      "cfg": {
+        "packageSpinCount": 5,
+        "perSpinStakeAllocation": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "perSpinRtp": [
+          0.96,
+          0.96,
+          0.96,
+          0.96,
+          0.96
+        ],
+        "perSpinVariance": [
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "baseGameRtpForSubsidyComparison": 0.92
+      },
+      "closed_form": {
+        "totalPackageCost": 25,
+        "perSpinExpectedPayout": [
+          4.8,
+          4.8,
+          4.8,
+          4.8,
+          4.8
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.192,
+          0.192,
+          0.192,
+          0.192,
+          0.192
+        ],
+        "expectedTotalPayout": 24,
+        "varianceTotalPayout": 80,
+        "stdDevTotalPayout": 8.94427190999916,
+        "packageRtp": 0.96,
+        "expectedNetProfitPerPackage": -1,
+        "probProfitCltApprox": 0.45548959716076665,
+        "oneInNPackagesAtLeastBreakEven": 2.19543982175085,
+        "operatorSubsidyAmount": 0.9999999999999981,
+        "operatorSubsidyFraction": 0.039999999999999925,
+        "bestSpinIndex": 0,
+        "bestSpinRtp": 0.96,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.96,
+        "rtpEscalationSlope": 0,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 24.054534293676742,
+        "stdDevTotalPayoutPerPackage": 8.970279397677434,
+        "meanNetProfit": -0.9454657063232581,
+        "observedProbProfit": 0.45876666666666666,
+        "observedPackageRtp": 0.9621813717470696
+      },
+      "checks": {
+        "payout_rel": 0.0022671107663505014,
+        "rtp_rel": 0.002267110766350497,
+        "profit_prob_abs": 0.00327706950590001,
+        "std_dev_rel": 0.0028992951640958195
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_action_bank_5spin_progressive_to_102pct",
+      "description": "LNW Barcrest Action Bank — 5-spin Big Bet sa final spin RTP 102% (player advantage), stake £3/spin.",
+      "cfg": {
+        "packageSpinCount": 5,
+        "perSpinStakeAllocation": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "perSpinRtp": [
+          0.9,
+          0.93,
+          0.97,
+          1,
+          1.02
+        ],
+        "perSpinVariance": [
+          9,
+          9,
+          16,
+          25,
+          49
+        ],
+        "baseGameRtpForSubsidyComparison": 0.95,
+        "harmThresholdLossPerPackage": 1
+      },
+      "closed_form": {
+        "totalPackageCost": 15,
+        "perSpinExpectedPayout": [
+          2.7,
+          2.79,
+          2.91,
+          3,
+          3.06
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.18000000000000002,
+          0.186,
+          0.194,
+          0.2,
+          0.20400000000000001
+        ],
+        "expectedTotalPayout": 14.46,
+        "varianceTotalPayout": 108,
+        "stdDevTotalPayout": 10.392304845413264,
+        "packageRtp": 0.9640000000000001,
+        "expectedNetProfitPerPackage": -0.5399999999999991,
+        "probProfitCltApprox": 0.4792796077038157,
+        "oneInNPackagesAtLeastBreakEven": 2.086464735670494,
+        "operatorSubsidyAmount": 0.21000000000000185,
+        "operatorSubsidyFraction": 0.014000000000000123,
+        "bestSpinIndex": 4,
+        "bestSpinRtp": 1.02,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.9,
+        "rtpEscalationSlope": 0.030999999999999944,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 14.524239972146452,
+        "stdDevTotalPayoutPerPackage": 10.407397251638633,
+        "meanNetProfit": -0.4757600278535481,
+        "observedProbProfit": 0.48213333333333336,
+        "observedPackageRtp": 0.9682826648097634
+      },
+      "checks": {
+        "payout_rel": 0.004422948964603027,
+        "rtp_rel": 0.004422948964602981,
+        "profit_prob_abs": 0.002853725629517634,
+        "std_dev_rel": 0.0014501614438703896
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "D_pearl_of_caribbean_5spin_high_vol",
+      "description": "LNW Barcrest Pearl of Caribbean — 5-spin Big Bet high-vol, stake £4/spin.",
+      "cfg": {
+        "packageSpinCount": 5,
+        "perSpinStakeAllocation": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "perSpinRtp": [
+          0.88,
+          0.92,
+          0.96,
+          0.99,
+          1.05
+        ],
+        "perSpinVariance": [
+          16,
+          25,
+          36,
+          49,
+          100
+        ],
+        "baseGameRtpForSubsidyComparison": 0.93,
+        "harmThresholdLossPerPackage": 3
+      },
+      "closed_form": {
+        "totalPackageCost": 20,
+        "perSpinExpectedPayout": [
+          3.52,
+          3.68,
+          3.84,
+          3.96,
+          4.2
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.176,
+          0.184,
+          0.192,
+          0.198,
+          0.21000000000000002
+        ],
+        "expectedTotalPayout": 19.2,
+        "varianceTotalPayout": 226,
+        "stdDevTotalPayout": 15.033296378372908,
+        "packageRtp": 0.96,
+        "expectedNetProfitPerPackage": -0.8000000000000007,
+        "probProfitCltApprox": 0.4787801508471905,
+        "oneInNPackagesAtLeastBreakEven": 2.088641306934974,
+        "operatorSubsidyAmount": 0.5999999999999983,
+        "operatorSubsidyFraction": 0.029999999999999916,
+        "bestSpinIndex": 4,
+        "bestSpinRtp": 1.05,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.88,
+        "rtpEscalationSlope": 0.040999999999999946,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 19.294156290154913,
+        "stdDevTotalPayoutPerPackage": 15.055707110240183,
+        "meanNetProfit": -0.7058437098450874,
+        "observedProbProfit": 0.48196666666666665,
+        "observedPackageRtp": 0.9647078145077457
+      },
+      "checks": {
+        "payout_rel": 0.004880041849923118,
+        "rtp_rel": 0.004880041849923163,
+        "profit_prob_abs": 0.0031865158194761545,
+        "std_dev_rel": 0.0014885207119918215
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_corner_2spin_minimum_package",
+      "description": "Corner: minimum 2-spin package (verify degenerate case).",
+      "cfg": {
+        "packageSpinCount": 2,
+        "perSpinStakeAllocation": [
+          10,
+          10
+        ],
+        "perSpinRtp": [
+          0.9,
+          0.99
+        ],
+        "perSpinVariance": [
+          25,
+          25
+        ],
+        "baseGameRtpForSubsidyComparison": 0.93
+      },
+      "closed_form": {
+        "totalPackageCost": 20,
+        "perSpinExpectedPayout": [
+          9,
+          9.9
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.45,
+          0.495
+        ],
+        "expectedTotalPayout": 18.9,
+        "varianceTotalPayout": 50,
+        "stdDevTotalPayout": 7.0710678118654755,
+        "packageRtp": 0.945,
+        "expectedNetProfitPerPackage": -1.1000000000000014,
+        "probProfitCltApprox": 0.4381885395881284,
+        "oneInNPackagesAtLeastBreakEven": 2.2821226701637185,
+        "operatorSubsidyAmount": 0.29999999999999805,
+        "operatorSubsidyFraction": 0.014999999999999902,
+        "bestSpinIndex": 1,
+        "bestSpinRtp": 0.99,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.9,
+        "rtpEscalationSlope": 0.08999999999999986,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 18.95354173791482,
+        "stdDevTotalPayoutPerPackage": 7.10929486496402,
+        "meanNetProfit": -1.0464582620851814,
+        "observedProbProfit": 0.4404,
+        "observedPackageRtp": 0.9476770868957409
+      },
+      "checks": {
+        "payout_rel": 0.002824893555789346,
+        "rtp_rel": 0.0028248935557893227,
+        "profit_prob_abs": 0.002211460411871591,
+        "std_dev_rel": 0.005377052692937882
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_10spin_extended_package",
+      "description": "Corner: extended 10-spin package — extreme escalation curve.",
+      "cfg": {
+        "packageSpinCount": 10,
+        "perSpinStakeAllocation": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "perSpinRtp": [
+          0.85,
+          0.88,
+          0.91,
+          0.93,
+          0.95,
+          0.96,
+          0.97,
+          0.98,
+          0.99,
+          1
+        ],
+        "perSpinVariance": [
+          4,
+          4,
+          9,
+          9,
+          16,
+          16,
+          25,
+          25,
+          36,
+          49
+        ],
+        "baseGameRtpForSubsidyComparison": 0.92
+      },
+      "closed_form": {
+        "totalPackageCost": 20,
+        "perSpinExpectedPayout": [
+          1.7,
+          1.76,
+          1.82,
+          1.86,
+          1.9,
+          1.92,
+          1.94,
+          1.96,
+          1.98,
+          2
+        ],
+        "perSpinContributionToPackageRtp": [
+          0.08499999999999999,
+          0.088,
+          0.091,
+          0.093,
+          0.095,
+          0.096,
+          0.097,
+          0.098,
+          0.099,
+          0.1
+        ],
+        "expectedTotalPayout": 18.84,
+        "varianceTotalPayout": 193,
+        "stdDevTotalPayout": 13.892443989449804,
+        "packageRtp": 0.942,
+        "expectedNetProfitPerPackage": -1.1600000000000001,
+        "probProfitCltApprox": 0.46672746891301276,
+        "oneInNPackagesAtLeastBreakEven": 2.142577985240412,
+        "operatorSubsidyAmount": 0.43999999999999817,
+        "operatorSubsidyFraction": 0.02199999999999991,
+        "bestSpinIndex": 9,
+        "bestSpinRtp": 1,
+        "worstSpinIndex": 0,
+        "worstSpinRtp": 0.85,
+        "rtpEscalationSlope": 0.01575757575757576,
+        "harmThresholdExceeded": false
+      },
+      "monte_carlo": {
+        "packages": 30000,
+        "meanTotalPayoutPerPackage": 18.93198651250266,
+        "stdDevTotalPayoutPerPackage": 13.842867847020324,
+        "meanNetProfit": -1.068013487497339,
+        "observedProbProfit": 0.46813333333333335,
+        "observedPackageRtp": 0.946599325625133
+      },
+      "checks": {
+        "payout_rel": 0.004858788191187085,
+        "rtp_rel": 0.004858788191187132,
+        "profit_prob_abs": 0.0014058644203205906,
+        "std_dev_rel": 0.0035685688182100234
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    }
+  ]
+}

@@ -127,14 +127,14 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 49 | Raging Rhino | LNW (WMS) | 2014 | G2 (4096 ways via 5-reel × 4-row) + H (Vault FS triggered by scatter quantity) | P-049 ✅ + P-068 ✅ | NO | n/a |
 | 50 | Reel'em In! Catch the Big One (1, 2, Cash Bandits) | LNW (WMS) | 1996, 2004, 2010 | D (Fishing Hole pick — multi-fisherman / multi-cast tree) + multi-stage pick | P-047 ✅ (N-stage pick tree) + P-010 ✅ | NO | n/a |
 | 51 | Reel'em In Big Bass Bucks | LNW (WMS) | 2014 | D (Fishing Contest competitive pick) + H + multiplier (14×–55×) | P-047 ✅ + P-063 ✅ + ⚠ competition-pick (M8 same race-pick gap) | YES (M8) | P1 |
-| 52 | Monopoly Big Event | LNW (Barcrest) | 2010 | **I (Big Bet — paid 5-spin packages at higher RTP up to 98%)** + Board bonus + Big Bet Reel-Set switch | ⚠ **P-057 ✅ Free-Spins Buy + Tier** handles paid tier RTP, but Big Bet has rotating reel sets WITHIN purchased session — partial | YES (M9) | **P0** |
+| 52 | Monopoly Big Event | LNW (Barcrest) | 2010 | **I (Big Bet — paid 5-spin packages at higher RTP up to 98%)** + Board bonus + Big Bet Reel-Set switch | ⚠ **P-057 ✅ Free-Spins Buy + Tier** handles paid tier RTP, but Big Bet has rotating reel sets WITHIN purchased session — partial |  ✅ **CLOSED (M9 W186)**| **P0** |
 | 53 | Monopoly Megaways | LNW (Barcrest) | 2019 | G3 (Megaways variable-reel) + F (cascade) + H + Board bonus | P-049 ✅ + P-001 ✅ + P-014 ✅ + P-047 ✅ | NO | n/a |
 | 54 | Monopoly Hot Properties | LNW (Barcrest) | 2014 | F + H + Board bonus + Hot Properties multiplier | P-001 ✅ + P-047 ✅ + P-063 ✅ | NO | n/a |
 | 55 | Monopoly Electric Wins | LNW (Barcrest) | 2024 | F + H + Board bonus + electric-shock multiplier | as #54 | NO | n/a |
 | 56 | Monopoly Super Wheel Bonus | LNW (Barcrest) | 2025 | D (wheel bonus) + Board + B | P-046 ✅ + P-047 ✅ + P-035 ✅ | NO | n/a |
 | 57 | Rainbow Riches (original) | LNW (Barcrest) | 2006 | D (Pots of Gold wheel + Road to Riches trail + Wishing Well) | P-046 ✅ + P-064 ✅ (trail) + P-047 ✅ | NO | n/a |
 | 58 | Rainbow Riches Megaways | LNW (Barcrest) | 2020 | G3 + F + H + Bonus Bank (running balance offset) | P-049 ✅ + P-001 ✅ + ❌ **Bonus Bank running-balance offset** (deferred-win bank with explicit Bank-Off-Wins / Bank-All-Wins / Bank-Small-Wins modes) | YES (M10) | P0 |
-| 59 | Rainbow Riches Pick n Mix | LNW (Barcrest) | 2014 | D (pick which 3 of 5 bonuses to enable per spin — composition selection!) + I (Big Bet) + multiple sub-bonuses | ❌ **player-elects feature-composition before spin** (combinatorial mode selection) + P-057 ⚠ | YES (M9, M11) | **P0** |
+| 59 | Rainbow Riches Pick n Mix | LNW (Barcrest) | 2014 | D (pick which 3 of 5 bonuses to enable per spin — composition selection!) + I (Big Bet) + multiple sub-bonuses | ❌ **player-elects feature-composition before spin** (combinatorial mode selection) + P-057 ⚠ | ✅ **CLOSED (M9 W186) + M11 pending** | **P0** |
 | 60 | Rainbow Riches Pots of Gold | LNW (Barcrest) | 2008 | D (Pots of Gold spinning wheel) + H | P-046 ✅ + P-014 ✅ | NO | n/a |
 | 61 | Eye of Horus Megaways | LNW (Reel Time / Blueprint, distributed via LNW OpenGaming) | 2020 | G3 + F + H + symbol-upgrade-during-FS (Horus light-beam) + G (expanding Horus wild) | P-049 ✅ + P-001 ✅ + P-013 ✅ (symbol upgrade cascade) + P-008 ✅ | NO | n/a |
 | 62 | The Wizard of Oz Munchkinland | LNW (WMS) | 2014 | D (wheel bonus → progressive jackpots OR FS) + H + Munchkin-feature random injection during FS + Mayor sticky-3-wild | P-046 ✅ + P-035 ✅ + P-005 ✅ + ❌ **per-spin random-feature injection during FS** (random "Munchkin" appears every K spins to grant FS / wilds / multipliers — distinct from sticky countdown) | YES (M12) | P1 |
@@ -172,7 +172,7 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 94 | 5 Treasures | LNW (Shuffle Master) | 2017 | D (FS mode selection: choose 1 of 5 FS modes after trigger) + H | P-047 ✅ + ❌ **player-elects FS-variant** (M11 same) | YES (M11) | P1 |
 | 95 | Jin Ji Bao Xi (Endless Treasure / Rising Fortunes) | LNW (Shuffle Master) | 2017–2019 | A (red-envelope H&S) + B (4-tier MMMG) + H | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
 | 96 | Fu Dai Lian Lian | LNW (Shuffle Master) | 2017 | A + B + H | as #95 | NO | n/a |
-| 97 | Action Bank | LNW (Barcrest) | 2017 | D (vault-pick bonus) + H + I (Big Bet) | P-047 ✅ + P-014 ✅ + P-057 ✅ + ❌ Big Bet within-package reel-set switching (M9) | YES (M9) | P1 |
+| 97 | Action Bank | LNW (Barcrest) | 2017 | D (vault-pick bonus) + H + I (Big Bet) | P-047 ✅ + P-014 ✅ + P-057 ✅ + ❌ Big Bet within-package reel-set switching (M9) |  ✅ **CLOSED (M9 W186)**| P1 |
 | 98 | Black Knight (I, II, III) | LNW (WMS) | 2008–2015 | H + G (stacked wilds) + multi-reel scatter | P-005 ✅ + P-068 ✅ | NO | n/a |
 | 99 | Amazon Queen | LNW (WMS) | 2011 | H + G + B | P-005 ✅ + P-035 ✅ | NO | n/a |
 | 100 | Bookworm | LNW (WMS) | 2008 | H + G (substitution-stacked wild) + reading bonus | P-005 ✅ + P-014 ✅ | NO | n/a |
@@ -226,9 +226,10 @@ Two grids: 5×4 main + 5×12 colossal, **100 paylines distributed across both, w
 **Example:** Goldfish Race for the Gold, Reel'em In Big Bass Bucks Fishing Contest.
 N "racers" each have iid progression rates; one wins, awards multiplier × N-position. Distinct from P-047 (sequential pick tree) and P-046 (wheel spin) because it's a **simultaneous max-finishing-order** outcome over multiple parallel Markov chains.
 
-### M9 — Big Bet paid-package with within-package reel-set switching
+### M9 — Big Bet paid-package with within-package reel-set switching — ✅ **CLOSED in W186** (P-087, UK-CRITICAL)
 **Example:** Monopoly Big Event, Rainbow Riches Pick n Mix, Action Bank.
 Player pays N× stake → unlocked 5 spins where **each spin has a different reel-set + paytable** (often with progressive RTP across the 5 spins). P-057 covers per-package RTP single-mode; this adds **multi-spin schedule of distinct paytables WITHIN ONE paid package**. UK-specific feature mandated under UKGC RTS 12 for Big Bet disclosure.
+**Resolution:** W186 ships `src/features/bigBetPaidPackageMultiSpin.ts` — per-spin independent aggregation: E[total] = Σ b_k·r_k, Var = Σ σ²_k, P(profit) via CLT-Normal (Abramowitz-Stegun erf). Operator subsidy = max(0, packageRtp − baseRtp)·C. RTP escalation slope (linear regression), UKGC LCCP 3.4.3 harm-threshold flag, bestSpinIndex/worstSpinIndex disclosure. 40 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC packages (Monopoly Big Event 5-spin 90→98% + RR Pick n Mix flat 96% + Action Bank 90→102% + Pearl of Caribbean high-vol + 2-spin corner + 10-spin extended). UKGC RTS-12 mandatory disclosure paper trail complete.
 
 ### M10 — Bonus Bank running-balance offset (deferred-win bank)
 **Example:** Rainbow Riches Megaways.

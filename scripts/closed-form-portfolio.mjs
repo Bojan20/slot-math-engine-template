@@ -1384,6 +1384,26 @@ async function main() {
     showcase.push({ wave: 185, solver: 'Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1)', metric: 'E[Y]', cf: cf.expectedTotalPayoutPerSpin, mc: mc.meanTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W186: Big Bet Paid-Package (UK-CRITICAL L&W M9 — Barcrest family) ──
+  {
+    const { analyzeBigBetPaidPackage, simulateBigBetPaidPackage } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'bigBetPaidPackageMultiSpin.js'));
+    const t0 = Date.now();
+    const cfg = {
+      packageSpinCount: 5,
+      perSpinStakeAllocation: [4, 4, 4, 4, 4],
+      perSpinRtp: [0.90, 0.92, 0.95, 0.96, 0.98],
+      perSpinVariance: [9, 9, 16, 25, 49],
+      baseGameRtpForSubsidyComparison: 0.94,
+    };
+    const cf = analyzeBigBetPaidPackage(cfg);
+    const mc = simulateBigBetPaidPackage(cfg, 30_000, SEED);
+    const rel = Math.abs(cf.expectedTotalPayout - mc.meanTotalPayoutPerPackage) /
+      Math.max(mc.meanTotalPayoutPerPackage, 1e-9);
+    const ok = rel < 0.05; // CF math is exact (linear aggregation)
+    showcase.push({ wave: 186, solver: 'Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9)', metric: 'E[total payout]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayoutPerPackage, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

@@ -256,3 +256,5 @@ jobs:
         run: npm run colossal-reels-wild-transfer-acceptance
       - name: Per-Reel Bag × Row-Multiplier Coupled acceptance (6/6 configs × 20K spins, Wave 185, 66. solver L&W M1 GAP CLOSURE Dragon Spin CrossLink Water — per-reel bag × per-row multiplier coupled aggregator)
         run: npm run per-reel-bag-row-multiplier-coupled-acceptance
+      - name: Big Bet Paid-Package Multi-Spin acceptance (6/6 configs × 30K packages, Wave 186, 67. solver UK-CRITICAL L&W M9 GAP CLOSURE Barcrest UK family Monopoly Big Event/RR Pick n Mix/Action Bank/Pearl of Caribbean — UKGC RTS-12 mandatory)
+        run: npm run big-bet-paid-package-multi-spin-acceptance

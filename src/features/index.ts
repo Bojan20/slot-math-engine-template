@@ -219,3 +219,6 @@ export * from './colossalReelsWildTransfer.js';
 
 // W152 Wave 185: Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water + future L&W flagship)
 export * from './perReelBagRowMultiplierCoupled.js';
+
+// W152 Wave 186: Big Bet Paid-Package Multi-Spin Reel-Set Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 P0 GAP CLOSURE — Barcrest UK family Monopoly Big Event / Rainbow Riches Pick n Mix / Action Bank / Pearl of Caribbean — UKGC RTS-12 mandatory)
+export * from './bigBetPaidPackageMultiSpin.js';
