@@ -1,10 +1,11 @@
 {
   "pilot": "Quick Hit Platinum Phoenix",
-  "generated_at_utc": "2026-05-18T14:54:23.714Z",
-  "total_elapsed_ms": 995,
+  "pilot_slug": "quick-hit-platinum-phoenix",
+  "generated_at_utc": "2026-05-18T15:44:16.670Z",
+  "total_elapsed_ms": 1016,
   "steps": {
     "step1": {
-      "ms": 0,
+      "ms": 1,
       "sizeBytes": 7321
     },
     "step2": {
@@ -15,7 +16,7 @@
       ]
     },
     "step3a": {
-      "ms": 93,
+      "ms": 94,
       "spins": 10000,
       "computedRtp": 0.9370549999999989,
       "hitFreq": 0.2608,
@@ -27,7 +28,7 @@
       "avgScatters": 0.2591
     },
     "step3b": {
-      "ms": 861,
+      "ms": 881,
       "spins": 100000,
       "computedRtp": 0.9383174999999687,
       "hitFreq": 0.26167,
@@ -45,10 +46,10 @@
     "step5": {
       "ms": 1,
       "irHash": "802d9ad9c9cc5ebf4624cbad2c63985f2d5154bec67c46b3b276b080bfcef4ef",
-      "mcHash": "b3f0bea4f577be1f68830ecad0449ddfc165632f1f8f4f37ce3358c03b75e64b",
+      "mcHash": "b3e28bb2514b1c25273c0a711778b89b7198d08aa38aa372553890cffe6dc117",
       "parHash": "cbedb654f455cef844f0fda89ca4429fb836f0d67bb44733b9974254cbaff45e",
-      "merkleRoot": "38fb2bb66b2f0511cb9670fd10029ea93549af312f560151e4c0538f398885aa",
-      "hsmSignature": "a48b3d535e9480a651076bcefda62040"
+      "merkleRoot": "1b3ae4a431a1dc45e82b09f8e9fa379103dc7ec3be699bb017eb3a9bcc2bdfc7",
+      "hsmSignature": "e6356d2d7e8d3e791fb0242536db941e"
     },
     "step6": {
       "ms": 0,
@@ -69,31 +70,31 @@
       "sampleZipName": "quick-hit-platinum-phoenix-operator-pkg.zip"
     },
     "step7": {
-      "ms": 0,
+      "ms": 1,
       "envelope": {
         "game_id": "quick-hit-platinum-phoenix",
         "version": "1.0.0",
         "jurisdiction": "UKGC",
-        "submitted_at_utc": "2026-05-18T14:54:23.713Z",
-        "merkle_root": "38fb2bb66b2f0511cb9670fd10029ea93549af312f560151e4c0538f398885aa",
-        "hsm_signature": "a48b3d535e9480a651076bcefda62040",
+        "submitted_at_utc": "2026-05-18T15:44:16.669Z",
+        "merkle_root": "1b3ae4a431a1dc45e82b09f8e9fa379103dc7ec3be699bb017eb3a9bcc2bdfc7",
+        "hsm_signature": "e6356d2d7e8d3e791fb0242536db941e",
         "stub": true
       },
       "status": "submitted",
-      "submissionId": "SUB-MPBBROIP"
+      "submissionId": "SUB-MPBDJTWE"
     },
     "step8": {
       "ms": 0,
       "cert": {
-        "cert_id": "CERT-SUB-MPBBROIP",
+        "cert_id": "CERT-SUB-MPBDJTWE",
         "game": "quick-hit-platinum-phoenix",
         "jurisdiction": "UKGC",
         "decision": "Approved",
         "rtp_stated": 0.96,
         "rtp_computed": 0.9383174999999687,
         "rtp_delta": 0.021682500000031246,
-        "issued_at_utc": "2026-05-18T14:54:23.714Z",
-        "cert_signature": "f0cd99eb6ad47eb3ad95e41badb5316690dc6a88",
+        "issued_at_utc": "2026-05-18T15:44:16.670Z",
+        "cert_signature": "1c5506b1b893504f99a3e37d850b89883f34e5e7",
         "note": "All checks passed. Game cleared for production deployment."
       }
     }

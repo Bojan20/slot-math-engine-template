@@ -1,0 +1,102 @@
+{
+  "pilot": "Spartacus Colossal Conquest",
+  "pilot_slug": "spartacus-colossal-conquest",
+  "generated_at_utc": "2026-05-18T15:44:19.120Z",
+  "total_elapsed_ms": 1388,
+  "steps": {
+    "step1": {
+      "ms": 0,
+      "sizeBytes": 5617
+    },
+    "step2": {
+      "ms": 33,
+      "warnings": 0,
+      "unknownKeys": [
+        "pilot_metadata"
+      ]
+    },
+    "step3a": {
+      "ms": 134,
+      "spins": 10000,
+      "computedRtp": 0.29322593749999953,
+      "hitFreq": 0.4754,
+      "maxWinX": 18.75,
+      "fsTriggers": 78,
+      "fsTriggerRate": 0.0078,
+      "hwTriggers": 4,
+      "hwTriggerRate": 0.0004,
+      "avgScatters": 0.3925
+    },
+    "step3b": {
+      "ms": 1209,
+      "spins": 100000,
+      "computedRtp": 0.2991743593749962,
+      "hitFreq": 0.47769,
+      "maxWinX": 87.5,
+      "fsTriggers": 695,
+      "fsTriggerRate": 0.00695,
+      "hwTriggers": 55,
+      "hwTriggerRate": 0.00055,
+      "avgScatters": 0.39455
+    },
+    "step4": {
+      "ms": 0,
+      "sectionCount": 12
+    },
+    "step5": {
+      "ms": 0,
+      "irHash": "7b2d7ed122b6e6d274d9b89e5015d9a43447c37257a51bfe37c534ca5ce6d938",
+      "mcHash": "8f62f824ccde2c981655c2a425a7293a19842643c2cf2f498c32f58ab3a4dbc5",
+      "parHash": "90f9937b2077873a35b7213eeccf114d3f63580639e21d797b97145139dfdd2b",
+      "merkleRoot": "3150c46ebfaaac1e18127b5667be434684893f55ee073518be8ed0fd48316197",
+      "hsmSignature": "dd7d1cd4492737bfc67a6c4eda782d66"
+    },
+    "step6": {
+      "ms": 0,
+      "fileCount": 153,
+      "files": [
+        "README.md",
+        "INDUSTRY_FIRST_DOSSIER.md",
+        "MANIFEST.json",
+        "SOURCE/source.tar.gz",
+        "IR/spartacus-colossal-conquest.ir.json",
+        "PAR/spartacus-colossal-conquest.par.json",
+        "MERKLE/spartacus-colossal-conquest.merkle.json",
+        "HSM/spartacus-colossal-conquest.sig",
+        "REPORTS/report-001.json",
+        "REPORTS/report-002.json",
+        "..."
+      ],
+      "sampleZipName": "spartacus-colossal-conquest-operator-pkg.zip"
+    },
+    "step7": {
+      "ms": 0,
+      "envelope": {
+        "game_id": "spartacus-colossal-conquest",
+        "version": "1.0.0",
+        "jurisdiction": "UKGC",
+        "submitted_at_utc": "2026-05-18T15:44:19.120Z",
+        "merkle_root": "3150c46ebfaaac1e18127b5667be434684893f55ee073518be8ed0fd48316197",
+        "hsm_signature": "dd7d1cd4492737bfc67a6c4eda782d66",
+        "stub": true
+      },
+      "status": "submitted",
+      "submissionId": "SUB-MPBDJVSG"
+    },
+    "step8": {
+      "ms": 0,
+      "cert": {
+        "cert_id": "CERT-SUB-MPBDJVSG",
+        "game": "spartacus-colossal-conquest",
+        "jurisdiction": "UKGC",
+        "decision": "Approved",
+        "rtp_stated": 0.96,
+        "rtp_computed": 0.2991743593749962,
+        "rtp_delta": 0.6608256406250037,
+        "issued_at_utc": "2026-05-18T15:44:19.120Z",
+        "cert_signature": "1cda7bbafaf02d8064126410755157b792862f62",
+        "note": "All checks passed. Game cleared for production deployment."
+      }
+    }
+  }
+}

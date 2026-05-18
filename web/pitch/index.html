@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Engine — Investor Deck 2026</title>
+  <meta name="description" content="Investor pitch deck for the Slot Math Engine platform — L&W acquisition target." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+</head>
+<body class="pitch-app">
+  <a class="skip-link" href="#pitch-stage">Skip to deck</a>
+
+  <header class="pitch-header" role="banner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-name">Slot Math Engine</span>
+        <span class="brand-tag">Investor Deck · 2026</span>
+      </div>
+    </div>
+    <nav class="pitch-toolbar" aria-label="Deck controls">
+      <button id="btn-overview" type="button" class="tool-btn" title="Overview (Esc)" aria-label="Toggle overview">
+        Overview
+      </button>
+      <button id="btn-presenter" type="button" class="tool-btn" title="Presenter mode (F)" aria-label="Toggle presenter mode">
+        Presenter
+      </button>
+      <button id="btn-autoplay" type="button" class="tool-btn" title="Auto-advance" aria-label="Toggle auto-advance">
+        Auto · Off
+      </button>
+      <button id="btn-download" type="button" class="tool-btn primary" title="Download PDF" aria-label="Download PDF">
+        Download PDF
+      </button>
+    </nav>
+    <div class="pitch-meta">
+      <span id="slide-counter" class="counter" aria-live="polite">01 / 30</span>
+      <span class="confidential">Confidential</span>
+    </div>
+  </header>
+
+  <main id="pitch-stage" class="pitch-stage" role="main" tabindex="-1" aria-label="Slide stage">
+    <button id="btn-prev" type="button" class="nav-arrow prev" aria-label="Previous slide">&#x2190;</button>
+    <section id="slide-frame" class="slide-frame" aria-live="polite"></section>
+    <button id="btn-next" type="button" class="nav-arrow next" aria-label="Next slide">&#x2192;</button>
+  </main>
+
+  <aside id="speaker-notes" class="speaker-notes" aria-label="Speaker notes" hidden>
+    <div class="notes-head">Speaker notes</div>
+    <div id="notes-body" class="notes-body"></div>
+  </aside>
+
+  <section id="overview-grid" class="overview-grid" aria-label="Slide overview" hidden></section>
+
+  <footer class="pitch-footer" role="contentinfo">
+    <span>Slot Math Engine · Confidential 2026</span>
+    <span class="spacer"></span>
+    <span class="hint">&#x2190; / &#x2192; navigate &middot; Esc overview &middot; F presenter</span>
+  </footer>
+
+  <div id="pitch-toast" class="pitch-toast" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

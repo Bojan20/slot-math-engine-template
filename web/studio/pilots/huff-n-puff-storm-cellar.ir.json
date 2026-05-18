@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "huff-n-puff-storm-cellar",
+    "name": "Huff N' Puff Storm Cellar",
+    "version": "1.0.0",
+    "description": "CORTI W205-PILOTS production-grade pilot — L&W M2 Multi-State Frame Upgrade Markov (8 states) anchored to a tornado/barn/farm theme. 5x3 grid, 25 paylines, frame escalates on 3+ Wolves and persists multiplier ladder for subsequent wins until a Wolf-less spin resets state to 1.",
+    "theme_tags": [
+      "pilot",
+      "huff-n-puff",
+      "storm",
+      "barn",
+      "frame-upgrade",
+      "markov",
+      "production"
+    ],
+    "author": "CORTI W205-PILOTS",
+    "created_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 3
+  },
+  "symbols": [
+    { "id": "HP1", "name": "Wolf",          "kind": "hp" },
+    { "id": "HP2", "name": "Pig",           "kind": "hp" },
+    { "id": "HP3", "name": "Barn",          "kind": "hp" },
+    { "id": "HP4", "name": "Lightning",     "kind": "hp" },
+    { "id": "MP1", "name": "Hay",           "kind": "lp" },
+    { "id": "MP2", "name": "Pitchfork",     "kind": "lp" },
+    { "id": "MP3", "name": "Bell",          "kind": "lp" },
+    { "id": "MP4", "name": "Star",          "kind": "lp" },
+    { "id": "LP1", "name": "Nine",          "kind": "lp" },
+    { "id": "LP2", "name": "Ten",           "kind": "lp" },
+    { "id": "LP3", "name": "Jack",          "kind": "lp" },
+    { "id": "WLD", "name": "Wild Tornado",  "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Storm Scatter", "kind": "scatter" },
+    { "id": "MLT", "name": "Frame Upgrade", "kind": "multiplier" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 8, "LP2": 8, "LP3": 8, "WLD": 1, "SCT": 1, "MLT": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 8, "LP2": 8, "LP3": 8, "WLD": 1, "SCT": 1, "MLT": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 8, "LP2": 8, "LP3": 8, "WLD": 1, "SCT": 1, "MLT": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 8, "LP2": 8, "LP3": 8, "WLD": 1, "SCT": 1, "MLT": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 8, "LP2": 8, "LP3": 8, "WLD": 1, "SCT": 1, "MLT": 1 }
+    ],
+    "free_spins": [
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 3 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 3 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 3 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 3 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 3 }
+    ]
+  },
+  "evaluation": {
+    "kind": "lines",
+    "paylines": [
+      [1, 1, 1, 1, 1], [0, 0, 0, 0, 0], [2, 2, 2, 2, 2],
+      [0, 1, 2, 1, 0], [2, 1, 0, 1, 2],
+      [0, 0, 1, 2, 2], [2, 2, 1, 0, 0],
+      [1, 0, 0, 0, 1], [1, 2, 2, 2, 1],
+      [0, 1, 1, 1, 0], [2, 1, 1, 1, 2],
+      [1, 0, 1, 2, 1], [1, 2, 1, 0, 1],
+      [0, 0, 2, 0, 0], [2, 2, 0, 2, 2],
+      [1, 1, 0, 1, 1], [1, 1, 2, 1, 1],
+      [0, 2, 0, 2, 0], [2, 0, 2, 0, 2],
+      [0, 1, 2, 2, 2], [1, 0, 1, 1, 1],
+      [1, 1, 1, 0, 1], [2, 1, 2, 1, 2],
+      [0, 1, 0, 1, 0], [1, 2, 1, 2, 1]
+    ],
+    "direction": "ltr",
+    "min_match": 3,
+    "pay_left_to_right_only": true
+  },
+  "paytable": {
+    "HP1": { "3": 12,   "4": 60,  "5": 300 },
+    "HP2": { "3": 9.5,  "4": 45,  "5": 220 },
+    "HP3": { "3": 7.5,  "4": 36,  "5": 170 },
+    "HP4": { "3": 6,    "4": 28,  "5": 130 },
+    "MP1": { "3": 2.4,  "4": 11,  "5": 45 },
+    "MP2": { "3": 2.0,  "4": 9,   "5": 36 },
+    "MP3": { "3": 1.7,  "4": 7.5, "5": 28 },
+    "MP4": { "3": 1.4,  "4": 6.3, "5": 24 },
+    "LP1": { "3": 0.85, "4": 3.1, "5": 12.5 },
+    "LP2": { "3": 0.75, "4": 2.7, "5": 10.5 },
+    "LP3": { "3": 0.65, "4": 2.25,"5": 8.5 }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 8, "4": 12, "5": 20 }
+      },
+      "retrigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 5, "4": 8, "5": 12 },
+        "max_total": 40
+      },
+      "global_multiplier": 2,
+      "modifiers": ["multiplier_ladder"]
+    },
+    {
+      "kind": "symbol_upgrade",
+      "from": "HP1",
+      "to": "WLD",
+      "probability": 0.05
+    }
+  ],
+  "rng": {
+    "kind": "mulberry32",
+    "default_seed": 20260519
+  },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1,
+    "denominations": [0.1, 0.2, 0.5, 1, 2, 5]
+  },
+  "limits": {
+    "target_rtp": 0.965,
+    "rtp_tolerance": 0.005,
+    "max_win_x": 8000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.30
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "eCOGRA", "ADM", "DGA"],
+    "rtp_range_required": [0.88, 0.99],
+    "max_win_cap_required": 10000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.60,
+    "free_spins": 0.27,
+    "hold_and_win": 0,
+    "jackpot": 0.095,
+    "tolerance": 0.01
+  },
+  "pilot_metadata": {
+    "pilot_id": "PILOT-HNP-STORM-W205",
+    "stated_rtp": 0.965,
+    "max_win_x": 8000,
+    "volatility": "MID-HIGH",
+    "lines": 25,
+    "grid": "5x3",
+    "feature": "multi_state_frame_upgrade_markov",
+    "frame_states": 8,
+    "frame_trigger": "3+ Wolves on screen",
+    "frame_reset": "spin without Wolf",
+    "frame_multipliers": [1, 2, 3, 5, 8, 13, 21, 50],
+    "audio_theme": "storm",
+    "asset_pack": "web/studio/pilots/huff-n-puff-storm-cellar/symbols/"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "rainbow-riches-megaways-vault",
+    "name": "Rainbow Riches Megaways Vault",
+    "version": "1.0.0",
+    "description": "CORTI W205-PILOTS production-grade pilot — L&W M10 Bonus Bank Running Balance Offset on a 6-reel Megaways (variable rows 2-7, up to 117,649 ways). Player elects banking mode: A) Bank Off Wins, B) Bank All, C) Bank Big Only. 3 RTP variants for player/UK-strict/exclusive.",
+    "theme_tags": [
+      "pilot",
+      "rainbow-riches",
+      "megaways",
+      "bonus-bank",
+      "irish",
+      "player-elects",
+      "production"
+    ],
+    "author": "CORTI W205-PILOTS",
+    "created_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "topology": {
+    "kind": "variable_rows",
+    "reels": 6,
+    "row_range_per_reel": [
+      [2, 7], [2, 7], [2, 7], [2, 7], [2, 7], [2, 7]
+    ],
+    "ways_cap": 117649
+  },
+  "symbols": [
+    { "id": "HP1", "name": "Leprechaun",     "kind": "hp" },
+    { "id": "HP2", "name": "Pot of Gold",    "kind": "hp" },
+    { "id": "HP3", "name": "Rainbow",        "kind": "hp" },
+    { "id": "HP4", "name": "Harp",           "kind": "hp" },
+    { "id": "MP1", "name": "Clover",         "kind": "lp" },
+    { "id": "MP2", "name": "Gold Coin",      "kind": "lp" },
+    { "id": "MP3", "name": "Pipe",           "kind": "lp" },
+    { "id": "MP4", "name": "Horseshoe",      "kind": "lp" },
+    { "id": "LP1", "name": "Nine",           "kind": "lp" },
+    { "id": "LP2", "name": "Ten",            "kind": "lp" },
+    { "id": "LP3", "name": "Jack",           "kind": "lp" },
+    { "id": "WLD", "name": "Wild Shamrock",  "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Lucky Scatter",  "kind": "scatter" },
+    { "id": "BNK", "name": "Bonus Bank Vault","kind": "bonus" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 },
+      { "HP1": 2, "HP2": 2, "HP3": 3, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BNK": 1 }
+    ],
+    "free_spins": [
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 },
+      { "HP1": 3, "HP2": 3, "HP3": 4, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BNK": 2 }
+    ]
+  },
+  "evaluation": {
+    "kind": "ways",
+    "direction": "ltr",
+    "min_match": 3,
+    "max_ways_per_spin": 117649
+  },
+  "paytable": {
+    "HP1": { "3": 20,   "4": 100, "5": 500,  "6": 2500 },
+    "HP2": { "3": 15,   "4": 75,  "5": 375,  "6": 1750 },
+    "HP3": { "3": 10,   "4": 50,  "5": 250,  "6": 1250 },
+    "HP4": { "3": 8,    "4": 40,  "5": 200,  "6": 900 },
+    "MP1": { "3": 2.5,  "4": 12,  "5": 60,   "6": 300 },
+    "MP2": { "3": 2.0,  "4": 10,  "5": 50,   "6": 240 },
+    "MP3": { "3": 1.7,  "4": 8.5, "5": 42,   "6": 200 },
+    "MP4": { "3": 1.4,  "4": 7,   "5": 36,   "6": 170 },
+    "LP1": { "3": 0.8,  "4": 4,   "5": 18,   "6": 80 },
+    "LP2": { "3": 0.7,  "4": 3.5, "5": 16,   "6": 72 },
+    "LP3": { "3": 0.6,  "4": 3,   "5": 14,   "6": 64 }
+  },
+  "features": [
+    {
+      "kind": "cascade",
+      "replacement": "drop",
+      "max_chain": 8,
+      "multiplier_progression": [1, 2, 3, 5, 8, 13, 21, 34]
+    },
+    {
+      "kind": "free_spins",
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 12, "4": 15, "5": 20, "6": 30 }
+      },
+      "retrigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 4, "4": 8, "5": 12, "6": 20 },
+        "max_total": 50
+      },
+      "global_multiplier": 1,
+      "modifiers": ["multiplier_ladder"]
+    }
+  ],
+  "rng": {
+    "kind": "mulberry32",
+    "default_seed": 20260521
+  },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1,
+    "denominations": [0.2, 0.5, 1, 2, 5, 10, 20]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.005,
+    "max_win_x": 50000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "ultra",
+    "hit_freq_target": 0.22
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "eCOGRA", "ADM", "DGA", "NJ", "PA", "MI"],
+    "rtp_range_required": [0.88, 0.99],
+    "max_win_cap_required": 50000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.50,
+    "free_spins": 0.32,
+    "hold_and_win": 0,
+    "jackpot": 0.14,
+    "tolerance": 0.01
+  },
+  "pilot_metadata": {
+    "pilot_id": "PILOT-RR-MEGAWAYS-W205",
+    "stated_rtp": 0.96,
+    "max_win_x": 50000,
+    "volatility": "VERY-HIGH",
+    "grid": "6-reels Megaways (variable 2-7 rows)",
+    "max_ways": 117649,
+    "feature": "bonus_bank_running_balance_offset",
+    "bonus_bank_modes": [
+      { "id": "A", "name": "Bank Off Wins",  "rtp_variant": 0.96  },
+      { "id": "B", "name": "Bank All",       "rtp_variant": 0.945 },
+      { "id": "C", "name": "Bank Big Only",  "rtp_variant": 0.975 }
+    ],
+    "audio_theme": "irish",
+    "asset_pack": "web/studio/pilots/rainbow-riches-megaways-vault/symbols/"
+  }
+}

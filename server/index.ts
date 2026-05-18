@@ -51,9 +51,18 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     logger: opts.logger ?? false,
   });
 
+  // CORTI W205-SECURITY — tightened CORS. In production, set
+  // `CORS_ALLOWED_ORIGINS=https://op.example.com,https://reg.example.com`
+  // to enforce an explicit allowlist. The unset / development default
+  // still reflects the request Origin, but `credentials` are only
+  // enabled when an explicit allowlist is in place — combining
+  // `origin: true` with `credentials: true` is a Critical OWASP A05
+  // finding (credential exfiltration via any origin).
+  const corsAllowlist =
+    process.env.CORS_ALLOWED_ORIGINS?.split(',').map((s) => s.trim()).filter(Boolean) ?? [];
   await app.register(cors, {
-    origin: true,
-    credentials: true,
+    origin: corsAllowlist.length > 0 ? corsAllowlist : true,
+    credentials: corsAllowlist.length > 0,
   });
 
   const stores: BackendStores = {

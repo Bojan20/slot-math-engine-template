@@ -24,6 +24,47 @@
     { "id": "hw-payout",      "tier": "hw",   "duration_s": 2.5,  "file": "cues/hw-payout.wav",      "format": "wav", "bytes_max": 50000 },
     { "id": "mystery-reveal", "tier": "fs",   "duration_s": 1.0,  "file": "cues/mystery-reveal.wav", "format": "wav", "bytes_max": 50000 }
   ],
+  "w205_pilot_cues": {
+    "huff-n-puff-storm-cellar": [
+      { "id": "reel-spin",     "tier": "spin", "duration_s": 1.8,  "file": "cues/huff-n-puff-storm-cellar/reel-spin.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "reel-stop",     "tier": "stop", "duration_s": 0.25, "file": "cues/huff-n-puff-storm-cellar/reel-stop.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "win-small",     "tier": "win",  "duration_s": 1.0,  "file": "cues/huff-n-puff-storm-cellar/win-small.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "win-big",       "tier": "win",  "duration_s": 2.0,  "file": "cues/huff-n-puff-storm-cellar/win-big.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "win-jackpot",   "tier": "win",  "duration_s": 2.0,  "file": "cues/huff-n-puff-storm-cellar/win-jackpot.wav",   "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-intro",      "tier": "fs",   "duration_s": 2.2,  "file": "cues/huff-n-puff-storm-cellar/fs-intro.wav",      "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-spin",       "tier": "fs",   "duration_s": 1.2,  "file": "cues/huff-n-puff-storm-cellar/fs-spin.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-outro",      "tier": "fs",   "duration_s": 2.0,  "file": "cues/huff-n-puff-storm-cellar/fs-outro.wav",      "format": "wav", "bytes_max": 50000 },
+      { "id": "frame-upgrade", "tier": "ui",   "duration_s": 0.7,  "file": "cues/huff-n-puff-storm-cellar/frame-upgrade.wav", "format": "wav", "bytes_max": 50000 },
+      { "id": "frame-reset",   "tier": "ui",   "duration_s": 0.8,  "file": "cues/huff-n-puff-storm-cellar/frame-reset.wav",   "format": "wav", "bytes_max": 50000 },
+      { "id": "mystery-reveal","tier": "fs",   "duration_s": 1.0,  "file": "cues/huff-n-puff-storm-cellar/mystery-reveal.wav","format": "wav", "bytes_max": 50000 }
+    ],
+    "spartacus-colossal-conquest": [
+      { "id": "reel-spin",       "tier": "spin", "duration_s": 2.0,  "file": "cues/spartacus-colossal-conquest/reel-spin.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "reel-stop",       "tier": "stop", "duration_s": 0.6,  "file": "cues/spartacus-colossal-conquest/reel-stop.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "win-small",       "tier": "win",  "duration_s": 1.0,  "file": "cues/spartacus-colossal-conquest/win-small.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "win-big",         "tier": "win",  "duration_s": 2.0,  "file": "cues/spartacus-colossal-conquest/win-big.wav",         "format": "wav", "bytes_max": 50000 },
+      { "id": "win-jackpot",     "tier": "win",  "duration_s": 3.0,  "file": "cues/spartacus-colossal-conquest/win-jackpot.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-intro",        "tier": "fs",   "duration_s": 2.0,  "file": "cues/spartacus-colossal-conquest/fs-intro.wav",        "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-spin",         "tier": "fs",   "duration_s": 1.2,  "file": "cues/spartacus-colossal-conquest/fs-spin.wav",         "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-outro",        "tier": "fs",   "duration_s": 2.5,  "file": "cues/spartacus-colossal-conquest/fs-outro.wav",        "format": "wav", "bytes_max": 50000 },
+      { "id": "wild-transfer",   "tier": "ui",   "duration_s": 0.6,  "file": "cues/spartacus-colossal-conquest/wild-transfer.wav",   "format": "wav", "bytes_max": 50000 },
+      { "id": "colossal-expand", "tier": "ui",   "duration_s": 2.5,  "file": "cues/spartacus-colossal-conquest/colossal-expand.wav", "format": "wav", "bytes_max": 50000 },
+      { "id": "mystery-reveal",  "tier": "fs",   "duration_s": 1.0,  "file": "cues/spartacus-colossal-conquest/mystery-reveal.wav",  "format": "wav", "bytes_max": 50000 }
+    ],
+    "rainbow-riches-megaways-vault": [
+      { "id": "reel-spin",     "tier": "spin",    "duration_s": 3.0,  "file": "cues/rainbow-riches-megaways-vault/reel-spin.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "reel-stop",     "tier": "stop",    "duration_s": 0.25, "file": "cues/rainbow-riches-megaways-vault/reel-stop.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "win-small",     "tier": "win",     "duration_s": 1.0,  "file": "cues/rainbow-riches-megaways-vault/win-small.wav",     "format": "wav", "bytes_max": 50000 },
+      { "id": "win-big",       "tier": "win",     "duration_s": 2.0,  "file": "cues/rainbow-riches-megaways-vault/win-big.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "win-jackpot",   "tier": "win",     "duration_s": 2.5,  "file": "cues/rainbow-riches-megaways-vault/win-jackpot.wav",   "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-intro",      "tier": "fs",      "duration_s": 1.6,  "file": "cues/rainbow-riches-megaways-vault/fs-intro.wav",      "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-spin",       "tier": "fs",      "duration_s": 1.2,  "file": "cues/rainbow-riches-megaways-vault/fs-spin.wav",       "format": "wav", "bytes_max": 50000 },
+      { "id": "fs-outro",      "tier": "fs",      "duration_s": 2.0,  "file": "cues/rainbow-riches-megaways-vault/fs-outro.wav",      "format": "wav", "bytes_max": 50000 },
+      { "id": "bank-deposit",  "tier": "ui",      "duration_s": 2.0,  "file": "cues/rainbow-riches-megaways-vault/bank-deposit.wav",  "format": "wav", "bytes_max": 50000 },
+      { "id": "cascade-drop",  "tier": "cascade", "duration_s": 2.5,  "file": "cues/rainbow-riches-megaways-vault/cascade-drop.wav",  "format": "wav", "bytes_max": 50000 },
+      { "id": "mystery-reveal","tier": "fs",      "duration_s": 1.0,  "file": "cues/rainbow-riches-megaways-vault/mystery-reveal.wav","format": "wav", "bytes_max": 50000 }
+    ]
+  },
   "cues": [
     {
       "id": "spin-classic",

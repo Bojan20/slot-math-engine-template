@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "spartacus-colossal-conquest",
+    "name": "Spartacus Colossal Conquest",
+    "version": "1.0.0",
+    "description": "CORTI W205-PILOTS production-grade pilot — L&W M7 Colossal Reels Wild Transfer (main 5x4 + colossal 5x12). Wilds on main grid mirror to corresponding columns of colossal grid for massive ways multipliers when WL+CL >= 2.",
+    "theme_tags": [
+      "pilot",
+      "spartacus",
+      "colossal-reels",
+      "roman",
+      "wild-transfer",
+      "dual-grid",
+      "production"
+    ],
+    "author": "CORTI W205-PILOTS",
+    "created_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 4
+  },
+  "symbols": [
+    { "id": "HP1", "name": "Spartacus",   "kind": "hp" },
+    { "id": "HP2", "name": "Crixus",      "kind": "hp" },
+    { "id": "HP3", "name": "Trident",     "kind": "hp" },
+    { "id": "HP4", "name": "Helmet",      "kind": "hp" },
+    { "id": "MP1", "name": "Shield",      "kind": "lp" },
+    { "id": "MP2", "name": "Sword",       "kind": "lp" },
+    { "id": "MP3", "name": "Wine",        "kind": "lp" },
+    { "id": "MP4", "name": "Crown",       "kind": "lp" },
+    { "id": "LP1", "name": "Ten",         "kind": "lp" },
+    { "id": "LP2", "name": "Jack",        "kind": "lp" },
+    { "id": "LP3", "name": "Queen",       "kind": "lp" },
+    { "id": "WLD", "name": "Lion Wild",   "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Coliseum",    "kind": "scatter" },
+    { "id": "BON", "name": "Empire Bonus","kind": "bonus" },
+    { "id": "MLT", "name": "Laurel Mult", "kind": "multiplier" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BON": 1, "MLT": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BON": 1, "MLT": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BON": 1, "MLT": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BON": 1, "MLT": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 7, "LP2": 7, "LP3": 7, "WLD": 1, "SCT": 1, "BON": 1, "MLT": 1 }
+    ],
+    "free_spins": [
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BON": 2, "MLT": 2 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BON": 2, "MLT": 2 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BON": 2, "MLT": 2 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BON": 2, "MLT": 2 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 5, "LP2": 5, "LP3": 5, "WLD": 2, "SCT": 1, "BON": 2, "MLT": 2 }
+    ]
+  },
+  "evaluation": {
+    "kind": "ways",
+    "direction": "ltr",
+    "min_match": 3,
+    "max_ways_per_spin": 1024
+  },
+  "paytable": {
+    "HP1": { "3": 15,   "4": 70,  "5": 350 },
+    "HP2": { "3": 12,   "4": 55,  "5": 275 },
+    "HP3": { "3": 9,    "4": 42,  "5": 200 },
+    "HP4": { "3": 7,    "4": 32,  "5": 150 },
+    "MP1": { "3": 2.5,  "4": 12,  "5": 50 },
+    "MP2": { "3": 2.1,  "4": 9.5, "5": 40 },
+    "MP3": { "3": 1.7,  "4": 7.5, "5": 30 },
+    "MP4": { "3": 1.4,  "4": 6.3, "5": 25 },
+    "LP1": { "3": 0.85, "4": 3.1, "5": 12.5 },
+    "LP2": { "3": 0.75, "4": 2.7, "5": 10.5 },
+    "LP3": { "3": 0.65, "4": 2.25,"5": 8.5 }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 10, "4": 15, "5": 25 }
+      },
+      "retrigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 5, "4": 10, "5": 15 },
+        "max_total": 60
+      },
+      "global_multiplier": 3,
+      "modifiers": ["expanding_wilds", "multiplier_ladder"]
+    }
+  ],
+  "rng": {
+    "kind": "mulberry32",
+    "default_seed": 20260520
+  },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1,
+    "denominations": [0.2, 0.5, 1, 2, 5, 10]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.005,
+    "max_win_x": 12000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.24
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "eCOGRA", "ADM", "DGA", "NJ", "PA"],
+    "rtp_range_required": [0.88, 0.99],
+    "max_win_cap_required": 15000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.55,
+    "free_spins": 0.30,
+    "hold_and_win": 0,
+    "jackpot": 0.11,
+    "tolerance": 0.01
+  },
+  "pilot_metadata": {
+    "pilot_id": "PILOT-SPT-COLOSSAL-W205",
+    "stated_rtp": 0.96,
+    "max_win_x": 12000,
+    "volatility": "HIGH",
+    "grid_main": "5x4",
+    "grid_colossal": "5x12",
+    "feature": "colossal_reels_wild_transfer",
+    "wild_transfer_min": 2,
+    "transfer_rule": "wilds on main grid mirror to corresponding column on colossal grid",
+    "audio_theme": "roman",
+    "asset_pack": "web/studio/pilots/spartacus-colossal-conquest/symbols/"
+  }
+}

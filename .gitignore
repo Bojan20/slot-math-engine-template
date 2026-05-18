@@ -84,6 +84,11 @@ web/cabinet/node_modules/
 sdk/node_modules/
 sdk/dist/
 
+# ─── W205-PITCH investor deck mini-app ─────────
+web/pitch/node_modules/
+web/pitch/package-lock.json
+dist/pitch/
+
 # ─── W204-PROTOCOLS — HSM ed25519 keypair (generated on first boot) ─────
 server/data/hsm-keys.json
 
@@ -92,3 +97,4 @@ server/data/hsm-keys.json
 # from git noise. The JSON + MD reports under reports/browser-compat/ are
 # the source-of-truth deliverables and stay tracked.
 reports/browser-compat/*.png
+.env.production

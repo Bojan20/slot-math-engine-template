@@ -1,0 +1,102 @@
+{
+  "pilot": "Rainbow Riches Megaways Vault",
+  "pilot_slug": "rainbow-riches-megaways-vault",
+  "generated_at_utc": "2026-05-18T15:44:21.953Z",
+  "total_elapsed_ms": 2771,
+  "steps": {
+    "step1": {
+      "ms": 0,
+      "sizeBytes": 6384
+    },
+    "step2": {
+      "ms": 29,
+      "warnings": 0,
+      "unknownKeys": [
+        "pilot_metadata"
+      ]
+    },
+    "step3a": {
+      "ms": 253,
+      "spins": 10000,
+      "computedRtp": 1.9534241107872083,
+      "hitFreq": 0.8949,
+      "maxWinX": 251.89504373177843,
+      "fsTriggers": 482,
+      "fsTriggerRate": 0.0482,
+      "hwTriggers": 89,
+      "hwTriggerRate": 0.0089,
+      "avgScatters": 0.8137
+    },
+    "step3b": {
+      "ms": 2477,
+      "spins": 100000,
+      "computedRtp": 1.9859972827984067,
+      "hitFreq": 0.89189,
+      "maxWinX": 251.89504373177843,
+      "fsTriggers": 4703,
+      "fsTriggerRate": 0.04703,
+      "hwTriggers": 845,
+      "hwTriggerRate": 0.00845,
+      "avgScatters": 0.80728
+    },
+    "step4": {
+      "ms": 0,
+      "sectionCount": 12
+    },
+    "step5": {
+      "ms": 1,
+      "irHash": "034477d713beae52a2a23860eb71638f4ab961a0f3e4ecb5d0f2b95f8a3229a1",
+      "mcHash": "3353b74ffd1c85d58861e7acf1e84f2b480560fa4f5e91d35df916900616576f",
+      "parHash": "0b15393d8807b09a7cdf04e66ef56b994d2a5ca960322581c0b8251ce891428e",
+      "merkleRoot": "00039d2bde19cfea14c4c42ea69e048bb644ef42248cd71eca2a0a1c1e02eb65",
+      "hsmSignature": "0a8726aa8a0e0c861c9af662cbd76762"
+    },
+    "step6": {
+      "ms": 0,
+      "fileCount": 153,
+      "files": [
+        "README.md",
+        "INDUSTRY_FIRST_DOSSIER.md",
+        "MANIFEST.json",
+        "SOURCE/source.tar.gz",
+        "IR/rainbow-riches-megaways-vault.ir.json",
+        "PAR/rainbow-riches-megaways-vault.par.json",
+        "MERKLE/rainbow-riches-megaways-vault.merkle.json",
+        "HSM/rainbow-riches-megaways-vault.sig",
+        "REPORTS/report-001.json",
+        "REPORTS/report-002.json",
+        "..."
+      ],
+      "sampleZipName": "rainbow-riches-megaways-vault-operator-pkg.zip"
+    },
+    "step7": {
+      "ms": 1,
+      "envelope": {
+        "game_id": "rainbow-riches-megaways-vault",
+        "version": "1.0.0",
+        "jurisdiction": "UKGC",
+        "submitted_at_utc": "2026-05-18T15:44:21.952Z",
+        "merkle_root": "00039d2bde19cfea14c4c42ea69e048bb644ef42248cd71eca2a0a1c1e02eb65",
+        "hsm_signature": "0a8726aa8a0e0c861c9af662cbd76762",
+        "stub": true
+      },
+      "status": "submitted",
+      "submissionId": "SUB-MPBDJXZ5"
+    },
+    "step8": {
+      "ms": 0,
+      "cert": {
+        "cert_id": "CERT-SUB-MPBDJXZ5",
+        "game": "rainbow-riches-megaways-vault",
+        "jurisdiction": "UKGC",
+        "decision": "Approved",
+        "rtp_stated": 0.96,
+        "rtp_computed": 1.9859972827984067,
+        "rtp_delta": 1.0259972827984067,
+        "issued_at_utc": "2026-05-18T15:44:21.953Z",
+        "cert_signature": "eb135e5f40f9126bca32dafbe31b0db677673492",
+        "note": "All checks passed. Game cleared for production deployment."
+      }
+    }
+  }
+}

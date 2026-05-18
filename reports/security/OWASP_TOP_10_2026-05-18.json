@@ -1,0 +1,184 @@
+{
+  "date": "2026-05-18",
+  "categories": {
+    "A01": {
+      "name": "Broken Access Control",
+      "findings": [
+        {
+          "severity": "Medium",
+          "id": "a01-admin-routes-open",
+          "file": "server/routes/admin.ts",
+          "message": "Admin tenant CRUD is intentionally open (no operator JWT). Wrap behind operator auth in production.",
+          "remediation": "Add JWT/OIDC admin scope check; deny if missing."
+        },
+        {
+          "severity": "High",
+          "id": "a01-no-rbac",
+          "message": "No role-based access control (RBAC) implemented for admin/operator/regulator separation.",
+          "remediation": "Introduce roles in TenantStore + per-route scope check."
+        }
+      ]
+    },
+    "A02": {
+      "name": "Cryptographic Failures",
+      "findings": [
+        {
+          "severity": "High",
+          "id": "a02-nginx-no-tls",
+          "file": "docker/nginx-spa.conf",
+          "message": "Nginx config does not enforce TLS (listen 443 / ssl_certificate). Terminate TLS at load balancer or add cert config.",
+          "remediation": "Use cloud LB with managed TLS or add ssl_certificate directives."
+        }
+      ]
+    },
+    "A03": {
+      "name": "Injection",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a03-clean",
+          "message": "No injection sinks detected (eval/Function/innerHTML/exec)."
+        }
+      ]
+    },
+    "A04": {
+      "name": "Insecure Design",
+      "findings": [
+        {
+          "severity": "High",
+          "id": "a04-session-id-predictable",
+          "file": "server/state/sessions.ts",
+          "message": "Session IDs derived from Date.now() + counter; predictable. Use crypto.randomBytes(16).",
+          "remediation": "Replace newSessionId() with crypto.randomBytes(16).toString(\"hex\")."
+        },
+        {
+          "severity": "Low",
+          "id": "a04-wallet-race-single-threaded",
+          "file": "server/state/wallet.ts",
+          "message": "Wallet operations rely on Node single-threaded execution. Add row-level lock when moving to Postgres."
+        }
+      ]
+    },
+    "A05": {
+      "name": "Security Misconfiguration",
+      "findings": [
+        {
+          "severity": "High",
+          "id": "a05-no-security-headers",
+          "message": "No @fastify/helmet or manual CSP/X-Frame-Options/HSTS headers detected.",
+          "remediation": "Install @fastify/helmet and register before routes."
+        }
+      ]
+    },
+    "A06": {
+      "name": "Vulnerable & Outdated Components",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a06-lockfile-present",
+          "file": "package-lock.json",
+          "message": "Lockfile present."
+        },
+        {
+          "severity": "Info",
+          "id": "a06-delegated",
+          "message": "Detailed CVE list owned by scripts/dependency-scan.mjs — see reports/security/DEPENDENCIES_*.json."
+        }
+      ]
+    },
+    "A07": {
+      "name": "Identification & Authentication Failures",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a07-rate-limit-present",
+          "file": "server/state/tenants.ts",
+          "message": "Per-tenant rate limit implemented."
+        },
+        {
+          "severity": "Medium",
+          "id": "a07-apikey-entropy-policy",
+          "message": "GAAS_API_KEYS comes from env-var split on comma; no length/entropy validation. Document policy: ≥ 32 random bytes, base64."
+        },
+        {
+          "severity": "Medium",
+          "id": "a07-no-mfa",
+          "message": "No MFA implemented for admin/operator portals (placeholder)."
+        }
+      ]
+    },
+    "A08": {
+      "name": "Software & Data Integrity Failures",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a08-lockfile",
+          "message": "package-lock.json present (deterministic installs)."
+        },
+        {
+          "severity": "Info",
+          "id": "a08-hash-chain",
+          "file": "server/state/audit.ts",
+          "message": "Audit log uses hash-chain (sealEntry + verifyChain)."
+        },
+        {
+          "severity": "Medium",
+          "id": "a08-no-signed-releases",
+          "message": "GitHub Release artifacts not signed (cosign/Sigstore). Add to release workflow."
+        },
+        {
+          "severity": "Low",
+          "id": "a08-no-sri",
+          "message": "No third-party CDN scripts in use; if added, require Subresource Integrity (integrity=)."
+        }
+      ]
+    },
+    "A09": {
+      "name": "Security Logging & Monitoring Failures",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a09-logger-enabled",
+          "message": "Fastify logger enabled in main bootstrap."
+        },
+        {
+          "severity": "Info",
+          "id": "a09-audit-store",
+          "message": "AuditStore append-only with hash chain."
+        },
+        {
+          "severity": "Medium",
+          "id": "a09-no-centralized-logging",
+          "message": "No centralized log shipping (ELK / CloudWatch / Datadog). Configure in deployment."
+        },
+        {
+          "severity": "Medium",
+          "id": "a09-no-alerting",
+          "message": "No alerting on anomalies (failed auth bursts, RTP drift). Wire Prometheus → Alertmanager."
+        },
+        {
+          "severity": "Info",
+          "id": "a09-prometheus-metrics",
+          "message": "Prometheus /api/metrics endpoint exposed."
+        }
+      ]
+    },
+    "A10": {
+      "name": "Server-Side Request Forgery",
+      "findings": [
+        {
+          "severity": "Info",
+          "id": "a10-clean",
+          "message": "No external URL fetch detected from request-derived input."
+        }
+      ]
+    }
+  },
+  "counts": {
+    "Critical": 0,
+    "High": 4,
+    "Medium": 6,
+    "Low": 2,
+    "Info": 10
+  }
+}

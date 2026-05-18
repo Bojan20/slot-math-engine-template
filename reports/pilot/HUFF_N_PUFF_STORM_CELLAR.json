@@ -1,0 +1,102 @@
+{
+  "pilot": "Huff N' Puff Storm Cellar",
+  "pilot_slug": "huff-n-puff-storm-cellar",
+  "generated_at_utc": "2026-05-18T15:44:17.662Z",
+  "total_elapsed_ms": 930,
+  "steps": {
+    "step1": {
+      "ms": 0,
+      "sizeBytes": 6159
+    },
+    "step2": {
+      "ms": 29,
+      "warnings": 0,
+      "unknownKeys": [
+        "pilot_metadata"
+      ]
+    },
+    "step3a": {
+      "ms": 88,
+      "spins": 10000,
+      "computedRtp": 0.9594049999999974,
+      "hitFreq": 0.2408,
+      "maxWinX": 102,
+      "fsTriggers": 18,
+      "fsTriggerRate": 0.0018,
+      "hwTriggers": 0,
+      "hwTriggerRate": 0,
+      "avgScatters": 0.2743
+    },
+    "step3b": {
+      "ms": 800,
+      "spins": 100000,
+      "computedRtp": 0.9794559999999473,
+      "hitFreq": 0.2456,
+      "maxWinX": 384.30000000000007,
+      "fsTriggers": 206,
+      "fsTriggerRate": 0.00206,
+      "hwTriggers": 0,
+      "hwTriggerRate": 0,
+      "avgScatters": 0.27179
+    },
+    "step4": {
+      "ms": 0,
+      "sectionCount": 12
+    },
+    "step5": {
+      "ms": 1,
+      "irHash": "2583cd07f45cb05e9f1fa3c12474a9797773d431fa5e977a01c1c5f77d0ed09d",
+      "mcHash": "2b2d6f5b30f55bfe7b4fd0f80275dfeb9b5fab793ca682e2c4a984f61b83ad9d",
+      "parHash": "d89cc3864aaadc286f3a69407673310f3a5f9a4c6836dfd2c30938aac1b743bb",
+      "merkleRoot": "4c83f21a78005a6d48dcab29364659e5be933da9fbf4d78cc14d4dc852ab4e1f",
+      "hsmSignature": "782879658da541f4ebc5338384658efe"
+    },
+    "step6": {
+      "ms": 0,
+      "fileCount": 153,
+      "files": [
+        "README.md",
+        "INDUSTRY_FIRST_DOSSIER.md",
+        "MANIFEST.json",
+        "SOURCE/source.tar.gz",
+        "IR/huff-n-puff-storm-cellar.ir.json",
+        "PAR/huff-n-puff-storm-cellar.par.json",
+        "MERKLE/huff-n-puff-storm-cellar.merkle.json",
+        "HSM/huff-n-puff-storm-cellar.sig",
+        "REPORTS/report-001.json",
+        "REPORTS/report-002.json",
+        "..."
+      ],
+      "sampleZipName": "huff-n-puff-storm-cellar-operator-pkg.zip"
+    },
+    "step7": {
+      "ms": 1,
+      "envelope": {
+        "game_id": "huff-n-puff-storm-cellar",
+        "version": "1.0.0",
+        "jurisdiction": "UKGC",
+        "submitted_at_utc": "2026-05-18T15:44:17.661Z",
+        "merkle_root": "4c83f21a78005a6d48dcab29364659e5be933da9fbf4d78cc14d4dc852ab4e1f",
+        "hsm_signature": "782879658da541f4ebc5338384658efe",
+        "stub": true
+      },
+      "status": "submitted",
+      "submissionId": "SUB-MPBDJUNY"
+    },
+    "step8": {
+      "ms": 0,
+      "cert": {
+        "cert_id": "CERT-SUB-MPBDJUNY",
+        "game": "huff-n-puff-storm-cellar",
+        "jurisdiction": "UKGC",
+        "decision": "Approved",
+        "rtp_stated": 0.965,
+        "rtp_computed": 0.9794559999999473,
+        "rtp_delta": 0.014455999999947289,
+        "issued_at_utc": "2026-05-18T15:44:17.662Z",
+        "cert_signature": "74246c9326f3da76863252a291c3ef12155d43d1",
+        "note": "All checks passed. Game cleared for production deployment."
+      }
+    }
+  }
+}
