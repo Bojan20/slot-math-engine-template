@@ -1,0 +1,698 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PLAYER_ELECTS_FEATURE_COMPOSITION",
+  "generated_utc": "2026-05-18T00:54:44.642Z",
+  "spins_per_strategy": 20000,
+  "seed": 3405644168,
+  "tolerances": {
+    "best_pick_rel": 0.08,
+    "worst_pick_rel": 0.08,
+    "uniform_pick_rel": 0.08,
+    "std_dev_rel": 0.2
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_rainbow_riches_pick_n_mix_3of5",
+      "description": "LNW Barcrest Rainbow Riches Pick n Mix (2014) — pick 3 of 5 bonuses (Roads/Wishing/Pots/Magic/Cash).",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "Roads_to_Riches",
+            "rtp": 0.32,
+            "variance": 8
+          },
+          {
+            "name": "Wishing_Well",
+            "rtp": 0.28,
+            "variance": 5
+          },
+          {
+            "name": "Pots_of_Gold",
+            "rtp": 0.35,
+            "variance": 12
+          },
+          {
+            "name": "Magic_Toadstool",
+            "rtp": 0.18,
+            "variance": 2
+          },
+          {
+            "name": "Cash_Crop",
+            "rtp": 0.22,
+            "variance": 4
+          }
+        ],
+        "numModesToElect": 3
+      },
+      "closed_form": {
+        "numDistinctCompositions": 10,
+        "expectedPayoutBestPick": 0.95,
+        "varianceBestPick": 25,
+        "stdDevBestPick": 5,
+        "bestPickIndices": [
+          2,
+          0,
+          1
+        ],
+        "bestPickNames": [
+          "Pots_of_Gold",
+          "Roads_to_Riches",
+          "Wishing_Well"
+        ],
+        "expectedPayoutWorstPick": 0.6799999999999999,
+        "worstPickIndices": [
+          1,
+          4,
+          3
+        ],
+        "worstPickNames": [
+          "Wishing_Well",
+          "Cash_Crop",
+          "Magic_Toadstool"
+        ],
+        "expectedPayoutUniformPick": 0.81,
+        "rtpSpread": 0.27,
+        "skillPremium": 0.1399999999999999,
+        "perModeDisclosure": [
+          {
+            "name": "Roads_to_Riches",
+            "rtp": 0.32,
+            "variance": 8,
+            "rankByRtp": 2,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.32
+          },
+          {
+            "name": "Wishing_Well",
+            "rtp": 0.28,
+            "variance": 5,
+            "rankByRtp": 3,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.28
+          },
+          {
+            "name": "Pots_of_Gold",
+            "rtp": 0.35,
+            "variance": 12,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.35
+          },
+          {
+            "name": "Magic_Toadstool",
+            "rtp": 0.18,
+            "variance": 2,
+            "rankByRtp": 5,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.18
+          },
+          {
+            "name": "Cash_Crop",
+            "rtp": 0.22,
+            "variance": 4,
+            "rankByRtp": 4,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.22
+          }
+        ],
+        "fullPortfolioExpectedPayout": 1.35,
+        "rationalityCoverageRatio": 0.7037037037037036
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 0.9615511270182682,
+          "stdDev": 5.03175196527002
+        },
+        "worst": {
+          "meanPayoutPerSpin": 0.7081492702575437,
+          "stdDev": 3.3330448284000527
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 0.7757986096707816,
+          "stdDev": 4.32062297253447
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.012013013862391073,
+        "worst_pick_rel": 0.03975047555624294,
+        "uniform_pick_rel": 0.04222393867804744,
+        "std_dev_rel": 0.006310320041444314
+      },
+      "pass": true,
+      "elapsed_ms": 22
+    },
+    {
+      "name": "B_michael_jackson_kop_3fs_modes",
+      "description": "LNW Bally Michael Jackson King of Pop (2013) — 3 FS modes Smooth Criminal/Beat It/Billie Jean, pick 1.",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "Smooth_Criminal",
+            "rtp": 0.95,
+            "variance": 50
+          },
+          {
+            "name": "Beat_It",
+            "rtp": 1.05,
+            "variance": 80
+          },
+          {
+            "name": "Billie_Jean",
+            "rtp": 1,
+            "variance": 65
+          }
+        ],
+        "numModesToElect": 1
+      },
+      "closed_form": {
+        "numDistinctCompositions": 3,
+        "expectedPayoutBestPick": 1.05,
+        "varianceBestPick": 80,
+        "stdDevBestPick": 8.94427190999916,
+        "bestPickIndices": [
+          1
+        ],
+        "bestPickNames": [
+          "Beat_It"
+        ],
+        "expectedPayoutWorstPick": 0.95,
+        "worstPickIndices": [
+          0
+        ],
+        "worstPickNames": [
+          "Smooth_Criminal"
+        ],
+        "expectedPayoutUniformPick": 1,
+        "rtpSpread": 0.10000000000000009,
+        "skillPremium": 0.050000000000000044,
+        "perModeDisclosure": [
+          {
+            "name": "Smooth_Criminal",
+            "rtp": 0.95,
+            "variance": 50,
+            "rankByRtp": 3,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.95
+          },
+          {
+            "name": "Beat_It",
+            "rtp": 1.05,
+            "variance": 80,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 1.05
+          },
+          {
+            "name": "Billie_Jean",
+            "rtp": 1,
+            "variance": 65,
+            "rankByRtp": 2,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 1
+          }
+        ],
+        "fullPortfolioExpectedPayout": 3,
+        "rationalityCoverageRatio": 0.35000000000000003
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 1.1072589264215895,
+          "stdDev": 8.931512680132643
+        },
+        "worst": {
+          "meanPayoutPerSpin": 0.9061663702212136,
+          "stdDev": 7.128031392859435
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 1.000853815039197,
+          "stdDev": 8.083097721664123
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.0517123186413474,
+        "worst_pick_rel": 0.04614066292503827,
+        "uniform_pick_rel": 0.0008530866609761347,
+        "std_dev_rel": 0.001426525266103768
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "C_kiss_band_member_fs_variants",
+      "description": "LNW Bally KISS — 4 band-member FS variants, pick 1 (Paul/Gene/Ace/Peter).",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "Paul_Stanley_FS",
+            "rtp": 0.98,
+            "variance": 55
+          },
+          {
+            "name": "Gene_Simmons_FS",
+            "rtp": 1.02,
+            "variance": 70
+          },
+          {
+            "name": "Ace_Frehley_FS",
+            "rtp": 1,
+            "variance": 60
+          },
+          {
+            "name": "Peter_Criss_FS",
+            "rtp": 0.96,
+            "variance": 45
+          }
+        ],
+        "numModesToElect": 1
+      },
+      "closed_form": {
+        "numDistinctCompositions": 4,
+        "expectedPayoutBestPick": 1.02,
+        "varianceBestPick": 70,
+        "stdDevBestPick": 8.366600265340756,
+        "bestPickIndices": [
+          1
+        ],
+        "bestPickNames": [
+          "Gene_Simmons_FS"
+        ],
+        "expectedPayoutWorstPick": 0.96,
+        "worstPickIndices": [
+          3
+        ],
+        "worstPickNames": [
+          "Peter_Criss_FS"
+        ],
+        "expectedPayoutUniformPick": 0.99,
+        "rtpSpread": 0.06000000000000005,
+        "skillPremium": 0.030000000000000027,
+        "perModeDisclosure": [
+          {
+            "name": "Paul_Stanley_FS",
+            "rtp": 0.98,
+            "variance": 55,
+            "rankByRtp": 3,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.98
+          },
+          {
+            "name": "Gene_Simmons_FS",
+            "rtp": 1.02,
+            "variance": 70,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 1.02
+          },
+          {
+            "name": "Ace_Frehley_FS",
+            "rtp": 1,
+            "variance": 60,
+            "rankByRtp": 2,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 1
+          },
+          {
+            "name": "Peter_Criss_FS",
+            "rtp": 0.96,
+            "variance": 45,
+            "rankByRtp": 4,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.96
+          }
+        ],
+        "fullPortfolioExpectedPayout": 3.96,
+        "rationalityCoverageRatio": 0.25757575757575757
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 1.073560821251006,
+          "stdDev": 8.354665098670873
+        },
+        "worst": {
+          "meanPayoutPerSpin": 0.9184157675359411,
+          "stdDev": 6.762244330385496
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 0.9811966586012646,
+          "stdDev": 7.598947557635073
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.049890812137306034,
+        "worst_pick_rel": 0.043316908816727964,
+        "uniform_pick_rel": 0.008892264039126664,
+        "std_dev_rel": 0.0014265252661017974
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "D_5_treasures_5fs_modes",
+      "description": "LNW Shuffle Master 5 Treasures (2017) — 5 FS modes (Dragon/Phoenix/Tiger/Lion/Elephant), pick 1.",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "Dragon_Treasure",
+            "rtp": 1.1,
+            "variance": 90
+          },
+          {
+            "name": "Phoenix_Treasure",
+            "rtp": 1.05,
+            "variance": 75
+          },
+          {
+            "name": "Tiger_Treasure",
+            "rtp": 1,
+            "variance": 60
+          },
+          {
+            "name": "Lion_Treasure",
+            "rtp": 0.95,
+            "variance": 45
+          },
+          {
+            "name": "Elephant_Treasure",
+            "rtp": 0.9,
+            "variance": 35
+          }
+        ],
+        "numModesToElect": 1
+      },
+      "closed_form": {
+        "numDistinctCompositions": 5,
+        "expectedPayoutBestPick": 1.1,
+        "varianceBestPick": 90,
+        "stdDevBestPick": 9.486832980505138,
+        "bestPickIndices": [
+          0
+        ],
+        "bestPickNames": [
+          "Dragon_Treasure"
+        ],
+        "expectedPayoutWorstPick": 0.9,
+        "worstPickIndices": [
+          4
+        ],
+        "worstPickNames": [
+          "Elephant_Treasure"
+        ],
+        "expectedPayoutUniformPick": 1.0000000000000002,
+        "rtpSpread": 0.20000000000000007,
+        "skillPremium": 0.09999999999999987,
+        "perModeDisclosure": [
+          {
+            "name": "Dragon_Treasure",
+            "rtp": 1.1,
+            "variance": 90,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 1.1
+          },
+          {
+            "name": "Phoenix_Treasure",
+            "rtp": 1.05,
+            "variance": 75,
+            "rankByRtp": 2,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 1.05
+          },
+          {
+            "name": "Tiger_Treasure",
+            "rtp": 1,
+            "variance": 60,
+            "rankByRtp": 3,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 1
+          },
+          {
+            "name": "Lion_Treasure",
+            "rtp": 0.95,
+            "variance": 45,
+            "rankByRtp": 4,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.95
+          },
+          {
+            "name": "Elephant_Treasure",
+            "rtp": 0.9,
+            "variance": 35,
+            "rankByRtp": 5,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.9
+          }
+        ],
+        "fullPortfolioExpectedPayout": 5.000000000000001,
+        "rationalityCoverageRatio": 0.21999999999999997
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 1.1607322627342516,
+          "stdDev": 9.473299773563113
+        },
+        "worst": {
+          "meanPayoutPerSpin": 0.8633261541461974,
+          "stdDev": 5.963738934285499
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 0.9785278361254457,
+          "stdDev": 7.821573549619149
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.052322369838492255,
+        "worst_pick_rel": 0.040748717615336244,
+        "uniform_pick_rel": 0.021472163874554525,
+        "std_dev_rel": 0.0014265252661067188
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "E_corner_pick_all_modes",
+      "description": "Corner: m = N (pick all modes) — degenerate single-composition case.",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "A",
+            "rtp": 0.3,
+            "variance": 4
+          },
+          {
+            "name": "B",
+            "rtp": 0.4,
+            "variance": 5
+          },
+          {
+            "name": "C",
+            "rtp": 0.2,
+            "variance": 3
+          }
+        ],
+        "numModesToElect": 3
+      },
+      "closed_form": {
+        "numDistinctCompositions": 1,
+        "expectedPayoutBestPick": 0.8999999999999999,
+        "varianceBestPick": 12,
+        "stdDevBestPick": 3.4641016151377544,
+        "bestPickIndices": [
+          1,
+          0,
+          2
+        ],
+        "bestPickNames": [
+          "B",
+          "A",
+          "C"
+        ],
+        "expectedPayoutWorstPick": 0.8999999999999999,
+        "worstPickIndices": [
+          1,
+          0,
+          2
+        ],
+        "worstPickNames": [
+          "B",
+          "A",
+          "C"
+        ],
+        "expectedPayoutUniformPick": 0.8999999999999999,
+        "rtpSpread": 0,
+        "skillPremium": 0,
+        "perModeDisclosure": [
+          {
+            "name": "A",
+            "rtp": 0.3,
+            "variance": 4,
+            "rankByRtp": 2,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.3
+          },
+          {
+            "name": "B",
+            "rtp": 0.4,
+            "variance": 5,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.4
+          },
+          {
+            "name": "C",
+            "rtp": 0.2,
+            "variance": 3,
+            "rankByRtp": 3,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.2
+          }
+        ],
+        "fullPortfolioExpectedPayout": 0.8999999999999999,
+        "rationalityCoverageRatio": 1
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 0.907189129636775,
+          "stdDev": 3.487307899756921
+        },
+        "worst": {
+          "meanPayoutPerSpin": 0.927138379196212,
+          "stdDev": 3.4773593477079294
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 0.8777830270400091,
+          "stdDev": 3.4616043367650664
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.007924620569090718,
+        "worst_pick_rel": 0.02927112047690213,
+        "uniform_pick_rel": 0.024685525511100904,
+        "std_dev_rel": 0.006654498336893077
+      },
+      "pass": true,
+      "elapsed_ms": 45
+    },
+    {
+      "name": "F_corner_flat_rtp_zero_skill_premium",
+      "description": "Corner: flat RTP across all modes — skill premium = 0 (no player-rational advantage).",
+      "cfg": {
+        "candidateModes": [
+          {
+            "name": "A",
+            "rtp": 0.5,
+            "variance": 5
+          },
+          {
+            "name": "B",
+            "rtp": 0.5,
+            "variance": 5
+          },
+          {
+            "name": "C",
+            "rtp": 0.5,
+            "variance": 5
+          },
+          {
+            "name": "D",
+            "rtp": 0.5,
+            "variance": 5
+          }
+        ],
+        "numModesToElect": 2
+      },
+      "closed_form": {
+        "numDistinctCompositions": 6,
+        "expectedPayoutBestPick": 1,
+        "varianceBestPick": 10,
+        "stdDevBestPick": 3.1622776601683795,
+        "bestPickIndices": [
+          0,
+          1
+        ],
+        "bestPickNames": [
+          "A",
+          "B"
+        ],
+        "expectedPayoutWorstPick": 1,
+        "worstPickIndices": [
+          2,
+          3
+        ],
+        "worstPickNames": [
+          "C",
+          "D"
+        ],
+        "expectedPayoutUniformPick": 1,
+        "rtpSpread": 0,
+        "skillPremium": 0,
+        "perModeDisclosure": [
+          {
+            "name": "A",
+            "rtp": 0.5,
+            "variance": 5,
+            "rankByRtp": 1,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.5
+          },
+          {
+            "name": "B",
+            "rtp": 0.5,
+            "variance": 5,
+            "rankByRtp": 2,
+            "inRationalTopMPick": true,
+            "contributionIfPicked": 0.5
+          },
+          {
+            "name": "C",
+            "rtp": 0.5,
+            "variance": 5,
+            "rankByRtp": 3,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.5
+          },
+          {
+            "name": "D",
+            "rtp": 0.5,
+            "variance": 5,
+            "rankByRtp": 4,
+            "inRationalTopMPick": false,
+            "contributionIfPicked": 0.5
+          }
+        ],
+        "fullPortfolioExpectedPayout": 2,
+        "rationalityCoverageRatio": 0.5
+      },
+      "monte_carlo": {
+        "spins_per_strategy": 20000,
+        "rational": {
+          "meanPayoutPerSpin": 0.9997334539178361,
+          "stdDev": 3.1839804443655133
+        },
+        "worst": {
+          "meanPayoutPerSpin": 1.0190583642884368,
+          "stdDev": 3.1557450858882388
+        },
+        "uniform": {
+          "meanPayoutPerSpin": 1.0027743317649587,
+          "stdDev": 3.1641002675584096
+        }
+      },
+      "checks": {
+        "best_pick_rel": 0.00026654608216392095,
+        "worst_pick_rel": 0.018701935979637808,
+        "uniform_pick_rel": 0.002766656142938598,
+        "std_dev_rel": 0.006816242931246583
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    }
+  ]
+}

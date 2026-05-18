@@ -95,6 +95,7 @@
     "per-reel-bag-row-multiplier-coupled-acceptance": "npm run build && node scripts/per-reel-bag-row-multiplier-coupled-acceptance.mjs",
     "big-bet-paid-package-multi-spin-acceptance": "npm run build && node scripts/big-bet-paid-package-multi-spin-acceptance.mjs",
     "deterministic-explosion-multiplier-drop-acceptance": "npm run build && node scripts/deterministic-explosion-multiplier-drop-acceptance.mjs",
+    "player-elects-feature-composition-acceptance": "npm run build && node scripts/player-elects-feature-composition-acceptance.mjs",
     "avalanche-reactor-wave-aggregator-acceptance": "npm run build && node scripts/avalanche-reactor-wave-aggregator-acceptance.mjs",
     "sticky-multiplier-fs-trail-acceptance": "npm run build && node scripts/sticky-multiplier-fs-trail-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",

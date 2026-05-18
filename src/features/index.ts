@@ -225,3 +225,6 @@ export * from './bigBetPaidPackageMultiSpin.js';
 
 // W152 Wave 187: Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
 export * from './deterministicExplosionMultiplierDrop.js';
+
+// W152 Wave 188: Player-Elects Feature Composition Aggregator (69. solver, L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ King of Pop + KISS + 5 Treasures)
+export * from './playerElectsFeatureComposition.js';

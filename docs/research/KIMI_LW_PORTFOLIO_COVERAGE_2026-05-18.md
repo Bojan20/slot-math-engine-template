@@ -142,8 +142,8 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 64 | The Wizard of Oz Follow the Yellow Brick Road | LNW (WMS) | 2017 | D + H + Glinda reshape-reels random feature + progressive FS meter (multi-stage) | P-047 ✅ + ❌ **random reel-reshape** (entire reel set replaced mid-spin) + P-067 ✅ | YES (M12, M13) | P1 |
 | 65 | Willy Wonka Pure Imagination | LNW (WMS) | 2014 | D (factory pick tree) + H + Oompa-Loompa wild + Golden Ticket bonus | P-047 ✅ + P-005 ✅ + P-068 ✅ | NO | n/a |
 | 66 | Willy Wonka Dreamers of Dreams | LNW (WMS) | 2017 | D + H + B | as #65 | NO | n/a |
-| 67 | Michael Jackson King of Pop | LNW (Bally) | 2013 | H (Smooth Criminal / Beat It / Billie Jean FS modes — 3 selectable FS variants) + Wild Bonus | ❌ **player-elects FS-variant pre-bonus** (multiple FS modes, mathematically distinct) + P-068 ✅ | YES (M11) | P1 |
-| 68 | KISS | LNW (WMS) | 2014 | H (band-member FS variants) + G (stacked wilds) + B | as #67 + P-005 ✅ | YES (M11) | P1 |
+| 67 | Michael Jackson King of Pop | LNW (Bally) | 2013 | H (Smooth Criminal / Beat It / Billie Jean FS modes — 3 selectable FS variants) + Wild Bonus | ❌ **player-elects FS-variant pre-bonus** (multiple FS modes, mathematically distinct) + P-068 ✅ |  ✅ **CLOSED (M11 W188)**| P1 |
+| 68 | KISS | LNW (WMS) | 2014 | H (band-member FS variants) + G (stacked wilds) + B | as #67 + P-005 ✅ |  ✅ **CLOSED (M11 W188)**| P1 |
 | 69 | Madonna | LNW (WMS) | 2010 | H + B (Like-a-Prayer bonus) + G | P-005 ✅ + P-035 ✅ | NO | n/a |
 | 70 | Star Trek (Trek Through the Stars / Trek to the Top) | LNW (WMS) | 2012 | D (multi-stage starship pick) + H + B (4-tier progressive) | P-047 ✅ + P-014 ✅ + P-035 ✅ | NO | n/a |
 | 71 | Lord of the Rings (Two Towers / Return of the King) | LNW (WMS) | 2012, 2013 | H (4-mode FS tower-spin / extra-spin) + D (tower-pick bonus) + B (5-tier progressive Helm's Deep) + **M: mini-slot inside bonus (Tower Spin)** | P-014 ✅ + P-047 ✅ + P-035 ✅ + ❌ **nested-slot-inside-bonus** (sub-game spins independently with own paytable, contributes to parent) | YES (M14) | P1 |
@@ -169,7 +169,7 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 91 | 88 Fortunes (land-based original) | LNW (Bally / Shuffle Master) | 2014 | A (gold-symbol H&S Fu Bat bonus) + B (4-tier MMMG WAP) + C (mystery gold-symbol coverage) + H | P-002 ✅ + P-035 ✅ + P-051 ✅ + P-014 ✅ | NO | n/a |
 | 92 | 88 Fortunes Megaways | LNW (SG Digital online port) | 2020 | G3 + F + D (picker bonus) + H (multiplier-enhanced FS up to 10000x) + cap | P-049 ✅ + P-001 ✅ + P-047 ✅ + P-067 ✅ + P-066 ✅ (max-win cap) | NO | n/a |
 | 93 | 88 Fortunes Diamond Eternity | LNW (Bally) | 2023 | as #91 + Diamond-Eternity sticky-symbol upgrade | + P-013 ✅ | NO | n/a |
-| 94 | 5 Treasures | LNW (Shuffle Master) | 2017 | D (FS mode selection: choose 1 of 5 FS modes after trigger) + H | P-047 ✅ + ❌ **player-elects FS-variant** (M11 same) | YES (M11) | P1 |
+| 94 | 5 Treasures | LNW (Shuffle Master) | 2017 | D (FS mode selection: choose 1 of 5 FS modes after trigger) + H | P-047 ✅ + ❌ **player-elects FS-variant** (M11 same) |  ✅ **CLOSED (M11 W188)**| P1 |
 | 95 | Jin Ji Bao Xi (Endless Treasure / Rising Fortunes) | LNW (Shuffle Master) | 2017–2019 | A (red-envelope H&S) + B (4-tier MMMG) + H | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
 | 96 | Fu Dai Lian Lian | LNW (Shuffle Master) | 2017 | A + B + H | as #95 | NO | n/a |
 | 97 | Action Bank | LNW (Barcrest) | 2017 | D (vault-pick bonus) + H + I (Big Bet) | P-047 ✅ + P-014 ✅ + P-057 ✅ + ❌ Big Bet within-package reel-set switching (M9) |  ✅ **CLOSED (M9 W186)**| P1 |
@@ -236,9 +236,10 @@ Player pays N× stake → unlocked 5 spins where **each spin has a different ree
 **Example:** Rainbow Riches Megaways.
 Player elects pre-spin Bank-Off-Wins / Bank-All-Wins / Bank-Small-Wins → winnings accumulate in a bank rather than balance, then auto-converts to a bonus buy when bank threshold reached. P-057 (FS Buy) does not handle running-balance accumulation; P-095 anteBetTradeOff (existing) handles per-spin RTP swap not cumulative banking.
 
-### M11 — Player-elects feature-composition pre-spin / pre-bonus
+### M11 — Player-elects feature-composition pre-spin / pre-bonus — ✅ **CLOSED in W188** (P-089)
 **Examples:** Rainbow Riches Pick n Mix (player picks 3 of 5 bonuses to enable), Michael Jackson King of Pop (3 FS-mode variants Smooth Criminal / Beat It / Billie Jean), KISS (band-member FS variants), 5 Treasures (FS-mode selection menu).
 Player makes an **m-of-n combinatorial selection** of features at trigger time, with each subset producing a different RTP and variance profile. The engine needs a **combinatorial-mode RTP decomposition analyzer** — given a base game with N optional features, for each 2^N subset emit RTP/var/hit-freq and verify that aggregate weighted RTP across configured mode-selection probabilities matches paytable target.
+**Resolution:** W188 ships `src/features/playerElectsFeatureComposition.ts` — m-of-N combinatorial composition selection: under independence E[Y|S] = Σ r_i. Best player-rational pick = top-m by RTP desc, worst = bottom-m, uniform = (m/N)·Σ r_i (linearity). Skill premium = bestPick − uniformPick. RTP spread = bestPick − worstPick. C(N,m) distinct compositions. 35 vitest specs PASS. Acceptance 6/6 PASS @ 360K MC spins (RR Pick n Mix 3-of-5 + MJ KOP 3 modes + KISS 4 modes + 5 Treasures 5 modes + 2 corner configs, rational/worst/uniform strategy validation).
 
 ### M12 — Random feature-injection during free spins (sticky / non-sticky)
 **Example:** The Wizard of Oz Munchkinland (random Munchkin appears mid-FS to grant extra spins / wilds / multiplier).

@@ -1428,6 +1428,29 @@ async function main() {
     showcase.push({ wave: 187, solver: 'Deterministic Explosion Mult-Drop (L&W Dancing Drums M4)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W188: Player-Elects Feature Composition (L&W M11 — RR Pick n Mix family) ──
+  {
+    const { analyzePlayerElectsFeatureComposition, simulatePlayerElectsFeatureComposition } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'playerElectsFeatureComposition.js'));
+    const t0 = Date.now();
+    const cfg = {
+      candidateModes: [
+        { name: 'Mode_A', rtp: 0.30, variance: 1 },
+        { name: 'Mode_B', rtp: 0.20, variance: 1 },
+        { name: 'Mode_C', rtp: 0.40, variance: 1 },
+        { name: 'Mode_D', rtp: 0.15, variance: 1 },
+        { name: 'Mode_E', rtp: 0.25, variance: 1 },
+      ],
+      numModesToElect: 3,
+    };
+    const cf = analyzePlayerElectsFeatureComposition(cfg);
+    const mc = simulatePlayerElectsFeatureComposition(cfg, 20_000, 'rational', SEED);
+    const rel = Math.abs(cf.expectedPayoutBestPick - mc.meanPayoutPerSpin) /
+      Math.max(mc.meanPayoutPerSpin, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 188, solver: 'Player-Elects Feature Composition (L&W RR Pick n Mix M11)', metric: 'best E[Y]', cf: cf.expectedPayoutBestPick, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

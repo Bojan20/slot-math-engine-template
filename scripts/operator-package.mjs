@@ -299,6 +299,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 187 Deterministic Explosion Multiplier-Drop (L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.md' },
+  // REPORTS — Wave 188 Player-Elects Feature Composition (L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

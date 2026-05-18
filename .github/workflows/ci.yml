@@ -260,3 +260,5 @@ jobs:
         run: npm run big-bet-paid-package-multi-spin-acceptance
       - name: Deterministic Explosion Multiplier-Drop acceptance (6/6 configs × 100K spins, Wave 187, 68. solver L&W M4 P1 GAP CLOSURE Dancing Drums Explosion + Revolution)
         run: npm run deterministic-explosion-multiplier-drop-acceptance
+      - name: Player-Elects Feature Composition acceptance (6/6 configs × 60K spins, Wave 188, 69. solver L&W M11 P1 GAP CLOSURE RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
+        run: npm run player-elects-feature-composition-acceptance
