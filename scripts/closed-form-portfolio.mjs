@@ -1451,6 +1451,26 @@ async function main() {
     showcase.push({ wave: 188, solver: 'Player-Elects Feature Composition (L&W RR Pick n Mix M11)', metric: 'best E[Y]', cf: cf.expectedPayoutBestPick, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W189: Random Feature-Injection During FS (L&W M12 — Wizard of Oz Munchkinland) ──
+  {
+    const { analyzeRandomFeatureInjectionDuringFs, simulateRandomFeatureInjectionDuringFs } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'randomFeatureInjectionDuringFs.js'));
+    const t0 = Date.now();
+    const cfg = {
+      numFreeSpins: 10,
+      baseFsWinMean: 1.0,
+      baseFsWinVar: 0.25,
+      probInjectionPerFsSpin: 0.20,
+      subFeatureMean: 5,
+      subFeatureVar: 1,
+    };
+    const cf = analyzeRandomFeatureInjectionDuringFs(cfg);
+    const mc = simulateRandomFeatureInjectionDuringFs(cfg, 30_000, SEED);
+    const rel = Math.abs(cf.expectedTotalFsPayout - mc.meanTotalFsPayout) / Math.max(mc.meanTotalFsPayout, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 189, solver: 'Random Feature-Injection FS (L&W Munchkinland M12)', metric: 'E[S]', cf: cf.expectedTotalFsPayout, mc: mc.meanTotalFsPayout, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

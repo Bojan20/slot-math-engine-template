@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "RANDOM_FEATURE_INJECTION_DURING_FS",
+  "generated_utc": "2026-05-18T01:04:36.307Z",
+  "fs_runs_per_config": 30000,
+  "seed": 3405644169,
+  "tolerances": {
+    "payout_rel": 0.07,
+    "inj_rel": 0.05,
+    "prob_abs": 0.03
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_wizard_of_oz_munchkinland_classic",
+      "description": "LNW WMS Wizard of Oz Munchkinland (2014, defining title) — 15 FS sa 18% Munchkin injection rate, sub-feature 12× avg.",
+      "cfg": {
+        "numFreeSpins": 15,
+        "baseFsWinMean": 1.2,
+        "baseFsWinVar": 1,
+        "probInjectionPerFsSpin": 0.18,
+        "subFeatureMean": 12,
+        "subFeatureVar": 4,
+        "topTierSubFeatureShare": 0.05
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 50.4,
+        "varianceTotalFsPayout": 344.616,
+        "stdDevTotalFsPayout": 18.56383581052149,
+        "expectedInjectionsPerFsBonus": 2.6999999999999997,
+        "varianceInjectionsPerFsBonus": 2.214,
+        "probAtLeastOneInjection": 0.9490425384143573,
+        "probNoInjection": 0.05095746158564277,
+        "oneInNFsBonusWithoutInjection": 1.0536935485218413,
+        "injectionContributionShareOfFs": 0.6428571428571428,
+        "commercialUpliftVsBaseFs": 2.8,
+        "probAllNSpinsTopTier": 2.0589113209464875e-31,
+        "expectedBaseFsContribution": 18,
+        "expectedInjectionContribution": 32.4
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 50.48743204346087,
+        "stdDevTotalFsPayout": 18.473522249112808,
+        "meanInjectionsPerBonus": 2.7026,
+        "observedProbAtLeastOneInjection": 0.9515,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.0017317585767802218,
+        "inj_rel": 0.0009620365573892392,
+        "prob_abs": 0.0024574615856427506
+      },
+      "pass": true,
+      "elapsed_ms": 21
+    },
+    {
+      "name": "B_wms_sub_feature_lib_high_inject",
+      "description": "WMS sub-feature library variant — 10 FS sa 30% inject rate.",
+      "cfg": {
+        "numFreeSpins": 10,
+        "baseFsWinMean": 1,
+        "baseFsWinVar": 0.5,
+        "probInjectionPerFsSpin": 0.3,
+        "subFeatureMean": 6,
+        "subFeatureVar": 2
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 28,
+        "varianceTotalFsPayout": 86.6,
+        "stdDevTotalFsPayout": 9.305912099305473,
+        "expectedInjectionsPerFsBonus": 3,
+        "varianceInjectionsPerFsBonus": 2.0999999999999996,
+        "probAtLeastOneInjection": 0.9717524751000001,
+        "probNoInjection": 0.02824752489999998,
+        "oneInNFsBonusWithoutInjection": 1.0290686420912827,
+        "injectionContributionShareOfFs": 0.6428571428571429,
+        "commercialUpliftVsBaseFs": 2.8,
+        "probAllNSpinsTopTier": 0,
+        "expectedBaseFsContribution": 10,
+        "expectedInjectionContribution": 18
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 28.036723833957,
+        "stdDevTotalFsPayout": 9.302586297364481,
+        "meanInjectionsPerBonus": 3.0072666666666668,
+        "observedProbAtLeastOneInjection": 0.9725333333333334,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.001309847547612643,
+        "inj_rel": 0.0024163692389545617,
+        "prob_abs": 0.0007808582333332925
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    },
+    {
+      "name": "C_long_fs_rare_injection",
+      "description": "Long 30-FS bonus sa rare 5% injection rate — high P(at least one).",
+      "cfg": {
+        "numFreeSpins": 30,
+        "baseFsWinMean": 0.8,
+        "baseFsWinVar": 0.25,
+        "probInjectionPerFsSpin": 0.05,
+        "subFeatureMean": 20,
+        "subFeatureVar": 4
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 54,
+        "varianceTotalFsPayout": 583.4999999999999,
+        "stdDevTotalFsPayout": 24.155744658362323,
+        "expectedInjectionsPerFsBonus": 1.5,
+        "varianceInjectionsPerFsBonus": 1.4249999999999998,
+        "probAtLeastOneInjection": 0.7853612360570628,
+        "probNoInjection": 0.21463876394293727,
+        "oneInNFsBonusWithoutInjection": 1.2732994118993441,
+        "injectionContributionShareOfFs": 0.5555555555555556,
+        "commercialUpliftVsBaseFs": 2.25,
+        "probAllNSpinsTopTier": 0,
+        "expectedBaseFsContribution": 24,
+        "expectedInjectionContribution": 30
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 53.88651041258091,
+        "stdDevTotalFsPayout": 24.15462822884922,
+        "meanInjectionsPerBonus": 1.4967333333333332,
+        "observedProbAtLeastOneInjection": 0.7846666666666666,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.0021016590262794236,
+        "inj_rel": 0.002177777777777834,
+        "prob_abs": 0.0006945693903961381
+      },
+      "pass": true,
+      "elapsed_ms": 37
+    },
+    {
+      "name": "D_short_fs_high_inject_payout",
+      "description": "Short 5-FS bonus sa 25% injection sa large payout.",
+      "cfg": {
+        "numFreeSpins": 5,
+        "baseFsWinMean": 2,
+        "baseFsWinVar": 1,
+        "probInjectionPerFsSpin": 0.25,
+        "subFeatureMean": 15,
+        "subFeatureVar": 4
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 28.75,
+        "varianceTotalFsPayout": 220.9375,
+        "stdDevTotalFsPayout": 14.863966496194749,
+        "expectedInjectionsPerFsBonus": 1.25,
+        "varianceInjectionsPerFsBonus": 0.9375,
+        "probAtLeastOneInjection": 0.7626953125,
+        "probNoInjection": 0.2373046875,
+        "oneInNFsBonusWithoutInjection": 1.3111395646606914,
+        "injectionContributionShareOfFs": 0.6521739130434783,
+        "commercialUpliftVsBaseFs": 2.875,
+        "probAllNSpinsTopTier": 0,
+        "expectedBaseFsContribution": 10,
+        "expectedInjectionContribution": 18.75
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 28.842382595503285,
+        "stdDevTotalFsPayout": 14.83130004087502,
+        "meanInjectionsPerBonus": 1.2585333333333333,
+        "observedProbAtLeastOneInjection": 0.7657333333333334,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.003203015395742226,
+        "inj_rel": 0.006780379277465792,
+        "prob_abs": 0.003038020833333377
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_corner_zero_base_full_injection_driven",
+      "description": "Corner: zero base FS win, injection-only payout (degenerate share=1).",
+      "cfg": {
+        "numFreeSpins": 12,
+        "baseFsWinMean": 0,
+        "baseFsWinVar": 0,
+        "probInjectionPerFsSpin": 0.2,
+        "subFeatureMean": 10,
+        "subFeatureVar": 1
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 24.000000000000004,
+        "varianceTotalFsPayout": 194.40000000000003,
+        "stdDevTotalFsPayout": 13.942740046346701,
+        "expectedInjectionsPerFsBonus": 2.4000000000000004,
+        "varianceInjectionsPerFsBonus": 1.9200000000000004,
+        "probAtLeastOneInjection": 0.931280523264,
+        "probNoInjection": 0.06871947673600004,
+        "oneInNFsBonusWithoutInjection": 1.0737903080965856,
+        "injectionContributionShareOfFs": 1,
+        "commercialUpliftVsBaseFs": null,
+        "probAllNSpinsTopTier": 0,
+        "expectedBaseFsContribution": 0,
+        "expectedInjectionContribution": 24.000000000000004
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 24.006957849115846,
+        "stdDevTotalFsPayout": 14.017111555252104,
+        "meanInjectionsPerBonus": 2.4021333333333335,
+        "observedProbAtLeastOneInjection": 0.9307333333333333,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.00028982635615776943,
+        "inj_rel": 0.0008880994671402218,
+        "prob_abs": 0.0005471899306667138
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_corner_N1_single_fs_spin",
+      "description": "Corner: N=1 single FS spin (degenerate to base + Bernoulli injection).",
+      "cfg": {
+        "numFreeSpins": 1,
+        "baseFsWinMean": 5,
+        "baseFsWinVar": 0.25,
+        "probInjectionPerFsSpin": 0.2,
+        "subFeatureMean": 20,
+        "subFeatureVar": 1
+      },
+      "closed_form": {
+        "expectedTotalFsPayout": 9,
+        "varianceTotalFsPayout": 64.45000000000002,
+        "stdDevTotalFsPayout": 8.028075734570521,
+        "expectedInjectionsPerFsBonus": 0.2,
+        "varianceInjectionsPerFsBonus": 0.16000000000000003,
+        "probAtLeastOneInjection": 0.19999999999999996,
+        "probNoInjection": 0.8,
+        "oneInNFsBonusWithoutInjection": 5.000000000000001,
+        "injectionContributionShareOfFs": 0.4444444444444444,
+        "commercialUpliftVsBaseFs": 1.8,
+        "probAllNSpinsTopTier": 0,
+        "expectedBaseFsContribution": 5,
+        "expectedInjectionContribution": 4
+      },
+      "monte_carlo": {
+        "meanTotalFsPayout": 8.999009630364226,
+        "stdDevTotalFsPayout": 8.030058079837165,
+        "meanInjectionsPerBonus": 0.19996666666666665,
+        "observedProbAtLeastOneInjection": 0.19996666666666665,
+        "fs_runs": 30000
+      },
+      "checks": {
+        "payout_rel": 0.00011004107064158417,
+        "inj_rel": 0.0001666666666667871,
+        "prob_abs": 0.00003333333333330191
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

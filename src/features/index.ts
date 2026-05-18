@@ -228,3 +228,6 @@ export * from './deterministicExplosionMultiplierDrop.js';
 
 // W152 Wave 188: Player-Elects Feature Composition Aggregator (69. solver, L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ King of Pop + KISS + 5 Treasures)
 export * from './playerElectsFeatureComposition.js';
+
+// W152 Wave 189: Random Feature-Injection During FS Aggregator (70. solver, L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
+export * from './randomFeatureInjectionDuringFs.js';

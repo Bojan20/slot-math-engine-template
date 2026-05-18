@@ -262,3 +262,5 @@ jobs:
         run: npm run deterministic-explosion-multiplier-drop-acceptance
       - name: Player-Elects Feature Composition acceptance (6/6 configs × 60K spins, Wave 188, 69. solver L&W M11 P1 GAP CLOSURE RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
         run: npm run player-elects-feature-composition-acceptance
+      - name: Random Feature-Injection During FS acceptance (6/6 configs × 30K FS-bonuses, Wave 189, 70. solver L&W M12 P1 GAP CLOSURE Wizard of Oz Munchkinland + WMS sub-feature library)
+        run: npm run random-feature-injection-during-fs-acceptance

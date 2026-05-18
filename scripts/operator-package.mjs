@@ -302,6 +302,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 188 Player-Elects Feature Composition (L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.md' },
+  // REPORTS — Wave 189 Random Feature-Injection During FS (L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth
