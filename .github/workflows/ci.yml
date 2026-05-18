@@ -272,3 +272,5 @@ jobs:
         run: npm run race-competitive-pick-winner-acceptance
       - name: Multi-Pot Branched H&S Sub-Feature acceptance (6/6 configs × 100K spins, Wave 193, 74. solver L&W M15 P1 GAP CLOSURE Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
         run: npm run multi-pot-branched-hold-spin-sub-feature-acceptance
+      - name: Arcade-Shooter Survival Level Progression acceptance (6/6 configs × 100K runs, Wave 194, 75. solver L&W M16 P1 GAP CLOSURE Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)
+        run: npm run arcade-shooter-survival-levels-acceptance

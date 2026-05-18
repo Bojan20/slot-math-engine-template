@@ -1563,6 +1563,35 @@ async function main() {
     showcase.push({ wave: 193, solver: 'Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W194: Arcade-Shooter Survival Level Progression (L&W M16 — Stellar Jackpots) ──
+  {
+    const { analyzeArcadeShooterSurvivalLevels, simulateArcadeShooterSurvivalLevels } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'arcadeShooterSurvivalLevels.js'));
+    const t0 = Date.now();
+    const cfg = {
+      levels: [
+        { probPass: 0.80, reward: 2 },
+        { probPass: 0.70, reward: 4 },
+        { probPass: 0.60, reward: 8 },
+        { probPass: 0.50, reward: 16 },
+        { probPass: 0.40, reward: 32 },
+        { probPass: 0.30, reward: 64 },
+      ],
+      jackpotTiers: [
+        { label: 'mini',  selectionWeight: 60, meanPayout: 50,    variancePayout: 100 },
+        { label: 'minor', selectionWeight: 30, meanPayout: 200,   variancePayout: 400 },
+        { label: 'major', selectionWeight: 9,  meanPayout: 1000,  variancePayout: 2500 },
+        { label: 'grand', selectionWeight: 1,  meanPayout: 10000, variancePayout: 1000000 },
+      ],
+    };
+    const cf = analyzeArcadeShooterSurvivalLevels(cfg);
+    const mc = simulateArcadeShooterSurvivalLevels(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerRun - mc.meanPayoutPerRun) /
+      Math.max(mc.meanPayoutPerRun, 1e-9);
+    const ok = rel < 0.12;
+    showcase.push({ wave: 194, solver: 'Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16)', metric: 'E[Y/run]', cf: cf.expectedPayoutPerRun, mc: mc.meanPayoutPerRun, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

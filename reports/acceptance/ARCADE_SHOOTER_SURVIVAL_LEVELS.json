@@ -1,0 +1,832 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "ARCADE_SHOOTER_SURVIVAL_LEVELS",
+  "generated_utc": "2026-05-18T01:54:27.866Z",
+  "runs_per_config": 100000,
+  "seed": 3405644180,
+  "tolerances": {
+    "payout_rel": 0.1,
+    "complete_abs": 0.01,
+    "level_reached_rel": 0.03,
+    "tier_prob_abs": 0.04
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_stellar_jackpots_6_level_4_tier",
+      "description": "LNW Lightning Box Stellar Jackpots wrapper (defining) — 6-level arcade-shooter sa 4-tier jackpot (mini/minor/major/grand).",
+      "cfg": {
+        "levels": [
+          {
+            "label": "l1",
+            "probPass": 0.8,
+            "reward": 2
+          },
+          {
+            "label": "l2",
+            "probPass": 0.7,
+            "reward": 4
+          },
+          {
+            "label": "l3",
+            "probPass": 0.6,
+            "reward": 8
+          },
+          {
+            "label": "l4",
+            "probPass": 0.5,
+            "reward": 16
+          },
+          {
+            "label": "l5",
+            "probPass": 0.4,
+            "reward": 32
+          },
+          {
+            "label": "l6",
+            "probPass": 0.3,
+            "reward": 64
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "label": "mini",
+            "selectionWeight": 60,
+            "meanPayout": 50,
+            "variancePayout": 100
+          },
+          {
+            "label": "minor",
+            "selectionWeight": 30,
+            "meanPayout": 200,
+            "variancePayout": 400
+          },
+          {
+            "label": "major",
+            "selectionWeight": 9,
+            "meanPayout": 1000,
+            "variancePayout": 2500
+          },
+          {
+            "label": "grand",
+            "selectionWeight": 1,
+            "meanPayout": 10000,
+            "variancePayout": 1000000
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 6,
+        "numJackpotTiers": 4,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "l1",
+            "probPass": 0.8,
+            "reward": 2,
+            "probReached": 1,
+            "probPassed": 0.8,
+            "probExitAtLevel": 0.19999999999999996,
+            "expectedRewardContribution": 1.6
+          },
+          {
+            "index": 1,
+            "label": "l2",
+            "probPass": 0.7,
+            "reward": 4,
+            "probReached": 0.8,
+            "probPassed": 0.5599999999999999,
+            "probExitAtLevel": 0.24000000000000005,
+            "expectedRewardContribution": 2.2399999999999998
+          },
+          {
+            "index": 2,
+            "label": "l3",
+            "probPass": 0.6,
+            "reward": 8,
+            "probReached": 0.5599999999999999,
+            "probPassed": 0.33599999999999997,
+            "probExitAtLevel": 0.22399999999999998,
+            "expectedRewardContribution": 2.6879999999999997
+          },
+          {
+            "index": 3,
+            "label": "l4",
+            "probPass": 0.5,
+            "reward": 16,
+            "probReached": 0.33599999999999997,
+            "probPassed": 0.16799999999999998,
+            "probExitAtLevel": 0.16799999999999998,
+            "expectedRewardContribution": 2.6879999999999997
+          },
+          {
+            "index": 4,
+            "label": "l5",
+            "probPass": 0.4,
+            "reward": 32,
+            "probReached": 0.16799999999999998,
+            "probPassed": 0.0672,
+            "probExitAtLevel": 0.10079999999999999,
+            "expectedRewardContribution": 2.1504
+          },
+          {
+            "index": 5,
+            "label": "l6",
+            "probPass": 0.3,
+            "reward": 64,
+            "probReached": 0.0672,
+            "probPassed": 0.020159999999999997,
+            "probExitAtLevel": 0.04703999999999999,
+            "expectedRewardContribution": 1.2902399999999998
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "mini",
+            "selectionProbWithinComplete": 0.6,
+            "meanPayout": 50,
+            "variancePayout": 100,
+            "probabilityHitThisTier": 0.012095999999999997,
+            "oneInNRunsForTier": 82.67195767195768
+          },
+          {
+            "index": 1,
+            "label": "minor",
+            "selectionProbWithinComplete": 0.3,
+            "meanPayout": 200,
+            "variancePayout": 400,
+            "probabilityHitThisTier": 0.006047999999999999,
+            "oneInNRunsForTier": 165.34391534391537
+          },
+          {
+            "index": 2,
+            "label": "major",
+            "selectionProbWithinComplete": 0.09,
+            "meanPayout": 1000,
+            "variancePayout": 2500,
+            "probabilityHitThisTier": 0.0018143999999999997,
+            "oneInNRunsForTier": 551.1463844797179
+          },
+          {
+            "index": 3,
+            "label": "grand",
+            "selectionProbWithinComplete": 0.01,
+            "meanPayout": 10000,
+            "variancePayout": 1000000,
+            "probabilityHitThisTier": 0.00020159999999999997,
+            "oneInNRunsForTier": 4960.317460317461
+          }
+        ],
+        "expectedLevelRewards": 12.65664,
+        "expectedJackpotContribution": 5.644799999999999,
+        "expectedPayoutPerRun": 18.30144,
+        "variancePayoutPerRun": 24177.425613926396,
+        "stdDevPayoutPerRun": 155.4909181075422,
+        "probabilityCompleteRun": 0.020159999999999997,
+        "expectedLevelReached": 2.9513599999999998,
+        "oneInNRunsToComplete": 49.60317460317461,
+        "jackpotMeanGivenComplete": 280,
+        "jackpotShareOfRtp": 0.3084347461183382,
+        "probabilityGrandJackpot": 0.00020159999999999997
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 17.664591088698582,
+        "stdDevPayoutPerRun": 141.92520164063393,
+        "observedCompleteRate": 0.01982,
+        "observedExpectedLevelReached": 2.93891,
+        "observedJackpotTierFreqs": [
+          0.5908173562058526,
+          0.31987891019172554,
+          0.08072653884964683,
+          0.008577194752774974
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.03479774877285159,
+        "complete_abs": 0.00033999999999999655,
+        "level_reached_rel": 0.004218394231811725,
+        "max_tier_prob_abs": 0.019878910191725552
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_thundering_bison_4_level_escalation",
+      "description": "LNW Lightning Box Thundering Bison sa Stellar Jackpots — 4-level shorter survival chain.",
+      "cfg": {
+        "levels": [
+          {
+            "label": "bison_l1",
+            "probPass": 0.85,
+            "reward": 1
+          },
+          {
+            "label": "bison_l2",
+            "probPass": 0.7,
+            "reward": 3
+          },
+          {
+            "label": "bison_l3",
+            "probPass": 0.5,
+            "reward": 10
+          },
+          {
+            "label": "bison_l4",
+            "probPass": 0.3,
+            "reward": 30
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "label": "major",
+            "selectionWeight": 95,
+            "meanPayout": 500,
+            "variancePayout": 1000
+          },
+          {
+            "label": "grand",
+            "selectionWeight": 5,
+            "meanPayout": 5000,
+            "variancePayout": 50000
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 4,
+        "numJackpotTiers": 2,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "bison_l1",
+            "probPass": 0.85,
+            "reward": 1,
+            "probReached": 1,
+            "probPassed": 0.85,
+            "probExitAtLevel": 0.15000000000000002,
+            "expectedRewardContribution": 0.85
+          },
+          {
+            "index": 1,
+            "label": "bison_l2",
+            "probPass": 0.7,
+            "reward": 3,
+            "probReached": 0.85,
+            "probPassed": 0.595,
+            "probExitAtLevel": 0.255,
+            "expectedRewardContribution": 1.785
+          },
+          {
+            "index": 2,
+            "label": "bison_l3",
+            "probPass": 0.5,
+            "reward": 10,
+            "probReached": 0.595,
+            "probPassed": 0.2975,
+            "probExitAtLevel": 0.2975,
+            "expectedRewardContribution": 2.9749999999999996
+          },
+          {
+            "index": 3,
+            "label": "bison_l4",
+            "probPass": 0.3,
+            "reward": 30,
+            "probReached": 0.2975,
+            "probPassed": 0.08925,
+            "probExitAtLevel": 0.20825,
+            "expectedRewardContribution": 2.6774999999999998
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "major",
+            "selectionProbWithinComplete": 0.95,
+            "meanPayout": 500,
+            "variancePayout": 1000,
+            "probabilityHitThisTier": 0.08478749999999999,
+            "oneInNRunsForTier": 11.79419136075483
+          },
+          {
+            "index": 1,
+            "label": "grand",
+            "selectionProbWithinComplete": 0.05,
+            "meanPayout": 5000,
+            "variancePayout": 50000,
+            "probabilityHitThisTier": 0.0044625,
+            "oneInNRunsForTier": 224.0896358543417
+          }
+        ],
+        "expectedLevelRewards": 8.2875,
+        "expectedJackpotContribution": 64.70625,
+        "expectedPayoutPerRun": 72.99374999999999,
+        "variancePayoutPerRun": 133651.9699609375,
+        "stdDevPayoutPerRun": 365.5844224812342,
+        "probabilityCompleteRun": 0.08925,
+        "expectedLevelReached": 2.83175,
+        "oneInNRunsToComplete": 11.204481792717088,
+        "jackpotMeanGivenComplete": 725,
+        "jackpotShareOfRtp": 0.8864628820960699,
+        "probabilityGrandJackpot": 0.0044625
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 72.05351602107368,
+        "stdDevPayoutPerRun": 360.29920184838755,
+        "observedCompleteRate": 0.08886,
+        "observedExpectedLevelReached": 2.82277,
+        "observedJackpotTierFreqs": [
+          0.9516092730137294,
+          0.04839072698627054
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.012881020346623038,
+        "complete_abs": 0.00039000000000000146,
+        "level_reached_rel": 0.0031711838968836266,
+        "max_tier_prob_abs": 0.0016092730137294842
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "C_chicken_fox_high_freq_short_chain",
+      "description": "LNW Lightning Box Chicken Fox — 3-level high-frequency arcade-shooter.",
+      "cfg": {
+        "levels": [
+          {
+            "label": "fox_l1",
+            "probPass": 0.9,
+            "reward": 5
+          },
+          {
+            "label": "fox_l2",
+            "probPass": 0.75,
+            "reward": 15
+          },
+          {
+            "label": "fox_l3",
+            "probPass": 0.5,
+            "reward": 50
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "label": "mini",
+            "selectionWeight": 80,
+            "meanPayout": 100,
+            "variancePayout": 200
+          },
+          {
+            "label": "major",
+            "selectionWeight": 20,
+            "meanPayout": 2000,
+            "variancePayout": 10000
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 3,
+        "numJackpotTiers": 2,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "fox_l1",
+            "probPass": 0.9,
+            "reward": 5,
+            "probReached": 1,
+            "probPassed": 0.9,
+            "probExitAtLevel": 0.09999999999999998,
+            "expectedRewardContribution": 4.5
+          },
+          {
+            "index": 1,
+            "label": "fox_l2",
+            "probPass": 0.75,
+            "reward": 15,
+            "probReached": 0.9,
+            "probPassed": 0.675,
+            "probExitAtLevel": 0.225,
+            "expectedRewardContribution": 10.125
+          },
+          {
+            "index": 2,
+            "label": "fox_l3",
+            "probPass": 0.5,
+            "reward": 50,
+            "probReached": 0.675,
+            "probPassed": 0.3375,
+            "probExitAtLevel": 0.3375,
+            "expectedRewardContribution": 16.875
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "mini",
+            "selectionProbWithinComplete": 0.8,
+            "meanPayout": 100,
+            "variancePayout": 200,
+            "probabilityHitThisTier": 0.27,
+            "oneInNRunsForTier": 3.7037037037037033
+          },
+          {
+            "index": 1,
+            "label": "major",
+            "selectionProbWithinComplete": 0.2,
+            "meanPayout": 2000,
+            "variancePayout": 10000,
+            "probabilityHitThisTier": 0.0675,
+            "oneInNRunsForTier": 14.814814814814813
+          }
+        ],
+        "expectedLevelRewards": 31.5,
+        "expectedJackpotContribution": 162,
+        "expectedPayoutPerRun": 193.5,
+        "variancePayoutPerRun": 260461.125,
+        "stdDevPayoutPerRun": 510.3539213134352,
+        "probabilityCompleteRun": 0.3375,
+        "expectedLevelReached": 2.9125000000000005,
+        "oneInNRunsToComplete": 2.962962962962963,
+        "jackpotMeanGivenComplete": 480,
+        "jackpotShareOfRtp": 0.8372093023255814,
+        "probabilityGrandJackpot": 0.0675
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 191.24082597400744,
+        "stdDevPayoutPerRun": 506.39031709116085,
+        "observedCompleteRate": 0.33657,
+        "observedExpectedLevelReached": 2.91101,
+        "observedJackpotTierFreqs": [
+          0.8025670737142347,
+          0.19743292628576523
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.011675317963785863,
+        "complete_abs": 0.0009300000000000419,
+        "level_reached_rel": 0.0005115879828327674,
+        "max_tier_prob_abs": 0.0025670737142347855
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_lightning_horseman_8_level_long_chain",
+      "description": "LNW Lightning Box Lightning Horseman — 8-level extended survival sa flat decay.",
+      "cfg": {
+        "levels": [
+          {
+            "probPass": 0.85,
+            "reward": 1
+          },
+          {
+            "probPass": 0.8,
+            "reward": 2
+          },
+          {
+            "probPass": 0.75,
+            "reward": 4
+          },
+          {
+            "probPass": 0.7,
+            "reward": 8
+          },
+          {
+            "probPass": 0.65,
+            "reward": 16
+          },
+          {
+            "probPass": 0.55,
+            "reward": 32
+          },
+          {
+            "probPass": 0.45,
+            "reward": 64
+          },
+          {
+            "probPass": 0.3,
+            "reward": 128
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "label": "grand",
+            "selectionWeight": 1,
+            "meanPayout": 25000,
+            "variancePayout": 500000
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 8,
+        "numJackpotTiers": 1,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "level_1",
+            "probPass": 0.85,
+            "reward": 1,
+            "probReached": 1,
+            "probPassed": 0.85,
+            "probExitAtLevel": 0.15000000000000002,
+            "expectedRewardContribution": 0.85
+          },
+          {
+            "index": 1,
+            "label": "level_2",
+            "probPass": 0.8,
+            "reward": 2,
+            "probReached": 0.85,
+            "probPassed": 0.68,
+            "probExitAtLevel": 0.16999999999999996,
+            "expectedRewardContribution": 1.36
+          },
+          {
+            "index": 2,
+            "label": "level_3",
+            "probPass": 0.75,
+            "reward": 4,
+            "probReached": 0.68,
+            "probPassed": 0.51,
+            "probExitAtLevel": 0.17,
+            "expectedRewardContribution": 2.04
+          },
+          {
+            "index": 3,
+            "label": "level_4",
+            "probPass": 0.7,
+            "reward": 8,
+            "probReached": 0.51,
+            "probPassed": 0.357,
+            "probExitAtLevel": 0.15300000000000002,
+            "expectedRewardContribution": 2.856
+          },
+          {
+            "index": 4,
+            "label": "level_5",
+            "probPass": 0.65,
+            "reward": 16,
+            "probReached": 0.357,
+            "probPassed": 0.23205,
+            "probExitAtLevel": 0.12494999999999999,
+            "expectedRewardContribution": 3.7128
+          },
+          {
+            "index": 5,
+            "label": "level_6",
+            "probPass": 0.55,
+            "reward": 32,
+            "probReached": 0.23205,
+            "probPassed": 0.1276275,
+            "probExitAtLevel": 0.10442249999999999,
+            "expectedRewardContribution": 4.08408
+          },
+          {
+            "index": 6,
+            "label": "level_7",
+            "probPass": 0.45,
+            "reward": 64,
+            "probReached": 0.1276275,
+            "probPassed": 0.057432375,
+            "probExitAtLevel": 0.07019512500000001,
+            "expectedRewardContribution": 3.675672
+          },
+          {
+            "index": 7,
+            "label": "level_8",
+            "probPass": 0.3,
+            "reward": 128,
+            "probReached": 0.057432375,
+            "probPassed": 0.0172297125,
+            "probExitAtLevel": 0.0402026625,
+            "expectedRewardContribution": 2.2054032
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "grand",
+            "selectionProbWithinComplete": 1,
+            "meanPayout": 25000,
+            "variancePayout": 500000,
+            "probabilityHitThisTier": 0.0172297125,
+            "oneInNRunsForTier": 58.039273725548234
+          }
+        ],
+        "expectedLevelRewards": 20.783955199999998,
+        "expectedJackpotContribution": 430.7428125,
+        "expectedPayoutPerRun": 451.5267677,
+        "variancePayoutPerRun": 10795172.63719779,
+        "stdDevPayoutPerRun": 3285.600803079673,
+        "probabilityCompleteRun": 0.0172297125,
+        "expectedLevelReached": 3.8313395874999996,
+        "oneInNRunsToComplete": 58.039273725548234,
+        "jackpotMeanGivenComplete": 25000,
+        "jackpotShareOfRtp": 0.9539696055986451,
+        "probabilityGrandJackpot": 0.0172297125
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 432.5725924240736,
+        "stdDevPayoutPerRun": 3215.3344616100544,
+        "observedCompleteRate": 0.01647,
+        "observedExpectedLevelReached": 3.82027,
+        "observedJackpotTierFreqs": [
+          1
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.041977965940924636,
+        "complete_abs": 0.0007597125000000024,
+        "level_reached_rel": 0.0028892211841819036,
+        "max_tier_prob_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_corner_single_level_binary",
+      "description": "Corner: single-level binary (minimum L=1).",
+      "cfg": {
+        "levels": [
+          {
+            "probPass": 0.4,
+            "reward": 10
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "selectionWeight": 1,
+            "meanPayout": 100,
+            "variancePayout": 50
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 1,
+        "numJackpotTiers": 1,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "level_1",
+            "probPass": 0.4,
+            "reward": 10,
+            "probReached": 1,
+            "probPassed": 0.4,
+            "probExitAtLevel": 0.6,
+            "expectedRewardContribution": 4
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "tier_0",
+            "selectionProbWithinComplete": 1,
+            "meanPayout": 100,
+            "variancePayout": 50,
+            "probabilityHitThisTier": 0.4,
+            "oneInNRunsForTier": 2.5
+          }
+        ],
+        "expectedLevelRewards": 4,
+        "expectedJackpotContribution": 40,
+        "expectedPayoutPerRun": 44,
+        "variancePayoutPerRun": 2924,
+        "stdDevPayoutPerRun": 54.0740233383831,
+        "probabilityCompleteRun": 0.4,
+        "expectedLevelReached": 1.4,
+        "oneInNRunsToComplete": 2.5,
+        "jackpotMeanGivenComplete": 100,
+        "jackpotShareOfRtp": 0.9090909090909091,
+        "probabilityGrandJackpot": 0.4
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 43.98531953490341,
+        "stdDevPayoutPerRun": 54.055974197250784,
+        "observedCompleteRate": 0.40001,
+        "observedExpectedLevelReached": 1.40001,
+        "observedJackpotTierFreqs": [
+          1
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.0003336469340133874,
+        "complete_abs": 0.00000999999999995449,
+        "level_reached_rel": 0.000007142806122860202,
+        "max_tier_prob_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_corner_all_pass_1_complete_certain",
+      "description": "Corner: all p=0.95 high-pass, complete near-certain (audit boundary).",
+      "cfg": {
+        "levels": [
+          {
+            "probPass": 0.95,
+            "reward": 3
+          },
+          {
+            "probPass": 0.95,
+            "reward": 6
+          },
+          {
+            "probPass": 0.95,
+            "reward": 12
+          }
+        ],
+        "jackpotTiers": [
+          {
+            "label": "fixed",
+            "selectionWeight": 1,
+            "meanPayout": 50,
+            "variancePayout": 25
+          }
+        ]
+      },
+      "closed_form": {
+        "numLevels": 3,
+        "numJackpotTiers": 1,
+        "perLevel": [
+          {
+            "index": 0,
+            "label": "level_1",
+            "probPass": 0.95,
+            "reward": 3,
+            "probReached": 1,
+            "probPassed": 0.95,
+            "probExitAtLevel": 0.050000000000000044,
+            "expectedRewardContribution": 2.8499999999999996
+          },
+          {
+            "index": 1,
+            "label": "level_2",
+            "probPass": 0.95,
+            "reward": 6,
+            "probReached": 0.95,
+            "probPassed": 0.9025,
+            "probExitAtLevel": 0.04750000000000004,
+            "expectedRewardContribution": 5.415
+          },
+          {
+            "index": 2,
+            "label": "level_3",
+            "probPass": 0.95,
+            "reward": 12,
+            "probReached": 0.9025,
+            "probPassed": 0.8573749999999999,
+            "probExitAtLevel": 0.04512500000000004,
+            "expectedRewardContribution": 10.288499999999999
+          }
+        ],
+        "perJackpotTier": [
+          {
+            "index": 0,
+            "label": "fixed",
+            "selectionProbWithinComplete": 1,
+            "meanPayout": 50,
+            "variancePayout": 25,
+            "probabilityHitThisTier": 0.8573749999999999,
+            "oneInNRunsForTier": 1.1663507799970843
+          }
+        ],
+        "expectedLevelRewards": 18.5535,
+        "expectedJackpotContribution": 42.86874999999999,
+        "expectedPayoutPerRun": 61.42224999999999,
+        "variancePayoutPerRun": 574.8515799375004,
+        "stdDevPayoutPerRun": 23.976062644594098,
+        "probabilityCompleteRun": 0.8573749999999999,
+        "expectedLevelReached": 3.709875,
+        "oneInNRunsToComplete": 1.1663507799970843,
+        "jackpotMeanGivenComplete": 50,
+        "jackpotShareOfRtp": 0.697935194493852,
+        "probabilityGrandJackpot": 0.8573749999999999
+      },
+      "monte_carlo": {
+        "meanPayoutPerRun": 61.39775390973444,
+        "stdDevPayoutPerRun": 23.994836083853624,
+        "observedCompleteRate": 0.85703,
+        "observedExpectedLevelReached": 3.70992,
+        "observedJackpotTierFreqs": [
+          1
+        ],
+        "runs": 100000
+      },
+      "checks": {
+        "payout_rel": 0.0003988146032675564,
+        "complete_abs": 0.0003449999999999287,
+        "level_reached_rel": 0.00001212964160954219,
+        "max_tier_prob_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}

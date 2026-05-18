@@ -243,3 +243,6 @@ export * from './raceCompetitivePickWinner.js';
 
 // W152 Wave 193: Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP CLOSURE — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
 export * from './multiPotBranchedHoldSpinSubFeature.js';
+
+// W152 Wave 194: Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP CLOSURE — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)
+export * from './arcadeShooterSurvivalLevels.js';
