@@ -391,21 +391,56 @@
       row.className = `sym-row tier-${sym.tier}`;
       row.dataset.idx = idx;
       if (paneKey) row.dataset.pane = paneKey;
+      const customThumb = sym.customIconData
+        ? `<img class="sym-custom-thumb" src="${sym.customIconData}" alt="custom" />`
+        : `<svg><use href="#g-${sym.icon}"/></svg>`;
       row.innerHTML = `
         <span class="sym-tier">${sym.tier}</span>
         <span class="sym-id mono">${sym.id}</span>
         <input class="sym-name" value="${sym.name}" data-idx="${idx}" />
         <button class="sym-icon-btn" data-idx="${idx}" title="Swap icon">
-          <svg><use href="#g-${sym.icon}"/></svg>
+          ${customThumb}
         </button>
         <div class="sym-weight">
           <input type="range" min="0.5" max="12" step="0.1" value="${sym.weight}" data-w="${idx}" />
           <span class="w-val mono" data-w-v="${idx}">${sym.weight.toFixed(1)}</span>
         </div>
         <span class="sym-pay">${sym.pay.x3}/${sym.pay.x4}/${sym.pay.x5}</span>
+        <button class="sym-upload" data-upload="${idx}" title="Upload custom icon (SVG/PNG/WebP ≤100KB)">📤</button>
         <button class="sym-more" data-more="${idx}" title="More">⋯</button>
       `;
       container.appendChild(row);
+    });
+    /* Per-row upload — wires to window.__studio_art__ */
+    $$(".sym-upload", container).forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        const idx = +btn.dataset.upload;
+        if (!window.__studio_art__) {
+          toast({ kind: "warn", msg: "Art pipeline not ready yet." });
+          return;
+        }
+        const inp = document.createElement("input");
+        inp.type = "file";
+        inp.accept = ".svg,.png,.webp,image/svg+xml,image/png,image/webp";
+        inp.style.display = "none";
+        inp.addEventListener("change", async ev => {
+          const f = ev.target.files?.[0];
+          if (!f) return;
+          const r = await window.__studio_art__.uploadIcon(f);
+          if (!r.ok) {
+            toast({ kind: "warn", msg: `Upload failed: ${r.error}` });
+            return;
+          }
+          window.__studio_art__.attachIconToSymbol(idx, r.icon.id);
+          renderSymbolList(container, variant, paneKey);
+          if (typeof renderMyIconsPane === "function") renderMyIconsPane();
+          toast({ kind: "ok", msg: `Custom icon attached → <b>${r.icon.name}</b>` });
+        });
+        document.body.appendChild(inp);
+        inp.click();
+        setTimeout(() => inp.remove(), 2000);
+      });
     });
     $$(".sym-name", container).forEach(inp => {
       inp.addEventListener("input", e => {
@@ -1257,6 +1292,13 @@
       }
       return;
     }
+    if (source === "lw-mgap" || source === "template") {
+      // CORTI 200.1 — open IR Library sub-modal so the designer can pick
+      // from the 26 curated starter IRs (16 L&W M-gaps + 10 classics).
+      closeNewGameModal();
+      openIRLibraryModal(source === "lw-mgap" ? "lw-mgaps" : null);
+      return;
+    }
     const name = $("#ng-name").value.trim() || `Untitled Game ${wsOrder.length + 1}`;
     const layout = $$("#ng-layouts input[type=radio]").find(r => r.checked)?.value || "5x3";
     const theme = $(".theme-swatch.is-active", $("#ng-themes"))?.dataset.theme || "cyan";
@@ -1268,6 +1310,156 @@
     closeNewGameModal();
     switchWorkspace(id);
     toast({ kind: "ok", msg: `Created <b>${name}</b> · ${LAYOUTS.find(l => l.id === layout)?.label || layout}` });
+  });
+
+  /* ============================================================
+     IR LIBRARY SUB-MODAL (CORTI 200.1) — 26 starter IRs
+     Wired to window.__studio_ir_library__ exposed by main.ts.
+     ============================================================ */
+  const IRL_STATE = { items: [], selected: null, filterCategory: null };
+
+  function openIRLibraryModal(forceCategory) {
+    IRL_STATE.selected = null;
+    const bridge = window.__studio_ir_library__;
+    if (!bridge) {
+      toast({ kind: "warn", msg: "IR Library bridge not ready — main.ts still booting" });
+      return;
+    }
+    showModal("ir-library-modal");
+    if (forceCategory) {
+      $("#irl-category").value = forceCategory;
+      IRL_STATE.filterCategory = forceCategory;
+    } else {
+      IRL_STATE.filterCategory = $("#irl-category").value || null;
+    }
+    $("#irl-load").disabled = true;
+    $("#irl-preview").innerHTML = `<div class="ir-library-preview-empty">Pick an IR from the list to see its preview.</div>`;
+    Promise.resolve(bridge.load())
+      .then(() => {
+        IRL_STATE.items = bridge.getAllItems();
+        renderIRLibraryGrid();
+      })
+      .catch((err) => {
+        toast({ kind: "warn", msg: `IR Library load failed: ${err && err.message ? err.message : err}` });
+      });
+  }
+  function closeIRLibraryModal() { hideModal("ir-library-modal"); }
+  $("#irl-close")?.addEventListener("click", closeIRLibraryModal);
+  $("#irl-cancel")?.addEventListener("click", closeIRLibraryModal);
+  $("#irl-backdrop")?.addEventListener("click", closeIRLibraryModal);
+
+  $("#irl-search")?.addEventListener("input", () => renderIRLibraryGrid());
+  $("#irl-category")?.addEventListener("change", (e) => {
+    IRL_STATE.filterCategory = e.target.value || null;
+    renderIRLibraryGrid();
+  });
+  $("#irl-topology")?.addEventListener("change", () => renderIRLibraryGrid());
+
+  function renderIRLibraryGrid() {
+    const bridge = window.__studio_ir_library__;
+    if (!bridge) return;
+    const search = ($("#irl-search")?.value || "").trim();
+    const category = $("#irl-category")?.value || null;
+    const topology = $("#irl-topology")?.value || null;
+    const filtered = bridge.filter({ search, category, topology });
+    const grid = $("#irl-grid");
+    if (!grid) return;
+    grid.innerHTML = filtered.map((it) => {
+      const tagClass = it.category === "classics" ? "is-classic" : "";
+      const tagLabel = it.category === "lw-mgaps" ? (it.mGap || "L&W") : "CLASSIC";
+      const meta = it.category === "lw-mgaps"
+        ? `${it.supplier || ""} · ${it.year || ""}`
+        : (it.topology || "");
+      const isSelected = IRL_STATE.selected === it.id ? "is-selected" : "";
+      return `<button type="button" class="ir-library-card ${isSelected}" data-irl-id="${it.id}" role="listitem">
+        <span class="ir-library-card-tag ${tagClass}">${tagLabel}</span>
+        <span class="ir-library-card-title">${it.title}</span>
+        <span class="ir-library-card-meta"><span>${meta}</span></span>
+      </button>`;
+    }).join("");
+    $("#irl-count").textContent = `${filtered.length} of ${IRL_STATE.items.length}`;
+    $$(".ir-library-card", grid).forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.dataset.irlId;
+        IRL_STATE.selected = id;
+        $$(".ir-library-card", grid).forEach((c) => c.classList.toggle("is-selected", c === card));
+        renderIRLibraryPreview(id);
+      });
+    });
+  }
+
+  function renderIRLibraryPreview(itemId) {
+    const bridge = window.__studio_ir_library__;
+    if (!bridge) return;
+    const preview = $("#irl-preview");
+    if (!preview) return;
+    preview.innerHTML = `<div class="ir-library-preview-empty">Loading…</div>`;
+    $("#irl-load").disabled = true;
+    Promise.resolve(bridge.preview(itemId))
+      .then((p) => {
+        const features = (p.features || [])
+          .map((f) => `<span class="ir-library-feature-chip">${f}</span>`).join("");
+        const tags = (p.ir.meta.theme_tags || [])
+          .map((t) => `<span class="ir-library-feature-chip">${t}</span>`).join("");
+        preview.innerHTML = `
+          <h3>${p.ir.meta.name}</h3>
+          <dl class="ir-library-preview-rows">
+            <dt>ID</dt><dd>${p.ir.meta.id}</dd>
+            <dt>Topology</dt><dd>${p.topologyLabel}</dd>
+            <dt>Target RTP</dt><dd>${(p.rtp * 100).toFixed(2)}%</dd>
+            <dt>Symbols</dt><dd>${p.symbolCount}</dd>
+            <dt>Volatility</dt><dd>${p.ir.limits.target_volatility}</dd>
+            <dt>Max win</dt><dd>${p.ir.limits.max_win_x}×</dd>
+          </dl>
+          <div style="margin-top:8px;color:var(--text-2);font-size:11px;">${p.ir.meta.description || ""}</div>
+          <div style="margin-top:8px;"><b style="font-size:11px;color:var(--text-2);">Features</b><br/>${features || '<span class="ir-library-preview-empty">none</span>'}</div>
+          <div style="margin-top:8px;"><b style="font-size:11px;color:var(--text-2);">Tags</b><br/>${tags}</div>
+        `;
+        $("#irl-load").disabled = false;
+      })
+      .catch((err) => {
+        preview.innerHTML = `<div class="ir-library-preview-empty">Preview failed: ${err && err.message ? err.message : err}</div>`;
+      });
+  }
+
+  $("#irl-load")?.addEventListener("click", () => {
+    const bridge = window.__studio_ir_library__;
+    const id = IRL_STATE.selected;
+    if (!bridge || !id) return;
+    Promise.resolve(bridge.loadIR(id))
+      .then((ir) => {
+        // Create workspace from IR meta. We don't deep-project IR → variant
+        // (round-trip is lossy as documented in main.ts importIR()); we
+        // seed an empty workspace with theme + layout heuristics, log the
+        // IR import for traceability, and stash the raw IR on the variant
+        // so downstream features can pull from it.
+        const layout = ir.topology.kind === "rectangular"
+          ? `${ir.topology.reels}x${ir.topology.rows}`
+          : (ir.topology.kind === "variable_rows" ? "6x4-variable" : "cluster");
+        const wsId = "ws-" + Date.now().toString(36);
+        const wsName = ir.meta.name;
+        const ws = newWorkspace({
+          id: wsId,
+          name: wsName,
+          theme: "cyan",
+          layout: LAYOUTS.find((l) => l.id === layout) ? layout : "5x3",
+          irName: (ir.meta.id || wsName).toLowerCase().replace(/\s+/g, "-") + "-v0.1.00",
+        });
+        // Stash IR on the active variant so the rest of the studio can
+        // read it without re-parsing the file. The build/sensitivity tabs
+        // know to consume `loadedIR` when present.
+        const variant = ws.variants[Object.keys(ws.variants)[0]];
+        if (variant) variant.loadedIR = ir;
+        workspaces[wsId] = ws;
+        wsOrder.push(wsId);
+        closeIRLibraryModal();
+        switchWorkspace(wsId);
+        toast({ kind: "ok", msg: `Loaded IR <b>${ir.meta.name}</b> · ${(ir.limits.target_rtp * 100).toFixed(2)}% target RTP` });
+        logActivity(`IR library · loaded ${id} → ${wsName}`);
+      })
+      .catch((err) => {
+        toast({ kind: "warn", msg: `IR load failed: ${err && err.message ? err.message : err}` });
+      });
   });
 
   /* ============================================================
@@ -2043,6 +2235,22 @@
     let n = 0; const id = setInterval(() => { spin(); if (++n >= 10) clearInterval(id); }, 200);
   });
   $("#btn-replay").addEventListener("click", () => toast({ kind: "cyan", msg: `Replayed last spin · seed 0x9F-2E1B` }));
+
+  // W200.3 — bonus-animation demo buttons. The TS playTab bridge owns the
+  // real handler binding; we add a passive UX toast here for instant
+  // feedback while the underlying promise runs the Pixi overlay.
+  const demoFsBtn = $("#btn-demo-fs");
+  if (demoFsBtn) demoFsBtn.addEventListener("click", () => {
+    toast({ kind: "cyan", msg: "FS demo · intro splash → 10-spin counter" });
+  });
+  const demoHwBtn = $("#btn-demo-hw");
+  if (demoHwBtn) demoHwBtn.addEventListener("click", () => {
+    toast({ kind: "cyan", msg: "H&W demo · 6-orb intro → respin land → payout" });
+  });
+  const demoCascadeBtn = $("#btn-demo-cascade");
+  if (demoCascadeBtn) demoCascadeBtn.addEventListener("click", () => {
+    toast({ kind: "cyan", msg: "Cascade demo · chain ×4 dissolve → drop → refill" });
+  });
 
   /* ============================================================
      CATALOG (W199) — 97 P-ID browser with L&W M-gap strip,
@@ -3472,5 +3680,203 @@
       }
     };
   }
+
+  /* ============================================================
+     CORTI 200.2 · ART PIPELINE UI WIRES
+     ============================================================
+     - My Icons grid (BUILD tab sidebar)
+     - Theme picker click → applyTheme
+     - Animation timeline knobs → setAnimation
+     - Audio toggles, master volume, custom audio upload
+     ============================================================ */
+
+  function renderMyIconsPane() {
+    const host = document.getElementById("my-icons-grid");
+    if (!host || !window.__studio_art__) return;
+    const icons = window.__studio_art__.listIcons();
+    host.innerHTML = "";
+    const cnt = document.getElementById("my-icons-count");
+    if (cnt) cnt.textContent = icons.length;
+    if (!icons.length) {
+      host.innerHTML = `<div class="my-icons-empty">No custom icons yet. Click 📤 next to any symbol to upload.</div>`;
+      return;
+    }
+    icons.forEach(ic => {
+      const cell = document.createElement("button");
+      cell.className = "my-icon-cell";
+      cell.title = ic.name;
+      cell.dataset.iconId = ic.id;
+      cell.innerHTML = `<img src="${ic.dataUrl}" alt="${ic.name}"/><span>${ic.name}</span>`;
+      cell.addEventListener("click", () => {
+        const v = getActiveVariant();
+        const idx = (v.selection && typeof v.selection.symIdx === "number") ? v.selection.symIdx : 0;
+        window.__studio_art__.attachIconToSymbol(idx, ic.id);
+        renderSymbolList($("#sym-list"), v);
+        toast({ kind: "ok", msg: `Icon → symbol #${idx + 1} (${ic.name})` });
+      });
+      cell.addEventListener("contextmenu", e => {
+        e.preventDefault();
+        const action = window.prompt(`Icon "${ic.name}" — type "rename:<newname>" or "delete":`, "rename:" + ic.name);
+        if (!action) return;
+        if (action === "delete") {
+          window.__studio_art__.deleteIcon(ic.id);
+          renderMyIconsPane();
+          toast({ kind: "ok", msg: `Deleted icon · ${ic.name}` });
+        } else if (action.startsWith("rename:")) {
+          window.__studio_art__.renameIcon(ic.id, action.slice(7).trim());
+          renderMyIconsPane();
+        }
+      });
+      host.appendChild(cell);
+    });
+  }
+  // Expose so renderSymbolList upload handler can refresh.
+  window.renderMyIconsPane = renderMyIconsPane;
+
+  function bindArtPipelineUI() {
+    /* My Icons — export / import buttons */
+    const exportBtn = document.getElementById("my-icons-export");
+    if (exportBtn) {
+      exportBtn.addEventListener("click", async () => {
+        if (!window.__studio_art__) return;
+        try {
+          const blob = await window.__studio_art__.exportPack();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "icon-pack.zip";
+          a.click();
+          URL.revokeObjectURL(url);
+          toast({ kind: "ok", msg: "Icon pack exported" });
+        } catch (e) {
+          toast({ kind: "warn", msg: "Export failed: " + e.message });
+        }
+      });
+    }
+    const importBtn = document.getElementById("my-icons-import");
+    if (importBtn) {
+      importBtn.addEventListener("click", () => {
+        const inp = document.createElement("input");
+        inp.type = "file";
+        inp.accept = ".zip,application/zip";
+        inp.style.display = "none";
+        inp.addEventListener("change", async ev => {
+          const f = ev.target.files?.[0];
+          if (!f || !window.__studio_art__) return;
+          try {
+            const n = await window.__studio_art__.importPack(f);
+            renderMyIconsPane();
+            toast({ kind: "ok", msg: `Imported <b>${n}</b> icons` });
+          } catch (e) {
+            toast({ kind: "warn", msg: "Import failed: " + e.message });
+          }
+        });
+        document.body.appendChild(inp);
+        inp.click();
+        setTimeout(() => inp.remove(), 2000);
+      });
+    }
+
+    /* Theme tiles — rebind to call the real applyTheme bridge */
+    $$(".theme-tile[data-theme-preset]").forEach(t => {
+      t.addEventListener("click", () => {
+        if (!window.__studio_art__) return;
+        const themeId = t.dataset.themePreset;
+        const r = window.__studio_art__.applyTheme(themeId);
+        if (r.ok) {
+          getActiveVariant().theme = themeId;
+          renderSymbolList($("#sym-list"), getActiveVariant());
+          renderReels($("#reels"), getActiveVariant());
+        }
+      });
+    });
+
+    /* Animation timeline sliders */
+    const wireAnim = (id, handler) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const update = () => {
+        if (!window.__studio_art__) return;
+        handler(el);
+      };
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
+    };
+    wireAnim("anim-idle-duration", el => {
+      const v = parseFloat(el.value);
+      window.__studio_art__.setAnimation({ idle: { durationSec: v, easing: "ease-in-out" } });
+      const lbl = document.getElementById("anim-idle-duration-v");
+      if (lbl) lbl.textContent = v.toFixed(1) + "s";
+    });
+    wireAnim("anim-spin-blur", el => {
+      const v = parseInt(el.value, 10);
+      window.__studio_art__.setAnimation({ spin: { blurPx: v, speed: 2 } });
+      const lbl = document.getElementById("anim-spin-blur-v");
+      if (lbl) lbl.textContent = v + "px";
+    });
+    wireAnim("anim-win-duration", el => {
+      const v = parseFloat(el.value);
+      const color = document.getElementById("anim-win-glow")?.value || "#22D3EE";
+      window.__studio_art__.setAnimation({ win: { durationSec: v, glowColor: color } });
+      const lbl = document.getElementById("anim-win-duration-v");
+      if (lbl) lbl.textContent = v.toFixed(2) + "s";
+    });
+    wireAnim("anim-win-glow", el => {
+      const color = el.value;
+      const dur = parseFloat(document.getElementById("anim-win-duration")?.value || "1.2");
+      window.__studio_art__.setAnimation({ win: { durationSec: dur, glowColor: color } });
+    });
+    wireAnim("anim-fs-style", el => {
+      window.__studio_art__.setAnimation({ fsIntro: { style: el.value } });
+    });
+    wireAnim("anim-hw-style", el => {
+      window.__studio_art__.setAnimation({ hwReveal: { style: el.value } });
+    });
+
+    /* Audio toggles */
+    const muteToggle = document.getElementById("audio-mute");
+    if (muteToggle) {
+      muteToggle.addEventListener("change", () => {
+        if (!window.__studio_art__) return;
+        window.__studio_art__.audio.setMuted(muteToggle.checked);
+      });
+    }
+    const volSlider = document.getElementById("audio-volume");
+    if (volSlider) {
+      volSlider.addEventListener("input", () => {
+        if (!window.__studio_art__) return;
+        window.__studio_art__.audio.setVolume(parseFloat(volSlider.value));
+        const lbl = document.getElementById("audio-volume-v");
+        if (lbl) lbl.textContent = Math.round(parseFloat(volSlider.value) * 100) + "%";
+      });
+    }
+    const audioUpload = document.getElementById("audio-upload-btn");
+    if (audioUpload) {
+      audioUpload.addEventListener("click", () => {
+        const cueSel = document.getElementById("audio-upload-cue");
+        const id = cueSel?.value || "reel-spin";
+        const inp = document.createElement("input");
+        inp.type = "file";
+        inp.accept = ".mp3,.ogg,audio/mpeg,audio/ogg";
+        inp.style.display = "none";
+        inp.addEventListener("change", async ev => {
+          const f = ev.target.files?.[0];
+          if (!f || !window.__studio_art__) return;
+          const r = await window.__studio_art__.uploadAudio(id, f);
+          if (r.ok) toast({ kind: "ok", msg: `Audio cue <b>${id}</b> updated` });
+          else toast({ kind: "warn", msg: `Audio upload failed: ${r.error}` });
+        });
+        document.body.appendChild(inp);
+        inp.click();
+        setTimeout(() => inp.remove(), 2000);
+      });
+    }
+  }
+
+  // Wait one tick for main.ts to install the art bridge, then bind UI.
+  setTimeout(() => {
+    bindArtPipelineUI();
+    renderMyIconsPane();
+  }, 200);
 
 })();

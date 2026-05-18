@@ -1,0 +1,32 @@
+{
+  "id": "cosmic",
+  "name": "Cosmic",
+  "description": "Planets / stars / nebula icons + deep space palette",
+  "palette": {
+    "primary": "#7C3AED",
+    "accent": "#F472B6",
+    "deep": "#1E1B4B",
+    "highlight": "#22D3EE"
+  },
+  "background": "radial-gradient(circle at 50% 50%, #1E1B4B 0%, #0B0117 75%)",
+  "iconMap": {
+    "HP1": "star5",
+    "HP2": "star6",
+    "HP3": "sun",
+    "HP4": "moon",
+    "MP1": "orbit",
+    "MP2": "sonar",
+    "MP3": "vortex",
+    "MP4": "spiral",
+    "LP1": "circle",
+    "LP2": "sigil",
+    "LP3": "knot",
+    "LP4": "lattice",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  }
+}

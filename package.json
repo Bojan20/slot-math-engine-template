@@ -25,6 +25,8 @@
     "mc-corpus": "npm run build && node scripts/mc-corpus-generate.mjs",
     "mutation-summary": "node scripts/mutation-summary.mjs",
     "catalog:gen": "node scripts/generate-catalog-json.mjs",
+    "ir-library:gen": "npm run build && node scripts/generate-ir-library.mjs",
+    "ir-library:check": "npm run build && node scripts/generate-ir-library.mjs --dry-run",
     "anomaly-timing": "npm run build && node scripts/anomaly-detection-timing.mjs",
     "optimizer-mass-validation": "npm run build && node scripts/optimizer-mass-validation.mjs",
     "sub-ms-mc-bench": "npm run build && node scripts/sub-ms-mc-bench.mjs",

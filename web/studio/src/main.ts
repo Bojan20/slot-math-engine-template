@@ -16,6 +16,38 @@ import { createSensitivityBridge, type SensitivityBridge } from './sensitivity.j
 import { installCertify, type CertifyBridge } from './certify.js';
 import { installPolish, pushToast, showSpinner, renderEmptyState, type PolishApi } from './polish.js';
 import {
+  loadLibrary as loadIRLibrary,
+  loadIR as loadIRLibraryItem,
+  previewIR as previewIRLibraryItem,
+  filterItems as filterIRLibrary,
+  getAllItems as getAllIRLibraryItems,
+  listTopologies as listIRLibraryTopologies,
+  type LibraryFilter as IRLibraryFilter,
+  type LibraryIndex as IRLibraryIndex,
+  type LibraryItem as IRLibraryItem,
+  type LibraryPreview as IRLibraryPreview,
+} from './ir-library.js';
+import {
+  listThemes,
+  getTheme,
+  applyTheme,
+  defaultAnimation,
+  clampAnimation,
+  validateIcon,
+  validateAudio,
+  IconLibrary,
+  makeIconId,
+  exportIconPack,
+  importIconPack,
+  createAudioEngine,
+  readFileAsDataUrl,
+  readFileAsText,
+  type ThemeDef,
+  type AnimationState,
+  type CustomIcon,
+  type AudioEngine,
+} from './art-pipeline.js';
+import {
   estimateFullRtp,
   type PaytableEntry,
   type ReelWeights,
@@ -50,7 +82,40 @@ declare global {
     __studio_sensitivity__?: SensitivityBridge;
     __studio_certify__?: CertifyBridge;
     __studio_polish__?: PolishApi;
+    __studio_art__?: ArtBridge;
+    __studio_ir_library__?: IRLibraryBridge;
   }
+}
+
+// ── IR Library bridge (CORTI 200.1) ─────────────────────────────────
+// Exposes the 26-item starter-IR catalog (16 L&W M-gaps + 10 industry
+// classics) to the legacy `app.js` wizard so designers can load a
+// curated IR into a fresh workspace with one click.
+export interface IRLibraryBridge {
+  load(): Promise<IRLibraryIndex>;
+  getAllItems(): IRLibraryItem[];
+  filter(filter: IRLibraryFilter): IRLibraryItem[];
+  topologies(items: IRLibraryItem[]): string[];
+  preview(itemId: string): Promise<IRLibraryPreview>;
+  loadIR(itemId: string): Promise<import('@engine/ir/types.js').SlotGameIR>;
+}
+
+// ── Art Pipeline bridge ─────────────────────────────────────────────
+export interface ArtBridge {
+  themes: ThemeDef[];
+  applyTheme(themeId: string): { ok: boolean; changed: number };
+  setAnimation(patch: Partial<AnimationState>): AnimationState;
+  getAnimation(): AnimationState;
+  uploadIcon(file: File): Promise<{ ok: boolean; icon?: CustomIcon; error?: string }>;
+  attachIconToSymbol(symIndex: number, iconId: string): boolean;
+  attachIconDataToSymbol(symIndex: number, dataUrl: string): boolean;
+  listIcons(): CustomIcon[];
+  renameIcon(id: string, name: string): boolean;
+  deleteIcon(id: string): boolean;
+  exportPack(): Promise<Blob>;
+  importPack(blob: Blob): Promise<number>;
+  audio: AudioEngine;
+  uploadAudio(id: string, file: File): Promise<{ ok: boolean; error?: string }>;
 }
 
 interface StudioBridge {
@@ -413,6 +478,192 @@ function bindPlayTabButtons(): void {
       void installPlayBridge().replayLast();
     });
   }
+
+  // W200.3 — bonus-feature demo trigger buttons.
+  const demoFsBtn = document.getElementById('btn-demo-fs');
+  if (demoFsBtn) {
+    demoFsBtn.addEventListener('click', () => {
+      void installPlayBridge().demoFreeSpins();
+    });
+  }
+  const demoHwBtn = document.getElementById('btn-demo-hw');
+  if (demoHwBtn) {
+    demoHwBtn.addEventListener('click', () => {
+      void installPlayBridge().demoHoldAndWin();
+    });
+  }
+  const demoCascadeBtn = document.getElementById('btn-demo-cascade');
+  if (demoCascadeBtn) {
+    demoCascadeBtn.addEventListener('click', () => {
+      void installPlayBridge().demoCascade();
+    });
+  }
+}
+
+// ── CORTI 200.2 · Art pipeline bridge install ───────────────────────
+//
+// The bridge is workspace-scoped but operates against whichever variant
+// is currently active on each call. Animation/theme state are stored
+// directly on the variant; the custom icon library is in-memory per
+// workspace + persisted via the existing localStorage Persistence
+// (variant.customIcons array).
+function installArtBridge(): ArtBridge {
+  const lib = new IconLibrary();
+  const audio = createAudioEngine();
+  // Best-effort preload defaults (browser only; quietly no-ops elsewhere).
+  void audio.preloadDefaults();
+
+  // Restore variant-level customIcons from any persisted state.
+  try {
+    const ws = window.__studio_ui_hook__?.getWorkspaces() ?? {};
+    for (const w of Object.values(ws)) {
+      for (const v of Object.values(w.variants ?? {})) {
+        const ci = (v as unknown as { customIcons?: CustomIcon[] }).customIcons;
+        if (Array.isArray(ci)) lib.importAll(ci);
+      }
+    }
+  } catch { /* ignore */ }
+
+  function v(): StudioVariant & {
+    theme?: string;
+    animation?: AnimationState;
+    customIcons?: CustomIcon[];
+  } {
+    return hook().getActiveVariant() as StudioVariant & {
+      theme?: string;
+      animation?: AnimationState;
+      customIcons?: CustomIcon[];
+    };
+  }
+
+  return {
+    themes: listThemes(),
+    applyTheme(themeId: string) {
+      const variant = v();
+      const def = getTheme(themeId);
+      if (!def) return { ok: false, changed: 0 };
+      const host = document.documentElement;
+      const changed = applyTheme(themeId, {
+        cssVarHost: host,
+        symbols: variant.symbols as Array<{ id: string; icon: string; customIconData?: string }>,
+      });
+      variant.theme = themeId;
+      hook().logActivity(`theme → ${def.name} (${changed} symbols re-skinned)`);
+      return { ok: true, changed };
+    },
+    setAnimation(patch: Partial<AnimationState>): AnimationState {
+      const variant = v();
+      const current = variant.animation ?? defaultAnimation();
+      const merged = clampAnimation({
+        ...current,
+        ...patch,
+        idle: { ...current.idle, ...(patch.idle ?? {}) },
+        spin: { ...current.spin, ...(patch.spin ?? {}) },
+        win: { ...current.win, ...(patch.win ?? {}) },
+        fsIntro: { ...current.fsIntro, ...(patch.fsIntro ?? {}) },
+        hwReveal: { ...current.hwReveal, ...(patch.hwReveal ?? {}) },
+      });
+      variant.animation = merged;
+      return merged;
+    },
+    getAnimation(): AnimationState {
+      const variant = v();
+      if (!variant.animation) variant.animation = defaultAnimation();
+      return variant.animation;
+    },
+    async uploadIcon(file: File) {
+      const isSvg = file.name.toLowerCase().endsWith('.svg');
+      let text: string | undefined;
+      try {
+        if (isSvg) text = await readFileAsText(file);
+      } catch {
+        return { ok: false, error: 'read failed' };
+      }
+      const val = validateIcon(file.name, file.size, text);
+      if (!val.ok) return { ok: false, error: val.error };
+      let dataUrl: string;
+      try {
+        if (isSvg && text) {
+          // Use base64 so we can round-trip through ZIP cleanly.
+          dataUrl = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(text)))}`;
+        } else {
+          dataUrl = await readFileAsDataUrl(file);
+        }
+      } catch {
+        return { ok: false, error: 'read failed' };
+      }
+      const icon: CustomIcon = {
+        id: makeIconId(),
+        name: file.name.replace(/\.[^.]+$/, ''),
+        family: val.family!,
+        dataUrl,
+        byteSize: file.size,
+        createdAt: Date.now(),
+      };
+      lib.add(icon);
+      // Persist to active variant for round-trip.
+      const variant = v();
+      if (!variant.customIcons) variant.customIcons = [];
+      variant.customIcons.push(icon);
+      hook().logActivity(`icon uploaded · ${icon.name}`);
+      return { ok: true, icon };
+    },
+    attachIconToSymbol(symIndex: number, iconId: string): boolean {
+      const variant = v();
+      const sym = variant.symbols[symIndex] as
+        | (StudioVariant['symbols'][number] & { customIconData?: string; customIconId?: string })
+        | undefined;
+      const ic = lib.get(iconId);
+      if (!sym || !ic) return false;
+      sym.customIconData = ic.dataUrl;
+      sym.customIconId = ic.id;
+      return true;
+    },
+    attachIconDataToSymbol(symIndex: number, dataUrl: string): boolean {
+      const variant = v();
+      const sym = variant.symbols[symIndex] as
+        | (StudioVariant['symbols'][number] & { customIconData?: string })
+        | undefined;
+      if (!sym) return false;
+      sym.customIconData = dataUrl;
+      return true;
+    },
+    listIcons() { return lib.list(); },
+    renameIcon(id: string, name: string) { return lib.rename(id, name); },
+    deleteIcon(id: string) {
+      const ok = lib.remove(id);
+      if (ok) {
+        const variant = v();
+        if (Array.isArray(variant.customIcons)) {
+          variant.customIcons = variant.customIcons.filter((i) => i.id !== id);
+        }
+      }
+      return ok;
+    },
+    async exportPack() {
+      return exportIconPack(lib.list());
+    },
+    async importPack(blob: Blob) {
+      const items = await importIconPack(blob);
+      lib.importAll(items);
+      const variant = v();
+      if (!variant.customIcons) variant.customIcons = [];
+      variant.customIcons.push(...items);
+      return items.length;
+    },
+    audio,
+    async uploadAudio(id: string, file: File) {
+      const val = validateAudio(file.name, file.size);
+      if (!val.ok) return { ok: false, error: val.error };
+      try {
+        const ab = await file.arrayBuffer();
+        await audio.loadCustom(id, ab);
+        return { ok: true };
+      } catch (err) {
+        return { ok: false, error: (err as Error).message };
+      }
+    },
+  };
 }
 
 // Boot: wait until the legacy `app.js` has installed its hook (it does
@@ -484,8 +735,36 @@ function boot(): void {
     console.warn('[W200] polish install failed:', err);
   }
 
+  // ── CORTI 200.2 · Symbol/Art pipeline ─────────────────────────────
+  try {
+    window.__studio_art__ = installArtBridge();
+    hook().logActivity('CORTI 200.2 · art pipeline ready (themes/anim/audio/icons)');
+  } catch (err) {
+    console.warn('[CORTI 200.2] art pipeline install failed:', err);
+  }
+
+  // ── CORTI 200.1 · IR library (16 L&W + 10 classics) ───────────────
+  try {
+    window.__studio_ir_library__ = installIRLibraryBridge();
+    hook().logActivity('CORTI 200.1 · IR library bridge ready (26 starter IRs)');
+  } catch (err) {
+    console.warn('[CORTI 200.1] IR library install failed:', err);
+  }
+
   // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).
   void loadCatalogData();
+}
+
+// ── IR Library bridge install (CORTI 200.1) ─────────────────────────
+function installIRLibraryBridge(): IRLibraryBridge {
+  return {
+    load: () => loadIRLibrary(),
+    getAllItems: () => getAllIRLibraryItems(),
+    filter: (f) => filterIRLibrary(getAllIRLibraryItems(), f),
+    topologies: (items) => listIRLibraryTopologies(items),
+    preview: (id) => previewIRLibraryItem(id),
+    loadIR: (id) => loadIRLibraryItem(id),
+  };
 }
 
 // ── W200 · Panel empty-state observer ───────────────────────────────

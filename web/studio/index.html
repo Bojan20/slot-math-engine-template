@@ -301,6 +301,20 @@
             <div class="sym-list" id="sym-list" role="list"></div>
           </section>
 
+          <!-- My Icons · custom icon library (CORTI 200.2) -->
+          <section class="card card-my-icons">
+            <div class="card-h">
+              <h2>📂 My Icons</h2>
+              <span class="card-meta"><b id="my-icons-count">0</b> uploaded</span>
+            </div>
+            <div class="my-icons-toolbar">
+              <button class="btn-ghost mini" id="my-icons-export" title="Export all uploaded icons as ZIP">Export pack</button>
+              <button class="btn-ghost mini" id="my-icons-import" title="Import a ZIP icon pack">Import pack</button>
+            </div>
+            <div class="my-icons-grid" id="my-icons-grid"></div>
+            <p class="my-icons-help">Click 📤 next to any symbol to upload a custom icon (SVG / PNG / WebP, max 100KB). Click a tile here to attach it to the currently selected symbol; right-click to rename or delete.</p>
+          </section>
+
           <!-- Reel editor · compact + paytable preview -->
           <section class="card card-reels">
             <div class="card-h">
@@ -535,6 +549,9 @@
             <span class="ctx-meta">deterministic spin · seed override available</span>
           </div>
           <div class="ctx-bar-r">
+            <button class="btn-ghost" id="btn-demo-fs" title="W200.3 — trigger Free Spins intro animation">Trigger FS Demo</button>
+            <button class="btn-ghost" id="btn-demo-hw" title="W200.3 — trigger Hold &amp; Win reveal animation">Trigger H&amp;W Demo</button>
+            <button class="btn-ghost" id="btn-demo-cascade" title="W200.3 — trigger Cascade drop animation">Trigger Cascade Demo</button>
             <button class="btn-ghost" id="btn-replay">Replay last</button>
             <button class="btn-ghost" id="btn-seed">Seed: <span class="mono">0x9F-2E1B</span></button>
             <button class="btn-ghost" id="btn-auto10">Autoplay 10</button>
@@ -970,14 +987,70 @@
         </section>
 
         <section class="rail-card timeline-card">
-          <div class="rail-card-h"><span>Animation timeline</span><span class="rail-card-r mono">spin sequence</span></div>
-          <ul class="anim-timeline">
-            <li class="anim-step is-done"><span class="anim-dot"></span><span class="anim-lbl">idle</span><b class="mono">0.0s</b></li>
-            <li class="anim-step is-active"><span class="anim-dot"></span><span class="anim-lbl">spin</span><b class="mono">0.4s</b></li>
-            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">win highlight</span><b class="mono">1.2s</b></li>
-            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">FS intro</span><b class="mono">2.8s</b></li>
-            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">H&amp;W reveal</span><b class="mono">4.4s</b></li>
-          </ul>
+          <div class="rail-card-h"><span>Animation timeline</span><span class="rail-card-r mono">5 stages</span></div>
+          <div class="anim-editor">
+            <div class="anim-knob">
+              <label for="anim-idle-duration">idle breathing</label>
+              <input type="range" id="anim-idle-duration" min="1" max="5" step="0.1" value="2" />
+              <span class="mono" id="anim-idle-duration-v">2.0s</span>
+            </div>
+            <div class="anim-knob">
+              <label for="anim-spin-blur">spin blur</label>
+              <input type="range" id="anim-spin-blur" min="0" max="10" step="1" value="4" />
+              <span class="mono" id="anim-spin-blur-v">4px</span>
+            </div>
+            <div class="anim-knob">
+              <label for="anim-win-duration">win pulse</label>
+              <input type="range" id="anim-win-duration" min="0.5" max="2" step="0.05" value="1.2" />
+              <span class="mono" id="anim-win-duration-v">1.20s</span>
+            </div>
+            <div class="anim-knob">
+              <label for="anim-win-glow">win glow</label>
+              <input type="color" id="anim-win-glow" value="#22D3EE" />
+            </div>
+            <div class="anim-knob">
+              <label for="anim-fs-style">FS intro</label>
+              <select id="anim-fs-style">
+                <option value="bounce">Bounce</option>
+                <option value="slide">Slide</option>
+                <option value="zoom">Zoom</option>
+              </select>
+            </div>
+            <div class="anim-knob">
+              <label for="anim-hw-style">H&amp;W reveal</label>
+              <select id="anim-hw-style">
+                <option value="sequential">Sequential</option>
+                <option value="random">Random</option>
+                <option value="wave">Wave</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="rail-card audio-card">
+          <div class="rail-card-h"><span>Audio cues</span><span class="rail-card-r mono">6 default</span></div>
+          <div class="audio-controls">
+            <label class="audio-mute-row">
+              <input type="checkbox" id="audio-mute" />
+              <span>Mute all</span>
+            </label>
+            <div class="audio-volume-row">
+              <label for="audio-volume">master volume</label>
+              <input type="range" id="audio-volume" min="0" max="1" step="0.05" value="0.7" />
+              <span class="mono" id="audio-volume-v">70%</span>
+            </div>
+            <div class="audio-upload-row">
+              <select id="audio-upload-cue">
+                <option value="reel-spin">reel-spin</option>
+                <option value="reel-stop">reel-stop</option>
+                <option value="win-small">win-small</option>
+                <option value="win-big">win-big</option>
+                <option value="fs-intro">fs-intro</option>
+                <option value="hw-orb-land">hw-orb-land</option>
+              </select>
+              <button class="btn-ghost mini" id="audio-upload-btn" title="Upload .mp3/.ogg ≤200KB">Upload</button>
+            </div>
+          </div>
         </section>
 
         <section class="rail-card theme-card">
@@ -1344,6 +1417,44 @@
     <footer class="modal-foot">
       <button class="btn-ghost" id="ng-cancel">Cancel</button>
       <button class="btn-primary" id="ng-create">Create</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ========= IR LIBRARY SUB-MODAL (CORTI 200.1) ========= -->
+<div class="modal-base ir-library-modal" id="ir-library-modal" hidden aria-hidden="true">
+  <div class="modal-backdrop" id="irl-backdrop"></div>
+  <div class="modal-box ir-library-box">
+    <header class="modal-h">
+      <h2>IR Library · 26 starter IRs</h2>
+      <button class="modal-close" id="irl-close">×</button>
+    </header>
+    <div class="modal-body ir-library-body">
+      <div class="ir-library-toolbar">
+        <input type="text" id="irl-search" class="ir-library-search" placeholder="Search title / supplier / M-gap…" />
+        <select id="irl-category" class="ir-library-select">
+          <option value="">All categories</option>
+          <option value="lw-mgaps">L&amp;W M-Gaps</option>
+          <option value="classics">Industry Classics</option>
+        </select>
+        <select id="irl-topology" class="ir-library-select">
+          <option value="">All topologies</option>
+          <option value="rectangular">Rectangular</option>
+          <option value="variable_rows">Megaways</option>
+          <option value="cluster_grid">Cluster grid</option>
+        </select>
+        <span class="ir-library-count" id="irl-count">0 of 0</span>
+      </div>
+      <div class="ir-library-split">
+        <div class="ir-library-grid" id="irl-grid" role="list"></div>
+        <aside class="ir-library-preview" id="irl-preview">
+          <div class="ir-library-preview-empty">Pick an IR from the list to see its preview.</div>
+        </aside>
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <button class="btn-ghost" id="irl-cancel">Cancel</button>
+      <button class="btn-primary" id="irl-load" disabled>Load into new workspace</button>
     </footer>
   </div>
 </div>

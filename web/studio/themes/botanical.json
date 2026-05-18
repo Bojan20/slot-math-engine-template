@@ -1,0 +1,32 @@
+{
+  "id": "botanical",
+  "name": "Botanical",
+  "description": "Leaves / petals / vines + green/amber palette",
+  "palette": {
+    "primary": "#65A30D",
+    "accent": "#FACC15",
+    "deep": "#14532D",
+    "highlight": "#FB923C"
+  },
+  "background": "radial-gradient(circle at 30% 20%, #14532D 0%, #06140A 80%)",
+  "iconMap": {
+    "HP1": "leaf",
+    "HP2": "flame",
+    "HP3": "drop",
+    "HP4": "sun",
+    "MP1": "spiral",
+    "MP2": "wave",
+    "MP3": "arc",
+    "MP4": "knot",
+    "LP1": "pebble",
+    "LP2": "circle",
+    "LP3": "triangle",
+    "LP4": "chevron",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  }
+}

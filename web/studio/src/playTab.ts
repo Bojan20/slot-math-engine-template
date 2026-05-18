@@ -13,6 +13,11 @@ import {
   type SpinResult,
 } from './renderer.js';
 import { playSpin, merkleCommit, isAutoplayAllowed } from './playEngine.js';
+import {
+  createBonusAnimator,
+  identifyWinningCells,
+  type BonusAnimator,
+} from './bonusAnimations.js';
 
 export interface PlayHistoryEntry {
   timestamp: number;
@@ -39,6 +44,14 @@ export interface PlayTabBridge {
   setIR(ir: SlotGameIR): void;
   /** Test access. */
   _renderer(): SlotRenderer | null;
+  /** W200.3 — force-trigger Free Spins bonus animation. */
+  demoFreeSpins(): Promise<void>;
+  /** W200.3 — force-trigger Hold & Win bonus animation. */
+  demoHoldAndWin(): Promise<void>;
+  /** W200.3 — force-trigger cascade chain animation. */
+  demoCascade(): Promise<void>;
+  /** W200.3 — read the bonus animator (test access). */
+  _animator(): BonusAnimator | null;
 }
 
 interface PlayState {
@@ -51,6 +64,11 @@ interface PlayState {
   spinDebounceUntil: number;
   mounting: boolean;
   mounted: boolean;
+  // W200.3 — bonus animation runtime.
+  animator: BonusAnimator | null;
+  inFsMode: boolean;
+  fsSpinsRemaining: number;
+  fsTotalWin: number;
 }
 
 const DEBOUNCE_MS = 100;
@@ -67,6 +85,10 @@ function createInitialState(): PlayState {
     spinDebounceUntil: 0,
     mounting: false,
     mounted: false,
+    animator: null,
+    inFsMode: false,
+    fsSpinsRemaining: 0,
+    fsTotalWin: 0,
   };
 }
 
@@ -212,11 +234,41 @@ export function createPlayTab(getIR: () => SlotGameIR): PlayTabBridge {
       const renderer = createSlotRenderer();
       await renderer.mount(host, ir);
       state.renderer = renderer;
+      // W200.3 — wire bonus animator (DOM badges + splash). The Pixi
+      // application reference is intentionally null here because the
+      // renderer encapsulates the canvas; we drive badges over DOM.
+      state.animator = createBonusAnimator(null, { container: host });
       state.mounted = true;
       bindInfoPanelEvents(bridge, state);
+      bindDemoButtons();
       updateInfoUI(state);
     } finally {
       state.mounting = false;
+    }
+  }
+
+  /** W200.3 — wire the three demo-trigger buttons in the PLAY tab. */
+  function bindDemoButtons(): void {
+    const fsBtn = document.getElementById('btn-demo-fs');
+    if (fsBtn && !fsBtn.dataset.bound) {
+      fsBtn.dataset.bound = '1';
+      fsBtn.addEventListener('click', () => {
+        void bridge.demoFreeSpins();
+      });
+    }
+    const hwBtn = document.getElementById('btn-demo-hw');
+    if (hwBtn && !hwBtn.dataset.bound) {
+      hwBtn.dataset.bound = '1';
+      hwBtn.addEventListener('click', () => {
+        void bridge.demoHoldAndWin();
+      });
+    }
+    const cascadeBtn = document.getElementById('btn-demo-cascade');
+    if (cascadeBtn && !cascadeBtn.dataset.bound) {
+      cascadeBtn.dataset.bound = '1';
+      cascadeBtn.addEventListener('click', () => {
+        void bridge.demoCascade();
+      });
     }
   }
 
@@ -243,7 +295,119 @@ export function createPlayTab(getIR: () => SlotGameIR): PlayTabBridge {
     if (state.history.length > MAX_HISTORY) state.history.length = MAX_HISTORY;
     updateInfoUI(state);
     if (state.renderer) await state.renderer.spin({ seed: effectiveSeed, result });
+
+    // W200.3 — post-spin bonus-feature animation hooks.
+    await runBonusAnimationsForResult(result);
     return result;
+  }
+
+  /**
+   * W200.3 — react to a fresh `SpinResult` by running the appropriate
+   * bonus-feature sequence. Free-Spins (≥3 scatters) → fsIntro and FS
+   * mode counter; existing FS mode → decrement and possibly outro;
+   * Cascade-feature winning combination → cascadeStep loop.
+   * Hold-and-Win trigger (≥6 orbs) is heuristic — we treat scatter
+   * symbols as the orb proxy when the result has no native orb count.
+   */
+  async function runBonusAnimationsForResult(result: SpinResult): Promise<void> {
+    const a = state.animator;
+    if (!a) return;
+    // Free Spins trigger / FS mode increment.
+    if (!state.inFsMode && result.scatterCount >= 3) {
+      const fsCount = 10;
+      try {
+        await a.fsIntro(result.scatterCount, fsCount);
+        state.inFsMode = true;
+        state.fsSpinsRemaining = fsCount;
+        state.fsTotalWin = 0;
+        a.fsModeIndicator(1, fsCount, 1);
+      } catch {
+        /* swallow — bad state; keep playing */
+      }
+    } else if (state.inFsMode) {
+      state.fsTotalWin += result.totalWin;
+      state.fsSpinsRemaining--;
+      const cur = Math.max(1, 10 - state.fsSpinsRemaining);
+      a.fsModeIndicator(cur, 10, 1);
+      if (state.fsSpinsRemaining <= 0) {
+        try {
+          await a.fsOutro(state.fsTotalWin);
+        } catch {
+          /* swallow */
+        }
+        state.inFsMode = false;
+        state.fsTotalWin = 0;
+      }
+    }
+    // Cascade chain — run a single visual step per win cluster.
+    if (result.wins.length > 0) {
+      const cells = identifyWinningCells(result.wins);
+      // Best-effort guard: cascadeStep transitions from a non-cascade
+      // resting state. Skip if we're mid-FS-intro-or-outro splash.
+      const s = a.state();
+      if (s === 'idle' || s === 'fs-mode') {
+        try {
+          await a.cascadeStep(1, cells);
+        } catch {
+          /* swallow */
+        }
+      }
+    } else {
+      a.resetCascade();
+    }
+  }
+
+  async function demoFreeSpins(): Promise<void> {
+    if (!state.mounted) await ensureMounted();
+    const a = state.animator;
+    if (!a) return;
+    // Reset to idle if we were in FS mode mid-session.
+    if (state.inFsMode) {
+      state.inFsMode = false;
+      state.fsSpinsRemaining = 0;
+      state.fsTotalWin = 0;
+      try { a.transitionTo('idle'); } catch { /* ignore */ }
+    }
+    await a.fsIntro(3, 10);
+    state.inFsMode = true;
+    state.fsSpinsRemaining = 10;
+    a.fsModeIndicator(1, 10, 2);
+  }
+
+  async function demoHoldAndWin(): Promise<void> {
+    if (!state.mounted) await ensureMounted();
+    const a = state.animator;
+    if (!a) return;
+    try { a.transitionTo('idle'); } catch { /* ignore */ }
+    await a.hwIntro(6, [[1, 0, 0, 0, 1], [0, 1, 0, 0, 0], [0, 0, 1, 1, 1]]);
+    // Simulate three orb-land respins.
+    await a.hwOrbLand(0, 1, 25);
+    await a.hwOrbLand(2, 2, 50);
+    await a.hwOrbLand(4, 0, 75);
+    await a.hwPayout([
+      { r: 0, c: 0, value: 10 },
+      { r: 1, c: 0, value: 10 },
+      { r: 2, c: 0, value: 10 },
+      { r: 1, c: 4, value: 10 },
+      { r: 1, c: 1, value: 25 },
+      { r: 2, c: 2, value: 50 },
+      { r: 0, c: 4, value: 75 },
+    ]);
+  }
+
+  async function demoCascade(): Promise<void> {
+    if (!state.mounted) await ensureMounted();
+    const a = state.animator;
+    if (!a) return;
+    try { a.transitionTo('idle'); } catch { /* ignore */ }
+    for (let depth = 1; depth <= 4; depth++) {
+      await a.cascadeStep(depth, [
+        { r: 1, c: 1 },
+        { r: 1, c: 2 },
+        { r: 1, c: 3 },
+      ]);
+    }
+    a.resetCascade();
   }
 
   async function autoplay(count: number): Promise<void> {
@@ -276,6 +440,10 @@ export function createPlayTab(getIR: () => SlotGameIR): PlayTabBridge {
       updateInfoUI(state);
     },
     _renderer: () => state.renderer,
+    demoFreeSpins,
+    demoHoldAndWin,
+    demoCascade,
+    _animator: () => state.animator,
   };
 
   return bridge;

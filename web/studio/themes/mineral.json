@@ -1,0 +1,32 @@
+{
+  "id": "mineral",
+  "name": "Mineral",
+  "description": "Crystals / shards / gems + cyan/teal palette",
+  "palette": {
+    "primary": "#22D3EE",
+    "accent": "#E2E8F0",
+    "deep": "#0F172A",
+    "highlight": "#94A3B8"
+  },
+  "background": "radial-gradient(circle at 50% 0%, #0F172A 0%, #020617 70%)",
+  "iconMap": {
+    "HP1": "diamond",
+    "HP2": "crystal",
+    "HP3": "prism",
+    "HP4": "shard",
+    "MP1": "hexagon",
+    "MP2": "octagon",
+    "MP3": "pentagon",
+    "MP4": "lattice",
+    "LP1": "triangle",
+    "LP2": "square",
+    "LP3": "circle",
+    "LP4": "chevron",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  }
+}

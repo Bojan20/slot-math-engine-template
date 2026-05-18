@@ -1,0 +1,32 @@
+{
+  "id": "geological",
+  "name": "Geological",
+  "description": "Mineralogy / acoustic gem icons + earth palette",
+  "palette": {
+    "primary": "#7E5C46",
+    "accent": "#A88963",
+    "deep": "#3F2E20",
+    "highlight": "#D4B896"
+  },
+  "background": "radial-gradient(circle at 50% 10%, #3F2E20 0%, #1A120A 70%)",
+  "iconMap": {
+    "HP1": "crystal",
+    "HP2": "diamond",
+    "HP3": "prism",
+    "HP4": "shard",
+    "MP1": "hexagon",
+    "MP2": "octagon",
+    "MP3": "pentagon",
+    "MP4": "triangle",
+    "LP1": "pebble",
+    "LP2": "mountain",
+    "LP3": "keystone",
+    "LP4": "obelisk",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  }
+}

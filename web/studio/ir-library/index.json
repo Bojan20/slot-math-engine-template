@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "scripts/generate-ir-library.mjs",
+  "total_items": 26,
+  "categories": [
+    {
+      "id": "lw-mgaps",
+      "name": "L&W M-Gaps (16)",
+      "description": "L&W mehanika M1-M16 starter IRs — closed-form solvers under W181–W196.",
+      "items": [
+        {
+          "id": "lw-m1",
+          "file": "lw-mgaps/M1-dragon-spin-crosslink-water.ir.json",
+          "title": "M1 Dragon Spin CrossLink Water",
+          "supplier": "L&W Bally",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M1"
+        },
+        {
+          "id": "lw-m2",
+          "file": "lw-mgaps/M2-huff-n-puff-frame-upgrade.ir.json",
+          "title": "M2 Huff N' Puff Frame Upgrade",
+          "supplier": "L&W SG Gaming",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M2"
+        },
+        {
+          "id": "lw-m3",
+          "file": "lw-mgaps/M3-ultimate-fire-link-grid-expansion.ir.json",
+          "title": "M3 Ultimate Fire Link Grid-Expansion",
+          "supplier": "L&W Bally",
+          "year": 2024,
+          "topology": "cluster_grid",
+          "mGap": "M3"
+        },
+        {
+          "id": "lw-m4",
+          "file": "lw-mgaps/M4-dancing-drums-explosion.ir.json",
+          "title": "M4 Dancing Drums Explosion",
+          "supplier": "L&W Shuffle Master",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M4"
+        },
+        {
+          "id": "lw-m5",
+          "file": "lw-mgaps/M5-quick-hit-reel-bound-mystery.ir.json",
+          "title": "M5 Quick Hit Reel-Bound Mystery",
+          "supplier": "L&W Bally",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M5"
+        },
+        {
+          "id": "lw-m6",
+          "file": "lw-mgaps/M6-triple-cash-wheel.ir.json",
+          "title": "M6 Triple Cash Wheel",
+          "supplier": "L&W Bally",
+          "year": 2026,
+          "topology": "rectangular",
+          "mGap": "M6"
+        },
+        {
+          "id": "lw-m7",
+          "file": "lw-mgaps/M7-spartacus-colossal-reels.ir.json",
+          "title": "M7 Spartacus Colossal Reels",
+          "supplier": "L&W WMS",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M7"
+        },
+        {
+          "id": "lw-m8",
+          "file": "lw-mgaps/M8-goldfish-race.ir.json",
+          "title": "M8 Goldfish Race Competitive Pick",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M8"
+        },
+        {
+          "id": "lw-m9",
+          "file": "lw-mgaps/M9-big-bet-uk.ir.json",
+          "title": "M9 Big Bet UK Paid-Package",
+          "supplier": "L&W Barcrest",
+          "year": 2024,
+          "topology": "rectangular",
+          "mGap": "M9"
+        },
+        {
+          "id": "lw-m10",
+          "file": "lw-mgaps/M10-rr-megaways-bonus-bank.ir.json",
+          "title": "M10 RR Megaways Bonus Bank",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "topology": "variable_rows",
+          "mGap": "M10"
+        },
+        {
+          "id": "lw-m11",
+          "file": "lw-mgaps/M11-player-elects.ir.json",
+          "title": "M11 Player-Elects Composition",
+          "supplier": "L&W (multi-studio)",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M11"
+        },
+        {
+          "id": "lw-m12",
+          "file": "lw-mgaps/M12-munchkinland.ir.json",
+          "title": "M12 Munchkinland Random Injection",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M12"
+        },
+        {
+          "id": "lw-m13",
+          "file": "lw-mgaps/M13-woz-glinda.ir.json",
+          "title": "M13 WOZ YBR Glinda Reshape",
+          "supplier": "L&W WMS",
+          "year": 2026,
+          "topology": "cluster_grid",
+          "mGap": "M13"
+        },
+        {
+          "id": "lw-m14",
+          "file": "lw-mgaps/M14-lotr-nested.ir.json",
+          "title": "M14 LOTR Two Towers Nested Slot",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M14"
+        },
+        {
+          "id": "lw-m15",
+          "file": "lw-mgaps/M15-rich-piggies.ir.json",
+          "title": "M15 Rich Little Piggies Multi-Pot",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M15"
+        },
+        {
+          "id": "lw-m16",
+          "file": "lw-mgaps/M16-stellar-jackpots.ir.json",
+          "title": "M16 Stellar Jackpots Arcade",
+          "supplier": "L&W Lightning Box",
+          "year": 2025,
+          "topology": "rectangular",
+          "mGap": "M16"
+        }
+      ]
+    },
+    {
+      "id": "classics",
+      "name": "Industry Classics (10)",
+      "description": "Cross-supplier classic mechanics — Vegas lines, Megaways, cluster, cascade, H&W, wheel, pick, sticky/expanding wilds.",
+      "items": [
+        {
+          "id": "classic-5x3-20lines",
+          "file": "classics/classic-5x3-20lines.ir.json",
+          "title": "Classic 5x3 20 Lines",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-megaways-6reel",
+          "file": "classics/megaways-6reel.ir.json",
+          "title": "Megaways 6-Reel",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "classic-cluster-7x7",
+          "file": "classics/cluster-7x7.ir.json",
+          "title": "Classic Cluster 7x7",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "classic-cascade-with-mult",
+          "file": "classics/cascade-with-multiplier.ir.json",
+          "title": "Cascade with Multiplier Progression",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "classic-hold-and-win",
+          "file": "classics/hold-and-win-classic.ir.json",
+          "title": "Hold and Win Classic",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-fs-retrigger",
+          "file": "classics/free-spins-retrigger.ir.json",
+          "title": "Free Spins with Retrigger",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-wheel-3tier",
+          "file": "classics/wheel-bonus-3tier.ir.json",
+          "title": "Wheel Bonus 3-Tier",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-pick-4of9",
+          "file": "classics/pick-bonus-4-of-9.ir.json",
+          "title": "Pick Bonus 4-of-9",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-sticky-wilds-fs",
+          "file": "classics/sticky-wilds-fs.ir.json",
+          "title": "Sticky Wilds Free Spins",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-expanding-wilds-fs",
+          "file": "classics/expanding-wilds-fs.ir.json",
+          "title": "Expanding Wilds Free Spins",
+          "topology": "rectangular"
+        }
+      ]
+    }
+  ]
+}
