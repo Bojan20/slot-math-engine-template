@@ -266,3 +266,5 @@ jobs:
         run: npm run random-feature-injection-during-fs-acceptance
       - name: Nested Mini-Slot Inside Bonus acceptance (6/6 configs × 50K parent-spins, Wave 190, 71. solver L&W M14 P1 GAP CLOSURE LOTR Two Towers + Return of the King + Star Trek)
         run: npm run nested-mini-slot-inside-bonus-acceptance
+      - name: Bonus Bank Running-Balance Offset acceptance (6/6 configs × 30K bonus-sessions, Wave 191, 72. solver L&W M10 P0 GAP CLOSURE Barcrest Rainbow Riches Megaways Bonus Bank UK-banking flagship)
+        run: npm run bonus-bank-running-balance-offset-acceptance

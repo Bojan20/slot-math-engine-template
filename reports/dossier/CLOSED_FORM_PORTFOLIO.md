@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T01:17:39.060Z`
+Generated: `2026-05-18T01:26:31.000Z`
 
 ## Headline
 
-**71/71 solvers PASS** in single end-to-end runner.
+**72/72 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -84,6 +84,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 188 | Player-Elects Feature Composition (L&W RR Pick n Mix M11) | best E[Y] | 0.95000 | 0.94655 | ✅ |
 | 189 | Random Feature-Injection FS (L&W Munchkinland M12) | E[S] | 20.00000 | 19.99032 | ✅ |
 | 190 | Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14) | E[Y/parent] | 1.80000 | 1.85044 | ✅ |
+| 191 | Bonus Bank Running-Balance Offset (L&W RR Megaways M10) | E[T_B] | 40.12500 | 40.01575 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

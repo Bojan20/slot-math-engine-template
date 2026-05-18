@@ -234,3 +234,6 @@ export * from './randomFeatureInjectionDuringFs.js';
 
 // W152 Wave 190: Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 P1 GAP CLOSURE — LOTR Two Towers + Star Trek)
 export * from './nestedMiniSlotInsideBonus.js';
+
+// W152 Wave 191: Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP CLOSURE — Barcrest Rainbow Riches Megaways Bonus Bank + future L&W flagship)
+export * from './bonusBankRunningBalanceOffset.js';

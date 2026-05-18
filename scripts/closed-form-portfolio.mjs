@@ -1494,6 +1494,33 @@ async function main() {
     showcase.push({ wave: 190, solver: 'Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14)', metric: 'E[Y/parent]', cf: cf.expectedPayoutPerParentSpin, mc: mc.meanPayoutPerParentSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W191: Bonus Bank Running-Balance Offset (L&W M10 — Rainbow Riches Megaways) ──
+  {
+    const { analyzeBonusBankRunningBalanceOffset, simulateBonusBankRunningBalanceOffset } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'bonusBankRunningBalanceOffset.js'));
+    const t0 = Date.now();
+    const core = {
+      numFreeSpins: 15,
+      probSmallBucket: 0.65,
+      smallBucketMean: 0.6,
+      smallBucketVariance: 0.2,
+      highBucketMean: 5.0,
+      highBucketVariance: 8.0,
+      bankAllMultiplier: 1.25,
+      bankSmallMultiplier: 2.0,
+    };
+    const muW = core.probSmallBucket * core.smallBucketMean + (1 - core.probSmallBucket) * core.highBucketMean;
+    const eW2 = core.probSmallBucket * (core.smallBucketVariance + core.smallBucketMean ** 2) +
+      (1 - core.probSmallBucket) * (core.highBucketVariance + core.highBucketMean ** 2);
+    const cfg = { ...core, perSpinVariance: Math.max(0, eW2 - muW * muW) };
+    const cf = analyzeBonusBankRunningBalanceOffset(cfg);
+    const mc = simulateBonusBankRunningBalanceOffset(cfg, 30_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutModeB - mc.meanPayoutModeB) /
+      Math.max(mc.meanPayoutModeB, 1e-9);
+    const ok = rel < 0.05;
+    showcase.push({ wave: 191, solver: 'Bonus Bank Running-Balance Offset (L&W RR Megaways M10)', metric: 'E[T_B]', cf: cf.expectedPayoutModeB, mc: mc.meanPayoutModeB, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
