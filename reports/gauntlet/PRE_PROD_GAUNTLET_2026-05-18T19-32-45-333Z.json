@@ -1,0 +1,103 @@
+{
+  "generatedAtUtc": "2026-05-18T19:32:45.333Z",
+  "mode": "synthetic",
+  "totalMs": 499,
+  "okCount": 8,
+  "failCount": 1,
+  "overallOk": false,
+  "results": [
+    {
+      "id": "pilot-integration",
+      "label": "Pilot integration (W211)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 4,
+      "metric": {
+        "steps": 10
+      }
+    },
+    {
+      "id": "billion-spin-synth",
+      "label": "1B spin benchmark (synthetic)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 134,
+      "metric": {
+        "spinsPerSec": "9.16e+6"
+      }
+    },
+    {
+      "id": "load-test-gaas",
+      "label": "Load test 1k spins/sec",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 1,
+      "metric": {
+        "p99": 10.899,
+        "p50": 6.021,
+        "total": 1000
+      }
+    },
+    {
+      "id": "cert-rehearsal",
+      "label": "Cert dossier rehearsal",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 1,
+      "metric": {
+        "available": true
+      }
+    },
+    {
+      "id": "chaos-scenarios",
+      "label": "Chaos scenarios (W212 Agent B)",
+      "ok": true,
+      "skipped": true,
+      "durationMs": 0,
+      "metric": {
+        "dirPresent": false
+      }
+    },
+    {
+      "id": "mutation-refresh",
+      "label": "Mutation refresh (no-run)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 4,
+      "metric": {
+        "total": 342
+      }
+    },
+    {
+      "id": "perf-regression-check",
+      "label": "Perf regression vs baseline",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 3,
+      "metric": {
+        "regressionCount": 0
+      }
+    },
+    {
+      "id": "latency-budget-snapshot",
+      "label": "Latency budget snapshot",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 1,
+      "metric": {
+        "p99": 98.95
+      }
+    },
+    {
+      "id": "memory-leak-quick",
+      "label": "Memory-leak quick (synthetic)",
+      "ok": false,
+      "skipped": false,
+      "durationMs": 351,
+      "metric": {
+        "growthBytes": 16509960,
+        "growthPctPerHour": 985684.988
+      }
+    }
+  ]
+}

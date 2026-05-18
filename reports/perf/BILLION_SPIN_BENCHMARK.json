@@ -1,0 +1,180 @@
+{
+  "generatedAtUtc": "2026-05-18T19:35:45.883Z",
+  "synthetic": true,
+  "spinsPerKernel": 10000,
+  "kernels": [
+    "P001-classic-5x3",
+    "P017-megaways",
+    "P024-cluster-pays"
+  ],
+  "modes": [
+    "node-single",
+    "node-workers"
+  ],
+  "workers": 8,
+  "totalMs": 101,
+  "memory": {
+    "before": {
+      "rssBytes": 49201152,
+      "heapUsedBytes": 6102560,
+      "heapTotalBytes": 8011776,
+      "externalBytes": 2307652,
+      "arrayBuffersBytes": 38081
+    },
+    "after": {
+      "rssBytes": 125616128,
+      "heapUsedBytes": 7993632,
+      "heapTotalBytes": 14827520,
+      "externalBytes": 2384542,
+      "arrayBuffersBytes": 114931
+    },
+    "deltaRssBytes": 76414976
+  },
+  "perKernel": [
+    {
+      "mode": "node-single",
+      "kernel": "P001-classic-5x3",
+      "spins": 10000,
+      "wallMs": 2.1517920000000004,
+      "spinsPerSec": 4647289.329080133,
+      "summary": {
+        "count": 10000,
+        "hits": 2771,
+        "hitFreq": 0.2771,
+        "totalWinUnits": 8843.300497496579,
+        "empiricalRtp": 0.8843300497496579,
+        "p50Ns": 42,
+        "p95Ns": 84,
+        "p99Ns": 125,
+        "p999Ns": 750,
+        "maxNs": 231208
+      },
+      "finalAuditHash": "2c78e113284605fc60448070"
+    },
+    {
+      "mode": "node-workers",
+      "kernel": "P001-classic-5x3",
+      "spins": 10000,
+      "workers": 8,
+      "wallMs": 31.057708000000005,
+      "spinsPerSec": 321981.2614633378,
+      "summary": {
+        "count": 10000,
+        "hits": 2720,
+        "totalWinUnits": 12132.513550024181,
+        "maxNs": 630207,
+        "p50Ns": 291,
+        "p95Ns": 582,
+        "p99Ns": 3083,
+        "p999Ns": 88624,
+        "hitFreq": 0.272,
+        "empiricalRtp": 1.2132513550024182
+      },
+      "finalAuditHash": "69cd99d7678915812ca43360"
+    },
+    {
+      "mode": "node-single",
+      "kernel": "P017-megaways",
+      "spins": 10000,
+      "wallMs": 1.4176669999999945,
+      "spinsPerSec": 7053842.6866112,
+      "summary": {
+        "count": 10000,
+        "hits": 2247,
+        "hitFreq": 0.2247,
+        "totalWinUnits": 10120.258822892472,
+        "empiricalRtp": 1.0120258822892472,
+        "p50Ns": 42,
+        "p95Ns": 84,
+        "p99Ns": 84,
+        "p999Ns": 291,
+        "maxNs": 10749
+      },
+      "finalAuditHash": "42d25f041310ae2e530dfab5"
+    },
+    {
+      "mode": "node-workers",
+      "kernel": "P017-megaways",
+      "spins": 10000,
+      "workers": 8,
+      "wallMs": 28.841499999999996,
+      "spinsPerSec": 346722.60458020563,
+      "summary": {
+        "count": 10000,
+        "hits": 2344,
+        "totalWinUnits": 18234.994400908414,
+        "maxNs": 53250,
+        "p50Ns": 250,
+        "p95Ns": 624,
+        "p99Ns": 1708,
+        "p999Ns": 25959,
+        "hitFreq": 0.2344,
+        "empiricalRtp": 1.8234994400908413
+      },
+      "finalAuditHash": "0ba878b8817fa3c2dfd44e0f"
+    },
+    {
+      "mode": "node-single",
+      "kernel": "P024-cluster-pays",
+      "spins": 10000,
+      "wallMs": 0.487125000000006,
+      "spinsPerSec": 20528611.752629977,
+      "summary": {
+        "count": 10000,
+        "hits": 2990,
+        "hitFreq": 0.299,
+        "totalWinUnits": 7985.938590712662,
+        "empiricalRtp": 0.7985938590712661,
+        "p50Ns": 1,
+        "p95Ns": 42,
+        "p99Ns": 42,
+        "p999Ns": 42,
+        "maxNs": 7583
+      },
+      "finalAuditHash": "c6163a44c3bc23aaee78b936"
+    },
+    {
+      "mode": "node-workers",
+      "kernel": "P024-cluster-pays",
+      "spins": 10000,
+      "workers": 8,
+      "wallMs": 27.259582999999992,
+      "spinsPerSec": 366843.4693223298,
+      "summary": {
+        "count": 10000,
+        "hits": 3168,
+        "totalWinUnits": 9897.912879838179,
+        "maxNs": 24249,
+        "p50Ns": 208,
+        "p95Ns": 541,
+        "p99Ns": 874,
+        "p999Ns": 12459,
+        "hitFreq": 0.3168,
+        "empiricalRtp": 0.9897912879838179
+      },
+      "finalAuditHash": "bbcb54714b8cbddcbf127dfb"
+    }
+  ],
+  "byMode": {
+    "node-single": {
+      "mode": "node-single",
+      "totalSpins": 30000,
+      "totalWallMs": 4.056584000000001,
+      "kernels": 3,
+      "skippedKernels": 0,
+      "spinsPerSec": 7395384.885410975,
+      "speedupVsBaseline": 1
+    },
+    "node-workers": {
+      "mode": "node-workers",
+      "totalSpins": 30000,
+      "totalWallMs": 87.158791,
+      "kernels": 3,
+      "skippedKernels": 0,
+      "spinsPerSec": 344199.35907555214,
+      "speedupVsBaseline": 0.046542453761204666
+    }
+  },
+  "node": "v25.2.1",
+  "platform": "darwin/arm64"
+}

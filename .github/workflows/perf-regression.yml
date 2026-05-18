@@ -1,0 +1,67 @@
+# W212 Faza 600.1 — Perf regression CI workflow (Agent C).
+#
+# Runs the committed baseline tracker on every PR and on push to main.
+# `npm run perf:regression-check` exits non-zero when any of the seven
+# tracked metrics has regressed more than 10% vs the stored baseline in
+# `reports/perf/baselines.json`. The job blocks merge.
+
+name: perf-regression
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  perf-regression:
+    name: Perf Regression Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      - name: Run perf:regression-check
+        id: perf
+        run: |
+          set -o pipefail
+          npm run perf:regression-check | tee perf-out.txt
+
+      - name: Upload regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-regression-report
+          path: reports/perf/REGRESSION_CHECK.*
+
+      - name: Post PR comment on regression
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = '## Perf regression detected\n\n';
+            try {
+              body += fs.readFileSync('reports/perf/REGRESSION_CHECK.md', 'utf8');
+            } catch (e) {
+              body += `(failed to read regression report: ${e.message})`;
+            }
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

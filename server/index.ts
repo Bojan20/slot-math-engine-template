@@ -44,6 +44,9 @@ import { registerMarketplaceRoutes } from './routes/marketplace.js';
 import { MarketplaceStore } from './state/marketplace.js';
 import { registerPilotRoutes } from './routes/pilot.js';
 import { PilotRunStore } from './state/pilot-runs.js';
+import { registerChaosRoutes } from './routes/chaos.js';
+import { registerCspReportRoutes } from './routes/csp-report.js';
+import { registerSecurityHeaders } from './lib/security-headers.js';
 import { createCache } from './lib/cache.js';
 import { LatencyBudgetTracker, attachLatencyMiddleware } from './lib/latency-budget.js';
 
@@ -238,6 +241,7 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
       '/api/admin',
       '/api/signup',
       '/api/license',
+      '/api/csp-report',
     ],
     rejectMissing: false,
   }));
@@ -316,6 +320,26 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
 
   // W211 Faza 700.0 — Pilot integration-suite run admin routes.
   await registerPilotRoutes(app, { store: stores.pilotRuns });
+
+  // W212 Faza 600.1 — Hardening: chaos admin route + CSP report endpoint
+  // + dedicated security-header middleware. Helmet remains authoritative
+  // for the bulk of the headers; the extra middleware layers
+  // Permissions-Policy + an explicit `report-uri` so CSP violations
+  // arrive at /api/csp-report.
+  await registerSecurityHeaders(app, {
+    routePrefixOverrides: {
+      // Docs/marketing site needs inline styles + analytics images.
+      '/api/docs': {
+        csp:
+          "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
+          "img-src 'self' data: blob: https:; connect-src 'self'; object-src 'none'; " +
+          "base-uri 'self'; frame-ancestors 'self'; form-action 'self'",
+        frameOptions: 'SAMEORIGIN',
+      },
+    },
+  });
+  await registerCspReportRoutes(app, {});
+  await registerChaosRoutes(app, {});
 
   return app;
 }

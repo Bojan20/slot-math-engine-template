@@ -66,6 +66,12 @@ harness = false
 name = "bulk_throughput"
 harness = false
 
+# W212 Faza 600.1 — Pre-prod perf gauntlet. Run with:
+#   cargo bench --bench W212_bench
+[[bench]]
+name = "W212_bench"
+harness = false
+
 # Package-wide lint policy.
 #
 # New modules (`ir`, `recall`) ship with `-D warnings` clean. The

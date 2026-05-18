@@ -219,3 +219,199 @@ export function attachLatencyMiddleware(
 }
 
 export const DEFAULTS = DEFAULT_BUDGETS;
+
+/**
+ * W212 Faza 600.1 — Circuit Breaker for latency budget enforcement.
+ *
+ * Wraps a `LatencyBudgetTracker` with the classic three-state circuit
+ * breaker pattern. Routes whose p99 stays over budget for N consecutive
+ * seconds trip the breaker, which then short-circuits subsequent calls
+ * for `openDurationMs` before transitioning to `half-open` (probe) and
+ * either back to `closed` or back to `open` depending on the probe result.
+ *
+ * States
+ * ──────
+ *   - closed     normal traffic; tracker records every sample.
+ *   - open       traffic is rejected at the gate; `enforceLatencyBudget`
+ *                throws `CircuitOpenError`.
+ *   - half-open  next request is allowed through as a probe; verdict
+ *                determines the next state.
+ *
+ * Wall-clock evaluation runs on `evaluate()` which the host should call
+ * from a periodic tick (or it's invoked implicitly by `record()` if
+ * `autoEvaluate` is set).
+ */
+
+export type CircuitState = 'closed' | 'open' | 'half-open';
+
+export interface CircuitBreakerOptions {
+  /** Number of consecutive evaluations the p99 must exceed budget to trip. */
+  consecutiveBreachesToOpen?: number;
+  /** Window during which evaluations are counted, in ms. */
+  evaluationWindowMs?: number;
+  /** How long the breaker stays open before transitioning to half-open. */
+  openDurationMs?: number;
+  /** Whether `record()` triggers `evaluate()` automatically. */
+  autoEvaluate?: boolean;
+  /** Time source (for tests). */
+  now?: () => number;
+  /** Logger sink. */
+  warn?: (msg: string, ctx: Record<string, unknown>) => void;
+}
+
+export class CircuitOpenError extends Error {
+  constructor(public route: string) {
+    super(`circuit open for ${route}`);
+    this.name = 'CircuitOpenError';
+  }
+}
+
+interface BreakerState {
+  state: CircuitState;
+  consecutiveBreaches: number;
+  openedAtMs: number;
+  lastEvaluationMs: number;
+  trips: number;
+  probesSinceOpen: number;
+}
+
+export class LatencyBudgetCircuitBreaker {
+  private readonly tracker: LatencyBudgetTracker;
+  private readonly opts: Required<CircuitBreakerOptions>;
+  private readonly breakers = new Map<string, BreakerState>();
+
+  constructor(tracker: LatencyBudgetTracker, opts: CircuitBreakerOptions = {}) {
+    this.tracker = tracker;
+    this.opts = {
+      consecutiveBreachesToOpen: opts.consecutiveBreachesToOpen ?? 3,
+      evaluationWindowMs: opts.evaluationWindowMs ?? 1_000,
+      openDurationMs: opts.openDurationMs ?? 30_000,
+      autoEvaluate: opts.autoEvaluate ?? true,
+      now: opts.now ?? (() => Date.now()),
+      warn: opts.warn ?? ((_m, _c) => { /* noop */ }),
+    };
+  }
+
+  /** Get state for a route (defaults to closed). */
+  getState(route: string): CircuitState {
+    return this.breakers.get(route)?.state ?? 'closed';
+  }
+
+  /** Stats per route for observability. */
+  snapshot(route: string): BreakerState & { route: string } {
+    const s = this.breakers.get(route) ?? this.empty();
+    return { route, ...s };
+  }
+
+  snapshotAll(): Array<BreakerState & { route: string }> {
+    return Array.from(this.breakers.entries()).map(([route, s]) => ({ route, ...s }));
+  }
+
+  private empty(): BreakerState {
+    return {
+      state: 'closed',
+      consecutiveBreaches: 0,
+      openedAtMs: 0,
+      lastEvaluationMs: 0,
+      trips: 0,
+      probesSinceOpen: 0,
+    };
+  }
+
+  /** Enforce the breaker — throws CircuitOpenError if route is open. */
+  enforce(route: string): void {
+    const s = this.breakers.get(route);
+    if (!s) return;
+    const now = this.opts.now();
+    if (s.state === 'open') {
+      if (now - s.openedAtMs >= this.opts.openDurationMs) {
+        s.state = 'half-open';
+        s.probesSinceOpen = 0;
+        this.opts.warn('circuit_half_open', { route });
+      } else {
+        throw new CircuitOpenError(route);
+      }
+    }
+    if (s.state === 'half-open') {
+      // Only let one probe through at a time.
+      if (s.probesSinceOpen >= 1) throw new CircuitOpenError(route);
+      s.probesSinceOpen++;
+    }
+  }
+
+  /** Record a duration sample through the underlying tracker + breaker. */
+  record(route: string, durationMs: number): void {
+    this.tracker.record(route, durationMs);
+    if (this.opts.autoEvaluate) this.evaluate(route);
+  }
+
+  /** Evaluate the breaker for a route (call periodically or via record). */
+  evaluate(route: string): void {
+    const snapshot = this.tracker.snapshot(route);
+    const budget = this.tracker.getBudget(route);
+    if (!budget) return;
+    let s = this.breakers.get(route);
+    if (!s) { s = this.empty(); this.breakers.set(route, s); }
+    const now = this.opts.now();
+    s.lastEvaluationMs = now;
+    const breached = snapshot.count > 0 && snapshot.p99 > budget.p99Ms;
+    if (s.state === 'closed') {
+      if (breached) {
+        s.consecutiveBreaches++;
+        if (s.consecutiveBreaches >= this.opts.consecutiveBreachesToOpen) {
+          s.state = 'open';
+          s.openedAtMs = now;
+          s.trips++;
+          s.consecutiveBreaches = 0;
+          this.opts.warn('circuit_open', { route, p99: snapshot.p99, budget: budget.p99Ms });
+        }
+      } else {
+        s.consecutiveBreaches = 0;
+      }
+    } else if (s.state === 'half-open') {
+      if (breached) {
+        s.state = 'open';
+        s.openedAtMs = now;
+        s.trips++;
+        s.probesSinceOpen = 0;
+        this.opts.warn('circuit_re_open', { route, p99: snapshot.p99, budget: budget.p99Ms });
+      } else {
+        s.state = 'closed';
+        s.consecutiveBreaches = 0;
+        s.probesSinceOpen = 0;
+        this.opts.warn('circuit_closed', { route });
+      }
+    }
+  }
+
+  /** Manually trip a route (admin override). */
+  trip(route: string): void {
+    const now = this.opts.now();
+    let s = this.breakers.get(route);
+    if (!s) { s = this.empty(); this.breakers.set(route, s); }
+    s.state = 'open';
+    s.openedAtMs = now;
+    s.trips++;
+    this.opts.warn('circuit_manual_trip', { route });
+  }
+
+  /** Manually reset (close) a route. */
+  reset(route?: string): void {
+    if (route) {
+      this.breakers.delete(route);
+    } else {
+      this.breakers.clear();
+    }
+  }
+}
+
+/**
+ * Convenience wrapper — returns a middleware option that enforces the
+ * latency budget via a circuit breaker. Intended to be invoked from a
+ * Fastify onRequest hook so over-budget routes shed load fast.
+ */
+export function enforceLatencyBudget(
+  breaker: LatencyBudgetCircuitBreaker,
+): (route: string) => void {
+  return (route: string) => breaker.enforce(route);
+}

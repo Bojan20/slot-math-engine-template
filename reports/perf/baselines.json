@@ -1,0 +1,48 @@
+{
+  "schema": "perf-baseline/v1",
+  "updatedAtUtc": "2026-05-18T00:00:00.000Z",
+  "metrics": {
+    "single_spin_latency_p99_ms": {
+      "metricId": "single_spin_latency_p99_ms",
+      "value": 12.5,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "cert_dossier_build_s": {
+      "metricId": "cert_dossier_build_s",
+      "value": 2.2,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "smoke_suite_s": {
+      "metricId": "smoke_suite_s",
+      "value": 12.1,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "pilot_suite_s": {
+      "metricId": "pilot_suite_s",
+      "value": 40.5,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "rust_1m_mc_ms": {
+      "metricId": "rust_1m_mc_ms",
+      "value": 18.0,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "cache_hit_rate": {
+      "metricId": "cache_hit_rate",
+      "value": 0.93,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    },
+    "marketplace_endpoint_p99_ms": {
+      "metricId": "marketplace_endpoint_p99_ms",
+      "value": 95.0,
+      "capturedAtUtc": "2026-05-18T00:00:00.000Z",
+      "source": "synthetic-seed"
+    }
+  }
+}

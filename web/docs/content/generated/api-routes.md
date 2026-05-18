@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 65 routes across 14 route files. 
+Captures 70 routes across 16 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -41,6 +41,21 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `POST` | `/api/cert/:submissionId/approve` |
 | `POST` | `/api/cert/:submissionId/reject` |
 | `GET` | `/api/cert/:submissionId/verify-signature` |
+
+## chaos.ts
+> W212 Faza 600.1 — Admin chaos UI endpoint. GET    /api/admin/chaos        → list active faults POST   /api/admin/chaos/enable → { name, probability } POST   /api/admin/chaos/disable→ { name } | { all: true } POST   /api/admin/chaos/reset  → reset counters Always env-gated: when `CHAOS_ENABLED !== 'true'` or `NODE_ENV === 'production'`, every mutating call returns 403. The GET works either way so dashboards can render an empty state without 403'ing. Admin RBAC enforced via the
+| Method | Path |
+|---|---|
+| `GET` | `/api/admin/chaos` |
+| `POST` | `/api/admin/chaos/enable` |
+| `POST` | `/api/admin/chaos/disable` |
+| `POST` | `/api/admin/chaos/reset` |
+
+## csp-report.ts
+> W212 Faza 600.1 — CSP violation report endpoint. POST /api/csp-report Browsers POST `application/csp-report` JSON when a CSP directive (whose `report-uri` points at this endpoint) is violated. We log the event at WARN severity and append a sanitised record to `reports/security/csp-violations.json` for later forensics. Public (no RBAC) by design — browsers can't add headers. Body is length-capped and any field longer than 2 KB is truncated.
+| Method | Path |
+|---|---|
+| `POST` | `/api/csp-report` |
 
 ## gaas.ts
 > CORTI W204-PROTOCOLS — Gaming-as-a-Service (GaaS) API with real WebSocket /live endpoint. POST /api/gaas/compute-rtp   — closed-form RTP estimate for an IR POST /api/gaas/render-ir     — operator-facing render config from IR POST /api/gaas/spin          — server-authoritative spin (wallet+audit) GET  /api/gaas/seamless      — operator integration handshake GET  /api/gaas/live          — WebSocket: real-time spin/wallet events HTTP API-key auth: pass `x-api-key: <key>`. The li

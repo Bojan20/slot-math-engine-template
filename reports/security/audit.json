@@ -1,0 +1,809 @@
+{
+  "date": "2026-05-18T19:44:29.661Z",
+  "overall": "pass",
+  "categories": [
+    {
+      "id": "secrets",
+      "title": "Secret scanner",
+      "verdict": "pass",
+      "summary": "scanned=2368 critical=0 high=0 (allowlist applied)",
+      "details": {
+        "counts": {
+          "Critical": 0,
+          "High": 0,
+          "Medium": 0,
+          "Low": 0
+        },
+        "hits": [],
+        "allowlistedFromHits": 19
+      }
+    },
+    {
+      "id": "dependencies",
+      "title": "Dependency CVE check",
+      "verdict": "warn",
+      "summary": "critical=0 high=2 moderate=28",
+      "details": {
+        "totals": {
+          "critical": 0,
+          "high": 2,
+          "moderate": 28,
+          "low": 4,
+          "info": 0
+        },
+        "perManifest": {
+          "root": {
+            "buckets": {
+              "critical": 0,
+              "high": 1,
+              "moderate": 8,
+              "low": 4,
+              "info": 0
+            },
+            "total": 13,
+            "cves": [
+              {
+                "name": "@inquirer/editor",
+                "severity": "low",
+                "range": "<=4.2.15",
+                "via": [
+                  "external-editor"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "@inquirer/prompts",
+                "severity": "low",
+                "range": "<=6.0.1",
+                "via": [
+                  "@inquirer/editor"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "@stryker-mutator/core",
+                "severity": "moderate",
+                "range": "4.4.0 - 9.5.1",
+                "via": [
+                  "@inquirer/prompts",
+                  "ajv"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "@stryker-mutator/vitest-runner",
+                "severity": "moderate",
+                "range": "<=9.5.1",
+                "via": [
+                  "@stryker-mutator/core"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/vitest-runner",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "ajv",
+                "severity": "moderate",
+                "range": "7.0.0-alpha.0 - 8.17.1",
+                "via": [
+                  "ajv has ReDoS when using `$data` option"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "external-editor",
+                "severity": "low",
+                "range": ">=1.1.1",
+                "via": [
+                  "tmp"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "postcss",
+                "severity": "moderate",
+                "range": "<8.5.10",
+                "via": [
+                  "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output"
+                ],
+                "fixAvailable": true
+              },
+              {
+                "name": "rollup",
+                "severity": "high",
+                "range": "4.0.0 - 4.58.0",
+                "via": [
+                  "Rollup 4 has Arbitrary File Write via Path Traversal"
+                ],
+                "fixAvailable": true
+              },
+              {
+                "name": "tmp",
+                "severity": "low",
+                "range": "<=0.2.3",
+                "via": [
+                  "tmp allows arbitrary temporary file / directory write via symbolic link `dir` parameter"
+                ],
+                "fixAvailable": {
+                  "name": "@stryker-mutator/core",
+                  "version": "9.6.1",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              }
+            ]
+          },
+          "web/studio": {
+            "buckets": {
+              "critical": 0,
+              "high": 1,
+              "moderate": 4,
+              "low": 0,
+              "info": 0
+            },
+            "total": 5,
+            "cves": [
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "xlsx",
+                "severity": "high",
+                "range": "*",
+                "via": [
+                  "Prototype Pollution in sheetJS",
+                  "SheetJS Regular Expression Denial of Service (ReDoS)"
+                ],
+                "fixAvailable": false
+              }
+            ]
+          },
+          "web/operator": {
+            "buckets": {
+              "critical": 0,
+              "high": 0,
+              "moderate": 4,
+              "low": 0,
+              "info": 0
+            },
+            "total": 4,
+            "cves": [
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              }
+            ]
+          },
+          "web/regulator": {
+            "buckets": {
+              "critical": 0,
+              "high": 0,
+              "moderate": 4,
+              "low": 0,
+              "info": 0
+            },
+            "total": 4,
+            "cves": [
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              }
+            ]
+          },
+          "web/marketplace": {
+            "buckets": {
+              "critical": 0,
+              "high": 0,
+              "moderate": 4,
+              "low": 0,
+              "info": 0
+            },
+            "total": 4,
+            "cves": [
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vite",
+                  "version": "8.0.13",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              }
+            ]
+          },
+          "web/cabinet": {
+            "buckets": {
+              "critical": 0,
+              "high": 0,
+              "moderate": 0,
+              "low": 0,
+              "info": 0
+            },
+            "total": 0,
+            "cves": [],
+            "error": {
+              "code": "ENOLOCK",
+              "summary": "This command requires an existing lockfile.",
+              "detail": "Try creating one first with: npm i --package-lock-only\nOriginal error: loadVirtual requires existing shrinkwrap file"
+            }
+          },
+          "sdk": {
+            "buckets": {
+              "critical": 0,
+              "high": 0,
+              "moderate": 4,
+              "low": 0,
+              "info": 0
+            },
+            "total": 4,
+            "cves": [
+              {
+                "name": "esbuild",
+                "severity": "moderate",
+                "range": "<=0.24.2",
+                "via": [
+                  "esbuild enables any website to send any requests to the development server and read the response"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite",
+                "severity": "moderate",
+                "range": "<=6.4.1",
+                "via": [
+                  "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+                  "esbuild"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vite-node",
+                "severity": "moderate",
+                "range": "<=2.2.0-beta.2",
+                "via": [
+                  "vite"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              },
+              {
+                "name": "vitest",
+                "severity": "moderate",
+                "range": "0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2",
+                "via": [
+                  "vite",
+                  "vite-node"
+                ],
+                "fixAvailable": {
+                  "name": "vitest",
+                  "version": "4.1.6",
+                  "semverMajor": true
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "type-laxity",
+      "title": "TypeScript type laxity",
+      "verdict": "pass",
+      "summary": "any=303/600 asUnknownAs=90/150 tsIgnore=4/50",
+      "details": {
+        "counts": {
+          "any": 303,
+          "asUnknownAs": 90,
+          "tsIgnore": 4
+        },
+        "budget": {
+          "any": 600,
+          "asUnknownAs": 150,
+          "tsIgnore": 50
+        },
+        "hits": [
+          {
+            "file": "sdk/tests/client.test.ts",
+            "line": 94,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/client.test.ts",
+            "line": 108,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/client.test.ts",
+            "line": 119,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/client.test.ts",
+            "line": 134,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/client.test.ts",
+            "line": 146,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/marketplace-submit.test.ts",
+            "line": 140,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "sdk/tests/marketplace-submit.test.ts",
+            "line": 159,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/lib/kernel-test-runner.ts",
+            "line": 209,
+            "kind": "ts-ignore"
+          },
+          {
+            "file": "server/lib/kernel-test-runner.ts",
+            "line": 213,
+            "kind": "ts-ignore"
+          },
+          {
+            "file": "server/lib/rate-limit.ts",
+            "line": 110,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/db-connection.test.ts",
+            "line": 36,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/db-connection.test.ts",
+            "line": 38,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/db-connection.test.ts",
+            "line": 62,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/fake-pg.ts",
+            "line": 678,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/fake-pg.ts",
+            "line": 693,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/kernel-test-runner.test.ts",
+            "line": 130,
+            "kind": "ts-ignore"
+          },
+          {
+            "file": "server/tests/kernel-test-runner.test.ts",
+            "line": 131,
+            "kind": "ts-ignore"
+          },
+          {
+            "file": "server/tests/pilot-runs.test.ts",
+            "line": 54,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/rate-limit.test.ts",
+            "line": 39,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/rate-limit.test.ts",
+            "line": 45,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/rate-limit.test.ts",
+            "line": 153,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/rate-limit.test.ts",
+            "line": 172,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/sessions-postgres.test.ts",
+            "line": 39,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "src/rng/RngFactory.ts",
+            "line": 135,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "src/rng/RngFactory.ts",
+            "line": 170,
+            "kind": "as-unknown-as"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sql-injection",
+      "title": "SQL injection sentinel",
+      "verdict": "pass",
+      "summary": "hits=0",
+      "details": {
+        "hits": []
+      }
+    },
+    {
+      "id": "cors",
+      "title": "CORS configuration",
+      "verdict": "pass",
+      "summary": "bad-combos=0",
+      "details": {
+        "hits": []
+      }
+    },
+    {
+      "id": "https-only",
+      "title": "HTTPS-only enforcement",
+      "verdict": "pass",
+      "summary": "hits=0",
+      "details": {
+        "hits": []
+      }
+    },
+    {
+      "id": "hsm-keys",
+      "title": "HSM key handling",
+      "verdict": "pass",
+      "summary": "leaks=0",
+      "details": {
+        "hits": []
+      }
+    },
+    {
+      "id": "pii",
+      "title": "PII handling",
+      "verdict": "warn",
+      "summary": "raw-pii-logs=1",
+      "details": {
+        "hits": [
+          {
+            "file": "server/lib/email.ts",
+            "line": 109,
+            "excerpt": "console.log(`[email] to=${msg.to} template=${msg.template} subject=\"${msg.subject}\"`);"
+          }
+        ]
+      }
+    },
+    {
+      "id": "audit-chain",
+      "title": "Audit log chain replay",
+      "verdict": "pass",
+      "summary": "entries=1000 broken=none",
+      "details": {
+        "entries": 1000,
+        "brokenAt": null
+      }
+    },
+    {
+      "id": "rate-limit",
+      "title": "Rate-limit coverage",
+      "verdict": "pass",
+      "summary": "global default present",
+      "details": {
+        "hasGlobalRateLimit": true
+      }
+    },
+    {
+      "id": "tenant-scoping",
+      "title": "Tenant scoping helper coverage",
+      "verdict": "warn",
+      "summary": "pg-files=9 offenders=4",
+      "details": {
+        "candidates": 9,
+        "offenders": [
+          {
+            "file": "server/state/marketplace-pg.ts"
+          },
+          {
+            "file": "server/state/pilot-runs-pg.ts"
+          },
+          {
+            "file": "server/state/tenant-wallet-config-pg.ts"
+          },
+          {
+            "file": "server/state/tenants-pg.ts"
+          }
+        ]
+      }
+    }
+  ]
+}

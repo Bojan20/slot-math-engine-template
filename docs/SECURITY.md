@@ -144,3 +144,69 @@ For high-impact issues we will:
 | Fix in private branch                          | ≤ 30 (high) / ≤ 60 (medium) |
 | Coordinated disclosure / CVE                   | ≤ 90 |
 | Public advisory + researcher credit (optional) | ≤ 90 |
+
+---
+
+## W212 Faza 600.1 — Hardening pass (2026-05-18)
+
+This wave consolidates the security model, threat model, controls
+inventory, and audit cadence below. The previous sections remain
+authoritative for vulnerability reporting.
+
+### Threat model snapshot
+
+| #   | Threat                       | Primary control                                            |
+|---  |---                           |---                                                         |
+| T1  | Cross-tenant read            | Tenant context AsyncLocalStorage + query interceptor       |
+| T2  | Privilege escalation         | RBAC matrix (`requireRole`, `requirePermission`)           |
+| T3  | Request replay               | Idempotent endpoints + request-id dedupe                   |
+| T4  | JWT forgery                  | HSM Ed25519 + key rotation hooks                            |
+| T5  | SQL injection                | Parameterised queries + SQL sentinel audit                  |
+| T6  | CSP bypass / XSS             | CSP `default-src 'self'` + report-uri                       |
+| T7  | Wallet provider outage       | Circuit breaker + chaos rehearsal scenarios                 |
+| T8  | Audit chain tampering        | Hash chain + observer + chaos rehearsal                     |
+| T9  | Noisy neighbour              | Per-tenant token-bucket rate limit                          |
+| T10 | Secret leak in source        | secrets-sweep + audit allowlist                             |
+| T11 | Vulnerable dependency        | dependency-scan + dependency-review                         |
+| T12 | Timing side-channel          | constant-time compare; variance budget < 5 ms               |
+
+### Controls inventory (W212 additions)
+
+- `server/lib/chaos/` — chaos framework (env-gated dev/staging only).
+- `server/lib/security-headers.ts` — explicit policy + per-route overrides.
+- `server/routes/csp-report.ts` — CSP violation receiver.
+- `scripts/security/audit.mjs` — 11-category audit (`npm run security:audit`).
+- `scripts/security/dependency-review.mjs` — license + staleness review.
+- `scripts/security/pentest/*` — 6 adversarial regression scripts.
+- `scripts/chaos/scenario-*.mjs` — 5 chaos scenarios + orchestrator.
+
+### Audit cadence
+
+| Cadence    | Activity                                                     | Output                                  |
+|---         |---                                                           |---                                      |
+| Per commit | `security:audit` (CI gate)                                   | `reports/security/AUDIT_REPORT.md`      |
+| Weekly     | `security:dep-review`, `security:owasp`                      | `reports/security/DEPENDENCY_REVIEW.md` |
+| Monthly    | full pen-test suite + chaos scenario rehearsal               | rehearsal report                         |
+| Quarterly  | threat-model review + control map refresh                    | this document                            |
+| Annually   | external pen test                                            | sign-off PDF in `reports/audit/`         |
+
+### Incident response
+
+1. **Acknowledge** within 15 min (SEV-1/2) via PagerDuty.
+2. **Contain** — rotate keys, flip feature flag, scale out.
+3. **Eradicate** — patch + ship hotfix; verify via `security:audit`.
+4. **Recover** — replay impacted audit window through chain validator.
+5. **Postmortem** within 5 business days; add a regression test under
+   `scripts/security/pentest/` if applicable.
+
+### RGPD / GDPR
+
+- Player IDs are pseudonymous SHA-256 hashes; raw emails never reach the
+  audit / log pipeline.
+- Audit entries retained 7 years (UKGC/MGA mandate); player profile data
+  5 years.
+- Right to erasure honoured via tombstoning the player record while
+  keeping the audit chain integrity intact (hash references only).
+- Postgres deployed per jurisdiction; cross-region replication only for
+  encrypted ops backups (KMS-managed).
+

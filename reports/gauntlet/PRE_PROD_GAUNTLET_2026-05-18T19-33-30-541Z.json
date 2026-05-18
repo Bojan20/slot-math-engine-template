@@ -1,0 +1,110 @@
+{
+  "generatedAtUtc": "2026-05-18T19:33:30.541Z",
+  "mode": "synthetic",
+  "totalMs": 571,
+  "okCount": 10,
+  "failCount": 0,
+  "overallOk": true,
+  "results": [
+    {
+      "id": "smoke-suite",
+      "label": "Smoke suite (W210)",
+      "ok": true,
+      "durationMs": 125,
+      "exitCode": 0
+    },
+    {
+      "id": "pilot-integration",
+      "label": "Pilot integration (W211)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 4,
+      "metric": {
+        "steps": 10
+      }
+    },
+    {
+      "id": "billion-spin-synth",
+      "label": "1B spin benchmark (synthetic)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 119,
+      "metric": {
+        "spinsPerSec": "9.64e+6"
+      }
+    },
+    {
+      "id": "load-test-gaas",
+      "label": "Load test 1k spins/sec",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 1,
+      "metric": {
+        "p99": 10.936,
+        "p50": 6.335,
+        "total": 1000
+      }
+    },
+    {
+      "id": "cert-rehearsal",
+      "label": "Cert dossier rehearsal",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 0,
+      "metric": {
+        "available": true
+      }
+    },
+    {
+      "id": "chaos-scenarios",
+      "label": "Chaos scenarios (W212 Agent B)",
+      "ok": true,
+      "skipped": true,
+      "durationMs": 0,
+      "metric": {
+        "dirPresent": false
+      }
+    },
+    {
+      "id": "mutation-refresh",
+      "label": "Mutation refresh (no-run)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 4,
+      "metric": {
+        "total": 342
+      }
+    },
+    {
+      "id": "perf-regression-check",
+      "label": "Perf regression vs baseline",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 4,
+      "metric": {
+        "regressionCount": 0
+      }
+    },
+    {
+      "id": "latency-budget-snapshot",
+      "label": "Latency budget snapshot",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 0,
+      "metric": {
+        "p99": 99.08
+      }
+    },
+    {
+      "id": "memory-leak-quick",
+      "label": "Memory-leak quick (synthetic)",
+      "ok": true,
+      "skipped": false,
+      "durationMs": 314,
+      "metric": {
+        "growthBytes": 191112,
+        "growthPctPerHour": 24531.63
+      }
+    }
+  ]
+}

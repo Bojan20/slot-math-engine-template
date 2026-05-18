@@ -1,0 +1,773 @@
+{
+  "date": "2026-05-18T19:33:53.762Z",
+  "totals": {
+    "totalDeps": 71,
+    "nonPermissive": 0
+  },
+  "roots": [
+    {
+      "id": "root",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template",
+      "deps": [
+        {
+          "name": "@fastify/cors",
+          "section": "dependencies",
+          "declared": "^11.2.0",
+          "installedVersion": "11.2.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@fastify/helmet",
+          "section": "dependencies",
+          "declared": "^13.0.2",
+          "installedVersion": "13.0.2",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@fastify/multipart",
+          "section": "dependencies",
+          "declared": "^10.0.0",
+          "installedVersion": "10.0.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@fastify/static",
+          "section": "dependencies",
+          "declared": "^9.1.3",
+          "installedVersion": "9.1.3",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@fastify/websocket",
+          "section": "dependencies",
+          "declared": "^11.2.0",
+          "installedVersion": "11.2.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@noble/curves",
+          "section": "dependencies",
+          "declared": "^1.9.7",
+          "installedVersion": "1.9.7",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@noble/ed25519",
+          "section": "dependencies",
+          "declared": "^3.1.0",
+          "installedVersion": "3.1.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@noble/hashes",
+          "section": "dependencies",
+          "declared": "^1.8.0",
+          "installedVersion": "1.8.0",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "commander",
+          "section": "dependencies",
+          "declared": "^14.0.2",
+          "installedVersion": "14.0.2",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "decimal.js",
+          "section": "dependencies",
+          "declared": "^10.6.0",
+          "installedVersion": "10.6.0",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "fast-check",
+          "section": "dependencies",
+          "declared": "^4.5.2",
+          "installedVersion": "4.5.2",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "fast-csv",
+          "section": "dependencies",
+          "declared": "^5.0.5",
+          "installedVersion": "5.0.5",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "fastify",
+          "section": "dependencies",
+          "declared": "^5.8.5",
+          "installedVersion": "5.8.5",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "hdr-histogram-js",
+          "section": "dependencies",
+          "declared": "^3.0.1",
+          "installedVersion": "3.0.1",
+          "license": "BSD-2-Clause",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "pdf-lib",
+          "section": "dependencies",
+          "declared": "^1.17.1",
+          "installedVersion": "1.17.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "pg",
+          "section": "dependencies",
+          "declared": "^8.21.0",
+          "installedVersion": "8.21.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "piscina",
+          "section": "dependencies",
+          "declared": "^5.1.4",
+          "installedVersion": "5.1.4",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "xxhash-wasm",
+          "section": "dependencies",
+          "declared": "^1.1.0",
+          "installedVersion": "1.1.0",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "zod",
+          "section": "dependencies",
+          "declared": "^4.2.1",
+          "installedVersion": "4.2.1",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@playwright/test",
+          "section": "devDependencies",
+          "declared": "^1.60.0",
+          "installedVersion": "1.60.0",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@stryker-mutator/core",
+          "section": "devDependencies",
+          "declared": "^8.7.1",
+          "installedVersion": "8.7.1",
+          "license": "Apache-2.0",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@stryker-mutator/vitest-runner",
+          "section": "devDependencies",
+          "declared": "^8.7.1",
+          "installedVersion": "8.7.1",
+          "license": "Apache-2.0",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.27",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/pdfkit",
+          "section": "devDependencies",
+          "declared": "^0.17.6",
+          "installedVersion": "0.17.6",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/pg",
+          "section": "devDependencies",
+          "declared": "^8.20.0",
+          "installedVersion": "8.20.0",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/ws",
+          "section": "devDependencies",
+          "declared": "^8.18.1",
+          "installedVersion": "8.18.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "pdfkit",
+          "section": "devDependencies",
+          "declared": "^0.18.0",
+          "installedVersion": "0.18.0",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "tsx",
+          "section": "devDependencies",
+          "declared": "^4.22.1",
+          "installedVersion": "4.22.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0.2,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "ioredis",
+          "section": "optionalDependencies",
+          "declared": "^5.4.1",
+          "installedVersion": null,
+          "license": "UNKNOWN",
+          "staleMonths": null,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/studio",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/studio",
+      "deps": [
+        {
+          "name": "jszip",
+          "section": "dependencies",
+          "declared": "^3.10.1",
+          "installedVersion": "3.10.1",
+          "license": "(MIT OR GPL-3.0-or-later)",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "mammoth",
+          "section": "dependencies",
+          "declared": "^1.12.0",
+          "installedVersion": "1.12.0",
+          "license": "BSD-2-Clause",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "marked",
+          "section": "dependencies",
+          "declared": "^13.0.3",
+          "installedVersion": "13.0.3",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "papaparse",
+          "section": "dependencies",
+          "declared": "^5.5.3",
+          "installedVersion": "5.5.3",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "pdfjs-dist",
+          "section": "dependencies",
+          "declared": "^4.10.38",
+          "installedVersion": "4.10.38",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "pixi.js",
+          "section": "dependencies",
+          "declared": "^8.18.1",
+          "installedVersion": "8.18.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "xlsx",
+          "section": "dependencies",
+          "declared": "^0.18.5",
+          "installedVersion": "0.18.5",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "zod",
+          "section": "dependencies",
+          "declared": "^4.2.1",
+          "installedVersion": "4.4.3",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/papaparse",
+          "section": "devDependencies",
+          "declared": "^5.5.2",
+          "installedVersion": "5.5.2",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/operator",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/operator",
+      "deps": [
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/regulator",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/regulator",
+      "deps": [
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/marketplace",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/marketplace",
+      "deps": [
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/pitch",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/pitch",
+      "deps": [
+        {
+          "name": "pdf-lib",
+          "section": "dependencies",
+          "declared": "^1.17.1",
+          "installedVersion": "1.17.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/onboarding",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/onboarding",
+      "deps": [
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "web/support",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/web/support",
+      "deps": [
+        {
+          "name": "@types/node",
+          "section": "devDependencies",
+          "declared": "^20.10.0",
+          "installedVersion": "20.19.41",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vite",
+          "section": "devDependencies",
+          "declared": "^5.4.10",
+          "installedVersion": "5.4.21",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    },
+    {
+      "id": "sdk",
+      "dir": "/Users/vanvinklstudio/Projects/slot-math-engine-template/sdk",
+      "deps": [
+        {
+          "name": "typescript",
+          "section": "devDependencies",
+          "declared": "^5.3.0",
+          "installedVersion": "5.9.3",
+          "license": "Apache-2.0",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        },
+        {
+          "name": "vitest",
+          "section": "devDependencies",
+          "declared": "^1.0.0",
+          "installedVersion": "1.6.1",
+          "license": "MIT",
+          "staleMonths": 0,
+          "recommendation": "keep",
+          "nonPermissive": false
+        }
+      ]
+    }
+  ]
+}
