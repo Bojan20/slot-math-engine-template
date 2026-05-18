@@ -1,0 +1,11 @@
+Placeholder directory for TLS certs (W206-SECURITY).
+
+Production:
+  - Mount Let's Encrypt certs here as fullchain.pem + privkey.pem.
+  - Updated nightly via certbot sidecar.
+
+Development:
+  - The SPA image entrypoint generates a self-signed pair on startup
+    (planned in Dockerfile.* refresh).
+
+Do NOT commit real certificate material to this directory.

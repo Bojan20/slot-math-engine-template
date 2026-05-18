@@ -30,7 +30,7 @@ describe('operator · mock-data integrity', () => {
       expect(g.gameId).toMatch(/^[\w-]+$/);
       expect(g.rtp).toBeGreaterThan(0.85);
       expect(g.rtp).toBeLessThan(1.0);
-      expect(['live', 'paused', 'draft', 'archived']).toContain(g.status);
+      expect(['live', 'paused', 'draft', 'archived', 'pending']).toContain(g.status);
     }
   });
 

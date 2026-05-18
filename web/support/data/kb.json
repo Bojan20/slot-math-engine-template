@@ -1,0 +1,67 @@
+{
+  "categories": [
+    "Getting started",
+    "Math engine",
+    "Certification",
+    "Billing",
+    "GaaS integration",
+    "Account"
+  ],
+  "articles": [
+    { "id": "kb-001", "category": "Getting started", "question": "How do I create my first workspace?", "body": "Open the Studio mini-app and click '+ New Workspace'. Pick a target jurisdiction (UKGC, MGA, NJ, etc.). The wizard creates an IR scaffold, default symbol set, and stub paytable so you can run a smoke spin in under a minute.", "tags": ["studio", "workspace", "onboarding"], "lastUpdated": "2026-05-01" },
+    { "id": "kb-002", "category": "Getting started", "question": "What is included in the 30-day trial?", "body": "The trial gives you 3 workspaces, 50 Monte Carlo runs per day, and 5 cert submissions per month. Community-tier support via the public KB and discussion forum. Upgrade to Pro for higher caps and 24h email SLA.", "tags": ["trial", "limits"], "lastUpdated": "2026-05-01" },
+    { "id": "kb-003", "category": "Getting started", "question": "Can I import an existing GDD?", "body": "Yes. The IR importer accepts L&W's internal Excel format, the IGT XML schema, and a generic JSON. Drag the file onto the Studio canvas; the engine parses and validates against the schema in under 2 seconds for typical games.", "tags": ["import", "gdd"], "lastUpdated": "2026-04-22" },
+    { "id": "kb-004", "category": "Math engine", "question": "How accurate is the closed-form RTP?", "body": "The closed-form solver matches Monte Carlo to within 1e-6 absolute RTP for all 77 kernel types in the test suite. Cluster and cascade kernels typically converge to 4 decimals with 100M MC spins.", "tags": ["rtp", "solver", "accuracy"], "lastUpdated": "2026-05-10" },
+    { "id": "kb-005", "category": "Math engine", "question": "Which mechanics does the engine support?", "body": "Lines, ways, cluster, Megaways, hold-and-spin, cascade with multipliers, mystery symbols, sticky wilds, walking wilds, big-bet packages, multi-tier wheels, must-hit jackpots, and 60+ more — see the master TODO and L&W M1-M16 portfolio coverage doc.", "tags": ["mechanics", "kernels"], "lastUpdated": "2026-05-12" },
+    { "id": "kb-006", "category": "Math engine", "question": "Can I customize the volatility profile?", "body": "Yes. Each kernel exposes parameters (paytable scale, hit-frequency target, bonus-trigger probability). The math optimizer can solve for a target volatility class (low/med/high/very-high) given an RTP constraint.", "tags": ["volatility", "optimizer"], "lastUpdated": "2026-04-30" },
+    { "id": "kb-007", "category": "Certification", "question": "How do I generate a PAR sheet?", "body": "From the CERTIFY tab in Studio, click 'Generate PAR'. The engine emits a PDF with closed-form RTP, hit frequency, max-win cap, jackpot tier, jurisdictional gating flags, and an HSM-signed footer hash.", "tags": ["par", "cert"], "lastUpdated": "2026-05-08" },
+    { "id": "kb-008", "category": "Certification", "question": "Which labs accept the operator-package.zip?", "body": "GLI, BMM, eCOGRA, NMi accept the bundle as a research input. UKGC requires a separate compliance statement; MGA and AGCO accept the full package as primary evidence. Always check with your specific lab account manager.", "tags": ["lab", "operator-package"], "lastUpdated": "2026-05-15" },
+    { "id": "kb-009", "category": "Certification", "question": "How are jurisdictional gates enforced?", "body": "Each game declares an allow-list of jurisdictions in its IR. The submission flow checks RTP bounds (e.g., UKGC requires >= 90%), max-win caps (Italy caps at 100x bet for slots), and feature restrictions (auto-play disabled for ON-AGCO).", "tags": ["jurisdiction", "gating"], "lastUpdated": "2026-05-01" },
+    { "id": "kb-010", "category": "Certification", "question": "What is the HSM signature for?", "body": "Every operator-package.zip is signed with an ed25519 key held by the HSM module. The signature lets the regulator independently verify the PAR + audit chain were not tampered with after generation. The public key ships with the dossier.", "tags": ["hsm", "signature", "audit"], "lastUpdated": "2026-04-18" },
+    { "id": "kb-011", "category": "Billing", "question": "How do I upgrade from Trial to Pro?", "body": "Click 'My Account' in the Operator dashboard or use the Onboarding portal. Upgrade is immediate; caps and SLA apply from the timestamp of the upgrade API call. Prorated billing applies for mid-month upgrades.", "tags": ["upgrade", "billing"], "lastUpdated": "2026-05-01" },
+    { "id": "kb-012", "category": "Billing", "question": "Can I pay annually?", "body": "Yes. Annual Pro is $50K (~17% discount). Enterprise is $250K annual or custom multi-year deal — talk to sales. Invoices in USD, EUR, or GBP; net-30 terms.", "tags": ["pricing", "annual"], "lastUpdated": "2026-05-01" },
+    { "id": "kb-013", "category": "Billing", "question": "What happens when my trial expires?", "body": "At day 25 you get a warning email. At day 31 the license locks: existing data is preserved, but you cannot run new MC sims or submit cert dossiers until you upgrade. Upgrade reactivates the account instantly.", "tags": ["trial", "expiry"], "lastUpdated": "2026-05-12" },
+    { "id": "kb-014", "category": "GaaS integration", "question": "How do I connect my operator stack?", "body": "Use the GaaS REST or WebSocket API. POST /api/session/start, then drive spins via /api/session/:id/spin. The /api/gaas/live WebSocket emits real-time spin events for monitoring.", "tags": ["gaas", "integration"], "lastUpdated": "2026-04-25" },
+    { "id": "kb-015", "category": "GaaS integration", "question": "What auth does the GaaS API use?", "body": "GAAS_API_KEYS environment variable holds a comma-separated list of accepted keys. Pass via 'Authorization: Bearer <key>' header. Per-tenant rate limits apply (default 600 req/min, configurable).", "tags": ["auth", "api-keys"], "lastUpdated": "2026-04-25" },
+    { "id": "kb-016", "category": "GaaS integration", "question": "Can I embed the game UI in my operator site?", "body": "Yes. The /web/cabinet bundle is a self-contained iframe-able player. Configure CSP frame-ancestors to allow your operator domain. WebGL + Web Audio API required.", "tags": ["cabinet", "embed", "iframe"], "lastUpdated": "2026-04-20" },
+    { "id": "kb-017", "category": "Account", "question": "How do I add team members?", "body": "Open the Operator dashboard → Settings → Team. Invite by email; roles are admin / developer / viewer. RBAC enforced at the API layer; viewer cannot trigger MC runs or cert submissions.", "tags": ["team", "rbac"], "lastUpdated": "2026-05-05" },
+    { "id": "kb-018", "category": "Account", "question": "Can I export my data?", "body": "Yes. From the Operator dashboard → My Account → Export, request a ZIP of all your IRs, MC outputs, and cert dossiers. Available within 24h. GDPR-compliant.", "tags": ["export", "gdpr"], "lastUpdated": "2026-04-15" },
+    { "id": "kb-019", "category": "Account", "question": "How do I change my primary jurisdiction?", "body": "Open the Operator dashboard → Settings → Account. The primary jurisdiction sets the default gating profile but does not restrict which jurisdictions individual games can target.", "tags": ["jurisdiction", "settings"], "lastUpdated": "2026-04-12" },
+    { "id": "kb-020", "category": "Account", "question": "What if I forget my password?", "body": "Click 'Forgot password?' on the login screen. We send a reset link to your registered email; the link expires in 1 hour. Contact support@example.com if you cannot receive the email.", "tags": ["password", "reset"], "lastUpdated": "2026-04-20" },
+    { "id": "kb-021", "category": "Getting started", "question": "Where can I find sample IR files?", "body": "The /docs/research and /web/marketplace ship with sample IRs for Quick Hit Platinum, Huff n Puff, Megaways Vault, and Spartacus Colossal. Use them as a starting point for your first workspace.", "tags": ["samples", "ir"], "lastUpdated": "2026-04-28" },
+    { "id": "kb-022", "category": "Math engine", "question": "How long does a full MC validation take?", "body": "A 100M-spin run on a base game with 5 reels takes ~12 seconds on an M2 Mac. Cluster + cascade kernels take ~40s. The optimizer runs in parallel via piscina workers; expect linear speedup up to 8 cores.", "tags": ["performance", "mc"], "lastUpdated": "2026-05-14" }
+  ],
+  "components": [
+    { "id": "engine-core", "name": "Math Engine API", "status": "operational", "url": "/api/health" },
+    { "id": "engine-gaas", "name": "GaaS WebSocket", "status": "operational", "url": "/api/health/deep" },
+    { "id": "engine-cert", "name": "Cert Pipeline", "status": "operational", "url": "/api/health" },
+    { "id": "engine-studio", "name": "Studio Web", "status": "operational", "url": "/api/health" },
+    { "id": "engine-marketplace", "name": "Marketplace", "status": "operational", "url": "/api/health" }
+  ],
+  "incidents": [
+    {
+      "id": "inc-2026-05-12",
+      "title": "Brief 502 spikes on /api/cert/submit",
+      "status": "resolved",
+      "openedAt": "2026-05-12T08:14:00Z",
+      "resolvedAt": "2026-05-12T08:42:00Z",
+      "summary": "Cert worker queue saturated for 28 minutes after a load test. Capacity raised; auto-scaler thresholds tuned."
+    },
+    {
+      "id": "inc-2026-04-30",
+      "title": "Marketplace search returning stale results",
+      "status": "resolved",
+      "openedAt": "2026-04-30T15:03:00Z",
+      "resolvedAt": "2026-04-30T16:11:00Z",
+      "summary": "ETag cache invalidation bug. Hotfix deployed; backfill complete."
+    },
+    {
+      "id": "inc-2026-04-18",
+      "title": "HSM signing latency elevated",
+      "status": "resolved",
+      "openedAt": "2026-04-18T22:00:00Z",
+      "resolvedAt": "2026-04-19T01:30:00Z",
+      "summary": "Key-rotation drill ran longer than planned. Routine; no customer impact beyond +400ms PAR submission latency."
+    }
+  ]
+}

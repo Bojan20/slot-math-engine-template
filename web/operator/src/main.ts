@@ -12,9 +12,12 @@ import {
   renderAB,
   renderSubmissions,
   renderCompliance,
+  renderMyAccount,
 } from './sections.js';
 
-export type Section = 'library' | 'rtp' | 'ab' | 'subs' | 'compliance';
+// CORTI W206-ONBOARDING — operator dashboard gains a customer-facing
+// "My Account" section (trial countdown, usage stats, upgrade CTA).
+export type Section = 'library' | 'rtp' | 'ab' | 'subs' | 'compliance' | 'account';
 
 export interface AppState {
   games: OperatorGame[];
@@ -79,6 +82,7 @@ function render(host: HTMLElement, state: AppState, rerender: () => void, toast:
     case 'ab':         return renderAB(host, state, rerender, toast);
     case 'subs':       return renderSubmissions(host, state, rerender, toast);
     case 'compliance': return renderCompliance(host, state, rerender);
+    case 'account':    return renderMyAccount(host, state, toast);
   }
 }
 

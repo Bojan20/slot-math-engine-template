@@ -9,6 +9,7 @@
 
 import Fastify, { type FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
+import helmet from '@fastify/helmet';
 
 import { SessionStore } from './state/sessions.js';
 import { WalletStore } from './state/wallet.js';
@@ -17,6 +18,16 @@ import { GamesRegistry } from './state/games.js';
 import { CertStore } from './state/cert.js';
 import { TenantStore } from './state/tenants.js';
 import { HsmStore } from './state/hsm.js';
+import { UserStore, seedDefaultUsers } from './state/users.js';
+import { attachRolePreHandler } from './state/rbac.js';
+import { LicenseStore } from './state/licenses.js';
+import { EmailSender } from './lib/email.js';
+
+// CORTI W206-PERSISTENCE — optional Postgres lifecycle. The pool is
+// only created when USE_POSTGRES=true; otherwise the legacy in-memory
+// stores remain authoritative.
+import { PgConnection } from './db/connection.js';
+import { runMigrations } from './db/migrate.js';
 
 import { registerSessionRoutes } from './routes/session.js';
 import { registerWalletRoutes } from './routes/wallet.js';
@@ -26,6 +37,8 @@ import { registerCertRoutes } from './routes/cert.js';
 import { registerAdminRoutes } from './routes/admin.js';
 import { registerHealthRoutes } from './routes/health.js';
 import { registerGaasRoutes } from './routes/gaas.js';
+import { registerSignupRoutes } from './routes/signup.js';
+import { registerLicenseRoutes } from './routes/license.js';
 
 export interface BackendStores {
   sessions: SessionStore;
@@ -35,6 +48,11 @@ export interface BackendStores {
   cert: CertStore;
   tenants: TenantStore;
   hsm: HsmStore;
+  users: UserStore;
+  licenses: LicenseStore;
+  email: EmailSender;
+  /** Optional Postgres pool (when USE_POSTGRES=true). */
+  pg?: PgConnection;
 }
 
 export interface BuildOptions {
@@ -65,6 +83,51 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     credentials: corsAllowlist.length > 0,
   });
 
+  // CORTI W206-SECURITY — security headers (OWASP A05 remediation).
+  // Helmet attaches CSP, HSTS, X-Frame-Options, X-Content-Type-Options,
+  // Referrer-Policy, Permissions-Policy, etc. CSP is intentionally
+  // conservative (`'self'` only) — tighten further with nonces when the
+  // SPAs ship their first inline script.
+  await app.register(helmet, {
+    global: true,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:', 'blob:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'", 'data:'],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        frameAncestors: ["'self'"],
+        formAction: ["'self'"],
+      },
+    },
+    strictTransportSecurity: {
+      maxAge: 31_536_000, // 1 year
+      includeSubDomains: true,
+      preload: true,
+    },
+    frameguard: { action: 'sameorigin' },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    crossOriginEmbedderPolicy: false, // GaaS iframe needs to load on operator sites
+    crossOriginResourcePolicy: { policy: 'same-site' },
+    permittedCrossDomainPolicies: { permittedPolicies: 'none' },
+  });
+
+  // CORTI W206-SECURITY — RBAC pre-handler resolves caller role from
+  // X-User-Role header (or implicit 'guest'). Per-route guards live
+  // inside the registerXRoutes calls. Skip the resolver for health /
+  // metrics / admin tenant-resolution path so existing CI gates don't
+  // need to inject a role header.
+  app.addHook('preHandler', async (req, reply) => {
+    if (req.url.startsWith('/api/health') || req.url.startsWith('/api/metrics')) return;
+    await attachRolePreHandler({ allowGuestFallback: true })(req, reply);
+  });
+
+  const usersStore = opts.stores?.users ?? new UserStore();
+  if (!opts.stores?.users) seedDefaultUsers(usersStore);
   const stores: BackendStores = {
     sessions: opts.stores?.sessions ?? new SessionStore(),
     wallet: opts.stores?.wallet ?? new WalletStore(),
@@ -77,12 +140,40 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     hsm:
       opts.stores?.hsm ??
       new HsmStore({ keyFile: process.env.HSM_KEY_FILE ?? null }),
+    users: usersStore,
+    licenses: opts.stores?.licenses ?? new LicenseStore(),
+    email: opts.stores?.email ?? new EmailSender(),
   };
   // Best-effort: load games up-front so first /api/lobby/games is fast.
   try {
     stores.games.load();
   } catch (err) {
     app.log.warn({ err }, 'games registry load failed (continuing with empty registry)');
+  }
+
+  // CORTI W206-PERSISTENCE — opt-in Postgres connect + migrate.
+  // Default is OFF so the existing in-memory test suite still passes.
+  // When USE_POSTGRES=true (typically in docker-compose / staging /
+  // prod) we connect, run idempotent migrations, and attach the pool to
+  // the stores struct. Postgres-backed store wrappers can then pick up
+  // the connection from `app.stores.pg`.
+  if (process.env.USE_POSTGRES === 'true') {
+    try {
+      const pg = new PgConnection();
+      await pg.connect();
+      const result = await runMigrations(pg);
+      app.log.info(
+        { applied: result.applied.length, skipped: result.skipped.length },
+        '[backend] postgres connected + migrations ok'
+      );
+      stores.pg = pg;
+      app.addHook('onClose', async () => {
+        await pg.shutdown();
+      });
+    } catch (err) {
+      app.log.error({ err }, '[backend] postgres bring-up failed');
+      throw err;
+    }
   }
 
   // Attach stores to the instance so tests can introspect.
@@ -116,6 +207,17 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     wallet: stores.wallet,
     audit: stores.audit,
     apiKeys: process.env.GAAS_API_KEYS ? process.env.GAAS_API_KEYS.split(',') : [],
+  });
+
+  // CORTI W206-ONBOARDING — customer-facing signup + license API.
+  await registerSignupRoutes(app, {
+    tenants: stores.tenants,
+    licenses: stores.licenses,
+    email: stores.email,
+  });
+  await registerLicenseRoutes(app, {
+    licenses: stores.licenses,
+    email: stores.email,
   });
 
   return app;

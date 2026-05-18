@@ -458,3 +458,145 @@ export function renderCompliance(host: HTMLElement, state: AppState, rerender: (
   }
   host.appendChild(grid);
 }
+
+// ───── Section 6: My Account (CORTI W206-ONBOARDING) ─────
+//
+// Customer-facing self-service widget: trial countdown, usage stats vs
+// limits, upgrade CTA, recent activity. Pulls live data from the
+// backend if /api/license/:tenantId/usage responds; otherwise renders
+// mock data so the dashboard works offline.
+export function renderMyAccount(
+  host: HTMLElement,
+  state: AppState,
+  toast: (m: string, k?: 'ok' | 'warn' | 'err') => void
+): void {
+  clear(host);
+
+  host.appendChild(
+    el('div', { className: 'section-head' }, [
+      el('div', {}, [
+        el('h1', {}, ['My Account']),
+        el('div', { className: 'crumb' }, ['Trial · usage · upgrade · activity']),
+      ]),
+    ])
+  );
+
+  // Default mock state — replaced by live data when fetch resolves.
+  const usageBlock = el('div', { className: 'juri-grid' });
+  host.appendChild(usageBlock);
+
+  type Usage = {
+    tenantId: string;
+    tier: 'trial' | 'pro' | 'enterprise';
+    status: string;
+    usage: {
+      gamesCreated: number;
+      mcRunsToday: number;
+      certSubmissionsThisMonth: number;
+    };
+    limits: { maxGames: number; mcRunsPerDay: number; certSubmissionsPerMonth: number };
+    remaining: { games: number; mcRunsToday: number; certSubsThisMonth: number };
+  };
+
+  const renderUsageCards = (u: Usage, daysLeft: number | null): void => {
+    clear(usageBlock);
+    const cap = (n: number): string => (n === -1 ? '∞' : String(n));
+    for (const cell of [
+      { label: 'Tier', value: u.tier.toUpperCase() },
+      { label: 'Status', value: u.status },
+      { label: 'Trial days left', value: daysLeft === null ? '—' : String(Math.max(0, daysLeft)) },
+      { label: 'Games', value: `${u.usage.gamesCreated} / ${cap(u.limits.maxGames)}` },
+      { label: 'MC runs today', value: `${u.usage.mcRunsToday} / ${cap(u.limits.mcRunsPerDay)}` },
+      { label: 'Cert subs (mo)', value: `${u.usage.certSubmissionsThisMonth} / ${cap(u.limits.certSubmissionsPerMonth)}` },
+    ]) {
+      const card = el('div', { className: 'juri-card' });
+      card.appendChild(el('h3', {}, [cell.label]));
+      card.appendChild(el('div', { className: 'stats' }, [el('strong', {}, [cell.value])]));
+      usageBlock.appendChild(card);
+    }
+  };
+
+  // Optimistic mock so the panel renders something even when backend is down.
+  renderUsageCards(
+    {
+      tenantId: 'default',
+      tier: 'trial',
+      status: 'active',
+      usage: { gamesCreated: 1, mcRunsToday: 3, certSubmissionsThisMonth: 0 },
+      limits: { maxGames: 3, mcRunsPerDay: 50, certSubmissionsPerMonth: 5 },
+      remaining: { games: 2, mcRunsToday: 47, certSubsThisMonth: 5 },
+    },
+    27
+  );
+
+  // Best-effort live fetch — `default` is the seeded tenant.
+  if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    const base = (window as { __OPERATOR_API__?: string }).__OPERATOR_API__ ?? 'http://localhost:4000';
+    const tenantId = (window as { __OPERATOR_TENANT__?: string }).__OPERATOR_TENANT__ ?? 'default';
+    fetch(`${base}/api/license/${tenantId}/usage`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: Usage | null) => {
+        if (!j) return;
+        // ask /expiry for trial countdown
+        fetch(`${base}/api/license/${tenantId}/expiry`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((e: { daysUntilExpiry?: number } | null) => {
+            renderUsageCards(j, e?.daysUntilExpiry ?? null);
+          })
+          .catch(() => renderUsageCards(j, null));
+      })
+      .catch(() => {
+        /* keep mock */
+      });
+  }
+
+  // Upgrade CTA strip
+  const cta = el('div', { className: 'detail-panel', style: 'margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;' });
+  cta.appendChild(
+    el('div', {}, [
+      el('h2', {}, ['Need higher limits?']),
+      el('div', { className: 'muted' }, ['Pro: $5K/mo · 25 games · 1000 MC/day · 24h email SLA · GaaS WebSocket included.']),
+    ])
+  );
+  const upgradeBtn = el('button', { className: 'btn primary' }, ['Upgrade to Pro']);
+  upgradeBtn.addEventListener('click', () => {
+    // Hit license upgrade endpoint best-effort; fall back to toast only.
+    if (typeof fetch !== 'undefined') {
+      const base = (window as { __OPERATOR_API__?: string }).__OPERATOR_API__ ?? 'http://localhost:4000';
+      const tenantId = (window as { __OPERATOR_TENANT__?: string }).__OPERATOR_TENANT__ ?? 'default';
+      fetch(`${base}/api/license/${tenantId}/upgrade`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: 'pro' }),
+      })
+        .then((r) => (r.ok ? toast('Upgraded to Pro. Limits applied.', 'ok') : toast('Upgrade pending — talk to sales.', 'warn')))
+        .catch(() => toast('Backend unreachable — upgrade queued offline.', 'warn'));
+    } else {
+      toast('Upgrade requested.', 'ok');
+    }
+  });
+  cta.appendChild(upgradeBtn);
+  host.appendChild(cta);
+
+  // Recent activity
+  const activity = el('div', { className: 'detail-panel', style: 'margin-top:18px;' });
+  activity.appendChild(el('h2', {}, ['Recent activity']));
+  const recent = state.games.slice(0, 5);
+  const tbl = el('table', { className: 'tbl' });
+  const thead = el('thead');
+  const tr = el('tr');
+  for (const h of ['Game', 'Status', 'Last updated']) tr.appendChild(el('th', {}, [h]));
+  thead.appendChild(tr);
+  tbl.appendChild(thead);
+  const tbody = el('tbody');
+  for (const g of recent) {
+    const row = el('tr');
+    row.appendChild(el('td', {}, [g.name]));
+    row.appendChild(el('td', {}, [el('span', { className: `status-pill ${g.status}` }, [g.status])]));
+    row.appendChild(el('td', { className: 'mono' }, [g.lastUpdated.slice(0, 10)]));
+    tbody.appendChild(row);
+  }
+  tbl.appendChild(tbody);
+  activity.appendChild(tbl);
+  host.appendChild(activity);
+}

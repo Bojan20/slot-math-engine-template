@@ -11,6 +11,7 @@
 import type { FastifyInstance } from 'fastify';
 import type { CertStore } from '../state/cert.js';
 import { HsmStore } from '../state/hsm.js';
+import { requireRole, requirePermission } from '../state/rbac.js';
 
 export interface CertRouteDeps {
   cert: CertStore;
@@ -31,7 +32,8 @@ export async function registerCertRoutes(
     deps.cert.withHsm(deps.hsm);
   }
 
-  app.post<{ Body: SubmitBody }>('/api/cert/submit', async (req, reply) => {
+  // CORTI W206-SECURITY — cert.submit requires operator+ (A01).
+  app.post<{ Body: SubmitBody }>('/api/cert/submit', { preHandler: requireRole('operator') }, async (req, reply) => {
     const body = req.body ?? ({} as SubmitBody);
     if (!body.ir || typeof body.ir !== 'object') {
       return reply.code(400).send({ error: 'ir_required' });
@@ -130,6 +132,44 @@ export async function registerCertRoutes(
         .header('X-Hsm-Public-Key', sub.hsmSignature?.publicKey ?? '')
         .header('X-Hsm-Signature', sub.hsmSignature?.signature ?? '')
         .send(pdf);
+    }
+  );
+
+  // CORTI W206-SECURITY — regulator decision endpoints (RBAC). Only
+  // regulators (or admins via inheritance) may approve / reject.
+  app.post<{ Params: { submissionId: string }; Body: { feedback?: string } }>(
+    '/api/cert/:submissionId/approve',
+    { preHandler: requirePermission('cert:approve') },
+    async (req, reply) => {
+      const updated = deps.cert.setRegulatorDecision(
+        req.params.submissionId,
+        'approve',
+        req.body?.feedback
+      );
+      if (!updated) return reply.code(404).send({ error: 'not_found' });
+      return reply.send({
+        submissionId: updated.submissionId,
+        status: updated.status,
+        regulatorFeedback: updated.regulatorFeedback,
+      });
+    }
+  );
+
+  app.post<{ Params: { submissionId: string }; Body: { feedback?: string } }>(
+    '/api/cert/:submissionId/reject',
+    { preHandler: requirePermission('cert:reject') },
+    async (req, reply) => {
+      const updated = deps.cert.setRegulatorDecision(
+        req.params.submissionId,
+        'reject',
+        req.body?.feedback
+      );
+      if (!updated) return reply.code(404).send({ error: 'not_found' });
+      return reply.send({
+        submissionId: updated.submissionId,
+        status: updated.status,
+        regulatorFeedback: updated.regulatorFeedback,
+      });
     }
   );
 

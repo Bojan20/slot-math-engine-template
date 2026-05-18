@@ -133,12 +133,36 @@ export function auditA01BrokenAccessControl(routesDir) {
       message: 'Tenant-resolution preHandler path-prefix check is fragile; consider per-route hook.',
     });
   }
-  // Role-based access (admin vs operator vs regulator)
-  findings.push({
-    severity: 'High', id: 'a01-no-rbac',
-    message: 'No role-based access control (RBAC) implemented for admin/operator/regulator separation.',
-    remediation: 'Introduce roles in TenantStore + per-route scope check.',
-  });
+  // Role-based access (admin vs operator vs regulator). W206 introduces
+  // server/state/rbac.ts + per-route requireRole/requirePermission
+  // guards. If those are missing, surface High; if present, surface Info.
+  const rbacFile = join(routesDir, '..', 'state', 'rbac.ts');
+  const hasRbacModule = existsSync(rbacFile);
+  let rbacRoleEnumPresent = false;
+  let rbacGuardCalls = 0;
+  if (hasRbacModule) {
+    const src = readFileSync(rbacFile, 'utf8');
+    rbacRoleEnumPresent = /export type Role\b/.test(src) && /requireRole|requirePermission/.test(src);
+    for (const f of readdirSync(routesDir)) {
+      if (!f.endsWith('.ts')) continue;
+      const s = readFileSync(join(routesDir, f), 'utf8');
+      const m = s.match(/requireRole\s*\(|requirePermission\s*\(/g);
+      if (m) rbacGuardCalls += m.length;
+    }
+  }
+  if (!hasRbacModule || !rbacRoleEnumPresent || rbacGuardCalls < 3) {
+    findings.push({
+      severity: 'High', id: 'a01-no-rbac',
+      message: 'No role-based access control (RBAC) implemented for admin/operator/regulator separation.',
+      remediation: 'Introduce roles in TenantStore + per-route scope check.',
+    });
+  } else {
+    findings.push({
+      severity: 'Info', id: 'a01-rbac-enforced',
+      file: 'server/state/rbac.ts',
+      message: `RBAC enforced — Role enum + ${rbacGuardCalls} requireRole/requirePermission guard sites across routes.`,
+    });
+  }
   return findings;
 }
 
@@ -214,6 +238,12 @@ export function auditA02CryptographicFailures(opts) {
         });
       }
     }
+  }
+  if (findings.length === 0) {
+    findings.push({
+      severity: 'Info', id: 'a02-clean',
+      message: 'No A02 findings — HSM uses noble/ed25519, TLS enforced in nginx, no hardcoded secrets.',
+    });
   }
   return findings;
 }

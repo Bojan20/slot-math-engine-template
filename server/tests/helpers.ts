@@ -9,8 +9,20 @@ import { AuditStore } from '../state/audit.js';
 import { GamesRegistry } from '../state/games.js';
 import { CertStore } from '../state/cert.js';
 import { TenantStore } from '../state/tenants.js';
+import { UserStore, seedDefaultUsers } from '../state/users.js';
 
-export async function buildTestApp() {
+export interface BuildTestAppOptions {
+  /**
+   * When provided, injects an `onRequest` hook that stamps every test
+   * request with this role (so legacy specs don't need to send headers).
+   * Defaults to `'admin'` for backward-compat.
+   * Pass `null` to disable the injection and exercise raw RBAC behavior.
+   */
+  defaultRole?: 'admin' | 'operator' | 'regulator' | 'player' | 'guest' | null;
+}
+
+export async function buildTestApp(opts: BuildTestAppOptions = {}) {
+  const defaultRole = opts.defaultRole === undefined ? 'admin' : opts.defaultRole;
   const games = new GamesRegistry();
   // Register a small known game registry for tests rather than relying
   // on the on-disk library (keeps tests hermetic).
@@ -38,6 +50,8 @@ export async function buildTestApp() {
     jurisdictions: ['MGA', 'NJ'], // NOT UKGC
   });
 
+  const users = new UserStore();
+  seedDefaultUsers(users);
   const app = await build({
     stores: {
       sessions: new SessionStore(),
@@ -46,8 +60,16 @@ export async function buildTestApp() {
       games,
       cert: new CertStore(),
       tenants: new TenantStore(),
+      users,
     },
     logger: false,
   });
+  if (defaultRole !== null) {
+    app.addHook('onRequest', async (req) => {
+      if (!req.headers['x-user-role']) {
+        req.headers['x-user-role'] = defaultRole;
+      }
+    });
+  }
   return app;
 }

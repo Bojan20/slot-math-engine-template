@@ -498,6 +498,24 @@ export class CertStore {
     return { buffer, sha256: sub.operatorPackage.sha256 };
   }
 
+  /**
+   * CORTI W206-SECURITY — regulator decision (RBAC). Records an
+   * approve/reject verdict + optional feedback on the submission.
+   * Idempotent: returns false if the submission cannot transition
+   * (e.g. already in a terminal state of the opposite kind).
+   */
+  setRegulatorDecision(
+    submissionId: string,
+    decision: 'approve' | 'reject',
+    feedback?: string
+  ): CertSubmission | null {
+    const sub = this.submissions.get(submissionId);
+    if (!sub) return null;
+    sub.status = decision === 'approve' ? 'completed' : 'rejected';
+    if (feedback !== undefined) sub.regulatorFeedback = feedback;
+    return sub;
+  }
+
   list(): CertSubmission[] {
     return Array.from(this.submissions.values());
   }

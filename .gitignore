@@ -89,6 +89,14 @@ web/pitch/node_modules/
 web/pitch/package-lock.json
 dist/pitch/
 
+# ─── W206-ONBOARDING customer signup + support portal ─────────
+web/onboarding/node_modules/
+web/onboarding/package-lock.json
+dist/onboarding/
+web/support/node_modules/
+web/support/package-lock.json
+dist/support/
+
 # ─── W204-PROTOCOLS — HSM ed25519 keypair (generated on first boot) ─────
 server/data/hsm-keys.json
 

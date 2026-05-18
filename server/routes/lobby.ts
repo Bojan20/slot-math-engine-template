@@ -9,6 +9,7 @@ import type { FastifyInstance } from 'fastify';
 import { sha256Hex } from '../lib/hashChain.js';
 import type { GamesRegistry } from '../state/games.js';
 import type { SessionStore } from '../state/sessions.js';
+import { requireRole } from '../state/rbac.js';
 
 export interface LobbyRouteDeps {
   games: GamesRegistry;
@@ -55,7 +56,8 @@ export async function registerLobbyRoutes(
     }
   );
 
-  app.post<{ Body: LaunchBody }>('/api/lobby/launch', async (req, reply) => {
+  // CORTI W206-SECURITY — lobby.launch consumes a session so requires player+.
+  app.post<{ Body: LaunchBody }>('/api/lobby/launch', { preHandler: requireRole('player') }, async (req, reply) => {
     const body = req.body ?? ({} as LaunchBody);
     if (!body.gameId || !body.sessionId) {
       return reply.code(400).send({ error: 'gameId_and_sessionId_required' });

@@ -8,6 +8,7 @@
 
 import type { FastifyInstance } from 'fastify';
 import type { AuditStore } from '../state/audit.js';
+import { requireRole } from '../state/rbac.js';
 
 export interface AuditRouteDeps {
   audit: AuditStore;
@@ -23,7 +24,9 @@ export async function registerAuditRoutes(
   app: FastifyInstance,
   deps: AuditRouteDeps
 ): Promise<void> {
-  app.post<{ Body: AppendBody }>('/api/audit/append', async (req, reply) => {
+  // CORTI W206-SECURITY — audit.append requires operator+ (RBAC). Read
+  // endpoints intentionally allow regulator/operator/admin via inheritance.
+  app.post<{ Body: AppendBody }>('/api/audit/append', { preHandler: requireRole('operator') }, async (req, reply) => {
     const body = req.body ?? ({} as AppendBody);
     if (!body.sessionId || !body.type) {
       return reply.code(400).send({ error: 'sessionId_and_type_required' });
@@ -44,6 +47,7 @@ export async function registerAuditRoutes(
 
   app.get<{ Params: { sessionId: string } }>(
     '/api/audit/:sessionId',
+    { preHandler: requireRole('regulator') },
     async (req, reply) => {
       const result = deps.audit.query(req.params.sessionId);
       const verification = deps.audit.verify(req.params.sessionId);
@@ -59,6 +63,7 @@ export async function registerAuditRoutes(
 
   app.get<{ Params: { auditId: string } }>(
     '/api/audit/replay/:auditId',
+    { preHandler: requireRole('regulator') },
     async (req, reply) => {
       const result = deps.audit.replay(req.params.auditId);
       if (!result) return reply.code(404).send({ error: 'audit_id_not_found' });

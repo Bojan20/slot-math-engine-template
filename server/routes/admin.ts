@@ -23,6 +23,7 @@ import {
   type TenantInput,
   type TenantPatch,
 } from '../state/tenants.js';
+import { requireRole } from '../state/rbac.js';
 
 export interface AdminRouteDeps {
   tenants: TenantStore;
@@ -48,6 +49,10 @@ export async function registerAdminRoutes(
     if (req.url.startsWith('/api/admin/')) return;
     if (req.url.startsWith('/api/health')) return;
     if (req.url.startsWith('/api/metrics')) return;
+    // CORTI W206-ONBOARDING — customer-facing signup + license routes
+    // are tenant-less by definition; they create tenants on the fly.
+    if (req.url.startsWith('/api/signup')) return;
+    if (req.url.startsWith('/api/license')) return;
     const tenant = resolveTenant(deps.tenants, req.headers as Record<string, string | string[] | undefined>);
     if (tenant === null) {
       return reply.code(400).send({ error: 'unknown_tenant' });
@@ -64,11 +69,15 @@ export async function registerAdminRoutes(
     }
   });
 
-  app.get('/api/admin/tenants', async (_req, reply) => {
+  // CORTI W206-SECURITY — admin RBAC guard. All /api/admin/* require
+  // 'admin' role (OWASP A01 remediation).
+  const adminOnly = { preHandler: requireRole('admin') };
+
+  app.get('/api/admin/tenants', adminOnly, async (_req, reply) => {
     return reply.send({ tenants: deps.tenants.list() });
   });
 
-  app.post<{ Body: CreateBody }>('/api/admin/tenants', async (req, reply) => {
+  app.post<{ Body: CreateBody }>('/api/admin/tenants', adminOnly, async (req, reply) => {
     const body = req.body ?? ({} as CreateBody);
     if (!body.id || !body.name || !body.contactEmail) {
       return reply.code(400).send({ error: 'id_name_email_required' });
@@ -85,6 +94,7 @@ export async function registerAdminRoutes(
 
   app.get<{ Params: { id: string } }>(
     '/api/admin/tenants/:id',
+    adminOnly,
     async (req, reply) => {
       const tenant = deps.tenants.get(req.params.id);
       if (!tenant) return reply.code(404).send({ error: 'not_found' });
@@ -94,6 +104,7 @@ export async function registerAdminRoutes(
 
   app.patch<{ Params: { id: string }; Body: PatchBody }>(
     '/api/admin/tenants/:id',
+    adminOnly,
     async (req, reply) => {
       try {
         const tenant = deps.tenants.update(req.params.id, req.body ?? {});
@@ -108,6 +119,7 @@ export async function registerAdminRoutes(
 
   app.delete<{ Params: { id: string } }>(
     '/api/admin/tenants/:id',
+    adminOnly,
     async (req, reply) => {
       const ok = deps.tenants.delete(req.params.id);
       if (!ok) return reply.code(404).send({ error: 'not_found' });

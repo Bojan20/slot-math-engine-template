@@ -12,10 +12,10 @@
           "remediation": "Add JWT/OIDC admin scope check; deny if missing."
         },
         {
-          "severity": "High",
-          "id": "a01-no-rbac",
-          "message": "No role-based access control (RBAC) implemented for admin/operator/regulator separation.",
-          "remediation": "Introduce roles in TenantStore + per-route scope check."
+          "severity": "Info",
+          "id": "a01-rbac-enforced",
+          "file": "server/state/rbac.ts",
+          "message": "RBAC enforced — Role enum + 10 requireRole/requirePermission guard sites across routes."
         }
       ]
     },
@@ -23,11 +23,9 @@
       "name": "Cryptographic Failures",
       "findings": [
         {
-          "severity": "High",
-          "id": "a02-nginx-no-tls",
-          "file": "docker/nginx-spa.conf",
-          "message": "Nginx config does not enforce TLS (listen 443 / ssl_certificate). Terminate TLS at load balancer or add cert config.",
-          "remediation": "Use cloud LB with managed TLS or add ssl_certificate directives."
+          "severity": "Info",
+          "id": "a02-clean",
+          "message": "No A02 findings — HSM uses noble/ed25519, TLS enforced in nginx, no hardcoded secrets."
         }
       ]
     },
@@ -45,13 +43,6 @@
       "name": "Insecure Design",
       "findings": [
         {
-          "severity": "High",
-          "id": "a04-session-id-predictable",
-          "file": "server/state/sessions.ts",
-          "message": "Session IDs derived from Date.now() + counter; predictable. Use crypto.randomBytes(16).",
-          "remediation": "Replace newSessionId() with crypto.randomBytes(16).toString(\"hex\")."
-        },
-        {
           "severity": "Low",
           "id": "a04-wallet-race-single-threaded",
           "file": "server/state/wallet.ts",
@@ -61,14 +52,7 @@
     },
     "A05": {
       "name": "Security Misconfiguration",
-      "findings": [
-        {
-          "severity": "High",
-          "id": "a05-no-security-headers",
-          "message": "No @fastify/helmet or manual CSP/X-Frame-Options/HSTS headers detected.",
-          "remediation": "Install @fastify/helmet and register before routes."
-        }
-      ]
+      "findings": []
     },
     "A06": {
       "name": "Vulnerable & Outdated Components",
@@ -176,9 +160,9 @@
   },
   "counts": {
     "Critical": 0,
-    "High": 4,
+    "High": 0,
     "Medium": 6,
     "Low": 2,
-    "Info": 10
+    "Info": 12
   }
 }

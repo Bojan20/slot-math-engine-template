@@ -10,9 +10,22 @@
  *
  * MGA / SE / other jurisdictions can override these via the
  * `jurisdictionPolicy` table below.
+ *
+ * CORTI W206-SECURITY — session IDs are derived from
+ * `crypto.randomBytes(16)` (128-bit entropy, OWASP A04 remediation). The
+ * `sess-` prefix is retained for backward compat with parsers/regex in
+ * sibling apps, but the body of the ID is now 32 hex chars from a CSPRNG
+ * (Node's libuv-backed crypto.randomBytes wraps OpenSSL's RAND_bytes).
+ * Earlier W205-and-prior IDs (`sess-<base36-ts>-<counter>`) remain
+ * grep-compatible with `^sess-`.
  */
 
+import { randomBytes } from 'node:crypto';
+
 export type Jurisdiction = 'UKGC' | 'MGA' | 'SE' | 'NJ' | 'GENERIC';
+
+/** 32-char hex body (16 random bytes → 128-bit entropy) with `sess-` prefix. */
+export const SESSION_ID_REGEX = /^sess-[0-9a-f]{32}$/;
 
 export interface JurisdictionPolicy {
   minSpinPacingMs: number;
@@ -97,10 +110,14 @@ export interface SessionCloseSummary {
   netResultMinor: number;
 }
 
-let counter = 0;
-function newSessionId(): string {
-  counter++;
-  return `sess-${Date.now().toString(36)}-${counter.toString(16).padStart(6, '0')}`;
+/**
+ * Cryptographically-secure session ID generator. 128 bits of entropy
+ * sourced from `crypto.randomBytes(16)` — sufficient to make collision
+ * + brute-force prediction infeasible (NIST SP 800-63B §5.1.1.1).
+ * Format: `sess-<32 hex>`. Validate inputs with {@link SESSION_ID_REGEX}.
+ */
+export function newSessionId(): string {
+  return `sess-${randomBytes(16).toString('hex')}`;
 }
 
 export class SessionStore {

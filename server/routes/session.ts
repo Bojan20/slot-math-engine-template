@@ -13,6 +13,7 @@ import type { SessionStore, Jurisdiction } from '../state/sessions.js';
 import type { WalletStore } from '../state/wallet.js';
 import type { AuditStore } from '../state/audit.js';
 import type { GamesRegistry } from '../state/games.js';
+import { requireRole } from '../state/rbac.js';
 
 export interface SessionRouteDeps {
   sessions: SessionStore;
@@ -55,7 +56,10 @@ export async function registerSessionRoutes(
 ): Promise<void> {
   const rng = deps.rng ?? defaultRng;
 
-  app.post<{ Body: CreateBody }>('/api/session/create', async (req, reply) => {
+  // CORTI W206-SECURITY — all session endpoints require player+ role.
+  const playerOrAbove = { preHandler: requireRole('player') };
+
+  app.post<{ Body: CreateBody }>('/api/session/create', playerOrAbove, async (req, reply) => {
     const body = req.body ?? ({} as CreateBody);
     if (!body.playerId) {
       return reply.code(400).send({ error: 'playerId_required' });
@@ -98,6 +102,7 @@ export async function registerSessionRoutes(
 
   app.get<{ Params: { sessionId: string } }>(
     '/api/session/:sessionId',
+    playerOrAbove,
     async (req, reply) => {
       const session = deps.sessions.get(req.params.sessionId);
       if (!session) return reply.code(404).send({ error: 'not_found' });
@@ -124,6 +129,7 @@ export async function registerSessionRoutes(
 
   app.delete<{ Params: { sessionId: string } }>(
     '/api/session/:sessionId',
+    playerOrAbove,
     async (req, reply) => {
       const summary = deps.sessions.close(req.params.sessionId);
       if (!summary) return reply.code(404).send({ error: 'not_found' });
@@ -139,7 +145,7 @@ export async function registerSessionRoutes(
   app.post<{
     Params: { sessionId: string };
     Body: SpinBody;
-  }>('/api/session/:sessionId/spin', async (req, reply) => {
+  }>('/api/session/:sessionId/spin', playerOrAbove, async (req, reply) => {
     const sessionId = req.params.sessionId;
     const body = req.body ?? ({} as SpinBody);
 
