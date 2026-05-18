@@ -129,6 +129,38 @@ const cascadePyramid = defineKernel({
 contract that you can register with the engine's kernel registry. The real
 kernel implementations live in `src/kernels/` of this monorepo.
 
+## Marketplace submission (W209)
+
+Submit a finished kernel to the marketplace. The platform runs your kernel through a 6-gate test battery and auto-grants the **Verified** badge on all-pass.
+
+```typescript
+import { submitKernel, validateManifest } from '@slot-math-engine/sdk';
+import type { KernelManifest } from '@slot-math-engine/sdk';
+
+const manifest: KernelManifest = {
+  name: 'cascade-pyramid',
+  version: '1.0.0',
+  author: 'bojan-studio',
+  license: 'MIT',
+  p_id_target: 'P-CASCADE-MULT-PYRAMID-001',
+  category: 'cascade',
+  description: 'Cascade multiplier pyramid with geometric falloff.',
+  math_summary: 'RTP = p_trigger * sum(m_i * (1-p_break)^i)',
+  certification_level: 'verified',
+};
+validateManifest(manifest);
+
+const code = await fs.readFile('./my-kernel.ts', 'utf-8');
+const r = await submitKernel(manifest, code, process.env.AUTHOR_TOKEN!, {
+  apiUrl: 'https://marketplace.slot-math-engine.com',
+});
+console.log(r.submissionId, r.verdict?.all_pass, r.autoBadges);
+```
+
+Without `apiUrl` the SDK returns a synthetic mock verdict — useful for local prototyping.
+
+Revenue split: **70/30** Tier 1, **75/25** Tier 2 (5+ certified kernels), **80/20** Tier 3 (partner). See `docs/MARKETPLACE_AUTHOR_GUIDE.md` for the full spec, payout schedule, and taxation basics.
+
 ## Error handling
 
 REST errors throw `ApiError`:
@@ -175,6 +207,10 @@ Public types (from `sdk/types.ts`):
 | `defineKernel` | Author a new math kernel |
 | `validateParams` | Runtime param-spec validation |
 | `defaultMC` | Drop-in Monte-Carlo helper |
+| `submitKernel` | Submit a kernel to the marketplace |
+| `validateManifest` | Validate kernel manifest shape |
+| `validateKernelCode` | Lightweight source-blob check |
+| `manifestSkeleton` | Manifest starter for the wizard UI |
 | `SDK_VERSION` | Pinned SDK semver string |
 
 ## License

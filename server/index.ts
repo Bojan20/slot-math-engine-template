@@ -40,6 +40,8 @@ import { registerGaasRoutes } from './routes/gaas.js';
 import { registerSignupRoutes } from './routes/signup.js';
 import { registerLicenseRoutes } from './routes/license.js';
 import { registerCatalogRoutes } from './routes/catalog.js';
+import { registerMarketplaceRoutes } from './routes/marketplace.js';
+import { MarketplaceStore } from './state/marketplace.js';
 import { createCache } from './lib/cache.js';
 import { LatencyBudgetTracker, attachLatencyMiddleware } from './lib/latency-budget.js';
 
@@ -63,6 +65,8 @@ export interface BackendStores {
   users: UserStore;
   licenses: LicenseStore;
   email: EmailSender;
+  /** CORTI W209 Faza 500.0 — marketplace store (kernels/templates/etc.). */
+  marketplace: MarketplaceStore;
   /** Optional Postgres pool (when USE_POSTGRES=true). */
   pg?: PgConnection;
 }
@@ -155,6 +159,7 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     users: usersStore,
     licenses: opts.stores?.licenses ?? new LicenseStore(),
     email: opts.stores?.email ?? new EmailSender(),
+    marketplace: opts.stores?.marketplace ?? new MarketplaceStore(),
   };
   // Best-effort: load games up-front so first /api/lobby/games is fast.
   try {
@@ -293,6 +298,14 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
   await registerLicenseRoutes(app, {
     licenses: stores.licenses,
     email: stores.email,
+    cache: sharedCache,
+  });
+
+  // CORTI W209 Faza 500.0 — Marketplace backend (kernels/templates/
+  // purchases/authors/payouts) with stub PSP + HSM-signed license JWTs.
+  await registerMarketplaceRoutes(app, {
+    store: stores.marketplace,
+    hsm: stores.hsm,
     cache: sharedCache,
   });
 

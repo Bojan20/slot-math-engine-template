@@ -61,7 +61,7 @@ export interface AuthorStats {
   avgRating: number;
 }
 
-export type ViewMode = 'browse' | 'author';
+export type ViewMode = 'browse' | 'templates' | 'author';
 
 /** License key minted for paid install (DRM placeholder). */
 export interface LicenseRecord {

@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 45 routes across 11 route files. 
+Captures 61 routes across 12 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -77,6 +77,27 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `GET` | `/api/lobby/games` |
 | `POST` | `/api/lobby/_invalidate` |
 | `POST` | `/api/lobby/launch` |
+
+## marketplace.ts
+> CORTI W209 Faza 500.0 — Marketplace REST API. All routes mounted under `/api/marketplace`. Tenant-scoped where applicable (purchases / list-mine / refund), public for catalogue reads (list kernels + templates + author profile). Author-only endpoints (kernel submission, payout method, earnings) gated by `X-Author-Key` via {@link authorAuthPreHandler}. Routes follow the same JSON response shape as the rest of the backend — every error returns `{ error: <code>, ... }` with the a
+| Method | Path |
+|---|---|
+| `GET` | `/api/marketplace/kernels` |
+| `GET` | `/api/marketplace/kernels/:id` |
+| `POST` | `/api/marketplace/kernels/:id/run-gates` |
+| `POST` | `/api/marketplace/kernels/:id/approve` |
+| `POST` | `/api/marketplace/kernels/:id/reject` |
+| `GET` | `/api/marketplace/templates` |
+| `GET` | `/api/marketplace/templates/:id` |
+| `POST` | `/api/marketplace/purchase` |
+| `GET` | `/api/marketplace/purchases` |
+| `POST` | `/api/marketplace/purchase/:id/refund` |
+| `POST` | `/api/marketplace/authors/register` |
+| `GET` | `/api/marketplace/authors/:id` |
+| `POST` | `/api/marketplace/authors/me/payout-method` |
+| `GET` | `/api/marketplace/authors/me/earnings` |
+| `POST` | `/api/marketplace/license/verify` |
+| `POST` | `/api/marketplace/webhooks/payment` |
 
 ## session.ts
 > CORTI 200.4-BACKEND — session lifecycle endpoints. POST   /api/session/create GET    /api/session/:sessionId DELETE /api/session/:sessionId POST   /api/session/:sessionId/spin

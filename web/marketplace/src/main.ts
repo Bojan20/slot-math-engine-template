@@ -7,6 +7,13 @@
 import { loadListings } from './data.js';
 import { renderBrowse, renderAuthor, type MarketplaceState } from './sections.js';
 import type { Listing, ViewMode } from './types.js';
+import { renderWizard, makeInitialState } from './submit-wizard.js';
+import { loadTemplates, type TemplateEntry } from './templates.js';
+import {
+  defaultTemplateBrowserState,
+  renderTemplateBrowser,
+  type TemplateBrowserState,
+} from './template-browser.js';
 
 async function boot(): Promise<void> {
   const main = document.getElementById('mp-main') as HTMLElement | null;
@@ -15,8 +22,9 @@ async function boot(): Promise<void> {
   if (!main || !nav) throw new Error('marketplace: missing #mp-main or #mp-nav');
 
   let listings: Listing[] = [];
+  let templates: TemplateEntry[] = [];
   try {
-    listings = await loadListings();
+    [listings, templates] = await Promise.all([loadListings(), loadTemplates()]);
   } catch (err) {
     main.innerHTML = `<p style="color:var(--err);padding:20px">Failed to load listings: ${String(err)}</p>`;
     return;
@@ -30,12 +38,21 @@ async function boot(): Promise<void> {
     currentAuthor: 'smec',
   };
 
-  if (countPill) countPill.textContent = `${state.listings.length} listings`;
+  const tplState: TemplateBrowserState = {
+    ...defaultTemplateBrowserState(),
+    templates,
+  };
+
+  if (countPill) countPill.textContent = `${state.listings.length} listings · ${tplState.templates.length} templates`;
 
   const rerender = (): void => {
-    if (countPill) countPill.textContent = `${state.listings.length} listings`;
+    if (countPill) countPill.textContent = `${state.listings.length} listings · ${tplState.templates.length} templates`;
     if (state.view === 'browse') renderBrowse(main, state, rerender, toast);
-    else renderAuthor(main, state, rerender, toast);
+    else if (state.view === 'templates') {
+      renderTemplateBrowser(main, tplState, rerender, (tpl) => {
+        toast(`Re-skin wizard: ${tpl.displayName}`, 'ok');
+      });
+    } else renderAuthor(main, state, rerender, toast);
   };
 
   for (const btn of Array.from(nav.querySelectorAll<HTMLButtonElement>('.nav-btn'))) {
@@ -46,6 +63,25 @@ async function boot(): Promise<void> {
         b.classList.toggle('is-active', b === btn);
       }
       rerender();
+    });
+  }
+
+  const submitBtn = document.getElementById('mp-submit-btn');
+  const modal = document.getElementById('mp-wizard-modal');
+  if (submitBtn && modal) {
+    submitBtn.addEventListener('click', () => {
+      modal.hidden = false;
+      const wState = makeInitialState(state.currentAuthor);
+      renderWizard(modal, wState, {
+        onClose: () => { modal.hidden = true; },
+        onSubmit: async (s) => {
+          // Mock — real submit wires to /api/marketplace/kernels/submit
+          const id = `sub-${Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, '0')}`;
+          const allPass = s.gateProgress.every((g) => g.pass !== false);
+          toast(allPass ? 'Submission accepted (Verified granted)' : 'Submission accepted (gates failed)', allPass ? 'ok' : 'warn');
+          return { submissionId: id, autoBadges: allPass ? ['verified'] : [] };
+        },
+      });
     });
   }
 

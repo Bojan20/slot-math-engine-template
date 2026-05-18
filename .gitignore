@@ -121,3 +121,4 @@ mobile/package-lock.json
 mobile/ios/Pods/
 mobile/android/.gradle/
 mobile/android/build/
+server/server/data/hsm-test-*.json

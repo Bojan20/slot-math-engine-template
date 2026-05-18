@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 192" width="256" height="192" role="img" aria-label="Pearl of Atlantis template preview">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#001a33"/>
+      <stop offset="100%" stop-color="#0c1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="192" fill="url(#bg)"/>
+  <g stroke="#22d3ee" stroke-width="1" fill="#001a33" opacity="0.85">
+    <rect x="14" y="42" width="228" height="108" rx="6"/>
+  </g>
+  <g fill="#00b4d8" opacity="0.8">
+    <circle cx="42" cy="72" r="10"/><circle cx="78" cy="72" r="10"/><circle cx="114" cy="72" r="10"/><circle cx="150" cy="72" r="10"/><circle cx="186" cy="72" r="10"/><circle cx="222" cy="72" r="10"/>
+    <circle cx="42" cy="100" r="10"/><circle cx="78" cy="100" r="10"/><circle cx="114" cy="100" r="10"/><circle cx="150" cy="100" r="10"/><circle cx="186" cy="100" r="10"/><circle cx="222" cy="100" r="10"/>
+  </g>
+  <g fill="#f8f4e3">
+    <circle cx="128" cy="96" r="9" stroke="#ffd700" stroke-width="1.5"/>
+  </g>
+  <text x="128" y="170" text-anchor="middle" fill="#22d3ee" font-family="monospace" font-size="11">PEARL OF ATLANTIS</text>
+  <text x="128" y="28" text-anchor="middle" fill="#00b4d8" font-family="monospace" font-size="10">6 x 4 | M14 | RTP 96.1</text>
+</svg>

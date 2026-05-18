@@ -15,15 +15,18 @@
     </div>
     <nav class="mp-nav" id="mp-nav" aria-label="Primary">
       <button class="nav-btn is-active" data-mode="browse" aria-current="page">Browse</button>
+      <button class="nav-btn" data-mode="templates">Templates</button>
       <button class="nav-btn" data-mode="author">Author Mode</button>
     </nav>
     <div class="mp-meta">
+      <button class="submit-kernel-btn" id="mp-submit-btn" type="button">Submit Kernel</button>
       <span class="env-pill" id="mp-listing-count" aria-live="polite">0 listings</span>
       <span class="user-pill" title="bojan.petkovic25@gmail.com" aria-label="Signed in as bojan.petkovic25@gmail.com">B</span>
     </div>
   </header>
 
   <main id="mp-main" class="mp-main" role="main" tabindex="-1"></main>
+  <div id="mp-wizard-modal" class="mp-wizard-modal" hidden></div>
   <div id="mp-toast" class="mp-toast" aria-live="polite"></div>
 
   <script type="module" src="/src/main.ts"></script>

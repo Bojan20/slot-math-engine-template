@@ -17,6 +17,6 @@
     "rootDir": ".",
     "types": ["node"]
   },
-  "include": ["index.ts", "types.ts", "client.ts", "kernel-author.ts"],
+  "include": ["index.ts", "types.ts", "client.ts", "kernel-author.ts", "marketplace-submit.ts"],
   "exclude": ["node_modules", "dist", "tests"]
 }

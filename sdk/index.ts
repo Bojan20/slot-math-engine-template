@@ -37,4 +37,20 @@ export type {
 
 export { defineKernel, validateParams, defaultMC } from './kernel-author.js';
 
+export type {
+  KernelManifest,
+  KernelCategory,
+  KernelDependency,
+  CertificationLevel,
+  SubmissionResult,
+  SubmitOptions,
+} from './marketplace-submit.js';
+
+export {
+  submitKernel,
+  validateManifest,
+  validateKernelCode,
+  manifestSkeleton,
+} from './marketplace-submit.js';
+
 export const SDK_VERSION = '0.1.0';
