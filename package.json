@@ -24,6 +24,7 @@
     "optimizer-reproductions": "npm run build && node scripts/optimizer-reproductions.mjs",
     "mc-corpus": "npm run build && node scripts/mc-corpus-generate.mjs",
     "mutation-summary": "node scripts/mutation-summary.mjs",
+    "catalog:gen": "node scripts/generate-catalog-json.mjs",
     "anomaly-timing": "npm run build && node scripts/anomaly-detection-timing.mjs",
     "optimizer-mass-validation": "npm run build && node scripts/optimizer-mass-validation.mjs",
     "sub-ms-mc-bench": "npm run build && node scripts/sub-ms-mc-bench.mjs",

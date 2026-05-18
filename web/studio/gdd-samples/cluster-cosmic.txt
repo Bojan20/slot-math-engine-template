@@ -1,0 +1,25 @@
+Cluster Cosmic Quest
+
+A 7x7 cluster-pay video slot in deep-space theme.
+
+Topology: 7x7
+Target RTP: 96.20%
+Max Win: 10000x
+Volatility: MEDIUM
+Jurisdictions: UKGC, MGA, SE, DE, NL
+
+Features:
+- Cascade reels with multiplier ladder
+- Free Spins with x2/x4/x8 progressive multipliers
+- Cluster Pay (min cluster size 5)
+- Expanding wilds during free spins
+
+Symbol pool: 4 HP, 4 LP, 1 WILD, 1 SCATTER
+HP1  60  180  600
+HP2  60  180  600
+HP3  50  150  500
+HP4  40  120  400
+LP1  10  30  100
+LP2   8  25   80
+LP3   5  20   75
+LP4   5  18   65

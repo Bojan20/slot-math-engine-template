@@ -1,0 +1,41 @@
+{
+  "id": "dragon-spin-phoenix",
+  "name": "Dragon Spin Phoenix",
+  "version": "0.1.0",
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "HP1", "name": "Dragon", "kind": "hp" },
+    { "id": "HP2", "name": "Phoenix", "kind": "hp" },
+    { "id": "HP3", "name": "Tiger", "kind": "hp" },
+    { "id": "MP1", "name": "Lantern", "kind": "hp" },
+    { "id": "MP2", "name": "Coin", "kind": "hp" },
+    { "id": "MP3", "name": "Crown", "kind": "hp" },
+    { "id": "LP1", "name": "Nine", "kind": "lp" },
+    { "id": "LP2", "name": "Ten", "kind": "lp" },
+    { "id": "LP3", "name": "Jack", "kind": "lp" },
+    { "id": "WILD1", "name": "Wild Dragon", "kind": "wild", "substitutes": "*" },
+    { "id": "SCATTER1", "name": "Pearl Scatter", "kind": "scatter" }
+  ],
+  "paytable": [
+    { "symbol": "HP1", "x3": 60, "x4": 180, "x5": 600 },
+    { "symbol": "HP2", "x3": 60, "x4": 180, "x5": 600 },
+    { "symbol": "HP3", "x3": 50, "x4": 150, "x5": 500 },
+    { "symbol": "MP1", "x3": 25, "x4": 75, "x5": 250 },
+    { "symbol": "MP2", "x3": 20, "x4": 60, "x5": 200 },
+    { "symbol": "MP3", "x3": 20, "x4": 60, "x5": 200 },
+    { "symbol": "LP1", "x3": 5, "x4": 20, "x5": 75 },
+    { "symbol": "LP2", "x3": 5, "x4": 20, "x5": 75 },
+    { "symbol": "LP3", "x3": 8, "x4": 30, "x5": 100 },
+    { "symbol": "WILD1", "x3": 0, "x4": 0, "x5": 0 },
+    { "symbol": "SCATTER1", "x3": 5, "x4": 20, "x5": 100 }
+  ],
+  "limits": {
+    "target_rtp": 0.965,
+    "max_win_x": 5000,
+    "target_volatility": "high"
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "DGOJ"]
+  },
+  "features": ["free_spins", "multiplier"]
+}

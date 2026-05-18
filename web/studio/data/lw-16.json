@@ -1,25 +1,282 @@
 {
-  "schema": "lw-gap-coverage-v1",
+  "schema": "lw-gap-coverage-v2",
   "generated": "2026-05-18",
-  "coverage_pct": 100.0,
-  "total_gaps": 16,
-  "closed_gaps": 16,
+  "source": "docs/research/KIMI_LW_PORTFOLIO_COVERAGE_2026-05-18.md",
+  "totalGaps": 16,
+  "closedGaps": 16,
+  "coveragePct": 100,
   "gaps": [
-    { "m": "M1",  "title": "Dragon Spin CrossLink Water",     "wave": "W181", "pin": "a1b2c3d", "pid": "P-001", "supplier": "L&W (Aristocrat)", "kernel": "crosslink-water-v1",      "rtp_band": "94.1-96.4%", "variance": "MID",  "fam": "hnw" },
-    { "m": "M2",  "title": "Huff N' Puff frame upgrade",      "wave": "W182", "pin": "b2c3d4e", "pid": "P-002", "supplier": "L&W",              "kernel": "huff-puff-frame-v1",      "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "wild" },
-    { "m": "M3",  "title": "Ultimate Fire Link grid-expand",  "wave": "W183", "pin": "c3d4e5f", "pid": "P-003", "supplier": "L&W",              "kernel": "fire-link-grid-v2",       "rtp_band": "95.5-97.2%", "variance": "MID",  "fam": "cascade" },
-    { "m": "M4",  "title": "Dancing Drums Explosion",         "wave": "W184", "pin": "d4e5f6a", "pid": "P-004", "supplier": "L&W (Aristocrat)", "kernel": "dancing-drums-explode-v1","rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "fs" },
-    { "m": "M5",  "title": "Quick Hit reel-bound mystery",    "wave": "W185", "pin": "e5f6a7b", "pid": "P-005", "supplier": "L&W (Bally)",      "kernel": "quick-hit-mystery-v1",    "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "mystery" },
-    { "m": "M6",  "title": "Triple Cash Wheel",               "wave": "W196", "pin": "bf9b1be", "pid": "P-006", "supplier": "L&W (Bally)",      "kernel": "triple-cash-wheel-v1",    "rtp_band": "96.0-98.0%", "variance": "HIGH", "fam": "wheel" },
-    { "m": "M7",  "title": "Spartacus Colossal Reels",        "wave": "W187", "pin": "fa1b2c3", "pid": "P-007", "supplier": "L&W (WMS)",        "kernel": "spartacus-colossal-v1",   "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "colossal" },
-    { "m": "M8",  "title": "Goldfish Race competitive pick",  "wave": "W188", "pin": "0b1c2d3", "pid": "P-008", "supplier": "L&W (WMS)",        "kernel": "goldfish-race-v1",        "rtp_band": "88.4-92.1%", "variance": "MID",  "fam": "pick" },
-    { "m": "M9",  "title": "Big Bet UK paid-package",         "wave": "W189", "pin": "1c2d3e4", "pid": "P-009", "supplier": "L&W",              "kernel": "big-bet-uk-v1",           "rtp_band": "95.5-97.2%", "variance": "HIGH", "fam": "fs" },
-    { "m": "M10", "title": "RR Megaways Bonus Bank",          "wave": "W190", "pin": "2d3e4f5", "pid": "P-010", "supplier": "L&W (Big Time Gaming)","kernel": "rr-megaways-bank-v1",  "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "mw" },
-    { "m": "M11", "title": "Player-elects Composition",       "wave": "W191", "pin": "3e4f5a6", "pid": "P-011", "supplier": "L&W",              "kernel": "player-elects-comp-v1",   "rtp_band": "92.0-94.2%", "variance": "MID",  "fam": "cascade" },
-    { "m": "M12", "title": "Munchkinland random injection",   "wave": "W192", "pin": "4f5a6b7", "pid": "P-012", "supplier": "L&W (WMS)",        "kernel": "munchkinland-inject-v1",  "rtp_band": "95.5-97.2%", "variance": "HIGH", "fam": "mystery" },
-    { "m": "M13", "title": "WOZ YBR Glinda reshape",          "wave": "W195", "pin": "3dbf5ca", "pid": "P-013", "supplier": "L&W (WMS)",        "kernel": "woz-glinda-reshape-v1",   "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "cluster" },
-    { "m": "M14", "title": "LOTR Two Towers nested slot",     "wave": "W193", "pin": "5a6b7c8", "pid": "P-014", "supplier": "L&W (WMS)",        "kernel": "lotr-two-towers-v1",      "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "fs" },
-    { "m": "M15", "title": "Rich Little Piggies multi-pot",   "wave": "W194", "pin": "7b16ddb", "pid": "P-015", "supplier": "L&W (WMS)",        "kernel": "rich-piggies-pot-v1",     "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "jackpot" },
-    { "m": "M16", "title": "Stellar Jackpots arcade wrapper", "wave": "W194", "pin": "7b16ddb", "pid": "P-016", "supplier": "L&W (Lightning Box)","kernel": "stellar-jackpots-wrap-v1","rtp_band": "95.5-97.2%", "variance": "MID",  "fam": "jackpot" }
+    {
+      "m": "M1",
+      "title": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator",
+      "pid": "P-086",
+      "wave": "W185",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "hnw",
+      "variance": "MID",
+      "supplier": "L&W (in-house digital)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M2",
+      "title": "Multi-State Frame Upgrade Markov Aggregator",
+      "pid": "P-084",
+      "wave": "W183",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "wild",
+      "variance": "LOW",
+      "supplier": "L&W (SG Gaming)",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M3",
+      "title": "Dynamic Grid-Expansion Hold-and-Spin Aggregator",
+      "pid": "P-083",
+      "wave": "W182",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "cascade",
+      "variance": "MID",
+      "supplier": "L&W (Bally)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M4",
+      "title": "Deterministic Explosion Multiplier-Drop Aggregator",
+      "pid": "P-088",
+      "wave": "W187",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "supplier": "L&W (Shuffle Master)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M5",
+      "title": "Reel-Bound Mystery Progressive",
+      "pid": "P-082",
+      "wave": "W181",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "mystery",
+      "variance": "HIGH",
+      "supplier": "L&W (Bally)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M6",
+      "title": "Stacked Multi-Wheel Composition Aggregator",
+      "pid": "P-097",
+      "wave": "W196",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "wheel",
+      "variance": "HIGH",
+      "supplier": "L&W (Bally)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M7",
+      "title": "Colossal Reels Wild-Transfer Two-Grid Aggregator",
+      "pid": "P-085",
+      "wave": "W184",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "colossal",
+      "variance": "HIGH",
+      "supplier": "L&W (WMS)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M8",
+      "title": "Race/Competitive Pick One-Winner-Among-N Aggregator",
+      "pid": "P-093",
+      "wave": "W192",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "pick",
+      "variance": "MID",
+      "supplier": "L&W (WMS)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M9",
+      "title": "Big Bet Paid-Package Multi-Spin Schedule Aggregator",
+      "pid": "P-087",
+      "wave": "W186",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "HIGH",
+      "supplier": "L&W (Barcrest)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M10",
+      "title": "Bonus Bank Running-Balance Offset Aggregator",
+      "pid": "P-092",
+      "wave": "W191",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "mw",
+      "variance": "MID",
+      "supplier": "L&W (Barcrest)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M11",
+      "title": "Player-Elects Feature Composition Aggregator",
+      "pid": "P-089",
+      "wave": "W188",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "supplier": "L&W (multi-studio)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M12",
+      "title": "Random Feature-Injection During FS Aggregator",
+      "pid": "P-090",
+      "wave": "W189",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "supplier": "L&W (WMS)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M13",
+      "title": "Mid-Spin Random Reel-Reshape Mixture Aggregator",
+      "pid": "P-096",
+      "wave": "W195",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "supplier": "L&W (WMS)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M14",
+      "title": "Nested Mini-Slot Inside Bonus Compositional Aggregator",
+      "pid": "P-091",
+      "wave": "W190",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "HIGH",
+      "supplier": "L&W (WMS)",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M15",
+      "title": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator",
+      "pid": "P-094",
+      "wave": "W193",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "hnw",
+      "variance": "MID",
+      "supplier": "L&W (Bally)",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "status": "CLOSED"
+    },
+    {
+      "m": "M16",
+      "title": "Arcade-Shooter Survival Level Progression Aggregator",
+      "pid": "P-095",
+      "wave": "W194",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "jackpot",
+      "variance": "LOW",
+      "supplier": "L&W (Lightning Box)",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "status": "CLOSED"
+    }
   ]
 }

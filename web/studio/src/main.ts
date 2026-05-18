@@ -8,6 +8,14 @@ import { buildIRFromVariant, computeLiveRTP, validateIRBlob, roundTripIR } from 
 import type { LiveRTP, ValidationReport } from './engine.js';
 import { Persistence } from './persistence.js';
 import type { StudioVariant, StudioPersistedState, StudioWorkspace } from './types.js';
+import { createPlayTab, type PlayTabBridge } from './playTab.js';
+import { parseGDD, gddToIR } from './gdd-parser.js';
+import type { ExtractedGDD } from './gdd-parser.js';
+import {
+  estimateFullRtp,
+  type PaytableEntry,
+  type ReelWeights,
+} from '@engine/utils/rtpEstimator.js';
 
 // ── Window contract — what app.js can call ──────────────────────────
 declare global {
@@ -24,6 +32,16 @@ declare global {
       onRTPUpdate?: (live: LiveRTP) => void;
       logActivity: (msg: string) => void;
     };
+    // Catalog wire (W199) — app.js exposes a setter so we can push the
+    // parsed JSON payloads after async fetch.
+    __studio_catalog_install__?: (payload: { patterns: unknown[]; lwGaps: unknown[] }) => void;
+    __studio_catalog__?: { patterns: unknown[]; lwGaps: unknown[] };
+    __studio_catalog_api__?: {
+      selectPattern: (pid: string) => void;
+      insertSelectedPatternIntoVariant: () => boolean;
+      setMGap: (m: string | null) => void;
+      state: unknown;
+    };
   }
 }
 
@@ -36,6 +54,9 @@ interface StudioBridge {
   saveNow(): boolean;
   roundTripCheck(): { ok: boolean; issues: string[] };
   scheduleRTPRecompute(): void;
+  // ── GDD Import Pipeline (W199.5) ──
+  parseGDD(file: File): Promise<ExtractedGDD>;
+  generateFromGDD(gdd: ExtractedGDD): { ok: boolean; message: string; computedRtp?: number };
 }
 
 // ── Debounced RTP compute ───────────────────────────────────────────
@@ -169,6 +190,69 @@ function scheduleRTPRecompute(): void {
   });
 }
 
+// ── GDD Import Pipeline (W199.5) ────────────────────────────────────
+function generateFromGDD(
+  gdd: ExtractedGDD
+): { ok: boolean; message: string; computedRtp?: number } {
+  try {
+    const ir = gddToIR(gdd);
+    const report = validateIRBlob(ir);
+    if (!report.ok) {
+      const first = report.issues[0];
+      return {
+        ok: false,
+        message: `IR invalid: ${report.issueCount} issue(s)${first ? ` · ${first.path}: ${first.message}` : ''}`,
+      };
+    }
+    // Compute base-game RTP from the produced IR so the studio toast can
+    // show stated-vs-computed delta without a full MC run.
+    let computedRtp: number | undefined;
+    try {
+      const reels = ir.topology.kind === 'rectangular' ? ir.topology.reels : 5;
+      const rows = ir.topology.kind === 'rectangular' ? ir.topology.rows : 3;
+      const stripLen = 30;
+      const paytable: PaytableEntry[] = [];
+      const counts = new Map<string, number[]>();
+      const totalWeight = ir.symbols.reduce((a, s) => a + Math.max(0.01, s.weight_hint ?? 1), 0);
+      for (const s of ir.symbols) {
+        if (s.kind === 'hp' || s.kind === 'lp' || s.kind === 'wild') {
+          const pays = ir.paytable[s.id] || {};
+          paytable.push({
+            symbol: s.id,
+            tier: s.kind === 'wild' ? 'WILD' : s.kind === 'lp' ? 'LP' : 'HP',
+            pays: {
+              3: Number(pays['3'] ?? 0),
+              4: Number(pays['4'] ?? 0),
+              5: Number(pays['5'] ?? 0),
+            },
+          });
+        }
+        const w = Math.max(0.01, s.weight_hint ?? 1);
+        const c = Math.max(1, Math.round((w / totalWeight) * stripLen));
+        counts.set(s.id, Array(reels).fill(c));
+      }
+      const reelWeights: ReelWeights = {
+        symbolCounts: counts,
+        stripLengths: Array(reels).fill(stripLen),
+      };
+      const paylines = ir.evaluation.kind === 'lines' ? ir.evaluation.paylines.length : 20;
+      const est = estimateFullRtp(paytable, reelWeights, paylines, rows, [], undefined);
+      computedRtp = est.totalRtp;
+    } catch (err) {
+      // RTP compute is best-effort here — the modal still proceeds.
+      console.warn('[gdd] computed-RTP estimate failed:', err);
+    }
+    return {
+      ok: true,
+      message: `Generated ${ir.meta.name}`,
+      computedRtp,
+    };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { ok: false, message: msg };
+  }
+}
+
 // ── Bind file-picker for import (delegated; app.js may inject the
 // button itself, but we own the file event so the engine path is real).
 function bindImportPicker(): void {
@@ -197,9 +281,60 @@ const bridge: StudioBridge = {
   saveNow,
   roundTripCheck,
   scheduleRTPRecompute,
+  parseGDD,
+  generateFromGDD,
 };
 
 window.__studio__ = bridge;
+
+// ── PLAY tab bridge install (W198) ──────────────────────────────────
+let playBridge: PlayTabBridge | null = null;
+function installPlayBridge(): PlayTabBridge {
+  if (playBridge) return playBridge;
+  playBridge = createPlayTab(() => buildIR() as ReturnType<typeof buildIRFromVariant>);
+  window.__studio_play__ = playBridge;
+  return playBridge;
+}
+
+/**
+ * Bind the legacy PLAY-tab buttons (`#btn-spin`, `#btn-auto10`,
+ * `#btn-replay`) and the tab switch event to the new Pixi renderer.
+ * Runs once, after app.js has rendered its initial DOM.
+ */
+function bindPlayTabButtons(): void {
+  const tabBtn = document.getElementById('tab-play');
+  const spinBtn = document.getElementById('btn-spin');
+  const autoBtn = document.getElementById('btn-auto10');
+  const replayBtn = document.getElementById('btn-replay');
+
+  // Lazy-mount: first time the user clicks the PLAY tab, ensure the
+  // renderer is mounted into the canvas container.
+  if (tabBtn) {
+    tabBtn.addEventListener('click', () => {
+      void installPlayBridge().ensureMounted();
+    });
+  }
+
+  if (spinBtn) {
+    // Replace the legacy mock-spin handler with our real one. We do this
+    // by adding a capture-phase listener that stops propagation only
+    // after the legacy handler has run — we want the mock counters in
+    // app.js to keep updating, plus our real engine spin on top.
+    spinBtn.addEventListener('click', () => {
+      void installPlayBridge().spin();
+    });
+  }
+  if (autoBtn) {
+    autoBtn.addEventListener('click', () => {
+      void installPlayBridge().autoplay(10);
+    });
+  }
+  if (replayBtn) {
+    replayBtn.addEventListener('click', () => {
+      void installPlayBridge().replayLast();
+    });
+  }
+}
 
 // Boot: wait until the legacy `app.js` has installed its hook (it does
 // so synchronously on load, but we double-check via raf).
@@ -221,7 +356,37 @@ function boot(): void {
   } catch (err) {
     console.warn('[studio] initial RTP compute failed:', err);
   }
+
+  // Wire the PLAY tab → Pixi renderer.
+  try {
+    installPlayBridge();
+    bindPlayTabButtons();
+    hook().logActivity('W198 · Pixi renderer ready');
+  } catch (err) {
+    console.warn('[W198] play tab wire failed:', err);
+  }
   hook().logActivity('engine wired · real RTP estimator online');
+  // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).
+  void loadCatalogData();
+}
+
+// ── Catalog data loader (W199) ──────────────────────────────────────
+async function loadCatalogData(): Promise<void> {
+  try {
+    const [cat, lw] = await Promise.all([
+      fetch(new URL('../data/catalog-97.json', import.meta.url).href).then((r) => r.json()),
+      fetch(new URL('../data/lw-16.json',      import.meta.url).href).then((r) => r.json()),
+    ]);
+    const patterns = Array.isArray(cat?.patterns) ? cat.patterns : [];
+    const lwGaps   = Array.isArray(lw?.gaps)      ? lw.gaps      : [];
+    window.__studio_catalog__ = { patterns, lwGaps };
+    if (typeof window.__studio_catalog_install__ === 'function') {
+      window.__studio_catalog_install__({ patterns, lwGaps });
+    }
+    hook().logActivity(`catalog loaded · ${patterns.length} patterns · ${lwGaps.length} L&W gaps`);
+  } catch (err) {
+    console.warn('[studio] catalog load failed:', err);
+  }
 }
 
 boot();

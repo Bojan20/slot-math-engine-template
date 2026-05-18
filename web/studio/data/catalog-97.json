@@ -1,34 +1,4159 @@
 {
-  "schema": "industry-pattern-catalog-v2.63",
+  "schema": "industry-pattern-catalog-v3",
   "generated": "2026-05-18",
-  "total_patterns": 97,
-  "lw_gaps_covered": 16,
+  "source": "docs/INDUSTRY_PATTERN_CATALOG.md",
+  "totalPatterns": 97,
+  "lwGapsCovered": 16,
   "patterns": [
-    { "pid": "P-001", "title": "Dragon Spin CrossLink Water",     "wave": "W181", "pin": "a1b2c3d", "rtp_band": "94.1-96.4%", "variance": "MID",  "fam": "hnw",      "lw": "M1",  "solver": "crosslink-water-v1",      "specs": 43, "mc_validation_spins": 600000 },
-    { "pid": "P-002", "title": "Huff N' Puff frame upgrade",      "wave": "W182", "pin": "b2c3d4e", "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "wild",     "lw": "M2",  "solver": "huff-puff-frame-v1",      "specs": 38, "mc_validation_spins": 600000 },
-    { "pid": "P-003", "title": "Ultimate Fire Link grid-expand",  "wave": "W183", "pin": "c3d4e5f", "rtp_band": "95.5-97.2%", "variance": "MID",  "fam": "cascade",  "lw": "M3",  "solver": "fire-link-grid-v2",       "specs": 42, "mc_validation_spins": 600000 },
-    { "pid": "P-004", "title": "Dancing Drums Explosion",         "wave": "W184", "pin": "d4e5f6a", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "fs",       "lw": "M4",  "solver": "dancing-drums-explode-v1","specs": 36, "mc_validation_spins": 600000 },
-    { "pid": "P-005", "title": "Quick Hit reel-bound mystery",    "wave": "W185", "pin": "e5f6a7b", "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "mystery",  "lw": "M5",  "solver": "quick-hit-mystery-v1",    "specs": 40, "mc_validation_spins": 600000 },
-    { "pid": "P-006", "title": "Triple Cash Wheel",               "wave": "W196", "pin": "bf9b1be", "rtp_band": "96.0-98.0%", "variance": "HIGH", "fam": "wheel",    "lw": "M6",  "solver": "triple-cash-wheel-v1",    "specs": 38, "mc_validation_spins": 600000 },
-    { "pid": "P-007", "title": "Spartacus Colossal Reels",        "wave": "W187", "pin": "fa1b2c3", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "colossal", "lw": "M7",  "solver": "spartacus-colossal-v1",   "specs": 41, "mc_validation_spins": 600000 },
-    { "pid": "P-008", "title": "Goldfish Race competitive pick",  "wave": "W188", "pin": "0b1c2d3", "rtp_band": "88.4-92.1%", "variance": "MID",  "fam": "pick",     "lw": "M8",  "solver": "goldfish-race-v1",        "specs": 34, "mc_validation_spins": 600000 },
-    { "pid": "P-009", "title": "Big Bet UK paid-package",         "wave": "W189", "pin": "1c2d3e4", "rtp_band": "95.5-97.2%", "variance": "HIGH", "fam": "fs",       "lw": "M9",  "solver": "big-bet-uk-v1",           "specs": 37, "mc_validation_spins": 600000 },
-    { "pid": "P-010", "title": "RR Megaways Bonus Bank",          "wave": "W190", "pin": "2d3e4f5", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "mw",       "lw": "M10", "solver": "rr-megaways-bank-v1",     "specs": 39, "mc_validation_spins": 600000 },
-    { "pid": "P-011", "title": "Player-elects Composition",       "wave": "W191", "pin": "3e4f5a6", "rtp_band": "92.0-94.2%", "variance": "MID",  "fam": "cascade",  "lw": "M11", "solver": "player-elects-comp-v1",   "specs": 35, "mc_validation_spins": 600000 },
-    { "pid": "P-012", "title": "Munchkinland random injection",   "wave": "W192", "pin": "4f5a6b7", "rtp_band": "95.5-97.2%", "variance": "HIGH", "fam": "mystery",  "lw": "M12", "solver": "munchkinland-inject-v1",  "specs": 33, "mc_validation_spins": 600000 },
-    { "pid": "P-013", "title": "WOZ YBR Glinda reshape",          "wave": "W195", "pin": "3dbf5ca", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "cluster",  "lw": "M13", "solver": "woz-glinda-reshape-v1",   "specs": 43, "mc_validation_spins": 600000 },
-    { "pid": "P-014", "title": "LOTR Two Towers nested slot",     "wave": "W193", "pin": "5a6b7c8", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "fs",       "lw": "M14", "solver": "lotr-two-towers-v1",      "specs": 36, "mc_validation_spins": 600000 },
-    { "pid": "P-015", "title": "Rich Little Piggies multi-pot",   "wave": "W194", "pin": "7b16ddb", "rtp_band": "92.0-94.2%", "variance": "HIGH", "fam": "jackpot",  "lw": "M15", "solver": "rich-piggies-pot-v1",     "specs": 30, "mc_validation_spins": 600000 },
-    { "pid": "P-016", "title": "Stellar Jackpots arcade wrapper", "wave": "W194", "pin": "7b16ddb", "rtp_band": "95.5-97.2%", "variance": "MID",  "fam": "jackpot",  "lw": "M16", "solver": "stellar-jackpots-wrap-v1","specs": 32, "mc_validation_spins": 600000 },
-    { "pid": "P-017", "title": "Hold & Win persistence · classic","wave": "W049", "pin": "9d2f3a1", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "hnw",      "lw": null,  "solver": "hnw-classic-v1",          "specs": 41, "mc_validation_spins": 500000 },
-    { "pid": "P-018", "title": "Cascade chain · cluster v2",      "wave": "W051", "pin": "8c1e2b0", "rtp_band": "92.0-94.2%", "variance": "MID",  "fam": "cascade",  "lw": null,  "solver": "cascade-cluster-v2",      "specs": 38, "mc_validation_spins": 500000 },
-    { "pid": "P-019", "title": "Cluster pays · hex topology",     "wave": "W053", "pin": "7d2f1a8", "rtp_band": "94.1-96.4%", "variance": "MID",  "fam": "cluster",  "lw": null,  "solver": "cluster-hex-v1",          "specs": 36, "mc_validation_spins": 500000 },
-    { "pid": "P-020", "title": "Free spins · multiplier ladder",  "wave": "W055", "pin": "6e3a0b9", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "fs",       "lw": null,  "solver": "fs-mul-ladder-v1",        "specs": 43, "mc_validation_spins": 500000 },
-    { "pid": "P-021", "title": "Wheel bonus prize · 12-segment",  "wave": "W057", "pin": "5f4b1c0", "rtp_band": "95.5-97.2%", "variance": "MID",  "fam": "wheel",    "lw": null,  "solver": "wheel-12seg-v1",          "specs": 32, "mc_validation_spins": 500000 },
-    { "pid": "P-022", "title": "Pick-em selector · 4 of 8",       "wave": "W059", "pin": "4a5c2d1", "rtp_band": "92.0-94.2%", "variance": "LOW",  "fam": "pick",     "lw": null,  "solver": "pick-4of8-v1",            "specs": 29, "mc_validation_spins": 500000 },
-    { "pid": "P-023", "title": "Megaways variable rows · classic","wave": "W061", "pin": "3b6d3e2", "rtp_band": "95.5-97.2%", "variance": "HIGH", "fam": "mw",       "lw": null,  "solver": "megaways-classic-v1",     "specs": 39, "mc_validation_spins": 500000 },
-    { "pid": "P-024", "title": "Colossal reels merge",            "wave": "W063", "pin": "2c7e4f3", "rtp_band": "94.1-96.4%", "variance": "HIGH", "fam": "colossal", "lw": null,  "solver": "colossal-merge-v1",       "specs": 31, "mc_validation_spins": 500000 },
-    { "pid": "P-025", "title": "Expanding wild · feature spin",   "wave": "W065", "pin": "1d8f5a4", "rtp_band": "92.0-94.2%", "variance": "MID",  "fam": "wild",     "lw": null,  "solver": "wild-expand-v1",          "specs": 28, "mc_validation_spins": 500000 }
-  ],
-  "note": "Patterns P-017..P-097 represent 77 closed-form solvers (W049..W196). Sample 25 shown; full 97 generated client-side in app.js."
+    {
+      "pid": "P-001",
+      "title": "Variable-Ways Cascade",
+      "titleRaw": "Variable-Ways Cascade",
+      "wave": "W049",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Variable-Ways Cascade",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-001.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-002",
+      "title": "Persistent-Grid Cash-Collect",
+      "titleRaw": "Persistent-Grid Cash-Collect",
+      "wave": "W051",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "hnw",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Persistent-Grid Cash-Collect",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-002.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-003",
+      "title": "Multi-Tier Pool Jackpot",
+      "titleRaw": "Multi-Tier Pool Jackpot",
+      "wave": "W052",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "jackpot",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Multi-Tier Pool Jackpot",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-003.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-004",
+      "title": "Cascading Cluster",
+      "titleRaw": "Cascading Cluster",
+      "wave": "W054",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Cascading Cluster",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-004.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-005",
+      "title": "Sticky-Wild Free Spins",
+      "titleRaw": "Sticky-Wild Free Spins",
+      "wave": "W055",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "fs",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Sticky-Wild Free Spins",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-005.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-006",
+      "title": "Mystery-Symbol Reveal",
+      "titleRaw": "Mystery-Symbol Reveal",
+      "wave": "W057",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "mystery",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Mystery-Symbol Reveal",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-006.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-007",
+      "title": "Walking-Wild Cascade",
+      "titleRaw": "Walking-Wild Cascade",
+      "wave": "W058",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Walking-Wild Cascade",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-007.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-008",
+      "title": "Expanding-Wild Free Spins",
+      "titleRaw": "Expanding-Wild Free Spins",
+      "wave": "W060",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "fs",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Expanding-Wild Free Spins",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-008.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-009",
+      "title": "Multiplier-Ladder Free Spins",
+      "titleRaw": "Multiplier-Ladder Free Spins",
+      "wave": "W061",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Multiplier-Ladder Free Spins",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-009.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-010",
+      "title": "Pick-Bonus Mini-Game",
+      "titleRaw": "Pick-Bonus Mini-Game",
+      "wave": "W063",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "pick",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Pick-Bonus Mini-Game",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-010.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-011",
+      "title": "Pay-Anywhere Scatter",
+      "titleRaw": "Pay-Anywhere Scatter",
+      "wave": "W064",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "lines",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Pay-Anywhere Scatter",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-011.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-012",
+      "title": "Both-Ways Line Evaluation",
+      "titleRaw": "Both-Ways Line Evaluation",
+      "wave": "W066",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "lines",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Both-Ways Line Evaluation",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-012.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-013",
+      "title": "Symbol-Upgrade Cascade",
+      "titleRaw": "Symbol-Upgrade Cascade",
+      "wave": "W067",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Symbol-Upgrade Cascade",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-013.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-014",
+      "title": "Respin-Lock Bonus",
+      "titleRaw": "Respin-Lock Bonus",
+      "wave": "W069",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Respin-Lock Bonus",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-014.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-015",
+      "title": "Hexagonal Cluster",
+      "titleRaw": "Hexagonal Cluster",
+      "wave": "W070",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Hexagonal Cluster",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-015.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-016",
+      "title": "Diagonal Cluster",
+      "titleRaw": "Diagonal Cluster",
+      "wave": "W072",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Diagonal Cluster",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-016.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-017",
+      "title": "Multi-Reel Wild-Spread",
+      "titleRaw": "Multi-Reel Wild-Spread",
+      "wave": "W074",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Multi-Reel Wild-Spread",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-017.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-018",
+      "title": "Asymmetric Variable-Rows",
+      "titleRaw": "Asymmetric Variable-Rows",
+      "wave": "W075",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "mw",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Asymmetric Variable-Rows",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-018.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-019",
+      "title": "High-Volatility Heavy-Tail",
+      "titleRaw": "High-Volatility Heavy-Tail",
+      "wave": "W077",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "High-Volatility Heavy-Tail",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-019.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-020",
+      "title": "Classic 3x3 Lines",
+      "titleRaw": "Classic 3x3 Lines",
+      "wave": "W078",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "lines",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Classic 3x3 Lines",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-020.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-021",
+      "title": "N-Tier Hold-and-Win Ladder",
+      "titleRaw": "N-Tier Hold-and-Win Ladder",
+      "wave": "W080",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "hnw",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "N-Tier Hold-and-Win Ladder",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-021.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-022",
+      "title": "Charge Meter",
+      "titleRaw": "Charge Meter (Renewal Reward)",
+      "wave": "W081",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Charge Meter (Renewal Reward)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-022.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-023",
+      "title": "Supermeter State-Switch",
+      "titleRaw": "Supermeter State-Switch",
+      "wave": "W083",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Supermeter State-Switch",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-023.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-024",
+      "title": "Sticky Cash + Reveal Multiplier",
+      "titleRaw": "Sticky Cash + Reveal Multiplier",
+      "wave": "W084",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Sticky Cash + Reveal Multiplier",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-024.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-025",
+      "title": "Walking-Wild Respin",
+      "titleRaw": "Walking-Wild Respin (1D Markov)",
+      "wave": "W086",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Walking-Wild Respin (1D Markov)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-025.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-026",
+      "title": "Megacluster Stack-Reveal Ways",
+      "titleRaw": "Megacluster Stack-Reveal Ways",
+      "wave": "W087",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Megacluster Stack-Reveal Ways",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-026.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-027",
+      "title": "Streaming Entropy Health Monitor",
+      "titleRaw": "Streaming Entropy Health Monitor",
+      "wave": "W089",
+      "tier": "aggregator",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Streaming Entropy Health Monitor",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-027.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-028",
+      "title": "Demo Mode Controller",
+      "titleRaw": "Demo Mode Controller (zero-RNG)",
+      "wave": "W090",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Demo Mode Controller (zero-RNG)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-028.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-029",
+      "title": "Crash-Style Multiplier",
+      "titleRaw": "Crash-Style Multiplier (Pareto)",
+      "wave": "W092",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Crash-Style Multiplier (Pareto)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-029.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-030",
+      "title": "Parallel Screens Aggregate",
+      "titleRaw": "Parallel Screens Aggregate",
+      "wave": "W093",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Parallel Screens Aggregate",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-030.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-031",
+      "title": "Class-II Bingo Coordinator",
+      "titleRaw": "Class-II Bingo Coordinator",
+      "wave": "W095",
+      "tier": "aggregator",
+      "complexity": "L",
+      "fam": "bingo",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Class-II Bingo Coordinator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-031.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-032",
+      "title": "Sticky-Cash Collector",
+      "titleRaw": "Sticky-Cash Collector (Renewal Reward)",
+      "wave": "W096",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "hnw",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Sticky-Cash Collector (Renewal Reward)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-032.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-033",
+      "title": "Must-Hit-By Jackpot",
+      "titleRaw": "Must-Hit-By Jackpot (Mystery Progressive)",
+      "wave": "W098",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "jackpot",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Must-Hit-By Jackpot (Mystery Progressive)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-033.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-034",
+      "title": "Pseudo-Must-Hit + Level Progression",
+      "titleRaw": "Pseudo-Must-Hit + Level Progression",
+      "wave": "W100",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "jackpot",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Pseudo-Must-Hit + Level Progression",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-034.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-035",
+      "title": "Multi-tier WAP Jackpot + Wheel",
+      "titleRaw": "Multi-tier WAP Jackpot + Wheel",
+      "wave": "W101",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "wheel",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Multi-tier WAP Jackpot + Wheel",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-035.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-036",
+      "title": "Bonus Buy / Feature Buy Variance Analyzer",
+      "titleRaw": "Bonus Buy / Feature Buy Variance Analyzer",
+      "wave": "W103",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Bonus Buy / Feature Buy Variance Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-036.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-037",
+      "title": "Free Spins Retrigger Compound Variance",
+      "titleRaw": "Free Spins Retrigger Compound Variance",
+      "wave": "W104",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Free Spins Retrigger Compound Variance",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-037.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-038",
+      "title": "Cascade Sequential Multiplier Pyramid",
+      "titleRaw": "Cascade Sequential Multiplier Pyramid",
+      "wave": "W106",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Cascade Sequential Multiplier Pyramid",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-038.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-039",
+      "title": "Persistent Multiplier Accumulator",
+      "titleRaw": "Persistent Multiplier Accumulator",
+      "wave": "W107",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Persistent Multiplier Accumulator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-039.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-040",
+      "title": "Coin Accumulator + Mystery Values",
+      "titleRaw": "Coin Accumulator + Mystery Values",
+      "wave": "W109",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "hnw",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Coin Accumulator + Mystery Values",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-040.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-041",
+      "title": "Multiplicative Wild Stack Bonus",
+      "titleRaw": "Multiplicative Wild Stack Bonus",
+      "wave": "W110",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Multiplicative Wild Stack Bonus",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-041.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-042",
+      "title": "Ante Bet / Bet Boost Trade-Off Analyzer",
+      "titleRaw": "Ante Bet / Bet Boost Trade-Off Analyzer",
+      "wave": "W112",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Ante Bet / Bet Boost Trade-Off Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-042.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-043",
+      "title": "Free Spins Lookback Multiplier Aggregator",
+      "titleRaw": "Free Spins Lookback Multiplier Aggregator",
+      "wave": "W113",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Free Spins Lookback Multiplier Aggregator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-043.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-044",
+      "title": "Symbol Upgrade Chain Markov",
+      "titleRaw": "Symbol Upgrade Chain Markov",
+      "wave": "W115",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Symbol Upgrade Chain Markov",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-044.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-045",
+      "title": "Cluster Compound Variance",
+      "titleRaw": "Cluster Compound Variance",
+      "wave": "W116",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Cluster Compound Variance",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-045.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-046",
+      "title": "Bonus Wheel + Respin Markov",
+      "titleRaw": "Bonus Wheel + Respin Markov",
+      "wave": "W118",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "wheel",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Bonus Wheel + Respin Markov",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-046.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-047",
+      "title": "Pick Bonus N-Stage Tree",
+      "titleRaw": "Pick Bonus N-Stage Tree",
+      "wave": "W119",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "pick",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Pick Bonus N-Stage Tree",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-047.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-048",
+      "title": "Bonus Trigger Wait Time Analyzer",
+      "titleRaw": "Bonus Trigger Wait Time Analyzer",
+      "wave": "W121",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Bonus Trigger Wait Time Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-048.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-049",
+      "title": "Variable Reel Height Ways",
+      "titleRaw": "Variable Reel Height Ways",
+      "wave": "W123",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "mw",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Variable Reel Height Ways",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-049.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-050",
+      "title": "Sticky Wild Countdown Multiplier",
+      "titleRaw": "Sticky Wild Countdown Multiplier",
+      "wave": "W124",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Sticky Wild Countdown Multiplier",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-050.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-051",
+      "title": "Mystery Symbol Reveal Aggregator",
+      "titleRaw": "Mystery Symbol Reveal Aggregator",
+      "wave": "W126",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "mystery",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Mystery Symbol Reveal Aggregator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-051.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-052",
+      "title": "Bonus Collect-N Trigger Tracker",
+      "titleRaw": "Bonus Collect-N Trigger Tracker",
+      "wave": "W127",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Bonus Collect-N Trigger Tracker",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-052.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-053",
+      "title": "Cascade Multiplier Chain Lockstep Conditional",
+      "titleRaw": "Cascade Multiplier Chain Lockstep Conditional",
+      "wave": "W129",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Cascade Multiplier Chain Lockstep Conditional",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-053.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-054",
+      "title": "Mega Symbol Multi-Cell Expansion Aggregator",
+      "titleRaw": "Mega Symbol Multi-Cell Expansion Aggregator",
+      "wave": "W130",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "base",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Mega Symbol Multi-Cell Expansion Aggregator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-054.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-055",
+      "title": "Bi-Directional Line Pay Aggregator",
+      "titleRaw": "Bi-Directional Line Pay Aggregator",
+      "wave": "W132",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Bi-Directional Line Pay Aggregator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-055.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-056",
+      "title": "Anticipation/Tease Reel Probability Tracker",
+      "titleRaw": "Anticipation/Tease Reel Probability Tracker",
+      "wave": "W133",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Anticipation/Tease Reel Probability Tracker",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-056.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-057",
+      "title": "Free Spins Buy + Tier Escalation Trade-Off Analyzer",
+      "titleRaw": "Free Spins Buy + Tier Escalation Trade-Off Analyzer",
+      "wave": "W135",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Free Spins Buy + Tier Escalation Trade-Off Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-057.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-058",
+      "title": "Multi-Level Wild Tier Markov",
+      "titleRaw": "Multi-Level Wild Tier Markov",
+      "wave": "W136",
+      "tier": "base",
+      "complexity": "H",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Multi-Level Wild Tier Markov",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-058.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-059",
+      "title": "Hold-and-Win Multi-Tier Value-Based Jackpot",
+      "titleRaw": "Hold-and-Win Multi-Tier Value-Based Jackpot",
+      "wave": "W138",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "hnw",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Hold-and-Win Multi-Tier Value-Based Jackpot",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-059.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-060",
+      "title": "Locked/Held Reels During FS Analyzer",
+      "titleRaw": "Locked/Held Reels During FS Analyzer",
+      "wave": "W139",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Locked/Held Reels During FS Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-060.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-061",
+      "title": "Tumble Multiplier with Cap",
+      "titleRaw": "Tumble Multiplier with Cap",
+      "wave": "W141",
+      "tier": "aggregator",
+      "complexity": "L",
+      "fam": "cascade",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Tumble Multiplier with Cap",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-061.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-062",
+      "title": "Adjacent Pays Aggregator",
+      "titleRaw": "Adjacent Pays Aggregator",
+      "wave": "W142",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "lines",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Adjacent Pays Aggregator",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-062.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-063",
+      "title": "Symbol Multiplier on Reel-Stop",
+      "titleRaw": "Symbol Multiplier on Reel-Stop",
+      "wave": "W144",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "base",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Symbol Multiplier on Reel-Stop",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-063.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-064",
+      "title": "Trail/Board Bonus Progression Tracker",
+      "titleRaw": "Trail/Board Bonus Progression Tracker",
+      "wave": "W145",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Trail/Board Bonus Progression Tracker",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-064.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-065",
+      "title": "Cascade Meter Charge-Up Trigger",
+      "titleRaw": "Cascade Meter Charge-Up Trigger",
+      "wave": "W147",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Cascade Meter Charge-Up Trigger",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-065.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-066",
+      "title": "Max Win Cap Truncation Analyzer",
+      "titleRaw": "Max Win Cap Truncation Analyzer",
+      "wave": "W149",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Max Win Cap Truncation Analyzer",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-066.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-067",
+      "title": "Voltage/XP Meter Multi-Tier Reward Levels",
+      "titleRaw": "Voltage/XP Meter Multi-Tier Reward Levels",
+      "wave": "W150",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Voltage/XP Meter Multi-Tier Reward Levels",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-067.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-068",
+      "title": "Bonus Trigger Award Tier Stratification",
+      "titleRaw": "Bonus Trigger Award Tier Stratification",
+      "wave": "W152",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "base",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Bonus Trigger Award Tier Stratification",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-068.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-069",
+      "title": "Free Bet Wagering Requirement Aggregator",
+      "titleRaw": "Free Bet Wagering Requirement Aggregator (INDUSTRY-FIRST)",
+      "wave": "W153",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "regulatory",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Free Bet Wagering Requirement Aggregator (INDUSTRY-FIRST)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-069.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-070",
+      "title": "Session Bankroll Drawdown Analyzer",
+      "titleRaw": "Session Bankroll Drawdown Analyzer (INDUSTRY-FIRST, 50th solver MILESTONE)",
+      "wave": "W155",
+      "tier": "aggregator",
+      "complexity": "M",
+      "fam": "regulatory",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Session Bankroll Drawdown Analyzer (INDUSTRY-FIRST, 50th solver MILESTONE)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-070.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-071",
+      "title": "Hit Frequency Distribution Decomposition Analyzer",
+      "titleRaw": "Hit Frequency Distribution Decomposition Analyzer (INDUSTRY-STANDARD, 51st solver)",
+      "wave": "W156",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "base",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Hit Frequency Distribution Decomposition Analyzer (INDUSTRY-STANDARD, 51st solver)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-071.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-072",
+      "title": "Max Drop From Starting Bankroll During Session",
+      "titleRaw": "Max Drop From Starting Bankroll During Session (INDUSTRY-FIRST, 52nd solver, COMPLETES responsible-gambling triad)",
+      "wave": "W158",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "regulatory",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Max Drop From Starting Bankroll During Session (INDUSTRY-FIRST, 52nd solver, COMPLETES responsible-gambling triad)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-072.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-073",
+      "title": "Martingale Wager Progression Bust Time",
+      "titleRaw": "Martingale Wager Progression Bust Time (INDUSTRY-FIRST chase-pattern detection, 53rd solver)",
+      "wave": "W159",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "regulatory",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Martingale Wager Progression Bust Time (INDUSTRY-FIRST chase-pattern detection, 53rd solver)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-073.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-074",
+      "title": "Reverse Martingale (Paroli) Streak Cash-Out",
+      "titleRaw": "Reverse Martingale (Paroli) Streak Cash-Out (INDUSTRY-FIRST let-it-ride, 54th solver, DUAL of P-073)",
+      "wave": "W161",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "regulatory",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Reverse Martingale (Paroli) Streak Cash-Out (INDUSTRY-FIRST let-it-ride, 54th solver, DUAL of P-073)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-074.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-075",
+      "title": "AWP Cycle Convergence",
+      "titleRaw": "AWP Cycle Convergence (INDUSTRY-FIRST UK Class III, 55th solver, first above-IR kernel)",
+      "wave": "W162",
+      "tier": "aggregator",
+      "complexity": "L",
+      "fam": "regulatory",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "AWP Cycle Convergence (INDUSTRY-FIRST UK Class III, 55th solver, first above-IR kernel)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-075.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-076",
+      "title": "Drop-and-Stick Wild Expansion",
+      "titleRaw": "Drop-and-Stick Wild Expansion (56th solver, per-cell sticky)",
+      "wave": "W164",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "wild",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Drop-and-Stick Wild Expansion (56th solver, per-cell sticky)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-076.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-077",
+      "title": "Tumbling Cascade Chain Length",
+      "titleRaw": "Tumbling Cascade Chain Length (57th solver, Wald identity)",
+      "wave": "W165",
+      "tier": "base",
+      "complexity": "M",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Tumbling Cascade Chain Length (57th solver, Wald identity)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-077.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-078",
+      "title": "Pick-and-Click Pooper Bonus",
+      "titleRaw": "Pick-and-Click Pooper Bonus (58th solver, Negative Hypergeometric)",
+      "wave": "W167",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "pick",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Pick-and-Click Pooper Bonus (58th solver, Negative Hypergeometric)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-078.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-079",
+      "title": "Skill-Stop Near-Miss Rate",
+      "titleRaw": "Skill-Stop Near-Miss Rate (59th solver, INDUSTRY-FIRST regulatory inflation detector)",
+      "wave": "W168",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "regulatory",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Skill-Stop Near-Miss Rate (59th solver, INDUSTRY-FIRST regulatory inflation detector)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-079.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-080",
+      "title": "Avalanche Reactor Wave Aggregator",
+      "titleRaw": "🎯 Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
+      "wave": "W170",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "cascade",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "🎯 Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-080.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-081",
+      "title": "Sticky Multiplier FS Trail Aggregator",
+      "titleRaw": "Sticky Multiplier FS Trail Aggregator (61. solver, compound Binomial trail quadratic-in-N payout)",
+      "wave": "W172",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Sticky Multiplier FS Trail Aggregator (61. solver, compound Binomial trail quadratic-in-N payout)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-081.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": false,
+      "lwMGap": null
+    },
+    {
+      "pid": "P-082",
+      "title": "Reel-Bound Mystery Progressive",
+      "titleRaw": "Reel-Bound Mystery Progressive (62. solver, L&W M5 GAP — Quick Hit family adjacency tier)",
+      "wave": "W181",
+      "tier": "base",
+      "complexity": "L",
+      "fam": "mystery",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Reel-Bound Mystery Progressive (62. solver, L&W M5 GAP — Quick Hit family adjacency tier)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-082.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M5",
+      "lwSupplier": "L&W (Bally)"
+    },
+    {
+      "pid": "P-083",
+      "title": "Dynamic Grid-Expansion Hold-and-Spin Aggregator",
+      "titleRaw": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP — Ultimate Fire Link / Lock It Link Eureka)",
+      "wave": "W182",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "cascade",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP — Ultimate Fire Link / Lock It Link Eureka)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-083.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M3",
+      "lwSupplier": "L&W (Bally)"
+    },
+    {
+      "pid": "P-084",
+      "title": "Multi-State Frame Upgrade Markov Aggregator",
+      "titleRaw": "Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 GAP — Huff N' Puff family)",
+      "wave": "W183",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "wild",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 GAP — Huff N' Puff family)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-084.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M2",
+      "lwSupplier": "L&W (SG Gaming)"
+    },
+    {
+      "pid": "P-085",
+      "title": "Colossal Reels Wild-Transfer Two-Grid Aggregator",
+      "titleRaw": "Colossal Reels Wild-Transfer Two-Grid Aggregator (65. solver, L&W M7 GAP — Spartacus family + 50+ WMS land-based titles)",
+      "wave": "W184",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "colossal",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Colossal Reels Wild-Transfer Two-Grid Aggregator (65. solver, L&W M7 GAP — Spartacus family + 50+ WMS land-based titles)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-085.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M7",
+      "lwSupplier": "L&W (WMS)"
+    },
+    {
+      "pid": "P-086",
+      "title": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator",
+      "titleRaw": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 GAP — Dragon Spin CrossLink Water)",
+      "wave": "W185",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "hnw",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 GAP — Dragon Spin CrossLink Water)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-086.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M1",
+      "lwSupplier": "L&W (in-house digital)"
+    },
+    {
+      "pid": "P-087",
+      "title": "Big Bet Paid-Package Multi-Spin Schedule Aggregator",
+      "titleRaw": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 GAP — Barcrest UK family)",
+      "wave": "W186",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 GAP — Barcrest UK family)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-087.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA",
+        "AGCO",
+        "AU NCPF",
+        "EU GA 2024",
+        "NIGC",
+        "GLI-19",
+        "JP Pachislot"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M9",
+      "lwSupplier": "L&W (Barcrest)"
+    },
+    {
+      "pid": "P-088",
+      "title": "Deterministic Explosion Multiplier-Drop Aggregator",
+      "titleRaw": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 GAP — Dancing Drums Explosion + Revolution)",
+      "wave": "W187",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 GAP — Dancing Drums Explosion + Revolution)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-088.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M4",
+      "lwSupplier": "L&W (Shuffle Master)"
+    },
+    {
+      "pid": "P-089",
+      "title": "Player-Elects Feature Composition Aggregator",
+      "titleRaw": "Player-Elects Feature Composition Aggregator (69. solver, L&W M11 GAP — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
+      "wave": "W188",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "cascade",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Player-Elects Feature Composition Aggregator (69. solver, L&W M11 GAP — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-089.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M11",
+      "lwSupplier": "L&W (multi-studio)"
+    },
+    {
+      "pid": "P-090",
+      "title": "Random Feature-Injection During FS Aggregator",
+      "titleRaw": "Random Feature-Injection During FS Aggregator (70. solver, L&W M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library)",
+      "wave": "W189",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Random Feature-Injection During FS Aggregator (70. solver, L&W M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-090.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M12",
+      "lwSupplier": "L&W (WMS)"
+    },
+    {
+      "pid": "P-091",
+      "title": "Nested Mini-Slot Inside Bonus Compositional Aggregator",
+      "titleRaw": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 GAP — LOTR Two Towers + Star Trek)",
+      "wave": "W190",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "fs",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 GAP — LOTR Two Towers + Star Trek)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-091.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M14",
+      "lwSupplier": "L&W (WMS)"
+    },
+    {
+      "pid": "P-092",
+      "title": "Bonus Bank Running-Balance Offset Aggregator",
+      "titleRaw": "Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank UK-banking)",
+      "wave": "W191",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "mw",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank UK-banking)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-092.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M10",
+      "lwSupplier": "L&W (Barcrest)"
+    },
+    {
+      "pid": "P-093",
+      "title": "Race/Competitive Pick One-Winner-Among-N Aggregator",
+      "titleRaw": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, L&W M8 P1 GAP — WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks)",
+      "wave": "W192",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "pick",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, L&W M8 P1 GAP — WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-093.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M8",
+      "lwSupplier": "L&W (WMS)"
+    },
+    {
+      "pid": "P-094",
+      "title": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator",
+      "titleRaw": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)",
+      "wave": "W193",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "hnw",
+      "variance": "MID",
+      "rtpBand": [
+        0.92,
+        0.965
+      ],
+      "rtpBandLabel": "92.0-96.5%",
+      "math": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-094.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M15",
+      "lwSupplier": "L&W (Bally)"
+    },
+    {
+      "pid": "P-095",
+      "title": "Arcade-Shooter Survival Level Progression Aggregator",
+      "titleRaw": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
+      "wave": "W194",
+      "tier": "aggregator",
+      "complexity": "H",
+      "fam": "jackpot",
+      "variance": "LOW",
+      "rtpBand": [
+        0.88,
+        0.94
+      ],
+      "rtpBandLabel": "88.0-94.0%",
+      "math": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-095.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M16",
+      "lwSupplier": "L&W (Lightning Box)"
+    },
+    {
+      "pid": "P-096",
+      "title": "Mid-Spin Random Reel-Reshape Mixture Aggregator",
+      "titleRaw": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)",
+      "wave": "W195",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "cluster",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-096.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M13",
+      "lwSupplier": "L&W (WMS)"
+    },
+    {
+      "pid": "P-097",
+      "title": "Stacked Multi-Wheel Composition Aggregator",
+      "titleRaw": "Stacked Multi-Wheel Composition Aggregator (77. solver, L&W M6 P1 FINAL GAP — 16/16 L&W KIMI gaps closed, Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)",
+      "wave": "W196",
+      "tier": "composer",
+      "complexity": "H",
+      "fam": "wheel",
+      "variance": "HIGH",
+      "rtpBand": [
+        0.94,
+        0.985
+      ],
+      "rtpBandLabel": "94.0-98.5%",
+      "math": "Stacked Multi-Wheel Composition Aggregator (77. solver, L&W M6 P1 FINAL GAP — 16/16 L&W KIMI gaps closed, Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)",
+      "paramRanges": {
+        "pTrigger": [
+          0.01,
+          0.15
+        ],
+        "multiplier": [
+          1,
+          100
+        ],
+        "reels": [
+          3,
+          7
+        ],
+        "rows": [
+          3,
+          6
+        ]
+      },
+      "acceptanceUrl": "docs/research/acceptance/p-097.md",
+      "compliance": [
+        "UKGC",
+        "MGA",
+        "eCOGRA"
+      ],
+      "isLWGap": true,
+      "lwMGap": "M6",
+      "lwSupplier": "L&W (Bally)"
+    }
+  ]
 }

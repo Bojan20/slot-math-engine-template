@@ -424,27 +424,110 @@
         <header class="ctx-bar">
           <div class="ctx-bar-l">
             <h1>Catalog</h1>
-            <span class="ctx-meta">97 P-IDs · 16 L&amp;W gaps · 100% coverage</span>
+            <span class="ctx-meta" id="cat-meta-summary">97 patterns · 16 L&amp;W M-gaps closed</span>
           </div>
           <div class="ctx-bar-r">
-            <input type="search" placeholder="Search catalog…" class="inline-search" />
             <span class="filter-chip" id="cat-persona-chip" title="Persona-aware default filter">
               <span class="chip-lbl" id="cat-chip-lbl">RTP range 88–98%</span>
               <span class="chip-x">×</span>
             </span>
-            <button class="btn-ghost">Filter</button>
-            <button class="btn-ghost">Compare 2</button>
-            <button class="btn-primary">Bookmark</button>
+            <button class="btn-ghost" id="cat-clear-filters">Clear filters</button>
           </div>
         </header>
 
         <div class="compare-banner" id="cmp-banner-catalog" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
 
-        <div class="cat-table-wrap">
-          <table class="cat-table">
-            <thead><tr><th>#</th><th>P-ID</th><th>Mechanic</th><th>Supplier</th><th>RTP</th><th>σ</th><th>Status</th><th>Wave</th></tr></thead>
-            <tbody id="cat-tbody"></tbody>
-          </table>
+        <!-- L&W M-gaps strip (16 chips · M1..M16, all closed) -->
+        <div class="catalog-lwstrip" id="cat-lwstrip" aria-label="L&amp;W KIMI M-gaps closure status"></div>
+
+        <!-- Tri-pane layout -->
+        <div class="catalog-tripane">
+          <!-- LEFT · filters -->
+          <aside class="catalog-filters" id="cat-filters">
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Search</div>
+              <input type="search" class="catalog-search-input" id="cat-search" placeholder="title or math…" />
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Tier</div>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="tier" value="base" /> base</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="tier" value="aggregator" /> aggregator</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="tier" value="composer" /> composer</label>
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Complexity</div>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="complexity" value="L" /> L</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="complexity" value="M" /> M</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="complexity" value="H" /> H</label>
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Variance</div>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="variance" value="LOW" /> LOW</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="variance" value="MID" /> MID</label>
+              <label class="catalog-check"><input type="checkbox" data-cat-filter="variance" value="HIGH" /> HIGH</label>
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">L&amp;W gap</div>
+              <label class="catalog-check"><input type="checkbox" id="cat-lw-only" /> L&amp;W gap only (M1–M16)</label>
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Jurisdiction</div>
+              <div class="catalog-juris-chips" id="cat-juris-chips"></div>
+            </div>
+            <div class="catalog-filter-block">
+              <div class="catalog-filter-label">Wave range</div>
+              <div class="catalog-wave-row">
+                <input type="range" id="cat-wave-min" min="49" max="196" value="49" />
+                <input type="range" id="cat-wave-max" min="49" max="196" value="196" />
+              </div>
+              <div class="catalog-wave-readout"><span id="cat-wave-min-r">W049</span> – <span id="cat-wave-max-r">W196</span></div>
+            </div>
+          </aside>
+
+          <!-- CENTER · grid -->
+          <div class="catalog-grid-wrap">
+            <div class="catalog-grid-toolbar">
+              <span class="catalog-grid-count" id="cat-grid-count">97 patterns</span>
+              <span class="catalog-grid-hint">Click a card to view details · ⌘K M1–M16</span>
+            </div>
+            <div class="catalog-grid" id="cat-grid" role="list"></div>
+          </div>
+
+          <!-- RIGHT · detail -->
+          <aside class="catalog-detail" id="cat-detail">
+            <div class="catalog-detail-empty" id="cat-detail-empty">Select a pattern to view details.</div>
+            <div class="catalog-detail-body" id="cat-detail-body" hidden>
+              <div class="catalog-detail-head">
+                <div class="catalog-detail-pid" id="cat-d-pid">P-001</div>
+                <div class="catalog-detail-title" id="cat-d-title">—</div>
+                <div class="catalog-detail-badges" id="cat-d-badges"></div>
+              </div>
+              <div class="catalog-detail-section">
+                <div class="catalog-detail-section-label">Math</div>
+                <pre class="catalog-detail-math" id="cat-d-math">—</pre>
+              </div>
+              <div class="catalog-detail-section">
+                <div class="catalog-detail-section-label">Param ranges</div>
+                <div class="catalog-detail-params" id="cat-d-params"></div>
+              </div>
+              <div class="catalog-detail-section">
+                <div class="catalog-detail-section-label">RTP band</div>
+                <div class="catalog-detail-rtp" id="cat-d-rtp">—</div>
+              </div>
+              <div class="catalog-detail-section">
+                <div class="catalog-detail-section-label">Compliance</div>
+                <div class="catalog-detail-compliance" id="cat-d-compliance"></div>
+              </div>
+              <div class="catalog-detail-section">
+                <div class="catalog-detail-section-label">Acceptance</div>
+                <div class="catalog-detail-acceptance" id="cat-d-acceptance">—</div>
+              </div>
+              <div class="catalog-detail-actions">
+                <button class="btn-primary" id="cat-d-insert">Insert into current variant</button>
+                <button class="btn-ghost" id="cat-d-specs">View specs</button>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -1084,6 +1167,15 @@
     </header>
     <div class="modal-body">
       <div class="modal-field">
+        <label>Start from</label>
+        <div class="ng-sources">
+          <label class="ng-radio is-active"><input type="radio" name="ng-source" value="empty" checked /> <span><b>Empty</b> · blank IR</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="template" /> <span><b>Template</b> · curated preset</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="lw-mgap" /> <span><b>L&amp;W M-gap</b> · catalog seed</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="gdd" /> <span>📄 <b>Import from GDD</b> · PDF / XLSX / DOCX / CSV / MD / JSON</span></label>
+        </div>
+      </div>
+      <div class="modal-field">
         <label for="ng-name">Name</label>
         <input type="text" id="ng-name" placeholder="Untitled Game" />
       </div>
@@ -1154,9 +1246,31 @@
   </div>
 </div>
 
+<!-- ========= GDD IMPORT REVIEW MODAL ========= -->
+<div class="wiz gdd-review" id="gdd-review" hidden aria-hidden="true">
+  <div class="wiz-backdrop" id="gdd-backdrop"></div>
+  <div class="wiz-box wide">
+    <header class="wiz-h">
+      <h2>Importing: <span id="gdd-filename" class="mono cyan">file.pdf</span></h2>
+      <div class="gdd-summary">Confidence: <strong id="gdd-overall">—</strong> · <span id="gdd-issues">— fields need review</span></div>
+      <button class="wiz-close" id="gdd-close">×</button>
+    </header>
+    <div class="wiz-body" id="gdd-body"></div>
+    <footer class="wiz-foot">
+      <button class="btn-ghost" id="gdd-cancel">Cancel</button>
+      <button class="btn-ghost" id="gdd-draft">Save as draft</button>
+      <button class="btn-primary" id="gdd-generate">Generate Game →</button>
+    </footer>
+  </div>
+</div>
+
+<!-- Hidden file input for GDD import -->
+<input type="file" id="gdd-file-input" accept=".pdf,.docx,.xlsx,.csv,.md,.json,.txt,application/pdf,application/json,text/csv,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none" />
+
 <!-- ========= TOASTS ========= -->
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script src="app.js"></script>
+<script type="module" src="/src/main.ts"></script>
 </body>
 </html>

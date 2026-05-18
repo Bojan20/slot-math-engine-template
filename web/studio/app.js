@@ -111,7 +111,8 @@
       activePreset: "standard",
       activity: [],
       lastSavedAt: Date.now() - 12000,
-      selection: null
+      selection: null,
+      composedKernels: []
     };
   }
 
@@ -1228,7 +1229,31 @@
   renderNewGameLayouts();
   renderNewGameThemes();
 
+  // Highlight selected "Start from" radio (visual is-active state)
+  document.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t && t.name === "ng-source") {
+      const wrap = t.closest(".ng-sources");
+      if (wrap) {
+        wrap.querySelectorAll(".ng-radio").forEach(r => r.classList.remove("is-active"));
+        const lbl = t.closest("label");
+        if (lbl) lbl.classList.add("is-active");
+      }
+    }
+  });
+
   $("#ng-create").addEventListener("click", () => {
+    const source = $$("input[name=ng-source]").find(r => r.checked)?.value || "empty";
+    if (source === "gdd") {
+      // Trigger GDD import flow — pick a file, then open the review modal.
+      closeNewGameModal();
+      const input = $("#gdd-file-input");
+      if (input) {
+        input.value = "";
+        input.click();
+      }
+      return;
+    }
     const name = $("#ng-name").value.trim() || `Untitled Game ${wsOrder.length + 1}`;
     const layout = $$("#ng-layouts input[type=radio]").find(r => r.checked)?.value || "5x3";
     const theme = $(".theme-swatch.is-active", $("#ng-themes"))?.dataset.theme || "cyan";
@@ -1240,6 +1265,223 @@
     closeNewGameModal();
     switchWorkspace(id);
     toast({ kind: "ok", msg: `Created <b>${name}</b> · ${LAYOUTS.find(l => l.id === layout)?.label || layout}` });
+  });
+
+  /* ============================================================
+     GDD IMPORT FLOW — picker → parse → review modal → generate
+     ============================================================ */
+  $("#gdd-file-input")?.addEventListener("change", async (e) => {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    if (!window.__studio__ || typeof window.__studio__.parseGDD !== "function") {
+      toast({ kind: "warn", msg: "GDD parser not ready — main.ts still booting" });
+      return;
+    }
+    toast({ kind: "cyan", msg: `Parsing <b>${f.name}</b>…` });
+    try {
+      const gdd = await window.__studio__.parseGDD(f);
+      window.__gddCurrent__ = gdd;
+      window.__gddFilename__ = f.name;
+      renderGDDReview(gdd, f.name);
+      showModal("gdd-review");
+    } catch (err) {
+      toast({ kind: "warn", msg: `Parse failed: ${(err && err.message) ? err.message : String(err)}` });
+    }
+  });
+
+  function confCls(c) {
+    if (c >= 90) return "ok";
+    if (c >= 60) return "warn";
+    return "bad";
+  }
+  function confSym(c) {
+    if (c >= 90) return "✓";
+    if (c >= 60) return "⚠";
+    return "✗";
+  }
+
+  function renderGDDReview(gdd, filename) {
+    $("#gdd-filename").textContent = filename;
+    $("#gdd-overall").textContent = `${gdd.overallConfidence}%`;
+    const lowCount = countLowConfidence(gdd);
+    $("#gdd-issues").textContent = lowCount === 0
+      ? `all fields high confidence`
+      : `${lowCount} field${lowCount === 1 ? "" : "s"} need review`;
+
+    const body = $("#gdd-body");
+    const sections = [];
+
+    sections.push(renderSection("Meta", [
+      fieldRow("Name",    "meta.name",    gdd.meta.name,    "text"),
+      fieldRow("ID",      "meta.id",      gdd.meta.id,      "text"),
+      fieldRow("Version", "meta.version", gdd.meta.version, "text"),
+    ]));
+    sections.push(renderSection("Topology", [
+      fieldRow("Reels", "topology.reels", gdd.topology.reels, "number"),
+      fieldRow("Rows",  "topology.rows",  gdd.topology.rows,  "number"),
+      fieldRow("Kind",  "topology.kind",  gdd.topology.kind,  "select", ["rectangular","variable_rows","cluster","hexagonal"]),
+    ]));
+    sections.push(renderSection("Symbol pool", [
+      fieldRow("HP",      "symbolPool.HP",      gdd.symbolPool.HP,      "number"),
+      fieldRow("MP",      "symbolPool.MP",      gdd.symbolPool.MP,      "number"),
+      fieldRow("LP",      "symbolPool.LP",      gdd.symbolPool.LP,      "number"),
+      fieldRow("Wild",    "symbolPool.WILD",    gdd.symbolPool.WILD,    "number"),
+      fieldRow("Scatter", "symbolPool.SCATTER", gdd.symbolPool.SCATTER, "number"),
+      fieldRow("Mult",    "symbolPool.MULT",    gdd.symbolPool.MULT,    "number"),
+    ]));
+    sections.push(renderSection("Engine", [
+      fieldRow("Target RTP", "targetRTP",  gdd.targetRTP,  "rtp"),
+      fieldRow("Max win",    "maxWin",     gdd.maxWin,     "number"),
+      fieldRow("Volatility", "volatility", gdd.volatility, "select", ["LOW","MID","HIGH"]),
+    ]));
+    sections.push(renderSection("Features / Jurisdictions", [
+      listRow("Features",      "features",      gdd.features),
+      listRow("Jurisdictions", "jurisdictions", gdd.jurisdictions),
+    ]));
+
+    // Paytable
+    const pt = gdd.paytable.value;
+    let ptHtml = "";
+    if (pt.length) {
+      ptHtml = `<table class="gdd-paytable-table">
+        <thead><tr><th>Symbol</th><th>x3</th><th>x4</th><th>x5</th></tr></thead>
+        <tbody>${pt.map(r => `<tr><td>${r.symbol}</td><td>${r.x3}</td><td>${r.x4}</td><td>${r.x5}</td></tr>`).join("")}</tbody>
+      </table>`;
+    } else {
+      ptHtml = `<em style="color:var(--text-2);font-size:11.5px">No paytable extracted — defaults will be applied.</em>`;
+    }
+    sections.push(`<div class="gdd-section"><h3>Paytable <span class="gdd-conf ${confCls(gdd.paytable.confidence)}">${confSym(gdd.paytable.confidence)} ${gdd.paytable.confidence}%</span></h3>${ptHtml}</div>`);
+
+    body.innerHTML = sections.join("");
+  }
+
+  function countLowConfidence(gdd) {
+    let n = 0;
+    const fields = [
+      gdd.meta.id, gdd.meta.name, gdd.meta.version,
+      gdd.topology.kind, gdd.topology.reels, gdd.topology.rows,
+      gdd.symbolPool.HP, gdd.symbolPool.MP, gdd.symbolPool.LP,
+      gdd.symbolPool.WILD, gdd.symbolPool.SCATTER, gdd.symbolPool.MULT,
+      gdd.paytable, gdd.targetRTP, gdd.maxWin,
+      gdd.features, gdd.jurisdictions, gdd.volatility
+    ];
+    for (const f of fields) { if (f.confidence < 60) n++; }
+    return n;
+  }
+
+  function renderSection(title, rows) {
+    return `<div class="gdd-section"><h3>${title}</h3>${rows.join("")}</div>`;
+  }
+
+  function fieldRow(label, key, fe, type, options) {
+    const cls = confCls(fe.confidence);
+    const sym = confSym(fe.confidence);
+    let input;
+    if (type === "select") {
+      input = `<select data-gdd-key="${key}">${(options||[]).map(o => `<option value="${o}" ${o === fe.value ? "selected" : ""}>${o}</option>`).join("")}</select>`;
+    } else if (type === "rtp") {
+      const pct = (fe.value * 100).toFixed(2);
+      input = `<input type="number" min="50" max="100" step="0.01" value="${pct}" data-gdd-key="${key}" data-gdd-pct="1" />`;
+    } else {
+      input = `<input type="${type}" value="${fe.value}" data-gdd-key="${key}" />`;
+    }
+    const src = fe.source ? `<span class="gdd-source" title="${fe.source}">${fe.source}</span>` : `<span class="gdd-source"></span>`;
+    return `<div class="gdd-field-row">
+      <span class="gdd-fname">${label}</span>
+      <span class="gdd-fval">${input}</span>
+      <span class="gdd-conf ${cls}">${sym} ${fe.confidence}%</span>
+      ${src}
+    </div>`;
+  }
+
+  function listRow(label, key, fe) {
+    const cls = confCls(fe.confidence);
+    const sym = confSym(fe.confidence);
+    const val = (fe.value || []).join(", ");
+    const input = `<input type="text" value="${val}" data-gdd-key="${key}" data-gdd-list="1" placeholder="comma,separated"/>`;
+    const src = fe.source ? `<span class="gdd-source" title="${fe.source}">${fe.source}</span>` : `<span class="gdd-source"></span>`;
+    return `<div class="gdd-field-row">
+      <span class="gdd-fname">${label}</span>
+      <span class="gdd-fval">${input}</span>
+      <span class="gdd-conf ${cls}">${sym} ${fe.confidence}%</span>
+      ${src}
+    </div>`;
+  }
+
+  function harvestGDDEdits(gdd) {
+    // Read modified field values from inputs and apply onto a clone.
+    const clone = JSON.parse(JSON.stringify(gdd));
+    $$("#gdd-body [data-gdd-key]").forEach(el => {
+      const key = el.dataset.gddKey;
+      const path = key.split(".");
+      let cur = clone;
+      for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]];
+      const node = cur[path[path.length - 1]];
+      const val = el.value;
+      if (el.dataset.gddList) {
+        node.value = val.split(",").map(s => s.trim()).filter(Boolean);
+      } else if (el.dataset.gddPct) {
+        node.value = parseFloat(val) / 100;
+      } else if (el.tagName === "INPUT" && el.type === "number") {
+        node.value = parseFloat(val);
+      } else {
+        node.value = val;
+      }
+    });
+    return clone;
+  }
+
+  function closeGDD() { hideModal("gdd-review"); window.__gddCurrent__ = null; }
+  $("#gdd-close")?.addEventListener("click", closeGDD);
+  $("#gdd-cancel")?.addEventListener("click", closeGDD);
+  $("#gdd-backdrop")?.addEventListener("click", closeGDD);
+  $("#gdd-draft")?.addEventListener("click", () => {
+    toast({ kind: "cyan", msg: `Draft saved (in-memory) — re-open via import` });
+    closeGDD();
+  });
+  $("#gdd-generate")?.addEventListener("click", () => {
+    const gdd = window.__gddCurrent__;
+    if (!gdd) return closeGDD();
+    const edited = harvestGDDEdits(gdd);
+    const result = window.__studio__.generateFromGDD(edited);
+    if (!result.ok) {
+      toast({ kind: "warn", msg: `Generation failed: ${result.message}` });
+      return;
+    }
+    closeGDD();
+    // Create workspace and seed its variant with extracted values.
+    const name = edited.meta.name.value || "Imported Game";
+    const id = "ws-" + Date.now().toString(36);
+    const irName = name.toLowerCase().replace(/\s+/g, "-") + "-v0.1.00";
+    const ws = newWorkspace({ id, name, theme: "cyan", layout: "5x3", irName });
+    const v = ws.variants[ws.activeVariantId];
+    v.rtpTarget = +(edited.targetRTP.value * 100).toFixed(2);
+    v.maxWin = edited.maxWin.value;
+    v.vola = edited.volatility.value;
+    v.tierCounts = {
+      HP: edited.symbolPool.HP.value | 0,
+      MP: edited.symbolPool.MP.value | 0,
+      LP: edited.symbolPool.LP.value | 0,
+      WILD: edited.symbolPool.WILD.value | 0,
+      SCATTER: edited.symbolPool.SCATTER.value | 0,
+      MULT: edited.symbolPool.MULT.value | 0,
+    };
+    workspaces[id] = ws;
+    wsOrder.push(id);
+    switchWorkspace(id);
+    if (window.__studio__.scheduleRTPRecompute) window.__studio__.scheduleRTPRecompute();
+    const computedRtp = result.computedRtp != null ? (result.computedRtp * 100).toFixed(2) : "—";
+    const statedRtp = (edited.targetRTP.value * 100).toFixed(2);
+    const delta = result.computedRtp != null
+      ? Math.abs((result.computedRtp - edited.targetRTP.value) * 100).toFixed(2)
+      : "—";
+    toast({
+      kind: "ok",
+      msg: `Generated <b>${name}</b> from GDD · Stated RTP ${statedRtp}% / Computed ${computedRtp}% · Δ ${delta}%`,
+      ttl: 7000
+    });
+    logActivity(`GDD import → ${name} · stated ${statedRtp}% / computed ${computedRtp}%`);
   });
 
   /* ============================================================
@@ -1800,25 +2042,302 @@
   $("#btn-replay").addEventListener("click", () => toast({ kind: "cyan", msg: `Replayed last spin · seed 0x9F-2E1B` }));
 
   /* ============================================================
-     CATALOG render (mock subset)
+     CATALOG (W199) — 97 P-ID browser with L&W M-gap strip,
+     tri-pane filters / grid / detail, insert-into-variant action.
      ============================================================ */
+  const CATALOG_STATE = {
+    patterns: [],
+    lwGaps: [],
+    selectedPid: null,
+    activeMGap: null,
+    filters: {
+      search: "",
+      tier: new Set(),
+      complexity: new Set(),
+      variance: new Set(),
+      lwOnly: false,
+      jurisdictions: new Set(),
+      waveMin: 49,
+      waveMax: 196,
+    },
+    juris: ["UKGC","MGA","eCOGRA","AGCO","AU NCPF","EU GA 2024","NIGC","GLI-19","JP Pachislot"],
+  };
+
+  // Fallback bootstrap data — overwritten by main.ts once it injects
+  // the parsed catalog-97.json + lw-16.json via window.__studio_catalog__.
+  function loadCatalogDataSync() {
+    if (window.__studio_catalog__ && Array.isArray(window.__studio_catalog__.patterns)) {
+      CATALOG_STATE.patterns = window.__studio_catalog__.patterns;
+      CATALOG_STATE.lwGaps   = window.__studio_catalog__.lwGaps || [];
+      return true;
+    }
+    return false;
+  }
+  // Allow main.ts / tests to push data in after async fetch.
+  window.__studio_catalog_install__ = function (payload) {
+    CATALOG_STATE.patterns = payload.patterns || [];
+    CATALOG_STATE.lwGaps   = payload.lwGaps   || [];
+    renderCatalog();
+  };
+
+  function applyCatalogFilters() {
+    const f = CATALOG_STATE.filters;
+    const q = f.search.trim().toLowerCase();
+    return CATALOG_STATE.patterns.filter(p => {
+      if (f.tier.size && !f.tier.has(p.tier)) return false;
+      if (f.complexity.size && !f.complexity.has(p.complexity)) return false;
+      if (f.variance.size && !f.variance.has(p.variance)) return false;
+      if (f.lwOnly && !p.isLWGap) return false;
+      if (CATALOG_STATE.activeMGap && p.lwMGap !== CATALOG_STATE.activeMGap) return false;
+      if (q) {
+        const hay = (p.title + " " + (p.math || "") + " " + p.pid).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      if (f.jurisdictions.size) {
+        const ok = [...f.jurisdictions].every(j => (p.compliance || []).includes(j));
+        if (!ok) return false;
+      }
+      const wn = parseInt(String(p.wave || "W049").slice(1), 10);
+      if (wn < f.waveMin || wn > f.waveMax) return false;
+      return true;
+    });
+  }
+
+  function renderCatalogLWStrip() {
+    const host = $("#cat-lwstrip");
+    if (!host) return;
+    const items = CATALOG_STATE.lwGaps;
+    host.innerHTML = items.map(g => {
+      const closed = g.status === "CLOSED";
+      const cls = closed ? "" : "is-pending";
+      const active = CATALOG_STATE.activeMGap === g.m ? "is-active" : "";
+      const short = (g.title || "").replace(/^L&W /, "").slice(0, 22);
+      return `<button type="button" class="catalog-lwstrip-chip ${cls} ${active}" data-mgap="${g.m}" title="${g.title} · ${g.supplier || ""}">
+        <span class="m-tag">${g.m}</span>
+        <span class="m-name">${short}</span>
+        <span class="m-supp">${(g.supplier || "").replace(/^L&W ?/, "") || "L&W"}</span>
+        <span class="m-check">${closed ? "✓" : "…"}</span>
+      </button>`;
+    }).join("");
+    host.querySelectorAll("[data-mgap]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const m = btn.dataset.mgap;
+        CATALOG_STATE.activeMGap = CATALOG_STATE.activeMGap === m ? null : m;
+        renderCatalog();
+        if (CATALOG_STATE.activeMGap) {
+          const target = CATALOG_STATE.patterns.find(p => p.lwMGap === m);
+          if (target) selectPattern(target.pid);
+        }
+      });
+    });
+  }
+
+  function renderCatalogGrid() {
+    const host = $("#cat-grid");
+    const count = $("#cat-grid-count");
+    if (!host) return;
+    const list = applyCatalogFilters();
+    if (count) count.textContent = `${list.length} of ${CATALOG_STATE.patterns.length} patterns`;
+    if (!list.length) {
+      host.innerHTML = `<div class="catalog-grid-empty">No patterns match the current filters.</div>`;
+      return;
+    }
+    // Window cap (max ~30 cards rendered at once for perf; scroll past via more)
+    const MAX = 30;
+    const slice = list.slice(0, MAX);
+    host.innerHTML = slice.map(p => {
+      const lw = p.isLWGap ? `<span class="catalog-card-badge lw">${p.lwMGap}</span>` : "";
+      const sel = p.pid === CATALOG_STATE.selectedPid ? "is-selected" : "";
+      return `<button type="button" class="catalog-card ${sel}" data-pid="${p.pid}" role="listitem">
+        <div class="catalog-card-head">
+          <span class="catalog-card-pid">${p.pid}</span>
+          <span class="catalog-card-wave">${p.wave || ""}</span>
+        </div>
+        <div class="catalog-card-title">${p.title}</div>
+        <div class="catalog-card-badges">
+          <span class="catalog-card-badge tier-${p.tier}">${p.tier}</span>
+          <span class="catalog-card-badge var-${p.variance}">${p.variance}</span>
+          <span class="catalog-card-badge">${p.complexity}</span>
+          ${lw}
+        </div>
+      </button>`;
+    }).join("") + (list.length > MAX ? `<div class="catalog-grid-empty">+${list.length - MAX} more · refine filters</div>` : "");
+    host.querySelectorAll("[data-pid]").forEach(btn => {
+      btn.addEventListener("click", () => selectPattern(btn.dataset.pid));
+    });
+  }
+
+  function selectPattern(pid) {
+    CATALOG_STATE.selectedPid = pid;
+    renderCatalogGrid();
+    renderCatalogDetail();
+  }
+
+  function renderCatalogDetail() {
+    const pid = CATALOG_STATE.selectedPid;
+    const empty = $("#cat-detail-empty");
+    const body  = $("#cat-detail-body");
+    if (!pid) {
+      if (empty) empty.hidden = false;
+      if (body)  body.hidden  = true;
+      return;
+    }
+    const p = CATALOG_STATE.patterns.find(x => x.pid === pid);
+    if (!p) { if (empty) empty.hidden = false; if (body) body.hidden = true; return; }
+    if (empty) empty.hidden = true;
+    if (body)  body.hidden  = false;
+    $("#cat-d-pid").textContent = p.pid;
+    $("#cat-d-title").textContent = p.title;
+    const badges = [];
+    badges.push(`<span class="catalog-card-badge tier-${p.tier}">${p.tier}</span>`);
+    badges.push(`<span class="catalog-card-badge var-${p.variance}">${p.variance}</span>`);
+    badges.push(`<span class="catalog-card-badge">${p.complexity}</span>`);
+    badges.push(`<span class="catalog-card-badge">${p.wave || "—"}</span>`);
+    if (p.isLWGap) badges.push(`<span class="catalog-card-badge lw">${p.lwMGap}</span>`);
+    $("#cat-d-badges").innerHTML = badges.join("");
+    $("#cat-d-math").textContent = p.math || p.title;
+    const pr = p.paramRanges || {};
+    $("#cat-d-params").innerHTML = Object.keys(pr).map(k =>
+      `<div class="p-row"><span class="p-k">${k}</span> ∈ [${pr[k][0]}, ${pr[k][1]}]</div>`
+    ).join("") || `<div class="p-row">—</div>`;
+    $("#cat-d-rtp").textContent = p.rtpBandLabel || `${(p.rtpBand?.[0]*100||0).toFixed(1)}-${(p.rtpBand?.[1]*100||0).toFixed(1)}%`;
+    $("#cat-d-compliance").innerHTML = (p.compliance || []).map(j =>
+      `<span class="catalog-juris-chip is-active">${j}</span>`
+    ).join("");
+    $("#cat-d-acceptance").textContent = p.acceptanceUrl || "—";
+  }
+
+  function renderCatalogFiltersUI() {
+    const f = CATALOG_STATE.filters;
+    // Populate jurisdiction chips (once)
+    const jurisHost = $("#cat-juris-chips");
+    if (jurisHost && !jurisHost.children.length) {
+      jurisHost.innerHTML = CATALOG_STATE.juris.map(j =>
+        `<button type="button" class="catalog-juris-chip" data-juris="${j}">${j}</button>`
+      ).join("");
+      jurisHost.querySelectorAll("[data-juris]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const j = btn.dataset.juris;
+          if (f.jurisdictions.has(j)) f.jurisdictions.delete(j); else f.jurisdictions.add(j);
+          btn.classList.toggle("is-active");
+          renderCatalogGrid();
+        });
+      });
+    }
+    // Reflect wave readout
+    const min = $("#cat-wave-min"), max = $("#cat-wave-max");
+    const minR = $("#cat-wave-min-r"), maxR = $("#cat-wave-max-r");
+    if (min && minR) minR.textContent = `W${String(min.value).padStart(3,"0")}`;
+    if (max && maxR) maxR.textContent = `W${String(max.value).padStart(3,"0")}`;
+  }
+
+  function bindCatalogFilters() {
+    if (window.__catalog_bound__) return;
+    window.__catalog_bound__ = true;
+    const f = CATALOG_STATE.filters;
+    $$("#cat-filters input[type=checkbox][data-cat-filter]").forEach(cb => {
+      cb.addEventListener("change", () => {
+        const key = cb.dataset.catFilter;
+        if (cb.checked) f[key].add(cb.value); else f[key].delete(cb.value);
+        renderCatalogGrid();
+      });
+    });
+    const search = $("#cat-search");
+    if (search) search.addEventListener("input", () => {
+      f.search = search.value;
+      renderCatalogGrid();
+    });
+    const lwOnly = $("#cat-lw-only");
+    if (lwOnly) lwOnly.addEventListener("change", () => {
+      f.lwOnly = lwOnly.checked;
+      renderCatalogGrid();
+    });
+    ["cat-wave-min","cat-wave-max"].forEach(id => {
+      const el = $("#" + id);
+      if (!el) return;
+      el.addEventListener("input", () => {
+        const lo = parseInt($("#cat-wave-min").value, 10);
+        const hi = parseInt($("#cat-wave-max").value, 10);
+        f.waveMin = Math.min(lo, hi); f.waveMax = Math.max(lo, hi);
+        renderCatalogFiltersUI();
+        renderCatalogGrid();
+      });
+    });
+    const clear = $("#cat-clear-filters");
+    if (clear) clear.addEventListener("click", () => {
+      f.tier.clear(); f.complexity.clear(); f.variance.clear();
+      f.lwOnly = false; f.search = ""; f.jurisdictions.clear();
+      f.waveMin = 49; f.waveMax = 196;
+      CATALOG_STATE.activeMGap = null;
+      $$("#cat-filters input[type=checkbox]").forEach(cb => cb.checked = false);
+      const s = $("#cat-search"); if (s) s.value = "";
+      const wmin = $("#cat-wave-min"); if (wmin) wmin.value = 49;
+      const wmax = $("#cat-wave-max"); if (wmax) wmax.value = 196;
+      $$("#cat-juris-chips .catalog-juris-chip").forEach(c => c.classList.remove("is-active"));
+      renderCatalogFiltersUI();
+      renderCatalog();
+    });
+    // Insert + specs actions
+    const insertBtn = $("#cat-d-insert");
+    if (insertBtn) insertBtn.addEventListener("click", insertSelectedPatternIntoVariant);
+    const specsBtn = $("#cat-d-specs");
+    if (specsBtn) specsBtn.addEventListener("click", () => {
+      const pid = CATALOG_STATE.selectedPid;
+      const p = CATALOG_STATE.patterns.find(x => x.pid === pid);
+      toast({ kind: "cyan", msg: `Specs for ${pid} · ${p?.acceptanceUrl || "external link"}` });
+    });
+  }
+
+  function insertSelectedPatternIntoVariant() {
+    const pid = CATALOG_STATE.selectedPid;
+    if (!pid) {
+      toast({ kind: "warn", msg: "Select a pattern card first." });
+      return false;
+    }
+    const p = CATALOG_STATE.patterns.find(x => x.pid === pid);
+    if (!p) return false;
+    const v = getActiveVariant();
+    if (!Array.isArray(v.composedKernels)) v.composedKernels = [];
+    if (!v.composedKernels.includes(pid)) v.composedKernels.push(pid);
+    if (!v.ir) v.ir = { kernels: [] };
+    if (!Array.isArray(v.ir.kernels)) v.ir.kernels = [];
+    if (!v.ir.kernels.find(k => k.pid === pid)) {
+      v.ir.kernels.push({
+        pid, title: p.title, wave: p.wave,
+        tier: p.tier, fam: p.fam,
+        insertedAt: Date.now()
+      });
+    }
+    v.activity.unshift({ t: "now", msg: `kernel ${pid} (${p.title}) composed`, at: Date.now() });
+    toast({ kind: "ok", msg: `Inserted ${pid} ${p.title} into variant '${v.name}'. Recomputing RTP…` });
+    if (window.__studio__ && typeof window.__studio__.scheduleRTPRecompute === "function") {
+      window.__studio__.scheduleRTPRecompute();
+    }
+    return true;
+  }
+  // Expose for tests + ⌘K
+  window.__studio_catalog_api__ = {
+    selectPattern,
+    insertSelectedPatternIntoVariant,
+    setMGap: (m) => { CATALOG_STATE.activeMGap = m; renderCatalog(); },
+    state: CATALOG_STATE,
+  };
+
   function renderCatalog() {
-    const rows = [
-      ["1","P001","Lines pay 5×3 · LR","NetEnt","96.10","8.4","GREEN","W181"],
-      ["2","P011","Megaways variable","BTG","96.43","11.2","GREEN","W184"],
-      ["3","P027","Cluster NLE 7×7","Push","96.20","9.8","GREEN","W187"],
-      ["4","P033","Cascade drop refill","P.Play","96.50","10.4","GREEN","W189"],
-      ["5","P058","Hold & Win 6-coin","Bally","95.80","12.1","GREEN","W192"],
-      ["6","P061","Cash Wheel composite","Bally","96.04","9.6","GREEN","W196"],
-      ["7","P074","Reel reshape WoO","WMS","95.42","8.7","GREEN","W195"],
-      ["8","P081","Stellar Jackpot wrap","LBX","96.18","11.5","GREEN","W194"]
-    ];
-    const tbody = $("#cat-tbody");
-    tbody.innerHTML = rows.map(r => `<tr>
-      <td>${r[0]}</td><td class="pid">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td>
-      <td class="mono">${r[4]}%</td><td class="mono">${r[5]}</td>
-      <td class="ok">${r[6]}</td><td class="mono">${r[7]}</td>
-    </tr>`).join("");
+    if (!CATALOG_STATE.patterns.length) {
+      loadCatalogDataSync();
+    }
+    renderCatalogFiltersUI();
+    bindCatalogFilters();
+    renderCatalogLWStrip();
+    renderCatalogGrid();
+    renderCatalogDetail();
+    // Update top summary
+    const meta = $("#cat-meta-summary");
+    if (meta) {
+      const closed = CATALOG_STATE.lwGaps.filter(g => g.status === "CLOSED").length;
+      meta.textContent = `${CATALOG_STATE.patterns.length} patterns · ${closed}/${CATALOG_STATE.lwGaps.length} L&W M-gaps closed`;
+    }
   }
 
   /* ============================================================
@@ -1850,6 +2369,20 @@
       { cat: "View",       lbl: "Toggle Expanded rail", run: () => $("#rail-expand").click() },
       { cat: "Help",       lbl: "Keyboard shortcuts", kbd: "?", run: () => showModal("help-modal") }
     ];
+
+    // L&W M-gap quick jumps (M1..M16) — open CATALOG tab, set active M-gap
+    // filter, and select the closing P-ID.
+    const mGapJumps = (CATALOG_STATE.lwGaps || []).map(g => ({
+      cat: "L&W gaps",
+      lbl: `${g.m} ${g.title}`,
+      run: () => {
+        goToTab("catalog");
+        CATALOG_STATE.activeMGap = g.m;
+        renderCatalog();
+        if (g.pid) selectPattern(g.pid);
+      }
+    }));
+    baseItems.push(...mGapJumps);
 
     const wsItems = wsOrder.map(id => ({
       cat: "Workspace", lbl: `Switch to ${workspaces[id].name}`,
@@ -1962,6 +2495,7 @@
       closeCmdp();
       hideModal("wiz"); hideModal("picker"); hideModal("help-modal");
       hideModal("new-game-modal"); hideModal("new-variant-modal"); hideModal("compare-modal");
+      hideModal("gdd-review");
       closeInlineIconPopup();
       closeVariantContextMenu();
       return;
