@@ -163,3 +163,33 @@ h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; letter-spacing: -
 
 .muted { color: var(--text-2); }
 .hidden { display: none !important; }
+
+/* ============================================================
+   CORTI W204-AUDIT — WCAG 2.1 AA fixes (additive only)
+   ============================================================ */
+
+/* 2.4.7 Focus Visible: visible focus indicator for keyboard users. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* 2.4.1 Bypass Blocks: skip-to-content link. */
+.skip-link {
+  position: absolute;
+  left: -2000px;
+  background: var(--bg-2);
+  color: var(--text-0);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  z-index: 1000;
+}
+.skip-link:focus,
+.skip-link:focus-visible { left: 12px; top: 8px; }

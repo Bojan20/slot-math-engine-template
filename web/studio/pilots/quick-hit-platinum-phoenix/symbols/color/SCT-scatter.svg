@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="scat-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF59D"/>
+      <stop offset="50%" stop-color="#FFEA00"/>
+      <stop offset="100%" stop-color="#FF8A1F" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="scat-egg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="60%" stop-color="#FF8A1F"/>
+      <stop offset="100%" stop-color="#E63946"/>
+    </radialGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#scat-glow)" opacity="0.7"/>
+  <path d="M32 8 L 38 26 L 58 26 L 42 38 L 48 58 L 32 46 L 16 58 L 22 38 L 6 26 L 26 26 Z" fill="url(#scat-egg)" stroke="#7C1F23" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 16 L 35 24 L 44 24 L 37 30 L 39 38 L 32 33 L 25 38 L 27 30 L 20 24 L 29 24 Z" fill="#FFEA00" opacity="0.5"/>
+  <circle cx="28" cy="26" r="2" fill="#FFFFFF"/>
+</svg>

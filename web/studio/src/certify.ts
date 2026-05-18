@@ -871,6 +871,8 @@ export interface CertifyBridge {
   generatePar(): Promise<ParSection[] | null>;
   runAudit(): ComplianceCheckResult[];
   downloadZip(): Promise<void>;
+  /** W204-PROTOCOLS: render the server-generated PAR PDF in #certify-pdf-preview. */
+  previewParPdf(submissionId: string): Promise<void>;
   getLastResult(): MCResult | null;
   getLastPar(): ParSection[] | null;
   getLastAudit(): ComplianceCheckResult[] | null;
@@ -1185,6 +1187,23 @@ export function installCertify(getIR: () => SlotGameIR, getCfRtp: () => number):
     </table>`;
   }
 
+  // ── PDF preview (W204-PROTOCOLS) ───────────────────────────────
+  // Renders the server-generated PAR PDF into an iframe in the CERTIFY
+  // tab. The server endpoint is /api/cert/<id>/par.pdf and the studio
+  // talks to it via the same origin (proxied by Vite in dev).
+  async function previewParPdf(submissionId: string): Promise<void> {
+    const root = document.getElementById('certify-pdf-preview');
+    if (!root) return;
+    const url = `/api/cert/${encodeURIComponent(submissionId)}/par.pdf`;
+    root.innerHTML = `
+      <header class="certify-pdf-h">
+        <b>PAR PDF</b>
+        <a class="btn-ghost mini" href="${url}" download>Download PDF</a>
+      </header>
+      <iframe class="certify-pdf-iframe" src="${url}" title="PAR Sheet PDF" style="width:100%;min-height:540px;border:0"></iframe>
+    `;
+  }
+
   // ── ZIP download ────────────────────────────────────────────────
   async function downloadZip(): Promise<void> {
     const ir = irRef ?? getIR();
@@ -1275,6 +1294,7 @@ export function installCertify(getIR: () => SlotGameIR, getCfRtp: () => number):
     setIR(ir) { irRef = ir; },
     getSelectedSize, getSelectedRng, getSeed,
     runMc, generatePar, runAudit, downloadZip,
+    previewParPdf,
     getLastResult: () => lastResult,
     getLastPar:    () => lastPar,
     getLastAudit:  () => lastAudit,

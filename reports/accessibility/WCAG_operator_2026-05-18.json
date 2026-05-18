@@ -1,0 +1,26 @@
+{
+  "name": "operator",
+  "url": "http://localhost:5174",
+  "timestamp": "2026-05-18T14:50:20.511Z",
+  "counts": {
+    "Critical": 0,
+    "Serious": 0,
+    "Moderate": 0,
+    "Minor": 1,
+    "total": 1
+  },
+  "findings": {
+    "Critical": [],
+    "Serious": [],
+    "Moderate": [],
+    "Minor": [
+      {
+        "id": "no-skip-link",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 2.4.1 Bypass Blocks",
+        "description": "No \"skip to main content\" link detected.",
+        "fix": "Add <a class=\"skip\" href=\"#main\">Skip to content</a> as first focusable element."
+      }
+    ]
+  }
+}

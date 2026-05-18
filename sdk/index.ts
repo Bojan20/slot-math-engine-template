@@ -21,7 +21,12 @@ export type {
   SeamlessHandshake,
 } from './types.js';
 
-export { SlotMathClient, IRBuilder } from './client.js';
+export { SlotMathClient, IRBuilder, SlotMathLiveClient } from './client.js';
+export type {
+  LiveClientOptions,
+  LiveEvent,
+  LiveCommand,
+} from './client.js';
 
 export type {
   KernelParamSpec,

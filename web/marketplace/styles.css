@@ -121,3 +121,36 @@ button { cursor: pointer; }
 .mp-toast .t.ok { border-color: var(--ok); color: var(--ok); }
 .mp-toast .t.warn { border-color: var(--warn); color: var(--warn); }
 .mp-toast .t.err { border-color: var(--err); color: var(--err); }
+
+/* ============================================================
+   CORTI W204-AUDIT — WCAG 2.1 AA fixes (additive only)
+   ============================================================ */
+
+/* 2.4.7 Focus Visible. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* 1.4.3 Contrast: bump --text-2 secondary text. */
+:root { --text-2: #8A92A0; }
+
+/* 2.4.1 Skip link. */
+.skip-link {
+  position: absolute;
+  left: -2000px;
+  background: var(--bg-3);
+  color: var(--text-0);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  z-index: 1000;
+}
+.skip-link:focus,
+.skip-link:focus-visible { left: 12px; top: 8px; }

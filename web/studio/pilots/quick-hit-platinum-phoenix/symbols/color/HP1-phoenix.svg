@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="ph-body" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="40%" stop-color="#FF8A1F"/>
+      <stop offset="80%" stop-color="#E63946"/>
+      <stop offset="100%" stop-color="#7C1F23"/>
+    </radialGradient>
+    <linearGradient id="ph-flame" x1="0" x2="0" y1="1" y2="0">
+      <stop offset="0%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#FFEA00" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 6 C 22 16, 14 24, 18 36 C 10 30, 4 38, 12 44 C 18 56, 32 58, 32 58 C 32 58, 46 56, 52 44 C 60 38, 54 30, 46 36 C 50 24, 42 16, 32 6 Z" fill="url(#ph-flame)"/>
+  <path d="M32 12 C 26 18, 22 26, 24 32 C 22 36, 26 40, 30 38 C 28 44, 32 48, 34 44 C 36 48, 40 44, 38 38 C 42 40, 46 36, 44 32 C 46 26, 42 18, 32 12 Z" fill="url(#ph-body)"/>
+  <circle cx="28" cy="28" r="2" fill="#FFFFFF"/>
+  <circle cx="28" cy="28" r="1" fill="#1A1A1A"/>
+  <path d="M30 32 L 34 32 L 32 36 Z" fill="#7C1F23"/>
+  <path d="M20 22 L 12 16 M 44 22 L 52 16" stroke="#FFEA00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

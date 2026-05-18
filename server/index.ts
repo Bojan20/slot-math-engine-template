@@ -16,6 +16,7 @@ import { AuditStore } from './state/audit.js';
 import { GamesRegistry } from './state/games.js';
 import { CertStore } from './state/cert.js';
 import { TenantStore } from './state/tenants.js';
+import { HsmStore } from './state/hsm.js';
 
 import { registerSessionRoutes } from './routes/session.js';
 import { registerWalletRoutes } from './routes/wallet.js';
@@ -33,6 +34,7 @@ export interface BackendStores {
   games: GamesRegistry;
   cert: CertStore;
   tenants: TenantStore;
+  hsm: HsmStore;
 }
 
 export interface BuildOptions {
@@ -63,6 +65,9 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     tenants:
       opts.stores?.tenants ??
       new TenantStore({ persistPath: process.env.TENANT_REGISTRY_FILE ?? null }),
+    hsm:
+      opts.stores?.hsm ??
+      new HsmStore({ keyFile: process.env.HSM_KEY_FILE ?? null }),
   };
   // Best-effort: load games up-front so first /api/lobby/games is fast.
   try {
@@ -95,7 +100,7 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
   });
   await registerAuditRoutes(app, { audit: stores.audit });
   await registerLobbyRoutes(app, { games: stores.games, sessions: stores.sessions });
-  await registerCertRoutes(app, { cert: stores.cert });
+  await registerCertRoutes(app, { cert: stores.cert, hsm: stores.hsm });
   await registerGaasRoutes(app, {
     games: stores.games,
     sessions: stores.sessions,

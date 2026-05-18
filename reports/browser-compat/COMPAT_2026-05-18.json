@@ -1,0 +1,146 @@
+{
+  "date": "2026-05-18",
+  "mode": "static",
+  "browsers": [
+    {
+      "name": "chromium",
+      "version": "120+",
+      "engine": "Blink"
+    },
+    {
+      "name": "firefox",
+      "version": "119+",
+      "engine": "Gecko"
+    },
+    {
+      "name": "webkit",
+      "version": "17+",
+      "engine": "WebKit"
+    },
+    {
+      "name": "edge",
+      "version": "120+",
+      "engine": "Blink"
+    }
+  ],
+  "results": [
+    {
+      "name": "studio",
+      "url": "http://localhost:5173",
+      "features": [
+        "css-has",
+        "bigint"
+      ],
+      "row": {
+        "chromium": {
+          "status": "ok",
+          "reasons": []
+        },
+        "firefox": {
+          "status": "ok",
+          "reasons": []
+        },
+        "webkit": {
+          "status": "ok",
+          "reasons": []
+        },
+        "edge": {
+          "status": "ok",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "name": "operator",
+      "url": "http://localhost:5174",
+      "features": [],
+      "row": {
+        "chromium": {
+          "status": "ok",
+          "reasons": []
+        },
+        "firefox": {
+          "status": "ok",
+          "reasons": []
+        },
+        "webkit": {
+          "status": "ok",
+          "reasons": []
+        },
+        "edge": {
+          "status": "ok",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "name": "regulator",
+      "url": "http://localhost:5175",
+      "features": [],
+      "row": {
+        "chromium": {
+          "status": "ok",
+          "reasons": []
+        },
+        "firefox": {
+          "status": "ok",
+          "reasons": []
+        },
+        "webkit": {
+          "status": "ok",
+          "reasons": []
+        },
+        "edge": {
+          "status": "ok",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "name": "marketplace",
+      "url": "http://localhost:5176",
+      "features": [],
+      "row": {
+        "chromium": {
+          "status": "ok",
+          "reasons": []
+        },
+        "firefox": {
+          "status": "ok",
+          "reasons": []
+        },
+        "webkit": {
+          "status": "ok",
+          "reasons": []
+        },
+        "edge": {
+          "status": "ok",
+          "reasons": []
+        }
+      }
+    },
+    {
+      "name": "production",
+      "url": "http://localhost:8080",
+      "features": [],
+      "row": {
+        "chromium": {
+          "status": "ok",
+          "reasons": []
+        },
+        "firefox": {
+          "status": "ok",
+          "reasons": []
+        },
+        "webkit": {
+          "status": "ok",
+          "reasons": []
+        },
+        "edge": {
+          "status": "ok",
+          "reasons": []
+        }
+      }
+    }
+  ]
+}

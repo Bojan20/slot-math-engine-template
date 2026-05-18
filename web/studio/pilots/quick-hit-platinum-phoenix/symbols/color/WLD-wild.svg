@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="wild-fill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFEA00"/>
+      <stop offset="60%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#7C1F23"/>
+    </linearGradient>
+    <linearGradient id="wild-flame" x1="0" x2="0" y1="1" y2="0">
+      <stop offset="0%" stop-color="#E63946"/>
+      <stop offset="100%" stop-color="#FFEA00" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 4 C 26 14, 14 16, 14 28 C 4 30, 4 42, 18 44 C 16 56, 32 60, 32 60 C 32 60, 48 56, 46 44 C 60 42, 60 30, 50 28 C 50 16, 38 14, 32 4 Z" fill="url(#wild-flame)" opacity="0.7"/>
+  <rect x="10" y="22" width="44" height="20" rx="4" fill="url(#wild-fill)" stroke="#7C1F23" stroke-width="2"/>
+  <text x="32" y="37" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" stroke="#7C1F23" stroke-width="0.8">WILD</text>
+  <path d="M14 22 C 12 18, 16 16, 18 18" stroke="#FFEA00" stroke-width="1.5" fill="none"/>
+  <path d="M50 22 C 52 18, 48 16, 46 18" stroke="#FFEA00" stroke-width="1.5" fill="none"/>
+</svg>

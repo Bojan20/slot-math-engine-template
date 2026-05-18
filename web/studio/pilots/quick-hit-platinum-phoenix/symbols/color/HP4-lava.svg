@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="lava-flow" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFEA00"/>
+      <stop offset="40%" stop-color="#FF8A1F"/>
+      <stop offset="80%" stop-color="#E63946"/>
+      <stop offset="100%" stop-color="#7C1F23"/>
+    </linearGradient>
+    <radialGradient id="lava-bubble" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#FFF59D"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </radialGradient>
+  </defs>
+  <path d="M6 50 C 12 44, 18 50, 24 46 C 30 42, 36 48, 42 44 C 48 40, 54 46, 58 42 L 58 60 L 6 60 Z" fill="url(#lava-flow)"/>
+  <path d="M8 50 C 14 46, 20 50, 26 48 C 32 46, 38 50, 44 48 C 50 46, 54 50, 58 48" stroke="#FFEA00" stroke-width="1.2" fill="none" opacity="0.8"/>
+  <circle cx="18" cy="38" r="4" fill="url(#lava-bubble)" opacity="0.9"/>
+  <circle cx="34" cy="32" r="6" fill="url(#lava-bubble)"/>
+  <circle cx="48" cy="40" r="3" fill="url(#lava-bubble)" opacity="0.9"/>
+  <circle cx="34" cy="30" r="2" fill="#FFFFFF" opacity="0.7"/>
+  <path d="M16 22 C 16 18, 20 16, 22 18 C 18 22, 18 26, 16 22 Z" fill="#FF8A1F" opacity="0.6"/>
+  <path d="M44 24 C 44 20, 48 18, 50 20 C 46 24, 46 28, 44 24 Z" fill="#FF8A1F" opacity="0.6"/>
+</svg>

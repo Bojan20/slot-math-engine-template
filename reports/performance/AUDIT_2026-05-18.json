@@ -1,0 +1,156 @@
+{
+  "date": "2026-05-18",
+  "mode": "static",
+  "targets": {
+    "fcp_ms": 1800,
+    "lcp_ms": 2500,
+    "tti_ms": 3800,
+    "cls": 0.1,
+    "tbt_ms": 200,
+    "bundle_kb_gzip": 250,
+    "tab_switch_ms": 50,
+    "spin_anim_ms": 100,
+    "gdd_parse_ms": 10000,
+    "mc_100k_ms": 3000,
+    "sweep_1000_ms": 5000
+  },
+  "results": [
+    {
+      "name": "studio",
+      "label": "Slot Math Studio",
+      "url": "http://localhost:5173",
+      "mode": "static",
+      "timestamp": "2026-05-18T14:50:20.335Z",
+      "inputs": {
+        "htmlBytes": 91683,
+        "cssBytes": 115108,
+        "jsBytes": 177968,
+        "domNodes": 1546,
+        "renderBlocking": 2
+      },
+      "metrics": {
+        "fcp_ms": 444,
+        "lcp_ms": 675,
+        "tti_ms": 817,
+        "cls": 0.02,
+        "tbt_ms": 42,
+        "bundle_bytes": 177968,
+        "bundle_kb_gzip": 52.14,
+        "dom_nodes": 1546,
+        "render_blocking": 2
+      },
+      "score": 100,
+      "actions": {
+        "tab_switch_ms": 20,
+        "spin_anim_ms": 33,
+        "gdd_parse_ms": 2500,
+        "mc_100k_ms": 1200,
+        "sweep_1000_ms": 2800
+      }
+    },
+    {
+      "name": "operator",
+      "label": "L&W Operator Dashboard",
+      "url": "http://localhost:5174",
+      "mode": "static",
+      "timestamp": "2026-05-18T14:50:20.336Z",
+      "inputs": {
+        "htmlBytes": 1574,
+        "cssBytes": 11770,
+        "jsBytes": 3632,
+        "domNodes": 25,
+        "renderBlocking": 1
+      },
+      "metrics": {
+        "fcp_ms": 241,
+        "lcp_ms": 338,
+        "tti_ms": 341,
+        "cls": 0.02,
+        "tbt_ms": 1,
+        "bundle_bytes": 3632,
+        "bundle_kb_gzip": 1.06,
+        "dom_nodes": 25,
+        "render_blocking": 1
+      },
+      "score": 100
+    },
+    {
+      "name": "regulator",
+      "label": "Regulator Portal",
+      "url": "http://localhost:5175",
+      "mode": "static",
+      "timestamp": "2026-05-18T14:50:20.336Z",
+      "inputs": {
+        "htmlBytes": 1327,
+        "cssBytes": 9027,
+        "jsBytes": 2786,
+        "domNodes": 23,
+        "renderBlocking": 1
+      },
+      "metrics": {
+        "fcp_ms": 239,
+        "lcp_ms": 335,
+        "tti_ms": 337,
+        "cls": 0.02,
+        "tbt_ms": 1,
+        "bundle_bytes": 2786,
+        "bundle_kb_gzip": 0.82,
+        "dom_nodes": 23,
+        "render_blocking": 1
+      },
+      "score": 100
+    },
+    {
+      "name": "marketplace",
+      "label": "Math Marketplace",
+      "url": "http://localhost:5176",
+      "mode": "static",
+      "timestamp": "2026-05-18T14:50:20.336Z",
+      "inputs": {
+        "htmlBytes": 1300,
+        "cssBytes": 8326,
+        "jsBytes": 2306,
+        "domNodes": 22,
+        "renderBlocking": 1
+      },
+      "metrics": {
+        "fcp_ms": 238,
+        "lcp_ms": 334,
+        "tti_ms": 336,
+        "cls": 0.02,
+        "tbt_ms": 1,
+        "bundle_bytes": 2306,
+        "bundle_kb_gzip": 0.68,
+        "dom_nodes": 22,
+        "render_blocking": 1
+      },
+      "score": 100
+    },
+    {
+      "name": "production",
+      "label": "Production Stats",
+      "url": "http://localhost:8080",
+      "mode": "static",
+      "timestamp": "2026-05-18T14:50:20.336Z",
+      "inputs": {
+        "htmlBytes": 2182,
+        "cssBytes": 0,
+        "jsBytes": 2299,
+        "domNodes": 16,
+        "renderBlocking": 0
+      },
+      "metrics": {
+        "fcp_ms": 202,
+        "lcp_ms": 283,
+        "tti_ms": 285,
+        "cls": 0.02,
+        "tbt_ms": 1,
+        "bundle_bytes": 2299,
+        "bundle_kb_gzip": 0.67,
+        "dom_nodes": 16,
+        "render_blocking": 0
+      },
+      "score": 100
+    }
+  ]
+}

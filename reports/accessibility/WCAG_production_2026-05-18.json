@@ -1,0 +1,33 @@
+{
+  "name": "production",
+  "url": "http://localhost:8080",
+  "timestamp": "2026-05-18T14:50:20.512Z",
+  "counts": {
+    "Critical": 0,
+    "Serious": 0,
+    "Moderate": 0,
+    "Minor": 2,
+    "total": 2
+  },
+  "findings": {
+    "Critical": [],
+    "Serious": [],
+    "Moderate": [],
+    "Minor": [
+      {
+        "id": "no-banner-landmark",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.3.1 Info and Relationships",
+        "description": "No <header role=\"banner\"> landmark.",
+        "fix": "Add <header role=\"banner\"> wrapping nav/logo."
+      },
+      {
+        "id": "no-skip-link",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 2.4.1 Bypass Blocks",
+        "description": "No \"skip to main content\" link detected.",
+        "fix": "Add <a class=\"skip\" href=\"#main\">Skip to content</a> as first focusable element."
+      }
+    ]
+  }
+}

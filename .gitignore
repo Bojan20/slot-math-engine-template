@@ -83,3 +83,12 @@ web/marketplace/package-lock.json
 web/cabinet/node_modules/
 sdk/node_modules/
 sdk/dist/
+
+# ─── W204-PROTOCOLS — HSM ed25519 keypair (generated on first boot) ─────
+server/data/hsm-keys.json
+
+# ─── CORTI W204-AUDIT — large screenshot artifacts ─────────────
+# Live-mode browser-compat captures one PNG per app × browser; ignore them
+# from git noise. The JSON + MD reports under reports/browser-compat/ are
+# the source-of-truth deliverables and stay tracked.
+reports/browser-compat/*.png

@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "quick-hit-platinum-phoenix",
+    "name": "Quick Hit Platinum Phoenix",
+    "version": "1.0.0",
+    "description": "CORTI W204 production-grade pilot — Quick Hit reel-bound mystery base, Free Spins with retrigger and global multiplier, Hold & Win with 4-tier jackpot (Mini / Minor / Major / Grand). Phoenix theme.",
+    "theme_tags": [
+      "pilot",
+      "phoenix",
+      "quick-hit",
+      "mystery",
+      "free-spins",
+      "hold-and-win",
+      "jackpot",
+      "production"
+    ],
+    "author": "CORTI W204-PILOT",
+    "created_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 3
+  },
+  "symbols": [
+    { "id": "HP1", "name": "Phoenix",        "kind": "hp" },
+    { "id": "HP2", "name": "Sun",            "kind": "hp" },
+    { "id": "HP3", "name": "Wheel of Fire",  "kind": "hp" },
+    { "id": "HP4", "name": "Lava",           "kind": "hp" },
+    { "id": "MP1", "name": "Coin",           "kind": "lp" },
+    { "id": "MP2", "name": "Star",           "kind": "lp" },
+    { "id": "MP3", "name": "Bell",           "kind": "lp" },
+    { "id": "MP4", "name": "Lucky 7",        "kind": "lp" },
+    { "id": "LP1", "name": "Nine",           "kind": "lp" },
+    { "id": "LP2", "name": "Ten",            "kind": "lp" },
+    { "id": "LP3", "name": "Jack",           "kind": "lp" },
+    { "id": "WLD", "name": "Wild",           "kind": "wild", "substitutes": "*" },
+    { "id": "SCT", "name": "Phoenix Egg",    "kind": "scatter" },
+    { "id": "MLT", "name": "Multiplier",     "kind": "multiplier" },
+    { "id": "MYS", "name": "Mystery Flame",  "kind": "mystery" },
+    { "id": "BON", "name": "Phoenix Orb",    "kind": "bonus" }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 9, "LP2": 9, "LP3": 9, "WLD": 1, "SCT": 1, "MLT": 1, "MYS": 1, "BON": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 9, "LP2": 9, "LP3": 9, "WLD": 1, "SCT": 1, "MLT": 1, "MYS": 1, "BON": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 9, "LP2": 9, "LP3": 9, "WLD": 1, "SCT": 1, "MLT": 1, "MYS": 1, "BON": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 9, "LP2": 9, "LP3": 9, "WLD": 1, "SCT": 1, "MLT": 1, "MYS": 1, "BON": 1 },
+      { "HP1": 1, "HP2": 2, "HP3": 2, "HP4": 3, "MP1": 4, "MP2": 4, "MP3": 5, "MP4": 5, "LP1": 9, "LP2": 9, "LP3": 9, "WLD": 1, "SCT": 1, "MLT": 1, "MYS": 1, "BON": 1 }
+    ],
+    "free_spins": [
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 2, "MYS": 3, "BON": 1 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 2, "MYS": 3, "BON": 1 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 2, "MYS": 3, "BON": 1 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 2, "MYS": 3, "BON": 1 },
+      { "HP1": 2, "HP2": 3, "HP3": 3, "HP4": 4, "MP1": 5, "MP2": 5, "MP3": 5, "MP4": 5, "LP1": 6, "LP2": 6, "LP3": 6, "WLD": 2, "SCT": 1, "MLT": 2, "MYS": 3, "BON": 1 }
+    ]
+  },
+  "evaluation": {
+    "kind": "lines",
+    "paylines": [
+      [1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0],
+      [2, 2, 2, 2, 2],
+      [0, 1, 2, 1, 0],
+      [2, 1, 0, 1, 2],
+      [0, 0, 1, 2, 2],
+      [2, 2, 1, 0, 0],
+      [1, 0, 0, 0, 1],
+      [1, 2, 2, 2, 1],
+      [0, 1, 1, 1, 0],
+      [2, 1, 1, 1, 2],
+      [1, 0, 1, 2, 1],
+      [1, 2, 1, 0, 1],
+      [0, 0, 2, 0, 0],
+      [2, 2, 0, 2, 2],
+      [1, 1, 0, 1, 1],
+      [1, 1, 2, 1, 1],
+      [0, 2, 0, 2, 0],
+      [2, 0, 2, 0, 2],
+      [0, 1, 2, 2, 2],
+      [1, 0, 1, 1, 1],
+      [1, 1, 1, 0, 1],
+      [2, 1, 2, 1, 2],
+      [0, 1, 0, 1, 0],
+      [1, 2, 1, 2, 1]
+    ],
+    "direction": "ltr",
+    "min_match": 3,
+    "pay_left_to_right_only": true
+  },
+  "paytable": {
+    "HP1": { "3": 11.5, "4": 58, "5": 280 },
+    "HP2": { "3": 10,   "4": 48, "5": 230 },
+    "HP3": { "3": 8,    "4": 38, "5": 175 },
+    "HP4": { "3": 6.3,  "4": 30, "5": 135 },
+    "MP1": { "3": 2.5,  "4": 12, "5": 47 },
+    "MP2": { "3": 2.1,  "4": 9.5,"5": 38 },
+    "MP3": { "3": 1.7,  "4": 7.5,"5": 29 },
+    "MP4": { "3": 1.4,  "4": 6.3,"5": 25 },
+    "LP1": { "3": 0.85, "4": 3.1,"5": 12.5 },
+    "LP2": { "3": 0.75, "4": 2.7,"5": 10.5 },
+    "LP3": { "3": 0.65, "4": 2.25,"5": 8.5 }
+  },
+  "features": [
+    {
+      "kind": "mystery_symbol",
+      "symbol_id": "MYS",
+      "reveal_distribution": {
+        "HP1": 1,
+        "HP2": 1,
+        "HP3": 2,
+        "HP4": 2,
+        "MP1": 3,
+        "MP2": 3,
+        "MP3": 3,
+        "MP4": 3,
+        "LP1": 4,
+        "LP2": 4,
+        "LP3": 4
+      }
+    },
+    {
+      "kind": "free_spins",
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 10, "4": 15, "5": 25 }
+      },
+      "retrigger": {
+        "by": "scatter_count",
+        "thresholds": { "3": 5, "4": 10, "5": 15 },
+        "max_total": 50
+      },
+      "global_multiplier": 2,
+      "modifiers": ["multiplier_ladder", "mystery_symbol"]
+    },
+    {
+      "kind": "hold_and_win",
+      "trigger": {
+        "by": "special_count",
+        "thresholds": { "6": 1 }
+      },
+      "respins_initial": 3,
+      "respin_reset_on_new": true,
+      "cash_value_distribution": [
+        { "value": 1,    "weight": 40 },
+        { "value": 2,    "weight": 25 },
+        { "value": 5,    "weight": 15 },
+        { "value": 10,   "weight": 10 },
+        { "value": 25,   "weight": 6 },
+        { "value": 50,   "weight": 3 },
+        { "value": 100,  "weight": 1 }
+      ],
+      "jackpot_tiers": [
+        { "id": "Mini",  "multiplier": 25 },
+        { "id": "Minor", "multiplier": 100 },
+        { "id": "Major", "multiplier": 500 },
+        { "id": "Grand", "multiplier": 5000 }
+      ],
+      "grid_full_award": "Grand"
+    }
+  ],
+  "rng": {
+    "kind": "mulberry32",
+    "default_seed": 20260518
+  },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1,
+    "denominations": [0.1, 0.2, 0.5, 1, 2, 5]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.005,
+    "max_win_x": 5000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.28
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "eCOGRA", "ADM", "DGA"],
+    "rtp_range_required": [0.88, 0.99],
+    "max_win_cap_required": 10000,
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true
+  },
+  "rtp_allocation": {
+    "base_game": 0.53,
+    "free_spins": 0.24,
+    "hold_and_win": 0.14,
+    "jackpot": 0.05,
+    "tolerance": 0.01
+  },
+  "pilot_metadata": {
+    "pilot_id": "PILOT-QHP-PHOENIX-W204",
+    "stated_rtp": 0.96,
+    "max_win_x": 5000,
+    "volatility": "HIGH",
+    "lines": 25,
+    "grid": "5x3",
+    "jackpot_tiers": 4,
+    "audio_theme": "phoenix",
+    "asset_pack": "web/studio/pilots/quick-hit-platinum-phoenix/symbols/"
+  }
+}

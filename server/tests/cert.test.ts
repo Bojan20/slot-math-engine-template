@@ -26,7 +26,7 @@ describe('Cert API', () => {
     expect(res.statusCode).toBe(201);
     const body = res.json();
     expect(body.submissionId).toMatch(/^cert-/);
-    expect(body.status).toBe('completed'); // mock auto-advances
+    expect(body.status).toBe('completed');
     expect(body.irSha256).toHaveLength(64);
   });
 

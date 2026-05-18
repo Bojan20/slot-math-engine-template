@@ -3912,3 +3912,10 @@ b.fail { color: var(--rose); }
   color: var(--text-1);
 }
 .math-notebook-scope .scope-pair b { color: var(--cyan); }
+
+/* ============================================================
+   CORTI W204-AUDIT — WCAG 2.1 AA fixes (additive only)
+   ============================================================ */
+/* 1.4.3 Contrast (Minimum): bump --text-2 from 2.86:1 to ≥ 3:1 on bg-2.
+   Old: #5C6470 (luminance ~0.105). New: #8A92A0 lifts to ~4.6:1. */
+:root { --text-2: #8A92A0; }

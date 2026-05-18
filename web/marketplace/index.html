@@ -7,22 +7,23 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="mp-app">
-  <header class="mp-header">
+  <a class="skip-link" href="#mp-main">Skip to content</a>
+  <header class="mp-header" role="banner">
     <div class="brand">
-      <span class="brand-mark"></span>
-      <span class="brand-name">Math Marketplace<span class="brand-v">v1</span></span>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h1 class="brand-name" style="font-size:14px;font-weight:600;margin:0;">Math Marketplace<span class="brand-v">v1</span></h1>
     </div>
-    <nav class="mp-nav" id="mp-nav">
-      <button class="nav-btn is-active" data-mode="browse">Browse</button>
+    <nav class="mp-nav" id="mp-nav" aria-label="Primary">
+      <button class="nav-btn is-active" data-mode="browse" aria-current="page">Browse</button>
       <button class="nav-btn" data-mode="author">Author Mode</button>
     </nav>
     <div class="mp-meta">
-      <span class="env-pill" id="mp-listing-count">0 listings</span>
-      <span class="user-pill" title="bojan.petkovic25@gmail.com">B</span>
+      <span class="env-pill" id="mp-listing-count" aria-live="polite">0 listings</span>
+      <span class="user-pill" title="bojan.petkovic25@gmail.com" aria-label="Signed in as bojan.petkovic25@gmail.com">B</span>
     </div>
   </header>
 
-  <main id="mp-main" class="mp-main"></main>
+  <main id="mp-main" class="mp-main" role="main" tabindex="-1"></main>
   <div id="mp-toast" class="mp-toast" aria-live="polite"></div>
 
   <script type="module" src="/src/main.ts"></script>

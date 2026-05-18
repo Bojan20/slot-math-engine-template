@@ -145,3 +145,67 @@ jobs:
       - run: cd web/studio && npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run studio:e2e
+
+  audit:
+    # CORTI W204-AUDIT — performance + WCAG + browser-compat hardening evidence.
+    # Static mode runs without launching browsers. Fails the build if the
+    # Studio Lighthouse-style score drops below 70 or any app shows
+    # Critical/Serious WCAG findings.
+    name: Audit · perf + a11y + browser-compat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Performance audit (static)
+        run: npm run perf:audit
+      - name: Accessibility audit (static)
+        run: npm run a11y:audit
+      - name: Browser-compat audit (static)
+        run: npm run browser:audit
+      - name: Gate on Studio perf score ≥ 70
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const dir = path.join('reports', 'performance');
+            const file = fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().pop();
+            const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+            const studio = data.results.find(r => r.name === 'studio');
+            if (!studio || studio.score < 70) {
+              console.error('FAIL: studio score', studio?.score, '< 70');
+              process.exit(1);
+            }
+            console.log('OK: studio score', studio.score);
+          "
+      - name: Gate on 0 Critical/Serious WCAG findings
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const dir = path.join('reports', 'accessibility');
+            const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
+            let bad = 0;
+            for (const f of files) {
+              const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+              if (d.counts.Critical > 0 || d.counts.Serious > 0) {
+                console.error('FAIL:', f, 'C=' + d.counts.Critical, 'S=' + d.counts.Serious);
+                bad++;
+              }
+            }
+            if (bad > 0) process.exit(1);
+            console.log('OK: all apps have 0 Critical/Serious findings');
+          "
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-reports
+          path: |
+            reports/performance/
+            reports/accessibility/
+            reports/browser-compat/
+          retention-days: 30

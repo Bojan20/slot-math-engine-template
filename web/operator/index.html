@@ -7,25 +7,26 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="operator-app">
-  <header class="op-header">
+  <a class="skip-link" href="#op-main">Skip to content</a>
+  <header class="op-header" role="banner">
     <div class="brand">
-      <span class="brand-mark"></span>
-      <span class="brand-name">L&amp;W Operator<span class="brand-v">v1</span></span>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h1 class="brand-name" style="font-size:14px;font-weight:600;margin:0;">L&amp;W Operator<span class="brand-v">v1</span></h1>
     </div>
-    <nav class="op-nav" id="op-nav">
-      <button class="nav-btn is-active" data-section="library">Game Library</button>
+    <nav class="op-nav" id="op-nav" aria-label="Primary">
+      <button class="nav-btn is-active" data-section="library" aria-current="page">Game Library</button>
       <button class="nav-btn" data-section="rtp">RTP Monitoring</button>
       <button class="nav-btn" data-section="ab">A/B Testing</button>
       <button class="nav-btn" data-section="subs">Submissions</button>
       <button class="nav-btn" data-section="compliance">Compliance</button>
     </nav>
     <div class="op-meta">
-      <span class="env-pill">PROD · 15 jurisdictions</span>
-      <span class="user-pill" title="bojan.petkovic25@gmail.com">B</span>
+      <span class="env-pill" aria-label="Environment: production, 15 jurisdictions">PROD · 15 jurisdictions</span>
+      <span class="user-pill" title="bojan.petkovic25@gmail.com" aria-label="Signed in as bojan.petkovic25@gmail.com">B</span>
     </div>
   </header>
 
-  <main id="op-main" class="op-main"></main>
+  <main id="op-main" class="op-main" role="main" tabindex="-1"></main>
 
   <div id="op-toast" class="op-toast" aria-live="polite"></div>
 

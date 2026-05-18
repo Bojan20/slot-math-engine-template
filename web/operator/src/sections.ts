@@ -149,14 +149,120 @@ function makeGameDetail(g: OperatorGame, state: AppState, toast: (m: string, k?:
 }
 
 // ───── Section 2: RTP Monitoring ─────
+// W204-PROTOCOLS — adds an optional Live Mode that streams spin events
+// from the GaaS WebSocket and shows a rolling RTP for the top 3 live
+// games. The "🟢 LIVE" indicator lights up while the socket is open.
+interface LiveAggregate {
+  spins: number;
+  bet: number;
+  win: number;
+  recentRtp: number[]; // rolling per-spin RTP samples
+}
+let liveSocket: WebSocket | null = null;
+const liveAgg = new Map<string, LiveAggregate>();
+let liveIndicatorEl: HTMLElement | null = null;
+let liveStripEl: HTMLElement | null = null;
+
+function disconnectLive(): void {
+  try { liveSocket?.close(); } catch { /* ignore */ }
+  liveSocket = null;
+  liveAgg.clear();
+  if (liveIndicatorEl) {
+    liveIndicatorEl.textContent = 'OFFLINE';
+    liveIndicatorEl.className = 'live-indicator is-off';
+  }
+}
+
+function connectLive(targetGameIds: string[]): void {
+  if (typeof window === 'undefined' || typeof WebSocket === 'undefined') return;
+  if (liveSocket) return;
+  const apiBase = (window as { __OPERATOR_API__?: string }).__OPERATOR_API__ ?? 'ws://localhost:4000';
+  const url = apiBase.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:') + '/api/gaas/live';
+  let ws: WebSocket;
+  try { ws = new WebSocket(url); } catch { return; }
+  liveSocket = ws;
+  ws.onopen = () => {
+    if (liveIndicatorEl) {
+      liveIndicatorEl.textContent = '\u{1F7E2} LIVE';
+      liveIndicatorEl.className = 'live-indicator is-on';
+    }
+    ws.send(JSON.stringify({ type: 'subscribe', sessionIds: targetGameIds }));
+  };
+  ws.onmessage = (ev) => {
+    let msg: { type?: string; gameId?: string; balance?: number; win?: number };
+    try { msg = JSON.parse(typeof ev.data === 'string' ? ev.data : String(ev.data)); }
+    catch { return; }
+    if (!msg || msg.type !== 'spin' || !msg.gameId) return;
+    const id = msg.gameId;
+    const agg = liveAgg.get(id) ?? { spins: 0, bet: 0, win: 0, recentRtp: [] };
+    const bet = 1; // bet is opaque server-side; we approximate per-spin bet=1.
+    const win = typeof msg.win === 'number' ? msg.win : 0;
+    agg.spins += 1;
+    agg.bet += bet;
+    agg.win += win;
+    agg.recentRtp.push(win / bet);
+    if (agg.recentRtp.length > 100) agg.recentRtp.shift();
+    liveAgg.set(id, agg);
+    renderLiveStrip();
+  };
+  ws.onclose = () => { disconnectLive(); };
+  ws.onerror = () => { /* error pre-open already triggers close */ };
+}
+
+function renderLiveStrip(): void {
+  if (!liveStripEl) return;
+  const rows = Array.from(liveAgg.entries()).map(([gid, a]) => {
+    const liveRtp = a.bet > 0 ? a.win / a.bet : 0;
+    return `<div class="live-row"><b class="mono">${gid}</b><span class="mono">${a.spins} spins</span><span class="mono">RTP ${(liveRtp * 100).toFixed(2)}%</span></div>`;
+  });
+  liveStripEl.innerHTML = rows.length
+    ? rows.join('')
+    : '<div class="muted">Waiting for spin events…</div>';
+}
+
 export function renderRtp(host: HTMLElement, state: AppState): void {
   clear(host);
-  host.appendChild(el('div', { className: 'section-head' }, [
+
+  // ── Section head with Live Mode toggle ────────────────────────
+  const head = el('div', { className: 'section-head' }, [
     el('div', {}, [
       el('h1', {}, ['RTP Monitoring']),
       el('div', { className: 'crumb' }, ['Hourly RTP for the last 24h · anomaly threshold ±2.0pp']),
     ]),
-  ]));
+  ]);
+  const liveBox = el('div', { className: 'actions' });
+  const indicator = el('span', { className: `live-indicator ${liveSocket ? 'is-on' : 'is-off'}` }, [
+    liveSocket ? '\u{1F7E2} LIVE' : 'OFFLINE',
+  ]);
+  liveIndicatorEl = indicator;
+  const toggle = el('button', { className: `btn ${liveSocket ? 'warn' : 'primary'}` }, [
+    liveSocket ? 'Disconnect Live' : 'Enable Live Mode',
+  ]) as HTMLButtonElement;
+  toggle.addEventListener('click', () => {
+    if (liveSocket) {
+      disconnectLive();
+    } else {
+      const topGameIds = state.games
+        .filter((g) => g.status === 'live')
+        .slice(0, 3)
+        .map((g) => g.gameId);
+      connectLive(topGameIds);
+    }
+    // Force a re-render of the toggle button + indicator label without
+    // a full app rerender — operator dashboard owns the strip's state.
+    toggle.textContent = liveSocket ? 'Disconnect Live' : 'Enable Live Mode';
+    toggle.className = `btn ${liveSocket ? 'warn' : 'primary'}`;
+  });
+  liveBox.appendChild(indicator);
+  liveBox.appendChild(toggle);
+  head.appendChild(liveBox);
+  host.appendChild(head);
+
+  // Strip placeholder — populated by message handler.
+  const strip = el('div', { className: 'live-strip' });
+  liveStripEl = strip;
+  renderLiveStrip();
+  host.appendChild(strip);
 
   const liveGames = state.games.filter((g) => g.status === 'live');
   const cards = el('div', { className: 'rtp-charts' });

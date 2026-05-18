@@ -1,0 +1,96 @@
+{
+  "name": "studio",
+  "url": "http://localhost:5173",
+  "timestamp": "2026-05-18T14:50:20.510Z",
+  "counts": {
+    "Critical": 0,
+    "Serious": 0,
+    "Moderate": 0,
+    "Minor": 11,
+    "total": 11
+  },
+  "findings": {
+    "Critical": [],
+    "Serious": [],
+    "Moderate": [],
+    "Minor": [
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fi...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"sweep-chart\" viewBox=\"0 0 400 200\" preserveAspec...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"sweep-chart\" viewBox=\"0 0 400 200\" preserveAspec...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"rail-gauge\" viewBox=\"0 0 200 110\" preserveAspect...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      },
+      {
+        "id": "svg-no-aria",
+        "severity": "Minor",
+        "rule": "WCAG 2.1 1.1.1 Non-text Content",
+        "description": "<svg> has no aria-hidden / aria-label / role: <svg class=\"rail-spark\" viewBox=\"0 0 200 40\" preserveAspectR...",
+        "fix": "Add aria-hidden=\"true\" for decorative icons or aria-label for meaningful ones."
+      }
+    ]
+  }
+}

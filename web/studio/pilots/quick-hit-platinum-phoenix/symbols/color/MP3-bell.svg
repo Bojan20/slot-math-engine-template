@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bell-grad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFF59D"/>
+      <stop offset="60%" stop-color="#FFB300"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 8 C 22 8, 16 18, 16 32 L 16 44 L 48 44 L 48 32 C 48 18, 42 8, 32 8 Z" fill="url(#bell-grad)" stroke="#7C5200" stroke-width="2"/>
+  <rect x="14" y="44" width="36" height="4" fill="#B8860B" stroke="#7C5200" stroke-width="1.5"/>
+  <circle cx="32" cy="52" r="4" fill="#B8860B" stroke="#7C5200" stroke-width="1.5"/>
+  <circle cx="32" cy="6" r="3" fill="#7C5200"/>
+  <path d="M22 16 C 24 14, 26 13, 28 13" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+</svg>
