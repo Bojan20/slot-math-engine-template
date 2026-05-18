@@ -156,10 +156,10 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 78 | Cash Express Gold Class series (Luxury Line) | LNW (Bally) | 2018+ | A (cash collector + mystery-cash values) + B (5-tier MMMG+G) + sticky symbols | P-002 ✅ + P-035 ✅ + P-051 ✅ + P-024 ✅ | NO | n/a |
 | 79 | Rich Little Piggies Hog Wild | LNW (Bally) | 2022 | A (sticky money symbol H&S) + B (4-tier MMMG) + H (FS) | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
 | 80 | Rich Little Piggies Meal Ticket | LNW (Bally) | 2023 | as #79 + Meal Ticket persistent meter | + P-067 ✅ | NO | n/a |
-| 81 | Rich Little Piggies Piggy Bankin' Break In | LNW (Bally) | 2024 | A (3-pot enhanced H&S — Instant Win / Double Play / Repeat Win each a sub-mode) + B + **M: branched H&S sub-mode selection** | P-002 ✅ + P-035 ✅ + ❌ **multi-pot branched H&S sub-feature selection** (each pot triggers structurally different sub-game) | YES (M15) | P1 |
+| 81 | Rich Little Piggies Piggy Bankin' Break In | LNW (Bally) | 2024 | A (3-pot enhanced H&S — Instant Win / Double Play / Repeat Win each a sub-mode) + B + **M: branched H&S sub-mode selection** | P-002 ✅ + P-035 ✅ + P-094 ✅ (multi-pot branched H&S sub-feature W193) | ✅ **CLOSED (M15 W193)** | P1 |
 | 82 | Rich Little Sheep – Wool Street Riches | LNW (Bally) | 2025 | as Hog Wild variant | as #79 | NO | n/a |
-| 83 | Rich Little Piggies World Class | LNW (Bally) | 2025 | as #81 + class-tier escalation | as #81 | YES (M15) | P2 |
-| 84 | Rich Little Hens World Class | LNW (Bally) | 2025 | as #81 | as #81 | YES (M15) | P2 |
+| 83 | Rich Little Piggies World Class | LNW (Bally) | 2025 | as #81 + class-tier escalation | as #81 | ✅ **CLOSED (M15 W193)** | P2 |
+| 84 | Rich Little Hens World Class | LNW (Bally) | 2025 | as #81 | as #81 | ✅ **CLOSED (M15 W193)** | P2 |
 | 85 | EggLink series (multiple) | LNW (Bally) | 2024–2025 | A (egg collect H&S) + B + H | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
 | 86 | Thundering series (Thundering Bison, Thundering Buffalo, Thundering Gorilla) | LNW (Lightning Box) | 2018–2024 | G4 (243/1024 ways) + H (FS retrigger) + G (stacked wilds) + occasional Stellar Jackpots arcade | P-049 ✅ + P-037 ✅ + P-005 ✅ + ❌ **arcade-shooter side bonus** (Stellar Jackpots: shoot-through 6 challenge levels) | YES (M16) | P1 |
 | 87 | Astro Pug | LNW (Lightning Box) | 2018 | G2 (Reelfecta 8 reels, 1296 ways, asymmetric reel heights 3-3-4-4-4-4-3-3) + H + G (multiplier wild) | P-049 ✅ + P-018 ✅ (asymmetric) + P-017 ✅ | NO | n/a |
@@ -257,9 +257,10 @@ Mid-spin the entire reel set may be replaced by a different reel set (Glinda the
 Bonus stage contains its own slot-spin with separate reel set, paytable, and variance which then contributes to parent bonus. P-047 (pick tree) does not model sub-spinner. Requires compositional kernel: parent stage E[Y] = pick-stage E[X] + nested-slot E[Y_inner]; variance composes via law of total variance.
 **Resolution:** W190 ships `src/features/nestedMiniSlotInsideBonus.ts` — hierarchical parent-child composition. **E[Z per outer] = μ_O + p_N·N_I·μ_I**. Var via law of total variance (single + two-level Bernoulli mass). **E[Y/parent] = p_B·K_O·E[Z]**. 34 vitest specs PASS. Acceptance 6/6 PASS @ 300K MC parent-spins (LOTR Two Towers + Return of the King + Star Trek + 3 corners).
 
-### M15 — Multi-pot branched H&S sub-feature selection
-**Example:** Rich Little Piggies Piggy Bankin' Break In (3 pots: Instant Win, Double Play, Repeat Win each triggering structurally distinct sub-game).
+### M15 — Multi-pot branched H&S sub-feature selection — ✅ **CLOSED in W193** (P-094)
+**Example:** LNW Bally Rich Little Piggies Piggy Bankin' Break In (2024 defining title, 3 pots: Instant Win, Double Play, Repeat Win — each triggering structurally distinct sub-game) + Rich Little Piggies World Class (2025, 4-tier escalation) + Rich Little Hens World Class (2025).
 Standard H&S grid + a **branched H&S** where each filled pot triggers a different sub-feature with its own math model. Requires compound-tree H&S where pot outcomes have heterogeneous payout distributions (not just different prize values).
+**Resolution:** W193 ships `src/features/multiPotBranchedHoldSpinSubFeature.ts` — trigger-gated categorical sub-mode mixture sa law of total variance: T ~ Bernoulli(p_trigger), if T=1 K ~ Categorical(p_1..p_M), per-pot V_k iid sa distinct (μ_k, σ²_k). **E[V|trig] = Σ p_k·μ_k**, **Var[V|trig] = Σ p_k·(σ²_k+μ²_k) − E[V]²**. **E[Y/spin] = p_T·E[V|trig]**, Var via law of total variance on trigger. Per-pot disclosure UKGC RTS-14: contributionShareOfBonus + oneInNTriggersForPot + rankByMeanPayout + isBestPot. jackpotPotShare + bonusVariabilityIndex (σ/μ) + mixtureVarianceLift (cross-pot diversity index). 35 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (Piggy Bankin' Break In 3-pot best=repeat_win 54.1% share + World Class 4-tier Mini/Minor/Major/Grand grand 68.5% share mixVarLift=90.66 + Hens variant + 3 corners). UKGC RTS-14 mandatory per-pot RTP contribution disclosure paper trail complete.
 
 ### M16 — Arcade-shooter side bonus (probabilistic level progression)
 **Example:** Stellar Jackpots wrapper (Lightning Box) — Thundering Bison, Chicken Fox, Lightning Horseman.

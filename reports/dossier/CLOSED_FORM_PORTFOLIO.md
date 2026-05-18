@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T01:37:27.881Z`
+Generated: `2026-05-18T01:45:33.765Z`
 
 ## Headline
 
-**73/73 solvers PASS** in single end-to-end runner.
+**74/74 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -86,6 +86,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 190 | Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14) | E[Y/parent] | 1.80000 | 1.85044 | ✅ |
 | 191 | Bonus Bank Running-Balance Offset (L&W RR Megaways M10) | E[T_B] | 40.12500 | 40.01575 | ✅ |
 | 192 | Race Competitive Pick Winner (L&W Goldfish Race M8) | bestRtp | 10.00000 | 10.05400 | ✅ |
+| 193 | Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15) | E[Y/spin] | 2.66000 | 2.63717 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

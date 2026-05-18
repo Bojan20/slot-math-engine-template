@@ -1,0 +1,640 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE",
+  "generated_utc": "2026-05-18T01:45:21.546Z",
+  "spins_per_config": 100000,
+  "seed": 3405644179,
+  "tolerances": {
+    "payout_rel": 0.07,
+    "trigger_abs": 0.01,
+    "bonus_rel": 0.08,
+    "pot_prob_abs": 0.03
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_piggy_bankin_break_in_3_pot",
+      "description": "LNW Bally Rich Little Piggies Piggy Bankin' Break In (2024 defining title) — 3-pot branched H&S (Instant Win / Double Play / Repeat Win).",
+      "cfg": {
+        "probTrigger": 0.04,
+        "pots": [
+          {
+            "label": "instant_win",
+            "selectionWeight": 5,
+            "meanPayout": 25,
+            "variancePayout": 16
+          },
+          {
+            "label": "double_play",
+            "selectionWeight": 3,
+            "meanPayout": 60,
+            "variancePayout": 100
+          },
+          {
+            "label": "repeat_win",
+            "selectionWeight": 2,
+            "meanPayout": 180,
+            "variancePayout": 900
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 3,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "instant_win",
+            "selectionProb": 0.5,
+            "meanPayout": 25,
+            "variancePayout": 16,
+            "contributionShareOfBonus": 0.18796992481203006,
+            "oneInNTriggersForPot": 2,
+            "rankByMeanPayout": 3,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "double_play",
+            "selectionProb": 0.3,
+            "meanPayout": 60,
+            "variancePayout": 100,
+            "contributionShareOfBonus": 0.2706766917293233,
+            "oneInNTriggersForPot": 3.3333333333333335,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 2,
+            "label": "repeat_win",
+            "selectionProb": 0.2,
+            "meanPayout": 180,
+            "variancePayout": 900,
+            "contributionShareOfBonus": 0.5413533834586466,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 66.5,
+        "variancePayoutGivenTrigger": 3668.25,
+        "stdDevPayoutGivenTrigger": 60.5660796155736,
+        "expectedPayoutPerSpin": 2.66,
+        "variancePayoutPerSpin": 316.5444,
+        "stdDevPayoutPerSpin": 17.79169469162508,
+        "bestPotIndex": 2,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.5413533834586466,
+        "bonusVariabilityIndex": 0.9107681145199038,
+        "oneInNSpinsAnyTrigger": 25,
+        "oneInNSpinsTopPotTrigger": 125,
+        "mixtureVarianceLift": 16.826834862385322
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 2.755868739255523,
+        "stdDevPayoutPerSpin": 18.203491810139234,
+        "observedTriggerRate": 0.04085,
+        "meanPayoutGivenTrigger": 67.46312703195895,
+        "observedPotSelectionRates": [
+          0.48886168910648714,
+          0.3055079559363525,
+          0.20563035495716034
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.034787120986546356,
+        "trigger_abs": 0.0008499999999999966,
+        "bonus_rel": 0.014276347307510524,
+        "max_pot_prob_abs": 0.01113831089351286
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_rich_piggies_world_class_4_tier_jackpot",
+      "description": "LNW Bally Rich Little Piggies World Class (2025) — class-tier escalation Mini/Minor/Major/Grand.",
+      "cfg": {
+        "probTrigger": 0.03,
+        "pots": [
+          {
+            "label": "mini",
+            "selectionWeight": 50,
+            "meanPayout": 20,
+            "variancePayout": 9
+          },
+          {
+            "label": "minor",
+            "selectionWeight": 30,
+            "meanPayout": 100,
+            "variancePayout": 100
+          },
+          {
+            "label": "major",
+            "selectionWeight": 15,
+            "meanPayout": 500,
+            "variancePayout": 2500
+          },
+          {
+            "label": "grand",
+            "selectionWeight": 5,
+            "meanPayout": 5000,
+            "variancePayout": 250000
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 4,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "mini",
+            "selectionProb": 0.5,
+            "meanPayout": 20,
+            "variancePayout": 9,
+            "contributionShareOfBonus": 0.0273972602739726,
+            "oneInNTriggersForPot": 2,
+            "rankByMeanPayout": 4,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "minor",
+            "selectionProb": 0.3,
+            "meanPayout": 100,
+            "variancePayout": 100,
+            "contributionShareOfBonus": 0.0821917808219178,
+            "oneInNTriggersForPot": 3.3333333333333335,
+            "rankByMeanPayout": 3,
+            "isBestPot": false
+          },
+          {
+            "index": 2,
+            "label": "major",
+            "selectionProb": 0.15,
+            "meanPayout": 500,
+            "variancePayout": 2500,
+            "contributionShareOfBonus": 0.2054794520547945,
+            "oneInNTriggersForPot": 6.666666666666667,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 3,
+            "label": "grand",
+            "selectionProb": 0.05,
+            "meanPayout": 5000,
+            "variancePayout": 250000,
+            "contributionShareOfBonus": 0.684931506849315,
+            "oneInNTriggersForPot": 20,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 365,
+        "variancePayoutGivenTrigger": 1170384.5,
+        "stdDevPayoutGivenTrigger": 1081.8431032270807,
+        "expectedPayoutPerSpin": 10.95,
+        "variancePayoutPerSpin": 38988.38249999999,
+        "stdDevPayoutPerSpin": 197.4547606415201,
+        "bestPotIndex": 3,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.684931506849315,
+        "bonusVariabilityIndex": 2.963953707471454,
+        "oneInNSpinsAnyTrigger": 33.333333333333336,
+        "oneInNSpinsTopPotTrigger": 666.6666666666666,
+        "mixtureVarianceLift": 90.66071497734227
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 11.075181336931925,
+        "stdDevPayoutPerSpin": 196.97040569843713,
+        "observedTriggerRate": 0.03061,
+        "meanPayoutGivenTrigger": 361.81579016438826,
+        "observedPotSelectionRates": [
+          0.4988565828160732,
+          0.2976151584449526,
+          0.15419797451813133,
+          0.04933028422084286
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.011302870185473957,
+        "trigger_abs": 0.0006099999999999994,
+        "bonus_rel": 0.008723862563319832,
+        "max_pot_prob_abs": 0.004197974518131337
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_rich_hens_world_class_hen_variant",
+      "description": "LNW Bally Rich Little Hens World Class (2025) — hen variant sa modified prize ladder.",
+      "cfg": {
+        "probTrigger": 0.035,
+        "pots": [
+          {
+            "label": "hen_basket",
+            "selectionWeight": 6,
+            "meanPayout": 30,
+            "variancePayout": 20
+          },
+          {
+            "label": "hen_coop",
+            "selectionWeight": 3,
+            "meanPayout": 120,
+            "variancePayout": 200
+          },
+          {
+            "label": "hen_grand",
+            "selectionWeight": 1,
+            "meanPayout": 1000,
+            "variancePayout": 40000
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 3,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "hen_basket",
+            "selectionProb": 0.6,
+            "meanPayout": 30,
+            "variancePayout": 20,
+            "contributionShareOfBonus": 0.11688311688311688,
+            "oneInNTriggersForPot": 1.6666666666666667,
+            "rankByMeanPayout": 3,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "hen_coop",
+            "selectionProb": 0.3,
+            "meanPayout": 120,
+            "variancePayout": 200,
+            "contributionShareOfBonus": 0.23376623376623376,
+            "oneInNTriggersForPot": 3.3333333333333335,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 2,
+            "label": "hen_grand",
+            "selectionProb": 0.1,
+            "meanPayout": 1000,
+            "variancePayout": 40000,
+            "contributionShareOfBonus": 0.6493506493506493,
+            "oneInNTriggersForPot": 10,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 154,
+        "variancePayoutGivenTrigger": 85216,
+        "stdDevPayoutGivenTrigger": 291.917796648303,
+        "expectedPayoutPerSpin": 5.390000000000001,
+        "variancePayoutPerSpin": 3783.5679000000005,
+        "stdDevPayoutPerSpin": 61.51071370094807,
+        "bestPotIndex": 2,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.6493506493506493,
+        "bonusVariabilityIndex": 1.8955701081058638,
+        "oneInNSpinsAnyTrigger": 28.57142857142857,
+        "oneInNSpinsTopPotTrigger": 285.71428571428567,
+        "mixtureVarianceLift": 20.927308447937133
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 5.489678810170377,
+        "stdDevPayoutPerSpin": 61.72485434049787,
+        "observedTriggerRate": 0.03569,
+        "meanPayoutGivenTrigger": 153.81560129365022,
+        "observedPotSelectionRates": [
+          0.5884001120762118,
+          0.31241244045951244,
+          0.09918744746427571
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.018157494020544063,
+        "trigger_abs": 0.0006899999999999962,
+        "bonus_rel": 0.0011973941970765069,
+        "max_pot_prob_abs": 0.012412440459512453
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "D_high_freq_low_jackpot_3_pot",
+      "description": "High-frequency trigger (10%) sa modest-payout 3-pot mix.",
+      "cfg": {
+        "probTrigger": 0.1,
+        "pots": [
+          {
+            "label": "small",
+            "selectionWeight": 7,
+            "meanPayout": 8,
+            "variancePayout": 4
+          },
+          {
+            "label": "medium",
+            "selectionWeight": 2,
+            "meanPayout": 30,
+            "variancePayout": 25
+          },
+          {
+            "label": "large",
+            "selectionWeight": 1,
+            "meanPayout": 80,
+            "variancePayout": 200
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 3,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "small",
+            "selectionProb": 0.7,
+            "meanPayout": 8,
+            "variancePayout": 4,
+            "contributionShareOfBonus": 0.2857142857142857,
+            "oneInNTriggersForPot": 1.4285714285714286,
+            "rankByMeanPayout": 3,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "medium",
+            "selectionProb": 0.2,
+            "meanPayout": 30,
+            "variancePayout": 25,
+            "contributionShareOfBonus": 0.3061224489795918,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 2,
+            "label": "large",
+            "selectionProb": 0.1,
+            "meanPayout": 80,
+            "variancePayout": 200,
+            "contributionShareOfBonus": 0.4081632653061224,
+            "oneInNTriggersForPot": 10,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 19.6,
+        "variancePayoutGivenTrigger": 508.43999999999994,
+        "stdDevPayoutGivenTrigger": 22.548614148102317,
+        "expectedPayoutPerSpin": 1.9600000000000002,
+        "variancePayoutPerSpin": 85.41839999999999,
+        "stdDevPayoutPerSpin": 9.24220752850746,
+        "bestPotIndex": 2,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.4081632653061224,
+        "bonusVariabilityIndex": 1.150439497352159,
+        "oneInNSpinsAnyTrigger": 10,
+        "oneInNSpinsTopPotTrigger": 99.99999999999999,
+        "mixtureVarianceLift": 18.289208633093523
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 1.9678736908362833,
+        "stdDevPayoutPerSpin": 9.19231193756716,
+        "observedTriggerRate": 0.10079,
+        "meanPayoutGivenTrigger": 19.52449341042051,
+        "observedPotSelectionRates": [
+          0.6962000198432384,
+          0.20696497668419486,
+          0.09683500347256672
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.004001115962344626,
+        "trigger_abs": 0.000789999999999999,
+        "bonus_rel": 0.003852377019361733,
+        "max_pot_prob_abs": 0.006964976684194851
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "E_corner_2_pot_binary_branch",
+      "description": "Corner: 2-pot binary branch (minimum M=2).",
+      "cfg": {
+        "probTrigger": 0.06,
+        "pots": [
+          {
+            "selectionWeight": 7,
+            "meanPayout": 15,
+            "variancePayout": 6
+          },
+          {
+            "selectionWeight": 3,
+            "meanPayout": 75,
+            "variancePayout": 150
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 2,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "pot_0",
+            "selectionProb": 0.7,
+            "meanPayout": 15,
+            "variancePayout": 6,
+            "contributionShareOfBonus": 0.3181818181818182,
+            "oneInNTriggersForPot": 1.4285714285714286,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "pot_1",
+            "selectionProb": 0.3,
+            "meanPayout": 75,
+            "variancePayout": 150,
+            "contributionShareOfBonus": 0.6818181818181818,
+            "oneInNTriggersForPot": 3.3333333333333335,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 33,
+        "variancePayoutGivenTrigger": 805.2,
+        "stdDevPayoutGivenTrigger": 28.376046236218322,
+        "expectedPayoutPerSpin": 1.98,
+        "variancePayoutPerSpin": 109.73159999999999,
+        "stdDevPayoutPerSpin": 10.475285198981457,
+        "bestPotIndex": 1,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.6818181818181818,
+        "bonusVariabilityIndex": 0.8598801889763128,
+        "oneInNSpinsAnyTrigger": 16.666666666666668,
+        "oneInNSpinsTopPotTrigger": 55.55555555555556,
+        "mixtureVarianceLift": 16.365853658536587
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 2.004899207385184,
+        "stdDevPayoutPerSpin": 10.552338457505714,
+        "observedTriggerRate": 0.06032,
+        "meanPayoutGivenTrigger": 33.237718955324674,
+        "observedPotSelectionRates": [
+          0.6951259946949602,
+          0.3048740053050398
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.012419181619438124,
+        "trigger_abs": 0.00032000000000000084,
+        "bonus_rel": 0.007152083921408547,
+        "max_pot_prob_abs": 0.004874005305039786
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_5_pot_uniform_progression",
+      "description": "Corner: 5-pot uniform-selection sa geometric prize progression (audit corner).",
+      "cfg": {
+        "probTrigger": 0.05,
+        "pots": [
+          {
+            "label": "p1",
+            "selectionWeight": 1,
+            "meanPayout": 10,
+            "variancePayout": 4
+          },
+          {
+            "label": "p2",
+            "selectionWeight": 1,
+            "meanPayout": 25,
+            "variancePayout": 16
+          },
+          {
+            "label": "p3",
+            "selectionWeight": 1,
+            "meanPayout": 60,
+            "variancePayout": 100
+          },
+          {
+            "label": "p4",
+            "selectionWeight": 1,
+            "meanPayout": 150,
+            "variancePayout": 500
+          },
+          {
+            "label": "p5",
+            "selectionWeight": 1,
+            "meanPayout": 400,
+            "variancePayout": 4000
+          }
+        ]
+      },
+      "closed_form": {
+        "numPots": 5,
+        "perPot": [
+          {
+            "index": 0,
+            "label": "p1",
+            "selectionProb": 0.2,
+            "meanPayout": 10,
+            "variancePayout": 4,
+            "contributionShareOfBonus": 0.015503875968992248,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 5,
+            "isBestPot": false
+          },
+          {
+            "index": 1,
+            "label": "p2",
+            "selectionProb": 0.2,
+            "meanPayout": 25,
+            "variancePayout": 16,
+            "contributionShareOfBonus": 0.03875968992248062,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 4,
+            "isBestPot": false
+          },
+          {
+            "index": 2,
+            "label": "p3",
+            "selectionProb": 0.2,
+            "meanPayout": 60,
+            "variancePayout": 100,
+            "contributionShareOfBonus": 0.09302325581395349,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 3,
+            "isBestPot": false
+          },
+          {
+            "index": 3,
+            "label": "p4",
+            "selectionProb": 0.2,
+            "meanPayout": 150,
+            "variancePayout": 500,
+            "contributionShareOfBonus": 0.23255813953488372,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 2,
+            "isBestPot": false
+          },
+          {
+            "index": 4,
+            "label": "p5",
+            "selectionProb": 0.2,
+            "meanPayout": 400,
+            "variancePayout": 4000,
+            "contributionShareOfBonus": 0.6201550387596899,
+            "oneInNTriggersForPot": 5,
+            "rankByMeanPayout": 1,
+            "isBestPot": true
+          }
+        ],
+        "expectedPayoutGivenTrigger": 129,
+        "variancePayoutGivenTrigger": 21648,
+        "stdDevPayoutGivenTrigger": 147.13259326199616,
+        "expectedPayoutPerSpin": 6.45,
+        "variancePayoutPerSpin": 1872.8475000000003,
+        "stdDevPayoutPerSpin": 43.276408122671185,
+        "bestPotIndex": 4,
+        "worstPotIndex": 0,
+        "jackpotPotShare": 0.6201550387596899,
+        "bonusVariabilityIndex": 1.1405627384650865,
+        "oneInNSpinsAnyTrigger": 20,
+        "oneInNSpinsTopPotTrigger": 99.99999999999999,
+        "mixtureVarianceLift": 23.428571428571427
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 6.634105177890738,
+        "stdDevPayoutPerSpin": 43.959064226216476,
+        "observedTriggerRate": 0.05082,
+        "meanPayoutGivenTrigger": 130.54122742799564,
+        "observedPotSelectionRates": [
+          0.19815033451397088,
+          0.20188902007083825,
+          0.19027941755214484,
+          0.20759543486816215,
+          0.2020857929948839
+        ],
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.02775132032942418,
+        "trigger_abs": 0.0008199999999999943,
+        "bonus_rel": 0.011806441982826855,
+        "max_pot_prob_abs": 0.009720582447855175
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    }
+  ]
+}

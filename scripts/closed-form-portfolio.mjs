@@ -1542,6 +1542,27 @@ async function main() {
     showcase.push({ wave: 192, solver: 'Race Competitive Pick Winner (L&W Goldfish Race M8)', metric: 'bestRtp', cf: cf.bestPickExpectedReturn, mc: mc.meanPayoutPerRace, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W193: Multi-Pot Branched H&S Sub-Feature (L&W M15 — Rich Little Piggies) ──
+  {
+    const { analyzeMultiPotBranchedHoldSpinSubFeature, simulateMultiPotBranchedHoldSpinSubFeature } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'multiPotBranchedHoldSpinSubFeature.js'));
+    const t0 = Date.now();
+    const cfg = {
+      probTrigger: 0.04,
+      pots: [
+        { label: 'instant_win', selectionWeight: 5, meanPayout: 25,  variancePayout: 16 },
+        { label: 'double_play', selectionWeight: 3, meanPayout: 60,  variancePayout: 100 },
+        { label: 'repeat_win',  selectionWeight: 2, meanPayout: 180, variancePayout: 900 },
+      ],
+    };
+    const cf = analyzeMultiPotBranchedHoldSpinSubFeature(cfg);
+    const mc = simulateMultiPotBranchedHoldSpinSubFeature(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
+      Math.max(mc.meanPayoutPerSpin, 1e-9);
+    const ok = rel < 0.10;
+    showcase.push({ wave: 193, solver: 'Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

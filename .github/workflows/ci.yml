@@ -270,3 +270,5 @@ jobs:
         run: npm run bonus-bank-running-balance-offset-acceptance
       - name: Race Competitive Pick Winner acceptance (6/6 configs × 50K races, Wave 192, 73. solver L&W M8 P1 GAP CLOSURE WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks fishing contest)
         run: npm run race-competitive-pick-winner-acceptance
+      - name: Multi-Pot Branched H&S Sub-Feature acceptance (6/6 configs × 100K spins, Wave 193, 74. solver L&W M15 P1 GAP CLOSURE Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
+        run: npm run multi-pot-branched-hold-spin-sub-feature-acceptance

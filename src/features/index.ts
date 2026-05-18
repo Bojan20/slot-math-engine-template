@@ -240,3 +240,6 @@ export * from './bonusBankRunningBalanceOffset.js';
 
 // W152 Wave 192: Race Competitive Pick Winner Aggregator (73. solver, L&W M8 P1 GAP CLOSURE — Goldfish Race for the Gold + Reel'em In Big Bass Bucks)
 export * from './raceCompetitivePickWinner.js';
+
+// W152 Wave 193: Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP CLOSURE — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
+export * from './multiPotBranchedHoldSpinSubFeature.js';

@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-18T01:37:27.881Z",
-  "solvers_total": 73,
-  "solvers_passed": 73,
+  "generated_utc": "2026-05-18T01:45:33.765Z",
+  "solvers_total": 74,
+  "solvers_passed": 74,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 49
     },
     {
       "wave": 50,
@@ -31,7 +31,7 @@
       "cf": 0.9500000000013147,
       "mc": 0.950963599998923,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 52,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 51
+      "elapsed_ms": 54
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 38
     },
     {
       "wave": 55,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 56,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 59,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 71
+      "elapsed_ms": 74
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 16
     },
     {
       "wave": 71,
@@ -148,7 +148,7 @@
       "cf": 3.3,
       "mc": 3.3126075,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 84,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 86,
@@ -175,7 +175,7 @@
       "cf": 13.25,
       "mc": 13.27215,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 91,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 93,
@@ -202,7 +202,7 @@
       "cf": 0.9720000000000001,
       "mc": 0.9710220622221776,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 97,
@@ -211,7 +211,7 @@
       "cf": 35.25,
       "mc": 35.14041666666663,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 101,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 49
+      "elapsed_ms": 53
     },
     {
       "wave": 112,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 114,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 116,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 121,
@@ -301,7 +301,7 @@
       "cf": 5.111111111111113,
       "mc": 5.2079,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 123,
@@ -319,7 +319,7 @@
       "cf": 0.31479375,
       "mc": 0.3172,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 127,
@@ -337,7 +337,7 @@
       "cf": 0.976,
       "mc": 0.976,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 132,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 136,
@@ -373,7 +373,7 @@
       "cf": 5.0587733333333365,
       "mc": 5.096785,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 140,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 247
+      "elapsed_ms": 259
     },
     {
       "wave": 142,
@@ -391,7 +391,7 @@
       "cf": 15.223422022308704,
       "mc": 14.81615,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 46
     },
     {
       "wave": 144,
@@ -400,7 +400,7 @@
       "cf": 40.7724375,
       "mc": 41.18446,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 146,
@@ -418,7 +418,7 @@
       "cf": 20.48,
       "mc": 20.24096,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 150,
@@ -427,7 +427,7 @@
       "cf": 1.1083984375,
       "mc": 1.13498,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 16
     },
     {
       "wave": 152,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 845
+      "elapsed_ms": 855
     },
     {
       "wave": 157,
@@ -463,7 +463,7 @@
       "cf": 1.74,
       "mc": 1.7057,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 161,
@@ -472,7 +472,7 @@
       "cf": 110.34474847738295,
       "mc": 108.41043902029095,
       "ok": true,
-      "elapsed_ms": 32
+      "elapsed_ms": 34
     },
     {
       "wave": 163,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 338
+      "elapsed_ms": 362
     },
     {
       "wave": 169,
@@ -508,7 +508,7 @@
       "cf": 5.113777151999998,
       "mc": 5.141,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 171,
@@ -526,7 +526,7 @@
       "cf": 2.4999999999999996,
       "mc": 2.5123,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 8
     },
     {
       "wave": 175,
@@ -535,7 +535,7 @@
       "cf": 0.6723199999999999,
       "mc": 0.67406,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 6
     },
     {
       "wave": 177,
@@ -544,7 +544,7 @@
       "cf": 8,
       "mc": 8.106148865304313,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 179,
@@ -553,7 +553,7 @@
       "cf": 5.800000000000001,
       "mc": 5.79635,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 181,
@@ -571,7 +571,7 @@
       "cf": 22.298391355206938,
       "mc": 22.3383,
       "ok": true,
-      "elapsed_ms": 64
+      "elapsed_ms": 76
     },
     {
       "wave": 183,
@@ -580,7 +580,7 @@
       "cf": 1666.94888061,
       "mc": 1669.1233333333332,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 184,
@@ -598,7 +598,7 @@
       "cf": 11.912103935999994,
       "mc": 11.818918420259651,
       "ok": true,
-      "elapsed_ms": 17
+      "elapsed_ms": 18
     },
     {
       "wave": 186,
@@ -634,7 +634,7 @@
       "cf": 20,
       "mc": 19.990318035914726,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 16
     },
     {
       "wave": 190,
@@ -652,7 +652,7 @@
       "cf": 40.125,
       "mc": 40.015754492668435,
       "ok": true,
-      "elapsed_ms": 18
+      "elapsed_ms": 21
     },
     {
       "wave": 192,
@@ -660,6 +660,15 @@
       "metric": "bestRtp",
       "cf": 10,
       "mc": 10.054,
+      "ok": true,
+      "elapsed_ms": 3
+    },
+    {
+      "wave": 193,
+      "solver": "Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15)",
+      "metric": "E[Y/spin]",
+      "cf": 2.66,
+      "mc": 2.637174025983168,
       "ok": true,
       "elapsed_ms": 2
     }

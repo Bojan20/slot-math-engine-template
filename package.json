@@ -100,6 +100,7 @@
     "nested-mini-slot-inside-bonus-acceptance": "npm run build && node scripts/nested-mini-slot-inside-bonus-acceptance.mjs",
     "bonus-bank-running-balance-offset-acceptance": "npm run build && node scripts/bonus-bank-running-balance-offset-acceptance.mjs",
     "race-competitive-pick-winner-acceptance": "npm run build && node scripts/race-competitive-pick-winner-acceptance.mjs",
+    "multi-pot-branched-hold-spin-sub-feature-acceptance": "npm run build && node scripts/multi-pot-branched-hold-spin-sub-feature-acceptance.mjs",
     "avalanche-reactor-wave-aggregator-acceptance": "npm run build && node scripts/avalanche-reactor-wave-aggregator-acceptance.mjs",
     "sticky-multiplier-fs-trail-acceptance": "npm run build && node scripts/sticky-multiplier-fs-trail-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",
