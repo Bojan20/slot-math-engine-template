@@ -19,28 +19,62 @@ import {
   TIER_LIMITS,
 } from '../state/licenses.js';
 import type { EmailSender } from '../lib/email.js';
+import { createCache, type Cache } from '../lib/cache.js';
 
 export interface LicenseRouteDeps {
   licenses: LicenseStore;
   email: EmailSender;
+  /** Optional cache (default: 30s in-memory). */
+  cache?: Cache<unknown>;
+  /** Cache TTL in ms (default 30 000). */
+  cacheTtlMs?: number;
+}
+
+function licenseCacheKey(kind: 'verify' | 'usage' | 'expiry', id: string): string {
+  return `license:${kind}:${id}`;
+}
+
+export function invalidateLicenseCache(
+  cache: Cache<unknown>,
+  scope?: { tenantId?: string; key?: string }
+): Promise<number> {
+  if (!scope) return cache.delByPrefix('license:');
+  const tasks: Promise<number | boolean>[] = [];
+  if (scope.tenantId) {
+    tasks.push(cache.del(licenseCacheKey('usage', scope.tenantId)));
+    tasks.push(cache.del(licenseCacheKey('expiry', scope.tenantId)));
+  }
+  if (scope.key) tasks.push(cache.del(licenseCacheKey('verify', scope.key)));
+  return Promise.all(tasks).then((rs) => rs.filter(Boolean).length);
 }
 
 export async function registerLicenseRoutes(
   app: FastifyInstance,
   deps: LicenseRouteDeps
 ): Promise<void> {
+  const cache: Cache<unknown> = deps.cache ?? createCache<unknown>({ namespace: 'svc' });
+  const ttlMs = deps.cacheTtlMs ?? 30_000;
+
   app.post<{ Body: { licenseKey?: string } }>('/api/license/verify', async (req, reply) => {
     const key = req.body?.licenseKey;
     if (!key || typeof key !== 'string') {
       return reply.code(400).send({ error: 'license_key_required' });
     }
+    const ck = licenseCacheKey('verify', key);
+    const hit = await cache.get(ck);
+    if (hit) {
+      reply.header('x-cache', 'HIT');
+      return reply.send(hit);
+    }
     const license = deps.licenses.get(key);
     if (!license) {
+      // Negative result is cheap — do not cache it (avoid bad-key floods
+      // pinning the cache).
       return reply.send({ valid: false, reason: 'unknown' });
     }
     const exp = deps.licenses.checkExpiry(key);
     const limits = TIER_LIMITS[license.tier];
-    return reply.send({
+    const out = {
       valid: license.status === 'active',
       tenantId: license.tenantId,
       tier: license.tier,
@@ -54,7 +88,10 @@ export async function registerLicenseRoutes(
         certSubmissionsPerMonth: limits.certSubmissionsPerMonth,
         supportLevel: limits.supportLevel,
       },
-    });
+    };
+    await cache.set(ck, out, { ttlMs });
+    reply.header('x-cache', 'MISS');
+    return reply.send(out);
   });
 
   app.get<{ Params: { tenantId: string } }>(

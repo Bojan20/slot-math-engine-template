@@ -233,6 +233,11 @@
     "security:secrets": "node scripts/secrets-sweep.mjs",
     "security:all": "node scripts/owasp-audit.mjs && node scripts/dependency-scan.mjs && node scripts/secrets-sweep.mjs",
     "analytics:report": "node scripts/analytics-report.mjs",
+    "load-test:gaas": "node scripts/load-test/gaas-spin-load.mjs",
+    "load-test:gaas:quick": "node scripts/load-test/gaas-spin-load.mjs --quick",
+    "load-test:rest": "node scripts/load-test/rest-api-load.mjs",
+    "load-test:rest:quick": "node scripts/load-test/rest-api-load.mjs --quick",
+    "cache-hit-rate": "node scripts/load-test/cache-hit-rate.mjs",
     "mobile:sync": "npm run studio:build && cd mobile && npx cap sync",
     "mobile:ios": "cd mobile && npx cap open ios",
     "mobile:android": "cd mobile && npx cap open android",
@@ -276,5 +281,8 @@
     "piscina": "^5.1.4",
     "xxhash-wasm": "^1.1.0",
     "zod": "^4.2.1"
+  },
+  "optionalDependencies": {
+    "ioredis": "^5.4.1"
   }
 }

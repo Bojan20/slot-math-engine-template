@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 41 routes across 10 route files. 
+Captures 45 routes across 11 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -21,6 +21,14 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `POST` | `/api/audit/append` |
 | `GET` | `/api/audit/:sessionId` |
 | `GET` | `/api/audit/replay/:auditId` |
+
+## catalog.ts
+> W208 Faza 400.1 — Catalog read endpoint. GET  /api/catalog                 → full catalog (cached 5 min) GET  /api/catalog/:gameId         → single entry (cached 5 min) POST /api/catalog/_invalidate     → drop the per-tenant catalog cache The catalog read is heavy enough on cold start (full IR-library JSON traversal) to be worth caching aggressively; it changes only when the games registry is updated.
+| Method | Path |
+|---|---|
+| `GET` | `/api/catalog` |
+| `GET` | `/api/catalog/:gameId` |
+| `POST` | `/api/catalog/_invalidate` |
 
 ## cert.ts
 > CORTI W204-PROTOCOLS — cert submission endpoints. POST /api/cert/submit GET  /api/cert/:submissionId GET  /api/cert/:submissionId/download                — operator-package.zip GET  /api/cert/:submissionId/par.pdf                 — real PAR PDF (pdf-lib) GET  /api/cert/:submissionId/verify-signature        — ed25519 verify
@@ -67,6 +75,7 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | Method | Path |
 |---|---|
 | `GET` | `/api/lobby/games` |
+| `POST` | `/api/lobby/_invalidate` |
 | `POST` | `/api/lobby/launch` |
 
 ## session.ts

@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-05-18T18:08:16.694Z",
+  "summary": {
+    "total": 5000,
+    "ok": 5000,
+    "errors": 0,
+    "errorRate": 0,
+    "p50": 0,
+    "p95": 0,
+    "p99": 0,
+    "duration": "0.01s",
+    "rps": 833333,
+    "mode": "in-process",
+    "hitRate": 0.996,
+    "hits": 4980,
+    "misses": 20,
+    "keys": 20,
+    "ttlMs": 500,
+    "zipf": 1.1
+  },
+  "perRoute": {}
+}

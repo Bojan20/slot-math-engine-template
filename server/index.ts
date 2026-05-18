@@ -39,6 +39,18 @@ import { registerHealthRoutes } from './routes/health.js';
 import { registerGaasRoutes } from './routes/gaas.js';
 import { registerSignupRoutes } from './routes/signup.js';
 import { registerLicenseRoutes } from './routes/license.js';
+import { registerCatalogRoutes } from './routes/catalog.js';
+import { createCache } from './lib/cache.js';
+import { LatencyBudgetTracker, attachLatencyMiddleware } from './lib/latency-budget.js';
+
+// CORTI W208-MULTI-TENANT — tenant isolation hardening, rate limiter,
+// structured logger + Prometheus metrics endpoint.
+import { registerObservability } from './lib/observability.js';
+import {
+  tenantIsolationPreHandler,
+  tenantContextScope,
+} from './lib/tenant-isolation.js';
+import { rateLimit, REST_DEFAULTS } from './lib/rate-limit.js';
 
 export interface BackendStores {
   sessions: SessionStore;
@@ -179,9 +191,65 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
   // Attach stores to the instance so tests can introspect.
   app.decorate('stores', stores);
 
+  // W208 Faza 400.1 — shared cache + latency budget tracker.
+  // The cache backend auto-selects: NODE_ENV=test → memory, otherwise
+  // REDIS_URL → Redis, else memory. Routes can override per-call.
+  const sharedCache = createCache<unknown>({ namespace: 'svc' });
+  const latencyTracker = new LatencyBudgetTracker({
+    warn: (msg, ctx) => app.log.warn(ctx, msg),
+  });
+  app.decorate('cache', sharedCache);
+  app.decorate('latency', latencyTracker);
+  attachLatencyMiddleware(app, latencyTracker);
+  app.addHook('onClose', async () => {
+    await sharedCache.close();
+  });
+
+  // CORTI W208-MULTI-TENANT — observability MUST be registered first so
+  // the request id / latency hooks wrap every other handler. The
+  // /api/admin/metrics endpoint exposes Prometheus scrape data.
+  await registerObservability(app);
+
   // Admin (tenant CRUD + tenant resolution preHandler) must register
   // BEFORE the data-plane routes so its preHandler hook runs first.
   await registerAdminRoutes(app, { tenants: stores.tenants });
+
+  // CORTI W208-MULTI-TENANT — bridge admin's req.tenant → req.tenantId,
+  // then open the AsyncLocalStorage tenant context for the rest of the
+  // request handler. This guarantees that any helper which calls
+  // assertTenantContext() inside a data-plane route can see the tenant.
+  app.addHook('preHandler', async (req) => {
+    if (!req.tenantId && req.tenant) req.tenantId = req.tenant.id;
+  });
+  app.addHook('preHandler', tenantIsolationPreHandler({
+    publicPrefixes: [
+      '/api/health',
+      '/api/metrics',
+      '/api/admin',
+      '/api/signup',
+      '/api/license',
+    ],
+    rejectMissing: false,
+  }));
+  app.addHook('preHandler', tenantContextScope());
+
+  // CORTI W208-MULTI-TENANT — default REST rate limit (100 req/s per
+  // tenant, burst 200). The legacy per-tenant minute window from
+  // admin.ts continues to fire alongside this layer, providing
+  // defence-in-depth. Tests can disable via DISABLE_RATE_LIMIT=1, and
+  // we skip in NODE_ENV=test by default so the existing suite isn't
+  // throttled across rapid-fire requests.
+  const rlDisabled =
+    process.env.DISABLE_RATE_LIMIT === '1' || process.env.NODE_ENV === 'test';
+  if (!rlDisabled) {
+    app.addHook('preHandler', async (req, reply) => {
+      if (!req.url.startsWith('/api/')) return;
+      if (req.url.startsWith('/api/admin/')) return;
+      if (req.url.startsWith('/api/health')) return;
+      if (req.url.startsWith('/api/metrics')) return;
+      return rateLimit(REST_DEFAULTS)(req, reply);
+    });
+  }
   await registerHealthRoutes(app, {
     stores,
     tenants: stores.tenants,
@@ -199,7 +267,12 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     audit: stores.audit,
   });
   await registerAuditRoutes(app, { audit: stores.audit });
-  await registerLobbyRoutes(app, { games: stores.games, sessions: stores.sessions });
+  await registerLobbyRoutes(app, {
+    games: stores.games,
+    sessions: stores.sessions,
+    cache: sharedCache,
+  });
+  await registerCatalogRoutes(app, { games: stores.games, cache: sharedCache });
   await registerCertRoutes(app, { cert: stores.cert, hsm: stores.hsm });
   await registerGaasRoutes(app, {
     games: stores.games,
@@ -207,6 +280,8 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     wallet: stores.wallet,
     audit: stores.audit,
     apiKeys: process.env.GAAS_API_KEYS ? process.env.GAAS_API_KEYS.split(',') : [],
+    cache: sharedCache,
+    latency: latencyTracker,
   });
 
   // CORTI W206-ONBOARDING — customer-facing signup + license API.
@@ -218,6 +293,7 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
   await registerLicenseRoutes(app, {
     licenses: stores.licenses,
     email: stores.email,
+    cache: sharedCache,
   });
 
   return app;
@@ -226,6 +302,8 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
 declare module 'fastify' {
   interface FastifyInstance {
     stores: BackendStores;
+    cache: import('./lib/cache.js').Cache<unknown>;
+    latency: import('./lib/latency-budget.js').LatencyBudgetTracker;
   }
 }
 

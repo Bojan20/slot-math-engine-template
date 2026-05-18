@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-05-18T18:08:16.611Z",
+  "summary": {
+    "total": 7052,
+    "ok": 7052,
+    "errors": 0,
+    "errorRate": 0,
+    "p50": 1.24,
+    "p95": 2.483,
+    "p99": 2.575,
+    "max": 4.592,
+    "mean": 1.46,
+    "target": "http://localhost:4000",
+    "mode": "synthetic",
+    "duration": "5.0s",
+    "rps": 1407,
+    "budgetBreaches": []
+  },
+  "perRoute": {
+    "/api/health": {
+      "total": 1848,
+      "ok": 1848,
+      "errors": 0,
+      "errorRate": 0,
+      "p50": 1.225,
+      "p95": 1.303,
+      "p99": 1.364,
+      "max": 3.379,
+      "mean": 1.199
+    },
+    "/api/lobby/games": {
+      "total": 2293,
+      "ok": 2293,
+      "errors": 0,
+      "errorRate": 0,
+      "p50": 1.249,
+      "p95": 2.501,
+      "p99": 2.584,
+      "max": 4.589,
+      "mean": 1.54
+    },
+    "/api/catalog": {
+      "total": 1072,
+      "ok": 1072,
+      "errors": 0,
+      "errorRate": 0,
+      "p50": 1.248,
+      "p95": 2.493,
+      "p99": 2.589,
+      "max": 3.391,
+      "mean": 1.532
+    },
+    "/api/license/verify": {
+      "total": 1113,
+      "ok": 1113,
+      "errors": 0,
+      "errorRate": 0,
+      "p50": 1.252,
+      "p95": 2.493,
+      "p99": 2.597,
+      "max": 2.819,
+      "mean": 1.575
+    },
+    "/api/signup": {
+      "total": 726,
+      "ok": 726,
+      "errors": 0,
+      "errorRate": 0,
+      "p50": 1.255,
+      "p95": 2.513,
+      "p99": 2.61,
+      "max": 4.592,
+      "mean": 1.588
+    }
+  }
+}

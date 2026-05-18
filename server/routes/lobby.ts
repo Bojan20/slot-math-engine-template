@@ -10,10 +10,26 @@ import { sha256Hex } from '../lib/hashChain.js';
 import type { GamesRegistry } from '../state/games.js';
 import type { SessionStore } from '../state/sessions.js';
 import { requireRole } from '../state/rbac.js';
+import { createCache, type Cache } from '../lib/cache.js';
 
 export interface LobbyRouteDeps {
   games: GamesRegistry;
   sessions: SessionStore;
+  /** Optional shared cache (per-tenant lobby list). */
+  cache?: Cache<unknown>;
+  /** TTL override for the lobby list (default 60s). */
+  cacheTtlMs?: number;
+}
+
+/** Cache key for lobby list — namespaced per tenant + filters. */
+function lobbyCacheKey(tenantId: string, jurisdiction?: string, category?: string): string {
+  return `lobby:${tenantId}:${jurisdiction ?? '*'}:${category ?? '*'}`;
+}
+
+/** Exported so other modules (e.g. games admin) can invalidate. */
+export function invalidateLobbyCache(cache: Cache<unknown>, tenantId?: string): Promise<number> {
+  if (tenantId) return cache.delByPrefix(`lobby:${tenantId}:`);
+  return cache.delByPrefix('lobby:');
 }
 
 interface LaunchBody {
@@ -25,11 +41,21 @@ export async function registerLobbyRoutes(
   app: FastifyInstance,
   deps: LobbyRouteDeps
 ): Promise<void> {
+  const cache: Cache<unknown> = deps.cache ?? createCache<unknown>({ namespace: 'svc' });
+  const ttlMs = deps.cacheTtlMs ?? 60_000;
+
   app.get<{ Querystring: { jurisdiction?: string; category?: string } }>(
     '/api/lobby/games',
     async (req, reply) => {
       const jurisdiction = req.query.jurisdiction;
       const category = req.query.category;
+      const tenantId = req.tenant?.id ?? 'default';
+      const key = lobbyCacheKey(tenantId, jurisdiction, category);
+      const cached = (await cache.get(key)) as null | { games: unknown[]; count: number };
+      if (cached) {
+        reply.header('x-cache', 'HIT');
+        return reply.send(cached);
+      }
       deps.games.load();
       let games = deps.games.list();
       if (jurisdiction) {
@@ -38,7 +64,7 @@ export async function registerLobbyRoutes(
       if (category) {
         games = games.filter((g) => g.category === category);
       }
-      return reply.send({
+      const payload = {
         games: games.map((g) => ({
           id: g.id,
           title: g.title,
@@ -52,9 +78,18 @@ export async function registerLobbyRoutes(
           thumbnail: g.thumbnail ?? `/thumbnails/${g.id}.png`,
         })),
         count: games.length,
-      });
+      };
+      await cache.set(key, payload, { ttlMs });
+      reply.header('x-cache', 'MISS');
+      return reply.send(payload);
     }
   );
+
+  // Explicit invalidation hook (called by games admin / install pipeline).
+  app.post('/api/lobby/_invalidate', { preHandler: requireRole('admin') }, async (req, reply) => {
+    const n = await invalidateLobbyCache(cache, req.tenant?.id);
+    return reply.send({ ok: true, evicted: n });
+  });
 
   // CORTI W206-SECURITY — lobby.launch consumes a session so requires player+.
   app.post<{ Body: LaunchBody }>('/api/lobby/launch', { preHandler: requireRole('player') }, async (req, reply) => {

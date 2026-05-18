@@ -37,6 +37,8 @@ import type { SessionStore } from '../state/sessions.js';
 import type { WalletStore } from '../state/wallet.js';
 import type { AuditStore } from '../state/audit.js';
 import type { AnalyticsStore, AnalyticsEvent } from '../state/analytics.js';
+import { createCache, type Cache } from '../lib/cache.js';
+import type { LatencyBudgetTracker } from '../lib/latency-budget.js';
 
 export interface GaasRouteDeps {
   games: GamesRegistry;
@@ -52,6 +54,10 @@ export interface GaasRouteDeps {
   rng?: (seed: string, n: number) => number;
   /** Skip registering the @fastify/websocket plugin (when already registered). */
   skipWebsocketPlugin?: boolean;
+  /** Optional shared cache for jurisdiction-profile lookups. */
+  cache?: Cache<unknown>;
+  /** Optional latency-budget tracker (records `gaas.ws.spin`). */
+  latency?: LatencyBudgetTracker;
 }
 
 interface IRPayload {
@@ -110,6 +116,25 @@ export async function registerGaasRoutes(
 ): Promise<void> {
   const apiKeys = deps.apiKeys ?? [];
   const rng = deps.rng ?? defaultRng;
+  const cache: Cache<unknown> = deps.cache ?? createCache<unknown>({ namespace: 'svc' });
+  const latency = deps.latency;
+
+  /** Per-session jurisdiction profile cache. 5-min TTL — far longer than
+   *  any reasonable session. Falls through to a fresh lookup whenever
+   *  the session is invalidated. */
+  async function jurisdictionProfile(sessionId: string): Promise<{
+    jurisdiction: string;
+    playerId: string;
+  } | null> {
+    const k = `gaas:juris:${sessionId}`;
+    const hit = (await cache.get(k)) as null | { jurisdiction: string; playerId: string };
+    if (hit) return hit;
+    const session = deps.sessions.get(sessionId);
+    if (!session) return null;
+    const v = { jurisdiction: session.jurisdiction, playerId: session.playerId };
+    await cache.set(k, v, { ttlMs: 5 * 60_000 });
+    return v;
+  }
 
   if (!deps.skipWebsocketPlugin) {
     // Register the websocket plugin if not already registered. Wrapped
@@ -217,9 +242,13 @@ export async function registerGaasRoutes(
     | { ok: true; data: Record<string, unknown> }
     | { ok: false; code: number; error: string }
   > {
+    const t0 = process.hrtime.bigint();
     if (!body.gameId || !body.sessionId || typeof body.betAmount !== 'number' || body.betAmount <= 0) {
       return { ok: false, code: 400, error: 'invalid_spin_request' };
     }
+    // Fast path: jurisdiction profile is cached per session — saves the
+    // SessionStore.get + property reads on every spin in a hot ws loop.
+    void jurisdictionProfile(body.sessionId);
     const session = deps.sessions.get(body.sessionId);
     if (!session) return { ok: false, code: 404, error: 'session_not_found' };
     if (session.closed) return { ok: false, code: 403, error: 'session_closed' };
@@ -305,6 +334,10 @@ export async function registerGaasRoutes(
       timestamp: payload.timestamp,
     });
 
+    if (latency) {
+      const durMs = Number(process.hrtime.bigint() - t0) / 1e6;
+      latency.record('gaas.ws.spin', durMs);
+    }
     return { ok: true, data: result };
   }
 
