@@ -1471,6 +1471,29 @@ async function main() {
     showcase.push({ wave: 189, solver: 'Random Feature-Injection FS (L&W Munchkinland M12)', metric: 'E[S]', cf: cf.expectedTotalFsPayout, mc: mc.meanTotalFsPayout, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W190: Nested Mini-Slot Inside Bonus (L&W M14 — LOTR Two Towers) ──
+  {
+    const { analyzeNestedMiniSlotInsideBonus, simulateNestedMiniSlotInsideBonus } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'nestedMiniSlotInsideBonus.js'));
+    const t0 = Date.now();
+    const cfg = {
+      probBonusTriggerPerParentSpin: 0.05,
+      numOuterBonusSpins: 8,
+      outerBaseMean: 1.5,
+      outerBaseVar: 1,
+      probNestedTriggerPerOuterSpin: 0.20,
+      numNestedInnerSpins: 3,
+      nestedInnerMean: 5,
+      nestedInnerVar: 1,
+    };
+    const cf = analyzeNestedMiniSlotInsideBonus(cfg);
+    const mc = simulateNestedMiniSlotInsideBonus(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerParentSpin - mc.meanPayoutPerParentSpin) /
+      Math.max(mc.meanPayoutPerParentSpin, 1e-9);
+    const ok = rel < 0.08;
+    showcase.push({ wave: 190, solver: 'Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14)', metric: 'E[Y/parent]', cf: cf.expectedPayoutPerParentSpin, mc: mc.meanPayoutPerParentSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

@@ -264,3 +264,5 @@ jobs:
         run: npm run player-elects-feature-composition-acceptance
       - name: Random Feature-Injection During FS acceptance (6/6 configs × 30K FS-bonuses, Wave 189, 70. solver L&W M12 P1 GAP CLOSURE Wizard of Oz Munchkinland + WMS sub-feature library)
         run: npm run random-feature-injection-during-fs-acceptance
+      - name: Nested Mini-Slot Inside Bonus acceptance (6/6 configs × 50K parent-spins, Wave 190, 71. solver L&W M14 P1 GAP CLOSURE LOTR Two Towers + Return of the King + Star Trek)
+        run: npm run nested-mini-slot-inside-bonus-acceptance

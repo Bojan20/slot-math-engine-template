@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T01:08:04.662Z`
+Generated: `2026-05-18T01:17:39.060Z`
 
 ## Headline
 
-**70/70 solvers PASS** in single end-to-end runner.
+**71/71 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -83,6 +83,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 187 | Deterministic Explosion Mult-Drop (L&W Dancing Drums M4) | E[Y/spin] | 7.87500 | 7.79540 | ✅ |
 | 188 | Player-Elects Feature Composition (L&W RR Pick n Mix M11) | best E[Y] | 0.95000 | 0.94655 | ✅ |
 | 189 | Random Feature-Injection FS (L&W Munchkinland M12) | E[S] | 20.00000 | 19.99032 | ✅ |
+| 190 | Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14) | E[Y/parent] | 1.80000 | 1.85044 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

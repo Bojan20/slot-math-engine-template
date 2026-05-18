@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "NESTED_MINI_SLOT_INSIDE_BONUS",
+  "generated_utc": "2026-05-18T01:13:14.065Z",
+  "spins_per_config": 50000,
+  "seed": 3405644176,
+  "tolerances": {
+    "payout_rel": 0.1,
+    "trigger_abs": 0.01,
+    "bonus_rel": 0.1,
+    "nested_abs": 0.04
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_lotr_two_towers_tower_spin_nested",
+      "description": "LNW WMS Lord of the Rings Two Towers (2013, defining title) — Tower Spin nested mini-slot inside main bonus.",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.02,
+        "numOuterBonusSpins": 10,
+        "outerBaseMean": 2,
+        "outerBaseVar": 1,
+        "probNestedTriggerPerOuterSpin": 0.15,
+        "numNestedInnerSpins": 5,
+        "nestedInnerMean": 8,
+        "nestedInnerVar": 4
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 40,
+        "varianceNestedSlotPayout": 20,
+        "expectedOuterSpinPayout": 8,
+        "varianceOuterSpinPayout": 208,
+        "expectedBonusPayoutGivenTrigger": 80,
+        "varianceBonusPayoutGivenTrigger": 2080,
+        "stdDevBonusPayoutGivenTrigger": 45.60701700396552,
+        "expectedPayoutPerParentSpin": 1.6,
+        "variancePayoutPerParentSpin": 167.04,
+        "stdDevPayoutPerParentSpin": 12.924395537122809,
+        "probAtLeastOneNestedGivenBonus": 0.8031255956592774,
+        "expectedNestedTriggersPerBonus": 1.5,
+        "nestedSlotContributionShare": 0.75,
+        "commercialUpliftVsNoNestedSlot": 4,
+        "oneInNSpinsAnyBonus": 50
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 1.6217069262973944,
+        "stdDevPayoutPerParentSpin": 12.958890394096196,
+        "observedBonusTriggerRate": 0.02038,
+        "meanBonusPayoutGivenTrigger": 79.57345075060816,
+        "observedProbAtLeastOneNestedGivenBonus": 0.7939156035328754,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.013385233759193831,
+        "trigger_abs": 0.0003799999999999984,
+        "bonus_rel": 0.0053318656173980015,
+        "nested_abs": 0.009209992126402056
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_lotr_return_of_the_king_extended",
+      "description": "LNW WMS Lord of the Rings Return of the King (2013) — extended nested-slot variant.",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.015,
+        "numOuterBonusSpins": 12,
+        "outerBaseMean": 2.5,
+        "outerBaseVar": 2,
+        "probNestedTriggerPerOuterSpin": 0.2,
+        "numNestedInnerSpins": 4,
+        "nestedInnerMean": 10,
+        "nestedInnerVar": 6
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 40,
+        "varianceNestedSlotPayout": 24,
+        "expectedOuterSpinPayout": 10.5,
+        "varianceOuterSpinPayout": 262.80000000000007,
+        "expectedBonusPayoutGivenTrigger": 126,
+        "varianceBonusPayoutGivenTrigger": 3153.600000000001,
+        "stdDevBonusPayoutGivenTrigger": 56.15692299262844,
+        "expectedPayoutPerParentSpin": 1.89,
+        "variancePayoutPerParentSpin": 281.87190000000004,
+        "stdDevPayoutPerParentSpin": 16.789041068506563,
+        "probAtLeastOneNestedGivenBonus": 0.931280523264,
+        "expectedNestedTriggersPerBonus": 2.4000000000000004,
+        "nestedSlotContributionShare": 0.761904761904762,
+        "commercialUpliftVsNoNestedSlot": 4.2,
+        "oneInNSpinsAnyBonus": 66.66666666666667
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 1.9968019883333168,
+        "stdDevPayoutPerParentSpin": 17.116081598721465,
+        "observedBonusTriggerRate": 0.01608,
+        "meanBonusPayoutGivenTrigger": 124.17922813018139,
+        "observedProbAtLeastOneNestedGivenBonus": 0.9328358208955224,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.053486519423221315,
+        "trigger_abs": 0.001080000000000001,
+        "bonus_rel": 0.014450570395385826,
+        "nested_abs": 0.001555297631522401
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_star_trek_trek_through_stars",
+      "description": "LNW WMS Star Trek Trek Through the Stars — nested-slot sub-game variant.",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.03,
+        "numOuterBonusSpins": 6,
+        "outerBaseMean": 1.8,
+        "outerBaseVar": 1,
+        "probNestedTriggerPerOuterSpin": 0.25,
+        "numNestedInnerSpins": 3,
+        "nestedInnerMean": 7,
+        "nestedInnerVar": 3
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 21,
+        "varianceNestedSlotPayout": 9,
+        "expectedOuterSpinPayout": 7.05,
+        "varianceOuterSpinPayout": 85.9375,
+        "expectedBonusPayoutGivenTrigger": 42.3,
+        "varianceBonusPayoutGivenTrigger": 515.625,
+        "stdDevBonusPayoutGivenTrigger": 22.707377655731186,
+        "expectedPayoutPerParentSpin": 1.269,
+        "variancePayoutPerParentSpin": 67.53708899999998,
+        "stdDevPayoutPerParentSpin": 8.218095217262938,
+        "probAtLeastOneNestedGivenBonus": 0.822021484375,
+        "expectedNestedTriggersPerBonus": 1.5,
+        "nestedSlotContributionShare": 0.7446808510638299,
+        "commercialUpliftVsNoNestedSlot": 3.916666666666666,
+        "oneInNSpinsAnyBonus": 33.333333333333336
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 1.2563832504226378,
+        "stdDevPayoutPerParentSpin": 8.188504222182521,
+        "observedBonusTriggerRate": 0.0299,
+        "meanBonusPayoutGivenTrigger": 42.01950670309825,
+        "observedProbAtLeastOneNestedGivenBonus": 0.8120401337792642,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.009942277050718788,
+        "trigger_abs": 0.0000999999999999994,
+        "bonus_rel": 0.006631047208079096,
+        "nested_abs": 0.009981350595735794
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_high_freq_low_payout_nested",
+      "description": "High-frequency bonus (10%) sa modest nested contribution.",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.1,
+        "numOuterBonusSpins": 5,
+        "outerBaseMean": 1.5,
+        "outerBaseVar": 0.5,
+        "probNestedTriggerPerOuterSpin": 0.3,
+        "numNestedInnerSpins": 2,
+        "nestedInnerMean": 3,
+        "nestedInnerVar": 1
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 6,
+        "varianceNestedSlotPayout": 2,
+        "expectedOuterSpinPayout": 3.3,
+        "varianceOuterSpinPayout": 8.66,
+        "expectedBonusPayoutGivenTrigger": 16.5,
+        "varianceBonusPayoutGivenTrigger": 43.3,
+        "stdDevBonusPayoutGivenTrigger": 6.58027355054484,
+        "expectedPayoutPerParentSpin": 1.6500000000000001,
+        "variancePayoutPerParentSpin": 28.832500000000003,
+        "stdDevPayoutPerParentSpin": 5.369590300944757,
+        "probAtLeastOneNestedGivenBonus": 0.8319300000000001,
+        "expectedNestedTriggersPerBonus": 1.5,
+        "nestedSlotContributionShare": 0.5454545454545454,
+        "commercialUpliftVsNoNestedSlot": 2.2,
+        "oneInNSpinsAnyBonus": 10
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 1.6385461017660343,
+        "stdDevPayoutPerParentSpin": 5.330274268379879,
+        "observedBonusTriggerRate": 0.09992,
+        "meanBonusPayoutGivenTrigger": 16.398579881565595,
+        "observedProbAtLeastOneNestedGivenBonus": 0.8306645316253003,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.006941756505433823,
+        "trigger_abs": 0.00008000000000001062,
+        "bonus_rel": 0.006146673844509368,
+        "nested_abs": 0.001265468374699763
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_corner_p_nested_1_always_triggers",
+      "description": "Corner: p_nested=1.0 — every outer-spin triggers nested.",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.05,
+        "numOuterBonusSpins": 4,
+        "outerBaseMean": 2,
+        "outerBaseVar": 0.5,
+        "probNestedTriggerPerOuterSpin": 1,
+        "numNestedInnerSpins": 2,
+        "nestedInnerMean": 5,
+        "nestedInnerVar": 1
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 10,
+        "varianceNestedSlotPayout": 2,
+        "expectedOuterSpinPayout": 12,
+        "varianceOuterSpinPayout": 2.5,
+        "expectedBonusPayoutGivenTrigger": 48,
+        "varianceBonusPayoutGivenTrigger": 10,
+        "stdDevBonusPayoutGivenTrigger": 3.1622776601683795,
+        "expectedPayoutPerParentSpin": 2.4000000000000004,
+        "variancePayoutPerParentSpin": 109.94000000000001,
+        "stdDevPayoutPerParentSpin": 10.485227703774488,
+        "probAtLeastOneNestedGivenBonus": 1,
+        "expectedNestedTriggersPerBonus": 4,
+        "nestedSlotContributionShare": 0.8333333333333334,
+        "commercialUpliftVsNoNestedSlot": 6,
+        "oneInNSpinsAnyBonus": 20
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 2.4197330439588405,
+        "stdDevPayoutPerParentSpin": 10.517738882383089,
+        "observedBonusTriggerRate": 0.05048,
+        "meanBonusPayoutGivenTrigger": 47.93448977731459,
+        "observedProbAtLeastOneNestedGivenBonus": 1,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.008155049999464231,
+        "trigger_abs": 0.0004799999999999943,
+        "bonus_rel": 0.0013647963059460662,
+        "nested_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_K_outer_1_single_outer_spin",
+      "description": "Corner: K_outer=1 (single outer-spin per bonus, degenerate).",
+      "cfg": {
+        "probBonusTriggerPerParentSpin": 0.08,
+        "numOuterBonusSpins": 1,
+        "outerBaseMean": 10,
+        "outerBaseVar": 4,
+        "probNestedTriggerPerOuterSpin": 0.3,
+        "numNestedInnerSpins": 3,
+        "nestedInnerMean": 8,
+        "nestedInnerVar": 2
+      },
+      "closed_form": {
+        "expectedNestedSlotPayout": 24,
+        "varianceNestedSlotPayout": 6,
+        "expectedOuterSpinPayout": 17.2,
+        "varianceOuterSpinPayout": 126.76,
+        "expectedBonusPayoutGivenTrigger": 17.2,
+        "varianceBonusPayoutGivenTrigger": 126.76,
+        "stdDevBonusPayoutGivenTrigger": 11.258774356030056,
+        "expectedPayoutPerParentSpin": 1.376,
+        "variancePayoutPerParentSpin": 31.914623999999996,
+        "stdDevPayoutPerParentSpin": 5.649302965853398,
+        "probAtLeastOneNestedGivenBonus": 0.30000000000000004,
+        "expectedNestedTriggersPerBonus": 0.3,
+        "nestedSlotContributionShare": 0.41860465116279066,
+        "commercialUpliftVsNoNestedSlot": 1.72,
+        "oneInNSpinsAnyBonus": 12.5
+      },
+      "monte_carlo": {
+        "meanPayoutPerParentSpin": 1.3101611744970512,
+        "stdDevPayoutPerParentSpin": 5.475773706485263,
+        "observedBonusTriggerRate": 0.0778,
+        "meanBonusPayoutGivenTrigger": 16.840117924126623,
+        "observedProbAtLeastOneNestedGivenBonus": 0.2863753213367609,
+        "spins": 50000
+      },
+      "checks": {
+        "payout_rel": 0.04784798365039879,
+        "trigger_abs": 0.0022000000000000075,
+        "bonus_rel": 0.02092337650426604,
+        "nested_abs": 0.013624678663239131
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}

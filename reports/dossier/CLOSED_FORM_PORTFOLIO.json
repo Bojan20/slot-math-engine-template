@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-18T01:08:04.662Z",
-  "solvers_total": 70,
-  "solvers_passed": 70,
+  "generated_utc": "2026-05-18T01:17:39.060Z",
+  "solvers_total": 71,
+  "solvers_passed": 71,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 45
     },
     {
       "wave": 50,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 54
+      "elapsed_ms": 51
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 37
     },
     {
       "wave": 55,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 56,
@@ -76,7 +76,7 @@
       "cf": "OK",
       "mc": "OK",
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 57,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 58,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 59,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 71
+      "elapsed_ms": 72
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 14
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 75,
@@ -139,7 +139,7 @@
       "cf": 1.6665,
       "mc": 1.6790952970006168,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 6
     },
     {
       "wave": 81,
@@ -148,7 +148,7 @@
       "cf": 3.3,
       "mc": 3.3126075,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 84,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 86,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 102,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 114,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 116,
@@ -283,7 +283,7 @@
       "cf": 38.325,
       "mc": 37.68944,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 118,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 121,
@@ -310,7 +310,7 @@
       "cf": 53.375,
       "mc": 54.2797,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 125,
@@ -328,7 +328,7 @@
       "cf": 0.05792000000000003,
       "mc": 0.05868,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 6
     },
     {
       "wave": 130,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 136,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 251
+      "elapsed_ms": 246
     },
     {
       "wave": 142,
@@ -391,7 +391,7 @@
       "cf": 15.223422022308704,
       "mc": 14.81615,
       "ok": true,
-      "elapsed_ms": 44
+      "elapsed_ms": 43
     },
     {
       "wave": 144,
@@ -409,7 +409,7 @@
       "cf": 0.03225806451612903,
       "mc": 0.03227666666666667,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 148,
@@ -418,7 +418,7 @@
       "cf": 20.48,
       "mc": 20.24096,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 150,
@@ -427,7 +427,7 @@
       "cf": 1.1083984375,
       "mc": 1.13498,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 152,
@@ -436,7 +436,7 @@
       "cf": 0.27801562499999993,
       "mc": 0.2738833333333333,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 13
     },
     {
       "wave": 154,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 845
+      "elapsed_ms": 831
     },
     {
       "wave": 157,
@@ -454,7 +454,7 @@
       "cf": 0.14148853381835558,
       "mc": 0.16166666666666665,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 37
     },
     {
       "wave": 159,
@@ -490,7 +490,7 @@
       "cf": 0.10628371482723427,
       "mc": 0.098,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 167,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 343
+      "elapsed_ms": 345
     },
     {
       "wave": 169,
@@ -508,7 +508,7 @@
       "cf": 5.113777151999998,
       "mc": 5.141,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 171,
@@ -517,7 +517,7 @@
       "cf": 0.4285714285714286,
       "mc": 0.43155,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 173,
@@ -526,7 +526,7 @@
       "cf": 2.4999999999999996,
       "mc": 2.5123,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 175,
@@ -562,7 +562,7 @@
       "cf": 3.1050000000000004,
       "mc": 3.1999,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 182,
@@ -571,7 +571,7 @@
       "cf": 22.298391355206938,
       "mc": 22.3383,
       "ok": true,
-      "elapsed_ms": 64
+      "elapsed_ms": 65
     },
     {
       "wave": 183,
@@ -580,7 +580,7 @@
       "cf": 1666.94888061,
       "mc": 1669.1233333333332,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 184,
@@ -589,7 +589,7 @@
       "cf": 0.442,
       "mc": 0.43822,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 185,
@@ -607,7 +607,7 @@
       "cf": 18.84,
       "mc": 18.836108799908672,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 187,
@@ -634,7 +634,16 @@
       "cf": 20,
       "mc": 19.990318035914726,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
+    },
+    {
+      "wave": 190,
+      "solver": "Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14)",
+      "metric": "E[Y/parent]",
+      "cf": 1.8,
+      "mc": 1.8504428242494475,
+      "ok": true,
+      "elapsed_ms": 4
     }
   ]
 }

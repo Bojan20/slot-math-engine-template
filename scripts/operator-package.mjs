@@ -305,6 +305,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 189 Random Feature-Injection During FS (L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
   { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.md' },
+  // REPORTS — Wave 190 Nested Mini-Slot Inside Bonus (L&W M14 P1 GAP CLOSURE — LOTR Two Towers + Return of the King + Star Trek)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/NESTED_MINI_SLOT_INSIDE_BONUS.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/NESTED_MINI_SLOT_INSIDE_BONUS.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

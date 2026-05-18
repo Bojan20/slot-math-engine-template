@@ -146,7 +146,7 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 68 | KISS | LNW (WMS) | 2014 | H (band-member FS variants) + G (stacked wilds) + B | as #67 + P-005 ✅ |  ✅ **CLOSED (M11 W188)**| P1 |
 | 69 | Madonna | LNW (WMS) | 2010 | H + B (Like-a-Prayer bonus) + G | P-005 ✅ + P-035 ✅ | NO | n/a |
 | 70 | Star Trek (Trek Through the Stars / Trek to the Top) | LNW (WMS) | 2012 | D (multi-stage starship pick) + H + B (4-tier progressive) | P-047 ✅ + P-014 ✅ + P-035 ✅ | NO | n/a |
-| 71 | Lord of the Rings (Two Towers / Return of the King) | LNW (WMS) | 2012, 2013 | H (4-mode FS tower-spin / extra-spin) + D (tower-pick bonus) + B (5-tier progressive Helm's Deep) + **M: mini-slot inside bonus (Tower Spin)** | P-014 ✅ + P-047 ✅ + P-035 ✅ + ❌ **nested-slot-inside-bonus** (sub-game spins independently with own paytable, contributes to parent) | YES (M14) | P1 |
+| 71 | Lord of the Rings (Two Towers / Return of the King) | LNW (WMS) | 2012, 2013 | H (4-mode FS tower-spin / extra-spin) + D (tower-pick bonus) + B (5-tier progressive Helm's Deep) + **M: mini-slot inside bonus (Tower Spin)** | P-014 ✅ + P-047 ✅ + P-035 ✅ + ❌ **nested-slot-inside-bonus** (sub-game spins independently with own paytable, contributes to parent) |  ✅ **CLOSED (M14 W190)**| P1 |
 | 72 | Stargate Megaways | LNW (SG Digital) | 2020 | G3 + F + H | P-049 ✅ + P-001 ✅ | NO | n/a |
 | 73 | James Bond 007 Thunderball / Casino Royale / Goldfinger / Diamonds Are Forever | LNW (SG / Bally licensed; mostly land-based) | 2016+ | Mixed; mostly D + H + B + scene-specific bonuses | P-014/P-047/P-035 ✅ | NO | n/a |
 | 74 | Cluedo Mighty Ways | LNW (SG Digital) | 2022 | **G3 variant: Mighty Ways (4,096–262,144 ways)** + F + Murder-mystery pick bonus + H | P-049 ✅ (variable-reel ways) + P-001 ✅ + P-047 ✅ | NO | n/a |
@@ -250,9 +250,10 @@ Per FS spin a Bernoulli(p) event injects a random sub-feature with its own payou
 **Example:** Wizard of Oz Follow the Yellow Brick Road.
 Mid-spin the entire reel set may be replaced by a different reel set (Glinda the Good Witch feature). No existing P-ID covers **reel-set switching mid-execution** as a stochastic event with state-dependent transition matrix.
 
-### M14 — Nested-slot mini-game inside bonus (independent paytable)
+### M14 — Nested-slot mini-game inside bonus (independent paytable) — ✅ **CLOSED in W190** (P-091)
 **Example:** Lord of the Rings Two Towers (Tower Spin nested mini-slot inside main bonus); also Star Trek some variants.
 Bonus stage contains its own slot-spin with separate reel set, paytable, and variance which then contributes to parent bonus. P-047 (pick tree) does not model sub-spinner. Requires compositional kernel: parent stage E[Y] = pick-stage E[X] + nested-slot E[Y_inner]; variance composes via law of total variance.
+**Resolution:** W190 ships `src/features/nestedMiniSlotInsideBonus.ts` — hierarchical parent-child composition. **E[Z per outer] = μ_O + p_N·N_I·μ_I**. Var via law of total variance (single + two-level Bernoulli mass). **E[Y/parent] = p_B·K_O·E[Z]**. 34 vitest specs PASS. Acceptance 6/6 PASS @ 300K MC parent-spins (LOTR Two Towers + Return of the King + Star Trek + 3 corners).
 
 ### M15 — Multi-pot branched H&S sub-feature selection
 **Example:** Rich Little Piggies Piggy Bankin' Break In (3 pots: Instant Win, Double Play, Repeat Win each triggering structurally distinct sub-game).

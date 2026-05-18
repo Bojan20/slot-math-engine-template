@@ -231,3 +231,6 @@ export * from './playerElectsFeatureComposition.js';
 
 // W152 Wave 189: Random Feature-Injection During FS Aggregator (70. solver, L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
 export * from './randomFeatureInjectionDuringFs.js';
+
+// W152 Wave 190: Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 P1 GAP CLOSURE — LOTR Two Towers + Star Trek)
+export * from './nestedMiniSlotInsideBonus.js';
