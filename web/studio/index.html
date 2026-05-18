@@ -371,51 +371,47 @@
         </div>
       </section>
 
-      <!-- ============= COMPOSE ============= -->
+      <!-- ============= COMPOSE (W199 · node-graph editor) ============= -->
       <section class="panel" id="panel-compose" role="tabpanel" aria-labelledby="tab-compose">
         <header class="ctx-bar">
           <div class="ctx-bar-l">
             <h1>Compose</h1>
-            <span class="ctx-meta">feature graph · 6 nodes · RTP split visible per edge</span>
+            <span class="ctx-meta" id="compose-ctx-meta">feature graph · 0 nodes · 0 edges</span>
           </div>
-          <div class="ctx-bar-r">
-            <button class="btn-ghost"><svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5 L 12 19"/><path d="M5 12 L 19 12"/></svg> Add node</button>
-            <button class="btn-ghost">Re-route</button>
-            <button class="btn-ghost">Validate</button>
-            <button class="btn-primary">Compose RTP</button>
+          <div class="ctx-bar-r" id="compose-template-bar">
+            <!-- template buttons rendered by app.js -->
           </div>
         </header>
 
         <div class="compare-banner" id="cmp-banner-compose" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
 
-        <div class="compose-canvas">
-          <div class="cnode" style="left:40px;top:60px">
-            <div class="cnode-h">Base game</div>
-            <div class="cnode-body"><b class="mono">82.4%</b> RTP · 5×3</div>
-          </div>
-          <div class="cnode cnode-feature" style="left:280px;top:30px">
-            <div class="cnode-h">Free Spins</div>
-            <div class="cnode-body"><b class="mono">8.6%</b> RTP · trigger 0.78%</div>
-          </div>
-          <div class="cnode cnode-feature" style="left:280px;top:140px">
-            <div class="cnode-h">Hold &amp; Win</div>
-            <div class="cnode-body"><b class="mono">3.1%</b> RTP · 6-coin trigger</div>
-          </div>
-          <div class="cnode cnode-output" style="left:540px;top:90px">
-            <div class="cnode-h">Total RTP</div>
-            <div class="cnode-body"><b class="mono cyan">95.42%</b> · 96.0% ceiling</div>
-          </div>
-          <svg class="cnode-edges" aria-hidden="true">
-            <path d="M 180 90 C 230 70, 240 50, 280 50" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
-            <path d="M 180 90 C 230 130, 240 160, 280 160" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
-            <path d="M 420 50 C 470 70, 480 90, 540 105" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
-            <path d="M 420 160 C 470 140, 480 120, 540 115" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
-          </svg>
-        </div>
+        <div class="compose-shell">
+          <!-- LEFT · feature palette -->
+          <aside class="compose-palette" id="compose-palette" aria-label="Feature palette">
+            <!-- rendered by app.js renderComposePalette() -->
+          </aside>
 
-        <div class="compose-formula">
-          <span class="caps">Closed-form</span>
-          <code class="mono">RTP_total = RTP_base · (1 − P_FS) + RTP_FS · P_FS + RTP_HW · P_HW · (1 − P_FS) = 0.8240·0.9922 + 0.086·0.0078 + 0.031 · 0.012 = <b class="cyan">0.9542</b></code>
+          <!-- CENTER · graph canvas -->
+          <div class="compose-canvas-wrap">
+            <div class="compose-toolbar">
+              <button class="btn-ghost" id="compose-validate">Validate Composition</button>
+              <button class="btn-ghost" id="compose-export">Export JSON</button>
+              <button class="btn-ghost" id="compose-clear">Clear</button>
+              <span class="compose-toolbar-status" id="compose-validate-status"></span>
+            </div>
+            <div class="compose-canvas" id="compose-canvas" tabindex="0" aria-label="Feature graph canvas">
+              <svg class="compose-edges" id="compose-edges" aria-hidden="true"></svg>
+              <!-- nodes injected as .cgnode children -->
+            </div>
+            <div class="compose-rtp-bars" id="compose-rtp-bars" aria-label="Composed RTP contributions">
+              <!-- stacked bar + per-feature legend rendered by app.js -->
+            </div>
+          </div>
+
+          <!-- RIGHT · inspector -->
+          <aside class="compose-inspector" id="compose-inspector" aria-label="Node inspector">
+            <div class="compose-inspector-empty">Select a node to inspect its params and formula.</div>
+          </aside>
         </div>
       </section>
 
@@ -583,41 +579,120 @@
         <header class="ctx-bar">
           <div class="ctx-bar-l">
             <h1>Sensitivity</h1>
-            <span class="ctx-meta">parameter sweep · A/B compare · primary tool</span>
+            <span class="ctx-meta">parameter sweep · 1000-point RTP curve · A/B</span>
           </div>
           <div class="ctx-bar-r">
-            <label class="seg">Parameter
-              <select id="sweep-param">
-                <option>HP1 weight</option>
-                <option>WILD weight</option>
-                <option>FS trigger %</option>
-                <option>Multiplier ladder</option>
-              </select>
+            <label class="seg sensitivity-samples-seg">Samples
+              <input id="sensitivity-samples" type="number" min="50" max="2000" step="50" value="1000" />
             </label>
-            <label class="seg">Range
-              <input type="text" value="0.5×–2.0×" />
-            </label>
-            <button class="btn-ghost">A/B</button>
-            <button class="btn-primary">Run sweep</button>
+            <div class="seg-group" role="tablist" aria-label="Chart mode">
+              <button class="btn-ghost sensitivity-mode-btn is-active" id="sensitivity-mode-1d" data-mode="1d">1D</button>
+              <button class="btn-ghost sensitivity-mode-btn" id="sensitivity-mode-2d" data-mode="2d">2D</button>
+            </div>
+            <button class="btn-ghost" id="sensitivity-export-csv" title="Export current sweep as CSV">Export CSV</button>
+            <button class="btn-ghost" id="sensitivity-save-b" title="Save Config B as a new variant">Save B</button>
+            <button class="btn-primary" id="sensitivity-run">Run sweep</button>
           </div>
         </header>
 
         <div id="single-sensitivity">
-        <div class="sweep-grid">
-          <div class="card">
-            <div class="card-h"><h2>RTP curve</h2><span class="card-meta">12 points · 1M spins each</span></div>
-            <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
-              <path d="M 10 180 L 50 162 L 90 142 L 130 122 L 170 104 L 210 90 L 250 80 L 290 72 L 330 66 L 370 60" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
-              <line x1="10" y1="100" x2="390" y2="100" stroke="#252B36" stroke-dasharray="2 3" stroke-width="0.5"/>
-              <text x="392" y="103" fill="#5C6470" font-size="9" font-family="monospace">95.5%</text>
-            </svg>
+        <div class="sensitivity-grid">
+          <!-- Left: parameter list -->
+          <aside class="sensitivity-params card" aria-label="Parameter list">
+            <div class="card-h">
+              <h2>Parameters <span id="sensitivity-param-count" class="card-meta mono">(0)</span></h2>
+              <span class="card-meta">click = sweep target</span>
+            </div>
+            <div class="sensitivity-param-list" id="sensitivity-param-list" role="listbox"></div>
+          </aside>
+
+          <!-- Center: chart + slider + heatmap target selector -->
+          <div class="sensitivity-center">
+            <div class="card sensitivity-slider-card">
+              <div class="card-h">
+                <h2>Sweep range</h2>
+                <span class="card-meta mono" id="sensitivity-slider-meta">no param selected</span>
+              </div>
+              <div class="sensitivity-slider-row">
+                <span class="mono" id="sensitivity-slider-min">—</span>
+                <input
+                  type="range"
+                  id="sensitivity-slider"
+                  class="sensitivity-slider"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value="50"
+                  disabled
+                />
+                <span class="mono" id="sensitivity-slider-max">—</span>
+                <span class="mono cyan" id="sensitivity-slider-val">—</span>
+              </div>
+              <div class="sensitivity-progress" id="sensitivity-progress" hidden>
+                <div class="sensitivity-progress-bar"><i id="sensitivity-progress-fill" style="width:0%"></i></div>
+                <span class="mono" id="sensitivity-progress-label">0 / 1000</span>
+              </div>
+            </div>
+
+            <div class="card sensitivity-chart-card">
+              <div class="card-h">
+                <h2 id="sensitivity-chart-title">RTP curve</h2>
+                <span class="card-meta" id="sensitivity-chart-meta">awaiting sweep</span>
+              </div>
+              <canvas
+                id="sensitivity-canvas"
+                class="sensitivity-canvas"
+                width="720"
+                height="320"
+                role="img"
+                aria-label="RTP sweep curve"
+              ></canvas>
+              <div id="sensitivity-tooltip" class="sensitivity-tooltip" hidden></div>
+
+              <div class="sensitivity-2d-targets" id="sensitivity-2d-targets" hidden>
+                <label class="seg">Param B
+                  <select id="sensitivity-param-b"></select>
+                </label>
+                <span class="card-meta">2D heatmap · cyan low → amber high · click cell to set both</span>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <div class="card-h"><h2>Volatility</h2><span class="card-meta">σ along sweep</span></div>
-            <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
-              <path d="M 10 140 L 50 132 L 90 128 L 130 122 L 170 116 L 210 110 L 250 102 L 290 92 L 330 80 L 370 68" fill="none" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="3 2"/>
-            </svg>
-          </div>
+
+          <!-- Right: A/B comparator + sweep history -->
+          <aside class="sensitivity-ab card" aria-label="A/B comparator">
+            <div class="card-h">
+              <h2>A / B compare</h2>
+              <span class="card-meta">delta = B − A</span>
+            </div>
+            <div class="sensitivity-ab-grid">
+              <div class="sensitivity-ab-col">
+                <div class="caps">Config A</div>
+                <div class="sensitivity-ab-row"><span>RTP</span><b class="mono cyan" id="sensitivity-ab-a-rtp">—</b></div>
+                <div class="sensitivity-ab-row"><span>Hit</span><b class="mono" id="sensitivity-ab-a-hit">—</b></div>
+                <div class="sensitivity-ab-row"><span>σ</span><b class="mono" id="sensitivity-ab-a-sigma">—</b></div>
+              </div>
+              <div class="sensitivity-ab-col">
+                <div class="caps">Config B</div>
+                <div class="sensitivity-ab-row"><span>RTP</span><b class="mono cyan" id="sensitivity-ab-b-rtp">—</b></div>
+                <div class="sensitivity-ab-row"><span>Hit</span><b class="mono" id="sensitivity-ab-b-hit">—</b></div>
+                <div class="sensitivity-ab-row"><span>σ</span><b class="mono" id="sensitivity-ab-b-sigma">—</b></div>
+              </div>
+              <div class="sensitivity-ab-col">
+                <div class="caps">Δ</div>
+                <div class="sensitivity-ab-row"><span>RTP</span><b class="mono" id="sensitivity-ab-d-rtp">—</b></div>
+                <div class="sensitivity-ab-row"><span>Hit</span><b class="mono" id="sensitivity-ab-d-hit">—</b></div>
+                <div class="sensitivity-ab-row"><span>σ</span><b class="mono" id="sensitivity-ab-d-sigma">—</b></div>
+              </div>
+            </div>
+
+            <div class="card-h sensitivity-history-h">
+              <h2>Sweep history</h2>
+              <select id="sensitivity-history-pick" aria-label="Past sweeps">
+                <option value="">no past sweeps</option>
+              </select>
+            </div>
+            <ul class="sensitivity-history-list" id="sensitivity-history-list"></ul>
+          </aside>
         </div>
         </div>
 
@@ -652,61 +727,139 @@
         <header class="ctx-bar">
           <div class="ctx-bar-l">
             <h1>Certify</h1>
-            <span class="ctx-meta">MC 100M · PAR · op-package · ed25519 sign</span>
+            <span class="ctx-meta">Real MC · 15 jurisdictions · 5 RNG backends · 12-section PAR · operator-package.zip</span>
           </div>
           <div class="ctx-bar-r">
             <button class="btn-ghost" id="btn-run-mc">Run MC <span class="kbd">R</span></button>
-            <button class="btn-ghost">Generate PAR</button>
-            <button class="btn-ghost">Sign HSM</button>
-            <button class="btn-primary">Export ZIP</button>
+            <button class="btn-ghost" id="btn-gen-par">Generate PAR</button>
+            <button class="btn-ghost" id="btn-run-audit">Run Compliance Audit</button>
+            <button class="btn-primary" id="btn-export-zip">Download Operator Package</button>
           </div>
         </header>
 
         <div class="compare-banner" id="cmp-banner-certify" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
 
-        <div class="cert-grid">
-          <div class="card">
-            <div class="card-h"><h2>MC convergence</h2><span class="card-meta">100M spins · CF vs MC delta</span></div>
-            <div class="cert-rows">
-              <div class="cert-row"><span class="cert-lbl">Closed-form RTP</span><b class="mono">95.4218%</b></div>
-              <div class="cert-row"><span class="cert-lbl">MC RTP (100M)</span><b class="mono">95.4187%</b></div>
-              <div class="cert-row"><span class="cert-lbl">Δ (CF − MC)</span><b class="mono cyan">+0.0031%</b></div>
-              <div class="cert-row"><span class="cert-lbl">95% CI half-width</span><b class="mono">±0.0042%</b></div>
-              <div class="cert-row"><span class="cert-lbl">Within tolerance</span><b class="ok">PASS</b></div>
+        <div class="certify-root" id="certify-root">
+
+          <!-- Row 1 — MC control + RNG selector + summary -->
+          <div class="cert-grid certify-controls">
+            <div class="card certify-card-mc">
+              <div class="card-h"><h2>Monte Carlo</h2><span class="card-meta">size · seed · backend</span></div>
+              <div class="certify-body">
+                <div class="certify-mc-sizes" role="group" aria-label="MC sample size">
+                  <button class="certify-mc-size is-active" data-mc-size="100000">100K<small>fast · &lt;3s</small></button>
+                  <button class="certify-mc-size" data-mc-size="1000000">1M<small>~30s · worker</small></button>
+                  <button class="certify-mc-size" data-mc-size="10000000">10M<small>~5min · worker</small></button>
+                  <button class="certify-mc-size" data-mc-size="100000000">100M<small>~50min · chunked</small></button>
+                  <button class="certify-mc-size is-disabled" data-mc-size="1000000000" disabled>1B<small>overnight · CLI</small></button>
+                </div>
+                <div class="certify-mc-progress" id="certify-mc-progress">
+                  <div class="certify-mc-bar"><i id="certify-mc-bar-i" style="width:0%"></i></div>
+                  <div class="certify-mc-meta">
+                    <span id="certify-mc-status">idle</span>
+                    <span id="certify-mc-eta" class="mono">ETA --</span>
+                    <span id="certify-mc-rtp" class="mono cyan">RTP --</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card certify-card-rng">
+              <div class="card-h"><h2>RNG backend</h2><span class="card-meta">5 backends · seed</span></div>
+              <div class="certify-body">
+                <ul class="certify-rng-list" id="certify-rng-list" role="radiogroup" aria-label="RNG backend">
+                  <li><label><input type="radio" name="rng-backend" value="mulberry32"><span class="cert-rng-name">Mulberry32</span><span class="cert-rng-note">legacy / TS parity</span></label></li>
+                  <li><label><input type="radio" name="rng-backend" value="pcg64" checked><span class="cert-rng-name">PCG64</span><span class="cert-rng-note cert-rng-default">default · excellent quality</span></label></li>
+                  <li><label><input type="radio" name="rng-backend" value="xoshiro256ss"><span class="cert-rng-name">Xoshiro256SS</span><span class="cert-rng-note">parallel · high throughput</span></label></li>
+                  <li><label><input type="radio" name="rng-backend" value="philox4x32"><span class="cert-rng-name">Philox4x32</span><span class="cert-rng-note">GPU / deterministic replay</span></label></li>
+                  <li><label><input type="radio" name="rng-backend" value="chacha20"><span class="cert-rng-name">ChaCha20 <span class="cert-rng-uk-badge">UK CRITICAL</span></span><span class="cert-rng-note cert-rng-uk">UKGC RTS-7A CSPRNG</span></label></li>
+                </ul>
+                <div class="certify-seed-row">
+                  <label for="certify-seed">Seed</label>
+                  <input type="text" id="certify-seed" value="0xC0FFEE" spellcheck="false" />
+                  <button class="btn-ghost mini" id="certify-seed-random" type="button">random</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card certify-card-summary">
+              <div class="card-h"><h2>MC convergence</h2><span class="card-meta">CF vs MC delta</span></div>
+              <div class="cert-rows">
+                <div class="cert-row"><span class="cert-lbl">Closed-form RTP</span><b class="mono" id="certify-rtp-cf">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">MC RTP</span><b class="mono" id="certify-rtp-mc">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">Δ (CF − MC)</span><b class="mono cyan" id="certify-rtp-delta">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">95% CI half-width</span><b class="mono" id="certify-rtp-ci">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">Within tolerance</span><b id="certify-rtp-pass">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">Sample size</span><b class="mono" id="certify-rtp-n">—</b></div>
+              </div>
             </div>
           </div>
-          <div class="card">
-            <div class="card-h"><h2>Jurisdictions</h2><span class="card-meta">15 active · all green</span></div>
-            <div class="jur-list">
-              <span class="jur ok">UKGC RTS-14</span>
-              <span class="jur ok">MGA</span>
-              <span class="jur ok">NJ DGE</span>
-              <span class="jur ok">ONT iGO</span>
-              <span class="jur ok">GLI-19</span>
-              <span class="jur ok">SE Spelinspektionen</span>
-              <span class="jur ok">DK Spillemyndigheden</span>
-              <span class="jur ok">PA PGCB</span>
-              <span class="jur ok">MI MGCB</span>
-              <span class="jur ok">DE GGL</span>
-              <span class="jur ok">ES DGOJ</span>
-              <span class="jur ok">CO Coljuegos</span>
-              <span class="jur ok">PT SRIJ</span>
-              <span class="jur ok">RO ONJN</span>
-              <span class="jur ok">CW CGCB</span>
+
+          <!-- Row 2 — 15 jurisdiction grid -->
+          <div class="card certify-card-jur">
+            <div class="card-h"><h2>Jurisdictions</h2><span class="card-meta" id="certify-jur-meta">15 regulators · click chip for rules</span></div>
+            <div class="certify-jur-grid" id="certify-jur-grid" role="grid" aria-label="15 jurisdictions"></div>
+          </div>
+
+          <!-- Row 3 — PAR Sheet (12 sections) -->
+          <div class="card certify-card-par">
+            <div class="card-h"><h2>PAR Sheet · GLI-16 Appendix D</h2><span class="card-meta">12 sections · ed25519-signed</span></div>
+            <div class="certify-par-sections" id="certify-par-sections"></div>
+          </div>
+
+          <!-- Row 4 — Compliance audit + RNG audit -->
+          <div class="cert-grid certify-audits">
+            <div class="card certify-card-compliance">
+              <div class="card-h"><h2>Compliance audit</h2><span class="card-meta" id="certify-audit-meta">run audit to populate</span></div>
+              <div class="certify-audit-body" id="certify-audit-body">
+                <p class="certify-empty">No audit run yet. Click <b>Run Compliance Audit</b>.</p>
+              </div>
+            </div>
+
+            <div class="card certify-card-rng-audit">
+              <div class="card-h"><h2>RNG audit</h2><span class="card-meta">NIST SP 800-22 · ENT · SP 800-90B</span></div>
+              <div class="certify-rng-audit" id="certify-rng-audit"></div>
             </div>
           </div>
-          <div class="card">
-            <div class="card-h"><h2>PAR · audit trail</h2><span class="card-meta">12 sections · ed25519 signed</span></div>
-            <div class="cert-rows">
-              <div class="cert-row"><span class="cert-lbl">Generated</span><b class="mono">2026-05-18 09:14 UTC</b></div>
-              <div class="cert-row"><span class="cert-lbl">Signer</span><b class="mono">Boki · HSM-PROD-01</b></div>
-              <div class="cert-row"><span class="cert-lbl">Cat version</span><b class="mono">v2.63</b></div>
-              <div class="cert-row"><span class="cert-lbl">Wave pin</span><b class="mono">W196 · bf9b1be</b></div>
-              <div class="cert-row"><span class="cert-lbl">Pkg size</span><b class="mono">2.4 MB</b></div>
+
+          <!-- Row 5 — Merkle + HSM + submission tracker + operator package -->
+          <div class="cert-grid certify-footer">
+            <div class="card certify-card-merkle">
+              <div class="card-h"><h2>Merkle commit</h2><span class="card-meta">SHA-256 canonical PAR</span></div>
+              <div class="cert-rows">
+                <div class="cert-row"><span class="cert-lbl">Root</span><b class="mono certify-merkle-root" id="certify-merkle-root">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">HSM signature</span><b class="mono" id="certify-hsm-sig">—</b></div>
+                <div class="cert-row"><span class="cert-lbl">Signer</span><b class="mono" id="certify-hsm-signer">HSM-PROD-01 (mock)</b></div>
+                <div class="cert-row"><span class="cert-lbl">Verified</span><button class="btn-ghost mini" id="certify-verify-sig" type="button">Verify signature</button></div>
+              </div>
+            </div>
+
+            <div class="card certify-card-package">
+              <div class="card-h"><h2>Operator package</h2><span class="card-meta">153-file bundle preview</span></div>
+              <div class="certify-pkg-body" id="certify-pkg-body">
+                <p class="certify-empty">Click <b>Download Operator Package</b> to generate ZIP.</p>
+              </div>
+            </div>
+
+            <div class="card certify-card-submit">
+              <div class="card-h"><h2>Submission tracker</h2><span class="card-meta">per-jurisdiction status</span></div>
+              <div class="certify-submit-list" id="certify-submit-list"></div>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- ============= CERTIFY · Jurisdiction modal ============= -->
+      <div class="modal-base certify-jur-modal" id="certify-jur-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="certify-jur-modal-title">
+        <div class="modal-backdrop" id="certify-jur-modal-backdrop"></div>
+        <div class="modal-box certify-jur-modal-box" role="document">
+          <header class="modal-h">
+            <h3 id="certify-jur-modal-title">Jurisdiction</h3>
+            <button class="modal-close" id="certify-jur-modal-close" aria-label="Close">×</button>
+          </header>
+          <div class="modal-body" id="certify-jur-modal-body"></div>
+        </div>
+      </div>
 
     </main>
 

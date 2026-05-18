@@ -11,6 +11,9 @@ import type { StudioVariant, StudioPersistedState, StudioWorkspace } from './typ
 import { createPlayTab, type PlayTabBridge } from './playTab.js';
 import { parseGDD, gddToIR } from './gdd-parser.js';
 import type { ExtractedGDD } from './gdd-parser.js';
+import { createComposeBridge, type ComposeBridge } from './compose.js';
+import { createSensitivityBridge, type SensitivityBridge } from './sensitivity.js';
+import { installCertify, type CertifyBridge } from './certify.js';
 import {
   estimateFullRtp,
   type PaytableEntry,
@@ -42,6 +45,9 @@ declare global {
       setMGap: (m: string | null) => void;
       state: unknown;
     };
+    __studio_compose__?: ComposeBridge;
+    __studio_sensitivity__?: SensitivityBridge;
+    __studio_certify__?: CertifyBridge;
   }
 }
 
@@ -364,6 +370,35 @@ function boot(): void {
     hook().logActivity('W198 · Pixi renderer ready');
   } catch (err) {
     console.warn('[W198] play tab wire failed:', err);
+  }
+
+  // Wire the COMPOSE tab → node-graph editor bridge (W199-COMPOSE).
+  try {
+    window.__studio_compose__ = createComposeBridge();
+    hook().logActivity('W199-COMPOSE · feature graph editor ready');
+  } catch (err) {
+    console.warn('[W199-COMPOSE] compose bridge install failed:', err);
+  }
+
+  // Wire the SENSITIVITY tab → param-sweep bridge (W199-SENSITIVITY).
+  try {
+    window.__studio_sensitivity__ = createSensitivityBridge();
+    hook().logActivity('W199-SENSITIVITY · param sweep engine ready');
+  } catch (err) {
+    console.warn('[W199-SENSITIVITY] sensitivity bridge install failed:', err);
+  }
+
+  // Wire the CERTIFY tab → MC + PAR + jurisdiction + op-pkg (W199-CERTIFY).
+  try {
+    const getIR = () => buildIR() as import('@engine/ir/types.js').SlotGameIR;
+    const getCfRtp = () => {
+      try { return computeRTP().rtp; } catch { return getCurrentVariant().rtp / 100; }
+    };
+    const certify = installCertify(getIR, getCfRtp);
+    window.__studio_certify__ = certify;
+    hook().logActivity('W199-CERTIFY · MC + PAR + op-pkg ready');
+  } catch (err) {
+    console.warn('[W199-CERTIFY] certify bridge install failed:', err);
   }
   hook().logActivity('engine wired · real RTP estimator online');
   // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).

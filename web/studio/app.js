@@ -332,6 +332,9 @@
     $$(".panel").forEach(p => p.classList.toggle("is-active", p.id === "panel-" + key));
     setRailContext(key === "play" ? "spin" : (getActiveVariant().selection?.kind || "overall"));
     applyCompareViewToTab(key);
+    if (key === "compose") {
+      try { renderCompose(); } catch (e) { console.warn("[compose] render failed:", e); }
+    }
   }
   $$(".tab").forEach(btn => btn.addEventListener("click", () => goToTab(btn.dataset.tab, /*manual=*/true)));
   const tabsEls = $$(".tab");
@@ -2506,7 +2509,16 @@
     if (e.key === "?" && !cmd) { e.preventDefault(); showModal("help-modal"); return; }
     if (e.key.toLowerCase() === "b" && active === "build") { e.preventDefault(); doAutoBalance("kbd", false); return; }
     if (e.key === " " && active === "play")               { e.preventDefault(); spin(); return; }
-    if (e.key.toLowerCase() === "r" && active === "certify"){ e.preventDefault(); toast({ kind:"cyan", msg:"MC 100M queued · ETA ~3 min" }); return; }
+    if (e.key.toLowerCase() === "r" && active === "certify"){
+      e.preventDefault();
+      if (typeof window !== "undefined" && window.__studio_certify__) {
+        try { window.__studio_certify__.runMc(); toast({ kind: "cyan", msg: "MC running · check progress bar" }); }
+        catch(err) { toast({ kind: "rose", msg: "MC start failed: " + (err && err.message ? err.message : err) }); }
+      } else {
+        toast({ kind: "cyan", msg: "MC queued (bridge not ready)" });
+      }
+      return;
+    }
   });
 
   /* ============================================================
@@ -2533,6 +2545,396 @@
     });
   }
 
+  /* ============================================================
+     SENSITIVITY (W199-SENSITIVITY) — parameter sweep + chart + A/B
+     ============================================================ */
+  const sensState = {
+    params: [],
+    activeParamId: null,
+    activeParamBId: null,
+    snapshotA: null,
+    snapshotB: null,
+    lastResult: null,
+    lastHeatmap: null,
+    mode: "1d"
+  };
+
+  function sensBridge() {
+    return (typeof window !== "undefined" && window.__studio_sensitivity__) || null;
+  }
+
+  function fmtRtp(v) {
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    return (v * 100).toFixed(2) + "%";
+  }
+  function fmtSigned(v, scale, suffix) {
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    const x = v * (scale || 1);
+    return (x >= 0 ? "+" : "") + x.toFixed(2) + (suffix || "");
+  }
+
+  function renderSensitivity() {
+    const bridge = sensBridge();
+    if (!bridge) return;
+    const v = getActiveVariant();
+    sensState.params = bridge.detectParams(v);
+    if (!sensState.activeParamId && sensState.params.length) {
+      sensState.activeParamId = sensState.params[0].id;
+    }
+    if (!sensState.activeParamBId && sensState.params.length > 1) {
+      sensState.activeParamBId = sensState.params[1].id;
+    }
+    renderSensitivityParamList();
+    renderSensitivitySlider();
+    renderSensitivityAB();
+    renderSensitivityHistory();
+    renderSensitivityChart();
+    populateSensitivityParamBSelect();
+  }
+
+  function renderSensitivityParamList() {
+    const host = $("#sensitivity-param-list");
+    const countEl = $("#sensitivity-param-count");
+    if (!host) return;
+    host.innerHTML = "";
+    if (countEl) countEl.textContent = "(" + sensState.params.length + ")";
+    sensState.params.forEach(p => {
+      const row = document.createElement("div");
+      row.className = "sensitivity-param-row" + (p.id === sensState.activeParamId ? " is-active" : "");
+      row.setAttribute("role", "option");
+      row.setAttribute("data-param-id", p.id);
+      row.innerHTML =
+        '<span class="sp-lbl">' + p.label + "</span>" +
+        '<span class="sp-cur">' + (Number(p.current).toFixed(2)) + "</span>" +
+        '<span class="sp-mark">✓</span>';
+      row.addEventListener("click", () => {
+        sensState.activeParamId = p.id;
+        renderSensitivity();
+      });
+      host.appendChild(row);
+    });
+  }
+
+  function populateSensitivityParamBSelect() {
+    const sel = $("#sensitivity-param-b");
+    if (!sel) return;
+    sel.innerHTML = "";
+    sensState.params.forEach(p => {
+      if (p.id === sensState.activeParamId) return;
+      const opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.label;
+      if (p.id === sensState.activeParamBId) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+
+  function getActiveParam() {
+    return sensState.params.find(p => p.id === sensState.activeParamId) || null;
+  }
+  function getParamB() {
+    return sensState.params.find(p => p.id === sensState.activeParamBId) || null;
+  }
+
+  function renderSensitivitySlider() {
+    const p = getActiveParam();
+    const slider = $("#sensitivity-slider");
+    const meta = $("#sensitivity-slider-meta");
+    const minEl = $("#sensitivity-slider-min");
+    const maxEl = $("#sensitivity-slider-max");
+    const valEl = $("#sensitivity-slider-val");
+    if (!slider || !meta) return;
+    if (!p) {
+      slider.disabled = true;
+      meta.textContent = "no param selected";
+      if (minEl) minEl.textContent = "—";
+      if (maxEl) maxEl.textContent = "—";
+      if (valEl) valEl.textContent = "—";
+      return;
+    }
+    slider.disabled = false;
+    meta.textContent = p.label + " ∈ [" + p.min.toFixed(2) + ", " + p.max.toFixed(2) + "]";
+    if (minEl) minEl.textContent = p.min.toFixed(2);
+    if (maxEl) maxEl.textContent = p.max.toFixed(2);
+    // map current value into 0..1000 slider integer space
+    const span = p.max - p.min || 1;
+    const t = Math.max(0, Math.min(1, (p.current - p.min) / span));
+    slider.min = 0;
+    slider.max = 1000;
+    slider.step = 1;
+    slider.value = String(Math.round(t * 1000));
+    if (valEl) valEl.textContent = Number(p.current).toFixed(2);
+  }
+
+  function onSensitivitySliderInput() {
+    const p = getActiveParam();
+    const slider = $("#sensitivity-slider");
+    const valEl = $("#sensitivity-slider-val");
+    if (!p || !slider) return;
+    const t = Number(slider.value) / 1000;
+    const x = p.min + (p.max - p.min) * t;
+    if (valEl) valEl.textContent = x.toFixed(2);
+    // re-render chart with marker at new x
+    renderSensitivityChart(x);
+  }
+
+  function renderSensitivityAB() {
+    const bridge = sensBridge();
+    if (!bridge) return;
+    const v = getActiveVariant();
+    // A = current variant snapshot (always recomputed).
+    sensState.snapshotA = bridge.snapshotVariant(v);
+    if (sensState.lastResult) {
+      const last = sensState.lastResult.points[sensState.lastResult.points.length - 1];
+      sensState.snapshotB = {
+        rtp: last ? last.rtp : sensState.snapshotA.rtp,
+        hitFreq: last ? last.hitFreq : sensState.snapshotA.hitFreq,
+        sigma: last ? last.variance : sensState.snapshotA.sigma
+      };
+    } else {
+      sensState.snapshotB = { ...sensState.snapshotA };
+    }
+    const A = sensState.snapshotA;
+    const B = sensState.snapshotB;
+    const d = bridge.abDelta(A, B);
+    $("#sensitivity-ab-a-rtp") && ($("#sensitivity-ab-a-rtp").textContent = fmtRtp(A.rtp));
+    $("#sensitivity-ab-a-hit") && ($("#sensitivity-ab-a-hit").textContent = (A.hitFreq * 100).toFixed(2) + "%");
+    $("#sensitivity-ab-a-sigma") && ($("#sensitivity-ab-a-sigma").textContent = A.sigma.toFixed(2));
+    $("#sensitivity-ab-b-rtp") && ($("#sensitivity-ab-b-rtp").textContent = fmtRtp(B.rtp));
+    $("#sensitivity-ab-b-hit") && ($("#sensitivity-ab-b-hit").textContent = (B.hitFreq * 100).toFixed(2) + "%");
+    $("#sensitivity-ab-b-sigma") && ($("#sensitivity-ab-b-sigma").textContent = B.sigma.toFixed(2));
+    $("#sensitivity-ab-d-rtp") && ($("#sensitivity-ab-d-rtp").textContent = fmtSigned(d.rtp, 100, "pp"));
+    $("#sensitivity-ab-d-hit") && ($("#sensitivity-ab-d-hit").textContent = fmtSigned(d.hitFreq, 100, "pp"));
+    $("#sensitivity-ab-d-sigma") && ($("#sensitivity-ab-d-sigma").textContent = fmtSigned(d.sigma, 1, ""));
+  }
+
+  function renderSensitivityHistory() {
+    const bridge = sensBridge();
+    if (!bridge) return;
+    const v = getActiveVariant();
+    const history = bridge.readHistory(v);
+    const pick = $("#sensitivity-history-pick");
+    const list = $("#sensitivity-history-list");
+    if (pick) {
+      pick.innerHTML = "";
+      if (!history.length) {
+        const o = document.createElement("option");
+        o.value = "";
+        o.textContent = "no past sweeps";
+        pick.appendChild(o);
+      } else {
+        history.slice().reverse().forEach((h, i) => {
+          const o = document.createElement("option");
+          o.value = String(history.length - 1 - i);
+          o.textContent = new Date(h.at).toLocaleTimeString() + " · " + h.paramLabel;
+          pick.appendChild(o);
+        });
+      }
+    }
+    if (list) {
+      list.innerHTML = "";
+      history.slice().reverse().slice(0, 8).forEach(h => {
+        const li = document.createElement("li");
+        li.innerHTML =
+          '<span>' + h.paramLabel + ' · ' + h.pointCount + 'p</span>' +
+          '<b>' + fmtRtp(h.minRtp) + '→' + fmtRtp(h.maxRtp) + '</b>';
+        list.appendChild(li);
+      });
+    }
+  }
+
+  function renderSensitivityChart(markerX) {
+    const bridge = sensBridge();
+    const canvas = $("#sensitivity-canvas");
+    const titleEl = $("#sensitivity-chart-title");
+    const metaEl = $("#sensitivity-chart-meta");
+    const targets2d = $("#sensitivity-2d-targets");
+    if (!bridge || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    // Use the device pixel resolution.
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.clientWidth || 720;
+    const h = canvas.clientHeight || 320;
+    if (canvas.width !== Math.round(w * dpr)) {
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (sensState.mode === "2d") {
+      if (targets2d) targets2d.hidden = false;
+      if (titleEl) titleEl.textContent = "RTP heatmap";
+      if (!sensState.lastHeatmap) {
+        if (metaEl) metaEl.textContent = "click Run sweep";
+        ctx.fillStyle = "#0E1219";
+        ctx.fillRect(0, 0, w, h);
+        return;
+      }
+      const p = getActiveParam();
+      const b = getParamB();
+      if (metaEl) metaEl.textContent = (p ? p.label : "?") + " × " + (b ? b.label : "?");
+      bridge.renderHeatmap(ctx, sensState.lastHeatmap, { width: w, height: h, title: "" });
+      return;
+    }
+    if (targets2d) targets2d.hidden = true;
+    if (titleEl) titleEl.textContent = "RTP curve";
+    if (!sensState.lastResult) {
+      if (metaEl) metaEl.textContent = "awaiting sweep";
+      ctx.fillStyle = "#0E1219";
+      ctx.fillRect(0, 0, w, h);
+      return;
+    }
+    if (metaEl) {
+      metaEl.textContent =
+        sensState.lastResult.points.length + " pts · " +
+        sensState.lastResult.durationMs.toFixed(0) + " ms";
+    }
+    bridge.renderLineChart(ctx, sensState.lastResult, {
+      width: w,
+      height: h,
+      markerX: markerX !== undefined ? markerX : sensState.lastResult.baselineX,
+      title: ""
+    });
+  }
+
+  async function runSensitivitySweep() {
+    const bridge = sensBridge();
+    if (!bridge) return;
+    const v = getActiveVariant();
+    const p = getActiveParam();
+    if (!p) {
+      toast({ kind: "warn", msg: "Select a parameter first" });
+      return;
+    }
+    const samplesInput = $("#sensitivity-samples");
+    const samples = Math.max(50, Math.min(2000, Number(samplesInput && samplesInput.value || 1000)));
+    const runBtn = $("#sensitivity-run");
+    if (runBtn) runBtn.disabled = true;
+    const progressWrap = $("#sensitivity-progress");
+    const progressFill = $("#sensitivity-progress-fill");
+    const progressLabel = $("#sensitivity-progress-label");
+    if (progressWrap) progressWrap.hidden = false;
+    try {
+      if (sensState.mode === "2d") {
+        const b = getParamB();
+        if (!b) {
+          toast({ kind: "warn", msg: "Select two params for 2D" });
+          return;
+        }
+        sensState.lastHeatmap = bridge.runHeatmap(v, p, b, {});
+      } else {
+        const result = await bridge.runSweepAsync(v, p, {
+          samples,
+          onProgress: (done, total) => {
+            const pct = total > 0 ? (done / total) * 100 : 0;
+            if (progressFill) progressFill.style.width = pct.toFixed(1) + "%";
+            if (progressLabel) progressLabel.textContent = done + " / " + total;
+          }
+        });
+        sensState.lastResult = result;
+        const entry = bridge.toHistoryEntry(result, p.label);
+        bridge.appendHistory(v, entry);
+        toast({
+          kind: "cyan",
+          msg: "Sweep " + p.label + " · " + result.points.length + " pts · " + result.durationMs.toFixed(0) + "ms",
+          ttl: 2400
+        });
+      }
+      renderSensitivity();
+    } finally {
+      if (runBtn) runBtn.disabled = false;
+      if (progressWrap) progressWrap.hidden = true;
+    }
+  }
+
+  function exportSensitivityCSV() {
+    const bridge = sensBridge();
+    if (!bridge || !sensState.lastResult) {
+      toast({ kind: "warn", msg: "Run a sweep first" });
+      return;
+    }
+    const csv = bridge.toCSV(sensState.lastResult);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sweep-" + sensState.lastResult.paramId.replace(/[^a-z0-9_-]/gi, "_") + ".csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast({ kind: "cyan", msg: "CSV exported · " + a.download, ttl: 2400 });
+  }
+
+  function saveBAsNewVariant() {
+    const bridge = sensBridge();
+    if (!bridge || !sensState.lastResult) {
+      toast({ kind: "warn", msg: "Run a sweep first" });
+      return;
+    }
+    const ws = getActiveWorkspace();
+    const v = getActiveVariant();
+    const p = getActiveParam();
+    if (!p) return;
+    // Use the slider value as the chosen B point.
+    const slider = $("#sensitivity-slider");
+    const t = slider ? Number(slider.value) / 1000 : 0.5;
+    const xB = p.min + (p.max - p.min) * t;
+    const clone = bridge.cloneVariant(v);
+    bridge.applyParam(clone, p, xB);
+    clone.id = "var-" + Math.random().toString(36).slice(2, 8);
+    clone.name = v.name + " · B@" + xB.toFixed(2);
+    clone.activity = [];
+    clone.lastSavedAt = Date.now();
+    ws.variants[clone.id] = clone;
+    ws.variantOrder.push(clone.id);
+    ws.activeVariantId = clone.id;
+    rerenderAll();
+    toast({ kind: "cyan", msg: "Saved B as variant '" + clone.name + "'", ttl: 2400 });
+  }
+
+  // Bind sensitivity controls once after DOM is ready.
+  function bindSensitivityControls() {
+    const runBtn = $("#sensitivity-run");
+    if (runBtn) runBtn.addEventListener("click", () => { void runSensitivitySweep(); });
+    const slider = $("#sensitivity-slider");
+    if (slider) slider.addEventListener("input", onSensitivitySliderInput);
+    const exportBtn = $("#sensitivity-export-csv");
+    if (exportBtn) exportBtn.addEventListener("click", exportSensitivityCSV);
+    const saveBtn = $("#sensitivity-save-b");
+    if (saveBtn) saveBtn.addEventListener("click", saveBAsNewVariant);
+    const mode1 = $("#sensitivity-mode-1d");
+    const mode2 = $("#sensitivity-mode-2d");
+    if (mode1) mode1.addEventListener("click", () => {
+      sensState.mode = "1d";
+      mode1.classList.add("is-active");
+      if (mode2) mode2.classList.remove("is-active");
+      renderSensitivityChart();
+    });
+    if (mode2) mode2.addEventListener("click", () => {
+      sensState.mode = "2d";
+      mode2.classList.add("is-active");
+      if (mode1) mode1.classList.remove("is-active");
+      renderSensitivityChart();
+    });
+    const pB = $("#sensitivity-param-b");
+    if (pB) pB.addEventListener("change", () => {
+      sensState.activeParamBId = pB.value;
+      renderSensitivityChart();
+    });
+    const history = $("#sensitivity-history-pick");
+    if (history) history.addEventListener("change", () => {
+      // History entries are summaries — selecting just shows the meta,
+      // we don't have the raw points cached. Toast for now.
+      if (!history.value) return;
+      toast({ kind: "cyan", msg: "Selected history entry · re-run sweep to view curve", ttl: 2400 });
+    });
+  }
+  bindSensitivityControls();
+  // Wire SENSITIVITY tab activation to a render.
+  const sensTabBtn = $("#tab-sensitivity");
+  if (sensTabBtn) sensTabBtn.addEventListener("click", () => renderSensitivity());
+
   function rerenderAll() {
     const v = getActiveVariant();
     const ws = getActiveWorkspace();
@@ -2545,6 +2947,9 @@
     rerenderActive();
     renderCatalog();
     renderPlayGrid(false);
+    // sensitivity tab — only render the param list (cheap); the chart
+    // stays cached so a workspace switch doesn't blow away results.
+    try { renderSensitivity(); } catch (e) { /* sens bridge may not be ready yet */ }
 
     // update IR name in ctx-bar
     const irNameEl = $("#ctx-irname");
@@ -2613,6 +3018,409 @@
     }, 400);
   }
   init();
+
+  /* ============================================================
+     COMPOSE TAB · W199 node-graph feature editor (renderer layer)
+     The graph state + logic lives in TS (web/studio/src/compose.ts)
+     and is exposed via window.__studio_compose__. This block owns
+     ONLY the DOM render/interaction layer.
+     ============================================================ */
+  let composeUI = {
+    selected: new Set(),
+    pending: null,      // { node, port, side } when waiting for second click
+    drag: null,         // { id, dx, dy } while dragging a node
+    validateIssues: [],
+  };
+
+  function getCompose() {
+    return window.__studio_compose__ || null;
+  }
+
+  function renderCompose() {
+    const c = getCompose();
+    if (!c) return;
+    renderComposePalette(c);
+    renderComposeTemplateBar(c);
+    renderComposeCanvas(c);
+    renderComposeInspector(c);
+    renderComposeRTPBars(c);
+    renderComposeMeta(c);
+    bindComposeToolbar(c);
+  }
+
+  function renderComposePalette(c) {
+    const host = $("#compose-palette");
+    if (!host || host.dataset.bound === "1") {
+      // already bound — palette never changes
+      return;
+    }
+    const cats = ["Triggers", "Mechanics", "Modifiers"];
+    const html = cats.map(cat => {
+      const items = c.palette.filter(p => p.category === cat);
+      return `<div class="compose-palette-cat">${cat}</div>` +
+        items.map(p => `
+          <div class="compose-palette-item" draggable="true" data-kind="${p.kind}" data-cat="${cat}" title="${p.formula}">
+            <span class="cp-dot"></span>
+            <span>${p.label}</span>
+          </div>
+        `).join("");
+    }).join("");
+    host.innerHTML = html;
+    host.dataset.bound = "1";
+    host.querySelectorAll(".compose-palette-item").forEach(el => {
+      el.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", el.dataset.kind);
+        e.dataTransfer.effectAllowed = "copy";
+      });
+    });
+    // Canvas drop target binding (only once, alongside palette init).
+    const canvas = $("#compose-canvas");
+    if (canvas && canvas.dataset.dropBound !== "1") {
+      canvas.dataset.dropBound = "1";
+      canvas.addEventListener("dragover", e => { e.preventDefault(); });
+      canvas.addEventListener("drop", e => {
+        e.preventDefault();
+        const kind = e.dataTransfer.getData("text/plain");
+        if (!kind) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = Math.max(8, e.clientX - rect.left - 20);
+        const y = Math.max(8, e.clientY - rect.top - 12);
+        const node = c.addNode(kind, x, y);
+        if (node) {
+          composeUI.selected = new Set([node.id]);
+          renderComposeCanvas(c);
+          renderComposeInspector(c);
+          renderComposeRTPBars(c);
+          renderComposeMeta(c);
+        }
+      });
+      canvas.addEventListener("click", e => {
+        // Click background → clear selection.
+        if (e.target === canvas) {
+          composeUI.selected = new Set();
+          composeUI.pending = null;
+          renderComposeCanvas(c);
+          renderComposeInspector(c);
+        }
+      });
+      canvas.addEventListener("keydown", e => {
+        if ((e.key === "Delete" || e.key === "Backspace") && composeUI.selected.size > 0) {
+          c.removeNodes(Array.from(composeUI.selected));
+          composeUI.selected = new Set();
+          renderCompose();
+        }
+      });
+    }
+  }
+
+  function renderComposeTemplateBar(c) {
+    const host = $("#compose-template-bar");
+    if (!host) return;
+    if (host.dataset.bound === "1") return;
+    host.dataset.bound = "1";
+    host.innerHTML = c.templates.map(t =>
+      `<button class="btn-ghost" data-template="${t.id}">${t.label}</button>`
+    ).join("");
+    host.querySelectorAll("[data-template]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        c.loadTemplate(btn.dataset.template);
+        composeUI.selected = new Set();
+        composeUI.pending = null;
+        renderCompose();
+      });
+    });
+  }
+
+  function renderComposeCanvas(c) {
+    const canvas = $("#compose-canvas");
+    if (!canvas) return;
+    const svg = $("#compose-edges");
+    // Remove existing node DOM
+    canvas.querySelectorAll(".cgnode").forEach(n => n.remove());
+    const g = c.getGraph();
+    const issuesByNode = new Map();
+    composeUI.validateIssues.forEach(iss => {
+      if (iss.nodeId) {
+        if (!issuesByNode.has(iss.nodeId)) issuesByNode.set(iss.nodeId, []);
+        issuesByNode.get(iss.nodeId).push(iss);
+      }
+    });
+    for (const n of g.nodes) {
+      const entry = c.palette.find(p => p.kind === n.kind);
+      if (!entry) continue;
+      const el = document.createElement("div");
+      el.className = "cgnode";
+      if (composeUI.selected.has(n.id)) el.classList.add("is-selected");
+      if (issuesByNode.has(n.id)) el.classList.add("is-invalid");
+      el.style.left = n.x + "px";
+      el.style.top = n.y + "px";
+      el.dataset.id = n.id;
+      el.innerHTML = `
+        <div class="cgnode-h">
+          <span>${entry.label}</span>
+          <span class="cgnode-badge" data-cat="${entry.category}">${entry.category}</span>
+        </div>
+        <div class="cgnode-body">${Object.keys(n.params).length} params</div>
+        <div class="cgnode-ports">
+          <span class="cgnode-port is-in"  data-port="${entry.inputs[0] || ''}"  data-side="in"  title="${entry.inputs.join(', ') || '(no inputs)'}"></span>
+          <span class="cgnode-port is-out" data-port="${entry.outputs[0] || ''}" data-side="out" title="${entry.outputs.join(', ') || '(no outputs)'}"></span>
+        </div>
+      `;
+      // Node-level interactions
+      el.addEventListener("mousedown", ev => {
+        if (ev.target.classList.contains("cgnode-port")) return; // port handles its own
+        const rect = el.getBoundingClientRect();
+        composeUI.drag = {
+          id: n.id,
+          offsetX: ev.clientX - rect.left,
+          offsetY: ev.clientY - rect.top,
+        };
+        if (ev.shiftKey) {
+          if (composeUI.selected.has(n.id)) composeUI.selected.delete(n.id);
+          else composeUI.selected.add(n.id);
+        } else {
+          composeUI.selected = new Set([n.id]);
+        }
+        renderComposeCanvas(c);
+        renderComposeInspector(c);
+        ev.stopPropagation();
+      });
+      el.querySelectorAll(".cgnode-port").forEach(p => {
+        p.addEventListener("click", ev => {
+          ev.stopPropagation();
+          const side = p.dataset.side;
+          const port = p.dataset.port;
+          if (!port) return;
+          if (!composeUI.pending) {
+            composeUI.pending = { nodeId: n.id, port, side };
+            p.classList.add("is-active");
+          } else {
+            // complete the connection (out → in)
+            const a = composeUI.pending;
+            let fromNode, fromPort, toNode, toPort;
+            if (a.side === "out" && side === "in") {
+              fromNode = a.nodeId; fromPort = a.port;
+              toNode = n.id; toPort = port;
+            } else if (a.side === "in" && side === "out") {
+              fromNode = n.id; fromPort = port;
+              toNode = a.nodeId; toPort = a.port;
+            } else {
+              composeUI.pending = null;
+              renderComposeCanvas(c);
+              return;
+            }
+            c.addEdge(fromNode, fromPort, toNode, toPort);
+            composeUI.pending = null;
+            renderComposeCanvas(c);
+            renderComposeRTPBars(c);
+            renderComposeMeta(c);
+          }
+        });
+      });
+      canvas.appendChild(el);
+    }
+    drawComposeEdges(c, svg);
+  }
+
+  function drawComposeEdges(c, svg) {
+    if (!svg) return;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const g = c.getGraph();
+    const nodeMap = new Map(g.nodes.map(n => [n.id, n]));
+    const NODE_W = 200, NODE_H = 60;
+    for (const e of g.edges) {
+      const a = nodeMap.get(e.fromNode);
+      const b = nodeMap.get(e.toNode);
+      if (!a || !b) continue;
+      const x1 = a.x + NODE_W + 6;
+      const y1 = a.y + NODE_H;
+      const x2 = b.x - 6;
+      const y2 = b.y + NODE_H;
+      const dx = Math.max(40, (x2 - x1) / 2);
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("class", "ce-path");
+      path.setAttribute("d", `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+      svg.appendChild(path);
+    }
+  }
+
+  function renderComposeInspector(c) {
+    const host = $("#compose-inspector");
+    if (!host) return;
+    const ids = Array.from(composeUI.selected);
+    if (ids.length !== 1) {
+      host.innerHTML = `<div class="compose-inspector-empty">${
+        ids.length === 0 ? "Select a node to inspect its params and formula." :
+        `${ids.length} nodes selected — press Delete to remove, or click one node to inspect.`
+      }</div>`;
+      return;
+    }
+    const g = c.getGraph();
+    const node = g.nodes.find(n => n.id === ids[0]);
+    if (!node) {
+      host.innerHTML = `<div class="compose-inspector-empty">(node missing)</div>`;
+      return;
+    }
+    const entry = c.palette.find(p => p.kind === node.kind);
+    const nodeIssues = composeUI.validateIssues.filter(i => i.nodeId === node.id);
+    const issuesHtml = nodeIssues.length
+      ? `<div class="ci-issues">${nodeIssues.map(i => i.message).join("<br>")}</div>`
+      : "";
+    host.innerHTML = `
+      <h3>${entry.label} <span class="cgnode-badge" data-cat="${entry.category}">${entry.category}</span></h3>
+      <div class="compose-params"></div>
+      <div class="ci-formula">${entry.formula}</div>
+      ${issuesHtml}
+      <div class="ci-actions">
+        <button class="btn-ghost" id="compose-insert-catalog">Insert from CATALOG…</button>
+        <button class="btn-ghost" id="compose-remove-node">Delete node</button>
+      </div>
+    `;
+    const params = host.querySelector(".compose-params");
+    Object.entries(node.params).forEach(([k, v]) => {
+      const row = document.createElement("div");
+      row.className = "ci-row";
+      const label = document.createElement("label");
+      label.textContent = k;
+      const input = document.createElement("input");
+      input.type = typeof v === "number" ? "number" : "text";
+      input.value = Array.isArray(v) ? v.join(",") : String(v);
+      input.addEventListener("change", () => {
+        if (typeof v === "number") {
+          const nv = Number(input.value);
+          if (!Number.isNaN(nv)) node.params[k] = nv;
+        } else if (Array.isArray(v)) {
+          node.params[k] = input.value.split(",").map(s => {
+            const n = Number(s.trim());
+            return Number.isNaN(n) ? s.trim() : n;
+          });
+        } else {
+          node.params[k] = input.value;
+        }
+      });
+      row.appendChild(label);
+      row.appendChild(input);
+      params.appendChild(row);
+    });
+    const insertBtn = host.querySelector("#compose-insert-catalog");
+    if (insertBtn) insertBtn.addEventListener("click", () => goToTab("catalog"));
+    const rmBtn = host.querySelector("#compose-remove-node");
+    if (rmBtn) rmBtn.addEventListener("click", () => {
+      c.removeNodes([node.id]);
+      composeUI.selected = new Set();
+      renderCompose();
+    });
+  }
+
+  function renderComposeRTPBars(c) {
+    const host = $("#compose-rtp-bars");
+    if (!host) return;
+    const r = c.composedRTP();
+    const segs = [
+      `<span class="rtp-seg rtp-seg-base" style="width:${(r.base * 100).toFixed(1)}%"></span>`,
+      ...r.contributions.map(ctr =>
+        `<span class="rtp-seg rtp-seg-feat" style="width:${(ctr.contribution * 100).toFixed(1)}%" title="${ctr.label}"></span>`
+      ),
+    ].join("");
+    const legend = [
+      `<span>Base ${(r.base * 100).toFixed(1)}%</span>`,
+      ...r.contributions.map(ctr => `<span>+${(ctr.contribution * 100).toFixed(2)}% ${ctr.label}</span>`),
+      `<span class="leg-tot mono">total RTP ${(r.total * 100).toFixed(2)}%</span>`,
+    ].join("");
+    host.innerHTML = `
+      <div class="compose-rtp-stack">${segs}</div>
+      <div class="compose-rtp-legend">${legend}</div>
+    `;
+  }
+
+  function renderComposeMeta(c) {
+    const host = $("#compose-ctx-meta");
+    if (!host) return;
+    const g = c.getGraph();
+    host.textContent = `feature graph · ${g.nodes.length} nodes · ${g.edges.length} edges`;
+  }
+
+  function bindComposeToolbar(c) {
+    const vBtn = $("#compose-validate");
+    if (vBtn && vBtn.dataset.bound !== "1") {
+      vBtn.dataset.bound = "1";
+      vBtn.addEventListener("click", () => {
+        const r = c.validate();
+        composeUI.validateIssues = r.issues;
+        const status = $("#compose-validate-status");
+        if (status) {
+          status.classList.remove("is-ok", "is-err");
+          if (r.ok) {
+            status.classList.add("is-ok");
+            status.textContent = "✓ valid composition";
+          } else {
+            status.classList.add("is-err");
+            status.textContent = `${r.issues.length} issue${r.issues.length === 1 ? "" : "s"}`;
+          }
+        }
+        renderComposeCanvas(c);
+        renderComposeInspector(c);
+      });
+    }
+    const eBtn = $("#compose-export");
+    if (eBtn && eBtn.dataset.bound !== "1") {
+      eBtn.dataset.bound = "1";
+      eBtn.addEventListener("click", () => {
+        const snap = c.snapshot();
+        const variant = getActiveVariant();
+        variant.composition = snap;
+        const blob = new Blob([JSON.stringify(snap, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "composition.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        logActivity("compose · exported composition.json");
+      });
+    }
+    const cBtn = $("#compose-clear");
+    if (cBtn && cBtn.dataset.bound !== "1") {
+      cBtn.dataset.bound = "1";
+      cBtn.addEventListener("click", () => {
+        c.setGraph({ nodes: [], edges: [] });
+        composeUI.selected = new Set();
+        composeUI.validateIssues = [];
+        renderCompose();
+      });
+    }
+
+    // Global drag handler — once.
+    if (!document.body.dataset.composeDragBound) {
+      document.body.dataset.composeDragBound = "1";
+      document.addEventListener("mousemove", ev => {
+        if (!composeUI.drag) return;
+        const c2 = getCompose();
+        if (!c2) return;
+        const canvas = $("#compose-canvas");
+        if (!canvas) return;
+        const node = c2.getGraph().nodes.find(n => n.id === composeUI.drag.id);
+        if (!node) return;
+        const rect = canvas.getBoundingClientRect();
+        node.x = Math.max(0, Math.min(rect.width - 200, ev.clientX - rect.left - composeUI.drag.offsetX));
+        node.y = Math.max(0, Math.min(rect.height - 60, ev.clientY - rect.top - composeUI.drag.offsetY));
+        const el = canvas.querySelector(`.cgnode[data-id="${node.id}"]`);
+        if (el) {
+          el.style.left = node.x + "px";
+          el.style.top = node.y + "px";
+        }
+        drawComposeEdges(c2, $("#compose-edges"));
+      });
+      document.addEventListener("mouseup", () => {
+        composeUI.drag = null;
+      });
+    }
+  }
+
+  // Expose for tests + console debugging.
+  window.__studio_compose_render__ = renderCompose;
 
   /* ============================================================
      STUDIO BRIDGE HOOK — installs window.__studio_ui_hook__ so the
