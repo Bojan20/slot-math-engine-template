@@ -14,6 +14,7 @@ import type { ExtractedGDD } from './gdd-parser.js';
 import { createComposeBridge, type ComposeBridge } from './compose.js';
 import { createSensitivityBridge, type SensitivityBridge } from './sensitivity.js';
 import { installCertify, type CertifyBridge } from './certify.js';
+import { installPolish, pushToast, showSpinner, renderEmptyState, type PolishApi } from './polish.js';
 import {
   estimateFullRtp,
   type PaytableEntry,
@@ -48,6 +49,7 @@ declare global {
     __studio_compose__?: ComposeBridge;
     __studio_sensitivity__?: SensitivityBridge;
     __studio_certify__?: CertifyBridge;
+    __studio_polish__?: PolishApi;
   }
 }
 
@@ -277,6 +279,39 @@ function bindImportPicker(): void {
   document.body.appendChild(input);
 }
 
+// ── W200 polish-wrapped parseGDD ────────────────────────────────────
+async function parseGDDWithPolish(file: File): Promise<ExtractedGDD> {
+  // Size guard — 10MB cap (PDF + image-heavy PDFs blow past this).
+  const MAX_BYTES = 10 * 1024 * 1024;
+  if (file.size > MAX_BYTES) {
+    pushToast({
+      kind: 'warn',
+      msg: `<b>${file.name}</b> is ${(file.size / 1024 / 1024).toFixed(1)} MB — chunking not yet supported (>10 MB).`,
+      ttl: 6000,
+    });
+    throw new Error('FILE_TOO_LARGE');
+  }
+  const gddPanel =
+    document.getElementById('panel-build') ||
+    document.getElementById('gdd-body') ||
+    document.body;
+  const dismiss = showSpinner(gddPanel as HTMLElement, `Parsing ${file.name}…`);
+  try {
+    const result = await parseGDD(file);
+    return result;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    pushToast({
+      kind: 'warn',
+      msg: `Could not parse <b>${file.name}</b> — ${msg}. Try different format.`,
+      ttl: 7000,
+    });
+    throw err;
+  } finally {
+    dismiss();
+  }
+}
+
 // ── Public bridge install ───────────────────────────────────────────
 const bridge: StudioBridge = {
   computeRTP,
@@ -287,7 +322,7 @@ const bridge: StudioBridge = {
   saveNow,
   roundTripCheck,
   scheduleRTPRecompute,
-  parseGDD,
+  parseGDD: parseGDDWithPolish,
   generateFromGDD,
 };
 
@@ -295,8 +330,46 @@ window.__studio__ = bridge;
 
 // ── PLAY tab bridge install (W198) ──────────────────────────────────
 let playBridge: PlayTabBridge | null = null;
+
+/** Probe whether the current browser can mount the Pixi WebGL canvas. */
+function probeWebGL(): boolean {
+  try {
+    const cv = document.createElement('canvas');
+    const ctx = (cv.getContext('webgl2') || cv.getContext('webgl')) as WebGLRenderingContext | null;
+    return ctx !== null;
+  } catch {
+    return false;
+  }
+}
+
+function renderPlayFallback(): void {
+  const host = document.getElementById('panel-play');
+  if (!host) return;
+  if (document.getElementById('w200-play-fallback')) return;
+  const note = document.createElement('div');
+  note.id = 'w200-play-fallback';
+  note.style.cssText =
+    'margin:16px 0;padding:16px;background:#1A1F28;border:1px solid #F59E0B;border-radius:4px;font-family:ui-monospace,monospace;font-size:12px;color:#FCD34D;';
+  note.innerHTML = `
+    <b>WebGL not available</b> — Pixi renderer disabled.<br>
+    Spins will run headlessly through the engine (result printed in
+    activity log). Enable WebGL in your browser to see animated reels.
+  `;
+  const target = document.getElementById('single-play') || host;
+  target.insertBefore(note, target.firstChild);
+}
+
 function installPlayBridge(): PlayTabBridge {
   if (playBridge) return playBridge;
+  const hasWebGL = probeWebGL();
+  if (!hasWebGL) {
+    renderPlayFallback();
+    pushToast({
+      kind: 'warn',
+      msg: 'WebGL unavailable — Pixi renderer disabled. Falling back to headless engine.',
+      ttl: 6000,
+    });
+  }
   playBridge = createPlayTab(() => buildIR() as ReturnType<typeof buildIRFromVariant>);
   window.__studio_play__ = playBridge;
   return playBridge;
@@ -401,8 +474,103 @@ function boot(): void {
     console.warn('[W199-CERTIFY] certify bridge install failed:', err);
   }
   hook().logActivity('engine wired · real RTP estimator online');
+
+  // ── W200 polish pass ──────────────────────────────────────────────
+  try {
+    window.__studio_polish__ = installPolish();
+    installPanelEmptyStateObserver();
+    hook().logActivity('W200 · polish pass installed (loading/error/empty + tooltips + mobile guard)');
+  } catch (err) {
+    console.warn('[W200] polish install failed:', err);
+  }
+
   // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).
   void loadCatalogData();
+}
+
+// ── W200 · Panel empty-state observer ───────────────────────────────
+// Watches tab-switches and renders placeholder content when a panel
+// is shown but its primary content host is empty. Idempotent — only
+// adds a placeholder once per panel + clears it the moment real
+// content is injected.
+function installPanelEmptyStateObserver(): void {
+  const checks: Array<{
+    panelId: string;
+    contentSel: string;
+    emptyMsg: { title: string; sub?: string; icon?: string };
+  }> = [
+    {
+      panelId: 'panel-compose',
+      contentSel: '#compose-canvas',
+      emptyMsg: {
+        title: 'Drag features from the palette ↑',
+        sub: 'Build a feature graph by chaining base mechanics into composers.',
+        icon: '◇',
+      },
+    },
+    {
+      panelId: 'panel-catalog',
+      contentSel: '#cat-grid, .catalog-grid, .catalog-list',
+      emptyMsg: {
+        title: 'No patterns match the current filters',
+        sub: 'Try clearing the L&W-only filter, broadening the wave range, or adjusting jurisdiction chips.',
+        icon: '◯',
+      },
+    },
+    {
+      panelId: 'panel-sensitivity',
+      contentSel: '#sensitivity-param-list',
+      emptyMsg: {
+        title: 'Build a variant first',
+        sub: 'Set tier counts and reel weights in the BUILD tab to expose sweepable parameters.',
+        icon: '△',
+      },
+    },
+    {
+      panelId: 'panel-certify',
+      contentSel: '#certify-par-sections',
+      emptyMsg: {
+        title: 'Click "Run MC" to generate cert',
+        sub: 'A Monte Carlo run produces the 12-section PAR sheet and unlocks the operator-package download.',
+        icon: '□',
+      },
+    },
+  ];
+
+  const tabs = document.querySelectorAll('[data-tab]');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      // Defer one tick so app.js can update aria-selected first.
+      window.setTimeout(checkAllPanels, 50);
+    });
+  });
+  // Initial check.
+  window.setTimeout(checkAllPanels, 250);
+
+  function checkAllPanels(): void {
+    for (const c of checks) {
+      const panel = document.getElementById(c.panelId);
+      if (!panel) continue;
+      const host = panel.querySelector(c.contentSel) as HTMLElement | null;
+      if (!host) continue;
+
+      // Skip if real content already there.
+      const realChildren = Array.from(host.children).filter(
+        (n) => !n.hasAttribute('data-w200-empty')
+      );
+      const existing = host.querySelector('[data-w200-empty]') as HTMLElement | null;
+      if (realChildren.length > 0) {
+        if (existing) existing.remove();
+        continue;
+      }
+      if (existing) continue; // already showing empty state
+
+      const placeholder = document.createElement('div');
+      placeholder.setAttribute('data-w200-empty', c.panelId);
+      host.appendChild(placeholder);
+      renderEmptyState(placeholder, c.emptyMsg);
+    }
+  }
 }
 
 // ── Catalog data loader (W199) ──────────────────────────────────────

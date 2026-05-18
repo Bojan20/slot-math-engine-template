@@ -63,3 +63,8 @@ reports/parity/CROSS_PLATFORM_RNG_PARITY.json
 # ─── Web/studio production app (Vite + TS) ─────────────────────
 web/studio/node_modules/
 web/studio/package-lock.json
+
+# ─── Playwright e2e test artifacts ─────────────────────
+reports/playwright/
+test-results/
+playwright-report/

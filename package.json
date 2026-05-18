@@ -142,11 +142,16 @@
     "studio:dev": "cd web/studio && npm run dev",
     "studio:build": "cd web/studio && npm run build",
     "studio:preview": "cd web/studio && npm run preview",
-    "studio:test": "cd web/studio && npm run test"
+    "studio:test": "cd web/studio && npm run test",
+    "studio:typecheck": "cd web/studio && npm run typecheck",
+    "studio:e2e": "playwright test --config=playwright.config.ts",
+    "studio:e2e:headed": "playwright test --config=playwright.config.ts --headed",
+    "studio:demo": "node scripts/walking-skeleton-demo.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@stryker-mutator/core": "^8.7.1",
     "@stryker-mutator/vitest-runner": "^8.7.1",
     "@types/node": "^20.10.0",

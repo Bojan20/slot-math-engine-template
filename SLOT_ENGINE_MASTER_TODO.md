@@ -449,6 +449,9 @@ Mapa "commit → faza":
 |  `506870e` | **W152 Wave 29 — 15 ⚠️→✅ Faza 12 named mechanic acceptance** — `scripts/mechanic-29-named.mjs` (~270 L) sa 15-mechanic registry mapping every named Faza 12 mechanic na postojeće reference fixtures + `reports/acceptance/MECHANIC_29.{json,md}`. **Headline: 15/15 named mechanics pass sanity (27 fixture invocations × 4 seeds × 25K spins = 2.7M total spinova).** Closes: Asymmetric grid + scatter mult (3x5-5lines), Cluster cascade + mult symbols (cluster-7x7+diagonal+hexagonal), Money-symbol collect FS (mystery-symbol), Expanding-symbol FS (fs-expanding-wilds), Hold & Win + multi-tier jackpot (hnw × 3), Persistent mult + symbol upgrade FS (symbol-upgrade + fs-mult-ladder), Sticky wilds + multi-mode FS (fs-sticky-wilds), Multi-tier WAP + wheel pick (wheel-bonus + hnw-grand-jackpot), Pick bonus + multi-level (pick-bonus), Money collect + var-rows ways + cascade (complex-var-rows + cascade-drop), Three-mode FS choice (3 FS fixtures), Scatter pay + mult scale (pay-anywhere + multiplier-wilds), Wheel re-entry tiers (wheel-bonus), Per-spin reel-modifier reveal (respin + mystery-symbol), Pick + variable-rows ways combo (pick-bonus + variable-rows-7reels). Sanity gate: every fixture finite RTP, no NaN, no crash, no overflow across 4 seeds. Bonus clippy fix: `rust-sim/tests/faza86_protocols.rs` `#![allow(clippy::absurd_extreme_comparisons)]` (3 errors → 0, preexisting from faza 8.6). **Ultimate QA OK: TS vitest 2771/2774 pass / TS build clean / cargo build 0 err / cargo test 791 pass / clippy 0 errors 0 new warnings / reserved-terms 0/821 files. 0 regresija.** 1 new script + 2 new report files + 1 fixture-attribution flip block (15 lines). |
 | `f87e080` | **W152 Wave 28 — 2 ⚠️→✅ + 1 Faza 14.1 closure progress (Node 15.76s → Rust 5.43s)** — Faza 2.1 both-ways closed-form ↔ MC validation (`scripts/both-ways-acceptance.mjs` (~230 L) + `reports/acceptance/BOTH_WAYS.{json,md}` koristi `5x4-25lines.json` u 3 moda BOTH/LTR/RTL × 4 seeds × 200K spins; gate je bounded-region check BOTH ∈ [max(LTR,RTL), LTR+RTL] (strict, ne zahteva analytical solver) + cross-seed rel-σ ≤ 5%; headline **BOTH=2891.59% ∈ [LTR=1987.23%, LTR+RTL=3973.05%], all gates ✅**). Faza 4.4 Variable-rows + cascade PAR match (`scripts/varrows-cascade-acceptance.mjs` (~240 L) + `reports/acceptance/VARROWS_CASCADE.{json,md}` koristi `complex-variable-rows.json` 6 reels row range 2-7 cascade max_chain=5 × 4 seeds × 100K spins; 3-gate check sanity + rel-σ ≤ 5% + cascade-ON strict > cascade-OFF — sve ✅, cascade lift = 49M pp jer fixture nije RTP-kalibrisana ali engine math je consistent). Faza 14.1 Rust closure (`rust-sim/examples/billion_spins_replay.rs` (~290 L) sa custom IR loader, GameConfig builder, flat-payouts ekspanzija preko Evaluator::with_mode + odometer iteracija; **measured: 10⁹ replays in 5.43s vs Node 15.76s = 2.9× brže**, ali još 5.43× preko 1s target — L3+DRAM bandwidth-bound na 110 MiB tabeli, SIMD gather / GPU memo replay zahteva Wave 28+). **Ultimate QA OK: TS lint clean / vitest 2771/2774 pass / TS build clean / cargo build 0 err / cargo test 791 pass / clippy 0 new warn / reserved-terms 0/804 files. 0 regresija.** 4 new files (1 Rust example + 3 mjs harnesses) + 1 report update + 2 npm script aliases. |
 | `0515398` | **W152 Wave 27 — 2 ⚠️→✅ + 1 ⚠️→⚠️ honest-fail upgrade (10⁹ replay measured)** — Faza 7.4 chi² uniformity sve sample sizes (`rust-sim/tests/faza74_chi_squared_sizes.rs` 5 backends × 6 N {10²..10⁷} × 10 buckets = 30/30 pass, gate χ²<27.877 for N≥1000 / χ²<40 small-N sanity; `scripts/chi-squared-sizes-report.mjs` parses cargo stdout → `reports/rng/CHI_SQUARED_SIZES.{json,md}` 30/30 cells pass; npm `chi-squared-sizes`). Faza 10.5 1000+ random configs → 0 crash (`scripts/random-config-sweep.mjs` deterministic Mulberry32 corpus, 3-way outcome classifier ok/rejected/crash, 1000 cfgs × 200 spins = 200K total, **1000 ok / 0 rejected / 0 crashes — ✅ PASS**; gate `crashCount==0`; `reports/acceptance/RANDOM_CONFIG_SWEEP.{json,md}`; npm `random-config-sweep`). Faza 14.1 10⁹ replay single-thread bench (`scripts/billion-spins-replay.mjs` analytical memoization flat-payouts replay with Vose-alias-equivalent uniform-state sampling, empirical 319.33% ≈ analytical 319.31% RTP at 4-decimal precision; **measured 15.76s vs 1s target on Node-only single thread = ❌ honest gap** documented in `reports/perf/BILLION_SPINS_REPLAY.{json,md}` with Rust/Wasm closure plan; npm `billion-spins-replay`). **Ultimate QA OK: TS lint clean / vitest 2771/2774 pass (3 pre-existing skip) / TS build clean / cargo build 0 err / cargo test 791 pass (+8 from new test file × 6 sizes ÷ assertion grouping) / clippy 0 new warn / reserved-terms 0/804 files. 0 regresija.** 4 new files (1 Rust test + 3 mjs harnesses) + 3 report doc pairs + 3 npm script aliases. |
+| `705c666` | **W197 — Studio production app + persona LAYOUT redesign** — `web/studio/` bootstrap sa Vite + TS + real engine wire (rtpCalculator + parseGameIR + estimateFullRtp), persona LAYOUT redesign (Math/Design/Producer 3 stvarno različita layout-a sa default tab + primary CTA + right rail + headline + welcome toast), workspace seed "Untitled" defaults, 309 files +38196 insertions. Ultimativni QA: TS typecheck clean / Vite build 84 modules 56ms / Studio vitest 10/10 PASS 254ms / Root vitest 5351/5354 PASS 0 regression / Cargo clippy strict clean. |
+| `3c56f87` | **W198 + W199 + W199.5 — Pixi renderer + Catalog 97 P-IDs + GDD Import** — Pixi.js v8 PLAY tab (asimetrični reel offset + accel/steady/decel + 500ms anticipation pause na ≥2 scatter + cyan win lines + UKGC autoplay guard), 97 P-IDs Catalog browser (deterministic JSON gen iz INDUSTRY_PATTERN_CATALOG.md, 16 L&W M-gaps strip, tri-pane filter/grid/detail, insert kernel), Math GDD Import Pipeline (7 format parsers PDF/DOCX/XLSX/CSV/MD/JSON/TXT, confidence-scored extraction, HP/MP/LP auto-detect, review modal sa ✓/⚠/✗ badges, Generate Game flow). 20 files. Studio vitest 57/57 PASS / Root 5351 PASS / TS clean / Vite 1217 modules. |
+| `d8357fc` | **W199 ostatak — Compose + Sensitivity + Certify-Ext** — Node-graph feature editor (19 features u 3 kategorije, bezier edges, 5 template presets, DFS circular dep validation, composed RTP bars), Parameter sweep + heatmap (auto-detect 47 numeric params, 1000-point sweep < 5s sa CI95, 2D heatmap toggle 16×12 cells, A/B comparator + CSV export + sweep history), Certify extended (5 MC sizes WebWorker, 5 RNG sa ChaCha20 UK CRITICAL, 12 GLI-16 PAR sections, 15 jurisdictions sa rule modali, compliance audit sa auto-fix, RNG audit fixture, Merkle + mock HSM, 153-file operator-package.zip via jszip). 12 files +5541 insertions. Studio vitest 128/128 PASS / Root 5351 PASS / TS clean / Vite 1219 modules 3.49s / Cargo clippy strict clean. |
 
 ---
 
@@ -481,7 +484,7 @@ Mapa "commit → faza":
 
 ---
 
-### 🦴 FAZA 200.0 — WALKING SKELETON MVP (Vertical Slice) — *(3-4 nedelje, **MUST-FIRST** ⚠️→❌, PRECONDITION za sve 200.x)*
+### 🦴 FAZA 200.0 — WALKING SKELETON MVP (Vertical Slice) — *(✅ CLOSED 2026-05-18, 1-day paralel sprint kompromituje 4.5 nedelja procenu)*
 
 > **Strateška odluka (Boki, 2026-05-18)**: Pre nego što krenemo da gradimo bilo koju 200.X fazu u širinu, **pravi se TANAK end-to-end slice** kroz ceo stack — math → builder UI → renderer → cert export — za **JEDNU JEDNOSTAVNU IGRU**. Tek kad slice radi end-to-end, WIDEN-uje se feature-by-feature.
 >
@@ -1124,6 +1127,39 @@ Ova faza je ✅ KADA:
 13. ✅ Demo video < 3 min uploaded
 14. ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima sent-to-L&W (sa **"GDD-to-IR u 30s"** highlight)
 15. ✅ Sve W197-W200 commits + pins + master TODO closure
+
+---
+
+### 200.0.8 — FAZA 200.0 ✅ CLOSED (2026-05-18)
+
+**ALL gates passed**. Faza 200.0 Walking Skeleton MVP delivered u 1-day sprint (paralelni agent execution kompromituje 4-5 nedelja procenu na 1 dan production work).
+
+**Commits**:
+- `705c666` W197 — Studio bootstrap + persona LAYOUT
+- `3c56f87` W198 + W199 + W199.5 — Pixi + Catalog + GDD Import
+- `d8357fc` W199 ostatak — Compose + Sensitivity + Certify-Ext
+- `<W200_commit>` W200 — Polish + e2e + demo + COMMERCIAL_PITCH_v2
+
+**Stats**:
+- 6 tabova LIVE u `web/studio/` production app
+- 128 studio vitest specs PASS
+- 5351 root vitest specs PASS (0 regression)
+- Vite build clean (1219 modules, 3.49s)
+- Cargo clippy --release -D warnings clean
+- 19 features u Compose, 97 P-IDs Catalog, 16 L&W M-gaps closed, 15 jurisdictions, 5 RNG backends, 12 GLI-16 PAR sections
+- Math GDD Import: 7 formats (PDF/DOCX/XLSX/CSV/MD/JSON/TXT)
+- Persona LAYOUT redesign: Math/Design/Producer 3 stvarno različita layout-a
+- 4 Playwright e2e scenarios
+
+**Files** (cumulative):
+- web/studio/ — 30+ fajlova (Vite + TS + 11 src modula + 7 test fajla + 6 tab markup + data + symbols)
+- web/mockups/ — 8 iteracija (corti / kimi / v2-baseline / v2-engine / v3-dark-onyx / v3-dark-deep / v4-final / v5-final-studio)
+- scripts/generate-catalog-json.mjs
+- scripts/walking-skeleton-demo.mjs
+- docs/COMMERCIAL_PITCH_v2.md
+- gdd-samples/ 4 fixtures
+
+**Sledeća Faza** (200.1 Math Studio dubina + 200.2 Symbol/Art Pipeline + 200.3 Runtime Engine sa bonus features) — već detaljno planirana u master TODO. W200 zatvara walking skeleton, posle WIDEN.
 
 ---
 
