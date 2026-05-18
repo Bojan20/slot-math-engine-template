@@ -1,0 +1,39 @@
+{
+  "id": "greek",
+  "name": "Greek Mythology",
+  "description": "Olympian gods / lightning / pegasus + azure marble palette",
+  "palette": {
+    "primary": "#3B82B6",
+    "accent": "#F5DEB3",
+    "deep": "#082F49",
+    "highlight": "#FFFFFF"
+  },
+  "background": "linear-gradient(180deg, #082F49 0%, #3B82B6 100%)",
+  "iconMap": {
+    "HP1": "pegasus",
+    "HP2": "phoenix",
+    "HP3": "unicorn",
+    "HP4": "dragon",
+    "MP1": "crown",
+    "MP2": "shield",
+    "MP3": "sword",
+    "MP4": "spear",
+    "LP1": "column",
+    "LP2": "temple",
+    "LP3": "chalice",
+    "LP4": "urn",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "star",
+    "SCATTER2": "star",
+    "MULT1": "sun-disk",
+    "MULT2": "sun-disk"
+  },
+  "ambientSounds": ["aegean-waves", "lyre-melody", "olympian-thunder"],
+  "animationDefaults": {
+    "spinDuration": 1100,
+    "stopStagger": 175,
+    "winFlash": "azure",
+    "reelEase": "easeOutSine"
+  }
+}

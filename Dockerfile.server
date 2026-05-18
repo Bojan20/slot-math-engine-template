@@ -1,0 +1,44 @@
+# CORTI 200.6-DEVOPS — backend Fastify image.
+# Multi-stage: deps install + TS compile, then slim runtime image.
+
+# ─── Build stage ─────────────────────────────────────────────────────
+FROM node:20-alpine AS build
+WORKDIR /app
+
+# Copy manifests + lockfile first so layer caching kicks in.
+COPY package.json package-lock.json ./
+COPY tsconfig.json ./
+COPY server/tsconfig.json ./server/tsconfig.json
+
+# Install full deps (devDeps needed for tsc).
+RUN npm ci --no-audit --no-fund
+
+# Copy engine + server sources.
+COPY src ./src
+COPY server ./server
+
+# Build root engine (used by some scripts) + server compile.
+RUN npx tsc \
+ && npx tsc -p server/tsconfig.json
+
+# ─── Runtime stage ───────────────────────────────────────────────────
+FROM node:20-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=4000
+ENV HOST=0.0.0.0
+
+# Re-install production-only deps for slim runtime.
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund
+
+# Copy compiled output + required runtime assets.
+COPY --from=build /app/dist ./dist
+
+# Healthcheck via wget (alpine ships busybox wget).
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:4000/api/health || exit 1
+
+EXPOSE 4000
+USER node
+CMD ["node", "dist/server/index.js"]

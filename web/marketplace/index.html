@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Marketplace · CORTI 200.7</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="mp-app">
+  <header class="mp-header">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Math Marketplace<span class="brand-v">v1</span></span>
+    </div>
+    <nav class="mp-nav" id="mp-nav">
+      <button class="nav-btn is-active" data-mode="browse">Browse</button>
+      <button class="nav-btn" data-mode="author">Author Mode</button>
+    </nav>
+    <div class="mp-meta">
+      <span class="env-pill" id="mp-listing-count">0 listings</span>
+      <span class="user-pill" title="bojan.petkovic25@gmail.com">B</span>
+    </div>
+  </header>
+
+  <main id="mp-main" class="mp-main"></main>
+  <div id="mp-toast" class="mp-toast" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

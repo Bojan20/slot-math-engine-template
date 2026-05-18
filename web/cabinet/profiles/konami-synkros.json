@@ -1,0 +1,12 @@
+{
+  "id": "konami-synkros",
+  "name": "Konami Synkros",
+  "manufacturer": "Konami",
+  "model": "Synkros Concerto Stack",
+  "reels": 5,
+  "rows": 3,
+  "resolution": [1920, 1080],
+  "hasTopper": true,
+  "lightingZones": ["topper", "buttonDeck", "reelHalo", "side"],
+  "speakerChannels": 4
+}

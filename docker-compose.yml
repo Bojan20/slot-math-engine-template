@@ -1,0 +1,104 @@
+# CORTI 200.6-DEVOPS — full-stack compose (production-ish profile).
+#
+# Boots the four mini-apps + a placeholder Postgres container:
+#   server      :4000  Fastify backend (in-memory stores)
+#   studio      :5173  Game studio SPA
+#   operator    :5174  Operator dashboard SPA
+#   regulator   :5175  Regulator portal SPA
+#   postgres    :5432  Placeholder for real wallet/audit storage
+#
+# `docker-compose up` boots everything; `docker-compose.dev.yml`
+# overrides volumes for live-reload during development.
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    image: slot-math-engine/server:latest
+    container_name: sme-server
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      HOST: 0.0.0.0
+      # Postgres is provisioned but not yet wired into the in-memory stores;
+      # this env block reserves the slot for the FUTURE wallet/audit move.
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/sme
+      TENANT_REGISTRY_FILE: /app/state/tenants.json
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - sme-net
+    restart: unless-stopped
+
+  studio:
+    build:
+      context: .
+      dockerfile: Dockerfile.studio
+    image: slot-math-engine/studio:latest
+    container_name: sme-studio
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+    networks:
+      - sme-net
+    restart: unless-stopped
+
+  operator:
+    build:
+      context: .
+      dockerfile: Dockerfile.operator
+    image: slot-math-engine/operator:latest
+    container_name: sme-operator
+    ports:
+      - "5174:80"
+    depends_on:
+      - server
+    networks:
+      - sme-net
+    restart: unless-stopped
+
+  regulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.regulator
+    image: slot-math-engine/regulator:latest
+    container_name: sme-regulator
+    ports:
+      - "5175:80"
+    depends_on:
+      - server
+    networks:
+      - sme-net
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: sme-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sme
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sme"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - sme-net
+    restart: unless-stopped
+
+networks:
+  sme-net:
+    driver: bridge
+
+volumes:
+  pgdata:

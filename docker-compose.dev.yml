@@ -1,0 +1,57 @@
+# CORTI 200.6-DEVOPS — development override.
+#
+# Used via:  docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# Mounts source dirs as volumes so tsx-watch / vite-dev pick up edits
+# without rebuilding the image.
+
+services:
+  server:
+    image: node:20-alpine
+    command: sh -c "npm ci && npx tsx watch server/index.ts"
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - server_node_modules:/app/node_modules
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      HOST: 0.0.0.0
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/sme
+      TENANT_REGISTRY_FILE: /app/server/state/tenants.dev.json
+
+  studio:
+    image: node:20-alpine
+    command: sh -c "cd web/studio && npm ci && npm run dev -- --host 0.0.0.0"
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - studio_node_modules:/app/web/studio/node_modules
+    ports:
+      - "5173:5173"
+
+  operator:
+    image: node:20-alpine
+    command: sh -c "cd web/operator && npm ci && npm run dev -- --host 0.0.0.0"
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - operator_node_modules:/app/web/operator/node_modules
+    ports:
+      - "5174:5174"
+
+  regulator:
+    image: node:20-alpine
+    command: sh -c "cd web/regulator && npm ci && npm run dev -- --host 0.0.0.0"
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - regulator_node_modules:/app/web/regulator/node_modules
+    ports:
+      - "5175:5175"
+
+volumes:
+  server_node_modules:
+  studio_node_modules:
+  operator_node_modules:
+  regulator_node_modules:

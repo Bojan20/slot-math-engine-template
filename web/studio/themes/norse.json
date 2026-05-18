@@ -1,0 +1,39 @@
+{
+  "id": "norse",
+  "name": "Norse Vikings",
+  "description": "Runes / longships / wolves + iron + frost palette",
+  "palette": {
+    "primary": "#4F6D7A",
+    "accent": "#D8B4A0",
+    "deep": "#1A2A33",
+    "highlight": "#C7E7EF"
+  },
+  "background": "linear-gradient(180deg, #1A2A33 0%, #4F6D7A 100%)",
+  "iconMap": {
+    "HP1": "wolf",
+    "HP2": "bear",
+    "HP3": "dragon",
+    "HP4": "eagle",
+    "MP1": "sword",
+    "MP2": "shield",
+    "MP3": "spear",
+    "MP4": "crown",
+    "LP1": "amulet",
+    "LP2": "scroll",
+    "LP3": "tomb",
+    "LP4": "urn",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["viking-horn", "fjord-wind", "battle-drum"],
+  "animationDefaults": {
+    "spinDuration": 1300,
+    "stopStagger": 220,
+    "winFlash": "ice",
+    "reelEase": "easeInOutQuad"
+  }
+}

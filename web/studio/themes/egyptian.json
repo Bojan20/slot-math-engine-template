@@ -1,0 +1,39 @@
+{
+  "id": "egyptian",
+  "name": "Egyptian Ancient",
+  "description": "Pharaoh / pyramids / scarabs + desert ochre palette",
+  "palette": {
+    "primary": "#D4A24C",
+    "accent": "#8B5A2B",
+    "deep": "#3E2814",
+    "highlight": "#F4D58D"
+  },
+  "background": "linear-gradient(180deg, #3E2814 0%, #D4A24C 100%)",
+  "iconMap": {
+    "HP1": "scarab",
+    "HP2": "sphinx",
+    "HP3": "pyramid",
+    "HP4": "ankh",
+    "MP1": "coin",
+    "MP2": "amulet",
+    "MP3": "mask",
+    "MP4": "glyph",
+    "LP1": "scroll",
+    "LP2": "column",
+    "LP3": "urn",
+    "LP4": "chalice",
+    "WILD1": "sun-disk",
+    "WILD2": "sun-disk",
+    "SCATTER1": "scarab",
+    "SCATTER2": "scarab",
+    "MULT1": "amulet",
+    "MULT2": "amulet"
+  },
+  "ambientSounds": ["desert-wind", "sandstorm", "temple-drum"],
+  "animationDefaults": {
+    "spinDuration": 1200,
+    "stopStagger": 200,
+    "winFlash": "gold",
+    "reelEase": "easeOutCubic"
+  }
+}

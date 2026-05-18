@@ -1,0 +1,25 @@
+# CORTI 200.6-DEVOPS — operator SPA image (Vite → nginx).
+
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY tsconfig.json ./
+RUN npm ci --no-audit --no-fund
+
+COPY web/operator/package.json web/operator/package-lock.json ./web/operator/
+RUN cd web/operator && npm ci --no-audit --no-fund
+
+COPY web/operator ./web/operator
+COPY web/shared ./web/shared
+
+RUN cd web/operator && npm run build
+
+FROM nginx:1.27-alpine AS runtime
+COPY --from=build /app/dist/operator /usr/share/nginx/html
+COPY docker/nginx-spa.conf /etc/nginx/conf.d/default.conf
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

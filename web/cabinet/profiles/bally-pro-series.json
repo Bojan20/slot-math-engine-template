@@ -1,0 +1,12 @@
+{
+  "id": "bally-pro-series",
+  "name": "Bally Pro Series V32",
+  "manufacturer": "Bally",
+  "model": "Pro Series V32",
+  "reels": 5,
+  "rows": 4,
+  "resolution": [1920, 1080],
+  "hasTopper": true,
+  "lightingZones": ["topper", "buttonDeck", "reelHalo", "trim"],
+  "speakerChannels": 4
+}

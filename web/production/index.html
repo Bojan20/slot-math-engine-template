@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slot Production Stats — CORTI 200.8</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; background: #0B0F1A; color: #E2E8F0; }
+      h1 { font-size: 18px; margin: 0 0 12px; color: #93C5FD; }
+      .panel { background: #111827; padding: 16px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #1F2937; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+      .kpi { background: #1F2937; padding: 12px; border-radius: 6px; }
+      .kpi .label { font-size: 11px; color: #94A3B8; text-transform: uppercase; }
+      .kpi .value { font-size: 22px; font-weight: 600; color: #FACC15; margin-top: 4px; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #1F2937; }
+      th { color: #93C5FD; font-weight: 600; }
+      td.num { text-align: right; font-variant-numeric: tabular-nums; }
+      .tag { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 11px; background: #1E40AF; color: #DBEAFE; }
+    </style>
+  </head>
+  <body>
+    <h1>CORTI 200.8 · Production Stats Dashboard</h1>
+    <div id="kpi-panel" class="panel"><div class="grid" id="kpi-grid"></div></div>
+    <div class="panel"><h2 style="font-size:14px;color:#93C5FD;margin:0 0 8px">Top 50 Production Games</h2><div id="games-table"></div></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

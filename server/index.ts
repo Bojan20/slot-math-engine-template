@@ -15,12 +15,16 @@ import { WalletStore } from './state/wallet.js';
 import { AuditStore } from './state/audit.js';
 import { GamesRegistry } from './state/games.js';
 import { CertStore } from './state/cert.js';
+import { TenantStore } from './state/tenants.js';
 
 import { registerSessionRoutes } from './routes/session.js';
 import { registerWalletRoutes } from './routes/wallet.js';
 import { registerAuditRoutes } from './routes/audit.js';
 import { registerLobbyRoutes } from './routes/lobby.js';
 import { registerCertRoutes } from './routes/cert.js';
+import { registerAdminRoutes } from './routes/admin.js';
+import { registerHealthRoutes } from './routes/health.js';
+import { registerGaasRoutes } from './routes/gaas.js';
 
 export interface BackendStores {
   sessions: SessionStore;
@@ -28,6 +32,7 @@ export interface BackendStores {
   audit: AuditStore;
   games: GamesRegistry;
   cert: CertStore;
+  tenants: TenantStore;
 }
 
 export interface BuildOptions {
@@ -55,6 +60,9 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     audit: opts.stores?.audit ?? new AuditStore(),
     games: opts.stores?.games ?? new GamesRegistry(),
     cert: opts.stores?.cert ?? new CertStore(),
+    tenants:
+      opts.stores?.tenants ??
+      new TenantStore({ persistPath: process.env.TENANT_REGISTRY_FILE ?? null }),
   };
   // Best-effort: load games up-front so first /api/lobby/games is fast.
   try {
@@ -63,20 +71,17 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     app.log.warn({ err }, 'games registry load failed (continuing with empty registry)');
   }
 
-  // Health check (used by studio for backend auto-detection).
-  app.get('/api/health', async () => ({
-    ok: true,
-    name: 'slot-math-engine-backend',
-    version: '0.1.0',
-    uptime: process.uptime(),
-    sessions: stores.sessions.size(),
-    games: stores.games.size(),
-    auditSessions: stores.audit.sessionCount(),
-    auditEntries: stores.audit.totalEntries(),
-  }));
-
   // Attach stores to the instance so tests can introspect.
   app.decorate('stores', stores);
+
+  // Admin (tenant CRUD + tenant resolution preHandler) must register
+  // BEFORE the data-plane routes so its preHandler hook runs first.
+  await registerAdminRoutes(app, { tenants: stores.tenants });
+  await registerHealthRoutes(app, {
+    stores,
+    tenants: stores.tenants,
+    startedAt: Date.now(),
+  });
 
   await registerSessionRoutes(app, {
     sessions: stores.sessions,
@@ -91,6 +96,13 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
   await registerAuditRoutes(app, { audit: stores.audit });
   await registerLobbyRoutes(app, { games: stores.games, sessions: stores.sessions });
   await registerCertRoutes(app, { cert: stores.cert });
+  await registerGaasRoutes(app, {
+    games: stores.games,
+    sessions: stores.sessions,
+    wallet: stores.wallet,
+    audit: stores.audit,
+    apiKeys: process.env.GAAS_API_KEYS ? process.env.GAAS_API_KEYS.split(',') : [],
+  });
 
   return app;
 }

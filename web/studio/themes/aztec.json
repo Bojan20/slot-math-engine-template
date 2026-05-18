@@ -1,0 +1,39 @@
+{
+  "id": "aztec",
+  "name": "Aztec / Mayan",
+  "description": "Sun gods / jade / step pyramids + jungle emerald palette",
+  "palette": {
+    "primary": "#2E8B57",
+    "accent": "#FFB700",
+    "deep": "#0B3D2E",
+    "highlight": "#F4E4BC"
+  },
+  "background": "linear-gradient(180deg, #0B3D2E 0%, #2E8B57 100%)",
+  "iconMap": {
+    "HP1": "sun-disk",
+    "HP2": "pyramid",
+    "HP3": "mask",
+    "HP4": "temple",
+    "MP1": "amulet",
+    "MP2": "coin",
+    "MP3": "glyph",
+    "MP4": "scroll",
+    "LP1": "column",
+    "LP2": "urn",
+    "LP3": "spear",
+    "LP4": "shield",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "sun-disk",
+    "SCATTER2": "sun-disk",
+    "MULT1": "jade",
+    "MULT2": "jade"
+  },
+  "ambientSounds": ["jungle-ambience", "tribal-drum", "macaw-call"],
+  "animationDefaults": {
+    "spinDuration": 1150,
+    "stopStagger": 190,
+    "winFlash": "emerald",
+    "reelEase": "easeOutCubic"
+  }
+}

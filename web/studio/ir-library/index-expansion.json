@@ -1,0 +1,1193 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "scripts/generate-ir-expansion.mjs",
+  "total_items": 154,
+  "categories": [
+    {
+      "id": "classic-lines",
+      "name": "Classic Lines (5)",
+      "description": "Additional classic-lines variants (777, Liberty Bell, Fruit, Diamonds, Lucky 7).",
+      "items": [
+        {
+          "id": "classic-lines-777",
+          "file": "classic-lines/classic-lines-777.ir.json",
+          "title": "Classic 777 Lucky Sevens",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-lines-liberty-bell",
+          "file": "classic-lines/classic-lines-liberty-bell.ir.json",
+          "title": "Classic Liberty Bell",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-lines-fruit",
+          "file": "classic-lines/classic-lines-fruit.ir.json",
+          "title": "Classic Fruit Salad",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-lines-diamonds",
+          "file": "classic-lines/classic-lines-diamonds.ir.json",
+          "title": "Classic Diamonds Triple Down",
+          "topology": "rectangular"
+        },
+        {
+          "id": "classic-lines-lucky-7",
+          "file": "classic-lines/classic-lines-lucky-7.ir.json",
+          "title": "Classic Lucky 7 Hot Reels",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "megaways",
+      "name": "Megaways Family (10)",
+      "description": "Megaways variable-rows topology templates.",
+      "items": [
+        {
+          "id": "megaways-bonanza",
+          "file": "megaways/megaways-bonanza.ir.json",
+          "title": "Bonanza Megaways Style",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-donkey-kong",
+          "file": "megaways/megaways-donkey-kong.ir.json",
+          "title": "Donkey Kong Megaways Style",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-extra-chilli",
+          "file": "megaways/megaways-extra-chilli.ir.json",
+          "title": "Extra Chilli Megaways Style",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-vikings",
+          "file": "megaways/megaways-vikings.ir.json",
+          "title": "Vikings Unleashed Megaways",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-fishin",
+          "file": "megaways/megaways-fishin.ir.json",
+          "title": "Fishin Frenzy Megaways",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-buffalo",
+          "file": "megaways/megaways-buffalo.ir.json",
+          "title": "Buffalo Megaways Style",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-7x",
+          "file": "megaways/megaways-7x.ir.json",
+          "title": "7-Reel Megaways Mega Edition",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-cascadia",
+          "file": "megaways/megaways-cascadia.ir.json",
+          "title": "Cascadia Megaways Cascade",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-mystery",
+          "file": "megaways/megaways-mystery.ir.json",
+          "title": "Mystery Megaways Variant",
+          "topology": "variable_rows"
+        },
+        {
+          "id": "megaways-classic",
+          "file": "megaways/megaways-classic.ir.json",
+          "title": "Classic Megaways 4-7 Rows",
+          "topology": "variable_rows"
+        }
+      ]
+    },
+    {
+      "id": "cluster",
+      "name": "Cluster Family (10)",
+      "description": "Cluster-pay grid topology templates.",
+      "items": [
+        {
+          "id": "cluster-6x6",
+          "file": "cluster/cluster-6x6.ir.json",
+          "title": "Cluster Pay 6x6",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-7x7-v2",
+          "file": "cluster/cluster-7x7-v2.ir.json",
+          "title": "Cluster Pay 7x7 Premium",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-8x8",
+          "file": "cluster/cluster-8x8.ir.json",
+          "title": "Cluster Pay 8x8 Mega",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-5x5",
+          "file": "cluster/cluster-5x5.ir.json",
+          "title": "Cluster Pay 5x5 Compact",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-hex",
+          "file": "cluster/cluster-hex.ir.json",
+          "title": "Hexagonal Cluster Pay",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-diagonal",
+          "file": "cluster/cluster-diagonal.ir.json",
+          "title": "Diagonal-Adjacency Cluster",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-mini",
+          "file": "cluster/cluster-mini.ir.json",
+          "title": "Mini Cluster 4x4",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-mega",
+          "file": "cluster/cluster-mega.ir.json",
+          "title": "Mega Cluster 9x9",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-rectangle",
+          "file": "cluster/cluster-rectangle.ir.json",
+          "title": "Rectangular Cluster 8x6",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cluster-tall",
+          "file": "cluster/cluster-tall.ir.json",
+          "title": "Tall Cluster 5x8",
+          "topology": "cluster_grid"
+        }
+      ]
+    },
+    {
+      "id": "cascade",
+      "name": "Cascade Family (10)",
+      "description": "Cascade/avalanche mechanics templates.",
+      "items": [
+        {
+          "id": "cascade-avalanche",
+          "file": "cascade/cascade-avalanche.ir.json",
+          "title": "Avalanche 5x3",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-tumble",
+          "file": "cascade/cascade-tumble.ir.json",
+          "title": "Tumble Reels 5x4",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-rolling",
+          "file": "cascade/cascade-rolling.ir.json",
+          "title": "Rolling Reels 5x3",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-collapse",
+          "file": "cascade/cascade-collapse.ir.json",
+          "title": "Collapsing Reels Grid",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-chain",
+          "file": "cascade/cascade-chain.ir.json",
+          "title": "Chain Reaction 6x4",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-mega-mult",
+          "file": "cascade/cascade-mega-mult.ir.json",
+          "title": "Mega Multiplier Cascade",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-slow",
+          "file": "cascade/cascade-slow.ir.json",
+          "title": "Slow Drift Cascade",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-fast",
+          "file": "cascade/cascade-fast.ir.json",
+          "title": "Fast Spike Cascade",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-staircase",
+          "file": "cascade/cascade-staircase.ir.json",
+          "title": "Staircase Cascade",
+          "topology": "cluster_grid"
+        },
+        {
+          "id": "cascade-rebirth",
+          "file": "cascade/cascade-rebirth.ir.json",
+          "title": "Rebirth Cascade Reset",
+          "topology": "cluster_grid"
+        }
+      ]
+    },
+    {
+      "id": "holdwin",
+      "name": "Hold & Win Family (10)",
+      "description": "Lock-it-Link / Cash Fall / Coin Combo style Hold & Win.",
+      "items": [
+        {
+          "id": "hw-lock-it-link",
+          "file": "holdwin/hw-lock-it-link.ir.json",
+          "title": "Lock It Link Style",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-cash-fall",
+          "file": "holdwin/hw-cash-fall.ir.json",
+          "title": "Cash Fall Style",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-coin-combo",
+          "file": "holdwin/hw-coin-combo.ir.json",
+          "title": "Coin Combo Style",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-megaorb",
+          "file": "holdwin/hw-megaorb.ir.json",
+          "title": "Mega Orb 7x7",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-classic",
+          "file": "holdwin/hw-classic.ir.json",
+          "title": "Classic Hold & Spin",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-row-complete",
+          "file": "holdwin/hw-row-complete.ir.json",
+          "title": "Row Complete H&W",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-column-complete",
+          "file": "holdwin/hw-column-complete.ir.json",
+          "title": "Column Complete H&W",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-jackpot-orb",
+          "file": "holdwin/hw-jackpot-orb.ir.json",
+          "title": "Jackpot Orb H&W",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-frenzy",
+          "file": "holdwin/hw-frenzy.ir.json",
+          "title": "Frenzy H&W 6x4",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hw-mini",
+          "file": "holdwin/hw-mini.ir.json",
+          "title": "Mini H&W 4x3",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "freespins",
+      "name": "Free Spins Family (15)",
+      "description": "Retrigger / sticky-wild / expanding-wild / mult-trail templates.",
+      "items": [
+        {
+          "id": "fs-retrigger-v2",
+          "file": "freespins/fs-retrigger-v2.ir.json",
+          "title": "Retrigger Free Spins+",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-sticky-wilds-v2",
+          "file": "freespins/fs-sticky-wilds-v2.ir.json",
+          "title": "Sticky Wilds FS+",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-expanding-v2",
+          "file": "freespins/fs-expanding-v2.ir.json",
+          "title": "Expanding Wilds FS+",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-mult-trail",
+          "file": "freespins/fs-mult-trail.ir.json",
+          "title": "Multiplier Trail FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-walking-wilds",
+          "file": "freespins/fs-walking-wilds.ir.json",
+          "title": "Walking Wilds FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-mystery-symbol",
+          "file": "freespins/fs-mystery-symbol.ir.json",
+          "title": "Mystery Symbol FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-symbol-upgrade",
+          "file": "freespins/fs-symbol-upgrade.ir.json",
+          "title": "Symbol Upgrade FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-locked-reels",
+          "file": "freespins/fs-locked-reels.ir.json",
+          "title": "Locked Reels FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-x2-multiplier",
+          "file": "freespins/fs-x2-multiplier.ir.json",
+          "title": "2x Multiplier FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-x3-multiplier",
+          "file": "freespins/fs-x3-multiplier.ir.json",
+          "title": "3x Multiplier FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-x5-multiplier",
+          "file": "freespins/fs-x5-multiplier.ir.json",
+          "title": "5x Multiplier FS",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-mega-spins",
+          "file": "freespins/fs-mega-spins.ir.json",
+          "title": "Mega Free Spins 30",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-super-spins",
+          "file": "freespins/fs-super-spins.ir.json",
+          "title": "Super Free Spins 50",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-pickem",
+          "file": "freespins/fs-pickem.ir.json",
+          "title": "Pick-Em FS Selector",
+          "topology": "rectangular"
+        },
+        {
+          "id": "fs-double",
+          "file": "freespins/fs-double.ir.json",
+          "title": "Double-Up FS Variant",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "bonus",
+      "name": "Bonus Games (10)",
+      "description": "Wheel / pick / map / race bonus templates.",
+      "items": [
+        {
+          "id": "bonus-wheel-3tier",
+          "file": "bonus/bonus-wheel-3tier.ir.json",
+          "title": "Wheel Bonus 3-Tier+",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-wheel-5tier",
+          "file": "bonus/bonus-wheel-5tier.ir.json",
+          "title": "Wheel Bonus 5-Tier",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-pick-3of9",
+          "file": "bonus/bonus-pick-3of9.ir.json",
+          "title": "Pick Bonus 3-of-9",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-pick-5of12",
+          "file": "bonus/bonus-pick-5of12.ir.json",
+          "title": "Pick Bonus 5-of-12",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-map-3path",
+          "file": "bonus/bonus-map-3path.ir.json",
+          "title": "Map Progression 3-Path",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-race-4lane",
+          "file": "bonus/bonus-race-4lane.ir.json",
+          "title": "Race Bonus 4-Lane",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-race-6lane",
+          "file": "bonus/bonus-race-6lane.ir.json",
+          "title": "Race Bonus 6-Lane",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-treasure",
+          "file": "bonus/bonus-treasure.ir.json",
+          "title": "Treasure Hunt Pick",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-prize-board",
+          "file": "bonus/bonus-prize-board.ir.json",
+          "title": "Prize Board Wheel",
+          "topology": "rectangular"
+        },
+        {
+          "id": "bonus-mystery-box",
+          "file": "bonus/bonus-mystery-box.ir.json",
+          "title": "Mystery Box Pick",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "jackpot",
+      "name": "Jackpot Tiers (10)",
+      "description": "4-tier WAP / Must-Hit-By / Linked / Standalone jackpot structures.",
+      "items": [
+        {
+          "id": "jackpot-4tier-wap",
+          "file": "jackpot/jackpot-4tier-wap.ir.json",
+          "title": "4-Tier WAP Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-must-hit",
+          "file": "jackpot/jackpot-must-hit.ir.json",
+          "title": "Must-Hit-By Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-linked",
+          "file": "jackpot/jackpot-linked.ir.json",
+          "title": "Linked Progressive Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-standalone",
+          "file": "jackpot/jackpot-standalone.ir.json",
+          "title": "Standalone Progressive",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-5tier-mega",
+          "file": "jackpot/jackpot-5tier-mega.ir.json",
+          "title": "5-Tier Mega Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-3tier-basic",
+          "file": "jackpot/jackpot-3tier-basic.ir.json",
+          "title": "3-Tier Basic Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-network-wap",
+          "file": "jackpot/jackpot-network-wap.ir.json",
+          "title": "Network-Wide WAP Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-instant",
+          "file": "jackpot/jackpot-instant.ir.json",
+          "title": "Instant Trigger Jackpot",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-mystery",
+          "file": "jackpot/jackpot-mystery.ir.json",
+          "title": "Mystery Jackpot Reveal",
+          "topology": "rectangular"
+        },
+        {
+          "id": "jackpot-frenzy",
+          "file": "jackpot/jackpot-frenzy.ir.json",
+          "title": "Jackpot Frenzy Multi",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "hybrid",
+      "name": "Hybrid Mechanics (10)",
+      "description": "Multi-feature combination templates.",
+      "items": [
+        {
+          "id": "hybrid-megaways-hw",
+          "file": "hybrid/hybrid-megaways-hw.ir.json",
+          "title": "Megaways + Hold & Win Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-cluster-fs",
+          "file": "hybrid/hybrid-cluster-fs.ir.json",
+          "title": "Cluster + Free Spins Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-cascade-jackpot",
+          "file": "hybrid/hybrid-cascade-jackpot.ir.json",
+          "title": "Cascade + Jackpot Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-fs-cluster",
+          "file": "hybrid/hybrid-fs-cluster.ir.json",
+          "title": "Free Spins + Cluster Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-mystery-hw",
+          "file": "hybrid/hybrid-mystery-hw.ir.json",
+          "title": "Mystery + Hold & Win Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-wheel-fs",
+          "file": "hybrid/hybrid-wheel-fs.ir.json",
+          "title": "Wheel + Free Spins Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-pick-jackpot",
+          "file": "hybrid/hybrid-pick-jackpot.ir.json",
+          "title": "Pick + Jackpot Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-mega-wheel-fs",
+          "file": "hybrid/hybrid-mega-wheel-fs.ir.json",
+          "title": "Mega Wheel + FS Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-cascade-fs",
+          "file": "hybrid/hybrid-cascade-fs.ir.json",
+          "title": "Cascade + FS Hybrid",
+          "topology": "rectangular"
+        },
+        {
+          "id": "hybrid-everything",
+          "file": "hybrid/hybrid-everything.ir.json",
+          "title": "Everything-Hybrid Mega",
+          "topology": "rectangular"
+        }
+      ]
+    },
+    {
+      "id": "lw-enhanced",
+      "name": "L&W Enhanced Variants (64)",
+      "description": "Enhanced variants per L&W M-gap (16 gaps × 4 profiles = 64).",
+      "items": [
+        {
+          "id": "lw-m1-classic",
+          "file": "lw-enhanced/lw-m1-classic.ir.json",
+          "title": "M1 dragon-spin Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M1"
+        },
+        {
+          "id": "lw-m1-premium",
+          "file": "lw-enhanced/lw-m1-premium.ir.json",
+          "title": "M1 dragon-spin Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M1"
+        },
+        {
+          "id": "lw-m1-mega",
+          "file": "lw-enhanced/lw-m1-mega.ir.json",
+          "title": "M1 dragon-spin Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M1"
+        },
+        {
+          "id": "lw-m1-turbo",
+          "file": "lw-enhanced/lw-m1-turbo.ir.json",
+          "title": "M1 dragon-spin Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M1"
+        },
+        {
+          "id": "lw-m2-classic",
+          "file": "lw-enhanced/lw-m2-classic.ir.json",
+          "title": "M2 huff-puff Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W SG Gaming",
+          "year": 2025,
+          "mGap": "M2"
+        },
+        {
+          "id": "lw-m2-premium",
+          "file": "lw-enhanced/lw-m2-premium.ir.json",
+          "title": "M2 huff-puff Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W SG Gaming",
+          "year": 2025,
+          "mGap": "M2"
+        },
+        {
+          "id": "lw-m2-mega",
+          "file": "lw-enhanced/lw-m2-mega.ir.json",
+          "title": "M2 huff-puff Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W SG Gaming",
+          "year": 2025,
+          "mGap": "M2"
+        },
+        {
+          "id": "lw-m2-turbo",
+          "file": "lw-enhanced/lw-m2-turbo.ir.json",
+          "title": "M2 huff-puff Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W SG Gaming",
+          "year": 2025,
+          "mGap": "M2"
+        },
+        {
+          "id": "lw-m3-classic",
+          "file": "lw-enhanced/lw-m3-classic.ir.json",
+          "title": "M3 fire-link Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M3"
+        },
+        {
+          "id": "lw-m3-premium",
+          "file": "lw-enhanced/lw-m3-premium.ir.json",
+          "title": "M3 fire-link Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M3"
+        },
+        {
+          "id": "lw-m3-mega",
+          "file": "lw-enhanced/lw-m3-mega.ir.json",
+          "title": "M3 fire-link Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M3"
+        },
+        {
+          "id": "lw-m3-turbo",
+          "file": "lw-enhanced/lw-m3-turbo.ir.json",
+          "title": "M3 fire-link Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M3"
+        },
+        {
+          "id": "lw-m4-classic",
+          "file": "lw-enhanced/lw-m4-classic.ir.json",
+          "title": "M4 dancing-drums Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Shuffle Master",
+          "year": 2025,
+          "mGap": "M4"
+        },
+        {
+          "id": "lw-m4-premium",
+          "file": "lw-enhanced/lw-m4-premium.ir.json",
+          "title": "M4 dancing-drums Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Shuffle Master",
+          "year": 2025,
+          "mGap": "M4"
+        },
+        {
+          "id": "lw-m4-mega",
+          "file": "lw-enhanced/lw-m4-mega.ir.json",
+          "title": "M4 dancing-drums Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Shuffle Master",
+          "year": 2025,
+          "mGap": "M4"
+        },
+        {
+          "id": "lw-m4-turbo",
+          "file": "lw-enhanced/lw-m4-turbo.ir.json",
+          "title": "M4 dancing-drums Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Shuffle Master",
+          "year": 2025,
+          "mGap": "M4"
+        },
+        {
+          "id": "lw-m5-classic",
+          "file": "lw-enhanced/lw-m5-classic.ir.json",
+          "title": "M5 quick-hit Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M5"
+        },
+        {
+          "id": "lw-m5-premium",
+          "file": "lw-enhanced/lw-m5-premium.ir.json",
+          "title": "M5 quick-hit Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M5"
+        },
+        {
+          "id": "lw-m5-mega",
+          "file": "lw-enhanced/lw-m5-mega.ir.json",
+          "title": "M5 quick-hit Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M5"
+        },
+        {
+          "id": "lw-m5-turbo",
+          "file": "lw-enhanced/lw-m5-turbo.ir.json",
+          "title": "M5 quick-hit Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M5"
+        },
+        {
+          "id": "lw-m6-classic",
+          "file": "lw-enhanced/lw-m6-classic.ir.json",
+          "title": "M6 cash-wheel Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2026,
+          "mGap": "M6"
+        },
+        {
+          "id": "lw-m6-premium",
+          "file": "lw-enhanced/lw-m6-premium.ir.json",
+          "title": "M6 cash-wheel Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2026,
+          "mGap": "M6"
+        },
+        {
+          "id": "lw-m6-mega",
+          "file": "lw-enhanced/lw-m6-mega.ir.json",
+          "title": "M6 cash-wheel Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2026,
+          "mGap": "M6"
+        },
+        {
+          "id": "lw-m6-turbo",
+          "file": "lw-enhanced/lw-m6-turbo.ir.json",
+          "title": "M6 cash-wheel Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2026,
+          "mGap": "M6"
+        },
+        {
+          "id": "lw-m7-classic",
+          "file": "lw-enhanced/lw-m7-classic.ir.json",
+          "title": "M7 spartacus Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M7"
+        },
+        {
+          "id": "lw-m7-premium",
+          "file": "lw-enhanced/lw-m7-premium.ir.json",
+          "title": "M7 spartacus Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M7"
+        },
+        {
+          "id": "lw-m7-mega",
+          "file": "lw-enhanced/lw-m7-mega.ir.json",
+          "title": "M7 spartacus Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M7"
+        },
+        {
+          "id": "lw-m7-turbo",
+          "file": "lw-enhanced/lw-m7-turbo.ir.json",
+          "title": "M7 spartacus Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M7"
+        },
+        {
+          "id": "lw-m8-classic",
+          "file": "lw-enhanced/lw-m8-classic.ir.json",
+          "title": "M8 goldfish Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M8"
+        },
+        {
+          "id": "lw-m8-premium",
+          "file": "lw-enhanced/lw-m8-premium.ir.json",
+          "title": "M8 goldfish Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M8"
+        },
+        {
+          "id": "lw-m8-mega",
+          "file": "lw-enhanced/lw-m8-mega.ir.json",
+          "title": "M8 goldfish Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M8"
+        },
+        {
+          "id": "lw-m8-turbo",
+          "file": "lw-enhanced/lw-m8-turbo.ir.json",
+          "title": "M8 goldfish Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M8"
+        },
+        {
+          "id": "lw-m9-classic",
+          "file": "lw-enhanced/lw-m9-classic.ir.json",
+          "title": "M9 big-bet Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M9"
+        },
+        {
+          "id": "lw-m9-premium",
+          "file": "lw-enhanced/lw-m9-premium.ir.json",
+          "title": "M9 big-bet Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M9"
+        },
+        {
+          "id": "lw-m9-mega",
+          "file": "lw-enhanced/lw-m9-mega.ir.json",
+          "title": "M9 big-bet Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M9"
+        },
+        {
+          "id": "lw-m9-turbo",
+          "file": "lw-enhanced/lw-m9-turbo.ir.json",
+          "title": "M9 big-bet Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M9"
+        },
+        {
+          "id": "lw-m10-classic",
+          "file": "lw-enhanced/lw-m10-classic.ir.json",
+          "title": "M10 rr-megaways Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M10"
+        },
+        {
+          "id": "lw-m10-premium",
+          "file": "lw-enhanced/lw-m10-premium.ir.json",
+          "title": "M10 rr-megaways Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M10"
+        },
+        {
+          "id": "lw-m10-mega",
+          "file": "lw-enhanced/lw-m10-mega.ir.json",
+          "title": "M10 rr-megaways Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M10"
+        },
+        {
+          "id": "lw-m10-turbo",
+          "file": "lw-enhanced/lw-m10-turbo.ir.json",
+          "title": "M10 rr-megaways Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Barcrest",
+          "year": 2025,
+          "mGap": "M10"
+        },
+        {
+          "id": "lw-m11-classic",
+          "file": "lw-enhanced/lw-m11-classic.ir.json",
+          "title": "M11 player-elects Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W (multi-studio)",
+          "year": 2025,
+          "mGap": "M11"
+        },
+        {
+          "id": "lw-m11-premium",
+          "file": "lw-enhanced/lw-m11-premium.ir.json",
+          "title": "M11 player-elects Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W (multi-studio)",
+          "year": 2025,
+          "mGap": "M11"
+        },
+        {
+          "id": "lw-m11-mega",
+          "file": "lw-enhanced/lw-m11-mega.ir.json",
+          "title": "M11 player-elects Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W (multi-studio)",
+          "year": 2025,
+          "mGap": "M11"
+        },
+        {
+          "id": "lw-m11-turbo",
+          "file": "lw-enhanced/lw-m11-turbo.ir.json",
+          "title": "M11 player-elects Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W (multi-studio)",
+          "year": 2025,
+          "mGap": "M11"
+        },
+        {
+          "id": "lw-m12-classic",
+          "file": "lw-enhanced/lw-m12-classic.ir.json",
+          "title": "M12 munchkinland Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M12"
+        },
+        {
+          "id": "lw-m12-premium",
+          "file": "lw-enhanced/lw-m12-premium.ir.json",
+          "title": "M12 munchkinland Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M12"
+        },
+        {
+          "id": "lw-m12-mega",
+          "file": "lw-enhanced/lw-m12-mega.ir.json",
+          "title": "M12 munchkinland Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M12"
+        },
+        {
+          "id": "lw-m12-turbo",
+          "file": "lw-enhanced/lw-m12-turbo.ir.json",
+          "title": "M12 munchkinland Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M12"
+        },
+        {
+          "id": "lw-m13-classic",
+          "file": "lw-enhanced/lw-m13-classic.ir.json",
+          "title": "M13 woz-glinda Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2026,
+          "mGap": "M13"
+        },
+        {
+          "id": "lw-m13-premium",
+          "file": "lw-enhanced/lw-m13-premium.ir.json",
+          "title": "M13 woz-glinda Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2026,
+          "mGap": "M13"
+        },
+        {
+          "id": "lw-m13-mega",
+          "file": "lw-enhanced/lw-m13-mega.ir.json",
+          "title": "M13 woz-glinda Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2026,
+          "mGap": "M13"
+        },
+        {
+          "id": "lw-m13-turbo",
+          "file": "lw-enhanced/lw-m13-turbo.ir.json",
+          "title": "M13 woz-glinda Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2026,
+          "mGap": "M13"
+        },
+        {
+          "id": "lw-m14-classic",
+          "file": "lw-enhanced/lw-m14-classic.ir.json",
+          "title": "M14 lotr-nested Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M14"
+        },
+        {
+          "id": "lw-m14-premium",
+          "file": "lw-enhanced/lw-m14-premium.ir.json",
+          "title": "M14 lotr-nested Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M14"
+        },
+        {
+          "id": "lw-m14-mega",
+          "file": "lw-enhanced/lw-m14-mega.ir.json",
+          "title": "M14 lotr-nested Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M14"
+        },
+        {
+          "id": "lw-m14-turbo",
+          "file": "lw-enhanced/lw-m14-turbo.ir.json",
+          "title": "M14 lotr-nested Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W WMS",
+          "year": 2025,
+          "mGap": "M14"
+        },
+        {
+          "id": "lw-m15-classic",
+          "file": "lw-enhanced/lw-m15-classic.ir.json",
+          "title": "M15 rich-piggies Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M15"
+        },
+        {
+          "id": "lw-m15-premium",
+          "file": "lw-enhanced/lw-m15-premium.ir.json",
+          "title": "M15 rich-piggies Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M15"
+        },
+        {
+          "id": "lw-m15-mega",
+          "file": "lw-enhanced/lw-m15-mega.ir.json",
+          "title": "M15 rich-piggies Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M15"
+        },
+        {
+          "id": "lw-m15-turbo",
+          "file": "lw-enhanced/lw-m15-turbo.ir.json",
+          "title": "M15 rich-piggies Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Bally",
+          "year": 2025,
+          "mGap": "M15"
+        },
+        {
+          "id": "lw-m16-classic",
+          "file": "lw-enhanced/lw-m16-classic.ir.json",
+          "title": "M16 stellar-jackpots Classic Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Lightning Box",
+          "year": 2025,
+          "mGap": "M16"
+        },
+        {
+          "id": "lw-m16-premium",
+          "file": "lw-enhanced/lw-m16-premium.ir.json",
+          "title": "M16 stellar-jackpots Premium Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Lightning Box",
+          "year": 2025,
+          "mGap": "M16"
+        },
+        {
+          "id": "lw-m16-mega",
+          "file": "lw-enhanced/lw-m16-mega.ir.json",
+          "title": "M16 stellar-jackpots Mega Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Lightning Box",
+          "year": 2025,
+          "mGap": "M16"
+        },
+        {
+          "id": "lw-m16-turbo",
+          "file": "lw-enhanced/lw-m16-turbo.ir.json",
+          "title": "M16 stellar-jackpots Turbo Edition",
+          "topology": "rectangular",
+          "supplier": "L&W Lightning Box",
+          "year": 2025,
+          "mGap": "M16"
+        }
+      ]
+    }
+  ]
+}

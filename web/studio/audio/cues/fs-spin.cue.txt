@@ -1,0 +1,6 @@
+; CORTI 200.8 audio cue placeholder
+; id: fs-spin
+; tier: fs
+; duration_s: 1.2
+; format: mp3 (replace with real ≤200 KB MP3 for production)
+; fallback: Web-Audio synth tone (createAudioEngine().preloadDefaults())

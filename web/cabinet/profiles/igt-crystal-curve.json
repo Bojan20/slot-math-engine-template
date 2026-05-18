@@ -1,0 +1,12 @@
+{
+  "id": "igt-crystal-curve",
+  "name": "IGT Crystal Curve",
+  "manufacturer": "IGT",
+  "model": "Crystal Curve 49",
+  "reels": 5,
+  "rows": 3,
+  "resolution": [3840, 1080],
+  "hasTopper": false,
+  "lightingZones": ["buttonDeck", "trim", "reelHalo"],
+  "speakerChannels": 2
+}

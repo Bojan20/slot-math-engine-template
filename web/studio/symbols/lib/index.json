@@ -1,0 +1,886 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "scripts/generate-symbol-library.mjs",
+  "packs": [
+    {
+      "id": "base",
+      "dir": ".",
+      "count": 40,
+      "items": [
+        {
+          "id": "anchor",
+          "file": "anchor.svg"
+        },
+        {
+          "id": "arc",
+          "file": "arc.svg"
+        },
+        {
+          "id": "arrow",
+          "file": "arrow.svg"
+        },
+        {
+          "id": "bonus",
+          "file": "bonus.svg"
+        },
+        {
+          "id": "chevron",
+          "file": "chevron.svg"
+        },
+        {
+          "id": "circle",
+          "file": "circle.svg"
+        },
+        {
+          "id": "crystal",
+          "file": "crystal.svg"
+        },
+        {
+          "id": "diamond",
+          "file": "diamond.svg"
+        },
+        {
+          "id": "drop",
+          "file": "drop.svg"
+        },
+        {
+          "id": "eye",
+          "file": "eye.svg"
+        },
+        {
+          "id": "flame",
+          "file": "flame.svg"
+        },
+        {
+          "id": "gear",
+          "file": "gear.svg"
+        },
+        {
+          "id": "hexagon",
+          "file": "hexagon.svg"
+        },
+        {
+          "id": "key",
+          "file": "key.svg"
+        },
+        {
+          "id": "keystone",
+          "file": "keystone.svg"
+        },
+        {
+          "id": "knot",
+          "file": "knot.svg"
+        },
+        {
+          "id": "lattice",
+          "file": "lattice.svg"
+        },
+        {
+          "id": "leaf",
+          "file": "leaf.svg"
+        },
+        {
+          "id": "moon",
+          "file": "moon.svg"
+        },
+        {
+          "id": "mountain",
+          "file": "mountain.svg"
+        },
+        {
+          "id": "mult",
+          "file": "mult.svg"
+        },
+        {
+          "id": "obelisk",
+          "file": "obelisk.svg"
+        },
+        {
+          "id": "octagon",
+          "file": "octagon.svg"
+        },
+        {
+          "id": "orbit",
+          "file": "orbit.svg"
+        },
+        {
+          "id": "pebble",
+          "file": "pebble.svg"
+        },
+        {
+          "id": "pentagon",
+          "file": "pentagon.svg"
+        },
+        {
+          "id": "prism",
+          "file": "prism.svg"
+        },
+        {
+          "id": "scatter",
+          "file": "scatter.svg"
+        },
+        {
+          "id": "shard",
+          "file": "shard.svg"
+        },
+        {
+          "id": "sigil",
+          "file": "sigil.svg"
+        },
+        {
+          "id": "sonar",
+          "file": "sonar.svg"
+        },
+        {
+          "id": "spiral",
+          "file": "spiral.svg"
+        },
+        {
+          "id": "square",
+          "file": "square.svg"
+        },
+        {
+          "id": "star5",
+          "file": "star5.svg"
+        },
+        {
+          "id": "star6",
+          "file": "star6.svg"
+        },
+        {
+          "id": "sun",
+          "file": "sun.svg"
+        },
+        {
+          "id": "triangle",
+          "file": "triangle.svg"
+        },
+        {
+          "id": "vortex",
+          "file": "vortex.svg"
+        },
+        {
+          "id": "wave",
+          "file": "wave.svg"
+        },
+        {
+          "id": "wild",
+          "file": "wild.svg"
+        }
+      ]
+    },
+    {
+      "id": "fruit",
+      "dir": "fruit",
+      "count": 20,
+      "items": [
+        {
+          "id": "cherry",
+          "file": "fruit/cherry.svg"
+        },
+        {
+          "id": "lemon",
+          "file": "fruit/lemon.svg"
+        },
+        {
+          "id": "orange",
+          "file": "fruit/orange.svg"
+        },
+        {
+          "id": "plum",
+          "file": "fruit/plum.svg"
+        },
+        {
+          "id": "grape",
+          "file": "fruit/grape.svg"
+        },
+        {
+          "id": "watermelon",
+          "file": "fruit/watermelon.svg"
+        },
+        {
+          "id": "strawberry",
+          "file": "fruit/strawberry.svg"
+        },
+        {
+          "id": "banana",
+          "file": "fruit/banana.svg"
+        },
+        {
+          "id": "apple",
+          "file": "fruit/apple.svg"
+        },
+        {
+          "id": "pineapple",
+          "file": "fruit/pineapple.svg"
+        },
+        {
+          "id": "kiwi",
+          "file": "fruit/kiwi.svg"
+        },
+        {
+          "id": "pear",
+          "file": "fruit/pear.svg"
+        },
+        {
+          "id": "peach",
+          "file": "fruit/peach.svg"
+        },
+        {
+          "id": "coconut",
+          "file": "fruit/coconut.svg"
+        },
+        {
+          "id": "fig",
+          "file": "fruit/fig.svg"
+        },
+        {
+          "id": "mango",
+          "file": "fruit/mango.svg"
+        },
+        {
+          "id": "pomegranate",
+          "file": "fruit/pomegranate.svg"
+        },
+        {
+          "id": "blueberry",
+          "file": "fruit/blueberry.svg"
+        },
+        {
+          "id": "raspberry",
+          "file": "fruit/raspberry.svg"
+        },
+        {
+          "id": "blackberry",
+          "file": "fruit/blackberry.svg"
+        }
+      ]
+    },
+    {
+      "id": "card",
+      "dir": "card",
+      "count": 24,
+      "items": [
+        {
+          "id": "a-hearts",
+          "file": "card/a-hearts.svg"
+        },
+        {
+          "id": "a-diamonds",
+          "file": "card/a-diamonds.svg"
+        },
+        {
+          "id": "a-clubs",
+          "file": "card/a-clubs.svg"
+        },
+        {
+          "id": "a-spades",
+          "file": "card/a-spades.svg"
+        },
+        {
+          "id": "k-hearts",
+          "file": "card/k-hearts.svg"
+        },
+        {
+          "id": "k-diamonds",
+          "file": "card/k-diamonds.svg"
+        },
+        {
+          "id": "k-clubs",
+          "file": "card/k-clubs.svg"
+        },
+        {
+          "id": "k-spades",
+          "file": "card/k-spades.svg"
+        },
+        {
+          "id": "q-hearts",
+          "file": "card/q-hearts.svg"
+        },
+        {
+          "id": "q-diamonds",
+          "file": "card/q-diamonds.svg"
+        },
+        {
+          "id": "q-clubs",
+          "file": "card/q-clubs.svg"
+        },
+        {
+          "id": "q-spades",
+          "file": "card/q-spades.svg"
+        },
+        {
+          "id": "j-hearts",
+          "file": "card/j-hearts.svg"
+        },
+        {
+          "id": "j-diamonds",
+          "file": "card/j-diamonds.svg"
+        },
+        {
+          "id": "j-clubs",
+          "file": "card/j-clubs.svg"
+        },
+        {
+          "id": "j-spades",
+          "file": "card/j-spades.svg"
+        },
+        {
+          "id": "10-hearts",
+          "file": "card/10-hearts.svg"
+        },
+        {
+          "id": "10-diamonds",
+          "file": "card/10-diamonds.svg"
+        },
+        {
+          "id": "10-clubs",
+          "file": "card/10-clubs.svg"
+        },
+        {
+          "id": "10-spades",
+          "file": "card/10-spades.svg"
+        },
+        {
+          "id": "9-hearts",
+          "file": "card/9-hearts.svg"
+        },
+        {
+          "id": "9-diamonds",
+          "file": "card/9-diamonds.svg"
+        },
+        {
+          "id": "9-clubs",
+          "file": "card/9-clubs.svg"
+        },
+        {
+          "id": "9-spades",
+          "file": "card/9-spades.svg"
+        }
+      ]
+    },
+    {
+      "id": "gem",
+      "dir": "gem",
+      "count": 20,
+      "items": [
+        {
+          "id": "ruby",
+          "file": "gem/ruby.svg"
+        },
+        {
+          "id": "sapphire",
+          "file": "gem/sapphire.svg"
+        },
+        {
+          "id": "emerald",
+          "file": "gem/emerald.svg"
+        },
+        {
+          "id": "diamond",
+          "file": "gem/diamond.svg"
+        },
+        {
+          "id": "topaz",
+          "file": "gem/topaz.svg"
+        },
+        {
+          "id": "amethyst",
+          "file": "gem/amethyst.svg"
+        },
+        {
+          "id": "opal",
+          "file": "gem/opal.svg"
+        },
+        {
+          "id": "pearl",
+          "file": "gem/pearl.svg"
+        },
+        {
+          "id": "jade",
+          "file": "gem/jade.svg"
+        },
+        {
+          "id": "onyx",
+          "file": "gem/onyx.svg"
+        },
+        {
+          "id": "gem-cut-1",
+          "file": "gem/gem-cut-1.svg"
+        },
+        {
+          "id": "gem-cut-2",
+          "file": "gem/gem-cut-2.svg"
+        },
+        {
+          "id": "gem-cut-3",
+          "file": "gem/gem-cut-3.svg"
+        },
+        {
+          "id": "gem-cut-4",
+          "file": "gem/gem-cut-4.svg"
+        },
+        {
+          "id": "gem-cut-5",
+          "file": "gem/gem-cut-5.svg"
+        },
+        {
+          "id": "gem-cut-6",
+          "file": "gem/gem-cut-6.svg"
+        },
+        {
+          "id": "gem-cut-7",
+          "file": "gem/gem-cut-7.svg"
+        },
+        {
+          "id": "gem-cut-8",
+          "file": "gem/gem-cut-8.svg"
+        },
+        {
+          "id": "gem-cut-9",
+          "file": "gem/gem-cut-9.svg"
+        },
+        {
+          "id": "gem-cut-10",
+          "file": "gem/gem-cut-10.svg"
+        }
+      ]
+    },
+    {
+      "id": "animal",
+      "dir": "animal",
+      "count": 20,
+      "items": [
+        {
+          "id": "wolf",
+          "file": "animal/wolf.svg"
+        },
+        {
+          "id": "tiger",
+          "file": "animal/tiger.svg"
+        },
+        {
+          "id": "lion",
+          "file": "animal/lion.svg"
+        },
+        {
+          "id": "eagle",
+          "file": "animal/eagle.svg"
+        },
+        {
+          "id": "dragon",
+          "file": "animal/dragon.svg"
+        },
+        {
+          "id": "phoenix",
+          "file": "animal/phoenix.svg"
+        },
+        {
+          "id": "unicorn",
+          "file": "animal/unicorn.svg"
+        },
+        {
+          "id": "pegasus",
+          "file": "animal/pegasus.svg"
+        },
+        {
+          "id": "kraken",
+          "file": "animal/kraken.svg"
+        },
+        {
+          "id": "dolphin",
+          "file": "animal/dolphin.svg"
+        },
+        {
+          "id": "leopard",
+          "file": "animal/leopard.svg"
+        },
+        {
+          "id": "panther",
+          "file": "animal/panther.svg"
+        },
+        {
+          "id": "fox",
+          "file": "animal/fox.svg"
+        },
+        {
+          "id": "bear",
+          "file": "animal/bear.svg"
+        },
+        {
+          "id": "shark",
+          "file": "animal/shark.svg"
+        },
+        {
+          "id": "hawk",
+          "file": "animal/hawk.svg"
+        },
+        {
+          "id": "serpent",
+          "file": "animal/serpent.svg"
+        },
+        {
+          "id": "scorpion",
+          "file": "animal/scorpion.svg"
+        },
+        {
+          "id": "crab",
+          "file": "animal/crab.svg"
+        },
+        {
+          "id": "butterfly",
+          "file": "animal/butterfly.svg"
+        }
+      ]
+    },
+    {
+      "id": "ancient",
+      "dir": "ancient",
+      "count": 20,
+      "items": [
+        {
+          "id": "scarab",
+          "file": "ancient/scarab.svg"
+        },
+        {
+          "id": "ankh",
+          "file": "ancient/ankh.svg"
+        },
+        {
+          "id": "pyramid",
+          "file": "ancient/pyramid.svg"
+        },
+        {
+          "id": "sphinx",
+          "file": "ancient/sphinx.svg"
+        },
+        {
+          "id": "coin",
+          "file": "ancient/coin.svg"
+        },
+        {
+          "id": "amulet",
+          "file": "ancient/amulet.svg"
+        },
+        {
+          "id": "mask",
+          "file": "ancient/mask.svg"
+        },
+        {
+          "id": "glyph",
+          "file": "ancient/glyph.svg"
+        },
+        {
+          "id": "scroll",
+          "file": "ancient/scroll.svg"
+        },
+        {
+          "id": "column",
+          "file": "ancient/column.svg"
+        },
+        {
+          "id": "urn",
+          "file": "ancient/urn.svg"
+        },
+        {
+          "id": "chalice",
+          "file": "ancient/chalice.svg"
+        },
+        {
+          "id": "spear",
+          "file": "ancient/spear.svg"
+        },
+        {
+          "id": "shield",
+          "file": "ancient/shield.svg"
+        },
+        {
+          "id": "sword",
+          "file": "ancient/sword.svg"
+        },
+        {
+          "id": "crown",
+          "file": "ancient/crown.svg"
+        },
+        {
+          "id": "throne",
+          "file": "ancient/throne.svg"
+        },
+        {
+          "id": "temple",
+          "file": "ancient/temple.svg"
+        },
+        {
+          "id": "tomb",
+          "file": "ancient/tomb.svg"
+        },
+        {
+          "id": "sun-disk",
+          "file": "ancient/sun-disk.svg"
+        }
+      ]
+    },
+    {
+      "id": "scifi",
+      "dir": "scifi",
+      "count": 20,
+      "items": [
+        {
+          "id": "rocket",
+          "file": "scifi/rocket.svg"
+        },
+        {
+          "id": "planet",
+          "file": "scifi/planet.svg"
+        },
+        {
+          "id": "star",
+          "file": "scifi/star.svg"
+        },
+        {
+          "id": "nebula",
+          "file": "scifi/nebula.svg"
+        },
+        {
+          "id": "black-hole",
+          "file": "scifi/black-hole.svg"
+        },
+        {
+          "id": "spaceship",
+          "file": "scifi/spaceship.svg"
+        },
+        {
+          "id": "robot",
+          "file": "scifi/robot.svg"
+        },
+        {
+          "id": "laser",
+          "file": "scifi/laser.svg"
+        },
+        {
+          "id": "portal",
+          "file": "scifi/portal.svg"
+        },
+        {
+          "id": "asteroid",
+          "file": "scifi/asteroid.svg"
+        },
+        {
+          "id": "satellite",
+          "file": "scifi/satellite.svg"
+        },
+        {
+          "id": "galaxy",
+          "file": "scifi/galaxy.svg"
+        },
+        {
+          "id": "atom",
+          "file": "scifi/atom.svg"
+        },
+        {
+          "id": "neutron",
+          "file": "scifi/neutron.svg"
+        },
+        {
+          "id": "quasar",
+          "file": "scifi/quasar.svg"
+        },
+        {
+          "id": "wormhole",
+          "file": "scifi/wormhole.svg"
+        },
+        {
+          "id": "hologram",
+          "file": "scifi/hologram.svg"
+        },
+        {
+          "id": "drone",
+          "file": "scifi/drone.svg"
+        },
+        {
+          "id": "capsule",
+          "file": "scifi/capsule.svg"
+        },
+        {
+          "id": "orbit",
+          "file": "scifi/orbit.svg"
+        }
+      ]
+    },
+    {
+      "id": "universal",
+      "dir": "universal",
+      "count": 20,
+      "items": [
+        {
+          "id": "wild-1",
+          "file": "universal/wild-1.svg"
+        },
+        {
+          "id": "wild-2",
+          "file": "universal/wild-2.svg"
+        },
+        {
+          "id": "wild-3",
+          "file": "universal/wild-3.svg"
+        },
+        {
+          "id": "scatter-1",
+          "file": "universal/scatter-1.svg"
+        },
+        {
+          "id": "scatter-2",
+          "file": "universal/scatter-2.svg"
+        },
+        {
+          "id": "scatter-3",
+          "file": "universal/scatter-3.svg"
+        },
+        {
+          "id": "bonus-1",
+          "file": "universal/bonus-1.svg"
+        },
+        {
+          "id": "bonus-2",
+          "file": "universal/bonus-2.svg"
+        },
+        {
+          "id": "bonus-3",
+          "file": "universal/bonus-3.svg"
+        },
+        {
+          "id": "mult-2x",
+          "file": "universal/mult-2x.svg"
+        },
+        {
+          "id": "mult-5x",
+          "file": "universal/mult-5x.svg"
+        },
+        {
+          "id": "mult-10x",
+          "file": "universal/mult-10x.svg"
+        },
+        {
+          "id": "retrigger",
+          "file": "universal/retrigger.svg"
+        },
+        {
+          "id": "sticky",
+          "file": "universal/sticky.svg"
+        },
+        {
+          "id": "expanding",
+          "file": "universal/expanding.svg"
+        },
+        {
+          "id": "walking",
+          "file": "universal/walking.svg"
+        },
+        {
+          "id": "mystery",
+          "file": "universal/mystery.svg"
+        },
+        {
+          "id": "cascade",
+          "file": "universal/cascade.svg"
+        },
+        {
+          "id": "jackpot",
+          "file": "universal/jackpot.svg"
+        },
+        {
+          "id": "progressive",
+          "file": "universal/progressive.svg"
+        }
+      ]
+    },
+    {
+      "id": "accent",
+      "dir": "accent",
+      "count": 20,
+      "items": [
+        {
+          "id": "banner",
+          "file": "accent/banner.svg"
+        },
+        {
+          "id": "scroll-overlay",
+          "file": "accent/scroll-overlay.svg"
+        },
+        {
+          "id": "sparkle",
+          "file": "accent/sparkle.svg"
+        },
+        {
+          "id": "star-burst",
+          "file": "accent/star-burst.svg"
+        },
+        {
+          "id": "coin-stack",
+          "file": "accent/coin-stack.svg"
+        },
+        {
+          "id": "treasure-chest",
+          "file": "accent/treasure-chest.svg"
+        },
+        {
+          "id": "lucky-charm",
+          "file": "accent/lucky-charm.svg"
+        },
+        {
+          "id": "clover",
+          "file": "accent/clover.svg"
+        },
+        {
+          "id": "horseshoe",
+          "file": "accent/horseshoe.svg"
+        },
+        {
+          "id": "dice",
+          "file": "accent/dice.svg"
+        },
+        {
+          "id": "cards-suite",
+          "file": "accent/cards-suite.svg"
+        },
+        {
+          "id": "roulette",
+          "file": "accent/roulette.svg"
+        },
+        {
+          "id": "slot-handle",
+          "file": "accent/slot-handle.svg"
+        },
+        {
+          "id": "vault",
+          "file": "accent/vault.svg"
+        },
+        {
+          "id": "safe",
+          "file": "accent/safe.svg"
+        },
+        {
+          "id": "locks",
+          "file": "accent/locks.svg"
+        },
+        {
+          "id": "keys",
+          "file": "accent/keys.svg"
+        },
+        {
+          "id": "chains",
+          "file": "accent/chains.svg"
+        },
+        {
+          "id": "chest",
+          "file": "accent/chest.svg"
+        },
+        {
+          "id": "pouch",
+          "file": "accent/pouch.svg"
+        }
+      ]
+    }
+  ],
+  "total": 204
+}

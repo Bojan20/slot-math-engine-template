@@ -1,0 +1,39 @@
+{
+  "id": "roman",
+  "name": "Roman Empire",
+  "description": "Legionnaire / columns / laurels + marble + crimson palette",
+  "palette": {
+    "primary": "#C0392B",
+    "accent": "#D4AF37",
+    "deep": "#1B1B1B",
+    "highlight": "#F5E6CC"
+  },
+  "background": "linear-gradient(180deg, #1B1B1B 0%, #C0392B 100%)",
+  "iconMap": {
+    "HP1": "crown",
+    "HP2": "shield",
+    "HP3": "sword",
+    "HP4": "spear",
+    "MP1": "coin",
+    "MP2": "chalice",
+    "MP3": "throne",
+    "MP4": "temple",
+    "LP1": "column",
+    "LP2": "scroll",
+    "LP3": "urn",
+    "LP4": "amulet",
+    "WILD1": "sun-disk",
+    "WILD2": "sun-disk",
+    "SCATTER1": "shield",
+    "SCATTER2": "shield",
+    "MULT1": "coin",
+    "MULT2": "coin"
+  },
+  "ambientSounds": ["coliseum-crowd", "trumpet-fanfare", "marching-legion"],
+  "animationDefaults": {
+    "spinDuration": 1100,
+    "stopStagger": 180,
+    "winFlash": "crimson",
+    "reelEase": "easeOutQuad"
+  }
+}

@@ -1,0 +1,506 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "scripts/generate-audio-library.mjs",
+  "total": 70,
+  "tiers": [
+    "spin",
+    "stop",
+    "win",
+    "fs",
+    "hw",
+    "cascade",
+    "ui"
+  ],
+  "cues": [
+    {
+      "id": "spin-classic",
+      "tier": "spin",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/spin-classic.cue.txt",
+      "file_runtime": "cues/spin-classic.mp3"
+    },
+    {
+      "id": "spin-rapid",
+      "tier": "spin",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/spin-rapid.cue.txt",
+      "file_runtime": "cues/spin-rapid.mp3"
+    },
+    {
+      "id": "spin-luxe",
+      "tier": "spin",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/spin-luxe.cue.txt",
+      "file_runtime": "cues/spin-luxe.mp3"
+    },
+    {
+      "id": "spin-mystery",
+      "tier": "spin",
+      "duration_s": 1.8,
+      "file_placeholder": "cues/spin-mystery.cue.txt",
+      "file_runtime": "cues/spin-mystery.mp3"
+    },
+    {
+      "id": "spin-cosmic",
+      "tier": "spin",
+      "duration_s": 1.4,
+      "file_placeholder": "cues/spin-cosmic.cue.txt",
+      "file_runtime": "cues/spin-cosmic.mp3"
+    },
+    {
+      "id": "spin-megaways",
+      "tier": "spin",
+      "duration_s": 1.3,
+      "file_placeholder": "cues/spin-megaways.cue.txt",
+      "file_runtime": "cues/spin-megaways.mp3"
+    },
+    {
+      "id": "spin-cluster",
+      "tier": "spin",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/spin-cluster.cue.txt",
+      "file_runtime": "cues/spin-cluster.mp3"
+    },
+    {
+      "id": "spin-bonus",
+      "tier": "spin",
+      "duration_s": 1.6,
+      "file_placeholder": "cues/spin-bonus.cue.txt",
+      "file_runtime": "cues/spin-bonus.mp3"
+    },
+    {
+      "id": "spin-fs",
+      "tier": "spin",
+      "duration_s": 1,
+      "file_placeholder": "cues/spin-fs.cue.txt",
+      "file_runtime": "cues/spin-fs.mp3"
+    },
+    {
+      "id": "spin-jackpot",
+      "tier": "spin",
+      "duration_s": 2,
+      "file_placeholder": "cues/spin-jackpot.cue.txt",
+      "file_runtime": "cues/spin-jackpot.mp3"
+    },
+    {
+      "id": "reel-stop-soft",
+      "tier": "stop",
+      "duration_s": 0.3,
+      "file_placeholder": "cues/reel-stop-soft.cue.txt",
+      "file_runtime": "cues/reel-stop-soft.mp3"
+    },
+    {
+      "id": "reel-stop-hard",
+      "tier": "stop",
+      "duration_s": 0.4,
+      "file_placeholder": "cues/reel-stop-hard.cue.txt",
+      "file_runtime": "cues/reel-stop-hard.mp3"
+    },
+    {
+      "id": "reel-stop-chime",
+      "tier": "stop",
+      "duration_s": 0.5,
+      "file_placeholder": "cues/reel-stop-chime.cue.txt",
+      "file_runtime": "cues/reel-stop-chime.mp3"
+    },
+    {
+      "id": "reel-stop-thud",
+      "tier": "stop",
+      "duration_s": 0.3,
+      "file_placeholder": "cues/reel-stop-thud.cue.txt",
+      "file_runtime": "cues/reel-stop-thud.mp3"
+    },
+    {
+      "id": "reel-stop-click",
+      "tier": "stop",
+      "duration_s": 0.2,
+      "file_placeholder": "cues/reel-stop-click.cue.txt",
+      "file_runtime": "cues/reel-stop-click.mp3"
+    },
+    {
+      "id": "reel-stop-bell",
+      "tier": "stop",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/reel-stop-bell.cue.txt",
+      "file_runtime": "cues/reel-stop-bell.mp3"
+    },
+    {
+      "id": "reel-stop-burst",
+      "tier": "stop",
+      "duration_s": 0.4,
+      "file_placeholder": "cues/reel-stop-burst.cue.txt",
+      "file_runtime": "cues/reel-stop-burst.mp3"
+    },
+    {
+      "id": "reel-stop-quick",
+      "tier": "stop",
+      "duration_s": 0.2,
+      "file_placeholder": "cues/reel-stop-quick.cue.txt",
+      "file_runtime": "cues/reel-stop-quick.mp3"
+    },
+    {
+      "id": "reel-stop-anchor",
+      "tier": "stop",
+      "duration_s": 0.5,
+      "file_placeholder": "cues/reel-stop-anchor.cue.txt",
+      "file_runtime": "cues/reel-stop-anchor.mp3"
+    },
+    {
+      "id": "reel-stop-deep",
+      "tier": "stop",
+      "duration_s": 0.4,
+      "file_placeholder": "cues/reel-stop-deep.cue.txt",
+      "file_runtime": "cues/reel-stop-deep.mp3"
+    },
+    {
+      "id": "win-small",
+      "tier": "win",
+      "duration_s": 0.8,
+      "file_placeholder": "cues/win-small.cue.txt",
+      "file_runtime": "cues/win-small.mp3"
+    },
+    {
+      "id": "win-medium",
+      "tier": "win",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/win-medium.cue.txt",
+      "file_runtime": "cues/win-medium.mp3"
+    },
+    {
+      "id": "win-big",
+      "tier": "win",
+      "duration_s": 2,
+      "file_placeholder": "cues/win-big.cue.txt",
+      "file_runtime": "cues/win-big.mp3"
+    },
+    {
+      "id": "win-mega",
+      "tier": "win",
+      "duration_s": 2.5,
+      "file_placeholder": "cues/win-mega.cue.txt",
+      "file_runtime": "cues/win-mega.mp3"
+    },
+    {
+      "id": "win-epic",
+      "tier": "win",
+      "duration_s": 3.5,
+      "file_placeholder": "cues/win-epic.cue.txt",
+      "file_runtime": "cues/win-epic.mp3"
+    },
+    {
+      "id": "win-jackpot",
+      "tier": "win",
+      "duration_s": 4,
+      "file_placeholder": "cues/win-jackpot.cue.txt",
+      "file_runtime": "cues/win-jackpot.mp3"
+    },
+    {
+      "id": "win-cascade",
+      "tier": "win",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/win-cascade.cue.txt",
+      "file_runtime": "cues/win-cascade.mp3"
+    },
+    {
+      "id": "win-line",
+      "tier": "win",
+      "duration_s": 0.9,
+      "file_placeholder": "cues/win-line.cue.txt",
+      "file_runtime": "cues/win-line.mp3"
+    },
+    {
+      "id": "win-cluster",
+      "tier": "win",
+      "duration_s": 1.4,
+      "file_placeholder": "cues/win-cluster.cue.txt",
+      "file_runtime": "cues/win-cluster.mp3"
+    },
+    {
+      "id": "win-way",
+      "tier": "win",
+      "duration_s": 1,
+      "file_placeholder": "cues/win-way.cue.txt",
+      "file_runtime": "cues/win-way.mp3"
+    },
+    {
+      "id": "fs-intro",
+      "tier": "fs",
+      "duration_s": 2.5,
+      "file_placeholder": "cues/fs-intro.cue.txt",
+      "file_runtime": "cues/fs-intro.mp3"
+    },
+    {
+      "id": "fs-outro",
+      "tier": "fs",
+      "duration_s": 2,
+      "file_placeholder": "cues/fs-outro.cue.txt",
+      "file_runtime": "cues/fs-outro.mp3"
+    },
+    {
+      "id": "fs-spin",
+      "tier": "fs",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/fs-spin.cue.txt",
+      "file_runtime": "cues/fs-spin.mp3"
+    },
+    {
+      "id": "fs-mult-up",
+      "tier": "fs",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/fs-mult-up.cue.txt",
+      "file_runtime": "cues/fs-mult-up.mp3"
+    },
+    {
+      "id": "fs-mult-max",
+      "tier": "fs",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/fs-mult-max.cue.txt",
+      "file_runtime": "cues/fs-mult-max.mp3"
+    },
+    {
+      "id": "fs-retrigger",
+      "tier": "fs",
+      "duration_s": 1.8,
+      "file_placeholder": "cues/fs-retrigger.cue.txt",
+      "file_runtime": "cues/fs-retrigger.mp3"
+    },
+    {
+      "id": "fs-sticky",
+      "tier": "fs",
+      "duration_s": 0.7,
+      "file_placeholder": "cues/fs-sticky.cue.txt",
+      "file_runtime": "cues/fs-sticky.mp3"
+    },
+    {
+      "id": "fs-expand",
+      "tier": "fs",
+      "duration_s": 0.9,
+      "file_placeholder": "cues/fs-expand.cue.txt",
+      "file_runtime": "cues/fs-expand.mp3"
+    },
+    {
+      "id": "fs-counter",
+      "tier": "fs",
+      "duration_s": 0.4,
+      "file_placeholder": "cues/fs-counter.cue.txt",
+      "file_runtime": "cues/fs-counter.mp3"
+    },
+    {
+      "id": "fs-final",
+      "tier": "fs",
+      "duration_s": 2.2,
+      "file_placeholder": "cues/fs-final.cue.txt",
+      "file_runtime": "cues/fs-final.mp3"
+    },
+    {
+      "id": "hw-orb-land",
+      "tier": "hw",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/hw-orb-land.cue.txt",
+      "file_runtime": "cues/hw-orb-land.mp3"
+    },
+    {
+      "id": "hw-row-complete",
+      "tier": "hw",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/hw-row-complete.cue.txt",
+      "file_runtime": "cues/hw-row-complete.mp3"
+    },
+    {
+      "id": "hw-col-complete",
+      "tier": "hw",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/hw-col-complete.cue.txt",
+      "file_runtime": "cues/hw-col-complete.mp3"
+    },
+    {
+      "id": "hw-full-grid",
+      "tier": "hw",
+      "duration_s": 3,
+      "file_placeholder": "cues/hw-full-grid.cue.txt",
+      "file_runtime": "cues/hw-full-grid.mp3"
+    },
+    {
+      "id": "hw-payout",
+      "tier": "hw",
+      "duration_s": 1.8,
+      "file_placeholder": "cues/hw-payout.cue.txt",
+      "file_runtime": "cues/hw-payout.mp3"
+    },
+    {
+      "id": "hw-jackpot-tier",
+      "tier": "hw",
+      "duration_s": 2,
+      "file_placeholder": "cues/hw-jackpot-tier.cue.txt",
+      "file_runtime": "cues/hw-jackpot-tier.mp3"
+    },
+    {
+      "id": "hw-trigger",
+      "tier": "hw",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/hw-trigger.cue.txt",
+      "file_runtime": "cues/hw-trigger.mp3"
+    },
+    {
+      "id": "hw-respin",
+      "tier": "hw",
+      "duration_s": 0.8,
+      "file_placeholder": "cues/hw-respin.cue.txt",
+      "file_runtime": "cues/hw-respin.mp3"
+    },
+    {
+      "id": "hw-reset",
+      "tier": "hw",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/hw-reset.cue.txt",
+      "file_runtime": "cues/hw-reset.mp3"
+    },
+    {
+      "id": "hw-final-payout",
+      "tier": "hw",
+      "duration_s": 2.5,
+      "file_placeholder": "cues/hw-final-payout.cue.txt",
+      "file_runtime": "cues/hw-final-payout.mp3"
+    },
+    {
+      "id": "cascade-phase-1",
+      "tier": "cascade",
+      "duration_s": 0.5,
+      "file_placeholder": "cues/cascade-phase-1.cue.txt",
+      "file_runtime": "cues/cascade-phase-1.mp3"
+    },
+    {
+      "id": "cascade-phase-2",
+      "tier": "cascade",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/cascade-phase-2.cue.txt",
+      "file_runtime": "cues/cascade-phase-2.mp3"
+    },
+    {
+      "id": "cascade-phase-3",
+      "tier": "cascade",
+      "duration_s": 0.7,
+      "file_placeholder": "cues/cascade-phase-3.cue.txt",
+      "file_runtime": "cues/cascade-phase-3.mp3"
+    },
+    {
+      "id": "cascade-phase-4",
+      "tier": "cascade",
+      "duration_s": 0.8,
+      "file_placeholder": "cues/cascade-phase-4.cue.txt",
+      "file_runtime": "cues/cascade-phase-4.mp3"
+    },
+    {
+      "id": "cascade-phase-5",
+      "tier": "cascade",
+      "duration_s": 0.9,
+      "file_placeholder": "cues/cascade-phase-5.cue.txt",
+      "file_runtime": "cues/cascade-phase-5.mp3"
+    },
+    {
+      "id": "cascade-chain",
+      "tier": "cascade",
+      "duration_s": 1,
+      "file_placeholder": "cues/cascade-chain.cue.txt",
+      "file_runtime": "cues/cascade-chain.mp3"
+    },
+    {
+      "id": "cascade-explosion",
+      "tier": "cascade",
+      "duration_s": 1.5,
+      "file_placeholder": "cues/cascade-explosion.cue.txt",
+      "file_runtime": "cues/cascade-explosion.mp3"
+    },
+    {
+      "id": "cascade-mult-up",
+      "tier": "cascade",
+      "duration_s": 0.5,
+      "file_placeholder": "cues/cascade-mult-up.cue.txt",
+      "file_runtime": "cues/cascade-mult-up.mp3"
+    },
+    {
+      "id": "cascade-mult-max",
+      "tier": "cascade",
+      "duration_s": 1.2,
+      "file_placeholder": "cues/cascade-mult-max.cue.txt",
+      "file_runtime": "cues/cascade-mult-max.mp3"
+    },
+    {
+      "id": "cascade-tumble",
+      "tier": "cascade",
+      "duration_s": 0.8,
+      "file_placeholder": "cues/cascade-tumble.cue.txt",
+      "file_runtime": "cues/cascade-tumble.mp3"
+    },
+    {
+      "id": "ui-click",
+      "tier": "ui",
+      "duration_s": 0.1,
+      "file_placeholder": "cues/ui-click.cue.txt",
+      "file_runtime": "cues/ui-click.mp3"
+    },
+    {
+      "id": "ui-hover",
+      "tier": "ui",
+      "duration_s": 0.05,
+      "file_placeholder": "cues/ui-hover.cue.txt",
+      "file_runtime": "cues/ui-hover.mp3"
+    },
+    {
+      "id": "ui-error",
+      "tier": "ui",
+      "duration_s": 0.4,
+      "file_placeholder": "cues/ui-error.cue.txt",
+      "file_runtime": "cues/ui-error.mp3"
+    },
+    {
+      "id": "ui-success",
+      "tier": "ui",
+      "duration_s": 0.5,
+      "file_placeholder": "cues/ui-success.cue.txt",
+      "file_runtime": "cues/ui-success.mp3"
+    },
+    {
+      "id": "ui-notification",
+      "tier": "ui",
+      "duration_s": 0.6,
+      "file_placeholder": "cues/ui-notification.cue.txt",
+      "file_runtime": "cues/ui-notification.mp3"
+    },
+    {
+      "id": "ui-confirm",
+      "tier": "ui",
+      "duration_s": 0.3,
+      "file_placeholder": "cues/ui-confirm.cue.txt",
+      "file_runtime": "cues/ui-confirm.mp3"
+    },
+    {
+      "id": "ui-cancel",
+      "tier": "ui",
+      "duration_s": 0.3,
+      "file_placeholder": "cues/ui-cancel.cue.txt",
+      "file_runtime": "cues/ui-cancel.mp3"
+    },
+    {
+      "id": "ui-bet-up",
+      "tier": "ui",
+      "duration_s": 0.2,
+      "file_placeholder": "cues/ui-bet-up.cue.txt",
+      "file_runtime": "cues/ui-bet-up.mp3"
+    },
+    {
+      "id": "ui-bet-down",
+      "tier": "ui",
+      "duration_s": 0.2,
+      "file_placeholder": "cues/ui-bet-down.cue.txt",
+      "file_runtime": "cues/ui-bet-down.mp3"
+    },
+    {
+      "id": "ui-cashout",
+      "tier": "ui",
+      "duration_s": 1,
+      "file_placeholder": "cues/ui-cashout.cue.txt",
+      "file_runtime": "cues/ui-cashout.mp3"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "underwater",
+  "name": "Underwater Reef",
+  "description": "Coral / dolphins / sunken treasure + aqua teal palette",
+  "palette": {
+    "primary": "#00BCD4",
+    "accent": "#FFCA28",
+    "deep": "#003F5C",
+    "highlight": "#B2EBF2"
+  },
+  "background": "linear-gradient(180deg, #003F5C 0%, #00BCD4 100%)",
+  "iconMap": {
+    "HP1": "dolphin",
+    "HP2": "shark",
+    "HP3": "kraken",
+    "HP4": "crab",
+    "MP1": "pearl",
+    "MP2": "treasure-chest",
+    "MP3": "coin",
+    "MP4": "amulet",
+    "LP1": "shell",
+    "LP2": "scroll",
+    "LP3": "urn",
+    "LP4": "chalice",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["underwater-bubbles", "whale-song", "coral-ripple"],
+  "animationDefaults": {
+    "spinDuration": 1250,
+    "stopStagger": 210,
+    "winFlash": "aqua",
+    "reelEase": "easeInOutSine"
+  }
+}

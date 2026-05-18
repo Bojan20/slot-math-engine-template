@@ -1,0 +1,12 @@
+{
+  "id": "aristocrat-helix",
+  "name": "Aristocrat Helix",
+  "manufacturer": "Aristocrat",
+  "model": "Helix XT",
+  "reels": 6,
+  "rows": 5,
+  "resolution": [2560, 1440],
+  "hasTopper": true,
+  "lightingZones": ["topper", "trim", "buttonDeck"],
+  "speakerChannels": 6
+}

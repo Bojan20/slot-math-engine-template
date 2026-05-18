@@ -8,6 +8,7 @@ import { WalletStore } from '../state/wallet.js';
 import { AuditStore } from '../state/audit.js';
 import { GamesRegistry } from '../state/games.js';
 import { CertStore } from '../state/cert.js';
+import { TenantStore } from '../state/tenants.js';
 
 export async function buildTestApp() {
   const games = new GamesRegistry();
@@ -44,6 +45,7 @@ export async function buildTestApp() {
       audit: new AuditStore(),
       games,
       cert: new CertStore(),
+      tenants: new TenantStore(),
     },
     logger: false,
   });

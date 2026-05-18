@@ -76,3 +76,10 @@ web/regulator/package-lock.json
 reports/playwright/
 test-results/
 playwright-report/
+
+# ─── Faza 200.6-200.8 node_modules ─────────────
+web/marketplace/node_modules/
+web/marketplace/package-lock.json
+web/cabinet/node_modules/
+sdk/node_modules/
+sdk/dist/

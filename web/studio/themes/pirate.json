@@ -1,0 +1,39 @@
+{
+  "id": "pirate",
+  "name": "Pirate Treasure",
+  "description": "Galleons / chests / kraken + storm + gold doubloon palette",
+  "palette": {
+    "primary": "#5C3317",
+    "accent": "#FFD700",
+    "deep": "#1A1A1A",
+    "highlight": "#E0E0E0"
+  },
+  "background": "linear-gradient(180deg, #1A1A1A 0%, #5C3317 100%)",
+  "iconMap": {
+    "HP1": "kraken",
+    "HP2": "shark",
+    "HP3": "treasure-chest",
+    "HP4": "sword",
+    "MP1": "coin",
+    "MP2": "compass",
+    "MP3": "pouch",
+    "MP4": "vault",
+    "LP1": "keys",
+    "LP2": "chains",
+    "LP3": "scroll",
+    "LP4": "amulet",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["ocean-waves", "creaking-wood", "seagulls"],
+  "animationDefaults": {
+    "spinDuration": 1200,
+    "stopStagger": 200,
+    "winFlash": "gold",
+    "reelEase": "easeOutBack"
+  }
+}

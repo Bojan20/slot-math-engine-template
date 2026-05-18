@@ -1,0 +1,39 @@
+{
+  "id": "fairytale",
+  "name": "Fairy Tale Magic",
+  "description": "Castles / fairies / unicorns + pastel rainbow palette",
+  "palette": {
+    "primary": "#C77DFF",
+    "accent": "#FFB6C1",
+    "deep": "#2E1A47",
+    "highlight": "#FFFACD"
+  },
+  "background": "radial-gradient(circle at 50% 50%, #C77DFF 0%, #2E1A47 75%)",
+  "iconMap": {
+    "HP1": "unicorn",
+    "HP2": "phoenix",
+    "HP3": "dragon",
+    "HP4": "pegasus",
+    "MP1": "crown",
+    "MP2": "amulet",
+    "MP3": "lucky-charm",
+    "MP4": "clover",
+    "LP1": "scroll",
+    "LP2": "chalice",
+    "LP3": "sparkle",
+    "LP4": "star-burst",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["fairy-chimes", "harp-melody", "forest-magic"],
+  "animationDefaults": {
+    "spinDuration": 1000,
+    "stopStagger": 165,
+    "winFlash": "rainbow",
+    "reelEase": "easeOutElastic"
+  }
+}

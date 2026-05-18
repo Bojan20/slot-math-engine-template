@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['tests/**/*.test.ts'],
+    include: ['tests/**/*.test.ts', 'scripts/tests/**/*.test.mjs'],
     // macOS writes AppleDouble (`._foo.test.ts`) twins onto ExFAT volumes
     // (T7 external). They match `*.test.ts` and vitest blows up trying to
     // load them as TS — same root problem the .gitignore solves for git.

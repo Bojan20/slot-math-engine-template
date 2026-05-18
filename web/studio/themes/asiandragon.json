@@ -1,0 +1,39 @@
+{
+  "id": "asiandragon",
+  "name": "Asian Dragon",
+  "description": "Dragons / koi / lanterns + imperial red and gold palette",
+  "palette": {
+    "primary": "#DC143C",
+    "accent": "#FFD700",
+    "deep": "#1A0006",
+    "highlight": "#FFF8DC"
+  },
+  "background": "linear-gradient(180deg, #1A0006 0%, #DC143C 100%)",
+  "iconMap": {
+    "HP1": "dragon",
+    "HP2": "phoenix",
+    "HP3": "tiger",
+    "HP4": "serpent",
+    "MP1": "coin",
+    "MP2": "scroll",
+    "MP3": "amulet",
+    "MP4": "lucky-charm",
+    "LP1": "fan",
+    "LP2": "lantern",
+    "LP3": "chalice",
+    "LP4": "urn",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["temple-gong", "koto-melody", "firework-burst"],
+  "animationDefaults": {
+    "spinDuration": 1200,
+    "stopStagger": 195,
+    "winFlash": "crimson-gold",
+    "reelEase": "easeOutCirc"
+  }
+}

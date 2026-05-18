@@ -1,0 +1,39 @@
+{
+  "id": "wildwest",
+  "name": "Wild West",
+  "description": "Sheriffs / cacti / saloons + sunset orange palette",
+  "palette": {
+    "primary": "#D2691E",
+    "accent": "#F4A460",
+    "deep": "#3E1F0E",
+    "highlight": "#FFE4B5"
+  },
+  "background": "linear-gradient(180deg, #3E1F0E 0%, #D2691E 100%)",
+  "iconMap": {
+    "HP1": "wolf",
+    "HP2": "horseshoe",
+    "HP3": "shield",
+    "HP4": "spear",
+    "MP1": "coin",
+    "MP2": "treasure-chest",
+    "MP3": "lucky-charm",
+    "MP4": "amulet",
+    "LP1": "keys",
+    "LP2": "vault",
+    "LP3": "pouch",
+    "LP4": "scroll",
+    "WILD1": "wild",
+    "WILD2": "wild",
+    "SCATTER1": "scatter",
+    "SCATTER2": "scatter",
+    "MULT1": "mult",
+    "MULT2": "mult"
+  },
+  "ambientSounds": ["desert-cricket", "harmonica-tune", "saloon-piano"],
+  "animationDefaults": {
+    "spinDuration": 1100,
+    "stopStagger": 185,
+    "winFlash": "amber",
+    "reelEase": "easeOutQuad"
+  }
+}
