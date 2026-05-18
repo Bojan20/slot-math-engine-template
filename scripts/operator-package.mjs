@@ -296,6 +296,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 186 Big Bet Paid-Package Multi-Spin (UK-CRITICAL L&W M9 GAP CLOSURE — Barcrest UK family)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIG_BET_PAID_PACKAGE_MULTI_SPIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIG_BET_PAID_PACKAGE_MULTI_SPIN.md' },
+  // REPORTS — Wave 187 Deterministic Explosion Multiplier-Drop (L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

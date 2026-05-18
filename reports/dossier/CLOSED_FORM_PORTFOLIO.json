@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-18T00:38:29.072Z",
-  "solvers_total": 67,
-  "solvers_passed": 67,
+  "generated_utc": "2026-05-18T00:48:36.738Z",
+  "solvers_total": 68,
+  "solvers_passed": 68,
   "overall_pass": true,
   "showcase": [
     {
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 51,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 56
+      "elapsed_ms": 51
     },
     {
       "wave": 53,
@@ -49,7 +49,7 @@
       "cf": 11.9,
       "mc": 12.029133333333334,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 10
     },
     {
       "wave": 54,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 71
+      "elapsed_ms": 72
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 14
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 0
+      "elapsed_ms": 1
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 75,
@@ -157,7 +157,7 @@
       "cf": 18.75,
       "mc": 18.75417666666416,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 86,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 93,
@@ -193,7 +193,7 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 95,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 102,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 107,
@@ -265,7 +265,7 @@
       "cf": 8303.765625,
       "mc": 8349.2031,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 114,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 116,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 9
+      "elapsed_ms": 8
     },
     {
       "wave": 136,
@@ -364,7 +364,7 @@
       "cf": 0.18,
       "mc": 0.17652,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 138,
@@ -373,7 +373,7 @@
       "cf": 5.0587733333333365,
       "mc": 5.096785,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 140,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 250
+      "elapsed_ms": 246
     },
     {
       "wave": 142,
@@ -409,7 +409,7 @@
       "cf": 0.03225806451612903,
       "mc": 0.03227666666666667,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 13
     },
     {
       "wave": 148,
@@ -418,7 +418,7 @@
       "cf": 20.48,
       "mc": 20.24096,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 150,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 875
+      "elapsed_ms": 820
     },
     {
       "wave": 157,
@@ -454,7 +454,7 @@
       "cf": 0.14148853381835558,
       "mc": 0.16166666666666665,
       "ok": true,
-      "elapsed_ms": 39
+      "elapsed_ms": 37
     },
     {
       "wave": 159,
@@ -463,7 +463,7 @@
       "cf": 1.74,
       "mc": 1.7057,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 161,
@@ -472,7 +472,7 @@
       "cf": 110.34474847738295,
       "mc": 108.41043902029095,
       "ok": true,
-      "elapsed_ms": 35
+      "elapsed_ms": 33
     },
     {
       "wave": 163,
@@ -481,7 +481,7 @@
       "cf": 21.433470507544587,
       "mc": 20.254702592780884,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 165,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 333
+      "elapsed_ms": 341
     },
     {
       "wave": 169,
@@ -562,7 +562,7 @@
       "cf": 3.1050000000000004,
       "mc": 3.1999,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 182,
@@ -571,7 +571,7 @@
       "cf": 22.298391355206938,
       "mc": 22.3383,
       "ok": true,
-      "elapsed_ms": 64
+      "elapsed_ms": 63
     },
     {
       "wave": 183,
@@ -607,7 +607,16 @@
       "cf": 18.84,
       "mc": 18.836108799908672,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
+    },
+    {
+      "wave": 187,
+      "solver": "Deterministic Explosion Mult-Drop (L&W Dancing Drums M4)",
+      "metric": "E[Y/spin]",
+      "cf": 7.875,
+      "mc": 7.7954,
+      "ok": true,
+      "elapsed_ms": 3
     }
   ]
 }

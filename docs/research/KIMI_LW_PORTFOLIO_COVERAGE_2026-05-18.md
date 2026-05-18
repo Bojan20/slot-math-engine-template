@@ -94,8 +94,8 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 16 | Lock It Link Hold Onto Your Hat | LNW (Bally) | 2018 | A + B + H | as #13 | ⚠ | P2 |
 | 17 | Jewel of the Dragon | LNW (in-house digital, 2024; commercialisation paused 2025 per g3newswire) | 2024 | A (6-gem H&S, 3 respin reset, fill 15 = grand) + B (4-tier MMMG, "what-you-see-is-what-you-get") + smaller-bonus secondary gem triggers | P-002 ✅ + P-035 ✅ + P-059 ✅ | NO | n/a |
 | 18 | Dancing Drums | LNW (Bally) | 2017 | A (gong scatters trigger FS + jackpot picker) + B (4-tier MMMG WAP) + D (pick-a-drum) + H (8/10/15 FS) + G (stacked wilds during FS) | P-002 ✅ + P-035 ✅ + P-010/P-047 ✅ + P-068 ✅ + P-005 ✅ | NO | n/a |
-| 19 | Dancing Drums Explosion | LNW (Bally) | 2020 | as Dancing Drums + **M: explosion mechanic adds free position multipliers** | + ❌ **deterministic-grid explosion add multipliers** (unique to L&W Explosion series) | YES (M4) | P1 |
-| 20 | Dancing Drums Revolution | LNW (Bally) | 2025 (LightWave cabinet) | as Dancing Drums + revolution feature (multi-stage) | + ❌ revolution multi-stage | YES (M4) | P1 |
+| 19 | Dancing Drums Explosion | LNW (Bally) | 2020 | as Dancing Drums + **M: explosion mechanic adds free position multipliers** | + ❌ **deterministic-grid explosion add multipliers** (unique to L&W Explosion series) |  ✅ **CLOSED (M4 W187)**| P1 |
+| 20 | Dancing Drums Revolution | LNW (Bally) | 2025 (LightWave cabinet) | as Dancing Drums + revolution feature (multi-stage) | + ❌ revolution multi-stage |  ✅ **CLOSED (M4 W187)**| P1 |
 | 21 | Quick Hit Platinum | LNW (Bally) | 2010 | F5 (reel-bound mystery progressive — Quick Hit symbol on reels 1, 2, 3 etc each → +tier) + H (FS pick-grid for spin count × multiplier — 20 tiles) | ❌ **reel-bound mystery progressive** (Quick Hit symbols on specific reels — count cumulative across spin) + P-047 ✅ (pick tile reveal) | YES (M5) | **P0** |
 | 22 | Quick Hit Black Gold | LNW (Bally) | 2013 | F5 + H | as #21 | YES (M5) | P0 |
 | 23 | Quick Hit Pro | LNW (Bally) | 2015 | F5 + H + multiplier wild | as #21 + P-017 ✅ | YES (M5) | P1 |
@@ -205,9 +205,10 @@ Each cell on the grid has an independent 3-or-4-state Markov chain (Idle/Straw/W
 H&S starts with N rows; as fireballs/dynamites collected past thresholds, **rows are added** (up to 4 extra rows). State space changes mid-feature. P-002/P-049/P-059 all assume fixed grid. Requires a kernel handling rectangular grid-expansion Markov where occupied rows trigger row-extend events with their own probability.
 **Resolution:** W182 ships `src/features/dynamicGridExpansionHoldSpin.ts` — exact Markov DP over state (active, m_idx, stale_streak) sa per-spin Binomial(empty, q) landing PMF + deterministic cumulative-landing-threshold row extensions + classic H&S 3-stale termination. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC features (Ultimate Fire Link Olvera/Power 4/China Street + Lock It Link Eureka + 2 corners) — CF/MC slaganje ~0.5-3% rel.
 
-### M4 — Deterministic-grid explosion adds free-position multipliers
+### M4 — Deterministic-grid explosion adds free-position multipliers — ✅ **CLOSED in W187** (P-088)
 **Example:** Dancing Drums Explosion, Dancing Drums Revolution.
 Bonus animation explodes K predetermined positions, adding free-position multipliers (e.g. 2× / 3× / 5× landing). Distinct from P-063 (random reel-stop multipliers) because positions are deterministic-by-design, and from P-038 (cascade pyramid) because it's a one-shot explosion not chain-conditional.
+**Resolution:** W187 ships `src/features/deterministicExplosionMultiplierDrop.ts` — trigger-gated compound sum: T ~ Bernoulli(p_trigger), conditional on T=1 K positions explode each sa V_k iid iz discrete PMF. **E[Y/spin] = p_trigger·K·c·E[V]** exact closed-form. Var via law of total variance. **P(all K hit v_max | trigger) = π_max^K**. Per-value disclosure 1−(1−π_l)^K za UKGC RTS-14 tag-level audit. 37 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (Dancing Drums Explosion 2020 classic + Revolution 2025 8-position extended + 4 corner configs) — CF/MC slaganje ~0.5-3% rel.
 
 ### M5 — Reel-bound mystery progressive (Quick Hit family)
 **Example:** Quick Hit Platinum, Quick Hit Black Gold, Quick Hit Pro, Quick Hit Wild, Quick Hit Blitz, Quick Hit Cash Wheel, Triple Cash Wheel, Smokin' 7s.

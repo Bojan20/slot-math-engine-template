@@ -1404,6 +1404,30 @@ async function main() {
     showcase.push({ wave: 186, solver: 'Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9)', metric: 'E[total payout]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayoutPerPackage, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W187: Deterministic Explosion Multiplier-Drop (L&W M4 — Dancing Drums) ──
+  {
+    const { analyzeDeterministicExplosion, simulateDeterministicExplosion } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'deterministicExplosionMultiplierDrop.js'));
+    const t0 = Date.now();
+    const cfg = {
+      probTriggerPerSpin: 0.05,
+      numExplodingPositions: 5,
+      multiplierValueDistribution: [
+        { value: 2, probability: 0.5 },
+        { value: 3, probability: 0.3 },
+        { value: 5, probability: 0.15 },
+        { value: 10, probability: 0.05 },
+      ],
+      freePositionBaseValue: 10,
+    };
+    const cf = analyzeDeterministicExplosion(cfg);
+    const mc = simulateDeterministicExplosion(cfg, 100_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
+      Math.max(mc.meanPayoutPerSpin, 1e-9);
+    const ok = rel < 0.10;
+    showcase.push({ wave: 187, solver: 'Deterministic Explosion Mult-Drop (L&W Dancing Drums M4)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T00:38:29.072Z`
+Generated: `2026-05-18T00:48:36.738Z`
 
 ## Headline
 
-**67/67 solvers PASS** in single end-to-end runner.
+**68/68 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -80,6 +80,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 184 | Colossal Reels Wild-Transfer (L&W Spartacus M7) | E[K_col] | 0.44200 | 0.43822 | ✅ |
 | 185 | Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1) | E[Y] | 11.91210 | 11.81892 | ✅ |
 | 186 | Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9) | E[total payout] | 18.84000 | 18.83611 | ✅ |
+| 187 | Deterministic Explosion Mult-Drop (L&W Dancing Drums M4) | E[Y/spin] | 7.87500 | 7.79540 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

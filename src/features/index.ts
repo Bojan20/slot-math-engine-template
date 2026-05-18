@@ -222,3 +222,6 @@ export * from './perReelBagRowMultiplierCoupled.js';
 
 // W152 Wave 186: Big Bet Paid-Package Multi-Spin Reel-Set Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 P0 GAP CLOSURE — Barcrest UK family Monopoly Big Event / Rainbow Riches Pick n Mix / Action Bank / Pearl of Caribbean — UKGC RTS-12 mandatory)
 export * from './bigBetPaidPackageMultiSpin.js';
+
+// W152 Wave 187: Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
+export * from './deterministicExplosionMultiplierDrop.js';

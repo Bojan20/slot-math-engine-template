@@ -1,0 +1,484 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP",
+  "generated_utc": "2026-05-18T00:44:39.433Z",
+  "spins_per_config": 100000,
+  "seed": 3405644167,
+  "tolerances": {
+    "payout_rel": 0.1,
+    "trigger_abs": 0.01,
+    "mult_value_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_dancing_drums_explosion_classic_5pos",
+      "description": "LNW Bally Dancing Drums Explosion (2020) — 5 positions, 2×/3×/5× distribution, p_trigger=3%, base value 8.",
+      "cfg": {
+        "probTriggerPerSpin": 0.03,
+        "numExplodingPositions": 5,
+        "multiplierValueDistribution": [
+          {
+            "value": 2,
+            "probability": 0.6
+          },
+          {
+            "value": 3,
+            "probability": 0.3
+          },
+          {
+            "value": 5,
+            "probability": 0.1
+          }
+        ],
+        "freePositionBaseValue": 8
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 2.5999999999999996,
+        "varianceMultiplierValue": 0.8400000000000016,
+        "expectedTotalPayoutGivenTrigger": 103.99999999999999,
+        "varianceTotalPayoutGivenTrigger": 268.8000000000005,
+        "expectedPayoutPerSpin": 3.1199999999999997,
+        "variancePayoutPerSpin": 322.80959999999993,
+        "stdDevPayoutPerSpin": 17.966902905064075,
+        "maxTotalMultiplierAchievable": 25,
+        "probAllPositionsHitMaxGivenTrigger": 0.000010000000000000003,
+        "probAllPositionsHitMaxPerSpin": 3.0000000000000004e-7,
+        "oneInNSpinsAllMaxExplosion": 3333333.333333333,
+        "perValueDisclosure": [
+          {
+            "value": 2,
+            "probability": 0.6,
+            "probAtLeastOneHitGivenTrigger": 0.98976,
+            "expectedPositionsHittingGivenTrigger": 3,
+            "perSpinContributionToPayout": 1.44
+          },
+          {
+            "value": 3,
+            "probability": 0.3,
+            "probAtLeastOneHitGivenTrigger": 0.8319300000000001,
+            "expectedPositionsHittingGivenTrigger": 1.5,
+            "perSpinContributionToPayout": 1.08
+          },
+          {
+            "value": 5,
+            "probability": 0.1,
+            "probAtLeastOneHitGivenTrigger": 0.40950999999999993,
+            "expectedPositionsHittingGivenTrigger": 0.5,
+            "perSpinContributionToPayout": 0.6
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.38999999999999996,
+        "topTierRtpContribution": 0.6
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 3.1984,
+        "stdDevPayoutPerSpin": 18.208604489087023,
+        "observedTriggerRate": 0.03068,
+        "meanMultiplierValueAcrossPositions": 2.60625814863103,
+        "observedProbAllMaxPerSpin": 0
+      },
+      "checks": {
+        "payout_rel": 0.02451225612806411,
+        "trigger_abs": 0.00068,
+        "mult_value_rel": 0.002401200600300335
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_dancing_drums_revolution_8pos_extended",
+      "description": "Dancing Drums Revolution (2025 LightWave) — 8 positions, extended 2×/3×/5×/10×/25× sa rare 25× top.",
+      "cfg": {
+        "probTriggerPerSpin": 0.02,
+        "numExplodingPositions": 8,
+        "multiplierValueDistribution": [
+          {
+            "value": 2,
+            "probability": 0.45
+          },
+          {
+            "value": 3,
+            "probability": 0.3
+          },
+          {
+            "value": 5,
+            "probability": 0.15
+          },
+          {
+            "value": 10,
+            "probability": 0.07
+          },
+          {
+            "value": 25,
+            "probability": 0.03
+          }
+        ],
+        "freePositionBaseValue": 10
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 4,
+        "varianceMultiplierValue": 18,
+        "expectedTotalPayoutGivenTrigger": 320,
+        "varianceTotalPayoutGivenTrigger": 14400,
+        "expectedPayoutPerSpin": 6.4,
+        "variancePayoutPerSpin": 2295.04,
+        "stdDevPayoutPerSpin": 47.90657574905558,
+        "maxTotalMultiplierAchievable": 200,
+        "probAllPositionsHitMaxGivenTrigger": 6.560999999999998e-13,
+        "probAllPositionsHitMaxPerSpin": 1.3121999999999997e-14,
+        "oneInNSpinsAllMaxExplosion": 76207895137936.31,
+        "perValueDisclosure": [
+          {
+            "value": 2,
+            "probability": 0.45,
+            "probAtLeastOneHitGivenTrigger": 0.9916266062109375,
+            "expectedPositionsHittingGivenTrigger": 3.6,
+            "perSpinContributionToPayout": 1.4400000000000002
+          },
+          {
+            "value": 3,
+            "probability": 0.3,
+            "probAtLeastOneHitGivenTrigger": 0.94235199,
+            "expectedPositionsHittingGivenTrigger": 2.4,
+            "perSpinContributionToPayout": 1.44
+          },
+          {
+            "value": 5,
+            "probability": 0.15,
+            "probAtLeastOneHitGivenTrigger": 0.7275094749609375,
+            "expectedPositionsHittingGivenTrigger": 1.2,
+            "perSpinContributionToPayout": 1.2
+          },
+          {
+            "value": 10,
+            "probability": 0.07,
+            "probAtLeastOneHitGivenTrigger": 0.4404181903349602,
+            "expectedPositionsHittingGivenTrigger": 0.56,
+            "perSpinContributionToPayout": 1.12
+          },
+          {
+            "value": 25,
+            "probability": 0.03,
+            "probAtLeastOneHitGivenTrigger": 0.2162566405623041,
+            "expectedPositionsHittingGivenTrigger": 0.24,
+            "perSpinContributionToPayout": 1.2
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.64,
+        "topTierRtpContribution": 1.2
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 6.4999,
+        "stdDevPayoutPerSpin": 47.969535123763706,
+        "observedTriggerRate": 0.02049,
+        "meanMultiplierValueAcrossPositions": 3.96528794533919,
+        "observedProbAllMaxPerSpin": 0
+      },
+      "checks": {
+        "payout_rel": 0.015369467222572635,
+        "trigger_abs": 0.0004900000000000009,
+        "mult_value_rel": 0.008678013665202489
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_explosion_high_frequency_low_max",
+      "description": "High-frequency explosion (10%) sa low-vol distribution 1×/2×/3×.",
+      "cfg": {
+        "probTriggerPerSpin": 0.1,
+        "numExplodingPositions": 6,
+        "multiplierValueDistribution": [
+          {
+            "value": 1,
+            "probability": 0.5
+          },
+          {
+            "value": 2,
+            "probability": 0.35
+          },
+          {
+            "value": 3,
+            "probability": 0.15
+          }
+        ],
+        "freePositionBaseValue": 5
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 1.65,
+        "varianceMultiplierValue": 0.5275000000000003,
+        "expectedTotalPayoutGivenTrigger": 49.5,
+        "varianceTotalPayoutGivenTrigger": 79.12500000000004,
+        "expectedPayoutPerSpin": 4.95,
+        "variancePayoutPerSpin": 228.43500000000003,
+        "stdDevPayoutPerSpin": 15.114066296003866,
+        "maxTotalMultiplierAchievable": 18,
+        "probAllPositionsHitMaxGivenTrigger": 0.000011390624999999997,
+        "probAllPositionsHitMaxPerSpin": 0.0000011390624999999997,
+        "oneInNSpinsAllMaxExplosion": 877914.9519890263,
+        "perValueDisclosure": [
+          {
+            "value": 1,
+            "probability": 0.5,
+            "probAtLeastOneHitGivenTrigger": 0.984375,
+            "expectedPositionsHittingGivenTrigger": 3,
+            "perSpinContributionToPayout": 1.5
+          },
+          {
+            "value": 2,
+            "probability": 0.35,
+            "probAtLeastOneHitGivenTrigger": 0.924581109375,
+            "expectedPositionsHittingGivenTrigger": 2.0999999999999996,
+            "perSpinContributionToPayout": 2.0999999999999996
+          },
+          {
+            "value": 3,
+            "probability": 0.15,
+            "probAtLeastOneHitGivenTrigger": 0.622850484375,
+            "expectedPositionsHittingGivenTrigger": 0.8999999999999999,
+            "perSpinContributionToPayout": 1.3499999999999999
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.99,
+        "topTierRtpContribution": 1.3499999999999999
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 4.9793,
+        "stdDevPayoutPerSpin": 15.151685434630696,
+        "observedTriggerRate": 0.10062,
+        "meanMultiplierValueAcrossPositions": 1.6495395216325448,
+        "observedProbAllMaxPerSpin": 0
+      },
+      "checks": {
+        "payout_rel": 0.0058843612555981965,
+        "trigger_abs": 0.0006199999999999956,
+        "mult_value_rel": 0.0002790777984576414
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_explosion_jackpot_skewed_to_top",
+      "description": "Jackpot-skewed: rare 1% trigger sa 50× top tier @ 5% probability — heavy-tail commercial.",
+      "cfg": {
+        "probTriggerPerSpin": 0.01,
+        "numExplodingPositions": 5,
+        "multiplierValueDistribution": [
+          {
+            "value": 2,
+            "probability": 0.6
+          },
+          {
+            "value": 5,
+            "probability": 0.25
+          },
+          {
+            "value": 10,
+            "probability": 0.1
+          },
+          {
+            "value": 50,
+            "probability": 0.05
+          }
+        ],
+        "freePositionBaseValue": 12
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 5.95,
+        "varianceMultiplierValue": 108.2475,
+        "expectedTotalPayoutGivenTrigger": 357,
+        "varianceTotalPayoutGivenTrigger": 77938.2,
+        "expectedPayoutPerSpin": 3.5700000000000003,
+        "variancePayoutPerSpin": 2041.1271000000002,
+        "stdDevPayoutPerSpin": 45.178834646325264,
+        "maxTotalMultiplierAchievable": 250,
+        "probAllPositionsHitMaxGivenTrigger": 3.125000000000001e-7,
+        "probAllPositionsHitMaxPerSpin": 3.1250000000000007e-9,
+        "oneInNSpinsAllMaxExplosion": 319999999.99999994,
+        "perValueDisclosure": [
+          {
+            "value": 2,
+            "probability": 0.6,
+            "probAtLeastOneHitGivenTrigger": 0.98976,
+            "expectedPositionsHittingGivenTrigger": 3,
+            "perSpinContributionToPayout": 0.72
+          },
+          {
+            "value": 5,
+            "probability": 0.25,
+            "probAtLeastOneHitGivenTrigger": 0.7626953125,
+            "expectedPositionsHittingGivenTrigger": 1.25,
+            "perSpinContributionToPayout": 0.75
+          },
+          {
+            "value": 10,
+            "probability": 0.1,
+            "probAtLeastOneHitGivenTrigger": 0.40950999999999993,
+            "expectedPositionsHittingGivenTrigger": 0.5,
+            "perSpinContributionToPayout": 0.6
+          },
+          {
+            "value": 50,
+            "probability": 0.05,
+            "probAtLeastOneHitGivenTrigger": 0.22621906250000023,
+            "expectedPositionsHittingGivenTrigger": 0.25,
+            "perSpinContributionToPayout": 1.5
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.29750000000000004,
+        "topTierRtpContribution": 1.5
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 3.6714,
+        "stdDevPayoutPerSpin": 46.191777861866285,
+        "observedTriggerRate": 0.01026,
+        "meanMultiplierValueAcrossPositions": 5.9639376218323585,
+        "observedProbAllMaxPerSpin": 0
+      },
+      "checks": {
+        "payout_rel": 0.02761889197581302,
+        "trigger_abs": 0.0002599999999999998,
+        "mult_value_rel": 0.0023369831671841276
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_corner_single_value_deterministic_mult",
+      "description": "Corner: degenerate single-value PMF — V = 3× constant (zero variance per position).",
+      "cfg": {
+        "probTriggerPerSpin": 0.05,
+        "numExplodingPositions": 4,
+        "multiplierValueDistribution": [
+          {
+            "value": 3,
+            "probability": 1
+          }
+        ],
+        "freePositionBaseValue": 10
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 3,
+        "varianceMultiplierValue": 0,
+        "expectedTotalPayoutGivenTrigger": 120,
+        "varianceTotalPayoutGivenTrigger": 0,
+        "expectedPayoutPerSpin": 6,
+        "variancePayoutPerSpin": 684,
+        "stdDevPayoutPerSpin": 26.153393661244042,
+        "maxTotalMultiplierAchievable": 12,
+        "probAllPositionsHitMaxGivenTrigger": 1,
+        "probAllPositionsHitMaxPerSpin": 0.05,
+        "oneInNSpinsAllMaxExplosion": 20,
+        "perValueDisclosure": [
+          {
+            "value": 3,
+            "probability": 1,
+            "probAtLeastOneHitGivenTrigger": 1,
+            "expectedPositionsHittingGivenTrigger": 4,
+            "perSpinContributionToPayout": 6
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.6,
+        "topTierRtpContribution": 6
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 6.192,
+        "stdDevPayoutPerSpin": 26.54616989322565,
+        "observedTriggerRate": 0.0516,
+        "meanMultiplierValueAcrossPositions": 3,
+        "observedProbAllMaxPerSpin": 0.0516
+      },
+      "checks": {
+        "payout_rel": 0.031007751937984523,
+        "trigger_abs": 0.0015999999999999973,
+        "mult_value_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_single_position_K1",
+      "description": "Corner: K=1 (single position explosion) — validate K=1 degenerate to single-V draw.",
+      "cfg": {
+        "probTriggerPerSpin": 0.08,
+        "numExplodingPositions": 1,
+        "multiplierValueDistribution": [
+          {
+            "value": 2,
+            "probability": 0.5
+          },
+          {
+            "value": 5,
+            "probability": 0.4
+          },
+          {
+            "value": 10,
+            "probability": 0.1
+          }
+        ],
+        "freePositionBaseValue": 20
+      },
+      "closed_form": {
+        "expectedMultiplierValue": 4,
+        "varianceMultiplierValue": 6,
+        "expectedTotalPayoutGivenTrigger": 80,
+        "varianceTotalPayoutGivenTrigger": 2400,
+        "expectedPayoutPerSpin": 6.4,
+        "variancePayoutPerSpin": 663.04,
+        "stdDevPayoutPerSpin": 25.74956310308973,
+        "maxTotalMultiplierAchievable": 10,
+        "probAllPositionsHitMaxGivenTrigger": 0.1,
+        "probAllPositionsHitMaxPerSpin": 0.008,
+        "oneInNSpinsAllMaxExplosion": 125,
+        "perValueDisclosure": [
+          {
+            "value": 2,
+            "probability": 0.5,
+            "probAtLeastOneHitGivenTrigger": 0.5,
+            "expectedPositionsHittingGivenTrigger": 0.5,
+            "perSpinContributionToPayout": 1.6
+          },
+          {
+            "value": 5,
+            "probability": 0.4,
+            "probAtLeastOneHitGivenTrigger": 0.4,
+            "expectedPositionsHittingGivenTrigger": 0.4,
+            "perSpinContributionToPayout": 3.2000000000000006
+          },
+          {
+            "value": 10,
+            "probability": 0.1,
+            "probAtLeastOneHitGivenTrigger": 0.09999999999999998,
+            "expectedPositionsHittingGivenTrigger": 0.1,
+            "perSpinContributionToPayout": 1.6000000000000003
+          }
+        ],
+        "commercialUpliftVsFlatBaseline": 0.32,
+        "topTierRtpContribution": 1.6000000000000003
+      },
+      "monte_carlo": {
+        "spins": 100000,
+        "meanPayoutPerSpin": 6.5,
+        "stdDevPayoutPerSpin": 25.905018818754023,
+        "observedTriggerRate": 0.08101,
+        "meanMultiplierValueAcrossPositions": 4.011850388840884,
+        "observedProbAllMaxPerSpin": 0.00796
+      },
+      "checks": {
+        "payout_rel": 0.01538461538461533,
+        "trigger_abs": 0.001009999999999997,
+        "mult_value_rel": 0.0029538461538461563
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}

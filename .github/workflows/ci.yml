@@ -258,3 +258,5 @@ jobs:
         run: npm run per-reel-bag-row-multiplier-coupled-acceptance
       - name: Big Bet Paid-Package Multi-Spin acceptance (6/6 configs × 30K packages, Wave 186, 67. solver UK-CRITICAL L&W M9 GAP CLOSURE Barcrest UK family Monopoly Big Event/RR Pick n Mix/Action Bank/Pearl of Caribbean — UKGC RTS-12 mandatory)
         run: npm run big-bet-paid-package-multi-spin-acceptance
+      - name: Deterministic Explosion Multiplier-Drop acceptance (6/6 configs × 100K spins, Wave 187, 68. solver L&W M4 P1 GAP CLOSURE Dancing Drums Explosion + Revolution)
+        run: npm run deterministic-explosion-multiplier-drop-acceptance
