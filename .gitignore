@@ -64,6 +64,14 @@ reports/parity/CROSS_PLATFORM_RNG_PARITY.json
 web/studio/node_modules/
 web/studio/package-lock.json
 
+# ─── Operator dashboard mini-app (Vite + TS) ───────────────────
+web/operator/node_modules/
+web/operator/package-lock.json
+
+# ─── Regulator portal mini-app (Vite + TS) ─────────────────────
+web/regulator/node_modules/
+web/regulator/package-lock.json
+
 # ─── Playwright e2e test artifacts ─────────────────────
 reports/playwright/
 test-results/

@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "description": "CORTI 200.1-DUBINA — pre-built industry-standard formula library for the Math Studio rule editor. Insert any entry directly into a custom IR rule. All expressions use the safe rule-editor grammar (no eval).",
+  "formulas": [
+    {
+      "id": "fs_retrigger_3plus",
+      "name": "Geometric retrigger (3+ scatter)",
+      "category": "Free Spins",
+      "expression": "if(scatters_landed >= 3, free_spins + 5, 0)",
+      "notes": "Add +5 spins on every 3+ scatter retrigger. Standard L&W mehanika."
+    },
+    {
+      "id": "fs_retrigger_2plus",
+      "name": "Soft retrigger (2+ scatter)",
+      "category": "Free Spins",
+      "expression": "if(scatters_landed >= 2, free_spins + 2, 0)",
+      "notes": "Generous retrigger — 2 scatters give +2 spins."
+    },
+    {
+      "id": "fs_multiplier_compound",
+      "name": "Sticky multiplier compound ×2",
+      "category": "Multipliers",
+      "expression": "current_mult * 2",
+      "notes": "Doubles current multiplier each trigger. Common in WMS Wizard of Oz."
+    },
+    {
+      "id": "fs_multiplier_increment",
+      "name": "Increment multiplier +1 per FS",
+      "category": "Multipliers",
+      "expression": "current_mult + 1",
+      "notes": "+1 each Free Spin. Linear growth — Bally Quick Hit."
+    },
+    {
+      "id": "win_scaling_10pct",
+      "name": "Win multiplier scaling (×1.1)",
+      "category": "Cascade",
+      "expression": "clamp(win_amount * 1.1, 0, max_win)",
+      "notes": "Each cascade chain boosts win by 10% with max-win clamp."
+    },
+    {
+      "id": "win_scaling_25pct",
+      "name": "Aggressive cascade scaling (×1.25)",
+      "category": "Cascade",
+      "expression": "clamp(win_amount * 1.25, 0, max_win)",
+      "notes": "Quad-cascade — 25% per chain. NetEnt Gonzo's Quest style."
+    },
+    {
+      "id": "pity_bonus_200",
+      "name": "Pity bonus (>200 spins)",
+      "category": "Triggers",
+      "expression": "if(spin_count - last_bonus > 200, 1, 0)",
+      "notes": "Force a bonus after 200 dry spins."
+    },
+    {
+      "id": "pity_bonus_500",
+      "name": "Pity bonus (>500 spins, hardcore)",
+      "category": "Triggers",
+      "expression": "if(spin_count - last_bonus > 500, 1, 0)",
+      "notes": "High-volatility pity floor."
+    },
+    {
+      "id": "loss_compensation",
+      "name": "Loss compensation (+1% RTP)",
+      "category": "Responsible Gaming",
+      "expression": "if(player_session_loss > 50, 1, 0)",
+      "notes": "Soft floor — sets RG boost flag after deep loss streak."
+    },
+    {
+      "id": "rg_session_cap",
+      "name": "RG session cap (>100u)",
+      "category": "Responsible Gaming",
+      "expression": "if(player_session_loss > 100, 1, 0)",
+      "notes": "Hard session cap — flags for jurisdiction RG hooks."
+    },
+    {
+      "id": "max_win_clamp",
+      "name": "Max-win clamp",
+      "category": "Limits",
+      "expression": "min(win_amount, max_win)",
+      "notes": "Standard regulator-mandated payout ceiling."
+    },
+    {
+      "id": "hw_respin_reset_3",
+      "name": "H&W respin reset to 3",
+      "category": "Hold & Win",
+      "expression": "if(scatters_landed >= 1, 3, 0)",
+      "notes": "Reset respin counter on every new blocker. Bally Cash Wheel."
+    },
+    {
+      "id": "hw_orb_value",
+      "name": "H&W orb value × current_mult",
+      "category": "Hold & Win",
+      "expression": "win_amount * current_mult",
+      "notes": "Apply meta multiplier to each captured orb."
+    },
+    {
+      "id": "wild_expansion_full",
+      "name": "Expanding wild — full reel",
+      "category": "Wilds",
+      "expression": "if(wilds_landed >= 1, row_count, 0)",
+      "notes": "Each wild expands to full reel height."
+    },
+    {
+      "id": "wild_walk_speed_1",
+      "name": "Walking wild speed 1",
+      "category": "Wilds",
+      "expression": "if(wilds_landed >= 1, 1, 0)",
+      "notes": "Wild advances 1 reel per spin."
+    },
+    {
+      "id": "scatter_count_payout",
+      "name": "Scatter count payout",
+      "category": "Scatter",
+      "expression": "scatters_landed * scatters_landed * bet",
+      "notes": "Quadratic scatter payout — common in old-school Aristocrat."
+    },
+    {
+      "id": "fs_count_lookup_3",
+      "name": "FS award · 3 scatters → 10 spins",
+      "category": "Free Spins",
+      "expression": "if(scatters_landed == 3, 10, 0)",
+      "notes": "Standard 3-scatter ladder entry."
+    },
+    {
+      "id": "fs_count_lookup_4",
+      "name": "FS award · 4 scatters → 15 spins",
+      "category": "Free Spins",
+      "expression": "if(scatters_landed == 4, 15, 0)",
+      "notes": "Mid ladder."
+    },
+    {
+      "id": "fs_count_lookup_5",
+      "name": "FS award · 5 scatters → 20 spins",
+      "category": "Free Spins",
+      "expression": "if(scatters_landed == 5, 20, 0)",
+      "notes": "Top ladder."
+    },
+    {
+      "id": "binomial_3_scatter_prob",
+      "name": "P(3+ scatters in 5 reels @ p=0.1)",
+      "category": "Probability",
+      "expression": "1 - binomial_cdf(2, 5, 0.1)",
+      "notes": "Closed-form scatter trigger probability."
+    },
+    {
+      "id": "normal_volatility_pdf",
+      "name": "Normal PDF at win_amount",
+      "category": "Probability",
+      "expression": "normal_pdf(win_amount, rtp, volatility)",
+      "notes": "Density of current win under normal volatility assumption."
+    },
+    {
+      "id": "mystery_trigger_prob",
+      "name": "Mystery trigger probability",
+      "category": "Triggers",
+      "expression": "if(spin_count % 50 == 0, 1, 0)",
+      "notes": "Every-50-spin mystery beacon — IGT Mystery of the Lamp."
+    },
+    {
+      "id": "weekend_boost",
+      "name": "Weekend RTP boost (+1%)",
+      "category": "Promotional",
+      "expression": "if(day_of_week >= 6, 0.01, 0)",
+      "notes": "Sat/Sun weekend promo boost (operator-side, off by default)."
+    },
+    {
+      "id": "tier_jackpot_award",
+      "name": "Tier-based jackpot award",
+      "category": "Jackpots",
+      "expression": "if(tier == 4, 5000, if(tier == 3, 500, if(tier == 2, 50, 5)))",
+      "notes": "4-tier jackpot ladder via nested if."
+    },
+    {
+      "id": "rtp_clamp_low",
+      "name": "RTP floor at 0.85",
+      "category": "Limits",
+      "expression": "clamp(rtp, 0.85, 0.99)",
+      "notes": "Jurisdiction compliance — enforce 85% floor."
+    },
+    {
+      "id": "rtp_clamp_high",
+      "name": "RTP ceiling at 0.985",
+      "category": "Limits",
+      "expression": "clamp(rtp, 0.85, 0.985)",
+      "notes": "Operator-mandated max RTP."
+    },
+    {
+      "id": "wild_substitution_payout",
+      "name": "Wild substitution payout",
+      "category": "Wilds",
+      "expression": "win_amount + wilds_landed * 2",
+      "notes": "Linear wild-count boost to base win."
+    },
+    {
+      "id": "free_spins_total_expected",
+      "name": "E[total FS] with retrigger p=0.18",
+      "category": "Probability",
+      "expression": "free_spins / (1 - 0.18)",
+      "notes": "Geometric series sum for retrigger-bearing FS."
+    },
+    {
+      "id": "cluster_min5_payout",
+      "name": "Cluster min-5 payout",
+      "category": "Cluster",
+      "expression": "if(scatters_landed >= 5, scatters_landed * bet, 0)",
+      "notes": "Cluster pays — min 5 matching symbols."
+    },
+    {
+      "id": "morphing_symbol_upgrade",
+      "name": "Symbol upgrade LP→HP",
+      "category": "Symbol Upgrade",
+      "expression": "if(win_amount > 0, win_amount * 3, 0)",
+      "notes": "Upgrade pays 3× when LP→HP morph triggers (Aristocrat Buffalo Gold)."
+    },
+    {
+      "id": "multiplier_ladder_step",
+      "name": "Multiplier ladder step",
+      "category": "Multipliers",
+      "expression": "if(spin_count % 5 == 0, current_mult + 1, current_mult)",
+      "notes": "Climb the ladder every 5 spins."
+    },
+    {
+      "id": "linked_jackpot_seed",
+      "name": "Linked jackpot seed delta",
+      "category": "Jackpots",
+      "expression": "bet * 0.01",
+      "notes": "1% of every bet seeds linked progressive jackpot."
+    },
+    {
+      "id": "anywhere_pay_count",
+      "name": "Anywhere pay count threshold",
+      "category": "Scatter",
+      "expression": "if(scatters_landed >= 8, scatters_landed * 10, 0)",
+      "notes": "WMS Anywhere Pays — 8+ matching gives 10× per symbol."
+    }
+  ]
+}

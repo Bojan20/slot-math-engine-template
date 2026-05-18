@@ -1,0 +1,107 @@
+{
+  "schema": "operator-ab-tests-v1",
+  "generated": "2026-05-18",
+  "count": 10,
+  "tests": [
+    {
+      "testId": "ab-001",
+      "gameId": "lw-001",
+      "variantA": { "rtp": 0.9645, "spinsToDate": 2840100, "winRate": 0.2812 },
+      "variantB": { "rtp": 0.9701, "spinsToDate": 2792500, "winRate": 0.2904 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-15",
+      "status": "running",
+      "jurisdiction": "UKGC"
+    },
+    {
+      "testId": "ab-002",
+      "gameId": "lw-002",
+      "variantA": { "rtp": 0.9498, "spinsToDate": 1842000, "winRate": 0.3104 },
+      "variantB": { "rtp": 0.9512, "spinsToDate": 1820400, "winRate": 0.3201 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-22",
+      "status": "running",
+      "jurisdiction": "NV"
+    },
+    {
+      "testId": "ab-003",
+      "gameId": "pg-001",
+      "variantA": { "rtp": 0.9610, "spinsToDate": 5104200, "winRate": 0.2604 },
+      "variantB": { "rtp": 0.9608, "spinsToDate": 5128400, "winRate": 0.2612 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-03-10",
+      "status": "completed",
+      "jurisdiction": "MGA"
+    },
+    {
+      "testId": "ab-004",
+      "gameId": "pg-002",
+      "variantA": { "rtp": 0.9650, "spinsToDate": 2400100, "winRate": 0.2105 },
+      "variantB": { "rtp": 0.9588, "spinsToDate": 2401000, "winRate": 0.2002 },
+      "trafficSplitB": 0.25,
+      "startedAt": "2026-05-01",
+      "status": "running",
+      "jurisdiction": "DGA"
+    },
+    {
+      "testId": "ab-005",
+      "gameId": "pg-009",
+      "variantA": { "rtp": 0.9590, "spinsToDate": 3204000, "winRate": 0.3209 },
+      "variantB": { "rtp": 0.9712, "spinsToDate": 3198400, "winRate": 0.3304 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-05",
+      "status": "running",
+      "jurisdiction": "UKGC"
+    },
+    {
+      "testId": "ab-006",
+      "gameId": "pg-014",
+      "variantA": { "rtp": 0.9605, "spinsToDate": 1820100, "winRate": 0.2510 },
+      "variantB": { "rtp": 0.9588, "spinsToDate": 1821800, "winRate": 0.2502 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-28",
+      "status": "running",
+      "jurisdiction": "PA"
+    },
+    {
+      "testId": "ab-007",
+      "gameId": "pg-019",
+      "variantA": { "rtp": 0.9498, "spinsToDate": 1280400, "winRate": 0.2812 },
+      "variantB": { "rtp": 0.9582, "spinsToDate": 1275200, "winRate": 0.2904 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-05-02",
+      "status": "running",
+      "jurisdiction": "NV"
+    },
+    {
+      "testId": "ab-008",
+      "gameId": "pg-041",
+      "variantA": { "rtp": 0.9620, "spinsToDate": 4108200, "winRate": 0.2304 },
+      "variantB": { "rtp": 0.9598, "spinsToDate": 4112400, "winRate": 0.2298 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-03-18",
+      "status": "paused",
+      "jurisdiction": "UKGC"
+    },
+    {
+      "testId": "ab-009",
+      "gameId": "pg-044",
+      "variantA": { "rtp": 0.9532, "spinsToDate": 2210400, "winRate": 0.2704 },
+      "variantB": { "rtp": 0.9608, "spinsToDate": 2208200, "winRate": 0.2812 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-18",
+      "status": "running",
+      "jurisdiction": "MGA"
+    },
+    {
+      "testId": "ab-010",
+      "gameId": "pg-060",
+      "variantA": { "rtp": 0.9610, "spinsToDate": 1844200, "winRate": 0.2502 },
+      "variantB": { "rtp": 0.9612, "spinsToDate": 1842100, "winRate": 0.2510 },
+      "trafficSplitB": 0.5,
+      "startedAt": "2026-04-30",
+      "status": "running",
+      "jurisdiction": "UKGC"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regulator Portal · UKGC Review · slot-math-engine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="reg-app">
+  <header class="reg-header">
+    <div class="reg-brand">
+      <span class="reg-crest" aria-hidden="true">⚖</span>
+      <div>
+        <div class="reg-title">Regulator Portal</div>
+        <div class="reg-sub">UKGC Review &middot; Compliance &amp; Audit</div>
+      </div>
+    </div>
+    <nav class="reg-nav" id="reg-nav">
+      <button class="rnav-btn is-active" data-section="queue">Submissions Queue</button>
+      <button class="rnav-btn" data-section="review">Review Workflow</button>
+      <button class="rnav-btn" data-section="audit">Audit Access</button>
+    </nav>
+    <div class="reg-meta">
+      <span class="reg-stamp">Reviewer ID UKGC-03</span>
+    </div>
+  </header>
+
+  <main id="reg-main" class="reg-main"></main>
+  <div id="reg-toast" class="reg-toast" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

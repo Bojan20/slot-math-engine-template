@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>L&amp;W Operator Dashboard · slot-math-engine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="operator-app">
+  <header class="op-header">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">L&amp;W Operator<span class="brand-v">v1</span></span>
+    </div>
+    <nav class="op-nav" id="op-nav">
+      <button class="nav-btn is-active" data-section="library">Game Library</button>
+      <button class="nav-btn" data-section="rtp">RTP Monitoring</button>
+      <button class="nav-btn" data-section="ab">A/B Testing</button>
+      <button class="nav-btn" data-section="subs">Submissions</button>
+      <button class="nav-btn" data-section="compliance">Compliance</button>
+    </nav>
+    <div class="op-meta">
+      <span class="env-pill">PROD · 15 jurisdictions</span>
+      <span class="user-pill" title="bojan.petkovic25@gmail.com">B</span>
+    </div>
+  </header>
+
+  <main id="op-main" class="op-main"></main>
+
+  <div id="op-toast" class="op-toast" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

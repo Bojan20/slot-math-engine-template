@@ -1,0 +1,165 @@
+/* =================================================================
+   Regulator Portal — slate-gray + amber (formal government feel)
+   No cyan accents. Serif fallback for headings.
+   ================================================================= */
+
+:root {
+  /* Slate-gray surfaces */
+  --bg-0: #0F172A;    /* slate-900 */
+  --bg-1: #1E293B;    /* slate-800 */
+  --bg-2: #334155;    /* slate-700 */
+  --bg-3: #475569;    /* slate-600 */
+
+  --line:        #334155;
+  --line-soft:   #1E293B;
+  --line-strong: #64748B;
+
+  --text-0: #F1F5F9;
+  --text-1: #CBD5E1;
+  --text-2: #94A3B8;
+  --text-3: #64748B;
+
+  /* Amber accent — gov warning palette */
+  --amber:       #F59E0B;
+  --amber-soft:  rgba(245,158,11,0.14);
+  --amber-line:  rgba(245,158,11,0.40);
+  --amber-deep:  #B45309;
+
+  --ok:          #22C55E;
+  --ok-soft:     rgba(34,197,94,0.12);
+  --err:         #EF4444;
+  --err-soft:    rgba(239,68,68,0.12);
+
+  --font-serif: "Source Serif Pro", "Georgia", "Times New Roman", serif;
+  --font-ui:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --r-sm: 3px;
+  --r:    5px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg-0); color: var(--text-0); font-family: var(--font-ui); font-size: 13px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; background: transparent; border: 0; }
+button { cursor: pointer; }
+
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; letter-spacing: -0.005em; }
+
+/* ===== Header ===== */
+.reg-header {
+  display: grid;
+  grid-template-columns: 280px 1fr auto;
+  align-items: center;
+  height: 60px;
+  padding: 0 22px;
+  background: var(--bg-1);
+  border-bottom: 2px solid var(--amber);
+}
+.reg-brand { display: flex; align-items: center; gap: 10px; }
+.reg-crest {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--amber); color: var(--amber);
+  border-radius: 4px; font-size: 18px;
+}
+.reg-title { font-family: var(--font-serif); font-size: 16px; font-weight: 600; }
+.reg-sub   { font-size: 11px; color: var(--text-2); letter-spacing: 0.02em; text-transform: uppercase; }
+
+.reg-nav { display: flex; gap: 6px; justify-content: center; }
+.rnav-btn {
+  padding: 8px 18px;
+  color: var(--text-1);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.rnav-btn:hover { color: var(--text-0); }
+.rnav-btn.is-active { color: var(--amber); border-bottom-color: var(--amber); }
+
+.reg-meta { color: var(--text-2); font-size: 11px; }
+.reg-stamp { padding: 4px 10px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px; font-family: var(--font-mono); }
+
+/* ===== Main ===== */
+.reg-main { padding: 26px 28px; max-width: 1480px; margin: 0 auto; }
+
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.section-head h1 { margin: 0; font-size: 24px; }
+.section-head .crumb { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+.section-head .actions { display: flex; gap: 8px; }
+
+/* ===== Buttons ===== */
+.btn {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  color: var(--text-0);
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  font-weight: 500;
+  font-size: 12px;
+}
+.btn:hover { background: var(--bg-3); border-color: var(--line-strong); }
+.btn.amber { background: var(--amber); color: #1A0F00; border-color: var(--amber); }
+.btn.amber:hover { background: #FBBF24; }
+.btn.approve { background: var(--ok); color: #04240E; border-color: var(--ok); }
+.btn.reject  { background: var(--err); color: #2A0707; border-color: var(--err); }
+
+/* ===== Filters ===== */
+.filter-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; padding: 12px; background: var(--bg-1); border: 1px solid var(--line); border-radius: var(--r); }
+.filter-row label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--text-2); }
+.filter-row input, .filter-row select { background: var(--bg-2); border: 1px solid var(--line); padding: 6px 10px; border-radius: var(--r-sm); color: var(--text-0); min-width: 160px; }
+.filter-row input:focus, .filter-row select:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 2px var(--amber-soft); }
+
+/* ===== Tables ===== */
+.tbl { width: 100%; border-collapse: collapse; background: var(--bg-1); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.tbl thead { background: var(--bg-2); }
+.tbl th, .tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 12px; }
+.tbl th { font-weight: 600; color: var(--text-1); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+.tbl tbody tr:hover { background: var(--bg-2); }
+.tbl tbody tr.is-clickable { cursor: pointer; }
+.tbl tbody tr.is-selected { background: var(--amber-soft); }
+.tbl .mono { font-family: var(--font-mono); font-size: 11px; }
+
+.status-pill { padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.status-pill.pending       { background: var(--bg-2); color: var(--text-1); border: 1px solid var(--line); }
+.status-pill.in_review     { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-line); }
+.status-pill.approved      { background: var(--ok-soft); color: var(--ok); border: 1px solid var(--ok-soft); }
+.status-pill.rejected      { background: var(--err-soft); color: var(--err); border: 1px solid var(--err-soft); }
+.status-pill.needs_revision{ background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-line); }
+.prio-pill { padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.prio-pill.urgent { background: var(--err-soft); color: var(--err); }
+.prio-pill.high   { background: var(--amber-soft); color: var(--amber); }
+.prio-pill.normal { background: var(--bg-2); color: var(--text-1); }
+.prio-pill.low    { background: var(--bg-1); color: var(--text-2); }
+
+/* ===== Review panel ===== */
+.review-panel { background: var(--bg-1); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; margin-top: 16px; }
+.review-panel h2 { margin: 0 0 4px; font-size: 18px; }
+.review-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 14px 0; }
+.review-grid .cell { background: var(--bg-2); padding: 10px; border-radius: var(--r-sm); border: 1px solid var(--line); }
+.review-grid .lbl { font-size: 10px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.05em; }
+.review-grid .val { font-family: var(--font-mono); font-size: 13px; margin-top: 2px; }
+.review-actions { display: flex; gap: 8px; margin-top: 14px; }
+.review-comment { width: 100%; min-height: 80px; margin-top: 10px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px; color: var(--text-0); font-family: var(--font-ui); }
+.review-comment:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 2px var(--amber-soft); }
+.review-signature {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--bg-2);
+  border-left: 3px solid var(--amber);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-1);
+}
+
+/* ===== Audit ===== */
+.audit-actions { display: flex; gap: 8px; margin-bottom: 10px; }
+
+/* ===== Toast ===== */
+.reg-toast { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 8px; z-index: 99; }
+.reg-toast .t { padding: 10px 14px; background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: var(--r); font-size: 12px; }
+.reg-toast .t.ok { border-color: var(--ok); color: var(--ok); }
+.reg-toast .t.amber { border-color: var(--amber); color: var(--amber); }
+.reg-toast .t.err { border-color: var(--err); color: var(--err); }
+
+.muted { color: var(--text-2); }
+.hidden { display: none !important; }

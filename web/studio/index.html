@@ -399,6 +399,30 @@
 
         <div class="compare-banner" id="cmp-banner-compose" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
 
+        <!-- ── CORTI 200.1-DUBINA · IR Rule Editor ────────────────── -->
+        <section class="rule-editor-shell" id="rule-editor-shell" aria-label="IR Rule Editor">
+          <header class="rule-editor-head">
+            <h2>📐 Custom Rule Editor</h2>
+            <div class="rule-editor-actions">
+              <button class="btn-ghost mini" id="rule-suggest">Suggest rule</button>
+              <button class="btn-ghost mini" id="rule-add">+ New rule</button>
+              <button class="btn-ghost mini" id="rule-lib-toggle">Formula library ▾</button>
+            </div>
+          </header>
+          <div class="rule-editor-grid">
+            <aside class="rule-list" id="rule-list" aria-label="Rules"></aside>
+            <div class="rule-edit-pane" id="rule-edit-pane">
+              <div class="rule-empty">Select a rule on the left, or click <b>+ New rule</b>.</div>
+            </div>
+            <aside class="formula-library" id="formula-library" hidden aria-label="Formula library">
+              <div class="formula-library-head">
+                <input type="search" id="formula-search" placeholder="Search formulas…" />
+              </div>
+              <div class="formula-library-list" id="formula-library-list"></div>
+            </aside>
+          </div>
+        </section>
+
         <div class="compose-shell">
           <!-- LEFT · feature palette -->
           <aside class="compose-palette" id="compose-palette" aria-label="Feature palette">
@@ -712,6 +736,20 @@
           </aside>
         </div>
         </div>
+
+        <!-- ── CORTI 200.1-DUBINA · Math Notebook ────────────────── -->
+        <section class="math-notebook-shell" id="math-notebook-shell" aria-label="Math Notebook">
+          <header class="math-notebook-head">
+            <h2>📓 Math Notebook</h2>
+            <div class="math-notebook-actions">
+              <button class="btn-ghost mini" id="mn-add-cell">+ Cell</button>
+              <button class="btn-ghost mini" id="mn-run-all">Run all</button>
+              <span class="math-notebook-meta" id="mn-meta">0 cells · 0 in scope</span>
+            </div>
+          </header>
+          <div class="math-notebook-cells" id="mn-cells"></div>
+          <div class="math-notebook-scope" id="mn-scope" aria-label="Shared variable scope"></div>
+        </section>
 
         <div id="split-sensitivity" class="split-view" hidden>
           <div class="split-pane">

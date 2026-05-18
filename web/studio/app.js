@@ -334,6 +334,10 @@
     applyCompareViewToTab(key);
     if (key === "compose") {
       try { renderCompose(); } catch (e) { console.warn("[compose] render failed:", e); }
+      try { renderRuleEditor(); } catch (e) { console.warn("[rule-editor] render failed:", e); }
+    }
+    if (key === "sensitivity") {
+      try { renderMathNotebook(); } catch (e) { console.warn("[math-notebook] render failed:", e); }
     }
   }
   $$(".tab").forEach(btn => btn.addEventListener("click", () => goToTab(btn.dataset.tab, /*manual=*/true)));
@@ -3629,6 +3633,346 @@
 
   // Expose for tests + console debugging.
   window.__studio_compose_render__ = renderCompose;
+
+  /* ============================================================
+     CORTI 200.1-DUBINA — IR Rule Editor render (COMPOSE tab)
+     ============================================================ */
+  const ruleEditorUI = {
+    selectedId: null,
+    showLibrary: false,
+    libraryFilter: "",
+    lastResult: null,
+  };
+
+  function getRuleEditor() {
+    return window.__studio_rule_editor__ || null;
+  }
+  function getFormulaLibrary() {
+    return window.__studio_formula_library__?.formulas || [];
+  }
+
+  function renderRuleEditor() {
+    const re = getRuleEditor();
+    if (!re) return;
+    renderRuleList(re);
+    renderRuleEditPane(re);
+    renderFormulaLibrary(re);
+    bindRuleEditorToolbar(re);
+  }
+
+  function renderRuleList(re) {
+    const host = $("#rule-list");
+    if (!host) return;
+    const rules = re.getRules();
+    if (!rules.length) {
+      host.innerHTML = `<div class="rule-list-empty">no rules — click + New rule</div>`;
+      return;
+    }
+    host.innerHTML = rules.map(r => `
+      <div class="rule-list-item ${ruleEditorUI.selectedId === r.id ? "is-selected" : ""}" data-id="${r.id}">
+        <span class="rule-toggle ${r.enabled ? "" : "is-disabled"}" title="${r.enabled ? "enabled" : "disabled"}"></span>
+        <span class="rule-name">${escapeHtml(r.name)}</span>
+      </div>
+    `).join("");
+    host.querySelectorAll(".rule-list-item").forEach(el => {
+      el.addEventListener("click", () => {
+        ruleEditorUI.selectedId = el.dataset.id;
+        ruleEditorUI.lastResult = null;
+        renderRuleEditor();
+      });
+    });
+  }
+
+  function renderRuleEditPane(re) {
+    const host = $("#rule-edit-pane");
+    if (!host) return;
+    const r = re.getRules().find(x => x.id === ruleEditorUI.selectedId);
+    if (!r) {
+      host.innerHTML = `<div class="rule-empty">Select a rule on the left, or click <b>+ New rule</b>.</div>`;
+      return;
+    }
+    const ctxVars = re.contextVars;
+    const builtinList = re.builtins().join(", ");
+    const contrib = re.contribution(r);
+    const contribCls = contrib > 0 ? "is-up" : contrib < 0 ? "is-down" : "";
+    const contribTxt = `Δ RTP contribution: ${(contrib * 100).toFixed(2)}%`;
+    const validation = re.validate(r.expression);
+    const errorMsg = validation.parseError || validation.typeIssues.join("; ");
+    const result = ruleEditorUI.lastResult;
+    host.innerHTML = `
+      <div class="rule-edit-row">
+        <label>Name</label>
+        <input type="text" id="rule-name-input" value="${escapeHtml(r.name)}" />
+      </div>
+      <div class="rule-edit-row">
+        <label>Priority</label>
+        <input type="number" id="rule-priority-input" value="${r.priority}" min="0" max="100" />
+        <label style="width:auto"><input type="checkbox" id="rule-enabled-input" ${r.enabled ? "checked" : ""} /> enabled</label>
+      </div>
+      <textarea id="rule-expr-input" class="rule-edit-expression ${errorMsg ? "is-err" : ""}" placeholder="if(scatters_landed >= 3, free_spins + 5, 0)">${escapeHtml(r.expression)}</textarea>
+      <div class="rule-edit-toolbar">
+        <select id="rule-var-insert">
+          <option value="">Insert variable…</option>
+          ${ctxVars.map(v => `<option value="${v}">${v}</option>`).join("")}
+        </select>
+        <button class="btn-ghost mini" id="rule-test">Test rule</button>
+        <button class="btn-ghost mini" id="rule-dup">Duplicate</button>
+        <button class="btn-ghost mini" id="rule-del">Delete</button>
+      </div>
+      <div class="rule-edit-vars" title="Built-in functions: ${builtinList}">
+        ${["min(a,b)","max(a,b)","abs(x)","clamp(x,lo,hi)","if(c,a,b)","binomial_cdf(k,n,p)","normal_pdf(x,m,s)"]
+          .map(s => `<span class="rule-edit-var-chip" data-fn="${s}">${s}</span>`).join("")}
+      </div>
+      ${errorMsg ? `<div class="rule-edit-result is-err">${escapeHtml(errorMsg)}</div>` : ""}
+      ${result ? `<div class="rule-edit-result ${result.ok ? "is-ok" : "is-err"}">${result.ok ? "= " + result.value : "✗ " + escapeHtml(result.error || "error")}</div>` : ""}
+      <div class="rule-edit-contribution ${contribCls}" title="Δ vs without rule, mock context">${contribTxt}</div>
+    `;
+    host.querySelector("#rule-name-input").addEventListener("input", e => {
+      re.updateRule(r.id, { name: e.target.value });
+      renderRuleList(re);
+    });
+    host.querySelector("#rule-priority-input").addEventListener("change", e => {
+      const n = Number(e.target.value);
+      if (!Number.isNaN(n)) re.updateRule(r.id, { priority: n });
+    });
+    host.querySelector("#rule-enabled-input").addEventListener("change", e => {
+      re.updateRule(r.id, { enabled: e.target.checked });
+      renderRuleList(re);
+    });
+    const expr = host.querySelector("#rule-expr-input");
+    expr.addEventListener("input", e => {
+      re.updateRule(r.id, { expression: e.target.value });
+      const v = re.validate(e.target.value);
+      expr.classList.toggle("is-err", !!(v.parseError || v.typeIssues.length));
+    });
+    host.querySelector("#rule-var-insert").addEventListener("change", e => {
+      const v = e.target.value;
+      if (!v) return;
+      const ta = expr;
+      const start = ta.selectionStart || ta.value.length;
+      ta.value = ta.value.slice(0, start) + v + ta.value.slice(start);
+      re.updateRule(r.id, { expression: ta.value });
+      e.target.value = "";
+      renderRuleEditPane(re);
+    });
+    host.querySelector("#rule-test").addEventListener("click", () => {
+      const res = re.evalRule(r);
+      ruleEditorUI.lastResult = res;
+      renderRuleEditPane(re);
+    });
+    host.querySelector("#rule-dup").addEventListener("click", () => {
+      const cp = re.duplicateRule(r.id);
+      if (cp) ruleEditorUI.selectedId = cp.id;
+      renderRuleEditor();
+    });
+    host.querySelector("#rule-del").addEventListener("click", () => {
+      re.removeRule(r.id);
+      ruleEditorUI.selectedId = null;
+      renderRuleEditor();
+    });
+    host.querySelectorAll(".rule-edit-var-chip").forEach(el => {
+      el.addEventListener("click", () => {
+        const ta = expr;
+        const start = ta.selectionStart || ta.value.length;
+        const fn = el.dataset.fn;
+        ta.value = ta.value.slice(0, start) + fn + ta.value.slice(start);
+        re.updateRule(r.id, { expression: ta.value });
+        renderRuleEditPane(re);
+      });
+    });
+  }
+
+  function renderFormulaLibrary(re) {
+    const host = $("#formula-library");
+    const grid = $("#rule-editor-shell .rule-editor-grid");
+    if (!host || !grid) return;
+    host.hidden = !ruleEditorUI.showLibrary;
+    grid.classList.toggle("has-lib", ruleEditorUI.showLibrary);
+    if (!ruleEditorUI.showLibrary) return;
+    const list = $("#formula-library-list");
+    const all = getFormulaLibrary();
+    const q = ruleEditorUI.libraryFilter.toLowerCase();
+    const items = q ? all.filter(f =>
+      f.name.toLowerCase().includes(q) ||
+      f.category.toLowerCase().includes(q) ||
+      f.expression.toLowerCase().includes(q)
+    ) : all;
+    if (!items.length) {
+      list.innerHTML = `<div class="rule-list-empty">no matches</div>`;
+      return;
+    }
+    list.innerHTML = items.map(f => `
+      <div class="formula-library-item" data-id="${f.id}" title="${escapeHtml(f.notes)}">
+        <div><span class="fl-name">${escapeHtml(f.name)}</span><span class="fl-cat">${escapeHtml(f.category)}</span></div>
+        <div class="fl-expr">${escapeHtml(f.expression)}</div>
+      </div>
+    `).join("");
+    list.querySelectorAll(".formula-library-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const f = all.find(x => x.id === el.dataset.id);
+        if (!f) return;
+        const r = re.getRules().find(x => x.id === ruleEditorUI.selectedId);
+        if (r) {
+          re.updateRule(r.id, { expression: f.expression });
+        } else {
+          const created = re.addRule(f.name, f.expression);
+          ruleEditorUI.selectedId = created.id;
+        }
+        renderRuleEditor();
+      });
+    });
+    const search = $("#formula-search");
+    if (search && search.dataset.bound !== "1") {
+      search.dataset.bound = "1";
+      search.addEventListener("input", e => {
+        ruleEditorUI.libraryFilter = e.target.value;
+        renderFormulaLibrary(re);
+      });
+    }
+  }
+
+  function bindRuleEditorToolbar(re) {
+    const addBtn = $("#rule-add");
+    if (addBtn && addBtn.dataset.bound !== "1") {
+      addBtn.dataset.bound = "1";
+      addBtn.addEventListener("click", () => {
+        const r = re.addRule("New rule", "0");
+        ruleEditorUI.selectedId = r.id;
+        renderRuleEditor();
+      });
+    }
+    const libBtn = $("#rule-lib-toggle");
+    if (libBtn && libBtn.dataset.bound !== "1") {
+      libBtn.dataset.bound = "1";
+      libBtn.addEventListener("click", () => {
+        ruleEditorUI.showLibrary = !ruleEditorUI.showLibrary;
+        renderRuleEditor();
+      });
+    }
+    const sugBtn = $("#rule-suggest");
+    if (sugBtn && sugBtn.dataset.bound !== "1") {
+      sugBtn.dataset.bound = "1";
+      sugBtn.addEventListener("click", () => {
+        const c = getCompose();
+        const kinds = c ? c.getGraph().nodes.map(n => n.kind) : [];
+        const sug = re.suggest({ kinds, existingNames: re.getRules().map(r => r.name) });
+        const host = $("#rule-edit-pane");
+        if (!host) return;
+        const html = sug.length
+          ? `<div class="rule-suggestions">
+              <div class="caps" style="font-size:10px; color: var(--text-2); margin-bottom: 4px">Suggestions (${sug.length})</div>
+              ${sug.map(s => `
+                <div class="rule-suggestion-item">
+                  <b>${escapeHtml(s.name)}</b>
+                  <code>${escapeHtml(s.expression)}</code>
+                  <button class="btn-ghost mini" data-apply="${escapeHtml(s.name)}|${escapeHtml(s.expression)}">Apply</button>
+                </div>
+              `).join("")}
+             </div>`
+          : `<div class="rule-empty">No suggestions — your composition is well-covered.</div>`;
+        host.insertAdjacentHTML("beforeend", html);
+        host.querySelectorAll("[data-apply]").forEach(b => {
+          b.addEventListener("click", () => {
+            const [name, expression] = b.dataset.apply.split("|");
+            const r = re.addRule(name, expression);
+            ruleEditorUI.selectedId = r.id;
+            renderRuleEditor();
+          });
+        });
+      });
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  /* ============================================================
+     CORTI 200.1-DUBINA — Math Notebook render (SENSITIVITY tab)
+     ============================================================ */
+  function getMathNotebook() {
+    const b = window.__studio_math_notebook__;
+    return b ? b.instance : null;
+  }
+
+  function renderMathNotebook() {
+    const nb = getMathNotebook();
+    if (!nb) return;
+    renderNotebookCells(nb);
+    renderNotebookScope(nb);
+    bindNotebookToolbar(nb);
+    updateNotebookMeta(nb);
+  }
+
+  function renderNotebookCells(nb) {
+    const host = $("#mn-cells");
+    if (!host) return;
+    host.innerHTML = nb.cells.map(c => `
+      <div class="mn-cell" data-id="${c.id}">
+        <div class="mn-cell-head">
+          <span>${escapeHtml(c.id)}${c.lastTookMs != null ? ` · ${c.lastTookMs}ms` : ""}</span>
+          <div class="mn-cell-actions">
+            <button class="btn-ghost mini mn-run">Run</button>
+            <button class="btn-ghost mini mn-del">×</button>
+          </div>
+        </div>
+        <textarea class="mn-cell-src">${escapeHtml(c.src)}</textarea>
+        ${c.lastError ? `<div class="mn-cell-out is-err">✗ ${escapeHtml(c.lastError)}</div>`
+          : c.lastValue !== undefined ? `<div class="mn-cell-out">= ${c.lastValue}</div>` : ""}
+      </div>
+    `).join("");
+    host.querySelectorAll(".mn-cell").forEach(el => {
+      const id = el.dataset.id;
+      el.querySelector(".mn-cell-src").addEventListener("input", e => {
+        nb.updateCell(id, e.target.value);
+      });
+      el.querySelector(".mn-run").addEventListener("click", () => {
+        nb.evalCell(id);
+        renderMathNotebook();
+      });
+      el.querySelector(".mn-del").addEventListener("click", () => {
+        nb.removeCell(id);
+        renderMathNotebook();
+      });
+    });
+  }
+
+  function renderNotebookScope(nb) {
+    const host = $("#mn-scope");
+    if (!host) return;
+    const keys = Object.keys(nb.scope).sort();
+    host.innerHTML = keys.map(k =>
+      `<span class="scope-pair">${escapeHtml(k)} = <b>${nb.scope[k]}</b></span>`
+    ).join("");
+  }
+
+  function updateNotebookMeta(nb) {
+    const m = $("#mn-meta");
+    if (!m) return;
+    m.textContent = `${nb.cells.length} cell${nb.cells.length === 1 ? "" : "s"} · ${Object.keys(nb.scope).length} in scope`;
+  }
+
+  function bindNotebookToolbar(nb) {
+    const addBtn = $("#mn-add-cell");
+    if (addBtn && addBtn.dataset.bound !== "1") {
+      addBtn.dataset.bound = "1";
+      addBtn.addEventListener("click", () => {
+        nb.addCell("");
+        renderMathNotebook();
+      });
+    }
+    const runAll = $("#mn-run-all");
+    if (runAll && runAll.dataset.bound !== "1") {
+      runAll.dataset.bound = "1";
+      runAll.addEventListener("click", () => {
+        nb.evalAll();
+        renderMathNotebook();
+      });
+    }
+  }
+
+  window.__studio_rule_editor_render__ = renderRuleEditor;
+  window.__studio_math_notebook_render__ = renderMathNotebook;
 
   /* ============================================================
      STUDIO BRIDGE HOOK — installs window.__studio_ui_hook__ so the

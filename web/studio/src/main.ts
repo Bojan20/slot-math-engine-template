@@ -12,6 +12,8 @@ import { createPlayTab, type PlayTabBridge } from './playTab.js';
 import { parseGDD, gddToIR } from './gdd-parser.js';
 import type { ExtractedGDD } from './gdd-parser.js';
 import { createComposeBridge, type ComposeBridge } from './compose.js';
+import { createRuleEditorBridge, type RuleEditorBridge, type IRRule } from './rule-editor.js';
+import { createMathNotebookBridge, type NotebookBridge, MathNotebook } from './math-notebook.js';
 import { createSensitivityBridge, type SensitivityBridge } from './sensitivity.js';
 import { installCertify, type CertifyBridge } from './certify.js';
 import { installPolish, pushToast, showSpinner, renderEmptyState, type PolishApi } from './polish.js';
@@ -79,6 +81,18 @@ declare global {
       state: unknown;
     };
     __studio_compose__?: ComposeBridge;
+    __studio_rule_editor__?: RuleEditorBridge & {
+      getRules(): IRRule[];
+      addRule(name: string, expression: string): IRRule;
+      removeRule(id: string): boolean;
+      updateRule(id: string, patch: Partial<IRRule>): boolean;
+      duplicateRule(id: string): IRRule | null;
+      reorderRules(ids: string[]): void;
+      snapshot(): { schemaVersion: 1; rules: IRRule[] };
+      restore(snap: { schemaVersion: 1; rules: IRRule[] }): void;
+    };
+    __studio_math_notebook__?: NotebookBridge & { instance: MathNotebook };
+    __studio_formula_library__?: { formulas: Array<{ id: string; name: string; category: string; expression: string; notes: string }> };
     __studio_sensitivity__?: SensitivityBridge;
     __studio_certify__?: CertifyBridge;
     __studio_polish__?: PolishApi;
@@ -704,6 +718,16 @@ function boot(): void {
     console.warn('[W199-COMPOSE] compose bridge install failed:', err);
   }
 
+  // Wire the COMPOSE tab → IR rule editor (CORTI 200.1-DUBINA).
+  try {
+    window.__studio_rule_editor__ = installRuleEditorBridge();
+    window.__studio_math_notebook__ = installMathNotebookBridge();
+    void loadFormulaLibrary();
+    hook().logActivity('CORTI 200.1-DUBINA · rule editor + math notebook ready');
+  } catch (err) {
+    console.warn('[CORTI 200.1-DUBINA] rule editor install failed:', err);
+  }
+
   // Wire the SENSITIVITY tab → param-sweep bridge (W199-SENSITIVITY).
   try {
     window.__studio_sensitivity__ = createSensitivityBridge();
@@ -751,8 +775,222 @@ function boot(): void {
     console.warn('[CORTI 200.1] IR library install failed:', err);
   }
 
+  // ── CORTI 200.4-BACKEND · Server detection + bridge ───────────────
+  // Probe http://localhost:4000/api/health — if up, expose
+  // window.__studio_backend__ with fetch helpers + a `connected: true`
+  // flag. Otherwise mark as offline; UI falls back to local stubs.
+  void installBackendBridge();
+
   // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).
   void loadCatalogData();
+}
+
+// ── CORTI 200.4-BACKEND · backend bridge install ────────────────────
+export interface BackendBridge {
+  connected: boolean;
+  baseUrl: string;
+  health(): Promise<unknown>;
+  createSession(input: { playerId: string; jurisdiction?: string }): Promise<unknown>;
+  getSession(sessionId: string): Promise<unknown>;
+  walletBalance(playerId: string): Promise<unknown>;
+  walletDeposit(playerId: string, amountMinor: number, ref?: string): Promise<unknown>;
+  appendAudit(sessionId: string, type: string, payload: unknown): Promise<unknown>;
+  listLobbyGames(jurisdiction?: string): Promise<unknown>;
+  submitCert(ir: unknown, jurisdiction: string): Promise<unknown>;
+  getCertStatus(submissionId: string): Promise<unknown>;
+}
+
+declare global {
+  interface Window {
+    __studio_backend__?: BackendBridge;
+  }
+}
+
+async function installBackendBridge(): Promise<void> {
+  const baseUrl = (() => {
+    // Allow override via meta tag <meta name="studio-backend-url" content="...">
+    if (typeof document !== 'undefined') {
+      const tag = document.querySelector('meta[name="studio-backend-url"]') as HTMLMetaElement | null;
+      if (tag?.content) return tag.content.replace(/\/$/, '');
+    }
+    return 'http://localhost:4000';
+  })();
+
+  const bridge: BackendBridge = {
+    connected: false,
+    baseUrl,
+    async health() {
+      const res = await fetch(`${baseUrl}/api/health`);
+      return res.json();
+    },
+    async createSession(input) {
+      const res = await fetch(`${baseUrl}/api/session/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
+      return res.json();
+    },
+    async getSession(sessionId) {
+      const res = await fetch(`${baseUrl}/api/session/${encodeURIComponent(sessionId)}`);
+      return res.json();
+    },
+    async walletBalance(playerId) {
+      const res = await fetch(`${baseUrl}/api/wallet/${encodeURIComponent(playerId)}/balance`);
+      return res.json();
+    },
+    async walletDeposit(playerId, amountMinor, ref) {
+      const res = await fetch(`${baseUrl}/api/wallet/${encodeURIComponent(playerId)}/deposit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amountMinor, ref }),
+      });
+      return res.json();
+    },
+    async appendAudit(sessionId, type, payload) {
+      const res = await fetch(`${baseUrl}/api/audit/append`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, type, payload }),
+      });
+      return res.json();
+    },
+    async listLobbyGames(jurisdiction) {
+      const qs = jurisdiction ? `?jurisdiction=${encodeURIComponent(jurisdiction)}` : '';
+      const res = await fetch(`${baseUrl}/api/lobby/games${qs}`);
+      return res.json();
+    },
+    async submitCert(ir, jurisdiction) {
+      const res = await fetch(`${baseUrl}/api/cert/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ir, jurisdiction }),
+      });
+      return res.json();
+    },
+    async getCertStatus(submissionId) {
+      const res = await fetch(`${baseUrl}/api/cert/${encodeURIComponent(submissionId)}`);
+      return res.json();
+    },
+  };
+  window.__studio_backend__ = bridge;
+  // Probe with a 1.5s timeout so a missing server doesn't block boot.
+  try {
+    const ctl = new AbortController();
+    const timer = window.setTimeout(() => ctl.abort(), 1500);
+    const res = await fetch(`${baseUrl}/api/health`, { signal: ctl.signal });
+    window.clearTimeout(timer);
+    if (res.ok) {
+      bridge.connected = true;
+      hook().logActivity(`CORTI 200.4 · backend connected @ ${baseUrl}`);
+      try {
+        pushToast({ kind: 'ok', msg: 'Backend connected', ttl: 3000 });
+      } catch { /* polish bridge optional */ }
+    } else {
+      hook().logActivity(`CORTI 200.4 · backend offline (status ${res.status}) — using local stubs`);
+    }
+  } catch (err) {
+    hook().logActivity('CORTI 200.4 · backend offline — using local stubs');
+    void err;
+  }
+}
+
+// ── Rule Editor bridge install (CORTI 200.1-DUBINA) ─────────────────
+function installRuleEditorBridge(): NonNullable<Window['__studio_rule_editor__']> {
+  const core = createRuleEditorBridge();
+  // Per-variant rule storage — we keep an in-memory map keyed by variant id
+  // so each variant has its own rule list. Variant-level persistence is
+  // handled by the existing studio Persistence layer (variant.rules array).
+  function rulesFor(): IRRule[] {
+    const v = getCurrentVariant() as unknown as { rules?: IRRule[] };
+    if (!Array.isArray(v.rules)) v.rules = [];
+    return v.rules;
+  }
+  let ruleSeed = 1;
+  function nextId(): string { return `r-${ruleSeed++}`; }
+
+  return {
+    ...core,
+    getRules: () => rulesFor().slice(),
+    addRule(name, expression) {
+      const r: IRRule = {
+        id: nextId(),
+        name,
+        expression,
+        enabled: true,
+        priority: rulesFor().length,
+      };
+      rulesFor().push(r);
+      return r;
+    },
+    removeRule(id) {
+      const arr = rulesFor();
+      const before = arr.length;
+      const next = arr.filter((r) => r.id !== id);
+      if (next.length === before) return false;
+      const v = getCurrentVariant() as unknown as { rules: IRRule[] };
+      v.rules = next;
+      return true;
+    },
+    updateRule(id, patch) {
+      const r = rulesFor().find((x) => x.id === id);
+      if (!r) return false;
+      Object.assign(r, patch);
+      return true;
+    },
+    duplicateRule(id) {
+      const r = rulesFor().find((x) => x.id === id);
+      if (!r) return null;
+      const cp: IRRule = {
+        ...r,
+        id: nextId(),
+        name: `${r.name} (copy)`,
+        priority: rulesFor().length,
+      };
+      rulesFor().push(cp);
+      return cp;
+    },
+    reorderRules(ids) {
+      const arr = rulesFor();
+      const map = new Map(arr.map((r) => [r.id, r]));
+      const reordered = ids.map((id) => map.get(id)).filter(Boolean) as IRRule[];
+      // Append any rules not in the explicit list (defensive).
+      for (const r of arr) if (!ids.includes(r.id)) reordered.push(r);
+      reordered.forEach((r, i) => (r.priority = i));
+      const v = getCurrentVariant() as unknown as { rules: IRRule[] };
+      v.rules = reordered;
+    },
+    snapshot() {
+      return { schemaVersion: 1 as const, rules: rulesFor().map((r) => ({ ...r })) };
+    },
+    restore(snap) {
+      if (!snap || snap.schemaVersion !== 1) return;
+      const v = getCurrentVariant() as unknown as { rules: IRRule[] };
+      v.rules = snap.rules.map((r) => ({ ...r }));
+    },
+  };
+}
+
+// ── Math Notebook bridge install (CORTI 200.1-DUBINA) ───────────────
+function installMathNotebookBridge(): NotebookBridge & { instance: MathNotebook } {
+  const core = createMathNotebookBridge();
+  const instance = core.create();
+  // Seed one cell so the panel doesn't start empty.
+  instance.addCell('1 + 1');
+  return { ...core, instance };
+}
+
+// ── Formula library async loader ─────────────────────────────────────
+async function loadFormulaLibrary(): Promise<void> {
+  try {
+    const url = new URL('../data/formula-library.json', import.meta.url).href;
+    const r = await fetch(url);
+    const json = (await r.json()) as { formulas: Array<{ id: string; name: string; category: string; expression: string; notes: string }> };
+    window.__studio_formula_library__ = { formulas: json.formulas };
+    hook().logActivity(`formula library loaded · ${json.formulas.length} entries`);
+  } catch (err) {
+    console.warn('[studio] formula library load failed:', err);
+  }
 }
 
 // ── IR Library bridge install (CORTI 200.1) ─────────────────────────
