@@ -618,7 +618,321 @@ Mapa "commit → faza":
 
 ---
 
-#### 🎯 Walking Skeleton Acceptance Criteria (kompletna 200.0 faza)
+---
+
+## 🎯 FAZA 200.0 IMPLEMENTACIJA — DETALJAN MICRO-PLAN (Boki, 2026-05-18, posle v5 mockup iteracija)
+
+> **Kontekst**: posle 5 iteracija mockup-a (corti / kimi / v2-baseline / v2-engine / v3-dark-onyx / v3-dark-deep / v4-final / **v5-final-studio**) imamo locked baseline:
+> - Onyx + cyan engineering paleta
+> - 4-row shell (header / tabs / main / status), 6 tab-ova (BUILD / COMPOSE / CATALOG / PLAY / SENSITIVITY / CERTIFY)
+> - Workspaces × Variants × Compare A/B
+> - Dinamički symbol pool (HP/MP/LP/Wild/Scatter/Mult sa auto-naming HP1, HP2... + per-symbol rename)
+> - Context-aware right rail
+> - ⌘K command palette, kbd shortcuts
+> - 40 cyan stroke SVG icon library
+>
+> **Lokacija mockup-a**: `web/mockups/v5-final-studio/` (336K, 4 fajla + 40 SVG)
+> **Cilj implementacije**: pretvoriti mockup u **production app** sa real engine integracijom (postojeća 77 closed-form solvera + 5351 vitest specs + Rust MC simulator + GLI-16 PAR + 15 jurisdiction profiles)
+>
+> **Strategy**: ne re-build u React/Vue/Svelte. Mockup je vanilla HTML/CSS/JS, brz, file:// safe, lakše integrisati direktno sa postojećim TypeScript `src/` modulima (build-free via `<script type="module">` import). Ako kasnije treba framework — refactor je opt-in, ne mandatory.
+
+### 200.0.0 — PRECONDITION POPRAVKE U v5 MOCKUPU (pre nego što kreće implementacija)
+
+Pre prelaska na real engine integraciju, mockup mora da bude **stabilan baseline**:
+
+#### 200.0.0.A — Persona LAYOUT redesign (Boki feedback "koja je razlika"?) ❌
+Trenutno: 2 CSS pravila + 1 div. To NIJE prava persona separacija.
+Cilj: tri kompletno različita layout-a koja se prebacuju, jer Math/Design/Producer imaju različite workflow-e:
+
+| Persona | Primary tab | Primary action | Side info | Headline metric |
+|---|---|---|---|---|
+| **MATH** (default) | SENSITIVITY | Run sensitivity sweep | σ, P99, kurtosis, skew, μ4 sa formulama | RTP 96.4214% (4dp) |
+| **DESIGN** | PLAY | Spin preview + audio | Animation timeline + theme picker | "Win feel" tight/balanced/loose |
+| **PRODUCER** | CERTIFY | Submit to regulator | KPI cards + 12-month roadmap | Days-to-cert + budget |
+
+Promene:
+- Math: 4dp precision, "View formula" links, Sensitivity slider primary, Catalog filter = math complexity
+- Design: simboli ×2.0 (ne 1.10), theme picker (Geological/Cosmic/Botanical/Mineral/Acoustic), "Win feel" indicator umesto numeričkog RTP, audio cue toggle, Catalog filter = visual theme
+- Producer: KPI strip prominent (cost saved $40K/title, time-to-cert 11d, regulator rejection 0%, releases/quarter 12), Submit to regulator big primary button, multi-game pipeline view, Catalog filter = jurisdiction + status
+
+QA: Playwright 3 scenarios (Math user flow / Design user flow / Producer user flow), svaki sa različitim primary action expected na load.
+
+#### 200.0.0.B — "Untitled" default workspace names ✅ *(landed 2026-05-18)*
+Workspace seed: "Untitled" / "Untitled 2" / "Untitled 3" umesto Lava/Pearl/Solar. Theme dot boje ostaju (interne labels).
+
+#### 200.0.0.C — Add real workspace creation flow ❌
+"+ New Game" modal sa:
+- Name input (required, default "Untitled N" sa auto-increment)
+- Template picker (Empty / Classic 5×3 / Megaways / Cluster / Cascade / Hold & Win / Free Spins / L&W M1-M16)
+- Theme color dot picker (8 boja)
+- Target RTP slider (88-98%)
+- Primary jurisdiction dropdown (15 opcija)
+→ Output: novi workspace u state-u + redirect u BUILD tab
+
+#### 200.0.0.D — Polish all interactions u v5 mockupu ❌
+- Symbol Table inline rename — Enter to commit, Esc to cancel
+- Drag-drop iz palette → reel cells sa cyan border feedback
+- Per-reel weight slider — value display update inline
+- Paytable cell numeric input — only integers, min 0
+- Auto-balance toast — actionable "Undo" button (5s window)
+- Auto-save indicator — "Saving..." → "Saved Xs ago" cycle
+- Right rail context switch — smooth fade (200ms), ne instant snap
+- ⌘K palette — fuzzy search, ↑↓ keyboard nav, ↵ execute, Esc close
+
+### 200.0.1 — W197 STUDIO BUILDER UI SKELETON (REAL ENGINE WIRING) ❌
+
+**Nije više mockup — pravi production wire-up.** Cilj: ono što korisnik vidi u UI-u **stvarno se obraća postojećim TS solverima** preko `<script type="module">` import-a iz `src/`.
+
+#### 200.0.1.1 — Bootstrap projekat skeleton
+- `web/studio/` novi dir (NE `web/mockups/v5-final-studio/` — produkt, ne mockup)
+- Kopiraj v5-final-studio kao baseline → `web/studio/`
+- `web/studio/main.ts` — entry point sa `import { rtpCalculator } from '../../src/calculator/rtpCalculator.js'`
+- `web/studio/vite.config.ts` ili plain `tsc` build u `dist/studio/`
+- Add npm script `npm run studio:dev` (live reload) + `npm run studio:build`
+
+#### 200.0.1.2 — Real symbol pool reactivity
+- Replace `app.js` symbol pool stub sa import-om `src/ir/types.ts` `SymbolDef` + `src/ir/extensions.ts` validators
+- Tier slider change → genericu `SymbolDef[]` array (HP1...HPn, MP1...MPm, LP1...LPp, WILD, SCATTER, MULT) sa stable IDs (preserve renames)
+- Symbol rename → update `name` field u SymbolDef
+- Icon swap → update `iconId` (custom field za UI, ne shipped u IR)
+- Validate symbol pool against `src/ir/schema.ts` (Zod or AJV)
+
+#### 200.0.1.3 — Reel editor → live IR
+- Drag symbol iz palette → push u `IR.reels[reelIdx]` array
+- Per-reel weight slider → update reel weight
+- Reel weight validation: must sum to user-specified `total_weight` (default 100)
+- On change → emit `irChanged` event → triggers Live PAR recompute
+
+#### 200.0.1.4 — Paytable grid → live IR
+- Each cell numeric input bound to `IR.paytable[symbolId][nOfKind]`
+- Validation: numeric ≥ 0, integer
+- On change → emit `irChanged` event
+
+#### 200.0.1.5 — Live PAR recompute (real solver)
+- On `irChanged` debounced 100ms → `rtpCalculator.compute(currentIR)`
+- Display: RTP (4dp), Hit Frequency %, Volatility class (LOW/MID/HIGH from CV)
+- Per-symbol contribution chart — `rtpCalculator.perSymbolContribution()`
+- Animate change (cyan pulse + tabular-nums no-reflow)
+
+#### 200.0.1.6 — IR Validator integration
+- "Validate IR" button → `src/ir/index.ts` `validateIR()` → display issues sa path + message
+- Auto-validate pre svake "Save" akcije
+- Inline error indicator pored field-a ako validation fail
+
+#### 200.0.1.7 — IR Import / Export
+- "Export IR" → JSON download sa `meta.id` filename
+- "Import IR" → file picker → parse → populate workspace state
+- Round-trip integrity: export, re-import, deep-equal check
+
+#### 200.0.1.8 — Auto-save to localStorage
+- Every 30s + on tab switch + on critical edit
+- Restore on next session
+- Statusbar "Saved Xs ago" indicator
+
+#### QA gates W197
+- ✅ Playwright e2e "Create 5×3 game from scratch → set 20 paylines → fill paytable → RTP within 5s"
+- ✅ Vitest unit: svaka komponenta 15-20 specs
+- ✅ Round-trip: import `tests/fixtures/reference/5x3-20lines.json` → UI → export → byte-identical
+- ✅ Visual regression: 6 baseline screenshots
+- ✅ Performance: full RTP recompute < 100ms na M3 Pro
+- ✅ TS lint + build clean / 0 regresija na 5351 postojećih vitest specs
+
+### 200.0.2 — W198 WEBGL RENDERER MINIMAL (PLAY TAB REAL SPIN) ❌
+
+#### 200.0.2.1 — Pixi.js v8 bootstrap
+- `npm install pixi.js@8` (locked version)
+- `web/studio/renderer/Renderer.ts` — Pixi.Application setup u PLAY tab canvas
+- Asset loader za 11 default ikonica (mapped iz 40 lib via Symbol Pool icon assignments)
+
+#### 200.0.2.2 — Reel kinematics
+- `ReelStrip.ts` — vertical scroll sa acceleration → steady → deceleration kinematics
+- Per-reel sequential stop sa 100-200ms delay
+- Anticipation pause na near-win (3+ scatter na last reel)
+- 60fps target na M3 Pro
+
+#### 200.0.2.3 — Symbol rendering
+- SVG → Pixi.Texture cache
+- Idle / blur (during spin) / win (winning line) states
+- Asimetrični reel offset (reels 2, 4 shifted -12px) iz Corti baseline
+
+#### 200.0.2.4 — Spin lifecycle
+1. Click SPIN → `src/engine/spin.ts` sa current IR + seed
+2. Engine returns spin result (stop positions per reel + win lines)
+3. Renderer animira spin (1.5-2.5s total)
+4. Win lines draw 1.5s posle final reel stop
+5. Spin again ready
+
+#### 200.0.2.5 — Deterministic replay
+- Seed input field → spin same seed → identical visual outcome
+- Frame hash compare za visual regression test
+
+#### 200.0.2.6 — Autoplay
+- "Autoplay 10" button — UK jurisdiction guard: ako primary jurisdiction = UKGC, disable autoplay (RTS 14D)
+- Spin counter u history log
+
+#### QA gates W198
+- ✅ Playwright e2e "Load 5×3-20lines → click spin → reels spin → final position matches engine.spin() result"
+- ✅ Frame-rate: stable 60fps M3 Pro + 30fps min na Chromebook (CPU 4× slowdown)
+- ✅ Visual regression: 10 baseline frames
+- ✅ Deterministic spin: same seed → identical frame hash
+- ✅ Bundle: full renderer + assets < 800KB gzipped
+- ✅ Memory: no leaks across 100 consecutive spins
+
+### 200.0.3 — W199 END-TO-END INTEGRATION + CERT EXPORT ❌
+
+#### 200.0.3.1 — Compose tab (feature graph)
+- Node-graph editor sa drag-drop iz feature palette
+- Pre-loaded graphs za 5 templates (Classic / Megaways / Cluster / Cascade / Hold & Win)
+- Each node = feature (Scatter Trigger / FS / Cascade / Multiplier / Sticky Wilds / Pick Bonus / Wheel / H&W / Cluster / Symbol Upgrade / Mystery / Compound Trigger)
+- Edges = composition order
+- Inspector panel sa node params (p_trigger, max_retrigger, etc.) + closed-form formula display
+- Composed RTP bars: base + per-feature contributions = total
+
+#### 200.0.3.2 — Catalog tab (97 P-IDs)
+- Load `docs/INDUSTRY_PATTERN_CATALOG.md` (or extract to JSON) → 97 P-ID metadata
+- Tri-pane: filter chips / grid / detail
+- L&W banner strip M1-M16 sa supplier label
+- "Insert into BUILD" button → adds kernel to current IR
+- "View 30-43 specs" → opens vitest results
+- "View 600K MC acceptance" → opens acceptance report
+
+#### 200.0.3.3 — Sensitivity tab
+- Parameter list iz current IR (sve numeric fields)
+- Slider widget per parameter sa min/max from IR schema
+- 2D heatmap (param X × param Y → RTP color gradient)
+- 1000-point line chart sa CI95 ribbon
+- A/B comparator (current vs sweep target)
+- Real computation: za svaki point, recompute RTP via `rtpCalculator.compute()`
+- Optimization: throttle to 60fps (compute on requestIdleCallback)
+
+#### 200.0.3.4 — Certify tab — REAL MC + PAR
+- MC trigger: 100K / 1M / 10M button selector
+- RNG backend selector (Mulberry32/PCG64/Xoshiro256SS/Philox4x32/**ChaCha20**) sa UK badge
+- WebWorker za MC simulator (background, non-blocking UI)
+- Optional: load Rust simulator preko WASM build (faster than TS)
+- Progress bar + ETA u live time
+- PAR Sheet generation iz `src/par/`  — 12 GLI-16 sekcija
+- 15 jurisdiction chips sa overlay-em (klik → per-jurisdiction rules iz `src/jurisdiction/profiles/`)
+- Compliance audit list sa pass/fail status per check
+- "Download operator-package.zip" → poziva `scripts/operator-package.sh` (postojeće, 153 fajla bundle)
+
+#### 200.0.3.5 — Workspace persistence
+- LocalStorage workspaces (3 default = "Untitled" / "Untitled 2" / "Untitled 3")
+- Variants per workspace
+- Compare A/B saved state per workspace
+- Browser refresh → state restored
+
+#### 200.0.3.6 — Cross-tab state sync
+- Reactive store (vanilla observer pattern, no framework needed)
+- IR object u jedinstvenom store-u
+- Multi-tab guard (BroadcastChannel API) — warn ako otvoreno u 2+ tab-a
+
+#### QA gates W199
+- ✅ Playwright e2e SCENARIO 1: "Build 5×3-20-lines from blank → spin 5 times → run 100K MC → export op-pkg → unzip → manifest contains PAR + IR + Merkle + jurisdiction overlay"
+- ✅ Playwright e2e SCENARIO 2 (round-trip): import existing fixture → all 6 tabs populate → export → re-import → byte-identical
+- ✅ Vitest e2e: full pipeline `IR → calculator → MC → PAR → op-pkg` u jednom test fajlu
+- ✅ Performance: tab switch < 50ms, MC 100K spins < 3s na M3 Pro
+- ✅ Operator package SHA-256 manifest 100% match sa reference
+
+### 200.0.4 — W200 🏆 DEMO-READY MILESTONE ❌
+
+#### 200.0.4.1 — Polish pass
+- Error messages, loading states, empty states
+- Help tooltips na svim primary actions
+- Keyboard shortcut cheatsheet (?)
+- Mobile/tablet fallback (or "desktop required" splash)
+
+#### 200.0.4.2 — Persona LAYOUT separation final
+- Math / Design / Producer dobijaju **stvarno različite ekrane**
+- Default tab per persona (Math=Sensitivity, Design=Play, Producer=Certify)
+- Primary action per persona
+- Side info per persona
+- Welcome wizard prvi put per persona
+
+#### 200.0.4.3 — Demo script
+- `scripts/walking-skeleton-demo.mjs` — automated 3-min demo: open studio → build game → spin → MC → export
+- Narration prompts za prezentera
+
+#### 200.0.4.4 — Video walkthrough
+- Capture 3-min screen recording (Loom/Quicktime)
+- Upload u `docs/demos/walking-skeleton-3min.mp4`
+
+#### 200.0.4.5 — COMMERCIAL_PITCH_v2
+- Update sa screenshot-ima walking skeleton-a
+- Before/after vs W196 ("imali smo math, sad imamo platform")
+- Send-to-L&W deck (PDF export)
+
+#### 200.0.4.6 — Master TODO closure
+- W197-W200 commits + pins u tabelu
+- Faza 200.0 ✅ flip
+- Spawn FAZA 200.1+ paralelni WIDEN plan
+
+#### QA gates W200
+- ✅ End-to-end demo < 3 min na first-time user
+- ✅ Demo video uploaded
+- ✅ Persona switch radi sa stvarnim layout razlikama
+- ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima
+- ✅ Sve W197-W200 commits + pins u TODO
+
+### 200.0.5 — DEPENDENCIES & RISKS
+
+#### Dependencies (već postoje u repo-u)
+- `src/calculator/rtpCalculator.ts` ✅
+- `src/ir/types.ts` + `src/ir/schema.ts` ✅
+- `src/engine/spin.ts` ✅
+- `src/par/` (PAR Sheet generator) ✅
+- `src/jurisdiction/profiles/` (15 jurisdictions) ✅
+- `src/rng/` (5 backends) ✅
+- `scripts/operator-package.sh` ✅
+- `docs/INDUSTRY_PATTERN_CATALOG.md` (97 P-IDs) ✅
+
+#### Nove dependencies za Studio
+- `pixi.js@8` (WebGL renderer)
+- `@vitejs/plugin-react` ako kasnije pređemo na React (opt-in)
+- Eventualno: `comlink` ili native WebWorker za MC background
+
+#### Rizici
+| Rizik | Impact | Mitigation |
+|---|---|---|
+| TS module import u `web/` nije plug-and-play (build needed) | High | Vite ili Rollup za bundle; ili eslint flat config + native ESM |
+| Pixi.js performance na low-end | Medium | Frame budget guard; fallback Canvas 2D |
+| MC 100K spinova u browseru spor | Medium | WebWorker + WASM Rust build (već imamo Rust simulator) |
+| 97 P-IDs metadata nije u JSON formatu | Low | Generate JSON iz `docs/INDUSTRY_PATTERN_CATALOG.md` u jednom skript-u |
+| UKGC autoplay ban u browser-u nije validan (operator deploy) | Low | Just disable button + show jurisdiction notice |
+
+### 200.0.6 — ESTIMATED TIMELINE
+
+| Wave | Effort | Cumulative |
+|---|---|---|
+| **200.0.0** Mockup polish + persona LAYOUT | 2-3 dana | 3 dana |
+| **W197** Studio UI Skeleton + real engine wire | 5-7 dana | 10 dana |
+| **W198** Pixi.js Renderer + spin lifecycle | 5-7 dana | 17 dana |
+| **W199** Compose + Catalog + Sensitivity + Certify | 7-10 dana | 27 dana |
+| **W200** Polish + demo + persona separation | 3-5 dana | 32 dana (~4.5 nedelje) |
+
+**Total**: 4-5 nedelja od W196 do live demo-ready Faza 200.0 milestone.
+
+### 200.0.7 — DEFINITION OF DONE (Faza 200.0)
+
+Ova faza je ✅ KADA:
+1. ✅ Designer otvori `web/studio/` u browseru i kreira igru kroz UI **bez ijednog JSON kucanja**
+2. ✅ Live RTP / hit freq / volatility racunaju se preko POSTOJEĆIH solvera (ne mock)
+3. ✅ PLAY tab — Pixi.js reels stvarno se vrte, win lines draw
+4. ✅ CERTIFY tab — MC 100K real, PAR Sheet 12 sekcija, operator-package.zip download
+5. ✅ Workspaces × Variants × Compare A/B rade end-to-end
+6. ✅ Math / Design / Producer persona LAYOUT stvarno različite (ne 2 CSS pravila)
+7. ✅ Round-trip: import IR JSON → UI → export → byte-identical
+8. ✅ 0 regresija na 5351 postojećih vitest specs
+9. ✅ Playwright e2e 3 scenarios pass (Math user / Design user / Producer user)
+10. ✅ Visual regression baseline approved (Percy ili Chromatic)
+11. ✅ Performance: RTP recompute < 100ms, spin 60fps, MC 100K < 3s
+12. ✅ Demo video < 3 min uploaded
+13. ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima sent-to-L&W
+14. ✅ Sve W197-W200 commits + pins + master TODO closure
+
+---
+
+#### 🎯 Walking Skeleton Acceptance Criteria (legacy from initial plan, kept for reference)
 
 Da bi Faza 200.0 bila ✅ označena, mora sve:
 1. ✅ Designer otvori `web/studio.html` u browser-u (Chrome 120+ / Firefox 119+ / Safari 17+)
