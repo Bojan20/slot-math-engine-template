@@ -834,6 +834,199 @@ Workspace seed: "Untitled" / "Untitled 2" / "Untitled 3" umesto Lava/Pearl/Solar
 - ✅ Performance: tab switch < 50ms, MC 100K spins < 3s na M3 Pro
 - ✅ Operator package SHA-256 manifest 100% match sa reference
 
+### 200.0.3.5 — W199.5 📄 MATH GDD IMPORT PIPELINE ❌ *(Boki, 2026-05-18, novi feature critical for designer workflow)*
+
+> **Zašto je ovo CRITICAL feature**: math/design timovi rade sa **Game Design Documents (GDD)** kao izvor istine — PDF/Word/Excel dokumenti sa paytable, reel strips, RTP target, volatility, features, jurisdiction info. Trenutno: 2-5 dana ručnog kucanja iz GDD u IR JSON. Novi flow: **drop GDD → engine parse → IR auto-built → designer tweak → save** za < 30 sekundi.
+>
+> **L&W C-level pitch upgrade**: "Imamo bilo koji math GDD koji vaš team koristi danas — pošalji nam .pdf / .xlsx / .docx i za 30 sekundi imaš production IR + cert ready package."
+
+#### 200.0.3.5.1 — Format Detection & Multi-Parser Pipeline
+Dodaj u v5-final-studio (BUILD tab → "+ New Game" wizard) novu primary opciju: **"📄 Import from GDD"** (pored "Empty / Template / L&W M-gap").
+
+Podržani formati (auto-detect by MIME + extension + content sniffing):
+- **PDF** (`application/pdf`) — `pdf-parse` library + OCR fallback za scan-ovane (Tesseract.js)
+- **DOCX** (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`) — `mammoth.js` ili `docx-parser`
+- **XLSX** (`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`) — `xlsx` (SheetJS)
+- **XLS** (legacy Excel) — `xlsx` (SheetJS, backwards-compat mode)
+- **CSV** (`text/csv`) — `papaparse`
+- **Markdown** (`text/markdown` ili `.md`) — `marked` AST traversal
+- **JSON** (`application/json`) — direct parse + schema sniff (možda već IR ili custom GDD JSON)
+- **Notion export** (`.zip` sa markdown + assets) — recursive unzip + markdown parse
+- **Plain text** (`.txt`) — heuristic + LLM extract fallback
+
+UI:
+```
+┌─────────────────────────────────────────────────┐
+│  Drop your GDD file here, or click to browse    │
+│                                                 │
+│  Supported: PDF, DOCX, XLSX, CSV, MD, JSON,    │
+│             Notion export, plain text           │
+│                                                 │
+│  ┌────────────────────┐                         │
+│  │ [📎 Choose file]   │                         │
+│  └────────────────────┘                         │
+└─────────────────────────────────────────────────┘
+```
+
+#### 200.0.3.5.2 — Per-Format Field Extractor
+Za svaki format, dedicated extractor koji izvlači sledeća polja sa **confidence score (0-100)**:
+
+**Required fields** (mora da budu pronađena ili default-ovana):
+- `meta.id` — game ID/code
+- `meta.name` — game title
+- `meta.version` — IR version (default 1.0.0 ako nema)
+- `topology.kind` — "rectangular" / "variable_rows" / "cluster" / "hexagonal"
+- `topology.reels` — broj reels
+- `topology.rows` — broj rows
+- `evaluation.kind` — "lines" / "ways" / "cluster" / "pay_anywhere" / "pattern"
+- `limits.target_rtp` — target RTP %
+- `limits.max_win` — max win cap
+
+**Symbol pool** (auto-detect HP/MP/LP/Wild/Scatter tiers):
+- Detekcija "HP1", "HP2", "H1", "H2", "high1", "premium1" → HP tier
+- Detekcija "MP1", "M1", "mid1", "medium1" → MP tier
+- Detekcija "LP1", "L1", "low1", "9 10 J Q K A" → LP tier (legacy)
+- Detekcija "Wild", "W", "Substitute" → Wild
+- Detekcija "Scatter", "S", "FreeSpin trigger" → Scatter
+- Detekcija "Bonus", "Mult", "Multiplier", "×N" → Bonus/Mult
+
+**Paytable extraction**:
+- Tabela parser (XLSX cells / PDF tables / Markdown tables)
+- Column heuristics: "3oak / 4oak / 5oak" ili "3 / 4 / 5" ili "Three / Four / Five"
+- Row mapping na detected symbols
+- Numeric value cleanup (drop `x` suffix, convert "1,500" → 1500)
+
+**Reel strips**:
+- Excel sheet "Reels" / "Strips" / "ReelStrips" detection
+- Column per reel, symbols u rows
+- Weighted mode: dodatna kolona "weight" / "count"
+
+**Features** (heuristic-based):
+- "Free Spins" / "FS" / "Bonus Round" → free_spins feature
+- "Hold & Win" / "H&W" / "Coin Collect" → hold_and_win feature
+- "Cascade" / "Tumble" / "Avalanche" → cascade feature
+- "Cluster" / "Cluster Pay" → cluster feature
+- "Pick" / "Pick & Click" → pick feature
+- "Wheel" / "Bonus Wheel" → wheel feature
+- "Megaways" / "Variable Rows" → topology.variable_rows
+- "Multiplier" + "FS"/"Bonus" → multiplier u feature
+
+**Jurisdictions**:
+- Text scan za "UKGC" / "MGA" / "ADM" / "eCOGRA" / "DGOJ" itd
+- Pre-fill `meta.jurisdictions[]`
+
+**Volatility**:
+- Detekcija "Low" / "Medium" / "Med" / "High" / "Very High" volatility label
+- Map na expected CV range (LOW 1-2 / MID 2-5 / HIGH 5-15)
+
+#### 200.0.3.5.3 — LLM Fallback za fuzzy parsing
+Kad regex/structural extractor failuje (npr. paytable u prose-formated paragraph-u umesto tabele):
+- **Local LLM** (npr. llama.cpp via WASM ili web-llm) za extract structured data — privatnost (GDD su poverljiv dokument)
+- **Optional cloud fallback** (Claude / GPT-4) sa eksplicitnim user consent + redact-ed mode (no paytable values to cloud)
+- LLM prompt template: "Extract slot game configuration as JSON matching this schema: {schema}"
+- Confidence score iz LLM response (uz field-level)
+
+#### 200.0.3.5.4 — Parameter Editor Modal (post-import review)
+Posle parse-a, otvori **veliki review modal** sa:
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│  📄 Importing: DragonSpinPhoenix-Math-v2.3.pdf                 │
+│  Confidence: 87% • 3 fields need review                        │
+├────────────────────────────────────────────────────────────────┤
+│  GAME META                                                     │
+│  Name         [Dragon Spin Phoenix          ] ✓ 98%            │
+│  Game ID      [dsp-v2.3                      ] ✓ 95%            │
+│  Topology     [5×3 rectangular              ] ✓ 92%            │
+│  Target RTP   [96.50%                        ] ⚠ 73% (review)  │
+│                                                                │
+│  SYMBOL POOL                                                   │
+│  HP   3 ✓ • MP 3 ✓ • LP 3 ⚠ (LP-3 not in paytable) • Wild 1 ✓ │
+│  Scatter 1 ✓ • Mult 0                                          │
+│                                                                │
+│  PAYTABLE — extracted 8/9 rows                                 │
+│  [Table preview with editable cells]                           │
+│  ⚠ LP-3 row missing — auto-fill with [estimated] / [skip]      │
+│                                                                │
+│  REEL STRIPS — weighted mode detected                          │
+│  Reel 1: 32 symbols ✓ • Reel 2: 32 ✓ • Reel 3-5: 32 ✓          │
+│                                                                │
+│  FEATURES                                                      │
+│  [✓] Free Spins (trigger=3+ scatters, count=10)               │
+│  [✓] Hold & Win (trigger=6+ orb symbols)                       │
+│  [ ] Cascade (mentioned u text ali no params)                  │
+│                                                                │
+│  JURISDICTIONS                                                 │
+│  [✓ UKGC]  [✓ MGA]  [ ADM]  [ + Add jurisdiction]              │
+│                                                                │
+│  [Cancel]              [Save as draft]    [Generate Game →]    │
+└────────────────────────────────────────────────────────────────┘
+```
+
+Svaki field ima:
+- **Confidence badge** (✓ green ≥ 90%, ⚠ amber 60-89%, ✗ rose < 60%)
+- **Inline edit** (klik na value → editable)
+- **"Show source"** link — otvori PDF na ekstrahovanoj strani sa highlight-om
+- **"Auto-fill missing"** — predloži default value iz pattern catalog-a
+
+#### 200.0.3.5.5 — Validate & Generate
+Posle review, klik **"Generate Game →"**:
+1. Construct IR object iz reviewed fields
+2. Validate against `src/ir/schema.ts` (Zod)
+3. Ako validation fail → highlight errors u modalu, vrati korisnika
+4. Ako pass → create new workspace sa naziv-om iz `meta.name`
+5. Pre-fill sve tabove (BUILD/PLAY/CERTIFY)
+6. Auto-trigger first MC run u CERTIFY tab → vidi se da li match-uje stated RTP
+7. **Confidence vs Reality check**: prikazi "Stated RTP: 96.50%, Computed: 96.43%, Delta: 0.07%" — ako delta > 0.5%, warning toast
+
+#### 200.0.3.5.6 — Template Library (GDD samples)
+Kreiraj `web/studio/gdd-templates/` sa **10 sample GDD-ova** u različitim formatima za testing:
+- `dragon-spin.pdf` — realistic L&W-style GDD
+- `quick-hit.xlsx` — Excel format sa multi-sheet
+- `huff-puff.docx` — Word format
+- `cluster-cosmic.md` — Markdown
+- `megaways-megaron.json` — already-IR-like JSON
+- `cascade-galaxy.csv` — CSV bulk paytable
+- `holdwin-coral.notion-export.zip` — Notion zip
+- `freespins-tiger.txt` — plain text
+- `bonus-wheel-zeus.html` — HTML export (legacy)
+- `pattern-byzantium.pdf` — scan-ovan PDF (test OCR path)
+
+Svaki sample sa expected IR output u `gdd-templates/expected/` za regression testing.
+
+#### 200.0.3.5.7 — GDD History & Versioning
+Kad korisnik importuje GDD:
+- Original fajl sačuvan u `workspaces/<ws-id>/gdd/<timestamp>.<ext>`
+- Mapping iz GDD → IR sačuvan u `workspaces/<ws-id>/gdd/<timestamp>.mapping.json`
+- Re-import istog GDD-a iste workspace → diff view (šta se promenilo)
+- Re-generate IR iz GDD posle mapping edit (ne moraš ponovo da parsi-uješ ceo dokument)
+
+#### 200.0.3.5.8 — Edit & Save Back (bidirectional)
+Bonus feature (P1, ako vreme dozvoli):
+- Posle parameter edit u Studio → "Export changes back to GDD"
+- Generiše **diff annotations** preko original PDF-a (Acrobat-style)
+- Ili **regenerate XLSX/MD** sa updated values
+- Use case: math team uveri da se UI promene reflektuju u source-of-truth GDD-u
+
+#### QA gates W199.5
+- ✅ Playwright e2e SCENARIO 3 (GDD import): "Upload 5 različitih GDD format samples → for each, parse + review modal opens + Generate Game produces valid IR + IR loads sa stated RTP within 1% delta"
+- ✅ Vitest unit: 10 sample GDDs round-trip (parse → IR → re-parse-validate)
+- ✅ Confidence score calibration: > 90% za clean structured docs, > 70% za prose/PDF
+- ✅ LLM fallback opt-in only (default off — privacy first)
+- ✅ Format detection 100% accuracy na 10 samples
+- ✅ Performance: PDF parse < 5s, XLSX parse < 2s, all formats < 10s
+- ✅ GDD history persisted u workspace (re-import diff radi)
+
+#### Effort & Timeline
+- **W199.5 main**: 5-7 dana paralelno sa W199 ili nezavisno
+- **Critical path**: format detection (1 dan) + PDF parser (2 dana) + XLSX parser (1 dan) + LLM fallback hook (1 dan) + review modal (2 dana) + IR validator wire (1 dan)
+- **Optional Bonus tasks** (W199.5.B, P1): OCR scan-ovan PDF, Notion export, edit-back GDD
+
+#### Strategic value
+- **Math team time savings**: 2-5 dana po naslovu → < 1 sat (parsing + review). 50+ naslova/godinu = **100-250 dana** ušteđeno
+- **L&W C-level pitch**: "send us any GDD format you use today, get production IR + cert pack u 30s"
+- **Acquisition leverage**: ovo je feature koji **niko od L&W competitor-a nema** (Pragmatic / NetEnt / IGT svi imaju manual workflow)
+
 ### 200.0.4 — W200 🏆 DEMO-READY MILESTONE ❌
 
 #### 200.0.4.1 — Polish pass
@@ -908,9 +1101,10 @@ Workspace seed: "Untitled" / "Untitled 2" / "Untitled 3" umesto Lava/Pearl/Solar
 | **W197** Studio UI Skeleton + real engine wire | 5-7 dana | 10 dana |
 | **W198** Pixi.js Renderer + spin lifecycle | 5-7 dana | 17 dana |
 | **W199** Compose + Catalog + Sensitivity + Certify | 7-10 dana | 27 dana |
-| **W200** Polish + demo + persona separation | 3-5 dana | 32 dana (~4.5 nedelje) |
+| **W199.5** 📄 Math GDD Import Pipeline | 5-7 dana | 34 dana (može paralelno sa W199 → ostaje 27) |
+| **W200** Polish + demo + persona separation | 3-5 dana | 32-39 dana (~4.5-5.5 nedelje) |
 
-**Total**: 4-5 nedelja od W196 do live demo-ready Faza 200.0 milestone.
+**Total**: 4.5-5.5 nedelja od W196 do live demo-ready Faza 200.0 milestone. GDD Import može paralelno (drugi developer) ili sequential (isti developer +5-7 dana).
 
 ### 200.0.7 — DEFINITION OF DONE (Faza 200.0)
 
@@ -922,13 +1116,14 @@ Ova faza je ✅ KADA:
 5. ✅ Workspaces × Variants × Compare A/B rade end-to-end
 6. ✅ Math / Design / Producer persona LAYOUT stvarno različite (ne 2 CSS pravila)
 7. ✅ Round-trip: import IR JSON → UI → export → byte-identical
-8. ✅ 0 regresija na 5351 postojećih vitest specs
-9. ✅ Playwright e2e 3 scenarios pass (Math user / Design user / Producer user)
-10. ✅ Visual regression baseline approved (Percy ili Chromatic)
-11. ✅ Performance: RTP recompute < 100ms, spin 60fps, MC 100K < 3s
-12. ✅ Demo video < 3 min uploaded
-13. ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima sent-to-L&W
-14. ✅ Sve W197-W200 commits + pins + master TODO closure
+8. ✅ **Math GDD Import**: drop PDF/XLSX/DOCX/MD GDD → parse + review modal → Generate Game → valid IR within 1% RTP delta vs stated
+9. ✅ 0 regresija na 5351 postojećih vitest specs
+10. ✅ Playwright e2e 4 scenarios pass (Math user / Design user / Producer user / **GDD Import flow**)
+11. ✅ Visual regression baseline approved (Percy ili Chromatic)
+12. ✅ Performance: RTP recompute < 100ms, spin 60fps, MC 100K < 3s, **GDD parse < 10s**
+13. ✅ Demo video < 3 min uploaded
+14. ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima sent-to-L&W (sa **"GDD-to-IR u 30s"** highlight)
+15. ✅ Sve W197-W200 commits + pins + master TODO closure
 
 ---
 
