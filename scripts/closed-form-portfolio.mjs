@@ -1521,6 +1521,27 @@ async function main() {
     showcase.push({ wave: 191, solver: 'Bonus Bank Running-Balance Offset (L&W RR Megaways M10)', metric: 'E[T_B]', cf: cf.expectedPayoutModeB, mc: mc.meanPayoutModeB, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W192: Race Competitive Pick Winner (L&W M8 — Goldfish Race + Big Bass Bucks) ──
+  {
+    const { analyzeRaceCompetitivePickWinner, simulateRaceCompetitivePickWinner } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'raceCompetitivePickWinner.js'));
+    const t0 = Date.now();
+    const cfg = {
+      candidates: [
+        { label: 'red',    weight: 4, basePrize: 5,   multiplierMean: 1, multiplierVariance: 0 },
+        { label: 'blue',   weight: 3, basePrize: 10,  multiplierMean: 1, multiplierVariance: 0 },
+        { label: 'yellow', weight: 2, basePrize: 25,  multiplierMean: 1, multiplierVariance: 0 },
+        { label: 'gold',   weight: 1, basePrize: 100, multiplierMean: 1, multiplierVariance: 0 },
+      ],
+    };
+    const cf = analyzeRaceCompetitivePickWinner(cfg);
+    const mc = simulateRaceCompetitivePickWinner(cfg, 50_000, 'rational_best', 0, SEED);
+    const rel = Math.abs(cf.bestPickExpectedReturn - mc.meanPayoutPerRace) /
+      Math.max(mc.meanPayoutPerRace, 1e-9);
+    const ok = rel < 0.08;
+    showcase.push({ wave: 192, solver: 'Race Competitive Pick Winner (L&W Goldfish Race M8)', metric: 'bestRtp', cf: cf.bestPickExpectedReturn, mc: mc.meanPayoutPerRace, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

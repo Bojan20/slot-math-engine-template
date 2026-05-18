@@ -237,3 +237,6 @@ export * from './nestedMiniSlotInsideBonus.js';
 
 // W152 Wave 191: Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP CLOSURE — Barcrest Rainbow Riches Megaways Bonus Bank + future L&W flagship)
 export * from './bonusBankRunningBalanceOffset.js';
+
+// W152 Wave 192: Race Competitive Pick Winner Aggregator (73. solver, L&W M8 P1 GAP CLOSURE — Goldfish Race for the Gold + Reel'em In Big Bass Bucks)
+export * from './raceCompetitivePickWinner.js';

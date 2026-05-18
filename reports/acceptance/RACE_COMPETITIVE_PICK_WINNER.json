@@ -1,0 +1,817 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "RACE_COMPETITIVE_PICK_WINNER",
+  "generated_utc": "2026-05-18T01:37:13.955Z",
+  "races_per_config": 50000,
+  "seed": 3405644178,
+  "tolerances": {
+    "payout_rel": 0.08,
+    "prob_abs": 0.02,
+    "pick_win_abs": 0.015
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_goldfish_race_for_gold_4_fish",
+      "description": "LNW WMS Goldfish Race for the Gold (2017, defining title) — 4 fish race red/blue/yellow/gold sa pyramid prize structure.",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "red",
+            "weight": 4,
+            "basePrize": 5,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "blue",
+            "weight": 3,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "yellow",
+            "weight": 2,
+            "basePrize": 25,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "gold",
+            "weight": 1,
+            "basePrize": 100,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 4,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "red",
+            "probWin": 0.4,
+            "basePrize": 5,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2,
+            "rankByExpectedReturn": 4,
+            "isRationalPick": false
+          },
+          {
+            "index": 1,
+            "label": "blue",
+            "probWin": 0.3,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 3,
+            "rankByExpectedReturn": 3,
+            "isRationalPick": false
+          },
+          {
+            "index": 2,
+            "label": "yellow",
+            "probWin": 0.2,
+            "basePrize": 25,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 5,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 3,
+            "label": "gold",
+            "probWin": 0.1,
+            "basePrize": 100,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 10,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          }
+        ],
+        "bestPickExpectedReturn": 10,
+        "worstPickExpectedReturn": 2,
+        "uniformPickExpectedReturn": 5,
+        "bestPickVariance": 900,
+        "bestPickStdDev": 30,
+        "bestPickIndex": 3,
+        "worstPickIndex": 0,
+        "rtpSpread": 8,
+        "skillPremiumVsUniform": 5,
+        "probabilityBestPickWins": 0.1,
+        "expectedRacesToFirstBestWin": 10,
+        "commercialUpliftOverSymmetric": 2
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 10.122,
+          "stdDevPayoutPerRace": 30.16198130096894,
+          "observedWinFrequencies": [
+            0.40134,
+            0.29664,
+            0.2008,
+            0.10122
+          ],
+          "observedPickWinRate": 0.10122,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 5.0316,
+          "stdDevPayoutPerRace": 16.37159129223546,
+          "observedWinFrequencies": [
+            0.4001,
+            0.29886,
+            0.20126,
+            0.09978
+          ],
+          "observedPickWinRate": 0.25098,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0.012052953961667643,
+        "uniform_payout_rel": 0.006280308450592271,
+        "pick_win_abs": 0.0012199999999999989,
+        "max_candidate_prob_abs": 0.003359999999999974
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_big_bass_bucks_5_anglers_14_to_55",
+      "description": "LNW WMS Reel'em In Big Bass Bucks (2014) — 5-angler fishing contest sa 14×–55× per-angler multiplier.",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "angler_1",
+            "weight": 5,
+            "basePrize": 1,
+            "multiplierMean": 14,
+            "multiplierVariance": 4
+          },
+          {
+            "label": "angler_2",
+            "weight": 4,
+            "basePrize": 1,
+            "multiplierMean": 20,
+            "multiplierVariance": 6
+          },
+          {
+            "label": "angler_3",
+            "weight": 3,
+            "basePrize": 1,
+            "multiplierMean": 30,
+            "multiplierVariance": 10
+          },
+          {
+            "label": "angler_4",
+            "weight": 2,
+            "basePrize": 1,
+            "multiplierMean": 40,
+            "multiplierVariance": 16
+          },
+          {
+            "label": "angler_5",
+            "weight": 1,
+            "basePrize": 1,
+            "multiplierMean": 55,
+            "multiplierVariance": 25
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 5,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "angler_1",
+            "probWin": 0.3333333333333333,
+            "basePrize": 1,
+            "multiplierMean": 14,
+            "expectedReturnIfPicked": 4.666666666666666,
+            "rankByExpectedReturn": 4,
+            "isRationalPick": false
+          },
+          {
+            "index": 1,
+            "label": "angler_2",
+            "probWin": 0.26666666666666666,
+            "basePrize": 1,
+            "multiplierMean": 20,
+            "expectedReturnIfPicked": 5.333333333333333,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 2,
+            "label": "angler_3",
+            "probWin": 0.2,
+            "basePrize": 1,
+            "multiplierMean": 30,
+            "expectedReturnIfPicked": 6,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          },
+          {
+            "index": 3,
+            "label": "angler_4",
+            "probWin": 0.13333333333333333,
+            "basePrize": 1,
+            "multiplierMean": 40,
+            "expectedReturnIfPicked": 5.333333333333333,
+            "rankByExpectedReturn": 3,
+            "isRationalPick": false
+          },
+          {
+            "index": 4,
+            "label": "angler_5",
+            "probWin": 0.06666666666666667,
+            "basePrize": 1,
+            "multiplierMean": 55,
+            "expectedReturnIfPicked": 3.6666666666666665,
+            "rankByExpectedReturn": 5,
+            "isRationalPick": false
+          }
+        ],
+        "bestPickExpectedReturn": 6,
+        "worstPickExpectedReturn": 3.6666666666666665,
+        "uniformPickExpectedReturn": 5,
+        "bestPickVariance": 146,
+        "bestPickStdDev": 12.083045973594572,
+        "bestPickIndex": 2,
+        "worstPickIndex": 4,
+        "rtpSpread": 2.3333333333333335,
+        "skillPremiumVsUniform": 1,
+        "probabilityBestPickWins": 0.2,
+        "expectedRacesToFirstBestWin": 5,
+        "commercialUpliftOverSymmetric": 1.2
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 5.979770616933239,
+          "stdDevPayoutPerRace": 12.082144855352027,
+          "observedWinFrequencies": [
+            0.33364,
+            0.26502,
+            0.19894,
+            0.13562,
+            0.06678
+          ],
+          "observedPickWinRate": 0.19894,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 4.984698207508405,
+          "stdDevPayoutPerRace": 11.34580932501655,
+          "observedWinFrequencies": [
+            0.33328,
+            0.26648,
+            0.20076,
+            0.1341,
+            0.06538
+          ],
+          "observedPickWinRate": 0.20068,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0.0033715638444601717,
+        "uniform_payout_rel": 0.0030603584983190046,
+        "pick_win_abs": 0.0010600000000000054,
+        "max_candidate_prob_abs": 0.002286666666666659
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "C_competitive_pick_3_candidate_skewed",
+      "description": "3-candidate skewed race sa heavy-tail jackpot — gold dominantan EV za rational pick.",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "common",
+            "weight": 10,
+            "basePrize": 2,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "rare",
+            "weight": 3,
+            "basePrize": 25,
+            "multiplierMean": 1.5,
+            "multiplierVariance": 0.5
+          },
+          {
+            "label": "jackpot",
+            "weight": 1,
+            "basePrize": 200,
+            "multiplierMean": 2,
+            "multiplierVariance": 1
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 3,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "common",
+            "probWin": 0.7142857142857143,
+            "basePrize": 2,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 1.4285714285714286,
+            "rankByExpectedReturn": 3,
+            "isRationalPick": false
+          },
+          {
+            "index": 1,
+            "label": "rare",
+            "probWin": 0.21428571428571427,
+            "basePrize": 25,
+            "multiplierMean": 1.5,
+            "expectedReturnIfPicked": 8.035714285714285,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 2,
+            "label": "jackpot",
+            "probWin": 0.07142857142857142,
+            "basePrize": 200,
+            "multiplierMean": 2,
+            "expectedReturnIfPicked": 28.57142857142857,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          }
+        ],
+        "bestPickExpectedReturn": 28.57142857142857,
+        "worstPickExpectedReturn": 1.4285714285714286,
+        "uniformPickExpectedReturn": 12.678571428571429,
+        "bestPickVariance": 13469.38775510204,
+        "bestPickStdDev": 116.05769149479943,
+        "bestPickIndex": 2,
+        "worstPickIndex": 0,
+        "rtpSpread": 27.142857142857142,
+        "skillPremiumVsUniform": 15.89285714285714,
+        "probabilityBestPickWins": 0.07142857142857142,
+        "expectedRacesToFirstBestWin": 14,
+        "commercialUpliftOverSymmetric": 2.253521126760563
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 29.70449756137516,
+          "stdDevPayoutPerRace": 118.44355393409413,
+          "observedWinFrequencies": [
+            0.71298,
+            0.21422,
+            0.0728
+          ],
+          "observedPickWinRate": 0.0728,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 12.449201809398405,
+          "stdDevPayoutPerRace": 67.91568782464294,
+          "observedWinFrequencies": [
+            0.71328,
+            0.21612,
+            0.0706
+          ],
+          "observedPickWinRate": 0.33274,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0.03814469467478632,
+        "uniform_payout_rel": 0.01809112489252021,
+        "pick_win_abs": 0.001371428571428579,
+        "max_candidate_prob_abs": 0.001371428571428579
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "D_symmetric_race_no_skill_premium",
+      "description": "Symmetric race sa equal weights+prizes — skill premium = 0 corner.",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "c1",
+            "weight": 1,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c2",
+            "weight": 1,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c3",
+            "weight": 1,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c4",
+            "weight": 1,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 4,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "c1",
+            "probWin": 0.25,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2.5,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          },
+          {
+            "index": 1,
+            "label": "c2",
+            "probWin": 0.25,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2.5,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 2,
+            "label": "c3",
+            "probWin": 0.25,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2.5,
+            "rankByExpectedReturn": 3,
+            "isRationalPick": false
+          },
+          {
+            "index": 3,
+            "label": "c4",
+            "probWin": 0.25,
+            "basePrize": 10,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2.5,
+            "rankByExpectedReturn": 4,
+            "isRationalPick": false
+          }
+        ],
+        "bestPickExpectedReturn": 2.5,
+        "worstPickExpectedReturn": 2.5,
+        "uniformPickExpectedReturn": 2.5,
+        "bestPickVariance": 18.75,
+        "bestPickStdDev": 4.330127018922194,
+        "bestPickIndex": 0,
+        "worstPickIndex": 0,
+        "rtpSpread": 0,
+        "skillPremiumVsUniform": 0,
+        "probabilityBestPickWins": 0.25,
+        "expectedRacesToFirstBestWin": 4,
+        "commercialUpliftOverSymmetric": 1
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 2.5,
+          "stdDevPayoutPerRace": 4.330127018922194,
+          "observedWinFrequencies": [
+            0.25,
+            0.25198,
+            0.24494,
+            0.25308
+          ],
+          "observedPickWinRate": 0.25,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 2.5162,
+          "stdDevPayoutPerRace": 4.339439774901825,
+          "observedWinFrequencies": [
+            0.25078,
+            0.24876,
+            0.2493,
+            0.25116
+          ],
+          "observedPickWinRate": 0.25162,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0,
+        "uniform_payout_rel": 0.006438279945950239,
+        "pick_win_abs": 0,
+        "max_candidate_prob_abs": 0.005060000000000009
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_corner_2_candidate_binary_race",
+      "description": "Corner: 2-candidate binary race — minimum N (degenerate).",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "c0",
+            "weight": 7,
+            "basePrize": 1,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c1",
+            "weight": 3,
+            "basePrize": 5,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 2,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "c0",
+            "probWin": 0.7,
+            "basePrize": 1,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 0.7,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 1,
+            "label": "c1",
+            "probWin": 0.3,
+            "basePrize": 5,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 1.5,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          }
+        ],
+        "bestPickExpectedReturn": 1.5,
+        "worstPickExpectedReturn": 0.7,
+        "uniformPickExpectedReturn": 1.1,
+        "bestPickVariance": 5.25,
+        "bestPickStdDev": 2.29128784747792,
+        "bestPickIndex": 1,
+        "worstPickIndex": 0,
+        "rtpSpread": 0.8,
+        "skillPremiumVsUniform": 0.3999999999999999,
+        "probabilityBestPickWins": 0.3,
+        "expectedRacesToFirstBestWin": 3.3333333333333335,
+        "commercialUpliftOverSymmetric": 1.3636363636363635
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 1.5101,
+          "stdDevPayoutPerRace": 2.295669399107807,
+          "observedWinFrequencies": [
+            0.69798,
+            0.30202
+          ],
+          "observedPickWinRate": 0.30202,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 1.10078,
+          "stdDevPayoutPerRace": 1.6985474357815267,
+          "observedWinFrequencies": [
+            0.69896,
+            0.30104
+          ],
+          "observedPickWinRate": 0.50158,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0.006688298788159723,
+        "uniform_payout_rel": 0.000708588455458859,
+        "pick_win_abs": 0.0020200000000000218,
+        "max_candidate_prob_abs": 0.0020200000000000218
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "F_corner_8_candidate_long_field",
+      "description": "Corner: 8-candidate long field (broad portfolio) sa varied prize tiers.",
+      "cfg": {
+        "candidates": [
+          {
+            "label": "c1",
+            "weight": 8,
+            "basePrize": 1,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c2",
+            "weight": 6,
+            "basePrize": 3,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c3",
+            "weight": 5,
+            "basePrize": 6,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c4",
+            "weight": 4,
+            "basePrize": 12,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c5",
+            "weight": 3,
+            "basePrize": 25,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c6",
+            "weight": 2,
+            "basePrize": 50,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c7",
+            "weight": 1,
+            "basePrize": 150,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          },
+          {
+            "label": "c8",
+            "weight": 1,
+            "basePrize": 400,
+            "multiplierMean": 1,
+            "multiplierVariance": 0
+          }
+        ]
+      },
+      "closed_form": {
+        "numCandidates": 8,
+        "perCandidate": [
+          {
+            "index": 0,
+            "label": "c1",
+            "probWin": 0.26666666666666666,
+            "basePrize": 1,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 0.26666666666666666,
+            "rankByExpectedReturn": 8,
+            "isRationalPick": false
+          },
+          {
+            "index": 1,
+            "label": "c2",
+            "probWin": 0.2,
+            "basePrize": 3,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 0.6000000000000001,
+            "rankByExpectedReturn": 7,
+            "isRationalPick": false
+          },
+          {
+            "index": 2,
+            "label": "c3",
+            "probWin": 0.16666666666666666,
+            "basePrize": 6,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 1,
+            "rankByExpectedReturn": 6,
+            "isRationalPick": false
+          },
+          {
+            "index": 3,
+            "label": "c4",
+            "probWin": 0.13333333333333333,
+            "basePrize": 12,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 1.6,
+            "rankByExpectedReturn": 5,
+            "isRationalPick": false
+          },
+          {
+            "index": 4,
+            "label": "c5",
+            "probWin": 0.1,
+            "basePrize": 25,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 2.5,
+            "rankByExpectedReturn": 4,
+            "isRationalPick": false
+          },
+          {
+            "index": 5,
+            "label": "c6",
+            "probWin": 0.06666666666666667,
+            "basePrize": 50,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 3.3333333333333335,
+            "rankByExpectedReturn": 3,
+            "isRationalPick": false
+          },
+          {
+            "index": 6,
+            "label": "c7",
+            "probWin": 0.03333333333333333,
+            "basePrize": 150,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 5,
+            "rankByExpectedReturn": 2,
+            "isRationalPick": false
+          },
+          {
+            "index": 7,
+            "label": "c8",
+            "probWin": 0.03333333333333333,
+            "basePrize": 400,
+            "multiplierMean": 1,
+            "expectedReturnIfPicked": 13.333333333333334,
+            "rankByExpectedReturn": 1,
+            "isRationalPick": true
+          }
+        ],
+        "bestPickExpectedReturn": 13.333333333333334,
+        "worstPickExpectedReturn": 0.26666666666666666,
+        "uniformPickExpectedReturn": 3.4541666666666666,
+        "bestPickVariance": 5155.555555555557,
+        "bestPickStdDev": 71.80219742846006,
+        "bestPickIndex": 7,
+        "worstPickIndex": 0,
+        "rtpSpread": 13.066666666666666,
+        "skillPremiumVsUniform": 9.879166666666666,
+        "probabilityBestPickWins": 0.03333333333333333,
+        "expectedRacesToFirstBestWin": 30,
+        "commercialUpliftOverSymmetric": 3.860072376357057
+      },
+      "monte_carlo": {
+        "rational": {
+          "meanPayoutPerRace": 13.64,
+          "stdDevPayoutPerRace": 72.59442402829572,
+          "observedWinFrequencies": [
+            0.2662,
+            0.20238,
+            0.16236,
+            0.1332,
+            0.10138,
+            0.06686,
+            0.03352,
+            0.0341
+          ],
+          "observedPickWinRate": 0.0341,
+          "races": 50000
+        },
+        "uniform": {
+          "meanPayoutPerRace": 3.47438,
+          "stdDevPayoutPerRace": 27.934313372903944,
+          "observedWinFrequencies": [
+            0.26656,
+            0.19916,
+            0.16564,
+            0.13412,
+            0.1017,
+            0.06608,
+            0.03324,
+            0.0335
+          ],
+          "observedPickWinRate": 0.12742,
+          "races": 50000
+        }
+      },
+      "checks": {
+        "rational_payout_rel": 0.022482893450635383,
+        "uniform_payout_rel": 0.00581782457109856,
+        "pick_win_abs": 0.0007666666666666655,
+        "max_candidate_prob_abs": 0.004306666666666653
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    }
+  ]
+}

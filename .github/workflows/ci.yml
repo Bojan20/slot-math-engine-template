@@ -268,3 +268,5 @@ jobs:
         run: npm run nested-mini-slot-inside-bonus-acceptance
       - name: Bonus Bank Running-Balance Offset acceptance (6/6 configs × 30K bonus-sessions, Wave 191, 72. solver L&W M10 P0 GAP CLOSURE Barcrest Rainbow Riches Megaways Bonus Bank UK-banking flagship)
         run: npm run bonus-bank-running-balance-offset-acceptance
+      - name: Race Competitive Pick Winner acceptance (6/6 configs × 50K races, Wave 192, 73. solver L&W M8 P1 GAP CLOSURE WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks fishing contest)
+        run: npm run race-competitive-pick-winner-acceptance

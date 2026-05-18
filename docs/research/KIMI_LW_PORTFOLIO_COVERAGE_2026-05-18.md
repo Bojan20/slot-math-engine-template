@@ -121,12 +121,12 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 43 | Zeus II, III, 1000 | LNW (WMS) | 2014–2017 | H + G + B | as #42 | NO | n/a |
 | 44 | Kronos Unleashed | LNW (WMS) | 2017 | H + G (stacked wild) + B | P-005 ✅ + P-035 ✅ | NO | n/a |
 | 45 | Goldfish (original) | LNW (WMS) | 2003 | D (pick-a-bowl bonus) + H + **M: secondary screen bonus pick** | P-047 ✅ + P-014 ✅ | NO | n/a |
-| 46 | Goldfish Race for the Gold | LNW (WMS) | 2017 | D (fish race — competitive pick) + H + secondary screen | P-047 ✅ + ❌ **competitive race / horse-style multi-outcome** (race resolves with one winner among N) | YES (M8) | P1 |
+| 46 | Goldfish Race for the Gold | LNW (WMS) | 2017 | D (fish race — competitive pick) + H + secondary screen | P-047 ✅ + P-093 ✅ (competitive race winner-among-N W192) | ✅ **CLOSED (M8 W192)** | P1 |
 | 47 | Goldfish 3 | LNW (WMS) | 2018 | D + H + C3 (multiplier fish wilds 2×–5×) | P-047 ✅ + P-017 ✅ + P-063 ✅ | NO | n/a |
 | 48 | Bier Haus (incl. Heidi's Bier Haus) | LNW (WMS) | 2010, 2014 | H (5/10/20/100 FS Stein Spin) + G (stacked wilds) + retrigger | P-037 ✅ + P-005 ✅ + P-068 ✅ | NO | n/a |
 | 49 | Raging Rhino | LNW (WMS) | 2014 | G2 (4096 ways via 5-reel × 4-row) + H (Vault FS triggered by scatter quantity) | P-049 ✅ + P-068 ✅ | NO | n/a |
 | 50 | Reel'em In! Catch the Big One (1, 2, Cash Bandits) | LNW (WMS) | 1996, 2004, 2010 | D (Fishing Hole pick — multi-fisherman / multi-cast tree) + multi-stage pick | P-047 ✅ (N-stage pick tree) + P-010 ✅ | NO | n/a |
-| 51 | Reel'em In Big Bass Bucks | LNW (WMS) | 2014 | D (Fishing Contest competitive pick) + H + multiplier (14×–55×) | P-047 ✅ + P-063 ✅ + ⚠ competition-pick (M8 same race-pick gap) | YES (M8) | P1 |
+| 51 | Reel'em In Big Bass Bucks | LNW (WMS) | 2014 | D (Fishing Contest competitive pick) + H + multiplier (14×–55×) | P-047 ✅ + P-063 ✅ + P-093 ✅ (competitive race winner-among-N W192) | ✅ **CLOSED (M8 W192)** | P1 |
 | 52 | Monopoly Big Event | LNW (Barcrest) | 2010 | **I (Big Bet — paid 5-spin packages at higher RTP up to 98%)** + Board bonus + Big Bet Reel-Set switch | ⚠ **P-057 ✅ Free-Spins Buy + Tier** handles paid tier RTP, but Big Bet has rotating reel sets WITHIN purchased session — partial |  ✅ **CLOSED (M9 W186)**| **P0** |
 | 53 | Monopoly Megaways | LNW (Barcrest) | 2019 | G3 (Megaways variable-reel) + F (cascade) + H + Board bonus | P-049 ✅ + P-001 ✅ + P-014 ✅ + P-047 ✅ | NO | n/a |
 | 54 | Monopoly Hot Properties | LNW (Barcrest) | 2014 | F + H + Board bonus + Hot Properties multiplier | P-001 ✅ + P-047 ✅ + P-063 ✅ | NO | n/a |
@@ -223,9 +223,10 @@ P-046 covers single-wheel respin Markov. Stacked wheels with cross-wheel trigger
 Two grids: 5×4 main + 5×12 colossal, **100 paylines distributed across both, with wild-position transfer from main → colossal at matched coordinates**. P-030 (Parallel Screens Aggregate) assumes independence; this is **conditional dependence via wild-transfer mapping**. Requires kernel: 2-grid joint-payout with conditional symbol propagation on a subset of positions.
 **Resolution:** W184 ships `src/features/colossalReelsWildTransfer.ts` — 2-stage Binomial sa conditional coupling: K_main via per-reel-non-uniform DP O(N²), K_col | K_main ~ Binomial(K_main, q_t). Joint PMF eksplicitno enumerated. E[K_col] = q_t·E[K_main] (law of total expectation), Var[K_col] derived via law of total variance, P(full wild both grids) = P(K_main=N)·q_t^N. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC spins (Spartacus Gladiator + Super Colossal + Call to Arms + Caesar Empire + 2 corner cases) — CF/MC slaganje 0.5-3% rel.
 
-### M8 — Competitive race / contest bonus
-**Example:** Goldfish Race for the Gold, Reel'em In Big Bass Bucks Fishing Contest.
+### M8 — Competitive race / contest bonus — ✅ **CLOSED in W192** (P-093)
+**Example:** LNW WMS Goldfish Race for the Gold (2017 defining title 4-fish red/blue/yellow/gold pyramid prize), LNW WMS Reel'em In Big Bass Bucks (2014, 5-angler fishing contest sa 14×–55× per-angler multiplier).
 N "racers" each have iid progression rates; one wins, awards multiplier × N-position. Distinct from P-047 (sequential pick tree) and P-046 (wheel spin) because it's a **simultaneous max-finishing-order** outcome over multiple parallel Markov chains.
+**Resolution:** W192 ships `src/features/raceCompetitivePickWinner.ts` — categorical winner + player-pick gating × multiplier draw: N candidates sa weights w_i, K ~ Categorical(p_1..p_N), per-candidate (V_i basePrize, M_i multiplier sa (μ_M, σ²_M)). Y(pick=s) = V_s·M_s·𝟙{K=s} → **E[Y|pick=s] = p_s·V_s·μ_M_s**, **Var[Y|pick=s] = p_s·V_s²·(σ²+μ²) − E[Y]²**. bestPickIndex = argmax_s, skillPremiumVsUniform = best − (1/N)·Σ, rtpSpread = best − worst, commercialUpliftOverSymmetric = bestRtp/uniformRtp. Per-candidate disclosure: probWin + expectedReturnIfPicked + rankByExpectedReturn + isRationalPick. probabilityBestPickWins = p_{s*}, expectedRacesToFirstBestWin = 1/p_{s*} (Geometric), probBestPickWinsAtLeastOnce(K) = 1−(1−p_{s*})^K. 35 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC total (Goldfish Race 4-fish best=gold p=10% ER=10.00 uplift=2.00× + Big Bass Bucks 5-angler 14–55× best=angler_3 + skewed 3-candidate jackpot uplift=2.25× + symmetric 4-candidate skill+=0 corner + 2-candidate binary corner + 8-candidate long field uplift=3.86×). UKGC RTS-12 mandatory player-skill mechanic RTP disclosure.
 
 ### M9 — Big Bet paid-package with within-package reel-set switching — ✅ **CLOSED in W186** (P-087, UK-CRITICAL)
 **Example:** Monopoly Big Event, Rainbow Riches Pick n Mix, Action Bank.
