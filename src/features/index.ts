@@ -246,3 +246,6 @@ export * from './multiPotBranchedHoldSpinSubFeature.js';
 
 // W152 Wave 194: Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP CLOSURE — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)
 export * from './arcadeShooterSurvivalLevels.js';
+
+// W152 Wave 195: Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP CLOSURE — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)
+export * from './midSpinReelReshapeMixture.js';

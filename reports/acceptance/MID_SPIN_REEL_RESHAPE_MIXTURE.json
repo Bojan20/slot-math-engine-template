@@ -1,0 +1,571 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MID_SPIN_REEL_RESHAPE_MIXTURE",
+  "generated_utc": "2026-05-18T02:03:46.521Z",
+  "spins_per_config": 100000,
+  "seed": 3405644181,
+  "tolerances": {
+    "payout_rel": 0.05,
+    "reshape_abs": 0.01,
+    "set_prob_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_wizard_of_oz_ybr_glinda_3_set",
+      "description": "LNW WMS Wizard of Oz Follow the Yellow Brick Road (2017, defining title) — Glinda waves wand mid-spin, 3 reel-set mixture (base + Glinda bonus + Emerald jackpot).",
+      "cfg": {
+        "reelSets": [
+          {
+            "label": "base_oz",
+            "selectionProbability": 0.88,
+            "meanPayout": 0.92,
+            "variancePayout": 20
+          },
+          {
+            "label": "glinda_bonus_reels",
+            "selectionProbability": 0.08,
+            "meanPayout": 4,
+            "variancePayout": 120
+          },
+          {
+            "label": "glinda_emerald_jackpot",
+            "selectionProbability": 0.04,
+            "meanPayout": 12,
+            "variancePayout": 500
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 3,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base_oz",
+            "selectionProbability": 0.88,
+            "meanPayout": 0.92,
+            "variancePayout": 20,
+            "contributionToRtp": 0.5029821073558648,
+            "oneInNSpinsForThisSet": 1.1363636363636365,
+            "rankByMeanPayout": 3,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "glinda_bonus_reels",
+            "selectionProbability": 0.08,
+            "meanPayout": 4,
+            "variancePayout": 120,
+            "contributionToRtp": 0.1988071570576541,
+            "oneInNSpinsForThisSet": 12.5,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": false
+          },
+          {
+            "index": 2,
+            "label": "glinda_emerald_jackpot",
+            "selectionProbability": 0.04,
+            "meanPayout": 12,
+            "variancePayout": 500,
+            "contributionToRtp": 0.2982107355864811,
+            "oneInNSpinsForThisSet": 25,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 1.6096,
+        "secondMomentPayoutPerSpin": 54.984832,
+        "variancePayoutPerSpin": 52.39401984,
+        "stdDevPayoutPerSpin": 7.238371352728457,
+        "withinSetVariance": 47.2,
+        "betweenSetVariance": 5.19401984,
+        "withinSetVarianceShare": 0.9008661703022328,
+        "reshapeProbability": 0.12,
+        "oneInNSpinsAnyReshape": 8.333333333333334,
+        "bestReelSetIndex": 2,
+        "commercialUpliftVsBaseOnly": 1.749565217391304,
+        "bestReelSetUpliftIfReshape": 13.043478260869565,
+        "oneInNSpinsBestReelSet": 25
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 1.6056261345023457,
+        "stdDevPayoutPerSpin": 7.23975254400436,
+        "observedReelSetFreqs": [
+          0.88095,
+          0.07894,
+          0.04011
+        ],
+        "observedReshapeRate": 0.11905,
+        "meanPayoutGivenReshape": 6.804060183258752,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.0024688528191191706,
+        "reshape_abs": 0.0009499999999999925,
+        "max_set_prob_abs": 0.0010600000000000054
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_wizard_of_oz_munchkinland_reshape_2_set",
+      "description": "LNW WMS Wizard of Oz Munchkinland reshape — 2-state base/Munchkin reel-set mixture.",
+      "cfg": {
+        "reelSets": [
+          {
+            "label": "base_oz",
+            "selectionProbability": 0.92,
+            "meanPayout": 0.95,
+            "variancePayout": 18
+          },
+          {
+            "label": "munchkin_bonus",
+            "selectionProbability": 0.08,
+            "meanPayout": 6,
+            "variancePayout": 200
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 2,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base_oz",
+            "selectionProbability": 0.92,
+            "meanPayout": 0.95,
+            "variancePayout": 18,
+            "contributionToRtp": 0.6454948301329394,
+            "oneInNSpinsForThisSet": 1.0869565217391304,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "munchkin_bonus",
+            "selectionProbability": 0.08,
+            "meanPayout": 6,
+            "variancePayout": 200,
+            "contributionToRtp": 0.35450516986706054,
+            "oneInNSpinsForThisSet": 12.5,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 1.354,
+        "secondMomentPayoutPerSpin": 36.2703,
+        "variancePayoutPerSpin": 34.436983999999995,
+        "stdDevPayoutPerSpin": 5.868303332309944,
+        "withinSetVariance": 32.56,
+        "betweenSetVariance": 1.8769839999999995,
+        "withinSetVarianceShare": 0.9454951107216593,
+        "reshapeProbability": 0.07999999999999996,
+        "oneInNSpinsAnyReshape": 12.500000000000007,
+        "bestReelSetIndex": 1,
+        "commercialUpliftVsBaseOnly": 1.425263157894737,
+        "bestReelSetUpliftIfReshape": 6.315789473684211,
+        "oneInNSpinsBestReelSet": 12.5
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 1.3438984695153537,
+        "stdDevPayoutPerSpin": 5.872244669644357,
+        "observedReelSetFreqs": [
+          0.92073,
+          0.07927
+        ],
+        "observedReshapeRate": 0.07927,
+        "meanPayoutGivenReshape": 6.127681505232185,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.007460509959118425,
+        "reshape_abs": 0.0007299999999999668,
+        "max_set_prob_abs": 0.0007300000000000084
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_lw_diverse_5_set_reshape_menu",
+      "description": "L&W diverse 5-reel-set reshape menu — base + 4 alternative paytables sa geometric prize escalation.",
+      "cfg": {
+        "reelSets": [
+          {
+            "label": "base",
+            "selectionProbability": 0.7,
+            "meanPayout": 1,
+            "variancePayout": 10
+          },
+          {
+            "label": "tier_1",
+            "selectionProbability": 0.15,
+            "meanPayout": 2.5,
+            "variancePayout": 40
+          },
+          {
+            "label": "tier_2",
+            "selectionProbability": 0.08,
+            "meanPayout": 5,
+            "variancePayout": 150
+          },
+          {
+            "label": "tier_3",
+            "selectionProbability": 0.05,
+            "meanPayout": 10,
+            "variancePayout": 500
+          },
+          {
+            "label": "tier_jackpot",
+            "selectionProbability": 0.02,
+            "meanPayout": 30,
+            "variancePayout": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 5,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base",
+            "selectionProbability": 0.7,
+            "meanPayout": 1,
+            "variancePayout": 10,
+            "contributionToRtp": 0.27184466019417475,
+            "oneInNSpinsForThisSet": 1.4285714285714286,
+            "rankByMeanPayout": 5,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "tier_1",
+            "selectionProbability": 0.15,
+            "meanPayout": 2.5,
+            "variancePayout": 40,
+            "contributionToRtp": 0.14563106796116504,
+            "oneInNSpinsForThisSet": 6.666666666666667,
+            "rankByMeanPayout": 4,
+            "isBestReelSet": false,
+            "isBaseReelSet": false
+          },
+          {
+            "index": 2,
+            "label": "tier_2",
+            "selectionProbability": 0.08,
+            "meanPayout": 5,
+            "variancePayout": 150,
+            "contributionToRtp": 0.1553398058252427,
+            "oneInNSpinsForThisSet": 12.5,
+            "rankByMeanPayout": 3,
+            "isBestReelSet": false,
+            "isBaseReelSet": false
+          },
+          {
+            "index": 3,
+            "label": "tier_3",
+            "selectionProbability": 0.05,
+            "meanPayout": 10,
+            "variancePayout": 500,
+            "contributionToRtp": 0.1941747572815534,
+            "oneInNSpinsForThisSet": 20,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": false
+          },
+          {
+            "index": 4,
+            "label": "tier_jackpot",
+            "selectionProbability": 0.02,
+            "meanPayout": 30,
+            "variancePayout": 5000,
+            "contributionToRtp": 0.23300970873786406,
+            "oneInNSpinsForThisSet": 50,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 2.575,
+        "secondMomentPayoutPerSpin": 176.6375,
+        "variancePayoutPerSpin": 170.00687499999998,
+        "stdDevPayoutPerSpin": 13.038668451954747,
+        "withinSetVariance": 150,
+        "betweenSetVariance": 20.006874999999997,
+        "withinSetVarianceShare": 0.8823172592284871,
+        "reshapeProbability": 0.30000000000000004,
+        "oneInNSpinsAnyReshape": 3.333333333333333,
+        "bestReelSetIndex": 4,
+        "commercialUpliftVsBaseOnly": 2.575,
+        "bestReelSetUpliftIfReshape": 30,
+        "oneInNSpinsBestReelSet": 50
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 2.5981879511105075,
+        "stdDevPayoutPerSpin": 12.933784870136224,
+        "observedReelSetFreqs": [
+          0.7004,
+          0.14973,
+          0.08064,
+          0.04957,
+          0.01966
+        ],
+        "observedReshapeRate": 0.2996,
+        "meanPayoutGivenReshape": 6.365991563984879,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.008924662706020327,
+        "reshape_abs": 0.00040000000000006697,
+        "max_set_prob_abs": 0.0006400000000000017
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "D_high_freq_reshape_low_jackpot",
+      "description": "High-frequency reshape (30%) sa modest reshape uplift — bonus-heavy gameplay.",
+      "cfg": {
+        "reelSets": [
+          {
+            "label": "base",
+            "selectionProbability": 0.7,
+            "meanPayout": 0.85,
+            "variancePayout": 15
+          },
+          {
+            "label": "reshape_med",
+            "selectionProbability": 0.3,
+            "meanPayout": 1.8,
+            "variancePayout": 30
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 2,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base",
+            "selectionProbability": 0.7,
+            "meanPayout": 0.85,
+            "variancePayout": 15,
+            "contributionToRtp": 0.5242290748898678,
+            "oneInNSpinsForThisSet": 1.4285714285714286,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "reshape_med",
+            "selectionProbability": 0.3,
+            "meanPayout": 1.8,
+            "variancePayout": 30,
+            "contributionToRtp": 0.4757709251101322,
+            "oneInNSpinsForThisSet": 3.3333333333333335,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 1.135,
+        "secondMomentPayoutPerSpin": 20.97775,
+        "variancePayoutPerSpin": 19.689525,
+        "stdDevPayoutPerSpin": 4.437288023106005,
+        "withinSetVariance": 19.5,
+        "betweenSetVariance": 0.18952499999999994,
+        "withinSetVarianceShare": 0.9903743234029262,
+        "reshapeProbability": 0.30000000000000004,
+        "oneInNSpinsAnyReshape": 3.333333333333333,
+        "bestReelSetIndex": 1,
+        "commercialUpliftVsBaseOnly": 1.335294117647059,
+        "bestReelSetUpliftIfReshape": 2.1176470588235294,
+        "oneInNSpinsBestReelSet": 3.3333333333333335
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 1.1219923377916319,
+        "stdDevPayoutPerSpin": 4.4418127152563995,
+        "observedReelSetFreqs": [
+          0.7004,
+          0.2996
+        ],
+        "observedReshapeRate": 0.2996,
+        "meanPayoutGivenReshape": 1.7965362058290169,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.011460495337769279,
+        "reshape_abs": 0.00040000000000006697,
+        "max_set_prob_abs": 0.00040000000000006697
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "E_corner_p_reshape_zero_only_base",
+      "description": "Corner: p_reshape = 0 (only base, p_0 = 1) — degenerate single-set baseline.",
+      "cfg": {
+        "reelSets": [
+          {
+            "selectionProbability": 1,
+            "meanPayout": 1,
+            "variancePayout": 8
+          },
+          {
+            "selectionProbability": 0,
+            "meanPayout": 10,
+            "variancePayout": 100
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 2,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base",
+            "selectionProbability": 1,
+            "meanPayout": 1,
+            "variancePayout": 8,
+            "contributionToRtp": 1,
+            "oneInNSpinsForThisSet": 1,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "reshape_1",
+            "selectionProbability": 0,
+            "meanPayout": 10,
+            "variancePayout": 100,
+            "contributionToRtp": 0,
+            "oneInNSpinsForThisSet": null,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 1,
+        "secondMomentPayoutPerSpin": 9,
+        "variancePayoutPerSpin": 8,
+        "stdDevPayoutPerSpin": 2.8284271247461903,
+        "withinSetVariance": 8,
+        "betweenSetVariance": 0,
+        "withinSetVarianceShare": 1,
+        "reshapeProbability": 0,
+        "oneInNSpinsAnyReshape": null,
+        "bestReelSetIndex": 1,
+        "commercialUpliftVsBaseOnly": 1,
+        "bestReelSetUpliftIfReshape": 10,
+        "oneInNSpinsBestReelSet": null
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 0.9910000336476846,
+        "stdDevPayoutPerSpin": 2.8312044090226594,
+        "observedReelSetFreqs": [
+          1,
+          0
+        ],
+        "observedReshapeRate": 0,
+        "meanPayoutGivenReshape": 0,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.00899996635231537,
+        "reshape_abs": 0,
+        "max_set_prob_abs": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_corner_rare_jackpot_reshape_1_in_500",
+      "description": "Corner: rare jackpot reshape (1 in 500 spins) — heavy-tail audit boundary.",
+      "cfg": {
+        "reelSets": [
+          {
+            "label": "base",
+            "selectionProbability": 0.998,
+            "meanPayout": 0.95,
+            "variancePayout": 12
+          },
+          {
+            "label": "jackpot",
+            "selectionProbability": 0.002,
+            "meanPayout": 100,
+            "variancePayout": 5000
+          }
+        ]
+      },
+      "closed_form": {
+        "numReelSets": 2,
+        "perReelSet": [
+          {
+            "index": 0,
+            "label": "base",
+            "selectionProbability": 0.998,
+            "meanPayout": 0.95,
+            "variancePayout": 12,
+            "contributionToRtp": 0.8257991464158174,
+            "oneInNSpinsForThisSet": 1.002004008016032,
+            "rankByMeanPayout": 2,
+            "isBestReelSet": false,
+            "isBaseReelSet": true
+          },
+          {
+            "index": 1,
+            "label": "jackpot",
+            "selectionProbability": 0.002,
+            "meanPayout": 100,
+            "variancePayout": 5000,
+            "contributionToRtp": 0.17420085358418258,
+            "oneInNSpinsForThisSet": 500,
+            "rankByMeanPayout": 1,
+            "isBestReelSet": true,
+            "isBaseReelSet": false
+          }
+        ],
+        "expectedPayoutPerSpin": 1.1481,
+        "secondMomentPayoutPerSpin": 42.876695,
+        "variancePayoutPerSpin": 41.55856139,
+        "stdDevPayoutPerSpin": 6.446593006387173,
+        "withinSetVariance": 21.976,
+        "betweenSetVariance": 19.58256139,
+        "withinSetVarianceShare": 0.5287959752448976,
+        "reshapeProbability": 0.0020000000000000018,
+        "oneInNSpinsAnyReshape": 499.99999999999955,
+        "bestReelSetIndex": 1,
+        "commercialUpliftVsBaseOnly": 1.2085263157894737,
+        "bestReelSetUpliftIfReshape": 105.26315789473685,
+        "oneInNSpinsBestReelSet": 500
+      },
+      "monte_carlo": {
+        "meanPayoutPerSpin": 1.136795876884856,
+        "stdDevPayoutPerSpin": 6.507492651903685,
+        "observedReelSetFreqs": [
+          0.99815,
+          0.00185
+        ],
+        "observedReshapeRate": 0.00185,
+        "meanPayoutGivenReshape": 108.28481149533056,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.009845939478393729,
+        "reshape_abs": 0.0001500000000000017,
+        "max_set_prob_abs": 0.00014999999999999996
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}

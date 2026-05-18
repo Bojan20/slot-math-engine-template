@@ -102,6 +102,7 @@
     "race-competitive-pick-winner-acceptance": "npm run build && node scripts/race-competitive-pick-winner-acceptance.mjs",
     "multi-pot-branched-hold-spin-sub-feature-acceptance": "npm run build && node scripts/multi-pot-branched-hold-spin-sub-feature-acceptance.mjs",
     "arcade-shooter-survival-levels-acceptance": "npm run build && node scripts/arcade-shooter-survival-levels-acceptance.mjs",
+    "mid-spin-reel-reshape-mixture-acceptance": "npm run build && node scripts/mid-spin-reel-reshape-mixture-acceptance.mjs",
     "avalanche-reactor-wave-aggregator-acceptance": "npm run build && node scripts/avalanche-reactor-wave-aggregator-acceptance.mjs",
     "sticky-multiplier-fs-trail-acceptance": "npm run build && node scripts/sticky-multiplier-fs-trail-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",

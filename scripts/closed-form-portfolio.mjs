@@ -1592,6 +1592,26 @@ async function main() {
     showcase.push({ wave: 194, solver: 'Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16)', metric: 'E[Y/run]', cf: cf.expectedPayoutPerRun, mc: mc.meanPayoutPerRun, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W195: Mid-Spin Reel-Reshape Mixture (L&W M13 — Wizard of Oz Glinda) ──
+  {
+    const { analyzeMidSpinReelReshapeMixture, simulateMidSpinReelReshapeMixture } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'midSpinReelReshapeMixture.js'));
+    const t0 = Date.now();
+    const cfg = {
+      reelSets: [
+        { label: 'base_oz',                selectionProbability: 0.88, meanPayout: 0.92, variancePayout: 20 },
+        { label: 'glinda_bonus_reels',     selectionProbability: 0.08, meanPayout: 4.00, variancePayout: 120 },
+        { label: 'glinda_emerald_jackpot', selectionProbability: 0.04, meanPayout: 12.0, variancePayout: 500 },
+      ],
+    };
+    const cf = analyzeMidSpinReelReshapeMixture(cfg);
+    const mc = simulateMidSpinReelReshapeMixture(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
+      Math.max(mc.meanPayoutPerSpin, 1e-9);
+    const ok = rel < 0.06;
+    showcase.push({ wave: 195, solver: 'Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);
