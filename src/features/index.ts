@@ -213,3 +213,6 @@ export * from './dynamicGridExpansionHoldSpin.js';
 
 // W152 Wave 183: Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles: original / More / Even More / Lots of / Xtra / Hard Hat Edition / Grand / Money Mansion)
 export * from './multiStateFrameUpgradeMarkov.js';
+
+// W152 Wave 184: Colossal Reels Wild-Transfer Coupled Two-Grid Aggregator (65. solver, L&W M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles)
+export * from './colossalReelsWildTransfer.js';

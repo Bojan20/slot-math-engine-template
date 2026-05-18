@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T00:03:50.805Z`
+Generated: `2026-05-18T00:14:39.498Z`
 
 ## Headline
 
-**64/64 solvers PASS** in single end-to-end runner.
+**65/65 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -77,6 +77,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 181 | Reel-Bound Mystery Progressive (L&W Quick Hit M5) | E[RTP/spin] | 3.10500 | 3.19990 | ✅ |
 | 182 | Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3) | E[bags] | 22.29839 | 22.33830 | ✅ |
 | 183 | Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2) | E[total payout] | 1666.94888 | 1669.12333 | ✅ |
+| 184 | Colossal Reels Wild-Transfer (L&W Spartacus M7) | E[K_col] | 0.44200 | 0.43822 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

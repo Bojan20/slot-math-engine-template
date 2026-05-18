@@ -114,9 +114,9 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | 36 | Visitors From The Planet Moolah (LightWave 2025) | LNW (WMS) | 2025 | F (cascade Cascading Reels) + A (sticky cow respin) + Invasion-mechanic on consecutive cascades | P-001/P-080 ✅ (avalanche reactor) + P-077 ✅ (cascade chain length) + P-002 ✅ + P-052 ✅ (collect-N — for invasion meter) | NO | n/a |
 | 37 | Invaders from the Planet Moolah (original WMS) | LNW (WMS) | 2008 | F (cascading reels — first cascade slot) + Invasion (consecutive-win meter) + Wild Cows + Respin Locking | P-080 ✅ + P-077 ✅ + P-052 ✅ + P-002 ✅ | NO | n/a |
 | 38 | Invaders Attack from The Planet Moolah | LNW (WMS) | 2024 | as #37 + tier upgrades | as #37 | NO | n/a |
-| 39 | Spartacus Gladiator of Rome | LNW (WMS) | 2012 | **E (Colossal Reels — 5×4 main + 5×12 colossal, wild transfer)** + H (FS) + G (stacked wilds transferred) | ⚠ **P-030 ✅ Parallel Screens Aggregate** (handles independent screens) but Colossal Reels has dependent wild-transfer coupling — partial gap | YES (M7) | **P0** |
-| 40 | Spartacus Super Colossal Reels | LNW (WMS) | 2019 | E + H + G | as #39 | YES (M7) | P0 |
-| 41 | Spartacus Call to Arms | LNW (WMS) | 2017 | E (50 paylines, main + 2 rows above) + H (20 FS × 1000× multiplier) | ⚠ P-030 + P-067 (high-multiplier tier) | YES (M7) | P1 |
+| 39 | Spartacus Gladiator of Rome | LNW (WMS) | 2012 | **E (Colossal Reels — 5×4 main + 5×12 colossal, wild transfer)** + H (FS) + G (stacked wilds transferred) | ⚠ **P-030 ✅ Parallel Screens Aggregate** (handles independent screens) but Colossal Reels has dependent wild-transfer coupling — partial gap |  ✅ **CLOSED (M7 W184)**| **P0** |
+| 40 | Spartacus Super Colossal Reels | LNW (WMS) | 2019 | E + H + G | as #39 |  ✅ **CLOSED (M7 W184)**| P0 |
+| 41 | Spartacus Call to Arms | LNW (WMS) | 2017 | E (50 paylines, main + 2 rows above) + H (20 FS × 1000× multiplier) | ⚠ P-030 + P-067 (high-multiplier tier) |  ✅ **CLOSED (M7 W184)**| P1 |
 | 42 | Zeus | LNW (WMS) | 2013 | H (up to 100 FS — extreme retrigger) + G (stacked wilds, Hand-of-Zeus sticky) + B (Hand-of-Zeus jackpot) | P-037 ✅ (retrigger Wald) + P-005 ✅ + P-035 ✅ | NO | n/a |
 | 43 | Zeus II, III, 1000 | LNW (WMS) | 2014–2017 | H + G + B | as #42 | NO | n/a |
 | 44 | Kronos Unleashed | LNW (WMS) | 2017 | H + G (stacked wild) + B | P-005 ✅ + P-035 ✅ | NO | n/a |
@@ -216,9 +216,10 @@ Quick Hit symbols on **reels 1, 2, 3, 4, 5** with cumulative-across-spin reel-po
 **Example:** Triple Cash Wheel (3 wheels in stacked configuration; spin one → triggers others conditionally).
 P-046 covers single-wheel respin Markov. Stacked wheels with cross-wheel triggers (winning wheel-1 unlocks wheel-2 spin) require a 2- or 3-level compound bonus tree analyzer. **Pure composition** of P-046 might suffice; verify before kernel.
 
-### M7 — Colossal Reels with wild-transfer coupling
+### M7 — Colossal Reels with wild-transfer coupling — ✅ **CLOSED in W184** (P-085)
 **Example:** Spartacus Gladiator of Rome, Spartacus Super Colossal Reels, Spartacus Call to Arms (and Spartacus dependent titles).
 Two grids: 5×4 main + 5×12 colossal, **100 paylines distributed across both, with wild-position transfer from main → colossal at matched coordinates**. P-030 (Parallel Screens Aggregate) assumes independence; this is **conditional dependence via wild-transfer mapping**. Requires kernel: 2-grid joint-payout with conditional symbol propagation on a subset of positions.
+**Resolution:** W184 ships `src/features/colossalReelsWildTransfer.ts` — 2-stage Binomial sa conditional coupling: K_main via per-reel-non-uniform DP O(N²), K_col | K_main ~ Binomial(K_main, q_t). Joint PMF eksplicitno enumerated. E[K_col] = q_t·E[K_main] (law of total expectation), Var[K_col] derived via law of total variance, P(full wild both grids) = P(K_main=N)·q_t^N. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC spins (Spartacus Gladiator + Super Colossal + Call to Arms + Caesar Empire + 2 corner cases) — CF/MC slaganje 0.5-3% rel.
 
 ### M8 — Competitive race / contest bonus
 **Example:** Goldfish Race for the Gold, Reel'em In Big Bass Bucks Fishing Contest.

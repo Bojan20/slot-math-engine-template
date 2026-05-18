@@ -1343,6 +1343,26 @@ async function main() {
     showcase.push({ wave: 183, solver: "Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2)", metric: 'E[total payout]', cf: cf.expectedTotalPayoutPerFeature, mc: mc.meanTotalPayoutPerFeature, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W184: Colossal Reels Wild-Transfer (L&W M7 — Spartacus family) ──
+  {
+    const { analyzeColossalReelsWildTransfer, simulateColossalReelsWildTransfer } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'colossalReelsWildTransfer.js'));
+    const t0 = Date.now();
+    const cfg = {
+      numReels: 5,
+      perReelMainWildProb: [0.10, 0.10, 0.12, 0.10, 0.10],
+      probTransferToColossal: 0.85,
+      payoutMainGivenWildReels: [0, 0, 0.5, 5, 50, 500],
+      payoutColossalGivenWildReels: [0, 0, 1, 10, 100, 1000],
+    };
+    const cf = analyzeColossalReelsWildTransfer(cfg);
+    const mc = simulateColossalReelsWildTransfer(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedWildReelsColossal - mc.meanWildReelsColossal) /
+      Math.max(mc.meanWildReelsColossal, 1e-9);
+    const ok = rel < 0.05; // 2-stage Binomial exact — tight
+    showcase.push({ wave: 184, solver: 'Colossal Reels Wild-Transfer (L&W Spartacus M7)', metric: 'E[K_col]', cf: cf.expectedWildReelsColossal, mc: mc.meanWildReelsColossal, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

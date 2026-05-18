@@ -1,0 +1,615 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "COLOSSAL_REELS_WILD_TRANSFER",
+  "generated_utc": "2026-05-18T00:11:21.115Z",
+  "spins_per_config": 30000,
+  "seed": 3405644164,
+  "tolerances": {
+    "k_main_rel": 0.03,
+    "k_col_rel": 0.1,
+    "max_pmf_abs": 0.025,
+    "both_prob_abs": 0.03,
+    "payout_rel": 0.3
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_spartacus_gladiator_of_rome_5reel_high_transfer",
+      "description": "WMS Spartacus Gladiator of Rome (2012, defining title) — 5×4 main + 5×12 colossal, q_t=0.85.",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.1,
+          0.1,
+          0.12,
+          0.1,
+          0.1
+        ],
+        "probTransferToColossal": 0.85,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          0.5,
+          5,
+          50,
+          500
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          1,
+          10,
+          100,
+          1000
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.5773680000000001,
+          0.3353400000000001,
+          0.07776000000000002,
+          0.009000000000000001,
+          0.0005200000000000001,
+          0.000012000000000000002
+        ],
+        "pmfWildReelsColossal": [
+          0.6294492391612502,
+          0.30539016781875017,
+          0.059158737112500026,
+          0.0057203901375000015,
+          0.0002761413062500001,
+          0.000005324463750000001
+        ],
+        "expectedWildReelsMain": 0.52,
+        "varianceWildReelsMain": 0.46560000000000007,
+        "expectedWildReelsColossal": 0.442,
+        "varianceWildReelsColossal": 0.40269600000000005,
+        "expectedTotalPayoutPerSpin": 0.26518123286250006,
+        "probBothGridsAtLeastOneWild": 0.37055076083875027,
+        "probFullWildBothGrids": 0.000005324463750000001,
+        "oneInNSpinsFullWildBothGrids": 187812.3407263313,
+        "commercialUpliftVsIndependentSplit": 2.2884124340913017
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.5176666666666667,
+        "meanWildReelsColossal": 0.43983333333333335,
+        "meanTotalPayoutPerSpin": 0.2517333333333333,
+        "observedPmfWildReelsMain": [
+          0.5793666666666667,
+          0.3343,
+          0.07613333333333333,
+          0.0097,
+          0.0005,
+          0
+        ],
+        "observedPmfWildReelsColossal": [
+          0.6327,
+          0.3015333333333333,
+          0.059166666666666666,
+          0.0064333333333333334,
+          0.00016666666666666666,
+          0
+        ],
+        "observedProbBothGridsAtLeastOne": 0.3673,
+        "observedProbFullWildBothGrids": 0
+      },
+      "checks": {
+        "k_main_rel": 0.00448717948717942,
+        "k_col_rel": 0.004901960784313688,
+        "max_pmf_abs": 0.001998666666666593,
+        "both_prob_abs": 0.003250760838750255,
+        "payout_rel": 0.05071210878689769
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "B_super_colossal_reels_full_transfer",
+      "description": "Spartacus Super Colossal Reels (2019) — full transfer (q_t=1.0), higher wild density.",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.15,
+          0.15,
+          0.18,
+          0.15,
+          0.15
+        ],
+        "probTransferToColossal": 1,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          1,
+          10,
+          100,
+          1000
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          2,
+          20,
+          200,
+          2000
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.428045125,
+          0.396110625,
+          0.14630624999999997,
+          0.02696624999999999,
+          0.0024806249999999993,
+          0.00009112499999999999
+        ],
+        "pmfWildReelsColossal": [
+          0.428045125,
+          0.396110625,
+          0.14630624999999997,
+          0.02696624999999999,
+          0.0024806249999999993,
+          0.00009112499999999999
+        ],
+        "expectedWildReelsMain": 0.7799999999999998,
+        "varianceWildReelsMain": 0.6575999999999999,
+        "expectedWildReelsColossal": 0.7799999999999998,
+        "varianceWildReelsColossal": 0.6575999999999999,
+        "expectedTotalPayoutPerSpin": 2.2654687499999997,
+        "probBothGridsAtLeastOneWild": 0.571954875,
+        "probFullWildBothGrids": 0.00009112499999999999,
+        "oneInNSpinsFullWildBothGrids": 10973.936899862827,
+        "commercialUpliftVsIndependentSplit": 3
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.7780333333333334,
+        "meanWildReelsColossal": 0.7780333333333334,
+        "meanTotalPayoutPerSpin": 2.06,
+        "observedPmfWildReelsMain": [
+          0.42866666666666664,
+          0.39526666666666666,
+          0.14766666666666667,
+          0.026233333333333334,
+          0.0021,
+          0.00006666666666666667
+        ],
+        "observedPmfWildReelsColossal": [
+          0.42866666666666664,
+          0.39526666666666666,
+          0.14766666666666667,
+          0.026233333333333334,
+          0.0021,
+          0.00006666666666666667
+        ],
+        "observedProbBothGridsAtLeastOne": 0.5713333333333334,
+        "observedProbFullWildBothGrids": 0.00006666666666666667
+      },
+      "checks": {
+        "k_main_rel": 0.002521367521367244,
+        "k_col_rel": 0.002521367521367244,
+        "max_pmf_abs": 0.0013604166666666972,
+        "both_prob_abs": 0.000621541666666614,
+        "payout_rel": 0.0906959100627628
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "C_call_to_arms_50_payline_low_transfer",
+      "description": "Spartacus Call to Arms (2017) — 50 paylines, lower transfer q_t=0.70.",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.08,
+          0.08,
+          0.1,
+          0.08,
+          0.08
+        ],
+        "probTransferToColossal": 0.7,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          0.3,
+          3,
+          30,
+          300
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          0.5,
+          5,
+          50,
+          1500
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.6447536640000001,
+          0.29590144000000007,
+          0.05416960000000001,
+          0.004945920000000001,
+          0.00022528000000000004,
+          0.000004096
+        ],
+        "pmfWildReelsColossal": [
+          0.7385347345612802,
+          0.23083416616960006,
+          0.028784405708800004,
+          0.0017904402432000004,
+          0.0000555649024,
+          6.884147200000001e-7
+        ],
+        "expectedWildReelsMain": 0.42000000000000004,
+        "varianceWildReelsMain": 0.3844000000000001,
+        "expectedWildReelsColossal": 0.294,
+        "varianceWildReelsColossal": 0.276556,
+        "expectedTotalPayoutPerSpin": 0.06623111127040002,
+        "probBothGridsAtLeastOneWild": 0.2614652654387201,
+        "probFullWildBothGrids": 6.884147200000001e-7,
+        "oneInNSpinsFullWildBothGrids": 1452612.7506396142,
+        "commercialUpliftVsIndependentSplit": 1.6949376205450732
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.4181666666666667,
+        "meanWildReelsColossal": 0.2924,
+        "meanTotalPayoutPerSpin": 0.06763999999999838,
+        "observedPmfWildReelsMain": [
+          0.6458,
+          0.2959,
+          0.0528,
+          0.005333333333333333,
+          0.00016666666666666666,
+          0
+        ],
+        "observedPmfWildReelsColossal": [
+          0.7408333333333333,
+          0.22846666666666668,
+          0.028266666666666666,
+          0.0023333333333333335,
+          0.0001,
+          0
+        ],
+        "observedProbBothGridsAtLeastOne": 0.25916666666666666,
+        "observedProbFullWildBothGrids": 0
+      },
+      "checks": {
+        "k_main_rel": 0.004365079365079413,
+        "k_col_rel": 0.005442176870748267,
+        "max_pmf_abs": 0.0013696000000000125,
+        "both_prob_abs": 0.0022985987720534617,
+        "payout_rel": 0.020829224269639245
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_wms_landbase_caesar_empire_uniform_high_density",
+      "description": "WMS Caesar's Empire-class dependent — uniform 20% wild density, q_t=0.80.",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "probTransferToColossal": 0.8,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          0.5,
+          4,
+          40,
+          400
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          1,
+          8,
+          80,
+          800
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.32768000000000014,
+          0.40960000000000024,
+          0.2048000000000001,
+          0.05120000000000002,
+          0.006400000000000004,
+          0.00032000000000000013
+        ],
+        "pmfWildReelsColossal": [
+          0.41821194240000015,
+          0.39829708800000024,
+          0.15173222400000005,
+          0.028901376000000024,
+          0.002752512000000002,
+          0.00010485760000000007
+        ],
+        "expectedWildReelsMain": 1.0000000000000004,
+        "varianceWildReelsMain": 0.8,
+        "expectedWildReelsColossal": 0.8000000000000004,
+        "varianceWildReelsColossal": 0.6720000000000002,
+        "expectedTotalPayoutPerSpin": 1.3782302720000008,
+        "probBothGridsAtLeastOneWild": 0.5817880576000004,
+        "probFullWildBothGrids": 0.00010485760000000007,
+        "oneInNSpinsFullWildBothGrids": 9536.743164062493,
+        "commercialUpliftVsIndependentSplit": 1.9939674074074072
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.9990666666666667,
+        "meanWildReelsColossal": 0.7991666666666667,
+        "meanTotalPayoutPerSpin": 1.2708,
+        "observedPmfWildReelsMain": [
+          0.3257,
+          0.4119,
+          0.20686666666666667,
+          0.049,
+          0.006233333333333333,
+          0.0003
+        ],
+        "observedPmfWildReelsColossal": [
+          0.4149,
+          0.4035666666666667,
+          0.15163333333333334,
+          0.0273,
+          0.0025666666666666667,
+          0.000033333333333333335
+        ],
+        "observedProbBothGridsAtLeastOne": 0.5851,
+        "observedProbFullWildBothGrids": 0.000033333333333333335
+      },
+      "checks": {
+        "k_main_rel": 0.0009333333333337852,
+        "k_col_rel": 0.0010416666666671066,
+        "max_pmf_abs": 0.0022999999999997467,
+        "both_prob_abs": 0.0033119423999995456,
+        "payout_rel": 0.07794798458758626
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "E_corner_low_transfer_independent_split",
+      "description": "Corner: q_t=0.05 near-independent grids (test independence-baseline degeneracy).",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12
+        ],
+        "probTransferToColossal": 0.05,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          0.5,
+          5,
+          50,
+          500
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          1,
+          10,
+          100,
+          1000
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.5277319168,
+          0.35981721600000005,
+          0.09813196799999999,
+          0.013381631999999997,
+          0.0009123839999999998,
+          0.0000248832
+        ],
+        "pmfWildReelsColossal": [
+          0.970357846472224,
+          0.029286454118880003,
+          0.00035355880224,
+          0.00000213415776,
+          6.441120000000001e-9,
+          7.776000000000002e-12
+        ],
+        "expectedWildReelsMain": 0.6,
+        "varianceWildReelsMain": 0.528,
+        "expectedWildReelsColossal": 0.03,
+        "varianceWildReelsColossal": 0.02982,
+        "expectedTotalPayoutPerSpin": 0.17441049626783997,
+        "probBothGridsAtLeastOneWild": 0.029642153527776,
+        "probFullWildBothGrids": 7.776000000000002e-12,
+        "oneInNSpinsFullWildBothGrids": 128600823045.26746,
+        "commercialUpliftVsIndependentSplit": 1.002157912998438
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.597,
+        "meanWildReelsColossal": 0.028233333333333333,
+        "meanTotalPayoutPerSpin": 0.16438333333333333,
+        "observedPmfWildReelsMain": [
+          0.5288666666666667,
+          0.35936666666666667,
+          0.09843333333333333,
+          0.0126,
+          0.0007,
+          0.000033333333333333335
+        ],
+        "observedPmfWildReelsColossal": [
+          0.9722666666666666,
+          0.02723333333333333,
+          0.0005,
+          0,
+          0,
+          0
+        ],
+        "observedProbBothGridsAtLeastOne": 0.027733333333333332,
+        "observedProbFullWildBothGrids": 0
+      },
+      "checks": {
+        "k_main_rel": 0.0050000000000000044,
+        "k_col_rel": 0.05888888888888888,
+        "max_pmf_abs": 0.0011347498666667288,
+        "both_prob_abs": 0.0019088201944426689,
+        "payout_rel": 0.05749174017089005
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_joint_bonus_full_wild_jackpot",
+      "description": "Corner: joint-bonus matrix sa large bonus za full-wild both grids (regulator disclosure case).",
+      "cfg": {
+        "numReels": 5,
+        "perReelMainWildProb": [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        "probTransferToColossal": 0.9,
+        "payoutMainGivenWildReels": [
+          0,
+          0,
+          0.5,
+          5,
+          50,
+          500
+        ],
+        "payoutColossalGivenWildReels": [
+          0,
+          0,
+          1,
+          10,
+          100,
+          1000
+        ],
+        "jointBonusPayoutMatrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            10000
+          ]
+        ]
+      },
+      "closed_form": {
+        "pmfWildReelsMain": [
+          0.5904900000000002,
+          0.32805000000000006,
+          0.07290000000000002,
+          0.008100000000000001,
+          0.0004500000000000001,
+          0.000010000000000000004
+        ],
+        "pmfWildReelsColossal": [
+          0.6240321451,
+          0.3085873245000001,
+          0.061039251,
+          0.006036849,
+          0.0002985255,
+          0.000005904900000000002
+        ],
+        "expectedWildReelsMain": 0.5000000000000001,
+        "varianceWildReelsMain": 0.44999999999999996,
+        "expectedWildReelsColossal": 0.4500000000000001,
+        "varianceWildReelsColossal": 0.4095,
+        "expectedTotalPayoutPerSpin": 0.32066419100000004,
+        "probBothGridsAtLeastOneWild": 0.3759678549,
+        "probFullWildBothGrids": 0.000005904900000000002,
+        "oneInNSpinsFullWildBothGrids": 169350.87808430282,
+        "commercialUpliftVsIndependentSplit": 3.0700257635232164
+      },
+      "monte_carlo": {
+        "spins": 30000,
+        "meanWildReelsMain": 0.49596666666666667,
+        "meanWildReelsColossal": 0.4461,
+        "meanTotalPayoutPerSpin": 0.24921666666666667,
+        "observedPmfWildReelsMain": [
+          0.5933666666666667,
+          0.3263666666666667,
+          0.07156666666666667,
+          0.008333333333333333,
+          0.00036666666666666667,
+          0
+        ],
+        "observedPmfWildReelsColossal": [
+          0.6275666666666667,
+          0.3057,
+          0.0601,
+          0.006333333333333333,
+          0.0003,
+          0
+        ],
+        "observedProbBothGridsAtLeastOne": 0.37243333333333334,
+        "observedProbFullWildBothGrids": 0
+      },
+      "checks": {
+        "k_main_rel": 0.008066666666666887,
+        "k_col_rel": 0.008666666666666944,
+        "max_pmf_abs": 0.0028766666666665275,
+        "both_prob_abs": 0.0035345215666666707,
+        "payout_rel": 0.22281104762749565
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}

@@ -252,3 +252,5 @@ jobs:
         run: npm run dynamic-grid-expansion-hold-spin-acceptance
       - name: Multi-State Frame Upgrade Markov acceptance (6/6 configs × 5K features, Wave 183, 64. solver L&W M2 GAP CLOSURE Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion — per-cell K-state Markov)
         run: npm run multi-state-frame-upgrade-markov-acceptance
+      - name: Colossal Reels Wild-Transfer acceptance (6/6 configs × 30K spins, Wave 184, 65. solver L&W M7 GAP CLOSURE Spartacus family + 50+ WMS land-based titles — 2-stage Binomial conditional coupling)
+        run: npm run colossal-reels-wild-transfer-acceptance
