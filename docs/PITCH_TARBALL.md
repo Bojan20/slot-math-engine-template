@@ -130,6 +130,66 @@ The same applies to the M-gap coverage matrix label (engine documents that
 L&W M1..M16 are closed; the matrix is informational and survives re-branding
 since the underlying mechanic kernels are vendor-agnostic).
 
+### Per-operator manifest mode (W213)
+
+Pass `--operator=<id>` with one of the slugs from
+`scripts/pitch/operators/*.json` to apply context-aware brand swap across
+every text/markdown/HTML payload in the bundle (README, CONTACT, INSTALL,
+deck, dossier, coverage matrix, etc.). Filenames pick up an operator prefix:
+
+```sh
+npm run pitch:tarball -- --operator=aristocrat
+# → dist/pitch/slot-math-engine-pitch-aristocrat-v20260518-<sha>.tar.gz
+```
+
+The MANIFEST.json gains an `operator` block:
+
+```json
+"operator": {
+  "operatorId": "aristocrat",
+  "displayName": "Aristocrat",
+  "legalName": "Aristocrat Technologies, Inc.",
+  "tier": "Tier-1",
+  "hqLocation": "Sydney, Australia",
+  "tickerSymbol": "ALL.AX"
+},
+"intendedAudience": "Chief Mathematics Officer",
+"pricingTier": "Tier-1 Enterprise",
+"expiresAt": "2026-08-16T…"
+```
+
+Build all 7 default operators in one shot:
+
+```sh
+npm run pitch:build-all-operators
+# 7 tarballs in <1s on a 2024 MacBook (target: <2 min)
+```
+
+See `docs/OPERATOR_BRANDING.md` for the manifest schema and how to add a
+new operator.
+
+## Production signing chain (W213)
+
+Beyond the W212 single-key `--sign` flag, the engine ships a three-level
+Ed25519 signing tree (root → intermediate → leaf) with an RFC-3161 timestamp
+stub. See `docs/PRODUCTION_SIGNING.md` for the full chain-of-custody
+walkthrough, recovery procedures, and tamper-detection guarantees.
+
+```sh
+npm run pitch:gen-keys                       # one-off chain generation
+npm run pitch:verify-prod-sign -- env.json   # end-to-end verify
+```
+
+## CDN distribution prep (W213)
+
+`scripts/pitch/cdn-distribute.mjs` simulates upload to a private CDN
+(Cloudflare R2 / S3 layout). Outputs per-operator subdirectories and a
+single `dist/cdn/index.json` directory file with TTL-signed URLs.
+
+```sh
+npm run pitch:cdn-prep -- --src-dir=dist/pitch --out=dist/cdn
+```
+
 ## Determinism
 
 For a fixed commit, fixed `--bundle-version`, fixed `--operator`, and an

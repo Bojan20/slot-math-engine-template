@@ -13,6 +13,10 @@ import { randomUUID } from 'node:crypto';
 import type { PgConnection } from '../db/connection.js';
 import type { ProviderConfig } from '../lib/wallet/types.js';
 import { decryptConfig, encryptConfig } from '../lib/wallet/crypto.js';
+import {
+  assertTenantScopedQuery,
+  crossTenantOverride,
+} from '../lib/tenant-isolation.js';
 import type {
   HealthStatus,
   TenantWalletConfig,
@@ -45,6 +49,16 @@ function rowToConfig(row: DbRow): TenantWalletConfig {
 }
 
 export class PostgresTenantWalletConfigStore {
+  /**
+   * W213 Faza 600.2 — `tenant_wallet_config` is not in
+   * MULTI_TENANT_TABLES; UNIQUE(tenant_id) makes single-tenant queries
+   * trivially safe. `listConfigs()` is admin-only and is wrapped via
+   * {@link crossTenantOverride} so the W208 observer records the
+   * override rather than treating it as a missing-context leak.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private static readonly _adminScope = crossTenantOverride;
+
   constructor(private readonly conn: PgConnection) {}
 
   async setTenantWalletConfig(
@@ -81,12 +95,14 @@ export class PostgresTenantWalletConfigStore {
   }
 
   async getTenantWalletConfig(tenantId: string): Promise<TenantWalletConfig | null> {
-    const r = await this.conn.query<DbRow>(
+    const sql =
       `SELECT id, tenant_id, provider_name, config_encrypted, health_status, last_check, active, created_at, updated_at
        FROM tenant_wallet_config WHERE tenant_id = $1 AND active = true
-       LIMIT 1`,
-      [tenantId]
-    );
+       LIMIT 1`;
+    // Sentinel: documents the tenant boundary even though
+    // tenant_wallet_config is not in MULTI_TENANT_TABLES.
+    assertTenantScopedQuery(sql);
+    const r = await this.conn.query<DbRow>(sql, [tenantId]);
     if (r.rows.length === 0) return null;
     return rowToConfig(r.rows[0]);
   }

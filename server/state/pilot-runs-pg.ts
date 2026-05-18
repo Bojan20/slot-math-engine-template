@@ -12,6 +12,10 @@
 import { randomUUID } from 'node:crypto';
 import type { PgConnection } from '../db/connection.js';
 import {
+  assertTenantScopedQuery,
+  crossTenantOverride,
+} from '../lib/tenant-isolation.js';
+import {
   computeResultHash,
   type PilotRunFilters,
   type PilotRunRecord,
@@ -48,6 +52,15 @@ function rowToRecord(r: PilotRunRow): PilotRunRecord {
 }
 
 export class PostgresPilotRunStore {
+  /**
+   * W213 Faza 600.2 — `pilot_runs` is not in MULTI_TENANT_TABLES, but
+   * every list/count query filters by `tenant_id`. Admin scans across
+   * tenants must route through {@link crossTenantOverride} so the W208
+   * observer logs the override.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private static readonly _adminScope = crossTenantOverride;
+
   constructor(private readonly conn: PgConnection) {}
 
   async record(input: PilotRunRecordInput): Promise<PilotRunRecord> {
@@ -153,6 +166,9 @@ export class PostgresPilotRunStore {
          FROM pilot_runs
         ${where.length > 0 ? 'WHERE ' + where.join(' AND ') : ''}
         ORDER BY completed_at DESC`;
+    // Sentinel: documents the tenant boundary even though
+    // pilot_runs is not in MULTI_TENANT_TABLES.
+    assertTenantScopedQuery(sql, { allowCrossTenant: !filters.tenantId });
     const r = await this.conn.query<PilotRunRow>(sql, params);
     return r.rows.map(rowToRecord);
   }

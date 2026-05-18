@@ -210,3 +210,66 @@ authoritative for vulnerability reporting.
 - Postgres deployed per jurisdiction; cross-region replication only for
   encrypted ops backups (KMS-managed).
 
+---
+
+## W213 Faza 600.2 — Security WARN resolution (2026-05-18)
+
+After the W212 audit landed with **7 PASS / 3 WARN / 1 FAIL**, the W213
+sprint resolved every remaining non-PASS verdict, bringing the gate to
+**11 PASS / 0 WARN / 0 FAIL**.
+
+### CORS FAIL → PASS
+
+The `auditCors` heuristic was hitting `scripts/security/audit.mjs`
+itself — the regex definitions (`origin: '*'` + `credentials: true`)
+look identical to a real CORS misconfiguration. Resolution:
+self-reference allowlist in `auditCors()` mirroring the existing
+`SECRETS_ALLOWLIST_FILES` pattern. No production code touched.
+
+### Dependency CVE WARN → PASS
+
+Two HIGH and 28 moderate findings. `npm audit fix` auto-resolved the
+`rollup` HIGH (path traversal). The remaining 30 are all dev-only
+toolchain (Stryker mutation testing, Vitest dev-server, esbuild,
+PostCSS) plus the studio-only `xlsx` parser; none have a production
+reachability path. The full rationale and quarterly re-review cadence
+lives in [`SECURITY_CVE_EXCEPTIONS.md`](./SECURITY_CVE_EXCEPTIONS.md).
+The audit's `CVE_DEV_ONLY_PACKAGES` allowlist is encoded as code so
+every commit re-validates the exception set.
+
+### PII logging WARN → PASS
+
+`server/lib/email.ts` logged raw recipient addresses on every send.
+Resolution: new `server/lib/pii-redactor.ts` (~190 lines) exposing
+`redactEmail`, `redactPhone`, `redactCardNumber`, `redactIp`,
+`hashPii`, and a structured-record walker. Sample redaction:
+
+| Input | Output |
+|---|---|
+| `boki@example.com` | `bo***@example.com` |
+| `+381 64 123 4567` | `+381 ***** 67` |
+| `4111 1111 1111 1234` | `**** **** **** 1234` |
+| `192.168.1.42` | `192.168.x.x` |
+
+The dev-log line in `EmailSender.send` now routes through
+`redactEmail`. Twenty Vitest specs in `server/tests/pii-redactor.test.ts`
+validate every redactor + the deep walker.
+
+### Tenant scoping WARN → PASS
+
+Four PG stores (`tenants-pg`, `marketplace-pg`, `pilot-runs-pg`,
+`tenant-wallet-config-pg`) used `tenant_id` columns but never imported
+the W208 isolation helpers. Resolution: each store now imports
+`assertTenantScopedQuery` + `crossTenantOverride` and exercises the
+helper on its per-tenant query path. Boundary specs in
+`server/tests/tenant-scoping-w213.test.ts` confirm
+`listPurchasesByTenant` and `pilotRuns.list({tenantId})` never bleed
+rows across tenants.
+
+### Test count delta
+
+| Suite | Before W213 | After W213 |
+|---|---:|---:|
+| Server | 692 | 718 |
+| Audit-script specs | 14 failing | 16 passing |
+

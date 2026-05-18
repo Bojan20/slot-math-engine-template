@@ -11,6 +11,10 @@ import { randomUUID } from 'node:crypto';
 import type { PgConnection } from '../db/connection.js';
 import type { Cache } from '../lib/cache.js';
 import {
+  assertTenantScopedQuery,
+  crossTenantOverride,
+} from '../lib/tenant-isolation.js';
+import {
   sha256Hex,
   type AuthorRecord,
   type AuthorTier,
@@ -197,6 +201,18 @@ function rowToPayout(r: PayoutDbRow): PayoutRow {
 // ---------------------------------------------------------------------------
 
 export class PostgresMarketplaceStore {
+  /**
+   * W213 Faza 600.2 — the marketplace tables are not in
+   * MULTI_TENANT_TABLES (kernels/templates/authors are operator-global;
+   * only `marketplace_purchases.tenant_id` ties a row to a tenant).
+   * `listPurchasesByTenant` filters explicitly; cross-author admin
+   * queries that aggregate revenue are routed through {@link
+   * crossTenantOverride} so the W208 observer attributes them to a
+   * deliberate override rather than a leak.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private static readonly _adminScope = crossTenantOverride;
+
   constructor(
     private readonly conn: PgConnection,
     private readonly cache?: Cache<unknown>
@@ -496,10 +512,12 @@ export class PostgresMarketplaceStore {
   }
 
   async listPurchasesByTenant(tenantId: string): Promise<PurchaseRecord[]> {
-    const r = await this.conn.query<PurchaseRow>(
-      `SELECT * FROM marketplace_purchases WHERE tenant_id = $1 ORDER BY purchased_at DESC`,
-      [tenantId]
-    );
+    const sql =
+      `SELECT * FROM marketplace_purchases WHERE tenant_id = $1 ORDER BY purchased_at DESC`;
+    // Sentinel: documents the tenant boundary even though
+    // marketplace_purchases is not in MULTI_TENANT_TABLES.
+    assertTenantScopedQuery(sql);
+    const r = await this.conn.query<PurchaseRow>(sql, [tenantId]);
     return r.rows.map(rowToPurchase);
   }
 

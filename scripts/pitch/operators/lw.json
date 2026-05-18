@@ -1,0 +1,31 @@
+{
+  "operatorId": "lw",
+  "displayName": "L&W",
+  "legalName": "Light & Wonder, Inc.",
+  "shortName": "Light & Wonder",
+  "hqLocation": "Las Vegas, NV, USA",
+  "tickerSymbol": "LNW",
+  "primaryColor": "#22d3ee",
+  "accentColor": "#0e7490",
+  "industryRank": 1,
+  "estimatedRevenue": "$3.0B",
+  "tier": "Tier-1",
+  "contactRole": "Slot Math Director",
+  "contactName": "_<replace-with-LW-AE-name>_",
+  "contactEmail": "_<replace-with-LW-AE-email>_",
+  "typicalTitle": "Quick Hit Platinum Phoenix",
+  "portfolioSize": 1200,
+  "annualReleases": 80,
+  "certLabsUsed": ["GLI", "BMM", "eCOGRA"],
+  "jurisdictions": ["NV", "NJ", "MI", "PA", "UKGC"],
+  "rtpStandard": "92.0% - 96.0%",
+  "competitorTo": ["Aristocrat", "IGT"],
+  "decisionMakerRole": "VP Slot Math / Director of Game Design",
+  "landingPageSlug": "lw-pilot",
+  "pricingTierLabel": "Tier-1 Enterprise",
+  "samplePricing": {
+    "pilotUSD": 120000,
+    "yearOneLicenseUSD": 850000,
+    "perSpinCostMills": 0.12
+  }
+}

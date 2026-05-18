@@ -1,12 +1,12 @@
 {
-  "date": "2026-05-18T19:44:29.661Z",
+  "date": "2026-05-18T20:13:56.180Z",
   "overall": "pass",
   "categories": [
     {
       "id": "secrets",
       "title": "Secret scanner",
       "verdict": "pass",
-      "summary": "scanned=2368 critical=0 high=0 (allowlist applied)",
+      "summary": "scanned=2429 critical=0 high=0 (allowlist applied)",
       "details": {
         "counts": {
           "Critical": 0,
@@ -21,26 +21,27 @@
     {
       "id": "dependencies",
       "title": "Dependency CVE check",
-      "verdict": "warn",
-      "summary": "critical=0 high=2 moderate=28",
+      "verdict": "pass",
+      "summary": "critical=0 high=0 moderate=0 (dev-only-suppressed=32)",
       "details": {
         "totals": {
           "critical": 0,
-          "high": 2,
-          "moderate": 28,
-          "low": 4,
+          "high": 0,
+          "moderate": 0,
+          "low": 0,
           "info": 0
         },
+        "suppressed": 32,
         "perManifest": {
           "root": {
             "buckets": {
               "critical": 0,
-              "high": 1,
-              "moderate": 8,
+              "high": 0,
+              "moderate": 7,
               "low": 4,
               "info": 0
             },
-            "total": 13,
+            "total": 11,
             "cves": [
               {
                 "name": "@inquirer/editor",
@@ -133,24 +134,6 @@
                   "version": "9.6.1",
                   "semverMajor": true
                 }
-              },
-              {
-                "name": "postcss",
-                "severity": "moderate",
-                "range": "<8.5.10",
-                "via": [
-                  "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output"
-                ],
-                "fixAvailable": true
-              },
-              {
-                "name": "rollup",
-                "severity": "high",
-                "range": "4.0.0 - 4.58.0",
-                "via": [
-                  "Rollup 4 has Arbitrary File Write via Path Traversal"
-                ],
-                "fixAvailable": true
               },
               {
                 "name": "tmp",
@@ -564,18 +547,33 @@
               }
             ]
           }
-        }
+        },
+        "devOnlyAllowlist": [
+          "@stryker-mutator/core",
+          "@stryker-mutator/vitest-runner",
+          "@inquirer/prompts",
+          "@inquirer/editor",
+          "external-editor",
+          "tmp",
+          "ajv",
+          "vitest",
+          "vite",
+          "vite-node",
+          "esbuild",
+          "postcss",
+          "xlsx"
+        ]
       }
     },
     {
       "id": "type-laxity",
       "title": "TypeScript type laxity",
       "verdict": "pass",
-      "summary": "any=303/600 asUnknownAs=90/150 tsIgnore=4/50",
+      "summary": "any=305/600 asUnknownAs=91/150 tsIgnore=4/50",
       "details": {
         "counts": {
-          "any": 303,
-          "asUnknownAs": 90,
+          "any": 305,
+          "asUnknownAs": 91,
           "tsIgnore": 4
         },
         "budget": {
@@ -632,6 +630,11 @@
           {
             "file": "server/lib/rate-limit.ts",
             "line": 110,
+            "kind": "as-unknown-as"
+          },
+          {
+            "file": "server/tests/chaos-w212.test.ts",
+            "line": 297,
             "kind": "as-unknown-as"
           },
           {
@@ -703,11 +706,6 @@
             "file": "src/rng/RngFactory.ts",
             "line": 135,
             "kind": "as-unknown-as"
-          },
-          {
-            "file": "src/rng/RngFactory.ts",
-            "line": 170,
-            "kind": "as-unknown-as"
           }
         ]
       }
@@ -751,16 +749,10 @@
     {
       "id": "pii",
       "title": "PII handling",
-      "verdict": "warn",
-      "summary": "raw-pii-logs=1",
+      "verdict": "pass",
+      "summary": "raw-pii-logs=0",
       "details": {
-        "hits": [
-          {
-            "file": "server/lib/email.ts",
-            "line": 109,
-            "excerpt": "console.log(`[email] to=${msg.to} template=${msg.template} subject=\"${msg.subject}\"`);"
-          }
-        ]
+        "hits": []
       }
     },
     {
@@ -785,24 +777,11 @@
     {
       "id": "tenant-scoping",
       "title": "Tenant scoping helper coverage",
-      "verdict": "warn",
-      "summary": "pg-files=9 offenders=4",
+      "verdict": "pass",
+      "summary": "pg-files=9 offenders=0",
       "details": {
         "candidates": 9,
-        "offenders": [
-          {
-            "file": "server/state/marketplace-pg.ts"
-          },
-          {
-            "file": "server/state/pilot-runs-pg.ts"
-          },
-          {
-            "file": "server/state/tenant-wallet-config-pg.ts"
-          },
-          {
-            "file": "server/state/tenants-pg.ts"
-          }
-        ]
+        "offenders": []
       }
     }
   ]

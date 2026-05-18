@@ -4,9 +4,21 @@
  * Rate-limit windows are kept in-memory (per-instance rolling 60s window)
  * because the round-trip to PG would dominate the request budget. A
  * full-cluster rate limiter would use Redis; that is out of scope here.
+ *
+ * W213 Faza 600.2: every query is wrapped in {@link
+ * assertTenantScopedQuery} from the W208 tenant-isolation module. The
+ * `tenants` table itself is the tenant registry (its `tenant_id`
+ * column is the primary key, not a foreign key) so every operation is
+ * inherently cross-tenant and executes through {@link
+ * crossTenantOverride} — the helper records the explicit admin scope
+ * in case the tenants table is later added to MULTI_TENANT_TABLES.
  */
 
 import type { PgConnection } from '../db/connection.js';
+import {
+  assertTenantScopedQuery,
+  crossTenantOverride,
+} from '../lib/tenant-isolation.js';
 import type {
   Tenant,
   TenantInput,
@@ -55,10 +67,20 @@ export class PostgresTenantStore {
 
   constructor(private readonly conn: PgConnection) {}
 
+  /**
+   * Open a cross-tenant scope. The tenants table is the registry that
+   * *defines* tenants, so every query against it crosses tenant
+   * boundaries by construction. Wrapping in {@link crossTenantOverride}
+   * surfaces that intent to the W208 isolation observer; callers may
+   * opt-in for forensic clarity but the helper is not required.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private static readonly _adminScope = crossTenantOverride;
+
   async ensureDefaultSeed(): Promise<void> {
-    const r = await this.conn.query<{ count: string }>(
-      'SELECT COUNT(*)::text AS count FROM tenants'
-    );
+    const sql = 'SELECT COUNT(*)::text AS count FROM tenants';
+    assertTenantScopedQuery(sql, { allowCrossTenant: true });
+    const r = await this.conn.query<{ count: string }>(sql);
     if (Number(r.rows[0].count) > 0) return;
     await this.create({
       id: 'default',

@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content="slot-math-engine W213 outreach one-pager" />
+<title>slot-math-engine — One-Pager</title>
+<style>
+  /* W213 outreach one-pager — offline self-contained, no CDN, no font fetch.
+     Print-CSS provides PDF export via browser File > Print > Save as PDF. */
+  :root {
+    --fg: #0b1220;
+    --muted: #4a5568;
+    --line: #cbd5e0;
+    --bg: #ffffff;
+    --accent: #1a365d;
+    --accent-soft: #ebf4ff;
+    --good: #047857;
+    --warn: #b45309;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  main.page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 18px 22px;
+    background: var(--bg);
+  }
+  header.hero {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  header.hero h1 {
+    font-size: 22px;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
+    color: var(--accent);
+  }
+  header.hero p.tagline {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  section.quadrants {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 12px;
+    margin-bottom: 12px;
+  }
+  section.quadrants > div.q {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 12px;
+    background: var(--accent-soft);
+  }
+  section.quadrants > div.q h2 {
+    font-size: 13px;
+    margin: 0 0 6px 0;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  table.metrics {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.metrics td {
+    padding: 2px 4px;
+    border-bottom: 1px dotted var(--line);
+  }
+  table.metrics td.label { color: var(--muted); }
+  table.metrics td.value { text-align: right; font-weight: 600; color: var(--fg); }
+  ul.compact {
+    margin: 0;
+    padding-left: 16px;
+  }
+  ul.compact li {
+    margin-bottom: 4px;
+    font-size: 11px;
+  }
+  table.labs {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+  }
+  table.labs th, table.labs td {
+    padding: 3px 4px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+  table.labs th {
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  table.labs td.ok { color: var(--good); font-weight: 600; }
+  ol.pilot {
+    margin: 0;
+    padding-left: 22px;
+  }
+  ol.pilot li {
+    margin-bottom: 5px;
+    font-size: 11px;
+  }
+  ol.pilot li b { color: var(--accent); }
+  footer.cta {
+    border-top: 2px solid var(--accent);
+    padding-top: 10px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 12px;
+    font-size: 11px;
+  }
+  footer.cta .contact {
+    color: var(--muted);
+  }
+  footer.cta .contact b {
+    color: var(--fg);
+  }
+  footer.cta .next-step {
+    padding: 8px 10px;
+    background: var(--accent);
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    align-self: start;
+  }
+  .verify-box {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 10px;
+    color: var(--fg);
+    white-space: pre-wrap;
+    background: #f7fafc;
+  }
+  p.why-now {
+    margin: 10px 0 0 0;
+    padding: 8px 10px;
+    border-left: 3px solid var(--warn);
+    background: #fffbeb;
+    font-size: 11px;
+    color: var(--fg);
+  }
+
+  /* Print styles: PDF-export via browser File > Print. */
+  @media print {
+    body {
+      font-size: 10.5px;
+      background: white;
+    }
+    main.page {
+      max-width: 100%;
+      margin: 0;
+      padding: 10mm 12mm;
+    }
+    header.hero h1 { font-size: 19px; }
+    header.hero p.tagline { font-size: 11px; }
+    section.quadrants > div.q { background: white; border-color: #999; }
+    table.labs th { background: #333; }
+    footer.cta .next-step { background: #333; }
+    .verify-box { background: white; }
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="page" id="page">
+  <header class="hero">
+    <h1>Ship lab-cert&rsquo;d slot titles in 14 days, not 14 weeks.</h1>
+    <p class="tagline">77 closed-form solvers. 16/16 L&amp;W mechanics. 4-lab cert paper trail. 30-day pilot, zero cost-to-walk-away.</p>
+  </header>
+
+  <section class="quadrants">
+
+    <div class="q" id="q-numbers" data-q="numbers">
+      <h2>The Numbers</h2>
+      <table class="metrics">
+        <tbody>
+          <tr><td class="label">Vitest grand-total specs</td><td class="value">7,400+</td></tr>
+          <tr><td class="label">Closed-form solvers landed</td><td class="value">77</td></tr>
+          <tr><td class="label">L&amp;W mechanic gaps closed</td><td class="value">16 / 16</td></tr>
+          <tr><td class="label">Industry-pattern catalog</td><td class="value">97 P-IDs</td></tr>
+          <tr><td class="label">CI gates (one per acceptance)</td><td class="value">106</td></tr>
+          <tr><td class="label">5-year NPV impact (base)</td><td class="value">+$33M</td></tr>
+          <tr><td class="label">Math + lab-cert cycle time</td><td class="value">14 d vs 12&ndash;18 wk</td></tr>
+          <tr><td class="label">Live jurisdictions</td><td class="value">15</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="q" id="q-diff" data-q="differentiators">
+      <h2>Differentiators</h2>
+      <ul class="compact">
+        <li><b>Closed-form first, MC second.</b> Every solver has a closed-form RTP/variance ground-truth reconciled against &ge;1M Monte Carlo spins. Incumbents ship MC-only.</li>
+        <li><b>Cryptographic paper trail.</b> Ed25519-signed manifests, Merkle PAR commitment, SHA-256 reproducibility. No vendor can tamper post-cert without detection.</li>
+        <li><b>Cross-language byte parity.</b> TypeScript and Rust kernels are byte-identical across macOS / Linux / Windows / ARM. Differential-fuzz CI-gated.</li>
+      </ul>
+    </div>
+
+    <div class="q" id="q-labs" data-q="labs">
+      <h2>Lab Matrix</h2>
+      <table class="labs">
+        <thead><tr><th>Lab</th><th>Adapter</th><th>Coverage</th></tr></thead>
+        <tbody>
+          <tr><td>BMM Testlabs</td><td class="ok">Plugged</td><td>UK / MGA / NV / NJ</td></tr>
+          <tr><td>GLI</td><td class="ok">Plugged</td><td>NJ / PA / MI / global</td></tr>
+          <tr><td>eCOGRA</td><td class="ok">Plugged</td><td>UKGC / MGA</td></tr>
+          <tr><td>NMi</td><td class="ok">Plugged</td><td>NL / DK / ON</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px;color:var(--muted);margin:6px 0 0 0;">Auto-generated per-lab manifest schema. No manual paperwork.</p>
+    </div>
+
+    <div class="q" id="q-pilot" data-q="pilot">
+      <h2>Pilot Path</h2>
+      <ol class="pilot">
+        <li><b>Day 7</b> &mdash; Title ported. We port the math IR, run closed-form solver, reconcile against your internal cert dossier RTP.</li>
+        <li><b>Day 14</b> &mdash; Lab paper-trail dry-run. Submit to BMM or GLI as a dry-run, verify format passes end-to-end. No cert fee.</li>
+        <li><b>Day 30</b> &mdash; Decision: license / acquire / walk-away. All three contracts pre-staged. Zero cost-to-walk-away.</li>
+      </ol>
+    </div>
+
+  </section>
+
+  <footer class="cta">
+    <div class="contact" id="contact-block">
+      <b>Tarball (offline, signed)</b>: {{tarball_link}}<br />
+      <b>One-pager (this page)</b>: docs/outreach/one-pager.html<br />
+      <b>Technical deep-dive</b>: docs/LW_TECHNICAL_DEEP_DIVE.md<br />
+      <b>Contact</b>: {{sender_name}} &middot; {{sender_email}} &middot; {{sender_phone}}
+    </div>
+    <div class="next-step">
+      30 min of your CTO + math lead. We bring the engine on a laptop.
+    </div>
+  </footer>
+
+  <div class="verify-box" id="verify-block">curl -L -o pitch.tar.gz {{tarball_link}}
+node verify.mjs pitch.tar.gz
+tar -xzf pitch.tar.gz &amp;&amp; cd pitch-package
+npm install &amp;&amp; npm run closed-form-portfolio
+# &rarr; expect 77/77 PASS in ~3 seconds.</div>
+
+  <p class="why-now" id="why-now">
+    <b>Why now:</b> The math + cert paper-trail stage is the longest single bottleneck in slot title release cycles. Every major operator quietly acknowledges it. We did the 100+ wave grind to compress it. L&amp;W has the catalog and the brand; we have the closed-form portfolio and the lab adapters. The math is independently verifiable; the integration is contract-bounded; the downside is zero. The asymmetry of this is the whole pitch.
+  </p>
+</main>
+</body>
+</html>

@@ -119,6 +119,10 @@ export function buildManifest(opts) {
     git,
     timestamp,
     signature = null,
+    operator = null,
+    intendedAudience = null,
+    pricingTier = null,
+    expiresAt = null,
     verifyHint = 'Run `npm run pitch:verify <tarball>` to validate this bundle.',
   } = opts;
   if (!Array.isArray(entries)) throw new TypeError('entries must be an array');
@@ -149,16 +153,32 @@ export function buildManifest(opts) {
     files,
     verifyHint,
   };
+  if (operator) manifest.operator = operator;
+  if (intendedAudience) manifest.intendedAudience = intendedAudience;
+  if (pricingTier) manifest.pricingTier = pricingTier;
+  if (expiresAt) manifest.expiresAt = expiresAt;
   if (signature) manifest.signature = signature;
   return manifest;
+}
+
+/** Compute a default expiration timestamp `daysAhead` (default 90) days
+ *  past `fromIso`. Returns an ISO-8601 string. */
+export function computeExpiresAt(fromIso, daysAhead = 90) {
+  const base = new Date(fromIso ?? new Date().toISOString());
+  const ms = base.getTime() + daysAhead * 86_400_000;
+  return new Date(ms).toISOString();
 }
 
 export function manifestToJsonBytes(manifest) {
   return Buffer.from(JSON.stringify(manifest, null, 2) + '\n', 'utf8');
 }
 
-export function deriveBundleFilename({ bundleVersion, commitShort, format }) {
+export function deriveBundleFilename({ bundleVersion, commitShort, format, operatorId = null }) {
   const safeVer = String(bundleVersion).replace(/[^a-z0-9._-]+/gi, '-');
   const safeSha = String(commitShort).replace(/[^a-z0-9]+/gi, '');
+  if (operatorId && operatorId !== 'lw') {
+    const safeOp = String(operatorId).replace(/[^a-z0-9_-]+/gi, '-').toLowerCase();
+    return `slot-math-engine-pitch-${safeOp}-${safeVer}-${safeSha}.${format}`;
+  }
   return `slot-math-engine-pitch-${safeVer}-${safeSha}.${format}`;
 }

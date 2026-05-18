@@ -190,6 +190,11 @@
     "pitch:tarball:dry": "node scripts/pitch/build-pitch-tarball.mjs --dry-run",
     "pitch:verify": "node scripts/pitch/verify-pitch-tarball.mjs",
     "pitch:compose-html": "node scripts/pitch/compose-standalone-html.mjs",
+    "pitch:build-all-operators": "node scripts/pitch/build-all-operators.mjs",
+    "pitch:gen-keys": "node scripts/pitch/production-sign.mjs gen-keys",
+    "pitch:verify-prod-sign": "node scripts/pitch/verify-production-sign.mjs",
+    "pitch:cdn-prep": "node scripts/pitch/cdn-distribute.mjs prep",
+    "pitch:dossier-v2": "node scripts/pilot/build-pilot-dossier-v2.mjs",
     "onboarding:dev": "cd web/onboarding && npm run dev",
     "onboarding:build": "cd web/onboarding && npm run build",
     "onboarding:preview": "cd web/onboarding && npm run preview",
@@ -282,7 +287,8 @@
     "theater:run:cmo": "node scripts/demo-theater/orchestrator.mjs --compress=300x --persona=cmo",
     "theater:run:cfo": "node scripts/demo-theater/orchestrator.mjs --compress=300x --persona=cfo",
     "theater:run:full": "node scripts/demo-theater/orchestrator.mjs --speed=1x",
-    "theater:snapshots": "node scripts/demo-theater/dashboard-snapshots.mjs"
+    "theater:snapshots": "node scripts/demo-theater/dashboard-snapshots.mjs",
+    "outreach:export": "node scripts/outreach/crm-export.mjs"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

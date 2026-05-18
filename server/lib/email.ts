@@ -11,7 +11,12 @@
  *   - trial-expiring    25-day warn cron
  *   - trial-expired     31-day lockout cron
  *   - upgrade           upgrade confirmation
+ *
+ * W213 Faza 600.2: the dev log line goes through the PII redactor so
+ * raw email addresses never reach stdout / a log shipper.
  */
+
+import { redactEmail } from './pii-redactor.js';
 
 export type EmailTemplate = 'welcome' | 'verify' | 'trial-expiring' | 'trial-expired' | 'upgrade';
 
@@ -105,8 +110,9 @@ export class EmailSender {
     };
     this.outbox.push(msg);
     if (this.devLog) {
+      // PII redacted: bo***@example.com style — see lib/pii-redactor.ts.
       // eslint-disable-next-line no-console
-      console.log(`[email] to=${msg.to} template=${msg.template} subject="${msg.subject}"`);
+      console.log(`[email] to-redacted=${redactEmail(msg.to)} template=${msg.template} subject="${msg.subject}"`);
     }
     return msg;
   }
