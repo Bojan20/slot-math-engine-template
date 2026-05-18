@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 70 routes across 16 route files. 
+Captures 74 routes across 17 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -92,6 +92,15 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `GET` | `/api/lobby/games` |
 | `POST` | `/api/lobby/_invalidate` |
 | `POST` | `/api/lobby/launch` |
+
+## marketing-leads.ts
+> W214 Faza 800.1 Agent C — Public marketing site lead capture route. POST  /api/marketing/lead              insert a new lead (public, rate-limited) GET   /api/marketing/lead/:id          fetch by id (admin) POST  /api/marketing/lead/:id/sent     mark tarball as delivered (admin) GET   /api/marketing/leads             list w/ filters (admin) The POST is the unauthenticated entry the marketing site form posts to. It enforces: * required fields + email regex * honeypot (silent d
+| Method | Path |
+|---|---|
+| `POST` | `/api/marketing/lead` |
+| `GET` | `/api/marketing/lead/:id` |
+| `POST` | `/api/marketing/lead/:id/sent` |
+| `GET` | `/api/marketing/leads` |
 
 ## marketplace.ts
 > CORTI W209 Faza 500.0 — Marketplace REST API. All routes mounted under `/api/marketplace`. Tenant-scoped where applicable (purchases / list-mine / refund), public for catalogue reads (list kernels + templates + author profile). Author-only endpoints (kernel submission, payout method, earnings) gated by `X-Author-Key` via {@link authorAuthPreHandler}. Routes follow the same JSON response shape as the rest of the backend — every error returns `{ error: <code>, ... }` with the a

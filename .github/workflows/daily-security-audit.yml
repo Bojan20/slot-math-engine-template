@@ -1,0 +1,170 @@
+# W214 Faza 600.3 — Daily security audit (continuous hardening).
+#
+# Runs every 24h (06:00 UTC) plus on-demand via `workflow_dispatch`.
+# Sequence:
+#   1. `npm audit --production --json`      (fail on high+)
+#   2. `npm run security:audit`             (11-category audit)
+#   3. `npm run security:dep-review`        (license / staleness)
+#   4. `npm run security:pentest`           (6 pentest scenarios)
+# Outputs surface in the Actions summary; FAIL automatically opens a
+# GitHub issue tagged `security` + `daily-audit` and posts to the
+# Slack/Teams webhook (stubbed; uncomment when prod secrets are wired).
+#
+# Baseline diffing: a JSON snapshot is committed to
+# `reports/security/baseline.json` and the workflow flags any NEW CVE
+# IDs not previously seen.
+#
+# Budget: ≤15 min on the free GitHub Actions tier.
+
+name: daily-security-audit
+
+on:
+  schedule:
+    # 06:00 UTC daily — fresh paper trail before Boki's morning standup.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      open_issue:
+        description: "Open a GitHub issue if any category FAILs"
+        required: false
+        default: "true"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: daily-security-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Daily security sweep
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: npm audit (production, high+)
+        id: npm_audit
+        run: |
+          set +e
+          npm audit --omit=dev --audit-level=high --json > reports/security/npm-audit.json
+          STATUS=$?
+          set -e
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          # Don't fail the whole job here — the aggregator decides.
+          echo "::notice::npm audit exit=$STATUS (full report in reports/security/npm-audit.json)"
+
+      - name: Aggregated 11-category audit
+        id: full_audit
+        run: |
+          set +e
+          npm run -s security:audit
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Dependency review (license + staleness)
+        id: dep_review
+        run: |
+          set +e
+          npm run -s security:dep-review
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Pentest scenarios (6 attacks)
+        id: pentest
+        run: |
+          set +e
+          npm run -s security:pentest
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Baseline diff (new CVEs vs reports/security/baseline.json)
+        id: baseline
+        run: |
+          node scripts/security/baseline-diff.mjs \
+            --current reports/security/audit.json \
+            --baseline reports/security/baseline.json \
+            --out reports/security/baseline-diff.json || true
+
+      - name: Render summary
+        if: always()
+        run: |
+          {
+            echo "## Daily Security Audit · $(date -u +'%Y-%m-%d')"
+            echo
+            echo "| Category | Status |"
+            echo "|---|---|"
+            echo "| npm audit (production high+) | ${{ steps.npm_audit.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo "| Full security:audit (11 categories) | ${{ steps.full_audit.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo "| Dependency review | ${{ steps.dep_review.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo "| Pentest scenarios (6) | ${{ steps.pentest.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo
+            if [ -f reports/security/baseline-diff.json ]; then
+              echo "### Baseline diff"
+              echo '```json'
+              cat reports/security/baseline-diff.json
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-security-${{ github.run_id }}
+          path: |
+            reports/security/audit.json
+            reports/security/AUDIT_REPORT.md
+            reports/security/DEPENDENCY_REVIEW.md
+            reports/security/baseline-diff.json
+            reports/security/npm-audit.json
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Open issue on FAIL
+        if: |
+          always() &&
+          (steps.npm_audit.outputs.status != '0'
+            || steps.full_audit.outputs.status != '0'
+            || steps.dep_review.outputs.status != '0'
+            || steps.pentest.outputs.status != '0')
+          && github.event.inputs.open_issue != 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `[daily-audit] FAIL on ${new Date().toISOString().slice(0, 10)}`;
+            const body = [
+              "Daily security audit failed.",
+              "",
+              `Workflow run: ${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+              "",
+              "Investigate within 24h. See artifact `daily-security-*` for full reports.",
+            ].join("\n");
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ["security", "daily-audit"],
+            });
+
+      # Slack / Teams notification — uncomment and wire SLACK_WEBHOOK_URL
+      # secret in production.
+      # - name: Notify Slack
+      #   if: failure()
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   run: |
+      #     curl -X POST -H 'Content-type: application/json' \
+      #       --data '{"text":"daily-security-audit FAILED — check Actions"}' \
+      #       "$SLACK_WEBHOOK_URL"

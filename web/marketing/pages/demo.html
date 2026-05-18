@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo — slot-math-engine</title>
+  <meta name="description" content="Interactive demo: edit an IR file, see closed-form RTP recompute live, replay any spin. No signup required." />
+  <link rel="canonical" href="https://slot-math-engine.example/pages/demo.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:title" content="Demo — slot-math-engine" />
+  <meta property="og:description" content="Live IR → closed-form RTP. No signup required." />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>slot-math-engine</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="./how-it-works.html">How it works</a>
+        <a href="./pricing.html">Pricing</a>
+        <a href="./coverage.html">Coverage</a>
+        <a href="./demo.html" class="active">Demo</a>
+        <a href="./docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="./contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>See it in action</h1>
+      <p class="subtitle">
+        Edit an IR file inline. Watch the closed-form solver recompute RTP and
+        variance in &lt; 200 ms. Replay any spin. No signup, no install.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="roi-preview">
+      <div class="inputs">
+        <h3>IR editor (mini)</h3>
+        <p style="color:var(--fg-muted);font-size:0.9rem">
+          Adjust three primitives and watch the RTP recompute. The full Studio
+          with reel-strip editor, paytable matrix, and bonus designer ships in
+          the pitch tarball.
+        </p>
+        <label>
+          <span class="lbl-row">
+            <span>HIGH_1 hit rate</span>
+            <span class="val" data-out="hr">0.04</span>
+          </span>
+          <input type="range" min="0.02" max="0.12" step="0.005" value="0.04" data-input="hr" />
+        </label>
+        <label>
+          <span class="lbl-row">
+            <span>Wild substitution gain</span>
+            <span class="val" data-out="ws">15%</span>
+          </span>
+          <input type="range" min="0" max="40" step="1" value="15" data-input="ws" />
+        </label>
+        <label>
+          <span class="lbl-row">
+            <span>Free-spin retrigger probability</span>
+            <span class="val" data-out="ft">8%</span>
+          </span>
+          <input type="range" min="0" max="25" step="1" value="8" data-input="ft" />
+        </label>
+        <p style="margin-top:18px;font-size:0.85rem;color:var(--fg-dim)">
+          Want the real Studio with reel-strip editor + paytable matrix?
+          <a href="./contact.html">Request access →</a>
+        </p>
+      </div>
+      <div class="outputs">
+        <div class="out-row">
+          <span class="out-lbl">RTP (closed-form)</span>
+          <span class="out-val" data-out="rtp">96.5%</span>
+        </div>
+        <div class="out-row">
+          <span class="out-lbl">Variance</span>
+          <span class="out-val" data-out="var">14.2</span>
+        </div>
+        <div class="out-row">
+          <span class="out-lbl">Hit frequency</span>
+          <span class="out-val" data-out="hf">27%</span>
+        </div>
+        <div class="out-row" style="border:none;padding-top:18px">
+          <a class="btn btn-primary btn-block" href="./contact.html">Try the full Studio →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">What the full demo unlocks</h2>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="icon">R</div>
+        <h3>Reel-strip editor</h3>
+        <p>Drag-and-drop symbol placement across all reels.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">P</div>
+        <h3>Paytable matrix</h3>
+        <p>Per-symbol per-line-count payouts with closed-form sensitivity.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">B</div>
+        <h3>Bonus designer</h3>
+        <p>Free-spin awards, retrigger maps, multiplier ladders.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">M</div>
+        <h3>MC sweep</h3>
+        <p>Spin 100K seeds in browser. Convergence visualised.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">D</div>
+        <h3>Dossier preview</h3>
+        <p>One-click export of cert dossier in BMM / GLI / eCOGRA / NMi format.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">A</div>
+        <h3>Audit replay</h3>
+        <p>Reproduce any spin from seed + IR. Byte-identical across machines.</p>
+      </article>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a class="btn btn-primary" href="./contact.html">Get the full demo + tarball →</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div><h4>slot-math-engine</h4><p>Math engine + IR + cert paper trail.</p></div>
+      <div><h4>Product</h4><ul>
+        <li><a href="./how-it-works.html">How it works</a></li>
+        <li><a href="./pricing.html">Pricing</a></li>
+        <li><a href="./coverage.html">Coverage</a></li>
+        <li><a href="./demo.html">Demo</a></li>
+      </ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="./docs.html">Docs</a></li>
+        <li><a href="./contact.html">Get tarball</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul><li><a href="./contact.html#privacy">Privacy</a></li></ul></div>
+      <div class="copy">© 2026 slot-math-engine · Demo · No signup required</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    // Tiny synthetic RTP model — purely illustrative. Real solver lives in
+    // /server/lib/closed-form-rtp and ships with 7,679 vitest specs behind it.
+    const $ = (s) => document.querySelector(s);
+    const inHr = $('[data-input="hr"]'), inWs = $('[data-input="ws"]'), inFt = $('[data-input="ft"]');
+    function refresh() {
+      const hr = Number(inHr.value), ws = Number(inWs.value), ft = Number(inFt.value);
+      // Toy formula: base RTP centred 96.5%, drift from primitives.
+      const rtp = 0.93 + hr * 0.5 + ws * 0.0008 + ft * 0.001;
+      const variance = 8 + (1 / Math.max(0.02, hr)) * 0.4 + ws * 0.04;
+      const hitFreq = 0.18 + hr * 1.5 + ft * 0.003;
+      $('[data-out="hr"]').textContent = hr.toFixed(3);
+      $('[data-out="ws"]').textContent = ws + '%';
+      $('[data-out="ft"]').textContent = ft + '%';
+      $('[data-out="rtp"]').textContent = (rtp * 100).toFixed(1) + '%';
+      $('[data-out="var"]').textContent = variance.toFixed(1);
+      $('[data-out="hf"]').textContent = (hitFreq * 100).toFixed(0) + '%';
+    }
+    [inHr, inWs, inFt].forEach(i => i.addEventListener('input', refresh));
+    refresh();
+  </script>
+</body>
+</html>

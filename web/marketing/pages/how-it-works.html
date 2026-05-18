@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How it works — slot-math-engine</title>
+  <meta name="description" content="Technical overview: closed-form solvers vs Monte Carlo, IR config-as-data, deterministic replay, lab cert paper trail. The four pillars of the platform." />
+  <link rel="canonical" href="https://slot-math-engine.example/pages/how-it-works.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:title" content="How it works — slot-math-engine" />
+  <meta property="og:description" content="Closed-form math first, MC second. IR config-as-data. Deterministic replay. Cert paper trail." />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>slot-math-engine</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="./how-it-works.html" class="active">How it works</a>
+        <a href="./pricing.html">Pricing</a>
+        <a href="./coverage.html">Coverage</a>
+        <a href="./demo.html">Demo</a>
+        <a href="./docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="./contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>How it works</h1>
+      <p class="subtitle">
+        Four ideas that make the difference between a 14-day cycle and a 14-week one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Architecture, in one diagram</h2>
+    <pre style="text-align:left;max-width:820px;margin:0 auto 36px auto">
+  ┌──────────────────┐     ┌──────────────────┐
+  │  Game designer   │ →   │   IR (YAML)      │
+  └──────────────────┘     └────────┬─────────┘
+                                    │
+                          ┌─────────┴──────────┐
+                          ↓                    ↓
+              ┌────────────────────┐  ┌────────────────┐
+              │ Closed-form solver │  │ Monte Carlo    │
+              │   (RTP / var / hits)│  │  (≥ 1M spins)  │
+              └─────────┬──────────┘  └────────┬───────┘
+                        │  reconcile  ←────────┘
+                        ↓
+              ┌────────────────────┐
+              │  Cert dossier      │ → BMM / GLI / eCOGRA / NMi
+              │  (Ed25519-signed)  │
+              └────────────────────┘
+    </pre>
+
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="icon">①</div>
+        <h3>Closed-form first, MC second</h3>
+        <p>Every solver computes the analytic RTP, variance, and hit distribution
+           in &lt; 200 ms — then validates against ≥ 1M Monte Carlo spins.
+           If they disagree by more than the configured tolerance, the build
+           fails. No "let it run overnight" math.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">②</div>
+        <h3>IR config-as-data</h3>
+        <p>The game's math lives in a single YAML / JSON file. No code. Reels,
+           paytable, wilds, bonus triggers — all declarative. Versioned in git
+           like infrastructure. Reproducible across machines, OSes, languages.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">③</div>
+        <h3>Deterministic replay</h3>
+        <p>Every spin is hash-chain audited. Given a seed + IR + spin index,
+           the result is byte-identical on TS or Rust, on macOS or ARM Linux.
+           Regulators can replay any session offline from the manifest.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">④</div>
+        <h3>Cert paper trail</h3>
+        <p>One IR file → four lab-formatted dossiers. BMM, GLI, eCOGRA, NMi
+           submissions auto-generated. Each manifest carries an Ed25519
+           signature + Merkle PAR commitment. Tamper-evident end to end.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">A minimal IR file</h2>
+    <p class="section-sub">
+      This is a full working game: 5 reels, 3 rows, 9-symbol set, wild
+      substitution. Engine ships a closed-form solver for it in &lt; 1 sec.
+    </p>
+    <pre style="max-width:820px;margin:0 auto"><code>game:
+  name: "Demo Slot"
+  rtp_target: 0.965
+  reels: 5
+  rows: 3
+  paylines: 20
+
+symbols:
+  - { id: HIGH_1, hit_rate: 0.04 }
+  - { id: HIGH_2, hit_rate: 0.07 }
+  - { id: HIGH_3, hit_rate: 0.10 }
+  - { id: LOW_1,  hit_rate: 0.14 }
+  - { id: LOW_2,  hit_rate: 0.16 }
+  - { id: WILD,   substitutes: [ HIGH_1, HIGH_2, HIGH_3, LOW_1, LOW_2 ] }
+  - { id: SCATTER, triggers_freespins: 10 }
+
+paytable:
+  HIGH_1: { 5: 250, 4: 100, 3: 40 }
+  HIGH_2: { 5: 150, 4: 60,  3: 25 }
+  LOW_1:  { 5: 50,  4: 20,  3: 10 }
+
+freespins:
+  trigger: SCATTER
+  count_trigger: 3
+  awarded: 10
+  retrigger: true</code></pre>
+    <div style="text-align:center;margin-top:24px">
+      <a class="btn btn-primary" href="./demo.html">See it in action →</a>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">What our engine does that incumbents don't</h2>
+    <table class="coverage-table">
+      <thead>
+        <tr><th>Capability</th><th>Incumbent math engines</th><th>slot-math-engine</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>RTP ground truth</td><td>Monte Carlo only</td><td>Closed-form + MC reconciled</td></tr>
+        <tr><td>Cycle time per title</td><td>12–18 weeks</td><td>14 days (measured)</td></tr>
+        <tr><td>Cross-language parity</td><td>Single engine binary</td><td>TS + Rust byte-identical</td></tr>
+        <tr><td>Cert dossier format</td><td>Manual paperwork</td><td>Auto-generated, 4 labs</td></tr>
+        <tr><td>Replay verification</td><td>Vendor-only</td><td>Regulator-runnable offline</td></tr>
+        <tr><td>Tamper evidence</td><td>—</td><td>Ed25519 + Merkle PAR</td></tr>
+        <tr><td>Marketplace SDK</td><td>—</td><td>30% rev-share to studios</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div><h4>slot-math-engine</h4><p>Math engine + IR + cert paper trail.</p></div>
+      <div><h4>Product</h4><ul>
+        <li><a href="./how-it-works.html">How it works</a></li>
+        <li><a href="./pricing.html">Pricing</a></li>
+        <li><a href="./coverage.html">Coverage</a></li>
+        <li><a href="./demo.html">Demo</a></li>
+      </ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="./docs.html">Docs</a></li>
+        <li><a href="./contact.html">Get tarball</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul>
+        <li><a href="./contact.html#privacy">Privacy</a></li>
+      </ul></div>
+      <div class="copy">© 2026 slot-math-engine · Pre-orders open Q3 2026</div>
+    </div>
+  </footer>
+</body>
+</html>

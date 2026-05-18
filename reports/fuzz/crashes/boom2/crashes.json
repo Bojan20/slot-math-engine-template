@@ -1,0 +1,35 @@
+[
+  {
+    "iter": 0,
+    "seed": 1,
+    "phase": "body",
+    "message": "zap",
+    "stack": "Error: zap\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:167:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:164:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "ff6ed825a946",
+    "inputSample": {
+      "x": 2442144158
+    }
+  },
+  {
+    "iter": 1,
+    "seed": 2,
+    "phase": "body",
+    "message": "zap",
+    "stack": "Error: zap\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:167:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:164:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "3f3d65ad6f8d",
+    "inputSample": {
+      "x": 2098143281
+    }
+  },
+  {
+    "iter": 2,
+    "seed": 3,
+    "phase": "body",
+    "message": "zap",
+    "stack": "Error: zap\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:167:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:164:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "8033c55e57ae",
+    "inputSample": {
+      "x": 3088717543
+    }
+  }
+]

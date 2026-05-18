@@ -1,0 +1,42 @@
+{
+  "reports": [
+    {
+      "id": "ir-evaluator",
+      "name": "ir-evaluator",
+      "iterations": 10000,
+      "seedStart": 1,
+      "crashes": [],
+      "durationMs": 249,
+      "iterPerSec": 40161
+    },
+    {
+      "id": "marketplace-api",
+      "name": "marketplace-api",
+      "iterations": 10000,
+      "seedStart": 1,
+      "crashes": [],
+      "durationMs": 48,
+      "iterPerSec": 208333
+    },
+    {
+      "id": "wallet-providers",
+      "name": "wallet-providers",
+      "iterations": 10000,
+      "seedStart": 1,
+      "crashes": [],
+      "durationMs": 19,
+      "iterPerSec": 526316
+    },
+    {
+      "id": "cert-bundle",
+      "name": "cert-bundle",
+      "iterations": 10000,
+      "seedStart": 1,
+      "crashes": [],
+      "durationMs": 168,
+      "iterPerSec": 59524
+    }
+  ],
+  "totalCrashes": 0,
+  "ranAt": "2026-05-18T20:34:18.807Z"
+}

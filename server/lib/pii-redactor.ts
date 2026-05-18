@@ -22,7 +22,7 @@
  * Usage:
  *
  *   import { redactEmail, redactString } from './pii-redactor.js';
- *   console.log(`[email] to=${redactEmail(user.email)}`);
+ *   logger.info(`[mail] to=${redactEmail(user.contact)}`);  // hashed/redacted
  *
  * Integrates with the W208 StructuredLogger via {@link redactRecord}:
  * any log call that includes `meta.email`, `meta.phone`, etc. has those

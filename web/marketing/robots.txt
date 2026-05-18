@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# No tracking pixels, no third-party scripts — full content available.
+# slot-math-engine W214 marketing site.
+
+Sitemap: https://slot-math-engine.example/sitemap.xml

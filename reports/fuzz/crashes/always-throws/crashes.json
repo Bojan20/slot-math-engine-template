@@ -1,0 +1,47 @@
+[
+  {
+    "iter": 0,
+    "seed": 1,
+    "phase": "body",
+    "message": "boom",
+    "stack": "Error: boom\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:156:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:153:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "05336137cccb",
+    "inputSample": 2442144158
+  },
+  {
+    "iter": 1,
+    "seed": 2,
+    "phase": "body",
+    "message": "boom",
+    "stack": "Error: boom\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:156:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:153:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "6bbe0203737c",
+    "inputSample": 2098143281
+  },
+  {
+    "iter": 2,
+    "seed": 3,
+    "phase": "body",
+    "message": "boom",
+    "stack": "Error: boom\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:156:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:153:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "5848a5adbdfc",
+    "inputSample": 3088717543
+  },
+  {
+    "iter": 3,
+    "seed": 4,
+    "phase": "body",
+    "message": "boom",
+    "stack": "Error: boom\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:156:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:153:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "6839dc79cb4c",
+    "inputSample": 628514800
+  },
+  {
+    "iter": 4,
+    "seed": 5,
+    "phase": "body",
+    "message": "boom",
+    "stack": "Error: boom\n    at Object.body (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:156:27)\n    at Module.runFuzz (/Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/fuzz/_lib.mjs:256:12)\n    at /Users/vanvinklstudio/Projects/slot-math-engine-template/scripts/tests/fuzz-harness.test.mjs:153:20\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:135:14\n    at file:///Users/vanvinklstudio/Projects/slot-math-engine-template/node_modules/@vitest/runner/dist/index.js:60:26",
+    "inputHash": "5974a8776b6b",
+    "inputSample": 3616982058
+  }
+]

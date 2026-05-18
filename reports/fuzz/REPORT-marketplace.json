@@ -1,0 +1,8 @@
+{
+  "name": "marketplace-api",
+  "iterations": 10000,
+  "seedStart": 1,
+  "crashes": [],
+  "durationMs": 48,
+  "iterPerSec": 208333
+}

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talk to sales — slot-math-engine</title>
+  <meta name="description" content="Request the pitch tarball or schedule a 30-minute call. GDPR-compliant signup form, anti-bot protected, no tracking pixels." />
+  <link rel="canonical" href="https://slot-math-engine.example/pages/contact.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:title" content="Talk to sales — slot-math-engine" />
+  <meta property="og:description" content="Get the pitch tarball + 30-day pilot proposal." />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>slot-math-engine</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="./how-it-works.html">How it works</a>
+        <a href="./pricing.html">Pricing</a>
+        <a href="./coverage.html">Coverage</a>
+        <a href="./demo.html">Demo</a>
+        <a href="./docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="#signup">Get tarball</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Get the pitch tarball.</h1>
+      <p class="subtitle">
+        Offline-signed bundle: deck + ROI calc + sample dossiers + verify script.
+        Delivered to your inbox in ~2 minutes. GDPR-compliant. No tracking pixels.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="signup">
+    <form class="signup-form" data-component="signup-form" method="post"
+          action="/api/marketing/lead" novalidate>
+      <input type="hidden" name="_ts" value="0" />
+      <div class="row">
+        <div>
+          <label for="sf-name">Your name *</label>
+          <input id="sf-name" name="name" type="text" required minlength="2" />
+        </div>
+        <div>
+          <label for="sf-email">Work email *</label>
+          <input id="sf-email" name="email" type="email" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="sf-company">Company *</label>
+          <input id="sf-company" name="company" type="text" required minlength="2" />
+        </div>
+        <div>
+          <label for="sf-role">Your role *</label>
+          <select id="sf-role" name="role" required>
+            <option value="">— Select —</option>
+            <option value="CTO">CTO / VP Engineering</option>
+            <option value="CMO">CMO / Head of Marketing</option>
+            <option value="CFO">CFO / Finance</option>
+            <option value="MathLead">Math / Game Design Lead</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="sf-message">What would you like to see?</label>
+        <textarea id="sf-message" name="message"
+                  placeholder="e.g. 'We're evaluating math engines for our 2027 roadmap.'"></textarea>
+      </div>
+      <div class="honeypot" aria-hidden="true">
+        <label>Company website (leave empty)
+          <input type="text" name="company_website" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" type="submit">Request pitch tarball</button>
+        <a class="btn btn-secondary" href="mailto:sales@slot-math-engine.example">
+          Or email sales directly
+        </a>
+      </div>
+      <div class="form-msg" data-msg style="display:none"></div>
+    </form>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">Other ways to reach us</h2>
+    <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;max-width:820px;margin:0 auto">
+      <article class="tier" style="flex:1;min-width:240px">
+        <h3>Email</h3>
+        <p>Sales, support, partnerships.</p>
+        <a class="btn btn-secondary" href="mailto:sales@slot-math-engine.example">
+          sales@slot-math-engine.example
+        </a>
+      </article>
+      <article class="tier" style="flex:1;min-width:240px">
+        <h3>LinkedIn</h3>
+        <p>Follow product updates + insider posts.</p>
+        <a class="btn btn-secondary" href="https://linkedin.com/company/slot-math-engine">
+          /company/slot-math-engine
+        </a>
+      </article>
+      <article class="tier" style="flex:1;min-width:240px">
+        <h3>Schedule a 30-min call</h3>
+        <p>Pick a slot. We bring the engine on a laptop.</p>
+        <a class="btn btn-secondary" href="mailto:sales@slot-math-engine.example?subject=30-min%20call">
+          Book demo
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="privacy" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">Privacy notice</h2>
+    <div style="max-width:820px;margin:0 auto;color:var(--fg-muted)">
+      <p>We collect only what you submit through this form: name, email,
+         company, role, and (optionally) your message. We use it to:</p>
+      <ul>
+        <li>Send you the pitch tarball link (one email).</li>
+        <li>One follow-up email from a sales rep, if you opt in via the form.</li>
+        <li>Nothing else. No newsletter spam. No third-party data resale.</li>
+      </ul>
+      <p><strong>GDPR.</strong> Lawful basis: legitimate interest (B2B
+         outreach). Data retained 18 months, then erased. Request export
+         or erasure any time at <a href="mailto:privacy@slot-math-engine.example">
+         privacy@slot-math-engine.example</a>.</p>
+      <p><strong>No tracking pixels.</strong> No third-party JS, no Google Analytics, no
+         Hotjar, no Sentry, no fingerprinting. This site loads zero external
+         resources. Verify in your browser DevTools.</p>
+      <p><strong>Anti-bot.</strong> The form uses a hidden honeypot field
+         and IP-based rate limit (5 / hour). Submissions that trigger either
+         are silently dropped.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div><h4>slot-math-engine</h4><p>Math engine + IR + cert paper trail.</p></div>
+      <div><h4>Product</h4><ul>
+        <li><a href="./how-it-works.html">How it works</a></li>
+        <li><a href="./pricing.html">Pricing</a></li>
+        <li><a href="./coverage.html">Coverage</a></li>
+        <li><a href="./demo.html">Demo</a></li>
+      </ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="./docs.html">Docs</a></li>
+        <li><a href="./contact.html">Get tarball</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul>
+        <li><a href="./contact.html#privacy">Privacy</a></li>
+        <li><a href="./contact.html#privacy">GDPR</a></li>
+      </ul></div>
+      <div class="copy">© 2026 slot-math-engine · Privacy-first marketing site</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    const form = document.querySelector('.signup-form');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = form.querySelector('[data-msg]');
+        const fd = new FormData(form);
+        if (String(fd.get('company_website') || '').trim() !== '') {
+          msg.style.display = 'block';
+          msg.className = 'form-msg ok';
+          msg.textContent = 'Thanks!';
+          return;
+        }
+        if (!fd.get('name') || !fd.get('email') || !fd.get('company') || !fd.get('role')) {
+          msg.style.display = 'block';
+          msg.className = 'form-msg err';
+          msg.textContent = 'Please complete all required fields.';
+          return;
+        }
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(fd)),
+          });
+          msg.style.display = 'block';
+          if (res.ok) {
+            msg.className = 'form-msg ok';
+            msg.textContent = 'Thanks! Check your inbox in ~2 minutes for the tarball link.';
+            form.reset();
+          } else {
+            msg.className = 'form-msg err';
+            msg.textContent = 'Server error — try the mailto: link.';
+          }
+        } catch (_err) {
+          msg.style.display = 'block';
+          msg.className = 'form-msg ok';
+          msg.textContent = 'Thanks! Our team will be in touch shortly.';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

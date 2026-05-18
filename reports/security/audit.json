@@ -1,12 +1,12 @@
 {
-  "date": "2026-05-18T20:13:56.180Z",
+  "date": "2026-05-18T20:40:40.018Z",
   "overall": "pass",
   "categories": [
     {
       "id": "secrets",
       "title": "Secret scanner",
       "verdict": "pass",
-      "summary": "scanned=2429 critical=0 high=0 (allowlist applied)",
+      "summary": "scanned=2481 critical=0 high=0 (allowlist applied)",
       "details": {
         "counts": {
           "Critical": 0,
@@ -569,11 +569,11 @@
       "id": "type-laxity",
       "title": "TypeScript type laxity",
       "verdict": "pass",
-      "summary": "any=305/600 asUnknownAs=91/150 tsIgnore=4/50",
+      "summary": "any=306/600 asUnknownAs=92/150 tsIgnore=4/50",
       "details": {
         "counts": {
-          "any": 305,
-          "asUnknownAs": 91,
+          "any": 306,
+          "asUnknownAs": 92,
           "tsIgnore": 4
         },
         "budget": {
@@ -673,6 +673,11 @@
             "kind": "ts-ignore"
           },
           {
+            "file": "server/tests/pii-redactor.test.ts",
+            "line": 37,
+            "kind": "as-unknown-as"
+          },
+          {
             "file": "server/tests/pilot-runs.test.ts",
             "line": 54,
             "kind": "as-unknown-as"
@@ -700,11 +705,6 @@
           {
             "file": "server/tests/sessions-postgres.test.ts",
             "line": 39,
-            "kind": "as-unknown-as"
-          },
-          {
-            "file": "src/rng/RngFactory.ts",
-            "line": 135,
             "kind": "as-unknown-as"
           }
         ]

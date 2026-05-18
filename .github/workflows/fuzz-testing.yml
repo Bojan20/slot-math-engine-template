@@ -1,0 +1,165 @@
+# W214 Faza 600.3 — Continuous fuzz testing (cargo + TS).
+#
+# Weekly Sunday 02:00 UTC. Three Rust targets run for 1h wall-clock
+# each (matrix parallelism). After Rust finishes, TS-level harnesses
+# run for 5 minutes each.
+#
+# Coverage stats and corpus are cached across runs via actions/cache —
+# we persist `rust-sim/fuzz/corpus` and `reports/fuzz/coverage-trend.json`.
+# Any crash artifact opens a GitHub issue with the stack trace.
+#
+# Note: complements `fuzz-weekly.yml` (24h sweep) with a lighter 1h
+# cadence so we always have FRESH data before standup.
+
+name: fuzz-testing
+
+on:
+  schedule:
+    # Sunday 02:00 UTC — 1h sweep complements the 24h `fuzz-weekly.yml`.
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+    inputs:
+      seconds_per_target:
+        description: "Seconds per fuzz target (default 3600 = 1h)"
+        required: false
+        default: "3600"
+      ts_iterations:
+        description: "TS fuzz iterations per harness (default 100000)"
+        required: false
+        default: "100000"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: fuzz-testing
+  cancel-in-progress: false
+
+jobs:
+  rust-fuzz:
+    name: cargo-fuzz · ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [fuzz_alias, fuzz_eval_config, fuzz_packed_grid]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust nightly + cargo-fuzz
+        run: |
+          rustup install nightly --profile minimal
+          rustup default nightly
+          cargo install cargo-fuzz --locked
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust-sim/fuzz
+
+      - name: Restore corpus cache
+        uses: actions/cache@v4
+        with:
+          path: rust-sim/fuzz/corpus/${{ matrix.target }}
+          key: fuzz-corpus-${{ matrix.target }}-${{ github.run_id }}
+          restore-keys: |
+            fuzz-corpus-${{ matrix.target }}-
+
+      - name: Run fuzz target
+        working-directory: rust-sim/fuzz
+        env:
+          SECS: ${{ github.event.inputs.seconds_per_target || '3600' }}
+        run: |
+          set +e
+          cargo +nightly fuzz run "${{ matrix.target }}" -- \
+            -max_total_time=${SECS} \
+            -print_final_stats=1 \
+            -timeout=25
+          STATUS=$?
+          set -e
+          mkdir -p ../../reports/fuzz
+          echo "{\"target\":\"${{ matrix.target }}\",\"status\":${STATUS},\"seconds\":${SECS},\"at\":\"$(date -u +%FT%TZ)\"}" \
+            > ../../reports/fuzz/run-${{ matrix.target }}.json
+
+      - name: Record coverage trend
+        if: always()
+        working-directory: rust-sim/fuzz
+        run: |
+          cargo +nightly fuzz coverage "${{ matrix.target }}" 2>/dev/null || true
+          node ../../scripts/fuzz/record-coverage.mjs \
+            --target "${{ matrix.target }}" \
+            --corpus-dir "corpus/${{ matrix.target }}" \
+            --out ../../reports/fuzz/coverage-trend.json || true
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-${{ matrix.target }}-${{ github.run_id }}
+          path: |
+            rust-sim/fuzz/corpus/${{ matrix.target }}/
+            rust-sim/fuzz/artifacts/${{ matrix.target }}/
+            reports/fuzz/run-${{ matrix.target }}.json
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Open issue on crash
+        if: always()
+        working-directory: rust-sim/fuzz
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const artDir = `rust-sim/fuzz/artifacts/${{ matrix.target }}`;
+            if (!fs.existsSync(artDir)) return;
+            const files = fs.readdirSync(artDir).filter((f) => f.startsWith('crash-'));
+            if (files.length === 0) return;
+            const body = [
+              `Fuzz crash discovered in target \`${{ matrix.target }}\`.`,
+              '',
+              `Crash files: ${files.length}`,
+              '',
+              'Triage within 48h. Download artifact `fuzz-${{ matrix.target }}-${{ github.run_id }}` for crash inputs.',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[fuzz crash] ${{ matrix.target }} — ${files.length} new input(s)`,
+              body,
+              labels: ['security', 'fuzz-crash', 'bug'],
+            });
+
+  ts-fuzz:
+    name: TS fuzz harness
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: rust-fuzz
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+
+      - name: Run TS fuzz harness
+        env:
+          ITER: ${{ github.event.inputs.ts_iterations || '100000' }}
+        run: |
+          ITER=${ITER} npm run -s fuzz:all:full
+        continue-on-error: true
+
+      - name: Upload TS fuzz reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ts-fuzz-${{ github.run_id }}
+          path: |
+            reports/fuzz/REPORT.json
+            reports/fuzz/REPORT.md
+            reports/fuzz/crashes/
+          if-no-files-found: ignore
+          retention-days: 30

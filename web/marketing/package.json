@@ -1,0 +1,21 @@
+{
+  "name": "slot-marketing-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "W214 Faza 800.1 Agent C — Public marketing site for slot-math-engine. Landing page, pricing, coverage, ROI preview, signup form, downloadable pitch tarball. Static deployable to Cloudflare Pages / Netlify / GitHub Pages.",
+  "scripts": {
+    "dev": "vite --port 5179",
+    "build": "vite build",
+    "preview": "vite preview --port 5179",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.4.10",
+    "vitest": "^1.0.0"
+  }
+}

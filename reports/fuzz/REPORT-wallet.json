@@ -1,0 +1,8 @@
+{
+  "name": "wallet-providers",
+  "iterations": 10000,
+  "seedStart": 1,
+  "crashes": [],
+  "durationMs": 19,
+  "iterPerSec": 526316
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation — slot-math-engine</title>
+  <meta name="description" content="Public docs: getting started, IR reference, SDK API, integration guides, cert lab adapters, white papers. Everything you need to evaluate the engine." />
+  <link rel="canonical" href="https://slot-math-engine.example/pages/docs.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:title" content="Documentation — slot-math-engine" />
+  <meta property="og:description" content="IR reference, SDK API, integration guides, cert lab adapters." />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>slot-math-engine</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="./how-it-works.html">How it works</a>
+        <a href="./pricing.html">Pricing</a>
+        <a href="./coverage.html">Coverage</a>
+        <a href="./demo.html">Demo</a>
+        <a href="./docs.html" class="active">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="./contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Documentation</h1>
+      <p class="subtitle">
+        Public-facing docs. The full reference + SDK API ships with the
+        Platform &amp; Enterprise tier license.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="icon">①</div>
+        <h3>Getting started</h3>
+        <p>From zero to first IR file in 10 minutes. Install, init project,
+           run the first closed-form solver.</p>
+        <a href="./contact.html">Quickstart (in tarball)</a>
+      </article>
+      <article class="feature-card">
+        <div class="icon">IR</div>
+        <h3>IR reference</h3>
+        <p>Complete YAML schema. Symbols, reels, paylines, bonuses,
+           persistence, free-spins.</p>
+        <a href="./contact.html">IR schema v3</a>
+      </article>
+      <article class="feature-card">
+        <div class="icon">SDK</div>
+        <h3>SDK API</h3>
+        <p>TypeScript + Rust kernel APIs. Identical surfaces, byte-parity
+           guaranteed by differential-fuzz CI.</p>
+        <a href="./contact.html">API docs</a>
+      </article>
+      <article class="feature-card">
+        <div class="icon">W</div>
+        <h3>Wallet adapters</h3>
+        <p>9 pre-plumbed wallet providers. Per-tenant config, P95 ≤ 30 ms.</p>
+        <a href="./contact.html">Wallet guide</a>
+      </article>
+      <article class="feature-card">
+        <div class="icon">L</div>
+        <h3>Cert lab adapters</h3>
+        <p>BMM, GLI, eCOGRA, NMi. Dossier format mapping per lab.</p>
+        <a href="./contact.html">Cert pipeline</a>
+      </article>
+      <article class="feature-card">
+        <div class="icon">📄</div>
+        <h3>White papers</h3>
+        <p>Closed-form vs Monte Carlo · Differential fuzz · Hash-chain audit ·
+           Operator privacy posture.</p>
+        <a href="./contact.html">White papers (coming Q3 2026)</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border)">
+    <h2 class="section-title">Reference cards</h2>
+    <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
+      <div class="tier">
+        <h3>L&amp;W Portfolio Coverage Manifest</h3>
+        <p>Canonical doc mapping every L&amp;W mechanic gap (M1–M16) to its
+           closure Wave + commit hash. Source of truth for the coverage page.</p>
+        <a class="btn btn-secondary" href="./coverage.html">View coverage →</a>
+      </div>
+      <div class="tier">
+        <h3>Compliance &amp; Jurisdictions Matrix</h3>
+        <p>15 live jurisdictions × stake caps × RG flags × audit retention.
+           Per-jurisdiction enforcement rules.</p>
+        <a class="btn btn-secondary" href="./contact.html">Request full matrix →</a>
+      </div>
+      <div class="tier">
+        <h3>Marketplace SDK Quickstart</h3>
+        <p>How to publish a math template into the public marketplace.
+           30% rev-share defaults, audited submission flow.</p>
+        <a class="btn btn-secondary" href="./contact.html">Get SDK →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:1px solid var(--border);text-align:center">
+    <h2 class="section-title">Blog</h2>
+    <p class="section-sub">
+      Launching Q3 2026. Topics:
+    </p>
+    <ul style="display:inline-block;text-align:left;color:var(--fg-muted)">
+      <li>Why closed-form is the right primitive for slot math</li>
+      <li>How we got TypeScript and Rust byte-identical</li>
+      <li>The 14-day cycle: a deep dive into our cert pipeline</li>
+      <li>Hash-chain audit logs and why operators love them</li>
+      <li>L&amp;W mechanic portfolio — the 16 gaps we closed</li>
+    </ul>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div><h4>slot-math-engine</h4><p>Math engine + IR + cert paper trail.</p></div>
+      <div><h4>Product</h4><ul>
+        <li><a href="./how-it-works.html">How it works</a></li>
+        <li><a href="./pricing.html">Pricing</a></li>
+        <li><a href="./coverage.html">Coverage</a></li>
+        <li><a href="./demo.html">Demo</a></li>
+      </ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="./docs.html">Docs</a></li>
+        <li><a href="./contact.html">Get tarball</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul><li><a href="./contact.html#privacy">Privacy</a></li></ul></div>
+      <div class="copy">© 2026 slot-math-engine · Docs · Public reference</div>
+    </div>
+  </footer>
+</body>
+</html>
