@@ -77,7 +77,7 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 | # | Title | Brand / Studio | Year | Mechanics | Engine P-ID coverage | Gap? | Priority |
 |---|---|---|---|---|---|---|---|
 | 1 | Dragon Train Chi Lin Wins | LNW (in-house digital) | 2024 | A (6-scatter H&S, 3-respin reset) + B (4-tier MMMS + Fortune 8) + H (sticky mystery green-dragon FS) + G (sticky mystery during FS) | P-002 ✅ + P-049 ✅ + P-059 ✅ (H&S value-based) + P-035 ✅ (multi-tier WAP) + P-005/P-051 ✅ (sticky FS + mystery reveal) | NO | n/a |
-| 2 | Dragon Spin CrossLink Water | LNW (in-house digital) | 2024 | A (gold coin bag fill per reel) + C2-like per-row multiplier increment | P-002 ✅ + ❌ NOVEL: **per-reel cash-bag aggregator with row-multiplier coupling** (each landed coin contributes to its reel's bag AND ramps its row's multiplier by +1) — distinct from any P-ID | YES (M1) | **P0** |
+| 2 | Dragon Spin CrossLink Water | LNW (in-house digital) | 2024 | A (gold coin bag fill per reel) + C2-like per-row multiplier increment | P-002 ✅ + ❌ NOVEL: **per-reel cash-bag aggregator with row-multiplier coupling** (each landed coin contributes to its reel's bag AND ramps its row's multiplier by +1) — distinct from any P-ID |  ✅ **CLOSED (M1 W185)**| **P0** |
 | 3 | Huff N' Puff (original) | LNW (in-house digital, ex-SG) | 2019 | A (cash-on-reel + Buzz Saw upgrade) + B (4-tier wheel: Mini/Minor/Major/Grand + Super) + D (wheel-bonus pick) + H (FS) + **M: frame upgrade (Straw→Wood→Brick)** | P-002 ✅ + P-035 ✅ + P-046 ✅ (wheel respin) + P-014 ✅ + ❌ **frame-state Markov upgrade** | ✅ **CLOSED (M2 W183)** | **P0** |
 | 4 | Huff N' More Puff | LNW | 2020 | Same as Huff N' Puff + 5-tier wheel | as above + P-067 ✅ (K-tier voltage meter analog) | ✅ **CLOSED (M2 W183)** | P0 |
 | 5 | Huff N' Even More Puff | LNW | 2022 | A + B (5-tier) + D (wheel) + H + frame upgrade + Mega Hat add-on | as above + ❌ Mega Hat add-on add-multiplier | ✅ **CLOSED (M2 W183 + M3 W182)** | P0 |
@@ -190,9 +190,10 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 
 Numbered M1…M16 (referenced in column above). For each: 1-line description + example L&W title(s) + reason existing P-IDs do not cover.
 
-### M1 — Per-reel cash-bag aggregator with row-multiplier coupling
+### M1 — Per-reel cash-bag aggregator with row-multiplier coupling — ✅ **CLOSED in W185** (P-086)
 **Example:** Dragon Spin CrossLink Water (2024).
 Each landed coin contributes to its reel-specific bag AND ramps its row-specific multiplier by +1. Two coupled progressions (per-reel bag, per-row multiplier) where outcomes interact multiplicatively at payout. P-002 covers cash-collect into a single pool; P-067 covers single-meter K-tier; P-039 covers global-only persistent multiplier. None covers **per-reel × per-row coupled accumulators**.
+**Resolution:** W185 ships `src/features/perReelBagRowMultiplierCoupled.ts` — per-cell Bernoulli × coupled-dimension aggregation: per-reel bag B_i = M·q·μ_V Wald, per-row coin count C_j ~ Binomial(N, q), per-row multiplier M_j = m_{C_j} vendor lookup. E[Y] = M·μ_V·Σ_c Bin(c;N,q)·m_c·c exact closed-form via tower property. P(all rows full) = q^(N·M). 36 vitest specs PASS. Acceptance 6/6 PASS @ 120K MC spins (Dragon Spin CrossLink Water classic + high-density + steep-ramp + compact 3×3 + flat-baseline + top-tier-only jackpot corners) — CF/MC slaganje 0.1-1% rel za main path, top-tier-only corner uses abs-or-rel tolerance.
 
 ### M2 — Multi-state frame/structure upgrade Markov — ✅ **CLOSED in W183** (P-084)
 **Example:** Huff N' Puff family (Straw → Wood → Brick → Mansion frame upgrades).

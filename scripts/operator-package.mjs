@@ -290,6 +290,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 184 Colossal Reels Wild-Transfer (L&W M7 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles)
   { kind: 'reports/acceptance', src: 'reports/acceptance/COLOSSAL_REELS_WILD_TRANSFER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/COLOSSAL_REELS_WILD_TRANSFER.md' },
+  // REPORTS — Wave 185 Per-Reel Bag × Row-Multiplier Coupled (L&W M1 GAP CLOSURE — Dragon Spin CrossLink Water)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

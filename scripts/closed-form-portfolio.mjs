@@ -1363,6 +1363,27 @@ async function main() {
     showcase.push({ wave: 184, solver: 'Colossal Reels Wild-Transfer (L&W Spartacus M7)', metric: 'E[K_col]', cf: cf.expectedWildReelsColossal, mc: mc.meanWildReelsColossal, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W185: Per-Reel Bag × Row-Multiplier Coupled (L&W M1 — Dragon Spin CrossLink) ──
+  {
+    const { analyzePerReelBagRowMultiplierCoupled, simulatePerReelBagRowMultiplierCoupled } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'perReelBagRowMultiplierCoupled.js'));
+    const t0 = Date.now();
+    const cfg = {
+      numReels: 5,
+      numRows: 4,
+      probCoinLandPerCell: 0.12,
+      expectedCoinValue: 3,
+      varianceCoinValue: 2,
+      multiplierByRowCoinCount: [1, 1, 2, 5, 10, 25],
+    };
+    const cf = analyzePerReelBagRowMultiplierCoupled(cfg);
+    const mc = simulatePerReelBagRowMultiplierCoupled(cfg, 30_000, SEED);
+    const rel = Math.abs(cf.expectedTotalPayoutPerSpin - mc.meanTotalPayoutPerSpin) /
+      Math.max(mc.meanTotalPayoutPerSpin, 1e-9);
+    const ok = rel < 0.05; // 2D Binomial exact — tight
+    showcase.push({ wave: 185, solver: 'Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1)', metric: 'E[Y]', cf: cf.expectedTotalPayoutPerSpin, mc: mc.meanTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

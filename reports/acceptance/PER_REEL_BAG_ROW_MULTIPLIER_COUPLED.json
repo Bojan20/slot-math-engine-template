@@ -1,0 +1,393 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PER_REEL_BAG_ROW_MULTIPLIER_COUPLED",
+  "generated_utc": "2026-05-18T00:22:30.142Z",
+  "spins_per_config": 20000,
+  "seed": 3405644165,
+  "tolerances": {
+    "payout_rel": 0.25,
+    "reel_bag_rel": 0.05,
+    "row_mult_rel": 0.04,
+    "prob_row_full_abs": 0.03,
+    "highest_mult_rel": 0.2
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_dragon_spin_crosslink_water_classic_5x4",
+      "description": "LNW Dragon Spin CrossLink Water (2024, defining title) — 5×4 grid, q=0.12, escalating row mult [1,1,2,5,10,25].",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "probCoinLandPerCell": 0.12,
+        "expectedCoinValue": 3,
+        "varianceCoinValue": 2,
+        "multiplierByRowCoinCount": [
+          1,
+          1,
+          2,
+          5,
+          10,
+          25
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 1.44,
+        "varianceReelBag": 4.7616,
+        "expectedRowCoinCount": 0.6,
+        "expectedRowMultiplier": 1.1604671487999998,
+        "rowCoinCountPmf": [
+          0.5277319168,
+          0.35981721599999994,
+          0.09813196799999997,
+          0.013381631999999996,
+          0.0009123839999999996,
+          0.00002488319999999999
+        ],
+        "expectedRowContribution": 2.9780259839999985,
+        "varianceRowContribution": 57.41847189462082,
+        "expectedTotalPayoutPerSpin": 11.912103935999994,
+        "varianceTotalPayoutPerSpin": 229.6738875784833,
+        "stdDevTotalPayoutPerSpin": 15.15499546613206,
+        "probAtLeastOneRowFull": 0.00009952908501997815,
+        "expectedRowsFull": 0.00009953279999999996,
+        "probAllRowsFull": 3.8337599924474685e-19,
+        "oneInNSpinsAtLeastOneRowFull": 10047.314308167037,
+        "expectedHighestRowMultiplier": 1.5678435172808283,
+        "commercialUpliftVsFlatMultiplier": 1.6544588799999993
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 12.039983150372183,
+        "stdDevTotalPayoutPerSpin": 15.094681071510085,
+        "meanReelBag": 1.4432826965385672,
+        "meanRowMultiplier": 1.1631875,
+        "meanHighestRowMultiplier": 1.5778,
+        "observedProbAtLeastOneRowFull": 0.00005,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.010621212071068087,
+        "reel_bag_rel": 0.002274465388132335,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.000049529085019978145,
+        "highest_mult_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "B_dragon_spin_crosslink_high_density",
+      "description": "Dragon Spin CrossLink variant — higher q=0.25 (more frequent low-tier hits, fewer rare full rows).",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "probCoinLandPerCell": 0.25,
+        "expectedCoinValue": 2,
+        "varianceCoinValue": 1,
+        "multiplierByRowCoinCount": [
+          1,
+          1,
+          2,
+          4,
+          10,
+          50
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 2,
+        "varianceReelBag": 4,
+        "expectedRowCoinCount": 1.25,
+        "expectedRowMultiplier": 1.70703125,
+        "rowCoinCountPmf": [
+          0.2373046875,
+          0.3955078125,
+          0.263671875,
+          0.087890625,
+          0.0146484375,
+          0.0009765625
+        ],
+        "expectedRowContribution": 6.669921875,
+        "varianceRowContribution": 387.2748374938965,
+        "expectedTotalPayoutPerSpin": 26.6796875,
+        "varianceTotalPayoutPerSpin": 1549.099349975586,
+        "stdDevTotalPayoutPerSpin": 39.35859944123502,
+        "probAtLeastOneRowFull": 0.0039005316784823663,
+        "expectedRowsFull": 0.00390625,
+        "probAllRowsFull": 9.094947017729282e-13,
+        "oneInNSpinsAtLeastOneRowFull": 256.37530532480736,
+        "expectedHighestRowMultiplier": 3.0701451696731965,
+        "commercialUpliftVsFlatMultiplier": 2.66796875
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 26.594935006777714,
+        "stdDevTotalPayoutPerSpin": 39.044586729668026,
+        "meanReelBag": 2.0032178401404614,
+        "meanRowMultiplier": 1.701675,
+        "meanHighestRowMultiplier": 3.0488,
+        "observedProbAtLeastOneRowFull": 0.00375,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.0031766673887123325,
+        "reel_bag_rel": 0.0016063356046368974,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.0001505316784823664,
+        "highest_mult_rel": 0.00695249523835013
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "C_dragon_spin_crosslink_steep_ramp",
+      "description": "Dragon Spin CrossLink variant — steep multiplier ramp [1,1,3,10,50,500] for jackpot disclosure.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "probCoinLandPerCell": 0.15,
+        "expectedCoinValue": 2.5,
+        "varianceCoinValue": 1.5,
+        "multiplierByRowCoinCount": [
+          1,
+          1,
+          3,
+          10,
+          50,
+          500
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 1.5,
+        "varianceReelBag": 4.0875,
+        "expectedRowCoinCount": 0.75,
+        "expectedRowMultiplier": 1.6391350000000002,
+        "rowCoinCountPmf": [
+          0.44370531249999995,
+          0.3915046875,
+          0.138178125,
+          0.024384375000000003,
+          0.0021515625000000003,
+          0.00007593750000000002
+        ],
+        "expectedRowContribution": 6.430652343750001,
+        "varianceRowContribution": 3823.492306136948,
+        "expectedTotalPayoutPerSpin": 25.722609375000005,
+        "varianceTotalPayoutPerSpin": 15293.969224547793,
+        "stdDevTotalPayoutPerSpin": 123.66878840090492,
+        "probAtLeastOneRowFull": 0.0003037154027281108,
+        "expectedRowsFull": 0.0003037500000000001,
+        "probAllRowsFull": 3.3252567300796546e-17,
+        "oneInNSpinsAtLeastOneRowFull": 3292.5560936901525,
+        "expectedHighestRowMultiplier": 3.2345716662205644,
+        "commercialUpliftVsFlatMultiplier": 3.4296812500000007
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 25.992189958327636,
+        "stdDevTotalPayoutPerSpin": 122.15447397341374,
+        "meanReelBag": 1.5021685087612535,
+        "meanRowMultiplier": 1.639675,
+        "meanHighestRowMultiplier": 3.24195,
+        "observedProbAtLeastOneRowFull": 0.0002,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.010371599459677699,
+        "reel_bag_rel": 0.0014435855555524557,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.00010371540272811081,
+        "highest_mult_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "D_compact_grid_3x3_balanced",
+      "description": "Compact 3×3 grid balanced — q=0.20, [1,1,2,5] mid-tier rewards.",
+      "cfg": {
+        "numReels": 3,
+        "numRows": 3,
+        "probCoinLandPerCell": 0.2,
+        "expectedCoinValue": 2,
+        "varianceCoinValue": 0.5,
+        "multiplierByRowCoinCount": [
+          1,
+          1,
+          2,
+          5
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 1.2000000000000002,
+        "varianceReelBag": 2.2200000000000006,
+        "expectedRowCoinCount": 0.6000000000000001,
+        "expectedRowMultiplier": 1.1280000000000003,
+        "rowCoinCountPmf": [
+          0.5120000000000001,
+          0.3840000000000001,
+          0.09600000000000003,
+          0.008000000000000002
+        ],
+        "expectedRowContribution": 1.7760000000000005,
+        "varianceRowContribution": 12.601824000000004,
+        "expectedTotalPayoutPerSpin": 5.328000000000001,
+        "varianceTotalPayoutPerSpin": 37.80547200000001,
+        "stdDevTotalPayoutPerSpin": 6.148615453905051,
+        "probAtLeastOneRowFull": 0.023808512000000004,
+        "expectedRowsFull": 0.024000000000000007,
+        "probAllRowsFull": 5.120000000000003e-7,
+        "oneInNSpinsAtLeastOneRowFull": 42.00178490785144,
+        "expectedHighestRowMultiplier": 1.3521024000000008,
+        "commercialUpliftVsFlatMultiplier": 1.4800000000000002
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 5.372186659238105,
+        "stdDevTotalPayoutPerSpin": 6.2215167279839285,
+        "meanReelBag": 1.2037454390790059,
+        "meanRowMultiplier": 1.13045,
+        "meanHighestRowMultiplier": 1.3569,
+        "observedProbAtLeastOneRowFull": 0.02455,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.008225078918678262,
+        "reel_bag_rel": 0.0031114876596096347,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.000741487999999995,
+        "highest_mult_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_corner_flat_multiplier_pure_collector",
+      "description": "Corner: flat multiplier (m_c = 1 svuda) — degenerates to pure per-cell collector (no row coupling).",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "probCoinLandPerCell": 0.15,
+        "expectedCoinValue": 2,
+        "varianceCoinValue": 0.5,
+        "multiplierByRowCoinCount": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 1.2,
+        "varianceReelBag": 2.34,
+        "expectedRowCoinCount": 0.75,
+        "expectedRowMultiplier": 1,
+        "rowCoinCountPmf": [
+          0.44370531249999995,
+          0.3915046875,
+          0.138178125,
+          0.024384375000000003,
+          0.0021515625000000003,
+          0.00007593750000000002
+        ],
+        "expectedRowContribution": 1.5,
+        "varianceRowContribution": 2.9250000000000007,
+        "expectedTotalPayoutPerSpin": 6,
+        "varianceTotalPayoutPerSpin": 11.700000000000003,
+        "stdDevTotalPayoutPerSpin": 3.4205262752974144,
+        "probAtLeastOneRowFull": 0.0003037154027281108,
+        "expectedRowsFull": 0.0003037500000000001,
+        "probAllRowsFull": 3.3252567300796546e-17,
+        "oneInNSpinsAtLeastOneRowFull": 3292.5560936901525,
+        "expectedHighestRowMultiplier": 1,
+        "commercialUpliftVsFlatMultiplier": 1
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 5.990211874625006,
+        "stdDevTotalPayoutPerSpin": 3.436480226520019,
+        "meanReelBag": 1.1980423749250064,
+        "meanRowMultiplier": 1,
+        "meanHighestRowMultiplier": 1,
+        "observedProbAtLeastOneRowFull": 0.0002,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.0016313542291657157,
+        "reel_bag_rel": 0.0016313542291612748,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.00010371540272811081,
+        "highest_mult_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "F_corner_threshold_only_top_tier_pays",
+      "description": "Corner: only top-tier pays (m_c=0 for c<N, m_N=100) — rare jackpot disclosure.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "probCoinLandPerCell": 0.2,
+        "expectedCoinValue": 2,
+        "varianceCoinValue": 0.5,
+        "multiplierByRowCoinCount": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          100
+        ]
+      },
+      "closed_form": {
+        "expectedReelBag": 1.6,
+        "varianceReelBag": 2.9600000000000004,
+        "expectedRowCoinCount": 1,
+        "expectedRowMultiplier": 0.032,
+        "rowCoinCountPmf": [
+          0.3276800000000001,
+          0.4096000000000001,
+          0.20480000000000004,
+          0.0512,
+          0.0064,
+          0.00032
+        ],
+        "expectedRowContribution": 0.32,
+        "varianceRowContribution": 327.8976,
+        "expectedTotalPayoutPerSpin": 1.28,
+        "varianceTotalPayoutPerSpin": 1311.5904,
+        "stdDevTotalPayoutPerSpin": 36.215886017050586,
+        "probAtLeastOneRowFull": 0.0012793857310614554,
+        "expectedRowsFull": 0.00128,
+        "probAllRowsFull": 1.0485760000000004e-14,
+        "oneInNSpinsAtLeastOneRowFull": 781.6251000160365,
+        "expectedHighestRowMultiplier": 0.12793857310614554,
+        "commercialUpliftVsFlatMultiplier": 0.16
+      },
+      "monte_carlo": {
+        "spins": 20000,
+        "meanTotalPayoutPerSpin": 1.5295637508451243,
+        "stdDevTotalPayoutPerSpin": 39.82703101631246,
+        "meanReelBag": 1.6011198538353175,
+        "meanRowMultiplier": 0.0375,
+        "meanHighestRowMultiplier": 0.15,
+        "observedProbAtLeastOneRowFull": 0.0015,
+        "observedProbAllRowsFull": 0
+      },
+      "checks": {
+        "payout_rel": 0.16316008450594735,
+        "reel_bag_rel": 0.0006994191175850677,
+        "row_mult_rel": 0,
+        "prob_row_full_abs": 0.00022061426893854466,
+        "highest_mult_rel": 0.14707617929236305
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    }
+  ]
+}

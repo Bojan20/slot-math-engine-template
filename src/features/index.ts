@@ -216,3 +216,6 @@ export * from './multiStateFrameUpgradeMarkov.js';
 
 // W152 Wave 184: Colossal Reels Wild-Transfer Coupled Two-Grid Aggregator (65. solver, L&W M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles)
 export * from './colossalReelsWildTransfer.js';
+
+// W152 Wave 185: Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water + future L&W flagship)
+export * from './perReelBagRowMultiplierCoupled.js';
