@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-18T02:03:56.446Z",
-  "solvers_total": 76,
-  "solvers_passed": 76,
+  "generated_utc": "2026-05-18T02:12:22.321Z",
+  "solvers_total": 77,
+  "solvers_passed": 77,
   "overall_pass": true,
   "showcase": [
     {
@@ -31,7 +31,7 @@
       "cf": 0.9500000000013147,
       "mc": 0.950963599998923,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 1
     },
     {
       "wave": 52,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 55
+      "elapsed_ms": 52
     },
     {
       "wave": 53,
@@ -67,7 +67,7 @@
       "cf": 13,
       "mc": 13,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 56,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -94,7 +94,7 @@
       "cf": 3.3000000000000003,
       "mc": 3.31502,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 59,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 2
     },
     {
       "wave": 75,
@@ -139,7 +139,7 @@
       "cf": 1.6665,
       "mc": 1.6790952970006168,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 81,
@@ -148,7 +148,7 @@
       "cf": 3.3,
       "mc": 3.3126075,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 84,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 10
+      "elapsed_ms": 9
     },
     {
       "wave": 93,
@@ -193,7 +193,7 @@
       "cf": 4.826172445700002,
       "mc": 5.03532,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 95,
@@ -220,7 +220,7 @@
       "cf": 40.15990642551331,
       "mc": 39.96452,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 102,
@@ -229,7 +229,7 @@
       "cf": 6.899999999999999,
       "mc": 6.90836,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 105,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 51
+      "elapsed_ms": 48
     },
     {
       "wave": 112,
@@ -310,7 +310,7 @@
       "cf": 53.375,
       "mc": 54.2797,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 125,
@@ -391,7 +391,7 @@
       "cf": 15.223422022308704,
       "mc": 14.81615,
       "ok": true,
-      "elapsed_ms": 49
+      "elapsed_ms": 45
     },
     {
       "wave": 144,
@@ -436,7 +436,7 @@
       "cf": 0.27801562499999993,
       "mc": 0.2738833333333333,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 154,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 825
+      "elapsed_ms": 866
     },
     {
       "wave": 157,
@@ -454,7 +454,7 @@
       "cf": 0.14148853381835558,
       "mc": 0.16166666666666665,
       "ok": true,
-      "elapsed_ms": 37
+      "elapsed_ms": 38
     },
     {
       "wave": 159,
@@ -472,7 +472,7 @@
       "cf": 110.34474847738295,
       "mc": 108.41043902029095,
       "ok": true,
-      "elapsed_ms": 33
+      "elapsed_ms": 35
     },
     {
       "wave": 163,
@@ -481,7 +481,7 @@
       "cf": 21.433470507544587,
       "mc": 20.254702592780884,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 165,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 334
+      "elapsed_ms": 343
     },
     {
       "wave": 169,
@@ -517,7 +517,7 @@
       "cf": 0.4285714285714286,
       "mc": 0.43155,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 173,
@@ -526,7 +526,7 @@
       "cf": 2.4999999999999996,
       "mc": 2.5123,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
     },
     {
       "wave": 175,
@@ -535,7 +535,7 @@
       "cf": 0.6723199999999999,
       "mc": 0.67406,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 177,
@@ -553,7 +553,7 @@
       "cf": 5.800000000000001,
       "mc": 5.79635,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 181,
@@ -562,7 +562,7 @@
       "cf": 3.1050000000000004,
       "mc": 3.1999,
       "ok": true,
-      "elapsed_ms": 7
+      "elapsed_ms": 8
     },
     {
       "wave": 182,
@@ -598,7 +598,7 @@
       "cf": 11.912103935999994,
       "mc": 11.818918420259651,
       "ok": true,
-      "elapsed_ms": 18
+      "elapsed_ms": 17
     },
     {
       "wave": 186,
@@ -634,7 +634,7 @@
       "cf": 20,
       "mc": 19.990318035914726,
       "ok": true,
-      "elapsed_ms": 15
+      "elapsed_ms": 14
     },
     {
       "wave": 190,
@@ -643,7 +643,7 @@
       "cf": 1.8,
       "mc": 1.8504428242494475,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 191,
@@ -652,7 +652,7 @@
       "cf": 40.125,
       "mc": 40.015754492668435,
       "ok": true,
-      "elapsed_ms": 20
+      "elapsed_ms": 19
     },
     {
       "wave": 192,
@@ -661,7 +661,7 @@
       "cf": 10,
       "mc": 10.054,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 193,
@@ -688,7 +688,16 @@
       "cf": 1.6096,
       "mc": 1.6068015656327834,
       "ok": true,
-      "elapsed_ms": 5
+      "elapsed_ms": 4
+    },
+    {
+      "wave": 196,
+      "solver": "🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS)",
+      "metric": "E[Y/spin]",
+      "cf": 42.05,
+      "mc": 41.71062,
+      "ok": true,
+      "elapsed_ms": 6
     }
   ]
 }

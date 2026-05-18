@@ -1612,6 +1612,41 @@ async function main() {
     showcase.push({ wave: 195, solver: 'Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W196: Stacked Multi-Wheel Composition (L&W M6 FINAL — Triple Cash Wheel, 16/16 L&W gaps) ──
+  {
+    const { analyzeStackedMultiWheelComposition, simulateStackedMultiWheelComposition } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'stackedMultiWheelComposition.js'));
+    const t0 = Date.now();
+    const cfg = {
+      wheels: [
+        { label: 'w1', slices: [
+          { probability: 0.50, payout: 2 },
+          { probability: 0.30, payout: 5 },
+          { probability: 0.15, payout: 10 },
+          { probability: 0.05, payout: 50 },
+        ] },
+        { label: 'w2', slices: [
+          { probability: 0.40, payout: 3 },
+          { probability: 0.35, payout: 8 },
+          { probability: 0.20, payout: 20 },
+          { probability: 0.05, payout: 100 },
+        ] },
+        { label: 'w3', slices: [
+          { probability: 0.35, payout: 5 },
+          { probability: 0.40, payout: 12 },
+          { probability: 0.20, payout: 30 },
+          { probability: 0.05, payout: 200 },
+        ] },
+      ],
+    };
+    const cf = analyzeStackedMultiWheelComposition(cfg);
+    const mc = simulateStackedMultiWheelComposition(cfg, 50_000, SEED);
+    const rel = Math.abs(cf.expectedTotalPayout - mc.meanTotalPayout) /
+      Math.max(mc.meanTotalPayout, 1e-9);
+    const ok = rel < 0.04;
+    showcase.push({ wave: 196, solver: '🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS)', metric: 'E[Y/spin]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayout, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

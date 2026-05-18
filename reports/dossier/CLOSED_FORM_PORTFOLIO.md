@@ -1,10 +1,10 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T02:03:56.446Z`
+Generated: `2026-05-18T02:12:22.321Z`
 
 ## Headline
 
-**76/76 solvers PASS** in single end-to-end runner.
+**77/77 solvers PASS** in single end-to-end runner.
 
 Each solver landed Wave 49-60 (closed-form math kernels for hybrid slot-game mechanics).
 All have MC verification, all clean-room, all bit-exact deterministic.
@@ -89,6 +89,7 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 193 | Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15) | E[Y/spin] | 2.66000 | 2.63717 | ✅ |
 | 194 | Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16) | E[Y/run] | 18.30144 | 19.29205 | ✅ |
 | 195 | Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13) | E[Y/spin] | 1.60960 | 1.60680 | ✅ |
+| 196 | 🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS) | E[Y/spin] | 42.05000 | 41.71062 | ✅ |
 
 ## Per-solver detailed acceptance reports
 

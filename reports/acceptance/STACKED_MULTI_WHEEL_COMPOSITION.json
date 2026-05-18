@@ -1,0 +1,1186 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "STACKED_MULTI_WHEEL_COMPOSITION",
+  "generated_utc": "2026-05-18T02:12:12.345Z",
+  "spins_per_config": 100000,
+  "seed": 3405644182,
+  "tolerances": {
+    "payout_rel": 0.04,
+    "per_wheel_rel": 0.05,
+    "top_prob_abs": 0.01
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_bally_triple_cash_wheel_3_stacked",
+      "description": "LNW Bally Triple Cash Wheel (2022, defining title) — 3 stacked wheels sa pyramid slice prizes.",
+      "cfg": {
+        "wheels": [
+          {
+            "label": "w1",
+            "slices": [
+              {
+                "label": "low",
+                "probability": 0.5,
+                "payout": 2
+              },
+              {
+                "label": "med",
+                "probability": 0.3,
+                "payout": 5
+              },
+              {
+                "label": "high",
+                "probability": 0.15,
+                "payout": 10
+              },
+              {
+                "label": "top",
+                "probability": 0.05,
+                "payout": 50
+              }
+            ]
+          },
+          {
+            "label": "w2",
+            "slices": [
+              {
+                "label": "low",
+                "probability": 0.4,
+                "payout": 3
+              },
+              {
+                "label": "med",
+                "probability": 0.35,
+                "payout": 8
+              },
+              {
+                "label": "high",
+                "probability": 0.2,
+                "payout": 20
+              },
+              {
+                "label": "top",
+                "probability": 0.05,
+                "payout": 100
+              }
+            ]
+          },
+          {
+            "label": "w3",
+            "slices": [
+              {
+                "label": "low",
+                "probability": 0.35,
+                "payout": 5
+              },
+              {
+                "label": "med",
+                "probability": 0.4,
+                "payout": 12
+              },
+              {
+                "label": "high",
+                "probability": 0.2,
+                "payout": 30
+              },
+              {
+                "label": "top",
+                "probability": 0.05,
+                "payout": 200
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 3,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "w1",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "low",
+                "probability": 0.5,
+                "payout": 2,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "med",
+                "probability": 0.3,
+                "payout": 5,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "high",
+                "probability": 0.15,
+                "payout": 10,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "top",
+                "probability": 0.05,
+                "payout": 50,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 6.5,
+            "variancePayout": 107.25,
+            "stdDevPayout": 10.35615758860399,
+            "contributionToTotalRtp": 0.1545778834720571,
+            "varianceContribution": 0.04699623920538014,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 50,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 1,
+            "label": "w2",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "low",
+                "probability": 0.4,
+                "payout": 3,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "med",
+                "probability": 0.35,
+                "payout": 8,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "high",
+                "probability": 0.2,
+                "payout": 20,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "top",
+                "probability": 0.05,
+                "payout": 100,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 13,
+            "variancePayout": 437,
+            "stdDevPayout": 20.904544960366874,
+            "contributionToTotalRtp": 0.3091557669441142,
+            "varianceContribution": 0.19149050380187527,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 100,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 2,
+            "label": "w3",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "low",
+                "probability": 0.35,
+                "payout": 5,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "med",
+                "probability": 0.4,
+                "payout": 12,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "high",
+                "probability": 0.2,
+                "payout": 30,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "top",
+                "probability": 0.05,
+                "payout": 200,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 22.55,
+            "variancePayout": 1737.8474999999999,
+            "stdDevPayout": 41.68749812593699,
+            "contributionToTotalRtp": 0.5362663495838288,
+            "varianceContribution": 0.7615132569927446,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 200,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": true
+          }
+        ],
+        "expectedTotalPayout": 42.05,
+        "varianceTotalPayout": 2282.0975,
+        "stdDevTotalPayout": 47.77130414799244,
+        "bestWheelIndex": 2,
+        "probabilityAllTopSlice": 0.00012500000000000003,
+        "probabilityAtLeastOneTopSlice": 0.1426250000000001,
+        "oneInNSpinsAllTopJackpot": 7999.999999999998,
+        "commercialUpliftVsSingleWheel": 1.8647450110864743,
+        "sumStdDevs": 72.94820067490785,
+        "independenceVarianceRatio": 0.6548661064429028
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 41.8163,
+        "stdDevTotalPayout": 47.35922987454505,
+        "perWheelMeans": [
+          6.48417,
+          13.07769,
+          22.25444
+        ],
+        "observedAllTopSliceRate": 0.00014,
+        "observedAtLeastOneTopSliceRate": 0.14144,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.005557669441141473,
+        "max_per_wheel_rel": 0.013106873614190767,
+        "all_top_abs": 0.000014999999999999958
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "B_quick_hit_cash_wheel_2_wheel_composition",
+      "description": "LNW Bally Quick Hit Cash Wheel (2014) — cash-tier wheel × multiplier wheel composition.",
+      "cfg": {
+        "wheels": [
+          {
+            "label": "cash_wheel",
+            "slices": [
+              {
+                "label": "mini",
+                "probability": 0.5,
+                "payout": 5
+              },
+              {
+                "label": "minor",
+                "probability": 0.3,
+                "payout": 20
+              },
+              {
+                "label": "major",
+                "probability": 0.15,
+                "payout": 100
+              },
+              {
+                "label": "grand",
+                "probability": 0.05,
+                "payout": 1000
+              }
+            ]
+          },
+          {
+            "label": "multiplier_wheel",
+            "slices": [
+              {
+                "label": "1x",
+                "probability": 0.5,
+                "payout": 1
+              },
+              {
+                "label": "2x",
+                "probability": 0.3,
+                "payout": 2
+              },
+              {
+                "label": "5x",
+                "probability": 0.15,
+                "payout": 5
+              },
+              {
+                "label": "10x",
+                "probability": 0.05,
+                "payout": 10
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 2,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "cash_wheel",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "mini",
+                "probability": 0.5,
+                "payout": 5,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "minor",
+                "probability": 0.3,
+                "payout": 20,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "major",
+                "probability": 0.15,
+                "payout": 100,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "grand",
+                "probability": 0.05,
+                "payout": 1000,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 73.5,
+            "variancePayout": 46230.25,
+            "stdDevPayout": 215.01220895567766,
+            "contributionToTotalRtp": 0.969017798286091,
+            "varianceContribution": 0.9998934253037095,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 1000,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": true
+          },
+          {
+            "index": 1,
+            "label": "multiplier_wheel",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "1x",
+                "probability": 0.5,
+                "payout": 1,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "2x",
+                "probability": 0.3,
+                "payout": 2,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "5x",
+                "probability": 0.15,
+                "payout": 5,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "10x",
+                "probability": 0.05,
+                "payout": 10,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 2.35,
+            "variancePayout": 4.927499999999998,
+            "stdDevPayout": 2.219797288042311,
+            "contributionToTotalRtp": 0.030982201713909033,
+            "varianceContribution": 0.00010657469629050302,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 10,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          }
+        ],
+        "expectedTotalPayout": 75.85,
+        "varianceTotalPayout": 46235.1775,
+        "stdDevTotalPayout": 215.02366730199725,
+        "bestWheelIndex": 0,
+        "probabilityAllTopSlice": 0.0025000000000000005,
+        "probabilityAtLeastOneTopSlice": 0.09750000000000003,
+        "oneInNSpinsAllTopJackpot": 399.99999999999994,
+        "commercialUpliftVsSingleWheel": 1.0319727891156463,
+        "sumStdDevs": 217.23200624371998,
+        "independenceVarianceRatio": 0.9898341916556941
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 75.30904,
+        "stdDevTotalPayout": 213.95236505885697,
+        "perWheelMeans": [
+          72.9638,
+          2.34524
+        ],
+        "observedAllTopSliceRate": 0.00246,
+        "observedAtLeastOneTopSliceRate": 0.09642,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.007131970995385608,
+        "max_per_wheel_rel": 0.007295238095238011,
+        "all_top_abs": 0.00004000000000000054
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "C_cash_wheel_quick_hit_3_tier_balanced",
+      "description": "LNW Bally Cash Wheel Quick Hit (2014) — 3-wheel balanced tier composition.",
+      "cfg": {
+        "wheels": [
+          {
+            "label": "tier_1",
+            "slices": [
+              {
+                "probability": 0.4,
+                "payout": 4
+              },
+              {
+                "probability": 0.35,
+                "payout": 10
+              },
+              {
+                "probability": 0.2,
+                "payout": 25
+              },
+              {
+                "probability": 0.05,
+                "payout": 150
+              }
+            ]
+          },
+          {
+            "label": "tier_2",
+            "slices": [
+              {
+                "probability": 0.4,
+                "payout": 6
+              },
+              {
+                "probability": 0.35,
+                "payout": 15
+              },
+              {
+                "probability": 0.2,
+                "payout": 40
+              },
+              {
+                "probability": 0.05,
+                "payout": 250
+              }
+            ]
+          },
+          {
+            "label": "tier_3",
+            "slices": [
+              {
+                "probability": 0.4,
+                "payout": 8
+              },
+              {
+                "probability": 0.35,
+                "payout": 20
+              },
+              {
+                "probability": 0.2,
+                "payout": 60
+              },
+              {
+                "probability": 0.05,
+                "payout": 400
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 3,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "tier_1",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.4,
+                "payout": 4,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.35,
+                "payout": 10,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "slice_2",
+                "probability": 0.2,
+                "payout": 25,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "slice_3",
+                "probability": 0.05,
+                "payout": 150,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 17.6,
+            "variancePayout": 981.6400000000001,
+            "stdDevPayout": 31.331134674633155,
+            "contributionToTotalRtp": 0.20011370096645822,
+            "varianceContribution": 0.09062301011504896,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 150,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 1,
+            "label": "tier_2",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.4,
+                "payout": 6,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.35,
+                "payout": 15,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "slice_2",
+                "probability": 0.2,
+                "payout": 40,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "slice_3",
+                "probability": 0.05,
+                "payout": 250,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 28.15,
+            "variancePayout": 2745.7275,
+            "stdDevPayout": 52.399689884578514,
+            "contributionToTotalRtp": 0.3200682205798749,
+            "varianceContribution": 0.2534799835027791,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 250,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 2,
+            "label": "tier_3",
+            "numSlices": 4,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.4,
+                "payout": 8,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.35,
+                "payout": 20,
+                "isTopSlice": false
+              },
+              {
+                "index": 2,
+                "label": "slice_2",
+                "probability": 0.2,
+                "payout": 60,
+                "isTopSlice": false
+              },
+              {
+                "index": 3,
+                "label": "slice_3",
+                "probability": 0.05,
+                "payout": 400,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 42.2,
+            "variancePayout": 7104.76,
+            "stdDevPayout": 84.2897384027261,
+            "contributionToTotalRtp": 0.47981807845366686,
+            "varianceContribution": 0.655897006382172,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 400,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": true
+          }
+        ],
+        "expectedTotalPayout": 87.95,
+        "varianceTotalPayout": 10832.1275,
+        "stdDevTotalPayout": 104.07750717614253,
+        "bestWheelIndex": 2,
+        "probabilityAllTopSlice": 0.00012500000000000003,
+        "probabilityAtLeastOneTopSlice": 0.1426250000000001,
+        "oneInNSpinsAllTopJackpot": 7999.999999999998,
+        "commercialUpliftVsSingleWheel": 2.084123222748815,
+        "sumStdDevs": 168.02056296193777,
+        "independenceVarianceRatio": 0.6194331535463283
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 87.47855,
+        "stdDevTotalPayout": 103.395827381464,
+        "perWheelMeans": [
+          17.53865,
+          28.34062,
+          41.59928
+        ],
+        "observedAllTopSliceRate": 0.00014,
+        "observedAtLeastOneTopSliceRate": 0.14144,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.005360432063672591,
+        "max_per_wheel_rel": 0.014235071090047454,
+        "all_top_abs": 0.000014999999999999958
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_high_freq_2_wheel_simple",
+      "description": "High-frequency 2-wheel sa simple low-volatility distribution.",
+      "cfg": {
+        "wheels": [
+          {
+            "slices": [
+              {
+                "probability": 0.6,
+                "payout": 2
+              },
+              {
+                "probability": 0.4,
+                "payout": 5
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.55,
+                "payout": 3
+              },
+              {
+                "probability": 0.45,
+                "payout": 6
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 2,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "wheel_0",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.6,
+                "payout": 2,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.4,
+                "payout": 5,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 3.2,
+            "variancePayout": 2.1599999999999984,
+            "stdDevPayout": 1.4696938456699062,
+            "contributionToTotalRtp": 0.423841059602649,
+            "varianceContribution": 0.4923076923076922,
+            "topSliceProbability": 0.4,
+            "topSlicePayout": 5,
+            "oneInNSpinsForThisWheelTopSlice": 2.5,
+            "isBestWheel": false
+          },
+          {
+            "index": 1,
+            "label": "wheel_1",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.55,
+                "payout": 3,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.45,
+                "payout": 6,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 4.3500000000000005,
+            "variancePayout": 2.227499999999999,
+            "stdDevPayout": 1.4924811556599296,
+            "contributionToTotalRtp": 0.576158940397351,
+            "varianceContribution": 0.5076923076923078,
+            "topSliceProbability": 0.45,
+            "topSlicePayout": 6,
+            "oneInNSpinsForThisWheelTopSlice": 2.2222222222222223,
+            "isBestWheel": true
+          }
+        ],
+        "expectedTotalPayout": 7.550000000000001,
+        "varianceTotalPayout": 4.3874999999999975,
+        "stdDevTotalPayout": 2.0946360065653407,
+        "bestWheelIndex": 1,
+        "probabilityAllTopSlice": 0.18000000000000002,
+        "probabilityAtLeastOneTopSlice": 0.6699999999999999,
+        "oneInNSpinsAllTopJackpot": 5.5555555555555545,
+        "commercialUpliftVsSingleWheel": 1.735632183908046,
+        "sumStdDevs": 2.962175001329836,
+        "independenceVarianceRatio": 0.707127703672125
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 7.55576,
+        "stdDevTotalPayout": 2.090619722091991,
+        "perWheelMeans": [
+          3.20039,
+          4.35537
+        ],
+        "observedAllTopSliceRate": 0.17974,
+        "observedAtLeastOneTopSliceRate": 0.67218,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.0007623323133608721,
+        "max_per_wheel_rel": 0.0012329606899067608,
+        "all_top_abs": 0.0002600000000000102
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_corner_2_wheel_binary_minimum",
+      "description": "Corner: N=2 minimum sa 2-slice binary wheels.",
+      "cfg": {
+        "wheels": [
+          {
+            "slices": [
+              {
+                "probability": 0.5,
+                "payout": 1
+              },
+              {
+                "probability": 0.5,
+                "payout": 10
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.5,
+                "payout": 1
+              },
+              {
+                "probability": 0.5,
+                "payout": 10
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 2,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "wheel_0",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.5,
+                "payout": 1,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.5,
+                "payout": 10,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 5.5,
+            "variancePayout": 20.25,
+            "stdDevPayout": 4.5,
+            "contributionToTotalRtp": 0.5,
+            "varianceContribution": 0.5,
+            "topSliceProbability": 0.5,
+            "topSlicePayout": 10,
+            "oneInNSpinsForThisWheelTopSlice": 2,
+            "isBestWheel": true
+          },
+          {
+            "index": 1,
+            "label": "wheel_1",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.5,
+                "payout": 1,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.5,
+                "payout": 10,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 5.5,
+            "variancePayout": 20.25,
+            "stdDevPayout": 4.5,
+            "contributionToTotalRtp": 0.5,
+            "varianceContribution": 0.5,
+            "topSliceProbability": 0.5,
+            "topSlicePayout": 10,
+            "oneInNSpinsForThisWheelTopSlice": 2,
+            "isBestWheel": false
+          }
+        ],
+        "expectedTotalPayout": 11,
+        "varianceTotalPayout": 40.5,
+        "stdDevTotalPayout": 6.363961030678928,
+        "bestWheelIndex": 0,
+        "probabilityAllTopSlice": 0.25,
+        "probabilityAtLeastOneTopSlice": 0.75,
+        "oneInNSpinsAllTopJackpot": 4,
+        "commercialUpliftVsSingleWheel": 2,
+        "sumStdDevs": 9,
+        "independenceVarianceRatio": 0.7071067811865475
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 11.01116,
+        "stdDevTotalPayout": 6.363569395740098,
+        "perWheelMeans": [
+          5.4982,
+          5.51296
+        ],
+        "observedAllTopSliceRate": 0.25059,
+        "observedAtLeastOneTopSliceRate": 0.75065,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.001013517195281903,
+        "max_per_wheel_rel": 0.002350824239609872,
+        "all_top_abs": 0.0005899999999999794
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_5_wheel_long_field",
+      "description": "Corner: 5-wheel stack sa heavy-tail jackpot tier (audit boundary).",
+      "cfg": {
+        "wheels": [
+          {
+            "slices": [
+              {
+                "probability": 0.95,
+                "payout": 1
+              },
+              {
+                "probability": 0.05,
+                "payout": 50
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.95,
+                "payout": 2
+              },
+              {
+                "probability": 0.05,
+                "payout": 100
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.95,
+                "payout": 3
+              },
+              {
+                "probability": 0.05,
+                "payout": 200
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.95,
+                "payout": 5
+              },
+              {
+                "probability": 0.05,
+                "payout": 500
+              }
+            ]
+          },
+          {
+            "slices": [
+              {
+                "probability": 0.95,
+                "payout": 8
+              },
+              {
+                "probability": 0.05,
+                "payout": 1000
+              }
+            ]
+          }
+        ]
+      },
+      "closed_form": {
+        "numWheels": 5,
+        "perWheel": [
+          {
+            "index": 0,
+            "label": "wheel_0",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.95,
+                "payout": 1,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.05,
+                "payout": 50,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 3.45,
+            "variancePayout": 114.0475,
+            "stdDevPayout": 10.67930241167465,
+            "contributionToTotalRtp": 0.031207598371777473,
+            "varianceContribution": 0.0018759234098209003,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 50,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 1,
+            "label": "wheel_1",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.95,
+                "payout": 2,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.05,
+                "payout": 100,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 6.9,
+            "variancePayout": 456.19,
+            "stdDevPayout": 21.3586048233493,
+            "contributionToTotalRtp": 0.062415196743554946,
+            "varianceContribution": 0.007503693639283601,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 100,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 2,
+            "label": "wheel_2",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.95,
+                "payout": 3,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.05,
+                "payout": 200,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 12.85,
+            "variancePayout": 1843.4275,
+            "stdDevPayout": 42.93515459387564,
+            "contributionToTotalRtp": 0.11623699683401174,
+            "varianceContribution": 0.030321829076109672,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 200,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 3,
+            "label": "wheel_3",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.95,
+                "payout": 5,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.05,
+                "payout": 500,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 29.75,
+            "variancePayout": 11638.6875,
+            "stdDevPayout": 107.88274885263166,
+            "contributionToTotalRtp": 0.26910900045228403,
+            "varianceContribution": 0.19144028883438824,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 500,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": false
+          },
+          {
+            "index": 4,
+            "label": "wheel_4",
+            "numSlices": 2,
+            "slices": [
+              {
+                "index": 0,
+                "label": "slice_0",
+                "probability": 0.95,
+                "payout": 8,
+                "isTopSlice": false
+              },
+              {
+                "index": 1,
+                "label": "slice_1",
+                "probability": 0.05,
+                "payout": 1000,
+                "isTopSlice": true
+              }
+            ],
+            "expectedPayout": 57.6,
+            "variancePayout": 46743.04,
+            "stdDevPayout": 216.20138759961742,
+            "contributionToTotalRtp": 0.5210312075983717,
+            "varianceContribution": 0.7688582650403976,
+            "topSliceProbability": 0.05,
+            "topSlicePayout": 1000,
+            "oneInNSpinsForThisWheelTopSlice": 20,
+            "isBestWheel": true
+          }
+        ],
+        "expectedTotalPayout": 110.55000000000001,
+        "varianceTotalPayout": 60795.3925,
+        "stdDevTotalPayout": 246.5672170017742,
+        "bestWheelIndex": 4,
+        "probabilityAllTopSlice": 3.1250000000000013e-7,
+        "probabilityAtLeastOneTopSlice": 0.22621906250000012,
+        "oneInNSpinsAllTopJackpot": 3199999.9999999986,
+        "commercialUpliftVsSingleWheel": 1.9192708333333335,
+        "sumStdDevs": 399.05719828114866,
+        "independenceVarianceRatio": 0.6178743750615411
+      },
+      "monte_carlo": {
+        "meanTotalPayout": 111.38226,
+        "stdDevTotalPayout": 246.9880771156624,
+        "perWheelMeans": [
+          3.41962,
+          6.79122,
+          13.03321,
+          29.96285,
+          58.17536
+        ],
+        "observedAllTopSliceRate": 0,
+        "observedAtLeastOneTopSliceRate": 0.22716,
+        "spins": 100000
+      },
+      "checks": {
+        "payout_rel": 0.007472105522010335,
+        "max_per_wheel_rel": 0.015765217391304393,
+        "all_top_abs": 3.1250000000000013e-7
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}

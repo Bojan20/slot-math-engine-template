@@ -249,3 +249,6 @@ export * from './arcadeShooterSurvivalLevels.js';
 
 // W152 Wave 195: Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP CLOSURE — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)
 export * from './midSpinReelReshapeMixture.js';
+
+// W152 Wave 196: Stacked Multi-Wheel Composition Aggregator (77. solver, L&W M6 P1 FINAL GAP CLOSURE — 🏆 16/16 L&W KIMI GAPS — Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)
+export * from './stackedMultiWheelComposition.js';

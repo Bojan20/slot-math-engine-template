@@ -276,3 +276,5 @@ jobs:
         run: npm run arcade-shooter-survival-levels-acceptance
       - name: Mid-Spin Reel-Reshape Mixture acceptance (6/6 configs × 100K spins, Wave 195, 76. solver L&W M13 P1 GAP CLOSURE WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)
         run: npm run mid-spin-reel-reshape-mixture-acceptance
+      - name: Stacked Multi-Wheel Composition acceptance (6/6 configs × 100K spins, Wave 196, 77. solver L&W M6 P1 FINAL GAP CLOSURE 🏆 16/16 L&W KIMI gaps Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)
+        run: npm run stacked-multi-wheel-composition-acceptance
