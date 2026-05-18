@@ -210,3 +210,6 @@ export * from './reelBoundMysteryProgressive.js';
 
 // W152 Wave 182: Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Lock It Link Eureka Reel Blast)
 export * from './dynamicGridExpansionHoldSpin.js';
+
+// W152 Wave 183: Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles: original / More / Even More / Lots of / Xtra / Hard Hat Edition / Grand / Money Mansion)
+export * from './multiStateFrameUpgradeMarkov.js';

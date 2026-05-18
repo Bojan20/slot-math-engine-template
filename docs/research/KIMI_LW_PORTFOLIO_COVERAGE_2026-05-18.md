@@ -78,14 +78,14 @@ Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial co
 |---|---|---|---|---|---|---|---|
 | 1 | Dragon Train Chi Lin Wins | LNW (in-house digital) | 2024 | A (6-scatter H&S, 3-respin reset) + B (4-tier MMMS + Fortune 8) + H (sticky mystery green-dragon FS) + G (sticky mystery during FS) | P-002 ✅ + P-049 ✅ + P-059 ✅ (H&S value-based) + P-035 ✅ (multi-tier WAP) + P-005/P-051 ✅ (sticky FS + mystery reveal) | NO | n/a |
 | 2 | Dragon Spin CrossLink Water | LNW (in-house digital) | 2024 | A (gold coin bag fill per reel) + C2-like per-row multiplier increment | P-002 ✅ + ❌ NOVEL: **per-reel cash-bag aggregator with row-multiplier coupling** (each landed coin contributes to its reel's bag AND ramps its row's multiplier by +1) — distinct from any P-ID | YES (M1) | **P0** |
-| 3 | Huff N' Puff (original) | LNW (in-house digital, ex-SG) | 2019 | A (cash-on-reel + Buzz Saw upgrade) + B (4-tier wheel: Mini/Minor/Major/Grand + Super) + D (wheel-bonus pick) + H (FS) + **M: frame upgrade (Straw→Wood→Brick)** | P-002 ✅ + P-035 ✅ + P-046 ✅ (wheel respin) + P-014 ✅ + ❌ **frame-state Markov upgrade** | YES (M2) | **P0** |
-| 4 | Huff N' More Puff | LNW | 2020 | Same as Huff N' Puff + 5-tier wheel | as above + P-067 ✅ (K-tier voltage meter analog) | YES (M2) | P0 |
-| 5 | Huff N' Even More Puff | LNW | 2022 | A + B (5-tier) + D (wheel) + H + frame upgrade + Mega Hat add-on | as above + ❌ Mega Hat add-on add-multiplier | YES (M2, M3) | P0 |
-| 6 | Huff N' Lots of Puff | LNW | 2023 | as Even More Puff + Lots-of-Puff multi-wheel pick tree | + P-047 ✅ (N-stage pick tree) | YES (M2) | P1 |
-| 7 | Huff N' Xtra Puff | LNW | 2024 | as Even More Puff + Xtra Puff persistent meter | + P-067 ✅ | YES (M2) | P1 |
-| 8 | Huff N' Even More Puff Hard Hat Edition | LNW | 2024 | Even More Puff variant | as #5 | YES (M2) | P2 |
-| 9 | Huff N' Even More Puff Grand | LNW | 2024 | Same + escalated grand jackpot | as #5 | YES (M2) | P2 |
-| 10 | Huff N' Puff Money Mansion | LNW | 2024 | as Even More Puff + Mansion bonus stage | + P-047 ✅ | YES (M2) | P1 |
+| 3 | Huff N' Puff (original) | LNW (in-house digital, ex-SG) | 2019 | A (cash-on-reel + Buzz Saw upgrade) + B (4-tier wheel: Mini/Minor/Major/Grand + Super) + D (wheel-bonus pick) + H (FS) + **M: frame upgrade (Straw→Wood→Brick)** | P-002 ✅ + P-035 ✅ + P-046 ✅ (wheel respin) + P-014 ✅ + ❌ **frame-state Markov upgrade** | ✅ **CLOSED (M2 W183)** | **P0** |
+| 4 | Huff N' More Puff | LNW | 2020 | Same as Huff N' Puff + 5-tier wheel | as above + P-067 ✅ (K-tier voltage meter analog) | ✅ **CLOSED (M2 W183)** | P0 |
+| 5 | Huff N' Even More Puff | LNW | 2022 | A + B (5-tier) + D (wheel) + H + frame upgrade + Mega Hat add-on | as above + ❌ Mega Hat add-on add-multiplier | ✅ **CLOSED (M2 W183 + M3 W182)** | P0 |
+| 6 | Huff N' Lots of Puff | LNW | 2023 | as Even More Puff + Lots-of-Puff multi-wheel pick tree | + P-047 ✅ (N-stage pick tree) | ✅ **CLOSED (M2 W183)** | P1 |
+| 7 | Huff N' Xtra Puff | LNW | 2024 | as Even More Puff + Xtra Puff persistent meter | + P-067 ✅ | ✅ **CLOSED (M2 W183)** | P1 |
+| 8 | Huff N' Even More Puff Hard Hat Edition | LNW | 2024 | Even More Puff variant | as #5 | ✅ **CLOSED (M2 W183)** | P2 |
+| 9 | Huff N' Even More Puff Grand | LNW | 2024 | Same + escalated grand jackpot | as #5 | ✅ **CLOSED (M2 W183)** | P2 |
+| 10 | Huff N' Puff Money Mansion | LNW | 2024 | as Even More Puff + Mansion bonus stage | + P-047 ✅ | ✅ **CLOSED (M2 W183)** | P1 |
 | 11 | Ultimate Fire Link (China Street, Olvera, Rue Royale, Power 4, By the Bay, Explosion, Glacier Gold, Add Em Up Gold) | Bally (under LNW) | 2017–2025 | A (4+ fireball trigger, sticky fireballs, expanding rows up to 4 extra) + B (4-tier MMMS prize bag) + G (sticky H&W) + **M: dynamic row-expansion during H&S** | P-002 ✅ + P-035 ✅ + ❌ **dynamic grid-expansion / row-addition during H&S** (rows added as fireballs collected — changes state space) |  ✅ **CLOSED (M3) W182**| **P0** |
 | 12 | Cash Falls (Outback Fortune, Pirate's Trove, Add Em Up Gold, By the Bay, Glacier Gold, Explosion, China Street) | LNW | 2020–2025 | A (jackpot-symbol collect bag fill) + B (4-tier MMMG) + H (FS with persistent multiplier) | P-002 ✅ + P-035 ✅ + P-068 ✅ (scatter-trigger tiers) + P-005 ✅ | NO | n/a |
 | 13 | Lock It Link Diamonds | LNW (ex-SG / Bally) | 2022 | A (sticky-heart H&S over secondary grid) + B (Mini 40x, Minor 100x, Major 200x, Grand 5000x — fixed multiples, not WAP) + H (FS) | P-002 ✅ + P-049 ✅ + **P-035 ⚠ (fixed-value tiers, not progressives — partial)** + P-014 ✅ | ⚠ (verify) | P1 |
@@ -194,9 +194,10 @@ Numbered M1…M16 (referenced in column above). For each: 1-line description + e
 **Example:** Dragon Spin CrossLink Water (2024).
 Each landed coin contributes to its reel-specific bag AND ramps its row-specific multiplier by +1. Two coupled progressions (per-reel bag, per-row multiplier) where outcomes interact multiplicatively at payout. P-002 covers cash-collect into a single pool; P-067 covers single-meter K-tier; P-039 covers global-only persistent multiplier. None covers **per-reel × per-row coupled accumulators**.
 
-### M2 — Multi-state frame/structure upgrade Markov
+### M2 — Multi-state frame/structure upgrade Markov — ✅ **CLOSED in W183** (P-084)
 **Example:** Huff N' Puff family (Straw → Wood → Brick → Mansion frame upgrades).
 Each cell on the grid has an independent 3-or-4-state Markov chain (Idle/Straw/Wood/Brick/House) with vendor-specific upgrade probabilities per spin; payouts gated by current state. P-058 covers 4-state Markov wild tier (single wild's state); this is **N×M independent per-cell Markov on grid** — N×M Kronecker product of small Markov chains.
+**Resolution:** W183 ships `src/features/multiStateFrameUpgradeMarkov.ts` — exact π_t = π_0 · P^t closed-form za per-cell K-state Markov chain, grid aggregate E[total payout] = N·M · Σ_{t=0..T-1} dot(π_t, m), P(at least one cell reaches k_target) = 1 − (1 − P_per_cell)^(N·M) pod independence. 39 vitest specs PASS. Acceptance 6/6 PASS @ 30K MC features (Huff N' Puff original/More/Even More/Money Mansion/Xtra Puff 6-state + 3-state reset corner) — CF/MC slaganje 0.05-0.3% rel.
 
 ### M3 — Dynamic grid-expansion during Hold-and-Spin — ✅ **CLOSED in W182** (P-083)
 **Example:** Ultimate Fire Link family, Lock It Link Eureka Reel Blast.

@@ -284,6 +284,9 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 182 Dynamic Grid-Expansion H&S (L&W M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Lock It Link Eureka Reel Blast)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.md' },
+  // REPORTS — Wave 183 Multi-State Frame Upgrade Markov (L&W M2 GAP CLOSURE — Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion)
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_STATE_FRAME_UPGRADE_MARKOV.json' },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_STATE_FRAME_UPGRADE_MARKOV.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)
   { kind: 'reports/dossier', src: 'reports/dossier/CENTENARY_RETROSPECTIVE_W33_100.md' },
   // REPORTS — Wave 63/68 exact-enumeration ground-truth

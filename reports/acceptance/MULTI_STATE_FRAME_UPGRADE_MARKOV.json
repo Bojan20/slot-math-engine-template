@@ -1,0 +1,618 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_STATE_FRAME_UPGRADE_MARKOV",
+  "generated_utc": "2026-05-18T00:00:06.173Z",
+  "features_per_config": 5000,
+  "seed": 3405644163,
+  "tolerances": {
+    "payout_rel": 0.05,
+    "max_state_dist_abs": 0.03,
+    "prob_at_least_one_abs": 0.04,
+    "cells_at_target_rel": 0.1
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_huff_n_puff_original_3stage_straw_wood_brick",
+      "description": "SG/LNW Huff N' Puff (original, 2019) — 4-state Idle→Straw→Wood→Brick, 5×3 grid, 10 spins.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 3,
+        "numStates": 4,
+        "transitionMatrix": [
+          [
+            0.7,
+            0.3,
+            0,
+            0
+          ],
+          [
+            0,
+            0.6,
+            0.4,
+            0
+          ],
+          [
+            0,
+            0,
+            0.7,
+            0.3
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          2,
+          8,
+          40
+        ],
+        "numSpins": 10,
+        "targetStateForReachabilityDisclosure": 3
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.028247524899999984,
+          0.06660272189999997,
+          0.2178323963999999,
+          0.6873173568
+        ],
+        "stationaryDistribution": [
+          5.842080405265805e-15,
+          1.7526226209275802e-14,
+          8.404250554693238e-13,
+          0.9999999999991361
+        ],
+        "expectedPayoutPerCellPerSpin": 11.1129925374,
+        "expectedTotalPayoutPerFeature": 1666.94888061,
+        "varianceTotalPayoutPerFeature": 23689.689581318064,
+        "stdDevTotalPayoutPerFeature": 153.9145528574802,
+        "perCellProbReachTargetStateAtT": 0.6873173568,
+        "probAtLeastOneCellReachesTargetAtT": 0.9999999732972114,
+        "oneInNCellsReachesTarget": 1.4549319759008887,
+        "expectedCellsAtOrAboveTargetAtT": 10.309760352,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 166.694888061
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 1671.8204,
+        "stdDevTotalPayoutPerFeature": 336.72583349639194,
+        "meanFinalStateDistributionPerCell": [
+          0.028586666666666666,
+          0.06617333333333333,
+          0.21472,
+          0.69052
+        ],
+        "meanCellsAtOrAboveTarget": 10.3578,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.0029139011523008113,
+        "max_state_dist_abs": 0.003202643200000077,
+        "prob_at_least_one_abs": 2.670278864691511e-8,
+        "cells_at_target_rel": 0.004638016567224662
+      },
+      "pass": true,
+      "elapsed_ms": 18
+    },
+    {
+      "name": "B_huff_n_more_puff_5state_extended",
+      "description": "Huff N' More Puff (2020) — 5-tier extended ladder, 5×3 grid, 15 spins.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 3,
+        "numStates": 5,
+        "transitionMatrix": [
+          [
+            0.6,
+            0.4,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0.5,
+            0.5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0.5,
+            0.5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0.6,
+            0.4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          1,
+          4,
+          12,
+          60
+        ],
+        "numSpins": 15,
+        "targetStateForReachabilityDisclosure": 4
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.0004701849845759998,
+          0.0017586696258039996,
+          0.006962293441519998,
+          0.03876803829129999,
+          0.9520408136567999
+        ],
+        "stationaryDistribution": [
+          7.600834399556777e-16,
+          3.0403174967901247e-15,
+          1.5200508702789006e-14,
+          6.949758323235792e-13,
+          0.999999999999286
+        ],
+        "expectedPayoutPerCellPerSpin": 27.141202902313868,
+        "expectedTotalPayoutPerFeature": 6106.770653020621,
+        "varianceTotalPayoutPerFeature": 69812.74568818879,
+        "stdDevTotalPayoutPerFeature": 264.2210167420237,
+        "perCellProbReachTargetStateAtT": 0.9520408136567999,
+        "probAtLeastOneCellReachesTargetAtT": 1,
+        "oneInNCellsReachesTarget": 1.0503751369219019,
+        "expectedCellsAtOrAboveTargetAtT": 14.280612204851998,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 407.118043534708
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 6118.9998,
+        "stdDevTotalPayoutPerFeature": 657.2794640029149,
+        "meanFinalStateDistributionPerCell": [
+          0.00048,
+          0.0019066666666666668,
+          0.007026666666666666,
+          0.03848,
+          0.9521066666666667
+        ],
+        "meanCellsAtOrAboveTarget": 14.2816,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.001998553256919381,
+        "max_state_dist_abs": 0.0002880382912999885,
+        "prob_at_least_one_abs": 0,
+        "cells_at_target_rel": 0.00006916558004712843
+      },
+      "pass": true,
+      "elapsed_ms": 23
+    },
+    {
+      "name": "C_huff_n_even_more_puff_megahat_addon",
+      "description": "Huff N' Even More Puff (2022) — Mega Hat add-on, 4-state slow-advance, 5×4 grid.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 4,
+        "numStates": 4,
+        "transitionMatrix": [
+          [
+            0.85,
+            0.15,
+            0,
+            0
+          ],
+          [
+            0,
+            0.7,
+            0.3,
+            0
+          ],
+          [
+            0,
+            0,
+            0.75,
+            0.25
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          1,
+          6,
+          50
+        ],
+        "numSpins": 20,
+        "targetStateForReachabilityDisclosure": 3
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.038759531084514326,
+          0.03796160842153821,
+          0.09252522178099379,
+          0.8307536387129533
+        ],
+        "stationaryDistribution": [
+          5.650186088704359e-13,
+          5.650186088704358e-13,
+          1.6950558253976993e-12,
+          0.9999999999971748
+        ],
+        "expectedPayoutPerCellPerSpin": 19.128582803367337,
+        "expectedTotalPayoutPerFeature": 7651.433121346935,
+        "varianceTotalPayoutPerFeature": 132698.6182263279,
+        "stdDevTotalPayoutPerFeature": 364.27821541553635,
+        "perCellProbReachTargetStateAtT": 0.8307536387129533,
+        "probAtLeastOneCellReachesTargetAtT": 0.9999999999999997,
+        "oneInNCellsReachesTarget": 1.2037262954986896,
+        "expectedCellsAtOrAboveTargetAtT": 16.615072774259065,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 382.57165606734674
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 7637.6264,
+        "stdDevTotalPayoutPerFeature": 1143.8675662956077,
+        "meanFinalStateDistributionPerCell": [
+          0.03772,
+          0.03834,
+          0.094,
+          0.82994
+        ],
+        "meanCellsAtOrAboveTarget": 16.5988,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.00180446213512801,
+        "max_state_dist_abs": 0.001474778219006212,
+        "prob_at_least_one_abs": 3.3306690738754696e-16,
+        "cells_at_target_rel": 0.0009793983138175195
+      },
+      "pass": true,
+      "elapsed_ms": 33
+    },
+    {
+      "name": "D_huff_n_money_mansion_fast_advance",
+      "description": "Huff N' Money Mansion (2024) — fast-advance variant, 4-state, 5×3 grid, 8 spins.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 3,
+        "numStates": 4,
+        "transitionMatrix": [
+          [
+            0.3,
+            0.7,
+            0,
+            0
+          ],
+          [
+            0,
+            0.3,
+            0.7,
+            0
+          ],
+          [
+            0,
+            0,
+            0.3,
+            0.7
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          3,
+          12,
+          100
+        ],
+        "numSpins": 8,
+        "targetStateForReachabilityDisclosure": 3
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.00006560999999999999,
+          0.0012247199999999999,
+          0.01000188,
+          0.9887077899999996
+        ],
+        "stationaryDistribution": [
+          5.147278302366222e-17,
+          3.654567594680016e-15,
+          1.2555927538905333e-13,
+          0.9999999999998708
+        ],
+        "expectedPayoutPerCellPerSpin": 49.30811383749999,
+        "expectedTotalPayoutPerFeature": 5916.973660499999,
+        "varianceTotalPayoutPerFeature": 84153.50779816601,
+        "stdDevTotalPayoutPerFeature": 290.0922401550342,
+        "perCellProbReachTargetStateAtT": 0.9887077899999996,
+        "probAtLeastOneCellReachesTargetAtT": 1,
+        "oneInNCellsReachesTarget": 1.0114211803671542,
+        "expectedCellsAtOrAboveTargetAtT": 14.830616849999995,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 739.6217075624999
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 5907.6934,
+        "stdDevTotalPayoutPerFeature": 474.6863572891465,
+        "meanFinalStateDistributionPerCell": [
+          0.00009333333333333333,
+          0.0012133333333333334,
+          0.01052,
+          0.9881733333333333
+        ],
+        "meanCellsAtOrAboveTarget": 14.8226,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.0015684133532571105,
+        "max_state_dist_abs": 0.0005344566666662942,
+        "prob_at_least_one_abs": 0,
+        "cells_at_target_rel": 0.0005405607926547778
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "E_corner_3state_balanced_with_reset",
+      "description": "Corner: 3-state sa reset cycle (terminal state has reset prob), 4×4 grid.",
+      "cfg": {
+        "numReels": 4,
+        "numRows": 4,
+        "numStates": 3,
+        "transitionMatrix": [
+          [
+            0.5,
+            0.5,
+            0
+          ],
+          [
+            0,
+            0.5,
+            0.5
+          ],
+          [
+            0.1,
+            0,
+            0.9
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          1,
+          10
+        ],
+        "numSpins": 12,
+        "targetStateForReachabilityDisclosure": 2
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.14301642385000002,
+          0.142473587625,
+          0.7145099885250001
+        ],
+        "stationaryDistribution": [
+          0.14285714285724488,
+          0.14285714285714754,
+          0.7142857142856077
+        ],
+        "expectedPayoutPerCellPerSpin": 5.496557098125,
+        "expectedTotalPayoutPerFeature": 1055.33896284,
+        "varianceTotalPayoutPerFeature": 3011.378047464738,
+        "stdDevTotalPayoutPerFeature": 54.876024340915386,
+        "perCellProbReachTargetStateAtT": 0.7145099885250001,
+        "probAtLeastOneCellReachesTargetAtT": 0.9999999980526021,
+        "oneInNCellsReachesTarget": 1.3995605604679533,
+        "expectedCellsAtOrAboveTargetAtT": 11.432159816400002,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 87.94491357
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 1054.091,
+        "stdDevTotalPayoutPerFeature": 91.68991394368506,
+        "meanFinalStateDistributionPerCell": [
+          0.1432375,
+          0.1432375,
+          0.713525
+        ],
+        "meanCellsAtOrAboveTarget": 11.4164,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.001182523230869598,
+        "max_state_dist_abs": 0.0009849885250001744,
+        "prob_at_least_one_abs": 1.9473979095963045e-9,
+        "cells_at_target_rel": 0.0013785510921037467
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "F_corner_huff_xtra_puff_persistent_meter_high_state_payout",
+      "description": "Huff N' Xtra Puff (2024) — 6-state persistent meter, 5×3 grid, 12 spins.",
+      "cfg": {
+        "numReels": 5,
+        "numRows": 3,
+        "numStates": 6,
+        "transitionMatrix": [
+          [
+            0.5,
+            0.5,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0.5,
+            0.5,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0.5,
+            0.5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0.5,
+            0.5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0.5,
+            0.5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "initialDistribution": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "payoutMultiplierPerState": [
+          0,
+          0.5,
+          2,
+          5,
+          15,
+          75
+        ],
+        "numSpins": 12,
+        "targetStateForReachabilityDisclosure": 5
+      },
+      "closed_form": {
+        "finalStateDistributionPerCell": [
+          0.000244140625,
+          0.0029296875,
+          0.01611328125,
+          0.0537109375,
+          0.120849609375,
+          0.80615234375
+        ],
+        "stationaryDistribution": [
+          1.1564823173178715e-18,
+          6.707597440443655e-17,
+          1.9128217528437594e-15,
+          3.575149435756468e-14,
+          4.925735745212971e-13,
+          0.9999999999994696
+        ],
+        "expectedPayoutPerCellPerSpin": 19.317240397135418,
+        "expectedTotalPayoutPerFeature": 3477.103271484375,
+        "varianceTotalPayoutPerFeature": 82148.97415548563,
+        "stdDevTotalPayoutPerFeature": 286.61642338757497,
+        "perCellProbReachTargetStateAtT": 0.80615234375,
+        "probAtLeastOneCellReachesTargetAtT": 0.9999999999794927,
+        "oneInNCellsReachesTarget": 1.2404603270745003,
+        "expectedCellsAtOrAboveTargetAtT": 12.09228515625,
+        "commercialUpliftVsIdleBaseline": null,
+        "effectiveGridRtpPerSpin": 289.75860595703125
+      },
+      "monte_carlo": {
+        "features": 5000,
+        "meanTotalPayoutPerFeature": 3467.8082,
+        "stdDevTotalPayoutPerFeature": 600.4473953751145,
+        "meanFinalStateDistributionPerCell": [
+          0.00022666666666666666,
+          0.0027866666666666665,
+          0.016186666666666665,
+          0.05350666666666667,
+          0.12228,
+          0.8050133333333334
+        ],
+        "meanCellsAtOrAboveTarget": 12.0752,
+        "probAtLeastOneCellReachesTarget": 1
+      },
+      "checks": {
+        "payout_rel": 0.0026732227255381437,
+        "max_state_dist_abs": 0.0014303906249999998,
+        "prob_at_least_one_abs": 2.0507262554758654e-11,
+        "cells_at_target_rel": 0.0014128972339995467
+      },
+      "pass": true,
+      "elapsed_ms": 20
+    }
+  ]
+}

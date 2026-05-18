@@ -250,3 +250,5 @@ jobs:
         run: npm run reel-bound-mystery-progressive-acceptance
       - name: Dynamic Grid-Expansion H&S acceptance (6/6 configs × 30K features, Wave 182, 63. solver L&W M3 GAP CLOSURE Ultimate Fire Link Olvera/China/Riverwalk/Power 4/Cash Falls + Lock It Link Eureka Reel Blast — exact Markov DP)
         run: npm run dynamic-grid-expansion-hold-spin-acceptance
+      - name: Multi-State Frame Upgrade Markov acceptance (6/6 configs × 5K features, Wave 183, 64. solver L&W M2 GAP CLOSURE Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion — per-cell K-state Markov)
+        run: npm run multi-state-frame-upgrade-markov-acceptance

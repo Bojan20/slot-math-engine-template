@@ -1315,6 +1315,34 @@ async function main() {
     showcase.push({ wave: 182, solver: 'Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3)', metric: 'E[bags]', cf: cf.expectedTotalBags, mc: mc.meanTotalBags, ok, elapsed_ms: Date.now() - t0 });
   }
 
+  // ── W183: Multi-State Frame Upgrade Markov (L&W M2 — Huff N' Puff family) ──
+  {
+    const { analyzeMultiStateFrameUpgrade, simulateMultiStateFrameUpgrade } =
+      await import(join(REPO_ROOT, 'dist', 'features', 'multiStateFrameUpgradeMarkov.js'));
+    const t0 = Date.now();
+    const cfg = {
+      numReels: 5,
+      numRows: 3,
+      numStates: 4,
+      transitionMatrix: [
+        [0.7, 0.3, 0, 0],
+        [0, 0.6, 0.4, 0],
+        [0, 0, 0.7, 0.3],
+        [0, 0, 0, 1],
+      ],
+      initialDistribution: [1, 0, 0, 0],
+      payoutMultiplierPerState: [0, 2, 8, 40],
+      numSpins: 10,
+      targetStateForReachabilityDisclosure: 3,
+    };
+    const cf = analyzeMultiStateFrameUpgrade(cfg);
+    const mc = simulateMultiStateFrameUpgrade(cfg, 3_000, SEED);
+    const rel = Math.abs(cf.expectedTotalPayoutPerFeature - mc.meanTotalPayoutPerFeature) /
+      Math.max(mc.meanTotalPayoutPerFeature, 1e-9);
+    const ok = rel < 0.05; // Markov DP exact — tight
+    showcase.push({ wave: 183, solver: "Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2)", metric: 'E[total payout]', cf: cf.expectedTotalPayoutPerFeature, mc: mc.meanTotalPayoutPerFeature, ok, elapsed_ms: Date.now() - t0 });
+  }
+
   for (const r of showcase) {
     const fmt = (v) => typeof v === 'number' ? v.toFixed(4) : v;
     console.log(`  W${r.wave} ${r.ok ? '✅' : '❌'}  ${r.solver.padEnd(50)}  ${r.metric.padEnd(22)}  CF=${fmt(r.cf)} MC=${fmt(r.mc)}  t=${r.elapsed_ms}ms`);

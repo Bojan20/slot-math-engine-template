@@ -90,6 +90,7 @@
     "skill-stop-near-miss-acceptance": "npm run build && node scripts/skill-stop-near-miss-acceptance.mjs",
     "reel-bound-mystery-progressive-acceptance": "npm run build && node scripts/reel-bound-mystery-progressive-acceptance.mjs",
     "dynamic-grid-expansion-hold-spin-acceptance": "npm run build && node scripts/dynamic-grid-expansion-hold-spin-acceptance.mjs",
+    "multi-state-frame-upgrade-markov-acceptance": "npm run build && node scripts/multi-state-frame-upgrade-markov-acceptance.mjs",
     "avalanche-reactor-wave-aggregator-acceptance": "npm run build && node scripts/avalanche-reactor-wave-aggregator-acceptance.mjs",
     "sticky-multiplier-fs-trail-acceptance": "npm run build && node scripts/sticky-multiplier-fs-trail-acceptance.mjs",
     "closed-form-portfolio": "npm run build && node scripts/closed-form-portfolio.mjs",

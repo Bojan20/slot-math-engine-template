@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
   "report_id": "CLOSED_FORM_PORTFOLIO",
-  "generated_utc": "2026-05-17T23:45:57.945Z",
-  "solvers_total": 63,
-  "solvers_passed": 63,
+  "generated_utc": "2026-05-18T00:03:50.805Z",
+  "solvers_total": 64,
+  "solvers_passed": 64,
   "overall_pass": true,
   "showcase": [
     {
@@ -13,7 +13,7 @@
       "cf": 345.17012909371675,
       "mc": 345.0901,
       "ok": true,
-      "elapsed_ms": 43
+      "elapsed_ms": 45
     },
     {
       "wave": 50,
@@ -22,7 +22,7 @@
       "cf": 0.8500000000000001,
       "mc": 0.848,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 51,
@@ -40,7 +40,7 @@
       "cf": 66.4347991098,
       "mc": 66.97443333333334,
       "ok": true,
-      "elapsed_ms": 50
+      "elapsed_ms": 52
     },
     {
       "wave": 53,
@@ -58,7 +58,7 @@
       "cf": 7.002290217082233,
       "mc": 7.270355,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 37
     },
     {
       "wave": 55,
@@ -85,7 +85,7 @@
       "cf": 0.99,
       "mc": 0.9993,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 58,
@@ -103,7 +103,7 @@
       "cf": 0.28041451809200957,
       "mc": 0.2821,
       "ok": true,
-      "elapsed_ms": 70
+      "elapsed_ms": 71
     },
     {
       "wave": 60,
@@ -112,7 +112,7 @@
       "cf": 96.39037541405543,
       "mc": 96.2746,
       "ok": true,
-      "elapsed_ms": 16
+      "elapsed_ms": 15
     },
     {
       "wave": 71,
@@ -121,7 +121,7 @@
       "cf": 225000,
       "mc": 226559.9313,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 0
     },
     {
       "wave": 72,
@@ -130,7 +130,7 @@
       "cf": 59.160000000000004,
       "mc": 3.9916089999999866,
       "ok": true,
-      "elapsed_ms": 1
+      "elapsed_ms": 2
     },
     {
       "wave": 75,
@@ -184,7 +184,7 @@
       "cf": 51,
       "mc": 50.72352,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 10
     },
     {
       "wave": 93,
@@ -211,7 +211,7 @@
       "cf": 35.25,
       "mc": 35.14041666666663,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 101,
@@ -238,7 +238,7 @@
       "cf": 12,
       "mc": 11.99538,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 107,
@@ -247,7 +247,7 @@
       "cf": 58.250000000000014,
       "mc": 56.0795,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 110,
@@ -256,7 +256,7 @@
       "cf": 59.10130554783957,
       "mc": 58.9205,
       "ok": true,
-      "elapsed_ms": 49
+      "elapsed_ms": 50
     },
     {
       "wave": 112,
@@ -274,7 +274,7 @@
       "cf": 1.1038461538461537,
       "mc": 1.11608,
       "ok": true,
-      "elapsed_ms": 2
+      "elapsed_ms": 3
     },
     {
       "wave": 116,
@@ -283,7 +283,7 @@
       "cf": 38.325,
       "mc": 37.68944,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 3
     },
     {
       "wave": 118,
@@ -292,7 +292,7 @@
       "cf": 200,
       "mc": 199.0234,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 7
     },
     {
       "wave": 121,
@@ -301,7 +301,7 @@
       "cf": 5.111111111111113,
       "mc": 5.2079,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 123,
@@ -355,7 +355,7 @@
       "cf": 8.28328283286117,
       "mc": 8.3132,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 9
     },
     {
       "wave": 136,
@@ -382,7 +382,7 @@
       "cf": 2.0855562500000002,
       "mc": 2.088925,
       "ok": true,
-      "elapsed_ms": 244
+      "elapsed_ms": 246
     },
     {
       "wave": 142,
@@ -391,7 +391,7 @@
       "cf": 15.223422022308704,
       "mc": 14.81615,
       "ok": true,
-      "elapsed_ms": 42
+      "elapsed_ms": 44
     },
     {
       "wave": 144,
@@ -400,7 +400,7 @@
       "cf": 40.7724375,
       "mc": 41.18446,
       "ok": true,
-      "elapsed_ms": 6
+      "elapsed_ms": 5
     },
     {
       "wave": 146,
@@ -409,7 +409,7 @@
       "cf": 0.03225806451612903,
       "mc": 0.03227666666666667,
       "ok": true,
-      "elapsed_ms": 13
+      "elapsed_ms": 14
     },
     {
       "wave": 148,
@@ -427,7 +427,7 @@
       "cf": 1.1083984375,
       "mc": 1.13498,
       "ok": true,
-      "elapsed_ms": 14
+      "elapsed_ms": 15
     },
     {
       "wave": 152,
@@ -436,7 +436,7 @@
       "cf": 0.27801562499999993,
       "mc": 0.2738833333333333,
       "ok": true,
-      "elapsed_ms": 12
+      "elapsed_ms": 13
     },
     {
       "wave": 154,
@@ -445,7 +445,7 @@
       "cf": 975,
       "mc": 976.1720303683296,
       "ok": true,
-      "elapsed_ms": 841
+      "elapsed_ms": 847
     },
     {
       "wave": 157,
@@ -454,7 +454,7 @@
       "cf": 0.14148853381835558,
       "mc": 0.16166666666666665,
       "ok": true,
-      "elapsed_ms": 36
+      "elapsed_ms": 37
     },
     {
       "wave": 159,
@@ -472,7 +472,7 @@
       "cf": 110.34474847738295,
       "mc": 108.41043902029095,
       "ok": true,
-      "elapsed_ms": 34
+      "elapsed_ms": 35
     },
     {
       "wave": 163,
@@ -499,7 +499,7 @@
       "cf": 0.695,
       "mc": 0.6950009589797201,
       "ok": true,
-      "elapsed_ms": 338
+      "elapsed_ms": 340
     },
     {
       "wave": 169,
@@ -508,7 +508,7 @@
       "cf": 5.113777151999998,
       "mc": 5.141,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 171,
@@ -517,7 +517,7 @@
       "cf": 0.4285714285714286,
       "mc": 0.43155,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 2
     },
     {
       "wave": 173,
@@ -526,7 +526,7 @@
       "cf": 2.4999999999999996,
       "mc": 2.5123,
       "ok": true,
-      "elapsed_ms": 4
+      "elapsed_ms": 5
     },
     {
       "wave": 175,
@@ -535,7 +535,7 @@
       "cf": 0.6723199999999999,
       "mc": 0.67406,
       "ok": true,
-      "elapsed_ms": 3
+      "elapsed_ms": 4
     },
     {
       "wave": 177,
@@ -562,7 +562,7 @@
       "cf": 3.1050000000000004,
       "mc": 3.1999,
       "ok": true,
-      "elapsed_ms": 8
+      "elapsed_ms": 7
     },
     {
       "wave": 182,
@@ -571,7 +571,16 @@
       "cf": 22.298391355206938,
       "mc": 22.3383,
       "ok": true,
-      "elapsed_ms": 63
+      "elapsed_ms": 64
+    },
+    {
+      "wave": 183,
+      "solver": "Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2)",
+      "metric": "E[total payout]",
+      "cf": 1666.94888061,
+      "mc": 1669.1233333333332,
+      "ok": true,
+      "elapsed_ms": 14
     }
   ]
 }
