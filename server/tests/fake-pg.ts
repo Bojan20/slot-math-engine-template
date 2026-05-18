@@ -592,6 +592,78 @@ export class FakeClient extends EventEmitter implements Partial<PoolClient> {
       return { ...emptyResult(), rowCount: n };
     }
 
+    // ── pilot_runs (W211 Faza 700.0)
+    if (/INSERT INTO pilot_runs/i.test(sql)) {
+      const t = this.db.ensureTable('pilot_runs');
+      const id = params?.[0] as string;
+      const existing = t.rows.find((r) => r['run_id'] === id);
+      const fields: Row = {
+        run_id: id,
+        tenant_id: String(params?.[1]),
+        started_at: new Date(String(params?.[2])),
+        completed_at: new Date(String(params?.[3])),
+        total_elapsed_ms: Number(params?.[4]),
+        pass_count: Number(params?.[5]),
+        fail_count: Number(params?.[6]),
+        overall_ok: Boolean(params?.[7]),
+        verdicts: parseJsonbParam(params?.[8]),
+        result_hash: String(params?.[9]),
+      };
+      if (existing) Object.assign(existing, fields);
+      else t.rows.push(fields);
+      return { ...emptyResult(), rows: [cloneRow(fields)], rowCount: 1 };
+    }
+    if (/FROM pilot_runs\s+WHERE run_id = \$1/i.test(sql) && upper.startsWith('SELECT')) {
+      const t = this.db.ensureTable('pilot_runs');
+      const row = t.rows.find((r) => r['run_id'] === params?.[0]);
+      return row
+        ? { ...emptyResult(), rows: [cloneRow(row)], rowCount: 1 }
+        : emptyResult();
+    }
+    if (/FROM pilot_runs/i.test(sql) && upper.startsWith('SELECT')) {
+      const t = this.db.ensureTable('pilot_runs');
+      // Apply WHERE filters if present (tenant_id, overall_ok). We
+      // scan the SQL to figure out which params bind to which column.
+      let rows = t.rows.slice();
+      const whereMatch = /WHERE\s+(.+?)\s+ORDER BY/i.exec(sql);
+      if (whereMatch) {
+        const clauses = whereMatch[1].split(/\s+AND\s+/i);
+        for (const c of clauses) {
+          const colMatch = /(\w+)\s*=\s*\$(\d+)/.exec(c);
+          if (!colMatch) continue;
+          const col = colMatch[1];
+          const idx = Number(colMatch[2]) - 1;
+          const val = params?.[idx];
+          rows = rows.filter((r) => {
+            if (typeof r[col] === 'boolean') return r[col] === Boolean(val);
+            return r[col] === val;
+          });
+        }
+      }
+      rows = rows
+        .slice()
+        .sort((a, b) =>
+          String(b['completed_at']).localeCompare(String(a['completed_at']))
+        )
+        .map(cloneRow);
+      return { ...emptyResult(), rows, rowCount: rows.length };
+    }
+    if (/DELETE FROM pilot_runs\s+WHERE run_id = \$1/i.test(sql)) {
+      const t = this.db.ensureTable('pilot_runs');
+      const idx = t.rows.findIndex((r) => r['run_id'] === params?.[0]);
+      if (idx >= 0) {
+        t.rows.splice(idx, 1);
+        return { ...emptyResult(), rowCount: 1 };
+      }
+      return emptyResult();
+    }
+    if (/DELETE FROM pilot_runs/i.test(sql)) {
+      const t = this.db.ensureTable('pilot_runs');
+      const n = t.rows.length;
+      t.rows.length = 0;
+      return { ...emptyResult(), rowCount: n };
+    }
+
     throw new Error(`FakePg: unhandled SQL → ${sql.slice(0, 120)}`);
   }
 }

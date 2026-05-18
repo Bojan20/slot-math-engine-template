@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 62 routes across 13 route files. 
+Captures 65 routes across 14 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -98,6 +98,14 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `GET` | `/api/marketplace/authors/me/earnings` |
 | `POST` | `/api/marketplace/license/verify` |
 | `POST` | `/api/marketplace/webhooks/payment` |
+
+## pilot.ts
+> W211 Faza 700.0 — Real L&W Pilot Onboard — pilot run REST routes. POST /api/pilot/runs       — admin record a new run (called by CI / the integration-suite script). GET  /api/pilot/runs       — admin list runs (filter ?tenant=&ok=) GET  /api/pilot/runs/:id   — per-run detail The store backing these routes is either the in-memory PilotRunStore or the Postgres-backed PostgresPilotRunStore. Both expose the same record() / get() / list() API, so the route layer treats them as a c
+| Method | Path |
+|---|---|
+| `POST` | `/api/pilot/runs` |
+| `GET` | `/api/pilot/runs` |
+| `GET` | `/api/pilot/runs/:id` |
 
 ## session.ts
 > CORTI 200.4-BACKEND — session lifecycle endpoints. POST   /api/session/create GET    /api/session/:sessionId DELETE /api/session/:sessionId POST   /api/session/:sessionId/spin

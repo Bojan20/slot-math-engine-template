@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Engine — L&amp;W Acceleration Pilot</title>
+  <meta name="description" content="L&amp;W C-Level pilot deck — 12 slides + ROI calculator + storyboards." />
+  <style>
+    /* Cyan + onyx palette, offline-safe (no CDN fonts). */
+    :root {
+      --bg: #0a0e14;
+      --bg-2: #10161f;
+      --bg-3: #161d28;
+      --line: #1c2533;
+      --line-2: #2b3849;
+      --text: #d6dde5;
+      --text-mute: #a8b5c5;
+      --text-dim: #7c8a9c;
+      --accent: #00d9ff;
+      --accent-2: #7fffd4;
+      --accent-soft: rgba(0, 217, 255, 0.10);
+      --warn: #ffcb6b;
+      --ok: #7fffd4;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    body { padding: 24px; max-width: 1200px; margin: 0 auto; }
+    h1 { color: var(--accent); margin: 0 0 16px; font-size: 24px; letter-spacing: 0.02em; }
+    h2.lw-slide-title { color: var(--accent); margin: 0 0 8px; font-size: 26px; letter-spacing: 0.01em; }
+    h3, h3.lw-h3 { color: var(--accent-2); margin: 24px 0 8px; font-size: 16px; }
+    a { color: var(--accent); }
+    code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--bg-3); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+
+    /* Top nav */
+    nav.lw-topnav { display: flex; gap: 4px; padding: 8px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    nav.lw-topnav a { color: var(--text-mute); text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 13px; }
+    nav.lw-topnav a:hover, nav.lw-topnav a.is-active { background: var(--accent-soft); color: var(--accent); }
+
+    /* Section wrappers */
+    section.lw-section { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; margin-bottom: 24px; scroll-margin-top: 24px; }
+
+    /* Slide */
+    .lw-slide { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; scroll-margin-top: 24px; }
+    .lw-slide-eyebrow { color: var(--text-dim); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+    .lw-slide-subtitle { color: var(--text-mute); margin: 4px 0 16px; font-size: 15px; }
+    .lw-slide-body { font-size: 14px; }
+
+    /* Hero block (slide 1) */
+    .lw-hero-block { display: grid; gap: 20px; }
+    .lw-lede { color: var(--text); font-size: 16px; line-height: 1.6; }
+    .lw-hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .lw-stat { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; }
+    .lw-stat-value { color: var(--accent); font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+    .lw-stat-label { color: var(--text-mute); font-size: 12px; margin-top: 4px; }
+    .lw-meta-strip { display: flex; gap: 10px; color: var(--text-dim); font-size: 12px; }
+
+    /* Compare grid (slide 2) */
+    .lw-comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .lw-compare-col { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+    .lw-compare-col.current { border-color: var(--warn); }
+    .lw-compare-col.platform { border-color: var(--accent); }
+    .lw-compare-head { font-weight: 600; color: var(--accent-2); margin-bottom: 8px; font-size: 14px; }
+    .lw-compare-col ul { margin: 0; padding-left: 16px; color: var(--text); }
+    .lw-compare-col li { margin: 6px 0; font-size: 13px; }
+    .lw-metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .lw-metric { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; }
+    .lw-metric-value { color: var(--accent); font-size: 26px; font-weight: 600; }
+    .lw-metric-label { color: var(--text-mute); font-size: 12px; margin-top: 4px; }
+
+    /* Tables */
+    .lw-table-wrap { overflow-x: auto; margin: 12px 0; }
+    .lw-coverage-table, .lw-risk-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .lw-coverage-table th, .lw-coverage-table td, .lw-risk-table th, .lw-risk-table td { border: 1px solid var(--line-2); padding: 6px 10px; text-align: left; vertical-align: top; }
+    .lw-coverage-table th, .lw-risk-table th { background: var(--bg-3); color: var(--accent-2); font-weight: 600; }
+    .lw-coverage-table tr:nth-child(even), .lw-risk-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+    /* Bars (slide 4) */
+    .lw-bar-compare { display: grid; gap: 6px; margin: 12px 0; }
+    .lw-bar-row { display: grid; grid-template-columns: 280px 1fr; gap: 12px; align-items: center; }
+    .lw-bar-label { font-size: 12.5px; color: var(--text-mute); }
+    .lw-bar { background: var(--accent-soft); color: var(--accent); padding: 4px 10px; font-size: 12.5px; border-radius: 4px; min-width: 40px; text-align: right; }
+    .lw-bar-us { background: var(--accent); color: var(--bg); font-weight: 600; }
+    .lw-bar-them { background: var(--bg-3); color: var(--text-mute); border: 1px solid var(--line-2); }
+
+    /* Callouts + footnotes */
+    .lw-callout { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 14px 0; border-radius: 0 6px 6px 0; font-size: 13.5px; }
+    .lw-footnote { color: var(--text-dim); font-size: 11.5px; margin-top: 12px; line-height: 1.5; }
+
+    /* Cert + jurisdiction cards */
+    .lw-cert-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; }
+    .lw-cert-card { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+    .lw-cert-head { color: var(--accent); font-weight: 600; margin-bottom: 6px; font-size: 13px; }
+    .lw-cert-card ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--text-mute); }
+    .lw-svg-wrap { margin: 16px 0; background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+    .lw-svg-wrap svg { width: 100%; height: auto; }
+    .lw-svg-caption { color: var(--text-mute); font-size: 12px; margin-top: 6px; text-align: center; }
+
+    .lw-juris-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 8px 0 16px; }
+    .lw-juris-card { background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--text-mute); text-align: center; }
+
+    /* Marketplace + performance */
+    .lw-mp-grid, .lw-perf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0; }
+    .lw-perf-grid { grid-template-columns: repeat(4, 1fr); }
+    .lw-mp-block { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+    .lw-mp-head { color: var(--accent); font-weight: 600; margin-bottom: 6px; font-size: 13px; }
+    .lw-mp-block ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-mute); }
+    .lw-mp-block li { margin: 4px 0; }
+    .lw-perf-card { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 12px; text-align: center; }
+    .lw-perf-value { color: var(--accent); font-size: 22px; font-weight: 600; }
+    .lw-perf-label { color: var(--text); font-size: 12px; margin-top: 4px; }
+    .lw-perf-sub { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
+
+    /* Timeline */
+    .lw-timeline { display: grid; gap: 14px; margin: 8px 0; }
+    .lw-timeline-step { display: grid; grid-template-columns: 60px 1fr; gap: 12px; align-items: start; background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+    .lw-timeline-dot { background: var(--accent); color: var(--bg); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; }
+    .lw-timeline-body { font-size: 13px; }
+
+    /* Terms + close grids */
+    .lw-terms-grid, .lw-close-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0; }
+    .lw-terms-card, .lw-close-card { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+    .lw-terms-head { color: var(--accent); font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+    .lw-terms-price { color: var(--accent-2); font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .lw-terms-card ul, .lw-close-card ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-mute); }
+    .lw-terms-card li, .lw-close-card li { margin: 4px 0; }
+    .lw-close-num { color: var(--accent); font-size: 26px; font-weight: 600; }
+    .lw-close-head { color: var(--accent-2); font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+    .lw-close-card p { color: var(--text-mute); font-size: 12.5px; margin: 0; }
+    .lw-final-cta { text-align: center; margin: 18px 0; padding: 16px; background: var(--bg-3); border: 1px solid var(--accent); border-radius: 8px; }
+    .lw-cta-line { color: var(--text-mute); font-size: 12px; }
+    .lw-cta-email { color: var(--accent); font-size: 22px; font-weight: 600; margin: 4px 0; font-family: ui-monospace, monospace; }
+    .lw-cta-sub { color: var(--text-dim); font-size: 11.5px; }
+
+    /* Two-col list (slide 4 categories) */
+    .lw-two-col-list { columns: 2; column-gap: 20px; padding-left: 18px; font-size: 13px; color: var(--text-mute); }
+    .lw-two-col-list li { margin: 4px 0; break-inside: avoid; }
+
+    /* Numbered list */
+    .lw-numbered-list { padding-left: 18px; font-size: 13px; color: var(--text); }
+    .lw-numbered-list li { margin: 6px 0; }
+
+    /* ROI calculator */
+    .lw-roi-calculator { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+    .lw-roi-title { color: var(--accent); font-size: 18px; margin: 0 0 14px; }
+    .lw-roi-sliders { display: grid; gap: 10px; margin-bottom: 18px; }
+    .lw-slider-row { display: grid; grid-template-columns: 220px 1fr 80px; gap: 12px; align-items: center; }
+    .lw-slider-label { color: var(--text-mute); font-size: 13px; }
+    .lw-slider-row input[type="range"] { accent-color: var(--accent); width: 100%; }
+    .lw-slider-val { color: var(--accent); font-family: ui-monospace, monospace; font-size: 13px; text-align: right; }
+    .lw-roi-summary h3 { color: var(--accent-2); margin: 0 0 10px; }
+    .lw-roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .lw-roi-card { background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px; text-align: center; }
+    .lw-roi-value { color: var(--accent); font-size: 22px; font-weight: 600; }
+    .lw-roi-label { color: var(--text-mute); font-size: 11.5px; margin-top: 4px; }
+    .lw-roi-inputs { color: var(--text-dim); font-size: 11.5px; margin-top: 12px; text-align: center; }
+    .lw-roi-footnote { color: var(--text-dim); font-size: 11px; margin-top: 8px; text-align: center; }
+
+    /* Storyboards */
+    .lw-storyboard { background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 14px; }
+    .lw-sb-head h3 { color: var(--accent); margin: 0 0 4px; }
+    .lw-sb-meta { color: var(--text-dim); font-size: 12px; }
+    .lw-sb-goal { color: var(--text-mute); font-size: 12.5px; margin-top: 6px; }
+    .lw-sb-scenes { margin-top: 14px; }
+    .lw-sb-scene { background: var(--bg); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 8px 0; border-radius: 0 6px 6px 0; }
+    .lw-sb-cue { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 4px; font-family: ui-monospace, monospace; }
+    .lw-sb-visual, .lw-sb-dialogue { font-size: 12.5px; margin: 3px 0; color: var(--text-mute); }
+    .lw-sb-visual strong, .lw-sb-dialogue strong { color: var(--text); }
+    .lw-sb-ascii { background: var(--bg-2); border: 1px solid var(--line); padding: 8px 12px; font-size: 11px; color: var(--text-mute); border-radius: 4px; overflow-x: auto; }
+    .lw-sb-qa { margin-top: 12px; }
+    .lw-sb-qa h4 { color: var(--accent-2); margin: 0 0 4px; font-size: 13px; }
+    .lw-sb-qa ul { margin: 0; padding-left: 18px; font-size: 12px; color: var(--text-mute); }
+
+    /* Download tarball CTA */
+    .lw-download-cta { display: inline-block; background: var(--accent); color: var(--bg); padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+    @media (max-width: 900px) {
+      .lw-hero-stats, .lw-cert-row, .lw-juris-grid, .lw-mp-grid, .lw-perf-grid, .lw-terms-grid, .lw-close-grid, .lw-metrics-row, .lw-comparison-grid { grid-template-columns: 1fr 1fr; }
+      .lw-bar-row { grid-template-columns: 1fr; }
+      .lw-slider-row { grid-template-columns: 1fr; }
+      .lw-two-col-list { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Slot Math Engine — L&amp;W Acceleration Pilot</h1>
+  <nav class="lw-topnav" aria-label="Pilot pitch sections">
+    <a href="#overview" class="is-active">Overview</a>
+    <a href="#deck">Deck</a>
+    <a href="#roi">ROI</a>
+    <a href="#deep-dive">Deep Dive</a>
+    <a href="#comparison">Comparison</a>
+    <a href="#storyboards">Storyboards</a>
+    <a href="./pitch-bundle.tar.gz" class="lw-download-cta" download>Download Pitch Tarball</a>
+  </nav>
+
+  <section id="overview" class="lw-section">
+    <h2>Overview</h2>
+    <p>
+      A 30-day pilot offer to L&amp;W's C-suite + math team. This page bundles
+      the full sales surface area: a 12-slide deck (below), a live ROI
+      calculator, a technical deep-dive document, a competitive
+      comparison, and three demo storyboards (30-second / 5-minute /
+      90-minute). Built for offline review — open in any modern browser,
+      no internet required.
+    </p>
+    <p>
+      Companion documents in <code>docs/</code>:
+      <code>docs/LW_TECHNICAL_DEEP_DIVE.md</code>,
+      <code>docs/LW_VS_COMPETITORS.md</code>,
+      <code>docs/LW_PILOT_PITCH_GUIDE.md</code>.
+    </p>
+  </section>
+
+  <section id="deck" class="lw-section">
+    <h2>12-Slide Deck</h2>
+    <div id="lw-deck-mount"></div>
+  </section>
+
+  <section id="roi" class="lw-section">
+    <h2>ROI Calculator</h2>
+    <p>Adjust the five sliders below to model L&amp;W's actual portfolio. Live recompute on every input.</p>
+    <div id="lw-roi-mount"></div>
+  </section>
+
+  <section id="deep-dive" class="lw-section">
+    <h2>Technical Deep Dive</h2>
+    <p>
+      Full architecture brief for L&amp;W's CTO + math team. Covers:
+      engine architecture (2 brains: TS + Rust), IR format, MC simulator,
+      closed-form math, determinism guarantees, RNG hardening,
+      compliance gate, marketplace SDK, multi-tenant isolation,
+      performance, deployment, and code metrics.
+    </p>
+    <p>Document: <a href="../../docs/LW_TECHNICAL_DEEP_DIVE.md"><code>docs/LW_TECHNICAL_DEEP_DIVE.md</code></a></p>
+  </section>
+
+  <section id="comparison" class="lw-section">
+    <h2>Competitive Comparison</h2>
+    <p>
+      Honest comparison vs Aristocrat, IGT, Pragmatic, Hacksaw, and
+      L&amp;W's own internal pipelines. Eight dimensions: math coverage,
+      cert speed, multi-tenant, marketplace, open audit, mobile, cabinet
+      HW, pricing.
+    </p>
+    <p>Document: <a href="../../docs/LW_VS_COMPETITORS.md"><code>docs/LW_VS_COMPETITORS.md</code></a></p>
+  </section>
+
+  <section id="storyboards" class="lw-section">
+    <h2>Demo Storyboards</h2>
+    <p>Three demo scripts — 30 seconds, 5 minutes, 90 minutes. Use the format that fits the room.</p>
+    <div id="lw-storyboards-mount"></div>
+  </section>
+
+  <footer style="text-align:center; color: var(--text-dim); font-size: 12px; padding: 20px 0;">
+    Slot Math Engine Platform · L&amp;W Pilot · Confidential
+  </footer>
+
+  <script type="module">
+    import { LW_SLIDES, renderLwDeck } from '/src/lw-pilot-deck/index.ts';
+    import { mountRoiCalculator, DEFAULT_INPUTS } from '/src/roi-calculator.ts';
+    import { STORYBOARDS, renderStoryboardHtml } from '/src/storyboards/index.ts';
+
+    // 1) Render the deck.
+    const deckMount = document.getElementById('lw-deck-mount');
+    if (deckMount) deckMount.innerHTML = renderLwDeck(LW_SLIDES);
+
+    // 2) Mount the ROI calculator with live recompute.
+    const roiMount = document.getElementById('lw-roi-mount');
+    if (roiMount) {
+      mountRoiCalculator({ root: roiMount }, DEFAULT_INPUTS);
+      roiMount.addEventListener('input', async (e) => {
+        const target = e.target;
+        if (!(target instanceof HTMLInputElement) || target.type !== 'range') return;
+        const inputs = { ...DEFAULT_INPUTS };
+        for (const row of roiMount.querySelectorAll('input[type="range"]')) {
+          const name = row.getAttribute('name');
+          if (name && name in inputs) inputs[name] = Number(row.value);
+        }
+        const mod = await import('/src/roi-calculator.ts');
+        const out = mod.computeRoi(inputs);
+        const summary = roiMount.querySelector('.lw-roi-summary');
+        if (summary) summary.outerHTML = mod.renderRoiSummary(out);
+        const valEl = roiMount.querySelector(`[data-slider-val="${target.name}"]`);
+        if (valEl) valEl.textContent = target.value;
+      });
+    }
+
+    // 3) Render storyboards.
+    const sbMount = document.getElementById('lw-storyboards-mount');
+    if (sbMount) sbMount.innerHTML = STORYBOARDS.map(renderStoryboardHtml).join('\n');
+
+    // 4) Top-nav active-section sync.
+    const sections = ['overview', 'deck', 'roi', 'deep-dive', 'comparison', 'storyboards'];
+    const navLinks = document.querySelectorAll('nav.lw-topnav a[href^="#"]');
+    const setActive = (id) => {
+      for (const a of navLinks) {
+        a.classList.toggle('is-active', a.getAttribute('href') === '#' + id);
+      }
+    };
+    window.addEventListener('scroll', () => {
+      let current = sections[0];
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 100) current = id;
+      }
+      setActive(current);
+    });
+  </script>
+</body>
+</html>

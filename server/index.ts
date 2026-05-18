@@ -42,6 +42,8 @@ import { registerLicenseRoutes } from './routes/license.js';
 import { registerCatalogRoutes } from './routes/catalog.js';
 import { registerMarketplaceRoutes } from './routes/marketplace.js';
 import { MarketplaceStore } from './state/marketplace.js';
+import { registerPilotRoutes } from './routes/pilot.js';
+import { PilotRunStore } from './state/pilot-runs.js';
 import { createCache } from './lib/cache.js';
 import { LatencyBudgetTracker, attachLatencyMiddleware } from './lib/latency-budget.js';
 
@@ -67,6 +69,8 @@ export interface BackendStores {
   email: EmailSender;
   /** CORTI W209 Faza 500.0 — marketplace store (kernels/templates/etc.). */
   marketplace: MarketplaceStore;
+  /** W211 Faza 700.0 — pilot integration-suite run history. */
+  pilotRuns: PilotRunStore;
   /** Optional Postgres pool (when USE_POSTGRES=true). */
   pg?: PgConnection;
 }
@@ -160,6 +164,7 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     licenses: opts.stores?.licenses ?? new LicenseStore(),
     email: opts.stores?.email ?? new EmailSender(),
     marketplace: opts.stores?.marketplace ?? new MarketplaceStore(),
+    pilotRuns: opts.stores?.pilotRuns ?? new PilotRunStore(),
   };
   // Best-effort: load games up-front so first /api/lobby/games is fast.
   try {
@@ -308,6 +313,9 @@ export async function build(opts: BuildOptions = {}): Promise<FastifyInstance> {
     hsm: stores.hsm,
     cache: sharedCache,
   });
+
+  // W211 Faza 700.0 — Pilot integration-suite run admin routes.
+  await registerPilotRoutes(app, { store: stores.pilotRuns });
 
   return app;
 }

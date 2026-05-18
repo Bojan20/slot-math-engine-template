@@ -1,6 +1,6 @@
 {
-  "startedAt": "2026-05-18T18:52:05.879Z",
-  "totalMs": 81,
+  "startedAt": "2026-05-18T19:15:40.975Z",
+  "totalMs": 82,
   "totalScripts": 6,
   "okCount": 6,
   "failCount": 0,
@@ -8,37 +8,37 @@
     {
       "name": "smoke-cert-export",
       "ok": true,
-      "durationMs": 76,
+      "durationMs": 78,
       "message": "synthetic cert export ok"
     },
     {
       "name": "smoke-jurisdiction-rules",
       "ok": true,
-      "durationMs": 66,
+      "durationMs": 76,
       "message": "synthetic jurisdiction rules ok"
     },
     {
       "name": "smoke-license-verify",
       "ok": true,
-      "durationMs": 65,
+      "durationMs": 75,
       "message": "synthetic license verify ok"
     },
     {
       "name": "smoke-rng-determinism",
       "ok": true,
-      "durationMs": 71,
+      "durationMs": 79,
       "message": "bit-identical replay"
     },
     {
       "name": "smoke-spin-flow",
       "ok": true,
-      "durationMs": 69,
+      "durationMs": 74,
       "message": "synthetic spin cycle ok"
     },
     {
       "name": "smoke-wallet-providers",
       "ok": true,
-      "durationMs": 77,
+      "durationMs": 73,
       "message": "synthetic wallet providers ok"
     }
   ]
