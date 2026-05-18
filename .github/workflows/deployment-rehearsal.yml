@@ -1,0 +1,52 @@
+# W210 Faza 600.0 — Deployment rehearsal.
+#
+# On every push to main:
+#   1. Build the project (tsc) so the smoke harness can import compiled JS.
+#   2. Run the canary controller in dry-run mode against a synthetic
+#      sample stream — exercises stage transitions + health gates.
+#   3. Run the full smoke suite in `--synthetic` mode.
+#   4. Generate a rollback rehearsal report and upload as artifact.
+
+name: deployment-rehearsal
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  rehearsal:
+    name: Rehearsal · ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: TypeScript build
+        run: npm run build || tsc --noEmit
+      - name: Canary dry-run + smoke (synthetic)
+        run: node scripts/smoke-tests/run-all-smoke.mjs --synthetic
+      - name: Blue/green dry-run plan
+        run: |
+          node scripts/deployment/prepare-green.mjs --version=ci.0.0 --dry-run
+          node scripts/deployment/traffic-shift.mjs --target=100 --step=25 --interval=0 --dry-run --fast
+          node scripts/deployment/blue-green-switch.mjs --to=green --dry-run
+      - name: Upload rehearsal artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-rehearsal
+          path: |
+            reports/smoke/summary.json
+            reports/deployment/state.json
+          if-no-files-found: ignore

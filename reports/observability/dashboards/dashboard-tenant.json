@@ -1,0 +1,98 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "id": null,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Active sessions (tenant)",
+      "id": 1,
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(active_sessions{tenant_id=\"$tenant\"})",
+          "legendFormat": "sessions",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Spin volume (24h)",
+      "id": 2,
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(gaas_spins_total{tenant_id=\"$tenant\"}[24h]))",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Revenue (24h)",
+      "id": 3,
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(gaas_net_gaming_revenue_sum{tenant_id=\"$tenant\"}[24h]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries",
+      "title": "Tenant RTP trend (rolling 1h)",
+      "id": 4,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(rate(gaas_payouts_sum{tenant_id=\"$tenant\"}[1h])) / sum(rate(gaas_bets_sum{tenant_id=\"$tenant\"}[1h]))",
+          "legendFormat": "rolling RTP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percentunit" }, "overrides": [] }
+    },
+    {
+      "type": "table",
+      "title": "Per-game RTP",
+      "id": 5,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum by (game_id) (rate(gaas_payouts_sum{tenant_id=\"$tenant\"}[24h])) / sum by (game_id) (rate(gaas_bets_sum{tenant_id=\"$tenant\"}[24h]))",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "tags": ["w210", "tenant"],
+  "templating": {
+    "list": [
+      {
+        "name": "tenant",
+        "label": "Tenant",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "PROM" },
+        "query": "label_values(active_sessions, tenant_id)",
+        "refresh": 2,
+        "sort": 1
+      }
+    ]
+  },
+  "time": { "from": "now-24h", "to": "now" },
+  "title": "Slot Engine — Per-Tenant",
+  "uid": "w210-tenant",
+  "version": 1
+}

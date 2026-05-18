@@ -1,0 +1,115 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "id": null,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Current canary stage",
+      "id": 1,
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        { "expr": "max(canary_stage{tenant_id=\"$tenant\"})", "refId": "A" }
+      ],
+      "fieldConfig": { "defaults": { "min": 0, "max": 3 }, "overrides": [] }
+    },
+    {
+      "type": "stat",
+      "title": "Rollout %",
+      "id": 2,
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "max(canary_rollout_percent{tenant_id=\"$tenant\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent" }, "overrides": [] }
+    },
+    {
+      "type": "stat",
+      "title": "Health score",
+      "id": 3,
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "avg(canary_health_score{tenant_id=\"$tenant\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percentunit", "min": 0, "max": 1 },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Rollbacks (24h)",
+      "id": 4,
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(deployment_rollbacks_total{tenant_id=\"$tenant\"}[24h]))",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "RTP drift (canary vs prod)",
+      "id": 5,
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "canary_rtp{tenant_id=\"$tenant\"} - production_rtp{tenant_id=\"$tenant\"}",
+          "legendFormat": "Δ_RTP",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Canary p99 latency vs baseline",
+      "id": 6,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "canary_latency_p99_ms{tenant_id=\"$tenant\"}",
+          "legendFormat": "canary",
+          "refId": "A"
+        },
+        {
+          "expr": "baseline_latency_p99_ms{tenant_id=\"$tenant\"}",
+          "legendFormat": "baseline",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] }
+    }
+  ],
+  "refresh": "15s",
+  "schemaVersion": 38,
+  "tags": ["w210", "deployment", "canary"],
+  "templating": {
+    "list": [
+      {
+        "name": "tenant",
+        "label": "Tenant",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "PROM" },
+        "query": "label_values(canary_stage, tenant_id)",
+        "refresh": 2
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "Slot Engine — Deployment / Canary",
+  "uid": "w210-deployment",
+  "version": 1
+}

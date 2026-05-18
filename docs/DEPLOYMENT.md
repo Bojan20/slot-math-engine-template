@@ -147,3 +147,141 @@ npm run deploy:rollback -- v0.9.0
 7. Playwright e2e
 
 Matrix: `ubuntu-latest` + `macos-14` (Apple silicon).
+
+---
+
+## W210 Faza 600.0 — Live Operator Integration
+
+The W210 wave introduces the production deployment-rehearsal stack:
+deployment manifests, a canary controller, automated rollback, smoke
+tests, blue/green scripts, and Grafana dashboards.
+
+### Deployment manifest
+
+Every promotion is governed by a `DeploymentManifest` (see
+`server/lib/deployment/manifest.ts`):
+
+| Field                  | Meaning                                          |
+| ---------------------- | ------------------------------------------------ |
+| `version`              | semver of the deployment artifact                |
+| `tenantId`             | tenant UUID owning the deployment                |
+| `jurisdiction`         | ISO-2 jurisdiction code (UKGC, MGA, SE, NJ, ...) |
+| `games[]`              | pinned game id + semver                          |
+| `walletProvider`       | wallet integration id                            |
+| `complianceVerdicts[]` | cert lab verdicts authorizing the deploy         |
+| `rolloutPercent`       | final target rollout (usually 100)               |
+| `canaryStrategy`       | `linear` / `exponential` / `adaptive`            |
+| `rollbackTriggers`     | gate thresholds (RTP, error, latency, audit)     |
+| `observabilityConfig`  | scrape interval + alert hooks + dashboards       |
+
+Manifests are persisted in the `deployments` Postgres table
+(migration `012_deployments.sql`) with a JSONB column so external
+tooling can index without schema-coupling.
+
+### Canary stages
+
+The default strategy (`linear`) advances through four stages:
+
+| Stage | Rollout % | Hold time |
+| ----- | --------: | --------- |
+| s0    |        1% | 30min     |
+| s1    |        5% | 30min     |
+| s2    |       25% | 30min     |
+| s3    |      100% | live      |
+
+Each stage evaluates four health gates per sample:
+
+1. **RTP drift** — `|RTPcanary - RTPproduction| < rtpDriftPp/100`.
+2. **Error rate** — `errorRate < rollbackTriggers.errorRate`.
+3. **Latency** — `p99 ≤ baseline × latencyP99Multiplier`.
+4. **Replay determinism** — bit-identical replay of a 1000-spin sample.
+
+If any gate fails, the controller emits a `rollback` decision with the
+trigger reason. If the stage window passes cleanly, it emits `promote`
+and advances. Stage 3 emits `live` once the configured hold elapses.
+
+Adaptive strategy halves the per-stage hold when the sample shows
+comfortable margin against every gate, accelerating safe rollouts.
+
+### Rollback procedure
+
+The `RollbackEngine` is invoked for four triggers (enumerated in
+`ROLLBACK_TRIGGERS`):
+
+- `canary_gate_failure` — emitted by the controller during canary.
+- `operator_manual` — operator clicks "rollback" in the console.
+- `anomaly_alert` — RTP drift > 1pp sustained for 1h on live traffic.
+- `audit_corruption` — audit-log integrity break detected.
+
+Procedure on rollback:
+
+1. Snapshot current state (manifest + tenant config + game-state digest).
+2. Restore previous manifest atomically via the `RouteSwap` interface.
+3. Write `audit` entry with `from`/`to` versions + reason.
+4. Notify operator (`critical` severity).
+5. Mail post-mortem template (`renderPostMortem`).
+
+**Recovery objectives:**
+
+- **RPO ≤ 60s** — at most 60s of writes can be lost.
+- **RTO ≤ 5min** — rollback wallclock under 5 minutes.
+
+In test mode both targets are exercised at sub-second resolution.
+
+### Smoke tests
+
+`scripts/smoke-tests/` ships six smokes that all support `--synthetic`
+mode for CI rehearsal and a `--target` URL for live verification:
+
+| Smoke                       | Verifies                                    |
+| --------------------------- | ------------------------------------------- |
+| `smoke-spin-flow`           | auth → debit → spin → credit → audit chain  |
+| `smoke-license-verify`      | marketplace licenses for tenant resolve     |
+| `smoke-jurisdiction-rules`  | every jurisdiction profile shape is valid   |
+| `smoke-rng-determinism`     | 1000-spin replay is bit-identical           |
+| `smoke-cert-export`         | dossier generation completes                |
+| `smoke-wallet-providers`    | every configured provider reports healthy   |
+
+`run-all-smoke.mjs` orchestrates them in parallel with a 5-minute
+total budget and writes `reports/smoke/summary.json`. Each smoke
+emits a single-line JSON envelope so the orchestrator can aggregate
+without parsing free-form output.
+
+### Blue/green scripts
+
+`scripts/deployment/` contains the blue/green helpers, all idempotent
+and all `--dry-run` capable:
+
+- `prepare-green.mjs` — stage a new version on the inactive side.
+- `health-probe.mjs` — health probe against `blue` or `green`.
+- `traffic-shift.mjs` — gradual shift (default 10%/min, configurable).
+- `blue-green-switch.mjs` — atomic active swap, refuses unhealthy targets.
+
+State persists in `reports/deployment/state.json` so the operations
+compose and resume.
+
+### Observability dashboards
+
+Grafana dashboard JSONs live under `reports/observability/dashboards/`
+and target the Prometheus endpoint exposed by `registerObservability`
+(see `server/lib/observability.ts`):
+
+- `dashboard-overview.json` — global RTP / hit / latency / errors.
+- `dashboard-tenant.json` — per-tenant sessions / volume / revenue.
+- `dashboard-deployment.json` — canary stage / health score / drift.
+- `dashboard-wallet.json` — provider health, debit/credit latency.
+- `dashboard-marketplace.json` — installs / purchases / earnings.
+- `dashboard-cert.json` — cert pipeline by lab + verdicts.
+
+Import each into Grafana 10.x with the `PROM` datasource UID.
+
+### CI rehearsal
+
+Two new workflows run on every push to main:
+
+- `.github/workflows/deployment-rehearsal.yml` — builds the project,
+  runs the smoke suite in synthetic mode, dry-runs the blue/green
+  scripts, and uploads `reports/smoke/summary.json` as an artifact.
+- `.github/workflows/cert-dossier-rehearsal.yml` — exercises the cert
+  export smoke on every PR.
+

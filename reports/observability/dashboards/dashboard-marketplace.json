@@ -1,0 +1,84 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "id": null,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Kernel installs (24h)",
+      "id": 1,
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(marketplace_kernel_installs_total[24h]))",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Template purchases (24h)",
+      "id": 2,
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(marketplace_template_purchases_total[24h]))",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Author earnings (MTD)",
+      "id": 3,
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(marketplace_author_payouts_sum[30d]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "currencyUSD" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries",
+      "title": "Daily purchases by category",
+      "id": 4,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum by (category) (rate(marketplace_template_purchases_total[1h]))",
+          "legendFormat": "{{category}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Top authors by gross",
+      "id": 5,
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (author_id) (increase(marketplace_gross_revenue_sum[30d])))",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["w210", "marketplace"],
+  "templating": { "list": [] },
+  "time": { "from": "now-30d", "to": "now" },
+  "title": "Slot Engine — Marketplace",
+  "uid": "w210-marketplace",
+  "version": 1
+}

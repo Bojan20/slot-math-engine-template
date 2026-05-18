@@ -6,6 +6,25 @@
 
 ---
 
+## Headline — One-Click Cert Export to 4 Labs
+
+> **`node scripts/cert-dossier-build.mjs --game=... --lab=GLI --jurisdiction=UKGC`** —
+> one command, four labs, signed bundle in 200 ms.
+
+| Lab    | Format               | Required docs                                             | Avg. timeline |
+| ------ | -------------------- | --------------------------------------------------------- | ------------- |
+| GLI    | `.zip` (GLI-19)      | PAR + TestU01 + NIST + SCR + MDD + RTP + paytable + replay | 6–12 weeks    |
+| BMM    | `.tar` + JSON manifest | PAR + TestU01 + NIST + MDD + RTP + paytable + replay + MGA PPD | 4–8 weeks     |
+| eCOGRA | `.zip` + YAML manifest | PAR + GSA + UKGC RTS-12 + RTS-14 + monthly RTP + paytable + replay | 3–6 weeks     |
+| NMi    | `.zip` + PKCS#7 sig    | PAR + NMi G-MS + EU GA 2024 + MDD + RTP + paytable + replay | 6–10 weeks    |
+
+Every bundle ships with an Ed25519 detached signature over the canonical
+manifest (same HSM key as W205-W206 cert routes + W209 marketplace
+license JWTs). Bundle bytes are deterministic; sha256 verifies
+byte-for-byte across machines. See `docs/CERT_LAB_SUBMISSION.md`.
+
+---
+
 ## What you are looking at, in 3 sentences
 
 > A **config-as-IR slot math engine** that ships every game as a single JSON

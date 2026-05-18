@@ -1,0 +1,88 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "id": null,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Cert pipelines in flight",
+      "id": 1,
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        { "expr": "sum(cert_pipelines_in_flight)", "refId": "A" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Success rate (30d)",
+      "id": 2,
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum(increase(cert_verdicts_total{status=\"pass\"}[30d])) / sum(increase(cert_verdicts_total[30d]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percentunit" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries",
+      "title": "Mean time in each stage (by lab)",
+      "id": 3,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "avg by (lab, stage) (cert_stage_duration_seconds)",
+          "legendFormat": "{{lab}}/{{stage}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] }
+    },
+    {
+      "type": "table",
+      "title": "Verdicts by lab (30d)",
+      "id": 4,
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "sum by (lab, status) (increase(cert_verdicts_total[30d]))",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Dossier size distribution",
+      "id": 5,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 18 },
+      "datasource": { "type": "prometheus", "uid": "PROM" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(cert_dossier_bytes_bucket[1h])))",
+          "legendFormat": "p50 bytes",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(cert_dossier_bytes_bucket[1h])))",
+          "legendFormat": "p99 bytes",
+          "refId": "B"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["w210", "cert"],
+  "templating": { "list": [] },
+  "time": { "from": "now-7d", "to": "now" },
+  "title": "Slot Engine — Cert Pipeline",
+  "uid": "w210-cert",
+  "version": 1
+}

@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 61 routes across 12 route files. 
+Captures 62 routes across 13 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -115,6 +115,12 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `POST` | `/api/signup` |
 | `POST` | `/api/signup/verify` |
 | `GET` | `/api/signup/check-email` |
+
+## wallet-healthcheck.ts
+> W210 Faza 600.0 — wallet provider healthcheck endpoint. POST /api/wallet/healthcheck — runs (or fetches cached) provider health for every configured tenant and returns the aggregate.
+| Method | Path |
+|---|---|
+| `POST` | `/api/wallet/healthcheck` |
 
 ## wallet.ts
 > CORTI 200.4-BACKEND — wallet endpoints (mock). GET  /api/wallet/:playerId/balance POST /api/wallet/:playerId/deposit POST /api/wallet/:playerId/withdraw GET  /api/wallet/:playerId/transactions

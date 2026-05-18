@@ -131,8 +131,12 @@ export class FakeClient extends EventEmitter implements Partial<PoolClient> {
       return emptyResult();
     }
 
-    // CREATE TABLE / CREATE INDEX (any) — no-op
-    if (upper.startsWith('CREATE TABLE') || upper.startsWith('CREATE INDEX')) {
+    // CREATE TABLE / CREATE INDEX / CREATE UNIQUE INDEX (any) — no-op
+    if (
+      upper.startsWith('CREATE TABLE') ||
+      upper.startsWith('CREATE INDEX') ||
+      upper.startsWith('CREATE UNIQUE INDEX')
+    ) {
       return emptyResult();
     }
 

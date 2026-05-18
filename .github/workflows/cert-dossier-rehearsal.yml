@@ -1,0 +1,37 @@
+# W210 Faza 600.0 — Cert dossier rehearsal.
+#
+# Runs the cert-export smoke against the in-process synthetic stub to
+# prove the dossier generation path is exercised on every PR.
+
+name: cert-dossier-rehearsal
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cert-dossier:
+    name: Cert dossier rehearsal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Synthetic cert-export smoke
+        run: node scripts/smoke-tests/smoke-cert-export.mjs --synthetic
+      - name: Upload dossier artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cert-dossier-smoke
+          path: reports/smoke/cert-dossier-smoke.json
+          if-no-files-found: ignore
