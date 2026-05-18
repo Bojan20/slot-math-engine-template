@@ -452,6 +452,347 @@ Mapa "commit → faza":
 
 ---
 
+## 🎯 FAZA 200 — FULL APP ROADMAP (Boki, 2026-05-18, **C-Level Vision iz W196 retrospektive**)
+
+> **Trenutno stanje**: imamo **dva mozga** (TypeScript engine + Rust MC simulator) + **77 closed-form solvera** + **97 P-IDs catalog** + **5351 vitest specs** + **106 CI gates** + **operator-package bundle** + **PAR sample kit** + **frontend skelet**.
+>
+> **Cilj**: kompletno re-skin Light & Wonder iz "engine vendor" u "**full slot-game production platform**" — gde game designer otvara studio, drag-drop math, vidi RTP live, exportuje IR + symbol art + audio, deploy u jurisdikciju jednim klikom, regulator dobija ceo dossier automatski.
+>
+> Trenutno smo **~25% od full app** (mozak gotov, telo skoro celo nedostaje). 8 faza ispod pokrivaju ostatak.
+>
+> **Ne pravimo demo igre — pravimo platform na kome se prave igre.** Svaki Tier-1 operator (L&W, Aristocrat, IGT, Konami) može da je kupi i ship-uje 100+ titulova godišnje umesto 5-10.
+
+### Šta već IMAMO ✅ (W181-W196 base)
+
+| Layer | Status | What |
+|---|---|---|
+| **Math kernel** | ✅ 77 solvers | Closed-form RTP, variance, percentile, jackpot prob za 16 L&W gap mehanika + 61 generičkih |
+| **IR format** | ✅ USIF v1.0 | JSON Schema Draft 2020-12 + Merkle commit + HSM-signed PAR |
+| **MC simulator** | ✅ Rust + TS | Philox-based RNG, paralel, NUMA, cross-platform byte-parity |
+| **CI fortress** | ✅ 106 gates | TestU01-ready, NIST SP 800-22, ENT, SP 800-90B, χ², KAT, mutation, parity |
+| **Compliance gate** | ✅ 15 jurisdikcija | UKGC RTS, MGA PPD, eCOGRA, AU NCPF, JP Pachislot, NIGC, EU GA 2024 |
+| **Operator package** | ✅ 153 fajla bundle | Full cert paper trail u tarball-u za one-click regulator submit |
+| **Industry catalog** | ✅ v2.63 (97 P-IDs) | Svaki industry pattern u tabeli sa math + diff od ostalih |
+| **PAR Sample Kit** | ✅ 20 samples | Standalone bundle za mathematician walkthrough (no repo needed) |
+| **Frontend skelet** | ✅ drop-IR demo | Drag-drop IR JSON → view solver output (vrlo basic) |
+| **Sales demo** | ✅ scripts/sales-demo.mjs | One-button C-level pitch reproducer |
+
+### Šta TREBA da bude full app — 8 FAZA roadmap
+
+---
+
+### 🎨 FAZA 200.1 — MATH STUDIO (Designer UX) — *(4-6 nedelja, **CRITICAL** ⚠️→❌)*
+
+**Mission**: game designer (math person) sedne za laptop, drag-drop iz catalog 97 P-IDs, vidi RTP/variance/percentile live, exportuje IR JSON. Bez teksta-editora.
+
+#### 200.1.1 Visual Math Kernel Composer ❌
+- **Node-based editor** (à la Blender shader nodes / Unreal Blueprint) — svaki P-ID je node, parametri su input pinovi, output je RTP/Var/percentile
+- Drop kernel iz sidebar palette → drag connection edges → automatic IR generation
+- Multi-kernel composition (npr. P-001 cascade + P-005 sticky wild + P-068 FS trigger u jednom game-u)
+- Live recompute na svaki parameter change (debounced 100ms)
+- Side panel: real-time RTP curve + variance bar + hit frequency histogram
+- Save/load workspace (.studio.json)
+- Templates: Quick Hit, Huff N' Puff, Dragon Spin, Wizard of Oz starter packs
+
+#### 200.1.2 Parameter Sweep + Sensitivity Tool ❌
+- Select parameter → slider range → engine computes RTP grid (1000 points u ~1s)
+- Heatmap visualization (par × RTP × var)
+- "What if I change p_trigger from 0.05 to 0.08?" → instant delta
+- A/B compare two configs side-by-side
+- Export sweep results as CSV za math team review
+
+#### 200.1.3 Template Library + Auto-Suggest ❌
+- Drop-down: "Start from existing title" → pre-fill kernels iz L&W catalog
+- Auto-suggest sledeći kernel based on what's already u graph-u (npr. ako dodaš FS trigger, suggest sticky wild ili multiplier)
+- Catalog browser sa search ("show me all kernels for jackpot mechanics") + filter (RTP range, variance, complexity)
+
+#### 200.1.4 IR Validator + Round-Trip ❌
+- Live JSON Schema validation u editor-u
+- Round-trip: IR JSON ↔ visual graph (drop existing IR file → see graph)
+- Diff view (compare two IR versions)
+- Export IR sa Merkle root + HSM signature
+
+#### 200.1.5 Math Documentation Auto-Gen ❌
+- "Generate spec sheet" button → emits PAR-like PDF (formula + parameters + RTP/var/percentile + UKGC/MGA disclosure block)
+- Math team handover artifact: zero manual rewriting
+
+---
+
+### 🎰 FAZA 200.2 — SYMBOL/ART PIPELINE — *(3-4 nedelje, ⚠️→❌)*
+
+**Mission**: art team drag-uje PNG/SVG simbole u browser, definiše reel strips, anim sequences, sound effects — sve linked back to IR za final game asset bundle.
+
+#### 200.2.1 Symbol Atlas Builder ❌
+- Drop PNG/SVG/Spine fajlove → auto-pack u texture atlas (power-of-2)
+- Symbol metadata: ID, name, paytable tier, win animation, idle anim, blur anim (during spin)
+- Atlas export: WebGL-friendly + iOS/Android sprite sheet variants
+
+#### 200.2.2 Reel Strip Configurator ❌
+- Visual reel strip editor (vertical column, drag-drop symbols)
+- Per-reel weight assignment (% probability per stop)
+- "Generate from IR" button → auto-build reel strips from IR symbol weights
+- Multi-reel coordination (sticky positions, expanding wilds)
+- Validation: reel coverage, stop count, symbol distribution
+
+#### 200.2.3 Animation Timeline Editor ❌
+- Per-feature animation triggers: win presentation, FS intro, bonus trigger, jackpot reveal
+- Timeline UI (after-effects style) sa keyframes for symbol movements
+- Spine/Lottie/Rive integration (3rd party animation tools)
+- Particle effects (coin burst, lightning, explosion)
+
+#### 200.2.4 Audio Engine + SFX Library ❌
+- Audio asset upload (mp3, ogg, webm)
+- Per-symbol win SFX + per-feature ambient music
+- Volume mixing, fade in/out, looping
+- Built-in SFX library (1000+ casino sounds): bell, coin, win, jackpot, etc.
+
+#### 200.2.5 Cabinet Preview Multi-Form Factor ❌
+- Mobile preview (375×667, 414×896, foldable)
+- Desktop (1920×1080, 4K)
+- EGM (Aristocrat Helix, Bally Pro Series cabinet aspect ratios)
+- VLT (square aspect)
+- Pixel-perfect simulation za regulator submission proofs
+
+---
+
+### 🎮 FAZA 200.3 — GAME RUNTIME ENGINE — *(6-8 nedelja, ❌)*
+
+**Mission**: WebGL/Canvas-based player-facing slot game runtime — uzima IR + asset bundle → puca runable game na svim platformama.
+
+#### 200.3.1 Spin Engine + Reel Renderer ❌
+- WebGL reels sa physics-based stop deceleration
+- Variable reel heights (Megaways), expanding rows (Reel Reels), Colossal Reels (5×4 + 5×12)
+- Cascade/tumble engine
+- Cluster pays renderer
+- Hold-and-spin grid (5×5, 6×3, custom)
+- Symbol-on-reel multipliers, mystery symbols, mega symbols
+
+#### 200.3.2 Bonus Game Runtime ❌
+- FS engine (retrigger, multiplier trail, sticky)
+- Wheel bonus (single, multi-stage, U-Spin touch)
+- Pick bonus N-stage tree + race/competitive pick
+- Bonus Bank (Mode A/B/C runtime)
+- Multi-pot branched H&S
+- Arcade-shooter survival (Stellar Jackpots)
+- Nested mini-slot inside bonus (LOTR Tower Spin)
+
+#### 200.3.3 IR → Runtime Config Converter ❌
+- Single function: `runGame(irJson, assetBundle) → SlotGameInstance`
+- Determinism guarantee: same seed → byte-identical replay
+- Sub-runtime za Class II Bingo wrapper
+- Sub-runtime za AWP cycle compensated math (UK Class III)
+
+#### 200.3.4 Input + UI Layer ❌
+- Spin button, bet selector, paylines toggle, auto-spin (mandatory regulatory limits 10/25/50/100 max)
+- Audio toggle, paytable view, help screen
+- Touch + click + keyboard support
+- Accessibility (WCAG 2.1 AA, screen reader, color-blind palette toggle)
+- Responsible gambling overlay (RG session timer, loss limit, cool-off)
+
+#### 200.3.5 Server Bridge (RNG + Wallet) ❌
+- WebSocket/REST `POST /spin` endpoint → server-authoritative RNG response
+- HSM-backed Philox seed bridge (Wave 38 already implemented na server side)
+- Wallet API integration (debit pre-spin, credit post-spin, escrow)
+- Demo mode toggle (script-driven, no real RNG)
+- Replay endpoint za disputes (`GET /spin/:id/replay`)
+
+---
+
+### 🖥️ FAZA 200.4 — BACKEND PLATFORM — *(5-7 nedelja, ❌)*
+
+**Mission**: server-side game session authority, wallet, RNG, audit, replay, jurisdiction profiles.
+
+#### 200.4.1 Game Session Manager ❌
+- Stateful spin authority (server-side, never trust client)
+- Session token + replay seed
+- Bet → spin → outcome pipeline
+- Concurrency (1000+ TPS per node, horizontal scale)
+- PostgreSQL session log + Redis cache
+
+#### 200.4.2 Wallet Integration API ❌
+- Generic adapter: PAM/CASINO API/REST/SOAP
+- Pre-built connectors: Playtech, Microgaming, NetEnt-Aggregator
+- Debit/credit/refund/freeroll
+- Multi-currency, locale, jurisdiction routing
+
+#### 200.4.3 Jurisdiction Profile Loader ❌
+- Per-spin: load jurisdiction profile, apply rules (max bet, max win cap, near-miss limit, anti-near-miss audit)
+- 15 profiles already defined in `src/jurisdiction/` — wire to runtime
+- Per-jurisdiction RTP variant (UK 92%, IT 90%, ES 92%, DE 96%, etc.)
+
+#### 200.4.4 Audit + Replay Service ❌
+- Every spin: log seed + outcome + bet + wallet delta + jurisdiction → HSM-signed
+- Replay endpoint: bit-identical reconstruction
+- Tamper-evident audit log (Merkle tree per session)
+- Player dispute UI: "show me spin #12345 from 2024-03-15 at 14:23 UTC"
+
+#### 200.4.5 Multi-Game Lobby + Hot-Reload ❌
+- Game catalog API: list installed games, filter by jurisdiction
+- Hot-load IR update (math change without re-cert if backward-compatible per regulatory rules)
+- A/B test platform: route 1% traffic to v2 math, measure RTP convergence
+
+---
+
+### 📊 FAZA 200.5 — OPERATOR + REGULATOR TOOLING — *(4-5 nedelja, ❌)*
+
+**Mission**: operator gleda real-time RTP per-game per-jurisdiction; regulator gleda audit logs sa read-only access.
+
+#### 200.5.1 Operator Dashboard ❌
+- Live RTP per game (real-time + 7-day + 30-day)
+- Hit frequency, win frequency, top-1% win share monitoring
+- Anomaly detection (RTP drift > 0.5pp triggers alert)
+- Player session analytics (avg session, bet patterns)
+- Game performance leaderboard
+- Revenue per game per jurisdiction
+
+#### 200.5.2 Regulator Portal ❌
+- Read-only audit access (UKGC, MGA, NIGC inspector role)
+- One-click cert export (PAR sheet + dossier + signed RNG + math attestation)
+- Spin replay (regulator can re-execute any spin from production logs)
+- Compliance verdict timeline (per-spin gate decisions)
+- Anomaly investigation tool
+
+#### 200.5.3 Math Team A/B Tool ❌
+- "Deploy variant B to 1% of traffic, target convergence in 1M spins"
+- Real-time RTP comparison A vs B
+- Auto-rollback ako variant drifts > tolerance
+- Cert-package generator za both variants
+
+#### 200.5.4 Anti-Cheat + Anomaly Detection ❌
+- Per-player win-rate outlier detection (3σ alerts)
+- Bonus abuse detection (FS buy spam, RTP boost exploit)
+- Session reconstruction za fraud investigation
+- Real-money play vs demo-mode segregation enforcement
+
+---
+
+### 🚀 FAZA 200.6 — DEVOPS + DELIVERY — *(3-4 nedelje, ❌)*
+
+**Mission**: one-click deploy igre u jurisdikciju X; lab submission packager.
+
+#### 200.6.1 Lab Submission Packager ❌
+- Single command: `npm run lab-submit -- --jurisdiction=UKGC --game=quick_hit_platinum_v2`
+- Auto-bundles: IR + PAR + cert dossier + RNG seed attestation + USIF schema + COMMERCIAL_PITCH + spin replay samples (10000)
+- TestU01 BigCrush + NIST SP 800-22 + PractRand reports
+- Lab-specific format adapters (GLI, BMM, eCOGRA, NMi)
+
+#### 200.6.2 Game Version Migration ❌
+- v1 → v2 math migration tool
+- Backward-compat checker (will old spins replay correctly?)
+- Deprecation pipeline (sunset old version, migrate player history)
+- Re-cert advisor ("change qualifies as material → re-cert required")
+
+#### 200.6.3 Multi-Tenant Hosting ❌
+- Operator A and Operator B share platform, isolated databases
+- Per-tenant white-label theming
+- Per-tenant audit access (Operator A can't see Operator B's logs)
+- Tenant onboarding wizard (1h setup target)
+
+#### 200.6.4 Mobile App Wrapper ❌
+- iOS app (Swift wrapper around WebView, IAP for jurisdictions that allow real-money)
+- Android app (Kotlin wrapper, Google Play compliance for jurisdictions allowing)
+- Web embed (iframe-able za operator portal integration)
+- PWA support (installable web app)
+
+---
+
+### 🛒 FAZA 200.7 — MARKETPLACE + SDK — *(4-5 nedelja, ❌, **Strategic moat**)*
+
+**Mission**: pretvori platformu u **ekosistem** — 3rd-party math studios pišu kernels, art studios prodaju templates, distribuciono nadmetan̂a sa L&W jer postaješ **infra-as-a-service**.
+
+#### 200.7.1 Math Kernel Marketplace ❌
+- 3rd-party developer SDK (TypeScript + Rust)
+- Kernel submission portal (sa automated test gates)
+- Revenue sharing (e.g. 70/30 split sa kernel author)
+- Kernel certification badge (engine-team verified)
+- 100+ kernels target u year 1
+
+#### 200.7.2 Game Template Marketplace ❌
+- Full game templates (IR + symbol pack + animations + sound) za sale
+- Operators kupe template → re-skin → ship u 2 nedelje umesto 6 meseci
+- Indie studios mogu da prodaju "Pirates Quest v1" za $20k flat
+
+#### 200.7.3 Designer SDK + Documentation ❌
+- Full TypeScript SDK docs (auto-gen iz JSDoc)
+- Rust core API docs
+- Math kernel authoring guide
+- Symbol art authoring guide
+- IR schema reference
+
+#### 200.7.4 Game-as-a-Service API ❌
+- REST API: external operator calls `POST /game/:id/spin`
+- Pay-per-spin pricing tier
+- Integration sa operator aggregators (SoftSwiss, EveryMatrix)
+
+#### 200.7.5 Tournament + Bonus Engine ❌
+- Slot tournament framework (leaderboard, prize pool)
+- Bonus pool integration (deposit match, FS bonuses, reload offers)
+- Loyalty integration (player tier, comp points)
+
+---
+
+### 🏭 FAZA 200.8 — PRODUCTION GAME STUDIO — *(8-12 nedelja, **Optional/L&W Acquisition Trigger** 🌟)*
+
+**Mission**: postani prvi-class production studio sa 100+ ready-to-ship game templates — direct L&W competitor (or acquisition target).
+
+#### 200.8.1 Game Template Library (100+) ❌
+- Re-implement every iconic L&W mehaniku as production-quality template
+- Quick Hit family (10 variants), Huff N' Puff (8), Wizard of Oz (5), Dancing Drums (4), Spartacus (3), Lock It Link (3), Rich Little Piggies (3), etc.
+- Plus Pragmatic-class (Sweet Bonanza), NetEnt-class (Gonzo, Starburst), Aristocrat-class (Buffalo, Lightning Link mehaniku — clean-room re-implementation, ne IP-violating)
+- Each template ships sa: math (engine-validated), art (production-quality), audio, animations
+- Per-template re-skin tool ("clone Quick Hit Platinum, rename Quick Hit Dragons, change art")
+
+#### 200.8.2 Symbol Art Library (10K+) ❌
+- 10000+ premium-quality casino symbols (vector + PNG + atlas)
+- Themed packs (Egyptian, Dragon, Fruit, Mythology, Pop Culture, etc.)
+- Per-symbol win animations + idle animations
+- Royalty-free za platform tenants
+
+#### 200.8.3 Music + SFX Production ❌
+- 1000+ original music tracks (per-game theme + bonus + jackpot)
+- 5000+ SFX (reel spin, win, bell, coin, celebration, dramatic stings)
+- Per-jurisdiction localized audio (e.g. mandatory RG announcements u UK)
+
+#### 200.8.4 Localization Toolchain ❌
+- 50+ language string database
+- Per-jurisdiction legal text (help screens, paytable, T&C, RG)
+- Right-to-left support (Arabic, Hebrew)
+- Asian-character glyph support (CJK fonts)
+
+#### 200.8.5 Cabinet Hardware Integration ❌
+- Bally Pro Series SDK integration
+- Aristocrat Helix touchscreen API
+- IGT Crystal Curve cabinet
+- Standalone EGM cert (NIGC Class III, NV/NJ regulated land-based)
+- Optional: physical cabinet manufacturing partnerships (Ainsworth, Spin Games)
+
+---
+
+## 🎯 PRIORITY ORDER (Boki, sledeći 12 meseci roadmap)
+
+| Order | Phase | Effort | Why first |
+|---|---|---|---|
+| 1 | **200.1 Math Studio** | 4-6 wk | Game designers need GUI — this is "Wave 200 vs Wave 196" jump |
+| 2 | **200.3 Runtime Engine** | 6-8 wk | Bez runtime-a, sve je samo math (mathematicians convinced; players need game) |
+| 3 | **200.4 Backend Platform** | 5-7 wk | Real-money requires server-side authority + wallet integration |
+| 4 | **200.2 Symbol/Art Pipeline** | 3-4 wk | Art team može da radi paralelno sa 200.3 |
+| 5 | **200.5 Operator/Regulator** | 4-5 wk | First live deployment requires operator tools |
+| 6 | **200.6 DevOps Delivery** | 3-4 wk | Scale-up phase, after first 5-10 games live |
+| 7 | **200.7 Marketplace** | 4-5 wk | Strategic moat — pretvori platform u ekosistem |
+| 8 | **200.8 Production Studio** | 8-12 wk | L&W acquisition trigger ili direct competitor stance |
+
+**Total**: 37-51 nedelja od W196 do **full app live** (8-12 meseci sa team od 5-10 ljudi).
+
+## 🏆 OUTCOME TARGET (godina 1 post-W196)
+
+- ✅ **5+ Tier-1 operatora** licenced (L&W, Aristocrat partner, IGT partner, 2 mid-tier EU operators)
+- ✅ **50+ titulova** live na platformi (mix iz template-a + custom)
+- ✅ **15+ jurisdikcija** active (UK, MT, IT, ES, DE, SE, NL, US-NJ, US-PA, CA-ON, AU, NZ, JP, KR, BR)
+- ✅ **$10M-$25M ARR** licensing + GaaS revenue
+- ✅ **Position vs L&W**: "we are the infrastructure they should have built" — acquisition target valuation $200M-$500M ili continued indie path
+
+---
+
 ## FAZA 0 — Pripreme i temelji *(1-2 nedelje)*
 
 ### 0.1 Repo & infra
