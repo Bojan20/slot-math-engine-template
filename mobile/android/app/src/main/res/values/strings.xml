@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Slot Math Studio</string>
+    <string name="title_activity_main">Slot Math Studio</string>
+    <string name="package_name">com.vanvinkl.slotstudio</string>
+    <string name="custom_url_scheme">slotstudio</string>
+</resources>

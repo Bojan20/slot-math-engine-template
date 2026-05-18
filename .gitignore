@@ -97,6 +97,11 @@ web/support/node_modules/
 web/support/package-lock.json
 dist/support/
 
+# ─── W207-DOCS public documentation site ─────────
+web/docs/node_modules/
+web/docs/package-lock.json
+dist/docs/
+
 # ─── W204-PROTOCOLS — HSM ed25519 keypair (generated on first boot) ─────
 server/data/hsm-keys.json
 
@@ -106,3 +111,13 @@ server/data/hsm-keys.json
 # the source-of-truth deliverables and stay tracked.
 reports/browser-compat/*.png
 .env.production
+
+# W207 mini-app artifacts
+web/docs/node_modules/
+web/docs/package-lock.json
+dist/docs/
+mobile/node_modules/
+mobile/package-lock.json
+mobile/ios/Pods/
+mobile/android/.gradle/
+mobile/android/build/

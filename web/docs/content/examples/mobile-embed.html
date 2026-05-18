@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Engine - Operator embed</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0b1220; color: #e7eefc; }
+    .wrap { max-width: 480px; margin: 16px auto; padding: 16px; }
+    .balance { font-size: 28px; font-weight: 700; }
+    button { padding: 14px 28px; font-size: 18px; background: #22d3ee; color: #0b1220; border: 0; border-radius: 8px; cursor: pointer; font-weight: 700; }
+    .log { background: #18243d; padding: 10px; border-radius: 6px; height: 200px; overflow: auto; font-family: monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <!--
+    Example: Embedding the Studio mini-app in an operator site.
+
+    Drop this HTML on any subdomain. It calls the GaaS API over CORS so
+    the operator's site never sees the player's wallet balance directly -
+    the engine signs every response and the embed displays it.
+
+    Expected output:
+      balance: $1.00
+      spin -> win $0.50, balance $1.49
+      spin -> win $0.00, balance $0.49
+  -->
+  <div class="wrap">
+    <h1>Demo slot</h1>
+    <div>Balance: <span id="balance" class="balance">--</span></div>
+    <button id="spin-btn" type="button">Spin $1.00</button>
+    <div id="log" class="log" aria-live="polite"></div>
+  </div>
+
+  <script type="module">
+    const API = 'http://localhost:4000';
+    const SESSION = 'sess-embed-demo';
+    const balanceEl = document.getElementById('balance');
+    const logEl = document.getElementById('log');
+    const spinBtn = document.getElementById('spin-btn');
+
+    function log(line) {
+      const div = document.createElement('div');
+      div.textContent = line;
+      logEl.prepend(div);
+    }
+
+    async function boot() {
+      const session = await fetch(`${API}/api/session/create`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ playerId: 'embed-demo' }),
+      }).then((r) => r.json());
+      balanceEl.textContent = `$${(session.balanceMinor / 100).toFixed(2)}`;
+      log(`balance: $${(session.balanceMinor / 100).toFixed(2)}`);
+    }
+
+    spinBtn.addEventListener('click', async () => {
+      const r = await fetch(`${API}/api/gaas/spin`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ gameId: 'demo-1', sessionId: SESSION, betAmount: 1 }),
+      }).then((r) => r.json());
+      balanceEl.textContent = `$${r.balance.toFixed(2)}`;
+      log(`spin -> win $${r.totalWin.toFixed(2)}, balance $${r.balance.toFixed(2)}`);
+    });
+
+    boot();
+  </script>
+</body>
+</html>

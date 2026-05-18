@@ -193,3 +193,37 @@ textarea:focus-visible,
 }
 .skip-link:focus,
 .skip-link:focus-visible { left: 12px; top: 8px; }
+
+/* ============================================================
+   CORTI W207-MOBILE — regulator mobile responsive
+   ============================================================ */
+@media (max-width: 1023px) {
+  body { font-size: 13px; }
+
+  /* Header: stack brand + nav. */
+  .reg-header, header[role="banner"] {
+    flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px;
+  }
+
+  /* Review grid → 2 col on tablet, 1 col on phone. */
+  .review-grid { grid-template-columns: 1fr 1fr !important; }
+  .review-actions { flex-wrap: wrap; }
+  .review-actions button { flex: 1 1 calc(50% - 4px); min-height: 40px; }
+  .review-comment { min-height: 100px; }
+
+  /* Audit table → horizontal scroll. */
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Toast → full-width at bottom. */
+  .reg-toast { left: 8px; right: 8px; bottom: 8px; }
+}
+
+@media (max-width: 767px) {
+  .review-grid { grid-template-columns: 1fr !important; }
+  .review-panel h2 { font-size: 16px; }
+  button { min-height: 40px; }
+}
+
+@media (pointer: coarse) {
+  button, a[role="button"], input[type="submit"] { min-height: 40px; }
+}

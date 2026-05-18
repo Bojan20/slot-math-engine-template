@@ -36,12 +36,16 @@ import type { GamesRegistry } from '../state/games.js';
 import type { SessionStore } from '../state/sessions.js';
 import type { WalletStore } from '../state/wallet.js';
 import type { AuditStore } from '../state/audit.js';
+import type { AnalyticsStore, AnalyticsEvent } from '../state/analytics.js';
 
 export interface GaasRouteDeps {
   games: GamesRegistry;
   sessions: SessionStore;
   wallet: WalletStore;
   audit: AuditStore;
+  /** Optional analytics pipeline — when provided, spins are recorded and
+   *  subscribed WebSocket clients receive `{type:"analytics", ...}` frames. */
+  analytics?: AnalyticsStore;
   /** Accepted API keys. Empty array = dev mode (no auth). */
   apiKeys?: string[];
   /** RNG hook for deterministic tests. */
@@ -124,6 +128,8 @@ export async function registerGaasRoutes(
     socket: import('ws').WebSocket;
     apiKey: string;
     subscriptions: Set<string>;
+    /** Operator analytics opt-in. Only operator-role clients can subscribe. */
+    analyticsSubscribed: boolean;
     pingTimer?: NodeJS.Timeout;
     closed: boolean;
   };
@@ -139,6 +145,32 @@ export async function registerGaasRoutes(
       }
     }
   };
+
+  const broadcastAnalytics = (ev: AnalyticsEvent): void => {
+    const msg = JSON.stringify({
+      type: 'analytics',
+      category: ev.category,
+      payload: {
+        eventId: ev.eventId,
+        sessionId: ev.sessionId,
+        gameId: ev.gameId,
+        value: ev.value,
+        bet: ev.bet,
+        timestamp: ev.timestamp,
+        ...(ev.payload ?? {}),
+      },
+    });
+    for (const c of conns.values()) {
+      if (c.closed) continue;
+      if (!c.analyticsSubscribed) continue;
+      try { c.socket.send(msg); } catch { /* ignore broken pipe */ }
+    }
+  };
+
+  // Wire analytics pipeline → WS fan-out (operator subscribers only).
+  if (deps.analytics) {
+    deps.analytics.onEvent(broadcastAnalytics);
+  }
 
   app.post<{ Body: IRPayload }>('/api/gaas/compute-rtp', async (req, reply) => {
     if (!checkApiKey(req, reply, apiKeys)) return;
@@ -240,6 +272,19 @@ export async function registerGaasRoutes(
       balance: wallet.balanceMinor / 100,
     };
 
+    // Feed analytics pipeline (best-effort; pipeline mirrors to WS).
+    if (deps.analytics) {
+      const category = winMinor > 0 ? 'win' : 'loss';
+      deps.analytics.ingest({
+        category,
+        sessionId: body.sessionId,
+        gameId: body.gameId,
+        bet: body.betAmount,
+        value: winMinor / 100,
+        payload: { spinId, merkleCommit: hash },
+      });
+    }
+
     // Fan out to subscribed websocket clients.
     broadcast(body.sessionId, {
       type: 'spin',
@@ -308,9 +353,13 @@ export async function registerGaasRoutes(
         socket,
         apiKey,
         subscriptions: new Set<string>(),
+        analyticsSubscribed: false,
         closed: false,
       };
       conns.set(id, conn);
+
+      // Resolve role from query param ?role=operator (defaults to guest).
+      const roleParam = url.searchParams.get('role') ?? 'guest';
 
       // Defer the first frame past the current microtask so that test
       // harnesses (and real clients) have a chance to attach a 'message'
@@ -336,7 +385,7 @@ export async function registerGaasRoutes(
       conn.pingTimer.unref?.();
 
       socket.on('message', (raw: import('ws').RawData) => {
-        let msg: { type?: string; sessionIds?: string[]; bet?: number; gameId?: string; sessionId?: string; ts?: number };
+        let msg: { type?: string; sessionIds?: string[]; bet?: number; gameId?: string; sessionId?: string; ts?: number; role?: string };
         try {
           msg = JSON.parse(raw.toString());
         } catch {
@@ -377,6 +426,30 @@ export async function registerGaasRoutes(
                 socket.send(JSON.stringify({ type: 'spin-ack', data: r.data, timestamp: new Date().toISOString() }));
               }
             });
+            return;
+          }
+          case 'subscribe-analytics': {
+            // Operator-only opt-in for analytics stream. Role can come
+            // from the query param (?role=operator) or from the message
+            // body for clients that prefer not to expose it in the URL.
+            const role = (msg.role as string | undefined) ?? roleParam;
+            if (role !== 'operator' && role !== 'admin' && role !== 'regulator') {
+              socket.send(JSON.stringify({ type: 'error', error: 'analytics_requires_operator_role' }));
+              return;
+            }
+            conn.analyticsSubscribed = true;
+            socket.send(JSON.stringify({
+              type: 'analytics-subscribed',
+              timestamp: new Date().toISOString(),
+            }));
+            return;
+          }
+          case 'unsubscribe-analytics': {
+            conn.analyticsSubscribed = false;
+            socket.send(JSON.stringify({
+              type: 'analytics-unsubscribed',
+              timestamp: new Date().toISOString(),
+            }));
             return;
           }
           case 'pong':

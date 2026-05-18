@@ -17,6 +17,7 @@ import { createMathNotebookBridge, type NotebookBridge, MathNotebook } from './m
 import { createSensitivityBridge, type SensitivityBridge } from './sensitivity.js';
 import { installCertify, type CertifyBridge } from './certify.js';
 import { installPolish, pushToast, showSpinner, renderEmptyState, type PolishApi } from './polish.js';
+import { installPwa, type PwaBridge } from './pwa.js';
 import {
   loadLibrary as loadIRLibrary,
   loadIR as loadIRLibraryItem,
@@ -96,6 +97,7 @@ declare global {
     __studio_sensitivity__?: SensitivityBridge;
     __studio_certify__?: CertifyBridge;
     __studio_polish__?: PolishApi;
+    __studio_pwa__?: PwaBridge;
     __studio_art__?: ArtBridge;
     __studio_ir_library__?: IRLibraryBridge;
   }
@@ -757,6 +759,14 @@ function boot(): void {
     hook().logActivity('W200 · polish pass installed (loading/error/empty + tooltips + mobile guard)');
   } catch (err) {
     console.warn('[W200] polish install failed:', err);
+  }
+
+  // ── CORTI W207-MOBILE · PWA + service worker + install prompt ─────
+  try {
+    window.__studio_pwa__ = installPwa();
+    hook().logActivity('W207-MOBILE · PWA bootstrap installed (SW + install + share + reducedData)');
+  } catch (err) {
+    console.warn('[W207-MOBILE] PWA install failed:', err);
   }
 
   // ── CORTI 200.2 · Symbol/Art pipeline ─────────────────────────────

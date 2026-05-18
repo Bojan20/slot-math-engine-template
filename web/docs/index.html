@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Engine - Docs</title>
+  <meta name="description" content="Public documentation for the slot-math-engine: SDK, REST API, GaaS protocol, IR schema, integration guides." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="docs-app">
+  <a class="skip-link" href="#docs-main">Skip to content</a>
+
+  <header class="docs-header" role="banner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-name">Slot Math Engine</span>
+        <span class="brand-tag">Documentation</span>
+      </div>
+    </div>
+    <div class="docs-search" role="search">
+      <input id="search-input" type="search" placeholder="Search docs..." aria-label="Search documentation" autocomplete="off" />
+      <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+    </div>
+    <nav class="docs-toolbar" aria-label="External links">
+      <a class="tool-btn" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      <a class="tool-btn" href="/#/api-reference">API</a>
+      <a class="tool-btn primary" href="/#/playground">Playground</a>
+    </nav>
+  </header>
+
+  <div class="docs-shell">
+    <aside id="docs-sidebar" class="docs-sidebar" aria-label="Documentation sections"></aside>
+    <main id="docs-main" class="docs-main" tabindex="-1" aria-live="polite">
+      <article id="docs-article" class="docs-article"></article>
+      <section id="docs-playground" class="docs-playground" hidden>
+        <header class="playground-head">
+          <h1>Interactive Playground</h1>
+          <p>Validate IR documents, generate cURL examples, and test WebSocket connections without leaving the page.</p>
+        </header>
+        <div class="playground-grid">
+          <div class="playground-col">
+            <label for="pg-editor"><strong>IR JSON</strong></label>
+            <textarea id="pg-editor" class="pg-editor" spellcheck="false" aria-label="IR JSON editor"></textarea>
+            <div class="pg-actions">
+              <button id="pg-validate" type="button" class="tool-btn primary">Validate IR</button>
+              <button id="pg-curl" type="button" class="tool-btn">Generate cURL</button>
+              <button id="pg-ws-test" type="button" class="tool-btn">Test WS</button>
+              <label class="pg-url"><span>API URL</span><input id="pg-url" type="text" value="http://localhost:4000" /></label>
+            </div>
+          </div>
+          <div class="playground-col">
+            <label><strong>Output</strong></label>
+            <pre id="pg-output" class="pg-output" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="docs-footer" role="contentinfo">
+    <span>Slot Math Engine - MIT - 6352 specs PASS - 12 mini-apps</span>
+    <span class="spacer"></span>
+    <span class="hint">v0.1.0 - 2026-05-18</span>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

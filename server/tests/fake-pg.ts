@@ -551,6 +551,43 @@ export class FakeClient extends EventEmitter implements Partial<PoolClient> {
       return { ...emptyResult(), rowCount: n };
     }
 
+    // ── analytics_events (W207-ANALYTICS)
+    if (/INSERT INTO analytics_events/i.test(sql)) {
+      const t = this.db.ensureTable('analytics_events');
+      const row: Row = {
+        event_id: Number(params?.[0]),
+        category: String(params?.[1]),
+        session_id: params?.[2] ?? null,
+        game_id: params?.[3] ?? null,
+        bet: params?.[4] == null ? null : Number(params?.[4]),
+        value: params?.[5] == null ? null : Number(params?.[5]),
+        payload: parseJsonbParam(params?.[6]),
+        created_at: new Date(String(params?.[7])),
+      };
+      t.rows.push(row);
+      return { ...emptyResult(), rows: [cloneRow(row)], rowCount: 1 };
+    }
+    if (/FROM analytics_events\s+ORDER BY event_id DESC LIMIT/i.test(sql)) {
+      const t = this.db.ensureTable('analytics_events');
+      const lim = Number(params?.[0] ?? 1000);
+      const rows = t.rows
+        .slice()
+        .sort((a, b) => Number(b['event_id']) - Number(a['event_id']))
+        .slice(0, lim)
+        .map(cloneRow);
+      return { ...emptyResult(), rows, rowCount: rows.length };
+    }
+    if (/SELECT COUNT\(\*\)::text AS count FROM analytics_events/i.test(sql)) {
+      const t = this.db.ensureTable('analytics_events');
+      return { ...emptyResult(), rows: [{ count: String(t.rows.length) }], rowCount: 1 };
+    }
+    if (/DELETE FROM analytics_events/i.test(sql)) {
+      const t = this.db.ensureTable('analytics_events');
+      const n = t.rows.length;
+      t.rows.length = 0;
+      return { ...emptyResult(), rowCount: n };
+    }
+
     throw new Error(`FakePg: unhandled SQL → ${sql.slice(0, 120)}`);
   }
 }

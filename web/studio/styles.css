@@ -3919,3 +3919,180 @@ b.fail { color: var(--rose); }
 /* 1.4.3 Contrast (Minimum): bump --text-2 from 2.86:1 to ≥ 3:1 on bg-2.
    Old: #5C6470 (luminance ~0.105). New: #8A92A0 lifts to ~4.6:1. */
 :root { --text-2: #8A92A0; }
+
+/* ============================================================
+   CORTI W207-MOBILE — Mobile-first responsive layout
+   ============================================================
+   Targets phones (320–767px) and small tablets (768–1023px).
+   The W200 desktop guard at <1024px is now suppressed inside
+   `.w207-mobile-ready` so the studio actually runs on touch
+   devices; the guard banner is hidden by setMobileGuard.
+*/
+
+/* Body/html: allow vertical scroll so panels can stack. */
+@media (max-width: 1023px) {
+  html, body { overflow: auto; }
+  /* Drop the desktop mobile-guard if our PWA opt-in has run. */
+  body.w207-mobile-ready .w200-mobile-guard { display: none !important; }
+
+  /* Stack all primary rows. */
+  .shell { display: block !important; height: auto !important; min-height: 100vh; }
+  .row-header, .row-tabs, .row-toolbar, .row-status { display: flex; flex-wrap: wrap; }
+  .row-header { height: auto; min-height: 48px; padding: 6px 10px; gap: 6px; }
+  .brand, .header-c, .header-r { min-width: 0; }
+  .brand-name { font-size: 13px; }
+  .ws-newgame-btn { display: none; }
+
+  /* Tabs → horizontal scroll strip instead of overflowing the header. */
+  .row-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .row-tabs::-webkit-scrollbar { display: none; }
+  .tabs { flex-wrap: nowrap; min-width: max-content; }
+  .tab { padding: 8px 10px; font-size: 11px; white-space: nowrap; }
+
+  /* Right rail → collapse to a bottom sheet (sticky drawer). */
+  .right-rail, .col-right, [data-rail] {
+    position: fixed;
+    inset: auto 0 0 0;
+    left: 0; right: 0; bottom: 0;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    background: var(--bg-1);
+    border-top: 1px solid var(--line);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    z-index: 80;
+    transform: translateY(calc(100% - 44px));
+    transition: transform 0.2s var(--ease);
+  }
+  .right-rail.is-open, .col-right.is-open, [data-rail].is-open { transform: translateY(0); }
+  .right-rail::before, .col-right::before, [data-rail]::before {
+    content: '';
+    display: block; height: 4px; width: 40px;
+    margin: 8px auto;
+    background: var(--bg-4); border-radius: 4px;
+  }
+
+  /* Symbol grid: 6-col → 2-col on phones. */
+  .symbol-grid, .sym-grid, [data-symbol-grid] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Main content: take full width, leave room for bottom action bar. */
+  .panel, [role="tabpanel"] { padding: 8px !important; }
+  main, #main { padding-bottom: 64px; }
+
+  /* Sticky bottom action bar (Spin / Compute / Save). */
+  .w207-bottom-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    background: var(--bg-1);
+    border-top: 1px solid var(--line);
+    z-index: 70;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.32);
+  }
+  .w207-bottom-bar button {
+    flex: 1; padding: 12px 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    color: var(--text-0);
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .w207-bottom-bar button.is-primary {
+    background: var(--cyan); color: var(--bg-0); border-color: var(--cyan);
+    font-weight: 600;
+  }
+
+  /* Drawer / hamburger nav for the 6 tabs. */
+  .w207-drawer-toggle {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    color: var(--cyan);
+    cursor: pointer;
+  }
+  .w207-drawer {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 15, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 95;
+    display: none;
+  }
+  .w207-drawer.is-open { display: block; }
+  .w207-drawer-panel {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(280px, 80vw);
+    background: var(--bg-1);
+    border-right: 1px solid var(--line);
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .w207-drawer-panel a, .w207-drawer-panel button {
+    padding: 12px 10px;
+    color: var(--text-0);
+    border: 0; background: transparent; text-align: left;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line-soft);
+    min-height: 44px;
+  }
+  .w207-drawer-panel a:hover, .w207-drawer-panel button:hover { background: var(--bg-2); }
+
+  /* Reduced data — skip backdrop blur. */
+  body.w207-reduced-data .w207-drawer { backdrop-filter: none; background: rgba(8, 10, 15, 0.96); }
+
+  /* Pixi canvas: shrink to viewport. */
+  #pixi-canvas { min-height: 220px !important; max-width: 100%; }
+  #pixi-canvas canvas { max-width: 100% !important; height: auto !important; }
+
+  /* Pitch deck: vertical scroll instead of slide-by-slide. */
+  .pitch-deck { display: block !important; height: auto !important; overflow: auto; }
+  .pitch-deck .slide {
+    display: block !important;
+    height: auto !important;
+    min-height: 60vh;
+    border-bottom: 1px solid var(--line);
+    page-break-after: always;
+  }
+}
+
+/* Phones only (320-768) — tighter type, hide secondary chrome. */
+@media (max-width: 767px) {
+  body { font-size: 13px; }
+  .row-header .persona, .row-header .header-r .meta { display: none; }
+  .tab span.tab-meta { display: none; }
+  /* Larger touch targets across the board. */
+  button, .tab, input, select, .persona-btn { min-height: 40px; }
+  .compose-toolbar button, .right-rail button { min-height: 40px; }
+}
+
+/* Tablets only (768-1023) — keep two-column layouts but trim padding. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .symbol-grid, .sym-grid, [data-symbol-grid] {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  main, #main { padding-bottom: 60px; }
+}
+
+/* Coarse-pointer (touch) globally — fatter hit areas regardless of width. */
+@media (pointer: coarse) {
+  button, .tab, .persona-btn, input[type="button"], input[type="submit"] {
+    min-height: 40px;
+  }
+}
+
+/* Save-Data — disable all decorative motion. */
+@media (prefers-reduced-data: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}

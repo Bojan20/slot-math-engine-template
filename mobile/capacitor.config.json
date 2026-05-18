@@ -1,0 +1,56 @@
+{
+  "appId": "com.vanvinkl.slotstudio",
+  "appName": "Slot Math Studio",
+  "webDir": "../web/studio",
+  "bundledWebRuntime": false,
+  "loggingBehavior": "production",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#0A0D11",
+    "minWebViewVersion": 79,
+    "appendUserAgent": "SlotStudioAndroid/1.0"
+  },
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#0A0D11",
+    "scrollEnabled": true,
+    "limitsNavigationsToAppBoundDomains": true,
+    "preferredContentMode": "mobile",
+    "appendUserAgent": "SlotStudioiOS/1.0"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#0A0D11",
+      "showSpinner": true,
+      "spinnerColor": "#22D3EE",
+      "androidSpinnerStyle": "small",
+      "iosSpinnerStyle": "small"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0A0D11",
+      "overlaysWebView": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "DARK",
+      "resizeOnFullScreen": true
+    },
+    "Haptics": {},
+    "Share": {},
+    "Filesystem": {
+      "iosDocumentsDirectoryName": "SlotStudio",
+      "androidDocumentsDirectoryName": "SlotStudio"
+    }
+  },
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "slotstudio",
+    "cleartext": false,
+    "errorPath": "offline.html"
+  }
+}

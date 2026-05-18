@@ -224,3 +224,38 @@ textarea:focus-visible,
 }
 .skip-link:focus,
 .skip-link:focus-visible { left: 12px; top: 8px; }
+
+/* ============================================================
+   CORTI W207-MOBILE — operator mobile responsive
+   ============================================================ */
+@media (max-width: 1023px) {
+  body { font-size: 13px; line-height: 1.5; }
+  .op-header {
+    grid-template-columns: auto 1fr auto !important;
+    height: auto; padding: 8px 12px; gap: 8px;
+  }
+  .op-nav { flex-wrap: wrap; gap: 4px; }
+  .op-nav a, .op-nav button { padding: 8px 10px; min-height: 40px; font-size: 12px; }
+
+  /* Card grids → single column. */
+  .juri-grid, .ab-grid, .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .ab-card .versus { grid-template-columns: 1fr !important; }
+
+  /* Tables → horizontal scroll. */
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Toast → full-width banner at bottom. */
+  .op-toast { left: 8px; right: 8px; bottom: 8px; }
+}
+
+@media (max-width: 767px) {
+  .op-header .brand { font-size: 13px; }
+  .op-header .brand img, .op-header .brand svg { max-height: 24px; }
+  button, .op-nav a { min-height: 40px; }
+}
+
+@media (pointer: coarse) {
+  button, .op-nav a, .op-nav button { min-height: 40px; }
+}
