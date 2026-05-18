@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atrium — Slot Math Studio</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+
+  <header class="topbar" role="banner">
+    <div class="brand" aria-label="Atrium Studio">
+      <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 20 L12 4 L20 20 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M9 14 L15 14" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+      <span class="brand__name">Atrium</span>
+      <span class="brand__sub">Slot Math Studio · build 2026.05</span>
+    </div>
+
+    <nav class="tabs" role="tablist" aria-label="Workspace tabs">
+      <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-build" id="tab-build" data-tab="build">
+        <span class="tab__idx">01</span><span class="tab__label">Build</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-play" id="tab-play" data-tab="play">
+        <span class="tab__idx">02</span><span class="tab__label">Play</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-certify" id="tab-certify" data-tab="certify">
+        <span class="tab__idx">03</span><span class="tab__label">Certify</span>
+      </button>
+    </nav>
+
+    <div class="topbar__right">
+      <div class="status-dot" title="Engine: 77 solvers online">
+        <span class="status-dot__pulse"></span>
+        <span>engine 77/77</span>
+      </div>
+      <button class="ghost-btn" title="Project: Aurora Vortex">aurora-vortex.ir</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- =========================== BUILD =========================== -->
+    <section class="panel is-active" id="panel-build" role="tabpanel" aria-labelledby="tab-build">
+      <div class="layout-build">
+
+        <!-- LEFT RAIL: SYMBOL PALETTE -->
+        <aside class="palette" aria-label="Symbol palette">
+          <header class="rail__head">
+            <h2>Symbols</h2>
+            <span class="rail__count">11 glyphs · 4 tiers</span>
+          </header>
+
+          <div class="palette__group">
+            <div class="palette__tier-label"><em>T1</em> apex</div>
+            <div class="palette__grid">
+              <button class="glyph glyph--t1" draggable="true" data-sym="obsidian" aria-label="Obsidian, tier 1">
+                <img src="symbols/obsidian.svg" alt="" />
+                <span>Obsidian</span>
+              </button>
+              <button class="glyph glyph--t1" draggable="true" data-sym="auralith" aria-label="Auralith, tier 1">
+                <img src="symbols/auralith.svg" alt="" />
+                <span>Auralith</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="palette__group">
+            <div class="palette__tier-label"><em>T2</em> major</div>
+            <div class="palette__grid">
+              <button class="glyph glyph--t2" draggable="true" data-sym="cinder" aria-label="Cinder, tier 2"><img src="symbols/cinder.svg" alt=""/><span>Cinder</span></button>
+              <button class="glyph glyph--t2" draggable="true" data-sym="verdant" aria-label="Verdant, tier 2"><img src="symbols/verdant.svg" alt=""/><span>Verdant</span></button>
+              <button class="glyph glyph--t2" draggable="true" data-sym="tide" aria-label="Tide, tier 2"><img src="symbols/tide.svg" alt=""/><span>Tide</span></button>
+            </div>
+          </div>
+
+          <div class="palette__group">
+            <div class="palette__tier-label"><em>T3</em> minor</div>
+            <div class="palette__grid">
+              <button class="glyph glyph--t3" draggable="true" data-sym="quill" aria-label="Quill, tier 3"><img src="symbols/quill.svg" alt=""/><span>Quill</span></button>
+              <button class="glyph glyph--t3" draggable="true" data-sym="prism" aria-label="Prism, tier 3"><img src="symbols/prism.svg" alt=""/><span>Prism</span></button>
+              <button class="glyph glyph--t3" draggable="true" data-sym="cog" aria-label="Cog, tier 3"><img src="symbols/cog.svg" alt=""/><span>Cog</span></button>
+            </div>
+          </div>
+
+          <div class="palette__group">
+            <div class="palette__tier-label"><em>T4</em> mech</div>
+            <div class="palette__grid">
+              <button class="glyph glyph--t4" draggable="true" data-sym="wild" aria-label="Wild"><img src="symbols/wild.svg" alt=""/><span>Wild</span></button>
+              <button class="glyph glyph--t4" draggable="true" data-sym="scatter" aria-label="Scatter"><img src="symbols/scatter.svg" alt=""/><span>Scatter</span></button>
+              <button class="glyph glyph--t4" draggable="true" data-sym="multiplier" aria-label="Multiplier"><img src="symbols/multiplier.svg" alt=""/><span>×N</span></button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- CENTER: HORIZONTAL REEL FLOW -->
+        <section class="canvas" aria-label="Reel canvas">
+          <header class="canvas__head">
+            <div>
+              <h2>Reel flow</h2>
+              <p class="canvas__sub">5 reels · 3 rows · horizontal cascade · drag glyphs onto a reel</p>
+            </div>
+            <div class="canvas__chips">
+              <button class="chip is-on" aria-pressed="true">Lines 20</button>
+              <button class="chip" aria-pressed="false">Ways 243</button>
+              <button class="chip" aria-pressed="false">Cluster</button>
+              <button class="chip" aria-pressed="false">Megaways</button>
+            </div>
+          </header>
+
+          <div class="reels" id="reels">
+            <!-- 5 reels generated by JS, but we provide a static fallback -->
+          </div>
+
+          <footer class="canvas__foot">
+            <div class="topology">
+              <span class="topology__label">Topology</span>
+              <select aria-label="Topology" id="topology">
+                <option>5×3 / 20 lines / left-to-right</option>
+                <option>5×3 / 243 ways</option>
+                <option>5×4 / cluster pays</option>
+                <option>6×4 / 4096 ways</option>
+              </select>
+            </div>
+            <div class="mech">
+              <span class="topology__label">Mechanic stack</span>
+              <span class="mech__pill">base</span>
+              <span class="mech__pill">free-spins</span>
+              <span class="mech__pill mech__pill--ghost">+ add</span>
+            </div>
+          </footer>
+        </section>
+
+        <!-- RIGHT RAIL: PAR LIVE + PAYTABLE -->
+        <aside class="par" aria-label="Live PAR metrics">
+          <header class="rail__head">
+            <h2>Live PAR</h2>
+            <span class="par__solver">solver #41 · stacked-wild</span>
+          </header>
+
+          <div class="par__big">
+            <div class="par__big-label">Return to player</div>
+            <div class="par__big-num"><span id="rtp">96.42</span><em>%</em></div>
+            <div class="par__big-delta" id="rtp-delta">target 96.00 · Δ +0.42</div>
+          </div>
+
+          <div class="par__row">
+            <div>
+              <div class="par__metric-label">Hit freq</div>
+              <div class="par__metric-num" id="hit">28.6%</div>
+            </div>
+            <div>
+              <div class="par__metric-label">Volatility</div>
+              <div class="par__metric-num" id="vol">5.3 / 10</div>
+            </div>
+            <div>
+              <div class="par__metric-label">Max win</div>
+              <div class="par__metric-num">10 000×</div>
+            </div>
+          </div>
+
+          <div class="par__chart" aria-label="Per-symbol contribution">
+            <div class="par__chart-head">
+              <span>Per-symbol contribution</span>
+              <span class="par__chart-unit">% of RTP</span>
+            </div>
+            <ol class="bars">
+              <li><span class="bars__lbl">obsidian</span><span class="bars__bar" style="--w:74%"></span><span class="bars__val">21.4</span></li>
+              <li><span class="bars__lbl">auralith</span><span class="bars__bar" style="--w:62%"></span><span class="bars__val">17.9</span></li>
+              <li><span class="bars__lbl">cinder</span>  <span class="bars__bar" style="--w:48%"></span><span class="bars__val">13.8</span></li>
+              <li><span class="bars__lbl">verdant</span> <span class="bars__bar" style="--w:39%"></span><span class="bars__val">11.2</span></li>
+              <li><span class="bars__lbl">tide</span>    <span class="bars__bar" style="--w:31%"></span><span class="bars__val">9.0</span></li>
+              <li><span class="bars__lbl">free-spins</span><span class="bars__bar bars__bar--alt" style="--w:42%"></span><span class="bars__val">12.1</span></li>
+              <li><span class="bars__lbl">multiplier</span><span class="bars__bar bars__bar--alt" style="--w:36%"></span><span class="bars__val">10.4</span></li>
+            </ol>
+          </div>
+
+          <details class="paytable" open>
+            <summary>Paytable · click cell to retune</summary>
+            <table aria-label="Paytable">
+              <thead><tr><th>symbol</th><th>×3</th><th>×4</th><th>×5</th></tr></thead>
+              <tbody id="paytable">
+                <tr data-row="obsidian"><th>obsidian</th><td><button data-pay="50">50</button></td><td><button data-pay="200">200</button></td><td><button data-pay="1000">1000</button></td></tr>
+                <tr data-row="auralith"><th>auralith</th><td><button data-pay="40">40</button></td><td><button data-pay="150">150</button></td><td><button data-pay="500">500</button></td></tr>
+                <tr data-row="cinder"><th>cinder</th><td><button data-pay="25">25</button></td><td><button data-pay="80">80</button></td><td><button data-pay="250">250</button></td></tr>
+                <tr data-row="verdant"><th>verdant</th><td><button data-pay="20">20</button></td><td><button data-pay="60">60</button></td><td><button data-pay="200">200</button></td></tr>
+                <tr data-row="tide"><th>tide</th><td><button data-pay="15">15</button></td><td><button data-pay="50">50</button></td><td><button data-pay="150">150</button></td></tr>
+                <tr data-row="quill"><th>quill</th><td><button data-pay="10">10</button></td><td><button data-pay="30">30</button></td><td><button data-pay="100">100</button></td></tr>
+                <tr data-row="prism"><th>prism</th><td><button data-pay="8">8</button></td><td><button data-pay="25">25</button></td><td><button data-pay="80">80</button></td></tr>
+                <tr data-row="cog"><th>cog</th><td><button data-pay="5">5</button></td><td><button data-pay="20">20</button></td><td><button data-pay="60">60</button></td></tr>
+              </tbody>
+            </table>
+            <p class="paytable__hint">↑ ↓ on a cell to nudge ±5 · live RTP updates on each commit.</p>
+          </details>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================== PLAY =========================== -->
+    <section class="panel" id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
+      <div class="layout-play">
+
+        <section class="stage" aria-label="Render stage">
+          <header class="stage__head">
+            <h2>Hex render · sector preview</h2>
+            <p>Non-grid visual mode. Each hex = a glyph slot, paylines drawn as ribbons.</p>
+          </header>
+
+          <div class="hex-stage" id="hex-stage" aria-live="polite">
+            <!-- hex cells rendered by JS -->
+          </div>
+
+          <div class="ribbon" id="payribbon" aria-hidden="true"></div>
+        </section>
+
+        <aside class="play-side" aria-label="Spin controls">
+          <div class="play-controls">
+            <div class="bet">
+              <label for="bet">Bet</label>
+              <div class="bet__row">
+                <button class="ghost-btn" id="bet-dn" aria-label="decrease bet">−</button>
+                <output id="bet">1.00</output>
+                <button class="ghost-btn" id="bet-up" aria-label="increase bet">+</button>
+              </div>
+              <span class="bet__cur">credits</span>
+            </div>
+
+            <button class="cta" id="spin">
+              <span class="cta__label">Spin</span>
+              <span class="cta__kbd">Space</span>
+            </button>
+
+            <button class="ghost-btn auto" id="auto">Autoplay × 10</button>
+
+            <div class="balance">
+              <div><span>balance</span><b id="balance">1 000.00</b></div>
+              <div><span>last win</span><b id="lastwin">0.00</b></div>
+            </div>
+          </div>
+
+          <section class="history" aria-label="Spin history">
+            <header><h3>History</h3><span id="hist-count">0 spins</span></header>
+            <ol id="history"></ol>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================== CERTIFY =========================== -->
+    <section class="panel" id="panel-certify" role="tabpanel" aria-labelledby="tab-certify" hidden>
+      <div class="layout-cert">
+
+        <section class="mc">
+          <header class="rail__head">
+            <h2>Monte-Carlo run</h2>
+            <span>Rust engine · 8 threads · xoshiro256++</span>
+          </header>
+
+          <div class="mc__config">
+            <label>Spins
+              <select id="mc-spins">
+                <option>20 000</option>
+                <option selected>50 000</option>
+                <option>250 000</option>
+                <option>1 000 000</option>
+              </select>
+            </label>
+            <label>Bet schedule
+              <select><option>flat 1.00</option><option>kelly</option><option>regulator stress</option></select>
+            </label>
+            <label>Seed
+              <input type="text" value="0x5e3d-aurora" />
+            </label>
+          </div>
+
+          <button class="cta cta--secondary" id="run-mc">Run Monte-Carlo</button>
+
+          <div class="mc__progress" id="mc-progress" hidden>
+            <div class="mc__bar"><span id="mc-bar"></span></div>
+            <p id="mc-status">queued</p>
+          </div>
+        </section>
+
+        <section class="parsheet" aria-label="PAR sheet">
+          <header class="rail__head">
+            <h2>PAR sheet · GLI-16</h2>
+            <span>12 sections · live preview</span>
+          </header>
+
+          <ol class="parsheet__list">
+            <li><b>01</b> Theoretical RTP <em>96.42%</em></li>
+            <li><b>02</b> Hit frequency <em>28.6%</em></li>
+            <li><b>03</b> Volatility index <em>5.3</em></li>
+            <li><b>04</b> Std deviation per spin <em>4.71</em></li>
+            <li><b>05</b> 99th-pct win <em>240×</em></li>
+            <li><b>06</b> 99.99th-pct win <em>3 100×</em></li>
+            <li><b>07</b> Max-win cap <em>10 000×</em></li>
+            <li><b>08</b> Bonus distance (E) <em>148 spins</em></li>
+            <li><b>09</b> Bonus distance (σ) <em>132 spins</em></li>
+            <li><b>10</b> Moments (m1..m4) <em>ok</em></li>
+            <li><b>11</b> Reel-strip entropy <em>3.18 bit</em></li>
+            <li><b>12</b> Drift KS · MC vs closed-form <em>p = 0.42</em></li>
+          </ol>
+        </section>
+
+        <section class="juris">
+          <header class="rail__head">
+            <h2>Jurisdictions</h2>
+            <span>multi-select · bundles into op-pkg</span>
+          </header>
+
+          <ul class="juris__list">
+            <li><label><input type="checkbox" checked /> UKGC · Great Britain</label></li>
+            <li><label><input type="checkbox" checked /> MGA · Malta</label></li>
+            <li><label><input type="checkbox" /> ADM · Italy</label></li>
+            <li><label><input type="checkbox" checked /> eCOGRA</label></li>
+            <li><label><input type="checkbox" /> EU GA 2024</label></li>
+            <li><label><input type="checkbox" /> GLI North America</label></li>
+          </ul>
+
+          <button class="cta cta--ghost" id="dl">
+            <span class="cta__label">Build operator-package.zip</span>
+            <span class="cta__kbd">⇧⌘B</span>
+          </button>
+          <p class="juris__foot">Bundles PAR sheet, IR, MC report, signed manifest, jurisdictional addenda.</p>
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="statusbar" role="contentinfo">
+    <span>aurora-vortex.ir · clean</span>
+    <span>solver: stacked-wild #41</span>
+    <span>rtp <b id="rtp-status">96.42%</b></span>
+    <span>last MC: 2026-05-17 23:11 · 50k spins · KS p=0.42</span>
+    <span class="statusbar__right">Atrium © 2026</span>
+  </footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

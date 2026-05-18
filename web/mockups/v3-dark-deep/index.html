@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Studio · v3-dark-deep — Midnight Trading Floor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="persona-math">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ INLINE SVG SPRITE — 40 warm-amber library icons ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- geometric -->
+    <symbol id="ic-triangle" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L56 52 L8 52 Z"/><path d="M32 22 L46 46 L18 46 Z" opacity=".5"/></g></symbol>
+    <symbol id="ic-square" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="10" width="44" height="44" rx="2"/><rect x="20" y="20" width="24" height="24" opacity=".5"/></g></symbol>
+    <symbol id="ic-hexagon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L54 20 L54 44 L32 56 L10 44 L10 20 Z"/><path d="M32 20 L44 26 L44 38 L32 44 L20 38 L20 26 Z" opacity=".5"/></g></symbol>
+    <symbol id="ic-octagon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8 L42 8 L56 22 L56 42 L42 56 L22 56 L8 42 L8 22 Z"/><circle cx="32" cy="32" r="10" opacity=".5"/></g></symbol>
+    <symbol id="ic-circle" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="12" opacity=".55"/><circle cx="32" cy="32" r="3" fill="currentColor"/></g></symbol>
+    <symbol id="ic-diamond" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 54 32 L 32 56 L 10 32 Z"/><path d="M32 20 L 44 32 L 32 44 L 20 32 Z" opacity=".55"/></g></symbol>
+    <symbol id="ic-star5" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 39 25 L 59 25 L 43 37 L 49 56 L 32 44 L 15 56 L 21 37 L 5 25 L 25 25 Z"/></g></symbol>
+    <symbol id="ic-star6" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 12 L52 46 L12 46 Z"/><path d="M32 52 L12 18 L52 18 Z" opacity=".7"/></g></symbol>
+    <symbol id="ic-chevron" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18 L 32 38 L 52 18"/><path d="M12 32 L 32 52 L 52 32" opacity=".55"/></g></symbol>
+    <symbol id="ic-arrow" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 32 56"/><path d="M16 24 L 32 8 L 48 24"/><path d="M22 30 L 32 20 L 42 30" opacity=".5"/></g></symbol>
+
+    <!-- abstract -->
+    <symbol id="ic-spiral" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 32 m -2 0 a 2 2 0 1 1 4 0 a 6 6 0 1 1 -12 0 a 10 10 0 1 1 20 0 a 14 14 0 1 1 -28 0 a 18 18 0 1 1 36 0"/></g></symbol>
+    <symbol id="ic-wave" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22 C 14 14, 22 30, 32 22 C 42 14, 50 30, 58 22"/><path d="M6 32 C 14 24, 22 40, 32 32 C 42 24, 50 40, 58 32"/><path d="M6 42 C 14 34, 22 50, 32 42 C 42 34, 50 50, 58 42" opacity=".55"/></g></symbol>
+    <symbol id="ic-knot" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="22" r="11"/><circle cx="42" cy="42" r="11"/><path d="M30 30 L 34 34"/><path d="M42 22 L 22 42" opacity=".5"/></g></symbol>
+    <symbol id="ic-lattice" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 58 20 L 58 44 L 32 58 L 6 44 L 6 20 Z"/><path d="M6 20 L 58 44"/><path d="M58 20 L 6 44"/><path d="M32 6 L 32 58"/><circle cx="32" cy="32" r="3" fill="currentColor"/></g></symbol>
+    <symbol id="ic-prism" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 54 24 L 46 54 L 18 54 L 10 24 Z"/><path d="M32 8 L 32 54" opacity=".55"/><path d="M10 24 L 54 24" opacity=".55"/></g></symbol>
+    <symbol id="ic-shard" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10 L 48 14 L 52 50 L 22 54 L 12 36 Z"/><path d="M16 10 L 32 32 L 52 50" opacity=".55"/><path d="M48 14 L 32 32 L 22 54" opacity=".35"/></g></symbol>
+    <symbol id="ic-crystal" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 50 22 L 42 56 L 22 56 L 14 22 Z"/><path d="M14 22 L 50 22" opacity=".55"/><path d="M32 6 L 32 56" opacity=".4"/></g></symbol>
+    <symbol id="ic-vortex" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 C 14 14, 8 30, 14 44 C 20 56, 38 58, 50 50 C 60 42, 60 26, 50 18 C 42 12, 28 14, 24 24 C 20 32, 28 38, 36 36"/></g></symbol>
+    <symbol id="ic-cipher" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="36" height="36"/><path d="M14 26 L 50 26"/><path d="M14 38 L 50 38"/><path d="M26 14 L 26 50"/><path d="M38 14 L 38 50"/><circle cx="20" cy="20" r="1.5" fill="currentColor"/><circle cx="44" cy="32" r="1.5" fill="currentColor"/><circle cx="32" cy="44" r="1.5" fill="currentColor"/></g></symbol>
+    <symbol id="ic-orbit" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="32" cy="32" rx="22" ry="10"/><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(60 32 32)" opacity=".55"/><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(120 32 32)" opacity=".4"/><circle cx="32" cy="32" r="3" fill="currentColor"/></g></symbol>
+    <symbol id="ic-rune" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10 L 20 54"/><path d="M44 10 L 44 54"/><path d="M20 22 L 44 38"/><path d="M20 42 L 44 28" opacity=".55"/></g></symbol>
+    <symbol id="ic-sigil" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M32 10 L 24 50 L 50 28 L 14 28 L 40 50 Z"/></g></symbol>
+
+    <!-- symbolic -->
+    <symbol id="ic-flame" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 C 22 18, 14 24, 18 38 C 20 48, 28 54, 32 56 C 36 54, 44 48, 46 38 C 50 24, 42 18, 32 6 Z"/><path d="M32 24 C 28 30, 26 36, 28 42 C 30 48, 32 50, 32 50 C 32 50, 34 48, 36 42 C 38 36, 36 30, 32 24 Z" opacity=".55"/></g></symbol>
+    <symbol id="ic-anchor" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="14" r="5"/><path d="M32 19 L 32 54"/><path d="M22 28 L 42 28"/><path d="M10 40 C 14 52, 26 56, 32 54"/><path d="M54 40 C 50 52, 38 56, 32 54"/></g></symbol>
+    <symbol id="ic-key" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="32" r="10"/><path d="M30 32 L 54 32"/><path d="M44 32 L 44 40"/><path d="M50 32 L 50 38"/><circle cx="20" cy="32" r="3"/></g></symbol>
+    <symbol id="ic-gear" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="10"/><path d="M32 8 L 32 16 M32 48 L 32 56 M8 32 L 16 32 M48 32 L 56 32 M15 15 L 21 21 M43 43 L 49 49 M15 49 L 21 43 M43 21 L 49 15"/><circle cx="32" cy="32" r="3"/></g></symbol>
+    <symbol id="ic-leaf" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 C 14 26, 32 8, 50 14 C 50 38, 38 50, 14 50 Z"/><path d="M14 50 L 50 14" opacity=".55"/></g></symbol>
+    <symbol id="ic-drop" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 C 22 22, 14 32, 14 42 C 14 52, 22 58, 32 58 C 42 58, 50 52, 50 42 C 50 32, 42 22, 32 8 Z"/></g></symbol>
+    <symbol id="ic-mountain" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 50 L 22 24 L 32 38 L 44 16 L 58 50 Z"/></g></symbol>
+    <symbol id="ic-sun" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="10"/><path d="M32 6 L 32 14 M32 50 L 32 58 M6 32 L 14 32 M50 32 L 58 32 M13 13 L 18 18 M46 46 L 51 51 M13 51 L 18 46 M46 18 L 51 13"/></g></symbol>
+    <symbol id="ic-moon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M44 14 C 30 14, 18 26, 18 40 C 18 50, 26 58, 36 58 C 32 50, 32 40, 36 32 C 40 24, 44 18, 44 14 Z"/></g></symbol>
+    <symbol id="ic-eye" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32 C 14 18, 22 14, 32 14 C 42 14, 50 18, 58 32 C 50 46, 42 50, 32 50 C 22 50, 14 46, 6 32 Z"/><circle cx="32" cy="32" r="8"/><circle cx="32" cy="32" r="3" fill="currentColor"/></g></symbol>
+    <symbol id="ic-feather" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M50 10 C 30 14, 18 26, 14 46 L 18 50 C 38 46, 50 34, 54 14 Z"/><path d="M50 10 L 14 46" opacity=".55"/></g></symbol>
+    <symbol id="ic-scales" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L 32 54"/><path d="M14 54 L 50 54"/><path d="M12 20 L 52 20"/><path d="M6 32 C 8 26, 16 26, 18 32 L 6 32 Z"/><path d="M46 32 C 48 26, 56 26, 58 32 L 46 32 Z"/><circle cx="32" cy="14" r="3"/></g></symbol>
+    <symbol id="ic-coin" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="14" opacity=".55"/></g></symbol>
+    <symbol id="ic-compass" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M32 14 L 38 32 L 32 50 L 26 32 Z"/><circle cx="32" cy="32" r="2" fill="currentColor"/></g></symbol>
+
+    <!-- special -->
+    <symbol id="ic-wild" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 38 24 L 58 24 L 42 36 L 48 56 L 32 44 L 16 56 L 22 36 L 6 24 L 26 24 Z"/></g></symbol>
+    <symbol id="ic-scatter" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="4" fill="currentColor"/><circle cx="32" cy="32" r="12" opacity=".75"/><circle cx="32" cy="32" r="20" opacity=".5" stroke-dasharray="2 4"/></g></symbol>
+    <symbol id="ic-bonus" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="20" width="48" height="36" rx="3"/><path d="M8 32 L 56 32" opacity=".55"/><path d="M32 20 L 32 56" opacity=".55"/><path d="M22 20 C 22 12, 32 12, 32 20"/><path d="M32 20 C 32 12, 42 12, 42 20"/></g></symbol>
+    <symbol id="ic-mult" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M22 22 L 42 42 M42 22 L 22 42"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+  <!-- ============ ROW 1: HEADER ============ -->
+  <header class="hdr-top" role="banner">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">Slot Math Studio <span>v3</span></div>
+        <div class="brand-sub">MIDNIGHT TRADING FLOOR · L&amp;W 100%</div>
+      </div>
+    </div>
+
+    <nav class="ws-tabs" id="ws-tabs" aria-label="Workspaces">
+      <button class="ws-tab is-active" data-ws="wsA"><span class="ws-dot"></span>Lava Falls <span class="ws-close" aria-hidden="true">×</span></button>
+      <button class="ws-tab" data-ws="wsB"><span class="ws-dot"></span>Pearl Dive <span class="ws-close" aria-hidden="true">×</span></button>
+      <button class="ws-tab" data-ws="wsC"><span class="ws-dot"></span>Solar Path <span class="ws-close" aria-hidden="true">×</span></button>
+      <button class="ws-new" id="ws-new" title="New workspace">+</button>
+    </nav>
+
+    <div class="hdr-right">
+      <div class="persona" role="group" aria-label="Persona">
+        <button class="persona-btn is-active" data-persona="math"     aria-pressed="true">Math</button>
+        <button class="persona-btn"            data-persona="design"   aria-pressed="false">Design</button>
+        <button class="persona-btn"            data-persona="producer" aria-pressed="false">Producer</button>
+      </div>
+      <button class="btn-ghost" id="btn-cmdk" title="Command palette">Search</button>
+      <span class="kbd">⌘ K</span>
+    </div>
+  </header>
+
+  <!-- ============ ROW 2: WORKSPACE CONTEXT STRIP ============ -->
+  <div class="hdr-ctx">
+    <div class="ctx-item"><span class="lbl">IR</span><b id="ctx-ir">lava-falls-v0.4.12</b></div>
+    <span class="ctx-sep">·</span>
+    <div class="ctx-item ctx-moss"><span class="lbl">Build</span><b>green · 0 err</b></div>
+    <span class="ctx-sep">·</span>
+    <div class="ctx-item"><span class="lbl">Topology</span><b>5×3 · 20 lines</b></div>
+    <span class="ctx-sep">·</span>
+    <div class="ctx-item ctx-amber"><span class="lbl">Seed</span><b>0x9F-2E1B</b></div>
+    <span class="ctx-sep">·</span>
+    <div class="ctx-item"><span class="lbl">Saved</span><b>14m ago · autosave on</b></div>
+    <div class="right ctx-item"><span class="lbl">Cat</span><b>v2.63</b></div>
+    <span class="ctx-sep">·</span>
+    <div class="ctx-item"><span class="lbl">Engine</span><b>77 solvers · 5 351 specs · 106 gates</b></div>
+  </div>
+
+  <!-- ============ ROW 3: TABS + CONTEXT TOOLS ============ -->
+  <div class="hdr-tabs">
+    <nav class="tabs" role="tablist" aria-label="Engine workspace">
+      <button class="tab is-active" data-tab="build"       role="tab" aria-selected="true"><span class="tab-idx">01</span>Build</button>
+      <button class="tab"           data-tab="compose"     role="tab" aria-selected="false"><span class="tab-idx">02</span>Compose</button>
+      <button class="tab"           data-tab="catalog"     role="tab" aria-selected="false"><span class="tab-idx">03</span>Catalog</button>
+      <button class="tab"           data-tab="play"        role="tab" aria-selected="false"><span class="tab-idx">04</span>Play</button>
+      <button class="tab"           data-tab="sensitivity" role="tab" aria-selected="false"><span class="tab-idx">05</span>Sensitivity</button>
+      <button class="tab"           data-tab="certify"     role="tab" aria-selected="false"><span class="tab-idx">06</span>Certify</button>
+    </nav>
+    <div class="ctx-tools">
+      <span class="pill">Layout · <b>12-col</b></span>
+      <span class="pill">Snap · <b>on</b></span>
+      <span class="pill">Density · <b>high</b></span>
+      <button class="btn-ghost" id="btn-save">Save</button>
+      <button class="btn-ghost" id="btn-export">Export</button>
+    </div>
+  </div>
+
+  <!-- ============ ROW 4: GLOBAL ENGINE STATUS ============ -->
+  <div class="global-status">
+    <div class="gs-item"><span class="dot"></span><b>engine online</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item is-amber"><span class="lbl">RTP</span><b id="gs-rtp">95.42%</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">σ</span><b id="gs-sigma">8.41</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">Hit</span><b id="gs-hit">27.83%</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">MaxWin</span><b id="gs-max">2 145×</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">Vola</span><b>MID</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">Drift</span><b id="gs-drift">−0.58 pp</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">Recompute</span><b id="gs-time">1.4 ms</b></div>
+    <div style="margin-left:auto" class="gs-item"><span class="lbl">Wave</span><b>W196 · bf9b1be</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item"><span class="lbl">P-IDs</span><b>97</b></div>
+    <span class="gs-sep">|</span>
+    <div class="gs-item is-amber"><span class="lbl">L&amp;W</span><b>16/16 ✓</b></div>
+  </div>
+
+  <!-- ============ MAIN: 3-COLUMN WORKSPACE ============ -->
+  <main id="main" class="workspace">
+
+    <!-- ===== LEFT: IR LIBRARY BROWSER ===== -->
+    <aside class="lib-rail" aria-label="IR Library">
+      <div class="lib-search"><input type="search" id="lib-search" placeholder="Search IR / templates / workspaces…" /></div>
+      <div id="lib-tree"></div>
+    </aside>
+
+    <!-- ===== CENTER: TAB PANELS ===== -->
+    <section class="panels">
+
+      <!-- ====================================================== 01 BUILD -->
+      <section class="panel is-active" id="panel-build" role="tabpanel">
+        <div class="build-grid">
+
+          <!-- Symbol Pool Configurator -->
+          <div class="build-section">
+            <div class="section-h">
+              <h2><span class="h-idx">01·A</span>Symbol Pool Configurator</h2>
+              <span class="sub">tier counts drive paytable + reel editor + symbol table</span>
+            </div>
+            <div class="pool-grid">
+              <div class="pool-row">
+                <span class="pool-lbl"><b>HP</b> High Pay</span>
+                <input type="range" min="1" max="8" value="3" data-pool="HP"/>
+                <span class="pool-count" data-count="HP">3</span>
+                <span class="pool-range">range 1–8</span>
+              </div>
+              <div class="pool-row">
+                <span class="pool-lbl"><b>MP</b> Mid Pay</span>
+                <input type="range" min="1" max="8" value="3" data-pool="MP"/>
+                <span class="pool-count" data-count="MP">3</span>
+                <span class="pool-range">range 1–8</span>
+              </div>
+              <div class="pool-row">
+                <span class="pool-lbl"><b>LP</b> Low Pay</span>
+                <input type="range" min="1" max="8" value="3" data-pool="LP"/>
+                <span class="pool-count" data-count="LP">3</span>
+                <span class="pool-range">range 1–8</span>
+              </div>
+              <div class="pool-row pool-special">
+                <span class="pool-lbl"><b>WILD</b></span>
+                <input type="range" min="0" max="3" value="1" data-pool="WILD"/>
+                <span class="pool-count" data-count="WILD">1</span>
+                <span class="pool-range">range 0–3</span>
+              </div>
+              <div class="pool-row pool-special">
+                <span class="pool-lbl"><b>SCATTER</b></span>
+                <input type="range" min="0" max="2" value="1" data-pool="SCATTER"/>
+                <span class="pool-count" data-count="SCATTER">1</span>
+                <span class="pool-range">range 0–2</span>
+              </div>
+              <div class="pool-row pool-special">
+                <span class="pool-lbl"><b>MULT</b> Bonus/Mult</span>
+                <input type="range" min="0" max="4" value="1" data-pool="MULT"/>
+                <span class="pool-count" data-count="MULT">1</span>
+                <span class="pool-range">range 0–4</span>
+              </div>
+              <div class="pool-total">
+                <span>Active pool</span>
+                <span><b id="pool-total">12</b> symbols · auto-renames + auto-regen</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Symbol Table (dynamic, reactive) -->
+          <div class="build-section">
+            <div class="section-h">
+              <h2><span class="h-idx">01·B</span>Symbol Table</h2>
+              <span class="sub">rename inline · click icon to pick from 40-glyph library · per-reel weight + N-of-kind pays</span>
+            </div>
+            <table class="symtable">
+              <thead>
+                <tr>
+                  <th>Tier</th>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Icon</th>
+                  <th>Weight / reel</th>
+                  <th>3×</th>
+                  <th>4×</th>
+                  <th>5×</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="symtable-body"></tbody>
+            </table>
+          </div>
+
+          <!-- Topology + Reel Editor -->
+          <div class="build-section">
+            <div class="section-h">
+              <h2><span class="h-idx">01·C</span>Reel Editor</h2>
+              <span class="sub">5 reels · weighted · drag from symbol table or click empty cell</span>
+            </div>
+            <div class="topo-row">
+              <div class="field"><label>Topology</label>
+                <select id="topology">
+                  <option value="rect">rectangular · 5×3 · 20 lines</option>
+                  <option value="var">variable_rows · megaways</option>
+                  <option value="cluster">cluster · 7×7</option>
+                  <option value="hex">hexagonal · 6 honeycomb</option>
+                  <option value="cluster_var">cluster_variable · adaptive</option>
+                </select>
+              </div>
+              <div class="field"><label>RNG seed</label>
+                <input type="text" id="rng-seed-build" value="0x9F-2E1B" />
+              </div>
+              <div class="field"><label>Lines</label>
+                <input type="text" value="20" style="width:60px"/>
+              </div>
+              <div class="field"><label>Bet</label>
+                <input type="text" value="1.00 EUR" style="width:90px"/>
+              </div>
+            </div>
+            <div class="reels" id="reels"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================== 02 COMPOSE -->
+      <section class="panel" id="panel-compose" role="tabpanel">
+        <div class="compose-grid">
+          <aside class="compose-rail">
+            <div class="node-cat">
+              <div class="node-cat-h">Triggers</div>
+              <button class="node-chip">Scatter Trigger</button>
+              <button class="node-chip">Anywhere Trigger</button>
+              <button class="node-chip">Mystery Trigger</button>
+              <button class="node-chip">Compound Trigger</button>
+            </div>
+            <div class="node-cat">
+              <div class="node-cat-h">Mechanics</div>
+              <button class="node-chip">Hold &amp; Win · Markov</button>
+              <button class="node-chip">Free Spins</button>
+              <button class="node-chip">Cascade</button>
+              <button class="node-chip">Cluster</button>
+              <button class="node-chip">Expanding Wilds</button>
+              <button class="node-chip">Walking Wilds</button>
+              <button class="node-chip">Sticky Wilds</button>
+              <button class="node-chip">Pick Bonus</button>
+              <button class="node-chip">Wheel Bonus</button>
+              <button class="node-chip">Symbol Upgrade</button>
+              <button class="node-chip">Multiplier Ladder</button>
+            </div>
+            <div class="node-cat">
+              <div class="node-cat-h">Modifiers</div>
+              <button class="node-chip">Variable Multiplier</button>
+              <button class="node-chip">Sticky Multiplier</button>
+              <button class="node-chip">Retrigger</button>
+              <button class="node-chip">Persistent State</button>
+            </div>
+          </aside>
+
+          <section class="compose-canvas">
+            <div class="canvas-head">
+              <div>
+                <h3>Feature graph</h3>
+                <div class="sub">5 nodes · 4 edges · RTP contributions auto-computed</div>
+              </div>
+              <div class="ctx-tools">
+                <span class="pill">zoom · <b>100%</b></span>
+                <button class="btn-ghost">Auto-layout</button>
+                <button class="btn-ghost">Validate</button>
+              </div>
+            </div>
+            <div class="graph-stage" id="graph-stage">
+              <svg class="graph-edges" viewBox="0 0 1000 540" preserveAspectRatio="none">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0 0 L 8 4 L 0 8 z" fill="currentColor"/>
+                  </marker>
+                </defs>
+                <g stroke="currentColor" stroke-width="1.4" fill="none" marker-end="url(#arrow)" opacity="0.7">
+                  <path d="M 160 100 C 240 100, 240 180, 320 180"/>
+                  <path d="M 460 180 C 540 180, 540 280, 620 280"/>
+                  <path d="M 760 280 C 820 280, 820 360, 880 360"/>
+                  <path d="M 460 180 C 540 180, 540 100, 620 100"/>
+                </g>
+              </svg>
+
+              <article class="node node-trigger" style="left:30px; top:70px;">
+                <div class="node-head"><span class="node-dot"></span>Scatter Trigger</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">p_trigger</span><span class="v">0.038</span></div>
+                  <div class="node-kv"><span class="k">min_count</span><span class="v">3</span></div>
+                  <div class="node-kv"><span class="k">scatter_sym</span><span class="v">SCATTER</span></div>
+                </div>
+                <div class="node-foot">+0.04 RTP</div>
+              </article>
+
+              <article class="node node-mech is-selected" style="left:320px; top:150px;">
+                <div class="node-head"><span class="node-dot"></span>Free Spins</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">awards</span><span class="v">10 / 15 / 20</span></div>
+                  <div class="node-kv"><span class="k">retrigger</span><span class="v">∞</span></div>
+                  <div class="node-kv"><span class="k">RTP share</span><span class="v">0.18</span></div>
+                </div>
+                <div class="node-foot">+0.18 RTP</div>
+              </article>
+
+              <article class="node node-mech" style="left:620px; top:250px;">
+                <div class="node-head"><span class="node-dot"></span>Cascade</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">max_chain</span><span class="v">8</span></div>
+                  <div class="node-kv"><span class="k">decay</span><span class="v">0.78</span></div>
+                </div>
+                <div class="node-foot">+0.06 RTP</div>
+              </article>
+
+              <article class="node node-mod" style="left:880px; top:330px;">
+                <div class="node-head"><span class="node-dot"></span>Multiplier Ladder</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">steps</span><span class="v">×1 ×2 ×3 ×5</span></div>
+                </div>
+                <div class="node-foot">+0.04 RTP</div>
+              </article>
+
+              <article class="node node-mech" style="left:620px; top:70px;">
+                <div class="node-head"><span class="node-dot"></span>Sticky Wilds</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">retain_until</span><span class="v">feature_end</span></div>
+                </div>
+                <div class="node-foot">+0.02 RTP</div>
+              </article>
+
+              <article class="node node-base" style="left:30px; top:380px;">
+                <div class="node-head"><span class="node-dot"></span>Base Game</div>
+                <div class="node-body">
+                  <div class="node-kv"><span class="k">topology</span><span class="v">5×3 · 20L</span></div>
+                  <div class="node-kv"><span class="k">RTP contrib</span><span class="v">0.42</span></div>
+                </div>
+                <div class="node-foot">+0.42 RTP</div>
+              </article>
+            </div>
+
+            <div class="compose-foot">
+              <span class="cf-label">Composed RTP</span>
+              <div class="compose-bars">
+                <div class="cb"><div class="cb-bar"><i style="width:60%; background:var(--moss)"></i></div><span class="cb-l">base 0.42</span></div>
+                <div class="cb"><div class="cb-bar"><i style="width:26%; background:var(--amber)"></i></div><span class="cb-l">FS 0.18</span></div>
+                <div class="cb"><div class="cb-bar"><i style="width:9%; background:var(--copper)"></i></div><span class="cb-l">cascade 0.06</span></div>
+                <div class="cb"><div class="cb-bar"><i style="width:6%; background:var(--steel)"></i></div><span class="cb-l">mult 0.04</span></div>
+              </div>
+              <div class="cf-total">Σ <b>0.70</b> · target 0.94–0.96 · short by 0.24</div>
+            </div>
+          </section>
+
+          <aside class="compose-inspector">
+            <div class="lib-section-h" style="border-bottom:1px solid var(--line)">Inspector <span class="meta">Free Spins</span></div>
+            <div class="insp-card">
+              <div class="insp-h">Node parameters</div>
+              <label class="insp-row">awards <input value="10 / 15 / 20"/></label>
+              <label class="insp-row">max_retrigger <input value="unlimited"/></label>
+              <label class="insp-row">multiplier_seq <input value="×1, ×2, ×3, ×5"/></label>
+              <label class="insp-row">p_trigger <input value="0.038"/></label>
+              <label class="insp-row">scatter_min <input value="3"/></label>
+            </div>
+            <div class="insp-card">
+              <div class="insp-h">Closed-form solver</div>
+              <div class="insp-formula">E[FS] = Σ<sub>k=3</sub><sup>5</sup> P(k scat) · μ<sub>k</sub> · m̄</div>
+              <div class="cd-kv"><span>solver</span><b>fs-cascade-v3</b></div>
+              <div class="cd-kv"><span>kernel</span><b>W117</b></div>
+              <div class="cd-kv"><span>specs</span><b>43</b></div>
+              <div class="cd-kv"><span>CI gate</span><b style="color:var(--moss)">green</b></div>
+            </div>
+            <div class="insp-card">
+              <div class="insp-h">Persistent state</div>
+              <div class="cd-kv"><span>variables</span><b>{spins_left, mul}</b></div>
+              <div class="cd-kv"><span>markov_dim</span><b>21 × 4</b></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ====================================================== 03 CATALOG -->
+      <section class="panel" id="panel-catalog" role="tabpanel">
+        <div class="catalog-shell">
+          <div class="lw-banner">
+            <div class="lw-banner-h">
+              <span>16 L&amp;W M-gaps closed · W181 → W196</span>
+              <span class="lw-banner-meta">100% L&amp;W mehanika coverage</span>
+            </div>
+            <div class="lw-chips" id="lw-chips"></div>
+          </div>
+          <div class="catalog-grid">
+            <aside class="catalog-filters">
+              <div class="filter-search"><input id="cat-search" type="search" placeholder="search 97 P-IDs…"/></div>
+              <div class="filter-block">
+                <div class="filter-h">RTP range</div>
+                <label><input type="checkbox" checked> 88–92%</label>
+                <label><input type="checkbox" checked> 92–95%</label>
+                <label><input type="checkbox" checked> 95–97%</label>
+                <label><input type="checkbox" checked> 97%+</label>
+              </div>
+              <div class="filter-block">
+                <div class="filter-h">Variance</div>
+                <label><input type="checkbox" checked> LOW</label>
+                <label><input type="checkbox" checked> MID</label>
+                <label><input type="checkbox" checked> HIGH</label>
+              </div>
+              <div class="filter-block">
+                <div class="filter-h">Family</div>
+                <label><input type="checkbox" checked> Hold &amp; Win</label>
+                <label><input type="checkbox" checked> Cascade</label>
+                <label><input type="checkbox" checked> Cluster</label>
+                <label><input type="checkbox" checked> Free Spins</label>
+                <label><input type="checkbox" checked> Wheel</label>
+                <label><input type="checkbox" checked> Pick</label>
+                <label><input type="checkbox" checked> Megaways</label>
+                <label><input type="checkbox" checked> Colossal</label>
+              </div>
+              <div class="filter-block">
+                <div class="filter-h">Jurisdiction</div>
+                <label><input type="checkbox" checked> UKGC</label>
+                <label><input type="checkbox" checked> MGA</label>
+                <label><input type="checkbox" checked> ADM</label>
+                <label><input type="checkbox" checked> DGOJ</label>
+                <label><input type="checkbox" checked> CA-ON</label>
+              </div>
+              <div class="filter-block">
+                <div class="filter-h">L&amp;W gap</div>
+                <label><input type="checkbox" id="lw-only"> show L&amp;W only</label>
+              </div>
+            </aside>
+
+            <section class="catalog-list">
+              <div class="catalog-list-head">
+                <span>Industry patterns</span>
+                <span class="hint" id="cat-shown">97 of 97 shown</span>
+              </div>
+              <div class="catalog-cards" id="catalog-cards"></div>
+            </section>
+
+            <aside class="catalog-detail" id="catalog-detail">
+              <div class="cd-title" id="cd-title">Hold &amp; Win · Markov persistent</div>
+              <div class="cd-meta">
+                <span class="cd-pill" id="cd-id">P-001</span>
+                <span class="cd-pill" id="cd-wave">W049 · 9d2f3a1</span>
+                <span class="cd-pill cd-pill-amber" id="cd-rtp">RTP 94.1–96.4%</span>
+                <span class="cd-pill" id="cd-var">var MID</span>
+                <span class="cd-pill cd-pill-amber" id="cd-lw" style="display:none">L&amp;W M1</span>
+              </div>
+              <div class="cd-card">
+                <div class="cd-card-h">Formula preview</div>
+                <pre class="cd-formula" id="cd-formula">π_n · M = π_{n+1}
+E[win | bonus] = Σ π_i · v_i + Σ p_jackpot · v_jackpot</pre>
+              </div>
+              <div class="cd-card">
+                <div class="cd-card-h">Sample parameters</div>
+                <div class="cd-kv"><span>persistence_p</span><b>0.62</b></div>
+                <div class="cd-kv"><span>trigger_p</span><b>0.018</b></div>
+                <div class="cd-kv"><span>jackpot_tiers</span><b>4</b></div>
+                <div class="cd-kv"><span>retrigger_max</span><b>3</b></div>
+              </div>
+              <div class="cd-card">
+                <div class="cd-card-h">Acceptance</div>
+                <div class="cd-kv"><span>vitest specs</span><b>43</b></div>
+                <div class="cd-kv"><span>MC validation</span><b>600 000 spins</b></div>
+                <div class="cd-kv"><span>closed↔MC Δ</span><b>0.013%</b></div>
+                <div class="cd-kv"><span>CI gate</span><b style="color:var(--moss)">green</b></div>
+              </div>
+              <button class="btn-primary" id="cd-insert">Insert into BUILD</button>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================== 04 PLAY -->
+      <section class="panel" id="panel-play" role="tabpanel">
+        <div class="play-grid">
+          <div class="play-stage">
+            <div class="play-head">
+              <div>
+                <h3>Renderer preview</h3>
+                <div class="seed">deterministic · seed <b>0x9F-2E1B</b> · spin #042</div>
+              </div>
+              <div class="seed">credit balance · <b>1 000.00 EUR</b></div>
+            </div>
+            <div class="machine" id="machine">
+              <div class="window">
+                <div class="cell lit"><svg><use href="#ic-prism"/></svg><span class="pos">R1·1</span></div>
+                <div class="cell"><svg><use href="#ic-shard"/></svg><span class="pos">R1·2</span></div>
+                <div class="cell"><svg><use href="#ic-triangle"/></svg><span class="pos">R1·3</span></div>
+              </div>
+              <div class="window offset">
+                <div class="cell"><svg><use href="#ic-crystal"/></svg><span class="pos">R2·1</span></div>
+                <div class="cell lit"><svg><use href="#ic-prism"/></svg><span class="pos">R2·2</span></div>
+                <div class="cell"><svg><use href="#ic-wave"/></svg><span class="pos">R2·3</span></div>
+              </div>
+              <div class="window">
+                <div class="cell"><svg><use href="#ic-lattice"/></svg><span class="pos">R3·1</span></div>
+                <div class="cell"><svg style="color:var(--amber)"><use href="#ic-wild"/></svg><span class="pos">R3·2</span></div>
+                <div class="cell lit"><svg><use href="#ic-prism"/></svg><span class="pos">R3·3</span></div>
+              </div>
+              <div class="window offset">
+                <div class="cell"><svg><use href="#ic-knot"/></svg><span class="pos">R4·1</span></div>
+                <div class="cell lit"><svg><use href="#ic-prism"/></svg><span class="pos">R4·2</span></div>
+                <div class="cell"><svg><use href="#ic-shard"/></svg><span class="pos">R4·3</span></div>
+              </div>
+              <div class="window">
+                <div class="cell"><svg><use href="#ic-crystal"/></svg><span class="pos">R5·1</span></div>
+                <div class="cell"><svg><use href="#ic-wave"/></svg><span class="pos">R5·2</span></div>
+                <div class="cell lit"><svg><use href="#ic-prism"/></svg><span class="pos">R5·3</span></div>
+              </div>
+            </div>
+
+            <div class="play-replay">
+              <div class="field"><label>Seed override</label>
+                <input type="text" id="seed-override" value="0x9F-2E1B"/>
+              </div>
+              <button class="btn-ghost" id="btn-replay">Replay this exact spin</button>
+              <div class="merkle">
+                <span class="lbl">Merkle commit</span>
+                <code id="merkle-hash">9f2e1b04ac0407a3 · b14e6f29 · spin 042</code>
+              </div>
+            </div>
+
+            <div class="controls">
+              <div class="bet"><span>Bet</span><span class="val">1.00<span class="unit">EUR</span></span></div>
+              <div class="bet"><span>Last win</span><span class="val amber">+14.50<span class="unit">EUR</span></span></div>
+              <div class="spacer"></div>
+              <button class="btn-auto">AUTO · 10</button>
+              <button class="btn-spin" id="btn-spin">SPIN</button>
+            </div>
+          </div>
+
+          <aside class="play-side">
+            <div class="side-block">
+              <h4>Session log</h4>
+              <div class="history" id="history">
+                <div class="hist-row"><span class="n">#042</span><span class="res win">5× PRISM · line 7</span><span class="amt">+14.50</span></div>
+                <div class="hist-row"><span class="n">#041</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+                <div class="hist-row"><span class="n">#040</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+                <div class="hist-row"><span class="n">#039</span><span class="res win">3× SHARD · line 2</span><span class="amt">+1.20</span></div>
+                <div class="hist-row"><span class="n">#038</span><span class="res win">3× SCATTER</span><span class="amt">+5.00</span></div>
+                <div class="hist-row"><span class="n">#037</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+                <div class="hist-row"><span class="n">#036</span><span class="res win">4× CRYSTAL · line 4</span><span class="amt">+7.50</span></div>
+              </div>
+            </div>
+            <div class="side-block">
+              <h4>Active features</h4>
+              <div class="history">
+                <div class="hist-row"><span class="n">F1</span><span>Wild expand · reel 3</span><span class="amt" style="color:var(--moss)">on</span></div>
+                <div class="hist-row"><span class="n">F2</span><span>Scatter FS trigger</span><span class="amt zero">idle</span></div>
+                <div class="hist-row"><span class="n">F3</span><span>Cascade respin</span><span class="amt zero">idle</span></div>
+              </div>
+            </div>
+            <div class="side-block">
+              <h4>Render diagnostics</h4>
+              <div class="history">
+                <div class="hist-row"><span class="n">FPS</span><span>renderer</span><span class="amt">60</span></div>
+                <div class="hist-row"><span class="n">DRW</span><span>draw calls</span><span class="amt">42</span></div>
+                <div class="hist-row"><span class="n">MEM</span><span>tex cache</span><span class="amt">8.1 MB</span></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ====================================================== 05 SENSITIVITY -->
+      <section class="panel" id="panel-sensitivity" role="tabpanel">
+        <div class="sens-grid">
+          <aside class="sens-params">
+            <div class="lib-section-h">Parameters <span class="meta">18</span></div>
+            <ul class="param-list" id="param-list"></ul>
+          </aside>
+          <section class="sens-canvas">
+            <div class="canvas-head">
+              <div>
+                <h3>Parameter sweep</h3>
+                <div class="sub">heatmap · RTP(x,y) with CI95 · 1 024 sample points</div>
+              </div>
+              <div class="ctx-tools">
+                <div class="field"><label>X</label><select><option>scatter_trigger_p</option><option>fs_award</option></select></div>
+                <div class="field"><label>Y</label><select><option>fs_multiplier_seq</option><option>persistence_p</option></select></div>
+                <button class="btn-ghost">Reset</button>
+              </div>
+            </div>
+            <div class="heatmap-wrap">
+              <div class="heatmap" id="heatmap"></div>
+              <div class="heatmap-legend">
+                <span>97%</span>
+                <div class="legend-bar"></div>
+                <span>91%</span>
+              </div>
+            </div>
+            <div class="sens-curve">
+              <div class="canvas-head">
+                <div class="sub">RTP curve · sweep <b style="color:var(--amber)">scatter_trigger_p</b> · 1000-pt with CI95 ribbon</div>
+                <div class="sub">closed-form · MC overlay</div>
+              </div>
+              <svg class="curve-svg" viewBox="0 0 800 220" preserveAspectRatio="none">
+                <g stroke="var(--line-strong)" stroke-width="0.5">
+                  <line x1="0" y1="44"  x2="800" y2="44"  stroke-dasharray="3 4"/>
+                  <line x1="0" y1="110" x2="800" y2="110" stroke-dasharray="3 4"/>
+                  <line x1="0" y1="176" x2="800" y2="176" stroke-dasharray="3 4"/>
+                </g>
+                <path d="M0 185 C 80 178, 160 160, 240 142 L 800 122 L 800 100 L 720 84 L 480 86 L 240 122 L 80 158 L 0 165 Z"
+                      fill="rgba(224,167,94,0.16)"/>
+                <path d="M0 175 C 80 168, 160 150, 240 132 C 320 116, 400 104, 480 96 C 560 92, 640 90, 720 94 C 760 96, 790 102, 800 110"
+                      fill="none" stroke="#E0A75E" stroke-width="2"/>
+                <g fill="var(--text-2)" font-family="JetBrains Mono, monospace" font-size="10">
+                  <text x="6" y="12">RTP %</text>
+                  <text x="6" y="48">97</text>
+                  <text x="6" y="114">95</text>
+                  <text x="6" y="180">93</text>
+                </g>
+              </svg>
+            </div>
+          </section>
+          <aside class="sens-compare">
+            <div class="lib-section-h">What-if compare <span class="meta">A↔B</span></div>
+            <div class="cmp-card">
+              <div class="cmp-h">Config A · current</div>
+              <div class="cmp-kv"><span>scatter_trigger_p</span><b>0.038</b></div>
+              <div class="cmp-kv"><span>fs_multiplier_seq</span><b>×1 ×2 ×3 ×5</b></div>
+              <div class="cmp-kv"><span>persistence_p</span><b>0.62</b></div>
+              <div class="cmp-kv"><span>RTP closed</span><b>95.42%</b></div>
+              <div class="cmp-kv"><span>σ</span><b>8.4</b></div>
+              <div class="cmp-kv"><span>hit freq.</span><b>27.8%</b></div>
+            </div>
+            <div class="cmp-card cmp-b">
+              <div class="cmp-h">Config B · sweep</div>
+              <div class="cmp-kv"><span>scatter_trigger_p</span><b class="d-up">0.052</b></div>
+              <div class="cmp-kv"><span>persistence_p</span><b>0.62</b></div>
+              <div class="cmp-kv"><span>RTP closed</span><b class="d-up">96.18%</b></div>
+              <div class="cmp-kv"><span>σ</span><b class="d-up">9.7</b></div>
+              <div class="cmp-kv"><span>hit freq.</span><b class="d-up">29.4%</b></div>
+            </div>
+            <div class="cmp-card cmp-delta">
+              <div class="cmp-h">Δ</div>
+              <div class="cmp-kv"><span>RTP</span><b class="d-up">+0.76 pp</b></div>
+              <div class="cmp-kv"><span>σ</span><b class="d-dn">+1.3</b></div>
+              <div class="cmp-kv"><span>hit</span><b class="d-up">+1.6 pp</b></div>
+              <div class="cmp-kv"><span>vola cat.</span><b>MID → MID-HI</b></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ====================================================== 06 CERTIFY -->
+      <section class="panel" id="panel-certify" role="tabpanel">
+        <div class="cert-grid">
+          <div class="cert-main">
+            <div class="cert-head">
+              <div>
+                <h3>Certification output</h3>
+                <div class="sub">GLI-16 v3.0 Appendix D · ISO/IEC 17025 · deterministic replay</div>
+              </div>
+              <div class="sub">build · <b>tide-lattice-v0.3.77</b> · 2026-05-18 14:02 UTC</div>
+            </div>
+
+            <div class="mc-bar">
+              <div class="mc-bar-l">
+                <div class="mc-row">
+                  <span class="mc-h">Monte Carlo</span>
+                  <div class="mc-size-row">
+                    <button class="mc-size" data-mc="100000">100 K</button>
+                    <button class="mc-size is-active" data-mc="1000000">1 M</button>
+                    <button class="mc-size" data-mc="10000000">10 M</button>
+                    <button class="mc-size" data-mc="100000000">100 M</button>
+                    <button class="mc-size" data-mc="1000000000">1 B</button>
+                  </div>
+                </div>
+                <div class="mc-row">
+                  <span class="mc-h">RNG backend</span>
+                  <div class="rng-row">
+                    <button class="rng-pill" data-rng="mulberry">Mulberry32 <small>legacy</small></button>
+                    <button class="rng-pill is-active" data-rng="pcg64">PCG64 <small>default</small></button>
+                    <button class="rng-pill" data-rng="xoshiro">Xoshiro256SS <small>parallel</small></button>
+                    <button class="rng-pill" data-rng="philox">Philox4×32 <small>GPU</small></button>
+                    <button class="rng-pill"><span class="uk-badge">UK</span>ChaCha20 <small>CSPRNG</small></button>
+                  </div>
+                </div>
+                <div class="mc-row">
+                  <span class="mc-h">Seed</span>
+                  <input class="mc-seed" value="0x9F-2E1B-04AC07A3-B14E6F29"/>
+                </div>
+              </div>
+              <div class="mc-bar-r">
+                <button class="btn-mc" id="btn-mc">Run · 1 M spins</button>
+                <div class="progress" id="mc-progress"><i></i></div>
+                <div class="stat" id="mc-stat"><b>idle</b> · last RTP 95.413% · CI95 ±0.018%</div>
+              </div>
+            </div>
+
+            <div class="par-sheet">
+              <div class="par-sheet-head">
+                <span>PAR sheet · GLI-16 Appendix D · 12 sections</span>
+                <span class="stamp">PASS · 5/15 jurisdictions signed</span>
+              </div>
+              <div class="par-sections" id="par-sections"></div>
+            </div>
+
+            <div class="cert-block">
+              <div class="cert-block-h">RNG audit</div>
+              <div class="cert-block-grid">
+                <div class="audit-card"><div class="ac-l">NIST SP 800-22</div><div class="ac-v ac-ok">15/15 PASS</div></div>
+                <div class="audit-card"><div class="ac-l">ENT entropy</div><div class="ac-v">7.99987 bits</div></div>
+                <div class="audit-card"><div class="ac-l">χ² statistic</div><div class="ac-v">253.4 / 255 df</div></div>
+                <div class="audit-card"><div class="ac-l">SP 800-90B min-entropy</div><div class="ac-v">0.9992</div></div>
+                <div class="audit-card"><div class="ac-l">TestU01 BigCrush</div><div class="ac-v ac-ok">160/160 PASS</div></div>
+                <div class="audit-card"><div class="ac-l">PractRand</div><div class="ac-v ac-ok">2 TB no fail</div></div>
+              </div>
+            </div>
+
+            <div class="cert-block">
+              <div class="cert-block-h">Compliance attestation</div>
+              <div class="cert-block-grid">
+                <div class="audit-card"><div class="ac-l">FastForward suppression</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Anti-fraud (collusion)</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Self-exclusion hooks</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Loss limit caps</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Spin pacing (UK 2.5s)</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Bonus wagering audit</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Stake caps (DE €1)</div><div class="ac-v ac-ok">PASS</div></div>
+                <div class="audit-card"><div class="ac-l">Net-position display</div><div class="ac-v ac-warn">REVIEW</div></div>
+              </div>
+            </div>
+
+            <div class="cert-block">
+              <div class="cert-block-h">Merkle commit · HSM signature</div>
+              <pre class="merkle-pre">root      9f2e1b04ac0407a3 b14e6f29 d2f5a118
+par_sheet sha256:e1a4...c8d2  (12 sections, 256 fields)
+rng_attest sha256:7f8b...4011  (NIST + ENT + 800-90B)
+sbom       cyclonedx-1.5  (153 components, 0 critical)
+signature  ed25519 / HSM-anchored Yubikey 5C NFC FIPS
+notarised  2026-05-18T14:02:11Z  by  L&amp;W-Cert Authority</pre>
+            </div>
+          </div>
+
+          <aside class="cert-side">
+            <div class="lib-section-h" style="border-bottom:1px solid var(--line); margin-bottom:10px">Jurisdictions <span class="meta">15</span></div>
+            <div class="juris-grid" id="juris-grid"></div>
+
+            <button class="btn-package" id="btn-package">
+              Download operator-package.zip
+              <span class="filename">153 files · 10 categories</span>
+            </button>
+
+            <div class="pkg-preview">
+              <div class="pkg-h">Package contents</div>
+              <ul class="pkg-list">
+                <li><span>par-sheet/</span><b>12 sections · signed</b></li>
+                <li><span>rng-attestation/</span><b>NIST + ENT + 90B</b></li>
+                <li><span>replay/</span><b>1M deterministic spins</b></li>
+                <li><span>jurisdiction-adapters/</span><b>15 packs</b></li>
+                <li><span>sbom/</span><b>cyclonedx-1.5</b></li>
+                <li><span>specs/</span><b>5 351 vitest</b></li>
+                <li><span>ci-gates/</span><b>106 green</b></li>
+                <li><span>solver-kernels/</span><b>77 closed-form</b></li>
+                <li><span>ir/</span><b>20 reference</b></li>
+                <li><span>signatures/</span><b>ed25519</b></li>
+              </ul>
+            </div>
+
+            <div class="cert-status">
+              <div class="pkg-h" style="margin-bottom:6px">Submission status</div>
+              <div class="cs-row"><span>UKGC</span><b class="cs-pending">PENDING</b></div>
+              <div class="cs-row"><span>MGA</span><b class="cs-ok">APPROVED</b></div>
+              <div class="cs-row"><span>ADM</span><b class="cs-pending">PENDING</b></div>
+              <div class="cs-row"><span>DGOJ</span><b class="cs-ok">APPROVED</b></div>
+              <div class="cs-row"><span>DE GGL</span><b class="cs-pending">PENDING</b></div>
+              <div class="cs-row"><span>CA-ON</span><b class="cs-ok">APPROVED</b></div>
+              <div class="cs-row"><span>JP Pachislot</span><b class="cs-review">REVIEW</b></div>
+              <div class="cs-row"><span>BR</span><b class="cs-pending">PENDING</b></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+    </section>
+    <!-- ===== RIGHT: METRICS RAIL (always visible) ===== -->
+    <aside class="metrics-rail" aria-label="Live metrics">
+      <div class="mr-block">
+        <div class="mr-h">RTP <span class="mr-h-meta">closed · live</span></div>
+        <div class="rtp-big" id="mr-rtp">95.42<span class="unit">%</span></div>
+        <div class="rtp-band">target band <b>94.0 – 96.0%</b></div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 100">
+            <path class="gauge-track" d="M 18 90 A 80 80 0 0 1 182 90" stroke-width="10" fill="none"/>
+            <path class="gauge-fill"  d="M 18 90 A 80 80 0 0 1 162 50" stroke-width="10" fill="none" stroke-linecap="round" id="gauge-arc"/>
+            <g stroke="var(--text-2)" stroke-width="1">
+              <line x1="18" y1="90" x2="22" y2="86"/>
+              <line x1="100" y1="10" x2="100" y2="14"/>
+              <line x1="182" y1="90" x2="178" y2="86"/>
+            </g>
+            <text x="100" y="74" font-family="JetBrains Mono" font-size="11" fill="#E0A75E" text-anchor="middle" font-weight="500">95.42%</text>
+            <text x="20" y="100" font-family="JetBrains Mono" font-size="8" fill="var(--text-2)">88%</text>
+            <text x="178" y="100" font-family="JetBrains Mono" font-size="8" fill="var(--text-2)" text-anchor="end">99%</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="mr-block">
+        <div class="mr-h">Volatility radar <span class="mr-h-meta">5-axis</span></div>
+        <div class="radar">
+          <svg viewBox="0 0 100 100">
+            <g class="radar-axes" fill="none">
+              <polygon points="50,8 88,32 76,86 24,86 12,32"/>
+              <polygon points="50,21 76,38 70,76 30,76 24,38"/>
+              <polygon points="50,34 64,44 60,66 40,66 36,44"/>
+              <line x1="50" y1="50" x2="50" y2="8"/>
+              <line x1="50" y1="50" x2="88" y2="32"/>
+              <line x1="50" y1="50" x2="76" y2="86"/>
+              <line x1="50" y1="50" x2="24" y2="86"/>
+              <line x1="50" y1="50" x2="12" y2="32"/>
+            </g>
+            <polygon class="radar-poly" points="50,18 78,36 66,76 30,72 22,38"/>
+            <g class="radar-label" font-family="JetBrains Mono">
+              <text x="50" y="5"  text-anchor="middle">σ</text>
+              <text x="92" y="34">P99</text>
+              <text x="78" y="92">skew</text>
+              <text x="22" y="92" text-anchor="end">hit</text>
+              <text x="8"  y="34" text-anchor="end">kurt</text>
+            </g>
+          </svg>
+        </div>
+        <div class="mr-kv"><span class="k">classification</span><span class="v amber">MID · σ 8.4</span></div>
+        <div class="mr-kv"><span class="k">VI (TW)</span><span class="v">11.6</span></div>
+      </div>
+
+      <div class="mr-block">
+        <div class="mr-h">Hit-freq strip <span class="mr-h-meta">last 64 spins</span></div>
+        <div class="spark">
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+            <line class="spark-axis" x1="0" y1="30" x2="200" y2="30"/>
+            <path class="spark-fill" d="M0 50 L 8 42 L 16 38 L 24 44 L 32 30 L 40 36 L 48 22 L 56 32 L 64 28 L 72 18 L 80 26 L 88 32 L 96 24 L 104 36 L 112 28 L 120 22 L 128 30 L 136 26 L 144 14 L 152 24 L 160 28 L 168 22 L 176 18 L 184 26 L 192 22 L 200 28 L 200 60 L 0 60 Z"/>
+            <path class="spark-line" d="M0 50 L 8 42 L 16 38 L 24 44 L 32 30 L 40 36 L 48 22 L 56 32 L 64 28 L 72 18 L 80 26 L 88 32 L 96 24 L 104 36 L 112 28 L 120 22 L 128 30 L 136 26 L 144 14 L 152 24 L 160 28 L 168 22 L 176 18 L 184 26 L 192 22 L 200 28"/>
+          </svg>
+        </div>
+        <div class="mr-kv"><span class="k">overall</span><span class="v amber" id="mr-hit">27.83%</span></div>
+        <div class="mr-kv"><span class="k">base</span><span class="v">26.10%</span></div>
+        <div class="mr-kv"><span class="k">feature</span><span class="v">1.73%</span></div>
+      </div>
+
+      <div class="mr-block">
+        <div class="mr-h">Symbol contribution <span class="mr-h-meta">top 7</span></div>
+        <div id="mr-contrib"></div>
+      </div>
+
+      <div class="mr-block" data-persona-only="producer">
+        <div class="mr-h">Producer KPIs</div>
+        <div class="kpi-strip">
+          <div class="kpi-card"><div class="kpi-num">$40K</div><div class="kpi-lbl">cost saved</div></div>
+          <div class="kpi-card"><div class="kpi-num">3w</div><div class="kpi-lbl">time saved</div></div>
+          <div class="kpi-card"><div class="kpi-num">0%</div><div class="kpi-lbl">reject</div></div>
+        </div>
+      </div>
+
+      <div class="mr-block">
+        <div class="mr-h">Confidence <span class="mr-h-meta">CI95</span></div>
+        <div class="mr-kv"><span class="k">RTP ±</span><span class="v">0.018%</span></div>
+        <div class="mr-kv"><span class="k">σ ±</span><span class="v">0.02</span></div>
+        <div class="mr-kv"><span class="k">closed↔MC Δ</span><span class="v moss">0.013%</span></div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ============ BOTTOM PANEL ============ -->
+  <div class="bottom-panel">
+    <div class="bp-block">
+      <span class="bp-h">MC</span>
+      <div class="bp-progress" id="bp-mc"><i></i></div>
+      <span class="bp-val" id="bp-mc-val">IDLE</span>
+    </div>
+    <div class="bp-block">
+      <span class="bp-h">CI Gates</span>
+      <span class="bp-val moss">106/106 ✓</span>
+      <span style="color:var(--text-2)">· last green @ 14:02 UTC</span>
+    </div>
+    <div class="bp-block">
+      <span class="bp-h">Activity</span>
+      <div class="bp-log" id="bp-log">
+        <span>[14:02:11] W196 pinned · <b>bf9b1be</b></span>
+        <span>[14:01:48] mc.run pcg64 1M → <b>95.413%</b> · CI ±0.018%</span>
+        <span>[14:01:30] symtable rename HP1 → <b>Sapphire</b></span>
+        <span>[14:00:55] pool.HP 3→4 · paytable regen</span>
+        <span>[13:58:12] workspace.switch <b>Lava Falls</b></span>
+        <span>[13:57:02] ir.load tide-lattice-v0.3.77</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="seg"><span class="dot"></span><b>ENGINE ONLINE</b></span>
+      <span class="seg">SOLVERS <b>77/77</b></span>
+      <span class="seg">SPECS <b>5 351/5 354</b></span>
+      <span class="seg">CI GATES <b>106 GREEN</b></span>
+      <span class="seg">P-IDs <b>97</b></span>
+      <span class="seg">L&amp;W M-GAPS <b>16/16 ✓</b></span>
+      <span class="seg">JURISDICTIONS <b>15</b></span>
+      <span class="seg">RNG <b>5 BACKENDS</b></span>
+      <span class="seg">WAVE <b>W196 · 14m ago</b></span>
+      <span class="seg">BUILD <b>0 ERRORS</b></span>
+      <span class="seg">MC <b>IDLE</b></span>
+      <span class="seg">STORAGE <b>23 MOD · 12 STAGED</b></span>
+      <span class="seg warn">DRIFT <b>−0.58 pp</b></span>
+      <span class="seg">RECOMPUTE <b>1.4 ms</b></span>
+      <span class="seg"><span class="dot"></span><b>·</b></span>
+      <!-- duplicate for seamless scroll -->
+      <span class="seg"><span class="dot"></span><b>ENGINE ONLINE</b></span>
+      <span class="seg">SOLVERS <b>77/77</b></span>
+      <span class="seg">SPECS <b>5 351/5 354</b></span>
+      <span class="seg">CI GATES <b>106 GREEN</b></span>
+      <span class="seg">P-IDs <b>97</b></span>
+      <span class="seg">L&amp;W M-GAPS <b>16/16 ✓</b></span>
+      <span class="seg">JURISDICTIONS <b>15</b></span>
+      <span class="seg">RNG <b>5 BACKENDS</b></span>
+      <span class="seg">WAVE <b>W196 · 14m ago</b></span>
+      <span class="seg">BUILD <b>0 ERRORS</b></span>
+      <span class="seg">MC <b>IDLE</b></span>
+      <span class="seg">STORAGE <b>23 MOD · 12 STAGED</b></span>
+      <span class="seg warn">DRIFT <b>−0.58 pp</b></span>
+      <span class="seg">RECOMPUTE <b>1.4 ms</b></span>
+      <span class="seg"><span class="dot"></span><b>·</b></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="cmd-overlay" id="cmd-overlay" aria-hidden="true">
+  <div class="cmd-card">
+    <div class="cmd-input-row">
+      <input class="cmd-input" id="cmd-input" type="search" placeholder="Type a command… (e.g. 'open catalog', 'run mc 10M', 'switch persona producer')"/>
+    </div>
+    <div class="cmd-list" id="cmd-list"></div>
+    <div class="cmd-foot">
+      <span>↑↓ navigate · ↵ run · esc close</span>
+      <span>command palette · v3-dark-deep</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ICON PICKER MODAL ============ -->
+<div class="picker-overlay" id="picker-overlay" aria-hidden="true">
+  <div class="picker-card">
+    <div class="picker-head">
+      <h4>Choose icon · 40 library glyphs</h4>
+      <button class="btn-ghost" id="picker-close">close</button>
+    </div>
+    <div class="picker-grid" id="picker-grid"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

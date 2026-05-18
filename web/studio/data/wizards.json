@@ -1,0 +1,66 @@
+{
+  "wizards": [
+    {
+      "id": "new-game",
+      "icon": "sparkle",
+      "label": "New Game",
+      "desc": "Build a slot from a blank IR in 3 steps",
+      "steps": [
+        {
+          "title": "Choose template",
+          "options": [
+            { "id": "5x3-lines",   "label": "Classic 5×3 · 20 lines",        "hint": "compact paytable, low feature load" },
+            { "id": "megaways",    "label": "Megaways 6-reel · 117 649",     "hint": "BTG variable-row, high volatility" },
+            { "id": "cluster",     "label": "Cluster Pays 7×7",              "hint": "match-N adjacent, NLE chains" },
+            { "id": "cascade",     "label": "Cascade 5×5 · drop refill",     "hint": "tumble until no win" },
+            { "id": "holdwin",     "label": "Hold & Win 5×3 · sticky bonus", "hint": "scatter-collect bonus round" }
+          ]
+        },
+        {
+          "title": "Symbol pool",
+          "options": [
+            { "id": "compact",  "label": "Compact 7",  "hint": "3 HP · 3 LP · 1 SCATTER" },
+            { "id": "standard", "label": "Standard 11","hint": "3 HP · 3 MP · 3 LP · 1 WILD · 1 SCATTER" },
+            { "id": "rich",     "label": "Rich 15",    "hint": "3 HP · 3 MP · 4 LP · 2 WILD · 1 SCATTER · 2 MULT" }
+          ]
+        },
+        {
+          "title": "Target RTP & jurisdiction",
+          "fields": [
+            { "kind": "slider", "id": "rtp", "min": 88, "max": 98, "step": 0.1, "default": 95.5, "label": "Target RTP %" },
+            { "kind": "select", "id": "jur", "label": "Primary jurisdiction", "options": ["UKGC", "MGA", "NJ DGE", "ONT iGO", "GLI-19"] }
+          ]
+        }
+      ],
+      "next": "Adjust paytable in BUILD"
+    },
+    {
+      "id": "rebalance",
+      "icon": "scale",
+      "label": "Re-balance Existing",
+      "desc": "Drop an IR, system suggests changes to hit target RTP",
+      "next": "Apply suggested deltas"
+    },
+    {
+      "id": "compare",
+      "icon": "split",
+      "label": "Compare Two",
+      "desc": "Pick A + B, side-by-side metrics diff",
+      "next": "Open compare workspace"
+    },
+    {
+      "id": "run-cert",
+      "icon": "shield",
+      "label": "Run Cert",
+      "desc": "MC + PAR + op-package — fully automated flow",
+      "next": "Watch progress in bottom panel"
+    },
+    {
+      "id": "compose",
+      "icon": "graph",
+      "label": "Compose Features",
+      "desc": "Open COMPOSE tab with pre-loaded template graph",
+      "next": "Drop nodes onto canvas"
+    }
+  ]
+}

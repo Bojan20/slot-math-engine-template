@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Cinder">
+  <path d="M32 6 C 36 18, 50 22, 48 36 C 47 48, 38 56, 32 56 C 26 56, 17 48, 16 36 C 14 22, 28 18, 32 6 Z"
+        fill="#c97a3a" stroke="#14161b" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M32 20 C 34 28, 42 30, 40 40 C 39 47, 35 50, 32 50 C 29 50, 25 47, 24 40 C 22 30, 30 28, 32 20 Z"
+        fill="#e8c388" opacity=".85"/>
+  <circle cx="32" cy="42" r="3" fill="#14161b"/>
+</svg>

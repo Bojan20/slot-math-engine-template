@@ -1,0 +1,53 @@
+{
+  "version": "v3-dark-deep · 2026-05-18",
+  "stroke_palette": {
+    "amber": "#E0A75E",
+    "copper": "#C67D43",
+    "steel": "#7A9BC4"
+  },
+  "icons": [
+    { "id": "triangle", "name": "Triangle",  "category": "geometric", "stroke": "amber" },
+    { "id": "square",   "name": "Square",    "category": "geometric", "stroke": "amber" },
+    { "id": "hexagon",  "name": "Hexagon",   "category": "geometric", "stroke": "amber" },
+    { "id": "octagon",  "name": "Octagon",   "category": "geometric", "stroke": "amber" },
+    { "id": "circle",   "name": "Circle",    "category": "geometric", "stroke": "amber" },
+    { "id": "diamond",  "name": "Diamond",   "category": "geometric", "stroke": "amber" },
+    { "id": "star5",    "name": "Star-5",    "category": "geometric", "stroke": "amber" },
+    { "id": "star6",    "name": "Star-6",    "category": "geometric", "stroke": "amber" },
+    { "id": "chevron",  "name": "Chevron",   "category": "geometric", "stroke": "amber" },
+    { "id": "arrow",    "name": "Arrow",     "category": "geometric", "stroke": "amber" },
+
+    { "id": "spiral",   "name": "Spiral",    "category": "abstract",  "stroke": "amber" },
+    { "id": "wave",     "name": "Wave",      "category": "abstract",  "stroke": "amber" },
+    { "id": "knot",     "name": "Knot",      "category": "abstract",  "stroke": "amber" },
+    { "id": "lattice",  "name": "Lattice",   "category": "abstract",  "stroke": "amber" },
+    { "id": "prism",    "name": "Prism",     "category": "abstract",  "stroke": "amber" },
+    { "id": "shard",    "name": "Shard",     "category": "abstract",  "stroke": "amber" },
+    { "id": "crystal",  "name": "Crystal",   "category": "abstract",  "stroke": "amber" },
+    { "id": "vortex",   "name": "Vortex",    "category": "abstract",  "stroke": "amber" },
+    { "id": "cipher",   "name": "Cipher",    "category": "abstract",  "stroke": "amber" },
+    { "id": "orbit",    "name": "Orbit",     "category": "abstract",  "stroke": "amber" },
+    { "id": "rune",     "name": "Rune",      "category": "abstract",  "stroke": "amber" },
+    { "id": "sigil",    "name": "Sigil",     "category": "abstract",  "stroke": "amber" },
+
+    { "id": "flame",    "name": "Flame",     "category": "symbolic",  "stroke": "amber" },
+    { "id": "anchor",   "name": "Anchor",    "category": "symbolic",  "stroke": "amber" },
+    { "id": "key",      "name": "Key",       "category": "symbolic",  "stroke": "amber" },
+    { "id": "gear",     "name": "Gear",      "category": "symbolic",  "stroke": "amber" },
+    { "id": "leaf",     "name": "Leaf",      "category": "symbolic",  "stroke": "amber" },
+    { "id": "drop",     "name": "Drop",      "category": "symbolic",  "stroke": "amber" },
+    { "id": "mountain", "name": "Mountain",  "category": "symbolic",  "stroke": "amber" },
+    { "id": "sun",      "name": "Sun",       "category": "symbolic",  "stroke": "amber" },
+    { "id": "moon",     "name": "Moon",      "category": "symbolic",  "stroke": "amber" },
+    { "id": "eye",      "name": "Eye",       "category": "symbolic",  "stroke": "amber" },
+    { "id": "feather",  "name": "Feather",   "category": "symbolic",  "stroke": "amber" },
+    { "id": "scales",   "name": "Scales",    "category": "symbolic",  "stroke": "amber" },
+    { "id": "coin",     "name": "Coin",      "category": "symbolic",  "stroke": "amber" },
+    { "id": "compass",  "name": "Compass",   "category": "symbolic",  "stroke": "amber" },
+
+    { "id": "wild",     "name": "Wild",      "category": "special",   "stroke": "amber"  },
+    { "id": "scatter",  "name": "Scatter",   "category": "special",   "stroke": "copper" },
+    { "id": "bonus",    "name": "Bonus",     "category": "special",   "stroke": "steel"  },
+    { "id": "mult",     "name": "Multiplier","category": "special",   "stroke": "copper" }
+  ]
+}

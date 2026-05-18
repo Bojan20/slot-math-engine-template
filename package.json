@@ -137,7 +137,11 @@
     "par-sample-kit": "node scripts/par-sample-kit-build.mjs",
     "par-sample-kit:verify": "node scripts/par-sample-kit-acceptance.mjs",
     "cross-platform-rng-parity": "npm run build && node scripts/cross-platform-rng-parity.mjs",
-    "cross-platform-rng-parity:update-golden": "npm run build && node scripts/cross-platform-rng-parity.mjs --update-golden"
+    "cross-platform-rng-parity:update-golden": "npm run build && node scripts/cross-platform-rng-parity.mjs --update-golden",
+    "studio:dev": "cd web/studio && npm run dev",
+    "studio:build": "cd web/studio && npm run build",
+    "studio:preview": "cd web/studio && npm run preview",
+    "studio:test": "cd web/studio && npm run test"
   },
   "author": "Slot Math Engine Team",
   "license": "MIT",

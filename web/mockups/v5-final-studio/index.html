@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Studio · v5-final — Production Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="persona-math">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ INLINE SVG SPRITE · 40 cyan stroke glyphs ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-triangle" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L 54 50 L 10 50 Z"/></g></symbol>
+    <symbol id="g-square" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="12" width="40" height="40" rx="2"/></g></symbol>
+    <symbol id="g-pentagon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 56 26 L 46 54 L 18 54 L 8 26 Z"/></g></symbol>
+    <symbol id="g-hexagon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 54 20 L 54 44 L 32 56 L 10 44 L 10 20 Z"/></g></symbol>
+    <symbol id="g-octagon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 L 42 10 L 54 22 L 54 42 L 42 54 L 22 54 L 10 42 L 10 22 Z"/></g></symbol>
+    <symbol id="g-circle" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/></g></symbol>
+    <symbol id="g-diamond" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 56 32 L 32 56 L 8 32 Z"/></g></symbol>
+    <symbol id="g-star5" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 39 25 L 59 25 L 43 38 L 49 57 L 32 46 L 15 57 L 21 38 L 5 25 L 25 25 Z"/></g></symbol>
+    <symbol id="g-star6" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 54 46 L 10 46 Z"/><path d="M32 56 L 10 18 L 54 18 Z"/></g></symbol>
+    <symbol id="g-chevron" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18 L 32 32 L 48 18"/><path d="M16 36 L 32 50 L 48 36"/></g></symbol>
+    <symbol id="g-spiral" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 32 m-2 0 a 2 2 0 1 1 4 0 a 6 6 0 1 1 -10 0 a 12 12 0 1 1 22 0 a 20 20 0 1 1 -36 0"/></g></symbol>
+    <symbol id="g-wave" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 28 C 16 20, 24 36, 32 28 C 40 20, 48 36, 56 28"/><path d="M8 40 C 16 32, 24 48, 32 40 C 40 32, 48 48, 56 40"/></g></symbol>
+    <symbol id="g-knot" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="22" r="11"/><circle cx="42" cy="42" r="11"/><path d="M30 30 L 34 34"/></g></symbol>
+    <symbol id="g-lattice" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 58 20 L 58 44 L 32 58 L 6 44 L 6 20 Z"/><path d="M6 20 L 58 44"/><path d="M58 20 L 6 44"/><path d="M32 6 L 32 58"/></g></symbol>
+    <symbol id="g-prism" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L 54 24 L 46 54 L 18 54 L 10 24 Z"/><path d="M32 8 L 32 54"/><path d="M10 24 L 54 24"/></g></symbol>
+    <symbol id="g-shard" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10 L 48 14 L 52 50 L 22 54 L 12 36 Z"/><path d="M16 10 L 32 32 L 52 50"/><path d="M48 14 L 32 32 L 22 54"/></g></symbol>
+    <symbol id="g-crystal" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8 L 42 8 L 54 24 L 32 58 L 10 24 Z"/><path d="M10 24 L 54 24"/><path d="M22 8 L 32 24 L 42 8"/></g></symbol>
+    <symbol id="g-vortex" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="4"/><circle cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="20" stroke-dasharray="2 4"/><circle cx="32" cy="32" r="28" stroke-dasharray="1 5"/></g></symbol>
+    <symbol id="g-sigil" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M32 10 L 24 50 L 50 28 L 14 28 L 40 50 Z"/></g></symbol>
+    <symbol id="g-orbit" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="32" cy="32" rx="22" ry="10"/><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(60 32 32)"/><circle cx="32" cy="32" r="3" fill="currentColor"/></g></symbol>
+    <symbol id="g-pebble" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 30 C 14 18, 26 12, 36 14 C 48 16, 52 26, 50 38 C 48 50, 36 54, 26 52 C 16 50, 14 42, 14 30 Z"/><path d="M22 32 C 22 26, 28 22, 34 24"/></g></symbol>
+    <symbol id="g-obelisk" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M28 6 L 36 6 L 42 54 L 22 54 Z"/><path d="M28 6 L 32 18 L 36 6"/><path d="M26 28 L 38 28"/><path d="M24 40 L 40 40"/></g></symbol>
+    <symbol id="g-keystone" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12 L 44 12 L 52 32 L 44 52 L 20 52 L 12 32 Z"/><path d="M20 12 L 44 52"/><path d="M44 12 L 20 52"/><circle cx="32" cy="32" r="6"/></g></symbol>
+    <symbol id="g-anchor" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="14" r="4"/><path d="M32 18 L 32 54"/><path d="M20 32 L 44 32"/><path d="M10 36 C 10 46, 22 54, 32 54 C 42 54, 54 46, 54 36"/></g></symbol>
+    <symbol id="g-key" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="32" r="10"/><path d="M30 32 L 56 32"/><path d="M48 32 L 48 40"/><path d="M40 32 L 40 42"/></g></symbol>
+    <symbol id="g-gear" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="8"/><path d="M32 6 L 32 14"/><path d="M32 50 L 32 58"/><path d="M6 32 L 14 32"/><path d="M50 32 L 58 32"/><path d="M14 14 L 20 20"/><path d="M44 44 L 50 50"/><path d="M50 14 L 44 20"/><path d="M14 50 L 20 44"/></g></symbol>
+    <symbol id="g-flame" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 C 38 16, 50 22, 48 36 C 46 50, 36 58, 32 58 C 28 58, 18 50, 16 36 C 14 24, 22 22, 26 30 C 24 18, 28 12, 32 6 Z"/></g></symbol>
+    <symbol id="g-leaf" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 52 C 12 24, 32 8, 54 8 C 54 32, 38 52, 12 52 Z"/><path d="M12 52 L 40 22"/></g></symbol>
+    <symbol id="g-mountain" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 52 L 22 24 L 32 38 L 44 18 L 58 52 Z"/><path d="M22 24 L 32 38"/></g></symbol>
+    <symbol id="g-sun" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="10"/><path d="M32 6 L 32 14"/><path d="M32 50 L 32 58"/><path d="M6 32 L 14 32"/><path d="M50 32 L 58 32"/><path d="M14 14 L 20 20"/><path d="M44 44 L 50 50"/><path d="M50 14 L 44 20"/><path d="M14 50 L 20 44"/></g></symbol>
+    <symbol id="g-moon" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M44 12 C 28 14, 18 26, 18 38 C 18 50, 28 56, 40 56 C 32 52, 26 44, 26 34 C 26 24, 34 16, 44 12 Z"/></g></symbol>
+    <symbol id="g-eye" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32 C 14 18, 24 14, 32 14 C 40 14, 50 18, 58 32 C 50 46, 40 50, 32 50 C 24 50, 14 46, 6 32 Z"/><circle cx="32" cy="32" r="7"/></g></symbol>
+    <symbol id="g-wild" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 L 38 24 L 58 24 L 42 36 L 48 56 L 32 44 L 16 56 L 22 36 L 6 24 L 26 24 Z"/></g></symbol>
+    <symbol id="g-scatter" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="4" fill="currentColor"/><circle cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="20" stroke-dasharray="2 4"/></g></symbol>
+    <symbol id="g-bonus" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="20" width="48" height="36" rx="3"/><path d="M8 32 L 56 32"/><path d="M32 20 L 32 56"/><path d="M22 20 C 22 12, 32 12, 32 20"/><path d="M32 20 C 32 12, 42 12, 42 20"/></g></symbol>
+    <symbol id="g-mult" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="22"/><path d="M22 22 L 42 42 M42 22 L 22 42"/></g></symbol>
+    <symbol id="g-drop" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 C 20 22, 14 32, 14 42 C 14 52, 22 58, 32 58 C 42 58, 50 52, 50 42 C 50 32, 44 22, 32 6 Z"/></g></symbol>
+    <symbol id="g-arrow" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 32 L 54 32"/><path d="M40 18 L 54 32 L 40 46"/></g></symbol>
+    <symbol id="g-arc" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 48 A 22 22 0 0 1 54 48"/><path d="M18 48 A 14 14 0 0 1 46 48"/><path d="M26 48 A 6 6 0 0 1 38 48"/></g></symbol>
+    <symbol id="g-sonar" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="3"/><circle cx="32" cy="32" r="10"/><circle cx="32" cy="32" r="18" stroke-dasharray="2 3"/><circle cx="32" cy="32" r="26" stroke-dasharray="1 5"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+  <!-- ROW 1 · COMPACT HEADER -->
+  <header class="row-header" role="banner">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">slot-math-studio<span class="brand-v">v5</span></span>
+      <button class="ws-switch" id="ws-switch" title="Switch workspace">
+        <span class="ws-dot theme-dot" id="ws-pill-dot"></span>
+        <span id="ws-name">Untitled</span>
+        <span class="caret">▾</span>
+      </button>
+      <button class="ws-newgame-btn" id="ws-newgame-btn" title="New game">+ New Game</button>
+      <div class="ws-menu" id="ws-menu" role="menu" hidden></div>
+    </div>
+
+    <div class="header-c">
+      <div class="persona" role="group" aria-label="Persona">
+        <button class="persona-btn is-active" data-persona="math"     aria-pressed="true">Math</button>
+        <button class="persona-btn"           data-persona="design"   aria-pressed="false">Design</button>
+        <button class="persona-btn"           data-persona="producer" aria-pressed="false">Producer</button>
+      </div>
+    </div>
+
+    <div class="header-r">
+      <!-- Per-persona primary CTA · text + click handler swap by persona -->
+      <button class="btn-primary persona-cta" id="persona-cta" title="Persona primary action">
+        <span class="persona-cta-ic" id="persona-cta-ic">▶</span>
+        <span class="persona-cta-lbl" id="persona-cta-lbl">Run sweep</span>
+      </button>
+      <button class="btn-cmd" id="btn-cmdp" title="Command palette">
+        <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20 L 16 16"/></svg>
+        <span>Search</span>
+        <span class="kbd">⌘K</span>
+      </button>
+      <button class="btn-help" id="btn-help" title="Keyboard shortcuts">?</button>
+      <div class="user" title="bojan.petkovic25@gmail.com">B</div>
+    </div>
+  </header>
+
+  <!-- ROW 2a · VARIANT TABS (per-workspace) -->
+  <div class="row-vartabs">
+    <div class="vartabs-l" id="var-tabs"></div>
+    <div class="vartabs-r">
+      <button class="btn-ghost mini" id="btn-compare" title="Open Compare A/B picker">
+        <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="7" height="12"/><rect x="13" y="6" width="7" height="12"/></svg>
+        Compare A/B
+        <span class="caret">▾</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ROW 2 · TAB NAV -->
+  <div class="row-tabs">
+    <nav class="tabs" role="tablist" aria-label="Engine workspace">
+      <button class="tab is-active" data-tab="build"       role="tab" aria-selected="true"  aria-controls="panel-build"       id="tab-build"><span class="tab-idx">1</span>Build</button>
+      <button class="tab"           data-tab="compose"     role="tab" aria-selected="false" aria-controls="panel-compose"     id="tab-compose"><span class="tab-idx">2</span>Compose</button>
+      <button class="tab"           data-tab="catalog"     role="tab" aria-selected="false" aria-controls="panel-catalog"     id="tab-catalog"><span class="tab-idx">3</span>Catalog</button>
+      <button class="tab"           data-tab="play"        role="tab" aria-selected="false" aria-controls="panel-play"        id="tab-play"><span class="tab-idx">4</span>Play</button>
+      <button class="tab"           data-tab="sensitivity" role="tab" aria-selected="false" aria-controls="panel-sensitivity" id="tab-sensitivity"><span class="tab-idx">5</span>Sensitivity</button>
+      <button class="tab"           data-tab="certify"     role="tab" aria-selected="false" aria-controls="panel-certify"     id="tab-certify"><span class="tab-idx">6</span>Certify</button>
+    </nav>
+    <div class="tabs-r">
+      <!-- L1 METRICS · always visible · 3 numbers only (default / math view) -->
+      <div class="l1-metrics persona-headline persona-headline-math" aria-label="Top-level metrics">
+        <div class="l1-m"><span class="l1-lbl">RTP</span><b class="mono" id="l1-rtp" title="Click to copy 4dp RTP">96.4214<span class="pct">%</span></b></div>
+        <div class="l1-m"><span class="l1-lbl">Hit</span><b class="mono" id="l1-hit">27.83<span class="pct">%</span></b></div>
+        <div class="l1-m"><span class="l1-lbl">σ</span><b class="mono" id="l1-sigma">6.42</b></div>
+        <div class="l1-m"><span class="l1-lbl">P99</span><b class="mono" id="l1-p99">245.5×</b></div>
+      </div>
+      <!-- Design persona headline · win-feel pill -->
+      <div class="persona-headline persona-headline-design" aria-label="Design headline">
+        <span class="winfeel-lbl">WIN FEEL</span>
+        <span class="winfeel-pill is-balanced" id="winfeel-pill">Balanced</span>
+        <span class="winfeel-sub mono">hit 1-in-3.7</span>
+      </div>
+      <!-- Producer persona headline · days-to-cert + budget -->
+      <div class="persona-headline persona-headline-producer" aria-label="Producer headline">
+        <div class="prod-seg">
+          <span class="prod-seg-lbl">DAYS TO CERT</span>
+          <b class="mono cyan" id="prod-days">11</b>
+        </div>
+        <div class="prod-seg">
+          <span class="prod-seg-lbl">SAVED</span>
+          <b class="mono ok" id="prod-saved">$40K</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3 · MAIN WORKSPACE (3-col) -->
+  <div class="row-main" id="row-main">
+
+    <!-- LEFT · workspace navigation -->
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="side-search">
+        <input type="search" id="side-search" placeholder="Search templates…" />
+      </div>
+
+      <div class="side-section">
+        <button class="side-h" data-toggle="side-ws">
+          <span class="side-h-lbl">Workspaces</span>
+          <span class="side-h-meta">3</span>
+        </button>
+        <div class="side-body" id="side-ws">
+          <button class="side-item is-active" data-ws="ws-lava"><span class="dot" style="background:#F97316"></span>Untitled<span class="rt">95.4%</span></button>
+          <button class="side-item" data-ws="ws-pearl"><span class="dot" style="background:#60A5FA"></span>Untitled 2<span class="rt">96.0%</span></button>
+          <button class="side-item" data-ws="ws-solar"><span class="dot" style="background:#F59E0B"></span>Untitled 3<span class="rt">94.5%</span></button>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <button class="side-h" data-toggle="side-ir">
+          <span class="side-h-lbl">IR Library</span>
+          <span class="side-h-meta">5</span>
+        </button>
+        <div class="side-body" id="side-ir">
+          <button class="side-item"><span class="ic"></span>Classic 5×3 · lines<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Megaways 6-reel<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Cluster 7×7<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Cascade 5×5<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Hold &amp; Win 5×3<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>FS multiplier ladder<span class="rt">tpl</span></button>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <button class="side-h" data-toggle="side-lw">
+          <span class="side-h-lbl">L&amp;W Templates</span>
+          <span class="side-h-meta">16</span>
+        </button>
+        <div class="side-body" id="side-lw">
+          <button class="side-item"><span class="ic"></span>M1 · Reel ribbons<span class="rt">BAL</span></button>
+          <button class="side-item"><span class="ic"></span>M6 · Cash Wheel<span class="rt">BAL</span></button>
+          <button class="side-item"><span class="ic"></span>M13 · Reshape<span class="rt">WMS</span></button>
+          <button class="side-item"><span class="ic"></span>M16 · Stellar Jackpot<span class="rt">LBX</span></button>
+          <button class="side-item"><span class="ic"></span>M8 · Hold &amp; Win<span class="rt">BAL</span></button>
+          <button class="side-item"><span class="ic"></span>+ 11 more…<span class="rt"></span></button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER · TAB PANELS -->
+    <main id="main" class="panels" role="main">
+
+      <!-- ============= BUILD ============= -->
+      <section class="panel is-active" id="panel-build" role="tabpanel" aria-labelledby="tab-build">
+
+        <!-- Contextual toolbar -->
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Build</h1>
+            <span class="ctx-meta"><span id="ctx-layout">5×3 · 20 lines</span> · <b class="mono" id="ctx-irname">onyx-lattice-v0.4.12</b></span>
+          </div>
+          <div class="ctx-bar-r">
+            <div class="quickstart">
+              <button class="btn-secondary" id="btn-quickstart">
+                <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12 L 12 5 L 19 12"/><path d="M12 5 L 12 19"/></svg>
+                Quick Start
+                <span class="caret">▾</span>
+              </button>
+              <div class="quickstart-menu" id="quickstart-menu" hidden></div>
+            </div>
+            <button class="btn-ghost" id="btn-validate" title="Validate IR (auto runs on save)">
+              <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13 L 9 17 L 19 7"/></svg>
+              Validate
+            </button>
+            <button class="btn-ghost" id="btn-autobalance" title="Auto-balance reel weights to target RTP (B)">
+              <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4 L 12 20"/><path d="M5 9 L 12 4 L 19 9"/><path d="M5 18 L 19 18"/></svg>
+              Auto-balance
+              <span class="kbd">B</span>
+            </button>
+            <button class="btn-primary" id="btn-compute" title="Compute RTP (closed-form)">
+              <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6,4 20,12 6,20"/></svg>
+              Compute RTP
+            </button>
+            <button class="btn-more" id="btn-build-more" title="More actions…">⋯</button>
+          </div>
+        </header>
+
+        <div id="single-build" class="build-single">
+        <div class="build-grid">
+
+          <!-- Symbol pool — progressive disclosure -->
+          <section class="card card-pool">
+            <div class="card-h">
+              <h2>Symbol pool</h2>
+              <span class="card-meta"><b id="pool-count">12</b> symbols active</span>
+            </div>
+            <div class="pool-presets" role="group" aria-label="Symbol pool presets">
+              <button class="preset is-active" data-preset="standard">
+                <span class="preset-lbl">Standard 11</span>
+                <span class="preset-sub">3 HP · 3 MP · 3 LP · 1W · 1S</span>
+              </button>
+              <button class="preset" data-preset="compact">
+                <span class="preset-lbl">Compact 7</span>
+                <span class="preset-sub">3 HP · 3 LP · 1S</span>
+              </button>
+              <button class="preset" data-preset="rich">
+                <span class="preset-lbl">Rich 15</span>
+                <span class="preset-sub">3·3·4·2W·1S·2M</span>
+              </button>
+              <button class="preset preset-custom" id="preset-custom-toggle" aria-expanded="false">
+                <span class="preset-lbl">Custom</span>
+                <span class="caret">▾</span>
+              </button>
+            </div>
+
+            <div class="pool-custom" id="pool-custom" hidden>
+              <div class="tier-row tier-HP">
+                <span class="lbl">HP</span>
+                <input type="range" min="1" max="8" value="3" data-tier="HP" />
+                <span class="val mono" data-tier-v="HP">3</span>
+              </div>
+              <div class="tier-row tier-MP">
+                <span class="lbl">MP</span>
+                <input type="range" min="1" max="8" value="3" data-tier="MP" />
+                <span class="val mono" data-tier-v="MP">3</span>
+              </div>
+              <div class="tier-row tier-LP">
+                <span class="lbl">LP</span>
+                <input type="range" min="1" max="8" value="3" data-tier="LP" />
+                <span class="val mono" data-tier-v="LP">3</span>
+              </div>
+              <div class="tier-row tier-WILD">
+                <span class="lbl">Wild</span>
+                <input type="range" min="0" max="3" value="1" data-tier="WILD" />
+                <span class="val mono" data-tier-v="WILD">1</span>
+              </div>
+              <div class="tier-row tier-SCATTER">
+                <span class="lbl">Scatter</span>
+                <input type="range" min="0" max="2" value="1" data-tier="SCATTER" />
+                <span class="val mono" data-tier-v="SCATTER">1</span>
+              </div>
+              <div class="tier-row tier-MULT">
+                <span class="lbl">Mult</span>
+                <input type="range" min="0" max="4" value="1" data-tier="MULT" />
+                <span class="val mono" data-tier-v="MULT">1</span>
+              </div>
+            </div>
+
+            <!-- Symbol table · compact 1-line per symbol -->
+            <div class="sym-list" id="sym-list" role="list"></div>
+          </section>
+
+          <!-- Reel editor · compact + paytable preview -->
+          <section class="card card-reels">
+            <div class="card-h">
+              <h2>Reels &amp; paytable</h2>
+              <div class="card-h-r">
+                <label class="seg">Topology
+                  <select id="topology">
+                    <option>5×3 · 20 lines</option>
+                    <option>6×4 · 4 096 ways</option>
+                    <option>7×7 cluster</option>
+                  </select>
+                </label>
+                <button class="btn-ghost mini" id="show-grid">Grid</button>
+              </div>
+            </div>
+
+            <div class="reels" id="reels"></div>
+
+            <div class="card-sub-h">
+              <h3>Paytable · 3oak / 4oak / 5oak</h3>
+              <span class="card-meta">click a cell → right rail shows contribution</span>
+            </div>
+            <div class="paytable" id="paytable"></div>
+          </section>
+
+        </div>
+        </div>
+
+        <!-- SPLIT VIEW · A/B compare -->
+        <div id="split-build" class="split-view" hidden>
+          <div class="split-pane" data-pane="left">
+            <header class="split-pane-h" id="split-build-head-A"></header>
+            <section class="card card-pool">
+              <div class="card-h">
+                <h2>Symbol pool · A</h2>
+                <span class="card-meta"><b id="pool-count-A">0</b> symbols</span>
+              </div>
+              <div class="sym-list" id="sym-list-A"></div>
+            </section>
+            <section class="card card-reels">
+              <div class="card-h"><h2>Reels · A</h2></div>
+              <div class="reels" id="reels-A"></div>
+              <div class="card-sub-h"><h3>Paytable · A</h3></div>
+              <div class="paytable" id="paytable-A"></div>
+            </section>
+          </div>
+          <div class="split-divider">
+            <div class="diff-callout" id="diff-callout"></div>
+            <button class="btn-ghost mini btn-swap-compare" title="Swap A ↔ B">⇄</button>
+            <button class="btn-ghost mini btn-exit-compare" title="Exit compare">× exit</button>
+          </div>
+          <div class="split-pane" data-pane="right">
+            <header class="split-pane-h" id="split-build-head-B"></header>
+            <section class="card card-pool">
+              <div class="card-h">
+                <h2>Symbol pool · B</h2>
+                <span class="card-meta"><b id="pool-count-B">0</b> symbols</span>
+              </div>
+              <div class="sym-list" id="sym-list-B"></div>
+            </section>
+            <section class="card card-reels">
+              <div class="card-h"><h2>Reels · B</h2></div>
+              <div class="reels" id="reels-B"></div>
+              <div class="card-sub-h"><h3>Paytable · B</h3></div>
+              <div class="paytable" id="paytable-B"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============= COMPOSE ============= -->
+      <section class="panel" id="panel-compose" role="tabpanel" aria-labelledby="tab-compose">
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Compose</h1>
+            <span class="ctx-meta">feature graph · 6 nodes · RTP split visible per edge</span>
+          </div>
+          <div class="ctx-bar-r">
+            <button class="btn-ghost"><svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5 L 12 19"/><path d="M5 12 L 19 12"/></svg> Add node</button>
+            <button class="btn-ghost">Re-route</button>
+            <button class="btn-ghost">Validate</button>
+            <button class="btn-primary">Compose RTP</button>
+          </div>
+        </header>
+
+        <div class="compare-banner" id="cmp-banner-compose" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
+
+        <div class="compose-canvas">
+          <div class="cnode" style="left:40px;top:60px">
+            <div class="cnode-h">Base game</div>
+            <div class="cnode-body"><b class="mono">82.4%</b> RTP · 5×3</div>
+          </div>
+          <div class="cnode cnode-feature" style="left:280px;top:30px">
+            <div class="cnode-h">Free Spins</div>
+            <div class="cnode-body"><b class="mono">8.6%</b> RTP · trigger 0.78%</div>
+          </div>
+          <div class="cnode cnode-feature" style="left:280px;top:140px">
+            <div class="cnode-h">Hold &amp; Win</div>
+            <div class="cnode-body"><b class="mono">3.1%</b> RTP · 6-coin trigger</div>
+          </div>
+          <div class="cnode cnode-output" style="left:540px;top:90px">
+            <div class="cnode-h">Total RTP</div>
+            <div class="cnode-body"><b class="mono cyan">95.42%</b> · 96.0% ceiling</div>
+          </div>
+          <svg class="cnode-edges" aria-hidden="true">
+            <path d="M 180 90 C 230 70, 240 50, 280 50" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
+            <path d="M 180 90 C 230 130, 240 160, 280 160" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
+            <path d="M 420 50 C 470 70, 480 90, 540 105" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
+            <path d="M 420 160 C 470 140, 480 120, 540 115" stroke="#22D3EE" stroke-width="1.25" fill="none"/>
+          </svg>
+        </div>
+
+        <div class="compose-formula">
+          <span class="caps">Closed-form</span>
+          <code class="mono">RTP_total = RTP_base · (1 − P_FS) + RTP_FS · P_FS + RTP_HW · P_HW · (1 − P_FS) = 0.8240·0.9922 + 0.086·0.0078 + 0.031 · 0.012 = <b class="cyan">0.9542</b></code>
+        </div>
+      </section>
+
+      <!-- ============= CATALOG ============= -->
+      <section class="panel" id="panel-catalog" role="tabpanel" aria-labelledby="tab-catalog">
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Catalog</h1>
+            <span class="ctx-meta">97 P-IDs · 16 L&amp;W gaps · 100% coverage</span>
+          </div>
+          <div class="ctx-bar-r">
+            <input type="search" placeholder="Search catalog…" class="inline-search" />
+            <span class="filter-chip" id="cat-persona-chip" title="Persona-aware default filter">
+              <span class="chip-lbl" id="cat-chip-lbl">RTP range 88–98%</span>
+              <span class="chip-x">×</span>
+            </span>
+            <button class="btn-ghost">Filter</button>
+            <button class="btn-ghost">Compare 2</button>
+            <button class="btn-primary">Bookmark</button>
+          </div>
+        </header>
+
+        <div class="compare-banner" id="cmp-banner-catalog" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
+
+        <div class="cat-table-wrap">
+          <table class="cat-table">
+            <thead><tr><th>#</th><th>P-ID</th><th>Mechanic</th><th>Supplier</th><th>RTP</th><th>σ</th><th>Status</th><th>Wave</th></tr></thead>
+            <tbody id="cat-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============= PLAY ============= -->
+      <section class="panel" id="panel-play" role="tabpanel" aria-labelledby="tab-play">
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Play</h1>
+            <span class="ctx-meta">deterministic spin · seed override available</span>
+          </div>
+          <div class="ctx-bar-r">
+            <button class="btn-ghost" id="btn-replay">Replay last</button>
+            <button class="btn-ghost" id="btn-seed">Seed: <span class="mono">0x9F-2E1B</span></button>
+            <button class="btn-ghost" id="btn-auto10">Autoplay 10</button>
+            <button class="btn-primary" id="btn-spin">
+              <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6,4 20,12 6,20"/></svg>
+              Spin
+              <span class="kbd">Space</span>
+            </button>
+          </div>
+        </header>
+
+        <div id="single-play">
+        <div class="play-area">
+          <div class="play-grid" id="play-grid"></div>
+          <div class="play-info">
+            <div class="play-stat"><span class="caps">last win</span><b class="mono" id="play-win">0×</b></div>
+            <div class="play-stat"><span class="caps">spins</span><b class="mono" id="play-spins">0</b></div>
+            <div class="play-stat"><span class="caps">hit</span><b class="mono" id="play-hit">0%</b></div>
+            <div class="play-stat"><span class="caps">RTP sim</span><b class="mono" id="play-rtp-sim">0.00%</b></div>
+          </div>
+        </div>
+        </div>
+
+        <div id="split-play" class="split-view" hidden>
+          <div class="split-pane">
+            <header class="split-pane-h" id="split-play-head-A"></header>
+            <div class="play-grid" id="play-grid-A"></div>
+          </div>
+          <div class="split-divider">
+            <button class="btn-ghost mini btn-swap-compare" title="Swap A ↔ B">⇄</button>
+            <button class="btn-ghost mini btn-exit-compare">× exit</button>
+          </div>
+          <div class="split-pane">
+            <header class="split-pane-h" id="split-play-head-B"></header>
+            <div class="play-grid" id="play-grid-B"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============= SENSITIVITY ============= -->
+      <section class="panel" id="panel-sensitivity" role="tabpanel" aria-labelledby="tab-sensitivity">
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Sensitivity</h1>
+            <span class="ctx-meta">parameter sweep · A/B compare · primary tool</span>
+          </div>
+          <div class="ctx-bar-r">
+            <label class="seg">Parameter
+              <select id="sweep-param">
+                <option>HP1 weight</option>
+                <option>WILD weight</option>
+                <option>FS trigger %</option>
+                <option>Multiplier ladder</option>
+              </select>
+            </label>
+            <label class="seg">Range
+              <input type="text" value="0.5×–2.0×" />
+            </label>
+            <button class="btn-ghost">A/B</button>
+            <button class="btn-primary">Run sweep</button>
+          </div>
+        </header>
+
+        <div id="single-sensitivity">
+        <div class="sweep-grid">
+          <div class="card">
+            <div class="card-h"><h2>RTP curve</h2><span class="card-meta">12 points · 1M spins each</span></div>
+            <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
+              <path d="M 10 180 L 50 162 L 90 142 L 130 122 L 170 104 L 210 90 L 250 80 L 290 72 L 330 66 L 370 60" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+              <line x1="10" y1="100" x2="390" y2="100" stroke="#252B36" stroke-dasharray="2 3" stroke-width="0.5"/>
+              <text x="392" y="103" fill="#5C6470" font-size="9" font-family="monospace">95.5%</text>
+            </svg>
+          </div>
+          <div class="card">
+            <div class="card-h"><h2>Volatility</h2><span class="card-meta">σ along sweep</span></div>
+            <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
+              <path d="M 10 140 L 50 132 L 90 128 L 130 122 L 170 116 L 210 110 L 250 102 L 290 92 L 330 80 L 370 68" fill="none" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="3 2"/>
+            </svg>
+          </div>
+        </div>
+        </div>
+
+        <div id="split-sensitivity" class="split-view" hidden>
+          <div class="split-pane">
+            <header class="split-pane-h" id="split-sens-head-A"></header>
+            <div class="card">
+              <div class="card-h"><h2>RTP curve · A</h2></div>
+              <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
+                <path d="M 10 180 L 50 162 L 90 142 L 130 122 L 170 104 L 210 90 L 250 80 L 290 72 L 330 66 L 370 60" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="split-divider">
+            <button class="btn-ghost mini btn-swap-compare" title="Swap A ↔ B">⇄</button>
+            <button class="btn-ghost mini btn-exit-compare">× exit</button>
+          </div>
+          <div class="split-pane">
+            <header class="split-pane-h" id="split-sens-head-B"></header>
+            <div class="card">
+              <div class="card-h"><h2>RTP curve · B</h2></div>
+              <svg class="sweep-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
+                <path d="M 10 170 L 50 158 L 90 138 L 130 116 L 170 96 L 210 82 L 250 72 L 290 64 L 330 58 L 370 52" fill="none" stroke="#A78BFA" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============= CERTIFY ============= -->
+      <section class="panel" id="panel-certify" role="tabpanel" aria-labelledby="tab-certify">
+        <header class="ctx-bar">
+          <div class="ctx-bar-l">
+            <h1>Certify</h1>
+            <span class="ctx-meta">MC 100M · PAR · op-package · ed25519 sign</span>
+          </div>
+          <div class="ctx-bar-r">
+            <button class="btn-ghost" id="btn-run-mc">Run MC <span class="kbd">R</span></button>
+            <button class="btn-ghost">Generate PAR</button>
+            <button class="btn-ghost">Sign HSM</button>
+            <button class="btn-primary">Export ZIP</button>
+          </div>
+        </header>
+
+        <div class="compare-banner" id="cmp-banner-certify" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
+
+        <div class="cert-grid">
+          <div class="card">
+            <div class="card-h"><h2>MC convergence</h2><span class="card-meta">100M spins · CF vs MC delta</span></div>
+            <div class="cert-rows">
+              <div class="cert-row"><span class="cert-lbl">Closed-form RTP</span><b class="mono">95.4218%</b></div>
+              <div class="cert-row"><span class="cert-lbl">MC RTP (100M)</span><b class="mono">95.4187%</b></div>
+              <div class="cert-row"><span class="cert-lbl">Δ (CF − MC)</span><b class="mono cyan">+0.0031%</b></div>
+              <div class="cert-row"><span class="cert-lbl">95% CI half-width</span><b class="mono">±0.0042%</b></div>
+              <div class="cert-row"><span class="cert-lbl">Within tolerance</span><b class="ok">PASS</b></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><h2>Jurisdictions</h2><span class="card-meta">15 active · all green</span></div>
+            <div class="jur-list">
+              <span class="jur ok">UKGC RTS-14</span>
+              <span class="jur ok">MGA</span>
+              <span class="jur ok">NJ DGE</span>
+              <span class="jur ok">ONT iGO</span>
+              <span class="jur ok">GLI-19</span>
+              <span class="jur ok">SE Spelinspektionen</span>
+              <span class="jur ok">DK Spillemyndigheden</span>
+              <span class="jur ok">PA PGCB</span>
+              <span class="jur ok">MI MGCB</span>
+              <span class="jur ok">DE GGL</span>
+              <span class="jur ok">ES DGOJ</span>
+              <span class="jur ok">CO Coljuegos</span>
+              <span class="jur ok">PT SRIJ</span>
+              <span class="jur ok">RO ONJN</span>
+              <span class="jur ok">CW CGCB</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><h2>PAR · audit trail</h2><span class="card-meta">12 sections · ed25519 signed</span></div>
+            <div class="cert-rows">
+              <div class="cert-row"><span class="cert-lbl">Generated</span><b class="mono">2026-05-18 09:14 UTC</b></div>
+              <div class="cert-row"><span class="cert-lbl">Signer</span><b class="mono">Boki · HSM-PROD-01</b></div>
+              <div class="cert-row"><span class="cert-lbl">Cat version</span><b class="mono">v2.63</b></div>
+              <div class="cert-row"><span class="cert-lbl">Wave pin</span><b class="mono">W196 · bf9b1be</b></div>
+              <div class="cert-row"><span class="cert-lbl">Pkg size</span><b class="mono">2.4 MB</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT · CONTEXT-AWARE PANEL (3 sections default · "Expand" reveals more) -->
+    <aside class="rail" aria-label="Inspector">
+      <div class="rail-h">
+        <div class="rail-title">
+          <span class="caps">Inspector</span>
+          <span class="rail-ctx" id="rail-ctx">overall</span>
+        </div>
+        <button class="btn-ghost mini" id="rail-expand" title="Show all panels">Expand</button>
+      </div>
+
+      <!-- ============= MATH persona rail ============= -->
+      <div id="rail-persona-math" class="rail-persona rail-persona-math">
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Statistical moments</span><span class="rail-card-r mono cyan">closed-form</span></div>
+          <div class="moment-list">
+            <div class="moment-row">
+              <span class="m-sym mono">σ</span>
+              <span class="m-lbl">std dev</span>
+              <b class="mono" id="m-sigma">6.42</b>
+              <button class="m-form" title="σ = √E[(X−μ)²]">📐</button>
+            </div>
+            <div class="moment-row">
+              <span class="m-sym mono">μ</span>
+              <span class="m-lbl">RTP (mean)</span>
+              <b class="mono cyan" id="m-mu">96.4214%</b>
+              <button class="m-form" title="μ = Σ pᵢ·xᵢ">📐</button>
+            </div>
+            <div class="moment-row">
+              <span class="m-sym mono">μ₃</span>
+              <span class="m-lbl">skewness</span>
+              <b class="mono" id="m-skew">+1.82</b>
+              <button class="m-form" title="μ₃ = E[(X−μ)³]/σ³">📐</button>
+            </div>
+            <div class="moment-row">
+              <span class="m-sym mono">μ₄</span>
+              <span class="m-lbl">kurtosis</span>
+              <b class="mono" id="m-kurt">4.21</b>
+              <button class="m-form" title="μ₄ = E[(X−μ)⁴]/σ⁴ − 3">📐</button>
+            </div>
+            <div class="moment-row">
+              <span class="m-sym mono">P99</span>
+              <span class="m-lbl">99th pct</span>
+              <b class="mono" id="m-p99">245.5×</b>
+              <button class="m-form" title="P99 = inf{x : F(x) ≥ 0.99}">📐</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Variance decomposition</span><span class="rail-card-r mono">σ² breakdown</span></div>
+          <div class="vdecomp-bar" aria-hidden="true">
+            <i class="vd-seg vd-base"    style="width:78%" title="Base 78%"></i>
+            <i class="vd-seg vd-fs"      style="width:14%" title="FS 14%"></i>
+            <i class="vd-seg vd-cascade" style="width:6%"  title="Cascade 6%"></i>
+            <i class="vd-seg vd-mult"    style="width:2%"  title="Multipliers 2%"></i>
+          </div>
+          <ul class="vdecomp-legend">
+            <li><i class="vd-dot vd-base"></i><span>Base</span><b class="mono">78%</b></li>
+            <li><i class="vd-dot vd-fs"></i><span>Free Spins</span><b class="mono">14%</b></li>
+            <li><i class="vd-dot vd-cascade"></i><span>Cascade</span><b class="mono">6%</b></li>
+            <li><i class="vd-dot vd-mult"></i><span>Multipliers</span><b class="mono">2%</b></li>
+          </ul>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Sensitivity preview</span><span class="rail-card-r mono">top-3 by ∂RTP</span></div>
+          <ul class="sens-preview">
+            <li>
+              <span class="sp-name">HP1 weight</span>
+              <span class="sp-bar"><i style="width:92%"></i></span>
+              <b class="mono cyan">±0.42pp</b>
+            </li>
+            <li>
+              <span class="sp-name">WILD weight</span>
+              <span class="sp-bar"><i style="width:67%"></i></span>
+              <b class="mono cyan">±0.31pp</b>
+            </li>
+            <li>
+              <span class="sp-name">FS trigger %</span>
+              <span class="sp-bar"><i style="width:48%"></i></span>
+              <b class="mono cyan">±0.22pp</b>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ============= DESIGN persona rail ============= -->
+      <div id="rail-persona-design" class="rail-persona rail-persona-design">
+        <section class="rail-card winfeel-card">
+          <div class="rail-card-h"><span>Win feel</span><span class="rail-card-r mono">player perception</span></div>
+          <div class="winfeel-big">
+            <span class="winfeel-pill is-balanced" id="winfeel-pill-big">BALANCED</span>
+          </div>
+          <div class="winfeel-track">
+            <span class="wf-tick wf-tight">tight</span>
+            <span class="wf-tick wf-balanced is-on">balanced</span>
+            <span class="wf-tick wf-loose">loose</span>
+          </div>
+          <div class="rail-mini-row winfeel-stats">
+            <div><span class="caps">avg win ≤ 5×</span><b class="mono">62%</b></div>
+            <div><span class="caps">big win ≥ 100×</span><b class="mono cyan">3.1%</b></div>
+            <div><span class="caps">hit pace</span><b class="mono">1-in-3.7</b></div>
+            <div><span class="caps">dead spin streak</span><b class="mono">≤ 6</b></div>
+          </div>
+        </section>
+
+        <section class="rail-card timeline-card">
+          <div class="rail-card-h"><span>Animation timeline</span><span class="rail-card-r mono">spin sequence</span></div>
+          <ul class="anim-timeline">
+            <li class="anim-step is-done"><span class="anim-dot"></span><span class="anim-lbl">idle</span><b class="mono">0.0s</b></li>
+            <li class="anim-step is-active"><span class="anim-dot"></span><span class="anim-lbl">spin</span><b class="mono">0.4s</b></li>
+            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">win highlight</span><b class="mono">1.2s</b></li>
+            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">FS intro</span><b class="mono">2.8s</b></li>
+            <li class="anim-step"><span class="anim-dot"></span><span class="anim-lbl">H&amp;W reveal</span><b class="mono">4.4s</b></li>
+          </ul>
+        </section>
+
+        <section class="rail-card theme-card">
+          <div class="rail-card-h"><span>Theme picker</span><span class="rail-card-r mono">4 presets</span></div>
+          <div class="theme-grid">
+            <button class="theme-tile is-active" data-theme-preset="geological">
+              <span class="theme-swatch-row">
+                <i style="background:#7E5C46"></i><i style="background:#A88963"></i><i style="background:#3F2E20"></i><i style="background:#D4B896"></i>
+              </span>
+              <span class="theme-tile-lbl">Geological</span>
+            </button>
+            <button class="theme-tile" data-theme-preset="cosmic">
+              <span class="theme-swatch-row">
+                <i style="background:#1E1B4B"></i><i style="background:#7C3AED"></i><i style="background:#22D3EE"></i><i style="background:#F472B6"></i>
+              </span>
+              <span class="theme-tile-lbl">Cosmic</span>
+            </button>
+            <button class="theme-tile" data-theme-preset="botanical">
+              <span class="theme-swatch-row">
+                <i style="background:#14532D"></i><i style="background:#65A30D"></i><i style="background:#FACC15"></i><i style="background:#FB923C"></i>
+              </span>
+              <span class="theme-tile-lbl">Botanical</span>
+            </button>
+            <button class="theme-tile" data-theme-preset="mineral">
+              <span class="theme-swatch-row">
+                <i style="background:#0F172A"></i><i style="background:#22D3EE"></i><i style="background:#94A3B8"></i><i style="background:#E2E8F0"></i>
+              </span>
+              <span class="theme-tile-lbl">Mineral</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============= PRODUCER persona rail ============= -->
+      <div id="rail-persona-producer" class="rail-persona rail-persona-producer">
+        <section class="rail-card kpi-card">
+          <div class="rail-card-h"><span>KPI strip</span><span class="rail-card-r mono">this title · this Q</span></div>
+          <div class="kpi-grid">
+            <div class="kpi-tile">
+              <span class="kpi-lbl">Cost saved</span>
+              <b class="mono cyan">$40K</b>
+              <span class="kpi-sub">this title</span>
+            </div>
+            <div class="kpi-tile">
+              <span class="kpi-lbl">Time saved</span>
+              <b class="mono cyan">11 days</b>
+              <span class="kpi-sub">vs baseline</span>
+            </div>
+            <div class="kpi-tile">
+              <span class="kpi-lbl">Reg queue</span>
+              <b class="mono">3</b>
+              <span class="kpi-sub">in flight</span>
+            </div>
+            <div class="kpi-tile">
+              <span class="kpi-lbl">Releases</span>
+              <b class="mono ok">12</b>
+              <span class="kpi-sub">this Q</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="rail-card pipeline-card">
+          <div class="rail-card-h"><span>Pipeline view</span><span class="rail-card-r mono">4 milestones</span></div>
+          <ol class="pipeline-list">
+            <li class="pipe-step is-done"><span class="pipe-dot ok">✓</span><span class="pipe-lbl">Math</span><b class="mono">Apr 12</b></li>
+            <li class="pipe-step is-active"><span class="pipe-dot warn">⏳</span><span class="pipe-lbl">Design</span><b class="mono">May 22</b></li>
+            <li class="pipe-step"><span class="pipe-dot">·</span><span class="pipe-lbl">Cert</span><b class="mono">Jun 14</b></li>
+            <li class="pipe-step"><span class="pipe-dot">·</span><span class="pipe-lbl">Live</span><b class="mono">Jul 02</b></li>
+          </ol>
+          <div class="pipeline-bar"><i style="width:38%"></i></div>
+        </section>
+
+        <section class="rail-card risk-card">
+          <div class="rail-card-h"><span>Risk register</span><span class="rail-card-r ok">0 critical</span></div>
+          <ul class="risk-list">
+            <li class="risk-row is-medium">
+              <span class="risk-dot"></span>
+              <div class="risk-text">
+                <b>UKGC RTS-14</b>
+                <span>session reminder review pending</span>
+              </div>
+              <span class="risk-sev mono">MED</span>
+            </li>
+            <li class="risk-row is-medium">
+              <span class="risk-dot"></span>
+              <div class="risk-text">
+                <b>MGA PPD §11</b>
+                <span>stake cap policy refresh</span>
+              </div>
+              <span class="risk-sev mono">MED</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Default (legacy / overall) view · still used on Compose / Catalog / Certify tabs -->
+      <div id="rail-default" hidden>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Overall RTP</span><span class="rail-card-r mono ok" id="rail-rtp-delta">↗ +0.03</span></div>
+          <div class="rail-rtp">
+            <b class="mono" id="rail-rtp-big">95.42</b><span class="rail-rtp-pct">%</span>
+          </div>
+          <svg class="rail-gauge" viewBox="0 0 200 110" preserveAspectRatio="none">
+            <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="#252B36" stroke-width="2"/>
+            <path id="gauge-arc" d="M 10 100 A 90 90 0 0 1 175 30" fill="none" stroke="#22D3EE" stroke-width="2"/>
+            <line x1="100" y1="100" x2="100" y2="20" stroke="#5C6470" stroke-width="0.5" stroke-dasharray="2 3"/>
+            <text x="6" y="110" fill="#5C6470" font-size="8" font-family="monospace">88%</text>
+            <text x="180" y="110" fill="#5C6470" font-size="8" font-family="monospace">99%</text>
+            <text x="92" y="14" fill="#5C6470" font-size="8" font-family="monospace">target</text>
+          </svg>
+          <div class="rail-mini-row">
+            <div><span class="caps">target</span><b class="mono">95.50%</b></div>
+            <div><span class="caps">drift</span><b class="mono">−0.08pp</b></div>
+          </div>
+        </section>
+
+        <section class="rail-card rail-card-lineup">
+          <div class="rail-card-h"><span>Variant lineup</span><span class="rail-card-r mono small">click to switch</span></div>
+          <div class="variant-lineup" id="rail-variant-lineup"></div>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Hit-freq &amp; volatility</span></div>
+          <div class="rail-pair">
+            <div class="rail-pair-cell"><span class="caps">hit</span><b class="mono">27.83%</b></div>
+            <div class="rail-pair-cell"><span class="caps">σ</span><b class="mono">8.41</b></div>
+            <div class="rail-pair-cell"><span class="caps">class</span><b class="mono cyan">MID</b></div>
+            <div class="rail-pair-cell"><span class="caps">maxWin</span><b class="mono">2 145×</b></div>
+          </div>
+          <svg class="rail-spark" viewBox="0 0 200 40" preserveAspectRatio="none" id="rail-spark">
+            <polyline fill="none" stroke="#22D3EE" stroke-width="1" points="0,30 12,28 24,32 36,24 48,26 60,20 72,22 84,18 96,24 108,16 120,20 132,14 144,18 156,12 168,16 180,10 192,14 200,12"/>
+          </svg>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Recent changes</span><span class="rail-card-r mono small">live</span></div>
+          <ul class="rail-activity" id="rail-activity">
+            <li><span class="t mono">12s</span><span class="m">HP1 weight 3.5 → 3.8</span></li>
+            <li><span class="t mono">42s</span><span class="m">auto-balance applied (3 deltas)</span></li>
+            <li><span class="t mono">1m</span><span class="m">preset Standard 11 loaded</span></li>
+            <li><span class="t mono">3m</span><span class="m">workspace Untitled opened</span></li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Selection view · paytable / reel cell (toggled by JS) -->
+      <div id="rail-selection" hidden></div>
+
+      <!-- Expanded view · 6 more cards -->
+      <div id="rail-expanded" hidden>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>CI gates</span><span class="rail-card-r ok">106/106</span></div>
+          <div class="rail-mini-row">
+            <div><span class="caps">acceptance</span><b class="mono">90/90</b></div>
+            <div><span class="caps">drift</span><b class="mono">16/16</b></div>
+          </div>
+        </section>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>L&amp;W coverage</span><span class="rail-card-r ok">16/16</span></div>
+          <div class="rail-bar"><i style="width:100%"></i></div>
+        </section>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Engine telemetry</span></div>
+          <div class="rail-mini-row">
+            <div><span class="caps">solvers</span><b class="mono">77/77</b></div>
+            <div><span class="caps">specs</span><b class="mono">5 351</b></div>
+          </div>
+        </section>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Audit trail</span><span class="rail-card-r mono small">12 entries</span></div>
+          <ul class="rail-activity small">
+            <li><span class="t mono">09:14</span><span class="m">PAR signed</span></li>
+            <li><span class="t mono">09:13</span><span class="m">MC 100M completed</span></li>
+            <li><span class="t mono">09:11</span><span class="m">IR validated</span></li>
+          </ul>
+        </section>
+        <section class="rail-card" data-persona-only="producer">
+          <div class="rail-card-h"><span>Producer KPI</span></div>
+          <div class="rail-mini-row">
+            <div><span class="caps">cost saved</span><b class="mono cyan">$40K</b></div>
+            <div><span class="caps">reject rate</span><b class="mono ok">0%</b></div>
+          </div>
+        </section>
+        <section class="rail-card">
+          <div class="rail-card-h"><span>Wave</span><span class="rail-card-r mono small">#bf9b1be</span></div>
+          <div class="rail-mini-row">
+            <div><span class="caps">W</span><b class="mono">196</b></div>
+            <div><span class="caps">cat</span><b class="mono">v2.63</b></div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ROW 4 · COMPACT STATUSBAR -->
+  <footer class="row-status" role="contentinfo">
+    <div class="status-l">
+      <span class="status-item ok"><span class="dot"></span>engine online</span>
+      <span class="status-sep">·</span>
+      <span class="status-item">77/77 solvers</span>
+      <span class="status-sep">·</span>
+      <span class="status-item">106/106 CI</span>
+      <span class="status-sep">·</span>
+      <span class="status-item">16/16 L&amp;W</span>
+      <span class="status-sep">·</span>
+      <span class="status-item" id="status-variant"></span>
+    </div>
+    <div class="status-c">
+      <div class="ticker" id="ticker" aria-hidden="true">
+        <span class="t-track" id="t-track">
+          <span class="t-it">RTP 95.42%</span><span class="t-sep">·</span>
+          <span class="t-it">σ 8.41</span><span class="t-sep">·</span>
+          <span class="t-it">Hit 27.83%</span><span class="t-sep">·</span>
+          <span class="t-it">MaxWin 2 145×</span><span class="t-sep">·</span>
+          <span class="t-it">Drift −0.08pp</span><span class="t-sep">·</span>
+          <span class="t-it">MC queue 0</span><span class="t-sep">·</span>
+          <span class="t-it">Wave W196</span><span class="t-sep">·</span>
+          <span class="t-it">cat v2.63</span><span class="t-sep">·</span>
+          <span class="t-it">L&amp;W 100%</span><span class="t-sep">·</span>
+          <span class="t-it">P-IDs 97</span><span class="t-sep">·</span>
+          <span class="t-it">recompute 1.4ms</span><span class="t-sep">·</span>
+          <span class="t-it">jurisdictions 15</span>
+        </span>
+      </div>
+    </div>
+    <div class="status-r">
+      <span class="status-item" id="status-save">saved <b id="save-age">12s</b> ago</span>
+      <span class="status-sep">·</span>
+      <button class="status-link" id="btn-toggle-bottom" title="Toggle bottom panel (⌘J)">Logs<span class="kbd">⌘J</span></button>
+      <span class="status-sep">·</span>
+      <button class="status-link" id="btn-status-help" title="Shortcuts (?)">Shortcuts<span class="kbd">?</span></button>
+    </div>
+  </footer>
+
+  <!-- Collapsible bottom panel · toggled on demand -->
+  <div class="bottom-panel" id="bottom-panel" hidden>
+    <div class="bp-h">
+      <div class="bp-tabs">
+        <button class="bp-tab is-active" data-bp="activity">Activity</button>
+        <button class="bp-tab" data-bp="mc">MC progress</button>
+        <button class="bp-tab" data-bp="ci">CI gates</button>
+      </div>
+      <button class="bp-close" id="bp-close" title="Close (⌘J)">×</button>
+    </div>
+    <div class="bp-body" id="bp-body">
+      <ul class="bp-activity" id="bp-activity"></ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========= COMMAND PALETTE ========= -->
+<div class="cmdp" id="cmdp" hidden aria-hidden="true" role="dialog" aria-label="Command palette">
+  <div class="cmdp-backdrop" id="cmdp-backdrop"></div>
+  <div class="cmdp-box">
+    <div class="cmdp-search">
+      <input type="text" id="cmdp-input" placeholder="Type a command or search…" autocomplete="off" />
+      <span class="kbd">esc</span>
+    </div>
+    <div class="cmdp-list" id="cmdp-list"></div>
+    <div class="cmdp-foot">
+      <span><span class="kbd">↑</span><span class="kbd">↓</span> navigate</span>
+      <span><span class="kbd">↵</span> execute</span>
+      <span><span class="kbd">esc</span> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========= QUICK START WIZARD MODAL ========= -->
+<div class="wiz" id="wiz" hidden aria-hidden="true">
+  <div class="wiz-backdrop" id="wiz-backdrop"></div>
+  <div class="wiz-box">
+    <header class="wiz-h">
+      <h2 id="wiz-title">New Game</h2>
+      <div class="wiz-steps" id="wiz-steps"></div>
+      <button class="wiz-close" id="wiz-close">×</button>
+    </header>
+    <div class="wiz-body" id="wiz-body"></div>
+    <footer class="wiz-foot">
+      <button class="btn-ghost" id="wiz-back" disabled>← Back</button>
+      <span class="wiz-hint" id="wiz-hint">Step 1 / 3</span>
+      <button class="btn-primary" id="wiz-next">Next →</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ========= ICON PICKER MODAL ========= -->
+<div class="picker" id="picker" hidden aria-hidden="true">
+  <div class="picker-backdrop" id="picker-backdrop"></div>
+  <div class="picker-box">
+    <header class="picker-h">
+      <h2>Choose icon</h2>
+      <button class="picker-close" id="picker-close">×</button>
+    </header>
+    <div class="picker-grid" id="picker-grid"></div>
+  </div>
+</div>
+
+<!-- ========= HELP / SHORTCUTS MODAL ========= -->
+<div class="help" id="help-modal" hidden aria-hidden="true">
+  <div class="help-backdrop" id="help-backdrop"></div>
+  <div class="help-box">
+    <header class="help-h">
+      <h2>Keyboard shortcuts</h2>
+      <button class="help-close" id="help-close">×</button>
+    </header>
+    <div class="help-grid">
+      <div class="help-col">
+        <h3>Navigation</h3>
+        <div class="help-row"><span class="kbd">⌘K</span><span>Command palette</span></div>
+        <div class="help-row"><span class="kbd">⌘1</span>–<span class="kbd">⌘6</span><span>Switch tabs</span></div>
+        <div class="help-row"><span class="kbd">⌘J</span><span>Toggle bottom panel</span></div>
+        <div class="help-row"><span class="kbd">?</span><span>This help</span></div>
+      </div>
+      <div class="help-col">
+        <h3>Edit</h3>
+        <div class="help-row"><span class="kbd">⌘S</span><span>Save</span></div>
+        <div class="help-row"><span class="kbd">⌘Z</span><span>Undo</span></div>
+        <div class="help-row"><span class="kbd">⇧⌘Z</span><span>Redo</span></div>
+        <div class="help-row"><span class="kbd">B</span><span>Auto-balance (BUILD)</span></div>
+      </div>
+      <div class="help-col">
+        <h3>Run</h3>
+        <div class="help-row"><span class="kbd">Space</span><span>Spin (PLAY)</span></div>
+        <div class="help-row"><span class="kbd">R</span><span>Run MC (CERTIFY)</span></div>
+        <div class="help-row"><span class="kbd">esc</span><span>Close modals</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========= NEW GAME MODAL (workspace creation) ========= -->
+<div class="modal-base" id="new-game-modal" hidden aria-hidden="true">
+  <div class="modal-backdrop" id="ng-backdrop"></div>
+  <div class="modal-box">
+    <header class="modal-h">
+      <h2>New Game</h2>
+      <button class="modal-close" id="ng-close">×</button>
+    </header>
+    <div class="modal-body">
+      <div class="modal-field">
+        <label for="ng-name">Name</label>
+        <input type="text" id="ng-name" placeholder="Untitled Game" />
+      </div>
+      <div class="modal-field">
+        <label>Layout</label>
+        <div class="ng-layouts" id="ng-layouts"></div>
+      </div>
+      <div class="modal-field">
+        <label>Theme color</label>
+        <div class="ng-themes" id="ng-themes"></div>
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <button class="btn-ghost" id="ng-cancel">Cancel</button>
+      <button class="btn-primary" id="ng-create">Create</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ========= NEW VARIANT MODAL ========= -->
+<div class="modal-base" id="new-variant-modal" hidden aria-hidden="true">
+  <div class="modal-backdrop" id="nv-backdrop"></div>
+  <div class="modal-box modal-box-sm">
+    <header class="modal-h">
+      <h2>New Variant</h2>
+      <button class="modal-close" id="nv-close">×</button>
+    </header>
+    <div class="modal-body">
+      <div class="modal-field">
+        <label for="nv-name">Name</label>
+        <input type="text" id="nv-name" />
+      </div>
+      <div class="modal-field">
+        <label>Start from</label>
+        <div class="nv-sources" id="nv-sources"></div>
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <button class="btn-ghost" id="nv-cancel">Cancel</button>
+      <button class="btn-primary" id="nv-create">Create</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ========= COMPARE A/B MODAL ========= -->
+<div class="modal-base" id="compare-modal" hidden aria-hidden="true">
+  <div class="modal-backdrop" id="cmp-backdrop"></div>
+  <div class="modal-box modal-box-sm">
+    <header class="modal-h">
+      <h2>Compare A/B</h2>
+      <button class="modal-close" id="cmp-close">×</button>
+    </header>
+    <div class="modal-body">
+      <div class="modal-field">
+        <label for="cmp-a">Variant A</label>
+        <select id="cmp-a"></select>
+      </div>
+      <div class="modal-field">
+        <label for="cmp-b">Variant B</label>
+        <select id="cmp-b"></select>
+      </div>
+      <p class="modal-warn" id="cmp-warn" hidden>A and B must be different variants.</p>
+    </div>
+    <footer class="modal-foot">
+      <button class="btn-ghost" id="cmp-cancel">Cancel</button>
+      <button class="btn-primary" id="cmp-enter">Enter Compare Mode</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ========= TOASTS ========= -->
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

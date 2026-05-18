@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Math Studio — CORTI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== SVG sprite (inline, no CDN) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-s01" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 30 C 14 18, 26 12, 36 14 C 48 16, 52 26, 50 38 C 48 50, 36 54, 26 52 C 16 50, 14 42, 14 30 Z"/>
+        <path d="M22 32 C 22 26, 28 22, 34 24" opacity=".55"/>
+      </g>
+    </symbol>
+    <symbol id="g-s02" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 26 C 16 18, 24 34, 32 26 C 40 18, 48 34, 56 26"/>
+        <path d="M8 38 C 16 30, 24 46, 32 38 C 40 30, 48 46, 56 38"/>
+      </g>
+    </symbol>
+    <symbol id="g-s03" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 48 A 22 22 0 0 1 54 48"/>
+        <path d="M18 48 A 14 14 0 0 1 46 48" opacity=".6"/>
+        <path d="M26 48 A 6 6 0 0 1 38 48" opacity=".3"/>
+      </g>
+    </symbol>
+    <symbol id="g-s04" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="22" cy="22" r="10"/>
+        <circle cx="42" cy="42" r="10"/>
+        <path d="M30 30 L 34 34"/>
+      </g>
+    </symbol>
+    <symbol id="g-s05" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 8 L 54 24 L 46 54 L 18 54 L 10 24 Z"/>
+        <path d="M32 8 L 32 54" opacity=".5"/>
+        <path d="M10 24 L 54 24" opacity=".5"/>
+      </g>
+    </symbol>
+    <symbol id="g-s06" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 10 L 48 14 L 52 50 L 22 54 L 12 36 Z"/>
+        <path d="M16 10 L 32 32 L 52 50" opacity=".55"/>
+        <path d="M48 14 L 32 32 L 22 54" opacity=".35"/>
+      </g>
+    </symbol>
+    <symbol id="g-s07" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="22"/>
+        <ellipse cx="32" cy="32" rx="10" ry="22"/>
+        <path d="M10 32 L 54 32"/>
+      </g>
+    </symbol>
+    <symbol id="g-s08" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 12 L 44 12 L 52 32 L 44 52 L 20 52 L 12 32 Z"/>
+        <path d="M20 12 L 44 52" opacity=".3"/>
+        <path d="M44 12 L 20 52" opacity=".3"/>
+        <circle cx="32" cy="32" r="6"/>
+      </g>
+    </symbol>
+    <symbol id="g-s09" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M28 6 L 36 6 L 42 54 L 22 54 Z"/>
+        <path d="M28 6 L 32 18 L 36 6"/>
+        <path d="M26 28 L 38 28" opacity=".5"/>
+        <path d="M24 40 L 40 40" opacity=".5"/>
+      </g>
+    </symbol>
+    <symbol id="g-s10" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 6 L 58 20 L 58 44 L 32 58 L 6 44 L 6 20 Z"/>
+        <path d="M6 20 L 58 44" opacity=".55"/>
+        <path d="M58 20 L 6 44" opacity=".55"/>
+        <path d="M32 6 L 32 58" opacity=".55"/>
+        <circle cx="32" cy="32" r="4" fill="currentColor"/>
+      </g>
+    </symbol>
+    <symbol id="g-s11" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="4" fill="currentColor"/>
+        <circle cx="32" cy="32" r="12" opacity=".75"/>
+        <circle cx="32" cy="32" r="20" opacity=".45" stroke-dasharray="2 4"/>
+        <circle cx="32" cy="32" r="28" opacity=".25" stroke-dasharray="1 5"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+  <!-- ============= TOP BAR ============= -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div class="brand-name">Slot Math Studio <span>· corti</span></div>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="build" role="tab">
+        <span class="tab-index">01</span>Build
+      </button>
+      <button class="tab" data-tab="play" role="tab">
+        <span class="tab-index">02</span>Play
+      </button>
+      <button class="tab" data-tab="certify" role="tab">
+        <span class="tab-index">03</span>Certify
+      </button>
+    </nav>
+
+    <div class="topbar-right">
+      <span>IR · <b id="ir-name">tide-lattice-v0.3</b></span>
+      <button class="btn-ghost">Save</button>
+      <button class="btn-ghost">Export IR</button>
+      <span class="kbd">⌘ K</span>
+    </div>
+  </header>
+
+  <!-- ============= PANELS ============= -->
+  <main class="panels">
+
+    <!-- =============================================== BUILD -->
+    <section class="panel active" id="panel-build">
+      <div class="build-grid">
+
+        <!-- LEFT: SYMBOL PALETTE -->
+        <aside class="col">
+          <div class="col-head">
+            <span>Symbols</span>
+            <span class="meta">11 · 4 tiers</span>
+          </div>
+
+          <div class="palette" id="palette">
+            <!-- low -->
+            <div class="sym tier-low"  draggable="true" data-sym="s01" data-tier="low" data-name="Pebble">
+              <svg class="gem"><use href="#g-s01"/></svg>
+              <span class="tier">LOW</span>
+              <span class="label">PEBBLE</span>
+            </div>
+            <div class="sym tier-low"  draggable="true" data-sym="s02" data-tier="low" data-name="Tide">
+              <svg class="gem"><use href="#g-s02"/></svg>
+              <span class="tier">LOW</span>
+              <span class="label">TIDE</span>
+            </div>
+            <div class="sym tier-low"  draggable="true" data-sym="s03" data-tier="low" data-name="Arc">
+              <svg class="gem"><use href="#g-s03"/></svg>
+              <span class="tier">LOW</span>
+              <span class="label">ARC</span>
+            </div>
+            <div class="sym tier-low"  draggable="true" data-sym="s04" data-tier="low" data-name="Knot">
+              <svg class="gem"><use href="#g-s04"/></svg>
+              <span class="tier">LOW</span>
+              <span class="label">KNOT</span>
+            </div>
+            <!-- mid -->
+            <div class="sym tier-mid"  draggable="true" data-sym="s05" data-tier="mid" data-name="Prism">
+              <svg class="gem"><use href="#g-s05"/></svg>
+              <span class="tier">MID</span>
+              <span class="label">PRISM</span>
+            </div>
+            <div class="sym tier-mid"  draggable="true" data-sym="s06" data-tier="mid" data-name="Shard">
+              <svg class="gem"><use href="#g-s06"/></svg>
+              <span class="tier">MID</span>
+              <span class="label">SHARD</span>
+            </div>
+            <div class="sym tier-mid"  draggable="true" data-sym="s07" data-tier="mid" data-name="Meridian">
+              <svg class="gem"><use href="#g-s07"/></svg>
+              <span class="tier">MID</span>
+              <span class="label">MERIDIAN</span>
+            </div>
+            <!-- high -->
+            <div class="sym tier-high" draggable="true" data-sym="s08" data-tier="high" data-name="Keystone">
+              <svg class="gem"><use href="#g-s08"/></svg>
+              <span class="tier">HIGH</span>
+              <span class="label">KEYSTONE</span>
+            </div>
+            <div class="sym tier-high" draggable="true" data-sym="s09" data-tier="high" data-name="Obelisk">
+              <svg class="gem"><use href="#g-s09"/></svg>
+              <span class="tier">HIGH</span>
+              <span class="label">OBELISK</span>
+            </div>
+            <!-- wild -->
+            <div class="sym tier-wild" draggable="true" data-sym="s10" data-tier="wild" data-name="Lattice">
+              <svg class="gem"><use href="#g-s10"/></svg>
+              <span class="tier">WILD</span>
+              <span class="label">LATTICE</span>
+            </div>
+            <!-- scatter -->
+            <div class="sym tier-scatter" draggable="true" data-sym="s11" data-tier="scatter" data-name="Sonar">
+              <svg class="gem"><use href="#g-s11"/></svg>
+              <span class="tier">SCT</span>
+              <span class="label">SONAR</span>
+            </div>
+          </div>
+
+          <p class="palette-legend">
+            <b>Drag</b> a symbol onto a reel column, or <b>click</b> an empty cell with a symbol selected.
+            Tier colour encodes paytable rank.
+          </p>
+        </aside>
+
+        <!-- CENTER: REEL EDITOR + PAYTABLE -->
+        <section class="col">
+          <div class="editor">
+
+            <div class="editor-bar">
+              <div class="editor-title">
+                Reel composition
+                <small>— 5 reels · 12 positions each · weighted</small>
+              </div>
+              <div class="editor-controls">
+                <label class="field">
+                  Topology
+                  <select id="topology">
+                    <option>3×3 · 9-cell</option>
+                    <option selected>5×3 · 15-cell · 20 lines</option>
+                    <option>5×4 · 20-cell · 40 lines</option>
+                    <option>6×4 · 24-cell · 4096 ways</option>
+                    <option>7×7 · cluster pays</option>
+                  </select>
+                </label>
+                <label class="field">
+                  RNG seed
+                  <input type="text" value="0x9F-2E1B" />
+                </label>
+              </div>
+            </div>
+
+            <div class="reels" id="reels">
+              <!-- Reels populated by JS -->
+            </div>
+
+            <!-- Paytable -->
+            <div class="paytable-wrap">
+              <div class="paytable-head">
+                <span>Paytable · multiplier of bet-per-line</span>
+                <span style="font-family:var(--font-mono);font-size:10.5px;text-transform:none;letter-spacing:0;color:var(--muted)">
+                  edits update RTP live
+                </span>
+              </div>
+              <table class="paytable" id="paytable">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>3 of</th>
+                    <th>4 of</th>
+                    <th>5 of</th>
+                    <th>Hit rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- rows generated by JS -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- RIGHT: LIVE PAR -->
+        <aside class="col">
+          <div class="par-panel">
+            <h3 class="section-title">Live PAR</h3>
+
+            <div class="par-card headline">
+              <div class="par-row">
+                <span class="par-label">Return to player</span>
+                <span class="par-sub" id="rtp-band">target band 94–96%</span>
+              </div>
+              <div class="par-value" id="rtp-value">95.42<span class="unit">%</span></div>
+              <div class="recompute" id="recompute">
+                <span class="spinner"></span>
+                <span id="recompute-text">closed-form · 1.4 ms</span>
+              </div>
+            </div>
+
+            <div class="par-grid">
+              <div class="par-mini">
+                <div class="par-label">Hit freq.</div>
+                <div class="par-value" id="hit-value">27.8<span class="unit">%</span></div>
+              </div>
+              <div class="par-mini">
+                <div class="par-label">Max win</div>
+                <div class="par-value" id="max-value">2 145<span class="unit">×</span></div>
+              </div>
+            </div>
+
+            <div class="par-card">
+              <div class="par-label">Volatility</div>
+              <div class="par-vola">
+                <div class="vola-pips" id="vola-pips">
+                  <span class="vola-pip on"></span>
+                  <span class="vola-pip on"></span>
+                  <span class="vola-pip on"></span>
+                  <span class="vola-pip"></span>
+                  <span class="vola-pip"></span>
+                </div>
+                <span class="vola-cat" id="vola-cat">MID · σ 8.4</span>
+              </div>
+            </div>
+
+            <div class="par-card">
+              <div class="par-label">Symbol contribution</div>
+              <div class="contrib" id="contrib">
+                <!-- rows generated by JS -->
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- =============================================== PLAY -->
+    <section class="panel" id="panel-play">
+      <div class="play-grid">
+
+        <div class="play-stage">
+          <div class="play-head">
+            <div>
+              <h2>Renderer preview</h2>
+              <div class="seed">deterministic · seed 0x9F-2E1B · frame 0042</div>
+            </div>
+            <div class="seed">credit balance · <b style="color:var(--text)">1 000.00</b></div>
+          </div>
+
+          <div class="machine" id="machine">
+            <!-- 5 columns; columns 2 and 4 vertically offset (asymmetric) -->
+            <div class="window">
+              <div class="cell lit"><svg><use href="#g-s08"/></svg><span class="pos">R1·1</span></div>
+              <div class="cell"><svg><use href="#g-s03"/></svg><span class="pos">R1·2</span></div>
+              <div class="cell"><svg><use href="#g-s01"/></svg><span class="pos">R1·3</span></div>
+            </div>
+            <div class="window offset">
+              <div class="cell"><svg><use href="#g-s05"/></svg><span class="pos">R2·1</span></div>
+              <div class="cell lit"><svg><use href="#g-s08"/></svg><span class="pos">R2·2</span></div>
+              <div class="cell"><svg><use href="#g-s02"/></svg><span class="pos">R2·3</span></div>
+            </div>
+            <div class="window">
+              <div class="cell"><svg><use href="#g-s07"/></svg><span class="pos">R3·1</span></div>
+              <div class="cell"><svg><use href="#g-s10"/></svg><span class="pos">R3·2</span></div>
+              <div class="cell lit"><svg style="color:var(--accent)"><use href="#g-s10"/></svg><span class="pos">R3·3</span></div>
+            </div>
+            <div class="window offset">
+              <div class="cell"><svg><use href="#g-s04"/></svg><span class="pos">R4·1</span></div>
+              <div class="cell lit"><svg><use href="#g-s08"/></svg><span class="pos">R4·2</span></div>
+              <div class="cell"><svg><use href="#g-s06"/></svg><span class="pos">R4·3</span></div>
+            </div>
+            <div class="window">
+              <div class="cell"><svg><use href="#g-s09"/></svg><span class="pos">R5·1</span></div>
+              <div class="cell"><svg><use href="#g-s02"/></svg><span class="pos">R5·2</span></div>
+              <div class="cell lit"><svg><use href="#g-s08"/></svg><span class="pos">R5·3</span></div>
+            </div>
+
+            <!-- payline overlay (preview only) -->
+            <div class="line-overlay">
+              <svg preserveAspectRatio="none" viewBox="0 0 100 100">
+                <path d="M0 14 C 20 14, 30 50, 50 50 C 70 50, 80 86, 100 86"
+                      fill="none" stroke="rgba(30,143,138,0.55)" stroke-width="0.6"
+                      stroke-dasharray="1.6 1.2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="controls">
+            <div class="bet">
+              <span>Bet</span>
+              <span class="val">1.00<span class="unit">EUR</span></span>
+            </div>
+            <div class="bet">
+              <span>Last win</span>
+              <span class="val" style="color:var(--accent)">+14.50<span class="unit">EUR</span></span>
+            </div>
+            <div class="spacer"></div>
+            <button class="btn-auto">AUTO · 10</button>
+            <button class="btn-spin" id="btn-spin">SPIN</button>
+          </div>
+        </div>
+
+        <aside class="play-side">
+          <div class="side-block">
+            <h3>Session log</h3>
+            <div class="history" id="history">
+              <div class="hist-row"><span class="n">#042</span><span class="res win">5× KEYSTONE · line 7</span><span class="amt">+14.50</span></div>
+              <div class="hist-row"><span class="n">#041</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+              <div class="hist-row"><span class="n">#040</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+              <div class="hist-row"><span class="n">#039</span><span class="res win">3× PRISM · line 2</span><span class="amt">+1.20</span></div>
+              <div class="hist-row"><span class="n">#038</span><span class="res win">3× SONAR scatter</span><span class="amt">+5.00</span></div>
+              <div class="hist-row"><span class="n">#037</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+              <div class="hist-row"><span class="n">#036</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+              <div class="hist-row"><span class="n">#035</span><span class="res win">4× OBELISK · line 4</span><span class="amt">+7.50</span></div>
+              <div class="hist-row"><span class="n">#034</span><span class="res loss">no win</span><span class="amt zero">0.00</span></div>
+            </div>
+          </div>
+
+          <div class="side-block">
+            <h3>Active features</h3>
+            <div class="history">
+              <div class="hist-row"><span class="n">F1</span><span>Wild expand · reel 3</span><span class="amt" style="color:var(--accent)">on</span></div>
+              <div class="hist-row"><span class="n">F2</span><span>Scatter free-spin trigger</span><span class="amt" style="color:var(--muted)">idle</span></div>
+              <div class="hist-row"><span class="n">F3</span><span>Cascade respin</span><span class="amt" style="color:var(--muted)">idle</span></div>
+            </div>
+          </div>
+
+          <div class="side-block">
+            <h3>Render diagnostics</h3>
+            <div class="history">
+              <div class="hist-row"><span class="n">FPS</span><span>renderer frame rate</span><span class="amt">60</span></div>
+              <div class="hist-row"><span class="n">DRW</span><span>draw calls / spin</span><span class="amt">42</span></div>
+              <div class="hist-row"><span class="n">MEM</span><span>texture cache</span><span class="amt">8.1 MB</span></div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- =============================================== CERTIFY -->
+    <section class="panel" id="panel-certify">
+      <div class="cert-grid">
+
+        <div class="cert-main">
+          <div class="cert-head">
+            <div>
+              <h2>Certification output</h2>
+              <div class="sub">GLI-16 v3.0 · ISO/IEC 17025 traceable · deterministic replay</div>
+            </div>
+            <div class="sub">build · <b style="color:var(--text)">tide-lattice-v0.3</b> · 2026-05-18 14:02 UTC</div>
+          </div>
+
+          <div class="mc-bar">
+            <button class="btn-mc" id="btn-mc">Run MC · 100 000</button>
+            <div class="progress" id="mc-progress"><i></i></div>
+            <div class="stat" id="mc-stat">
+              <b>idle</b> · last run 95.41% · 95% CI ±0.06%
+            </div>
+          </div>
+
+          <div class="par-sheet">
+            <div class="par-sheet-head">
+              <span>PAR sheet · 12 sections</span>
+              <span class="stamp">PASS · UKGC / MGA / EU GA 2024</span>
+            </div>
+
+            <div class="par-sections">
+
+              <div class="par-section">
+                <h4>Identification <span class="num">01</span></h4>
+                <div class="par-kv"><span class="k">build id</span><span class="v">TL-0.3.0</span></div>
+                <div class="par-kv"><span class="k">irhash</span><span class="v">9F2E1B…AC04</span></div>
+                <div class="par-kv"><span class="k">engine</span><span class="v">sme/77</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>RTP & moments <span class="num">02</span></h4>
+                <div class="par-kv"><span class="k">RTP (closed)</span><span class="v">95.421 %</span></div>
+                <div class="par-kv"><span class="k">RTP (MC)</span><span class="v">95.408 %</span></div>
+                <div class="par-kv"><span class="k">σ</span><span class="v">8.41</span></div>
+                <div class="par-kv"><span class="k">skew</span><span class="v">+12.7</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Hit frequency <span class="num">03</span></h4>
+                <div class="par-kv"><span class="k">overall</span><span class="v">27.83 %</span></div>
+                <div class="par-kv"><span class="k">base</span><span class="v">26.10 %</span></div>
+                <div class="par-kv"><span class="k">feature</span><span class="v">1.73 %</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Volatility band <span class="num">04</span></h4>
+                <div class="par-kv"><span class="k">category</span><span class="v">MID</span></div>
+                <div class="par-kv"><span class="k">VI (gov.tw)</span><span class="v">11.6</span></div>
+                <div class="par-kv"><span class="k">SD / bet</span><span class="v">8.41×</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Win quantiles <span class="num">05</span></h4>
+                <div class="par-kv"><span class="k">P50</span><span class="v">0.00×</span></div>
+                <div class="par-kv"><span class="k">P90</span><span class="v">2.10×</span></div>
+                <div class="par-kv"><span class="k">P99</span><span class="v">38.5×</span></div>
+                <div class="par-kv"><span class="k">P99.9</span><span class="v">220×</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Max exposure <span class="num">06</span></h4>
+                <div class="par-kv"><span class="k">cap</span><span class="v">2 145×</span></div>
+                <div class="par-kv"><span class="k">hit prob.</span><span class="v">1 : 3.4M</span></div>
+                <div class="par-kv"><span class="k">tail mass</span><span class="v">2.1e-7</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Paylines <span class="num">07</span></h4>
+                <div class="par-kv"><span class="k">count</span><span class="v">20</span></div>
+                <div class="par-kv"><span class="k">direction</span><span class="v">L→R</span></div>
+                <div class="par-kv"><span class="k">scatter pays</span><span class="v">anywhere</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Feature mix <span class="num">08</span></h4>
+                <div class="par-kv"><span class="k">free spins</span><span class="v">42.1 % of RTP</span></div>
+                <div class="par-kv"><span class="k">wild expand</span><span class="v">11.4 %</span></div>
+                <div class="par-kv"><span class="k">base</span><span class="v">46.5 %</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Player-cycle <span class="num">09</span></h4>
+                <div class="par-kv"><span class="k">spins / hr</span><span class="v">600</span></div>
+                <div class="par-kv"><span class="k">avg session</span><span class="v">28 min</span></div>
+                <div class="par-kv"><span class="k">bust prob.</span><span class="v">3.2 %</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>RNG attest. <span class="num">10</span></h4>
+                <div class="par-kv"><span class="k">source</span><span class="v">xoshiro256**</span></div>
+                <div class="par-kv"><span class="k">period</span><span class="v">2²⁵⁶ − 1</span></div>
+                <div class="par-kv"><span class="k">testu01</span><span class="v">PASS</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Convergence <span class="num">11</span></h4>
+                <div class="par-kv"><span class="k">runs</span><span class="v">100 000</span></div>
+                <div class="par-kv"><span class="k">CI 95%</span><span class="v">±0.06 %</span></div>
+                <div class="par-kv"><span class="k">closed vs MC Δ</span><span class="v">0.013 %</span></div>
+              </div>
+
+              <div class="par-section">
+                <h4>Audit trail <span class="num">12</span></h4>
+                <div class="par-kv"><span class="k">SBOM</span><span class="v">cyclonedx 1.5</span></div>
+                <div class="par-kv"><span class="k">signature</span><span class="v">ed25519</span></div>
+                <div class="par-kv"><span class="k">notarised</span><span class="v">14:02 UTC</span></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <aside class="cert-side">
+          <h3 class="section-title">Jurisdictions</h3>
+
+          <div class="juris" id="juris">
+            <div class="juris-chip on" data-juris="ukgc">
+              <div class="nm"><b>UKGC</b><small>UK Gambling Commission · RTS 7A</small></div>
+              <div class="check"></div>
+            </div>
+            <div class="juris-chip on" data-juris="mga">
+              <div class="nm"><b>MGA</b><small>Malta · DOI/SR 06</small></div>
+              <div class="check"></div>
+            </div>
+            <div class="juris-chip" data-juris="adm">
+              <div class="nm"><b>ADM</b><small>Italy · D.D. 39 / 2011</small></div>
+              <div class="check"></div>
+            </div>
+            <div class="juris-chip on" data-juris="ecogra">
+              <div class="nm"><b>eCOGRA</b><small>Generally Accepted Practices</small></div>
+              <div class="check"></div>
+            </div>
+            <div class="juris-chip on" data-juris="eu-ga">
+              <div class="nm"><b>EU GA 2024</b><small>Gambling Act harmonised</small></div>
+              <div class="check"></div>
+            </div>
+          </div>
+
+          <button class="btn-package" id="btn-package">
+            Download package
+            <span class="filename">operator-package.zip</span>
+          </button>
+
+          <p class="cert-note">
+            Package bundles signed PAR sheet, deterministic replay manifest, RNG attestation, SBOM, and per-jurisdiction adapters. All artefacts are content-addressed and reproducible from <code style="font-family:var(--font-mono)">irhash 9F2E1B…AC04</code>.
+          </p>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============= STATUS BAR ============= -->
+  <footer class="statusbar">
+    <span><span class="dot"></span>engine · online</span>
+    <span class="sep">|</span>
+    <span>solver pool · <b style="color:var(--text)">77 active</b></span>
+    <span class="sep">|</span>
+    <span>last recompute · <span id="status-time">1.4 ms</span></span>
+    <span class="sep">|</span>
+    <span>RTP drift vs target · <span id="status-drift">−0.58 pp</span></span>
+    <span style="margin-left:auto">Slot Math Studio · build 0.3.0 · © 2026</span>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

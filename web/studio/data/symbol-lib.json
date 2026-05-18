@@ -1,0 +1,57 @@
+{
+  "schema": "symbol-library-v4-final",
+  "generated": "2026-05-18",
+  "total": 40,
+  "categories": ["geometric", "abstract", "symbolic", "special"],
+  "stylebook": {
+    "viewBox": "0 0 64 64",
+    "stroke_width": 1.75,
+    "fill": "none",
+    "stroke_color": "currentColor (cyan #22D3EE)"
+  },
+  "icons": [
+    { "id": "triangle", "name": "Triangle", "category": "geometric" },
+    { "id": "square",   "name": "Square",   "category": "geometric" },
+    { "id": "pentagon", "name": "Pentagon", "category": "geometric" },
+    { "id": "hexagon",  "name": "Hexagon",  "category": "geometric" },
+    { "id": "octagon",  "name": "Octagon",  "category": "geometric" },
+    { "id": "circle",   "name": "Circle",   "category": "geometric" },
+    { "id": "diamond",  "name": "Diamond",  "category": "geometric" },
+    { "id": "star5",    "name": "Star 5pt", "category": "geometric" },
+    { "id": "star6",    "name": "Star 6pt", "category": "geometric" },
+    { "id": "chevron",  "name": "Chevron",  "category": "geometric" },
+
+    { "id": "spiral",   "name": "Spiral",   "category": "abstract" },
+    { "id": "wave",     "name": "Wave",     "category": "abstract" },
+    { "id": "knot",     "name": "Knot",     "category": "abstract" },
+    { "id": "lattice",  "name": "Lattice",  "category": "abstract" },
+    { "id": "prism",    "name": "Prism",    "category": "abstract" },
+    { "id": "shard",    "name": "Shard",    "category": "abstract" },
+    { "id": "crystal",  "name": "Crystal",  "category": "abstract" },
+    { "id": "vortex",   "name": "Vortex",   "category": "abstract" },
+    { "id": "sigil",    "name": "Sigil",    "category": "abstract" },
+    { "id": "orbit",    "name": "Orbit",    "category": "abstract" },
+
+    { "id": "pebble",   "name": "Pebble",   "category": "symbolic" },
+    { "id": "obelisk",  "name": "Obelisk",  "category": "symbolic" },
+    { "id": "keystone", "name": "Keystone", "category": "symbolic" },
+    { "id": "anchor",   "name": "Anchor",   "category": "symbolic" },
+    { "id": "key",      "name": "Key",      "category": "symbolic" },
+    { "id": "gear",     "name": "Gear",     "category": "symbolic" },
+    { "id": "flame",    "name": "Flame",    "category": "symbolic" },
+    { "id": "leaf",     "name": "Leaf",     "category": "symbolic" },
+    { "id": "mountain", "name": "Mountain", "category": "symbolic" },
+    { "id": "sun",      "name": "Sun",      "category": "symbolic" },
+    { "id": "moon",     "name": "Moon",     "category": "symbolic" },
+    { "id": "eye",      "name": "Eye",      "category": "symbolic" },
+
+    { "id": "wild",     "name": "Wild",     "category": "special" },
+    { "id": "scatter",  "name": "Scatter",  "category": "special" },
+    { "id": "bonus",    "name": "Bonus",    "category": "special" },
+    { "id": "mult",     "name": "Multiplier","category": "special" },
+    { "id": "drop",     "name": "Drop",     "category": "special" },
+    { "id": "arrow",    "name": "Arrow",    "category": "special" },
+    { "id": "arc",      "name": "Arc",      "category": "special" },
+    { "id": "sonar",    "name": "Sonar",    "category": "special" }
+  ]
+}

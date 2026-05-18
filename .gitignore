@@ -59,3 +59,7 @@ reports/acceptance/cert-daily/
 # CROSS_PLATFORM_GOLDEN.json. Tracking the transient report would create
 # diff noise on every developer run.
 reports/parity/CROSS_PLATFORM_RNG_PARITY.json
+
+# ─── Web/studio production app (Vite + TS) ─────────────────────
+web/studio/node_modules/
+web/studio/package-lock.json

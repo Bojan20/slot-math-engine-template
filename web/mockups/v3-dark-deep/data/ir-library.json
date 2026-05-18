@@ -1,0 +1,120 @@
+{
+  "version": "v3-dark-deep · 2026-05-18",
+  "tree": [
+    {
+      "label": "Workspaces",
+      "type": "section",
+      "children": [
+        { "label": "Lava Falls",   "type": "workspace", "id": "wsA", "ir": "lava-falls-v0.4.12",   "active": true  },
+        { "label": "Pearl Dive",   "type": "workspace", "id": "wsB", "ir": "pearl-dive-v0.2.05",   "active": false },
+        { "label": "Solar Path",   "type": "workspace", "id": "wsC", "ir": "solar-path-v0.1.18",   "active": false }
+      ]
+    },
+    {
+      "label": "IR Library",
+      "type": "section",
+      "children": [
+        {
+          "label": "5×3 classic",
+          "type": "folder",
+          "children": [
+            { "label": "5x3-20lines.ir",       "type": "ir", "topology": "rect"   },
+            { "label": "5x3-50lines.ir",       "type": "ir", "topology": "rect"   },
+            { "label": "5x3-243ways.ir",       "type": "ir", "topology": "rect"   },
+            { "label": "5x3-classic-hold.ir",  "type": "ir", "topology": "rect"   }
+          ]
+        },
+        {
+          "label": "6×4 + Megaways",
+          "type": "folder",
+          "children": [
+            { "label": "6x4-4096ways.ir",      "type": "ir", "topology": "rect"   },
+            { "label": "megaways-117649.ir",   "type": "ir", "topology": "var"    },
+            { "label": "megaways-bank.ir",     "type": "ir", "topology": "var"    }
+          ]
+        },
+        {
+          "label": "7×7 cluster",
+          "type": "folder",
+          "children": [
+            { "label": "cluster-7x7-base.ir",   "type": "ir", "topology": "cluster" },
+            { "label": "cluster-7x7-cascade.ir","type": "ir", "topology": "cluster" },
+            { "label": "cluster-variable.ir",   "type": "ir", "topology": "cluster_var" }
+          ]
+        },
+        {
+          "label": "Cascade",
+          "type": "folder",
+          "children": [
+            { "label": "cascade-5x4.ir",       "type": "ir", "topology": "rect" },
+            { "label": "cascade-cluster.ir",   "type": "ir", "topology": "cluster" }
+          ]
+        },
+        {
+          "label": "Hold & Win",
+          "type": "folder",
+          "children": [
+            { "label": "hnw-markov-21x4.ir",   "type": "ir", "topology": "rect" },
+            { "label": "hnw-multipot.ir",      "type": "ir", "topology": "rect" }
+          ]
+        },
+        {
+          "label": "Free Spins",
+          "type": "folder",
+          "children": [
+            { "label": "fs-cascade-v3.ir",     "type": "ir", "topology": "rect" },
+            { "label": "fs-multiplier-seq.ir", "type": "ir", "topology": "rect" }
+          ]
+        },
+        {
+          "label": "Hexagonal",
+          "type": "folder",
+          "children": [
+            { "label": "hex-honeycomb-6.ir",   "type": "ir", "topology": "hex" }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "L&W Templates",
+      "type": "section",
+      "children": [
+        { "label": "M1 · Dragon Spin CrossLink",       "type": "tmpl", "supplier": "L&W", "wave": "W181" },
+        { "label": "M2 · Huff N' Puff frame-upgrade",  "type": "tmpl", "supplier": "L&W", "wave": "W182" },
+        { "label": "M3 · Ultimate Fire Link",          "type": "tmpl", "supplier": "L&W", "wave": "W183" },
+        { "label": "M4 · Dancing Drums Explosion",     "type": "tmpl", "supplier": "L&W", "wave": "W184" },
+        { "label": "M5 · Quick Hit mystery",           "type": "tmpl", "supplier": "L&W", "wave": "W185" },
+        { "label": "M6 · Triple Cash Wheel",           "type": "tmpl", "supplier": "Bally", "wave": "W196" },
+        { "label": "M7 · Spartacus Colossal",          "type": "tmpl", "supplier": "WMS", "wave": "W187" },
+        { "label": "M8 · Goldfish Race",               "type": "tmpl", "supplier": "WMS", "wave": "W188" },
+        { "label": "M9 · Big Bet UK package",          "type": "tmpl", "supplier": "L&W", "wave": "W189" },
+        { "label": "M10 · RR Megaways Bonus Bank",     "type": "tmpl", "supplier": "Red Tiger", "wave": "W190" },
+        { "label": "M11 · Player-elects Compose",      "type": "tmpl", "supplier": "L&W", "wave": "W191" },
+        { "label": "M12 · Munchkinland inject",        "type": "tmpl", "supplier": "WMS", "wave": "W192" },
+        { "label": "M13 · WOZ Yellow-Brick reshape",   "type": "tmpl", "supplier": "WMS", "wave": "W195" },
+        { "label": "M14 · LOTR Two Towers nested",     "type": "tmpl", "supplier": "L&W", "wave": "W193" },
+        { "label": "M15 · Rich Little Piggies pots",   "type": "tmpl", "supplier": "WMS", "wave": "W194" },
+        { "label": "M16 · Stellar Jackpots wrap",      "type": "tmpl", "supplier": "Lightning Box", "wave": "W194" }
+      ]
+    },
+    {
+      "label": "Recent Files",
+      "type": "section",
+      "children": [
+        { "label": "tide-lattice-v0.3.77",     "type": "recent", "when": "14m ago" },
+        { "label": "cascade-cluster.ir",       "type": "recent", "when": "1h ago"  },
+        { "label": "hnw-markov-21x4.ir",       "type": "recent", "when": "yesterday" },
+        { "label": "fs-cascade-v3.ir",         "type": "recent", "when": "2d ago"  }
+      ]
+    },
+    {
+      "label": "Pinned",
+      "type": "section",
+      "children": [
+        { "label": "★ Lava Falls (master)",    "type": "pinned" },
+        { "label": "★ 5x3-classic-hold.ir",    "type": "pinned" },
+        { "label": "★ M6 Triple Cash Wheel",   "type": "pinned" }
+      ]
+    }
+  ]
+}

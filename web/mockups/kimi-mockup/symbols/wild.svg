@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Wild">
+  <rect x="6" y="6" width="52" height="52" rx="6" fill="#14161b" stroke="#14161b" stroke-width="1.4"/>
+  <path d="M14 22 L 22 22 L 32 36 L 42 22 L 50 22 L 38 42 L 50 42 L 50 50 L 32 50 L 32 44 L 14 50 L 14 42 L 26 42 Z" fill="#f6f3ec"/>
+  <circle cx="32" cy="14" r="2" fill="#c97a3a"/>
+</svg>
