@@ -481,6 +481,168 @@ Mapa "commit → faza":
 
 ---
 
+### 🦴 FAZA 200.0 — WALKING SKELETON MVP (Vertical Slice) — *(3-4 nedelje, **MUST-FIRST** ⚠️→❌, PRECONDITION za sve 200.x)*
+
+> **Strateška odluka (Boki, 2026-05-18)**: Pre nego što krenemo da gradimo bilo koju 200.X fazu u širinu, **pravi se TANAK end-to-end slice** kroz ceo stack — math → builder UI → renderer → cert export — za **JEDNU JEDNOSTAVNU IGRU**. Tek kad slice radi end-to-end, WIDEN-uje se feature-by-feature.
+>
+> **Zašto NE "math first"**: math je već 95% gotov (77 solvera, 100% L&W coverage). Dalji solver work bez UI/renderer feedback-a = mrtav kod.
+>
+> **Zašto NE "sve odjednom big-bang"**: 8-12 meseci bez funkcionalnog demoa. Bug u math-u otkriće se tek na samom kraju. Praktično najgori pristup za commercial timeline.
+>
+> **Walking skeleton answer**: 3-4 nedelje do **first live demo** — "drop config → vidi slot mašinu kako se vrti → izvuci operator-package.zip". Posle toga svaki novi feature ide end-to-end kroz ceo stack u jednom wave-u.
+>
+> **Target slice**: **klasik 5×3 grid, 20 paylines, 3-of-a-kind paytable, no features** — minimal viable game. Cilj nije lepota nego dokaz da pipeline radi.
+>
+> **Test strategija (kontinuirano, NE na kraju)**:
+> - Math layer: 5351 vitest spec + portfolio + acceptance — već postoji, samo održavanje
+> - Builder layer: Playwright e2e + unit testovi po komponenti (svaki commit)
+> - Renderer layer: visual regression (Percy/Chromatic) + 60fps frame-rate budget guard
+> - End-to-end: 1 reference IR → builder import → renderer spin → cert export → SVE u jednom test pipe-u
+
+---
+
+#### 200.0.1 — W197 STUDIO BUILDER UI SKELETON ❌ *(3-5 dana, prvi sprint walking-skeleton-a)*
+
+**Cilj**: Designer u browser-u napravi 5×3 igru kroz UI (bez JSON editora) i dobije live RTP estimate.
+
+**Što već postoji** (build-on): `web/studio.html` + `web/studio.js` (W152 Wave 26 imali Export/Import IR JSON + live spin preview).
+
+**Nova implementacija**:
+- **Reel editor komponenta** (`web/components/ReelEditor.{html,js,css}`) — vizuelna kolona po reel-u, drag-drop iz palette, klik-edit weight (0-100), real-time validation (reel coverage ≥ 95%)
+- **Symbol palette komponenta** (`web/components/SymbolPalette.{html,js,css}`) — 11 predefined slot simbola sa SVG ikonicama (9-10-J-Q-K-A high cards + 4 theme symbols + 1 WILD + 1 SCATTER), drag handler za reel cells
+- **Paytable grid komponenta** (`web/components/PaytableGrid.{html,js,css}`) — sve simbole × {3-of, 4-of, 5-of} sa numeric input, color-coded by tier (high/mid/low), auto-sum validation
+- **Topology selector** (`web/components/TopologySelector.{html,js}`) — drop-down: 3×3 / 5×3 / 5×4 / 6×4 / 7×7 (uses postojeće `tests/fixtures/reference/*.json` kao defaults)
+- **"Compute RTP" dugme** — debounced 100ms na svaki edit, poziva `src/calculator/rtpCalculator.ts` na in-memory IR object, prikazuje rezultat u side panel-u
+- **Live PAR panel** (`web/components/LivePAR.{html,js,css}`) — RTP %, hit frequency %, per-symbol contribution chart (D3 ili Chart.js), volatility category (LOW/MED/HIGH bar)
+- **IR Export dugme** — emits canonical JSON sa Merkle root (postojeće `src/cert/`)
+- **IR Import dugme** — drop JSON file → populate sve komponente (round-trip test)
+
+**QA gates W197**:
+- ✅ Playwright e2e: "create 5×3 game from scratch, set 20 paylines, fill paytable, see RTP within 5s"
+- ✅ Vitest unit: svaka komponenta 15-20 specs (input validation, state mutation, edge cases)
+- ✅ Round-trip test: import `tests/fixtures/reference/5x3-20lines.json` → UI → re-export → byte-identical sa original
+- ✅ Visual regression: 6 baseline screenshots (empty / loaded / RTP computed / paytable edit / topology switch / IR export modal)
+- ✅ Performance: full RTP recompute < 100ms na M3 Pro za 5×3 grid
+- ✅ TS lint + build clean / 0 regresija na 5351 postojećih vitest specs
+
+**Commit + pin posle W197** (Cortex policy: nikad ne preskačemo).
+
+---
+
+#### 200.0.2 — W198 WEBGL RENDERER MINIMAL ❌ *(5-7 dana, drugi sprint walking-skeleton-a)*
+
+**Cilj**: Builder IR JSON → slot mašina koja se VRTI u browser-u sa spin animacijom + win line draw. Bez audio, bez bonus, bez features.
+
+**Tech stack**:
+- **Pixi.js v8** (lightweight WebGL 2.0, dobar developer ergo za sprite-based slot mašine, manji bundle od Phaser)
+- Alternative considered: Phaser 3 (preteška za slot use case), raw WebGL (preskup engineering za walking skeleton)
+- Pixi.js zaključno bere ako benchmark @ 60fps fails na low-end Chromebook
+
+**Nova implementacija**:
+- **Renderer paket** (`web/renderer/`):
+  - `Renderer.ts` — bootstrap (Pixi.Application, stage setup, asset loader)
+  - `ReelStrip.ts` — vertical scroll reel sa acceleration → steady → deceleration kinematics
+  - `SymbolSprite.ts` — symbol tile sa idle/blur/win animacijama (3-frame minimal)
+  - `WinLineRenderer.ts` — draw paylines on win (animated dash, fade-in/out, per-line color)
+  - `SpinController.ts` — orchestrates 5 reels (sequential stop sa 100-200ms delay, anticipation pause na near-win)
+  - `IRToRendererAdapter.ts` — IR JSON → renderer config (reel strips → symbol sequences, paytable → win mapping)
+- **Symbol asset pack** (`web/assets/symbols/`):
+  - 11 SVG ikonice (originalni layout, theme: classic Vegas neon → 9/10/J/Q/K/A + 4 theme fruits/jewels + WILD + SCATTER)
+  - SVG → PNG @ 128×128 + 256×256 (retina) atlas via build script
+  - Audio placeholder (silent .ogg sa proper duration tags, audio ide u W199+)
+- **Spin lifecycle**:
+  1. Player klikne "SPIN" → controller poziva `src/engine/spin.ts` sa current IR
+  2. Engine returns spin result (stop positions per reel + win lines)
+  3. Renderer animates reel spin (1.5-2.5s total, sequential stops sa anticipation)
+  4. Win lines draw 1.5s posle final reel stop
+  5. Spin again ready
+
+**QA gates W198**:
+- ✅ Playwright e2e: "load 5×3-20lines IR → click spin → reels spin → final position matches engine.spin() result"
+- ✅ Frame-rate budget: stable 60fps na M3 Pro + 30fps minimum na throttled Chromebook (CPU 4× slowdown)
+- ✅ Visual regression: 10 baseline frames (idle / spinning t=0/0.5/1.0/1.5s / stopped / win-line-1 / win-line-2 / win-all / fade-out)
+- ✅ Deterministic spin test: same seed → identical visual outcome (frame hash compare)
+- ✅ Asset loader: 11 SVG sprites < 500ms total load on cold cache
+- ✅ Bundle size: full renderer + assets < 800KB gzipped
+- ✅ Memory: no leaks across 100 consecutive spins (Chrome DevTools snapshot diff)
+
+**Commit + pin posle W198**.
+
+---
+
+#### 200.0.3 — W199 END-TO-END INTEGRATION + CERT EXPORT ❌ *(3-5 dana, treći sprint walking-skeleton-a)*
+
+**Cilj**: Builder → Renderer → Cert export, sve u jednoj live demo sesiji. "Designer otvori studio, napravi igru, pusti spin, exportuje regulator package."
+
+**Nova implementacija**:
+- **Unified Studio app** (`web/studio.html` refactor) — single-page app sa 3 tab-a:
+  - **Tab 1: BUILD** (W197 reel editor + paytable + topology + live PAR)
+  - **Tab 2: PLAY** (W198 renderer sa "SPIN" / "AUTOPLAY 10" dugmićima, credit balance, bet selector, spin history log)
+  - **Tab 3: CERTIFY** (Monte Carlo runner + cert pipeline)
+- **MC trigger button** u Tab 3 — pokreće `npm run sim -- --config <IR>` preko webworker (ili WASM build Rust simulator-a za client-side MC) na 100K-1M spinova, progress bar + ETA
+- **PAR Sheet preview** posle MC — 12 GLI-16 sekcija u tabovima (RTP / hit freq / volatility / quantiles / moments / bonus distances / required spins / compliance)
+- **Operator package export** — klik "Download operator-package.zip" poziva `scripts/operator-package.sh` (postojeći) i serves bundle iz browser-a
+- **Jurisdiction picker** u export modalu — UKGC / MGA / ADM / eCOGRA / EU GA 2024 → emits jurisdiction-specific overlay u package
+- **Cross-tab state sync** — IR object u jedinstvenom store-u (Zustand ili plain reactive proxy), nikad ne gubi rad između tabova
+
+**QA gates W199**:
+- ✅ Playwright e2e SCENARIO 1 (the demo): "Build 5×3-20-lines from blank → spin 5 times u Play tab-u → run 100K MC → export operator-package.zip → unzip → manifest contains PAR + IR + Merkle + jurisdiction overlay"
+- ✅ Playwright e2e SCENARIO 2 (round-trip): "Import existing hnw-classic.json → all 3 tabs populate correctly → spin renders H&W placeholder (no animation yet, just text overlay) → export → re-import → byte-identical"
+- ✅ Vitest e2e: full pipeline `IR → calculator → MC simulator → PAR → operator-package` u jednom test fajlu
+- ✅ Performance: tab switch < 50ms, MC 100K spins < 3s na M3 Pro
+- ✅ Operator package SHA-256 manifest: 100% match sa `scripts/operator-package.sh` reference output
+
+**Commit + pin posle W199**.
+
+---
+
+#### 200.0.4 — W200 🏆 DEMO-READY MILESTONE + DOCUMENTATION ❌ *(2-3 dana, walking-skeleton closure)*
+
+**Cilj**: Walking skeleton je polished, demo-ready, sa video walkthrough + sales pitch.
+
+**Nova implementacija**:
+- **Polish pass** — UX cleanup, error messages, loading states, empty states (sve sa kojima C-level demo može razbiti)
+- **Demo script** (`scripts/walking-skeleton-demo.mjs`) — automated 3-minute live demo: open studio → build game → spin → MC → export, sa narration prompts za prezentera
+- **Video walkthrough** — capture 3-min screen recording (Loom / Quicktime), upload u `docs/demos/walking-skeleton-3min.mp4` ili shareable link
+- **C-level pitch v2** (`docs/COMMERCIAL_PITCH_v2.md`) — update sa screenshot-ima walking skeleton-a, before/after vs W196 ("imali smo math, sad imamo platform")
+- **Master TODO update** — W200 milestone row + Faza 200.0 ✅ flip + sledećih waveova roadmap (W201+ = Faza 200.1 Math Studio expansion / 200.2 Symbol Pipeline / 200.3 Runtime Engine — paralelno)
+
+**QA gates W200**:
+- ✅ End-to-end demo runs < 3 minuta on first-time user (Boki ili tester)
+- ✅ Demo video uploaded i playable
+- ✅ COMMERCIAL_PITCH_v2.md sa screenshot-ima
+- ✅ Master TODO Faza 200.0 ✅ flipped, W197-W200 commit history dodat u tabelu
+- ✅ Sve W197-W200 commits + pins linked u TODO
+
+**Commit + pin posle W200**.
+
+---
+
+#### 🎯 Walking Skeleton Acceptance Criteria (kompletna 200.0 faza)
+
+Da bi Faza 200.0 bila ✅ označena, mora sve:
+1. ✅ Designer otvori `web/studio.html` u browser-u (Chrome 120+ / Firefox 119+ / Safari 17+)
+2. ✅ Kreira 5×3 20-lines igru kroz UI **bez ijednog JSON kucanja**
+3. ✅ Live vidi RTP / hit freq / volatility dok edituje paytable
+4. ✅ Klikne "Play" tab → vidi reel mašinu **kako se VRTI sa win lines**
+5. ✅ Klikne "Certify" tab → run 100K MC → vidi PAR Sheet
+6. ✅ Exportuje `operator-package.zip` sa UKGC overlay
+7. ✅ Round-trip test: re-import zip → identičan IR → identičan PAR
+8. ✅ 0 regresija na 5351 postojećih vitest spec
+9. ✅ TS lint + build + cargo clippy strict clean
+10. ✅ Playwright e2e green (3 scenarios pass)
+11. ✅ Visual regression baseline approved
+12. ✅ Demo video < 3 minuta uploaded
+13. ✅ Sve W197-W200 commits + pins u master TODO
+
+#### Posle W200 — paralelni WIDEN
+
+Walking skeleton dovršen → krećemo sa **paralelnim WIDEN** kroz Faze 200.1+ (Math Studio dubina) / 200.2 (Symbol Pipeline) / 200.3 (Runtime Engine bonus features). Svaki novi feature **MORA da prođe kroz ceo end-to-end stack u istom wave-u** — nikad više solver-only ili UI-only commits.
+
+**Total Faza 200.0**: ~3-4 nedelje od W196 do W200 demo-ready milestone. **Output**: "drop config → vidi slot mašinu kako se vrti → izvuci regulator-ready cert paket" — live demoable any time, prodaje L&W C-level u 3 minuta.
+
+---
+
 ### 🎨 FAZA 200.1 — MATH STUDIO (Designer UX) — *(4-6 nedelja, **CRITICAL** ⚠️→❌)*
 
 **Mission**: game designer (math person) sedne za laptop, drag-drop iz catalog 97 P-IDs, vidi RTP/variance/percentile live, exportuje IR JSON. Bez teksta-editora.
@@ -772,8 +934,9 @@ Mapa "commit → faza":
 
 | Order | Phase | Effort | Why first |
 |---|---|---|---|
-| 1 | **200.1 Math Studio** | 4-6 wk | Game designers need GUI — this is "Wave 200 vs Wave 196" jump |
-| 2 | **200.3 Runtime Engine** | 6-8 wk | Bez runtime-a, sve je samo math (mathematicians convinced; players need game) |
+| **0** | **🦴 200.0 Walking Skeleton MVP** | **3-4 wk** | **PRECONDITION — thin end-to-end slice (math→builder→renderer→cert). Bez ovoga ostatak je waterfall hell.** |
+| 1 | **200.1 Math Studio** | 4-6 wk | WIDEN posle skeleton-a — node-based editor, sweep, templates |
+| 2 | **200.3 Runtime Engine** | 6-8 wk | WIDEN renderer iz skeleton-a — bonus features, FS, H&W animacije |
 | 3 | **200.4 Backend Platform** | 5-7 wk | Real-money requires server-side authority + wallet integration |
 | 4 | **200.2 Symbol/Art Pipeline** | 3-4 wk | Art team može da radi paralelno sa 200.3 |
 | 5 | **200.5 Operator/Regulator** | 4-5 wk | First live deployment requires operator tools |
@@ -781,7 +944,7 @@ Mapa "commit → faza":
 | 7 | **200.7 Marketplace** | 4-5 wk | Strategic moat — pretvori platform u ekosistem |
 | 8 | **200.8 Production Studio** | 8-12 wk | L&W acquisition trigger ili direct competitor stance |
 
-**Total**: 37-51 nedelja od W196 do **full app live** (8-12 meseci sa team od 5-10 ljudi).
+**Total**: **40-55 nedelja** od W196 do **full app live** (8-13 meseci sa team od 5-10 ljudi). Walking skeleton (200.0) dodaje 3-4 nedelje na originalnu procenu ali **DRASTIČNO smanjuje rizik** — bug discovery i UX validacija kontinuirano, ne na kraju.
 
 ## 🏆 OUTCOME TARGET (godina 1 post-W196)
 
