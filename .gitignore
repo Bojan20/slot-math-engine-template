@@ -84,6 +84,11 @@ web/cabinet/node_modules/
 sdk/node_modules/
 sdk/dist/
 
+# ─── W215 marketing site (analytics + blog + case-studies) ─────────
+web/marketing/node_modules/
+web/marketing/package-lock.json
+dist/marketing/
+
 # ─── W205-PITCH investor deck mini-app ─────────
 web/pitch/node_modules/
 web/pitch/package-lock.json
