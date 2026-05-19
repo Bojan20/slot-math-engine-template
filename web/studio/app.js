@@ -1650,13 +1650,68 @@
   // Direct workspace seeder for canonical Studio-IR-1.0.0 JSON files.
   // Returns true on success; false signals the caller to fall back to the
   // narrative parser (e.g. for partial / malformed IRs).
-  function importCanonicalIR(ir, filename) {
+  // Stable identifier for a canonical IR — used to detect duplicate
+  // imports.  Falls back gracefully when meta.id / meta.version are absent.
+  function irKeyOf(ir) {
+    const meta = (ir && ir.meta) || {};
+    const id = meta.id || (meta.name || "imported-game").toLowerCase().replace(/\s+/g, "-");
+    const version = meta.version || "0.0.0";
+    return `${id}@${version}`;
+  }
+  function findWorkspaceByIrKey(key) {
+    for (const wsId of wsOrder) {
+      const ws = workspaces[wsId];
+      if (!ws) continue;
+      if (ws.irKey === key) return wsId;
+      // Legacy workspaces imported before this dedup logic existed —
+      // reconstruct the key from their persisted `irName` (id-vMAJOR.MINOR.PATCH).
+      if (!ws.irKey && typeof ws.irName === "string") {
+        const m = ws.irName.match(/^(.*)-v([0-9].*)$/);
+        if (m) {
+          const reconstructed = `${m[1]}@${m[2]}`;
+          if (reconstructed === key) {
+            ws.irKey = reconstructed; // upgrade in place
+            return wsId;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  function importCanonicalIR(ir, filename, opts) {
+    const options = opts || {};
     try {
       const meta = ir.meta || {};
       const topo = ir.topology || { reels: 5, rows: 3 };
       const layout = topo.reels === 6 ? "6x4mw"
                   : topo.reels === 7 ? "7x7c"
                   : "5x3";
+
+      // ── Dedup guard ────────────────────────────────────────────────
+      // If this exact game (id @ version) is already loaded, switch to
+      // it instead of creating yet another duplicate workspace.  The
+      // user can opt out via `opts.forceReimport === true` (wired to a
+      // "Re-import anyway" toast action).
+      const key = irKeyOf(ir);
+      if (!options.forceReimport) {
+        const existingId = findWorkspaceByIrKey(key);
+        if (existingId) {
+          switchWorkspace(existingId);
+          const existingName = workspaces[existingId].name || meta.name || "Game";
+          toast({
+            kind: "cyan",
+            msg: `<b>${existingName}</b> already loaded — switched to existing workspace`,
+            action: "Re-import anyway",
+            onAction: () => {
+              try { importCanonicalIR(ir, filename, { forceReimport: true }); } catch (_) {}
+            },
+            ttl: 6000,
+          });
+          logActivity(`IR import skipped (dedup) → ${existingName} · key=${key}`);
+          return true;
+        }
+      }
 
       // Map IR symbols → workspace symbol shape (id/name/tier/weight/icon/pay).
       // Weight is computed as the SUM of per-reel weights across all reels
@@ -1769,6 +1824,10 @@
       const ws = newWorkspace({
         id: wsId, name: wsName, theme: "cyan", layout, irName
       });
+      // Persist the dedup key so subsequent imports of the same IR find it.
+      ws.irKey = key;
+      ws.irMetaId = meta.id || null;
+      ws.irMetaVersion = meta.version || null;
       const v = ws.variants[ws.activeVariantId];
 
       // Seed math from IR
@@ -4685,8 +4744,52 @@
         for (const k of Object.keys(s.workspaces || {})) workspaces[k] = s.workspaces[k];
         wsOrder.length = 0;
         (s.wsOrder || []).forEach(id => wsOrder.push(id));
+
+        // ── One-time dedup migration ──────────────────────────────────
+        // Earlier builds let the user import the same IR multiple times,
+        // which produced N copies of the same workspace.  On boot, walk
+        // the restored set and collapse duplicates by irKey (or, for
+        // legacy workspaces written before irKey existed, by the
+        // `irName` string).  Keep the FIRST occurrence in wsOrder, drop
+        // the rest.  Blank workspaces (no symbols / no irKey) are
+        // exempt — they're real designer-built drafts.
+        const seenKeys = new Set();
+        const dropped = [];
+        const dedupedOrder = [];
+        for (const id of wsOrder) {
+          const ws = workspaces[id];
+          if (!ws) continue;
+          let key = ws.irKey;
+          if (!key && typeof ws.irName === "string") {
+            const m = ws.irName.match(/^(.*)-v([0-9].*)$/);
+            if (m) {
+              key = `${m[1]}@${m[2]}`;
+              ws.irKey = key; // upgrade legacy ws in place
+            }
+          }
+          // No key → treat as user-built (no duplicates possible); keep.
+          if (!key) { dedupedOrder.push(id); continue; }
+          if (seenKeys.has(key)) {
+            dropped.push({ id, key, name: ws.name });
+            delete workspaces[id];
+          } else {
+            seenKeys.add(key);
+            dedupedOrder.push(id);
+          }
+        }
+        wsOrder.length = 0;
+        dedupedOrder.forEach((id) => wsOrder.push(id));
+
         if (s.activeWorkspaceId && workspaces[s.activeWorkspaceId]) {
           activeWorkspaceId = s.activeWorkspaceId;
+        } else if (wsOrder.length > 0) {
+          // The previously-active workspace got deduped away — fall back
+          // to the first surviving one so the UI doesn't break.
+          activeWorkspaceId = wsOrder[0];
+        }
+        if (dropped.length > 0) {
+          console.log(`[studio] dedup migration: removed ${dropped.length} duplicate workspace(s)`,
+            dropped.map((d) => `${d.name} (${d.key})`).join(", "));
         }
         renderWorkspacePill();
         renderSidebarWorkspaces();
