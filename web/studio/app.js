@@ -2662,18 +2662,48 @@
   }
 
   /* ============================================================
-     BOTTOM PANEL
+     BOTTOM PANEL — Activity / MC progress / CI gates drawer
      ============================================================ */
+  const BOTTOM_PANEL_STORAGE_KEY = "studio.bottomPanel.open.v1";
+  function syncBottomToggleBtn() {
+    const bp = $("#bottom-panel");
+    const btn = document.querySelector("#btn-toggle-panel");
+    if (!bp || !btn) return;
+    const isOpen = !bp.hasAttribute("hidden");
+    btn.classList.toggle("is-active", isOpen);
+    btn.setAttribute("aria-pressed", isOpen ? "true" : "false");
+  }
   function toggleBottom() {
     const bp = $("#bottom-panel");
-    if (bp.hasAttribute("hidden")) { bp.removeAttribute("hidden"); refreshBottomActivity(); }
-    else bp.setAttribute("hidden", "");
+    if (!bp) return;
+    if (bp.hasAttribute("hidden")) {
+      bp.removeAttribute("hidden");
+      try { refreshBottomActivity(); } catch (_) {}
+      try { localStorage.setItem(BOTTOM_PANEL_STORAGE_KEY, "1"); } catch (_) {}
+    } else {
+      bp.setAttribute("hidden", "");
+      try { localStorage.setItem(BOTTOM_PANEL_STORAGE_KEY, "0"); } catch (_) {}
+    }
+    syncBottomToggleBtn();
   }
-  // NOTE: legacy #btn-toggle-bottom is in the status bar (Logs panel toggle).
-  // The header-r layout-toggle group uses #btn-toggle-status (see below).
+  // Restore persisted state on boot
+  try {
+    if (localStorage.getItem(BOTTOM_PANEL_STORAGE_KEY) === "1") {
+      const bp = $("#bottom-panel");
+      if (bp) bp.removeAttribute("hidden");
+    }
+  } catch (_) {}
+  syncBottomToggleBtn();
+
+  // Wire all open / close affordances:
+  //  - In-panel "×" close button (existed)
+  //  - Legacy #btn-toggle-bottom in status footer ("Logs · ⌘J" link, may be hidden)
+  //  - NEW #btn-toggle-panel in header-r layout-toggles group (always visible)
   $("#bp-close").addEventListener("click", toggleBottom);
   const legacyBottomBtn = document.querySelector("#btn-toggle-bottom");
   if (legacyBottomBtn) legacyBottomBtn.addEventListener("click", toggleBottom);
+  const headerPanelBtn = document.querySelector("#btn-toggle-panel");
+  if (headerPanelBtn) headerPanelBtn.addEventListener("click", toggleBottom);
 
   /* ============================================================
      LAYOUT TOGGLES — left sidebar / right rail / bottom (status) zone
