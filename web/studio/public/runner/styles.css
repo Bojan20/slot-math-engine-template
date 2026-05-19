@@ -1448,3 +1448,59 @@ body {
   .bottomBar__betDisplay { min-width: 60px; }
   .cell .cell-name { display: none; }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   WRATH-OF-OLYMPUS PORT — Batch 3 (payline overlay + intro modal logic)
+   ════════════════════════════════════════════════════════════════════════ */
+
+.payline-overlay {
+  position: absolute;
+  inset: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  pointer-events: none;
+  z-index: 3;
+}
+.payline-overlay .payline-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px currentColor);
+  stroke-dasharray: var(--len, 1000);
+  stroke-dashoffset: var(--len, 1000);
+  animation: paylineDraw 480ms cubic-bezier(.5,0,.2,1) forwards,
+             paylineFade 1800ms 480ms ease-out forwards;
+}
+@keyframes paylineDraw  { to { stroke-dashoffset: 0; } }
+@keyframes paylineFade  { 0%{opacity:1;}80%{opacity:0.85;}100%{opacity:0;} }
+
+/* Per-line color palette (cycles through 10 colors) */
+.payline-path.line-0  { color: #fde68a; stroke: #fde68a; stroke-width: 3.5px; }
+.payline-path.line-1  { color: #fda4af; stroke: #fda4af; stroke-width: 3.5px; }
+.payline-path.line-2  { color: #93c5fd; stroke: #93c5fd; stroke-width: 3.5px; }
+.payline-path.line-3  { color: #86efac; stroke: #86efac; stroke-width: 3.5px; }
+.payline-path.line-4  { color: #c4b5fd; stroke: #c4b5fd; stroke-width: 3.5px; }
+.payline-path.line-5  { color: #fcd34d; stroke: #fcd34d; stroke-width: 3.5px; }
+.payline-path.line-6  { color: #f472b6; stroke: #f472b6; stroke-width: 3.5px; }
+.payline-path.line-7  { color: #67e8f9; stroke: #67e8f9; stroke-width: 3.5px; }
+.payline-path.line-8  { color: #a3e635; stroke: #a3e635; stroke-width: 3.5px; }
+.payline-path.line-9  { color: #fb923c; stroke: #fb923c; stroke-width: 3.5px; }
+
+.payline-pin {
+  fill: currentColor;
+  stroke: rgba(7,9,15,0.85);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px currentColor);
+  opacity: 0;
+  animation: paylinePinPop 360ms 240ms cubic-bezier(.34,1.6,.4,1) forwards,
+             paylineFade 1800ms 1080ms ease-out forwards;
+}
+@keyframes paylinePinPop {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.25); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Intro modal — show/hide transitions hooked from JS */
+.introModal.is-fading-out .introModal__content { animation: introOut 280ms ease-in forwards; }
+@keyframes introOut { to { opacity: 0; transform: translateY(-12px); } }

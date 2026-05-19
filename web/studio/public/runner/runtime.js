@@ -566,6 +566,67 @@
         if (cell) cell.classList.add('is-scatter-win');
       }
     }
+    drawPaylines(result.lineWins);
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ Payline SVG overlay  (Wrath→Template Batch 3)                 ║
+  // ║ Draws one polyline per winning line through cell centres,      ║
+  // ║ animates stroke-dashoffset draw-in, then fades out.            ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  const paylineSvg = $('#paylineOverlay');
+  let paylineClearTimer = null;
+  function clearPaylines() {
+    if (paylineClearTimer) { clearTimeout(paylineClearTimer); paylineClearTimer = null; }
+    if (paylineSvg) paylineSvg.innerHTML = '';
+  }
+  function drawPaylines(lineWins) {
+    if (!paylineSvg || !lineWins || lineWins.length === 0) return;
+    clearPaylines();
+    // Use the reels-grid's bounding box for coordinate mapping
+    const grid = $('#reels-grid');
+    if (!grid) return;
+    const gridRect = grid.getBoundingClientRect();
+    const svgRect = paylineSvg.getBoundingClientRect();
+    // Configure viewBox to grid coordinates so paths use integer cell centres
+    const cellW = gridRect.width / REELS;
+    const cellH = gridRect.height / ROWS;
+    const offsetX = gridRect.left - svgRect.left;
+    const offsetY = gridRect.top - svgRect.top;
+    const w = svgRect.width;
+    const h = svgRect.height;
+    paylineSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    let html = '';
+    for (let i = 0; i < lineWins.length; i++) {
+      const lw = lineWins[i];
+      const colorIdx = lw.lineIdx % 10;
+      const cells = lw.cells || [];
+      if (cells.length < 2) continue;
+      const pts = cells.map((c) => {
+        const cx = offsetX + c.r * cellW + cellW / 2;
+        const cy = offsetY + c.y * cellH + cellH / 2;
+        return `${cx.toFixed(2)},${cy.toFixed(2)}`;
+      }).join(' ');
+      // Approximate path length for stroke-dasharray (poly length ≈ N×cellW + Y deltas)
+      const len = Math.round(cellW * (cells.length - 1) * 1.15);
+      // Stagger each line's draw start by 80ms so the player can follow them
+      const delay = i * 80;
+      html += `<polyline class="payline-path line-${colorIdx}" points="${pts}"
+                 style="--len:${len};animation-delay:${delay}ms,${delay + 480}ms"></polyline>`;
+      // Pin a small circle on each cell centre for emphasis
+      for (let k = 0; k < cells.length; k++) {
+        const c = cells[k];
+        const cx = offsetX + c.r * cellW + cellW / 2;
+        const cy = offsetY + c.y * cellH + cellH / 2;
+        const pinDelay = delay + 240 + k * 50;
+        html += `<circle class="payline-pin line-${colorIdx}" cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="6"
+                  style="animation-delay:${pinDelay}ms,${pinDelay + 840}ms"></circle>`;
+      }
+    }
+    paylineSvg.innerHTML = html;
+    // Auto-clear after the longest fade ends so the next spin starts clean
+    paylineClearTimer = setTimeout(clearPaylines, 480 + (lineWins.length - 1) * 80 + 1800);
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
@@ -985,6 +1046,7 @@
     spinBtn?.classList.add('is-spinning');
     setStatusText('SPINNING…');
     clearWinHighlights();
+    clearPaylines();
     hideWinBanner();
 
     state.balance -= bet;
@@ -1165,11 +1227,28 @@
   }
   function showIntroModal() {
     if (!introModalEl) return Promise.resolve();
+    // Honor "don't show again" preference if previously stored
+    try {
+      if (localStorage.getItem('mtl_runner_intro_dismissed') === '1') return Promise.resolve();
+    } catch (_) {}
     introModalEl.removeAttribute('hidden');
     introModalEl.setAttribute('aria-hidden', 'false');
     return new Promise((resolve) => {
       const t0 = performance.now();
       const totalMs = 1400;
+      const dontShowEl = $('#introDontShow');
+      function dismiss() {
+        try {
+          if (dontShowEl && dontShowEl.checked) localStorage.setItem('mtl_runner_intro_dismissed', '1');
+        } catch (_) {}
+        introModalEl.classList.add('is-fading-out');
+        setTimeout(() => {
+          introModalEl.classList.remove('is-fading-out');
+          introModalEl.setAttribute('hidden', '');
+          introModalEl.setAttribute('aria-hidden', 'true');
+          resolve();
+        }, 280);
+      }
       function tick(now) {
         const t = clamp((now - t0) / totalMs, 0, 1);
         const pct = Math.round(t * 100);
@@ -1179,11 +1258,14 @@
         if (t < 1) requestAnimationFrame(tick);
         else if (introContinueBtn) {
           introContinueBtn.disabled = false;
-          introContinueBtn.addEventListener('click', () => {
-            introModalEl.setAttribute('hidden', '');
-            introModalEl.setAttribute('aria-hidden', 'true');
-            resolve();
-          }, { once: true });
+          introContinueBtn.addEventListener('click', dismiss, { once: true });
+          // Allow Enter / Space to dismiss too — matches Wrath production UX
+          document.addEventListener('keydown', function escIntro(e) {
+            if (e.code === 'Enter' || e.code === 'Space') {
+              document.removeEventListener('keydown', escIntro);
+              dismiss();
+            }
+          });
         }
       }
       requestAnimationFrame(tick);

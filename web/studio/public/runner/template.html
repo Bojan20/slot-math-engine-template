@@ -124,6 +124,14 @@
             -->
             <div class="reels-grid" id="reels-grid" aria-label="Reels"></div>
 
+            <!--
+              Payline overlay — animated SVG drawn through winning-line cells.
+              Stroke is dashed and "drawn in" via stroke-dashoffset animation.
+              Multiple wins cycle one-at-a-time so the player can read each.
+            -->
+            <svg id="paylineOverlay" class="payline-overlay" aria-hidden="true"
+                 preserveAspectRatio="none" pointer-events="none"></svg>
+
             <!-- Win banner — floats above the reel grid -->
             <div class="win-banner" id="win-banner" hidden>
               <span class="wb-lbl">WIN</span>
