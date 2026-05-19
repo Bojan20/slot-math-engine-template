@@ -1,0 +1,270 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "AI_FAIRNESS_AUDIT",
+  "generated_utc": "2026-05-19T11:53:09.133Z",
+  "episodes_per_config": 500,
+  "seed": 3405644342,
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_fair_baseline",
+      "description": "UK fair baseline: small DP/EO/DI deviations",
+      "regime": "FAIR_BASELINE",
+      "cfg": {
+        "positiveRateGroupA": 0.3,
+        "positiveRateGroupB": 0.35,
+        "truePositiveRateA": 0.85,
+        "truePositiveRateB": 0.87,
+        "falsePositiveRateA": 0.1,
+        "falsePositiveRateB": 0.09,
+        "ppvGroupA": 0.75,
+        "ppvGroupB": 0.78,
+        "demographicParityTolerance": 0.1,
+        "equalizedOddsTolerance": 0.05,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": true,
+        "humanOversightEnabled": true
+      },
+      "closed_form": {
+        "demographicParityDifference": -0.04999999999999999,
+        "demographicParityAbs": 0.04999999999999999,
+        "equalizedOddsTprDiff": 0.020000000000000018,
+        "equalizedOddsFprDiff": 0.010000000000000009,
+        "disparateImpactRatio": 0.8571428571428572,
+        "predictiveParityDiff": 0.030000000000000027,
+        "equalOpportunityDiff": 0.020000000000000018,
+        "fairnessCompositeScore": 0.6714285714285714,
+        "passesDemographicParity": true,
+        "passesEqualizedOdds": true,
+        "passesDisparateImpact": true,
+        "isCompliantEuAiAct": true,
+        "isCompliantUkgcRts1211": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.05006599999999998,
+        "observedDisparateImpactMean": 0.8585584787402823
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "B_eu_perfect_fairness",
+      "description": "EU AI Act gold standard: zero deviations, full compliance",
+      "regime": "GOLD_STANDARD",
+      "cfg": {
+        "positiveRateGroupA": 0.3,
+        "positiveRateGroupB": 0.3,
+        "truePositiveRateA": 0.85,
+        "truePositiveRateB": 0.85,
+        "falsePositiveRateA": 0.1,
+        "falsePositiveRateB": 0.1,
+        "ppvGroupA": 0.78,
+        "ppvGroupB": 0.78,
+        "demographicParityTolerance": 0.1,
+        "equalizedOddsTolerance": 0.05,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": true,
+        "humanOversightEnabled": true
+      },
+      "closed_form": {
+        "demographicParityDifference": 0,
+        "demographicParityAbs": 0,
+        "equalizedOddsTprDiff": 0,
+        "equalizedOddsFprDiff": 0,
+        "disparateImpactRatio": 1,
+        "predictiveParityDiff": 0,
+        "equalOpportunityDiff": 0,
+        "fairnessCompositeScore": 1,
+        "passesDemographicParity": true,
+        "passesEqualizedOdds": true,
+        "passesDisparateImpact": true,
+        "isCompliantEuAiAct": true,
+        "isCompliantUkgcRts1211": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.0007040000000000006,
+        "observedDisparateImpactMean": 1.000089275191542
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "C_us_disparate_impact_failure",
+      "description": "US EEOC 4/5 rule failure: DI < 0.80",
+      "regime": "DI_FAILURE",
+      "cfg": {
+        "positiveRateGroupA": 0.15,
+        "positiveRateGroupB": 0.4,
+        "truePositiveRateA": 0.7,
+        "truePositiveRateB": 0.85,
+        "falsePositiveRateA": 0.08,
+        "falsePositiveRateB": 0.1,
+        "ppvGroupA": 0.65,
+        "ppvGroupB": 0.8,
+        "demographicParityTolerance": 0.1,
+        "equalizedOddsTolerance": 0.05,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": true,
+        "humanOversightEnabled": true
+      },
+      "closed_form": {
+        "demographicParityDifference": -0.25,
+        "demographicParityAbs": 0.25,
+        "equalizedOddsTprDiff": 0.15000000000000002,
+        "equalizedOddsFprDiff": 0.020000000000000004,
+        "disparateImpactRatio": 0.37499999999999994,
+        "predictiveParityDiff": 0.15000000000000002,
+        "equalOpportunityDiff": 0.15000000000000002,
+        "fairnessCompositeScore": 0.22499999999999998,
+        "passesDemographicParity": false,
+        "passesEqualizedOdds": false,
+        "passesDisparateImpact": false,
+        "isCompliantEuAiAct": false,
+        "isCompliantUkgcRts1211": false
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.2503659999999999,
+        "observedDisparateImpactMean": 0.3746932258579756
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "D_no_oversight_no_docs",
+      "description": "Corner: no documentation, no human oversight → EU AI Act fail",
+      "regime": "NO_OVERSIGHT",
+      "cfg": {
+        "positiveRateGroupA": 0.3,
+        "positiveRateGroupB": 0.32,
+        "truePositiveRateA": 0.85,
+        "truePositiveRateB": 0.86,
+        "falsePositiveRateA": 0.1,
+        "falsePositiveRateB": 0.1,
+        "ppvGroupA": 0.78,
+        "ppvGroupB": 0.79,
+        "demographicParityTolerance": 0.1,
+        "equalizedOddsTolerance": 0.05,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": false,
+        "humanOversightEnabled": false
+      },
+      "closed_form": {
+        "demographicParityDifference": -0.020000000000000018,
+        "demographicParityAbs": 0.020000000000000018,
+        "equalizedOddsTprDiff": 0.010000000000000009,
+        "equalizedOddsFprDiff": 0,
+        "disparateImpactRatio": 0.9375,
+        "predictiveParityDiff": 0.010000000000000009,
+        "equalOpportunityDiff": 0.010000000000000009,
+        "fairnessCompositeScore": 0.8775,
+        "passesDemographicParity": true,
+        "passesEqualizedOdds": true,
+        "passesDisparateImpact": true,
+        "isCompliantEuAiAct": false,
+        "isCompliantUkgcRts1211": false
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.020742000000000007,
+        "observedDisparateImpactMean": 0.9372612228366125
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    },
+    {
+      "name": "E_strict_thresholds_audit_grade",
+      "description": "Strict audit-grade: DP=0.02, EO=0.01 thresholds",
+      "regime": "STRICT_AUDIT",
+      "cfg": {
+        "positiveRateGroupA": 0.3,
+        "positiveRateGroupB": 0.31,
+        "truePositiveRateA": 0.85,
+        "truePositiveRateB": 0.85,
+        "falsePositiveRateA": 0.1,
+        "falsePositiveRateB": 0.1,
+        "ppvGroupA": 0.78,
+        "ppvGroupB": 0.78,
+        "demographicParityTolerance": 0.02,
+        "equalizedOddsTolerance": 0.01,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": true,
+        "humanOversightEnabled": true
+      },
+      "closed_form": {
+        "demographicParityDifference": -0.010000000000000009,
+        "demographicParityAbs": 0.010000000000000009,
+        "equalizedOddsTprDiff": 0,
+        "equalizedOddsFprDiff": 0,
+        "disparateImpactRatio": 0.9677419354838709,
+        "predictiveParityDiff": 0,
+        "equalOpportunityDiff": 0,
+        "fairnessCompositeScore": 0.8435483870967742,
+        "passesDemographicParity": true,
+        "passesEqualizedOdds": true,
+        "passesDisparateImpact": true,
+        "isCompliantEuAiAct": true,
+        "isCompliantUkgcRts1211": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.010714,
+        "observedDisparateImpactMean": 0.9676845476577051
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "F_equalized_odds_failure",
+      "description": "Corner: passes DP but fails equalized odds (different error rates)",
+      "regime": "EO_FAILURE",
+      "cfg": {
+        "positiveRateGroupA": 0.3,
+        "positiveRateGroupB": 0.3,
+        "truePositiveRateA": 0.7,
+        "truePositiveRateB": 0.95,
+        "falsePositiveRateA": 0.2,
+        "falsePositiveRateB": 0.05,
+        "ppvGroupA": 0.7,
+        "ppvGroupB": 0.9,
+        "demographicParityTolerance": 0.1,
+        "equalizedOddsTolerance": 0.05,
+        "disparateImpactLower": 0.8,
+        "disparateImpactUpper": 1.25,
+        "documentationComplete": true,
+        "humanOversightEnabled": true
+      },
+      "closed_form": {
+        "demographicParityDifference": 0,
+        "demographicParityAbs": 0,
+        "equalizedOddsTprDiff": 0.25,
+        "equalizedOddsFprDiff": 0.15000000000000002,
+        "disparateImpactRatio": 1,
+        "predictiveParityDiff": 0.20000000000000007,
+        "equalOpportunityDiff": 0.25,
+        "fairnessCompositeScore": 0.5,
+        "passesDemographicParity": true,
+        "passesEqualizedOdds": false,
+        "passesDisparateImpact": true,
+        "isCompliantEuAiAct": false,
+        "isCompliantUkgcRts1211": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedDemographicParityMean": -0.0007040000000000006,
+        "observedDisparateImpactMean": 1.000089275191542
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    }
+  ]
+}
