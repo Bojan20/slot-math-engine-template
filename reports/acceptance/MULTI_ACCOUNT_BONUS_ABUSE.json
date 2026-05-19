@@ -1,0 +1,274 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_ACCOUNT_BONUS_ABUSE",
+  "generated_utc": "2026-05-19T11:11:43.600Z",
+  "episodes_per_config": 30000,
+  "seed": 3405644337,
+  "tolerances": {
+    "tpr_abs": 0.08,
+    "fpr_abs": 0.03
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_baseline_mid_tier",
+      "description": "UK mid-tier baseline: 2% abusers, N_thr=5, S_thr=0.5, separable populations",
+      "regime": "UK_BASELINE",
+      "cfg": {
+        "abuserPrevalence": 0.02,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 20,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 8,
+        "abuserMatchScoreBeta": 3,
+        "claimCountThreshold": 5,
+        "matchScoreThreshold": 0.5,
+        "averageBonusValue": 50,
+        "expectedAbuserLifetimeClaims": 30,
+        "newPlayersPerDay": 1000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.9452445236741881,
+        "falsePositiveRate": 8.49910883950785e-9,
+        "f1ScoreApprox": 0.9718516189265558,
+        "bayesianPosteriorAbuser": 0.9999995594196642,
+        "rocAucApproximation": 0.9999638644208343,
+        "expectedAbuserArrivalsPerDay": 20,
+        "expectedMissedAbusersPerDay": 1.095109526516238,
+        "annualOperatorLossExposure": 599572.4657676403,
+        "annualFalsePositiveFrictionCost": 0.0076003280797298945,
+        "netAnnualSavings": 10350427.526632031,
+        "isCompliantUkgcRts1210": false
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 0.9464831804281345,
+        "observedFpr": 0
+      },
+      "checks": {
+        "tpr_delta": 0.00123865675394641,
+        "fpr_delta": 8.49910883950785e-9
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "B_aggressive_low_thresholds",
+      "description": "Aggressive detection: N_thr=3, S_thr=0.3 — higher TPR but more FPR",
+      "regime": "AGGRESSIVE",
+      "cfg": {
+        "abuserPrevalence": 0.02,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 20,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 8,
+        "abuserMatchScoreBeta": 3,
+        "claimCountThreshold": 3,
+        "matchScoreThreshold": 0.3,
+        "averageBonusValue": 50,
+        "expectedAbuserLifetimeClaims": 30,
+        "newPlayersPerDay": 1000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.998406414975372,
+        "falsePositiveRate": 0.00007482514571705653,
+        "f1ScoreApprox": 0.9991652177754825,
+        "bayesianPosteriorAbuser": 0.996341152092196,
+        "rocAucApproximation": 0.999997592380983,
+        "expectedAbuserArrivalsPerDay": 20,
+        "expectedMissedAbusersPerDay": 0.031871700492560606,
+        "annualOperatorLossExposure": 17449.756019676934,
+        "annualFalsePositiveFrictionCost": 66.9123865574778,
+        "netAnnualSavings": 10932483.331593767,
+        "isCompliantUkgcRts1210": true
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 1,
+        "observedFpr": 0.00003407619437061269
+      },
+      "checks": {
+        "tpr_delta": 0.0015935850246280303,
+        "fpr_delta": 0.000040748951346443846
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "C_conservative_high_thresholds",
+      "description": "Conservative: N_thr=10, S_thr=0.7 — fewer FPs but missed abusers",
+      "regime": "CONSERVATIVE",
+      "cfg": {
+        "abuserPrevalence": 0.02,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 20,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 8,
+        "abuserMatchScoreBeta": 3,
+        "claimCountThreshold": 10,
+        "matchScoreThreshold": 0.7,
+        "averageBonusValue": 50,
+        "expectedAbuserLifetimeClaims": 30,
+        "newPlayersPerDay": 1000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.610544034631585,
+        "falsePositiveRate": 6.412814874123019e-17,
+        "f1ScoreApprox": 0.7581835969747304,
+        "bayesianPosteriorAbuser": 0.9999999999999949,
+        "rocAucApproximation": 0.9945941381164805,
+        "expectedAbuserArrivalsPerDay": 20,
+        "expectedMissedAbusersPerDay": 7.789119307368299,
+        "annualOperatorLossExposure": 4264542.820784143,
+        "annualFalsePositiveFrictionCost": 5.7346597011845105e-11,
+        "netAnnualSavings": 6685457.179215856,
+        "isCompliantUkgcRts1210": false
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 0.6085626911314985,
+        "observedFpr": 0
+      },
+      "checks": {
+        "tpr_delta": 0.0019813435000864965,
+        "fpr_delta": 6.412814874123019e-17
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "D_high_prevalence_5pct_abusers",
+      "description": "High-risk market: 5% abusers (typical CIS/SEA region)",
+      "regime": "HIGH_PREVALENCE",
+      "cfg": {
+        "abuserPrevalence": 0.05,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 20,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 8,
+        "abuserMatchScoreBeta": 3,
+        "claimCountThreshold": 5,
+        "matchScoreThreshold": 0.5,
+        "averageBonusValue": 100,
+        "expectedAbuserLifetimeClaims": 50,
+        "newPlayersPerDay": 2000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.9452445236741881,
+        "falsePositiveRate": 8.49910883950785e-9,
+        "f1ScoreApprox": 0.9718516189265558,
+        "bayesianPosteriorAbuser": 0.9999998291626809,
+        "rocAucApproximation": 0.9999638644208343,
+        "expectedAbuserArrivalsPerDay": 100,
+        "expectedMissedAbusersPerDay": 5.47554763258119,
+        "annualOperatorLossExposure": 9992874.42946067,
+        "annualFalsePositiveFrictionCost": 0.029470659900993474,
+        "netAnnualSavings": 172507125.54106867,
+        "isCompliantUkgcRts1210": false
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 0.9468154957321077,
+        "observedFpr": 0
+      },
+      "checks": {
+        "tpr_delta": 0.0015709720579195618,
+        "fpr_delta": 8.49910883950785e-9
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_corner_well_camouflaged_abusers",
+      "description": "Corner: sophisticated abusers (low N, organic-like S) — hard to detect",
+      "regime": "CORNER_CAMOUFLAGED",
+      "cfg": {
+        "abuserPrevalence": 0.02,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 4,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 2,
+        "abuserMatchScoreBeta": 8,
+        "claimCountThreshold": 5,
+        "matchScoreThreshold": 0.5,
+        "averageBonusValue": 50,
+        "expectedAbuserLifetimeClaims": 30,
+        "newPlayersPerDay": 1000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.004196672128312401,
+        "falsePositiveRate": 8.49910883950785e-9,
+        "f1ScoreApprox": 0.008358267348703393,
+        "bayesianPosteriorAbuser": 0.9999007749479819,
+        "rocAucApproximation": 0.6055288532436344,
+        "expectedAbuserArrivalsPerDay": 20,
+        "expectedMissedAbusersPerDay": 19.91606655743375,
+        "annualOperatorLossExposure": 10904046.44019498,
+        "annualFalsePositiveFrictionCost": 0.0076003280797298945,
+        "netAnnualSavings": 45953.552204692714,
+        "isCompliantUkgcRts1210": false
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 0.006309148264984227,
+        "observedFpr": 0
+      },
+      "checks": {
+        "tpr_delta": 0.002112476136671826,
+        "fpr_delta": 8.49910883950785e-9
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_corner_blatant_abusers",
+      "description": "Corner: blatant abusers (high N, high S) — easy detection target",
+      "regime": "CORNER_BLATANT",
+      "cfg": {
+        "abuserPrevalence": 0.02,
+        "organicBonusClaimRate": 1.5,
+        "abuserBonusClaimRate": 50,
+        "organicMatchScoreAlpha": 1,
+        "organicMatchScoreBeta": 19,
+        "abuserMatchScoreAlpha": 20,
+        "abuserMatchScoreBeta": 2,
+        "claimCountThreshold": 5,
+        "matchScoreThreshold": 0.5,
+        "averageBonusValue": 50,
+        "expectedAbuserLifetimeClaims": 30,
+        "newPlayersPerDay": 1000
+      },
+      "closed_form": {
+        "truePositiveRate": 0.999989509582519,
+        "falsePositiveRate": 8.49910883950785e-9,
+        "f1ScoreApprox": 0.9999947505142373,
+        "bayesianPosteriorAbuser": 0.9999995835394715,
+        "rocAucApproximation": 0.9999999999992558,
+        "expectedAbuserArrivalsPerDay": 20,
+        "expectedMissedAbusersPerDay": 0.00020980834962047723,
+        "annualOperatorLossExposure": 114.87007141721128,
+        "annualFalsePositiveFrictionCost": 0.0076003280797298945,
+        "netAnnualSavings": 10949885.122328255,
+        "isCompliantUkgcRts1210": true
+      },
+      "monte_carlo": {
+        "episodes": 30000,
+        "observedTpr": 1,
+        "observedFpr": 0
+      },
+      "checks": {
+        "tpr_delta": 0.000010490417481023862,
+        "fpr_delta": 8.49910883950785e-9
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}
