@@ -1,0 +1,377 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CUSTOMER_AFFORDABILITY_STRATIFICATION",
+  "generated_utc": "2026-05-19T08:03:26.591Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644324,
+  "tolerances": {
+    "mean_rel": 0.08,
+    "pabove_abs": 0.02,
+    "rolling_rel": 0.25
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_typical_player_median_£85",
+      "description": "UKGC RTS 14E typical user, median £85/month, σ=1.5 (broad distribution per Gainsbury 2020)",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "monthlySpendLogMean": 4.45,
+        "monthlySpendLogStd": 1.5,
+        "currency": "£",
+        "lowHarmThreshold": 100,
+        "enhancedThreshold": 500,
+        "fullCheckThreshold": 2000,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 263.749555636939,
+        "medianMonthlySpend": 85.62694400220059,
+        "monthlySpendCoeffVar": 2.9133719014843478,
+        "monthlySpendP75": 235.50558421363058,
+        "monthlySpendP90": 585.4187166801662,
+        "monthlySpendP95": 1009.5706674204881,
+        "monthlySpendP99": 2806.018381940706,
+        "tierDistribution": {
+          "T0_noCheck": 0.35992803439638943,
+          "T1_lightCheck": 0.1812678316534514,
+          "T2_lowHarmReview": 0.3390876147906612,
+          "T3_enhancedCheck": 0.10187860655988201,
+          "T4_fullFinancialReview": 0.01783791259961598
+        },
+        "probAboveLowHarmThreshold": 0.4588041339501592,
+        "probAboveEnhancedThreshold": 0.11971651915949799,
+        "probAboveFullCheckThreshold": 0.01783791259961598,
+        "annualLowHarmReviewsExpected": 5.50564960740191,
+        "annualEnhancedChecksExpected": 1.436598229913976,
+        "annualFullFinancialReviewsExpected": 0.21405495119539175,
+        "rollingTriggerProbPerWindow": 0.02592813773801317,
+        "expectedRollingTriggersPerYear": 0.18149696416609218,
+        "financialVulnerabilityScore": 0.22478798310779785,
+        "isCompliantUkgcRts14e": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 261.6130462510363,
+        "observedMedianMonthlySpend": 84.55350624598097,
+        "observedProbAboveLowHarm": 0.45652777777777775,
+        "observedProbAboveEnhanced": 0.11961111111111111,
+        "observedProbAboveFullCheck": 0.017722222222222223,
+        "observedAnnualEnhancedChecks": 1.4353333333333333,
+        "observedRollingTriggersPerYear": 0.18233333333333332
+      },
+      "checks": {
+        "mean_rel": 0.00810052316768156,
+        "low_harm_delta": 0.002276356172381422,
+        "enhanced_delta": 0.00010540804838687912,
+        "full_check_delta": 0.00011569037739375676,
+        "rolling_rel": 0.0045870338239916335
+      },
+      "pass": true,
+      "elapsed_ms": 14
+    },
+    {
+      "name": "B_uk_low_spender_median_£25",
+      "description": "UK casual player, median £25/month, tight σ=0.8 — rarely above £100 threshold",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "monthlySpendLogMean": 3.2,
+        "monthlySpendLogStd": 0.8,
+        "currency": "£",
+        "lowHarmThreshold": 100,
+        "enhancedThreshold": 500,
+        "fullCheckThreshold": 2000,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 33.78442846384957,
+        "medianMonthlySpend": 24.532530197109352,
+        "monthlySpendCoeffVar": 0.946826741967585,
+        "monthlySpendP75": 42.08080927979177,
+        "monthlySpendP90": 68.39100097718827,
+        "monthlySpendP95": 91.45827891066888,
+        "monthlySpendP99": 157.76053775050246,
+        "tierDistribution": {
+          "T0_noCheck": 0.8132748103059728,
+          "T1_lightCheck": 0.147220518326316,
+          "T2_lowHarmReview": 0.03942245047061388,
+          "T3_enhancedCheck": 0.00008220198206843055,
+          "T4_fullFinancialReview": 1.8915028876520523e-8
+        },
+        "probAboveLowHarmThreshold": 0.039504671367711186,
+        "probAboveEnhancedThreshold": 0.00008222089709730707,
+        "probAboveFullCheckThreshold": 1.8915028876520523e-8,
+        "annualLowHarmReviewsExpected": 0.47405605641253423,
+        "annualEnhancedChecksExpected": 0.0009866507651676848,
+        "annualFullFinancialReviewsExpected": 2.2698034651824628e-7,
+        "rollingTriggerProbPerWindow": 1.1114664744127367e-11,
+        "expectedRollingTriggersPerYear": 7.780265320889157e-11,
+        "financialVulnerabilityScore": 0.015826540490722327,
+        "isCompliantUkgcRts14e": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 33.651456606003755,
+        "observedMedianMonthlySpend": 24.36802340882641,
+        "observedProbAboveLowHarm": 0.03822222222222222,
+        "observedProbAboveEnhanced": 0.00002777777777777778,
+        "observedProbAboveFullCheck": 0,
+        "observedAnnualEnhancedChecks": 0.0003333333333333333,
+        "observedRollingTriggersPerYear": 0
+      },
+      "checks": {
+        "mean_rel": 0.0039358918854614094,
+        "low_harm_delta": 0.001282449145488966,
+        "enhanced_delta": 0.00005444311931952929,
+        "full_check_delta": 1.8915028876520523e-8,
+        "rolling_rel": 7.780265320889157e-10
+      },
+      "pass": true,
+      "elapsed_ms": 13
+    },
+    {
+      "name": "C_uk_high_roller_median_£600",
+      "description": "UK high-roller, median £600/month, σ=1.0 — frequent enhanced checks expected",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "monthlySpendLogMean": 6.4,
+        "monthlySpendLogStd": 1,
+        "currency": "£",
+        "lowHarmThreshold": 100,
+        "enhancedThreshold": 500,
+        "fullCheckThreshold": 2000,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 992.2747156050262,
+        "medianMonthlySpend": 601.8450378720822,
+        "monthlySpendCoeffVar": 1.310832494432086,
+        "monthlySpendP75": 1181.4405172216022,
+        "monthlySpendP90": 2167.980925110698,
+        "monthlySpendP95": 3117.708716065555,
+        "monthlySpendP99": 6163.178257651018,
+        "tierDistribution": {
+          "T0_noCheck": 0.006423614449435788,
+          "T1_lightCheck": 0.029916743761049858,
+          "T2_lowHarmReview": 0.39012048508912955,
+          "T3_enhancedCheck": 0.4586445717370601,
+          "T4_fullFinancialReview": 0.11489458496332472
+        },
+        "probAboveLowHarmThreshold": 0.9636596417895144,
+        "probAboveEnhancedThreshold": 0.5735391567003848,
+        "probAboveFullCheckThreshold": 0.11489458496332472,
+        "annualLowHarmReviewsExpected": 11.563915701474173,
+        "annualEnhancedChecksExpected": 6.882469880404617,
+        "annualFullFinancialReviewsExpected": 1.3787350195598966,
+        "rollingTriggerProbPerWindow": 0.7822380750792969,
+        "expectedRollingTriggersPerYear": 5.475666525555078,
+        "financialVulnerabilityScore": 0.5919939792149186,
+        "isCompliantUkgcRts14e": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 987.5081502594177,
+        "observedMedianMonthlySpend": 596.804563805752,
+        "observedProbAboveLowHarm": 0.96175,
+        "observedProbAboveEnhanced": 0.5713888888888888,
+        "observedProbAboveFullCheck": 0.11458333333333333,
+        "observedAnnualEnhancedChecks": 6.8566666666666665,
+        "observedRollingTriggersPerYear": 5.475666666666666
+      },
+      "checks": {
+        "mean_rel": 0.004803675101911893,
+        "low_harm_delta": 0.0019096417895143603,
+        "enhanced_delta": 0.002150267811495965,
+        "full_check_delta": 0.0003112516299913909,
+        "rolling_rel": 2.5770668081607488e-8
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "D_au_ncpf_AUD1000_threshold_median_$200",
+      "description": "AU NCPF Schedule 8 stricter $1000 enhanced check, median A$200/month",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "monthlySpendLogMean": 5.3,
+        "monthlySpendLogStd": 1.4,
+        "currency": "$",
+        "lowHarmThreshold": 200,
+        "enhancedThreshold": 1000,
+        "fullCheckThreshold": 5000,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 533.7886638255609,
+        "medianMonthlySpend": 200.33680997479166,
+        "monthlySpendCoeffVar": 2.4696815716113343,
+        "monthlySpendP75": 515.0611597005383,
+        "monthlySpendP90": 1204.9245017303522,
+        "monthlySpendP95": 2003.7888155450198,
+        "monthlySpendP99": 5202.460803864677,
+        "tierDistribution": {
+          "T0_noCheck": 0.30983891115259815,
+          "T1_lightCheck": 0.18968160428795938,
+          "T2_lowHarmReview": 0.37507699568840214,
+          "T3_enhancedCheck": 0.11462148487098545,
+          "T4_fullFinancialReview": 0.010781004000054883
+        },
+        "probAboveLowHarmThreshold": 0.5004794845594425,
+        "probAboveEnhancedThreshold": 0.12540248887104033,
+        "probAboveFullCheckThreshold": 0.010781004000054883,
+        "annualLowHarmReviewsExpected": 6.00575381471331,
+        "annualEnhancedChecksExpected": 1.504829866452484,
+        "annualFullFinancialReviewsExpected": 0.1293720480006586,
+        "rollingTriggerProbPerWindow": 0.02939008126087561,
+        "expectedRollingTriggersPerYear": 0.20573056882612928,
+        "financialVulnerabilityScore": 0.24104684168510557,
+        "isCompliantUkgcRts14e": false
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 529.969468022849,
+        "observedMedianMonthlySpend": 197.99179182047266,
+        "observedProbAboveLowHarm": 0.4969166666666667,
+        "observedProbAboveEnhanced": 0.12502777777777777,
+        "observedProbAboveFullCheck": 0.011027777777777777,
+        "observedAnnualEnhancedChecks": 1.5003333333333333,
+        "observedRollingTriggersPerYear": 0.204
+      },
+      "checks": {
+        "mean_rel": 0.007154883686252216,
+        "low_harm_delta": 0.0035628178927757936,
+        "enhanced_delta": 0.00037471109326256413,
+        "full_check_delta": 0.0002467737777228935,
+        "rolling_rel": 0.008411821519785236
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "E_nl_ksa_EUR350_strict_median_€60",
+      "description": "NL KSA §10 €350 auto-pause threshold, median €60/month, σ=1.3",
+      "jurisdiction": "NL_KSA",
+      "cfg": {
+        "monthlySpendLogMean": 4.1,
+        "monthlySpendLogStd": 1.3,
+        "currency": "€",
+        "lowHarmThreshold": 100,
+        "enhancedThreshold": 350,
+        "fullCheckThreshold": 1500,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 140.47085085144607,
+        "medianMonthlySpend": 60.34028759736195,
+        "monthlySpendCoeffVar": 2.1022560988450496,
+        "monthlySpendP75": 145.01492603430842,
+        "monthlySpendP90": 319.263580695254,
+        "monthlySpendP95": 511.9923649256909,
+        "monthlySpendP99": 1241.7193076931217,
+        "tierDistribution": {
+          "T0_noCheck": 0.4425142393148282,
+          "T1_lightCheck": 0.20869688083399213,
+          "T2_lowHarmReview": 0.2606421433712405,
+          "T3_enhancedCheck": 0.08142326240708464,
+          "T4_fullFinancialReview": 0.006723474072854563
+        },
+        "probAboveLowHarmThreshold": 0.3487888798511797,
+        "probAboveEnhancedThreshold": 0.0881467364799392,
+        "probAboveFullCheckThreshold": 0.006723474072854563,
+        "annualLowHarmReviewsExpected": 4.185466558214156,
+        "annualEnhancedChecksExpected": 1.0577608377592704,
+        "annualFullFinancialReviewsExpected": 0.08068168887425475,
+        "rollingTriggerProbPerWindow": 0.01116794180661751,
+        "expectedRollingTriggersPerYear": 0.07817559264632257,
+        "financialVulnerabilityScore": 0.16797661510631,
+        "isCompliantUkgcRts14e": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 139.5709080577123,
+        "observedMedianMonthlySpend": 59.684156790438585,
+        "observedProbAboveLowHarm": 0.34591666666666665,
+        "observedProbAboveEnhanced": 0.08819444444444445,
+        "observedProbAboveFullCheck": 0.006638888888888889,
+        "observedAnnualEnhancedChecks": 1.0583333333333333,
+        "observedRollingTriggersPerYear": 0.08466666666666667
+      },
+      "checks": {
+        "mean_rel": 0.006406615951130668,
+        "low_harm_delta": 0.0028722131845130283,
+        "enhanced_delta": 0.0000477079645052475,
+        "full_check_delta": 0.00008458518396567416,
+        "rolling_rel": 0.06491074020344101
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "F_corner_problem_gambler_high_variance",
+      "description": "Corner: problem-gambler signature — median £200 sa σ=2.5 (very wide tail) — high vulnerability",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "monthlySpendLogMean": 5.3,
+        "monthlySpendLogStd": 2.5,
+        "currency": "£",
+        "lowHarmThreshold": 100,
+        "enhancedThreshold": 500,
+        "fullCheckThreshold": 2000,
+        "rollingWindowMonths": 6,
+        "rollingTriggerK": 3
+      },
+      "closed_form": {
+        "meanMonthlySpend": 4559.644778398061,
+        "medianMonthlySpend": 200.33680997479166,
+        "monthlySpendCoeffVar": 22.737916014189647,
+        "monthlySpendP75": 1081.6299285779405,
+        "monthlySpendP90": 4933.869809547871,
+        "monthlySpendP95": 12235.955431227592,
+        "monthlySpendP99": 67229.65245588298,
+        "tierDistribution": {
+          "T0_noCheck": 0.28938205179537213,
+          "T1_lightCheck": 0.10115032073040825,
+          "T2_lowHarmReview": 0.25222653977600845,
+          "T3_enhancedCheck": 0.17854903401373423,
+          "T4_fullFinancialReview": 0.17869205368447694
+        },
+        "probAboveLowHarmThreshold": 0.6094676274742197,
+        "probAboveEnhancedThreshold": 0.35724108769821117,
+        "probAboveFullCheckThreshold": 0.17869205368447694,
+        "annualLowHarmReviewsExpected": 7.313611529690636,
+        "annualEnhancedChecksExpected": 4.2868930523785345,
+        "annualFullFinancialReviewsExpected": 2.1443046442137232,
+        "rollingTriggerProbPerWindow": 0.3675862470748077,
+        "expectedRollingTriggersPerYear": 2.5731037295236536,
+        "financialVulnerabilityScore": 0.4045669934044943,
+        "isCompliantUkgcRts14e": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedMeanMonthlySpend": 4308.735794970276,
+        "observedMedianMonthlySpend": 196.16855025579386,
+        "observedProbAboveLowHarm": 0.6056666666666667,
+        "observedProbAboveEnhanced": 0.35491666666666666,
+        "observedProbAboveFullCheck": 0.17697222222222223,
+        "observedAnnualEnhancedChecks": 4.259,
+        "observedRollingTriggersPerYear": 2.5536666666666665
+      },
+      "checks": {
+        "mean_rel": 0.05502818654130696,
+        "low_harm_delta": 0.003800960807552989,
+        "enhanced_delta": 0.00232442103154451,
+        "full_check_delta": 0.0017198314622547117,
+        "rolling_rel": 0.007553936762815772
+      },
+      "pass": true,
+      "elapsed_ms": 10
+    }
+  ]
+}
