@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SPIN_VELOCITY_COMPLIANCE",
+  "generated_utc": "2026-05-19T05:46:27.366Z",
+  "episodes_per_config": 20000,
+  "seed": 3405644322,
+  "tolerances": {
+    "effective_rel": 0.03,
+    "pbelow_abs": 0.02,
+    "spins_min_rel": 0.04
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_si2025_2.5s_typical_user",
+      "description": "UKGC SI 2025/215 §8.4 mandatory 2.5s minimum, typical user Gamma(k=2, θ=0.8) E[X]=1.6s — throttle binds",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "naturalIntervalShape": 2,
+        "naturalIntervalScale": 0.8,
+        "regulatoryMinIntervalSec": 2.5,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 1
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 1.6,
+        "effectiveMeanIntervalSec": 2.680141427855972,
+        "naturalSpinsPerMinute": 37.5,
+        "effectiveSpinsPerMinute": 22.386878310372634,
+        "naturalSpinsPerHour": 2250,
+        "effectiveSpinsPerHour": 1343.212698622358,
+        "probIntervalBelowRegulatory": 0.8187601488034444,
+        "spinRateThrottleImpact": 0.4030165783900631,
+        "expectedSpinsPerSession": 1343.212698622358,
+        "expectedSpinsBeforeFirstRealityCheck": 1343.212698622358,
+        "oneInNSpinsRealityCheckTriggered": 1343.212698622358,
+        "velocityHarmScore": 0.9193439155186317,
+        "compliesWithRegulatoryMinimum": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 1.587726672334518,
+        "observedEffectiveMeanIntervalSec": 2.6725966733362836,
+        "observedProbIntervalBelowRegulatory": 0.8205,
+        "observedNaturalSpinsPerMinute": 37.78987973526882,
+        "observedEffectiveSpinsPerMinute": 22.45007658604176
+      },
+      "checks": {
+        "effective_rel": 0.0028150583552315907,
+        "pbelow_delta": 0.0017398511965556196,
+        "spins_min_rel": 0.0028150583552316146
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_au_ncpf_3.0s_fast_tapper",
+      "description": "AU NCPF Schedule 6 3.0s minimum, fast tapper Gamma(k=1.5, θ=0.6) E[X]=0.9s — heavy throttle",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "naturalIntervalShape": 1.5,
+        "naturalIntervalScale": 0.6,
+        "regulatoryMinIntervalSec": 3,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 2
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 0.8999999999999999,
+        "effectiveMeanIntervalSec": 3.0120133151427306,
+        "naturalSpinsPerMinute": 66.66666666666667,
+        "effectiveSpinsPerMinute": 19.920230663773403,
+        "naturalSpinsPerHour": 4000.0000000000005,
+        "effectiveSpinsPerHour": 1195.2138398264042,
+        "probIntervalBelowRegulatory": 0.9814338645369567,
+        "spinRateThrottleImpact": 0.701196540043399,
+        "expectedSpinsPerSession": 2390.4276796528084,
+        "expectedSpinsBeforeFirstRealityCheck": 1195.2138398264042,
+        "oneInNSpinsRealityCheckTriggered": 1195.2138398264042,
+        "velocityHarmScore": 0.7960115331886701,
+        "compliesWithRegulatoryMinimum": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 0.9087529013692803,
+        "observedEffectiveMeanIntervalSec": 3.01215339435344,
+        "observedProbIntervalBelowRegulatory": 0.9806,
+        "observedNaturalSpinsPerMinute": 66.02454848792657,
+        "observedEffectiveSpinsPerMinute": 19.919304279946548
+      },
+      "checks": {
+        "effective_rel": 0.00004650467369031321,
+        "pbelow_delta": 0.0008338645369566633,
+        "spins_min_rel": 0.000046504673690310746
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "C_de_glustv_5.0s_strictest",
+      "description": "DE GlüStV §6 Abs 4 5.0s strictest-EU minimum, normal user Gamma(k=2, θ=1.5) E[X]=3.0s",
+      "jurisdiction": "DE_GLUSTV",
+      "cfg": {
+        "naturalIntervalShape": 2,
+        "naturalIntervalScale": 1.5,
+        "regulatoryMinIntervalSec": 5,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 1
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 3,
+        "effectiveMeanIntervalSec": 5.285391946778022,
+        "naturalSpinsPerMinute": 20,
+        "effectiveSpinsPerMinute": 11.352043633504993,
+        "naturalSpinsPerHour": 1200,
+        "effectiveSpinsPerHour": 681.1226180102996,
+        "probIntervalBelowRegulatory": 0.8454126954952397,
+        "spinRateThrottleImpact": 0.4323978183247503,
+        "expectedSpinsPerSession": 681.1226180102996,
+        "expectedSpinsBeforeFirstRealityCheck": 681.1226180102996,
+        "oneInNSpinsRealityCheckTriggered": 681.1226180102996,
+        "velocityHarmScore": 0.3676021816752496,
+        "compliesWithRegulatoryMinimum": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 2.97698751062721,
+        "observedEffectiveMeanIntervalSec": 5.271748847269989,
+        "observedProbIntervalBelowRegulatory": 0.8474,
+        "observedNaturalSpinsPerMinute": 20.15460252547678,
+        "observedEffectiveSpinsPerMinute": 11.38142232080563
+      },
+      "checks": {
+        "effective_rel": 0.002581284348524018,
+        "pbelow_delta": 0.0019873045047603677,
+        "spins_min_rel": 0.002581284348523993
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "D_nl_ksa_4.0s_medium",
+      "description": "NL KSA RWA §7 4.0s minimum, medium user Gamma(k=3, θ=0.7) E[X]=2.1s",
+      "jurisdiction": "NL_KSA",
+      "cfg": {
+        "naturalIntervalShape": 3,
+        "naturalIntervalScale": 0.7,
+        "regulatoryMinIntervalSec": 4,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 1
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 2.0999999999999996,
+        "effectiveMeanIntervalSec": 4.0710121167742885,
+        "naturalSpinsPerMinute": 28.571428571428577,
+        "effectiveSpinsPerMinute": 14.738349648426412,
+        "naturalSpinsPerHour": 1714.2857142857147,
+        "effectiveSpinsPerHour": 884.3009789055848,
+        "probIntervalBelowRegulatory": 0.9239997347254034,
+        "spinRateThrottleImpact": 0.4841577623050757,
+        "expectedSpinsPerSession": 884.3009789055848,
+        "expectedSpinsBeforeFirstRealityCheck": 884.3009789055848,
+        "oneInNSpinsRealityCheckTriggered": 884.3009789055848,
+        "velocityHarmScore": 0.5369174824213206,
+        "compliesWithRegulatoryMinimum": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 2.1111735154933293,
+        "observedEffectiveMeanIntervalSec": 4.077676357658257,
+        "observedProbIntervalBelowRegulatory": 0.91935,
+        "observedNaturalSpinsPerMinute": 28.420212530934236,
+        "observedEffectiveSpinsPerMinute": 14.714262422351004
+      },
+      "checks": {
+        "effective_rel": 0.0016343231535412284,
+        "pbelow_delta": 0.0046497347254034205,
+        "spins_min_rel": 0.0016343231535411809
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_mt_mga_no_throttle_slow_user",
+      "description": "MT MGA PPD §11 disclosure only (no hard throttle), slow user Gamma(k=4, θ=2) E[X]=8.0s — no binding",
+      "jurisdiction": "MT_MGA",
+      "cfg": {
+        "naturalIntervalShape": 4,
+        "naturalIntervalScale": 2,
+        "regulatoryMinIntervalSec": 0.001,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 4
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 8,
+        "effectiveMeanIntervalSec": 8,
+        "naturalSpinsPerMinute": 7.5,
+        "effectiveSpinsPerMinute": 7.5,
+        "naturalSpinsPerHour": 450,
+        "effectiveSpinsPerHour": 450,
+        "probIntervalBelowRegulatory": 2.6031252169828873e-15,
+        "spinRateThrottleImpact": 0,
+        "expectedSpinsPerSession": 1800,
+        "expectedSpinsBeforeFirstRealityCheck": 450,
+        "oneInNSpinsRealityCheckTriggered": 450,
+        "velocityHarmScore": 0.175,
+        "compliesWithRegulatoryMinimum": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 8.03555172826181,
+        "observedEffectiveMeanIntervalSec": 8.03555172826181,
+        "observedProbIntervalBelowRegulatory": 0,
+        "observedNaturalSpinsPerMinute": 7.466817715698876,
+        "observedEffectiveSpinsPerMinute": 7.466817715698876
+      },
+      "checks": {
+        "effective_rel": 0.004424304573483237,
+        "pbelow_delta": 2.6031252169828873e-15,
+        "spins_min_rel": 0.004424304573483203
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_extreme_fast_tapper_uk_throttle",
+      "description": "Corner: extreme fast tapper Gamma(k=1, θ=0.3) Exponential E[X]=0.3s vs UKGC 2.5s — almost full throttle",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "naturalIntervalShape": 1,
+        "naturalIntervalScale": 0.3,
+        "regulatoryMinIntervalSec": 2.5,
+        "realityCheckIntervalMinutes": 60,
+        "sessionDurationHours": 1
+      },
+      "closed_form": {
+        "naturalMeanIntervalSec": 0.3,
+        "effectiveMeanIntervalSec": 2.5000721108429262,
+        "naturalSpinsPerMinute": 200,
+        "effectiveSpinsPerMinute": 23.999307755875233,
+        "naturalSpinsPerHour": 12000,
+        "effectiveSpinsPerHour": 1439.958465352514,
+        "probIntervalBelowRegulatory": 0.9997596305235805,
+        "spinRateThrottleImpact": 0.8800034612206238,
+        "expectedSpinsPerSession": 1439.958465352514,
+        "expectedSpinsBeforeFirstRealityCheck": 1439.958465352514,
+        "oneInNSpinsRealityCheckTriggered": 1439.958465352514,
+        "velocityHarmScore": 0.9999653877937617,
+        "compliesWithRegulatoryMinimum": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedNaturalMeanIntervalSec": 0.30102367734468033,
+        "observedEffectiveMeanIntervalSec": 2.5002210185292304,
+        "observedProbIntervalBelowRegulatory": 0.9996,
+        "observedNaturalSpinsPerMinute": 199.31986921845473,
+        "observedEffectiveSpinsPerMinute": 23.997878409683697
+      },
+      "checks": {
+        "effective_rel": 0.00005955780916990766,
+        "pbelow_delta": 0.00015963052358047847,
+        "spins_min_rel": 0.000059557809169969465
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
