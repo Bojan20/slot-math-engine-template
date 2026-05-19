@@ -86,8 +86,58 @@ export function reducedData(): boolean {
 }
 
 /**
+ * In dev mode Vite serves files dynamically and we don't want the SW
+ * caching stale assets (a previously-registered SW from a build preview
+ * can otherwise pin old HTML/CSS to the page and produce ghost layouts
+ * after a refresh).  This helper tears down any registration + clears
+ * caches so dev sessions always reflect the live source on disk.
+ */
+async function unregisterAllAndClearCaches(): Promise<void> {
+  const nav = safeNavigator();
+  if (!nav || !('serviceWorker' in nav)) return;
+  try {
+    const regs = await nav.serviceWorker.getRegistrations();
+    await Promise.all(regs.map((r) => r.unregister().catch(() => false)));
+  } catch {
+    /* ignore */
+  }
+  const w = safeWindow();
+  const cacheStore = (w as unknown as { caches?: CacheStorage })?.caches;
+  if (cacheStore) {
+    try {
+      const keys = await cacheStore.keys();
+      await Promise.all(keys.map((k) => cacheStore.delete(k).catch(() => false)));
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+/**
+ * True when the studio is running under Vite's dev server. We intentionally
+ * keep SW registration *off* in dev — the dev server already provides hot
+ * reload, and an active SW would re-serve cached responses and shadow source
+ * changes.  Falls back to a hostname heuristic for environments where
+ * `import.meta.env` is unavailable (e.g. plain `file://` previews).
+ */
+function isDevEnvironment(): boolean {
+  try {
+    const env = (import.meta as unknown as { env?: { DEV?: boolean; MODE?: string } }).env;
+    if (env && (env.DEV === true || env.MODE === 'development')) return true;
+  } catch {
+    /* ignore */
+  }
+  const w = safeWindow();
+  const host = w?.location?.hostname ?? '';
+  return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0';
+}
+
+/**
  * Register the studio service worker. Idempotent — returns the existing
  * registration if one is already active.
+ *
+ * In dev mode this is a no-op: it actively *unregisters* any leftover SW
+ * and clears caches so refreshes always reflect the source on disk.
  */
 export async function registerServiceWorker(
   swUrl = './service-worker.js',
@@ -95,10 +145,16 @@ export async function registerServiceWorker(
 ): Promise<ServiceWorkerRegistration | null> {
   const nav = safeNavigator();
   if (!nav || !('serviceWorker' in nav)) return null;
+
+  if (isDevEnvironment()) {
+    await unregisterAllAndClearCaches();
+    return null;
+  }
+
   try {
     const reg =
       (await nav.serviceWorker.getRegistration(scope)) ??
-      (await nav.serviceWorker.register(swUrl, { scope }));
+      (await nav.serviceWorker.register(swUrl, { scope, type: 'classic' }));
     controlled = nav.serviceWorker.controller !== null;
     nav.serviceWorker.addEventListener('controllerchange', () => {
       controlled = nav.serviceWorker.controller !== null;

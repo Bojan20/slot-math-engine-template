@@ -277,10 +277,12 @@
         <div class="build-grid">
 
           <!-- Symbol pool — progressive disclosure -->
-          <section class="card card-pool">
+          <section class="card card-pool" aria-labelledby="card-pool-h">
             <div class="card-h">
-              <h2>Symbol pool</h2>
-              <span class="card-meta"><b id="pool-count">12</b> symbols active</span>
+              <div class="card-h-l">
+                <h2 id="card-pool-h">Symbol pool</h2>
+                <span class="card-meta"><b id="pool-count">12</b> symbols active <span class="card-meta-sep">·</span> <span id="pool-last-action" class="card-meta-ts">no edits yet</span></span>
+              </div>
             </div>
             <div class="pool-presets" role="group" aria-label="Symbol pool presets">
               <button class="preset is-active" data-preset="standard">
@@ -339,23 +341,33 @@
           </section>
 
           <!-- My Icons · custom icon library (CORTI 200.2) -->
-          <section class="card card-my-icons">
-            <div class="card-h">
-              <h2>📂 My Icons</h2>
-              <span class="card-meta"><b id="my-icons-count">0</b> uploaded</span>
-            </div>
-            <div class="my-icons-toolbar">
-              <button class="btn-ghost mini" id="my-icons-export" title="Export all uploaded icons as ZIP">Export pack</button>
-              <button class="btn-ghost mini" id="my-icons-import" title="Import a ZIP icon pack">Import pack</button>
-            </div>
-            <div class="my-icons-grid" id="my-icons-grid"></div>
-            <p class="my-icons-help">Click 📤 next to any symbol to upload a custom icon (SVG / PNG / WebP, max 100KB). Click a tile here to attach it to the currently selected symbol; right-click to rename or delete.</p>
+          <section class="card card-my-icons" aria-labelledby="card-my-icons-h">
+            <details class="card-disclosure" id="card-my-icons-disclosure" open>
+              <summary class="card-h">
+                <div class="card-h-l">
+                  <h2 id="card-my-icons-h">My Icons</h2>
+                  <span class="card-meta"><b id="my-icons-count">0</b> uploaded <span class="card-meta-sep">·</span> <span class="card-meta-ts">custom SVG / PNG / WebP</span></span>
+                </div>
+                <span class="card-h-caret" aria-hidden="true">▾</span>
+              </summary>
+              <div class="card-disclosure-body">
+                <div class="my-icons-toolbar">
+                  <button class="btn-ghost mini" id="my-icons-export" title="Export all uploaded icons as ZIP">Export pack</button>
+                  <button class="btn-ghost mini" id="my-icons-import" title="Import a ZIP icon pack">Import pack</button>
+                </div>
+                <div class="my-icons-grid" id="my-icons-grid"></div>
+                <p class="my-icons-help">Click 📤 next to any symbol to upload a custom icon (SVG / PNG / WebP, max 100KB). Click a tile here to attach it to the currently selected symbol; right-click to rename or delete.</p>
+              </div>
+            </details>
           </section>
 
           <!-- Reel editor · compact + paytable preview -->
-          <section class="card card-reels">
+          <section class="card card-reels" aria-labelledby="card-reels-h">
             <div class="card-h">
-              <h2>Reels &amp; paytable</h2>
+              <div class="card-h-l">
+                <h2 id="card-reels-h">Reels &amp; paytable</h2>
+                <span class="card-meta"><span id="reels-topology-meta">5×3 · 20 lines</span> <span class="card-meta-sep">·</span> <span class="card-meta-ts" id="reels-last-action">no edits yet</span></span>
+              </div>
               <div class="card-h-r">
                 <label class="seg">Topology
                   <select id="topology">
@@ -368,13 +380,19 @@
               </div>
             </div>
 
-            <div class="reels" id="reels"></div>
-
-            <div class="card-sub-h">
-              <h3>Paytable · 3oak / 4oak / 5oak</h3>
-              <span class="card-meta">click a cell → right rail shows contribution</span>
+            <div class="reels-section">
+              <div class="card-sub-h reels-sub-h">
+                <h3>Reels <span class="sub-h-meta mono">5 cols · click cell to edit weight</span></h3>
+              </div>
+              <div class="reels" id="reels"></div>
             </div>
-            <div class="paytable" id="paytable"></div>
+
+            <div class="paytable-section">
+              <div class="card-sub-h paytable-sub-h">
+                <h3>Paytable <span class="sub-h-meta mono">3oak / 4oak / 5oak · click a cell → rail shows contribution</span></h3>
+              </div>
+              <div class="paytable" id="paytable"></div>
+            </div>
           </section>
 
         </div>
