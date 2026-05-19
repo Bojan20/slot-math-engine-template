@@ -56,6 +56,30 @@ export interface IRSimConfig {
    * completed spin is recorded via `session.recordSpin(...)`.
    */
   observabilitySession?: import('../observability/index.js').ObservabilitySession;
+  /**
+   * Auto-MC hook (Studio): invoked after each completed spin with the
+   * final win multiplier (sum of base + features + cap applied). Lets
+   * external orchestrators compute volatility / percentile / histogram
+   * stats without re-implementing the spin loop.  Pure side-effect — must
+   * not throw or the run is aborted.
+   */
+  onSpinWin?: (winX: number, spinIndex: number) => void;
+  /**
+   * Auto-MC progress hook: invoked periodically (default every 1000 spins)
+   * with the running RTP and elapsed-ms.  Designed for WebWorker
+   * postMessage relay; also used by CLI progress bars.
+   */
+  onProgress?: (
+    spinsDone: number,
+    totalSpins: number,
+    runningRtp: number,
+    elapsedMs: number,
+  ) => void;
+  /**
+   * Auto-MC cancellation: when set, the orchestrator polls this before each
+   * spin and bails out cleanly if true (returning partial results).
+   */
+  shouldCancel?: () => boolean;
 }
 
 export interface IRSimResult {
@@ -1008,7 +1032,15 @@ export async function runIRSimulation(
   // offer mapped to a known feature gets exercised at least once.
   let buyIndex = 0;
 
+  // Auto-MC plumbing — sample epoch + cancellation timestamps, no-ops
+  // when the orchestrator hooks are absent.
+  const t0 = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+  const progressEvery = Math.max(1000, Math.floor(config.spins / 100));
+
   for (let i = 0; i < config.spins; i++) {
+    // Cancellation poll — checked before each spin so callers can bail
+    // out cleanly within ~one-spin granularity (sub-ms in practice).
+    if (config.shouldCancel && config.shouldCancel()) break;
     totalWagered += 1; // one unit per spin — RTP is win/wager
     let spinWon = 0;
 
@@ -1255,6 +1287,21 @@ export async function runIRSimulation(
     if (spinWon > maxWinX) maxWinX = spinWon;
     if (spinWon > 0 && baseSpinPayout === 0) totalHits++; // count feature-only hits
     totalWon += spinWon;
+
+    // ── Auto-MC hooks ──────────────────────────────────────────────────
+    // Per-spin win callback (volatility / percentile / histogram outside
+    // the engine). Wrapped in try/catch so a misbehaving caller never
+    // aborts the simulator mid-run.
+    if (config.onSpinWin) {
+      try { config.onSpinWin(spinWon, i); } catch (_) { /* swallow */ }
+    }
+    if (config.onProgress && (i % progressEvery === 0 || i === config.spins - 1)) {
+      try {
+        const rtpSoFar = totalWagered > 0 ? totalWon / totalWagered : 0;
+        const elapsed = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - t0;
+        config.onProgress(i + 1, config.spins, rtpSoFar, elapsed);
+      } catch (_) { /* swallow */ }
+    }
 
     // ── Observability hook (Faza 11.7) ─────────────────────────────────
     if (config.observabilitySession) {

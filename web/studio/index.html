@@ -130,6 +130,16 @@
     </div>
   </div>
 
+  <!-- ROW 2b · AUTO-MC PROGRESS STRIP (hidden until orchestrator starts) -->
+  <div class="row-automc" id="row-automc" hidden role="status" aria-live="polite">
+    <span class="automc-label" id="automc-label">Auto-MC · 0 / 1 000 000 spins · RTP —</span>
+    <div class="automc-track">
+      <div class="automc-bar" id="automc-bar" style="width:0%"></div>
+    </div>
+    <span class="automc-eta mono" id="automc-eta">—</span>
+    <button class="btn-ghost mini" id="automc-cancel" title="Stop the simulation and keep partial results">Cancel</button>
+  </div>
+
   <!-- ROW 2 · TAB NAV -->
   <div class="row-tabs">
     <nav class="tabs" role="tablist" aria-label="Engine workspace">
@@ -650,6 +660,7 @@
             </div>
             <button class="btn-ghost" id="sensitivity-export-csv" title="Export current sweep as CSV">Export CSV</button>
             <button class="btn-ghost" id="sensitivity-save-b" title="Save Config B as a new variant">Save B</button>
+            <button class="btn-ghost" id="sensitivity-run-mc" title="Run 1M-spin Monte-Carlo against the current variant to populate Hit / σ / P99">Run MC</button>
             <button class="btn-primary" id="sensitivity-run">Run sweep</button>
           </div>
         </header>

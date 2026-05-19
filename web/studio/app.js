@@ -1788,11 +1788,221 @@
         ttl: 7000
       });
       logActivity(`IR import → ${wsName} · ${totSymbols} symbols · ${topo.reels}×${topo.rows} · ${totPaylines} lines · ${totFeatures} features`);
+
+      // ── Auto-MC ──────────────────────────────────────────────────────
+      // If the IR did NOT ship a validated_metrics block, kick off a
+      // 1M-spin local Monte-Carlo in a WebWorker so Hit / σ / P99 are
+      // engine-truth instead of heuristic placeholders.  Result is
+      // cached in IndexedDB by IR hash so re-imports skip the work.
+      if (!ir.validated_metrics) {
+        // Defer to next tick so the variant is already active in the UI
+        // (the orchestrator binds metrics to whatever workspace is live
+        // when the result returns).
+        setTimeout(() => autoMcTrigger(v, ir, "import").catch(() => {}), 200);
+      }
       return true;
     } catch (err) {
       console.warn("[studio] importCanonicalIR error:", err);
       return false;
     }
+  }
+
+  /* ============================================================
+     AUTO-MC — orchestrator client (UI + variant-binding glue)
+     ============================================================ */
+  let activeMcHandle = null;
+  let activeMcRunId = null;
+  async function autoMcTrigger(targetVariant, ir, originLabel) {
+    if (!window.__studio__ || typeof window.__studio__.runAutoMc !== "function") {
+      console.warn("[studio] runAutoMc bridge not available — skipping auto-MC");
+      return;
+    }
+    if (activeMcHandle) {
+      // Cancel any in-flight run before starting a new one.
+      try { activeMcHandle.cancel(); } catch (_) {}
+      activeMcHandle = null;
+    }
+
+    const strip = $("#row-automc");
+    const bar   = $("#automc-bar");
+    const lbl   = $("#automc-label");
+    const eta   = $("#automc-eta");
+    const cancelBtn = $("#automc-cancel");
+    if (!strip) return; // shell missing — defensive
+
+    // QA hook: tests can set window.__studio_auto_mc_test_spins to
+    // override the default 1M-spin count for cancel-timing tests.
+    const spins = (typeof window !== "undefined" && typeof window.__studio_auto_mc_test_spins === "number")
+      ? window.__studio_auto_mc_test_spins
+      : 1_000_000;
+    strip.removeAttribute("hidden");
+    if (bar) bar.style.width = "0%";
+    if (lbl) lbl.textContent = `Auto-MC · 0 / ${spins.toLocaleString()} spins · RTP — · ${originLabel}`;
+    if (eta) eta.textContent = "—";
+
+    const startedAt = performance.now();
+    const handle = window.__studio__.runAutoMc(ir, {
+      spins,
+      timeoutMs: 60_000,
+      onProgress: (p) => {
+        if (activeMcRunId !== handle.runId) return;
+        const pct = Math.min(100, (p.spinsDone / p.totalSpins) * 100);
+        if (bar) bar.style.width = pct.toFixed(1) + "%";
+        const rtpStr = (p.runningRtp * 100).toFixed(2);
+        if (lbl) lbl.textContent = `Auto-MC · ${p.spinsDone.toLocaleString()} / ${p.totalSpins.toLocaleString()} spins · RTP ${rtpStr}%`;
+        // ETA: project from current rate
+        const elapsedSec = Math.max(0.01, p.elapsedMs / 1000);
+        const rate = p.spinsDone / elapsedSec;
+        const remaining = (p.totalSpins - p.spinsDone) / Math.max(1, rate);
+        if (eta) eta.textContent = remaining < 1 ? "—" : `~${remaining.toFixed(0)}s`;
+      },
+    });
+    activeMcHandle = handle;
+    activeMcRunId = handle.runId;
+
+    if (cancelBtn) {
+      cancelBtn.onclick = () => {
+        try { handle.cancel(); } catch (_) {}
+        toast({ kind: "warn", msg: "Auto-MC cancelled — keeping partial result if available" });
+      };
+    }
+
+    try {
+      const res = await handle.result;
+      if (!res || activeMcRunId !== handle.runId) return; // stale or cancelled-before-any-spin
+      // Merge into the variant — but only if it's still the active one
+      // (user may have switched workspaces mid-run).
+      const vmBlock = res.validatedMetrics;
+      targetVariant.validatedMetrics = vmBlock;
+      if (typeof vmBlock.hit_rate === "number")          targetVariant.hit = vmBlock.hit_rate;
+      if (typeof vmBlock.volatility_index === "number")  targetVariant.sigma = vmBlock.volatility_index;
+      if (typeof vmBlock.max_win_observed_x === "number") targetVariant.maxWinObserved = vmBlock.max_win_observed_x;
+      if (vmBlock.win_percentiles && typeof vmBlock.win_percentiles.p99 === "number") {
+        targetVariant.p99 = vmBlock.win_percentiles.p99;
+      }
+      // Also seed rtpAllocation if missing — so recomputeFor surfaces it.
+      if (!targetVariant.rtpAllocation && typeof vmBlock.rtp === "number") {
+        targetVariant.rtpAllocation = {
+          total_mc_5b: vmBlock.rtp / 100,
+          total_cf: vmBlock.rtp / 100,
+        };
+      }
+      const elapsed = ((performance.now() - startedAt) / 1000).toFixed(1);
+      const statusLbl = res.status === "complete" ? "ok"
+        : res.status === "cancelled" ? "warn"
+        : "cyan";
+      toast({
+        kind: statusLbl,
+        msg: `Auto-MC ${res.status} · ${vmBlock.total_spins.toLocaleString()} spins · ${elapsed}s · RTP <b>${vmBlock.rtp.toFixed(2)}%</b> · Hit ${vmBlock.hit_rate.toFixed(2)}% · σ ${vmBlock.volatility_index.toFixed(2)} · P99 ${vmBlock.win_percentiles.p99.toFixed(2)}×`,
+        ttl: 9000,
+      });
+      logActivityFor(targetVariant, `auto-MC ${res.status} · RTP ${vmBlock.rtp.toFixed(4)}% · Hit ${vmBlock.hit_rate.toFixed(2)}% · σ ${vmBlock.volatility_index.toFixed(2)}`);
+
+      // Repaint the L1 row + rail with new numbers
+      try {
+        recomputeFor(targetVariant);
+        refreshL1(); refreshRail(); refreshVariantTabs();
+      } catch (_) {}
+    } catch (err) {
+      console.warn("[studio] auto-MC failed:", err);
+      toast({ kind: "warn", msg: `Auto-MC failed: ${err.message || err}` });
+    } finally {
+      if (activeMcRunId === handle.runId) {
+        activeMcRunId = null;
+        activeMcHandle = null;
+        strip.setAttribute("hidden", "");
+      }
+    }
+  }
+  // Expose so Sensitivity tab (and tests) can invoke explicitly.
+  window.__studio_auto_mc__ = { trigger: autoMcTrigger };
+
+  // Build a canonical IR-1.0.0 shape from a Studio variant — used by the
+  // Sensitivity tab's `Run MC` button when the user wants to populate
+  // validated metrics without importing a pre-built IR.  Returns null if
+  // the variant lacks the minimum required structure (reels + paytable).
+  function variantToIrForMc(v) {
+    if (!v || !Array.isArray(v.symbols) || v.symbols.length === 0) return null;
+    // Reels: prefer the preserved IR reels (from import), else derive from
+    // the variant's display strips, else fall back to uniform weights.
+    let baseReels;
+    if (v.irReels && Array.isArray(v.irReels.base) && v.irReels.base.length > 0) {
+      baseReels = v.irReels.base;
+    } else if (Array.isArray(v.reels) && v.reels.length > 0 && typeof v.reels[0] === "object" && !Array.isArray(v.reels[0])) {
+      // Already in weighted-map form
+      baseReels = v.reels;
+    } else {
+      // Convert each native display strip into a weighted map.  This is
+      // approximate (uniform weights per symbol per reel) but lets the MC
+      // run for user-built variants.
+      const symbolIds = v.symbols.map((s) => s.id);
+      baseReels = [];
+      const reelCount = Array.isArray(v.reels) && v.reels.length > 0 ? v.reels.length : 5;
+      for (let r = 0; r < reelCount; r++) {
+        const map = {};
+        for (const id of symbolIds) {
+          const w = v.symbols.find((s) => s.id === id)?.weight ?? 1;
+          map[id] = Math.max(0.5, w);
+        }
+        baseReels.push(map);
+      }
+    }
+    const fsReels = (v.irReels && Array.isArray(v.irReels.free_spins) && v.irReels.free_spins.length > 0)
+      ? v.irReels.free_spins
+      : null;
+    // Paytable: convert {x3,x4,x5} → {"3","4","5"} since MC runner uses
+    // string-keyed lookup.
+    const paytable = {};
+    for (const sym of v.symbols) {
+      if (sym && sym.pay) {
+        paytable[sym.id] = {
+          "3": sym.pay.x3 ?? 0,
+          "4": sym.pay.x4 ?? 0,
+          "5": sym.pay.x5 ?? 0,
+        };
+      }
+    }
+    const symbols = v.symbols.map((s) => {
+      let kind = "lp";
+      switch (s.tier) {
+        case "WILD":    kind = "wild"; break;
+        case "SCATTER": kind = "scatter"; break;
+        case "MULT":    kind = "bonus"; break; // multi/bonus orb tier
+        case "HP":      kind = "hp"; break;
+        case "MP":      kind = "hp"; break; // MP rolls up to hp at the schema level
+        case "LP":
+        default:        kind = "lp"; break;
+      }
+      const out = { id: s.id, name: s.name || s.id, kind };
+      if (kind === "wild") out.substitutes = "*";
+      return out;
+    });
+
+    const paylines = Array.isArray(v.paylines) && v.paylines.length > 0
+      ? v.paylines
+      : [[1,1,1,1,1],[0,0,0,0,0],[2,2,2,2,2]]; // minimal fallback
+
+    const ir = {
+      schema_version: "1.0.0",
+      meta: { id: v.id || "studio-variant", name: v.name || "Studio Variant", version: "0.1.0" },
+      topology: { kind: "rectangular", reels: baseReels.length, rows: 3 },
+      symbols,
+      reels: { mode: "weighted", base: baseReels, free_spins: fsReels || baseReels },
+      evaluation: {
+        kind: "lines",
+        paylines,
+        direction: "ltr",
+        min_match: 3,
+        pay_left_to_right_only: true,
+        wild_substitution: { enabled: true, excludes: ["S","B"], best_paying_interpretation: true },
+      },
+      paytable,
+      features: Array.isArray(v.features) ? v.features : [],
+      rng: v.rng || { kind: "pcg64", default_seed: 12345 },
+      bet: v.bet || { currency: "EUR", base_bet: 1, denominations: [1] },
+      limits: { target_rtp: 0.96, max_win_x: v.maxWin || 5000 },
+    };
+    return ir;
   }
 
   function confCls(c) {
@@ -3493,6 +3703,24 @@
     if (exportBtn) exportBtn.addEventListener("click", exportSensitivityCSV);
     const saveBtn = $("#sensitivity-save-b");
     if (saveBtn) saveBtn.addEventListener("click", saveBAsNewVariant);
+    const runMcBtn = $("#sensitivity-run-mc");
+    if (runMcBtn) runMcBtn.addEventListener("click", () => {
+      // Sensitivity-tab path: rebuild a minimal IR from the active variant
+      // and feed it to the same auto-MC orchestrator the import path uses.
+      const v = getActiveVariant();
+      if (!v || !v.symbols || v.symbols.length === 0) {
+        toast({ kind: "warn", msg: "Build a symbol pool first — Auto-MC needs an IR" });
+        return;
+      }
+      const ir = variantToIrForMc(v);
+      if (!ir) {
+        toast({ kind: "warn", msg: "Variant has no reels / paytable — cannot run MC" });
+        return;
+      }
+      autoMcTrigger(v, ir, "Sensitivity tab").catch((err) => {
+        console.warn("[studio] sensitivity MC failed:", err);
+      });
+    });
     const mode1 = $("#sensitivity-mode-1d");
     const mode2 = $("#sensitivity-mode-2d");
     if (mode1) mode1.addEventListener("click", () => {

@@ -55,6 +55,12 @@ import {
   type PaytableEntry,
   type ReelWeights,
 } from '@engine/utils/rtpEstimator.js';
+import {
+  runAutoMcOrchestrated,
+  cacheClear as autoMcCacheClear,
+  type AutoMcOptions,
+} from './auto-mc/orchestrator.js';
+import type { SlotGameIR as IRForAutoMc } from '@engine/ir/types.js';
 
 // ── Window contract — what app.js can call ──────────────────────────
 declare global {
@@ -146,6 +152,41 @@ interface StudioBridge {
   // ── GDD Import Pipeline (W199.5) ──
   parseGDD(file: File): Promise<ExtractedGDD>;
   generateFromGDD(gdd: ExtractedGDD): { ok: boolean; message: string; computedRtp?: number };
+  // ── Auto-MC (Phase 2) ──
+  // Kicks off a Monte-Carlo sim against the supplied IR.  Returns a handle
+  // so callers (app.js, Sensitivity tab) can subscribe to progress and
+  // cancel via `cancel()`.  Caching, WebWorker fallback, timeout handling
+  // are all internal — callers just get the final validated_metrics block.
+  runAutoMc(
+    ir: unknown,
+    opts?: AutoMcCallerOptions,
+  ): AutoMcCallerHandle;
+  /** Clears cached MC results (for QA / forced re-run). */
+  clearAutoMcCache(): Promise<void>;
+}
+
+export interface AutoMcCallerOptions {
+  spins?: number;
+  seed?: number;
+  timeoutMs?: number;
+  noCache?: boolean;
+  onProgress?: (p: {
+    spinsDone: number;
+    totalSpins: number;
+    runningRtp: number;
+    elapsedMs: number;
+  }) => void;
+}
+export interface AutoMcCallerHandle {
+  /** Resolves with the `validated_metrics` block + run status, or null if cancelled. */
+  result: Promise<null | {
+    status: 'complete' | 'cancelled' | 'timeout' | 'partial';
+    validatedMetrics: import('./auto-mc/types.js').AutoMcResultMessage['validatedMetrics'];
+    durationMs: number;
+    spinsPerSec: number;
+  }>;
+  cancel(): void;
+  runId: string;
 }
 
 // ── Debounced RTP compute ───────────────────────────────────────────
@@ -434,6 +475,39 @@ async function parseGDDWithPolish(file: File): Promise<ExtractedGDD> {
   }
 }
 
+// ── Auto-MC bridge wrapper ──────────────────────────────────────────
+function runAutoMcBridge(
+  ir: unknown,
+  callerOpts?: AutoMcCallerOptions,
+) {
+  const irTyped = ir as IRForAutoMc;
+  const opts: AutoMcOptions = {
+    spins: callerOpts?.spins ?? 1_000_000,
+    seed: callerOpts?.seed,
+    timeoutMs: callerOpts?.timeoutMs ?? 60_000,
+    noCache: callerOpts?.noCache,
+    onProgress: callerOpts?.onProgress
+      ? (p) => callerOpts.onProgress!({
+          spinsDone: p.spinsDone,
+          totalSpins: p.totalSpins,
+          runningRtp: p.runningRtp,
+          elapsedMs: p.elapsedMs,
+        })
+      : undefined,
+  };
+  const h = runAutoMcOrchestrated(irTyped, opts);
+  return {
+    runId: h.runId,
+    cancel: h.cancel,
+    result: h.result.then((r) => (r == null ? null : {
+      status: r.status,
+      validatedMetrics: r.validatedMetrics,
+      durationMs: r.durationMs,
+      spinsPerSec: r.spinsPerSec,
+    })),
+  };
+}
+
 // ── Public bridge install ───────────────────────────────────────────
 const bridge: StudioBridge = {
   computeRTP,
@@ -446,6 +520,8 @@ const bridge: StudioBridge = {
   scheduleRTPRecompute,
   parseGDD: parseGDDWithPolish,
   generateFromGDD,
+  runAutoMc: runAutoMcBridge,
+  clearAutoMcCache: autoMcCacheClear,
 };
 
 window.__studio__ = bridge;

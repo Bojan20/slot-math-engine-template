@@ -123,7 +123,8 @@ button:focus-visible, input:focus-visible, select:focus-visible,
    ================================================================= */
 .shell {
   display: grid;
-  grid-template-rows: 44px 32px 38px 1fr 28px;
+  /* header · vartabs · auto-mc (auto/0) · tabs · main · status */
+  grid-template-rows: 44px 32px auto 38px 1fr 28px;
   grid-template-columns: 1fr;
   height: 100vh;
 }
@@ -314,6 +315,56 @@ button:focus-visible, input:focus-visible, select:focus-visible,
 .l1-m b .pct { font-size: 10px; color: var(--text-2); font-weight: 400; margin-left: 1px; }
 .l1-vola { color: var(--cyan) !important; font-family: var(--font-mono); font-size: 11px !important; letter-spacing: 0.06em; }
 
+/* ---------- ROW 2b · AUTO-MC PROGRESS STRIP ---------- */
+.row-automc {
+  display: grid;
+  grid-template-columns: 1fr 240px auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
+  border-bottom: 1px solid var(--cyan-line);
+  font-size: 11px;
+  color: var(--text-1);
+}
+.row-automc[hidden] { display: none; }
+.automc-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.automc-label .automc-rtp { color: var(--cyan); font-weight: 600; }
+.automc-track {
+  position: relative;
+  height: 6px;
+  background: var(--bg-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.automc-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan) 0%, #67e8f9 100%);
+  border-radius: 3px;
+  transition: width 200ms ease-out;
+}
+.automc-eta {
+  font-size: 10.5px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  min-width: 64px;
+  text-align: right;
+}
+#automc-cancel {
+  height: 22px;
+  padding: 0 10px;
+  font-size: 10.5px;
+}
+
 /* ---------- ROW 3 · MAIN ---------- */
 .row-main {
   display: grid;
@@ -334,7 +385,7 @@ button:focus-visible, input:focus-visible, select:focus-visible,
   display: none;
 }
 .shell.is-bottom-collapsed .row-status { display: none; }
-.shell.is-bottom-collapsed { grid-template-rows: 44px 32px 38px 1fr 0; }
+.shell.is-bottom-collapsed { grid-template-rows: 44px 32px auto 38px 1fr 0; }
 
 /* ─── LAYOUT TOGGLES (header-right small button group) ───────────────── */
 .layout-toggles {
