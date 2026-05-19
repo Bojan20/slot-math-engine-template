@@ -171,6 +171,11 @@ function hook() {
   return h;
 }
 
+/** Soft hook — returns null if app.js hasn't installed yet (no exception). */
+function hookSoft() {
+  return window.__studio_ui_hook__ ?? null;
+}
+
 function getCurrentVariant(): StudioVariant {
   return hook().getActiveVariant();
 }
@@ -275,7 +280,16 @@ function roundTripCheck(): { ok: boolean; issues: string[] } {
 
 function scheduleRTPRecompute(): void {
   debounceRTP(() => {
-    computeRTP();
+    // The debounced callback may fire during app.js's boot sequence (before
+    // the UI hook is installed) or right after a workspace switch where the
+    // variant pool is still empty.  In either case, fail silently instead of
+    // throwing — boot() will issue its own computeRTP() once the hook is up.
+    if (!hookSoft()) return;
+    try {
+      computeRTP();
+    } catch (err) {
+      console.warn('[studio] scheduleRTPRecompute → computeRTP failed:', err);
+    }
   });
 }
 

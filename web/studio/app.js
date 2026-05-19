@@ -388,7 +388,7 @@
           ${customThumb}
         </button>
         <div class="sym-weight">
-          <input type="range" min="0.5" max="12" step="0.1" value="${sym.weight}" data-w="${idx}" />
+          <input type="range" min="0.5" max="${Math.max(12, Math.ceil(sym.weight * 1.5))}" step="0.1" value="${sym.weight}" data-w="${idx}" />
           <span class="w-val mono" data-w-v="${idx}">${sym.weight.toFixed(1)}</span>
         </div>
         <span class="sym-pay">${sym.pay.x3}/${sym.pay.x4}/${sym.pay.x5}</span>
@@ -1530,16 +1530,23 @@
                   : topo.reels === 7 ? "7x7c"
                   : "5x3";
 
-      // Map IR symbols → workspace symbol shape (id/name/tier/weight).
+      // Map IR symbols → workspace symbol shape (id/name/tier/weight/icon/pay).
       // Weight is computed as the SUM of per-reel weights across all reels
       // in the base reel set — this is what Studio's render code expects
       // (`sym.weight.toFixed(1)`).  If reels.base is missing or empty, fall
       // back to weight=1 per symbol so the UI doesn't crash.
+      //
+      // Tier mapping: IR uses `kind: "hp" | "lp" | "wild" | "scatter" | "bonus"`
+      // — but classic slot UX distinguishes HP (premium) vs MP (mid).  When the
+      // IR has many `kind=hp` symbols (Wrath has 6: Z/H/P/HM/SH/SW), we split
+      // them by pay rank: top half (by x5) → HP, bottom half → MP.  Symbols
+      // with `kind: "mp"` (if explicitly set in future IRs) always go to MP.
       const KIND_TO_TIER = {
         wild:       "WILD",
         scatter:    "SCATTER",
         bonus:      "MULT",   // bonus orbs are treated as MULT tier in Studio
         hp:         "HP",
+        mp:         "MP",
         lp:         "LP",
         multiplier: "MULT",
       };
@@ -1566,14 +1573,64 @@
           x5: typeof p.x5 === "number" ? p.x5 : (p["5"] ?? 0),
         };
       };
-      const symbols = ir.symbols.map(s => ({
-        id: s.id,
-        name: s.name || s.id,
-        tier: KIND_TO_TIER[s.kind] || "LP",
-        weight: sumWeightForSymbol(s.id),
-        pay: payFor(s.id),
-        substitutes: s.substitutes || null,
-      }));
+
+      // ── HP / MP auto-split for kind=hp symbols ──
+      // If IR has >=4 kind=hp symbols, sort by x5 descending and split: the
+      // top half (ceil N/2) stays HP, the rest move to MP.  This matches the
+      // Wrath of Olympus authoring intent (Z/H/P=HP, HM/SH/SW=MP) without
+      // requiring the IR schema to encode "mp" explicitly.
+      const hpIRSymbols = ir.symbols.filter(s => s.kind === "hp");
+      const hpToMP = new Set();
+      if (hpIRSymbols.length >= 4) {
+        const ranked = hpIRSymbols
+          .map(s => ({ id: s.id, x5: payFor(s.id).x5 }))
+          .sort((a, b) => b.x5 - a.x5);
+        const hpCount = Math.ceil(ranked.length / 2);
+        for (let i = hpCount; i < ranked.length; i++) hpToMP.add(ranked[i].id);
+      }
+      const tierFor = (s) => {
+        if (s.kind === "hp" && hpToMP.has(s.id)) return "MP";
+        return KIND_TO_TIER[s.kind] || "LP";
+      };
+
+      // ── Default icon assignment per tier (sprite IDs from ICON_LIB) ──
+      // Without this, `<use href="#g-${sym.icon}"/>` resolves to "#g-undefined"
+      // and the symbol pool renders with empty glyphs.  We pick from the
+      // tier's default icon roster, cycling if the IR has more symbols in a
+      // tier than there are unique defaults.
+      const tierIconCursor = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
+      const usedIcons = new Set();
+      const pickIconForTier = (tier) => {
+        const defs = (TIER_DEFAULTS[tier] && TIER_DEFAULTS[tier].defaultIcons) || [];
+        if (defs.length) {
+          for (let attempt = 0; attempt < defs.length; attempt++) {
+            const candidate = defs[(tierIconCursor[tier] + attempt) % defs.length];
+            if (!usedIcons.has(candidate)) {
+              tierIconCursor[tier] = (tierIconCursor[tier] + attempt + 1) % defs.length;
+              usedIcons.add(candidate);
+              return candidate;
+            }
+          }
+          // All tier defaults taken → fall through to global library
+        }
+        const fallback = ICON_LIB.find(ic => !usedIcons.has(ic.id));
+        const iconId = fallback ? fallback.id : (defs[0] || ICON_LIB[0].id);
+        usedIcons.add(iconId);
+        return iconId;
+      };
+
+      const symbols = ir.symbols.map(s => {
+        const tier = tierFor(s);
+        return {
+          id: s.id,
+          name: s.name || s.id,
+          tier,
+          icon: pickIconForTier(tier),
+          weight: sumWeightForSymbol(s.id),
+          pay: payFor(s.id),
+          substitutes: s.substitutes || null,
+        };
+      });
       const tierCounts = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
       for (const s of symbols) tierCounts[s.tier]++;
 
@@ -2092,8 +2149,10 @@
     const grid = side === "A" ? $("#play-grid-A") : $("#play-grid-B");
     const pool = variant.symbols.length ? variant.symbols : (buildSymbolPoolFor(variant), variant.symbols);
     grid.innerHTML = "";
+    if (!pool || pool.length === 0) return;
     for (let i = 0; i < 15; i++) {
       const s = pool[i % pool.length];
+      if (!s) continue;
       const cell = document.createElement("div");
       cell.className = `play-cell tier-${s.tier}`;
       cell.innerHTML = `<svg><use href="#g-${s.icon}"/></svg>`;
@@ -2376,8 +2435,12 @@
     grid.innerHTML = "";
     const v = getActiveVariant();
     const pool = v.symbols.length ? v.symbols : (buildSymbolPoolFor(v), v.symbols);
+    // Guard against blank workspaces (no tiers seeded yet) — empty pool would
+    // crash `pool[i % 0] → undefined` on the first .tier access.
+    if (!pool || pool.length === 0) return;
     for (let i = 0; i < 15; i++) {
-      const s = pool[(Math.floor(Math.random() * pool.length)) % pool.length];
+      const s = pool[Math.floor(Math.random() * pool.length)];
+      if (!s) continue;
       const win = animateWin && Math.random() < 0.18;
       const cell = document.createElement("div");
       cell.className = `play-cell tier-${s.tier} ${win ? "is-win" : ""}`;
