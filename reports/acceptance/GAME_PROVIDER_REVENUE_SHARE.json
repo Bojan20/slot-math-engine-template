@@ -1,0 +1,509 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_uk_balanced_portfolio",
+      "regime": "UK_BALANCED",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "Pragmatic",
+            "revenueSharePct": 0.2,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 5000000,
+            "minimumMonthlyFee": 10000,
+            "annualContentRefreshRequired": 20,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "NetEnt",
+            "revenueSharePct": 0.22,
+            "engagementMultiplier": 1.3,
+            "annualGgrPotential": 3000000,
+            "minimumMonthlyFee": 8000,
+            "annualContentRefreshRequired": 15,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Hacksaw",
+            "revenueSharePct": 0.25,
+            "engagementMultiplier": 1.1,
+            "annualGgrPotential": 2000000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Smaller",
+            "revenueSharePct": 0.3,
+            "engagementMultiplier": 0.9,
+            "annualGgrPotential": 1000000,
+            "minimumMonthlyFee": 2000,
+            "annualContentRefreshRequired": 5,
+            "isTier1Premium": false
+          }
+        ],
+        "operatorTotalGgrCapacity": 20000000,
+        "marketingBudgetPerProvider": 50000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          7000000,
+          3900000,
+          2200000,
+          900000
+        ],
+        "perProviderSupplierPayment": [
+          1520000,
+          954000,
+          610000,
+          294000
+        ],
+        "perProviderOperatorMargin": [
+          5480000,
+          2946000,
+          1590000,
+          606000
+        ],
+        "providerRanking": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "totalOperatorNetRevenue": 10622000,
+        "totalSupplierPayments": 3378000,
+        "tier1PortfolioShare": 0.7785714285714286,
+        "meetsTier1Threshold": true,
+        "supplierPortfolioScore": 1,
+        "isCompliantUkgcSms52": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 10569974.75558644
+      },
+      "pass": true
+    },
+    {
+      "name": "B_tier1_dominant",
+      "regime": "TIER1_DOMINANT",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "Evolution",
+            "revenueSharePct": 0.3,
+            "engagementMultiplier": 1.6,
+            "annualGgrPotential": 8000000,
+            "minimumMonthlyFee": 30000,
+            "annualContentRefreshRequired": 20,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Pragmatic",
+            "revenueSharePct": 0.2,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 5000000,
+            "minimumMonthlyFee": 10000,
+            "annualContentRefreshRequired": 20,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Yggdrasil",
+            "revenueSharePct": 0.25,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 1500000,
+            "minimumMonthlyFee": 4000,
+            "annualContentRefreshRequired": 8,
+            "isTier1Premium": false
+          }
+        ],
+        "operatorTotalGgrCapacity": 20000000,
+        "marketingBudgetPerProvider": 75000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          12018779.342723005,
+          6572769.953051643,
+          1408450.704225352
+        ],
+        "perProviderSupplierPayment": [
+          3965633.8028169014,
+          1434553.9906103287,
+          400112.676056338
+        ],
+        "perProviderOperatorMargin": [
+          8053145.539906103,
+          5138215.962441315,
+          1008338.028169014
+        ],
+        "providerRanking": [
+          0,
+          1,
+          2
+        ],
+        "totalOperatorNetRevenue": 14199699.53051643,
+        "totalSupplierPayments": 5800300.469483567,
+        "tier1PortfolioShare": 0.9295774647887323,
+        "meetsTier1Threshold": true,
+        "supplierPortfolioScore": 1,
+        "isCompliantUkgcSms52": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 14041477.455862308
+      },
+      "pass": true
+    },
+    {
+      "name": "C_no_tier1_corner",
+      "regime": "NO_TIER1",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "Hacksaw",
+            "revenueSharePct": 0.25,
+            "engagementMultiplier": 1.1,
+            "annualGgrPotential": 2000000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Smaller1",
+            "revenueSharePct": 0.3,
+            "engagementMultiplier": 0.9,
+            "annualGgrPotential": 1000000,
+            "minimumMonthlyFee": 2000,
+            "annualContentRefreshRequired": 5,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Smaller2",
+            "revenueSharePct": 0.32,
+            "engagementMultiplier": 0.8,
+            "annualGgrPotential": 800000,
+            "minimumMonthlyFee": 1500,
+            "annualContentRefreshRequired": 4,
+            "isTier1Premium": false
+          }
+        ],
+        "operatorTotalGgrCapacity": 10000000,
+        "marketingBudgetPerProvider": 30000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          2200000,
+          900000,
+          640000
+        ],
+        "perProviderSupplierPayment": [
+          610000,
+          294000,
+          222800
+        ],
+        "perProviderOperatorMargin": [
+          1590000,
+          606000,
+          417200
+        ],
+        "providerRanking": [
+          0,
+          1,
+          2
+        ],
+        "totalOperatorNetRevenue": 2613200,
+        "totalSupplierPayments": 1126800,
+        "tier1PortfolioShare": 0,
+        "meetsTier1Threshold": false,
+        "supplierPortfolioScore": 0.5,
+        "isCompliantUkgcSms52": false
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 2614861.881480839
+      },
+      "pass": true
+    },
+    {
+      "name": "D_10_provider_mega_portfolio",
+      "regime": "MEGA_10",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "Provider0",
+            "revenueSharePct": 0.2,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 2000000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Provider1",
+            "revenueSharePct": 0.21000000000000002,
+            "engagementMultiplier": 1.2,
+            "annualGgrPotential": 1900000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Provider2",
+            "revenueSharePct": 0.22,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 1800000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Provider3",
+            "revenueSharePct": 0.23,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 1700000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider4",
+            "revenueSharePct": 0.24000000000000002,
+            "engagementMultiplier": 1.2,
+            "annualGgrPotential": 1600000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider5",
+            "revenueSharePct": 0.25,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 1500000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider6",
+            "revenueSharePct": 0.26,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 1400000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider7",
+            "revenueSharePct": 0.27,
+            "engagementMultiplier": 1.2,
+            "annualGgrPotential": 1300000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider8",
+            "revenueSharePct": 0.28,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 1200000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          },
+          {
+            "providerName": "Provider9",
+            "revenueSharePct": 0.29000000000000004,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 1100000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 10,
+            "isTier1Premium": false
+          }
+        ],
+        "operatorTotalGgrCapacity": 30000000,
+        "marketingBudgetPerProvider": 50000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          2000000,
+          2280000,
+          2520000,
+          1700000,
+          1920000,
+          2100000,
+          1400000,
+          1560000,
+          1680000,
+          1100000
+        ],
+        "perProviderSupplierPayment": [
+          460000,
+          538800,
+          614400,
+          451000,
+          520800.00000000006,
+          585000,
+          424000,
+          481200,
+          530400,
+          379000.00000000006
+        ],
+        "perProviderOperatorMargin": [
+          1540000,
+          1741200,
+          1905600,
+          1249000,
+          1399200,
+          1515000,
+          976000,
+          1078800,
+          1149600,
+          721000
+        ],
+        "providerRanking": [
+          2,
+          1,
+          0,
+          5,
+          4,
+          3,
+          8,
+          7,
+          6,
+          9
+        ],
+        "totalOperatorNetRevenue": 13275400,
+        "totalSupplierPayments": 4984600,
+        "tier1PortfolioShare": 0.3723986856516977,
+        "meetsTier1Threshold": true,
+        "supplierPortfolioScore": 1,
+        "isCompliantUkgcSms52": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 13240396.4398736
+      },
+      "pass": true
+    },
+    {
+      "name": "E_low_capacity_constrained",
+      "regime": "CONSTRAINED",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "Pragmatic",
+            "revenueSharePct": 0.2,
+            "engagementMultiplier": 1.4,
+            "annualGgrPotential": 8000000,
+            "minimumMonthlyFee": 10000,
+            "annualContentRefreshRequired": 20,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "NetEnt",
+            "revenueSharePct": 0.22,
+            "engagementMultiplier": 1.3,
+            "annualGgrPotential": 8000000,
+            "minimumMonthlyFee": 8000,
+            "annualContentRefreshRequired": 15,
+            "isTier1Premium": true
+          }
+        ],
+        "operatorTotalGgrCapacity": 5000000,
+        "marketingBudgetPerProvider": 50000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          2592592.592592593,
+          2407407.4074074076
+        ],
+        "perProviderSupplierPayment": [
+          638518.5185185187,
+          625629.6296296297
+        ],
+        "perProviderOperatorMargin": [
+          1954074.0740740742,
+          1781777.777777778
+        ],
+        "providerRanking": [
+          0,
+          1
+        ],
+        "totalOperatorNetRevenue": 3735851.851851852,
+        "totalSupplierPayments": 1264148.1481481483,
+        "tier1PortfolioShare": 1,
+        "meetsTier1Threshold": true,
+        "supplierPortfolioScore": 1,
+        "isCompliantUkgcSms52": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 3736130.655700202
+      },
+      "pass": true
+    },
+    {
+      "name": "F_high_share_extreme_corner",
+      "regime": "CORNER_HIGH_SHARE",
+      "cfg": {
+        "providers": [
+          {
+            "providerName": "PremiumProv",
+            "revenueSharePct": 0.4,
+            "engagementMultiplier": 1.8,
+            "annualGgrPotential": 6000000,
+            "minimumMonthlyFee": 50000,
+            "annualContentRefreshRequired": 30,
+            "isTier1Premium": true
+          },
+          {
+            "providerName": "Other",
+            "revenueSharePct": 0.25,
+            "engagementMultiplier": 1,
+            "annualGgrPotential": 2000000,
+            "minimumMonthlyFee": 5000,
+            "annualContentRefreshRequired": 5,
+            "isTier1Premium": false
+          }
+        ],
+        "operatorTotalGgrCapacity": 10000000,
+        "marketingBudgetPerProvider": 50000,
+        "tier1MinimumSharePct": 0.3
+      },
+      "closed_form": {
+        "perProviderEffectiveGgr": [
+          8437500,
+          1562500
+        ],
+        "perProviderSupplierPayment": [
+          3975000,
+          450625
+        ],
+        "perProviderOperatorMargin": [
+          4462500,
+          1111875
+        ],
+        "providerRanking": [
+          0,
+          1
+        ],
+        "totalOperatorNetRevenue": 5574375,
+        "totalSupplierPayments": 4425625,
+        "tier1PortfolioShare": 0.84375,
+        "meetsTier1Threshold": true,
+        "supplierPortfolioScore": 1,
+        "isCompliantUkgcSms52": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedTotalNetRevenueMean": 5573857.192001797
+      },
+      "pass": true
+    }
+  ]
+}
