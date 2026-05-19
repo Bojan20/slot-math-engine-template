@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "RTP_DRIFT_CUSUM",
+  "generated_utc": "2026-05-19T11:04:30.843Z",
+  "episodes_per_config": 200,
+  "horizon_spins": 300000,
+  "seed": 3405644336,
+  "tolerances": {
+    "arl0_factor": 4,
+    "arl1_factor": 4
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_ukgc_canonical_k0.5_h4",
+      "description": "UKGC canonical k=0.5/h=4, detect 1σ shift in 100K-spin/mo game",
+      "regime": "UKGC_CANONICAL",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 1,
+        "driftSensitivityK": 0.5,
+        "decisionThresholdH": 4,
+        "spinsPerMonth": 100000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 99.19630006628847,
+        "arl0InMonths": 0.0009919630006628847,
+        "probFalseAlertPerMonth": 1,
+        "arl1InSpins": 6.036631277777468,
+        "monthsToDetectionGivenShift": 0.000060366312777774686,
+        "perSpinDriftToleranceBand": 1.5811388300841898,
+        "rtpDriftDetectionScore": 0.4229284825701437,
+        "isCompliantUkgcRts14": true,
+        "effectiveDriftSigma": 0.5
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 176.41,
+        "observedArl1InSpins": 7.935
+      },
+      "checks": {
+        "arl0_ratio": 1.778392942903244,
+        "arl1_ratio": 1.3144748510996453
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_strict_audit_k0.5_h5",
+      "description": "Strict audit k=0.5/h=5 — fewer false alarms, slower detection",
+      "regime": "STRICT_AUDIT",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 1,
+        "driftSensitivityK": 0.5,
+        "decisionThresholdH": 5,
+        "spinsPerMonth": 100000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 284.8263182051532,
+        "arl0InMonths": 0.002848263182051532,
+        "probFalseAlertPerMonth": 1,
+        "arl1InSpins": 8.013475893998171,
+        "monthsToDetectionGivenShift": 0.00008013475893998172,
+        "perSpinDriftToleranceBand": 1.5811388300841898,
+        "rtpDriftDetectionScore": 0.39407162175245436,
+        "isCompliantUkgcRts14": true,
+        "effectiveDriftSigma": 0.5
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 515.59,
+        "observedArl1InSpins": 10.49
+      },
+      "checks": {
+        "arl0_ratio": 1.810190867364418,
+        "arl1_ratio": 1.3090449311586079
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "C_high_volume_operator_10M_spins",
+      "description": "High-volume operator: 10M spins/mo → faster ARL_1 detection in months",
+      "regime": "HIGH_VOLUME",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 1,
+        "driftSensitivityK": 0.5,
+        "decisionThresholdH": 4,
+        "spinsPerMonth": 10000000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 99.19630006628847,
+        "arl0InMonths": 0.000009919630006628847,
+        "probFalseAlertPerMonth": 1,
+        "arl1InSpins": 6.036631277777468,
+        "monthsToDetectionGivenShift": 6.036631277777468e-7,
+        "perSpinDriftToleranceBand": 15.811388300841898,
+        "rtpDriftDetectionScore": 0.4229284825701437,
+        "isCompliantUkgcRts14": true,
+        "effectiveDriftSigma": 0.5
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 176.41,
+        "observedArl1InSpins": 7.935
+      },
+      "checks": {
+        "arl0_ratio": 1.778392942903244,
+        "arl1_ratio": 1.3144748510996453
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_small_shift_2sigma_detection",
+      "description": "Detect small 0.5σ shift (subtle RTP drift) — slow but feasible",
+      "regime": "SMALL_SHIFT",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 0.5,
+        "driftSensitivityK": 0.25,
+        "decisionThresholdH": 4,
+        "spinsPerMonth": 1000000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 35.1124487914452,
+        "arl0InMonths": 0.0000351124487914452,
+        "probFalseAlertPerMonth": 1,
+        "arl1InSpins": 9.082682265892903,
+        "monthsToDetectionGivenShift": 0.000009082682265892903,
+        "perSpinDriftToleranceBand": 5,
+        "rtpDriftDetectionScore": 0.3830401384389266,
+        "isCompliantUkgcRts14": false,
+        "effectiveDriftSigma": 0.25
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 39.035,
+        "observedArl1InSpins": 13.345
+      },
+      "checks": {
+        "arl0_ratio": 1.1117139744895972,
+        "arl1_ratio": 1.469279625701855
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_corner_overly_sensitive",
+      "description": "Corner: overly sensitive k=0.2 — high false-alarm rate",
+      "regime": "CORNER_SENSITIVE",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 1,
+        "driftSensitivityK": 0.2,
+        "decisionThresholdH": 3,
+        "spinsPerMonth": 1000000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 14.001461534206847,
+        "arl0InMonths": 0.000014001461534206847,
+        "probFalseAlertPerMonth": 1,
+        "arl1InSpins": 2.9751794898820467,
+        "monthsToDetectionGivenShift": 0.0000029751794898820467,
+        "perSpinDriftToleranceBand": 5,
+        "rtpDriftDetectionScore": 0.5,
+        "isCompliantUkgcRts14": false,
+        "effectiveDriftSigma": 0.8
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 16.345,
+        "observedArl1InSpins": 4.42
+      },
+      "checks": {
+        "arl0_ratio": 1.167378131209208,
+        "arl1_ratio": 1.4856246539180176
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "F_corner_moderately_conservative",
+      "description": "Corner: moderately conservative k=1.0/h=6 — slow but ARL_0 tractable",
+      "regime": "CORNER_CONSERVATIVE",
+      "cfg": {
+        "targetRtp": 0.96,
+        "perSpinPayoutStd": 5,
+        "shiftToDetectSigma": 2,
+        "driftSensitivityK": 1,
+        "decisionThresholdH": 6,
+        "spinsPerMonth": 1000000,
+        "monthlyRtpDriftToleranceAbs": 0.005
+      },
+      "closed_form": {
+        "arl0InSpins": 81370.89570950196,
+        "arl0InMonths": 0.08137089570950196,
+        "probFalseAlertPerMonth": 0.9999953997794964,
+        "arl1InSpins": 5.500003072106177,
+        "monthsToDetectionGivenShift": 0.000005500003072106176,
+        "perSpinDriftToleranceBand": 5,
+        "rtpDriftDetectionScore": 0.6537751624030121,
+        "isCompliantUkgcRts14": true,
+        "effectiveDriftSigma": 1
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "horizonSpins": 300000,
+        "observedArl0InSpins": 132745.8482142857,
+        "observedArl1InSpins": 6.98
+      },
+      "checks": {
+        "arl0_ratio": 1.6313676660042533,
+        "arl1_ratio": 1.269090200221847
+      },
+      "pass": true,
+      "elapsed_ms": 1049
+    }
+  ]
+}
