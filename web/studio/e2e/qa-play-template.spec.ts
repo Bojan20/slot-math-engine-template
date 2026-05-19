@@ -74,13 +74,13 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
   // Runner must render: reels grid + spin button + balance
   await expect(newPage.locator('#reels-grid')).toBeVisible();
   await expect(newPage.locator('#spin-btn')).toBeVisible();
-  await expect(newPage.locator('#balance')).toBeVisible();
+  await expect(newPage.locator('#bal')).toBeVisible();
   const cellCount = await newPage.locator('#reels-grid .cell').count();
   expect(cellCount, 'reels grid has 5×3 = 15 cells').toBe(15);
   console.log(`✓ Runner UI rendered (${cellCount} cells)`);
 
   // Initial state: balance 100, spins 0
-  const initialBalance = parseFloat(await newPage.locator('#balance').textContent() || '0');
+  const initialBalance = parseFloat(await newPage.locator('#bal').textContent() || '0');
   expect(initialBalance, 'starting balance').toBe(100);
   expect(await newPage.locator('#stat-spins').textContent()).toBe('0');
   console.log(`✓ Initial state: balance=${initialBalance}, spins=0`);

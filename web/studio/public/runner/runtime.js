@@ -482,8 +482,17 @@
   // ─── Render helpers ────────────────────────────────────────────────
 
   const reelsEl = $('#reels-grid');
-  const balanceEl = $('#balance');
+  // Balance display — Wrath canonical ID is #bal; #balance kept as legacy
+  // alias on a hidden span.  The renderHud mirror keeps both in sync so
+  // existing tests + future Wrath controllers (statusBarController,
+  // bigWinController) both find a working node.  topBalanceValue is the
+  // top-right large counter introduced in Batch 1 of the Wrath port.
+  const balanceEl = $('#bal') || $('#balance');
+  const balanceAliasEl = $('#balance');
+  const topBalanceEl = $('#topBalanceValue');
+  const menuBalanceEl = $('#menuBalanceValue');
   const betAmountEl = $('#bet-amount');
+  const betWrathEl = $('#bet');
   const spinsEl = $('#stat-spins');
   const hitsEl = $('#stat-hits');
   const hitPctEl = $('#stat-hit-pct');
@@ -572,9 +581,18 @@
   function hideWinBanner() { winBannerEl.setAttribute('hidden', ''); }
 
   function renderHud() {
-    balanceEl.textContent = fmt(state.balance);
-    $('#currency').textContent = CURRENCY;
-    betAmountEl.textContent = fmt(currentBet());
+    const balStr = fmt(state.balance);
+    if (balanceEl) balanceEl.textContent = balStr;
+    // Mirror to legacy alias + Wrath top counter + menu balance so every
+    // visible / scripted consumer stays in sync regardless of which ID
+    // it queries.
+    if (balanceAliasEl && balanceAliasEl !== balanceEl) balanceAliasEl.textContent = balStr;
+    if (topBalanceEl) topBalanceEl.textContent = balStr;
+    if (menuBalanceEl) menuBalanceEl.textContent = balStr;
+    const curEl = $('#currency'); if (curEl) curEl.textContent = CURRENCY;
+    const betStr = fmt(currentBet());
+    if (betAmountEl) betAmountEl.textContent = betStr;
+    if (betWrathEl) betWrathEl.textContent = betStr;
     spinsEl.textContent = String(state.spinsPlayed);
     hitsEl.textContent = String(state.hits);
     hitPctEl.textContent = state.spinsPlayed > 0 ? fmt((state.hits / state.spinsPlayed) * 100, 2) + '%' : '—';
