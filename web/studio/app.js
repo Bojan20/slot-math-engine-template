@@ -649,6 +649,29 @@
      COMPUTE (mock closed-form)
      ============================================================ */
   function recomputeFor(variant) {
+    // If variant was imported from a canonical IR that carries a validated
+    // rtp_allocation (closed-form or Monte-Carlo total), trust those numbers
+    // instead of the legacy heuristic.  This is the only way Compute can
+    // surface the true RTP for feature-heavy games (Free Spins, Hold & Win,
+    // Lightning Multiplier) — the heuristic only models base line wins.
+    const alloc = variant.rtpAllocation;
+    if (alloc && (typeof alloc.total_cf === "number" || typeof alloc.total_mc_5b === "number")) {
+      // Prefer Monte-Carlo total when present (4B-spin validation);
+      // fall back to closed-form total otherwise.
+      const totalRtp = typeof alloc.total_mc_5b === "number"
+        ? alloc.total_mc_5b
+        : alloc.total_cf;
+      variant.rtp = +(totalRtp * 100).toFixed(4);
+      // Derive hit/sigma/maxWin/vola from imported symbols so the UI rails
+      // still render sensible numbers; these are display-only and don't
+      // feed back into RTP.
+      variant.hit = 22 + (variant.symbols.length - 6) * 0.6;
+      variant.sigma = 6 + variant.symbols.filter(s => s.tier === "HP").length * 0.7;
+      variant.maxWin = (variant.maxWin && variant.maxWin > 0) ? variant.maxWin : 5000;
+      variant.vola = variant.sigma > 9.5 ? "HIGH" : variant.sigma < 7 ? "LOW" : "MID";
+      return;
+    }
+    // Legacy heuristic for native (non-imported) variants.
     const total = variant.symbols.reduce((a, s) => a + s.weight, 0) || 1;
     const payMass = variant.symbols.reduce((a, s) => a + (s.pay.x3 + s.pay.x4 + s.pay.x5) * (s.weight / total), 0);
     const wAvg = variant.symbols.reduce((a, s) => a + s.weight, 0) / Math.max(variant.symbols.length, 1);
@@ -1593,6 +1616,9 @@
       v.features = ir.features || [];
       v.rng = ir.rng || { kind: "pcg64" };
       v.bet = ir.bet || { currency: "EUR", base_bet: 1, denominations: [0.01] };
+      // Preserve IR rtp_allocation so recomputeFor() can use the validated
+      // closed-form / Monte-Carlo total instead of the legacy heuristic.
+      v.rtpAllocation = ir.rtp_allocation || null;
 
       const tgtRtp = (ir.limits && ir.limits.target_rtp) || 0.96;
       v.rtpTarget = +(tgtRtp * 100).toFixed(4);
