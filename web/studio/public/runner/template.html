@@ -61,8 +61,10 @@
         <span class="top-balance__cur" id="currency">EUR</span>
       </div>
 
-      <!-- Lightning Multiplier Meter — N items strip (2x · 3x · 5x · 10x · MISS) -->
-      <div id="lightningMeter" class="lightning-meter" aria-label="Lightning Multiplier" data-state="idle">
+      <!-- Multiplier Strip — generic placeholder.  Hidden by the runner
+           at boot unless IR declares a `multiplier` feature.  Item values
+           below are illustrative defaults; a skin can override via DOM. -->
+      <div id="lightningMeter" class="lightning-meter" aria-label="Multiplier Strip" data-state="idle">
         <div class="lightning-meter-frame">
           <div class="lightning-meter-window">
             <div class="lightning-meter-strip" id="lightningMeterStrip">
@@ -82,7 +84,7 @@
           <div class="lightning-meter-pointer lightning-meter-pointer--left" aria-hidden="true"></div>
           <div class="lightning-meter-pointer lightning-meter-pointer--right" aria-hidden="true"></div>
         </div>
-        <div class="lightning-meter-label" aria-hidden="true">⚡</div>
+        <div class="lightning-meter-label" aria-hidden="true">×</div>
       </div>
     </header>
 
@@ -275,7 +277,7 @@
         <div class="autoPlayPanel__backdrop"></div>
         <div class="autoPlayPanel__content">
           <div class="autoPlayPanel__header">
-            <h3 class="autoPlayPanel__title" id="autoPlayPanelTitle">⚡ AUTOPLAY</h3>
+            <h3 class="autoPlayPanel__title" id="autoPlayPanelTitle">AUTOPLAY</h3>
             <button id="autoPlayCloseBtn" class="autoPlayPanel__close" aria-label="Close autoplay panel">&times;</button>
           </div>
           <div class="autoPlayPanel__body">
@@ -374,7 +376,7 @@
       <section id="introModal" class="introModal" aria-hidden="true" role="dialog" aria-label="Intro" hidden>
         <div class="introModal__bg" aria-hidden="true"></div>
         <div class="introModal__content">
-          <h1 class="introModal__title">⚡ Wrath of Olympus ⚡</h1>
+          <h1 class="introModal__title">Slot Template</h1>
           <p class="introModal__subtitle" id="introStatusText">Loading…</p>
           <div class="introModal__progressTrack" aria-hidden="true">
             <div class="introModal__progressFill" id="introProgressFill" style="width:0%"></div>

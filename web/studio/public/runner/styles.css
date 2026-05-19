@@ -116,7 +116,7 @@ html, body { height: 100%; margin: 0; }
 
 body {
   background:
-    radial-gradient(1400px 900px at 50% -12%, rgba(247,201,72,0.06), transparent 60%),
+    radial-gradient(1400px 900px at 50% -12%, rgba(34, 211, 238,0.06), transparent 60%),
     radial-gradient(1200px 800px at 50% 110%, rgba(34,211,238,0.04), transparent 60%),
     linear-gradient(180deg, var(--bg-0), #050709 90%);
   color: var(--text-0);
@@ -177,14 +177,14 @@ body {
 .zeus-meter__fill {
   position: absolute;
   inset: 0 auto 0 0;
-  background: linear-gradient(90deg, #1e40af, #38bdf8 60%, #f7c948);
+  background: linear-gradient(90deg, #1e40af, #38bdf8 60%, var(--cyan));
   box-shadow: 0 0 12px rgba(56,189,248,0.55);
   transition: width 380ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .zeus-meter__icon {
   font-size: 16px;
   color: var(--gold);
-  filter: drop-shadow(0 0 6px rgba(247,201,72,0.7));
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238,0.7));
 }
 .zeus-meter__markers {
   position: absolute;
@@ -303,8 +303,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
   border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -548,7 +548,7 @@ body {
 }
 @keyframes cell-anticipate {
   from { box-shadow: 0 0 0 2px var(--gold), 0 0 12px var(--gold-glow); }
-  to   { box-shadow: 0 0 0 3px var(--gold), 0 0 32px rgba(247,201,72,0.65); }
+  to   { box-shadow: 0 0 0 3px var(--gold), 0 0 32px rgba(34, 211, 238,0.65); }
 }
 
 
@@ -583,7 +583,7 @@ body {
 .cell.is-hnw-jp {
   background: linear-gradient(135deg, #b45309, #fbbf24);
   border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #fff, 0 0 32px rgba(247,201,72,0.85);
+  box-shadow: 0 0 0 2px #fff, 0 0 32px rgba(34, 211, 238,0.85);
   animation: cell-jp-flash 540ms ease-in-out infinite alternate;
 }
 @keyframes cell-jp-flash {
@@ -634,7 +634,7 @@ body {
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(60% 60% at 50% 50%, rgba(247,201,72,0.18), transparent 70%),
+    radial-gradient(60% 60% at 50% 50%, rgba(34, 211, 238,0.18), transparent 70%),
     rgba(10,13,17,0.88);
   backdrop-filter: blur(8px);
   z-index: 10;
@@ -678,25 +678,25 @@ body {
   text-align: center;
   font-family: var(--font-display);
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 12px rgba(247,201,72,0.4);
+  text-shadow: 0 2px 12px rgba(34, 211, 238,0.4);
 }
 .fo-detail { font-size: 12px; color: var(--text-1); letter-spacing: 0.04em; }
 .fo-go {
   margin-top: 6px;
   padding: 12px 36px;
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
   border: 0;
   border-radius: var(--r);
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(247,201,72,0.4);
+  box-shadow: 0 4px 16px rgba(34, 211, 238,0.4);
   transition: transform 120ms, box-shadow 120ms;
 }
-.fo-go:hover  { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(247,201,72,0.55); }
-.fo-go:active { transform: translateY(0);    box-shadow: 0 2px 10px rgba(247,201,72,0.35); }
+.fo-go:hover  { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(34, 211, 238,0.55); }
+.fo-go:active { transform: translateY(0);    box-shadow: 0 2px 10px rgba(34, 211, 238,0.35); }
 
 
 /* ── 7 · Big Win overlay (BIG → MEGA → EPIC) ─────────────────────── */
@@ -723,11 +723,11 @@ body {
   gap: 14px;
   padding: 38px 72px;
   background:
-    radial-gradient(60% 60% at 50% 0%, rgba(247,201,72,0.30), transparent 70%),
+    radial-gradient(60% 60% at 50% 0%, rgba(34, 211, 238,0.30), transparent 70%),
     linear-gradient(180deg, var(--bg-1), var(--bg-2));
   border: 2px solid var(--gold);
   border-radius: var(--r-lg);
-  box-shadow: 0 0 80px rgba(247,201,72,0.5), var(--shadow-elev);
+  box-shadow: 0 0 80px rgba(34, 211, 238,0.5), var(--shadow-elev);
   text-align: center;
 }
 .bw-tier {
@@ -749,7 +749,7 @@ body {
   font-size: 56px;
   font-weight: 800;
   color: var(--text-0);
-  text-shadow: 0 4px 20px rgba(247,201,72,0.55);
+  text-shadow: 0 4px 20px rgba(34, 211, 238,0.55);
 }
 .bw-mult {
   font-size: 14px;
@@ -928,10 +928,10 @@ body {
   width: 110px;
   height: 70px;
   background:
-    radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.18), transparent 60%),
-    linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
-  border: 2px solid #f7c948;
+    radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.14), transparent 60%),
+    linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
+  border: 2px solid var(--cyan);
   border-radius: var(--r-lg);
   font-family: var(--font-display);
   font-size: 18px;
@@ -940,12 +940,12 @@ body {
   cursor: pointer;
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.4) inset,
-    0 4px 16px rgba(247,201,72,0.42),
-    0 0 24px rgba(247,201,72,0.18);
+    0 4px 16px rgba(34, 211, 238,0.42),
+    0 0 24px rgba(34, 211, 238,0.18);
   transition: transform 120ms, box-shadow 120ms;
 }
-.spin-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(247,201,72,0.55), 0 0 32px rgba(247,201,72,0.25); }
-.spin-btn:active { transform: translateY(0);    box-shadow: 0 2px 10px rgba(247,201,72,0.35); }
+.spin-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(34, 211, 238,0.55), 0 0 32px rgba(34, 211, 238,0.25); }
+.spin-btn:active { transform: translateY(0);    box-shadow: 0 2px 10px rgba(34, 211, 238,0.35); }
 .spin-btn[disabled],
 .spin-btn[aria-disabled="true"] {
   background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
@@ -1138,8 +1138,8 @@ body {
 .autoPlayPanel__startBtn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
   border: 0;
   border-radius: var(--r);
   font-size: 14px;
@@ -1232,7 +1232,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(60% 70% at 50% 30%, rgba(247,201,72,0.16), transparent 70%),
+  background: radial-gradient(60% 70% at 50% 30%, rgba(34, 211, 238,0.16), transparent 70%),
               rgba(7,9,13,0.94);
   backdrop-filter: blur(8px);
 }
@@ -1282,8 +1282,8 @@ body {
 .introModal__continueBtn {
   margin-top: 6px;
   padding: 12px 36px;
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
   border: 0;
   border-radius: var(--r);
   font-size: 14px;
@@ -1511,7 +1511,7 @@ body {
   align-items: center;
   gap: 14px;
   padding: 6px 18px;
-  background: linear-gradient(180deg, rgba(247,201,72,0.18), rgba(247,201,72,0.04)),
+  background: linear-gradient(180deg, rgba(34, 211, 238,0.18), rgba(34, 211, 238,0.04)),
               linear-gradient(180deg, var(--bg-1), var(--bg-2));
   border: 1px solid var(--gold);
   border-radius: 999px;
@@ -1527,7 +1527,7 @@ body {
 .fs-hud-block { display: flex; align-items: baseline; gap: 6px; }
 .fs-hud-lbl   { font-size: 9.5px; letter-spacing: 0.12em; color: var(--text-3); font-family: var(--font-mono); }
 .fs-hud-block b { font-size: 15px; color: var(--gold); font-family: var(--font-mono); text-shadow: 0 0 8px var(--gold-glow); }
-.fs-hud-divider { width: 1px; height: 18px; background: rgba(247,201,72,0.3); }
+.fs-hud-divider { width: 1px; height: 18px; background: rgba(34, 211, 238,0.3); }
 
 /* ── Multiplier Ladder — vertical 1× → max, lit current ─────────────── */
 .fs-mult-ladder {
@@ -1568,14 +1568,14 @@ body {
   transition: background 220ms, color 220ms, border-color 220ms, box-shadow 220ms, transform 220ms;
 }
 .fs-mult-step.is-lit {
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  color: #1a1208;
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-deep));
+  color: #001017;
   border-color: var(--gold);
   box-shadow: 0 0 14px var(--gold-glow);
 }
 .fs-mult-step.is-current {
   background: linear-gradient(180deg, #fff, var(--gold));
-  color: #1a1208;
+  color: #001017;
   border-color: #fff;
   box-shadow: 0 0 22px rgba(255,255,255,0.7), 0 0 32px var(--gold-glow);
   transform: scale(1.08);
