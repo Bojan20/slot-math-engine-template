@@ -1,0 +1,179 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_uk_chatbot_compliant",
+      "regime": "UK_COMPLIANT",
+      "cfg": {
+        "perQueryHallucinationProb": 0.02,
+        "annualQueries": 1000000,
+        "humanSamplingRate": 0.1,
+        "humanDetectionRate": 0.95,
+        "costPerUncorrectedHallucination": 500,
+        "costPerHumanReview": 5,
+        "operatorAnnualRevenue": 50000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 20000,
+        "detectedHallucinations": 1900,
+        "undetectedHallucinations": 18100,
+        "annualHumanReviewCost": 500000,
+        "annualUncorrectedRiskCost": 9050000,
+        "totalAnnualAiOversightCost": 9550000,
+        "costShareOfRevenue": 0.191,
+        "aiSafetyScore": 0.635,
+        "isCompliantEuAiActArt14": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 20122
+      },
+      "pass": true
+    },
+    {
+      "name": "B_eu_strict_high_sampling",
+      "regime": "EU_STRICT",
+      "cfg": {
+        "perQueryHallucinationProb": 0.015,
+        "annualQueries": 2000000,
+        "humanSamplingRate": 0.2,
+        "humanDetectionRate": 0.98,
+        "costPerUncorrectedHallucination": 1000,
+        "costPerHumanReview": 8,
+        "operatorAnnualRevenue": 100000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 30000,
+        "detectedHallucinations": 5880,
+        "undetectedHallucinations": 24120,
+        "annualHumanReviewCost": 3200000,
+        "annualUncorrectedRiskCost": 24120000,
+        "totalAnnualAiOversightCost": 27320000,
+        "costShareOfRevenue": 0.2732,
+        "aiSafetyScore": 0.694,
+        "isCompliantEuAiActArt14": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 30288
+      },
+      "pass": true
+    },
+    {
+      "name": "C_low_sampling_corner",
+      "regime": "CORNER_LOW_OVERSIGHT",
+      "cfg": {
+        "perQueryHallucinationProb": 0.05,
+        "annualQueries": 1000000,
+        "humanSamplingRate": 0.02,
+        "humanDetectionRate": 0.8,
+        "costPerUncorrectedHallucination": 500,
+        "costPerHumanReview": 5,
+        "operatorAnnualRevenue": 50000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 50000,
+        "detectedHallucinations": 800,
+        "undetectedHallucinations": 49200,
+        "annualHumanReviewCost": 100000,
+        "annualUncorrectedRiskCost": 24600000,
+        "totalAnnualAiOversightCost": 24700000,
+        "costShareOfRevenue": 0.494,
+        "aiSafetyScore": 0.446,
+        "isCompliantEuAiActArt14": false
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 49835
+      },
+      "pass": true
+    },
+    {
+      "name": "D_high_hallucination_unsafe",
+      "regime": "CORNER_UNSAFE",
+      "cfg": {
+        "perQueryHallucinationProb": 0.2,
+        "annualQueries": 500000,
+        "humanSamplingRate": 0.05,
+        "humanDetectionRate": 0.9,
+        "costPerUncorrectedHallucination": 1000,
+        "costPerHumanReview": 10,
+        "operatorAnnualRevenue": 25000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 100000,
+        "detectedHallucinations": 4500.000000000001,
+        "undetectedHallucinations": 95500,
+        "annualHumanReviewCost": 250000,
+        "annualUncorrectedRiskCost": 95500000,
+        "totalAnnualAiOversightCost": 95750000,
+        "costShareOfRevenue": 3.83,
+        "aiSafetyScore": 0.28500000000000003,
+        "isCompliantEuAiActArt14": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 99921.5
+      },
+      "pass": true
+    },
+    {
+      "name": "E_au_mature_ai_safety",
+      "regime": "AU_MATURE",
+      "cfg": {
+        "perQueryHallucinationProb": 0.01,
+        "annualQueries": 1500000,
+        "humanSamplingRate": 0.15,
+        "humanDetectionRate": 0.97,
+        "costPerUncorrectedHallucination": 800,
+        "costPerHumanReview": 6,
+        "operatorAnnualRevenue": 75000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 15000,
+        "detectedHallucinations": 2182.5,
+        "undetectedHallucinations": 12817.5,
+        "annualHumanReviewCost": 1350000,
+        "annualUncorrectedRiskCost": 10254000,
+        "totalAnnualAiOversightCost": 11604000,
+        "costShareOfRevenue": 0.15472,
+        "aiSafetyScore": 0.696,
+        "isCompliantEuAiActArt14": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 15214.5
+      },
+      "pass": true
+    },
+    {
+      "name": "F_full_human_review_costly",
+      "regime": "CORNER_FULL_REVIEW",
+      "cfg": {
+        "perQueryHallucinationProb": 0.02,
+        "annualQueries": 1000000,
+        "humanSamplingRate": 1,
+        "humanDetectionRate": 0.99,
+        "costPerUncorrectedHallucination": 500,
+        "costPerHumanReview": 5,
+        "operatorAnnualRevenue": 50000000
+      },
+      "closed_form": {
+        "expectedHallucinationsPerYear": 20000,
+        "detectedHallucinations": 19800,
+        "undetectedHallucinations": 200,
+        "annualHumanReviewCost": 5000000,
+        "annualUncorrectedRiskCost": 100000,
+        "totalAnnualAiOversightCost": 5100000,
+        "costShareOfRevenue": 0.102,
+        "aiSafetyScore": 0.917,
+        "isCompliantEuAiActArt14": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedHallucinationsMean": 20122
+      },
+      "pass": true
+    }
+  ]
+}
