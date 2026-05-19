@@ -1,0 +1,525 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_3_state_baseline",
+      "regime": "BASELINE_3",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 500000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 750000,
+            "annualViolationProb": 0.04
+          },
+          {
+            "state": "MI",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 40,
+            "annualLicensingFee": 60000,
+            "perViolationFine": 600000,
+            "annualViolationProb": 0.06
+          }
+        ],
+        "totalRevenueCapacity": 5000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          true,
+          true,
+          true
+        ],
+        "perStateExpectedFine": [
+          25000,
+          30000,
+          36000
+        ],
+        "totalAnnualLicensingFees": 185000,
+        "totalExpectedAnnualFines": 91000,
+        "totalComplianceCost": 276000,
+        "fractionStatesCompliant": 1,
+        "multiStateComplianceScore": 1,
+        "isCompliantAllStates": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 85800
+      },
+      "pass": true
+    },
+    {
+      "name": "B_5_state_expanding",
+      "regime": "EXPANDING_5",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 500000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 750000,
+            "annualViolationProb": 0.04
+          },
+          {
+            "state": "MI",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 40,
+            "annualLicensingFee": 60000,
+            "perViolationFine": 600000,
+            "annualViolationProb": 0.06
+          },
+          {
+            "state": "NV",
+            "minRtp": 0.75,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 60,
+            "actualAuditCadenceDays": 60,
+            "annualLicensingFee": 80000,
+            "perViolationFine": 1000000,
+            "annualViolationProb": 0.03
+          },
+          {
+            "state": "MA",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 65000,
+            "perViolationFine": 800000,
+            "annualViolationProb": 0.04
+          }
+        ],
+        "totalRevenueCapacity": 10000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "perStateExpectedFine": [
+          25000,
+          30000,
+          36000,
+          30000,
+          32000
+        ],
+        "totalAnnualLicensingFees": 330000,
+        "totalExpectedAnnualFines": 153000,
+        "totalComplianceCost": 483000,
+        "fractionStatesCompliant": 1,
+        "multiStateComplianceScore": 1,
+        "isCompliantAllStates": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 139200
+      },
+      "pass": true
+    },
+    {
+      "name": "C_8_state_mature",
+      "regime": "MATURE_8",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 500000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 750000,
+            "annualViolationProb": 0.04
+          },
+          {
+            "state": "MI",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 40,
+            "annualLicensingFee": 60000,
+            "perViolationFine": 600000,
+            "annualViolationProb": 0.06
+          },
+          {
+            "state": "NV",
+            "minRtp": 0.75,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 60,
+            "actualAuditCadenceDays": 60,
+            "annualLicensingFee": 80000,
+            "perViolationFine": 1000000,
+            "annualViolationProb": 0.03
+          },
+          {
+            "state": "MA",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 65000,
+            "perViolationFine": 800000,
+            "annualViolationProb": 0.04
+          },
+          {
+            "state": "CO",
+            "minRtp": 0.8,
+            "maxRtp": 0.96,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 45,
+            "annualLicensingFee": 40000,
+            "perViolationFine": 400000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "IL",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 70000,
+            "perViolationFine": 700000,
+            "annualViolationProb": 0.04
+          },
+          {
+            "state": "CT",
+            "minRtp": 0.85,
+            "maxRtp": 0.95,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 55000,
+            "perViolationFine": 550000,
+            "annualViolationProb": 0.05
+          }
+        ],
+        "totalRevenueCapacity": 20000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "perStateExpectedFine": [
+          25000,
+          30000,
+          36000,
+          30000,
+          32000,
+          20000,
+          28000,
+          27500
+        ],
+        "totalAnnualLicensingFees": 495000,
+        "totalExpectedAnnualFines": 228500,
+        "totalComplianceCost": 723500,
+        "fractionStatesCompliant": 1,
+        "multiStateComplianceScore": 1,
+        "isCompliantAllStates": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 230500
+      },
+      "pass": true
+    },
+    {
+      "name": "D_rtp_violation",
+      "regime": "VIOLATION_RTP",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.5,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 500000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 750000,
+            "annualViolationProb": 0.04
+          }
+        ],
+        "totalRevenueCapacity": 5000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          false,
+          true
+        ],
+        "perStateExpectedFine": [
+          25000,
+          30000
+        ],
+        "totalAnnualLicensingFees": 125000,
+        "totalExpectedAnnualFines": 55000,
+        "totalComplianceCost": 180000,
+        "fractionStatesCompliant": 0.5,
+        "multiStateComplianceScore": 0.5,
+        "isCompliantAllStates": false
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 54500
+      },
+      "pass": true
+    },
+    {
+      "name": "E_audit_violation",
+      "regime": "VIOLATION_AUDIT",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 60,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 500000,
+            "annualViolationProb": 0.05
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 750000,
+            "annualViolationProb": 0.04
+          }
+        ],
+        "totalRevenueCapacity": 5000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          false,
+          true
+        ],
+        "perStateExpectedFine": [
+          25000,
+          30000
+        ],
+        "totalAnnualLicensingFees": 125000,
+        "totalExpectedAnnualFines": 55000,
+        "totalComplianceCost": 180000,
+        "fractionStatesCompliant": 0.5,
+        "multiStateComplianceScore": 0.5,
+        "isCompliantAllStates": false
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 54500
+      },
+      "pass": true
+    },
+    {
+      "name": "F_high_fine_exposure",
+      "regime": "HIGH_FINES",
+      "cfg": {
+        "states": [
+          {
+            "state": "NJ",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 50000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "PA",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 75000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "MI",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 40,
+            "annualLicensingFee": 60000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "NV",
+            "minRtp": 0.75,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 60,
+            "actualAuditCadenceDays": 60,
+            "annualLicensingFee": 80000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "MA",
+            "minRtp": 0.87,
+            "maxRtp": 0.95,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 65000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "CO",
+            "minRtp": 0.8,
+            "maxRtp": 0.96,
+            "actualRtp": 0.91,
+            "auditCadenceDays": 45,
+            "actualAuditCadenceDays": 45,
+            "annualLicensingFee": 40000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "IL",
+            "minRtp": 0.85,
+            "maxRtp": 0.96,
+            "actualRtp": 0.92,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 30,
+            "annualLicensingFee": 70000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          },
+          {
+            "state": "CT",
+            "minRtp": 0.85,
+            "maxRtp": 0.95,
+            "actualRtp": 0.93,
+            "auditCadenceDays": 30,
+            "actualAuditCadenceDays": 28,
+            "annualLicensingFee": 55000,
+            "perViolationFine": 2000000,
+            "annualViolationProb": 0.2
+          }
+        ],
+        "totalRevenueCapacity": 30000000
+      },
+      "closed_form": {
+        "perStateCompliance": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "perStateExpectedFine": [
+          400000,
+          400000,
+          400000,
+          400000,
+          400000,
+          400000,
+          400000,
+          400000
+        ],
+        "totalAnnualLicensingFees": 495000,
+        "totalExpectedAnnualFines": 3200000,
+        "totalComplianceCost": 3695000,
+        "fractionStatesCompliant": 1,
+        "multiStateComplianceScore": 1,
+        "isCompliantAllStates": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedTotalFinesMean": 3068000
+      },
+      "pass": true
+    }
+  ]
+}
