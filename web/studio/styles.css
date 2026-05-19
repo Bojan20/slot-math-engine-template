@@ -387,16 +387,27 @@ button:focus-visible, input:focus-visible, select:focus-visible,
   background: var(--bg-0);
   transition: grid-template-columns 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Explicit column assignments so an `display: none` on .sidebar or
+   .rail does NOT cause auto-placement to shift the surviving items
+   one column to the left.  This guards against the bug where hiding
+   the left panel made the center main disappear too. */
+.row-main > .sidebar { grid-column: 1; }
+.row-main > main     { grid-column: 2; }
+.row-main > .rail    { grid-column: 3; }
 
 /* ─── COLLAPSE STATES (driven by .shell modifier classes) ─────────────
    Left, right, and bottom panels can be hidden independently for a
-   responsive single-zone focus mode.  Toggles live in the header. */
+   responsive single-zone focus mode.  Toggles live in the header.
+   We use `visibility: hidden` + zero column track instead of
+   `display: none` so grid-column assignments stay stable. */
 .shell.is-left-collapsed  .row-main { grid-template-columns: 0 1fr 304px; }
 .shell.is-right-collapsed .row-main { grid-template-columns: 220px 1fr 0; }
 .shell.is-left-collapsed.is-right-collapsed .row-main { grid-template-columns: 0 1fr 0; }
 .shell.is-left-collapsed  .sidebar,
 .shell.is-right-collapsed .rail {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
 }
 .shell.is-bottom-collapsed .row-status { display: none; }
 .shell.is-bottom-collapsed { grid-template-rows: 44px 32px auto 38px 1fr 0; }
