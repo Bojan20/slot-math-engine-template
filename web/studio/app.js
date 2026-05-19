@@ -339,27 +339,63 @@
      SYMBOL POOL — build + render (for active variant)
      ============================================================ */
   function buildSymbolPoolFor(variant) {
-    const used = new Set();
+    // Group existing symbols by tier in their original order so a tier-count
+    // change (slider) does NOT wipe imported / user-named entries.  Adjusting
+    // the HP slider from 3 → 2 drops the LAST HP symbol; 3 → 5 appends two
+    // new placeholders to the end of HP — Z/H/P stay intact (in order),
+    // their names, icons, weights, and pays are preserved.
+    const existingByTier = { HP: [], MP: [], LP: [], WILD: [], SCATTER: [], MULT: [] };
+    for (const s of (variant.symbols || [])) {
+      if (existingByTier[s.tier]) existingByTier[s.tier].push(s);
+    }
+    // Reserve all current IDs + icons so new placeholders never collide
+    const reservedIds = new Set((variant.symbols || []).map(s => s.id));
+    const usedIcons = new Set();
+    for (const list of Object.values(existingByTier)) {
+      for (const s of list) if (s.icon) usedIcons.add(s.icon);
+    }
+
+    const pickFreshIcon = (tdef, prefIndex) => {
+      const defs = tdef.defaultIcons || [];
+      for (let k = 0; k < defs.length; k++) {
+        const candidate = defs[(prefIndex + k) % defs.length];
+        if (!usedIcons.has(candidate)) {
+          usedIcons.add(candidate);
+          return candidate;
+        }
+      }
+      const fallback = ICON_LIB.find(ic => !usedIcons.has(ic.id));
+      const iconId = fallback ? fallback.id : (defs[0] || ICON_LIB[0].id);
+      usedIcons.add(iconId);
+      return iconId;
+    };
+    const freshId = (tier) => {
+      let n = 1;
+      while (reservedIds.has(`${tier}${n}`)) n++;
+      const id = `${tier}${n}`;
+      reservedIds.add(id);
+      return id;
+    };
+
     const pool = [];
     for (const tier of TIER_ORDER) {
       const count = variant.tierCounts[tier] || 0;
       const tdef = TIER_DEFAULTS[tier];
+      const existing = existingByTier[tier] || [];
       for (let i = 0; i < count; i++) {
-        const id = `${tier}${i + 1}`;
-        const existing = variant.symbols.find(s => s.id === id && s.tier === tier);
-        if (existing) {
-          used.add(existing.icon);
-          pool.push(existing);
+        if (i < existing.length) {
+          // PRESERVE imported / user-edited symbol verbatim — id, name,
+          // icon, weight, pay, custom upload all stay.
+          pool.push(existing[i]);
           continue;
         }
-        let icon = tdef.defaultIcons[i % tdef.defaultIcons.length];
-        if (used.has(icon)) {
-          const fallback = ICON_LIB.find(ic => !used.has(ic.id));
-          icon = fallback ? fallback.id : icon;
-        }
-        used.add(icon);
+        // Append a new placeholder past the existing tail
+        const id = freshId(tier);
+        const slotIdx = i; // for default-name picking
+        const name = tdef.defaultNames[slotIdx] || id;
+        const icon = pickFreshIcon(tdef, slotIdx);
         pool.push({
-          tier, id, name: tdef.defaultNames[i] || id, icon,
+          tier, id, name, icon,
           weight: tier === "HP" ? 3.5 : tier === "MP" ? 5.2 : tier === "LP" ? 8.0 : 1.5,
           pay: { ...tdef.basePay }
         });
