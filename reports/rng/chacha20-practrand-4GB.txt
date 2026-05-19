@@ -1,0 +1,68 @@
+RNG_test using PractRand version 0.96
+RNG = RNG_stdin, seed = unknown
+test set = core, folding = standard(unknown format)
+
+rng=RNG_stdin, seed=unknown
+length= 128 kilobytes (2^17 bytes), time= 72.9 seconds
+  no anomalies in 72 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 256 kilobytes (2^18 bytes), time= 73.1 seconds
+  no anomalies in 78 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 512 kilobytes (2^19 bytes), time= 73.2 seconds
+  no anomalies in 92 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 1 megabyte (2^20 bytes), time= 73.3 seconds
+  no anomalies in 102 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 2 megabytes (2^21 bytes), time= 73.5 seconds
+  no anomalies in 115 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 4 megabytes (2^22 bytes), time= 73.6 seconds
+  no anomalies in 127 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 8 megabytes (2^23 bytes), time= 73.8 seconds
+  no anomalies in 138 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 16 megabytes (2^24 bytes), time= 74.0 seconds
+  no anomalies in 150 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 32 megabytes (2^25 bytes), time= 74.3 seconds
+  no anomalies in 163 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 64 megabytes (2^26 bytes), time= 74.7 seconds
+  no anomalies in 174 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 128 megabytes (2^27 bytes), time= 75.4 seconds
+  no anomalies in 187 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 256 megabytes (2^28 bytes), time= 76.7 seconds
+  no anomalies in 201 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 512 megabytes (2^29 bytes), time= 79.1 seconds
+  no anomalies in 216 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 1 gigabyte (2^30 bytes), time= 83.8 seconds
+  no anomalies in 231 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 2 gigabytes (2^31 bytes), time= 93.1 seconds
+  no anomalies in 246 test result(s)
+
+rng=RNG_stdin, seed=unknown
+length= 4 gigabytes (2^32 bytes), time= 112 seconds
+  no anomalies in 261 test result(s)
+

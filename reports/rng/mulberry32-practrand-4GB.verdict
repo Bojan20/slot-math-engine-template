@@ -1,0 +1,1 @@
+FAIL_at_2^29_bytes (FPF/16:all R+20.3 p=1.7e-18) — EXPECTED 32-bit period exhaustion, parity-only backend per docs/rng.md
