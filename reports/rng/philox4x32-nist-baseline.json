@@ -2,7 +2,7 @@
   "backend": "philox4x32",
   "seed_hex": "0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)",
   "sample_bits": 1000000,
-  "tested_at": "2026-05-15T18:25:11.417Z",
+  "tested_at": "2026-05-19T01:15:18.436Z",
   "overall_pass": true,
   "results": [
     {

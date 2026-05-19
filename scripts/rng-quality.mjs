@@ -344,7 +344,69 @@ function runBackend(kind) {
   };
 }
 
+// ─── --dump mode (raw bit stream → stdout for external batteries) ─────────
+//
+// Usage: node scripts/rng-quality.mjs --dump <backend> <bytes>
+//
+// Writes `<bytes>` raw bytes to stdout (no framing, no newline). Designed
+// to feed NIST SP 800-22 `assess`, TestU01 BigCrush `-i stdin`, and
+// PractRand `RNG_test stdin`. Seed and bit-extraction harness match the
+// in-process baseline above byte-for-byte, so live full-suite results
+// land on the same entropy footprint as the CI baseline.
+
+function dumpStream(backend, nBytes) {
+  const rng = newBackend(backend, BACKEND_SEED_NUMBER);
+  const CHUNK = 1 << 20; // 1 MiB
+  const buf = Buffer.alloc(CHUNK);
+  const has64 = typeof rng.nextU64 === 'function';
+  let written = 0;
+  let cur = 0;
+  let bitsLeft = 0;
+  let acc = 0n;
+
+  while (written < nBytes) {
+    let off = 0;
+    const target = Math.min(CHUNK, nBytes - written);
+    while (off < target) {
+      if (bitsLeft < 8) {
+        if (has64) {
+          const [hi, lo] = rng.nextU64();
+          // MSB-first big-endian assembly: hi || lo, total 64 bits.
+          acc = (acc << 64n) | ((BigInt(hi >>> 0) << 32n) | BigInt(lo >>> 0));
+          bitsLeft += 64;
+        } else {
+          const w = rng.nextUint32() >>> 0;
+          acc = (acc << 32n) | BigInt(w);
+          bitsLeft += 32;
+        }
+      }
+      // Pull top 8 bits of `acc` window (MSB-first).
+      const shift = BigInt(bitsLeft - 8);
+      buf[off++] = Number((acc >> shift) & 0xffn);
+      // Mask off the consumed byte.
+      acc &= (1n << shift) - 1n;
+      bitsLeft -= 8;
+      cur++;
+    }
+    process.stdout.write(buf.subarray(0, off));
+    written += off;
+  }
+}
+
 async function main() {
+  // --dump short-circuit BEFORE we touch OUT_DIR (stdout is the artefact).
+  const argv = process.argv.slice(2);
+  if (argv[0] === '--dump') {
+    const backend = argv[1];
+    const nBytes = Number(argv[2]);
+    if (!backend || !Number.isFinite(nBytes) || nBytes <= 0) {
+      process.stderr.write('usage: rng-quality.mjs --dump <backend> <bytes>\n');
+      process.exit(2);
+    }
+    dumpStream(backend, nBytes);
+    return;
+  }
+
   mkdirSync(OUT_DIR, { recursive: true });
 
   const backends = ['mulberry32', 'pcg64', 'xoshiro256ss', 'philox4x32', 'chacha20'];

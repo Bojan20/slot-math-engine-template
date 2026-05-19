@@ -2,7 +2,7 @@
   "backend": "xoshiro256ss",
   "seed_hex": "0xCAFEBABE_DEADBEEF (XOR-mixed → 0x14530451)",
   "sample_bits": 1000000,
-  "tested_at": "2026-05-15T18:25:11.380Z",
+  "tested_at": "2026-05-19T01:15:18.400Z",
   "overall_pass": true,
   "results": [
     {
