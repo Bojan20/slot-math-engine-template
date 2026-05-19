@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SELF_EXCLUSION_LIFECYCLE",
+  "generated_utc": "2026-05-19T09:52:33.466Z",
+  "episodes_per_config": 300,
+  "horizon_days": 1825,
+  "seed": 3405644325,
+  "tolerances": {
+    "fraction_abs": 0.08,
+    "annual_rel": 0.4,
+    "first_se_rel": 0.4
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_gamstop_typical_user",
+      "description": "UKGC RTS 7B baseline: λ_se=0.003/day (~1 SE/year), D_se=180d (6mo min), λ_p=1e-4/day",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.003,
+        "meanSelfExclusionDurationDays": 180,
+        "permanentAbsorptionRatePerDay": 0.0001,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 180,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.6493506493506493,
+        "stationaryFractionExcluded": 0.35064935064935066,
+        "expectedDaysActivePerYear": 237.012987012987,
+        "expectedDaysExcludedPerYear": 127.98701298701299,
+        "annualSelfExclusionEpisodes": 0.711038961038961,
+        "expectedDaysToFirstSE": 333.3333333333333,
+        "expectedDaysToPermanent": 10000,
+        "expectedYearsToPermanent": 27.397260273972602,
+        "oneInNDaysFirstSE": 333.3333333333333,
+        "harmReductionScoreFromSE": 0.35064935064935066,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.6777878366198073,
+        "observedFractionExcluded": 0.3222121633801926,
+        "observedAnnualSelfExclusionEpisodes": 0.6746666666666666,
+        "observedExpectedDaysToFirstSE": 334.848275862069
+      },
+      "checks": {
+        "fraction_delta": 0.02843718726915806,
+        "annual_rel": 0.05115372907153731,
+        "first_se_rel": 0.0045242655791953666
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "B_uk_high_risk_user",
+      "description": "UKGC high-risk: λ_se=0.01/day (~3.65 SE/year), D_se=180d",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.01,
+        "meanSelfExclusionDurationDays": 180,
+        "permanentAbsorptionRatePerDay": 0.0005,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 180,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.35714285714285715,
+        "stationaryFractionExcluded": 0.6428571428571429,
+        "expectedDaysActivePerYear": 130.35714285714286,
+        "expectedDaysExcludedPerYear": 234.64285714285717,
+        "annualSelfExclusionEpisodes": 1.3035714285714286,
+        "expectedDaysToFirstSE": 100,
+        "expectedDaysToPermanent": 2000,
+        "expectedYearsToPermanent": 5.47945205479452,
+        "oneInNDaysFirstSE": 100,
+        "harmReductionScoreFromSE": 0.6428571428571429,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.39447204283269854,
+        "observedFractionExcluded": 0.6055279571673015,
+        "observedAnnualSelfExclusionEpisodes": 0.9433333333333334,
+        "observedExpectedDaysToFirstSE": 94
+      },
+      "checks": {
+        "fraction_delta": 0.03732918568984145,
+        "annual_rel": 0.2763470319634703,
+        "first_se_rel": 0.06
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "C_au_betstop_stricter_12mo",
+      "description": "AU NCPF Schedule 9 BetStop: min 12mo SE (D_se=365d), tightened protection",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.003,
+        "meanSelfExclusionDurationDays": 365,
+        "permanentAbsorptionRatePerDay": 0.0001,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 365,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.4773269689737471,
+        "stationaryFractionExcluded": 0.5226730310262531,
+        "expectedDaysActivePerYear": 174.22434367541769,
+        "expectedDaysExcludedPerYear": 190.77565632458237,
+        "annualSelfExclusionEpisodes": 0.5226730310262531,
+        "expectedDaysToFirstSE": 333.3333333333333,
+        "expectedDaysToPermanent": 10000,
+        "expectedYearsToPermanent": 27.397260273972602,
+        "oneInNDaysFirstSE": 333.3333333333333,
+        "harmReductionScoreFromSE": 0.5226730310262531,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.5409201600278309,
+        "observedFractionExcluded": 0.45907983997216906,
+        "observedAnnualSelfExclusionEpisodes": 0.5273333333333333,
+        "observedExpectedDaysToFirstSE": 334.848275862069
+      },
+      "checks": {
+        "fraction_delta": 0.06359319105408401,
+        "annual_rel": 0.008837488572212874,
+        "first_se_rel": 0.0045242655791953666
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "D_de_oasis_typical",
+      "description": "DE OASIS typical: D_se=365d (1 year), λ_se=0.002, λ_p=1e-4",
+      "jurisdiction": "DE_OASIS",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.002,
+        "meanSelfExclusionDurationDays": 365,
+        "permanentAbsorptionRatePerDay": 0.0001,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 365,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.5780346820809249,
+        "stationaryFractionExcluded": 0.42196531791907516,
+        "expectedDaysActivePerYear": 210.9826589595376,
+        "expectedDaysExcludedPerYear": 154.01734104046244,
+        "annualSelfExclusionEpisodes": 0.4219653179190752,
+        "expectedDaysToFirstSE": 500,
+        "expectedDaysToPermanent": 10000,
+        "expectedYearsToPermanent": 27.397260273972602,
+        "oneInNDaysFirstSE": 500,
+        "harmReductionScoreFromSE": 0.42196531791907516,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.6320407501699901,
+        "observedFractionExcluded": 0.36795924983000994,
+        "observedAnnualSelfExclusionEpisodes": 0.4146666666666667,
+        "observedExpectedDaysToFirstSE": 442.9392857142857
+      },
+      "checks": {
+        "fraction_delta": 0.05400606808906522,
+        "annual_rel": 0.01729680365296815,
+        "first_se_rel": 0.11412142857142862
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "E_corner_modest_risk_user",
+      "description": "Corner: modest-risk user, λ_se=0.001/day (1 SE per ~2.7 years), D_se=180d",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.001,
+        "meanSelfExclusionDurationDays": 180,
+        "permanentAbsorptionRatePerDay": 0.00005,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 180,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.8474576271186441,
+        "stationaryFractionExcluded": 0.15254237288135594,
+        "expectedDaysActivePerYear": 309.3220338983051,
+        "expectedDaysExcludedPerYear": 55.67796610169492,
+        "annualSelfExclusionEpisodes": 0.3093220338983051,
+        "expectedDaysToFirstSE": 1000,
+        "expectedDaysToPermanent": 20000,
+        "expectedYearsToPermanent": 54.794520547945204,
+        "oneInNDaysFirstSE": 1000,
+        "harmReductionScoreFromSE": 0.15254237288135594,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.8623651759431229,
+        "observedFractionExcluded": 0.13763482405687716,
+        "observedAnnualSelfExclusionEpisodes": 0.294,
+        "observedExpectedDaysToFirstSE": 660.4190871369294
+      },
+      "checks": {
+        "fraction_delta": 0.014907548824478783,
+        "annual_rel": 0.04953424657534254,
+        "first_se_rel": 0.33958091286307057
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "F_corner_severe_player",
+      "description": "Corner: severe problem gambler, λ_se=0.03/day, D_se=365d — π_e dominant",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "selfExclusionOnsetRatePerDay": 0.03,
+        "meanSelfExclusionDurationDays": 365,
+        "permanentAbsorptionRatePerDay": 0.0005,
+        "coolingPeriodHours": 24,
+        "minSelfExclusionDurationDays": 365,
+        "maxSelfExclusionDurationDays": 1825
+      },
+      "closed_form": {
+        "stationaryFractionActive": 0.08368200836820085,
+        "stationaryFractionExcluded": 0.9163179916317992,
+        "expectedDaysActivePerYear": 30.54393305439331,
+        "expectedDaysExcludedPerYear": 334.4560669456067,
+        "annualSelfExclusionEpisodes": 0.9163179916317993,
+        "expectedDaysToFirstSE": 33.333333333333336,
+        "expectedDaysToPermanent": 2000,
+        "expectedYearsToPermanent": 5.47945205479452,
+        "oneInNDaysFirstSE": 33.333333333333336,
+        "harmReductionScoreFromSE": 0.9163179916317992,
+        "isCompliantUkgcRts7b": true
+      },
+      "monte_carlo": {
+        "episodes": 300,
+        "horizonDays": 1825,
+        "observedFractionActive": 0.10956284153005465,
+        "observedFractionExcluded": 0.8904371584699453,
+        "observedAnnualSelfExclusionEpisodes": 0.774,
+        "observedExpectedDaysToFirstSE": 32.744107744107744
+      },
+      "checks": {
+        "fraction_delta": 0.025880833161853856,
+        "annual_rel": 0.15531506849315077,
+        "first_se_rel": 0.017676767676767752
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    }
+  ]
+}
