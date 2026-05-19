@@ -408,16 +408,24 @@
 
   function renderSymbolList(container = $("#sym-list"), variant = getActiveVariant(), paneKey = null) {
     container.innerHTML = "";
+    // Per-tier ordinal so each row gets a visible HP1/HP2/MP1/... index
+    // next to the tier badge.  Helps the user match the weight slider on
+    // row N to the N-th symbol in that tier.
+    const tierCounter = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
     variant.symbols.forEach((sym, idx) => {
+      tierCounter[sym.tier] = (tierCounter[sym.tier] || 0) + 1;
+      const tierOrd = tierCounter[sym.tier];
       const row = document.createElement("div");
       row.className = `sym-row tier-${sym.tier}`;
       row.dataset.idx = idx;
+      row.dataset.tierOrd = String(tierOrd);
       if (paneKey) row.dataset.pane = paneKey;
       const customThumb = sym.customIconData
         ? `<img class="sym-custom-thumb" src="${sym.customIconData}" alt="custom" />`
         : `<svg><use href="#g-${sym.icon}"/></svg>`;
       row.innerHTML = `
-        <span class="sym-tier">${sym.tier}</span>
+        <span class="sym-tier" title="${sym.tier} tier">${sym.tier}</span>
+        <span class="sym-tier-ord mono" title="${sym.tier} · position #${tierOrd} (weight slot)">${tierOrd}</span>
         <span class="sym-id mono">${sym.id}</span>
         <input class="sym-name" value="${sym.name}" data-idx="${idx}" />
         <button class="sym-icon-btn" data-idx="${idx}" title="Swap icon">
