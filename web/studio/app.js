@@ -98,12 +98,14 @@
   /* ============================================================
      STATE — two levels: Workspaces × Variants
      ============================================================ */
-  function newVariant({ id, name, rtp = 95.42, sigma = 8.41, hit = 27.83, maxWin = 2145, vola = "MID", pool, rtpTarget = 95.5 }) {
+  // Default pool is FULLY EMPTY — Studio opens as a blank canvas and the
+  // designer fills the pool, paytable, and reels manually (or via GDD import).
+  function newVariant({ id, name, rtp = 0, sigma = 0, hit = 0, maxWin = 0, vola = "MID", pool, rtpTarget = 96.0 }) {
     return {
       id,
       name,
       persona: "math",
-      tierCounts: pool ? { ...pool } : { HP: 3, MP: 3, LP: 3, WILD: 1, SCATTER: 1, MULT: 0 },
+      tierCounts: pool ? { ...pool } : { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 },
       symbols: [],
       reels: [],
       rtp, rtpTarget,
@@ -127,51 +129,31 @@
     };
   }
 
-  // Seed three workspaces with realistic variants
+  // Studio opens as a blank canvas — a single empty workspace with zero
+  // symbols, zero reels, zero paytable rows.  The designer builds from
+  // scratch or imports via GDD / Math GDD / IR Library.  Previous seed
+  // workspaces ("Untitled", "Untitled 2", "Untitled 3" with prefilled
+  // symbol pools and RTP figures) were placeholder demo data — removed
+  // per originality policy so the default state is truly empty.
   const workspaces = {};
   const wsOrder = [];
 
-  // Untitled — 3 variants
-  workspaces["ws-lava"] = {
-    id: "ws-lava", name: "Untitled", theme: "lava", layout: "5x3",
-    irName: "untitled-v0.4.12",
-    activeVariantId: "var-a",
-    variantOrder: ["var-a", "var-b", "var-c"],
-    variants: {
-      "var-a": newVariant({ id: "var-a", name: "Base", rtp: 95.42, sigma: 6.2, hit: 26.8, maxWin: 5000, vola: "MID", pool: { HP: 3, MP: 3, LP: 3, WILD: 1, SCATTER: 1, MULT: 1 } }),
-      "var-b": newVariant({ id: "var-b", name: "Higher Hit", rtp: 94.80, sigma: 5.1, hit: 32.5, maxWin: 3000, vola: "LOW", pool: { HP: 3, MP: 3, LP: 4, WILD: 1, SCATTER: 1, MULT: 1 } }),
-      "var-c": newVariant({ id: "var-c", name: "Jackpot Heavy", rtp: 96.20, sigma: 9.8, hit: 18.4, maxWin: 12000, vola: "HIGH", pool: { HP: 4, MP: 2, LP: 3, WILD: 1, SCATTER: 1, MULT: 2 } })
-    }
-  };
-  wsOrder.push("ws-lava");
-
-  // Untitled 2 — 1 variant
-  workspaces["ws-pearl"] = {
-    id: "ws-pearl", name: "Untitled 2", theme: "pearl", layout: "6x4mw",
-    irName: "untitled-2-v0.2.05",
+  workspaces["ws-blank"] = {
+    id: "ws-blank",
+    name: "Untitled",
+    theme: "cyan",
+    layout: "5x3",
+    irName: "untitled-v0.0.1",
     activeVariantId: "var-a",
     variantOrder: ["var-a"],
     variants: {
-      "var-a": newVariant({ id: "var-a", name: "Base", rtp: 96.00, sigma: 8.0, hit: 22.1, maxWin: 10000, vola: "MID", pool: { HP: 4, MP: 4, LP: 4, WILD: 1, SCATTER: 1, MULT: 1 } })
+      "var-a": newVariant({ id: "var-a", name: "Base" })
     }
   };
-  wsOrder.push("ws-pearl");
-
-  // Untitled 3 — 2 variants
-  workspaces["ws-solar"] = {
-    id: "ws-solar", name: "Untitled 3", theme: "solar", layout: "7x7c",
-    irName: "untitled-3-v0.1.18",
-    activeVariantId: "var-a",
-    variantOrder: ["var-a", "var-b"],
-    variants: {
-      "var-a": newVariant({ id: "var-a", name: "Base", rtp: 94.50, sigma: 7.4, hit: 28.0, maxWin: 7500, vola: "MID", pool: { HP: 3, MP: 3, LP: 3, WILD: 0, SCATTER: 2, MULT: 1 } }),
-      "var-b": newVariant({ id: "var-b", name: "Slow Burn", rtp: 95.00, sigma: 4.5, hit: 38.0, maxWin: 2500, vola: "LOW", pool: { HP: 3, MP: 4, LP: 5, WILD: 0, SCATTER: 1, MULT: 1 } })
-    }
-  };
-  wsOrder.push("ws-solar");
+  wsOrder.push("ws-blank");
 
   // Top-level state
-  let activeWorkspaceId = "ws-lava";
+  let activeWorkspaceId = "ws-blank";
   let compareMode = false;
   let compareVariantIds = []; // [leftId, rightId]
   let comparePane = "left";   // which pane is being edited in compare mode (drives state proxy)
