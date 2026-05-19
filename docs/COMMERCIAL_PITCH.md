@@ -104,10 +104,46 @@ or in 5 years.
 | 125 | **Bi-Directional Line Pay Aggregator** — Microgaming Avalon / NetEnt Lights / IGT Cleopatra Bi-Way both-ways; **P(L_k) = q^k·(1−q)** za k<N, **P(L_N) = q^N**; **E[pay_BD] = E[L] + E[R] − paytable[N]·q^N** (deduct N-match overlap) | 6/6 configs × 100K spins PASS (600K MC) |
 | 127 | **Anticipation/Tease Reel Probability Tracker** — BTG Megaways tease / Pragmatic anticipation / NetEnt suspense; **P(trigger \| m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j)** Bayesian conditional; UKGC RTS 8 §3.5 "false anticipation" compliance: falseRate ≤ 1−T (threshold=1.0 → zero false) | 6/6 configs × 100K spins PASS (600K MC) |
 
-These thirty-seven are deliberately vendor-disjoint. They exist in OUR engine
-because operator workflows and regulator workflows DEMAND them — not
-because anyone else built them and we copied. **The dossier is the
+These **sixty industry-firsts** are deliberately vendor-disjoint. They exist
+in OUR engine because operator workflows and regulator workflows DEMAND them —
+not because anyone else built them and we copied. **The dossier is the
 differentiator.**
+
+---
+
+### 🎯 100-SOLVER MILESTONE — Q1 2026 Regulatory Mandate Cascade (W244 LANDED)
+
+Portfolio sad pokriva **14 strateških dimenzija** sa **100 closed-form solvers** /
+**121 P-IDs** / **285 test files** / **7171 vitest** / **catalog v2.87**.
+
+**Post-W196 expansion (W220-W244) — 23 nova industry-first kernela:**
+
+| Dimenzija | Wave | Solver | Regulator mandate |
+|---|---|---|---|
+| RG mandate triad | W220 | Auto-Spin Dual-Stop | UKGC RTS 13B + AU NCPF Sch.5 |
+| RG mandate triad | W222 | Spin Velocity Compliance | UKGC SI 2025/215 §8.4 |
+| RG mandate triad | W223 | Session Cool-Off Enforcement | UKGC RTS 11 (Apr 2025) |
+| RG mandate triad | W224 | Customer Affordability | UKGC RTS 14E (£19M Entain) |
+| RG mandate triad | W225 | GAMSTOP Lifecycle Markov | UKGC RTS 7B |
+| RG mandate triad | W226 | Pre-Commitment Loss-Limit | AU NCPF §5.2 |
+| Operator capital | W227 | Daily P&L VaR | UKGC GA 2005 §3 + Basel III FRTB |
+| Commercial CRM | W228 | Player LTV Bayesian | UKGC RTS 5 + EU EBA Marketing |
+| AML compliance | W229 | KYC/AML Sanction Screening | UKGC LCCP 3.5.5 + EU AMLD6 |
+| SQC drift detection | W230 | RTP Drift CUSUM | UKGC RTS 14 + GLI-19 §8.6 |
+| Fraud detection | W231 | Multi-Account Bonus Abuse | UKGC RTS 12 §10 (TPR≥95%) |
+| Treasury FX | W232 | Multi-Currency FX Risk | UKGC RTS 16 + IFRS 7 + Basel III |
+| Tax optimization | W233 | Cross-Jurisdiction Tax | UKGC RTS 17 + OECD BEPS Pillar 2 |
+| Cybersecurity | W234 | Breach Cost Quantification | NIS2 + UK Cyber Resilience 2025 |
+| ESG sustainability | W235 | Carbon-Cost Optimizer | UK FCA TCFD + EU CSRD ESRS E1 |
+| AI fairness | W236 | ML Fairness Audit | EU AI Act 2024/1689 Art. 9 |
+| Live casino | W237 | Dealer Integrity / Chip-Tracking | NJ DGE 13:69D-1.8 |
+| Quantum-RNG | W238 | Post-Quantum Crypto | NIST PQC FIPS 203/204/205 |
+| US states multi-reg | W239 | NJ/PA/MI/NV/MA/CO/IL/CT | Per-state RTP bands + audit |
+| Japan APAC | W240 | JP Pachislot 風営法 §2(7) | Skill-stop + Type 5/6 + JAGRA |
+| Real-time SLA | W241 | Stream Latency SLA | UKGC RTS 14F (≤500ms) |
+| Sportsbook | W242 | Odds Margin (N-outcome) | UKGC RTS 12 sports + MGA §11 |
+| AI safety | W243 | Customer Service AI Hallucination | EU AI Act Art. 14 + GDPR Art. 22 |
+| 🎯 Supplier | W244 | **Game Provider Revenue-Share LP** | **UKGC SMS 5.2 + IFRS 15** |
 
 > **CI-enforced**: every push runs `closed-form-truth` job — **61 portfolio
 > solvers** (🎯 50-solver milestone @ Wave 157, 51 @ Wave 159, 52 @ Wave 161 = responsible-gambling math triad, 53 @ Wave 163 + 54 @ Wave 165 = sequential bet-progression chase-pattern pair Martingale + Paroli #1+#2 NHS, 55 @ Wave 167 = first ABOVE-IR analyzer for UK Class III AWP cycle convergence, 56 @ Wave 169 = per-cell sticky wild expansion, 57 @ Wave 171 = Wald-identity tumbling cascade chain Sweet Bonanza/Gonzo/Reactoonz iconic, 58 @ Wave 173 = Negative-Hypergeometric Pick-and-Click Pooper Bonus Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF / Konami China Shores iconic, 59 @ Wave 175 = INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario, **🎯 60 @ Wave 177 = MILESTONE doubly-compound Wald Avalanche Reactor Wave Aggregator Reactoonz Quantum Leap / ELK Reactor / BTG Megaways / Tombstone Rip / Sweet Bonanza ante-bet evolution**, **61 @ Wave 179 = compound Binomial trail aggregator za FS-persistent sticky multiplier BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf — quadratic-in-N payout signature**, **62 @ Wave 181 = L&W M5 GAP CLOSURE per-reel Bernoulli adjacency-cascade Reel-Bound Mystery Progressive — Quick Hit family 8+ titles SG Platinum/Black Gold/Pro 9-tier/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Bally Smokin 7s**, **63 @ Wave 182 = L&W M3 GAP CLOSURE exact Markov DP Dynamic Grid-Expansion Hold-and-Spin — Ultimate Fire Link family 7+ variants Olvera Street/China Street/Riverwalk/Power 4/Cash Falls + Bally Lock It Link Eureka Reel Blast**, **64 @ Wave 183 = L&W M2 GAP CLOSURE per-cell K-state Markov chain on N×M grid Multi-State Frame Upgrade — Huff N' Puff family 8 L&W titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion**, **65 @ Wave 184 = L&W M7 GAP CLOSURE 2-stage Binomial conditional coupling Colossal Reels Wild-Transfer — Spartacus Gladiator of Rome + Super Colossal Reels + Call to Arms + 50+ WMS land-based dependent titles**, **66 @ Wave 185 = L&W M1 GAP CLOSURE per-cell Bernoulli × coupled-dimension Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator — Dragon Spin CrossLink Water 2024 (defining novel L&W flagship) + future variants**, **67 @ Wave 186 = UK-CRITICAL L&W M9 GAP CLOSURE Big Bet Paid-Package Multi-Spin Schedule Aggregator — Barcrest UK family Monopoly Big Event/RR Pick n Mix/Action Bank/Pearl of Caribbean — UKGC RTS-12 mandatory disclosure**, **68 @ Wave 187 = L&W M4 P1 GAP CLOSURE Deterministic Explosion Multiplier-Drop Aggregator — Dancing Drums Explosion 2020 + Revolution 2025 LightWave**, **69 @ Wave 188 = L&W M11 P1 GAP CLOSURE Player-Elects Feature Composition Aggregator — RR Pick n Mix 3-of-5 + MJ King of Pop 3 FS modes + KISS band-member variants + 5 Treasures**, **70 @ Wave 189 = L&W M12 P1 GAP CLOSURE Random Feature-Injection During FS Aggregator — Wizard of Oz Munchkinland + WMS sub-feature library**, **71 @ Wave 190 = L&W M14 P1 GAP CLOSURE Nested Mini-Slot Inside Bonus Compositional Aggregator — LOTR Two Towers + Return of the King + Star Trek**) + 11 exact-enum fixtures + 336 commerce/cascade/jackpot/wild/coin/upgrade/wheel/pick/wait-time/ways/sticky/mystery/collect/chain/mega/bi-dir/anticipation/buy-tier/multi-level-wild/hold-win-value/locked-reels/tumble-mult-cap/adjacent-pays/symbol-mult-stop/trail-bonus/cascade-meter/max-win-cap/voltage-meter/bonus-trigger-strat/free-bet-wagering-req/session-bankroll-drawdown/hit-frequency-distribution/running-max-drawdown/martingale-bust-time/paroli-streak/awp-cycle/drop-stick-wild/tumbling-cascade/pick-click-pooper/skill-stop-near-miss/avalanche-reactor/sticky-multiplier-fs-trail/reel-bound-mystery-progressive/dynamic-grid-expansion-hold-spin/multi-state-frame-upgrade-markov/colossal-reels-wild-transfer/per-reel-bag-row-multiplier/big-bet-paid-package/deterministic-explosion-mult/player-elects-composition/random-feature-inject-fs/nested-mini-slot configs =

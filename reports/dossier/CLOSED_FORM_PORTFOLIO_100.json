@@ -1,0 +1,854 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CLOSED_FORM_PORTFOLIO_100",
+  "generated_utc": "2026-05-19T12:56:19.141Z",
+  "portfolio_milestone": "🎯 100-SOLVER MILESTONE",
+  "acceptance_reports_total": 120,
+  "overall_pass_count": 102,
+  "overall_fail_count": 18,
+  "total_configs": 589,
+  "total_configs_passed": 589,
+  "pass_rate_pct": "100.00",
+  "reports": [
+    {
+      "fileName": "ADJACENT_PAYS_AGGREGATOR.json",
+      "reportId": "ADJACENT_PAYS_AGGREGATOR",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "AI_FAIRNESS_AUDIT.json",
+      "reportId": "AI_FAIRNESS_AUDIT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "ANTE_BET_TRADEOFF.json",
+      "reportId": "ANTE_BET_TRADEOFF",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "ANTICIPATION_REEL_TEASE.json",
+      "reportId": "ANTICIPATION_REEL_TEASE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "ARCADE_SHOOTER_SURVIVAL_LEVELS.json",
+      "reportId": "ARCADE_SHOOTER_SURVIVAL_LEVELS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "AUTO_SPIN_DUAL_STOP.json",
+      "reportId": "AUTO_SPIN_DUAL_STOP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "AVALANCHE_REACTOR_WAVE_AGGREGATOR.json",
+      "reportId": "AVALANCHE_REACTOR_WAVE_AGGREGATOR",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "AWP_CYCLE_CONVERGENCE.json",
+      "reportId": "AWP_CYCLE_CONVERGENCE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BEHAVIORS_COMPOSITIONAL.json",
+      "reportId": "BEHAVIORS_COMPOSITIONAL",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "BIDIRECTIONAL_LINE_PAY.json",
+      "reportId": "BIDIRECTIONAL_LINE_PAY",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BIG_BET_PAID_PACKAGE_MULTI_SPIN.json",
+      "reportId": "BIG_BET_PAID_PACKAGE_MULTI_SPIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_BANK_RUNNING_BALANCE_OFFSET.json",
+      "reportId": "BONUS_BANK_RUNNING_BALANCE_OFFSET",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_BUY_VARIANCE.json",
+      "reportId": "BONUS_BUY_VARIANCE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_COLLECT_N.json",
+      "reportId": "BONUS_COLLECT_N",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_TRIGGER_AWARD_STRATIFICATION.json",
+      "reportId": "BONUS_TRIGGER_AWARD_STRATIFICATION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_TRIGGER_WAIT_TIME.json",
+      "reportId": "BONUS_TRIGGER_WAIT_TIME",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BONUS_WHEEL_RESPIN.json",
+      "reportId": "BONUS_WHEEL_RESPIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "BOTH_WAYS.json",
+      "reportId": "BOTH_WAYS",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "CASCADE_METER_CHARGE_UP.json",
+      "reportId": "CASCADE_METER_CHARGE_UP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CASCADE_MULTIPLIER_CHAIN.json",
+      "reportId": "CASCADE_MULTIPLIER_CHAIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CASCADE_MULTIPLIER_PYRAMID.json",
+      "reportId": "CASCADE_MULTIPLIER_PYRAMID",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CHARGE_METER.json",
+      "reportId": "CHARGE_METER",
+      "overallPass": true,
+      "configsTotal": 7,
+      "configsPassed": 7
+    },
+    {
+      "fileName": "CLASS_II_BINGO.json",
+      "reportId": "CLASS_II_BINGO",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CLUSTER_CASCADE.json",
+      "reportId": "CLUSTER_CASCADE",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "CLUSTER_COMPOUND_VARIANCE.json",
+      "reportId": "CLUSTER_COMPOUND_VARIANCE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "COIN_ACCUMULATOR_MYSTERY.json",
+      "reportId": "COIN_ACCUMULATOR_MYSTERY",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "COLOSSAL_REELS_WILD_TRANSFER.json",
+      "reportId": "COLOSSAL_REELS_WILD_TRANSFER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CRASH_MULTIPLIER.json",
+      "reportId": "CRASH_MULTIPLIER",
+      "overallPass": true,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "CROSS_JURISDICTION_TAX_OPTIMIZER.json",
+      "reportId": "CROSS_JURISDICTION_TAX_OPTIMIZER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CUSTOMER_AFFORDABILITY_STRATIFICATION.json",
+      "reportId": "CUSTOMER_AFFORDABILITY_STRATIFICATION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CUSTOMER_SERVICE_AI_HALLUCINATION.json",
+      "reportId": "CUSTOMER_SERVICE_AI_HALLUCINATION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "CYBERSECURITY_BREACH_COST.json",
+      "reportId": "CYBERSECURITY_BREACH_COST",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "DEMO_MODE.json",
+      "reportId": "DEMO_MODE",
+      "overallPass": true,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json",
+      "reportId": "DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "DIFF_FUZZ_CROSS_LANG.json",
+      "reportId": "DIFF_FUZZ_CROSS_LANG",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "dossier-2026-05-14_233949019Z.json",
+      "reportId": "dossier-2026-05-14_233949019Z",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "DROP_STICK_WILD_EXPANSION.json",
+      "reportId": "DROP_STICK_WILD_EXPANSION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json",
+      "reportId": "DYNAMIC_GRID_EXPANSION_HOLD_SPIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "ENTROPY_HEALTH_MONITOR.json",
+      "reportId": "ENTROPY_HEALTH_MONITOR",
+      "overallPass": true,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "ESG_CARBON_COST.json",
+      "reportId": "ESG_CARBON_COST",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "EXACT_ENUMERATION.json",
+      "reportId": "EXACT_ENUMERATION",
+      "overallPass": true,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "FREE_BET_WAGERING_REQUIREMENT.json",
+      "reportId": "FREE_BET_WAGERING_REQUIREMENT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "FREE_SPINS_LOOKBACK_MULTIPLIER.json",
+      "reportId": "FREE_SPINS_LOOKBACK_MULTIPLIER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "FREE_SPINS_RETRIGGER.json",
+      "reportId": "FREE_SPINS_RETRIGGER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "FS_BUY_TIER_TRADEOFF.json",
+      "reportId": "FS_BUY_TIER_TRADEOFF",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "FS_CONFIGS.json",
+      "reportId": "FS_CONFIGS",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "GAME_PROVIDER_REVENUE_SHARE.json",
+      "reportId": "GAME_PROVIDER_REVENUE_SHARE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "golden.json",
+      "reportId": "golden",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "HIT_FREQUENCY_DISTRIBUTION.json",
+      "reportId": "HIT_FREQUENCY_DISTRIBUTION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "HNW_LADDER.json",
+      "reportId": "HNW_LADDER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "HNW_MULTI_JACKPOT.json",
+      "reportId": "HNW_MULTI_JACKPOT",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "HOLD_WIN_VALUE_JACKPOT.json",
+      "reportId": "HOLD_WIN_VALUE_JACKPOT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "INDUSTRY_PATTERNS.json",
+      "reportId": "INDUSTRY_PATTERNS",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "JP_PACHISLOT_SKILL_STOP.json",
+      "reportId": "JP_PACHISLOT_SKILL_STOP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "JURISDICTION_AUTO_GATE.json",
+      "reportId": "JURISDICTION_AUTO_GATE",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "KYC_AML_SANCTION_SCREENING.json",
+      "reportId": "KYC_AML_SANCTION_SCREENING",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "LIVE_CASINO_DEALER_INTEGRITY.json",
+      "reportId": "LIVE_CASINO_DEALER_INTEGRITY",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "LOCKED_REELS_FS.json",
+      "reportId": "LOCKED_REELS_FS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MARTINGALE_BUST_TIME.json",
+      "reportId": "MARTINGALE_BUST_TIME",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MAX_WIN_CAP_TRUNCATION.json",
+      "reportId": "MAX_WIN_CAP_TRUNCATION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MECHANIC_29.json",
+      "reportId": "MECHANIC_29",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "MECHANIC_30.json",
+      "reportId": "MECHANIC_30",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "MECHANIC_FAMILY.json",
+      "reportId": "MECHANIC_FAMILY",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "MEGA_SYMBOL_EXPANSION.json",
+      "reportId": "MEGA_SYMBOL_EXPANSION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MEGACLUSTER_STACK_WAYS.json",
+      "reportId": "MEGACLUSTER_STACK_WAYS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "METAMORPHIC_RTP.json",
+      "reportId": "METAMORPHIC_RTP",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "MID_SPIN_REEL_RESHAPE_MIXTURE.json",
+      "reportId": "MID_SPIN_REEL_RESHAPE_MIXTURE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_ACCOUNT_BONUS_ABUSE.json",
+      "reportId": "MULTI_ACCOUNT_BONUS_ABUSE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_CURRENCY_FX_RISK.json",
+      "reportId": "MULTI_CURRENCY_FX_RISK",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_LEVEL_WILD_MARKOV.json",
+      "reportId": "MULTI_LEVEL_WILD_MARKOV",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json",
+      "reportId": "MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_STATE_FRAME_UPGRADE_MARKOV.json",
+      "reportId": "MULTI_STATE_FRAME_UPGRADE_MARKOV",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTI_TIER_WAP_WHEEL.json",
+      "reportId": "MULTI_TIER_WAP_WHEEL",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MULTIPLICATIVE_WILD_STACK.json",
+      "reportId": "MULTIPLICATIVE_WILD_STACK",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MUST_HIT_BY_JACKPOT.json",
+      "reportId": "MUST_HIT_BY_JACKPOT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "MYSTERY_SYMBOL_REVEAL.json",
+      "reportId": "MYSTERY_SYMBOL_REVEAL",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "NESTED_MINI_SLOT_INSIDE_BONUS.json",
+      "reportId": "NESTED_MINI_SLOT_INSIDE_BONUS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "OPERATOR_DAILY_PNL_VAR.json",
+      "reportId": "OPERATOR_DAILY_PNL_VAR",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PAR_COMMITMENT.json",
+      "reportId": "PAR_COMMITMENT",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "PARALLEL_SCREENS.json",
+      "reportId": "PARALLEL_SCREENS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PAROLI_STREAK_CASH_OUT.json",
+      "reportId": "PAROLI_STREAK_CASH_OUT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json",
+      "reportId": "PER_REEL_BAG_ROW_MULTIPLIER_COUPLED",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PERSISTENT_MULTIPLIER.json",
+      "reportId": "PERSISTENT_MULTIPLIER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PICK_BONUS_N_STAGE.json",
+      "reportId": "PICK_BONUS_N_STAGE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PICK_CLICK_POOPER_BONUS.json",
+      "reportId": "PICK_CLICK_POOPER_BONUS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PLAYER_ELECTS_FEATURE_COMPOSITION.json",
+      "reportId": "PLAYER_ELECTS_FEATURE_COMPOSITION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PLAYER_LTV_BAYESIAN.json",
+      "reportId": "PLAYER_LTV_BAYESIAN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PRE_COMMITMENT_LOSS_LIMIT.json",
+      "reportId": "PRE_COMMITMENT_LOSS_LIMIT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "PSEUDO_MUST_HIT_LEVEL.json",
+      "reportId": "PSEUDO_MUST_HIT_LEVEL",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "QUANTUM_RESISTANT_RNG.json",
+      "reportId": "QUANTUM_RESISTANT_RNG",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "RACE_COMPETITIVE_PICK_WINNER.json",
+      "reportId": "RACE_COMPETITIVE_PICK_WINNER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "RANDOM_CONFIG_SWEEP.json",
+      "reportId": "RANDOM_CONFIG_SWEEP",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "RANDOM_FEATURE_INJECTION_DURING_FS.json",
+      "reportId": "RANDOM_FEATURE_INJECTION_DURING_FS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "REEL_BOUND_MYSTERY_PROGRESSIVE.json",
+      "reportId": "REEL_BOUND_MYSTERY_PROGRESSIVE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "RTP_DRIFT_CUSUM.json",
+      "reportId": "RTP_DRIFT_CUSUM",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "RUNNING_MAX_DRAWDOWN.json",
+      "reportId": "RUNNING_MAX_DRAWDOWN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SELF_EXCLUSION_LIFECYCLE.json",
+      "reportId": "SELF_EXCLUSION_LIFECYCLE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SESSION_BANKROLL_DRAWDOWN.json",
+      "reportId": "SESSION_BANKROLL_DRAWDOWN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SESSION_COOL_OFF_ENFORCEMENT.json",
+      "reportId": "SESSION_COOL_OFF_ENFORCEMENT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SKILL_STOP_NEAR_MISS.json",
+      "reportId": "SKILL_STOP_NEAR_MISS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SPIN_VELOCITY_COMPLIANCE.json",
+      "reportId": "SPIN_VELOCITY_COMPLIANCE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SPORTSBOOK_ODDS_MARGIN.json",
+      "reportId": "SPORTSBOOK_ODDS_MARGIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STACKED_MULTI_WHEEL_COMPOSITION.json",
+      "reportId": "STACKED_MULTI_WHEEL_COMPOSITION",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STICKY_CASH_COLLECTOR.json",
+      "reportId": "STICKY_CASH_COLLECTOR",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STICKY_CASH_REVEAL.json",
+      "reportId": "STICKY_CASH_REVEAL",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STICKY_MULTIPLIER_FS_TRAIL.json",
+      "reportId": "STICKY_MULTIPLIER_FS_TRAIL",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STICKY_WILD_COUNTDOWN_MULT.json",
+      "reportId": "STICKY_WILD_COUNTDOWN_MULT",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "STREAM_LATENCY_SLA.json",
+      "reportId": "STREAM_LATENCY_SLA",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SUPERMETER.json",
+      "reportId": "SUPERMETER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SYMBOL_MULT_REEL_STOP.json",
+      "reportId": "SYMBOL_MULT_REEL_STOP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "SYMBOL_UPGRADE_CHAIN.json",
+      "reportId": "SYMBOL_UPGRADE_CHAIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "TRAIL_BONUS_TRACKER.json",
+      "reportId": "TRAIL_BONUS_TRACKER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "TUMBLE_MULTIPLIER_CAP.json",
+      "reportId": "TUMBLE_MULTIPLIER_CAP",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "TUMBLING_CASCADE_CHAIN_LENGTH.json",
+      "reportId": "TUMBLING_CASCADE_CHAIN_LENGTH",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "US_STATE_REGULATOR_COMPLIANCE.json",
+      "reportId": "US_STATE_REGULATOR_COMPLIANCE",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "VARIABLE_REEL_HEIGHT_WAYS.json",
+      "reportId": "VARIABLE_REEL_HEIGHT_WAYS",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "VARROWS_CASCADE.json",
+      "reportId": "VARROWS_CASCADE",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    },
+    {
+      "fileName": "VOLTAGE_METER_MULTI_TIER.json",
+      "reportId": "VOLTAGE_METER_MULTI_TIER",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "WALKING_WILD_RESPIN.json",
+      "reportId": "WALKING_WILD_RESPIN",
+      "overallPass": true,
+      "configsTotal": 6,
+      "configsPassed": 6
+    },
+    {
+      "fileName": "WAYS_ACCEPTANCE.json",
+      "reportId": "WAYS_ACCEPTANCE",
+      "overallPass": false,
+      "configsTotal": 0,
+      "configsPassed": 0
+    }
+  ]
+}

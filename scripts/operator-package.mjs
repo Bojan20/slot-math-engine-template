@@ -368,7 +368,7 @@ function runAcceptance() {
 
 // ─── Build ZIP ─────────────────────────────────────────────────────────────
 
-function buildZip(tag) {
+async function buildZip(tag) {
   const zipName = `slot-math-engine-${tag}-operator-pkg.zip`;
   const zipPath = join(OUT_DIR, zipName);
   const manifestName = `slot-math-engine-${tag}-operator-pkg.MANIFEST.json`;
@@ -578,7 +578,7 @@ function renderReadme(tag, entries) {
 
 // ─── Main ──────────────────────────────────────────────────────────────────
 
-function main() {
+async function main() {
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
 
   const tag = TAG_OVERRIDE ?? (shortSha() + gitDirtyMarker());
@@ -603,7 +603,7 @@ function main() {
     console.log('Skipping acceptance refresh (--skip-acceptance) — using cached reports');
   }
 
-  buildZip(tag);
+  await buildZip(tag);
 }
 
-main();
+main().catch((e) => { console.error(e); process.exit(2); });
