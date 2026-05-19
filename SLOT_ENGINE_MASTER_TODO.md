@@ -170,11 +170,17 @@ Legenda:
 
 ---
 
-## STATE SNAPSHOT (overeno protiv git history-ja Wave 25, izvora i fixture-a — 2026-05-15, W152 Wave 25 landed; **FAZA 15 KOMPLETNA + 17 acceptance proofs + 4 Faza 12 mehaničke familije** (11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console / 12 mechanic-family))
+## STATE SNAPSHOT (overeno protiv git history-ja Wave 33-215, izvora i fixture-a — 2026-05-19, W215 landed; **FAZA 15 KOMPLETNA + 16/16 L&W KIMI GAPS CLOSED (W196 milestone) + 77 solveri + 106 CI gates + 97 P-IDs + Tier-2 outreach + DR/IR + Marketing analytics**)
 
-**Ukupno: ~99% kompletno na kodu, ~95% kompletno na "acceptance proof"-u.** **FAZA 15 KOMPLETIRANA: 15.A (14 schema primitives) + 15.B (5 cert blockers) + 15.C (5 competitive mehanike) + 15.X (3 anti-patent housekeeping) = 27/24 stavki landed.** Plus **16 acceptance proof reports landed waves 21-24** (Faze 11.7 / 13.1 / 14.3 / 14.4 / 6.7 / 8.6 / 13.3 / 13.6 / 12 ways-1024 PGF / 12 FS / 12 H&W / 12 cluster / coverage / 0.1 vitest bench / 13.11 publish pipeline / 14.4 tuning console). Sve clean-room, zero vendor-marker u kod-u (verified **0/757 files** post-Wave 24), respinLockEvaluator dokumentovan sa 4-criteria differentiation od H&W Markov persistent u IP_REVIEW.md.
+**Ukupno: ~99% kompletno na kodu, ~95% kompletno na "acceptance proof"-u.** **FAZA 15 KOMPLETIRANA** (15.A/B/C/X 27/24 stavki). **W196 MILESTONE 16/16 L&W KIMI GAPS CLOSED — 100% L&W MEHANIKA COVERAGE** (220+ titles attestable). **W197-W215 COMMERCIAL SPRINT**: Walking-skeleton Demo (W200) + Pilot Architecture + Pitch Tarball + Real L&W Pilot Onboard (W211) + Live Operator Integration (W210) + Marketplace Activation (W209) + Continuous Hardening (W213/W214) + Negotiation Toolkit + Public Marketing Site (W214) + **Tier-2 Operator Outreach 8 ops $478M 5yr NPV (W215 Faza 1200.0)** + **DR + Incident Response (W215 Faza 600.4)** + **Marketing Analytics + Case Studies + Blog (W215 Faza 800.2)**.
 
-**Post-Wave 24 ultimate-QA (2026-05-15, post `7a529e9`):** TS lint 0 err ✅ · vitest **2752 pass / 0 fail / 3 skipped / 118 files** ✅ · npm build clean ✅ · cargo build --release ✅ · clippy --lib -D warnings 0 ✅ · cargo test --release **783 pass / 0 fail** ✅ · check-reserved-terms **0/757 files** ✅. **Combined TS+Rust = 3535 testova / 0 fail / 0 regresija.**
+**Post-W215 ultimate-QA (2026-05-19, post `6d34495`):** TS lint 0 err ✅ · vitest **6549 pass / 0 fail / 3 skipped / 261 files** ✅ · npm build clean ✅ · cargo build --release ✅ · clippy --lib -D warnings 0 ✅ · cargo test --release **791 pass / 0 fail** ✅ · slot-truth-check **10/10 OK** ✅. **Combined TS+Rust = 7340 testova / 0 fail / 0 regresija.** **W215 delta: +473 vitest specs vs W214 (6076 → 6549), +57 files, +8,500 LOC.**
+
+**Faza 1200.0 ✅ DONE (W215):** 8 Tier-2 dossiers (Aristocrat/IGT/Konami/Novomatic/Playtech/Everi/Ainsworth/AGS) + Market Expansion Strategy + Coverage matrix script + Portfolio fit script + Cold-email template + Master index. 103 vitest specs. NPV +$478M 5yr.
+
+**Faza 600.4 ✅ DONE (W215):** DR (BackupOrchestrator, 4-tier RTO/RPO 15/5..1440/1440) + Incident Response (SEV1-SEV4 matrix + escalation route + MTTA/MTTR) + 3 dr scripts (backup-verify, restore-drill 4-scenario, failover-test) + Monthly dr-drill GH workflow + 3 docs (DISASTER_RECOVERY / INCIDENT_RESPONSE / RUNBOOK_RTO_RPO). 107 vitest specs. GLI-19 §6 + UKGC RTS 1B.6 + MGA Ch.6 mapping.
+
+**Faza 800.2 ✅ DONE (W215):** Privacy-first analytics (FNV-1a session, DNT 204, batched) + A/B testing (xxhash bucketing, 3 experiments, 10K-bucket chi-square at α=0.001) + Internal dashboard (Bayesian credible interval) + 3 case studies + 4 blog posts + SEO audit (16/16 strict PASS) + Funnel snapshot + Marketing Playbook. 132 vitest specs. PG migration 015.
 
 **Wave 21-25 closeouts:**
 
