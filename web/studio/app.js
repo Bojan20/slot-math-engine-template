@@ -3543,6 +3543,8 @@
       templateHtml, runtimeJs, stylesCss,
       oracleJs, dnaJs, diffJs, dashboardJs,
       replayJs, watchtowerJs, watchtowerWorkerJs,
+      featureRegistryJs, componentBuilderJs,
+      ftMultiplierJs, ftPowerMeterJs, ftFreeSpinsJs, ftHoldAndWinJs,
     ] = await Promise.all([
       fetch(base + "template.html").then((r) => r.text()),
       fetch(base + "runtime.js").then((r) => r.text()),
@@ -3554,6 +3556,16 @@
       fetch(base + "replay-log.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "watchtower.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "watchtower-worker.js").then((r) => r.text()).catch(() => ""),
+      // Feature plug-in pipeline — registry + boot compiler + 4 core components
+      // (multiplier, power-meter, free-spins, hold-and-win).  Each component
+      // self-registers on window.MTLFeatures.register() so the builder can
+      // look them up by IR kind at boot.
+      fetch(base + "feature-registry.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "component-builder.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/multiplier.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/power-meter.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/free-spins.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/hold-and-win.js").then((r) => r.text()).catch(() => ""),
     ]);
     // Embed IR as a JSON script tag the runtime reads, plus inline CSS + JS.
     // We use REPLACER FUNCTIONS (not strings) so `$` characters in the
@@ -3568,6 +3580,11 @@
     const wtSourceStub = watchtowerJs && watchtowerWorkerJs
       ? `window.__MTL_WT_SRC__ = ${JSON.stringify(watchtowerJs)};\nwindow.__MTL_WT_WORKER_SRC__ = ${JSON.stringify(watchtowerWorkerJs)};`
       : "";
+    // Concatenate the 4 core feature components into a single bundle so
+    // template.html only needs ONE script slot for all of them.  Order
+    // is alphabetical for stability; each component self-registers via
+    // window.MTLFeatures.register() so order doesn't affect mount logic.
+    const featuresBundle = [ftFreeSpinsJs, ftHoldAndWinJs, ftMultiplierJs, ftPowerMeterJs].filter(Boolean).join('\n\n');
     const finalHtml = templateHtml
       .replace("/* RUNNER-CSS */", () => stylesCss)
       .replace(/(<script id="inline-ir"[^>]*>)\{\}(<\/script>)/, (m, open, close) => open + irJson + close)
@@ -3577,6 +3594,9 @@
       .replace("/* MTL-DASHBOARD-JS */", () => dashboardJs)
       .replace("/* MTL-REPLAY-JS */",    () => replayJs)
       .replace("/* MTL-WT-SOURCE-JS */", () => wtSourceStub)
+      .replace("/* MTL-FEATURE-REGISTRY-JS */",  () => featureRegistryJs)
+      .replace("/* MTL-COMPONENT-BUILDER-JS */", () => componentBuilderJs)
+      .replace("/* MTL-FEATURES-BUNDLE-JS */",   () => featuresBundle)
       .replace("/* RUNNER-JS */",        () => safeRuntime);
     const blob = new Blob([finalHtml], { type: "text/html" });
     return URL.createObjectURL(blob);

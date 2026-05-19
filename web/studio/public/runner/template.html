@@ -26,26 +26,12 @@
     pipeline continues to work during the port.
   -->
   <div id="appRoot" class="appRoot">
-    <!-- ═════ TOP HUB ═════ -->
+    <!-- ═════ TOP HUB ═════
+         Universal slot at left + right of the logo for optional widgets.
+         Components from MTLFeatureRegistry (power_meter, multiplier, etc.)
+         self-mount into `#mtl-features-top` when the IR declares them. -->
     <header class="topHub" aria-label="Top HUD">
-      <!-- Power Meter — generic accumulator placeholder.  Hidden by the
-           runner at boot unless IR declares a `power_meter` / `accumulator`
-           feature.  A game-specific skin can re-theme via CSS without
-           touching the runner. -->
-      <div id="zeusMeter" class="zeus-meter" aria-label="Power Meter">
-        <div class="zeus-meter__frame">
-          <div class="zeus-meter__track">
-            <div class="zeus-meter__fill" id="zeusMeterFill" style="width:0%"></div>
-          </div>
-          <div class="zeus-meter__icon" aria-hidden="true">◆</div>
-          <div class="zeus-meter__markers">
-            <span class="zeus-meter__marker" data-level="25"></span>
-            <span class="zeus-meter__marker" data-level="50"></span>
-            <span class="zeus-meter__marker" data-level="75"></span>
-          </div>
-        </div>
-        <div class="zeus-meter__label" id="zeusMeterLabel">POWER · IDLE</div>
-      </div>
+      <div id="mtl-features-top-l" class="mtl-feature-slot mtl-feature-slot--top-l"></div>
 
       <!-- Game logo / title (text-only; art slot in production) -->
       <div id="gameLogo" class="game-logo" aria-label="Game title">
@@ -54,38 +40,15 @@
         <span class="game-logo__version mono" id="game-version">v0.0</span>
       </div>
 
-      <!-- Top-right balance counter -->
+      <!-- Top-right balance counter — always present (universal shell) -->
       <div id="topBalance" class="top-balance" aria-label="Balance">
         <span class="top-balance__label">BALANCE</span>
         <span class="top-balance__value mono" id="topBalanceValue">0.00</span>
         <span class="top-balance__cur" id="currency">EUR</span>
       </div>
 
-      <!-- Multiplier Strip — generic placeholder.  Hidden by the runner
-           at boot unless IR declares a `multiplier` feature.  Item values
-           below are illustrative defaults; a skin can override via DOM. -->
-      <div id="lightningMeter" class="lightning-meter" aria-label="Multiplier Strip" data-state="idle">
-        <div class="lightning-meter-frame">
-          <div class="lightning-meter-window">
-            <div class="lightning-meter-strip" id="lightningMeterStrip">
-              <!-- One full set + one duplicate for seamless scroll (mirrors stormMultiplierReel.ts) -->
-              <div class="lightning-mult-item" data-mult="2"><span class="mult-val">2×</span></div>
-              <div class="lightning-mult-item" data-mult="3"><span class="mult-val">3×</span></div>
-              <div class="lightning-mult-item" data-mult="5"><span class="mult-val">5×</span></div>
-              <div class="lightning-mult-item" data-mult="10"><span class="mult-val">10×</span></div>
-              <div class="lightning-mult-item lightning-mult-miss" data-mult="0"><span class="miss-x">✕</span></div>
-              <div class="lightning-mult-item" data-mult="2"><span class="mult-val">2×</span></div>
-              <div class="lightning-mult-item" data-mult="3"><span class="mult-val">3×</span></div>
-              <div class="lightning-mult-item" data-mult="5"><span class="mult-val">5×</span></div>
-              <div class="lightning-mult-item" data-mult="10"><span class="mult-val">10×</span></div>
-              <div class="lightning-mult-item lightning-mult-miss" data-mult="0"><span class="miss-x">✕</span></div>
-            </div>
-          </div>
-          <div class="lightning-meter-pointer lightning-meter-pointer--left" aria-hidden="true"></div>
-          <div class="lightning-meter-pointer lightning-meter-pointer--right" aria-hidden="true"></div>
-        </div>
-        <div class="lightning-meter-label" aria-hidden="true">×</div>
-      </div>
+      <!-- Right-side feature slot for top-HUB widgets (multiplier strip, etc.) -->
+      <div id="mtl-features-top" class="mtl-feature-slot mtl-feature-slot--top"></div>
     </header>
 
     <!-- ═════ STAGE — reels + side stats + overlays ═════ -->
@@ -106,6 +69,8 @@
             <span class="side-lbl">HIT %</span>
             <b class="mono" id="stat-hit-pct">—</b>
           </div>
+          <!-- Feature slot for left-rail vertical widgets (rare — reserved). -->
+          <div id="mtl-features-side-l" class="mtl-feature-slot mtl-feature-slot--side-l"></div>
         </aside>
 
         <!-- ═════ CENTER STAGE — reel frame + landing cell grid ═════ -->
@@ -136,6 +101,16 @@
             -->
             <svg id="paylineOverlay" class="payline-overlay" aria-hidden="true"
                  preserveAspectRatio="none" pointer-events="none"></svg>
+
+            <!-- Feature slot for per-cell decorations (H&W locked-orb badges,
+                 expanding-wild flashes, sticky-wild halos, etc.).  Components
+                 from MTLFeatureRegistry mount into here. -->
+            <div id="mtl-features-cells" class="mtl-feature-slot mtl-feature-slot--cells"></div>
+
+            <!-- Feature slot for full-frame overlays (FS HUD, cascade FX,
+                 cluster-pays outline, ways-pays badge).  Components mount
+                 into here. -->
+            <div id="mtl-features-overlay" class="mtl-feature-slot mtl-feature-slot--overlay"></div>
 
             <!-- Win banner — floats above the reel grid -->
             <div class="win-banner" id="win-banner" hidden>
@@ -170,6 +145,8 @@
             <span class="side-lbl">MAX WIN</span>
             <b class="mono" id="stat-max-win">0.00</b>
           </div>
+          <!-- Feature slot for right-rail widgets (FS multiplier ladder, etc.) -->
+          <div id="mtl-features-side-r" class="mtl-feature-slot mtl-feature-slot--side"></div>
         </aside>
 
         <!-- HUD — right-side spin hint + skip hint (mirrors Wrath aside) -->
@@ -252,6 +229,9 @@
             <button class="auto-btn auto-stop" id="auto-stop" type="button" hidden aria-label="Stop autoplay">STOP</button>
             <button class="auto-btn" id="autoPlayOpenBtn" type="button" aria-label="Open autoplay settings">…</button>
           </div>
+
+          <!-- Feature slot for bottom-bar buttons (buy_feature, bonus_pick, etc.) -->
+          <div id="mtl-features-bottom" class="mtl-feature-slot mtl-feature-slot--bottom bottomBar__section"></div>
 
           <!-- Sound toggle -->
           <div class="bottomBar__section bottomBar__section--sound">
@@ -415,6 +395,12 @@
   <script id="mtl-dashboard">/* MTL-DASHBOARD-JS */</script>
   <script id="mtl-replay">/* MTL-REPLAY-JS */</script>
   <script id="mtl-wt-source">/* MTL-WT-SOURCE-JS */</script>
+  <!-- Feature plug-in pipeline — registry + boot compiler + per-feature
+       modules.  Studio's buildPlayTemplateBlob inlines each script body
+       at build time, so the runner ships as a single self-contained blob. -->
+  <script id="mtl-feature-registry">/* MTL-FEATURE-REGISTRY-JS */</script>
+  <script id="mtl-component-builder">/* MTL-COMPONENT-BUILDER-JS */</script>
+  <script id="mtl-features-bundle">/* MTL-FEATURES-BUNDLE-JS */</script>
   <script id="inline-js">/* RUNNER-JS */</script>
 </body>
 </html>

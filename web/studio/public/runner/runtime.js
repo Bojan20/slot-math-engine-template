@@ -1030,6 +1030,8 @@
     setStatusText(`FREE SPINS · ${remaining} REMAINING`);
     showFsHud(maxMult);
     updateFsHud({ done: 0, total: totalAwarded, mult, winTotal: 0 });
+    // Feature bus: FS entered — FS HUD pill + ladder mount.
+    emitFeatureEvent('fs:enter', { triggerScCount: initialScCount, awarded: totalAwarded, mult: mult, max: maxMult });
     await showFeatureOverlay({
       kind: 'FREE SPINS',
       title: `${remaining} Free Spins awarded`,
@@ -1057,6 +1059,8 @@
       state.featureLabel = `FS · ${remaining} left · ${mult}× · ${fmt(total * bet)}`;
       setStatusText(`FS ${remaining} LEFT · ${mult}× · ${fmt(total * bet)}`);
       updateFsHud({ done: spinsDone, total: totalAwarded, mult, winTotal: total * bet });
+      // Feature bus: per-spin update for FS HUD components.
+      emitFeatureEvent('fs:spin', { index: spinsDone, total: totalAwarded, win: win * bet, mult: mult, winTotal: total * bet });
       renderHud();
       if (r.scCount >= 3 && totalAwarded < fsCap) {
         const add = awardFsRetrigger(r.scCount);
@@ -1064,6 +1068,7 @@
           remaining += add;
           totalAwarded += add;
           updateFsHud({ done: spinsDone, total: totalAwarded, mult, winTotal: total * bet });
+          emitFeatureEvent('fs:retrigger', { added: add, total: totalAwarded });
           await showFeatureOverlay({
             kind: 'RETRIGGER',
             title: `+${add} more Free Spins`,
@@ -1085,6 +1090,8 @@
     hideFsHud();
     setStatusText('PRESS SPIN');
     renderHud();
+    // Feature bus: FS exited — HUD pill + ladder unmount cleanup.
+    emitFeatureEvent('fs:exit', { totalWin: total * bet, totalAwarded: totalAwarded, maxMult: mult });
     return total;
   }
 
@@ -1122,6 +1129,17 @@
     state.featureLabel = `HOLD & WIN · ${filled} orbs · ${respinsInitial} respins`;
     renderHud();
     setStatusText(`HOLD & WIN · STARTING`);
+    // Feature bus: H&W started — components react (hold-and-win.js shows info + per-cell badges)
+    emitFeatureEvent('hnw:enter', { initialOrbs: filled, respins: respinsInitial, totalCells: totalCells });
+    // Emit each initial orb so the component can pop badges with values + jp tags
+    for (let i = 0; i < filled; i++) {
+      const key = cellOrder[i];
+      const locked = state.hnwLockedCells.get(key);
+      if (locked) {
+        const [rr, yy] = key.split(':').map(Number);
+        emitFeatureEvent('hnw:orb-landed', { cell: { r: rr, y: yy }, value: locked.value, jpName: locked.jpName });
+      }
+    }
     await showFeatureOverlay({
       kind: 'HOLD & WIN',
       title: (F_HNW && F_HNW.name) || 'Hold & Win',
@@ -1149,15 +1167,30 @@
       }
       filled += landed;
       renderHnwBoard();
+      // Emit newly landed orbs for the component to badge
+      if (landed > 0) {
+        // remainingCells[0..landed-1] are the cells that received orbs this respin
+        for (let li = 0; li < landed; li++) {
+          const key = remainingCells[li];
+          const locked = state.hnwLockedCells.get(key);
+          if (locked) {
+            const [rr, yy] = key.split(':').map(Number);
+            emitFeatureEvent('hnw:orb-landed', { cell: { r: rr, y: yy }, value: locked.value, jpName: locked.jpName });
+          }
+        }
+      }
       if (landed > 0 && F_HNW.respin_reset_on_new) respins = respinsInitial;
       state.featureLabel = `H&W · ${respins} respins · ${filled}/${totalCells} · ${fmt(total * bet)}`;
       setStatusText(`H&W ${respins} RESPINS · ${filled}/${totalCells} · ${fmt(total * bet)}`);
       renderHud();
+      // Feature bus: respin tick — components update their counter widgets
+      emitFeatureEvent('hnw:respin', { filled: filled, totalCells: totalCells, respinsLeft: respins, cumulative: total * bet });
       await wait(state.turbo ? 200 : 720);
     }
 
     if (filled >= totalCells && fullGridBonus > 0) {
       total += fullGridBonus;
+      emitFeatureEvent('hnw:full-grid', { bonus: fullGridBonus });
       await showFeatureOverlay({
         kind: 'FULL GRID',
         title: `+${fullGridBonus}× BONUS!`,
@@ -1176,6 +1209,8 @@
     state.featureLabel = '';
     setStatusText('PRESS SPIN');
     renderHud();
+    // Feature bus: H&W exited — components fade out their badges + info pill
+    emitFeatureEvent('hnw:exit', { totalWin: total * bet });
     return total;
   }
 
@@ -1241,6 +1276,8 @@
     clearWinHighlights();
     clearPaylines();
     hideWinBanner();
+    // Feature bus: spin started — multiplier strip starts scrolling, etc.
+    emitFeatureEvent('spin:start', { bet: bet });
 
     state.balance -= bet;
     state.totalWagered += bet;
@@ -1259,6 +1296,11 @@
     await animateGrid(grid, result, { multAnnounce: lightning });
     await lightningPromise;
     updateZeusMeter(result.baseWin || 0);
+    // Feature bus: math evaluated + lightning rolled.  Components like
+    // power_meter listen to spin:eval to grow their gauges; multiplier
+    // strip listens to spin:lightning to flash the chosen value.
+    emitFeatureEvent('spin:eval', { result: result, totalWin: spinWin, bet: bet });
+    if (lightning > 1) emitFeatureEvent('spin:lightning', { value: lightning });
 
     let featureLabel = null;
     if (F_FS && result.scCount >= 3) {
@@ -1290,6 +1332,8 @@
     }
     if (!featureLabel) setStatusText('PRESS SPIN');
     setTimeout(hideWinBanner, 1200);
+    // Feature bus: render-done — multiplier strip returns to idle, etc.
+    emitFeatureEvent('spin:render-done', { totalWin: spinWin });
 
     state.spinning = false;
     spinBtn?.removeAttribute('disabled');
@@ -1554,6 +1598,27 @@
   renderPaytable();
   bindUI();
   applyFeatureVisibility();
+
+  // ─── Feature plug-in pipeline boot ────────────────────────────────
+  // MTLFeatureBuilder + MTLFeatureRegistry are loaded via the inline
+  // <script id="mtl-feature-registry"> / <script id="mtl-component-builder">
+  // / <script id="mtl-features-bundle"> tags emitted by Studio's
+  // buildPlayTemplateBlob.  When they're present, we boot the registry
+  // and let it mount any feature components the IR declares.  The shared
+  // event bus lives on `window.MTLFeatures.events`.
+  const featureBus = (window.MTLFeatures && window.MTLFeatures.events) || null;
+  function emitFeatureEvent(name, payload) {
+    if (featureBus) {
+      try { featureBus.emit(name, payload); } catch (err) { console.warn('[bus emit] ' + name + ' threw:', err); }
+    }
+  }
+  if (window.MTLFeatureBuilder && typeof window.MTLFeatureBuilder.boot === 'function') {
+    window.MTLFeatureBuilder.boot(IR, document.body).then(function (res) {
+      console.log('[MTLFeatures] booted with kinds:', res.mounted, 'unknown:', res.unknown);
+    }).catch(function (err) {
+      console.warn('[MTLFeatures] boot failed:', err);
+    });
+  }
   // Strip Wrath-specific copy from the game title in the intro modal when
   // the IR is generic — show whatever IR.meta.name says (template stays
   // theme-agnostic).
