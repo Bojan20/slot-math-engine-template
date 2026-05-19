@@ -1,0 +1,173 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_uk_500ms_compliant",
+      "regime": "UK_COMPLIANT",
+      "cfg": {
+        "medianLatencyMs": 200,
+        "latencyLogStd": 0.4,
+        "slaThresholdMs": 500,
+        "spinsPerDay": 1000000,
+        "refundPerBreach": 1,
+        "operatorAnnualRevenue": 100000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 216.65741353499163,
+        "p99LatencyMs": 507.14397244850335,
+        "probSlaBreach": 0.010989578449253967,
+        "expectedDailyBreaches": 10989.578449253968,
+        "expectedAnnualBreaches": 4011196.133977698,
+        "expectedAnnualRefundCost": 4011196.133977698,
+        "refundCostShareOfRevenue": 0.04011196133977698,
+        "slaComplianceScore": 0.7802084310149207,
+        "isCompliantUkgcRts14f": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0.0126
+      },
+      "pass": true
+    },
+    {
+      "name": "B_eu_strict_300ms",
+      "regime": "EU_STRICT",
+      "cfg": {
+        "medianLatencyMs": 150,
+        "latencyLogStd": 0.35,
+        "slaThresholdMs": 300,
+        "spinsPerDay": 2000000,
+        "refundPerBreach": 2,
+        "operatorAnnualRevenue": 200000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 159.4747008201152,
+        "p99LatencyMs": 338.59447906972093,
+        "probSlaBreach": 0.023828079018440418,
+        "expectedDailyBreaches": 47656.158036880835,
+        "expectedAnnualBreaches": 17394497.683461506,
+        "expectedAnnualRefundCost": 34788995.36692301,
+        "refundCostShareOfRevenue": 0.17394497683461507,
+        "slaComplianceScore": 0.5234384196311916,
+        "isCompliantUkgcRts14f": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0.0282
+      },
+      "pass": true
+    },
+    {
+      "name": "C_high_latency_corner",
+      "regime": "CORNER_HIGH",
+      "cfg": {
+        "medianLatencyMs": 350,
+        "latencyLogStd": 0.5,
+        "slaThresholdMs": 500,
+        "spinsPerDay": 500000,
+        "refundPerBreach": 1,
+        "operatorAnnualRevenue": 50000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 396.6019585733891,
+        "p99LatencyMs": 1119.9396871227386,
+        "probSlaBreach": 0.2378145676641592,
+        "expectedDailyBreaches": 118907.2838320796,
+        "expectedAnnualBreaches": 43401158.598709054,
+        "expectedAnnualRefundCost": 43401158.598709054,
+        "refundCostShareOfRevenue": 0.8680231719741811,
+        "slaComplianceScore": 0,
+        "isCompliantUkgcRts14f": false
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0.2332
+      },
+      "pass": true
+    },
+    {
+      "name": "D_us_loose_1000ms",
+      "regime": "US_LOOSE",
+      "cfg": {
+        "medianLatencyMs": 400,
+        "latencyLogStd": 0.4,
+        "slaThresholdMs": 1000,
+        "spinsPerDay": 500000,
+        "refundPerBreach": 0.5,
+        "operatorAnnualRevenue": 30000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 433.3148270699833,
+        "p99LatencyMs": 1014.2879448970068,
+        "probSlaBreach": 0.010989578449253967,
+        "expectedDailyBreaches": 5494.789224626984,
+        "expectedAnnualBreaches": 2005598.066988849,
+        "expectedAnnualRefundCost": 1002799.0334944245,
+        "refundCostShareOfRevenue": 0.03342663444981415,
+        "slaComplianceScore": 0.7802084310149207,
+        "isCompliantUkgcRts14f": false
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0.0126
+      },
+      "pass": true
+    },
+    {
+      "name": "E_au_excellent",
+      "regime": "AU_EXCELLENT",
+      "cfg": {
+        "medianLatencyMs": 100,
+        "latencyLogStd": 0.3,
+        "slaThresholdMs": 500,
+        "spinsPerDay": 1000000,
+        "refundPerBreach": 1,
+        "operatorAnnualRevenue": 80000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 104.60278599087174,
+        "p99LatencyMs": 200.94442163234874,
+        "probSlaBreach": 4.0610375728888926e-8,
+        "expectedDailyBreaches": 0.040610375728888926,
+        "expectedAnnualBreaches": 14.822787141044458,
+        "expectedAnnualRefundCost": 14.822787141044458,
+        "refundCostShareOfRevenue": 1.8528483926305572e-7,
+        "slaComplianceScore": 0.9999991877924854,
+        "isCompliantUkgcRts14f": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "F_corner_high_variance",
+      "regime": "CORNER_VAR",
+      "cfg": {
+        "medianLatencyMs": 200,
+        "latencyLogStd": 1,
+        "slaThresholdMs": 500,
+        "spinsPerDay": 1000000,
+        "refundPerBreach": 2,
+        "operatorAnnualRevenue": 100000000
+      },
+      "closed_form": {
+        "meanLatencyMs": 329.74425414002553,
+        "p99LatencyMs": 2047.7794331307414,
+        "probSlaBreach": 0.17975719085874597,
+        "expectedDailyBreaches": 179757.19085874598,
+        "expectedAnnualBreaches": 65611374.663442284,
+        "expectedAnnualRefundCost": 131222749.32688457,
+        "refundCostShareOfRevenue": 1.3122274932688456,
+        "slaComplianceScore": 0,
+        "isCompliantUkgcRts14f": false
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedProbSlaBreach": 0.17
+      },
+      "pass": true
+    }
+  ]
+}
