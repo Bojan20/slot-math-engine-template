@@ -1634,6 +1634,16 @@
 <!-- MTL Phase D — Rust→WASM third witness (loads via dynamic import) -->
 <script src="/runner/wasm-oracle-loader.js"></script>
 <script src="/runner/sealing-ceremony.js"></script>
+
+<!-- MTL Phase E — Feature-driven UI compiler (registry + builder + 4 core components).
+     Studio loads these so unit tests can exercise the registry without a runner blob.
+     Components self-register via window.MTLFeatures.register(). -->
+<script src="/runner/feature-registry.js"></script>
+<script src="/runner/component-builder.js"></script>
+<script src="/runner/features/multiplier.js"></script>
+<script src="/runner/features/power-meter.js"></script>
+<script src="/runner/features/free-spins.js"></script>
+<script src="/runner/features/hold-and-win.js"></script>
 <script src="app.js"></script>
 <script type="module" src="/src/main.ts"></script>
 </body>

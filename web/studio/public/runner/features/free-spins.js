@@ -134,14 +134,13 @@
     const irFeature = meta.irFeature;
     const bus = meta.bus;
 
-    // The HUD anchors to the reel frame so it floats above the reels.
-    // We deliberately ignore `meta.host` (which points to
-    // #mtl-features-overlay) for absolute positioning; the slot lives
-    // somewhere else in the DOM tree but we need to be relative to
-    // .reelFrame so visuals align with the reels.
-    const frame = document.querySelector('.reelFrame');
+    // The HUD prefers to anchor to .reelFrame so it floats above the reels;
+    // when running in test / Studio contexts where the reel frame isn't
+    // rendered, fall back to the slot host so the component still mounts
+    // its DOM (positioning may be off but functional behavior is preserved).
+    const frame = document.querySelector('.reelFrame') || meta.host;
     if (!frame) {
-      console.warn('[free-spins] no .reelFrame found — HUD will not mount');
+      console.warn('[free-spins] no anchor (no .reelFrame, no host slot) — HUD will not mount');
       return { unmount: function () {} };
     }
     if (getComputedStyle(frame).position === 'static') {
