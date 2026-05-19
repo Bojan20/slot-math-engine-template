@@ -1,0 +1,285 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "CYBERSECURITY_BREACH_COST",
+  "generated_utc": "2026-05-19T11:40:46.598Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644340,
+  "tolerances": {
+    "mean_rel": 0.2
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_mid_tier_compliant_baseline",
+      "description": "UK mid-tier: λ=0.08 baseline, sens=£500K investment, 1% revenue, NIS2 compliant",
+      "tier": "UK_MID",
+      "cfg": {
+        "annualBreachRate": 0.08,
+        "paretoAlpha": 2.5,
+        "paretoScale": 1000000,
+        "annualSecurityInvestment": 500000,
+        "investmentEffectivenessCoeff": 1e-7,
+        "operatorAnnualRevenue": 50000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.4,
+        "expectedFineWhenFined": 2000000,
+        "horizonYears": 3,
+        "varConfidenceLevel": 0.99,
+        "breachResponseTimeHours": 48
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.08,
+        "effectiveBreachRate": 0.07609835396005712,
+        "expectedCostPerBreach": 1666666.6666666667,
+        "varianceCostPerBreach": 2222222222222.222,
+        "expectedAnnualLoss": 380491.76980028563,
+        "stdAnnualLoss": 1068398.478752594,
+        "varAlphaTHorizon": 2865958.2998457854,
+        "expectedLossReduction": 19508.230199714388,
+        "securityInvestmentROI": -0.9869945132001904,
+        "expectedAnnualFineExposure": 60878.6831680457,
+        "cappedAnnualFineExposure": 60878.6831680457,
+        "cyberResilienceScore": 0.5027142338593471,
+        "isCompliantNis2": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 385391.391289528,
+        "observedAnnualLossStd": 949428.373372026,
+        "observedVarAlphaTHorizon": 4407802.214900236
+      },
+      "checks": {
+        "mean_rel": 0.01271336516585936
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "B_uk_large_high_value_target",
+      "description": "UK large (Entain-class): high attack surface, £5M investment, low effective rate",
+      "tier": "UK_LARGE",
+      "cfg": {
+        "annualBreachRate": 0.3,
+        "paretoAlpha": 1.8,
+        "paretoScale": 3000000,
+        "annualSecurityInvestment": 5000000,
+        "investmentEffectivenessCoeff": 1e-7,
+        "operatorAnnualRevenue": 1000000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.6,
+        "expectedFineWhenFined": 20000000,
+        "horizonYears": 3,
+        "varConfidenceLevel": 0.999,
+        "breachResponseTimeHours": 24
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.3,
+        "effectiveBreachRate": 0.18195919791379003,
+        "expectedCostPerBreach": 6750000,
+        "varianceCostPerBreach": 1620000000000000,
+        "expectedAnnualLoss": 3684673.7577542486,
+        "stdAnnualLoss": 30152831.537450355,
+        "varAlphaTHorizon": 96863927.85324386,
+        "expectedLossReduction": 2390326.242245752,
+        "securityInvestmentROI": -0.8406449171836166,
+        "expectedAnnualFineExposure": 2183510.37496548,
+        "cappedAnnualFineExposure": 2183510.37496548,
+        "cyberResilienceScore": 0.4959489976323459,
+        "isCompliantNis2": false
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 3680630.483544438,
+        "observedAnnualLossStd": 9337682.620462978,
+        "observedVarAlphaTHorizon": 149731626.48170188
+      },
+      "checks": {
+        "mean_rel": 0.001097322171685217
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "C_eu_nis2_essential_service",
+      "description": "EU NIS2 essential service (gambling-class): strict 24h breach SLA",
+      "tier": "EU_NIS2",
+      "cfg": {
+        "annualBreachRate": 0.15,
+        "paretoAlpha": 2,
+        "paretoScale": 1500000,
+        "annualSecurityInvestment": 1000000,
+        "investmentEffectivenessCoeff": 2e-7,
+        "operatorAnnualRevenue": 100000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.5,
+        "expectedFineWhenFined": 5000000,
+        "horizonYears": 3,
+        "varConfidenceLevel": 0.99,
+        "breachResponseTimeHours": 24
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.15,
+        "effectiveBreachRate": 0.12280961296169729,
+        "expectedCostPerBreach": 3000000,
+        "varianceCostPerBreach": 450000000000000,
+        "expectedAnnualLoss": 1105286.5166552756,
+        "stdAnnualLoss": 13004185.36657553,
+        "varAlphaTHorizon": 31357545.50233616,
+        "expectedLossReduction": 244713.48334472434,
+        "securityInvestmentROI": -0.9184288388850919,
+        "expectedAnnualFineExposure": 307024.03240424325,
+        "cappedAnnualFineExposure": 307024.03240424325,
+        "cyberResilienceScore": 0.5108505411086344,
+        "isCompliantNis2": false
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 1137306.5709585093,
+        "observedAnnualLossStd": 2858135.9030628745,
+        "observedVarAlphaTHorizon": 12036027.48215229
+      },
+      "checks": {
+        "mean_rel": 0.02815428585473449
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "D_au_small_under_investment",
+      "description": "AU small operator: under-invested (0.3% revenue) → NIS2 fail",
+      "tier": "AU_SMALL",
+      "cfg": {
+        "annualBreachRate": 0.2,
+        "paretoAlpha": 2.2,
+        "paretoScale": 800000,
+        "annualSecurityInvestment": 30000,
+        "investmentEffectivenessCoeff": 1e-7,
+        "operatorAnnualRevenue": 10000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.5,
+        "expectedFineWhenFined": 500000,
+        "horizonYears": 3,
+        "varConfidenceLevel": 0.99,
+        "breachResponseTimeHours": 72
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.2,
+        "effectiveBreachRate": 0.1994008991006746,
+        "expectedCostPerBreach": 1466666.6666666667,
+        "varianceCostPerBreach": 4888888888888.885,
+        "expectedAnnualLoss": 877363.9560429683,
+        "stdAnnualLoss": 2052156.667753767,
+        "varAlphaTHorizon": 5651394.257983163,
+        "expectedLossReduction": 2636.0439570318085,
+        "securityInvestmentROI": -0.9707106226996466,
+        "expectedAnnualFineExposure": 49850.22477516865,
+        "cappedAnnualFineExposure": 49850.22477516865,
+        "cyberResilienceScore": 0.4568540709490107,
+        "isCompliantNis2": false
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 870976.3529317765,
+        "observedAnnualLossStd": 1587670.8505617809,
+        "observedVarAlphaTHorizon": 6702558.0533099985
+      },
+      "checks": {
+        "mean_rel": 0.007280448515346738
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_corner_extreme_heavy_tail",
+      "description": "Corner: α=1.3 very heavy tail (catastrophic single-breach scenarios)",
+      "tier": "CORNER_HEAVY_TAIL",
+      "cfg": {
+        "annualBreachRate": 0.1,
+        "paretoAlpha": 1.3,
+        "paretoScale": 2000000,
+        "annualSecurityInvestment": 1500000,
+        "investmentEffectivenessCoeff": 1e-7,
+        "operatorAnnualRevenue": 150000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.5,
+        "expectedFineWhenFined": 10000000,
+        "horizonYears": 5,
+        "varConfidenceLevel": 0.99,
+        "breachResponseTimeHours": 48
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.1,
+        "effectiveBreachRate": 0.08607079764250579,
+        "expectedCostPerBreach": 8666666.666666666,
+        "varianceCostPerBreach": 520000000000000,
+        "expectedAnnualLoss": 3729734.564508584,
+        "stdAnnualLoss": 16003388.394220022,
+        "varAlphaTHorizon": 40959183.13840837,
+        "expectedLossReduction": 603598.7688247493,
+        "securityInvestmentROI": -0.9195201641567,
+        "expectedAnnualFineExposure": 430353.98821252893,
+        "cappedAnnualFineExposure": 430353.98821252893,
+        "cyberResilienceScore": 0.5081401430026786,
+        "isCompliantNis2": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 3500856.7682973766,
+        "observedAnnualLossStd": 16844167.25773608,
+        "observedVarAlphaTHorizon": 42346918.87717675
+      },
+      "checks": {
+        "mean_rel": 0.06136570639346915
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "F_corner_best_in_class_low_breach",
+      "description": "Corner: best-in-class λ=0.02, 3% revenue investment, instant breach response",
+      "tier": "CORNER_BEST",
+      "cfg": {
+        "annualBreachRate": 0.02,
+        "paretoAlpha": 3,
+        "paretoScale": 500000,
+        "annualSecurityInvestment": 3000000,
+        "investmentEffectivenessCoeff": 5e-7,
+        "operatorAnnualRevenue": 100000000,
+        "gdprFineCapFraction": 0.04,
+        "probFineGivenBreach": 0.3,
+        "expectedFineWhenFined": 1000000,
+        "horizonYears": 3,
+        "varConfidenceLevel": 0.99,
+        "breachResponseTimeHours": 12
+      },
+      "closed_form": {
+        "baselineBreachRate": 0.02,
+        "effectiveBreachRate": 0.004462603202968597,
+        "expectedCostPerBreach": 750000,
+        "varianceCostPerBreach": 187500000000,
+        "expectedAnnualLoss": 10040.857206679344,
+        "stdAnnualLoss": 100204.07779466534,
+        "varAlphaTHorizon": 243150.40058931167,
+        "expectedLossReduction": 34959.14279332066,
+        "securityInvestmentROI": -0.9961156508007422,
+        "expectedAnnualFineExposure": 1338.780960890579,
+        "cappedAnnualFineExposure": 1338.780960890579,
+        "cyberResilienceScore": 0.694196928335337,
+        "isCompliantNis2": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedAnnualLossMean": 12143.075124366704,
+        "observedAnnualLossStd": 117126.14110948067,
+        "observedVarAlphaTHorizon": 595398.0726685716
+      },
+      "checks": {
+        "mean_rel": 0.17312072075293172
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
