@@ -2995,16 +2995,32 @@
   } catch (_) {}
   syncBottomToggleBtn();
 
-  // Wire all open / close affordances:
-  //  - In-panel "×" close button (existed)
-  //  - Legacy #btn-toggle-bottom in status footer ("Logs · ⌘J" link, may be hidden)
-  //  - NEW #btn-toggle-panel in header-r layout-toggles group (always visible)
-  const bpCloseBtn = document.querySelector("#bp-close");
-  if (bpCloseBtn) bpCloseBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleBottom();
+  // Wire all open / close affordances.  We use a SINGLE delegated
+  // listener on the document for #bp-close (matches both the current
+  // button and any future re-render of the drawer), so the X always
+  // works even if the original DOM node was replaced.  Direct binding
+  // would double-fire when combined with delegation, so we don't add
+  // one separately.
+  //
+  // The header `#btn-toggle-panel` and legacy status-footer
+  // `#btn-toggle-bottom` are SEPARATE buttons (not #bp-close), so they
+  // get their own direct listeners without conflict.
+  function safeToggleBottom(e) {
+    try {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      toggleBottom();
+    } catch (err) {
+      console.warn("[studio] toggleBottom failed:", err);
+    }
+  }
+  // Single delegated listener for the in-panel X.  Survives DOM
+  // rebuilds (Layer-of-defense vs. cached/stale bundles).
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
+    if (t.closest("#bp-close, [data-bp-close]")) safeToggleBottom(e);
   });
+  // Separate buttons — direct listeners, no conflict with the delegated one.
   const legacyBottomBtn = document.querySelector("#btn-toggle-bottom");
   if (legacyBottomBtn) legacyBottomBtn.addEventListener("click", toggleBottom);
   const headerPanelBtn = document.querySelector("#btn-toggle-panel");

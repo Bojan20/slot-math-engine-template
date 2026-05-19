@@ -14,7 +14,7 @@
 
 /* eslint-env serviceworker */
 
-const SW_VERSION = 'studio-w207-1';
+const SW_VERSION = 'studio-w207-2-bp-close';
 const SHELL_CACHE = `slot-studio-shell-${SW_VERSION}`;
 const RUNTIME_CACHE = `slot-studio-runtime-${SW_VERSION}`;
 
