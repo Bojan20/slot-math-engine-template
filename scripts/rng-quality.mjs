@@ -354,7 +354,7 @@ function runBackend(kind) {
 // in-process baseline above byte-for-byte, so live full-suite results
 // land on the same entropy footprint as the CI baseline.
 
-function dumpStream(backend, nBytes) {
+async function dumpStream(backend, nBytes) {
   const rng = newBackend(backend, BACKEND_SEED_NUMBER);
   const CHUNK = 1 << 20; // 1 MiB
   // CRITICAL: process.stdout.write to a pipe is back-pressured and async on
@@ -362,16 +362,28 @@ function dumpStream(backend, nBytes) {
   // buffer, the next iteration's writes can corrupt the still-buffered bytes
   // before they hit the pipe — manifested as PractRand BCFN(2+,13-1U) failing
   // with R ≈ +60k across every backend (same signature regardless of RNG,
-  // because the corruption pattern is independent of source). Fix: allocate
-  // a fresh buffer per chunk so each one owns its memory until Node flushes.
+  // because the corruption pattern is independent of source).
+  //
+  // W219-bp — Mac freeze + disk-full root cause: the previous fix allocated a
+  // FRESH Buffer per chunk to dodge corruption but did NOT await the `drain`
+  // event when `.write()` returned `false`. Under a slow consumer (RNG_test ~
+  // 30 MB/s) and a fast producer (~150 MB/s), each ignored back-pressure
+  // signal would simply allocate another 1 MiB Buffer; over a 64 GiB dump and
+  // 5 paralleled backends the V8 heap exploded into macOS swap and ate the
+  // entire SSD. Boki's whole Mac froze with a "no space left on device"
+  // dialog.  Fix: HONOR back-pressure — when `.write()` returns false, await
+  // `drain` before allocating the next chunk. With drain semantics the buffer
+  // can also be REUSED safely (V8 has finished writing it to the pipe by the
+  // time drain fires), so we drop back to a single reusable buffer too —
+  // memory stays flat at exactly CHUNK bytes regardless of dump size.
   // Performance: direct nextU64 → 8 BE bytes (no BigInt accumulator), gets
   // ~150 MB/s on M3 Pro for 64-bit backends; ~80 MB/s for 32-bit fallback.
   const has64 = typeof rng.nextU64 === 'function';
   let written = 0;
+  const buf = Buffer.allocUnsafe(CHUNK); // SINGLE reusable buffer — see comment
 
   while (written < nBytes) {
     const target = Math.min(CHUNK, nBytes - written);
-    const buf = Buffer.allocUnsafe(target); // fresh ownership per chunk
     let off = 0;
     if (has64) {
       // Fast path: 8 BE bytes per nextU64() call. No BigInt, no bit accumulator.
@@ -405,7 +417,15 @@ function dumpStream(backend, nBytes) {
         off = target;
       }
     }
-    process.stdout.write(buf);
+    // BACK-PRESSURE AWARE WRITE: emit a subarray view (so we don't write
+    // garbage tail when target < CHUNK on the last iteration), then await
+    // drain whenever the kernel pipe buffer is full. This bounds heap growth
+    // to a single CHUNK-sized allocation regardless of consumer speed.
+    const view = off === CHUNK ? buf : buf.subarray(0, off);
+    const ok = process.stdout.write(view);
+    if (!ok) {
+      await new Promise((resolve) => process.stdout.once('drain', resolve));
+    }
     written += off;
   }
 }
@@ -420,7 +440,7 @@ async function main() {
       process.stderr.write('usage: rng-quality.mjs --dump <backend> <bytes>\n');
       process.exit(2);
     }
-    dumpStream(backend, nBytes);
+    await dumpStream(backend, nBytes);
     return;
   }
 
