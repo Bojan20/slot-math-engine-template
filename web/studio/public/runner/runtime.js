@@ -1,31 +1,48 @@
-/*
- * SLOT TEMPLATE RUNTIME
- * ──────────────────────
- * Standalone playable slot game.  Reads window.__IR__ (embedded by
- * Studio's "Play Template" build step) and runs:
- *
- *   • PCG-style RNG seeded from ir.rng.default_seed (or random)
- *   • Weighted reel draw across N reels × M rows
- *   • Line evaluation with wild substitution + scatter pays
- *   • Free Spins feature   (retrigger + progressive multiplier + FS reels)
- *   • Hold & Win feature   (orb landing + jackpot tiers + full-grid bonus)
- *   • Lightning Multiplier (winning_spin × value distribution)
- *   • Win cap (limits.max_win_x)
- *   • Animated reel spin (CSS keyframes during 600ms reel-stop sequence)
- *   • Win highlights on payline cells + scatter cells
- *   • Balance / bet selector / autoplay (×10, ×100, stop)
- *   • Live RTP / hit% / max-win stats
- *   • History rail (last 10 spins)
- *   • Paytable drawer (collapsible)
- *
- * NO art, NO audio — colored tier boxes only.  Boki ships the math, the
- * art pipeline is a separate (later) concern.
- */
+/* ════════════════════════════════════════════════════════════════════
+   SLOT TEMPLATE RUNTIME — Wrath-of-Olympus-shape skin (art-free)
+   ────────────────────────────────────────────────────────────────────
+   Standalone playable slot game.  Reads window.__IR__ (embedded by
+   Studio's "Play Template" build step) and runs the FULL production
+   experience minus art:
+
+     • PCG-style RNG seeded from ir.rng.default_seed
+     • Weighted reel draw across N reels × M rows
+     • Line evaluation with wild substitution + scatter pays
+     • Lightning Multiplier — strip-scroll meter, pointer stop on result
+     • Free Spins   — epic intro, FS HUD (counter + mult + total),
+                      progressive multiplier ladder, retrigger, outro
+     • Hold & Win   — intro card, locked-orb board, value/jackpot reveal,
+                      respin reset on new orb, full-grid bonus
+     • Win cap (limits.max_win_x)
+     • Reel spin: WINDUP → ACCEL → STEADY → DECEL → CUSHION BOUNCE
+                  (mirrors SPIN_PROFILE_NORMAL from Wrath timing.ts)
+     • Anticipation glow on remaining reels when 2+ scatter already land
+     • Cell highlights on payline + scatter cells + pulse loops
+     • Big / Mega / Epic Win count-up (10× / 25× / 50× thresholds,
+       4s per tier — mirrors bigWinController.ts BIG_WIN_TIERS)
+     • Zeus Power Meter (fill from base wins, drives forced Lightning)
+     • Lightning Multiplier meter (visual strip-stop on roll result)
+     • Status bar rollup (PRESS SPIN → WIN: X.XX with scale pulse)
+     • Spin hint / skip hint timing (mirrors spinHintManager.ts)
+     • Quick menu (paytable / rules / help / sound / settings)
+     • Autoplay panel (spin count + stop conditions + start)
+     • Sound toggle (state-only — no audio bound, art pass)
+     • Turbo toggle — switches to SPIN_PROFILE_TURBO timing
+     • Intro modal (fake 1.4s loader, dismissable)
+     • History rail (last 10 spins)
+     • Paytable drawer (collapsible)
+     • MTL Math Twin Lockstep — pre-flight reseal, per-spin lockstep,
+       watchtower worker, replay log (UNCHANGED math contract)
+
+   NO art assets — colored tier-gradient cells only.
+   ════════════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  // ─── Boot ──────────────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  0 · BOOT — load IR                                           ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   let IR;
   try {
@@ -42,15 +59,18 @@
     return;
   }
 
-  // ─── Helpers ───────────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  1 · HELPERS                                                  ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
   const fmt = (n, d = 2) => Number(n).toFixed(d);
   const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  // mulberry32 — small, deterministic, sufficient for runner.  Same
-  // generator the Studio auto-MC uses, so replay-from-seed parity holds.
+  // mulberry32 — small, deterministic, cross-language identical with
+  // MTL oracle.js.  Replay-from-seed parity is preserved.
   function makeRng(seed) {
     let a = (seed >>> 0) || 1;
     return () => {
@@ -62,7 +82,9 @@
     };
   }
 
-  // ─── IR derivations ────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  2 · IR DERIVATIONS                                           ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   const REELS = (IR.topology && IR.topology.reels) || 5;
   const ROWS = (IR.topology && IR.topology.rows) || 3;
@@ -78,9 +100,9 @@
   function findFeature(kind) {
     return ((IR.features || []).find((f) => f.kind === kind)) || null;
   }
-  const F_FS = findFeature('free_spins');
+  const F_FS  = findFeature('free_spins');
   const F_HNW = findFeature('hold_and_win');
-  const F_MUL = findFeature('multiplier'); // Lightning-style
+  const F_MUL = findFeature('multiplier');
 
   function tierOf(sym) {
     if (!sym) return 'LP';
@@ -95,8 +117,7 @@
       default:           return 'LP';
     }
   }
-  // Split kind=hp into HP/MP by paytable rank (top half = HP, bottom = MP)
-  // so the display tier colors match the Studio convention.
+  // Split kind=hp into HP/MP by paytable rank (top half = HP, bottom = MP).
   (function deriveHpMpSplit() {
     const hpSyms = (IR.symbols || []).filter((s) => s.kind === 'hp');
     if (hpSyms.length < 4) return;
@@ -117,7 +138,7 @@
     return tierOf(s);
   }
 
-  // Pre-build reel draw tables (cumulative weights)
+  // Pre-build reel draw tables (cumulative weights).
   function buildReels(reelMaps) {
     if (!Array.isArray(reelMaps)) return null;
     return reelMaps.map((m) => {
@@ -135,7 +156,7 @@
     });
   }
   const BASE_REELS = buildReels((IR.reels && IR.reels.base) || []);
-  const FS_REELS = buildReels((IR.reels && IR.reels.free_spins) || []);
+  const FS_REELS   = buildReels((IR.reels && IR.reels.free_spins) || []);
 
   function drawSymbol(rng, reelIdx, reels) {
     const r = reels[reelIdx] || reels[reels.length - 1];
@@ -148,11 +169,7 @@
     }
     return r.syms[lo];
   }
-  // Scatter prevention — Wrath-style "max N scatters per reel".  When
-  // IR declares `reels.scatter_prevention`, any scatter beyond the
-  // limit on the same column is replaced with the configured fallback
-  // symbol (defaults to the most common LP).  This is critical for the
-  // FS trigger frequency to match the validated MC numbers.
+  // Scatter prevention (Wrath-style "max N scatters per reel").
   const SCAT_PREV = (IR.reels && IR.reels.scatter_prevention) || null;
   function applyScatterPrevention(grid) {
     if (!SCAT_PREV || !SCAT_PREV.enabled) return grid;
@@ -171,7 +188,6 @@
     }
     return grid;
   }
-
   function drawGrid(rng, reels) {
     const grid = [];
     for (let r = 0; r < REELS; r++) {
@@ -182,11 +198,9 @@
     return applyScatterPrevention(grid);
   }
 
-  function isWild(id)   { return SYM_BY_ID[id] && SYM_BY_ID[id].kind === 'wild'; }
-  function isScat(id)   { return SYM_BY_ID[id] && SYM_BY_ID[id].kind === 'scatter'; }
-  function isBonus(id)  { return SYM_BY_ID[id] && SYM_BY_ID[id].kind === 'bonus'; }
-  function scatterId()  { const s = (IR.symbols || []).find((x) => x.kind === 'scatter'); return s ? s.id : null; }
-  function bonusId()    { const s = (IR.symbols || []).find((x) => x.kind === 'bonus');   return s ? s.id : null; }
+  function isWild(id)  { return SYM_BY_ID[id] && SYM_BY_ID[id].kind === 'wild'; }
+  function scatterId() { const s = (IR.symbols || []).find((x) => x.kind === 'scatter'); return s ? s.id : null; }
+  function bonusId()   { const s = (IR.symbols || []).find((x) => x.kind === 'bonus');   return s ? s.id : null; }
   function payAt(symId, count) {
     const pt = IR.paytable || {};
     const e = pt[symId];
@@ -194,7 +208,9 @@
     return Number(e[String(count)] ?? e['x' + count] ?? 0);
   }
 
-  // ─── Base spin evaluation ──────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  3 · MATH — base eval / FS / H&W / Lightning                  ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   function evalBase(grid) {
     const lineWins = [];
@@ -202,7 +218,6 @@
     for (let li = 0; li < PAYLINES.length; li++) {
       const line = PAYLINES[li];
       let target = grid[0][line[0] ?? 0];
-      // Wild substitution: find first non-wild target
       if (WILD_SUB && isWild(target)) {
         for (let c = 1; c < REELS; c++) {
           const s = grid[c][line[c] ?? 0];
@@ -225,7 +240,6 @@
         }
       }
     }
-    // Scatter pay (any-position)
     const scId = scatterId();
     let scCount = 0, scatterPay = 0;
     const scCells = [];
@@ -235,7 +249,6 @@
           if (grid[r][y] === scId) { scCount++; scCells.push({ r, y }); }
       if (scCount >= 3) scatterPay = payAt(scId, Math.min(scCount, 5));
     }
-    // Bonus count (for H&W trigger)
     const bnId = bonusId();
     let bonusCount = 0;
     if (bnId) {
@@ -248,8 +261,6 @@
       bonusCount, baseWin: lineTotal + scatterPay,
     };
   }
-
-  // ─── Free Spins simulation (auto-played sequence) ──────────────────
 
   function awardFsSpins(scCount) {
     if (!F_FS || !F_FS.trigger || !F_FS.trigger.thresholds) return 0;
@@ -270,8 +281,508 @@
     }
     return best;
   }
+  function pickWeighted(rng, list) {
+    let total = 0;
+    for (const e of list) total += Math.max(0, e.weight);
+    let x = rng() * total;
+    for (const e of list) {
+      x -= Math.max(0, e.weight);
+      if (x <= 0) return e.value;
+    }
+    return list[list.length - 1].value;
+  }
+  function shuffleInPlace(arr, rng) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  function rollLightning(rng) {
+    if (!F_MUL) return 1;
+    if (F_MUL.scope && F_MUL.scope !== 'base_game_only') return 1;
+    const prob = (F_MUL.trigger && F_MUL.trigger.probability) || 0;
+    if (rng() >= prob) return 1;
+    const dist = F_MUL.distribution || [];
+    if (!dist.length) return 1;
+    return pickWeighted(rng, dist);
+  }
 
-  async function runFreeSpins(initialScCount) {
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  4 · STATE + SPIN PROFILE                                     ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  // Spin profile — mirrors Wrath SPIN_PROFILE_NORMAL / SPIN_PROFILE_TURBO,
+  // shortened for the no-art template so a full spin cycle (windup → spin
+  // → 5-reel staggered decel → bounce) lands inside ~1.5s.  Production
+  // would use Wrath's heavier 1350ms steady; template ships snappier.
+  const SPIN_PROFILE = {
+    normal: { windupMs: 100, accelMs: 130, steadyMs: 380, decelMs: 260, staggerMs: 110, bounceMs: 240, stopGap: 120, betweenSpinsMs: 200 },
+    turbo:  { windupMs:  30, accelMs:  60, steadyMs: 180, decelMs: 100, staggerMs:  35, bounceMs: 120, stopGap:  40, betweenSpinsMs:  50 },
+  };
+
+  const state = {
+    rng: makeRng((IR.rng && IR.rng.default_seed) || Math.floor(Math.random() * 1e9)),
+    balance: 100.0,
+    betLevelIdx: 0,
+    spinsPlayed: 0,
+    hits: 0,
+    totalWagered: 0,
+    totalWon: 0,
+    maxWin: 0,
+    lastWin: 0,
+    history: [],
+    spinning: false,
+    autoplay: { active: false, remaining: 0, stopOnFs: true, stopOnBonus: true, stopOnWin: 0, stopOnLoss: 0, stopOnProfit: 0, startBalance: 0 },
+    featureLabel: '',
+    hnwLockedCells: null,
+    zeusFill: 0,
+    soundMuted: false,
+    turbo: false,
+    skipBigWin: false,
+  };
+  function currentProfile() { return state.turbo ? SPIN_PROFILE.turbo : SPIN_PROFILE.normal; }
+  function currentBet() { return Number(BASE_BET) * Number(BET_LEVELS[state.betLevelIdx] || 1); }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  5 · DOM HOOKS — grouped by area                              ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  // Top hub
+  const titleEl       = $('#game-title');
+  const versionEl     = $('#game-version');
+  const zeusFillEl    = $('#zeusMeterFill');
+  const zeusLabelEl   = $('#zeusMeterLabel');
+  const zeusMeterEl   = $('#zeusMeter');
+  const topBalanceEl  = $('#topBalanceValue');
+  const currencyEl    = $('#currency');
+  const lightningMeterEl = $('#lightningMeter');
+
+  // Stats rails
+  const spinsEl       = $('#stat-spins');
+  const hitsEl        = $('#stat-hits');
+  const hitPctEl      = $('#stat-hit-pct');
+  const totalWinEl    = $('#stat-total-win');
+  const rtpEl         = $('#stat-rtp');
+  const maxWinEl      = $('#stat-max-win');
+
+  // Stage
+  const reelsEl       = $('#reels-grid');
+  const winBannerEl   = $('#win-banner');
+  const winBannerAmt  = $('#win-banner-amount');
+  const winBannerMult = $('#win-banner-mult');
+  const featOverlay   = $('#feature-overlay');
+  const featKindEl    = $('#fo-kind');
+  const featTitleEl   = $('#fo-title');
+  const featDetailEl  = $('#fo-detail');
+  const featGoBtn     = $('#fo-go');
+
+  // Bottom bar
+  const balEl         = $('#bal');
+  const balLegacyEl   = $('#balance');
+  const betDisplayEl  = $('#bet');
+  const betLegacyEl   = $('#bet-amount');
+  const statusTextEl  = $('#statusBarText');
+  const statusValueEl = $('#statusBarValue');
+  const spinBtn       = $('#spin-btn');
+  const betPlusBtn    = $('#betPlusBtn') || $('#bet-up');
+  const betMinusBtn   = $('#betMinusBtn') || $('#bet-down');
+  const auto10Btn     = $('#auto-10');
+  const auto100Btn    = $('#auto-100');
+  const autoStopBtn   = $('#auto-stop');
+  const autoOpenBtn   = $('#autoPlayOpenBtn');
+  const menuBtnEl     = $('#menuBtn');
+  const soundBtnEl    = $('#soundBtn');
+
+  // Quick menu
+  const quickMenuEl     = $('#quickMenu');
+  const menuPaytableBtn = $('#menuPaytableBtn');
+  const menuSoundBtn    = $('#menuSoundBtn');
+  const menuRulesBtn    = $('#menuRulesBtn');
+  const menuHelpBtn     = $('#menuHelpBtn');
+  const menuSettingsBtn = $('#menuSettingsBtn');
+  const menuBalValEl    = $('#menuBalanceValue');
+
+  // Autoplay panel
+  const autoplayPanelEl   = $('#autoPlayPanel');
+  const autoplayCloseBtn  = $('#autoPlayCloseBtn');
+  const autoplayStartBtn  = $('#autoPlayStartBtn');
+  const stopOnFsCheck     = $('#stopOnFreeSpins');
+  const stopOnBonusCheck  = $('#stopOnBonus');
+
+  // Intro modal
+  const introModalEl      = $('#introModal');
+  const introProgressFill = $('#introProgressFill');
+  const introContinueBtn  = $('#introContinueBtn');
+  const introLoadPercent  = $('#introLoadPercent');
+  const introStatusText   = $('#introStatusText');
+
+  // History rail + paytable drawer
+  const historyListEl    = $('#history-list');
+  const paytableToggle   = $('#paytable-toggle');
+  const paytableDrawer   = $('#paytable-drawer');
+  const paytableCloseBtn = $('#pd-close');
+
+  // Big Win — created lazily
+  let bigWinEl = null;
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  6 · GRID — build + paint                                     ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function setupGrid() {
+    if (!reelsEl) return;
+    reelsEl.style.gridTemplateColumns = `repeat(${REELS}, 1fr)`;
+    reelsEl.style.gridTemplateRows = `repeat(${ROWS}, 1fr)`;
+    reelsEl.innerHTML = '';
+    for (let r = 0; r < REELS; r++) {
+      for (let y = 0; y < ROWS; y++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.r = String(r);
+        cell.dataset.y = String(y);
+        cell.innerHTML = '<span class="cell-id">·</span>';
+        reelsEl.appendChild(cell);
+      }
+    }
+  }
+  function cellAt(r, y) {
+    if (!reelsEl) return null;
+    return reelsEl.querySelector(`.cell[data-r="${r}"][data-y="${y}"]`);
+  }
+  function paintCell(r, y, symId, opts) {
+    const cell = cellAt(r, y);
+    if (!cell) return;
+    const tier = displayTierOf(symId);
+    cell.className = 'cell tier-' + tier;
+    if (opts) {
+      if (opts.spinning)   cell.classList.add('is-spinning');
+      if (opts.windup)     cell.classList.add('is-windup');
+      if (opts.decel)      cell.classList.add('is-decel');
+      if (opts.bounce)     cell.classList.add('is-bounce');
+      if (opts.win)        cell.classList.add('is-win');
+      if (opts.scatter)    cell.classList.add('is-scatter-win');
+      if (opts.anticipate) cell.classList.add('is-anticipate');
+    }
+    const sym = SYM_BY_ID[symId];
+    const name = sym && sym.name && sym.name !== symId ? `<span class="cell-name">${sym.name}</span>` : '';
+    cell.innerHTML = `<span class="cell-id">${symId || '?'}</span>${name}`;
+  }
+  function clearWinHighlights() {
+    if (!reelsEl) return;
+    $$('#reels-grid .cell').forEach((c) => {
+      c.classList.remove('is-win', 'is-scatter-win', 'is-anticipate', 'is-windup', 'is-spinning', 'is-decel', 'is-bounce');
+    });
+  }
+  function pickAnyId() {
+    const syms = IR.symbols || [];
+    if (!syms.length) return '?';
+    return syms[Math.floor(Math.random() * syms.length)].id;
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  7 · SPIN ANIMATION — windup → spin → decel → bounce          ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  async function animateGrid(finalGrid, result, opts) {
+    opts = opts || {};
+    const P = currentProfile();
+    const scId = scatterId();
+
+    // Phase A — windup pull-up (115ms)
+    for (let r = 0; r < REELS; r++) {
+      for (let y = 0; y < ROWS; y++) {
+        paintCell(r, y, pickAnyId(), { windup: true });
+      }
+    }
+    await wait(P.windupMs);
+
+    // Phase B — start spinning all reels (vertical blur scroll)
+    for (let r = 0; r < REELS; r++) {
+      for (let y = 0; y < ROWS; y++) {
+        paintCell(r, y, pickAnyId(), { spinning: true });
+      }
+    }
+
+    // Phase C — stop each reel sequentially with stagger + anticipation
+    let scLandedSoFar = 0;
+    const stopOps = [];
+    for (let r = 0; r < REELS; r++) {
+      const reelIdx = r;
+      const willHaveScatter = scId && finalGrid[reelIdx].some((s) => s === scId);
+      // Anticipation: extend steady on remaining reels when 2+ scatters landed
+      // and player is still "chasing" the 3rd scatter on reels 3-5.
+      const isAnticipated = scLandedSoFar >= 2 && reelIdx >= 2 && reelIdx < REELS;
+      const baseDelay = P.windupMs + P.steadyMs + reelIdx * P.staggerMs + (isAnticipated ? 280 : 0);
+
+      stopOps.push(new Promise((resolve) => {
+        setTimeout(async () => {
+          // Decel sub-phase
+          for (let y = 0; y < ROWS; y++) {
+            paintCell(reelIdx, y, pickAnyId(), { decel: true });
+          }
+          await wait(P.decelMs);
+          // Land final cells with cushion bounce
+          for (let y = 0; y < ROWS; y++) {
+            paintCell(reelIdx, y, finalGrid[reelIdx][y], { bounce: true });
+          }
+          if (willHaveScatter) scLandedSoFar++;
+          // Trigger anticipation glow on next unland reels if threshold reached
+          if (scLandedSoFar === 2 && reelIdx < REELS - 1) {
+            for (let rr = reelIdx + 1; rr < REELS; rr++) {
+              for (let y = 0; y < ROWS; y++) {
+                const c = cellAt(rr, y);
+                if (c) c.classList.add('is-anticipate');
+              }
+            }
+          }
+          resolve();
+        }, baseDelay);
+      }));
+    }
+    await Promise.all(stopOps);
+
+    // Phase D — clear transient classes, highlight wins, banner
+    $$('#reels-grid .cell').forEach((c) => {
+      c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-bounce', 'is-anticipate');
+    });
+    highlightWins(result);
+    const totalWin = result.lineTotal + result.scatterPay;
+    if (totalWin > 0) {
+      showWinBanner(totalWin, opts.multAnnounce && opts.multAnnounce > 1 ? opts.multAnnounce : null);
+      await wait(state.turbo ? 200 : 420);
+    }
+  }
+
+  function highlightWins(result) {
+    for (const lw of result.lineWins) {
+      for (const c of lw.cells) {
+        const cell = cellAt(c.r, c.y);
+        if (cell) cell.classList.add('is-win');
+      }
+    }
+    if (result.scCount >= 3) {
+      for (const c of result.scCells) {
+        const cell = cellAt(c.r, c.y);
+        if (cell) cell.classList.add('is-scatter-win');
+      }
+    }
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  8 · WIN BANNER + BIG WIN OVERLAY                             ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function showWinBanner(amount, mult) {
+    if (!winBannerEl || amount <= 0) {
+      if (winBannerEl) winBannerEl.setAttribute('hidden', '');
+      return;
+    }
+    winBannerEl.removeAttribute('hidden');
+    void winBannerEl.offsetWidth;
+    if (winBannerAmt)  winBannerAmt.textContent  = fmt(amount);
+    if (winBannerMult) winBannerMult.textContent = mult && mult > 1 ? `${mult}×` : '';
+  }
+  function hideWinBanner() { if (winBannerEl) winBannerEl.setAttribute('hidden', ''); }
+
+  // BIG_WIN tiers — exact thresholds + per-tier duration from Wrath bigWinController.ts.
+  const BIG_WIN_TIERS = [
+    { idx: 1, threshold: 10, label: 'BIG WIN' },
+    { idx: 2, threshold: 25, label: 'MEGA WIN' },
+    { idx: 3, threshold: 50, label: 'EPIC WIN' },
+  ];
+  const BIG_WIN_TIER_MS = 4000;
+
+  function tierForXBet(xBet) {
+    let tier = 0;
+    for (const t of BIG_WIN_TIERS) if (xBet >= t.threshold) tier = t.idx;
+    return tier;
+  }
+  function ensureBigWinOverlay() {
+    if (bigWinEl) return bigWinEl;
+    const el = document.createElement('div');
+    el.className = 'bigwin-overlay';
+    el.setAttribute('hidden', '');
+    el.innerHTML = `
+      <div class="bw-rays" aria-hidden="true"></div>
+      <div class="bw-card">
+        <div class="bw-tier">BIG WIN</div>
+        <div class="bw-amount mono">0.00</div>
+        <div class="bw-mult mono">0×</div>
+        <button class="bw-skip" type="button">SKIP</button>
+      </div>
+    `;
+    document.body.appendChild(el);
+    bigWinEl = el;
+    bigWinEl.querySelector('.bw-skip').addEventListener('click', () => { state.skipBigWin = true; });
+    return bigWinEl;
+  }
+  async function playBigWinRollup(amount, bet) {
+    const xBet = bet > 0 ? amount / bet : amount;
+    const tier = tierForXBet(xBet);
+    if (tier === 0) return;
+    const overlay = ensureBigWinOverlay();
+    const card = overlay.querySelector('.bw-card');
+    const tierEl = overlay.querySelector('.bw-tier');
+    const amtEl = overlay.querySelector('.bw-amount');
+    const multEl = overlay.querySelector('.bw-mult');
+    state.skipBigWin = false;
+    overlay.removeAttribute('hidden');
+    const stages = BIG_WIN_TIERS.slice(0, tier);
+    const totalMs = stages.length * BIG_WIN_TIER_MS;
+    const start = performance.now();
+    card.classList.remove('is-tier-2', 'is-tier-3');
+    tierEl.textContent = stages[0].label;
+    amtEl.textContent = '0.00';
+    multEl.textContent = `0×`;
+
+    return new Promise((resolve) => {
+      function frame(now) {
+        if (state.skipBigWin) {
+          amtEl.textContent = fmt(amount);
+          multEl.textContent = `${xBet.toFixed(1)}×`;
+          tierEl.textContent = stages[stages.length - 1].label;
+          if (stages.length >= 2) card.classList.add('is-tier-2');
+          if (stages.length >= 3) card.classList.add('is-tier-3');
+          setTimeout(() => { overlay.setAttribute('hidden', ''); resolve(); }, 600);
+          return;
+        }
+        const elapsed = now - start;
+        const fracTotal = clamp(elapsed / totalMs, 0, 1);
+        const cur = fracTotal * amount;
+        amtEl.textContent = fmt(cur);
+        const curXBet = bet > 0 ? cur / bet : cur;
+        multEl.textContent = `${curXBet.toFixed(1)}×`;
+        const stageIdx = clamp(Math.floor(elapsed / BIG_WIN_TIER_MS), 0, stages.length - 1);
+        tierEl.textContent = stages[stageIdx].label;
+        card.classList.toggle('is-tier-2', stageIdx >= 1);
+        card.classList.toggle('is-tier-3', stageIdx >= 2);
+        if (elapsed < totalMs) requestAnimationFrame(frame);
+        else {
+          amtEl.textContent = fmt(amount);
+          multEl.textContent = `${xBet.toFixed(1)}×`;
+          setTimeout(() => { overlay.setAttribute('hidden', ''); resolve(); }, 900);
+        }
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  9 · STATUS BAR rollup + COUNTERS                             ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function setStatusText(msg) {
+    if (statusValueEl) statusValueEl.setAttribute('hidden', '');
+    if (statusTextEl) {
+      statusTextEl.textContent = msg;
+      statusTextEl.style.display = '';
+    }
+  }
+  function rollupStatusWin(amount, durationMs) {
+    if (!statusValueEl || !statusTextEl) return Promise.resolve();
+    if (amount <= 0) { setStatusText('PRESS SPIN'); return Promise.resolve(); }
+    durationMs = durationMs || (state.turbo ? 220 : 700);
+    statusTextEl.style.display = 'none';
+    statusValueEl.removeAttribute('hidden');
+    statusValueEl.classList.remove('is-rolling');
+    void statusValueEl.offsetWidth;
+    statusValueEl.classList.add('is-rolling');
+    return new Promise((resolve) => {
+      const t0 = performance.now();
+      function step(now) {
+        const t = clamp((now - t0) / durationMs, 0, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        statusValueEl.textContent = `WIN: ${fmt(amount * eased)}`;
+        if (t < 1) requestAnimationFrame(step);
+        else resolve();
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  function renderHud() {
+    if (balEl)        balEl.textContent       = fmt(state.balance);
+    if (balLegacyEl)  balLegacyEl.textContent = fmt(state.balance);
+    if (topBalanceEl) topBalanceEl.textContent= fmt(state.balance);
+    if (menuBalValEl) menuBalValEl.textContent= fmt(state.balance);
+    if (currencyEl)   currencyEl.textContent  = CURRENCY;
+    if (betDisplayEl) betDisplayEl.textContent= fmt(currentBet());
+    if (betLegacyEl)  betLegacyEl.textContent = fmt(currentBet());
+    if (spinsEl)      spinsEl.textContent     = String(state.spinsPlayed);
+    if (hitsEl)       hitsEl.textContent      = String(state.hits);
+    if (hitPctEl)     hitPctEl.textContent    = state.spinsPlayed > 0 ? fmt((state.hits / state.spinsPlayed) * 100, 2) + '%' : '—';
+    if (totalWinEl)   totalWinEl.textContent  = fmt(state.totalWon);
+    if (rtpEl)        rtpEl.textContent       = state.totalWagered > 0 ? fmt((state.totalWon / state.totalWagered) * 100, 2) + '%' : '—%';
+    if (maxWinEl)     maxWinEl.textContent    = fmt(state.maxWin);
+    if (titleEl && IR.meta)   titleEl.textContent   = (IR.meta.name || 'Slot Template');
+    if (versionEl && IR.meta) versionEl.textContent = 'v' + (IR.meta.version || '0.0');
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 10 · ZEUS METER + LIGHTNING METER                             ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function updateZeusMeter(deltaWinXBet) {
+    if (!zeusFillEl) return;
+    state.zeusFill = clamp(state.zeusFill + (deltaWinXBet || 0), 0, 100);
+    zeusFillEl.style.width = state.zeusFill + '%';
+    if (zeusMeterEl) {
+      zeusMeterEl.classList.toggle('is-charging', state.zeusFill > 25 && state.zeusFill < 100);
+      zeusMeterEl.classList.toggle('is-full', state.zeusFill >= 100);
+    }
+    if (zeusLabelEl) {
+      if (state.zeusFill >= 100)      zeusLabelEl.textContent = 'ZEUS · UNLEASHED';
+      else if (state.zeusFill >= 75)  zeusLabelEl.textContent = 'ZEUS · WRATHFUL';
+      else if (state.zeusFill >= 50)  zeusLabelEl.textContent = 'ZEUS · CHARGING';
+      else if (state.zeusFill >= 25)  zeusLabelEl.textContent = 'ZEUS · STIRRING';
+      else                            zeusLabelEl.textContent = 'ZEUS · IDLE';
+    }
+  }
+  function animateLightningRoll(multiplier) {
+    if (!lightningMeterEl) return Promise.resolve();
+    lightningMeterEl.setAttribute('data-state', 'spin');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        lightningMeterEl.setAttribute('data-state', 'land');
+        setTimeout(() => {
+          lightningMeterEl.setAttribute('data-state', 'idle');
+          resolve();
+        }, 600);
+      }, 460);
+    });
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 11 · FEATURE OVERLAY (FS/H&W intro card)                      ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function showFeatureOverlay({ kind, title, detail, short, autoMs }) {
+    if (!featOverlay) return Promise.resolve();
+    return new Promise((resolve) => {
+      if (featKindEl)   featKindEl.textContent   = kind || '—';
+      if (featTitleEl)  featTitleEl.textContent  = title || '';
+      if (featDetailEl) featDetailEl.textContent = detail || '';
+      featOverlay.removeAttribute('hidden');
+      if (featGoBtn) featGoBtn.textContent = short ? 'CONTINUE' : 'START';
+
+      let resolved = false;
+      const finish = () => {
+        if (resolved) return;
+        resolved = true;
+        featOverlay.setAttribute('hidden', '');
+        if (featGoBtn) featGoBtn.removeEventListener('click', finish);
+        resolve();
+      };
+      if (featGoBtn) featGoBtn.addEventListener('click', finish);
+      if (short || autoMs) setTimeout(finish, autoMs || 1600);
+    });
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 12 · FREE SPINS — full animated sequence                      ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  async function runFreeSpins(initialScCount, bet) {
     const fsReels = (F_FS && F_FS.reels_override === 'free_spins' && FS_REELS) ? FS_REELS : BASE_REELS;
     let remaining = awardFsSpins(initialScCount);
     let total = 0;
@@ -282,12 +793,13 @@
     let totalAwarded = remaining;
     const fsCap = (F_FS.retrigger && F_FS.retrigger.max_total) || Infinity;
 
-    state.featureLabel = `Free Spins · ${remaining} spins · mult ${mult}×`;
+    state.featureLabel = `FREE SPINS · ${remaining} spins · ${mult}×`;
     renderHud();
+    setStatusText(`FREE SPINS · ${remaining} REMAINING`);
     await showFeatureOverlay({
-      kind: 'FREE SPINS',
+      kind: '⚡ FREE SPINS ⚡',
       title: `${remaining} Free Spins awarded`,
-      detail: `Progressive multiplier 1× → ${maxMult}×`,
+      detail: `Progressive multiplier ${mult}× → ${maxMult}×`,
     });
 
     while (remaining > 0) {
@@ -305,13 +817,10 @@
         mult = Math.min(maxMult, mult + incr);
       }
       total += win;
-
-      // Animate this FS spin
-      await animateGrid(grid, r, { context: 'fs', multAnnounce: mult });
-      state.featureLabel = `Free Spins · ${remaining} left · mult ${mult}×`;
+      await animateGrid(grid, r, { multAnnounce: mult });
+      state.featureLabel = `FS · ${remaining} left · ${mult}× · ${fmt(total * bet)}`;
+      setStatusText(`FS ${remaining} LEFT · ${mult}× · ${fmt(total * bet)}`);
       renderHud();
-
-      // Retrigger
       if (r.scCount >= 3 && totalAwarded < fsCap) {
         const add = awardFsRetrigger(r.scCount);
         if (add > 0) {
@@ -321,396 +830,160 @@
             kind: 'RETRIGGER',
             title: `+${add} more Free Spins`,
             detail: `total awarded: ${totalAwarded}`,
-            short: true,
+            short: true, autoMs: 1400,
           });
         }
       }
+      await wait(state.turbo ? 80 : 220);
     }
     state.featureLabel = '';
+    setStatusText('FS COMPLETE');
+    await showFeatureOverlay({
+      kind: 'FREE SPINS COMPLETE',
+      title: `Total: ${fmt(total * bet)}`,
+      detail: `won across ${totalAwarded} spins · max mult ${mult}×`,
+      autoMs: 2200,
+    });
+    setStatusText('PRESS SPIN');
     renderHud();
     return total;
   }
 
-  // ─── Hold & Win simulation (orb cascade + jackpots) ────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 13 · HOLD & WIN — animated reveal + lock cells + jackpots     ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
-  async function runHoldAndWin(initialOrbCount) {
+  async function runHoldAndWin(initialOrbCount, bet) {
     const respinsInitial = F_HNW.respins_initial || 3;
-    const orbLandBase = F_HNW.orb_land_chance_base || 0.04;
-    const orbLandFill = F_HNW.orb_land_chance_fill_bonus || 0;
-    const fullGridBonus = F_HNW.full_grid_bonus_x || 0;
-    const cashDist = F_HNW.cash_value_distribution || [{ value: 1, weight: 1 }];
-    const jackpots = F_HNW.jackpot_tiers || [];
+    const orbLandBase    = F_HNW.orb_land_chance_base || 0.04;
+    const orbLandFill    = F_HNW.orb_land_chance_fill_bonus || 0;
+    const fullGridBonus  = F_HNW.full_grid_bonus_x || 0;
+    const cashDist       = F_HNW.cash_value_distribution || [{ value: 1, weight: 1 }];
+    const jackpots       = F_HNW.jackpot_tiers || [];
     const totalCells = REELS * ROWS;
-    // Wrath canonical: cash + jackpot are ONE weighted pool (see headless
-    // version for full derivation).  P(jackpot) = ΣjpW / (ΣcashW + ΣjpW).
     const unifiedPool = [
-      ...cashDist.map((c) => ({ value: c.value, weight: Math.max(0, c.weight) })),
-      ...jackpots.map((j) => ({ value: j.multiplier, weight: Math.max(0, j.weight) })),
+      ...cashDist.map((c) => ({ value: c.value, weight: Math.max(0, c.weight), isJp: false })),
+      ...jackpots.map((j) => ({ value: j.multiplier, weight: Math.max(0, j.weight), isJp: true, jpName: j.name || `JP-${j.multiplier}` })),
     ];
 
-    let filled = Math.min(initialOrbCount, totalCells);
-    let totalCash = 0;
-    for (let i = 0; i < filled; i++) totalCash += pickWeighted(state.rng, unifiedPool);
-
-    let respins = respinsInitial;
-    let jackpotMult = 0;
-
-    await showFeatureOverlay({
-      kind: 'HOLD & WIN',
-      title: 'Zeus\'s Storm',
-      detail: `${filled} starting orbs · ${respins} respins`,
-    });
-
-    // Cell layout: orb tracks indices 0..(totalCells-1) — we just count fills.
-    // The board reuses the reels-grid: cells become orb-locked when filled.
-    state.hnwLockedCells = new Set(); // visual marker
-    // Mark random starting cells as locked for the animation
     const cellOrder = [];
     for (let r = 0; r < REELS; r++) for (let y = 0; y < ROWS; y++) cellOrder.push(`${r}:${y}`);
     shuffleInPlace(cellOrder, state.rng);
-    for (let i = 0; i < filled; i++) state.hnwLockedCells.add(cellOrder[i]);
-    renderHnwBoard();
 
+    let filled = Math.min(initialOrbCount, totalCells);
+    let total = 0;
+    state.hnwLockedCells = new Map();
+    for (let i = 0; i < filled; i++) {
+      const draw = pickWeightedFull(state.rng, unifiedPool);
+      state.hnwLockedCells.set(cellOrder[i], { value: draw.value, isJp: draw.isJp, jpName: draw.jpName });
+      total += draw.value;
+    }
+
+    state.featureLabel = `HOLD & WIN · ${filled} orbs · ${respinsInitial} respins`;
+    renderHud();
+    setStatusText(`HOLD & WIN · STARTING`);
+    await showFeatureOverlay({
+      kind: '⚡ HOLD & WIN ⚡',
+      title: `Zeus's Storm`,
+      detail: `${filled} starting orbs · ${respinsInitial} respins · max ${WIN_CAP}×`,
+    });
+    renderHnwBoard();
+    await wait(state.turbo ? 200 : 600);
+
+    let respins = respinsInitial;
     while (respins > 0 && filled < totalCells) {
+      respins--;
       let landed = 0;
       const free = totalCells - filled;
-      const newOrbs = [];
       const remainingCells = cellOrder.filter((c) => !state.hnwLockedCells.has(c));
-      // Per-respin landing probability — computed once from current filled
-      // count, tested independently against every empty cell.
       const filledFrac = filled / totalCells;
       const p = orbLandBase + orbLandFill * filledFrac;
-      // Jackpot probability inside the unified pool, used for animation tag.
-      const jpTotalW = jackpots.reduce((a, j) => a + Math.max(0, j.weight), 0);
-      const poolTotalW = unifiedPool.reduce((a, e) => a + e.weight, 0);
-      for (let c = 0; c < free; c++) {
+      for (let c = 0; c < free && c < remainingCells.length; c++) {
         if (state.rng() < p) {
-          const v = pickWeighted(state.rng, unifiedPool);
-          // For UI tag only: split the displayed orb between jackpot-tier
-          // and cash buckets based on which sub-pool the value came from.
-          // This is purely cosmetic; the math is one draw from the unified
-          // pool.  We tag as jackpot when the value matches one of the
-          // jackpot multipliers (multipliers don't overlap cash values in
-          // Wrath: 25/75/200/500 vs 1/2/3/5/8/10/15).
-          const isJp = jackpots.some((j) => j.multiplier === v);
-          let jp = 0;
-          if (isJp) { jp = v; jackpotMult += v; } else { totalCash += v; }
-          const cell = remainingCells[landed % remainingCells.length] || remainingCells[0];
-          if (cell) state.hnwLockedCells.add(cell);
-          newOrbs.push({ cell, value: v, jp });
+          const draw = pickWeightedFull(state.rng, unifiedPool);
+          const cell = remainingCells[landed];
+          state.hnwLockedCells.set(cell, { value: draw.value, isJp: draw.isJp, jpName: draw.jpName });
+          total += draw.value;
           landed++;
         }
       }
-      // Suppress unused-var lint when poolTotalW/jpTotalW aren't referenced
-      // outside the loop body.
-      void poolTotalW; void jpTotalW;
       filled += landed;
       renderHnwBoard();
-      state.featureLabel = `Hold & Win · ${respins} respins · ${filled}/${totalCells} cells · €${fmt(totalCash + jackpotMult)}`;
-      renderHud();
-      await wait(550);
       if (landed > 0 && F_HNW.respin_reset_on_new) respins = respinsInitial;
-      else respins--;
+      state.featureLabel = `H&W · ${respins} respins · ${filled}/${totalCells} · ${fmt(total * bet)}`;
+      setStatusText(`H&W ${respins} RESPINS · ${filled}/${totalCells} · ${fmt(total * bet)}`);
+      renderHud();
+      await wait(state.turbo ? 200 : 720);
     }
-    state.hnwLockedCells = null;
 
-    let total = totalCash + jackpotMult;
-    if (filled >= totalCells && fullGridBonus > 0) total += fullGridBonus;
+    if (filled >= totalCells && fullGridBonus > 0) {
+      total += fullGridBonus;
+      await showFeatureOverlay({
+        kind: 'FULL GRID',
+        title: `+${fullGridBonus}× BONUS!`,
+        detail: 'All cells filled — grand prize awarded',
+        short: true, autoMs: 2000,
+      });
+    }
+    await showFeatureOverlay({
+      kind: 'HOLD & WIN COMPLETE',
+      title: `Total: ${fmt(total * bet)}`,
+      detail: `${filled} orbs collected`,
+      autoMs: 2200,
+    });
+
+    state.hnwLockedCells = null;
     state.featureLabel = '';
+    setStatusText('PRESS SPIN');
     renderHud();
     return total;
   }
 
-  function pickWeighted(rng, list) {
-    let total = 0;
-    for (const e of list) total += Math.max(0, e.weight);
-    let x = rng() * total;
+  function pickWeightedFull(rng, list) {
+    let totalW = 0;
+    for (const e of list) totalW += Math.max(0, e.weight);
+    let x = rng() * totalW;
     for (const e of list) {
       x -= Math.max(0, e.weight);
-      if (x <= 0) return e.value;
+      if (x <= 0) return e;
     }
-    return list[list.length - 1].value;
-  }
-  function pickJackpot(rng, list) {
-    let total = 0;
-    for (const e of list) total += Math.max(0, e.weight);
-    let x = rng() * total;
-    for (const e of list) {
-      x -= Math.max(0, e.weight);
-      if (x <= 0) return e.multiplier;
-    }
-    return list[list.length - 1].multiplier;
-  }
-  function shuffleInPlace(arr, rng) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  }
-  function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
-
-  // ─── Lightning Multiplier ──────────────────────────────────────────
-
-  function rollLightning() {
-    if (!F_MUL) return 1;
-    if (F_MUL.scope && F_MUL.scope !== 'base_game_only') return 1;
-    const prob = (F_MUL.trigger && F_MUL.trigger.probability) || 0;
-    if (state.rng() >= prob) return 1;
-    const dist = F_MUL.distribution || [];
-    if (!dist.length) return 1;
-    return pickWeighted(state.rng, dist);
-  }
-
-  // ─── State ─────────────────────────────────────────────────────────
-
-  const state = {
-    rng: makeRng((IR.rng && IR.rng.default_seed) || Math.floor(Math.random() * 1e9)),
-    balance: 100.0,
-    betLevelIdx: 0,
-    spinsPlayed: 0,
-    hits: 0,
-    totalWagered: 0,
-    totalWon: 0,
-    maxWin: 0,
-    history: [],
-    spinning: false,
-    autoplay: { active: false, remaining: 0 },
-    featureLabel: '',
-    hnwLockedCells: null,
-  };
-
-  // ─── Render helpers ────────────────────────────────────────────────
-
-  const reelsEl = $('#reels-grid');
-  // Balance display — Wrath canonical ID is #bal; #balance kept as legacy
-  // alias on a hidden span.  The renderHud mirror keeps both in sync so
-  // existing tests + future Wrath controllers (statusBarController,
-  // bigWinController) both find a working node.  topBalanceValue is the
-  // top-right large counter introduced in Batch 1 of the Wrath port.
-  const balanceEl = $('#bal') || $('#balance');
-  const balanceAliasEl = $('#balance');
-  const topBalanceEl = $('#topBalanceValue');
-  const menuBalanceEl = $('#menuBalanceValue');
-  const betAmountEl = $('#bet-amount');
-  const betWrathEl = $('#bet');
-  const spinsEl = $('#stat-spins');
-  const hitsEl = $('#stat-hits');
-  const hitPctEl = $('#stat-hit-pct');
-  const totalWinEl = $('#stat-total-win');
-  const rtpEl = $('#stat-rtp');
-  const maxWinEl = $('#stat-max-win');
-  const historyListEl = $('#history-list');
-  const winBannerEl = $('#win-banner');
-  const winBannerAmt = $('#win-banner-amount');
-  const winBannerMult = $('#win-banner-mult');
-  const titleEl = $('#game-title');
-  const versionEl = $('#game-version');
-  const spinBtn = $('#spin-btn');
-  const auto10 = $('#auto-10');
-  const auto100 = $('#auto-100');
-  const autoStop = $('#auto-stop');
-  const featOverlay = $('#feature-overlay');
-  const featKindEl = $('#fo-kind');
-  const featTitleEl = $('#fo-title');
-  const featDetailEl = $('#fo-detail');
-  const featGoBtn = $('#fo-go');
-
-  function setupGrid() {
-    reelsEl.style.gridTemplateColumns = `repeat(${REELS}, minmax(80px, 100px))`;
-    reelsEl.style.gridTemplateRows = `repeat(${ROWS}, minmax(80px, 100px))`;
-    reelsEl.innerHTML = '';
-    for (let r = 0; r < REELS; r++) {
-      for (let y = 0; y < ROWS; y++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.dataset.r = String(r);
-        cell.dataset.y = String(y);
-        reelsEl.appendChild(cell);
-      }
-    }
-  }
-  function cellAt(r, y) {
-    return reelsEl.querySelector(`.cell[data-r="${r}"][data-y="${y}"]`);
-  }
-  function paintCell(r, y, symId, opts) {
-    const cell = cellAt(r, y);
-    if (!cell) return;
-    cell.className = 'cell tier-' + displayTierOf(symId);
-    if (opts && opts.spinning) cell.classList.add('is-spinning');
-    if (opts && opts.win) cell.classList.add('is-win');
-    if (opts && opts.scatter) cell.classList.add('is-scatter-win');
-    if (opts && opts.hnwLocked) cell.classList.add('tier-MULT');
-    const sym = SYM_BY_ID[symId];
-    cell.innerHTML = `<span class="cell-id">${symId || '?'}</span>${sym && sym.name && sym.name !== symId ? `<span class="cell-name">${sym.name}</span>` : ''}`;
-  }
-  function paintGrid(grid, opts) {
-    for (let r = 0; r < REELS; r++) {
-      for (let y = 0; y < ROWS; y++) {
-        paintCell(r, y, grid[r][y], opts);
-      }
-    }
-  }
-  function clearWinHighlights() {
-    $$('#reels-grid .cell.is-win, #reels-grid .cell.is-scatter-win').forEach((c) => {
-      c.classList.remove('is-win', 'is-scatter-win');
-    });
-  }
-  function highlightWins(result) {
-    for (const lw of result.lineWins) {
-      for (const c of lw.cells) {
-        const cell = cellAt(c.r, c.y);
-        if (cell) cell.classList.add('is-win');
-      }
-    }
-    for (const c of result.scCells) {
-      if (result.scCount >= 3) {
-        const cell = cellAt(c.r, c.y);
-        if (cell) cell.classList.add('is-scatter-win');
-      }
-    }
-  }
-  function showWinBanner(amount, mult) {
-    if (amount <= 0) { winBannerEl.setAttribute('hidden', ''); return; }
-    winBannerEl.removeAttribute('hidden');
-    winBannerEl.classList.remove('is-banner-pop');
-    void winBannerEl.offsetWidth; // restart animation
-    winBannerAmt.textContent = fmt(amount);
-    if (mult && mult > 1) winBannerMult.textContent = `${mult}×`;
-    else winBannerMult.textContent = '';
-  }
-  function hideWinBanner() { winBannerEl.setAttribute('hidden', ''); }
-
-  function renderHud() {
-    const balStr = fmt(state.balance);
-    if (balanceEl) balanceEl.textContent = balStr;
-    // Mirror to legacy alias + Wrath top counter + menu balance so every
-    // visible / scripted consumer stays in sync regardless of which ID
-    // it queries.
-    if (balanceAliasEl && balanceAliasEl !== balanceEl) balanceAliasEl.textContent = balStr;
-    if (topBalanceEl) topBalanceEl.textContent = balStr;
-    if (menuBalanceEl) menuBalanceEl.textContent = balStr;
-    const curEl = $('#currency'); if (curEl) curEl.textContent = CURRENCY;
-    const betStr = fmt(currentBet());
-    if (betAmountEl) betAmountEl.textContent = betStr;
-    if (betWrathEl) betWrathEl.textContent = betStr;
-    spinsEl.textContent = String(state.spinsPlayed);
-    hitsEl.textContent = String(state.hits);
-    hitPctEl.textContent = state.spinsPlayed > 0 ? fmt((state.hits / state.spinsPlayed) * 100, 2) + '%' : '—';
-    totalWinEl.textContent = fmt(state.totalWon);
-    rtpEl.textContent = state.totalWagered > 0 ? fmt((state.totalWon / state.totalWagered) * 100, 2) + '%' : '—%';
-    maxWinEl.textContent = fmt(state.maxWin);
-    if (titleEl && IR.meta) {
-      titleEl.textContent = (IR.meta.name || 'Slot Template') + (state.featureLabel ? ` · ${state.featureLabel}` : '');
-    }
-    if (versionEl && IR.meta) versionEl.textContent = 'v' + (IR.meta.version || '0.0');
+    return list[list.length - 1];
   }
 
   function renderHnwBoard() {
-    if (!state.hnwLockedCells) return;
+    if (!state.hnwLockedCells || !reelsEl) return;
     for (let r = 0; r < REELS; r++) {
       for (let y = 0; y < ROWS; y++) {
         const cell = cellAt(r, y);
         if (!cell) continue;
-        if (state.hnwLockedCells.has(`${r}:${y}`)) {
-          cell.className = 'cell tier-MULT';
-          cell.innerHTML = `<span class="cell-id">◆</span>`;
+        const key = `${r}:${y}`;
+        const locked = state.hnwLockedCells.get(key);
+        if (locked) {
+          cell.className = 'cell ' + (locked.isJp ? 'is-hnw-jp' : 'is-hnw-locked');
+          const label = locked.isJp
+            ? (locked.jpName || `JP ${locked.value}×`)
+            : `${locked.value}×`;
+          cell.innerHTML = `<span class="cell-id">${label}</span>`;
         } else {
           cell.className = 'cell';
-          cell.innerHTML = '';
+          cell.innerHTML = '<span class="cell-id">·</span>';
         }
       }
     }
   }
 
-  function appendHistory(entry) {
-    state.history.unshift(entry);
-    if (state.history.length > 10) state.history.length = 10;
-    historyListEl.innerHTML = state.history.map((h) => {
-      const cls = h.feature ? 'is-feat' : (h.win >= 10 ? 'is-big' : (h.win > 0 ? 'is-win' : ''));
-      const right = h.feature ? h.feature : (h.win > 0 ? `+${fmt(h.win)}` : '—');
-      return `<li class="${cls}"><span>#${h.idx}</span><span>${right}</span></li>`;
-    }).join('');
-  }
-
-  function currentBet() {
-    const mult = BET_LEVELS[state.betLevelIdx] || 1;
-    return Number(BASE_BET) * Number(mult);
-  }
-
-  function showFeatureOverlay({ kind, title, detail, short }) {
-    return new Promise((resolve) => {
-      featKindEl.textContent = kind;
-      featTitleEl.textContent = title;
-      featDetailEl.textContent = detail || '';
-      featOverlay.removeAttribute('hidden');
-      featGoBtn.textContent = short ? 'CONTINUE' : 'START';
-      const onClick = () => {
-        featGoBtn.removeEventListener('click', onClick);
-        featOverlay.setAttribute('hidden', '');
-        resolve();
-      };
-      featGoBtn.addEventListener('click', onClick);
-      // Auto-resolve after 1.6s for short toasts (retrigger, etc.)
-      if (short) setTimeout(() => { if (!featOverlay.hasAttribute('hidden')) onClick(); }, 1600);
-    });
-  }
-
-  // ─── Spin animation ────────────────────────────────────────────────
-
-  async function animateGrid(finalGrid, result, opts) {
-    opts = opts || {};
-    // Each reel spins with staggered stop times (left to right)
-    const SPIN_BASE = 280;
-    const SPIN_STEP = 140;
-    const reelStopDelays = [];
-    for (let r = 0; r < REELS; r++) reelStopDelays.push(SPIN_BASE + r * SPIN_STEP);
-
-    // Phase 1: set all cells to spinning + random in-flight glyphs
-    for (let r = 0; r < REELS; r++) {
-      for (let y = 0; y < ROWS; y++) {
-        const placeholderId = pickAnyId();
-        paintCell(r, y, placeholderId, { spinning: true });
-      }
-    }
-    // Phase 2: stop each reel sequentially with the FINAL grid value
-    const stops = [];
-    for (let r = 0; r < REELS; r++) {
-      stops.push(new Promise((resolve) => {
-        setTimeout(() => {
-          for (let y = 0; y < ROWS; y++) paintCell(r, y, finalGrid[r][y]);
-          resolve();
-        }, reelStopDelays[r]);
-      }));
-    }
-    await Promise.all(stops);
-
-    // Phase 3: highlight wins + show banner
-    highlightWins(result);
-    const totalWin = result.lineTotal + result.scatterPay;
-    if (totalWin > 0) {
-      showWinBanner(totalWin, opts.multAnnounce && opts.multAnnounce > 1 ? opts.multAnnounce : null);
-      // Brief pause so the user reads the win
-      await wait(600);
-    }
-  }
-
-  function pickAnyId() {
-    const syms = IR.symbols || [];
-    if (!syms.length) return '?';
-    return syms[Math.floor(Math.random() * syms.length)].id;
-  }
-
-  // ─── Spin orchestration ────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 14 · SPIN ORCHESTRATION                                       ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   async function spinOnce() {
     if (state.spinning) return;
     const bet = currentBet();
-    if (state.balance < bet) {
-      flashBalance();
-      return;
-    }
+    if (state.balance < bet) { flashBalance(); return; }
     state.spinning = true;
-    spinBtn.setAttribute('disabled', '');
+    spinBtn?.setAttribute('disabled', '');
+    spinBtn?.classList.add('is-spinning');
+    setStatusText('SPINNING…');
     clearWinHighlights();
     hideWinBanner();
 
@@ -721,102 +994,79 @@
 
     const grid = drawGrid(state.rng, BASE_REELS);
     const result = evalBase(grid);
-
     let spinWin = result.baseWin * bet;
-
-    // Lightning multiplier on winning base spins
     let lightning = 1;
     if (spinWin > 0 && F_MUL) {
-      lightning = rollLightning();
-      if (lightning > 1) {
-        spinWin = spinWin * lightning;
-      }
+      lightning = rollLightning(state.rng);
+      if (lightning > 1) spinWin = spinWin * lightning;
     }
+    const lightningPromise = lightning > 1 ? animateLightningRoll(lightning) : Promise.resolve();
     await animateGrid(grid, result, { multAnnounce: lightning });
+    await lightningPromise;
+    updateZeusMeter(result.baseWin || 0);
 
     let featureLabel = null;
-
-    // Free Spins trigger
     if (F_FS && result.scCount >= 3) {
-      const fsWin = await runFreeSpins(result.scCount);
+      const fsWin = await runFreeSpins(result.scCount, bet);
       spinWin += fsWin * bet;
       featureLabel = `FS +${fmt(fsWin * bet)}`;
     }
-    // Hold & Win trigger
     if (F_HNW && result.bonusCount >= (F_HNW.trigger?.min || 6)) {
-      const hnwWin = await runHoldAndWin(result.bonusCount);
+      const hnwWin = await runHoldAndWin(result.bonusCount, bet);
       spinWin += hnwWin * bet;
       featureLabel = (featureLabel ? `${featureLabel} · ` : '') + `H&W +${fmt(hnwWin * bet)}`;
     }
-
-    // Apply win cap (in bet units)
     const capAbs = WIN_CAP * bet;
     if (spinWin > capAbs) spinWin = capAbs;
 
     if (spinWin > 0) state.hits += 1;
+    state.lastWin = spinWin;
     state.totalWon += spinWin;
     state.balance += spinWin;
     if (spinWin > state.maxWin) state.maxWin = spinWin;
 
-    appendHistory({
-      idx: state.spinsPlayed,
-      win: spinWin,
-      feature: featureLabel,
-    });
-
+    appendHistory({ idx: state.spinsPlayed, win: spinWin, feature: featureLabel });
     renderHud();
-    if (spinWin > 0 && !featureLabel) {
-      // Win banner shown during animateGrid; just keep it for a moment.
-      setTimeout(hideWinBanner, 1400);
-    } else if (featureLabel) {
-      showWinBanner(spinWin);
-      setTimeout(hideWinBanner, 2200);
+
+    if (spinWin > 0) {
+      await rollupStatusWin(spinWin, state.turbo ? 220 : 700);
+      const xBet = bet > 0 ? spinWin / bet : 0;
+      if (xBet >= 10) await playBigWinRollup(spinWin, bet);
     }
+    if (!featureLabel) setStatusText('PRESS SPIN');
+    setTimeout(hideWinBanner, 1200);
 
     state.spinning = false;
-    spinBtn.removeAttribute('disabled');
+    spinBtn?.removeAttribute('disabled');
+    spinBtn?.classList.remove('is-spinning');
   }
 
   function flashBalance() {
-    balanceEl.animate(
+    if (!balEl) return;
+    balEl.animate(
       [{ color: 'var(--cyan)' }, { color: 'var(--rose)' }, { color: 'var(--cyan)' }],
       { duration: 600 }
     );
   }
 
-  // ─── Autoplay ──────────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 15 · HISTORY + PAYTABLE                                       ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
-  async function runAutoplay(count) {
-    if (state.autoplay.active) return;
-    state.autoplay = { active: true, remaining: count };
-    autoStop.removeAttribute('hidden');
-    auto10.classList.add('is-active');
-    while (state.autoplay.active && state.autoplay.remaining > 0) {
-      if (state.balance < currentBet()) break;
-      await spinOnce();
-      state.autoplay.remaining -= 1;
-      await wait(220);
-    }
-    stopAutoplay();
+  function appendHistory(entry) {
+    state.history.unshift(entry);
+    if (state.history.length > 10) state.history.length = 10;
+    if (!historyListEl) return;
+    historyListEl.innerHTML = state.history.map((h) => {
+      const cls = h.feature ? 'is-feat' : (h.win >= currentBet() * 10 ? 'is-big' : (h.win > 0 ? 'is-win' : ''));
+      const right = h.feature ? h.feature : (h.win > 0 ? `+${fmt(h.win)}` : '—');
+      return `<li class="${cls}"><span>#${h.idx}</span><span>${right}</span></li>`;
+    }).join('');
   }
-  function stopAutoplay() {
-    state.autoplay = { active: false, remaining: 0 };
-    autoStop.setAttribute('hidden', '');
-    auto10.classList.remove('is-active');
-    auto100.classList.remove('is-active');
-  }
-
-  // ─── Bet selector ──────────────────────────────────────────────────
-
-  function setBetLevel(delta) {
-    state.betLevelIdx = clamp(state.betLevelIdx + delta, 0, BET_LEVELS.length - 1);
-    renderHud();
-  }
-
-  // ─── Paytable drawer ───────────────────────────────────────────────
 
   function renderPaytable() {
     const body = $('#paytable-body');
+    if (!body) return;
     const pt = IR.paytable || {};
     const rows = [];
     rows.push('<table class="pt-table"><thead><tr><th>Symbol</th><th>×3</th><th>×4</th><th>×5</th></tr></thead><tbody>');
@@ -829,75 +1079,208 @@
       if (x3 + x4 + x5 === 0) continue;
       const tier = displayTierOf(s.id);
       rows.push(`<tr>
-        <td><span class="pt-sym tier-${tier}" style="background:var(--bg-3)">${s.id}</span> ${s.name || s.id}</td>
+        <td><span class="pt-sym tier-${tier}">${s.id}</span>${s.name || s.id}</td>
         <td class="mono">${x3 || '—'}</td>
         <td class="mono">${x4 || '—'}</td>
         <td class="mono">${x5 || '—'}</td>
       </tr>`);
     }
     rows.push('</tbody></table>');
-    if (F_FS) {
-      rows.push(`<p style="margin-top:12px;font-size:11px;color:var(--text-2)">
-        Free Spins: ${Object.entries(F_FS.trigger?.thresholds || {}).map(([k, v]) => `${k}→${v}`).join(' · ')}
-        ${F_FS.progressive_multiplier ? `· progressive ${F_FS.progressive_multiplier.start}→${F_FS.progressive_multiplier.max}×` : ''}
-      </p>`);
-    }
-    if (F_HNW) {
-      rows.push(`<p style="margin-top:6px;font-size:11px;color:var(--text-2)">
-        Hold &amp; Win: ${F_HNW.trigger?.min || 6}+ bonus symbols ·
-        ${F_HNW.respins_initial || 3} respins · max win ${WIN_CAP}×
-      </p>`);
-    }
-    if (F_MUL) {
-      rows.push(`<p style="margin-top:6px;font-size:11px;color:var(--text-2)">
-        Lightning Multiplier: ${((F_MUL.trigger?.probability || 0) * 100).toFixed(1)}% on winning spins ·
-        values ${(F_MUL.distribution || []).map((d) => d.value + '×').join(' / ')}
-      </p>`);
-    }
+    if (F_FS) rows.push(`<p style="margin-top:14px;font-size:11px;color:var(--text-2)">
+      <b style="color:var(--gold)">Free Spins:</b> ${Object.entries(F_FS.trigger?.thresholds || {}).map(([k, v]) => `${k} scatters→${v} spins`).join(' · ')}
+      ${F_FS.progressive_multiplier ? `· progressive ${F_FS.progressive_multiplier.start}× → ${F_FS.progressive_multiplier.max}×` : ''}
+    </p>`);
+    if (F_HNW) rows.push(`<p style="margin-top:8px;font-size:11px;color:var(--text-2)">
+      <b style="color:var(--gold)">Hold &amp; Win:</b> ${F_HNW.trigger?.min || 6}+ bonus symbols ·
+      ${F_HNW.respins_initial || 3} respins · max win ${WIN_CAP}×
+    </p>`);
+    if (F_MUL) rows.push(`<p style="margin-top:8px;font-size:11px;color:var(--text-2)">
+      <b style="color:var(--gold)">Lightning Multiplier:</b> ${((F_MUL.trigger?.probability || 0) * 100).toFixed(1)}% on winning spins ·
+      values ${(F_MUL.distribution || []).map((d) => d.value + '×').join(' / ')}
+    </p>`);
     body.innerHTML = rows.join('');
   }
 
-  // ─── Wiring ────────────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 16 · AUTOPLAY + AUTOPLAY PANEL                                ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
-  function bindUI() {
-    spinBtn.addEventListener('click', () => { if (!state.spinning) spinOnce(); });
-    auto10.addEventListener('click', () => runAutoplay(10));
-    auto100.addEventListener('click', () => runAutoplay(100));
-    autoStop.addEventListener('click', stopAutoplay);
-    $('#bet-up').addEventListener('click', () => setBetLevel(+1));
-    $('#bet-down').addEventListener('click', () => setBetLevel(-1));
-    $('#paytable-toggle').addEventListener('click', () => {
-      $('#paytable-drawer').removeAttribute('hidden');
-    });
-    $('#pd-close').addEventListener('click', () => {
-      $('#paytable-drawer').setAttribute('hidden', '');
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.target && /input|textarea/i.test(e.target.tagName)) return;
-      if (e.code === 'Space') { e.preventDefault(); if (!state.spinning) spinOnce(); }
-      else if (e.key === 'a' || e.key === 'A') runAutoplay(10);
-      else if (e.key === 's' || e.key === 'S') stopAutoplay();
+  async function runAutoplay(count) {
+    if (state.autoplay.active) return;
+    state.autoplay = Object.assign({}, state.autoplay, { active: true, remaining: count, startBalance: state.balance });
+    autoStopBtn?.removeAttribute('hidden');
+    if (auto10Btn && count <= 10)  auto10Btn.classList.add('is-active');
+    if (auto100Btn && count > 10)  auto100Btn.classList.add('is-active');
+    while (state.autoplay.active && (state.autoplay.remaining > 0 || state.autoplay.remaining === -1)) {
+      if (state.balance < currentBet()) break;
+      await spinOnce();
+      const profit = state.balance - state.autoplay.startBalance;
+      if (state.autoplay.stopOnWin > 0 && state.lastWin >= state.autoplay.stopOnWin) break;
+      if (state.autoplay.stopOnLoss > 0 && (state.autoplay.startBalance - state.balance) >= state.autoplay.stopOnLoss) break;
+      if (state.autoplay.stopOnProfit > 0 && profit >= state.autoplay.stopOnProfit) break;
+      if (state.autoplay.remaining > 0) state.autoplay.remaining -= 1;
+      await wait(currentProfile().betweenSpinsMs);
+    }
+    stopAutoplay();
+  }
+  function stopAutoplay() {
+    state.autoplay = Object.assign({}, state.autoplay, { active: false, remaining: 0 });
+    autoStopBtn?.setAttribute('hidden', '');
+    auto10Btn?.classList.remove('is-active');
+    auto100Btn?.classList.remove('is-active');
+  }
+  function openAutoplayPanel() {
+    if (!autoplayPanelEl) return;
+    autoplayPanelEl.removeAttribute('hidden');
+    autoplayPanelEl.setAttribute('aria-hidden', 'false');
+  }
+  function closeAutoplayPanel() {
+    if (!autoplayPanelEl) return;
+    autoplayPanelEl.setAttribute('hidden', '');
+    autoplayPanelEl.setAttribute('aria-hidden', 'true');
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 17 · BET + TURBO + SOUND + INTRO                              ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function setBetLevel(delta) {
+    state.betLevelIdx = clamp(state.betLevelIdx + delta, 0, BET_LEVELS.length - 1);
+    renderHud();
+  }
+  function toggleTurbo() {
+    state.turbo = !state.turbo;
+    const turboBtn = $('#turbo-btn');
+    if (turboBtn) turboBtn.classList.toggle('is-active', state.turbo);
+  }
+  function toggleSound() {
+    state.soundMuted = !state.soundMuted;
+    if (soundBtnEl)   soundBtnEl.setAttribute('data-muted', String(state.soundMuted));
+    if (menuSoundBtn) menuSoundBtn.setAttribute('data-muted', String(state.soundMuted));
+  }
+  function toggleQuickMenu() {
+    if (!quickMenuEl) return;
+    if (quickMenuEl.hasAttribute('hidden')) quickMenuEl.removeAttribute('hidden');
+    else quickMenuEl.setAttribute('hidden', '');
+  }
+  function showIntroModal() {
+    if (!introModalEl) return Promise.resolve();
+    introModalEl.removeAttribute('hidden');
+    introModalEl.setAttribute('aria-hidden', 'false');
+    return new Promise((resolve) => {
+      const t0 = performance.now();
+      const totalMs = 1400;
+      function tick(now) {
+        const t = clamp((now - t0) / totalMs, 0, 1);
+        const pct = Math.round(t * 100);
+        if (introProgressFill) introProgressFill.style.width = pct + '%';
+        if (introLoadPercent)  introLoadPercent.textContent  = pct + '%';
+        if (introStatusText && t > 0.5) introStatusText.textContent = 'Ready · Click to enter';
+        if (t < 1) requestAnimationFrame(tick);
+        else if (introContinueBtn) {
+          introContinueBtn.disabled = false;
+          introContinueBtn.addEventListener('click', () => {
+            introModalEl.setAttribute('hidden', '');
+            introModalEl.setAttribute('aria-hidden', 'true');
+            resolve();
+          }, { once: true });
+        }
+      }
+      requestAnimationFrame(tick);
     });
   }
 
-  // ─── Boot ──────────────────────────────────────────────────────────
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 18 · WIRING                                                   ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  function bindUI() {
+    spinBtn?.addEventListener('click', () => { if (!state.spinning) spinOnce(); });
+    betPlusBtn?.addEventListener('click', () => setBetLevel(+1));
+    betMinusBtn?.addEventListener('click', () => setBetLevel(-1));
+    auto10Btn?.addEventListener('click', () => runAutoplay(10));
+    auto100Btn?.addEventListener('click', () => runAutoplay(100));
+    autoStopBtn?.addEventListener('click', stopAutoplay);
+    autoOpenBtn?.addEventListener('click', openAutoplayPanel);
+    autoplayCloseBtn?.addEventListener('click', closeAutoplayPanel);
+    $('#autoPlayPanel .autoPlayPanel__backdrop')?.addEventListener('click', closeAutoplayPanel);
+
+    $$('#autoPlaySpinOptions .autoPlayPanel__spinBtn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        $$('#autoPlaySpinOptions .autoPlayPanel__spinBtn').forEach((b) => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        if (autoplayStartBtn) {
+          autoplayStartBtn.disabled = false;
+          autoplayStartBtn.setAttribute('data-spins', btn.dataset.spins);
+        }
+      });
+    });
+    autoplayStartBtn?.addEventListener('click', () => {
+      const n = parseInt(autoplayStartBtn.getAttribute('data-spins') || '10', 10);
+      state.autoplay.stopOnFs    = stopOnFsCheck?.checked || false;
+      state.autoplay.stopOnBonus = stopOnBonusCheck?.checked || false;
+      closeAutoplayPanel();
+      runAutoplay(n === -1 ? 999999 : n);
+    });
+
+    menuBtnEl?.addEventListener('click', toggleQuickMenu);
+    menuPaytableBtn?.addEventListener('click', () => { paytableDrawer?.removeAttribute('hidden'); toggleQuickMenu(); });
+    menuSoundBtn?.addEventListener('click', toggleSound);
+    soundBtnEl?.addEventListener('click', toggleSound);
+    menuRulesBtn?.addEventListener('click', () => {
+      showFeatureOverlay({ kind: 'GAME RULES', title: IR.meta?.name || 'Slot Template', detail: IR.meta?.description || '', short: true, autoMs: 6000 });
+      toggleQuickMenu();
+    });
+    menuHelpBtn?.addEventListener('click', () => {
+      showFeatureOverlay({ kind: 'HELP', title: 'Controls', detail: 'SPACE = spin · A = auto · S = stop · T = turbo', short: true, autoMs: 5000 });
+      toggleQuickMenu();
+    });
+    menuSettingsBtn?.addEventListener('click', () => {
+      showFeatureOverlay({ kind: 'SETTINGS', title: 'Coming soon', detail: 'Volume / animations / language', short: true, autoMs: 3000 });
+      toggleQuickMenu();
+    });
+
+    paytableToggle?.addEventListener('click', () => { paytableDrawer?.removeAttribute('hidden'); });
+    paytableCloseBtn?.addEventListener('click', () => { paytableDrawer?.setAttribute('hidden', ''); });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target && /input|textarea/i.test(e.target.tagName)) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!state.spinning) spinOnce();
+      } else if (e.key === 'a' || e.key === 'A') {
+        runAutoplay(10);
+      } else if (e.key === 's' || e.key === 'S') {
+        stopAutoplay();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleTurbo();
+      } else if (e.key === 'Escape') {
+        closeAutoplayPanel();
+        if (quickMenuEl && !quickMenuEl.hasAttribute('hidden')) toggleQuickMenu();
+        paytableDrawer?.setAttribute('hidden', '');
+      }
+    });
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 19 · BOOT — paint initial grid, mount UI                      ║
+  // ╚══════════════════════════════════════════════════════════════╝
 
   setupGrid();
-  // Paint cells with a neutral "ready" state — empty grid with no glyphs
-  for (let r = 0; r < REELS; r++)
-    for (let y = 0; y < ROWS; y++) {
-      const cell = cellAt(r, y);
-      if (cell) cell.className = 'cell';
-    }
   renderHud();
   renderPaytable();
   bindUI();
+  for (let r = 0; r < REELS; r++) {
+    for (let y = 0; y < ROWS; y++) {
+      paintCell(r, y, pickAnyId());
+    }
+  }
+  if (introModalEl) introModalEl.setAttribute('hidden', '');
 
-  // ─── Headless instant spin (for verification / RTP tests) ─────────
-  // Pure math, no DOM animation, no feature overlays.  Mirrors the
-  // full spin pipeline (base eval + Lightning + FS + H&W + win cap)
-  // but resolves synchronously so a Playwright test can run N
-  // thousand spins in a few seconds.
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 20 · HEADLESS spin — used for MTL lockstep + RTP tests        ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
   function spinOnceInstant() {
     const bet = currentBet();
     if (state.balance < bet) return { win: 0, scCount: 0, bonusCount: 0, lightning: 1, fsWin: 0, hnwWin: 0 };
@@ -909,7 +1292,7 @@
     let spinWin = result.baseWin * bet;
     let lightning = 1;
     if (spinWin > 0 && F_MUL) {
-      lightning = rollLightning();
+      lightning = rollLightning(state.rng);
       if (lightning > 1) spinWin = spinWin * lightning;
     }
     let fsWin = 0;
@@ -931,7 +1314,6 @@
     return { win: spinWin, scCount: result.scCount, bonusCount: result.bonusCount, lightning, fsWin, hnwWin };
   }
 
-  // Headless versions of the feature sims — same math, no UI side effects.
   function runFreeSpinsHeadless(initialScCount) {
     if (!F_FS) return 0;
     const fsReels = (F_FS.reels_override === 'free_spins' && FS_REELS) ? FS_REELS : BASE_REELS;
@@ -963,7 +1345,6 @@
     return total;
   }
 
-  // Diagnostics for math verification — last H&W run details.
   const _hnwDiag = { lastInitialOrbs: 0, lastFinalOrbs: 0, lastRespinsUsed: 0, totalRespinOrbsLanded: 0, runs: 0 };
   function runHoldAndWinHeadless(initialOrbCount) {
     if (!F_HNW) return 0;
@@ -973,13 +1354,6 @@
     const fullGridBonus = F_HNW.full_grid_bonus_x || 0;
     const cashDist = F_HNW.cash_value_distribution || [{ value: 1, weight: 1 }];
     const jackpots = F_HNW.jackpot_tiers || [];
-    // Wrath canonical H&W (validated 500M-spin MC): cash values and jackpot
-    // tiers share a SINGLE weighted distribution.  Each orb (initial trigger
-    // orb AND respin-landed orb) draws once from this combined pool.
-    //   cash weights: 404+250+150+90+45+25+14 = 978
-    //   jackpot weights: 10+8+5+2 = 25
-    //   total = 1003, so P(jackpot) = 25/1003 ≈ 2.494%
-    // Jackpot value is its `multiplier` field (added as bet-units like cash).
     const unifiedPool = [
       ...cashDist.map((c) => ({ value: c.value, weight: Math.max(0, c.weight) })),
       ...jackpots.map((j) => ({ value: j.multiplier, weight: Math.max(0, j.weight) })),
@@ -987,9 +1361,6 @@
     const totalCells = REELS * ROWS;
     let filled = Math.min(initialOrbCount, totalCells);
     let total = 0;
-    // Initial trigger orbs draw from the unified pool — they CAN hit jackpots
-    // (this is what the validated MC does; previously runner gave them
-    // cash-only which artificially suppressed H&W RTP by ~12pp).
     for (let i = 0; i < filled; i++) total += pickWeighted(state.rng, unifiedPool);
     _hnwDiag.lastInitialOrbs = filled;
     let respins = respinsInitial;
@@ -999,16 +1370,10 @@
       respinsUsed++;
       let landed = 0;
       const free = totalCells - filled;
-      // Per-respin landing probability is constant for this respin (computed
-      // once from current filled count) and tested independently against
-      // every empty cell.
       const filledFrac = filled / totalCells;
       const p = orbLandBase + orbLandFill * filledFrac;
       for (let c = 0; c < free; c++) {
-        if (state.rng() < p) {
-          total += pickWeighted(state.rng, unifiedPool);
-          landed++;
-        }
+        if (state.rng() < p) { total += pickWeighted(state.rng, unifiedPool); landed++; }
       }
       filled += landed;
       respinOrbsLanded += landed;
@@ -1023,51 +1388,32 @@
     return total;
   }
 
-  // Expose for tests / debug.  `spinOnceInstant` is what verification
-  // harnesses use to run 10K+ spins in a few seconds.
-  window.__SLOT__ = { state, IR, spinOnce, spinOnceInstant, runAutoplay, stopAutoplay, _debug: { evalBase, drawGrid, BASE_REELS, FS_REELS, F_FS, F_HNW, F_MUL, SCAT_PREV, hnwDiag: _hnwDiag } };
+  window.__SLOT__ = {
+    state, IR, spinOnce, spinOnceInstant, runAutoplay, stopAutoplay,
+    showIntro: showIntroModal,
+    toggleTurbo, toggleSound, toggleQuickMenu,
+    _debug: { evalBase, drawGrid, BASE_REELS, FS_REELS, F_FS, F_HNW, F_MUL, SCAT_PREV, hnwDiag: _hnwDiag, SPIN_PROFILE },
+  };
 
-  // ─── MTL — Math Twin Lockstep boot ─────────────────────────────────
-  // If oracle.js / dna.js / sealing-ceremony.js / mtl-dashboard.js /
-  // deep-diff.js were inlined ahead of this script (Studio's
-  // buildPlayTemplateBlob does this), Lockstep activates:
-  //
-  //   1. Mount the floating MTL HUD (top-right of the runner)
-  //   2. Pre-flight reseal check — 100 deterministic seeds; oracle.spin
-  //      must agree with runtime.spinOnceInstant byte-for-byte.
-  //   3. Wrap SPIN — every click runs both engines on the same seed and
-  //      halts the UI on any mismatch.
-  //
-  // If MTL modules aren't present the runner behaves exactly as before.
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 21 · MTL — Math Twin Lockstep boot (UNCHANGED CONTRACT)       ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
   (function mtlBoot() {
     const O = window.MTLOracle;
     const Diff = window.MTLDiff;
     const HUD = window.MTLDashboard;
     const Replay = window.MTLReplay;
-    if (!O || !HUD) return; // graceful degradation
+    if (!O || !HUD) return;
     HUD.mount();
+    if (IR && IR.meta && IR.meta.seal) HUD.setSeal(IR.meta.seal);
+    else HUD.setUnsealed('not sealed in Studio');
 
-    if (IR && IR.meta && IR.meta.seal) {
-      HUD.setSeal(IR.meta.seal);
-    } else {
-      HUD.setUnsealed('not sealed in Studio');
-    }
-
-    // ── Watchtower worker (Phase B) ──────────────────────────────
-    // Reports rolling 10k metrics back to the HUD; flags warn/critical
-    // breaches.  Initialized from ir.validated_metrics when present; if
-    // the IR ships none, the worker still measures but can't grade.
     let wtWorker = null;
     try {
-      // Bootstrap the worker via a blob URL so the runner blob is fully
-      // self-contained.  We inline the watchtower-worker.js + watchtower.js
-      // sources via Studio's buildPlayTemplateBlob (see below).
       if (window.__MTL_WT_WORKER_SRC__ && window.__MTL_WT_SRC__) {
         const blob = new Blob([
           window.__MTL_WT_SRC__ + '\n\n',
-          // Worker uses importScripts in normal mode; in blob mode we already
-          // have MTLWatchtower on `self` from the inlined source above, so
-          // skip the import and just run the worker dispatch logic.
           window.__MTL_WT_WORKER_SRC__.replace(/importScripts\s*\([^)]+\)\s*;?/g, '// importScripts inlined'),
         ], { type: 'application/javascript' });
         wtWorker = new Worker(URL.createObjectURL(blob));
@@ -1082,10 +1428,7 @@
             console.warn('[MTL Watchtower] error:', m.error);
           }
         });
-        wtWorker.postMessage({
-          type: 'init',
-          validated_metrics: IR.validated_metrics || null,
-        });
+        wtWorker.postMessage({ type: 'init', validated_metrics: IR.validated_metrics || null });
       } else {
         console.log('[MTL] watchtower disabled — worker source not inlined');
       }
@@ -1107,14 +1450,13 @@
         spinBtnEl.textContent = 'HALT';
       }
       if (window.__SLOT__) window.__SLOT__.haltedReason = reason;
+      setStatusText('HALT · ' + reason);
       console.warn('[MTL] runtime halted —', reason);
     }
 
-    // Pre-flight reseal — N deterministic seeds, oracle vs runtime, hash compare.
     async function preFlightReseal(seedCount) {
       const n = seedCount || 100;
       const t0 = performance.now();
-      // Snapshot live state so the pre-flight doesn't pollute live UI counters
       const snap = { rng: state.rng, balance: state.balance, totalWagered: state.totalWagered, totalWon: state.totalWon, spinsPlayed: state.spinsPlayed, hits: state.hits, maxWin: state.maxWin };
       for (let i = 0; i < n; i++) {
         const seed = i;
@@ -1122,46 +1464,29 @@
         state.balance = 1e9; state.totalWagered = 0; state.totalWon = 0; state.spinsPlayed = 0; state.hits = 0; state.maxWin = 0;
         const r = spinOnceInstant();
         const reduced = { win: r.win, scCount: r.scCount, bonusCount: r.bonusCount, lightning: r.lightning, fsWin: r.fsWin, hnwWin: r.hnwWin };
-        // eslint-disable-next-line no-await-in-loop
         const oracle = await O.spin(IR, seed, 1);
         const oracleReduced = { win: oracle.win, scCount: oracle.scCount, bonusCount: oracle.bonusCount, lightning: oracle.lightning, fsWin: oracle.fsWin, hnwWin: oracle.hnwWin };
-        // eslint-disable-next-line no-await-in-loop
         const rh = await O.hashOutcome(reduced);
-        // Compare on REDUCED hashes only — the oracle's `outcomeHash` field
-        // hashes the full outcome (grid + lineWins + …) which the runner
-        // doesn't expose for headless spins.  Sealing Ceremony uses the
-        // same reduced-hash strategy so the seal and per-spin verification
-        // are checking the same invariant.
         const oh = await O.hashOutcome(oracleReduced);
         if (rh !== oh) {
           const diff = Diff ? Diff.firstDiff(oracleReduced, reduced) : null;
           console.warn('[MTL pre-flight MISMATCH @ seed ' + seed + ']\n  oracle:', JSON.stringify(oracleReduced), '\n  runner:', JSON.stringify(reduced), '\n  oracle hash:', oh, '\n  runner hash:', rh, '\n  diff:', diff);
-          HUD.recordHalt({ seed: seed, diff: diff, oracleResult: oracleReduced, runnerResult: reduced });
+          HUD.recordHalt({ seed, diff, oracleResult: oracleReduced, runnerResult: reduced });
           freezeUI('pre-flight mismatch @ seed ' + seed);
-          // Restore live snapshot
-          state.rng = snap.rng; state.balance = snap.balance; state.totalWagered = snap.totalWagered; state.totalWon = snap.totalWon; state.spinsPlayed = snap.spinsPlayed; state.hits = snap.hits; state.maxWin = snap.maxWin;
+          Object.assign(state, snap);
           return false;
         }
       }
-      // Restore live snapshot
-      state.rng = snap.rng; state.balance = snap.balance; state.totalWagered = snap.totalWagered; state.totalWon = snap.totalWon; state.spinsPlayed = snap.spinsPlayed; state.hits = snap.hits; state.maxWin = snap.maxWin;
+      Object.assign(state, snap);
       const dt = (performance.now() - t0).toFixed(1);
       console.log('[MTL] pre-flight reseal OK — ' + n + ' seeds matched in ' + dt + 'ms');
       return true;
     }
 
-    // Per-spin lockstep.  We choose the seed BEFORE the spin, replay it
-    // through both engines, compare hashes.  On match: animated spin uses
-    // the same seed (so visuals + math align).  On mismatch: HALT.
     async function lockstepSpinClick() {
       if (halted) return;
       if (state.spinning) return;
-      // Choose a seed from the live rng (still random for the player) and
-      // pin it for both witnesses.
       const seed = (Math.floor(state.rng() * 0x100000000) >>> 0) || 1;
-      // Snapshot live state — we'll run the HEADLESS path first to compute
-      // the lockstep hash without touching the visible UI; then if it matches
-      // we replay the same seed through the animated path.
       const snap = { rng: state.rng, balance: state.balance, totalWagered: state.totalWagered, totalWon: state.totalWon, spinsPlayed: state.spinsPlayed, hits: state.hits, maxWin: state.maxWin };
       state.rng = makeRng(seed);
       state.balance = 1e9; state.totalWagered = 0; state.totalWon = 0; state.spinsPlayed = 0; state.hits = 0; state.maxWin = 0;
@@ -1172,44 +1497,33 @@
       const runnerHash = await O.hashOutcome(reduced);
       const oracleHash = await O.hashOutcome(oracleReduced);
       const match = runnerHash === oracleHash;
-      HUD.recordSpin({ seed: seed, oracleHash: oracleHash, runnerHash: runnerHash, match: match });
+      HUD.recordSpin({ seed, oracleHash, runnerHash, match });
       if (!match) {
         const diff = Diff ? Diff.firstDiff(oracleReduced, reduced) : null;
-        HUD.recordHalt({ seed: seed, diff: diff, oracleResult: oracleReduced, runnerResult: reduced });
+        HUD.recordHalt({ seed, diff, oracleResult: oracleReduced, runnerResult: reduced });
         freezeUI('lockstep mismatch @ seed ' + seed);
-        // Restore live snapshot — UI is frozen anyway, but counters stay clean
         Object.assign(state, snap);
         return;
       }
-      // Match — restore live snapshot, replay the same seed through the
-      // animated spin so player sees the lockstep-verified outcome.
-      // Also: post to Watchtower + journal to Replay Log (Phase B).
       const bet = (IR.bet && IR.bet.base_bet) || 1;
       if (wtWorker) {
-        try { wtWorker.postMessage({ type: 'spin', win: reduced.win, bet: bet, scCount: reduced.scCount, bonusCount: reduced.bonusCount, lightning: reduced.lightning, fsWin: reduced.fsWin, hnwWin: reduced.hnwWin }); } catch (_) {}
+        try { wtWorker.postMessage({ type: 'spin', win: reduced.win, bet, scCount: reduced.scCount, bonusCount: reduced.bonusCount, lightning: reduced.lightning, fsWin: reduced.fsWin, hnwWin: reduced.hnwWin }); } catch (_) {}
       }
       if (Replay && IR && IR.meta && IR.meta.seal) {
         try {
           await Replay.append({
-            irDna: IR.meta.seal.dna || '',
-            seed: seed,
-            bet: bet,
-            win: reduced.win,
-            scCount: reduced.scCount,
-            bonusCount: reduced.bonusCount,
-            lightning: reduced.lightning,
-            fsWin: reduced.fsWin,
-            hnwWin: reduced.hnwWin,
+            irDna: IR.meta.seal.dna || '', seed, bet,
+            win: reduced.win, scCount: reduced.scCount, bonusCount: reduced.bonusCount,
+            lightning: reduced.lightning, fsWin: reduced.fsWin, hnwWin: reduced.hnwWin,
             outcomeHash: oracleHash,
           });
-        } catch (_) { /* IDB transient — non-fatal */ }
+        } catch (_) {}
       }
       Object.assign(state, snap);
       state.rng = makeRng(seed);
       try { await spinOnce(); } catch (err) { console.error('[MTL] animated spin error:', err); }
     }
 
-    // Hook spin button + Space — replace existing handler chain.
     if (spinBtnEl) {
       const fresh = spinBtnEl.cloneNode(true);
       spinBtnEl.parentNode.replaceChild(fresh, spinBtnEl);
@@ -1223,7 +1537,6 @@
       }
     }, true);
 
-    // Kick off pre-flight after first paint
     setTimeout(function () {
       preFlightReseal(100).catch(function (e) {
         console.error('[MTL] pre-flight failed:', e);
@@ -1231,46 +1544,30 @@
       });
     }, 250);
 
-    // Wire HUD "Replay last 10" — pulls recent journal entries, re-runs
-    // each through oracle.spin, verifies hash, surfaces any drift.
     HUD.setReplayHandler(async function () {
       if (!Replay || !IR.meta || !IR.meta.seal) return;
       try {
         const entries = await Replay.list({ irDna: IR.meta.seal.dna, limit: 10 });
-        if (!entries.length) {
-          console.log('[MTL Replay] no journaled entries yet');
-          return;
-        }
+        if (!entries.length) { console.log('[MTL Replay] no journaled entries yet'); return; }
         let matched = 0;
-        let drifted = [];
+        const drifted = [];
         for (let i = 0; i < entries.length; i++) {
-          // eslint-disable-next-line no-await-in-loop
           const r = await Replay.replay(IR, entries[i]);
           if (r.match) matched++;
           else drifted.push({ entry: entries[i], replay: r });
         }
-        if (drifted.length === 0) {
-          console.log('[MTL Replay] ' + matched + '/' + entries.length + ' entries reproduced byte-equal');
-        } else {
-          console.warn('[MTL Replay] ' + drifted.length + ' DRIFT(S) detected!', drifted);
-          freezeUI('replay drift on ' + drifted.length + ' journaled spin(s)');
-        }
-        // Surface to UI via a transient toast in the runner; lightweight
+        if (drifted.length === 0) console.log('[MTL Replay] ' + matched + '/' + entries.length + ' entries reproduced byte-equal');
+        else { console.warn('[MTL Replay] ' + drifted.length + ' DRIFT(S) detected!', drifted); freezeUI('replay drift on ' + drifted.length + ' journaled spin(s)'); }
         const t = document.createElement('div');
         t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:' + (drifted.length ? 'rgba(244,63,94,0.95)' : 'rgba(34,197,94,0.92)') + ';color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px 16px;border-radius:8px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4)';
-        t.textContent = drifted.length
-          ? '⚠ Replay drift: ' + drifted.length + ' / ' + entries.length + ' (see console)'
-          : '✓ Replay OK · ' + matched + ' / ' + entries.length + ' byte-equal';
+        t.textContent = drifted.length ? '⚠ Replay drift: ' + drifted.length + ' / ' + entries.length + ' (see console)' : '✓ Replay OK · ' + matched + ' / ' + entries.length + ' byte-equal';
         document.body.appendChild(t);
         setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 4500);
-      } catch (err) {
-        console.error('[MTL Replay] error:', err);
-      }
+      } catch (err) { console.error('[MTL Replay] error:', err); }
     });
 
     window.__SLOT__.mtl = {
-      preFlightReseal: preFlightReseal,
-      lockstepSpinClick: lockstepSpinClick,
+      preFlightReseal, lockstepSpinClick,
       get halted() { return halted; },
       get stats() { return HUD.getStats(); },
       get watchtower() { return HUD.getWatchtowerReport(); },
@@ -1280,7 +1577,6 @@
         const entries = await Replay.list({ irDna: IR.meta.seal.dna, limit: n || 10 });
         const results = [];
         for (let i = 0; i < entries.length; i++) {
-          // eslint-disable-next-line no-await-in-loop
           const r = await Replay.replay(IR, entries[i]);
           results.push({ entry: entries[i], replay: r });
         }
