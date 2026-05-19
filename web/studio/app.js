@@ -1153,12 +1153,101 @@
       const dot = THEME_PALETTE[w.theme]?.dot || "#22D3EE";
       const blank = isVariantBlank(v);
       const rtLbl = blank ? DASH : `${v.rtp.toFixed(1)}%`;
-      return `<button class="side-item ${id === activeWorkspaceId ? "is-active" : ""}" data-ws="${id}">
-        <span class="dot" style="background:${dot}"></span>${w.name}<span class="rt">${rtLbl}</span>
-      </button>`;
+      const safeName = escapeHtml(w.name);
+      // Hover-X delete affordance — visible only on row hover (CSS) and
+      // not for the very last surviving workspace (the user must always
+      // have one to fall back to).
+      const allowDelete = wsOrder.length > 1;
+      return `<div class="side-item-row" data-ws="${id}">
+        <button class="side-item ${id === activeWorkspaceId ? "is-active" : ""}" data-ws="${id}" title="Switch to ${safeName}">
+          <span class="dot" style="background:${dot}"></span>${safeName}<span class="rt">${rtLbl}</span>
+        </button>
+        ${allowDelete ? `<button class="side-item-delete" data-del-ws="${id}" title="Delete ${safeName}" aria-label="Delete workspace ${safeName}">×</button>` : ""}
+      </div>`;
     }).join("");
     $("#side-ws").parentElement.querySelector(".side-h-meta").textContent = wsOrder.length;
     $$(".side-item[data-ws]", c).forEach(b => b.addEventListener("click", () => switchWorkspace(b.dataset.ws)));
+    $$(".side-item-delete[data-del-ws]", c).forEach(b => {
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        deleteWorkspace(b.dataset.delWs);
+      });
+    });
+  }
+
+  // Small HTML escape helper — sidebar names may contain user-supplied
+  // text (imported IR.meta.name) so we never want to inject raw markup.
+  function escapeHtml(s) {
+    return String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* ============================================================
+     WORKSPACE DELETE — hover-X in sidebar, confirm via toast undo
+     ============================================================ */
+  // Keep a short-lived stash of the last deleted workspace so the user
+  // can undo within a 10-second toast window.  Cleared on next delete.
+  let _lastDeletedWs = null;
+
+  function deleteWorkspace(wsId) {
+    const ws = workspaces[wsId];
+    if (!ws) return;
+    if (wsOrder.length <= 1) {
+      toast({ kind: "warn", msg: "Cannot delete the last workspace — keep at least one" });
+      return;
+    }
+    const idx = wsOrder.indexOf(wsId);
+    if (idx === -1) return;
+
+    // Stash for undo + remove from in-memory state
+    _lastDeletedWs = { id: wsId, ws: workspaces[wsId], orderIndex: idx, wasActive: wsId === activeWorkspaceId };
+    delete workspaces[wsId];
+    wsOrder.splice(idx, 1);
+
+    // If we just deleted the active workspace, fall back to the previous
+    // one in order (or the next if we deleted index 0).
+    if (_lastDeletedWs.wasActive) {
+      const fallbackIdx = Math.min(idx, wsOrder.length - 1);
+      activeWorkspaceId = wsOrder[fallbackIdx];
+      switchWorkspace(activeWorkspaceId);
+    } else {
+      renderSidebarWorkspaces();
+      renderWorkspacePill();
+      renderWorkspaceMenu();
+    }
+    logActivity(`workspace deleted: ${ws.name}`);
+
+    toast({
+      kind: "warn",
+      msg: `Deleted <b>${escapeHtml(ws.name)}</b>`,
+      action: "Undo",
+      onAction: () => undoDeleteWorkspace(),
+      ttl: 10000,
+    });
+  }
+
+  function undoDeleteWorkspace() {
+    if (!_lastDeletedWs) return;
+    const { id, ws, orderIndex, wasActive } = _lastDeletedWs;
+    workspaces[id] = ws;
+    // Re-insert at its original position so order stays stable
+    const insertAt = Math.min(orderIndex, wsOrder.length);
+    wsOrder.splice(insertAt, 0, id);
+    if (wasActive) {
+      activeWorkspaceId = id;
+      switchWorkspace(id);
+    } else {
+      renderSidebarWorkspaces();
+      renderWorkspacePill();
+      renderWorkspaceMenu();
+    }
+    logActivity(`workspace restored: ${ws.name}`);
+    toast({ kind: "ok", msg: `Restored <b>${escapeHtml(ws.name)}</b>`, ttl: 3000 });
+    _lastDeletedWs = null;
   }
 
   function switchWorkspace(id) {
