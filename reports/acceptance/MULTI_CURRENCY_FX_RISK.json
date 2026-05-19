@@ -1,0 +1,561 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "MULTI_CURRENCY_FX_RISK",
+  "generated_utc": "2026-05-19T11:19:28.999Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644338,
+  "tolerances": {
+    "std_rel": 0.1,
+    "var_factor": 1.5
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_operator_GBP_EUR_USD",
+      "description": "UK operator: £1M/€600K/$400K daily volumes, moderate correlations",
+      "regime": "UK_BASELINE",
+      "cfg": {
+        "currencies": [
+          "GBP",
+          "EUR",
+          "USD"
+        ],
+        "dailyVolumes": [
+          1000000,
+          600000,
+          400000
+        ],
+        "dailyVolatilities": [
+          0.005,
+          0.006,
+          0.007
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.6,
+            0.5
+          ],
+          [
+            0.6,
+            1,
+            0.7
+          ],
+          [
+            0.5,
+            0.7,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          0.3,
+          0.5,
+          0.4
+        ],
+        "basisRisk": 0.1,
+        "hedgingCostPerAnnum": 0.001,
+        "operatorOwnFunds": 10000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 2000000,
+        "portfolioVariance": 95512000,
+        "portfolioStd": 9773.024096972236,
+        "hedgedPortfolioVariance": 40634788,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 71895.817754105,
+        "varAlphaTHorizonHedged": 46894.68871310624,
+        "expectedShortfallAlphaTHorizon": 53725.580981215906,
+        "totalAnnualHedgingCost": 760,
+        "concentrationIndex": 0.38,
+        "ifrs7SensitivityShock10pct": [
+          100000,
+          60000,
+          40000
+        ],
+        "optimalHedgeRatios": [
+          0.9728133724540209,
+          0.9773444770450174,
+          0.9805809803243006
+        ],
+        "isCompliantUkgcRts16": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 6403.785077146262,
+        "observedVarAlphaTHorizon": 52111.289652184736
+      },
+      "checks": {
+        "std_rel": 0.004566502022587676,
+        "var_ratio": 1.1112407627011405
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "B_eu_5_currencies_diversified",
+      "description": "EU diversified: 5 currencies, moderate hedging, EU EBA reporting",
+      "regime": "EU_DIVERSIFIED",
+      "cfg": {
+        "currencies": [
+          "EUR",
+          "GBP",
+          "USD",
+          "CHF",
+          "SEK"
+        ],
+        "dailyVolumes": [
+          800000,
+          500000,
+          400000,
+          200000,
+          100000
+        ],
+        "dailyVolatilities": [
+          0.005,
+          0.005,
+          0.006,
+          0.004,
+          0.006
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.7,
+            0.6,
+            0.5,
+            0.4
+          ],
+          [
+            0.7,
+            1,
+            0.6,
+            0.4,
+            0.3
+          ],
+          [
+            0.6,
+            0.6,
+            1,
+            0.4,
+            0.3
+          ],
+          [
+            0.5,
+            0.4,
+            0.4,
+            1,
+            0.5
+          ],
+          [
+            0.4,
+            0.3,
+            0.3,
+            0.5,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          0.5,
+          0.5,
+          0.5,
+          0.4,
+          0.3
+        ],
+        "basisRisk": 0.1,
+        "hedgingCostPerAnnum": 0.0012,
+        "operatorOwnFunds": 50000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 2000000,
+        "portfolioVariance": 72230000,
+        "portfolioStd": 8498.823447983845,
+        "hedgedPortfolioVariance": 22758467.000000004,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 62522.08688709392,
+        "varAlphaTHorizonHedged": 35095.073849957495,
+        "expectedShortfallAlphaTHorizon": 40207.18089638751,
+        "totalAnnualHedgingCost": 1152,
+        "concentrationIndex": 0.2750000000000001,
+        "ifrs7SensitivityShock10pct": [
+          80000,
+          50000,
+          40000,
+          20000,
+          10000
+        ],
+        "optimalHedgeRatios": [
+          0.967376046944825,
+          0.967376046944825,
+          0.9728133724540209,
+          0.9592200586810313,
+          0.9728133724540209
+        ],
+        "isCompliantUkgcRts16": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 4704.773061901259,
+        "observedVarAlphaTHorizon": 38877.59838775544
+      },
+      "checks": {
+        "std_rel": 0.013795051545654266,
+        "var_ratio": 1.1077793582646223
+      },
+      "pass": true,
+      "elapsed_ms": 11
+    },
+    {
+      "name": "C_au_AUD_NZD_exotic_basket",
+      "description": "AU operator: AUD-anchored sa NZD + Asian exotics (THB, IDR)",
+      "regime": "AU_EXOTIC",
+      "cfg": {
+        "currencies": [
+          "AUD",
+          "NZD",
+          "THB",
+          "IDR"
+        ],
+        "dailyVolumes": [
+          600000,
+          200000,
+          100000,
+          80000
+        ],
+        "dailyVolatilities": [
+          0.007,
+          0.008,
+          0.012,
+          0.015
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.8,
+            0.3,
+            0.2
+          ],
+          [
+            0.8,
+            1,
+            0.3,
+            0.2
+          ],
+          [
+            0.3,
+            0.3,
+            1,
+            0.4
+          ],
+          [
+            0.2,
+            0.2,
+            0.4,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          0.4,
+          0.4,
+          0.2,
+          0.2
+        ],
+        "basisRisk": 0.15,
+        "hedgingCostPerAnnum": 0.0015,
+        "operatorOwnFunds": 8000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 980000,
+        "portfolioVariance": 41944000,
+        "portfolioStd": 6476.418763483412,
+        "hedgedPortfolioVariance": 20073023.999999993,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 47644.14970213003,
+        "varAlphaTHorizonHedged": 32959.53380016853,
+        "expectedShortfallAlphaTHorizon": 37760.56843275683,
+        "totalAnnualHedgingCost": 534,
+        "concentrationIndex": 0.4335693461057893,
+        "ifrs7SensitivityShock10pct": [
+          60000,
+          20000,
+          10000,
+          8000
+        ],
+        "optimalHedgeRatios": [
+          0.970871470486451,
+          0.9745125366756445,
+          0.983008357783763,
+          0.9864066862270104
+        ],
+        "isCompliantUkgcRts16": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 4506.35534914588,
+        "observedVarAlphaTHorizon": 38029.317173725736
+      },
+      "checks": {
+        "std_rel": 0.005783498982022777,
+        "var_ratio": 1.153818418800914
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "D_global_high_concentration_single_USD",
+      "description": "Corner: USD-dominant (HHI > 0.7) — concentration compliance fail",
+      "regime": "CORNER_CONCENTRATION",
+      "cfg": {
+        "currencies": [
+          "USD",
+          "GBP",
+          "EUR"
+        ],
+        "dailyVolumes": [
+          9000000,
+          500000,
+          500000
+        ],
+        "dailyVolatilities": [
+          0.006,
+          0.005,
+          0.006
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.5,
+            0.6
+          ],
+          [
+            0.5,
+            1,
+            0.7
+          ],
+          [
+            0.6,
+            0.7,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "basisRisk": 0.1,
+        "hedgingCostPerAnnum": 0.001,
+        "operatorOwnFunds": 50000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 10000000,
+        "portfolioVariance": 3271150000,
+        "portfolioStd": 57193.96821344013,
+        "hedgedPortfolioVariance": 989522875.0000002,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 420750.7394340202,
+        "varAlphaTHorizonHedged": 231412.90668871114,
+        "expectedShortfallAlphaTHorizon": 265121.55639766867,
+        "totalAnnualHedgingCost": 5000,
+        "concentrationIndex": 0.815,
+        "ifrs7SensitivityShock10pct": [
+          900000,
+          50000,
+          50000
+        ],
+        "optimalHedgeRatios": [
+          0.9773444770450174,
+          0.9728133724540209,
+          0.9773444770450174
+        ],
+        "isCompliantUkgcRts16": false
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 31551.83136610958,
+        "observedVarAlphaTHorizon": 257722.84855429665
+      },
+      "checks": {
+        "std_rel": 0.0030156363227684434,
+        "var_ratio": 1.1136926295168867
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "E_crypto_exposure_high_vol",
+      "description": "Crypto operator: 30% BTC/ETH exposure sa 2-4% daily σ",
+      "regime": "CRYPTO_HEAVY",
+      "cfg": {
+        "currencies": [
+          "USD",
+          "BTC",
+          "ETH"
+        ],
+        "dailyVolumes": [
+          500000,
+          300000,
+          200000
+        ],
+        "dailyVolatilities": [
+          0.006,
+          0.04,
+          0.05
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.1,
+            0.1
+          ],
+          [
+            0.1,
+            1,
+            0.85
+          ],
+          [
+            0.1,
+            0.85,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          0.5,
+          0.3,
+          0.3
+        ],
+        "basisRisk": 0.2,
+        "hedgingCostPerAnnum": 0.003,
+        "operatorOwnFunds": 20000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 1000000,
+        "portfolioVariance": 470200000,
+        "portfolioStd": 21684.095554115233,
+        "hedgedPortfolioVariance": 268024000,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 159520.304733952,
+        "varAlphaTHorizonHedged": 120437.43576736689,
+        "expectedShortfallAlphaTHorizon": 137980.89690019094,
+        "totalAnnualHedgingCost": 1200,
+        "concentrationIndex": 0.38,
+        "ifrs7SensitivityShock10pct": [
+          50000,
+          30000,
+          20000
+        ],
+        "optimalHedgeRatios": [
+          0.9320334311350521,
+          0.9898050146702578,
+          0.9918440117362063
+        ],
+        "isCompliantUkgcRts16": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 16346.681584412081,
+        "observedVarAlphaTHorizon": 134377.1506038614
+      },
+      "checks": {
+        "std_rel": 0.0015122042893379458,
+        "var_ratio": 1.1157423748494615
+      },
+      "pass": true,
+      "elapsed_ms": 5
+    },
+    {
+      "name": "F_corner_full_hedging_zero_risk",
+      "description": "Corner: full hedging (h=1) sa basisRisk=0.02 — near-zero VaR",
+      "regime": "CORNER_FULL_HEDGE",
+      "cfg": {
+        "currencies": [
+          "GBP",
+          "EUR",
+          "USD"
+        ],
+        "dailyVolumes": [
+          1000000,
+          600000,
+          400000
+        ],
+        "dailyVolatilities": [
+          0.005,
+          0.006,
+          0.007
+        ],
+        "correlationMatrix": [
+          [
+            1,
+            0.6,
+            0.5
+          ],
+          [
+            0.6,
+            1,
+            0.7
+          ],
+          [
+            0.5,
+            0.7,
+            1
+          ]
+        ],
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "hedgeRatios": [
+          1,
+          1,
+          1
+        ],
+        "basisRisk": 0.02,
+        "hedgingCostPerAnnum": 0.003,
+        "operatorOwnFunds": 10000000
+      },
+      "closed_form": {
+        "totalPortfolioValue": 2000000,
+        "portfolioVariance": 95512000,
+        "portfolioStd": 9773.024096972236,
+        "hedgedPortfolioVariance": 38204.8,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizonUnhedged": 71895.817754105,
+        "varAlphaTHorizonHedged": 1437.9163550821002,
+        "expectedShortfallAlphaTHorizon": 1647.3697490945785,
+        "totalAnnualHedgingCost": 6000,
+        "concentrationIndex": 0.38,
+        "ifrs7SensitivityShock10pct": [
+          100000,
+          60000,
+          40000
+        ],
+        "optimalHedgeRatios": [
+          0.9184401173620625,
+          0.9320334311350521,
+          0.9417429409729018
+        ],
+        "isCompliantUkgcRts16": true
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedPortfolioStd": 196.27157878669445,
+        "observedVarAlphaTHorizon": 1567.1467543781841
+      },
+      "checks": {
+        "std_rel": 0.004132523171534635,
+        "var_ratio": 1.0898733774321006
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    }
+  ]
+}
