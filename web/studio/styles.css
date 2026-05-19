@@ -129,6 +129,20 @@ button:focus-visible, input:focus-visible, select:focus-visible,
   height: 100vh;
 }
 
+/* Pin each row child to its grid slot so `[hidden]` siblings (e.g.
+   .row-automc, which collapses to display:none when no MC run is
+   active) don't shift everything below them up by one row. Without
+   explicit grid-row values, auto-flow placed .row-main into the 38px
+   tabs slot and .row-status into the 1fr main slot — the panels
+   appeared with ~38px of height after a GDD import or any time the
+   automc strip wasn't materialised. */
+.row-header  { grid-row: 1; }
+.row-vartabs { grid-row: 2; }
+.row-automc  { grid-row: 3; }
+.row-tabs    { grid-row: 4; }
+.row-main    { grid-row: 5; }
+.row-status  { grid-row: 6; }
+
 /* ---------- ROW 1 · HEADER ---------- */
 .row-header {
   display: grid;
@@ -1559,9 +1573,36 @@ input[type="range"]::-moz-range-thumb {
   border-radius: var(--r-sm);
 }
 .bp-tab.is-active { color: var(--cyan); background: var(--cyan-glow); }
-.bp-close { width: 24px; height: 24px; color: var(--text-1); font-size: 14px; border-radius: var(--r-sm); }
-.bp-close:hover { color: var(--text-0); background: var(--bg-2); }
+/* Close X — explicit cursor + z-index so it never gets covered. */
+.bp-close {
+  width: 28px; height: 28px;
+  color: var(--text-1);
+  font-size: 16px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.bp-close:hover {
+  color: #fff;
+  background: rgba(244, 63, 94, 0.20);
+  border-color: rgba(244, 63, 94, 0.55);
+}
+.bp-close:focus-visible {
+  outline: 1px solid var(--cyan);
+  outline-offset: 1px;
+}
 .bp-body { flex: 1; overflow-y: auto; padding: 8px 14px; }
+/* Each pane is shown/hidden via the `hidden` attribute (and a redundant
+   .is-active class for styling).  Only one is visible at a time. */
+.bp-pane { display: none; }
+.bp-pane.is-active { display: block; }
+.bp-pane[hidden] { display: none !important; }
 .bp-activity { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
 .bp-activity li {
   display: grid; grid-template-columns: 60px 1fr;
@@ -1573,11 +1614,69 @@ input[type="range"]::-moz-range-thumb {
 .bp-activity .t { font-family: var(--font-mono); color: var(--text-3); }
 .bp-activity .m { color: var(--text-1); }
 
+/* MC progress pane */
+.bp-mc-empty, .bp-ci-empty {
+  font-size: 11.5px;
+  color: var(--text-2);
+  padding: 12px 4px;
+}
+.bp-mc-empty kbd, .bp-ci-empty kbd {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0 5px;
+  color: var(--text-0);
+}
+.bp-mc-row {
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: 12px;
+  padding: 3px 0;
+  font-size: 11.5px;
+}
+.bp-mc-lbl { color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+.bp-mc-row b { color: var(--text-0); }
+.bp-mc-bar {
+  margin-top: 8px;
+  height: 6px;
+  background: var(--bg-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bp-mc-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan) 0%, #67e8f9 100%);
+  border-radius: 3px;
+  transition: width 200ms ease-out;
+}
+
+/* CI gates pane */
+.bp-ci-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.bp-ci-item {
+  display: grid; grid-template-columns: 10px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 11.5px;
+  border-bottom: 1px dashed var(--line-soft);
+}
+.bp-ci-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+.bp-ci-item.is-pass .bp-ci-dot { background: var(--ok); }
+.bp-ci-item.is-fail .bp-ci-dot { background: #f43f5e; }
+.bp-ci-name { color: var(--text-0); }
+.bp-ci-detail { color: var(--text-2); font-size: 10.5px; }
+
 /* MODAL HIDDEN STATE — must come before display:grid rules below */
 .cmdp[hidden], .wiz[hidden], .picker[hidden], .help[hidden] { display: none !important; }
 
 /* COMMAND PALETTE */
 .cmdp { position: fixed; inset: 0; z-index: 100; display: grid; place-items: start center; padding-top: 14vh; }
+.cmdp[hidden] { display: none !important; }
 .cmdp-backdrop { position: absolute; inset: 0; background: rgba(5,8,12,0.7); backdrop-filter: blur(2px); }
 .cmdp-box {
   position: relative;
@@ -1637,6 +1736,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* WIZARD */
 .wiz { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; }
+.wiz[hidden] { display: none !important; }
 .wiz-backdrop { position: absolute; inset: 0; background: rgba(5,8,12,0.7); backdrop-filter: blur(2px); }
 .wiz-box {
   position: relative;

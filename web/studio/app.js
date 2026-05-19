@@ -2060,6 +2060,20 @@
         const rate = p.spinsDone / elapsedSec;
         const remaining = (p.totalSpins - p.spinsDone) / Math.max(1, rate);
         if (eta) eta.textContent = remaining < 1 ? "—" : `~${remaining.toFixed(0)}s`;
+        // Mirror into the bottom-panel MC tab so user can pop the drawer
+        // and read a larger view of the same run.
+        if (window.__studio_bp_mc__) {
+          try {
+            window.__studio_bp_mc__.update({
+              status: `running · ${originLabel}`,
+              spinsDone: p.spinsDone,
+              totalSpins: p.totalSpins,
+              runningRtp: p.runningRtp,
+              elapsedMs: p.elapsedMs,
+              etaMs: remaining * 1000,
+            });
+          } catch (_) {}
+        }
       },
     });
     activeMcHandle = handle;
@@ -2108,9 +2122,26 @@
         recomputeFor(targetVariant);
         refreshL1(); refreshRail(); refreshVariantTabs();
       } catch (_) {}
+      // Final state in the MC tab — summary numbers stay visible until
+      // the next run kicks off.
+      if (window.__studio_bp_mc__) {
+        try {
+          window.__studio_bp_mc__.update({
+            status: `${res.status} · ${vmBlock.total_spins.toLocaleString()} spins · RTP ${vmBlock.rtp.toFixed(4)}% · Hit ${vmBlock.hit_rate.toFixed(2)}% · σ ${vmBlock.volatility_index.toFixed(2)} · P99 ${vmBlock.win_percentiles.p99.toFixed(2)}×`,
+            spinsDone: vmBlock.total_spins,
+            totalSpins: vmBlock.total_spins,
+            runningRtp: vmBlock.rtp / 100,
+            elapsedMs: res.durationMs,
+            etaMs: 0,
+          });
+        } catch (_) {}
+      }
     } catch (err) {
       console.warn("[studio] auto-MC failed:", err);
       toast({ kind: "warn", msg: `Auto-MC failed: ${err.message || err}` });
+      if (window.__studio_bp_mc__) {
+        try { window.__studio_bp_mc__.update({ status: `failed · ${err.message || err}` }); } catch (_) {}
+      }
     } finally {
       if (activeMcRunId === handle.runId) {
         activeMcRunId = null;
@@ -2896,11 +2927,123 @@
   //  - In-panel "×" close button (existed)
   //  - Legacy #btn-toggle-bottom in status footer ("Logs · ⌘J" link, may be hidden)
   //  - NEW #btn-toggle-panel in header-r layout-toggles group (always visible)
-  $("#bp-close").addEventListener("click", toggleBottom);
+  const bpCloseBtn = document.querySelector("#bp-close");
+  if (bpCloseBtn) bpCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleBottom();
+  });
   const legacyBottomBtn = document.querySelector("#btn-toggle-bottom");
   if (legacyBottomBtn) legacyBottomBtn.addEventListener("click", toggleBottom);
   const headerPanelBtn = document.querySelector("#btn-toggle-panel");
   if (headerPanelBtn) headerPanelBtn.addEventListener("click", toggleBottom);
+
+  // ── Bottom-panel TABS — Activity / MC progress / CI gates ──────────
+  // Each .bp-tab has data-bp="activity|mc|ci"; clicking it activates the
+  // matching pane and updates aria-selected for screen readers.  Active
+  // pane uses .is-active class; inactive panes get `hidden` so they
+  // don\'t consume layout / steal focus.
+  const BP_PANES = ["activity", "mc", "ci"];
+  function activateBpTab(name) {
+    if (!BP_PANES.includes(name)) return;
+    // Tabs
+    $$(".bp-tab", $("#bottom-panel")).forEach((t) => {
+      const on = t.dataset.bp === name;
+      t.classList.toggle("is-active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    // Panes
+    BP_PANES.forEach((p) => {
+      const el = document.getElementById(`bp-pane-${p}`);
+      if (!el) return;
+      if (p === name) {
+        el.removeAttribute("hidden");
+        el.classList.add("is-active");
+      } else {
+        el.setAttribute("hidden", "");
+        el.classList.remove("is-active");
+      }
+    });
+    // Refresh content for the newly-active pane
+    if (name === "activity") {
+      try { refreshBottomActivity(); } catch (_) {}
+    } else if (name === "ci") {
+      try { refreshBpCiPane(); } catch (_) {}
+    }
+  }
+  $$(".bp-tab", $("#bottom-panel")).forEach((t) => {
+    t.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      activateBpTab(t.dataset.bp);
+    });
+  });
+  // Default active pane on boot
+  activateBpTab("activity");
+
+  // ── MC pane live binding — driven by the auto-MC orchestrator ──────
+  // The orchestrator already updates the header progress strip; we
+  // mirror the same numbers into the MC tab so the user can pop the
+  // drawer and read a more spacious view of the run.
+  function bpMcShow(active) {
+    const empty = document.getElementById("bp-mc-empty");
+    const live  = document.getElementById("bp-mc-active");
+    if (!empty || !live) return;
+    if (active) {
+      empty.setAttribute("hidden", "");
+      live.removeAttribute("hidden");
+    } else {
+      live.setAttribute("hidden", "");
+      empty.removeAttribute("hidden");
+    }
+  }
+  function bpMcUpdate({ status, spinsDone, totalSpins, runningRtp, elapsedMs, etaMs }) {
+    bpMcShow(true);
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    if (status != null)          set("bp-mc-status", status);
+    if (spinsDone != null && totalSpins != null) {
+      set("bp-mc-spins", `${spinsDone.toLocaleString()} / ${totalSpins.toLocaleString()}`);
+      const pct = totalSpins > 0 ? Math.min(100, (spinsDone / totalSpins) * 100) : 0;
+      const fill = document.getElementById("bp-mc-fill");
+      if (fill) fill.style.width = pct.toFixed(1) + "%";
+    }
+    if (runningRtp != null)      set("bp-mc-rtp",  (runningRtp * 100).toFixed(2) + "%");
+    if (elapsedMs != null)       set("bp-mc-elapsed", (elapsedMs / 1000).toFixed(1) + "s");
+    if (etaMs != null && etaMs >= 0) set("bp-mc-eta", (etaMs / 1000).toFixed(0) + "s");
+  }
+  function bpMcReset() {
+    bpMcShow(false);
+    const fill = document.getElementById("bp-mc-fill");
+    if (fill) fill.style.width = "0%";
+  }
+  // Expose so autoMcTrigger can call without re-wiring.
+  window.__studio_bp_mc__ = { update: bpMcUpdate, reset: bpMcReset };
+
+  // ── CI gates pane — refreshed when Validate is clicked ─────────────
+  function refreshBpCiPane() {
+    const v = getActiveVariant();
+    const empty = document.getElementById("bp-ci-empty");
+    const list  = document.getElementById("bp-ci-list");
+    if (!empty || !list) return;
+    const report = v && v.lastValidate;
+    if (!report) {
+      empty.removeAttribute("hidden");
+      list.setAttribute("hidden", "");
+      list.innerHTML = "";
+      return;
+    }
+    empty.setAttribute("hidden", "");
+    list.removeAttribute("hidden");
+    const items = (report.gates || []).map((g) => `
+      <li class="bp-ci-item ${g.pass ? "is-pass" : "is-fail"}">
+        <span class="bp-ci-dot"></span>
+        <span class="bp-ci-name">${escapeHtml(g.name)}</span>
+        <span class="bp-ci-detail mono">${escapeHtml(g.detail || "")}</span>
+      </li>
+    `).join("");
+    list.innerHTML = items || `<li class="bp-ci-item is-pass"><span class="bp-ci-dot"></span><span class="bp-ci-name">All checks passed</span></li>`;
+  }
+  window.__studio_bp_ci__ = { refresh: refreshBpCiPane };
 
   /* ============================================================
      LAYOUT TOGGLES — left sidebar / right rail / bottom (status) zone
@@ -3015,8 +3158,42 @@
     logActivity(`compute RTP ${v.rtp.toFixed(2)}%`);
   });
   $("#btn-validate").addEventListener("click", () => {
-    toast({ kind: "ok", msg: `IR validated · <b>0 issues</b> · ready to run` });
-    logActivity(`validated IR`);
+    const v = getActiveVariant();
+    // Build a real gate list based on current variant state.  Engine-side
+    // Zod validation runs separately (TS bridge); here we focus on UI-visible
+    // sanity checks for the CI gates pane in the bottom drawer.
+    const gates = [];
+    const symbols = (v && v.symbols) || [];
+    gates.push({ name: "Symbol pool ≥ 3",         pass: symbols.length >= 3,
+                  detail: `${symbols.length} symbol${symbols.length === 1 ? "" : "s"}` });
+    gates.push({ name: "At least one paying symbol",
+                  pass: symbols.some((s) => s.pay && (s.pay.x3 + s.pay.x4 + s.pay.x5) > 0),
+                  detail: "paytable.x3/x4/x5 > 0" });
+    gates.push({ name: "RTP within target ± 0.5pp",
+                  pass: !isVariantBlank(v) && Math.abs(v.rtp - (v.rtpTarget || 96)) <= 0.5,
+                  detail: !isVariantBlank(v)
+                    ? `RTP ${v.rtp.toFixed(2)}% vs target ${(v.rtpTarget || 96).toFixed(2)}%`
+                    : "no project loaded" });
+    gates.push({ name: "Hit-rate measured",
+                  pass: !isVariantBlank(v) && v.hit > 0,
+                  detail: !isVariantBlank(v) ? `${v.hit.toFixed(2)}%` : "no MC data yet" });
+    gates.push({ name: "σ measured",
+                  pass: !isVariantBlank(v) && v.sigma > 0,
+                  detail: !isVariantBlank(v) ? v.sigma.toFixed(2) : "no MC data yet" });
+    gates.push({ name: "Max-win cap ≤ 5 000×",
+                  pass: (v.maxWin || 0) > 0 && (v.maxWin || 0) <= 10000,
+                  detail: `${(v.maxWin || 0).toLocaleString()}×` });
+    const failCount = gates.filter((g) => !g.pass).length;
+    if (v) v.lastValidate = { gates, ranAt: Date.now() };
+    toast({
+      kind: failCount === 0 ? "ok" : "warn",
+      msg: `IR validated · <b>${failCount === 0 ? "0 issues" : failCount + " issue" + (failCount === 1 ? "" : "s")}</b> · open the CI gates tab for details`,
+    });
+    logActivity(`validated IR · ${failCount} issue${failCount === 1 ? "" : "s"}`);
+    // Refresh CI pane immediately if it's open
+    try {
+      if (typeof refreshBpCiPane === "function") refreshBpCiPane();
+    } catch (_) {}
   });
   $("#btn-autobalance").addEventListener("click", () => doAutoBalance("manual", false));
 

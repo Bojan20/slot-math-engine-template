@@ -11,8 +11,8 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="application-name" content="Slot Math Studio" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
   <title>Slot Math Studio · v5-final — Production Studio</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -1344,18 +1344,38 @@
     </div>
   </footer>
 
-  <!-- Collapsible bottom panel · toggled on demand -->
+  <!-- Collapsible bottom panel · toggled on demand
+       Three internal panes (Activity / MC progress / CI gates) — only the
+       pane matching the active tab is visible.  X in the top-right
+       closes the whole drawer (sync with header layout-toggle button). -->
   <div class="bottom-panel" id="bottom-panel" hidden>
     <div class="bp-h">
-      <div class="bp-tabs">
-        <button class="bp-tab is-active" data-bp="activity">Activity</button>
-        <button class="bp-tab" data-bp="mc">MC progress</button>
-        <button class="bp-tab" data-bp="ci">CI gates</button>
+      <div class="bp-tabs" role="tablist" aria-label="Bottom panel sections">
+        <button class="bp-tab is-active" data-bp="activity" role="tab" aria-selected="true"  aria-controls="bp-pane-activity">Activity</button>
+        <button class="bp-tab"           data-bp="mc"       role="tab" aria-selected="false" aria-controls="bp-pane-mc">MC progress</button>
+        <button class="bp-tab"           data-bp="ci"       role="tab" aria-selected="false" aria-controls="bp-pane-ci">CI gates</button>
       </div>
-      <button class="bp-close" id="bp-close" title="Close (⌘J)">×</button>
+      <button class="bp-close" id="bp-close" title="Close drawer (⌘J)" aria-label="Close drawer">×</button>
     </div>
     <div class="bp-body" id="bp-body">
-      <ul class="bp-activity" id="bp-activity"></ul>
+      <div class="bp-pane is-active" id="bp-pane-activity" role="tabpanel" aria-labelledby="bp-tab-activity">
+        <ul class="bp-activity" id="bp-activity"></ul>
+      </div>
+      <div class="bp-pane" id="bp-pane-mc" role="tabpanel" aria-labelledby="bp-tab-mc" hidden>
+        <div class="bp-mc-empty" id="bp-mc-empty">No Monte Carlo run yet. Import an IR or click <kbd>Run MC</kbd> in the Sensitivity tab.</div>
+        <div class="bp-mc-active" id="bp-mc-active" hidden>
+          <div class="bp-mc-row"><span class="bp-mc-lbl">Status</span><b class="mono" id="bp-mc-status">idle</b></div>
+          <div class="bp-mc-row"><span class="bp-mc-lbl">Spins</span><b class="mono" id="bp-mc-spins">— / —</b></div>
+          <div class="bp-mc-row"><span class="bp-mc-lbl">Running RTP</span><b class="mono" id="bp-mc-rtp">—%</b></div>
+          <div class="bp-mc-row"><span class="bp-mc-lbl">Elapsed</span><b class="mono" id="bp-mc-elapsed">—s</b></div>
+          <div class="bp-mc-row"><span class="bp-mc-lbl">ETA</span><b class="mono" id="bp-mc-eta">—s</b></div>
+          <div class="bp-mc-bar"><div class="bp-mc-fill" id="bp-mc-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="bp-pane" id="bp-pane-ci" role="tabpanel" aria-labelledby="bp-tab-ci" hidden>
+        <div class="bp-ci-empty" id="bp-ci-empty">No validation yet. Click <kbd>Validate</kbd> in the Build tab toolbar.</div>
+        <ul class="bp-ci-list" id="bp-ci-list" hidden></ul>
+      </div>
     </div>
   </div>
 
