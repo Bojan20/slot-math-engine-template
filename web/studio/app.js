@@ -3539,7 +3539,11 @@
   // enabled.
   async function buildPlayTemplateBlob(ir) {
     const base = new URL("./runner/", window.location.href).toString();
-    const [templateHtml, runtimeJs, stylesCss, oracleJs, dnaJs, diffJs, dashboardJs] = await Promise.all([
+    const [
+      templateHtml, runtimeJs, stylesCss,
+      oracleJs, dnaJs, diffJs, dashboardJs,
+      replayJs, watchtowerJs, watchtowerWorkerJs,
+    ] = await Promise.all([
       fetch(base + "template.html").then((r) => r.text()),
       fetch(base + "runtime.js").then((r) => r.text()),
       fetch(base + "styles.css").then((r) => r.text()),
@@ -3547,6 +3551,9 @@
       fetch(base + "dna.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "deep-diff.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "mtl-dashboard.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "replay-log.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "watchtower.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "watchtower-worker.js").then((r) => r.text()).catch(() => ""),
     ]);
     // Embed IR as a JSON script tag the runtime reads, plus inline CSS + JS.
     // We use REPLACER FUNCTIONS (not strings) so `$` characters in the
@@ -3555,6 +3562,12 @@
     // patterns — which would corrupt the bundled output.
     const irJson = JSON.stringify(ir).replace(/<\/script>/gi, "<\\/script>");
     const safeRuntime = `window.__IR__ = ${irJson};\n${runtimeJs}`;
+    // Stash watchtower sources on `window` so the runtime can bootstrap a
+    // Web Worker via Blob URL without an extra HTTP fetch.  We embed the
+    // sources as JSON-escaped strings to safely round-trip arbitrary JS.
+    const wtSourceStub = watchtowerJs && watchtowerWorkerJs
+      ? `window.__MTL_WT_SRC__ = ${JSON.stringify(watchtowerJs)};\nwindow.__MTL_WT_WORKER_SRC__ = ${JSON.stringify(watchtowerWorkerJs)};`
+      : "";
     const finalHtml = templateHtml
       .replace("/* RUNNER-CSS */", () => stylesCss)
       .replace(/(<script id="inline-ir"[^>]*>)\{\}(<\/script>)/, (m, open, close) => open + irJson + close)
@@ -3562,6 +3575,8 @@
       .replace("/* MTL-DNA-JS */",       () => dnaJs)
       .replace("/* MTL-DIFF-JS */",      () => diffJs)
       .replace("/* MTL-DASHBOARD-JS */", () => dashboardJs)
+      .replace("/* MTL-REPLAY-JS */",    () => replayJs)
+      .replace("/* MTL-WT-SOURCE-JS */", () => wtSourceStub)
       .replace("/* RUNNER-JS */",        () => safeRuntime);
     const blob = new Blob([finalHtml], { type: "text/html" });
     return URL.createObjectURL(blob);

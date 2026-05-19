@@ -102,6 +102,9 @@
     lastSpin: null,        // { seed, oracleHash, runnerHash, match }
     haltInfo: null,        // { seed, diff, oracleResult, runnerResult }
     collapsed: false,
+    // Watchtower state (populated by runtime via setWatchtowerReport)
+    wt: null,              // { status, breaches, metrics, spinsObserved }
+    replayHandler: null,   // callback wired by runtime
   };
 
   function shortHash(h) {
@@ -143,9 +146,18 @@
       '  <div class="mtl-row"><span class="lbl">Match rate</span><span class="val mono ok" data-f="matchRate">—</span></div>',
       '  <div class="mtl-row"><span class="lbl">Last seed</span><span class="val mono hashfrag" data-f="lastSeed">—</span></div>',
       '  <div class="mtl-row"><span class="lbl">Last hash</span><span class="val mono hashfrag" data-f="lastHash">—</span></div>',
+      '  <div class="mtl-divider"></div>',
+      '  <div class="mtl-row"><span class="lbl">Watchtower</span><span class="val mono" data-f="wtStatus">—</span></div>',
+      '  <div class="mtl-row"><span class="lbl">Rolling RTP</span><span class="val mono" data-f="wtRtp">—</span></div>',
+      '  <div class="mtl-row"><span class="lbl">Hit rate</span><span class="val mono" data-f="wtHit">—</span></div>',
+      '  <div class="mtl-row"><span class="lbl">FS hit</span><span class="val mono" data-f="wtFs">—</span></div>',
+      '  <div class="mtl-row"><span class="lbl">H&amp;W hit</span><span class="val mono" data-f="wtHnw">—</span></div>',
+      '  <div class="mtl-row"><span class="lbl">Lightning</span><span class="val mono" data-f="wtLight">—</span></div>',
+      '  <div data-f="breachBlock" hidden></div>',
       '  <div data-f="haltBlock" hidden></div>',
       '  <div class="mtl-actions">',
       '    <button class="mtl-btn" data-act="copy" type="button">Copy seal</button>',
+      '    <button class="mtl-btn" data-act="replay" type="button">Replay last 10</button>',
       '    <button class="mtl-btn" data-act="report" type="button" disabled>Copy report</button>',
       '  </div>',
       '</div>',
@@ -164,8 +176,10 @@
       if (act === 'copy' && state.seal) {
         try { navigator.clipboard.writeText(state.seal.value); } catch (_) {}
       } else if (act === 'report' && state.haltInfo) {
-        const txt = JSON.stringify({ seal: state.seal, halt: state.haltInfo, lastSpin: state.lastSpin }, null, 2);
+        const txt = JSON.stringify({ seal: state.seal, halt: state.haltInfo, lastSpin: state.lastSpin, watchtower: state.wt }, null, 2);
         try { navigator.clipboard.writeText(txt); } catch (_) {}
+      } else if (act === 'replay' && typeof state.replayHandler === 'function') {
+        state.replayHandler();
       }
     });
     return el;
@@ -199,6 +213,43 @@
     set('matchRate', pct(state.matches, state.spins), matchClass);
     set('lastSeed', state.lastSpin ? String(state.lastSpin.seed) : '—');
     set('lastHash', state.lastSpin ? shortHash(state.lastSpin.oracleHash) : '—');
+
+    // Watchtower rows
+    const wt = state.wt;
+    if (wt && wt.metrics && wt.metrics.n > 0) {
+      const m = wt.metrics;
+      const sCls = wt.status === 'critical' ? 'bad' : wt.status === 'warn' ? 'warn' : (wt.status === 'warmup' ? '' : 'ok');
+      set('wtStatus', wt.status.toUpperCase() + ' · ' + m.n + ' spins', sCls);
+      set('wtRtp', m.rtp.toFixed(3) + '%', null);
+      set('wtHit', m.hitPct.toFixed(2) + '%', null);
+      set('wtFs', m.fsOneIn ? ('1-in-' + Math.round(m.fsOneIn)) : '—', null);
+      set('wtHnw', m.hnwOneIn ? ('1-in-' + Math.round(m.hnwOneIn)) : '—', null);
+      set('wtLight', m.lightPct.toFixed(2) + '%', null);
+    } else {
+      set('wtStatus', '—', null);
+      set('wtRtp', '—', null);
+      set('wtHit', '—', null);
+      set('wtFs', '—', null);
+      set('wtHnw', '—', null);
+      set('wtLight', '—', null);
+    }
+
+    // Breach block (warn/critical from watchtower)
+    const breachBlock = state.el.querySelector('[data-f="breachBlock"]');
+    if (wt && wt.breaches && wt.breaches.length) {
+      const html = wt.breaches.map(function (b) {
+        if (b.metric === 'fs' || b.metric === 'hnw') {
+          return b.metric.toUpperCase() + ' freq 1-in-' + Math.round(b.observed) + ' (target 1-in-' + Math.round(b.target) + ') [' + b.status + ']';
+        }
+        const dp = b.deltaPp != null ? (b.deltaPp >= 0 ? '+' : '') + b.deltaPp.toFixed(2) + 'pp' : '';
+        return b.metric.toUpperCase() + ' ' + b.observed.toFixed(2) + '% (target ' + b.target.toFixed(2) + '%) ' + dp + ' [' + b.status + ']';
+      }).join('\n');
+      const color = wt.status === 'critical' ? '244,63,94' : '252,211,77';
+      breachBlock.outerHTML = '<div data-f="breachBlock" class="mtl-halt-block" style="background:rgba(' + color + ',0.10);border-color:rgba(' + color + ',0.45);color:' + (wt.status === 'critical' ? '#fecaca' : '#fde68a') + '"><b>Watchtower</b>\n' + html + '</div>';
+    } else {
+      const cur = state.el.querySelector('[data-f="breachBlock"]');
+      if (cur) cur.outerHTML = '<div data-f="breachBlock" hidden></div>';
+    }
 
     const haltBlock = state.el.querySelector('[data-f="haltBlock"]');
     const reportBtn = state.el.querySelector('[data-act="report"]');
@@ -264,6 +315,16 @@
   function getStats() {
     return { spins: state.spins, matches: state.matches, mismatches: state.mismatches };
   }
+  function setWatchtowerReport(report) {
+    state.wt = report || null;
+    render();
+  }
+  function getWatchtowerReport() {
+    return state.wt;
+  }
+  function setReplayHandler(fn) {
+    state.replayHandler = typeof fn === 'function' ? fn : null;
+  }
 
   root.MTLDashboard = {
     mount: mount,
@@ -274,5 +335,8 @@
     expand: expand,
     collapse: collapse,
     getStats: getStats,
+    setWatchtowerReport: setWatchtowerReport,
+    getWatchtowerReport: getWatchtowerReport,
+    setReplayHandler: setReplayHandler,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

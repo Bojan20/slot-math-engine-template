@@ -1025,6 +1025,7 @@
     const O = window.MTLOracle;
     const Diff = window.MTLDiff;
     const HUD = window.MTLDashboard;
+    const Replay = window.MTLReplay;
     if (!O || !HUD) return; // graceful degradation
     HUD.mount();
 
@@ -1032,6 +1033,47 @@
       HUD.setSeal(IR.meta.seal);
     } else {
       HUD.setUnsealed('not sealed in Studio');
+    }
+
+    // ── Watchtower worker (Phase B) ──────────────────────────────
+    // Reports rolling 10k metrics back to the HUD; flags warn/critical
+    // breaches.  Initialized from ir.validated_metrics when present; if
+    // the IR ships none, the worker still measures but can't grade.
+    let wtWorker = null;
+    try {
+      // Bootstrap the worker via a blob URL so the runner blob is fully
+      // self-contained.  We inline the watchtower-worker.js + watchtower.js
+      // sources via Studio's buildPlayTemplateBlob (see below).
+      if (window.__MTL_WT_WORKER_SRC__ && window.__MTL_WT_SRC__) {
+        const blob = new Blob([
+          window.__MTL_WT_SRC__ + '\n\n',
+          // Worker uses importScripts in normal mode; in blob mode we already
+          // have MTLWatchtower on `self` from the inlined source above, so
+          // skip the import and just run the worker dispatch logic.
+          window.__MTL_WT_WORKER_SRC__.replace(/importScripts\s*\([^)]+\)\s*;?/g, '// importScripts inlined'),
+        ], { type: 'application/javascript' });
+        wtWorker = new Worker(URL.createObjectURL(blob));
+        wtWorker.addEventListener('message', function (ev) {
+          const m = ev.data || {};
+          if (m.type === 'report') {
+            HUD.setWatchtowerReport(m);
+            if (m.status === 'critical' && !halted) {
+              freezeUI('watchtower CRITICAL — ' + (m.breaches[0] ? m.breaches[0].metric : 'unknown'));
+            }
+          } else if (m.type === 'error') {
+            console.warn('[MTL Watchtower] error:', m.error);
+          }
+        });
+        wtWorker.postMessage({
+          type: 'init',
+          validated_metrics: IR.validated_metrics || null,
+        });
+      } else {
+        console.log('[MTL] watchtower disabled — worker source not inlined');
+      }
+    } catch (err) {
+      console.warn('[MTL Watchtower] boot failed:', err);
+      wtWorker = null;
     }
 
     let halted = false;
@@ -1123,6 +1165,27 @@
       }
       // Match — restore live snapshot, replay the same seed through the
       // animated spin so player sees the lockstep-verified outcome.
+      // Also: post to Watchtower + journal to Replay Log (Phase B).
+      const bet = (IR.bet && IR.bet.base_bet) || 1;
+      if (wtWorker) {
+        try { wtWorker.postMessage({ type: 'spin', win: reduced.win, bet: bet, scCount: reduced.scCount, bonusCount: reduced.bonusCount, lightning: reduced.lightning, fsWin: reduced.fsWin, hnwWin: reduced.hnwWin }); } catch (_) {}
+      }
+      if (Replay && IR && IR.meta && IR.meta.seal) {
+        try {
+          await Replay.append({
+            irDna: IR.meta.seal.dna || '',
+            seed: seed,
+            bet: bet,
+            win: reduced.win,
+            scCount: reduced.scCount,
+            bonusCount: reduced.bonusCount,
+            lightning: reduced.lightning,
+            fsWin: reduced.fsWin,
+            hnwWin: reduced.hnwWin,
+            outcomeHash: oracleHash,
+          });
+        } catch (_) { /* IDB transient — non-fatal */ }
+      }
       Object.assign(state, snap);
       state.rng = makeRng(seed);
       try { await spinOnce(); } catch (err) { console.error('[MTL] animated spin error:', err); }
@@ -1150,11 +1213,61 @@
       });
     }, 250);
 
+    // Wire HUD "Replay last 10" — pulls recent journal entries, re-runs
+    // each through oracle.spin, verifies hash, surfaces any drift.
+    HUD.setReplayHandler(async function () {
+      if (!Replay || !IR.meta || !IR.meta.seal) return;
+      try {
+        const entries = await Replay.list({ irDna: IR.meta.seal.dna, limit: 10 });
+        if (!entries.length) {
+          console.log('[MTL Replay] no journaled entries yet');
+          return;
+        }
+        let matched = 0;
+        let drifted = [];
+        for (let i = 0; i < entries.length; i++) {
+          // eslint-disable-next-line no-await-in-loop
+          const r = await Replay.replay(IR, entries[i]);
+          if (r.match) matched++;
+          else drifted.push({ entry: entries[i], replay: r });
+        }
+        if (drifted.length === 0) {
+          console.log('[MTL Replay] ' + matched + '/' + entries.length + ' entries reproduced byte-equal');
+        } else {
+          console.warn('[MTL Replay] ' + drifted.length + ' DRIFT(S) detected!', drifted);
+          freezeUI('replay drift on ' + drifted.length + ' journaled spin(s)');
+        }
+        // Surface to UI via a transient toast in the runner; lightweight
+        const t = document.createElement('div');
+        t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:' + (drifted.length ? 'rgba(244,63,94,0.95)' : 'rgba(34,197,94,0.92)') + ';color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px 16px;border-radius:8px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4)';
+        t.textContent = drifted.length
+          ? '⚠ Replay drift: ' + drifted.length + ' / ' + entries.length + ' (see console)'
+          : '✓ Replay OK · ' + matched + ' / ' + entries.length + ' byte-equal';
+        document.body.appendChild(t);
+        setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 4500);
+      } catch (err) {
+        console.error('[MTL Replay] error:', err);
+      }
+    });
+
     window.__SLOT__.mtl = {
       preFlightReseal: preFlightReseal,
       lockstepSpinClick: lockstepSpinClick,
       get halted() { return halted; },
       get stats() { return HUD.getStats(); },
+      get watchtower() { return HUD.getWatchtowerReport(); },
+      requestWatchtowerReport: function () { if (wtWorker) wtWorker.postMessage({ type: 'report' }); },
+      replayLastN: async function (n) {
+        if (!Replay || !IR.meta || !IR.meta.seal) return null;
+        const entries = await Replay.list({ irDna: IR.meta.seal.dna, limit: n || 10 });
+        const results = [];
+        for (let i = 0; i < entries.length; i++) {
+          // eslint-disable-next-line no-await-in-loop
+          const r = await Replay.replay(IR, entries[i]);
+          results.push({ entry: entries[i], replay: r });
+        }
+        return results;
+      },
     };
   })();
 })();
