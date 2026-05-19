@@ -320,7 +320,49 @@ button:focus-visible, input:focus-visible, select:focus-visible,
   grid-template-columns: 220px 1fr 304px;
   min-height: 0;
   background: var(--bg-0);
+  transition: grid-template-columns 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ─── COLLAPSE STATES (driven by .shell modifier classes) ─────────────
+   Left, right, and bottom panels can be hidden independently for a
+   responsive single-zone focus mode.  Toggles live in the header. */
+.shell.is-left-collapsed  .row-main { grid-template-columns: 0 1fr 304px; }
+.shell.is-right-collapsed .row-main { grid-template-columns: 220px 1fr 0; }
+.shell.is-left-collapsed.is-right-collapsed .row-main { grid-template-columns: 0 1fr 0; }
+.shell.is-left-collapsed  .sidebar,
+.shell.is-right-collapsed .rail {
+  display: none;
+}
+.shell.is-bottom-collapsed .row-status { display: none; }
+.shell.is-bottom-collapsed { grid-template-rows: 44px 32px 38px 1fr 0; }
+
+/* ─── LAYOUT TOGGLES (header-right small button group) ───────────────── */
+.layout-toggles {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0 6px 0 4px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-1);
+}
+.btn-layout-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+.btn-layout-toggle:hover { background: var(--bg-2); color: var(--text-0); }
+.btn-layout-toggle.is-active { color: var(--cyan); background: rgba(34, 211, 238, 0.10); }
+.btn-layout-toggle:focus-visible { outline: 1px solid var(--cyan-line); outline-offset: 1px; }
+.btn-layout-toggle .i { display: block; }
 
 /* SIDEBAR */
 .sidebar {

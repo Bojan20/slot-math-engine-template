@@ -2364,8 +2364,71 @@
     if (bp.hasAttribute("hidden")) { bp.removeAttribute("hidden"); refreshBottomActivity(); }
     else bp.setAttribute("hidden", "");
   }
-  $("#btn-toggle-bottom").addEventListener("click", toggleBottom);
+  // NOTE: legacy #btn-toggle-bottom is in the status bar (Logs panel toggle).
+  // The header-r layout-toggle group uses #btn-toggle-status (see below).
   $("#bp-close").addEventListener("click", toggleBottom);
+  const legacyBottomBtn = document.querySelector("#btn-toggle-bottom");
+  if (legacyBottomBtn) legacyBottomBtn.addEventListener("click", toggleBottom);
+
+  /* ============================================================
+     LAYOUT TOGGLES — left sidebar / right rail / bottom (status) zone
+     Persisted across reloads via localStorage; mirrored as
+     .is-{left|right|bottom}-collapsed classes on the .shell root.
+     ============================================================ */
+  const LAYOUT_STORAGE_KEY = "studio.layout.collapsed.v1";
+  const LAYOUT_ZONES = [
+    { id: "left",   cls: "is-left-collapsed",   btn: "#btn-toggle-left"   },
+    { id: "right",  cls: "is-right-collapsed",  btn: "#btn-toggle-right"  },
+    { id: "status", cls: "is-bottom-collapsed", btn: "#btn-toggle-status" },
+  ];
+  function loadLayoutState() {
+    try {
+      const raw = localStorage.getItem(LAYOUT_STORAGE_KEY);
+      if (!raw) return { left: false, right: false, status: false };
+      const parsed = JSON.parse(raw);
+      return {
+        left:   !!parsed.left,
+        right:  !!parsed.right,
+        status: !!parsed.status,
+      };
+    } catch (_) {
+      return { left: false, right: false, status: false };
+    }
+  }
+  function saveLayoutState(state) {
+    try { localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
+  }
+  function applyLayoutState(state) {
+    const shell = document.querySelector(".shell");
+    if (!shell) return;
+    for (const z of LAYOUT_ZONES) {
+      const collapsed = !!state[z.id];
+      shell.classList.toggle(z.cls, collapsed);
+      const btn = document.querySelector(z.btn);
+      if (btn) {
+        btn.classList.toggle("is-active", !collapsed);
+        btn.setAttribute("aria-pressed", collapsed ? "false" : "true");
+      }
+    }
+  }
+  const layoutState = loadLayoutState();
+  applyLayoutState(layoutState);
+  function toggleLayoutZone(zoneId) {
+    if (!(zoneId in layoutState)) return;
+    layoutState[zoneId] = !layoutState[zoneId];
+    applyLayoutState(layoutState);
+    saveLayoutState(layoutState);
+    const zoneLbl = zoneId === "status" ? "bottom zone" : zoneId + " panel";
+    toast({
+      kind: "cyan",
+      msg: `${layoutState[zoneId] ? "Collapsed" : "Expanded"} ${zoneLbl}`,
+      ttl: 1400
+    });
+  }
+  for (const z of LAYOUT_ZONES) {
+    const btn = document.querySelector(z.btn);
+    if (btn) btn.addEventListener("click", () => toggleLayoutZone(z.id));
+  }
 
   /* ============================================================
      STATUSBAR · variant segment
@@ -2926,6 +2989,9 @@
     if (cmd && e.key.toLowerCase() === "s") { e.preventDefault(); doSave(); return; }
     if (cmd && e.key.toLowerCase() === "z") { e.preventDefault(); toast({ kind:"cyan", msg: e.shiftKey ? "Redo" : "Undo" }); return; }
     if (cmd && e.key.toLowerCase() === "j") { e.preventDefault(); toggleBottom(); return; }
+    if (cmd && e.key === "[")               { e.preventDefault(); toggleLayoutZone("left");   return; }
+    if (cmd && e.key === "]")               { e.preventDefault(); toggleLayoutZone("right");  return; }
+    if (cmd && e.key === "\\")              { e.preventDefault(); toggleLayoutZone("status"); return; }
     if (cmd && /^[1-6]$/.test(e.key)) {
       e.preventDefault();
       const map = { "1": "build", "2": "compose", "3": "catalog", "4": "play", "5": "sensitivity", "6": "certify" };
