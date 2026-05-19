@@ -1466,6 +1466,26 @@
     }
     toast({ kind: "cyan", msg: `Parsing <b>${f.name}</b>…` });
     try {
+      // ── Direct canonical-IR fast-path ────────────────────────────────
+      // If the file is a Studio-IR-1.0.0 JSON we bypass the narrative GDD
+      // parser (which only extracts pool counts / averaged paytable) and
+      // load the IR directly so every concrete symbol, reel weight, payline,
+      // paytable cell and feature lands in the workspace verbatim.
+      const isJson = /\.json$/i.test(f.name) || f.type === "application/json";
+      if (isJson) {
+        const txt = await f.text();
+        let raw;
+        try { raw = JSON.parse(txt); } catch (_) { raw = null; }
+        if (raw && raw.schema_version === "1.0.0"
+                && raw.meta && Array.isArray(raw.symbols)
+                && raw.reels && raw.evaluation && raw.paytable) {
+          const ok = importCanonicalIR(raw, f.name);
+          if (ok) return;
+          console.warn("[studio] canonical IR import failed — falling back to GDD parser");
+        }
+      }
+
+      // ── Narrative GDD path (PDF / DOCX / MD / XLSX / CSV / TXT / non-IR JSON) ──
       const gdd = await window.__studio__.parseGDD(f);
       window.__gddCurrent__ = gdd;
       window.__gddFilename__ = f.name;
@@ -1475,6 +1495,135 @@
       toast({ kind: "warn", msg: `Parse failed: ${(err && err.message) ? err.message : String(err)}` });
     }
   });
+
+  // Direct workspace seeder for canonical Studio-IR-1.0.0 JSON files.
+  // Returns true on success; false signals the caller to fall back to the
+  // narrative parser (e.g. for partial / malformed IRs).
+  function importCanonicalIR(ir, filename) {
+    try {
+      const meta = ir.meta || {};
+      const topo = ir.topology || { reels: 5, rows: 3 };
+      const layout = topo.reels === 6 ? "6x4mw"
+                  : topo.reels === 7 ? "7x7c"
+                  : "5x3";
+
+      // Map IR symbols → workspace symbol shape (id/name/tier/weight).
+      // Weight is computed as the SUM of per-reel weights across all reels
+      // in the base reel set — this is what Studio's render code expects
+      // (`sym.weight.toFixed(1)`).  If reels.base is missing or empty, fall
+      // back to weight=1 per symbol so the UI doesn't crash.
+      const KIND_TO_TIER = {
+        wild:       "WILD",
+        scatter:    "SCATTER",
+        bonus:      "MULT",   // bonus orbs are treated as MULT tier in Studio
+        hp:         "HP",
+        lp:         "LP",
+        multiplier: "MULT",
+      };
+      const baseReels = Array.isArray(ir.reels?.base) ? ir.reels.base : [];
+      const sumWeightForSymbol = (sid) => {
+        let sum = 0;
+        for (const reel of baseReels) {
+          if (reel && typeof reel === "object") {
+            const w = reel[sid];
+            if (typeof w === "number") sum += w;
+          }
+        }
+        return sum > 0 ? sum : 1; // never zero, avoids div-by-zero downstream
+      };
+      // Build per-symbol pay object from IR paytable (Studio render expects
+      // `sym.pay.x3 / x4 / x5` inline on each symbol).
+      const irPaytable = ir.paytable || {};
+      const payFor = (sid) => {
+        const p = irPaytable[sid];
+        if (!p) return { x3: 0, x4: 0, x5: 0 };
+        return {
+          x3: typeof p.x3 === "number" ? p.x3 : (p["3"] ?? 0),
+          x4: typeof p.x4 === "number" ? p.x4 : (p["4"] ?? 0),
+          x5: typeof p.x5 === "number" ? p.x5 : (p["5"] ?? 0),
+        };
+      };
+      const symbols = ir.symbols.map(s => ({
+        id: s.id,
+        name: s.name || s.id,
+        tier: KIND_TO_TIER[s.kind] || "LP",
+        weight: sumWeightForSymbol(s.id),
+        pay: payFor(s.id),
+        substitutes: s.substitutes || null,
+      }));
+      const tierCounts = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
+      for (const s of symbols) tierCounts[s.tier]++;
+
+      const wsName = meta.name || "Imported Game";
+      const wsId = "ws-" + Date.now().toString(36);
+      const irName = (meta.id || wsName.toLowerCase().replace(/\s+/g, "-")) + "-v" + (meta.version || "0.1.00");
+
+      const ws = newWorkspace({
+        id: wsId, name: wsName, theme: "cyan", layout, irName
+      });
+      const v = ws.variants[ws.activeVariantId];
+
+      // Seed math from IR
+      v.symbols = symbols;
+      v.tierCounts = tierCounts;
+      // Studio renders reels as display strips (array of symbol-id arrays).
+      // IR encodes reels as weighted maps (per-symbol-weight per-reel).  We
+      // preserve IR's granular per-reel info under v.irReels for export, and
+      // let Studio's autoBuildReelsFor() generate display strips at render
+      // time using the aggregate per-symbol weights computed above.
+      v.reels = [];
+      v.irReels = {
+        base: Array.isArray(ir.reels?.base) ? ir.reels.base : [],
+        free_spins: Array.isArray(ir.reels?.free_spins) ? ir.reels.free_spins : [],
+      };
+      v.fsReels = v.irReels.free_spins;
+      // Studio render expects paytable keyed by symbol with { x3, x4, x5 }
+      // properties.  IR uses { "3": ..., "4": ..., "5": ... } string keys.
+      const paytableMapped = {};
+      for (const [sid, p] of Object.entries(ir.paytable || {})) {
+        if (!p || typeof p !== "object") continue;
+        paytableMapped[sid] = {
+          x3: typeof p.x3 === "number" ? p.x3 : (p["3"] ?? 0),
+          x4: typeof p.x4 === "number" ? p.x4 : (p["4"] ?? 0),
+          x5: typeof p.x5 === "number" ? p.x5 : (p["5"] ?? 0),
+        };
+      }
+      v.paytable = paytableMapped;
+      v.paylines = (ir.evaluation && ir.evaluation.paylines) || [];
+      v.features = ir.features || [];
+      v.rng = ir.rng || { kind: "pcg64" };
+      v.bet = ir.bet || { currency: "EUR", base_bet: 1, denominations: [0.01] };
+
+      const tgtRtp = (ir.limits && ir.limits.target_rtp) || 0.96;
+      v.rtpTarget = +(tgtRtp * 100).toFixed(4);
+      v.rtp = v.rtpTarget;
+      v.maxWin = (ir.limits && ir.limits.max_win_x) || 5000;
+      v.vola = (ir.limits && ir.limits.target_volatility ? ir.limits.target_volatility.toUpperCase() : "HIGH");
+      v.hit = 0;  // measured by Compute RTP / MC worker
+      v.sigma = 0;
+
+      workspaces[wsId] = ws;
+      wsOrder.push(wsId);
+      switchWorkspace(wsId);
+      if (window.__studio__ && window.__studio__.scheduleRTPRecompute) {
+        try { window.__studio__.scheduleRTPRecompute(); } catch (_) {}
+      }
+
+      const totSymbols = symbols.length;
+      const totFeatures = (ir.features || []).length;
+      const totPaylines = ((ir.evaluation && ir.evaluation.paylines) || []).length;
+      toast({
+        kind: "ok",
+        msg: `Imported IR <b>${wsName}</b> · ${totSymbols} symbols · ${totPaylines} paylines · ${totFeatures} features · target RTP ${(tgtRtp*100).toFixed(2)}%`,
+        ttl: 7000
+      });
+      logActivity(`IR import → ${wsName} · ${totSymbols} symbols · ${topo.reels}×${topo.rows} · ${totPaylines} lines · ${totFeatures} features`);
+      return true;
+    } catch (err) {
+      console.warn("[studio] importCanonicalIR error:", err);
+      return false;
+    }
+  }
 
   function confCls(c) {
     if (c >= 90) return "ok";
