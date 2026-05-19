@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "SESSION_COOL_OFF_ENFORCEMENT",
+  "generated_utc": "2026-05-19T06:41:05.378Z",
+  "episodes_per_config": 500,
+  "seed": 3405644323,
+  "tolerances": {
+    "daily_trigger_abs": 0.05,
+    "annual_rel": 0.3,
+    "fraction_abs": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_rts11_moderate_user",
+      "description": "UKGC RTS 11 mandatory: K=5/D=7/24h, moderate user (P_loss=0.4, 2 sessions/day)",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "probLossStopPerSession": 0.4,
+        "sessionsPerDay": 2,
+        "rollingWindowDays": 7,
+        "coolOffThresholdK": 5,
+        "coolOffDurationHours": 24
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 0.8,
+        "expectedLossStopsInWindow": 5.6000000000000005,
+        "coolOffTriggerProbPerDay": 0.6578499826232138,
+        "expectedDaysToFirstCoolOff": 1.5201034071817465,
+        "expectedDaysToFirstCoolOffMarkov": 6.25,
+        "oneInNDaysCoolOff": 1.5201034071817465,
+        "annualCoolOffsExpected": 50.3448275862069,
+        "fractionOfYearInCoolOff": 0.13793103448275862,
+        "harmReductionScore": 0.20371603274508,
+        "isCompliantUkgcRts11": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 6.796,
+        "observedAnnualCoolOffsExpected": 42.426,
+        "observedFractionOfYearInCoolOff": 0.11593972602739726,
+        "observedCoolOffTriggerProbPerDay": 0.11623561643835617
+      },
+      "checks": {
+        "daily_trigger_delta": 0.021695418044402448,
+        "annual_rel": 0.15729178082191778,
+        "fraction_delta": 0.02199130845536136
+      },
+      "pass": true,
+      "elapsed_ms": 9
+    },
+    {
+      "name": "B_uk_rts11_heavy_user",
+      "description": "UKGC RTS 11: K=5/D=7/24h, heavy user (P_loss=0.6, 4 sessions/day)",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "probLossStopPerSession": 0.6,
+        "sessionsPerDay": 4,
+        "rollingWindowDays": 7,
+        "coolOffThresholdK": 5,
+        "coolOffDurationHours": 24
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 2.4,
+        "expectedLossStopsInWindow": 16.8,
+        "coolOffTriggerProbPerDay": 0.9997841703330123,
+        "expectedDaysToFirstCoolOff": 1.000215876259489,
+        "expectedDaysToFirstCoolOffMarkov": 2.0833333333333335,
+        "oneInNDaysCoolOff": 1.000215876259489,
+        "annualCoolOffsExpected": 118.37837837837837,
+        "fractionOfYearInCoolOff": 0.3243243243243243,
+        "harmReductionScore": 0.4243027413576255,
+        "isCompliantUkgcRts11": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 1.704,
+        "observedAnnualCoolOffsExpected": 101.81,
+        "observedFractionOfYearInCoolOff": 0.27814246575342466,
+        "observedCoolOffTriggerProbPerDay": 0.27893150684931506
+      },
+      "checks": {
+        "daily_trigger_delta": 0.04539281747500923,
+        "annual_rel": 0.13996118721461182,
+        "fraction_delta": 0.046181858570899625
+      },
+      "pass": true,
+      "elapsed_ms": 12
+    },
+    {
+      "name": "C_au_ncpf_stricter_k3_48h",
+      "description": "AU NCPF Schedule 7 stricter: K=3/D=7/48h, moderate user",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "probLossStopPerSession": 0.4,
+        "sessionsPerDay": 2,
+        "rollingWindowDays": 7,
+        "coolOffThresholdK": 3,
+        "coolOffDurationHours": 48
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 0.8,
+        "expectedLossStopsInWindow": 5.6000000000000005,
+        "coolOffTriggerProbPerDay": 0.9176115963967604,
+        "expectedDaysToFirstCoolOff": 1.0897857044600996,
+        "expectedDaysToFirstCoolOffMarkov": 3.75,
+        "oneInNDaysCoolOff": 1.0897857044600996,
+        "annualCoolOffsExpected": 63.47826086956522,
+        "fractionOfYearInCoolOff": 0.34782608695652173,
+        "harmReductionScore": 0.43958724659619774,
+        "isCompliantUkgcRts11": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 3.56,
+        "observedAnnualCoolOffsExpected": 57.718,
+        "observedFractionOfYearInCoolOff": 0.3148767123287671,
+        "observedCoolOffTriggerProbPerDay": 0.15813150684931507
+      },
+      "checks": {
+        "daily_trigger_delta": 0.015781536628945797,
+        "annual_rel": 0.09074383561643831,
+        "fraction_delta": 0.0329493746277546
+      },
+      "pass": true,
+      "elapsed_ms": 6
+    },
+    {
+      "name": "D_mga_relaxed_k5_d10",
+      "description": "MGA PPD §20 relaxed window: K=5/D=10/24h, moderate user",
+      "jurisdiction": "MGA",
+      "cfg": {
+        "probLossStopPerSession": 0.4,
+        "sessionsPerDay": 2,
+        "rollingWindowDays": 10,
+        "coolOffThresholdK": 5,
+        "coolOffDurationHours": 24
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 0.8,
+        "expectedLossStopsInWindow": 8,
+        "coolOffTriggerProbPerDay": 0.900367599512954,
+        "expectedDaysToFirstCoolOff": 1.1106574698389207,
+        "expectedDaysToFirstCoolOffMarkov": 6.25,
+        "oneInNDaysCoolOff": 1.1106574698389207,
+        "annualCoolOffsExpected": 50.3448275862069,
+        "fractionOfYearInCoolOff": 0.13793103448275862,
+        "harmReductionScore": 0.22796779443405402,
+        "isCompliantUkgcRts11": false
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 5.766,
+        "observedAnnualCoolOffsExpected": 45.854,
+        "observedFractionOfYearInCoolOff": 0.1252164383561644,
+        "observedCoolOffTriggerProbPerDay": 0.12562739726027397
+      },
+      "checks": {
+        "daily_trigger_delta": 0.012303637222484648,
+        "annual_rel": 0.08920136986301372,
+        "fraction_delta": 0.01271459612659423
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    },
+    {
+      "name": "E_corner_low_risk_player",
+      "description": "Corner: very low loss-stop frequency (P_loss=0.05, 1 session/day) — rare cool-offs",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "probLossStopPerSession": 0.05,
+        "sessionsPerDay": 1,
+        "rollingWindowDays": 7,
+        "coolOffThresholdK": 5,
+        "coolOffDurationHours": 24
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 0.05,
+        "expectedLossStopsInWindow": 0.35000000000000003,
+        "coolOffTriggerProbPerDay": 0.00003273617475307855,
+        "expectedDaysToFirstCoolOff": 30547.24651071087,
+        "expectedDaysToFirstCoolOffMarkov": 30547.24651071087,
+        "oneInNDaysCoolOff": 30547.24651071087,
+        "annualCoolOffsExpected": 0.011948312642822992,
+        "fractionOfYearInCoolOff": 0.000032735103131021895,
+        "harmReductionScore": 0.00003600872060632975,
+        "isCompliantUkgcRts11": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 362.948,
+        "observedAnnualCoolOffsExpected": 0.008,
+        "observedFractionOfYearInCoolOff": 0.000021917808219178083,
+        "observedCoolOffTriggerProbPerDay": 0.000021917808219178083
+      },
+      "checks": {
+        "daily_trigger_delta": 0.000010817294911843811,
+        "annual_rel": 0.03948312642822992,
+        "fraction_delta": 0.000010817294911843811
+      },
+      "pass": true,
+      "elapsed_ms": 8
+    },
+    {
+      "name": "F_corner_high_risk_player",
+      "description": "Corner: high loss-stop frequency (P_loss=0.5, 3 sessions/day, λ=1.5) — frequent cool-offs",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "probLossStopPerSession": 0.5,
+        "sessionsPerDay": 3,
+        "rollingWindowDays": 7,
+        "coolOffThresholdK": 5,
+        "coolOffDurationHours": 24
+      },
+      "closed_form": {
+        "lossStopRatePerDay": 1.5,
+        "expectedLossStopsInWindow": 10.5,
+        "coolOffTriggerProbPerDay": 0.9789064344125621,
+        "expectedDaysToFirstCoolOff": 1.021548091672414,
+        "expectedDaysToFirstCoolOffMarkov": 3.3333333333333335,
+        "oneInNDaysCoolOff": 1.021548091672414,
+        "annualCoolOffsExpected": 84.23076923076921,
+        "fractionOfYearInCoolOff": 0.23076923076923073,
+        "harmReductionScore": 0.3286598742104869,
+        "isCompliantUkgcRts11": true
+      },
+      "monte_carlo": {
+        "episodes": 500,
+        "observedExpectedDaysToFirstCoolOff": 2.814,
+        "observedAnnualCoolOffsExpected": 75.112,
+        "observedFractionOfYearInCoolOff": 0.2052054794520548,
+        "observedCoolOffTriggerProbPerDay": 0.205786301369863
+      },
+      "checks": {
+        "daily_trigger_delta": 0.02498292939936772,
+        "annual_rel": 0.10825936073059347,
+        "fraction_delta": 0.02556375131717592
+      },
+      "pass": true,
+      "elapsed_ms": 7
+    }
+  ]
+}
