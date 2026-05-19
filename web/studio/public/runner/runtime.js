@@ -1008,4 +1008,153 @@
   // Expose for tests / debug.  `spinOnceInstant` is what verification
   // harnesses use to run 10K+ spins in a few seconds.
   window.__SLOT__ = { state, IR, spinOnce, spinOnceInstant, runAutoplay, stopAutoplay, _debug: { evalBase, drawGrid, BASE_REELS, FS_REELS, F_FS, F_HNW, F_MUL, SCAT_PREV, hnwDiag: _hnwDiag } };
+
+  // ─── MTL — Math Twin Lockstep boot ─────────────────────────────────
+  // If oracle.js / dna.js / sealing-ceremony.js / mtl-dashboard.js /
+  // deep-diff.js were inlined ahead of this script (Studio's
+  // buildPlayTemplateBlob does this), Lockstep activates:
+  //
+  //   1. Mount the floating MTL HUD (top-right of the runner)
+  //   2. Pre-flight reseal check — 100 deterministic seeds; oracle.spin
+  //      must agree with runtime.spinOnceInstant byte-for-byte.
+  //   3. Wrap SPIN — every click runs both engines on the same seed and
+  //      halts the UI on any mismatch.
+  //
+  // If MTL modules aren't present the runner behaves exactly as before.
+  (function mtlBoot() {
+    const O = window.MTLOracle;
+    const Diff = window.MTLDiff;
+    const HUD = window.MTLDashboard;
+    if (!O || !HUD) return; // graceful degradation
+    HUD.mount();
+
+    if (IR && IR.meta && IR.meta.seal) {
+      HUD.setSeal(IR.meta.seal);
+    } else {
+      HUD.setUnsealed('not sealed in Studio');
+    }
+
+    let halted = false;
+    const spinBtnEl = $('#spin-btn');
+
+    function freezeUI(reason) {
+      halted = true;
+      if (spinBtnEl) {
+        spinBtnEl.setAttribute('disabled', '');
+        spinBtnEl.setAttribute('aria-disabled', 'true');
+        spinBtnEl.style.opacity = '0.35';
+        spinBtnEl.style.cursor = 'not-allowed';
+        spinBtnEl.textContent = 'HALT';
+      }
+      if (window.__SLOT__) window.__SLOT__.haltedReason = reason;
+      console.warn('[MTL] runtime halted —', reason);
+    }
+
+    // Pre-flight reseal — N deterministic seeds, oracle vs runtime, hash compare.
+    async function preFlightReseal(seedCount) {
+      const n = seedCount || 100;
+      const t0 = performance.now();
+      // Snapshot live state so the pre-flight doesn't pollute live UI counters
+      const snap = { rng: state.rng, balance: state.balance, totalWagered: state.totalWagered, totalWon: state.totalWon, spinsPlayed: state.spinsPlayed, hits: state.hits, maxWin: state.maxWin };
+      for (let i = 0; i < n; i++) {
+        const seed = i;
+        state.rng = makeRng(seed);
+        state.balance = 1e9; state.totalWagered = 0; state.totalWon = 0; state.spinsPlayed = 0; state.hits = 0; state.maxWin = 0;
+        const r = spinOnceInstant();
+        const reduced = { win: r.win, scCount: r.scCount, bonusCount: r.bonusCount, lightning: r.lightning, fsWin: r.fsWin, hnwWin: r.hnwWin };
+        // eslint-disable-next-line no-await-in-loop
+        const oracle = await O.spin(IR, seed, 1);
+        const oracleReduced = { win: oracle.win, scCount: oracle.scCount, bonusCount: oracle.bonusCount, lightning: oracle.lightning, fsWin: oracle.fsWin, hnwWin: oracle.hnwWin };
+        // eslint-disable-next-line no-await-in-loop
+        const rh = await O.hashOutcome(reduced);
+        // Compare on REDUCED hashes only — the oracle's `outcomeHash` field
+        // hashes the full outcome (grid + lineWins + …) which the runner
+        // doesn't expose for headless spins.  Sealing Ceremony uses the
+        // same reduced-hash strategy so the seal and per-spin verification
+        // are checking the same invariant.
+        const oh = await O.hashOutcome(oracleReduced);
+        if (rh !== oh) {
+          const diff = Diff ? Diff.firstDiff(oracleReduced, reduced) : null;
+          console.warn('[MTL pre-flight MISMATCH @ seed ' + seed + ']\n  oracle:', JSON.stringify(oracleReduced), '\n  runner:', JSON.stringify(reduced), '\n  oracle hash:', oh, '\n  runner hash:', rh, '\n  diff:', diff);
+          HUD.recordHalt({ seed: seed, diff: diff, oracleResult: oracleReduced, runnerResult: reduced });
+          freezeUI('pre-flight mismatch @ seed ' + seed);
+          // Restore live snapshot
+          state.rng = snap.rng; state.balance = snap.balance; state.totalWagered = snap.totalWagered; state.totalWon = snap.totalWon; state.spinsPlayed = snap.spinsPlayed; state.hits = snap.hits; state.maxWin = snap.maxWin;
+          return false;
+        }
+      }
+      // Restore live snapshot
+      state.rng = snap.rng; state.balance = snap.balance; state.totalWagered = snap.totalWagered; state.totalWon = snap.totalWon; state.spinsPlayed = snap.spinsPlayed; state.hits = snap.hits; state.maxWin = snap.maxWin;
+      const dt = (performance.now() - t0).toFixed(1);
+      console.log('[MTL] pre-flight reseal OK — ' + n + ' seeds matched in ' + dt + 'ms');
+      return true;
+    }
+
+    // Per-spin lockstep.  We choose the seed BEFORE the spin, replay it
+    // through both engines, compare hashes.  On match: animated spin uses
+    // the same seed (so visuals + math align).  On mismatch: HALT.
+    async function lockstepSpinClick() {
+      if (halted) return;
+      if (state.spinning) return;
+      // Choose a seed from the live rng (still random for the player) and
+      // pin it for both witnesses.
+      const seed = (Math.floor(state.rng() * 0x100000000) >>> 0) || 1;
+      // Snapshot live state — we'll run the HEADLESS path first to compute
+      // the lockstep hash without touching the visible UI; then if it matches
+      // we replay the same seed through the animated path.
+      const snap = { rng: state.rng, balance: state.balance, totalWagered: state.totalWagered, totalWon: state.totalWon, spinsPlayed: state.spinsPlayed, hits: state.hits, maxWin: state.maxWin };
+      state.rng = makeRng(seed);
+      state.balance = 1e9; state.totalWagered = 0; state.totalWon = 0; state.spinsPlayed = 0; state.hits = 0; state.maxWin = 0;
+      const headless = spinOnceInstant();
+      const reduced = { win: headless.win, scCount: headless.scCount, bonusCount: headless.bonusCount, lightning: headless.lightning, fsWin: headless.fsWin, hnwWin: headless.hnwWin };
+      const oracle = await O.spin(IR, seed, 1);
+      const oracleReduced = { win: oracle.win, scCount: oracle.scCount, bonusCount: oracle.bonusCount, lightning: oracle.lightning, fsWin: oracle.fsWin, hnwWin: oracle.hnwWin };
+      const runnerHash = await O.hashOutcome(reduced);
+      const oracleHash = await O.hashOutcome(oracleReduced);
+      const match = runnerHash === oracleHash;
+      HUD.recordSpin({ seed: seed, oracleHash: oracleHash, runnerHash: runnerHash, match: match });
+      if (!match) {
+        const diff = Diff ? Diff.firstDiff(oracleReduced, reduced) : null;
+        HUD.recordHalt({ seed: seed, diff: diff, oracleResult: oracleReduced, runnerResult: reduced });
+        freezeUI('lockstep mismatch @ seed ' + seed);
+        // Restore live snapshot — UI is frozen anyway, but counters stay clean
+        Object.assign(state, snap);
+        return;
+      }
+      // Match — restore live snapshot, replay the same seed through the
+      // animated spin so player sees the lockstep-verified outcome.
+      Object.assign(state, snap);
+      state.rng = makeRng(seed);
+      try { await spinOnce(); } catch (err) { console.error('[MTL] animated spin error:', err); }
+    }
+
+    // Hook spin button + Space — replace existing handler chain.
+    if (spinBtnEl) {
+      const fresh = spinBtnEl.cloneNode(true);
+      spinBtnEl.parentNode.replaceChild(fresh, spinBtnEl);
+      fresh.addEventListener('click', function () { lockstepSpinClick(); });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.code === 'Space' && !halted && !state.spinning) {
+        e.preventDefault();
+        e.stopPropagation();
+        lockstepSpinClick();
+      }
+    }, true);
+
+    // Kick off pre-flight after first paint
+    setTimeout(function () {
+      preFlightReseal(100).catch(function (e) {
+        console.error('[MTL] pre-flight failed:', e);
+        freezeUI('pre-flight error: ' + e.message);
+      });
+    }, 250);
+
+    window.__SLOT__.mtl = {
+      preFlightReseal: preFlightReseal,
+      lockstepSpinClick: lockstepSpinClick,
+      get halted() { return halted; },
+      get stats() { return HUD.getStats(); },
+    };
+  })();
 })();

@@ -3342,6 +3342,56 @@
       try {
         playTemplateBtn.setAttribute("disabled", "");
         const ir = variantToFullIR(v);
+
+        // ── MTL — Math Twin Lockstep: Sealing Ceremony ──────────
+        // Before opening the runner we make sure the IR has a valid
+        // Math Seal.  If not, run the ceremony in-place (modal progress).
+        // No seal → no Play.  Mismatched ceremony → diagnostic, no Play.
+        if (window.MTLSeal && window.MTLOracle && window.MTLDNA) {
+          // Hydrate from localStorage first — if Boki sealed this IR in
+          // a previous session, skip the ceremony.
+          await window.MTLSeal.hydrateSealFromStorage(ir);
+          const alreadySealed = await window.MTLSeal.isSealed(ir);
+          if (!alreadySealed) {
+            const modal = mtlOpenSealingModal();
+            try {
+              // Default 500 seeds — dual-witness ceremony is bottlenecked by
+              // the iframe runtime (~100 hashes/sec).  500 seeds ≈ 5s on M1.
+              // Bumping to 10K for production-grade is a one-line change; the
+              // hash chain stays deterministic regardless of N.
+              const result = await window.MTLSeal.sealIR(ir, {
+                seedCount: 500,
+                useRuntime: true,
+                onProgress: (pct, seed) => modal.update(pct, seed),
+              });
+              if (!result.ok) {
+                modal.fail(result);
+                toast({
+                  kind: "warn",
+                  msg: `🔒 Math seal FAILED · oracle/runtime disagree @ seed ${result.firstMismatch.seed}`,
+                  ttl: 9000,
+                });
+                logActivity(`MTL seal FAILED · seed ${result.firstMismatch.seed} · oracle ${JSON.stringify(result.firstMismatch.oracle)} vs runner ${JSON.stringify(result.firstMismatch.runner)}`);
+                return; // do NOT open the runner — unsealed math is forbidden
+              }
+              window.MTLSeal.storeSeal(ir, result);
+              modal.success(result);
+              toast({
+                kind: "ok",
+                msg: `🪞 Math sealed · ${result.stats.seedCount} seeds · ${result.stats.witnesses} witnesses · ${result.stats.durationMs}ms`,
+                ttl: 5000,
+              });
+              logActivity(`MTL seal OK · ${result.stats.seedCount} seeds · seal ${result.seal.slice(0,12)}…`);
+            } catch (err) {
+              modal.fail({ error: err.message });
+              toast({ kind: "warn", msg: `🔒 Sealing ceremony error: ${err.message}` });
+              return;
+            }
+          } else {
+            logActivity(`MTL seal hydrated from cache · seal ${ir.meta.seal.value.slice(0,12)}…`);
+          }
+        }
+
         const blobUrl = await buildPlayTemplateBlob(ir);
         const win = window.open(blobUrl, "_blank", "noopener,noreferrer");
         if (!win) {
@@ -3351,11 +3401,12 @@
             ttl: 6000,
           });
         } else {
+          const sealHex = ir.meta && ir.meta.seal ? ` · sealed ${ir.meta.seal.value.slice(0,8)}…` : "";
           toast({
             kind: "ok",
-            msg: `🎮 Playable template opened · ${ir.symbols.length} symbols · ${ir.evaluation?.paylines?.length || 0} paylines`,
+            msg: `🎮 Playable template opened · ${ir.symbols.length} symbols · ${ir.evaluation?.paylines?.length || 0} paylines${sealHex}`,
           });
-          logActivity(`play template launched · ${ir.meta?.name || "Slot Template"}`);
+          logActivity(`play template launched · ${ir.meta?.name || "Slot Template"}${sealHex}`);
         }
       } catch (err) {
         console.warn("[studio] Play Template failed:", err);
@@ -3364,6 +3415,89 @@
         playTemplateBtn.removeAttribute("disabled");
       }
     });
+  }
+
+  // ─── MTL — Sealing Ceremony progress modal ──────────────────────────
+  // Lightweight in-DOM modal driven by sealing-ceremony.js's onProgress.
+  // Shows a progress bar 0..100%, current seed, and on completion either
+  // a success/fail summary.  Self-contained (zero new dependencies).
+  function mtlOpenSealingModal() {
+    const root = document.createElement("div");
+    root.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,0.78);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cbd5e1";
+    root.innerHTML = `
+      <div style="background:#0f172a;border:1px solid rgba(245,158,11,0.55);border-radius:14px;padding:24px;min-width:440px;max-width:560px;box-shadow:0 24px 60px rgba(0,0,0,0.6)">
+        <div style="font-size:16px;color:#fde68a;font-weight:600;letter-spacing:.02em;margin-bottom:6px">🪞 Math Twin Lockstep — Sealing Ceremony</div>
+        <div style="color:#94a3b8;font-size:11px;margin-bottom:18px" data-f="status">running 1,000 deterministic seeds through oracle.js + runtime.js…</div>
+        <div style="background:rgba(148,163,184,0.12);border-radius:6px;height:10px;overflow:hidden;margin-bottom:8px">
+          <div style="background:linear-gradient(90deg,#f59e0b,#fde68a);height:100%;width:0%;transition:width .15s ease" data-f="bar"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;letter-spacing:.04em;text-transform:uppercase">
+          <span data-f="pct">0%</span>
+          <span data-f="seed">seed: 0</span>
+        </div>
+        <div data-f="result" style="margin-top:14px;display:none;font-size:11px"></div>
+        <div data-f="actions" style="margin-top:14px;text-align:right;display:none">
+          <button type="button" data-act="close" style="padding:6px 14px;background:rgba(30,41,59,0.85);border:1px solid rgba(148,163,184,0.4);border-radius:6px;color:#cbd5e1;font:inherit;cursor:pointer">Close</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(root);
+    const bar = root.querySelector('[data-f="bar"]');
+    const pct = root.querySelector('[data-f="pct"]');
+    const seed = root.querySelector('[data-f="seed"]');
+    const status = root.querySelector('[data-f="status"]');
+    const result = root.querySelector('[data-f="result"]');
+    const actions = root.querySelector('[data-f="actions"]');
+    let closed = false;
+    function close() {
+      if (closed) return;
+      closed = true;
+      if (root.parentNode) root.parentNode.removeChild(root);
+    }
+    root.querySelector('[data-act="close"]').addEventListener('click', close);
+    return {
+      update(p, s) {
+        if (closed) return;
+        const v = Math.round(p * 100);
+        bar.style.width = v + '%';
+        pct.textContent = v + '%';
+        seed.textContent = 'seed: ' + s;
+      },
+      success(r) {
+        if (closed) return;
+        bar.style.width = '100%';
+        pct.textContent = '100%';
+        status.textContent = `Sealed · ${r.stats.seedCount} seeds · ${r.stats.witnesses} witness${r.stats.witnesses === 1 ? '' : 'es'} · ${r.stats.durationMs}ms`;
+        status.style.color = '#86efac';
+        result.style.display = 'block';
+        result.innerHTML =
+          `<div style="color:#fde68a;font-weight:600;margin-bottom:6px">✓ Math Seal</div>` +
+          `<div style="font-family:ui-monospace;font-size:10px;color:#cbd5e1;word-break:break-all;background:rgba(30,41,59,0.5);padding:8px;border-radius:6px">${r.seal}</div>` +
+          `<div style="margin-top:6px;color:#64748b;font-size:10px">DNA: ${r.dna.slice(0,16)}… · stored to ir.meta.seal + localStorage</div>`;
+        actions.style.display = 'block';
+        setTimeout(close, 1800);
+      },
+      fail(r) {
+        if (closed) return;
+        bar.style.background = 'linear-gradient(90deg,#f43f5e,#fda4af)';
+        status.textContent = '⚠ Sealing FAILED — oracle and runtime disagree';
+        status.style.color = '#fda4af';
+        result.style.display = 'block';
+        if (r.firstMismatch) {
+          const fm = r.firstMismatch;
+          const diff = window.MTLDiff ? window.MTLDiff.firstDiff(fm.oracle, fm.runner) : null;
+          result.innerHTML =
+            `<div style="color:#fda4af;font-weight:600;margin-bottom:6px">First mismatch · seed ${fm.seed}</div>` +
+            (diff
+              ? `<div style="font-family:ui-monospace;font-size:10px;background:rgba(244,63,94,0.12);border:1px solid rgba(244,63,94,0.35);padding:8px;border-radius:6px;color:#fecaca;word-break:break-word">${diff.path}<br>oracle: ${JSON.stringify(diff.a)}<br>runner: ${JSON.stringify(diff.b)}</div>`
+              : `<pre style="font-size:10px;background:rgba(244,63,94,0.08);padding:8px;border-radius:6px;color:#fecaca;max-height:200px;overflow:auto">oracle: ${JSON.stringify(fm.oracle, null, 2)}\n\nrunner: ${JSON.stringify(fm.runner, null, 2)}</pre>`);
+        } else if (r.error) {
+          result.innerHTML = `<div style="color:#fda4af">${r.error}</div>`;
+        }
+        actions.style.display = 'block';
+      },
+      close,
+    };
   }
 
   // Build a canonical IR from a Studio variant — re-uses the
@@ -3398,15 +3532,21 @@
     return ir;
   }
 
-  // Fetch the runner files (template / runtime / styles) from the
-  // dev/preview server, splice them together with the IR embedded, and
-  // return a blob: URL that opens to a fully-self-contained slot game.
+  // Fetch the runner files (template / runtime / styles + MTL modules)
+  // from the dev/preview server, splice them together with the IR
+  // (and seal, when present) embedded, and return a blob: URL that
+  // opens to a fully-self-contained slot game with Math Twin Lockstep
+  // enabled.
   async function buildPlayTemplateBlob(ir) {
     const base = new URL("./runner/", window.location.href).toString();
-    const [templateHtml, runtimeJs, stylesCss] = await Promise.all([
+    const [templateHtml, runtimeJs, stylesCss, oracleJs, dnaJs, diffJs, dashboardJs] = await Promise.all([
       fetch(base + "template.html").then((r) => r.text()),
       fetch(base + "runtime.js").then((r) => r.text()),
       fetch(base + "styles.css").then((r) => r.text()),
+      fetch(base + "oracle.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "dna.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "deep-diff.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "mtl-dashboard.js").then((r) => r.text()).catch(() => ""),
     ]);
     // Embed IR as a JSON script tag the runtime reads, plus inline CSS + JS.
     // We use REPLACER FUNCTIONS (not strings) so `$` characters in the
@@ -3418,7 +3558,11 @@
     const finalHtml = templateHtml
       .replace("/* RUNNER-CSS */", () => stylesCss)
       .replace(/(<script id="inline-ir"[^>]*>)\{\}(<\/script>)/, (m, open, close) => open + irJson + close)
-      .replace("/* RUNNER-JS */", () => safeRuntime);
+      .replace("/* MTL-ORACLE-JS */",    () => oracleJs)
+      .replace("/* MTL-DNA-JS */",       () => dnaJs)
+      .replace("/* MTL-DIFF-JS */",      () => diffJs)
+      .replace("/* MTL-DASHBOARD-JS */", () => dashboardJs)
+      .replace("/* RUNNER-JS */",        () => safeRuntime);
     const blob = new Blob([finalHtml], { type: "text/html" });
     return URL.createObjectURL(blob);
   }

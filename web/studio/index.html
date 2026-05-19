@@ -1622,6 +1622,14 @@
 <!-- ========= TOASTS ========= -->
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
+<!-- ========= MTL — Math Twin Lockstep (Studio side) =========
+     Loaded BEFORE app.js so the Play Template click handler can call
+     window.MTLSeal.sealIR() / window.MTLSeal.isSealed() synchronously.
+     Vite serves files from `public/runner/` at the root URL `/runner/`. -->
+<script src="/runner/oracle.js"></script>
+<script src="/runner/dna.js"></script>
+<script src="/runner/deep-diff.js"></script>
+<script src="/runner/sealing-ceremony.js"></script>
 <script src="app.js"></script>
 <script type="module" src="/src/main.ts"></script>
 </body>
