@@ -662,13 +662,37 @@
         ? alloc.total_mc_5b
         : alloc.total_cf;
       variant.rtp = +(totalRtp * 100).toFixed(4);
-      // Derive hit/sigma/maxWin/vola from imported symbols so the UI rails
-      // still render sensible numbers; these are display-only and don't
-      // feed back into RTP.
-      variant.hit = 22 + (variant.symbols.length - 6) * 0.6;
-      variant.sigma = 6 + variant.symbols.filter(s => s.tier === "HP").length * 0.7;
+
+      // Prefer validated MC metrics over heuristic for hit / σ / P99 so the
+      // L1 row reflects engine truth (e.g. Wrath of Olympus: hit 20.69%,
+      // σ 4.51, P99 53.82×).  Fall back to a coarse heuristic only when no
+      // validated_metrics block is present in the IR.
+      const vm = variant.validatedMetrics;
+      if (vm && typeof vm.hit_rate === "number") {
+        variant.hit = vm.hit_rate;
+      } else {
+        variant.hit = 22 + (variant.symbols.length - 6) * 0.6;
+      }
+      if (vm && typeof vm.volatility_index === "number") {
+        variant.sigma = vm.volatility_index;
+      } else {
+        variant.sigma = 6 + variant.symbols.filter(s => s.tier === "HP").length * 0.7;
+      }
+      if (vm && vm.win_percentiles && typeof vm.win_percentiles.p99 === "number") {
+        variant.p99 = vm.win_percentiles.p99;
+      } else {
+        variant.p99 = null; // refreshL1 will fall back to maxWin / 10
+      }
       variant.maxWin = (variant.maxWin && variant.maxWin > 0) ? variant.maxWin : 5000;
-      variant.vola = variant.sigma > 9.5 ? "HIGH" : variant.sigma < 7 ? "LOW" : "MID";
+      // Volatility classification — use IR target_volatility when set,
+      // otherwise derive from σ.  Wrath's σ = 4.51 is below the heuristic
+      // threshold (6), so we must use the IR override or all high-vol
+      // games would be mis-classified as LOW.
+      if (variant.vola && typeof variant.vola === "string" && variant.vola !== "") {
+        variant.vola = variant.vola.toUpperCase();
+      } else {
+        variant.vola = variant.sigma > 9.5 ? "HIGH" : variant.sigma < 4 ? "LOW" : "MID";
+      }
       return;
     }
     // Legacy heuristic for native (non-imported) variants.
@@ -691,7 +715,14 @@
     const l1hit = $("#l1-hit");   if (l1hit) l1hit.innerHTML = `${v.hit.toFixed(2)}<span class="pct">%</span>`;
     const l1vol = $("#l1-vola");  if (l1vol) l1vol.textContent = v.vola;
     const l1sig = $("#l1-sigma"); if (l1sig) l1sig.textContent = v.sigma.toFixed(2);
-    const l1p99 = $("#l1-p99");   if (l1p99) l1p99.textContent = (v.maxWin / 10).toFixed(1) + "×";
+    // P99 from validated MC win-distribution when available, else fall back
+    // to the legacy `maxWin / 10` heuristic.  Wrath's validated P99 is 53.82×,
+    // not 500× (which is the cap-divided-by-10 placeholder).
+    const l1p99 = $("#l1-p99");
+    if (l1p99) {
+      const p99Val = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
+      l1p99.textContent = p99Val.toFixed(p99Val < 100 ? 2 : 1) + "×";
+    }
 
     // Design headline · classify win-feel from sigma + hit
     const pill = $("#winfeel-pill");
@@ -766,11 +797,15 @@
     // Math rail · live moment values driven from active variant
     const mSigma = $("#m-sigma"); if (mSigma) mSigma.textContent = v.sigma.toFixed(2);
     const mMu    = $("#m-mu");    if (mMu)    mMu.textContent    = v.rtp.toFixed(4) + "%";
-    const mP99   = $("#m-p99");   if (mP99)   mP99.textContent   = (v.maxWin / 10).toFixed(1) + "×";
+    // P99 from validated MC win-distribution when present, else fall back
+    // to the legacy `maxWin / 10` heuristic placeholder.
+    const p99Display = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
+    const p99Fmt = p99Display.toFixed(p99Display < 100 ? 2 : 1) + "×";
+    const mP99   = $("#m-p99");   if (mP99)   mP99.textContent   = p99Fmt;
 
     // Headline metrics (math / design / producer)
     const l1sigma = $("#l1-sigma"); if (l1sigma) l1sigma.textContent = v.sigma.toFixed(2);
-    const l1p99   = $("#l1-p99");   if (l1p99)   l1p99.textContent   = (v.maxWin / 10).toFixed(1) + "×";
+    const l1p99   = $("#l1-p99");   if (l1p99)   l1p99.textContent   = p99Fmt;
 
     // Variant lineup mini-section (only if element exists, since it's
     // inside legacy #rail-default now hidden — guarded inside fn)
@@ -1684,6 +1719,22 @@
       v.vola = (ir.limits && ir.limits.target_volatility ? ir.limits.target_volatility.toUpperCase() : "HIGH");
       v.hit = 0;  // measured by Compute RTP / MC worker
       v.sigma = 0;
+
+      // ── Validated MC metrics — seed L1 row from real 500M+/4B simulator
+      // numbers instead of the legacy heuristic.  When present, Compute will
+      // surface these directly (hit / σ / P99 all reflect engine truth).
+      if (ir.validated_metrics && typeof ir.validated_metrics === "object") {
+        v.validatedMetrics = ir.validated_metrics;
+        const vm = ir.validated_metrics;
+        if (typeof vm.hit_rate === "number")          v.hit = vm.hit_rate;
+        if (typeof vm.volatility_index === "number")  v.sigma = vm.volatility_index;
+        if (typeof vm.max_win_observed_x === "number") v.maxWinObserved = vm.max_win_observed_x;
+        if (vm.win_percentiles && typeof vm.win_percentiles.p99 === "number") {
+          v.p99 = vm.win_percentiles.p99;
+        }
+        if (typeof vm.fs_frequency === "number")  v.fsFreq = vm.fs_frequency;
+        if (typeof vm.hnw_frequency === "number") v.hnwFreq = vm.hnw_frequency;
+      }
 
       workspaces[wsId] = ws;
       wsOrder.push(wsId);

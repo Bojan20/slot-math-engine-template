@@ -15,7 +15,7 @@
       "progressive-multiplier"
     ],
     "author": "VanVinkl Studio — Bojan Petković",
-    "created_at_utc": "2026-05-19T15:28:11.876Z",
+    "created_at_utc": "2026-05-19T16:51:37.192Z",
     "locked": true,
     "lock_root_hash": "9a000a38911a4995da617b01d9e6ff8a4349d671d3ccb84443b7df012901a15b",
     "spec_document": "MATH_SPEC_v12.md"
@@ -641,6 +641,35 @@
     "total_mc_5b": 0.96042,
     "mc_std_error": 0.000073,
     "tolerance": 0.0005
+  },
+  "validated_metrics": {
+    "source": "reports/validation/par-v2-data-500M.json (500M-spin MC)",
+    "total_spins": 500000000,
+    "rtp": 96.0232,
+    "hit_rate": 20.6855,
+    "volatility_index": 4.5096,
+    "fs_frequency": 117.98,
+    "hnw_frequency": 110.91,
+    "max_win_observed_x": 1596,
+    "win_percentiles": {
+      "p95": 19.09,
+      "p99": 53.82,
+      "p99_9": 441.98,
+      "p99_99": 930.34
+    },
+    "confidence": {
+      "mean_rtp": 96.0232,
+      "std_dev": 0.1014,
+      "std_error": 0.0453,
+      "ci_95_low": 95.9343,
+      "ci_95_high": 96.112
+    },
+    "rtp_breakdown": {
+      "base": 34.5934,
+      "free_spins": 21.6456,
+      "hold_and_win": 39.7842,
+      "lightning": 6.7759
+    }
   },
   "source": {
     "upstream_repo": "https://github.com/Bojan20/wrath-of-olympus (private)",

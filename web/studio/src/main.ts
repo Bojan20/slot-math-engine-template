@@ -189,6 +189,33 @@ function getWorkspaceName(): string {
 // ── Bridge implementation ───────────────────────────────────────────
 function computeRTP(): LiveRTP {
   const v = getCurrentVariant();
+
+  // When the variant was imported from a canonical IR with a validated
+  // rtp_allocation (closed-form or 4B-spin Monte-Carlo total), use those
+  // numbers — the engine's `estimateFullRtp` only models base-game line
+  // wins and would surface a wildly wrong figure for feature-heavy games
+  // (Free Spins + Hold & Win + Lightning sit outside the base estimator).
+  const alloc = (v as { rtpAllocation?: { total_mc_5b?: number; total_cf?: number } }).rtpAllocation;
+  const vm = (v as { validatedMetrics?: { volatility_index?: number } }).validatedMetrics;
+  if (alloc && (typeof alloc.total_mc_5b === 'number' || typeof alloc.total_cf === 'number')) {
+    const totalRtp = typeof alloc.total_mc_5b === 'number' ? alloc.total_mc_5b : (alloc.total_cf as number);
+    v.rtp = +(totalRtp * 100).toFixed(4);
+    if (vm && typeof vm.volatility_index === 'number') {
+      v.sigma = +vm.volatility_index.toFixed(2);
+    }
+    const live: LiveRTP = {
+      rtp: totalRtp,
+      baseGameRtp: typeof alloc.total_cf === 'number' ? alloc.total_cf : totalRtp,
+      featureRtp: 0,
+      volatility: { index: vm?.volatility_index ?? 0, class: 'High' },
+      computedAtMs: 0,
+      fromEngine: true,
+    };
+    hook().onRTPUpdate?.(live);
+    return live;
+  }
+
+  // Native (non-imported) variants — run the in-browser estimator.
   const live = computeLiveRTP(v);
   // mutate variant.rtp so the UI's existing render functions pick it up
   v.rtp = +(live.rtp * 100).toFixed(2);
