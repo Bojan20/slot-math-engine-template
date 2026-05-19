@@ -2047,6 +2047,16 @@
         free_spins: Array.isArray(ir.reels?.free_spins) ? ir.reels.free_spins : [],
       };
       v.fsReels = v.irReels.free_spins;
+      // Preserve scatter_prevention block — critical for FS trigger frequency
+      // (Wrath uses max_scatters_per_reel=1).  Without this, FS triggers ~64%
+      // too often in the Play Template runner and inflates RTP by ~5pp.
+      v.irScatterPrev = (ir.reels && ir.reels.scatter_prevention) || null;
+      // Preserve the FULL original IR — needed by Play Template so the runner
+      // gets byte-for-byte the same math as the validated MC.  Anything we
+      // derive from this (paytable, reels, features) flows back into the
+      // variant for Studio editing; the original sits here untouched so we
+      // can hand the runner the canonical shape.
+      v.irOriginal = ir;
       // Studio render expects paytable keyed by symbol with { x3, x4, x5 }
       // properties.  IR uses { "3": ..., "4": ..., "5": ... } string keys.
       const paytableMapped = {};
@@ -2332,12 +2342,17 @@
       ? v.paylines
       : [[1,1,1,1,1],[0,0,0,0,0],[2,2,2,2,2]]; // minimal fallback
 
+    const reelsBlock = { mode: "weighted", base: baseReels, free_spins: fsReels || baseReels };
+    // Scatter prevention — required for FS trigger frequency to match the
+    // validated MC.  Without it, multiple scatters on the same reel land
+    // independently and FS triggers ~64% too often.
+    if (v.irScatterPrev) reelsBlock.scatter_prevention = v.irScatterPrev;
     const ir = {
       schema_version: "1.0.0",
       meta: { id: v.id || "studio-variant", name: v.name || "Studio Variant", version: "0.1.0" },
       topology: { kind: "rectangular", reels: baseReels.length, rows: 3 },
       symbols,
-      reels: { mode: "weighted", base: baseReels, free_spins: fsReels || baseReels },
+      reels: reelsBlock,
       evaluation: {
         kind: "lines",
         paylines,
@@ -3355,9 +3370,25 @@
   // `variantToIrForMc()` shape but adds meta + rtp_allocation so the
   // standalone runner can render real names + version.
   function variantToFullIR(v) {
+    const ws = getActiveWorkspace();
+    // If we have the FULL original IR captured at import time, prefer it
+    // byte-for-byte so the runner sees the same math the validator signed
+    // off on.  This preserves scatter_prevention, exact feature objects,
+    // RNG kind, bet structure, limits — everything the user can't tweak
+    // in Studio but the engine still depends on.  Tweakable fields
+    // (meta name, paytable, validated_metrics) are layered on top.
+    if (v.irOriginal && typeof v.irOriginal === "object") {
+      const ir = JSON.parse(JSON.stringify(v.irOriginal));
+      ir.meta = ir.meta || {};
+      ir.meta.name = ws?.name || ir.meta.name || v.name || "Slot Template";
+      ir.meta.id = ir.meta.id || v.id || "slot-template";
+      ir.meta.version = ir.meta.version || "1.0.0";
+      if (v.rtpAllocation) ir.rtp_allocation = v.rtpAllocation;
+      if (v.validatedMetrics) ir.validated_metrics = v.validatedMetrics;
+      return ir;
+    }
     const ir = variantToIrForMc(v);
     if (!ir) return null;
-    const ws = getActiveWorkspace();
     ir.meta = ir.meta || {};
     ir.meta.id = ir.meta.id || v.id || "slot-template";
     ir.meta.name = ws?.name || v.name || "Slot Template";

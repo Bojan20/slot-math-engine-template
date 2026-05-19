@@ -148,6 +148,30 @@
     }
     return r.syms[lo];
   }
+  // Scatter prevention — Wrath-style "max N scatters per reel".  When
+  // IR declares `reels.scatter_prevention`, any scatter beyond the
+  // limit on the same column is replaced with the configured fallback
+  // symbol (defaults to the most common LP).  This is critical for the
+  // FS trigger frequency to match the validated MC numbers.
+  const SCAT_PREV = (IR.reels && IR.reels.scatter_prevention) || null;
+  function applyScatterPrevention(grid) {
+    if (!SCAT_PREV || !SCAT_PREV.enabled) return grid;
+    const maxPer = SCAT_PREV.max_scatters_per_reel || 1;
+    const replace = SCAT_PREV.replacement_symbol;
+    const scId = scatterId();
+    if (!scId || !replace) return grid;
+    for (let r = 0; r < REELS; r++) {
+      let scSeen = 0;
+      for (let y = 0; y < ROWS; y++) {
+        if (grid[r][y] === scId) {
+          if (scSeen >= maxPer) grid[r][y] = replace;
+          else scSeen++;
+        }
+      }
+    }
+    return grid;
+  }
+
   function drawGrid(rng, reels) {
     const grid = [];
     for (let r = 0; r < REELS; r++) {
@@ -155,7 +179,7 @@
       for (let y = 0; y < ROWS; y++) col.push(drawSymbol(rng, r, reels));
       grid.push(col);
     }
-    return grid;
+    return applyScatterPrevention(grid);
   }
 
   function isWild(id)   { return SYM_BY_ID[id] && SYM_BY_ID[id].kind === 'wild'; }
@@ -317,10 +341,16 @@
     const cashDist = F_HNW.cash_value_distribution || [{ value: 1, weight: 1 }];
     const jackpots = F_HNW.jackpot_tiers || [];
     const totalCells = REELS * ROWS;
+    // Wrath canonical: cash + jackpot are ONE weighted pool (see headless
+    // version for full derivation).  P(jackpot) = ΣjpW / (ΣcashW + ΣjpW).
+    const unifiedPool = [
+      ...cashDist.map((c) => ({ value: c.value, weight: Math.max(0, c.weight) })),
+      ...jackpots.map((j) => ({ value: j.multiplier, weight: Math.max(0, j.weight) })),
+    ];
 
     let filled = Math.min(initialOrbCount, totalCells);
     let totalCash = 0;
-    for (let i = 0; i < filled; i++) totalCash += pickWeighted(state.rng, cashDist);
+    for (let i = 0; i < filled; i++) totalCash += pickWeighted(state.rng, unifiedPool);
 
     let respins = respinsInitial;
     let jackpotMult = 0;
@@ -346,24 +376,34 @@
       const free = totalCells - filled;
       const newOrbs = [];
       const remainingCells = cellOrder.filter((c) => !state.hnwLockedCells.has(c));
+      // Per-respin landing probability — computed once from current filled
+      // count, tested independently against every empty cell.
+      const filledFrac = filled / totalCells;
+      const p = orbLandBase + orbLandFill * filledFrac;
+      // Jackpot probability inside the unified pool, used for animation tag.
+      const jpTotalW = jackpots.reduce((a, j) => a + Math.max(0, j.weight), 0);
+      const poolTotalW = unifiedPool.reduce((a, e) => a + e.weight, 0);
       for (let c = 0; c < free; c++) {
-        const filledFrac = filled / totalCells;
-        const p = orbLandBase + orbLandFill * filledFrac;
         if (state.rng() < p) {
-          let value = pickWeighted(state.rng, cashDist);
+          const v = pickWeighted(state.rng, unifiedPool);
+          // For UI tag only: split the displayed orb between jackpot-tier
+          // and cash buckets based on which sub-pool the value came from.
+          // This is purely cosmetic; the math is one draw from the unified
+          // pool.  We tag as jackpot when the value matches one of the
+          // jackpot multipliers (multipliers don't overlap cash values in
+          // Wrath: 25/75/200/500 vs 1/2/3/5/8/10/15).
+          const isJp = jackpots.some((j) => j.multiplier === v);
           let jp = 0;
-          if (jackpots.length && state.rng() < 0.02) {
-            jp = pickJackpot(state.rng, jackpots);
-            jackpotMult += jp;
-          } else {
-            totalCash += value;
-          }
+          if (isJp) { jp = v; jackpotMult += v; } else { totalCash += v; }
           const cell = remainingCells[landed % remainingCells.length] || remainingCells[0];
           if (cell) state.hnwLockedCells.add(cell);
-          newOrbs.push({ cell, value, jp });
+          newOrbs.push({ cell, value: v, jp });
           landed++;
         }
       }
+      // Suppress unused-var lint when poolTotalW/jpTotalW aren't referenced
+      // outside the loop body.
+      void poolTotalW; void jpTotalW;
       filled += landed;
       renderHnwBoard();
       state.featureLabel = `Hold & Win · ${respins} respins · ${filled}/${totalCells} cells · €${fmt(totalCash + jackpotMult)}`;
@@ -835,6 +875,137 @@
   renderPaytable();
   bindUI();
 
-  // Expose for tests / debug
-  window.__SLOT__ = { state, IR, spinOnce, runAutoplay, stopAutoplay };
+  // ─── Headless instant spin (for verification / RTP tests) ─────────
+  // Pure math, no DOM animation, no feature overlays.  Mirrors the
+  // full spin pipeline (base eval + Lightning + FS + H&W + win cap)
+  // but resolves synchronously so a Playwright test can run N
+  // thousand spins in a few seconds.
+  function spinOnceInstant() {
+    const bet = currentBet();
+    if (state.balance < bet) return { win: 0, scCount: 0, bonusCount: 0, lightning: 1, fsWin: 0, hnwWin: 0 };
+    state.balance -= bet;
+    state.totalWagered += bet;
+    state.spinsPlayed += 1;
+    const grid = drawGrid(state.rng, BASE_REELS);
+    const result = evalBase(grid);
+    let spinWin = result.baseWin * bet;
+    let lightning = 1;
+    if (spinWin > 0 && F_MUL) {
+      lightning = rollLightning();
+      if (lightning > 1) spinWin = spinWin * lightning;
+    }
+    let fsWin = 0;
+    if (F_FS && result.scCount >= 3) {
+      fsWin = runFreeSpinsHeadless(result.scCount);
+      spinWin += fsWin * bet;
+    }
+    let hnwWin = 0;
+    if (F_HNW && result.bonusCount >= (F_HNW.trigger?.min || 6)) {
+      hnwWin = runHoldAndWinHeadless(result.bonusCount);
+      spinWin += hnwWin * bet;
+    }
+    const capAbs = WIN_CAP * bet;
+    if (spinWin > capAbs) spinWin = capAbs;
+    if (spinWin > 0) state.hits += 1;
+    state.totalWon += spinWin;
+    state.balance += spinWin;
+    if (spinWin > state.maxWin) state.maxWin = spinWin;
+    return { win: spinWin, scCount: result.scCount, bonusCount: result.bonusCount, lightning, fsWin, hnwWin };
+  }
+
+  // Headless versions of the feature sims — same math, no UI side effects.
+  function runFreeSpinsHeadless(initialScCount) {
+    if (!F_FS) return 0;
+    const fsReels = (F_FS.reels_override === 'free_spins' && FS_REELS) ? FS_REELS : BASE_REELS;
+    let remaining = awardFsSpins(initialScCount);
+    if (remaining <= 0) return 0;
+    let total = 0;
+    let mult = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.start) || 1;
+    const incr = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.increment) || 0;
+    const maxMult = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.max) || Infinity;
+    const incrOn = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.increments_on) || 'each_winning_fs_spin';
+    const fsCap = (F_FS.retrigger && F_FS.retrigger.max_total) || Infinity;
+    let totalAwarded = remaining;
+    while (remaining > 0) {
+      remaining--;
+      const grid = drawGrid(state.rng, fsReels);
+      const r = evalBase(grid);
+      let win = r.baseWin;
+      if (win > 0) {
+        win *= mult;
+        if (incrOn === 'each_winning_fs_spin' && mult < maxMult) mult = Math.min(maxMult, mult + incr);
+      }
+      if (incrOn === 'each_fs_spin' && mult < maxMult) mult = Math.min(maxMult, mult + incr);
+      total += win;
+      if (r.scCount >= 3 && totalAwarded < fsCap) {
+        const add = awardFsRetrigger(r.scCount);
+        if (add > 0) { remaining += add; totalAwarded += add; }
+      }
+    }
+    return total;
+  }
+
+  // Diagnostics for math verification — last H&W run details.
+  const _hnwDiag = { lastInitialOrbs: 0, lastFinalOrbs: 0, lastRespinsUsed: 0, totalRespinOrbsLanded: 0, runs: 0 };
+  function runHoldAndWinHeadless(initialOrbCount) {
+    if (!F_HNW) return 0;
+    const respinsInitial = F_HNW.respins_initial || 3;
+    const orbLandBase = F_HNW.orb_land_chance_base || 0.04;
+    const orbLandFill = F_HNW.orb_land_chance_fill_bonus || 0;
+    const fullGridBonus = F_HNW.full_grid_bonus_x || 0;
+    const cashDist = F_HNW.cash_value_distribution || [{ value: 1, weight: 1 }];
+    const jackpots = F_HNW.jackpot_tiers || [];
+    // Wrath canonical H&W (validated 500M-spin MC): cash values and jackpot
+    // tiers share a SINGLE weighted distribution.  Each orb (initial trigger
+    // orb AND respin-landed orb) draws once from this combined pool.
+    //   cash weights: 404+250+150+90+45+25+14 = 978
+    //   jackpot weights: 10+8+5+2 = 25
+    //   total = 1003, so P(jackpot) = 25/1003 ≈ 2.494%
+    // Jackpot value is its `multiplier` field (added as bet-units like cash).
+    const unifiedPool = [
+      ...cashDist.map((c) => ({ value: c.value, weight: Math.max(0, c.weight) })),
+      ...jackpots.map((j) => ({ value: j.multiplier, weight: Math.max(0, j.weight) })),
+    ];
+    const totalCells = REELS * ROWS;
+    let filled = Math.min(initialOrbCount, totalCells);
+    let total = 0;
+    // Initial trigger orbs draw from the unified pool — they CAN hit jackpots
+    // (this is what the validated MC does; previously runner gave them
+    // cash-only which artificially suppressed H&W RTP by ~12pp).
+    for (let i = 0; i < filled; i++) total += pickWeighted(state.rng, unifiedPool);
+    _hnwDiag.lastInitialOrbs = filled;
+    let respins = respinsInitial;
+    let respinsUsed = 0;
+    let respinOrbsLanded = 0;
+    while (respins > 0 && filled < totalCells) {
+      respinsUsed++;
+      let landed = 0;
+      const free = totalCells - filled;
+      // Per-respin landing probability is constant for this respin (computed
+      // once from current filled count) and tested independently against
+      // every empty cell.
+      const filledFrac = filled / totalCells;
+      const p = orbLandBase + orbLandFill * filledFrac;
+      for (let c = 0; c < free; c++) {
+        if (state.rng() < p) {
+          total += pickWeighted(state.rng, unifiedPool);
+          landed++;
+        }
+      }
+      filled += landed;
+      respinOrbsLanded += landed;
+      if (landed > 0 && F_HNW.respin_reset_on_new) respins = respinsInitial;
+      else respins--;
+    }
+    if (filled >= totalCells && fullGridBonus > 0) total += fullGridBonus;
+    _hnwDiag.lastFinalOrbs = filled;
+    _hnwDiag.lastRespinsUsed = respinsUsed;
+    _hnwDiag.totalRespinOrbsLanded += respinOrbsLanded;
+    _hnwDiag.runs++;
+    return total;
+  }
+
+  // Expose for tests / debug.  `spinOnceInstant` is what verification
+  // harnesses use to run 10K+ spins in a few seconds.
+  window.__SLOT__ = { state, IR, spinOnce, spinOnceInstant, runAutoplay, stopAutoplay, _debug: { evalBase, drawGrid, BASE_REELS, FS_REELS, F_FS, F_HNW, F_MUL, SCAT_PREV, hnwDiag: _hnwDiag } };
 })();
