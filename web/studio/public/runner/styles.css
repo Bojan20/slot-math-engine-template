@@ -394,13 +394,13 @@ body {
 
 .reelFrame {
   position: relative;
-  /* Neutral template frame — no game-specific ornaments.  Subtle inner
-     gradient + 1px stroke gives it depth without committing to a theme.
-     Inner aspect ratio chosen so that 5×3 with square cells fits without
-     leaking past the inner edge; same ratio works for 6×4 and 7×7 too. */
+  /* Wrath-canonical sizing — desktop frame matches production
+     (228px square cells + 6px gap + 18px inset → ~1200×732 bounding box).
+     `clamp` keeps it responsive on small screens while preserving the
+     5×3.05 aspect ratio that Wrath's PixiJS renderer uses. */
   aspect-ratio: 5 / 3.05;
-  width: min(96vw, 760px);
-  max-height: 100%;
+  width: clamp(600px, 82vw, 1200px);
+  max-height: calc(100vh - 220px);
   padding: var(--frame-inset);
   background:
     radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.04), transparent 65%),
@@ -709,9 +709,16 @@ body {
   justify-content: center;
   background: rgba(7,9,13,0.86);
   backdrop-filter: blur(10px);
-  z-index: 60;
+  /* Wrath-canonical z=9980 — above SPIN button (200), HUD (50), payline
+     overlay (3) and every component DOM.  Only the intro modal (300) and
+     Studio toasts (above) can ride higher. */
+  z-index: 9980;
   animation: bw-fadein 280ms ease-out;
 }
+/* When Big Win is active, hide the payline overlay so the gold count-up
+   reads cleanly without rays of color slicing across the reels. */
+body.is-bigwin .payline-overlay,
+.appRoot.has-bigwin .payline-overlay { opacity: 0; visibility: hidden; }
 .bigwin-overlay[hidden] { display: none; }
 @keyframes bw-fadein { from { opacity: 0; } to { opacity: 1; } }
 .bw-card {
@@ -819,13 +826,21 @@ body {
   background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
 }
 .bottomBar__inner {
+  /* Wrath-canonical layout: menu LEFT, status CENTER, bet stepper RIGHT-CENTER,
+     sound FAR RIGHT.  SPIN button lives on the right edge fixed at 50% vertical
+     (see .spin-btn rules) — NOT inside the bottom bar.  Auto controls sit
+     between bet and sound.  Total bar height ~76px matches production. */
   display: grid;
-  grid-template-columns: 50px minmax(140px, 1fr) minmax(220px, 1.4fr) minmax(180px, 1fr) auto minmax(220px, 1fr) 50px;
+  grid-template-columns: 56px 1fr minmax(220px, auto) minmax(140px, auto) minmax(120px, auto) 56px;
   align-items: center;
-  gap: 14px;
-  height: 96px;
-  padding: 0 8px;
+  gap: 12px;
+  height: 76px;
+  padding: 0 12px;
 }
+/* The dedicated `.bottomBar__section--spin` cell from earlier port batches
+   is unused now (SPIN floats fixed-right).  Hide it so the grid columns
+   stay aligned to the Wrath layout. */
+.bottomBar__section--spin { display: none; }
 
 .bottomBar__section {
   display: flex;
@@ -923,29 +938,37 @@ body {
   min-width: 80px;
 }
 
+/* SPIN button — Wrath-canonical sizing: 150×150 circle, fixed on right
+   side of viewport at desktop, vertically centered around the reel
+   frame.  Sits at z-index 200 to stay above the reel frame + payline
+   overlays but below the Big-Win and modal layers. */
 .spin-btn {
-  position: relative;
-  width: 110px;
-  height: 70px;
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 150px;
   background:
     radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.14), transparent 60%),
     linear-gradient(180deg, var(--cyan), var(--cyan-deep));
   color: #001017;
-  border: 2px solid var(--cyan);
-  border-radius: var(--r-lg);
+  border: 5px solid var(--cyan);
+  border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: 0.10em;
   cursor: pointer;
+  z-index: 200;
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.4) inset,
-    0 4px 16px rgba(34, 211, 238,0.42),
-    0 0 24px rgba(34, 211, 238,0.18);
+    0 6px 24px rgba(34, 211, 238,0.45),
+    0 0 36px rgba(34, 211, 238,0.22);
   transition: transform 120ms, box-shadow 120ms;
 }
-.spin-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(34, 211, 238,0.55), 0 0 32px rgba(34, 211, 238,0.25); }
-.spin-btn:active { transform: translateY(0);    box-shadow: 0 2px 10px rgba(34, 211, 238,0.35); }
+.spin-btn:hover  { transform: translateY(-50%) scale(1.04); box-shadow: 0 8px 28px rgba(34, 211, 238,0.55), 0 0 40px rgba(34, 211, 238,0.28); }
+.spin-btn:active { transform: translateY(-50%) scale(0.97); box-shadow: 0 3px 12px rgba(34, 211, 238,0.35); }
 .spin-btn[disabled],
 .spin-btn[aria-disabled="true"] {
   background: linear-gradient(180deg, var(--bg-3), var(--bg-2));

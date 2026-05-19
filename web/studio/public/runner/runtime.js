@@ -688,6 +688,12 @@
     const multEl = overlay.querySelector('.bw-mult');
     state.skipBigWin = false;
     overlay.removeAttribute('hidden');
+    // Mark body so .payline-overlay can hide via CSS (Wrath behavior: win
+    // lines vanish behind the Big Win reveal so the count-up has the stage
+    // to itself).  Cleared after the reveal completes / is skipped.
+    document.body.classList.add('is-bigwin');
+    document.getElementById('appRoot')?.classList.add('has-bigwin');
+    clearPaylines();
     // Kick off coin shower — tier-scaled particle burst (24 / 48 / 80 coins)
     playCoinShower(tier);
     const stages = BIG_WIN_TIERS.slice(0, tier);
@@ -707,7 +713,7 @@
           tierEl.textContent = stages[stages.length - 1].label;
           if (stages.length >= 2) card.classList.add('is-tier-2');
           if (stages.length >= 3) card.classList.add('is-tier-3');
-          setTimeout(() => { overlay.setAttribute('hidden', ''); resolve(); }, 600);
+          setTimeout(() => { overlay.setAttribute('hidden', ''); document.body.classList.remove('is-bigwin'); document.getElementById('appRoot')?.classList.remove('has-bigwin'); resolve(); }, 600);
           return;
         }
         const elapsed = now - start;
@@ -729,7 +735,7 @@
         else {
           amtEl.textContent = fmt(amount);
           multEl.textContent = `${xBet.toFixed(1)}×`;
-          setTimeout(() => { overlay.setAttribute('hidden', ''); resolve(); }, 900);
+          setTimeout(() => { overlay.setAttribute('hidden', ''); document.body.classList.remove('is-bigwin'); document.getElementById('appRoot')?.classList.remove('has-bigwin'); resolve(); }, 900);
         }
       }
       requestAnimationFrame(frame);
