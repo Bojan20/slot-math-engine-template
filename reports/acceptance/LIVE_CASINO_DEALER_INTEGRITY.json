@@ -1,0 +1,197 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_nj_dge_compliant",
+      "regime": "NJ_DGE",
+      "cfg": {
+        "perSpinErrorProbability": 0.0005,
+        "spinsPerShift": 300,
+        "shiftsPerYear": 700,
+        "avgChipErrorValue": 100,
+        "chipTrackingDetectionRate": 0.98,
+        "reconciliationStd": 50,
+        "alertZThreshold": 3,
+        "auditCadenceDays": 30
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 105,
+        "expectedAnnualErrorCost": 10500,
+        "detectedAnnualErrors": 102.89999999999999,
+        "undetectedAnnualErrors": 2.1000000000000085,
+        "perShiftErrorProb": 0.1393243102813484,
+        "perShiftErrorStd": 0.38720149793098685,
+        "zAlertProbability": 0.0013499672813147567,
+        "oneInNShiftsAlert": 740.7586938152178,
+        "dealerIntegrityScore": 0.5920000000000001,
+        "isCompliantNjDge": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 105.33,
+        "observedDetectedAnnualErrors": 103.22
+      },
+      "pass": true
+    },
+    {
+      "name": "B_mga_premium_live",
+      "regime": "MGA_PREMIUM",
+      "cfg": {
+        "perSpinErrorProbability": 0.0003,
+        "spinsPerShift": 250,
+        "shiftsPerYear": 800,
+        "avgChipErrorValue": 500,
+        "chipTrackingDetectionRate": 0.995,
+        "reconciliationStd": 100,
+        "alertZThreshold": 2.5,
+        "auditCadenceDays": 14
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 60,
+        "expectedAnnualErrorCost": 30000,
+        "detectedAnnualErrors": 59.7,
+        "undetectedAnnualErrors": 0.29999999999999716,
+        "perShiftErrorProb": 0.0722669528148212,
+        "perShiftErrorStd": 0.27382019647936856,
+        "zAlertProbability": 0.006209680111437965,
+        "oneInNShiftsAlert": 161.0388912237271,
+        "dealerIntegrityScore": 0.7089321887407152,
+        "isCompliantNjDge": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 59.93,
+        "observedDetectedAnnualErrors": 59.55
+      },
+      "pass": true
+    },
+    {
+      "name": "C_corner_no_chip_tracking",
+      "regime": "CORNER_LOW_TRACK",
+      "cfg": {
+        "perSpinErrorProbability": 0.001,
+        "spinsPerShift": 300,
+        "shiftsPerYear": 700,
+        "avgChipErrorValue": 100,
+        "chipTrackingDetectionRate": 0.7,
+        "reconciliationStd": 100,
+        "alertZThreshold": 3,
+        "auditCadenceDays": 90
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 210,
+        "expectedAnnualErrorCost": 21000,
+        "detectedAnnualErrors": 147,
+        "undetectedAnnualErrors": 63,
+        "perShiftErrorProb": 0.25929296784390077,
+        "perShiftErrorStd": 0.5474486277268398,
+        "zAlertProbability": 0.0013499672813147567,
+        "oneInNShiftsAlert": 740.7586938152178,
+        "dealerIntegrityScore": 0.3466666666666667,
+        "isCompliantNjDge": false
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 210.93,
+        "observedDetectedAnnualErrors": 147.1
+      },
+      "pass": true
+    },
+    {
+      "name": "D_uk_rts7c_baseline",
+      "regime": "UK_RTS7C",
+      "cfg": {
+        "perSpinErrorProbability": 0.0008,
+        "spinsPerShift": 280,
+        "shiftsPerYear": 720,
+        "avgChipErrorValue": 150,
+        "chipTrackingDetectionRate": 0.97,
+        "reconciliationStd": 60,
+        "alertZThreshold": 3,
+        "auditCadenceDays": 30
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 161.28,
+        "expectedAnnualErrorCost": 24192,
+        "detectedAnnualErrors": 156.4416,
+        "undetectedAnnualErrors": 4.838400000000007,
+        "perShiftErrorProb": 0.20075651927437377,
+        "perShiftErrorStd": 0.47309703021684674,
+        "zAlertProbability": 0.0013499672813147567,
+        "oneInNShiftsAlert": 740.7586938152178,
+        "dealerIntegrityScore": 0.5880000000000001,
+        "isCompliantNjDge": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 161.26,
+        "observedDetectedAnnualErrors": 156.68
+      },
+      "pass": true
+    },
+    {
+      "name": "E_au_agco_strict",
+      "regime": "AU_AGCO",
+      "cfg": {
+        "perSpinErrorProbability": 0.0002,
+        "spinsPerShift": 200,
+        "shiftsPerYear": 600,
+        "avgChipErrorValue": 200,
+        "chipTrackingDetectionRate": 0.999,
+        "reconciliationStd": 75,
+        "alertZThreshold": 2,
+        "auditCadenceDays": 7
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 24,
+        "expectedAnnualErrorCost": 4800,
+        "detectedAnnualErrors": 23.976,
+        "undetectedAnnualErrors": 0.02400000000000091,
+        "perShiftErrorProb": 0.03921440451023872,
+        "perShiftErrorStd": 0.1999799989999,
+        "zAlertProbability": 0.02275006288725634,
+        "oneInNShiftsAlert": 43.95592244978625,
+        "dealerIntegrityScore": 0.8427423819590452,
+        "isCompliantNjDge": true
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 23.89,
+        "observedDetectedAnnualErrors": 23.88
+      },
+      "pass": true
+    },
+    {
+      "name": "F_corner_high_error_rate",
+      "regime": "CORNER_HIGH_ERR",
+      "cfg": {
+        "perSpinErrorProbability": 0.005,
+        "spinsPerShift": 300,
+        "shiftsPerYear": 700,
+        "avgChipErrorValue": 100,
+        "chipTrackingDetectionRate": 0.95,
+        "reconciliationStd": 50,
+        "alertZThreshold": 3,
+        "auditCadenceDays": 30
+      },
+      "closed_form": {
+        "expectedAnnualErrors": 1050,
+        "expectedAnnualErrorCost": 105000,
+        "detectedAnnualErrors": 997.5,
+        "undetectedAnnualErrors": 52.5,
+        "perShiftErrorProb": 0.777707800159253,
+        "perShiftErrorStd": 1.2216791722870617,
+        "zAlertProbability": 0.0013499672813147567,
+        "oneInNShiftsAlert": 740.7586938152178,
+        "dealerIntegrityScore": 0.5800000000000001,
+        "isCompliantNjDge": false
+      },
+      "monte_carlo": {
+        "episodes": 100,
+        "observedExpectedAnnualErrors": 1055.58,
+        "observedDetectedAnnualErrors": 1001.66
+      },
+      "pass": true
+    }
+  ]
+}
