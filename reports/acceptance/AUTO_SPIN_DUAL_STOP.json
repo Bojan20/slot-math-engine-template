@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "AUTO_SPIN_DUAL_STOP",
+  "generated_utc": "2026-05-19T04:26:25.881Z",
+  "episodes_per_config": 3000,
+  "seed": 3405644320,
+  "tolerances": {
+    "ploss_small_bet": 0.05,
+    "ploss_realistic": 0.15,
+    "psum_abs": 0.005,
+    "expected_spins_rel": 0.3
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_responsible_small_bet_smooth",
+      "description": "UK responsible-gambling, £0.10 bet, £5 loss-limit, £10 win-limit, 5000 auto-spins — small-bet smooth Bachelier regime",
+      "regime": "small-bet",
+      "cfg": {
+        "bet": 0.1,
+        "rtp": 0.96,
+        "volatilityIndex": 5,
+        "lossLimit": 5,
+        "winLimit": 10,
+        "maxAutoSpins": 5000
+      },
+      "closed_form": {
+        "meanNetPerSpin": -0.0040000000000000036,
+        "varNetPerSpin": 0.05000000000000001,
+        "driftRegime": "negative",
+        "probWinUnconditional": 0.12227071358930007,
+        "probLossUnconditional": 0.8777292864106999,
+        "expectedSpinsUnbounded": 791.484824040124,
+        "probSpinLimitFired": 0,
+        "probLossStopFired": 0.8777292864106999,
+        "probWinStopFired": 0.12227071358930007,
+        "expectedSpinsToStop": 791.484824040124,
+        "expectedFinalNetWin": -3.1659392961604986,
+        "oneInNSessionsLossStop": 1.1393034452448338,
+        "sessionRiskScore": 0.6582969648080249
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.8693333333333333,
+        "observedProbWinStop": 0.12733333333333333,
+        "observedProbSpinLimit": 0.0033333333333333335,
+        "observedExpectedSpinsToStop": 856.9646666666666,
+        "observedExpectedFinalNetWin": -3.1586479837055217
+      },
+      "checks": {
+        "ploss_delta": 0.008395953077366625,
+        "pwin_delta": 0.005062619744033256,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.07640903432021236,
+        "tolerance_regime": "small-bet",
+        "tolerance_ploss": 0.05
+      },
+      "pass": true,
+      "elapsed_ms": 62
+    },
+    {
+      "name": "B_uk_realistic_£1_bet_£50_£100_limits",
+      "description": "UK realistic operator, £1 bet, £50 loss-limit, £100 win-limit, 500 auto-spins — typical session",
+      "regime": "realistic",
+      "cfg": {
+        "bet": 1,
+        "rtp": 0.96,
+        "volatilityIndex": 5,
+        "lossLimit": 50,
+        "winLimit": 100,
+        "maxAutoSpins": 500
+      },
+      "closed_form": {
+        "meanNetPerSpin": -0.040000000000000036,
+        "varNetPerSpin": 5,
+        "driftRegime": "negative",
+        "probWinUnconditional": 0.12227071358930001,
+        "probLossUnconditional": 0.8777292864107,
+        "expectedSpinsUnbounded": 791.4848240401242,
+        "probSpinLimitFired": 0.5267582431361515,
+        "probLossStopFired": 0.41537814955185176,
+        "probWinStopFired": 0.05786360731199677,
+        "expectedSpinsToStop": 500,
+        "expectedFinalNetWin": -25.51771160911595,
+        "oneInNSessionsLossStop": 2.4074448814384968,
+        "sessionRiskScore": 0.3115336121638888
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.42866666666666664,
+        "observedProbWinStop": 0.02033333333333333,
+        "observedProbSpinLimit": 0.551,
+        "observedExpectedSpinsToStop": 397.951,
+        "observedExpectedFinalNetWin": -14.2054988987814
+      },
+      "checks": {
+        "ploss_delta": 0.01328851711481488,
+        "pwin_delta": 0.037530273978663445,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.20409799999999995,
+        "tolerance_regime": "realistic",
+        "tolerance_ploss": 0.15
+      },
+      "pass": true,
+      "elapsed_ms": 36
+    },
+    {
+      "name": "C_au_ncpf_high_vol_£2_bet",
+      "description": "AU NCPF high-volatility, £2 bet, £100 loss-limit, £200 win-limit, 250 auto-spins, v=10 — fast P_loss",
+      "regime": "realistic",
+      "cfg": {
+        "bet": 2,
+        "rtp": 0.88,
+        "volatilityIndex": 10,
+        "lossLimit": 100,
+        "winLimit": 200,
+        "maxAutoSpins": 250
+      },
+      "closed_form": {
+        "meanNetPerSpin": -0.24,
+        "varNetPerSpin": 40,
+        "driftRegime": "negative",
+        "probWinUnconditional": 0.06517505598226614,
+        "probLossUnconditional": 0.9348249440177339,
+        "expectedSpinsUnbounded": 335.197846688834,
+        "probSpinLimitFired": 0.46149433216868685,
+        "probLossStopFired": 0.5034085307836397,
+        "probWinStopFired": 0.03509713704767345,
+        "expectedSpinsToStop": 250,
+        "expectedFinalNetWin": -71.01108559895049,
+        "oneInNSessionsLossStop": 1.9864581922029263,
+        "sessionRiskScore": 0.3775563980877298
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.484,
+        "observedProbWinStop": 0.011666666666666667,
+        "observedProbSpinLimit": 0.5043333333333333,
+        "observedExpectedSpinsToStop": 192.164,
+        "observedExpectedFinalNetWin": -42.52964107490264
+      },
+      "checks": {
+        "ploss_delta": 0.019408530783639688,
+        "pwin_delta": 0.023430470381006784,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.23134400000000005,
+        "tolerance_regime": "realistic",
+        "tolerance_ploss": 0.15
+      },
+      "pass": true,
+      "elapsed_ms": 15
+    },
+    {
+      "name": "D_eu_high_roller_£5_bet_long_session",
+      "description": "EU high-roller, £5 bet, £500 loss-limit, £1000 win-limit, 1000 auto-spins, low-vol v=3",
+      "regime": "realistic",
+      "cfg": {
+        "bet": 5,
+        "rtp": 0.97,
+        "volatilityIndex": 3,
+        "lossLimit": 500,
+        "winLimit": 1000,
+        "maxAutoSpins": 1000
+      },
+      "closed_form": {
+        "meanNetPerSpin": -0.15000000000000013,
+        "varNetPerSpin": 75,
+        "driftRegime": "negative",
+        "probWinUnconditional": 0.015876239976466713,
+        "probLossUnconditional": 0.9841237600235333,
+        "expectedSpinsUnbounded": 3174.570933568664,
+        "probSpinLimitFired": 0.8342425037140919,
+        "probLossStopFired": 0.1631258904969747,
+        "probWinStopFired": 0.0026316057889333665,
+        "expectedSpinsToStop": 1000,
+        "expectedFinalNetWin": -204.06771501666788,
+        "oneInNSessionsLossStop": 6.130234734372505,
+        "sessionRiskScore": 0.12234441787273104
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.14766666666666667,
+        "observedProbWinStop": 0,
+        "observedProbSpinLimit": 0.8523333333333334,
+        "observedExpectedSpinsToStop": 957.2016666666667,
+        "observedExpectedFinalNetWin": -133.5395411990158
+      },
+      "checks": {
+        "ploss_delta": 0.015459223830308039,
+        "pwin_delta": 0.0026316057889333665,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.04279833333333329,
+        "tolerance_regime": "realistic",
+        "tolerance_ploss": 0.15
+      },
+      "pass": true,
+      "elapsed_ms": 80
+    },
+    {
+      "name": "E_corner_zero_drift_symmetric",
+      "description": "Corner: RTP=1.00 zero-drift symmetric P_win=a/(a+b)=0.5 — driftless Wiener verified",
+      "regime": "small-bet",
+      "cfg": {
+        "bet": 0.1,
+        "rtp": 1,
+        "volatilityIndex": 5,
+        "lossLimit": 10,
+        "winLimit": 10,
+        "maxAutoSpins": 10000
+      },
+      "closed_form": {
+        "meanNetPerSpin": 0,
+        "varNetPerSpin": 0.05000000000000001,
+        "driftRegime": "zero",
+        "probWinUnconditional": 0.5,
+        "probLossUnconditional": 0.5,
+        "expectedSpinsUnbounded": 1999.9999999999995,
+        "probSpinLimitFired": 0,
+        "probLossStopFired": 0.5,
+        "probWinStopFired": 0.5,
+        "expectedSpinsToStop": 1999.9999999999995,
+        "expectedFinalNetWin": 0,
+        "oneInNSessionsLossStop": 2,
+        "sessionRiskScore": 0.5
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.4806666666666667,
+        "observedProbWinStop": 0.5163333333333333,
+        "observedProbSpinLimit": 0.003,
+        "observedExpectedSpinsToStop": 2054.6766666666667,
+        "observedExpectedFinalNetWin": 0.36128027037959287
+      },
+      "checks": {
+        "ploss_delta": 0.019333333333333313,
+        "pwin_delta": 0.01633333333333331,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.026610837390473693,
+        "tolerance_regime": "small-bet",
+        "tolerance_ploss": 0.05
+      },
+      "pass": true,
+      "elapsed_ms": 171
+    },
+    {
+      "name": "F_corner_player_edge_positive_drift",
+      "description": "Corner: RTP=1.03 player advantage, P_win > P_loss verified, expected net positive",
+      "regime": "small-bet",
+      "cfg": {
+        "bet": 0.1,
+        "rtp": 1.03,
+        "volatilityIndex": 5,
+        "lossLimit": 5,
+        "winLimit": 10,
+        "maxAutoSpins": 5000
+      },
+      "closed_form": {
+        "meanNetPerSpin": 0.0030000000000000027,
+        "varNetPerSpin": 0.05000000000000001,
+        "driftRegime": "positive",
+        "probWinUnconditional": 0.5405388318516459,
+        "probLossUnconditional": 0.45946116814835414,
+        "expectedSpinsUnbounded": 1036.027492591562,
+        "probSpinLimitFired": 0,
+        "probLossStopFired": 0.45946116814835414,
+        "probWinStopFired": 0.5405388318516459,
+        "expectedSpinsToStop": 1036.027492591562,
+        "expectedFinalNetWin": 3.1080824777746883,
+        "oneInNSessionsLossStop": 2.1764624941647144,
+        "sessionRiskScore": 0.34459587611126563
+      },
+      "monte_carlo": {
+        "episodes": 3000,
+        "observedProbLossStop": 0.43533333333333335,
+        "observedProbWinStop": 0.5613333333333334,
+        "observedProbSpinLimit": 0.0033333333333333335,
+        "observedExpectedSpinsToStop": 1060.177,
+        "observedExpectedFinalNetWin": 3.4606917765890874
+      },
+      "checks": {
+        "ploss_delta": 0.024127834815020788,
+        "pwin_delta": 0.02079450148168749,
+        "psum": 1,
+        "psum_ok": true,
+        "expected_spins_rel": 0.022778750537351795,
+        "tolerance_regime": "small-bet",
+        "tolerance_ploss": 0.05
+      },
+      "pass": true,
+      "elapsed_ms": 88
+    }
+  ]
+}
