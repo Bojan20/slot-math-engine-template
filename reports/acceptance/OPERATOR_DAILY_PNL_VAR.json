@@ -1,0 +1,268 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "OPERATOR_DAILY_PNL_VAR",
+  "generated_utc": "2026-05-19T10:39:33.073Z",
+  "episodes_per_config": 10000,
+  "seed": 3405644327,
+  "tolerances": {
+    "var_rel": 0.1,
+    "ggr_rel": 0.05
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_small_operator_£1M_reserves",
+      "description": "UK small operator: 1K sessions/day, £1M reserves, no large jackpot — minimal VaR",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "expectedSessionsPerDay": 1000,
+        "meanProfitPerSession": 3,
+        "stdProfitPerSession": 30,
+        "jackpotMaxPayout": 10000,
+        "jackpotTriggerProbPerDay": 0.001,
+        "operatorOwnFunds": 1000000,
+        "minimumReserve": 100000,
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "jackpotSafetyFactor": 2
+      },
+      "closed_form": {
+        "expectedDailyGgr": 3000,
+        "stdDailyGgr": 948.6832980505138,
+        "expectedAnnualGgr": 1095000,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizon": 6979.043623164085,
+        "expectedShortfallAlphaTHorizon": 7995.642654579509,
+        "jackpotTailReserve": 7300,
+        "requiredReserveCapital": 100000,
+        "solvencyRatio": 10,
+        "isCompliantUkgcGa2005": true
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 3005.0202679919144,
+        "observedStdDailyGgr": 954.9313384787432,
+        "observedVarAlphaTHorizon": 7704.58952643952,
+        "observedExpectedShortfallAlphaTHorizon": 8513.013308912316
+      },
+      "checks": {
+        "var_rel": 0.09417061100862147,
+        "ggr_rel": 0.0016706269988884682
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "B_uk_mid_tier_£5M_reserves",
+      "description": "UK mid-tier operator: 10K sessions/day, £5M reserves, moderate jackpot exposure",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "expectedSessionsPerDay": 10000,
+        "meanProfitPerSession": 5,
+        "stdProfitPerSession": 50,
+        "jackpotMaxPayout": 100000,
+        "jackpotTriggerProbPerDay": 0.001,
+        "operatorOwnFunds": 5000000,
+        "minimumReserve": 100000,
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "jackpotSafetyFactor": 2
+      },
+      "closed_form": {
+        "expectedDailyGgr": 50000,
+        "stdDailyGgr": 5000,
+        "expectedAnnualGgr": 18250000,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizon": 36782.78956478728,
+        "expectedShortfallAlphaTHorizon": 42140.73690877696,
+        "jackpotTailReserve": 73000,
+        "requiredReserveCapital": 100000,
+        "solvencyRatio": 50,
+        "isCompliantUkgcGa2005": true
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 50026.45913553135,
+        "observedStdDailyGgr": 5032.930064444978,
+        "observedVarAlphaTHorizon": 40606.75223371161,
+        "observedExpectedShortfallAlphaTHorizon": 44867.51967914919
+      },
+      "checks": {
+        "var_rel": 0.09417061100862156,
+        "ggr_rel": 0.0005289028243967922
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    },
+    {
+      "name": "C_eu_large_operator_£50M_reserves",
+      "description": "EU large operator: 100K sessions/day, £50M reserves, big jackpot pool — significant VaR",
+      "jurisdiction": "EU_EBA",
+      "cfg": {
+        "expectedSessionsPerDay": 100000,
+        "meanProfitPerSession": 4,
+        "stdProfitPerSession": 80,
+        "jackpotMaxPayout": 1000000,
+        "jackpotTriggerProbPerDay": 0.002,
+        "operatorOwnFunds": 50000000,
+        "minimumReserve": 1000000,
+        "varConfidenceLevel": 0.999,
+        "varHorizonDays": 10,
+        "jackpotSafetyFactor": 2.5
+      },
+      "closed_form": {
+        "expectedDailyGgr": 400000,
+        "stdDailyGgr": 25298.221281347036,
+        "expectedAnnualGgr": 146000000,
+        "zScoreForVar": 3.090232304709404,
+        "varAlphaTHorizon": 247218.58437675235,
+        "expectedShortfallAlphaTHorizon": 269367.2073791099,
+        "jackpotTailReserve": 1825000,
+        "requiredReserveCapital": 1825000,
+        "solvencyRatio": 27.397260273972602,
+        "isCompliantUkgcGa2005": true
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 400133.8738131156,
+        "observedStdDailyGgr": 25464.835692798737,
+        "observedVarAlphaTHorizon": 257028.93805900385,
+        "observedExpectedShortfallAlphaTHorizon": 269851.9766594634
+      },
+      "checks": {
+        "var_rel": 0.038168284693295605,
+        "ggr_rel": 0.0003345725565291945
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "D_au_micro_operator_AUD_1M_minimum",
+      "description": "AU NCPF micro: 500 sessions/day, A$1M minimum reserve required",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "expectedSessionsPerDay": 500,
+        "meanProfitPerSession": 3,
+        "stdProfitPerSession": 25,
+        "jackpotMaxPayout": 5000,
+        "jackpotTriggerProbPerDay": 0.0005,
+        "operatorOwnFunds": 1000000,
+        "minimumReserve": 1000000,
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "jackpotSafetyFactor": 2
+      },
+      "closed_form": {
+        "expectedDailyGgr": 1500,
+        "stdDailyGgr": 559.0169943749474,
+        "expectedAnnualGgr": 547500,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizon": 4112.440893446714,
+        "expectedShortfallAlphaTHorizon": 4711.4776174979825,
+        "jackpotTailReserve": 1825,
+        "requiredReserveCapital": 1000000,
+        "solvencyRatio": 1,
+        "isCompliantUkgcGa2005": true
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 1502.9582212837029,
+        "observedStdDailyGgr": 562.6986875049105,
+        "observedVarAlphaTHorizon": 4539.97291700353,
+        "observedExpectedShortfallAlphaTHorizon": 5016.341199219355
+      },
+      "checks": {
+        "var_rel": 0.0941706110086215,
+        "ggr_rel": 0.001968265811924034
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "E_corner_undercapitalized_at_risk",
+      "description": "Corner: undercapitalized operator (£200K vs £3M+ required) — non-compliant",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "expectedSessionsPerDay": 5000,
+        "meanProfitPerSession": 4,
+        "stdProfitPerSession": 100,
+        "jackpotMaxPayout": 500000,
+        "jackpotTriggerProbPerDay": 0.005,
+        "operatorOwnFunds": 200000,
+        "minimumReserve": 100000,
+        "varConfidenceLevel": 0.999,
+        "varHorizonDays": 30,
+        "jackpotSafetyFactor": 3
+      },
+      "closed_form": {
+        "expectedDailyGgr": 20000,
+        "stdDailyGgr": 7071.067811865475,
+        "expectedAnnualGgr": 7300000,
+        "zScoreForVar": 3.090232304709404,
+        "varAlphaTHorizon": 119684.18252051684,
+        "expectedShortfallAlphaTHorizon": 130406.83852421147,
+        "jackpotTailReserve": 2737500,
+        "requiredReserveCapital": 2737500,
+        "solvencyRatio": 0.0730593607305936,
+        "isCompliantUkgcGa2005": false
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 20037.418868317218,
+        "observedStdDailyGgr": 7117.637955610955,
+        "observedVarAlphaTHorizon": 124433.59957448744,
+        "observedExpectedShortfallAlphaTHorizon": 130641.52644290682
+      },
+      "checks": {
+        "var_rel": 0.0381682846932957,
+        "ggr_rel": 0.0018674495234705032
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "F_corner_well_capitalized_high_solvency",
+      "description": "Corner: well-capitalized operator (£100M reserves) — solvency ratio >> 1",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "expectedSessionsPerDay": 20000,
+        "meanProfitPerSession": 4,
+        "stdProfitPerSession": 60,
+        "jackpotMaxPayout": 250000,
+        "jackpotTriggerProbPerDay": 0.001,
+        "operatorOwnFunds": 100000000,
+        "minimumReserve": 500000,
+        "varConfidenceLevel": 0.99,
+        "varHorizonDays": 10,
+        "jackpotSafetyFactor": 2
+      },
+      "closed_form": {
+        "expectedDailyGgr": 80000,
+        "stdDailyGgr": 8485.28137423857,
+        "expectedAnnualGgr": 29200000,
+        "zScoreForVar": 2.326347874388028,
+        "varAlphaTHorizon": 62422.463837325275,
+        "expectedShortfallAlphaTHorizon": 71515.20199774661,
+        "jackpotTailReserve": 182500,
+        "requiredReserveCapital": 500000,
+        "solvencyRatio": 200,
+        "isCompliantUkgcGa2005": true
+      },
+      "monte_carlo": {
+        "episodes": 10000,
+        "observedExpectedDailyGgr": 80044.90264198056,
+        "observedStdDailyGgr": 8541.165546733231,
+        "observedVarAlphaTHorizon": 68911.94367940672,
+        "observedExpectedShortfallAlphaTHorizon": 76142.70580835344
+      },
+      "checks": {
+        "var_rel": 0.09417061100862147,
+        "ggr_rel": 0.0005609681628497579
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    }
+  ]
+}
