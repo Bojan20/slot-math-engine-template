@@ -1020,40 +1020,28 @@
           </div>
         </section>
 
-        <section class="rail-card">
+        <section class="rail-card" id="rail-vdecomp-card">
           <div class="rail-card-h"><span>Variance decomposition</span><span class="rail-card-r mono">σ² breakdown</span></div>
-          <div class="vdecomp-bar" aria-hidden="true">
-            <i class="vd-seg vd-base"    style="width:78%" title="Base 78%"></i>
-            <i class="vd-seg vd-fs"      style="width:14%" title="FS 14%"></i>
-            <i class="vd-seg vd-cascade" style="width:6%"  title="Cascade 6%"></i>
-            <i class="vd-seg vd-mult"    style="width:2%"  title="Multipliers 2%"></i>
+          <div class="vdecomp-bar" aria-hidden="true" id="vdecomp-bar">
+            <!-- Filled by refreshRail() when validatedMetrics.rtp_breakdown exists.
+                 Cold-start: empty bar (no fake segments). -->
           </div>
-          <ul class="vdecomp-legend">
-            <li><i class="vd-dot vd-base"></i><span>Base</span><b class="mono">78%</b></li>
-            <li><i class="vd-dot vd-fs"></i><span>Free Spins</span><b class="mono">14%</b></li>
-            <li><i class="vd-dot vd-cascade"></i><span>Cascade</span><b class="mono">6%</b></li>
-            <li><i class="vd-dot vd-mult"></i><span>Multipliers</span><b class="mono">2%</b></li>
+          <ul class="vdecomp-legend" id="vdecomp-legend">
+            <li><i class="vd-dot vd-base"></i><span>Base</span><b class="mono">—</b></li>
+            <li><i class="vd-dot vd-fs"></i><span>Free Spins</span><b class="mono">—</b></li>
+            <li><i class="vd-dot vd-cascade"></i><span>Cascade</span><b class="mono">—</b></li>
+            <li><i class="vd-dot vd-mult"></i><span>Multipliers</span><b class="mono">—</b></li>
           </ul>
         </section>
 
-        <section class="rail-card">
+        <section class="rail-card" id="rail-sens-card">
           <div class="rail-card-h"><span>Sensitivity preview</span><span class="rail-card-r mono">top-3 by ∂RTP</span></div>
-          <ul class="sens-preview">
-            <li>
-              <span class="sp-name">HP1 weight</span>
-              <span class="sp-bar"><i style="width:92%"></i></span>
-              <b class="mono cyan">±0.42pp</b>
-            </li>
-            <li>
-              <span class="sp-name">WILD weight</span>
-              <span class="sp-bar"><i style="width:67%"></i></span>
-              <b class="mono cyan">±0.31pp</b>
-            </li>
-            <li>
-              <span class="sp-name">FS trigger %</span>
-              <span class="sp-bar"><i style="width:48%"></i></span>
-              <b class="mono cyan">±0.22pp</b>
-            </li>
+          <ul class="sens-preview" id="sens-preview">
+            <!-- Populated by refreshRail() after a sweep / MC run.
+                 Cold-start: empty list (no fake ±0.42pp etc.). -->
+            <li class="sens-preview-empty"><span class="sp-name">—</span><span class="sp-bar"></span><b class="mono">—</b></li>
+            <li class="sens-preview-empty"><span class="sp-name">—</span><span class="sp-bar"></span><b class="mono">—</b></li>
+            <li class="sens-preview-empty"><span class="sp-name">—</span><span class="sp-bar"></span><b class="mono">—</b></li>
           </ul>
         </section>
       </div>

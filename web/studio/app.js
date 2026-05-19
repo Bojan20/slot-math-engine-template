@@ -893,6 +893,78 @@
     const l1sigma = $("#l1-sigma"); if (l1sigma) l1sigma.textContent = blankR ? DASH : v.sigma.toFixed(2);
     const l1p99   = $("#l1-p99");   if (l1p99)   l1p99.textContent   = blankR ? `${DASH}×` : p99Fmt;
 
+    // ── Variance decomposition (rail card) ─────────────────────────────
+    // Populates from validated_metrics.rtp_breakdown when present.
+    // Cold-start: bar empty, legend reads "—".
+    const vdBar = document.getElementById("vdecomp-bar");
+    const vdLeg = document.getElementById("vdecomp-legend");
+    if (vdBar && vdLeg) {
+      const br = (v && v.validatedMetrics && v.validatedMetrics.rtp_breakdown) || null;
+      if (!blankR && br && typeof br === "object") {
+        // Sum any numeric components into a normalized 0-100 split.  We
+        // accept BOTH the long-form keys (base_line_wins, lightning_uplift)
+        // AND the short-form keys (base, lightning) that the par-to-ir
+        // generator may emit.  First matching alias wins.
+        const segs = [
+          { keys: ["base_line_wins", "base"],            cls: "vd-base",    label: "Base" },
+          { keys: ["scatter_pays"],                       cls: "vd-base",    label: "Scatter pays" },
+          { keys: ["free_spins"],                         cls: "vd-fs",      label: "Free Spins" },
+          { keys: ["cascade"],                            cls: "vd-cascade", label: "Cascade" },
+          { keys: ["lightning_uplift", "lightning"],      cls: "vd-mult",    label: "Lightning" },
+          { keys: ["hold_and_win"],                       cls: "vd-mult",    label: "Hold & Win" },
+          { keys: ["pick"],                               cls: "vd-cascade", label: "Pick" },
+          { keys: ["wheel"],                              cls: "vd-cascade", label: "Wheel" },
+        ];
+        const pickValue = (keys) => {
+          for (const k of keys) {
+            const raw = br[k];
+            if (typeof raw === "number" && raw > 0) return raw;
+          }
+          return 0;
+        };
+        const present = segs
+          .map((s) => ({ ...s, val: pickValue(s.keys) }))
+          .filter((s) => s.val > 0);
+        const total = present.reduce((a, s) => a + s.val, 0) || 1;
+        const norm = present.map((s) => ({ ...s, pct: (s.val / total) * 100 }));
+        vdBar.innerHTML = norm.map((s) => `<i class="vd-seg ${s.cls}" style="width:${s.pct.toFixed(1)}%" title="${s.label} ${s.pct.toFixed(1)}%"></i>`).join("");
+        vdLeg.innerHTML = norm.map((s) => `<li><i class="vd-dot ${s.cls}"></i><span>${s.label}</span><b class="mono">${s.pct.toFixed(1)}%</b></li>`).join("");
+      } else {
+        vdBar.innerHTML = "";
+        vdLeg.innerHTML = `
+          <li><i class="vd-dot vd-base"></i><span>Base</span><b class="mono">${DASH}</b></li>
+          <li><i class="vd-dot vd-fs"></i><span>Free Spins</span><b class="mono">${DASH}</b></li>
+          <li><i class="vd-dot vd-cascade"></i><span>Cascade</span><b class="mono">${DASH}</b></li>
+          <li><i class="vd-dot vd-mult"></i><span>Multipliers</span><b class="mono">${DASH}</b></li>
+        `;
+      }
+    }
+
+    // ── Sensitivity preview (rail card) ────────────────────────────────
+    // Populated by the Sensitivity sweep when results exist; otherwise
+    // shows three em-dashes.
+    const sensList = document.getElementById("sens-preview");
+    if (sensList) {
+      const top = (v && v.lastSensitivity && Array.isArray(v.lastSensitivity.top3)) ? v.lastSensitivity.top3 : null;
+      if (!blankR && top && top.length > 0) {
+        const max = Math.max(...top.map((t) => Math.abs(t.dpp || 0)), 0.001);
+        sensList.innerHTML = top.slice(0, 3).map((t) => {
+          const w = Math.max(5, Math.min(100, (Math.abs(t.dpp || 0) / max) * 100));
+          return `<li>
+            <span class="sp-name">${escapeHtml(t.name || "—")}</span>
+            <span class="sp-bar"><i style="width:${w.toFixed(0)}%"></i></span>
+            <b class="mono cyan">±${(t.dpp || 0).toFixed(2)}pp</b>
+          </li>`;
+        }).join("");
+      } else {
+        sensList.innerHTML = `
+          <li class="sens-preview-empty"><span class="sp-name">${DASH}</span><span class="sp-bar"></span><b class="mono">${DASH}</b></li>
+          <li class="sens-preview-empty"><span class="sp-name">${DASH}</span><span class="sp-bar"></span><b class="mono">${DASH}</b></li>
+          <li class="sens-preview-empty"><span class="sp-name">${DASH}</span><span class="sp-bar"></span><b class="mono">${DASH}</b></li>
+        `;
+      }
+    }
+
     // Variant lineup mini-section (only if element exists, since it's
     // inside legacy #rail-default now hidden — guarded inside fn)
     renderVariantLineup();
