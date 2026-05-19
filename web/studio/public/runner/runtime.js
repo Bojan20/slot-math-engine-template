@@ -688,6 +688,8 @@
     const multEl = overlay.querySelector('.bw-mult');
     state.skipBigWin = false;
     overlay.removeAttribute('hidden');
+    // Kick off coin shower — tier-scaled particle burst (24 / 48 / 80 coins)
+    playCoinShower(tier);
     const stages = BIG_WIN_TIERS.slice(0, tier);
     const totalMs = stages.length * BIG_WIN_TIER_MS;
     const start = performance.now();
@@ -696,6 +698,7 @@
     amtEl.textContent = '0.00';
     multEl.textContent = `0×`;
 
+    let lastStageIdx = 0;
     return new Promise((resolve) => {
       function frame(now) {
         if (state.skipBigWin) {
@@ -717,6 +720,11 @@
         tierEl.textContent = stages[stageIdx].label;
         card.classList.toggle('is-tier-2', stageIdx >= 1);
         card.classList.toggle('is-tier-3', stageIdx >= 2);
+        // Burst extra coins on tier upgrades (MEGA / EPIC entries)
+        if (stageIdx > lastStageIdx) {
+          playCoinShower(stageIdx + 1);
+          lastStageIdx = stageIdx;
+        }
         if (elapsed < totalMs) requestAnimationFrame(frame);
         else {
           amtEl.textContent = fmt(amount);
@@ -840,16 +848,142 @@
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 11.5 · FS HUD + MULT LADDER + COIN SHOWER (Batch 3)           ║
+  // ╚══════════════════════════════════════════════════════════════╝
+
+  // FS HUD elements are injected lazily into .reelFrame so we can ship the
+  // template with no extra DOM in the static HTML.  Same for the mult
+  // ladder + coin shower — all art-free, CSS-only visuals.
+
+  let fsHudEl = null;
+  let fsLadderEl = null;
+  let coinShowerEl = null;
+
+  function ensureFsHud() {
+    if (fsHudEl) return fsHudEl;
+    const frame = $('.reelFrame') || $('#reels-grid')?.parentElement;
+    if (!frame) return null;
+    const el = document.createElement('div');
+    el.id = 'fs-hud';
+    el.className = 'fs-hud';
+    el.setAttribute('hidden', '');
+    el.innerHTML = `
+      <div class="fs-hud-block">
+        <span class="fs-hud-lbl">FS</span>
+        <b class="mono" id="fs-counter">0 / 0</b>
+      </div>
+      <div class="fs-hud-divider"></div>
+      <div class="fs-hud-block">
+        <span class="fs-hud-lbl">MULT</span>
+        <b class="mono" id="fs-mult-display">1×</b>
+      </div>
+      <div class="fs-hud-divider"></div>
+      <div class="fs-hud-block">
+        <span class="fs-hud-lbl">WIN</span>
+        <b class="mono" id="fs-win-total">0.00</b>
+      </div>
+    `;
+    frame.appendChild(el);
+    fsHudEl = el;
+    return el;
+  }
+
+  function ensureFsLadder(maxMult) {
+    if (fsLadderEl) return fsLadderEl;
+    const frame = $('.reelFrame') || $('#reels-grid')?.parentElement;
+    if (!frame) return null;
+    const el = document.createElement('div');
+    el.id = 'fs-mult-ladder';
+    el.className = 'fs-mult-ladder';
+    el.setAttribute('hidden', '');
+    // Build ladder rungs: every integer step from maxMult down to 1×
+    const max = Math.max(2, Math.min(20, Math.floor(maxMult)));
+    let html = '';
+    for (let m = max; m >= 1; m--) {
+      html += `<div class="fs-mult-step" data-mult="${m}">${m}×</div>`;
+    }
+    el.innerHTML = html;
+    frame.appendChild(el);
+    fsLadderEl = el;
+    return el;
+  }
+
+  function showFsHud(maxMult) {
+    const hud = ensureFsHud();
+    const ladder = ensureFsLadder(maxMult);
+    if (hud)    hud.removeAttribute('hidden');
+    if (ladder) ladder.removeAttribute('hidden');
+  }
+  function hideFsHud() {
+    if (fsHudEl)    fsHudEl.setAttribute('hidden', '');
+    if (fsLadderEl) fsLadderEl.setAttribute('hidden', '');
+  }
+  function updateFsHud({ done, total, mult, winTotal }) {
+    const fsCounter   = $('#fs-counter');
+    const fsMultDisp  = $('#fs-mult-display');
+    const fsWinTotal  = $('#fs-win-total');
+    if (fsCounter)  fsCounter.textContent  = `${done} / ${total}`;
+    if (fsMultDisp) fsMultDisp.textContent = `${mult}×`;
+    if (fsWinTotal) fsWinTotal.textContent = fmt(winTotal);
+    if (fsLadderEl) {
+      $$('.fs-mult-step').forEach((step) => {
+        const m = Number(step.dataset.mult);
+        step.classList.toggle('is-lit',     m <= mult);
+        step.classList.toggle('is-current', m === mult);
+      });
+    }
+  }
+
+  function ensureCoinShower() {
+    if (coinShowerEl) return coinShowerEl;
+    const el = document.createElement('div');
+    el.className = 'bw-coin-shower';
+    document.body.appendChild(el);
+    coinShowerEl = el;
+    return el;
+  }
+  /**
+   * Spawn N golden coins falling from above with random horizontal
+   * positions + sizes.  Intensity scales with tier (1 = light, 2 = strong,
+   * 3 = epic).  Mirrors coin3d.ts intent without actual 3D — pure CSS.
+   */
+  function playCoinShower(tier) {
+    const shower = ensureCoinShower();
+    // Clear previous coins (let CSS animation continue, but new burst on top)
+    while (shower.firstChild) shower.removeChild(shower.firstChild);
+    const counts = { 1: 24, 2: 48, 3: 80 };
+    const N = counts[tier] || 24;
+    for (let i = 0; i < N; i++) {
+      const c = document.createElement('div');
+      c.className = 'bw-coin';
+      const x = (Math.random() * 100).toFixed(1);
+      const size = (0.6 + Math.random() * 1.1).toFixed(2);
+      const delay = (Math.random() * (tier === 3 ? 1600 : 800)).toFixed(0);
+      c.style.left = x + 'vw';
+      c.style.setProperty('--x', '0px');
+      c.style.setProperty('--s', size);
+      c.style.animationDelay = delay + 'ms';
+      c.style.animationDuration = (1800 + Math.random() * 1200).toFixed(0) + 'ms';
+      shower.appendChild(c);
+    }
+    // GC: clear after longest animation completes
+    setTimeout(() => {
+      while (shower.firstChild) shower.removeChild(shower.firstChild);
+    }, 3500);
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
   // ║ 12 · FREE SPINS — full animated sequence                      ║
   // ╚══════════════════════════════════════════════════════════════╝
 
   async function runFreeSpins(initialScCount, bet) {
     const fsReels = (F_FS && F_FS.reels_override === 'free_spins' && FS_REELS) ? FS_REELS : BASE_REELS;
     let remaining = awardFsSpins(initialScCount);
+    const initialAwarded = remaining;
     let total = 0;
     let mult = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.start) || 1;
     const incr = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.increment) || 0;
-    const maxMult = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.max) || Infinity;
+    const maxMult = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.max) || 10;
     const incrOn = (F_FS.progressive_multiplier && F_FS.progressive_multiplier.increments_on) || 'each_winning_fs_spin';
     let totalAwarded = remaining;
     const fsCap = (F_FS.retrigger && F_FS.retrigger.max_total) || Infinity;
@@ -857,14 +991,18 @@
     state.featureLabel = `FREE SPINS · ${remaining} spins · ${mult}×`;
     renderHud();
     setStatusText(`FREE SPINS · ${remaining} REMAINING`);
+    showFsHud(maxMult);
+    updateFsHud({ done: 0, total: totalAwarded, mult, winTotal: 0 });
     await showFeatureOverlay({
       kind: '⚡ FREE SPINS ⚡',
       title: `${remaining} Free Spins awarded`,
       detail: `Progressive multiplier ${mult}× → ${maxMult}×`,
     });
 
+    let spinsDone = 0;
     while (remaining > 0) {
       remaining--;
+      spinsDone++;
       const grid = drawGrid(state.rng, fsReels);
       const r = evalBase(grid);
       let win = r.baseWin;
@@ -881,12 +1019,14 @@
       await animateGrid(grid, r, { multAnnounce: mult });
       state.featureLabel = `FS · ${remaining} left · ${mult}× · ${fmt(total * bet)}`;
       setStatusText(`FS ${remaining} LEFT · ${mult}× · ${fmt(total * bet)}`);
+      updateFsHud({ done: spinsDone, total: totalAwarded, mult, winTotal: total * bet });
       renderHud();
       if (r.scCount >= 3 && totalAwarded < fsCap) {
         const add = awardFsRetrigger(r.scCount);
         if (add > 0) {
           remaining += add;
           totalAwarded += add;
+          updateFsHud({ done: spinsDone, total: totalAwarded, mult, winTotal: total * bet });
           await showFeatureOverlay({
             kind: 'RETRIGGER',
             title: `+${add} more Free Spins`,
@@ -905,6 +1045,7 @@
       detail: `won across ${totalAwarded} spins · max mult ${mult}×`,
       autoMs: 2200,
     });
+    hideFsHud();
     setStatusText('PRESS SPIN');
     renderHud();
     return total;
@@ -934,6 +1075,7 @@
     let filled = Math.min(initialOrbCount, totalCells);
     let total = 0;
     state.hnwLockedCells = new Map();
+    resetHnwSeen();
     for (let i = 0; i < filled; i++) {
       const draw = pickWeightedFull(state.rng, unifiedPool);
       state.hnwLockedCells.set(cellOrder[i], { value: draw.value, isJp: draw.isJp, jpName: draw.jpName });
@@ -1011,6 +1153,9 @@
     return list[list.length - 1];
   }
 
+  // Mark cells freshly added since the last render so the .is-orb-land
+  // pop animation fires only on the newcomers.  Tracks key set between renders.
+  const _hnwSeen = new Set();
   function renderHnwBoard() {
     if (!state.hnwLockedCells || !reelsEl) return;
     for (let r = 0; r < REELS; r++) {
@@ -1020,11 +1165,20 @@
         const key = `${r}:${y}`;
         const locked = state.hnwLockedCells.get(key);
         if (locked) {
-          cell.className = 'cell ' + (locked.isJp ? 'is-hnw-jp' : 'is-hnw-locked');
-          const label = locked.isJp
-            ? (locked.jpName || `JP ${locked.value}×`)
+          const isNew = !_hnwSeen.has(key);
+          _hnwSeen.add(key);
+          const baseCls = locked.isJp ? 'is-hnw-jp' : 'is-hnw-locked';
+          cell.className = 'cell ' + baseCls + (isNew ? ' is-orb-land' : '');
+          // Tier badge — for jackpots show name (MINI/MINOR/MAJOR/GRAND),
+          // for cash orbs show "×N" subtle tag.  Both art-free.
+          const tierBadge = locked.isJp
+            ? `<span class="hnw-cell-tier">${locked.jpName || 'JP'}</span>`
+            : `<span class="hnw-cell-tier">CASH</span>`;
+          // Main value — large number/multiplier
+          const valueText = locked.isJp
+            ? `${locked.value}×`
             : `${locked.value}×`;
-          cell.innerHTML = `<span class="cell-id">${label}</span>`;
+          cell.innerHTML = `${tierBadge}<span class="cell-id">${valueText}</span>`;
         } else {
           cell.className = 'cell';
           cell.innerHTML = '<span class="cell-id">·</span>';
@@ -1032,6 +1186,8 @@
       }
     }
   }
+  // Clear the seen-set whenever a new H&W run starts (called from runHoldAndWin)
+  function resetHnwSeen() { _hnwSeen.clear(); }
 
   // ╔══════════════════════════════════════════════════════════════╗
   // ║ 14 · SPIN ORCHESTRATION                                       ║
@@ -1233,6 +1389,14 @@
     } catch (_) {}
     introModalEl.removeAttribute('hidden');
     introModalEl.setAttribute('aria-hidden', 'false');
+    // Inject mythic-gold rays behind the card (Batch 3 polish) — rotating
+    // conic gradient that emanates from the centre of the modal.
+    if (!introModalEl.querySelector('.introModal__rays')) {
+      const rays = document.createElement('div');
+      rays.className = 'introModal__rays';
+      rays.setAttribute('aria-hidden', 'true');
+      introModalEl.insertBefore(rays, introModalEl.firstChild);
+    }
     return new Promise((resolve) => {
       const t0 = performance.now();
       const totalMs = 1400;
