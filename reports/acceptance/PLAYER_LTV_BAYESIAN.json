@@ -1,0 +1,274 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PLAYER_LTV_BAYESIAN",
+  "generated_utc": "2026-05-19T10:48:54.356Z",
+  "episodes_per_config": 5000,
+  "seed": 3405644328,
+  "tolerances": {
+    "active_months_rel": 0.25,
+    "ltv_undisc_rel": 0.25
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_social_media_£100_cac",
+      "description": "UK social media acquisition: £50/mo, θ=0.10 (10mo avg), £100 CAC",
+      "channel": "SOCIAL_MEDIA",
+      "cfg": {
+        "monthlyChurnProbability": 0.1,
+        "meanMonthlyRevenuePerActive": 50,
+        "stdMonthlyRevenuePerActive": 30,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 100,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 9,
+        "observedActiveMonths": 0,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 100000,
+        "totalRevenuePeriod": 250000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 10,
+        "varActiveMonths": 89.99999999999999,
+        "ltvUndiscounted": 500,
+        "ltvDiscounted": 466.6666666666666,
+        "paybackMonths": 2.117904889901081,
+        "ltvCacRatio": 4.666666666666666,
+        "posteriorChurnMean": 0.1,
+        "posteriorLtvDiscounted": 466.6666666666666,
+        "realizedRoas": 2.5,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 9.173,
+        "observedLtvUndiscounted": 458.65,
+        "observedLtvDiscounted": 429.05050821036053
+      },
+      "checks": {
+        "active_months_rel": 0.0827,
+        "ltv_undisc_rel": 0.08270000000000005
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "B_uk_affiliate_£250_cac_high_value",
+      "description": "UK affiliate: high-value players £100/mo, low churn θ=0.05 (20mo), £250 CAC",
+      "channel": "AFFILIATE",
+      "cfg": {
+        "monthlyChurnProbability": 0.05,
+        "meanMonthlyRevenuePerActive": 100,
+        "stdMonthlyRevenuePerActive": 60,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 250,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 19,
+        "observedActiveMonths": 0,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 500000,
+        "totalRevenuePeriod": 1500000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 20,
+        "varActiveMonths": 379.9999999999999,
+        "ltvUndiscounted": 2000,
+        "ltvDiscounted": 1737.9310344827584,
+        "paybackMonths": 2.6032914091190076,
+        "ltvCacRatio": 6.951724137931033,
+        "posteriorChurnMean": 0.05,
+        "posteriorLtvDiscounted": 1737.9310344827584,
+        "realizedRoas": 3,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 18.8894,
+        "observedLtvUndiscounted": 1888.94,
+        "observedLtvDiscounted": 1645.2119199209035
+      },
+      "checks": {
+        "active_months_rel": 0.05553000000000008,
+        "ltv_undisc_rel": 0.055529999999999975
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "C_eu_tv_advertising_£500_cac_premium",
+      "description": "EU TV advertising premium: £150/mo, θ=0.04 (25mo), £500 CAC",
+      "channel": "TV",
+      "cfg": {
+        "monthlyChurnProbability": 0.04,
+        "meanMonthlyRevenuePerActive": 150,
+        "stdMonthlyRevenuePerActive": 80,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 500,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 24,
+        "observedActiveMonths": 0,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 2000000,
+        "totalRevenuePeriod": 5500000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 25,
+        "varActiveMonths": 600,
+        "ltvUndiscounted": 3750,
+        "ltvDiscounted": 3149.9999999999995,
+        "paybackMonths": 3.5054838775618653,
+        "ltvCacRatio": 6.299999999999999,
+        "posteriorChurnMean": 0.04,
+        "posteriorLtvDiscounted": 3149.9999999999995,
+        "realizedRoas": 2.75,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 23.8484,
+        "observedLtvUndiscounted": 3577.26,
+        "observedLtvDiscounted": 3008.91830729756
+      },
+      "checks": {
+        "active_months_rel": 0.04606399999999994,
+        "ltv_undisc_rel": 0.04606399999999994
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "D_au_loose_search_£50_cac_low_value",
+      "description": "AU search loose: £30/mo, θ=0.15 (6.7mo), £50 CAC — break-even regime",
+      "channel": "SEARCH",
+      "cfg": {
+        "monthlyChurnProbability": 0.15,
+        "meanMonthlyRevenuePerActive": 30,
+        "stdMonthlyRevenuePerActive": 20,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 50,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 6,
+        "observedActiveMonths": 0,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 100000,
+        "totalRevenuePeriod": 200000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 6.666666666666667,
+        "varActiveMonths": 37.77777777777778,
+        "ltvUndiscounted": 200,
+        "ltvDiscounted": 191.39240506329114,
+        "paybackMonths": 1.7701450122812898,
+        "ltvCacRatio": 3.8278481012658228,
+        "posteriorChurnMean": 0.14285714285714285,
+        "posteriorLtvDiscounted": 200.45454545454547,
+        "realizedRoas": 2,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 5.8422,
+        "observedLtvUndiscounted": 175.266,
+        "observedLtvDiscounted": 168.07214103968406
+      },
+      "checks": {
+        "active_months_rel": 0.12367000000000003,
+        "ltv_undisc_rel": 0.12367000000000004
+      },
+      "pass": true,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "E_corner_unprofitable_channel",
+      "description": "Corner: bad channel — high CAC £500 sa low retention θ=0.30 → never recoups",
+      "channel": "BAD_CHANNEL",
+      "cfg": {
+        "monthlyChurnProbability": 0.3,
+        "meanMonthlyRevenuePerActive": 40,
+        "stdMonthlyRevenuePerActive": 25,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 500,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 3,
+        "observedActiveMonths": 0,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 500000,
+        "totalRevenuePeriod": 600000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 3.3333333333333335,
+        "varActiveMonths": 7.777777777777778,
+        "ltvUndiscounted": 133.33333333333334,
+        "ltvDiscounted": 130.9090909090909,
+        "paybackMonths": "Infinity",
+        "ltvCacRatio": 0.26181818181818184,
+        "posteriorChurnMean": 0.25,
+        "posteriorLtvDiscounted": 156.27906976744185,
+        "realizedRoas": 1.2,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": false
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 2.6422,
+        "observedLtvUndiscounted": 105.688,
+        "observedLtvDiscounted": 103.94874491810776
+      },
+      "checks": {
+        "active_months_rel": 0.20734000000000008,
+        "ltv_undisc_rel": 0.20734000000000005
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_super_premium_VIP",
+      "description": "Corner: VIP segment £500/mo, θ=0.02 (50mo avg), £1500 CAC",
+      "channel": "VIP",
+      "cfg": {
+        "monthlyChurnProbability": 0.02,
+        "meanMonthlyRevenuePerActive": 500,
+        "stdMonthlyRevenuePerActive": 200,
+        "monthlyDiscountRate": 0.008,
+        "customerAcquisitionCost": 1500,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 49,
+        "observedActiveMonths": 6,
+        "roasComplianceThreshold": 5,
+        "totalMarketingSpend": 1500000,
+        "totalRevenuePeriod": 6000000
+      },
+      "closed_form": {
+        "expectedActiveMonths": 50,
+        "varActiveMonths": 2450,
+        "ltvUndiscounted": 25000,
+        "ltvDiscounted": 18000,
+        "paybackMonths": 3.0627283138646555,
+        "ltvCacRatio": 12,
+        "posteriorChurnMean": 0.017857142857142856,
+        "posteriorLtvDiscounted": 19491.71270718232,
+        "realizedRoas": 4,
+        "isRoasBelowDisclosureThreshold": true,
+        "isCompliantUkgcRts5": true
+      },
+      "monte_carlo": {
+        "episodes": 5000,
+        "observedExpectedActiveMonths": 48.6188,
+        "observedLtvUndiscounted": 24309.4,
+        "observedLtvDiscounted": 17551.31253271643
+      },
+      "checks": {
+        "active_months_rel": 0.027623999999999996,
+        "ltv_undisc_rel": 0.02762399999999994
+      },
+      "pass": true,
+      "elapsed_ms": 4
+    }
+  ]
+}
