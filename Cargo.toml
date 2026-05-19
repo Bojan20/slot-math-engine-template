@@ -21,7 +21,7 @@
 
 [workspace]
 resolver = "2"
-members  = ["rust-sim"]
+members  = ["rust-sim", "wasm-oracle"]
 exclude  = ["rust-sim/fuzz"]
 
 # Profiles MUST be defined at the workspace root — cargo ignores

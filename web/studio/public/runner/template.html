@@ -28,20 +28,23 @@
   <div id="appRoot" class="appRoot">
     <!-- ═════ TOP HUB ═════ -->
     <header class="topHub" aria-label="Top HUD">
-      <!-- Zeus Power Meter — accumulator for guaranteed Lightning multipliers -->
-      <div id="zeusMeter" class="zeus-meter" aria-label="Zeus Power Meter">
+      <!-- Power Meter — generic accumulator placeholder.  Hidden by the
+           runner at boot unless IR declares a `power_meter` / `accumulator`
+           feature.  A game-specific skin can re-theme via CSS without
+           touching the runner. -->
+      <div id="zeusMeter" class="zeus-meter" aria-label="Power Meter">
         <div class="zeus-meter__frame">
           <div class="zeus-meter__track">
             <div class="zeus-meter__fill" id="zeusMeterFill" style="width:0%"></div>
           </div>
-          <div class="zeus-meter__icon" aria-hidden="true">⚡</div>
+          <div class="zeus-meter__icon" aria-hidden="true">◆</div>
           <div class="zeus-meter__markers">
             <span class="zeus-meter__marker" data-level="25"></span>
             <span class="zeus-meter__marker" data-level="50"></span>
             <span class="zeus-meter__marker" data-level="75"></span>
           </div>
         </div>
-        <div class="zeus-meter__label" id="zeusMeterLabel">ZEUS · IDLE</div>
+        <div class="zeus-meter__label" id="zeusMeterLabel">POWER · IDLE</div>
       </div>
 
       <!-- Game logo / title (text-only; art slot in production) -->

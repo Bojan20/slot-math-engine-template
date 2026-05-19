@@ -44,12 +44,17 @@
   --text-2: #828c9c;
   --text-3: #5a626f;
 
-  /* Brand — Olympus palette */
+  /* Brand — neutral template palette (cyan primary, violet secondary).
+     `--gold*` tokens are kept as aliases for the cool accent so all
+     existing rules resolve to the neutral scheme without having to
+     rewrite each call-site.  When a game ships a skin, it overrides
+     `--gold*` on body to re-introduce its own brand colour. */
   --cyan: #22d3ee;
-  --cyan-glow: rgba(34, 211, 238, 0.18);
-  --gold: #f7c948;
-  --gold-deep: #b88a09;
-  --gold-glow: rgba(247, 201, 72, 0.32);
+  --cyan-deep: #0891b2;
+  --cyan-glow: rgba(34, 211, 238, 0.22);
+  --gold: var(--cyan);
+  --gold-deep: var(--cyan-deep);
+  --gold-glow: var(--cyan-glow);
   --rose: #f43f5e;
   --violet: #a78bfa;
   --green: #10b981;
@@ -76,11 +81,13 @@
   --shadow-card: 0 2px 8px rgba(0,0,0,0.45), 0 0 0 1px var(--line);
   --shadow-elev: 0 6px 22px rgba(0,0,0,0.55);
   --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.45);
-  --shadow-glow-gold: 0 0 28px rgba(247, 201, 72, 0.5);
+  --shadow-glow-gold: var(--shadow-glow-cyan);
 
-  /* Type */
+  /* Type — neutral template: system sans for body + display, mono for nums.
+     A game-specific skin can override `--font-display` to introduce
+     theme-appropriate serif/display fonts. */
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, system-ui, sans-serif;
 
   /* Layout */
   --frame-inset: 18px;   /* mirrors Wrath renderer.ts frameInset */
@@ -387,24 +394,22 @@ body {
 
 .reelFrame {
   position: relative;
-  /* Golden ornamental frame — outer glow + golden border + inner inset.
+  /* Neutral template frame — no game-specific ornaments.  Subtle inner
+     gradient + 1px stroke gives it depth without committing to a theme.
      Inner aspect ratio chosen so that 5×3 with square cells fits without
-     leaking past the inner edge.  Wrath uses ~ 0.61 aspect; we keep the
-     same so the same cell-sizing math applies. */
+     leaking past the inner edge; same ratio works for 6×4 and 7×7 too. */
   aspect-ratio: 5 / 3.05;
   width: min(96vw, 760px);
   max-height: 100%;
   padding: var(--frame-inset);
   background:
-    linear-gradient(180deg, rgba(247,201,72,0.16), rgba(247,201,72,0.04)),
-    radial-gradient(120% 80% at 50% 0%, rgba(247,201,72,0.18), transparent 65%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.04), transparent 65%),
     linear-gradient(180deg, var(--bg-2), var(--bg-1));
-  border: 2px solid var(--gold-deep);
+  border: 1px solid var(--line-2);
   border-radius: var(--r-lg);
   box-shadow:
-    0 0 0 1px rgba(247,201,72,0.35) inset,
-    0 0 18px rgba(247,201,72,0.18),
-    0 12px 36px rgba(0,0,0,0.65);
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 8px 28px rgba(0,0,0,0.55);
 }
 .reelFrame__innerGlow {
   position: absolute;
@@ -764,24 +769,10 @@ body {
   cursor: pointer;
 }
 .bw-skip:hover { color: var(--text-0); border-color: var(--text-1); }
-.bw-rays {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    conic-gradient(from 0deg, transparent 0deg, rgba(247,201,72,0.08) 10deg, transparent 20deg,
-                              transparent 60deg, rgba(247,201,72,0.08) 70deg, transparent 80deg,
-                              transparent 120deg, rgba(247,201,72,0.08) 130deg, transparent 140deg,
-                              transparent 180deg, rgba(247,201,72,0.08) 190deg, transparent 200deg,
-                              transparent 240deg, rgba(247,201,72,0.08) 250deg, transparent 260deg,
-                              transparent 300deg, rgba(247,201,72,0.08) 310deg, transparent 320deg,
-                              transparent 360deg);
-  animation: bw-rays-rotate 22s linear infinite;
-}
-@keyframes bw-rays-rotate {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
-}
+/* `.bw-rays` is intentionally a no-op in the neutral template.  A
+   game-specific skin can re-introduce a conic ornament here without
+   touching the runner JS, which still creates the element. */
+.bw-rays { display: none; }
 
 
 /* ── 8 · HUD aside (spin & skip hints) ──────────────────────────── */
@@ -1595,7 +1586,10 @@ body {
   to   { transform: scale(1.14); }
 }
 
-/* ── Coin shower — Big Win particle layer ───────────────────────────── */
+/* ── Big Win particle layer (neutral sparkles, not gold coins) ────────
+   Template uses subtle white sparkle dots instead of game-specific
+   coin imagery.  A game-specific skin can override `.bw-coin` to swap
+   in themed art (e.g. gold coins, orbs, leaves). */
 .bw-coin-shower {
   position: absolute;
   inset: 0;
@@ -1605,40 +1599,25 @@ body {
 }
 .bw-coin {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fef3c7 0%, var(--gold) 40%, var(--gold-deep) 100%);
-  box-shadow: 0 0 8px rgba(247,201,72,0.65), inset -3px -3px 6px rgba(0,0,0,0.35), inset 3px 3px 6px rgba(255,255,255,0.4);
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, var(--cyan) 60%, transparent 100%);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.7);
   opacity: 0;
   animation: coinFall 2400ms linear forwards;
 }
 @keyframes coinFall {
-  0%   { opacity: 0; transform: translate(var(--x), -40px) rotate(0deg) scale(var(--s, 1)); }
+  0%   { opacity: 0; transform: translate(var(--x), -40px) scale(var(--s, 1)); }
   10%  { opacity: 1; }
   85%  { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--x), calc(100vh + 40px)) rotate(720deg) scale(var(--s, 1)); }
+  100% { opacity: 0; transform: translate(var(--x), calc(100vh + 40px)) scale(var(--s, 1)); }
 }
 
 /* ── Intro modal polish ─────────────────────────────────────────────── */
-.introModal__rays {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    conic-gradient(from 0deg, transparent 0deg, rgba(247,201,72,0.10) 14deg, transparent 28deg,
-                              transparent 60deg, rgba(247,201,72,0.10) 74deg, transparent 88deg,
-                              transparent 120deg, rgba(247,201,72,0.10) 134deg, transparent 148deg,
-                              transparent 180deg, rgba(247,201,72,0.10) 194deg, transparent 208deg,
-                              transparent 240deg, rgba(247,201,72,0.10) 254deg, transparent 268deg,
-                              transparent 300deg, rgba(247,201,72,0.10) 314deg, transparent 328deg,
-                              transparent 360deg);
-  animation: introRaysRotate 28s linear infinite;
-}
-@keyframes introRaysRotate {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
-}
+/* `.introModal__rays` is intentionally a no-op in the neutral template;
+   a game-specific skin can re-introduce a conic ornament here. */
+.introModal__rays { display: none; }
 .introModal__title {
   animation: introTitleIn 720ms cubic-bezier(0.16, 1.2, 0.3, 1);
 }

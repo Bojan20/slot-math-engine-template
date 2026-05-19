@@ -233,6 +233,7 @@
     const seedCount = opts.seedCount || 1000;
     const onProgress = typeof opts.onProgress === 'function' ? opts.onProgress : null;
     const useRuntime = opts.useRuntime !== false;   // default true; tests can disable
+    const useWasm    = opts.useWasm    !== false;   // default true; tests can disable
 
     const t0 = (root.performance && root.performance.now) ? root.performance.now() : Date.now();
     const dna = await D.compute(ir);
@@ -247,6 +248,18 @@
       }
     }
 
+    // WASM witness — Phase D.  Loads asynchronously and degrades gracefully
+    // when missing (e.g. when the wasm-pack output hasn't shipped yet).
+    let wasmReady = false;
+    if (useWasm && root.MTLWasmOracle) {
+      try {
+        const r = await root.MTLWasmOracle.ready;
+        if (r && root.MTLWasmOracle.isReady) wasmReady = true;
+      } catch (err) {
+        console.warn('[MTLSeal] WASM oracle load failed, falling back to JS-only witnesses:', err && err.message);
+      }
+    }
+
     const hashChain = [];
     let firstMismatch = null;
 
@@ -255,16 +268,35 @@
       // eslint-disable-next-line no-await-in-loop
       const oracleR = await oracleSpinHash(ir, seed);
       let runnerR = null;
+      let wasmR = null;
       if (runtimeBoot) {
         // eslint-disable-next-line no-await-in-loop
         runnerR = await runtimeSpinHash(runtimeBoot, ir, seed);
         if (runnerR.hash !== oracleR.hash) {
           firstMismatch = {
             seed: seed,
+            witness: 'oracle-vs-runner',
             oracle: oracleR.result,
             runner: runnerR.result,
             oracleHash: oracleR.hash,
             runnerHash: runnerR.hash,
+          };
+          break;
+        }
+      }
+      if (wasmReady) {
+        // eslint-disable-next-line no-await-in-loop
+        const w = await root.MTLWasmOracle.spin(ir, seed, 1);
+        const wReduced = { win: w.win, scCount: w.scCount, bonusCount: w.bonusCount, lightning: w.lightning, fsWin: w.fsWin, hnwWin: w.hnwWin };
+        wasmR = { result: wReduced, hash: w.outcomeHash };
+        if (wasmR.hash !== oracleR.hash) {
+          firstMismatch = {
+            seed: seed,
+            witness: 'oracle-vs-wasm',
+            oracle: oracleR.result,
+            wasm: wasmR.result,
+            oracleHash: oracleR.hash,
+            wasmHash: wasmR.hash,
           };
           break;
         }
@@ -279,12 +311,18 @@
 
     const t1 = (root.performance && root.performance.now) ? root.performance.now() : Date.now();
     const durationMs = t1 - t0;
+    let witnessCount = 1;            // oracle.js always counts
+    if (runtimeBoot) witnessCount++; // + runtime.js iframe
+    if (wasmReady) witnessCount++;   // + WASM (Rust)
     const stats = {
       seedCount: seedCount,
       hashChainLen: hashChain.length,
       durationMs: Math.round(durationMs),
       hashesPerSec: Math.round((hashChain.length / Math.max(1, durationMs)) * 1000),
-      witnesses: runtimeBoot ? 2 : 1,
+      witnesses: witnessCount,
+      witnessKinds: ['oracle.js']
+        .concat(runtimeBoot ? ['runtime.js'] : [])
+        .concat(wasmReady ? ['wasm-oracle'] : []),
     };
 
     if (firstMismatch) {

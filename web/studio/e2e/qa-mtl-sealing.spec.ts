@@ -37,7 +37,7 @@ test.describe('MTL Sealing Ceremony', () => {
     const first = await page.evaluate(async (irJson: string) => {
       const ir = JSON.parse(irJson);
       const w = window as any;
-      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false });
+      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false, useWasm: false });
       return { result, dna: ir.meta?.seal?.dna || null };
     }, irJson);
 
@@ -50,7 +50,7 @@ test.describe('MTL Sealing Ceremony', () => {
     const second = await page.evaluate(async (irJson: string) => {
       const ir = JSON.parse(irJson);
       const w = window as any;
-      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false });
+      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false, useWasm: false });
       return result;
     }, irJson);
     expect(second.ok).toBe(true);
@@ -67,7 +67,7 @@ test.describe('MTL Sealing Ceremony', () => {
         pt[firstSym][k] = Number(pt[firstSym][k]) + 1;
       }
       const w = window as any;
-      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false });
+      const result = await w.MTLSeal.sealIR(ir, { seedCount: 200, useRuntime: false, useWasm: false });
       return result;
     }, irJson);
     expect(tampered.ok).toBe(true);
@@ -90,7 +90,7 @@ test.describe('MTL Sealing Ceremony', () => {
       const ir = JSON.parse(irJson);
       const w = window as any;
       const unsealedBefore = await w.MTLSeal.isSealed(ir);
-      const result = await w.MTLSeal.sealIR(ir, { seedCount: 100, useRuntime: false });
+      const result = await w.MTLSeal.sealIR(ir, { seedCount: 100, useRuntime: false, useWasm: false });
       w.MTLSeal.storeSeal(ir, result);
       const sealedAfter = await w.MTLSeal.isSealed(ir);
       // Tamper — should invalidate

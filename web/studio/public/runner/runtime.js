@@ -788,10 +788,27 @@
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
-  // ║ 10 · ZEUS METER + LIGHTNING METER                             ║
+  // ║ 10 · POWER METER + MULTIPLIER STRIP — auto-adaptive            ║
   // ╚══════════════════════════════════════════════════════════════╝
+  //
+  // Both HUB widgets are generic placeholders.  They render ONLY when
+  // the IR declares the matching feature; otherwise the runner hides
+  // them at boot via `applyFeatureVisibility()`.
+  //
+  //   * Power Meter   — surfaced when `IR.features.power_meter` or any
+  //     feature with `kind: "accumulator"` exists.  Fills from base
+  //     wins until 100%, then dispatches whatever the IR maps it to
+  //     (no built-in trigger — math owns that).
+  //
+  //   * Multiplier Strip — surfaced when `IR.features.multiplier`
+  //     exists.  The DOM strip in the template ships with a default
+  //     2×/3×/5×/10×/MISS pattern; the runner does NOT overwrite that
+  //     visual — math just animates spin/land states.  A skin can
+  //     repopulate items from `F_MUL.distribution` if desired.
 
-  function updateZeusMeter(deltaWinXBet) {
+  const F_POW = findFeature('power_meter') || findFeature('accumulator');
+
+  function updatePowerMeter(deltaWinXBet) {
     if (!zeusFillEl) return;
     state.zeusFill = clamp(state.zeusFill + (deltaWinXBet || 0), 0, 100);
     zeusFillEl.style.width = state.zeusFill + '%';
@@ -800,14 +817,15 @@
       zeusMeterEl.classList.toggle('is-full', state.zeusFill >= 100);
     }
     if (zeusLabelEl) {
-      if (state.zeusFill >= 100)      zeusLabelEl.textContent = 'ZEUS · UNLEASHED';
-      else if (state.zeusFill >= 75)  zeusLabelEl.textContent = 'ZEUS · WRATHFUL';
-      else if (state.zeusFill >= 50)  zeusLabelEl.textContent = 'ZEUS · CHARGING';
-      else if (state.zeusFill >= 25)  zeusLabelEl.textContent = 'ZEUS · STIRRING';
-      else                            zeusLabelEl.textContent = 'ZEUS · IDLE';
+      if (state.zeusFill >= 100)      zeusLabelEl.textContent = 'POWER · FULL';
+      else if (state.zeusFill >= 50)  zeusLabelEl.textContent = 'POWER · CHARGING';
+      else                            zeusLabelEl.textContent = 'POWER · IDLE';
     }
   }
-  function animateLightningRoll(multiplier) {
+  // Back-compat alias — older spec hooks may still call updateZeusMeter
+  const updateZeusMeter = updatePowerMeter;
+
+  function animateMultiplierRoll(multiplier) {
     if (!lightningMeterEl) return Promise.resolve();
     lightningMeterEl.setAttribute('data-state', 'spin');
     return new Promise((resolve) => {
@@ -819,6 +837,25 @@
         }, 600);
       }, 460);
     });
+  }
+  // Back-compat alias — older code references animateLightningRoll
+  const animateLightningRoll = animateMultiplierRoll;
+
+  /**
+   * Mount-time feature visibility — looks at the parsed IR and hides
+   * any HUB widget the game does not declare.  This is what makes the
+   * template adaptive: import a different IR and the chrome reshapes.
+   * Called once at boot.
+   */
+  function applyFeatureVisibility() {
+    if (zeusMeterEl) {
+      // Hide unless IR declares an accumulator-style feature
+      if (!F_POW) zeusMeterEl.style.display = 'none';
+    }
+    if (lightningMeterEl) {
+      // Hide unless IR declares a multiplier (Lightning-style) feature
+      if (!F_MUL) lightningMeterEl.style.display = 'none';
+    }
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
@@ -994,7 +1031,7 @@
     showFsHud(maxMult);
     updateFsHud({ done: 0, total: totalAwarded, mult, winTotal: 0 });
     await showFeatureOverlay({
-      kind: '⚡ FREE SPINS ⚡',
+      kind: 'FREE SPINS',
       title: `${remaining} Free Spins awarded`,
       detail: `Progressive multiplier ${mult}× → ${maxMult}×`,
     });
@@ -1086,8 +1123,8 @@
     renderHud();
     setStatusText(`HOLD & WIN · STARTING`);
     await showFeatureOverlay({
-      kind: '⚡ HOLD & WIN ⚡',
-      title: `Zeus's Storm`,
+      kind: 'HOLD & WIN',
+      title: (F_HNW && F_HNW.name) || 'Hold & Win',
       detail: `${filled} starting orbs · ${respinsInitial} respins · max ${WIN_CAP}×`,
     });
     renderHnwBoard();
@@ -1516,6 +1553,16 @@
   renderHud();
   renderPaytable();
   bindUI();
+  applyFeatureVisibility();
+  // Strip Wrath-specific copy from the game title in the intro modal when
+  // the IR is generic — show whatever IR.meta.name says (template stays
+  // theme-agnostic).
+  (function applyMetaToIntro() {
+    const introTitle = document.querySelector('.introModal__title');
+    if (!introTitle) return;
+    const name = (IR.meta && IR.meta.name) || 'Slot Template';
+    introTitle.textContent = name;
+  })();
   for (let r = 0; r < REELS; r++) {
     for (let y = 0; y < ROWS; y++) {
       paintCell(r, y, pickAnyId());

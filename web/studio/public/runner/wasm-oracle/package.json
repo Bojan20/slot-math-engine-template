@@ -1,0 +1,16 @@
+{
+  "name": "mtl-wasm-oracle",
+  "type": "module",
+  "description": "Math Twin Lockstep — Rust-language oracle compiled to WebAssembly. Third independent witness alongside oracle.js and runtime.js. Mirrors the canonical slot spin pipeline exactly.",
+  "version": "0.1.0",
+  "files": [
+    "mtl_wasm_oracle_bg.wasm",
+    "mtl_wasm_oracle.js",
+    "mtl_wasm_oracle.d.ts"
+  ],
+  "main": "mtl_wasm_oracle.js",
+  "types": "mtl_wasm_oracle.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
