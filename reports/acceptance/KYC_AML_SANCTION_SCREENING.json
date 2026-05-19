@@ -1,0 +1,304 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "KYC_AML_SANCTION_SCREENING",
+  "generated_utc": "2026-05-19T10:56:43.052Z",
+  "episodes_per_config": 200,
+  "seed": 3405644329,
+  "tolerances": {
+    "fp_rel": 0.15,
+    "fn_rel": 0.5
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_uk_mid_tier_500_new_per_day",
+      "description": "UK mid-tier operator: 500 new players/day, sens=0.99/spec=0.98 (UKGC minimum)",
+      "tier": "UK_MID",
+      "cfg": {
+        "expectedNewPlayersPerDay": 500,
+        "sanctionsBaseMatchRate": 0.0005,
+        "screeningSensitivity": 0.99,
+        "screeningSpecificity": 0.98,
+        "costPerFalsePositive": 50,
+        "costPerFalseNegative": 500000,
+        "annualScreeningOverhead": 100000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 1999,
+        "observedSanctionHits": 0,
+        "totalScreeningsObserved": 0,
+        "regulatorAuditProbabilityPerYear": 0.2,
+        "expectedFinePerViolation": 5000000,
+        "screeningCadenceDays": 1
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 9.995000000000008,
+        "falseNegativesPerDay": 0.0025000000000000022,
+        "annualFalsePositives": 3648.175000000003,
+        "annualFalseNegatives": 0.9125000000000008,
+        "annualFalsePositiveCost": 182408.75000000015,
+        "annualFalseNegativeCost": 456250.00000000035,
+        "totalAnnualComplianceCost": 738658.7500000005,
+        "posteriorMatchRateMean": 0.0005,
+        "posteriorAnnualFalseNegatives": 0.9125000000000008,
+        "probRegulatorDetectionPerYear": 0.18422646287913347,
+        "expectedAnnualFineExposure": 921132.3143956673,
+        "amlRiskScore": 0.06859446759375531,
+        "isCompliantUkgcLccp35": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 3648.195,
+        "observedAnnualFalseNegatives": 0.945,
+        "observedExpectedMissed": 0.945
+      },
+      "checks": {
+        "fp_rel": 0.000005482163096340334,
+        "fn_rel": 0.03439153439153354
+      },
+      "pass": true,
+      "elapsed_ms": 236
+    },
+    {
+      "name": "B_uk_large_5K_new_per_day",
+      "description": "UK large operator: 5K new players/day, sens=0.995/spec=0.99 (best-in-class)",
+      "tier": "UK_LARGE",
+      "cfg": {
+        "expectedNewPlayersPerDay": 5000,
+        "sanctionsBaseMatchRate": 0.0005,
+        "screeningSensitivity": 0.995,
+        "screeningSpecificity": 0.99,
+        "costPerFalsePositive": 30,
+        "costPerFalseNegative": 750000,
+        "annualScreeningOverhead": 500000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 1999,
+        "observedSanctionHits": 5,
+        "totalScreeningsObserved": 1000000,
+        "regulatorAuditProbabilityPerYear": 0.4,
+        "expectedFinePerViolation": 18000000,
+        "screeningCadenceDays": 1
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 49.975000000000044,
+        "falseNegativesPerDay": 0.012500000000000011,
+        "annualFalsePositives": 18240.875000000015,
+        "annualFalseNegatives": 4.562500000000004,
+        "annualFalsePositiveCost": 547226.2500000005,
+        "annualFalseNegativeCost": 3421875.0000000033,
+        "totalAnnualComplianceCost": 4469101.250000004,
+        "posteriorMatchRateMean": 0.0000059880239520958085,
+        "posteriorAnnualFalseNegatives": 0.0546407185628743,
+        "probRegulatorDetectionPerYear": 0.9027666878300598,
+        "expectedAnnualFineExposure": 16249800.380941076,
+        "amlRiskScore": 0.5129788402368474,
+        "isCompliantUkgcLccp35": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 18262.215,
+        "observedAnnualFalseNegatives": 4.84,
+        "observedExpectedMissed": 4.84
+      },
+      "checks": {
+        "fp_rel": 0.0011685329517797044,
+        "fn_rel": 0.057334710743800706
+      },
+      "pass": true,
+      "elapsed_ms": 4786
+    },
+    {
+      "name": "C_eu_amld6_compliant_strict",
+      "description": "EU AMLD6 strict: 2K/day, high-risk demographic (p=1e-3), sens=0.999",
+      "tier": "EU_AMLD6",
+      "cfg": {
+        "expectedNewPlayersPerDay": 2000,
+        "sanctionsBaseMatchRate": 0.001,
+        "screeningSensitivity": 0.999,
+        "screeningSpecificity": 0.99,
+        "costPerFalsePositive": 75,
+        "costPerFalseNegative": 1000000,
+        "annualScreeningOverhead": 300000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 999,
+        "observedSanctionHits": 0,
+        "totalScreeningsObserved": 0,
+        "regulatorAuditProbabilityPerYear": 0.3,
+        "expectedFinePerViolation": 10000000,
+        "screeningCadenceDays": 1
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 19.980000000000018,
+        "falseNegativesPerDay": 0.0020000000000000018,
+        "annualFalsePositives": 7292.700000000006,
+        "annualFalseNegatives": 0.7300000000000006,
+        "annualFalsePositiveCost": 546952.5000000005,
+        "annualFalseNegativeCost": 730000.0000000007,
+        "totalAnnualComplianceCost": 1576952.5000000012,
+        "posteriorMatchRateMean": 0.001,
+        "posteriorAnnualFalseNegatives": 0.7300000000000006,
+        "probRegulatorDetectionPerYear": 0.2292357385724405,
+        "expectedAnnualFineExposure": 2292357.3857244053,
+        "amlRiskScore": 0.08666727818979103,
+        "isCompliantUkgcLccp35": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 7302.955,
+        "observedAnnualFalseNegatives": 0.795,
+        "observedExpectedMissed": 0.795
+      },
+      "checks": {
+        "fp_rel": 0.0014042260975172026,
+        "fn_rel": 0.08176100628930741
+      },
+      "pass": true,
+      "elapsed_ms": 2080
+    },
+    {
+      "name": "D_au_austrac_micro_operator",
+      "description": "AU AUSTRAC micro: 100 new/day, sens=0.98 (sub-UK), cadence=7d (sub-mandate)",
+      "tier": "AU_AUSTRAC",
+      "cfg": {
+        "expectedNewPlayersPerDay": 100,
+        "sanctionsBaseMatchRate": 0.0003,
+        "screeningSensitivity": 0.98,
+        "screeningSpecificity": 0.97,
+        "costPerFalsePositive": 100,
+        "costPerFalseNegative": 300000,
+        "annualScreeningOverhead": 50000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 3000,
+        "observedSanctionHits": 0,
+        "totalScreeningsObserved": 0,
+        "regulatorAuditProbabilityPerYear": 0.15,
+        "expectedFinePerViolation": 2000000,
+        "screeningCadenceDays": 7
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 2.9991000000000025,
+        "falseNegativesPerDay": 0.0006000000000000005,
+        "annualFalsePositives": 1094.6715000000008,
+        "annualFalseNegatives": 0.21900000000000017,
+        "annualFalsePositiveCost": 109467.15000000008,
+        "annualFalseNegativeCost": 65700.00000000004,
+        "totalAnnualComplianceCost": 225167.15000000014,
+        "posteriorMatchRateMean": 0.0003332222592469177,
+        "posteriorAnnualFalseNegatives": 0.24325224925025016,
+        "probRegulatorDetectionPerYear": 0.034965710930594085,
+        "expectedAnnualFineExposure": 69931.42186118817,
+        "amlRiskScore": 0.014257029454935878,
+        "isCompliantUkgcLccp35": false
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 1096.79,
+        "observedAnnualFalseNegatives": 0.26,
+        "observedExpectedMissed": 0.26
+      },
+      "checks": {
+        "fp_rel": 0.001931545692428934,
+        "fn_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 105
+    },
+    {
+      "name": "E_corner_bad_screening_tool",
+      "description": "Corner: weak screening (sens=0.9/spec=0.92) — high regulator fine exposure",
+      "tier": "CORNER_BAD",
+      "cfg": {
+        "expectedNewPlayersPerDay": 1000,
+        "sanctionsBaseMatchRate": 0.0008,
+        "screeningSensitivity": 0.9,
+        "screeningSpecificity": 0.92,
+        "costPerFalsePositive": 75,
+        "costPerFalseNegative": 1000000,
+        "annualScreeningOverhead": 50000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 1249,
+        "observedSanctionHits": 0,
+        "totalScreeningsObserved": 0,
+        "regulatorAuditProbabilityPerYear": 0.5,
+        "expectedFinePerViolation": 15000000,
+        "screeningCadenceDays": 1
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 79.93599999999995,
+        "falseNegativesPerDay": 0.07999999999999999,
+        "annualFalsePositives": 29176.63999999998,
+        "annualFalseNegatives": 29.199999999999996,
+        "annualFalsePositiveCost": 2188247.9999999986,
+        "annualFalseNegativeCost": 29199999.999999996,
+        "totalAnnualComplianceCost": 31438247.999999996,
+        "posteriorMatchRateMean": 0.0008,
+        "posteriorAnnualFalseNegatives": 29.199999999999996,
+        "probRegulatorDetectionPerYear": 0.9999999983784732,
+        "expectedAnnualFineExposure": 14999999.975677097,
+        "amlRiskScore": 0.746938775023746,
+        "isCompliantUkgcLccp35": false
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 29186.405,
+        "observedAnnualFalseNegatives": 29.345,
+        "observedExpectedMissed": 29.345
+      },
+      "checks": {
+        "fp_rel": 0.00033457357972033923,
+        "fn_rel": 0.004941216561594927
+      },
+      "pass": true,
+      "elapsed_ms": 1175
+    },
+    {
+      "name": "F_corner_best_in_class",
+      "description": "Corner: state-of-art screening (sens=0.9995/spec=0.999) — minimal risk",
+      "tier": "CORNER_BEST",
+      "cfg": {
+        "expectedNewPlayersPerDay": 2000,
+        "sanctionsBaseMatchRate": 0.0005,
+        "screeningSensitivity": 0.9995,
+        "screeningSpecificity": 0.999,
+        "costPerFalsePositive": 25,
+        "costPerFalseNegative": 500000,
+        "annualScreeningOverhead": 800000,
+        "betaPriorAlpha": 1,
+        "betaPriorBeta": 1999,
+        "observedSanctionHits": 0,
+        "totalScreeningsObserved": 0,
+        "regulatorAuditProbabilityPerYear": 0.2,
+        "expectedFinePerViolation": 5000000,
+        "screeningCadenceDays": 1
+      },
+      "closed_form": {
+        "falsePositivesPerDay": 1.9990000000000019,
+        "falseNegativesPerDay": 0.0004999999999999449,
+        "annualFalsePositives": 729.6350000000007,
+        "annualFalseNegatives": 0.1824999999999799,
+        "annualFalsePositiveCost": 18240.87500000002,
+        "annualFalseNegativeCost": 91249.99999998994,
+        "totalAnnualComplianceCost": 909490.87499999,
+        "posteriorMatchRateMean": 0.0005,
+        "posteriorAnnualFalseNegatives": 0.1824999999999799,
+        "probRegulatorDetectionPerYear": 0.0399056308128003,
+        "expectedAnnualFineExposure": 199528.1540640015,
+        "amlRiskScore": 0.014744307250196126,
+        "isCompliantUkgcLccp35": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedAnnualFalsePositives": 727.71,
+        "observedAnnualFalseNegatives": 0.205,
+        "observedExpectedMissed": 0.205
+      },
+      "checks": {
+        "fp_rel": 0.0026383054540977816,
+        "fn_rel": 0
+      },
+      "pass": true,
+      "elapsed_ms": 1900
+    }
+  ]
+}
