@@ -1286,21 +1286,26 @@
 
   $("#ng-create").addEventListener("click", () => {
     const source = $$("input[name=ng-source]").find(r => r.checked)?.value || "empty";
-    if (source === "gdd") {
-      // Trigger GDD import flow — pick a file, then open the review modal.
+    // Both Game GDD (narrative) and Math GDD (math doc) route to the same
+    // parser pipeline — the underlying gdd-parser.ts auto-detects format
+    // (PDF/DOCX/MD/TXT for narrative, JSON/XLSX/CSV/MD-spec for math).
+    if (source === "gdd-game" || source === "gdd-math") {
       closeNewGameModal();
       const input = $("#gdd-file-input");
       if (input) {
         input.value = "";
+        // Hint to the parser which entry-point was used (Studio can adjust
+        // confidence priors based on this — math docs trust XLSX/JSON more,
+        // narrative docs trust prose extraction more).
+        input.setAttribute("data-import-source", source);
         input.click();
       }
       return;
     }
-    if (source === "lw-mgap" || source === "template") {
-      // CORTI 200.1 — open IR Library sub-modal so the designer can pick
-      // from the 26 curated starter IRs (16 L&W M-gaps + 10 classics).
+    if (source === "template") {
+      // Open IR Library sub-modal (classic patterns + studio pilots).
       closeNewGameModal();
-      openIRLibraryModal(source === "lw-mgap" ? "lw-mgaps" : null);
+      openIRLibraryModal(null);
       return;
     }
     const name = $("#ng-name").value.trim() || `Untitled Game ${wsOrder.length + 1}`;

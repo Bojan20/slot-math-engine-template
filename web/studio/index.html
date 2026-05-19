@@ -180,7 +180,7 @@
       <div class="side-section">
         <button class="side-h" data-toggle="side-ir">
           <span class="side-h-lbl">IR Library</span>
-          <span class="side-h-meta">5</span>
+          <span class="side-h-meta">10</span>
         </button>
         <div class="side-body" id="side-ir">
           <button class="side-item"><span class="ic"></span>Classic 5×3 · lines<span class="rt">tpl</span></button>
@@ -189,21 +189,20 @@
           <button class="side-item"><span class="ic"></span>Cascade 5×5<span class="rt">tpl</span></button>
           <button class="side-item"><span class="ic"></span>Hold &amp; Win 5×3<span class="rt">tpl</span></button>
           <button class="side-item"><span class="ic"></span>FS multiplier ladder<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Wheel bonus 3-tier<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Pick bonus 4-of-9<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Sticky wilds FS<span class="rt">tpl</span></button>
+          <button class="side-item"><span class="ic"></span>Expanding wilds FS<span class="rt">tpl</span></button>
         </div>
       </div>
 
       <div class="side-section">
-        <button class="side-h" data-toggle="side-lw">
-          <span class="side-h-lbl">L&amp;W Templates</span>
-          <span class="side-h-meta">16</span>
+        <button class="side-h" data-toggle="side-pilots">
+          <span class="side-h-lbl">Studio Pilots</span>
+          <span class="side-h-meta">1</span>
         </button>
-        <div class="side-body" id="side-lw">
-          <button class="side-item"><span class="ic"></span>M1 · Reel ribbons<span class="rt">BAL</span></button>
-          <button class="side-item"><span class="ic"></span>M6 · Cash Wheel<span class="rt">BAL</span></button>
-          <button class="side-item"><span class="ic"></span>M13 · Reshape<span class="rt">WMS</span></button>
-          <button class="side-item"><span class="ic"></span>M16 · Stellar Jackpot<span class="rt">LBX</span></button>
-          <button class="side-item"><span class="ic"></span>M8 · Hold &amp; Win<span class="rt">BAL</span></button>
-          <button class="side-item"><span class="ic"></span>+ 11 more…<span class="rt"></span></button>
+        <div class="side-body" id="side-pilots">
+          <button class="side-item" data-pilot="wrath-of-olympus"><span class="ic"></span>Wrath of Olympus<span class="rt">v12</span></button>
         </div>
       </div>
     </aside>
@@ -468,7 +467,7 @@
         <header class="ctx-bar">
           <div class="ctx-bar-l">
             <h1>Catalog</h1>
-            <span class="ctx-meta" id="cat-meta-summary">97 patterns · 16 L&amp;W M-gaps closed</span>
+            <span class="ctx-meta" id="cat-meta-summary">97 industry patterns</span>
           </div>
           <div class="ctx-bar-r">
             <span class="filter-chip" id="cat-persona-chip" title="Persona-aware default filter">
@@ -481,8 +480,8 @@
 
         <div class="compare-banner" id="cmp-banner-catalog" hidden>Compare A/B not applicable here · single-variant view <button class="btn-ghost mini btn-exit-compare">exit compare</button></div>
 
-        <!-- L&W M-gaps strip (16 chips · M1..M16, all closed) -->
-        <div class="catalog-lwstrip" id="cat-lwstrip" aria-label="L&amp;W KIMI M-gaps closure status"></div>
+        <!-- Coverage strip placeholder (regen by Studio at runtime) -->
+        <div class="catalog-lwstrip" id="cat-lwstrip" aria-label="Pattern coverage strip"></div>
 
         <!-- Tri-pane layout -->
         <div class="catalog-tripane">
@@ -510,9 +509,9 @@
               <label class="catalog-check"><input type="checkbox" data-cat-filter="variance" value="MID" /> MID</label>
               <label class="catalog-check"><input type="checkbox" data-cat-filter="variance" value="HIGH" /> HIGH</label>
             </div>
-            <div class="catalog-filter-block">
-              <div class="catalog-filter-label">L&amp;W gap</div>
-              <label class="catalog-check"><input type="checkbox" id="cat-lw-only" /> L&amp;W gap only (M1–M16)</label>
+            <div class="catalog-filter-block" style="display:none">
+              <!-- Reserved for future vendor-coverage filters; kept hidden to preserve script bindings. -->
+              <label class="catalog-check"><input type="checkbox" id="cat-lw-only" /> Coverage filter (disabled)</label>
             </div>
             <div class="catalog-filter-block">
               <div class="catalog-filter-label">Jurisdiction</div>
@@ -583,11 +582,8 @@
             <span class="ctx-meta">deterministic spin · seed override available</span>
           </div>
           <div class="ctx-bar-r">
-            <button class="btn-ghost" id="btn-demo-fs" title="W200.3 — trigger Free Spins intro animation">Trigger FS Demo</button>
-            <button class="btn-ghost" id="btn-demo-hw" title="W200.3 — trigger Hold &amp; Win reveal animation">Trigger H&amp;W Demo</button>
-            <button class="btn-ghost" id="btn-demo-cascade" title="W200.3 — trigger Cascade drop animation">Trigger Cascade Demo</button>
             <button class="btn-ghost" id="btn-replay">Replay last</button>
-            <button class="btn-ghost" id="btn-seed">Seed: <span class="mono">0x9F-2E1B</span></button>
+            <button class="btn-ghost" id="btn-seed">Seed: <span class="mono">—</span></button>
             <button class="btn-ghost" id="btn-auto10">Autoplay 10</button>
             <button class="btn-primary" id="btn-spin">
               <svg class="i" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6,4 20,12 6,20"/></svg>
@@ -1258,8 +1254,8 @@
           </div>
         </section>
         <section class="rail-card">
-          <div class="rail-card-h"><span>L&amp;W coverage</span><span class="rail-card-r ok">16/16</span></div>
-          <div class="rail-bar"><i style="width:100%"></i></div>
+          <div class="rail-card-h"><span>Pattern coverage</span><span class="rail-card-r ok" id="rail-coverage-pct">—</span></div>
+          <div class="rail-bar"><i style="width:0%"></i></div>
         </section>
         <section class="rail-card">
           <div class="rail-card-h"><span>Engine telemetry</span></div>
@@ -1304,8 +1300,6 @@
       <span class="status-sep">·</span>
       <span class="status-item">106/106 CI</span>
       <span class="status-sep">·</span>
-      <span class="status-item">16/16 L&amp;W</span>
-      <span class="status-sep">·</span>
       <span class="status-item" id="status-variant"></span>
     </div>
     <div class="status-c">
@@ -1319,7 +1313,6 @@
           <span class="t-it">MC queue 0</span><span class="t-sep">·</span>
           <span class="t-it">Wave W196</span><span class="t-sep">·</span>
           <span class="t-it">cat v2.63</span><span class="t-sep">·</span>
-          <span class="t-it">L&amp;W 100%</span><span class="t-sep">·</span>
           <span class="t-it">P-IDs 97</span><span class="t-sep">·</span>
           <span class="t-it">recompute 1.4ms</span><span class="t-sep">·</span>
           <span class="t-it">jurisdictions 15</span>
@@ -1444,15 +1437,15 @@
       <div class="modal-field">
         <label>Start from</label>
         <div class="ng-sources">
-          <label class="ng-radio is-active"><input type="radio" name="ng-source" value="empty" checked /> <span><b>Empty</b> · blank IR</span></label>
-          <label class="ng-radio"><input type="radio" name="ng-source" value="template" /> <span><b>Template</b> · curated preset</span></label>
-          <label class="ng-radio"><input type="radio" name="ng-source" value="lw-mgap" /> <span><b>L&amp;W M-gap</b> · catalog seed</span></label>
-          <label class="ng-radio"><input type="radio" name="ng-source" value="gdd" /> <span>📄 <b>Import from GDD</b> · PDF / XLSX / DOCX / CSV / MD / JSON</span></label>
+          <label class="ng-radio is-active"><input type="radio" name="ng-source" value="empty" checked /> <span><b>Empty</b> · blank IR — fill in Studio</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="template" /> <span><b>Template</b> · generic industry preset (10 patterns)</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="gdd-game" /> <span>📄 <b>Import Game GDD</b> · narrative document (PDF / DOCX / MD / TXT) — theme, symbols, features described in prose</span></label>
+          <label class="ng-radio"><input type="radio" name="ng-source" value="gdd-math" /> <span>🧮 <b>Import Math GDD</b> · math-first document (IR JSON / PAR XLSX / CSV / MD spec) — RTP, paytable, reel weights, feature math</span></label>
         </div>
       </div>
       <div class="modal-field">
-        <label for="ng-name">Name</label>
-        <input type="text" id="ng-name" placeholder="Untitled Game" />
+        <label for="ng-name">Game name</label>
+        <input type="text" id="ng-name" />
       </div>
       <div class="modal-field">
         <label>Layout</label>
@@ -1475,16 +1468,16 @@
   <div class="modal-backdrop" id="irl-backdrop"></div>
   <div class="modal-box ir-library-box">
     <header class="modal-h">
-      <h2>IR Library · 26 starter IRs</h2>
+      <h2>IR Library · industry starter templates</h2>
       <button class="modal-close" id="irl-close">×</button>
     </header>
     <div class="modal-body ir-library-body">
       <div class="ir-library-toolbar">
-        <input type="text" id="irl-search" class="ir-library-search" placeholder="Search title / supplier / M-gap…" />
+        <input type="text" id="irl-search" class="ir-library-search" placeholder="Search title or studio…" />
         <select id="irl-category" class="ir-library-select">
           <option value="">All categories</option>
-          <option value="lw-mgaps">L&amp;W M-Gaps</option>
           <option value="classics">Industry Classics</option>
+          <option value="pilots">Studio Pilots</option>
         </select>
         <select id="irl-topology" class="ir-library-select">
           <option value="">All topologies</option>

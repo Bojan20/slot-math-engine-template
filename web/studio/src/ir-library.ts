@@ -24,16 +24,14 @@ export interface LibraryItem {
   id: string;
   file: string;
   title: string;
-  /** Category id this item lives under ('lw-mgaps' | 'classics'). */
+  /** Category id this item lives under ('classics' | 'pilots'). */
   category: string;
-  /** Supplier line for the L&W items ('L&W Bally' …). */
-  supplier?: string;
+  /** Originating studio / vendor (free-text, generic). */
+  studio?: string;
   /** Year — for sort + display. */
   year?: number;
   /** Engine topology kind — used by the topology filter. */
   topology?: string;
-  /** L&W M-gap label (e.g. 'M5') — only set for items in `lw-mgaps`. */
-  mGap?: string;
 }
 
 export interface LibraryIndex {
@@ -48,9 +46,9 @@ export interface LibraryIndex {
 }
 
 export interface LibraryFilter {
-  /** Free-text — case-insensitive substring match across title + id + supplier. */
+  /** Free-text — case-insensitive substring match across title + id + studio. */
   search?: string;
-  /** Restrict to a single category, e.g. 'lw-mgaps' or 'classics'. */
+  /** Restrict to a single category, e.g. 'classics' or 'pilots'. */
   category?: string | null;
   /** Restrict to a single topology kind, e.g. 'rectangular'. */
   topology?: string | null;
@@ -110,7 +108,7 @@ export function getAllItems(): LibraryItem[] {
 /**
  * Pure filter pipeline — DOM-free so tests can exercise it directly.
  * Order: category → topology → search. Search matches on the lowercased
- * title, id, and (if present) supplier with a substring test.
+ * title, id, and (if present) studio with a substring test.
  */
 export function filterItems(items: LibraryItem[], filter: LibraryFilter): LibraryItem[] {
   let out = items;
@@ -123,7 +121,7 @@ export function filterItems(items: LibraryItem[], filter: LibraryFilter): Librar
   if (filter.search && filter.search.trim().length > 0) {
     const q = filter.search.trim().toLowerCase();
     out = out.filter((it) => {
-      const hay = [it.title, it.id, it.supplier ?? '', it.mGap ?? ''].join(' ').toLowerCase();
+      const hay = [it.title, it.id, it.studio ?? ''].join(' ').toLowerCase();
       return hay.includes(q);
     });
   }

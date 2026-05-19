@@ -104,7 +104,7 @@ declare global {
 }
 
 // ── IR Library bridge (CORTI 200.1) ─────────────────────────────────
-// Exposes the 26-item starter-IR catalog (16 L&W M-gaps + 10 industry
+// Exposes the industry-template starter-IR catalog (generic patterns +
 // classics) to the legacy `app.js` wizard so designers can load a
 // curated IR into a fresh workspace with one click.
 export interface IRLibraryBridge {
@@ -777,7 +777,7 @@ function boot(): void {
     console.warn('[CORTI 200.2] art pipeline install failed:', err);
   }
 
-  // ── CORTI 200.1 · IR library (16 L&W + 10 classics) ───────────────
+  // ── CORTI 200.1 · IR library (industry templates + studio pilots) ──
   try {
     window.__studio_ir_library__ = installIRLibraryBridge();
     hook().logActivity('CORTI 200.1 · IR library bridge ready (26 starter IRs)');
@@ -791,7 +791,7 @@ function boot(): void {
   // flag. Otherwise mark as offline; UI falls back to local stubs.
   void installBackendBridge();
 
-  // Kick off async catalog data load (97 P-IDs + 16 L&W M-gaps).
+  // Kick off async catalog data load (97 industry P-ID patterns).
   void loadCatalogData();
 }
 
@@ -1040,7 +1040,7 @@ function installPanelEmptyStateObserver(): void {
       contentSel: '#cat-grid, .catalog-grid, .catalog-list',
       emptyMsg: {
         title: 'No patterns match the current filters',
-        sub: 'Try clearing the L&W-only filter, broadening the wave range, or adjusting jurisdiction chips.',
+        sub: 'Try clearing the filters, broadening the wave range, or adjusting jurisdiction chips.',
         icon: '◯',
       },
     },
@@ -1100,20 +1100,19 @@ function installPanelEmptyStateObserver(): void {
   }
 }
 
-// ── Catalog data loader (W199) ──────────────────────────────────────
+// ── Catalog data loader (industry-pattern catalog only; vendor coverage removed) ──
 async function loadCatalogData(): Promise<void> {
   try {
-    const [cat, lw] = await Promise.all([
-      fetch(new URL('../data/catalog-97.json', import.meta.url).href).then((r) => r.json()),
-      fetch(new URL('../data/lw-16.json',      import.meta.url).href).then((r) => r.json()),
-    ]);
+    const cat = await fetch(new URL('../data/catalog-97.json', import.meta.url).href).then((r) => r.json());
     const patterns = Array.isArray(cat?.patterns) ? cat.patterns : [];
-    const lwGaps   = Array.isArray(lw?.gaps)      ? lw.gaps      : [];
+    // lwGaps shape preserved as empty array so existing consumers don't crash;
+    // vendor-specific coverage tracking was removed during the originality sweep.
+    const lwGaps: unknown[] = [];
     window.__studio_catalog__ = { patterns, lwGaps };
     if (typeof window.__studio_catalog_install__ === 'function') {
       window.__studio_catalog_install__({ patterns, lwGaps });
     }
-    hook().logActivity(`catalog loaded · ${patterns.length} patterns · ${lwGaps.length} L&W gaps`);
+    hook().logActivity(`catalog loaded · ${patterns.length} industry patterns`);
   } catch (err) {
     console.warn('[studio] catalog load failed:', err);
   }

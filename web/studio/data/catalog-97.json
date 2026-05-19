@@ -3380,7 +3380,7 @@
     {
       "pid": "P-080",
       "title": "Avalanche Reactor Wave Aggregator",
-      "titleRaw": "🎯 Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
+      "titleRaw": "\ud83c\udfaf Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
       "wave": "W170",
       "tier": "aggregator",
       "complexity": "H",
@@ -3391,7 +3391,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "🎯 Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
+      "math": "\ud83c\udfaf Avalanche Reactor Wave Aggregator (60. solver MILESTONE, doubly-compound Wald)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3464,7 +3464,7 @@
     {
       "pid": "P-082",
       "title": "Reel-Bound Mystery Progressive",
-      "titleRaw": "Reel-Bound Mystery Progressive (62. solver, L&W M5 GAP — Quick Hit family adjacency tier)",
+      "titleRaw": "Reel-Bound Mystery Progressive (62. solver, tier-1-vendor M5 GAP \u2014 industry-pattern family adjacency tier)",
       "wave": "W181",
       "tier": "base",
       "complexity": "L",
@@ -3475,7 +3475,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Reel-Bound Mystery Progressive (62. solver, L&W M5 GAP — Quick Hit family adjacency tier)",
+      "math": "Reel-Bound Mystery Progressive (62. solver, tier-1-vendor M5 GAP \u2014 industry-pattern family adjacency tier)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3501,13 +3501,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M5",
-      "lwSupplier": "L&W (Bally)"
+      "lwMGap": "M5"
     },
     {
       "pid": "P-083",
       "title": "Dynamic Grid-Expansion Hold-and-Spin Aggregator",
-      "titleRaw": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP — Ultimate Fire Link / Lock It Link Eureka)",
+      "titleRaw": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, tier-1-vendor M3 GAP \u2014 industry-pattern / Lock It Link Eureka)",
       "wave": "W182",
       "tier": "aggregator",
       "complexity": "H",
@@ -3518,7 +3517,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, L&W M3 GAP — Ultimate Fire Link / Lock It Link Eureka)",
+      "math": "Dynamic Grid-Expansion Hold-and-Spin Aggregator (63. solver, tier-1-vendor M3 GAP \u2014 industry-pattern / Lock It Link Eureka)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3544,13 +3543,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M3",
-      "lwSupplier": "L&W (Bally)"
+      "lwMGap": "M3"
     },
     {
       "pid": "P-084",
       "title": "Multi-State Frame Upgrade Markov Aggregator",
-      "titleRaw": "Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 GAP — Huff N' Puff family)",
+      "titleRaw": "Multi-State Frame Upgrade Markov Aggregator (64. solver, tier-1-vendor M2 GAP \u2014 industry-pattern family)",
       "wave": "W183",
       "tier": "aggregator",
       "complexity": "H",
@@ -3561,7 +3559,7 @@
         0.94
       ],
       "rtpBandLabel": "88.0-94.0%",
-      "math": "Multi-State Frame Upgrade Markov Aggregator (64. solver, L&W M2 GAP — Huff N' Puff family)",
+      "math": "Multi-State Frame Upgrade Markov Aggregator (64. solver, tier-1-vendor M2 GAP \u2014 industry-pattern family)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3587,13 +3585,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M2",
-      "lwSupplier": "L&W (SG Gaming)"
+      "lwMGap": "M2"
     },
     {
       "pid": "P-085",
-      "title": "Colossal Reels Wild-Transfer Two-Grid Aggregator",
-      "titleRaw": "Colossal Reels Wild-Transfer Two-Grid Aggregator (65. solver, L&W M7 GAP — Spartacus family + 50+ WMS land-based titles)",
+      "title": "industry-pattern Wild-Transfer Two-Grid Aggregator",
+      "titleRaw": "industry-pattern Wild-Transfer Two-Grid Aggregator (65. solver, tier-1-vendor M7 GAP \u2014 industry-pattern family + 50+ industry-vendor land-based titles)",
       "wave": "W184",
       "tier": "composer",
       "complexity": "H",
@@ -3604,7 +3601,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Colossal Reels Wild-Transfer Two-Grid Aggregator (65. solver, L&W M7 GAP — Spartacus family + 50+ WMS land-based titles)",
+      "math": "industry-pattern Wild-Transfer Two-Grid Aggregator (65. solver, tier-1-vendor M7 GAP \u2014 industry-pattern family + 50+ industry-vendor land-based titles)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3630,13 +3627,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M7",
-      "lwSupplier": "L&W (WMS)"
+      "lwMGap": "M7"
     },
     {
       "pid": "P-086",
-      "title": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator",
-      "titleRaw": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 GAP — Dragon Spin CrossLink Water)",
+      "title": "Per-Reel Cash-Bag \u00d7 Per-Row-Multiplier Coupled Accumulator",
+      "titleRaw": "Per-Reel Cash-Bag \u00d7 Per-Row-Multiplier Coupled Accumulator (66. solver, tier-1-vendor M1 GAP \u2014 industry-pattern CrossLink Water)",
       "wave": "W185",
       "tier": "composer",
       "complexity": "H",
@@ -3647,7 +3643,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator (66. solver, L&W M1 GAP — Dragon Spin CrossLink Water)",
+      "math": "Per-Reel Cash-Bag \u00d7 Per-Row-Multiplier Coupled Accumulator (66. solver, tier-1-vendor M1 GAP \u2014 industry-pattern CrossLink Water)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3673,13 +3669,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M1",
-      "lwSupplier": "L&W (in-house digital)"
+      "lwMGap": "M1"
     },
     {
       "pid": "P-087",
       "title": "Big Bet Paid-Package Multi-Spin Schedule Aggregator",
-      "titleRaw": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 GAP — Barcrest UK family)",
+      "titleRaw": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL tier-1-vendor M9 GAP \u2014 Barcrest UK family)",
       "wave": "W186",
       "tier": "aggregator",
       "complexity": "H",
@@ -3690,7 +3685,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL L&W M9 GAP — Barcrest UK family)",
+      "math": "Big Bet Paid-Package Multi-Spin Schedule Aggregator (67. solver, UK-CRITICAL tier-1-vendor M9 GAP \u2014 Barcrest UK family)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3722,13 +3717,12 @@
         "JP Pachislot"
       ],
       "isLWGap": true,
-      "lwMGap": "M9",
-      "lwSupplier": "L&W (Barcrest)"
+      "lwMGap": "M9"
     },
     {
       "pid": "P-088",
       "title": "Deterministic Explosion Multiplier-Drop Aggregator",
-      "titleRaw": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 GAP — Dancing Drums Explosion + Revolution)",
+      "titleRaw": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, tier-1-vendor M4 GAP \u2014 industry-pattern Explosion + Revolution)",
       "wave": "W187",
       "tier": "aggregator",
       "complexity": "H",
@@ -3739,7 +3733,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, L&W M4 GAP — Dancing Drums Explosion + Revolution)",
+      "math": "Deterministic Explosion Multiplier-Drop Aggregator (68. solver, tier-1-vendor M4 GAP \u2014 industry-pattern Explosion + Revolution)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3765,13 +3759,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M4",
-      "lwSupplier": "L&W (Shuffle Master)"
+      "lwMGap": "M4"
     },
     {
       "pid": "P-089",
       "title": "Player-Elects Feature Composition Aggregator",
-      "titleRaw": "Player-Elects Feature Composition Aggregator (69. solver, L&W M11 GAP — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
+      "titleRaw": "Player-Elects Feature Composition Aggregator (69. solver, tier-1-vendor M11 GAP \u2014 RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
       "wave": "W188",
       "tier": "composer",
       "complexity": "H",
@@ -3782,7 +3775,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Player-Elects Feature Composition Aggregator (69. solver, L&W M11 GAP — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
+      "math": "Player-Elects Feature Composition Aggregator (69. solver, tier-1-vendor M11 GAP \u2014 RR Pick n Mix + MJ KOP + KISS + 5 Treasures)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3808,13 +3801,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M11",
-      "lwSupplier": "L&W (multi-studio)"
+      "lwMGap": "M11"
     },
     {
       "pid": "P-090",
       "title": "Random Feature-Injection During FS Aggregator",
-      "titleRaw": "Random Feature-Injection During FS Aggregator (70. solver, L&W M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library)",
+      "titleRaw": "Random Feature-Injection During FS Aggregator (70. solver, tier-1-vendor M12 GAP \u2014 industry-pattern industry-pattern + industry-vendor sub-feature library)",
       "wave": "W189",
       "tier": "aggregator",
       "complexity": "H",
@@ -3825,7 +3817,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Random Feature-Injection During FS Aggregator (70. solver, L&W M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library)",
+      "math": "Random Feature-Injection During FS Aggregator (70. solver, tier-1-vendor M12 GAP \u2014 industry-pattern industry-pattern + industry-vendor sub-feature library)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3851,13 +3843,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M12",
-      "lwSupplier": "L&W (WMS)"
+      "lwMGap": "M12"
     },
     {
       "pid": "P-091",
       "title": "Nested Mini-Slot Inside Bonus Compositional Aggregator",
-      "titleRaw": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 GAP — LOTR Two Towers + Star Trek)",
+      "titleRaw": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, tier-1-vendor M14 GAP \u2014 industry-pattern Two Towers + Star Trek)",
       "wave": "W190",
       "tier": "composer",
       "complexity": "H",
@@ -3868,7 +3859,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, L&W M14 GAP — LOTR Two Towers + Star Trek)",
+      "math": "Nested Mini-Slot Inside Bonus Compositional Aggregator (71. solver, tier-1-vendor M14 GAP \u2014 industry-pattern Two Towers + Star Trek)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3894,13 +3885,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M14",
-      "lwSupplier": "L&W (WMS)"
+      "lwMGap": "M14"
     },
     {
       "pid": "P-092",
       "title": "Bonus Bank Running-Balance Offset Aggregator",
-      "titleRaw": "Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank UK-banking)",
+      "titleRaw": "Bonus Bank Running-Balance Offset Aggregator (72. solver, tier-1-vendor M10 P0 GAP \u2014 Barcrest industry-pattern industry-pattern UK-banking)",
       "wave": "W191",
       "tier": "aggregator",
       "complexity": "H",
@@ -3911,7 +3901,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Bonus Bank Running-Balance Offset Aggregator (72. solver, L&W M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank UK-banking)",
+      "math": "Bonus Bank Running-Balance Offset Aggregator (72. solver, tier-1-vendor M10 P0 GAP \u2014 Barcrest industry-pattern industry-pattern UK-banking)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3937,13 +3927,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M10",
-      "lwSupplier": "L&W (Barcrest)"
+      "lwMGap": "M10"
     },
     {
       "pid": "P-093",
       "title": "Race/Competitive Pick One-Winner-Among-N Aggregator",
-      "titleRaw": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, L&W M8 P1 GAP — WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks)",
+      "titleRaw": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern for the Gold + Reel'em In Big Bass Bucks)",
       "wave": "W192",
       "tier": "aggregator",
       "complexity": "H",
@@ -3954,7 +3943,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, L&W M8 P1 GAP — WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks)",
+      "math": "Race/Competitive Pick One-Winner-Among-N Aggregator (73. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern for the Gold + Reel'em In Big Bass Bucks)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -3980,13 +3969,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M8",
-      "lwSupplier": "L&W (WMS)"
+      "lwMGap": "M8"
     },
     {
       "pid": "P-094",
       "title": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator",
-      "titleRaw": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)",
+      "titleRaw": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern industry-pattern + industry-pattern + industry-pattern)",
       "wave": "W193",
       "tier": "aggregator",
       "complexity": "H",
@@ -3997,7 +3985,7 @@
         0.965
       ],
       "rtpBandLabel": "92.0-96.5%",
-      "math": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, L&W M15 P1 GAP — Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)",
+      "math": "Multi-Pot Branched H&S Sub-Feature Selection Aggregator (74. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern industry-pattern + industry-pattern + industry-pattern)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -4023,13 +4011,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M15",
-      "lwSupplier": "L&W (Bally)"
+      "lwMGap": "M15"
     },
     {
       "pid": "P-095",
       "title": "Arcade-Shooter Survival Level Progression Aggregator",
-      "titleRaw": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
+      "titleRaw": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, tier-1-vendor industry-pattern \u2014 Lightning Box industry-pattern wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
       "wave": "W194",
       "tier": "aggregator",
       "complexity": "H",
@@ -4040,7 +4027,7 @@
         0.94
       ],
       "rtpBandLabel": "88.0-94.0%",
-      "math": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, L&W M16 P1 GAP — Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
+      "math": "Arcade-Shooter Survival Level Progression Aggregator (75. solver, tier-1-vendor industry-pattern \u2014 Lightning Box industry-pattern wrapper Thundering Bison/Chicken Fox/Lightning Horseman)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -4066,13 +4053,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M16",
-      "lwSupplier": "L&W (Lightning Box)"
+      "lwMGap": "M16"
     },
     {
       "pid": "P-096",
       "title": "Mid-Spin Random Reel-Reshape Mixture Aggregator",
-      "titleRaw": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)",
+      "titleRaw": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern Follow the Yellow Brick Road industry-pattern reshape)",
       "wave": "W195",
       "tier": "composer",
       "complexity": "H",
@@ -4083,7 +4069,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, L&W M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)",
+      "math": "Mid-Spin Random Reel-Reshape Mixture Aggregator (76. solver, tier-1-vendor industry-pattern \u2014 industry-vendor industry-pattern Follow the Yellow Brick Road industry-pattern reshape)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -4109,13 +4095,12 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M13",
-      "lwSupplier": "L&W (WMS)"
+      "lwMGap": "M13"
     },
     {
       "pid": "P-097",
       "title": "Stacked Multi-Wheel Composition Aggregator",
-      "titleRaw": "Stacked Multi-Wheel Composition Aggregator (77. solver, L&W M6 P1 FINAL GAP — 16/16 L&W KIMI gaps closed, Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)",
+      "titleRaw": "Stacked Multi-Wheel Composition Aggregator (77. solver, tier-1-vendor industry-pattern \u2014 16/16 tier-1-vendor KIMI gaps closed, industry-vendor industry-pattern + industry-pattern industry-pattern + industry-pattern industry-pattern)",
       "wave": "W196",
       "tier": "composer",
       "complexity": "H",
@@ -4126,7 +4111,7 @@
         0.985
       ],
       "rtpBandLabel": "94.0-98.5%",
-      "math": "Stacked Multi-Wheel Composition Aggregator (77. solver, L&W M6 P1 FINAL GAP — 16/16 L&W KIMI gaps closed, Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)",
+      "math": "Stacked Multi-Wheel Composition Aggregator (77. solver, tier-1-vendor industry-pattern \u2014 16/16 tier-1-vendor KIMI gaps closed, industry-vendor industry-pattern + industry-pattern industry-pattern + industry-pattern industry-pattern)",
       "paramRanges": {
         "pTrigger": [
           0.01,
@@ -4152,8 +4137,7 @@
         "eCOGRA"
       ],
       "isLWGap": true,
-      "lwMGap": "M6",
-      "lwSupplier": "L&W (Bally)"
+      "lwMGap": "M6"
     }
   ]
 }
