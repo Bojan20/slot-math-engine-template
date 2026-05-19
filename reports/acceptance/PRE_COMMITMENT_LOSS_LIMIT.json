@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "PRE_COMMITMENT_LOSS_LIMIT",
+  "generated_utc": "2026-05-19T10:29:17.053Z",
+  "episodes_per_config": 20000,
+  "seed": 3405644326,
+  "tolerances": {
+    "effective_rel": 0.04,
+    "phit_abs": 0.02,
+    "harm_red_abs": 0.03
+  },
+  "overall_pass": true,
+  "configs_total": 6,
+  "configs_passed": 6,
+  "configs": [
+    {
+      "name": "A_au_ncpf_default_AUD50",
+      "description": "AU NCPF §5.2 default A$50 daily limit, typical player (μ=£30, σ=£25, α=0.75)",
+      "jurisdiction": "AU_NCPF",
+      "cfg": {
+        "sessionLossMean": 30,
+        "sessionLossStd": 25,
+        "playerLossLimit": 50,
+        "adherenceRate": 0.75,
+        "limitEscalationFactor": 1.5,
+        "sessionsPerYear": 300,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 30,
+        "expectedLossWithLimit": 26.994817952763793,
+        "expectedLossEscalatedLimit": 29.64310804836552,
+        "expectedLossEffective": 27.656890476664223,
+        "probSessionHitsLimit": 0.21185533859004302,
+        "harmReductionFromLimit": 0.07810365077785922,
+        "expectedAnnualLossNoLimit": 9000,
+        "expectedAnnualLossWithLimit": 8297.067142999267,
+        "absoluteAnnualHarmReduction": 702.9328570007328,
+        "expectedAnnualSessionsAtLimit": 63.556601577012906,
+        "expectedAnnualLimitBreachAttempts": 75,
+        "isCompliantAuNcpfSection5": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 27.926368475755844,
+        "observedProbSessionHitsLimit": 0.21355,
+        "observedHarmReductionFromLimit": 0.06912105080813855
+      },
+      "checks": {
+        "effective_rel": 0.009649589753338909,
+        "phit_delta": 0.0016946614099569712,
+        "harm_red_delta": 0.008982599969720673
+      },
+      "pass": true,
+      "elapsed_ms": 3
+    },
+    {
+      "name": "B_uk_lccp_tight_£25_limit",
+      "description": "UKGC LCCP 3.4.5 tight £25 limit, high-discipline player (α=0.85)",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "sessionLossMean": 30,
+        "sessionLossStd": 25,
+        "playerLossLimit": 25,
+        "adherenceRate": 0.85,
+        "limitEscalationFactor": 1.3,
+        "sessionsPerYear": 365,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 30,
+        "expectedLossWithLimit": 17.327634227491227,
+        "expectedLossEscalatedLimit": 21.226616577081778,
+        "expectedLossEffective": 17.91248157992981,
+        "probSessionHitsLimit": 0.5792596846244752,
+        "harmReductionFromLimit": 0.40291728066900634,
+        "expectedAnnualLossNoLimit": 10950,
+        "expectedAnnualLossWithLimit": 6538.0557766743805,
+        "absoluteAnnualHarmReduction": 4411.9442233256195,
+        "expectedAnnualSessionsAtLimit": 211.42978488793344,
+        "expectedAnnualLimitBreachAttempts": 54.75000000000001,
+        "isCompliantAuNcpfSection5": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 18.071433810129662,
+        "observedProbSessionHitsLimit": 0.58505,
+        "observedHarmReductionFromLimit": 0.39761887299567794
+      },
+      "checks": {
+        "effective_rel": 0.008795773034387187,
+        "phit_delta": 0.005790315375524768,
+        "harm_red_delta": 0.005298407673328398
+      },
+      "pass": true,
+      "elapsed_ms": 2
+    },
+    {
+      "name": "C_eu_eba_relaxed_high_roller",
+      "description": "EU EBA high-roller £200 limit, moderate adherence (α=0.6, γ=2.0)",
+      "jurisdiction": "EU_EBA",
+      "cfg": {
+        "sessionLossMean": 100,
+        "sessionLossStd": 80,
+        "playerLossLimit": 200,
+        "adherenceRate": 0.6,
+        "limitEscalationFactor": 2,
+        "sessionsPerYear": 200,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 100,
+        "expectedLossWithLimit": 95.95305738941585,
+        "expectedLossEscalatedLimit": 99.99832572374521,
+        "expectedLossEffective": 97.5711647231476,
+        "probSessionHitsLimit": 0.10564984220537599,
+        "harmReductionFromLimit": 0.024288352768523966,
+        "expectedAnnualLossNoLimit": 20000,
+        "expectedAnnualLossWithLimit": 19514.23294462952,
+        "absoluteAnnualHarmReduction": 485.7670553704811,
+        "expectedAnnualSessionsAtLimit": 21.1299684410752,
+        "expectedAnnualLimitBreachAttempts": 80,
+        "isCompliantAuNcpfSection5": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 98.44616516207294,
+        "observedProbSessionHitsLimit": 0.10625,
+        "observedHarmReductionFromLimit": 0.01553834837927056
+      },
+      "checks": {
+        "effective_rel": 0.00888811095368538,
+        "phit_delta": 0.0006001577946240094,
+        "harm_red_delta": 0.008750004389253406
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "D_nl_ksa_mandatory_predeposit_€50",
+      "description": "NL KSA RWA §11 mandatory pre-deposit limit €50, typical user",
+      "jurisdiction": "NL_KSA",
+      "cfg": {
+        "sessionLossMean": 35,
+        "sessionLossStd": 30,
+        "playerLossLimit": 50,
+        "adherenceRate": 0.7,
+        "limitEscalationFactor": 1.5,
+        "sessionsPerYear": 250,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 35,
+        "expectedLossWithLimit": 29.066103256211107,
+        "expectedLossEscalatedLimit": 33.7281491504985,
+        "expectedLossEffective": 30.464717024497325,
+        "probSessionHitsLimit": 0.3085375372760062,
+        "harmReductionFromLimit": 0.1295795135857907,
+        "expectedAnnualLossNoLimit": 8750,
+        "expectedAnnualLossWithLimit": 7616.179256124331,
+        "absoluteAnnualHarmReduction": 1133.820743875669,
+        "expectedAnnualSessionsAtLimit": 77.13438431900155,
+        "expectedAnnualLimitBreachAttempts": 75.00000000000001,
+        "isCompliantAuNcpfSection5": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 30.779705494032218,
+        "observedProbSessionHitsLimit": 0.31155,
+        "observedHarmReductionFromLimit": 0.12057984302765093
+      },
+      "checks": {
+        "effective_rel": 0.010233641436106803,
+        "phit_delta": 0.003012462723993803,
+        "harm_red_delta": 0.008999670558139772
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "E_corner_low_adherence_player",
+      "description": "Corner: low-adherence player (α=0.4) — limit largely ignored",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "sessionLossMean": 50,
+        "sessionLossStd": 40,
+        "playerLossLimit": 50,
+        "adherenceRate": 0.4,
+        "limitEscalationFactor": 2,
+        "sessionsPerYear": 365,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 50,
+        "expectedLossWithLimit": 34.042308783942694,
+        "expectedLossEscalatedLimit": 47.97652869470792,
+        "expectedLossEffective": 42.402840730401834,
+        "probSessionHitsLimit": 0.49999999949999996,
+        "harmReductionFromLimit": 0.1519431853919633,
+        "expectedAnnualLossNoLimit": 18250,
+        "expectedAnnualLossWithLimit": 15477.036866596669,
+        "absoluteAnnualHarmReduction": 2772.963133403331,
+        "expectedAnnualSessionsAtLimit": 182.4999998175,
+        "expectedAnnualLimitBreachAttempts": 219,
+        "isCompliantAuNcpfSection5": false
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 42.85323785914844,
+        "observedProbSessionHitsLimit": 0.50685,
+        "observedHarmReductionFromLimit": 0.14293524281703113
+      },
+      "checks": {
+        "effective_rel": 0.01051022399350523,
+        "phit_delta": 0.006850000500000064,
+        "harm_red_delta": 0.009007942574932176
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "F_corner_perfect_adherence",
+      "description": "Corner: perfect adherence (α=1.0) — maximum harm reduction",
+      "jurisdiction": "UKGC",
+      "cfg": {
+        "sessionLossMean": 50,
+        "sessionLossStd": 40,
+        "playerLossLimit": 25,
+        "adherenceRate": 1,
+        "limitEscalationFactor": 1.5,
+        "sessionsPerYear": 365,
+        "defaultDailyLimit": 50,
+        "coolingPeriodHours": 24
+      },
+      "closed_form": {
+        "expectedLossNoLimit": 50,
+        "expectedLossWithLimit": 18.52319808239067,
+        "expectedLossEscalatedLimit": 27.019405132795864,
+        "expectedLossEffective": 18.52319808239067,
+        "probSessionHitsLimit": 0.7340145270237729,
+        "harmReductionFromLimit": 0.6295360383521866,
+        "expectedAnnualLossNoLimit": 18250,
+        "expectedAnnualLossWithLimit": 6760.967300072595,
+        "absoluteAnnualHarmReduction": 11489.032699927404,
+        "expectedAnnualSessionsAtLimit": 267.9153023636771,
+        "expectedAnnualLimitBreachAttempts": 0,
+        "isCompliantAuNcpfSection5": true
+      },
+      "monte_carlo": {
+        "episodes": 20000,
+        "observedExpectedLossEffective": 18.660957554980182,
+        "observedProbSessionHitsLimit": 0.74405,
+        "observedHarmReductionFromLimit": 0.6267808489003963
+      },
+      "checks": {
+        "effective_rel": 0.007382229565853476,
+        "phit_delta": 0.010035472976227089,
+        "harm_red_delta": 0.0027551894517903186
+      },
+      "pass": true,
+      "elapsed_ms": 1
+    }
+  ]
+}
