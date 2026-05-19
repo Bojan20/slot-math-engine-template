@@ -1743,29 +1743,37 @@ input[type="range"]::-moz-range-thumb {
   border-radius: var(--r-sm);
 }
 .bp-tab.is-active { color: var(--cyan); background: var(--cyan-glow); }
-/* Close X — explicit cursor + z-index so it never gets covered. */
+/* Close X — generously sized so the click target is impossible to miss.
+   Always rose-tinted (visible at idle, full danger on hover) + z-index
+   guard so nothing can cover it. */
 .bp-close {
-  width: 28px; height: 28px;
-  color: var(--text-1);
-  font-size: 16px;
+  width: 40px; height: 32px;
+  margin-right: -4px;
+  color: var(--text-0);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
   border-radius: var(--r-sm);
   cursor: pointer;
-  background: transparent;
-  border: 1px solid transparent;
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.35);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  transition: background 120ms, border-color 120ms, transform 120ms, color 120ms;
 }
 .bp-close:hover {
   color: #fff;
-  background: rgba(244, 63, 94, 0.20);
-  border-color: rgba(244, 63, 94, 0.55);
+  background: rgba(244, 63, 94, 0.45);
+  border-color: rgba(244, 63, 94, 0.90);
+  transform: scale(1.05);
 }
+.bp-close:active { transform: scale(0.95); }
 .bp-close:focus-visible {
-  outline: 1px solid var(--cyan);
-  outline-offset: 1px;
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
 }
 .bp-body { flex: 1; overflow-y: auto; padding: 8px 14px; }
 /* Each pane is shown/hidden via the `hidden` attribute (and a redundant

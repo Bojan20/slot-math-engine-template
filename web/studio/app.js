@@ -6,6 +6,48 @@
    No deps. file:// safe.
    ============================================================= */
 
+/* ─────────────────────────────────────────────────────────────
+   BOOT-TIME SERVICE WORKER + CACHE CLEANUP
+   ─────────────────────────────────────────────────────────────
+   Runs BEFORE everything else.  When the user opens Studio in
+   localhost / preview mode, this nukes every prior service worker
+   registration and all CacheStorage entries.  Cures the "X doesn't
+   close because Boki's browser is serving a stale app.js from a
+   service worker baked weeks ago" class of bug forever.
+
+   Idempotent — no-op on a clean session.  Skipped on file:// URLs
+   so this stays harmless when the bundle is opened locally.
+*/
+(function killStaleServiceWorkersAndCaches() {
+  try {
+    const host = (typeof location !== "undefined" && location.hostname) || "";
+    const isLocalDev = host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0";
+    if (!isLocalDev) return;
+    if (typeof navigator !== "undefined" && navigator.serviceWorker) {
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        for (const r of regs) {
+          try { r.unregister(); } catch (_) {}
+        }
+        if (regs.length > 0) {
+          console.log(`[studio] nuked ${regs.length} stale service-worker registration(s)`);
+        }
+      }).catch(() => {});
+    }
+    if (typeof caches !== "undefined") {
+      caches.keys().then((keys) => {
+        for (const k of keys) {
+          try { caches.delete(k); } catch (_) {}
+        }
+        if (keys.length > 0) {
+          console.log(`[studio] cleared ${keys.length} stale CacheStorage entr${keys.length === 1 ? 'y' : 'ies'}`);
+        }
+      }).catch(() => {});
+    }
+  } catch (_) {
+    /* never block boot on this */
+  }
+})();
+
 (() => {
   "use strict";
 
@@ -3025,6 +3067,25 @@
   if (legacyBottomBtn) legacyBottomBtn.addEventListener("click", toggleBottom);
   const headerPanelBtn = document.querySelector("#btn-toggle-panel");
   if (headerPanelBtn) headerPanelBtn.addEventListener("click", toggleBottom);
+
+  // Esc key closes the bottom drawer (in addition to ⌘J).  Doesn\'t
+  // fire if a modal is open (those have their own Esc handlers).
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const bp = document.getElementById("bottom-panel");
+    if (!bp || bp.hasAttribute("hidden")) return;
+    // Skip if a modal/menu is open above the drawer
+    const blocked = document.querySelector(".modal-base:not([hidden]), .wiz:not([hidden]), .cmdp:not([hidden]), .picker:not([hidden])");
+    if (blocked) return;
+    safeToggleBottom(e);
+  });
+
+  // Note: an earlier iteration added click-outside-to-close but it was
+  // too aggressive — clicks on Build toolbar buttons (#btn-validate,
+  // #btn-compute) closed the drawer right when the user wanted to
+  // observe their side-effects on the MC/CI panes.  Removed.  Four
+  // close paths remain (more than enough): X button, Esc, ⌘J, header
+  // toggle button.
 
   // ── Bottom-panel TABS — Activity / MC progress / CI gates ──────────
   // Each .bp-tab has data-bp="activity|mc|ci"; clicking it activates the
