@@ -1,0 +1,173 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_type6_compliant",
+      "regime": "TYPE_6_COMPLIANT",
+      "cfg": {
+        "targetRtp": 0.95,
+        "pachislotType": 6,
+        "playerSkillMultiplier": 1.02,
+        "betPerSpin": 150,
+        "spinsPerHour": 360,
+        "dailyPlayHours": 4,
+        "paybackCycleHours": 3.5,
+        "jagraCertified": true
+      },
+      "closed_form": {
+        "effectiveRtp": 0.969,
+        "expectedHourlyLoss": 1674.0000000000016,
+        "expectedDailyLoss": 6696.000000000006,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": true,
+        "pachislotComplianceScore": 1,
+        "isCompliantFueiho": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": -6405.45
+      },
+      "pass": true
+    },
+    {
+      "name": "B_type5_legacy",
+      "regime": "TYPE_5_LEGACY",
+      "cfg": {
+        "targetRtp": 1.1,
+        "pachislotType": 5,
+        "playerSkillMultiplier": 1.05,
+        "betPerSpin": 200,
+        "spinsPerHour": 400,
+        "dailyPlayHours": 6,
+        "paybackCycleHours": 4,
+        "jagraCertified": true
+      },
+      "closed_form": {
+        "effectiveRtp": 1.1550000000000002,
+        "expectedHourlyLoss": -12400.00000000002,
+        "expectedDailyLoss": -74400.00000000012,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": true,
+        "pachislotComplianceScore": 1,
+        "isCompliantFueiho": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": -213538.10000000003
+      },
+      "pass": true
+    },
+    {
+      "name": "C_type6_max_rtp",
+      "regime": "TYPE_6_MAX",
+      "cfg": {
+        "targetRtp": 1.05,
+        "pachislotType": 6,
+        "playerSkillMultiplier": 1.1,
+        "betPerSpin": 150,
+        "spinsPerHour": 360,
+        "dailyPlayHours": 4,
+        "paybackCycleHours": 3,
+        "jagraCertified": true
+      },
+      "closed_form": {
+        "effectiveRtp": 1.1550000000000002,
+        "expectedHourlyLoss": -8370.000000000013,
+        "expectedDailyLoss": -33480.00000000005,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": true,
+        "pachislotComplianceScore": 1,
+        "isCompliantFueiho": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": -96240.86250000002
+      },
+      "pass": true
+    },
+    {
+      "name": "D_no_jagra_fail",
+      "regime": "NO_JAGRA",
+      "cfg": {
+        "targetRtp": 0.95,
+        "pachislotType": 6,
+        "playerSkillMultiplier": 1.02,
+        "betPerSpin": 150,
+        "spinsPerHour": 360,
+        "dailyPlayHours": 4,
+        "paybackCycleHours": 3.5,
+        "jagraCertified": false
+      },
+      "closed_form": {
+        "effectiveRtp": 0.969,
+        "expectedHourlyLoss": 1674.0000000000016,
+        "expectedDailyLoss": 6696.000000000006,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": true,
+        "pachislotComplianceScore": 0.7,
+        "isCompliantFueiho": false
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": -6405.45
+      },
+      "pass": true
+    },
+    {
+      "name": "E_cycle_violation",
+      "regime": "CYCLE_VIOLATION",
+      "cfg": {
+        "targetRtp": 0.95,
+        "pachislotType": 6,
+        "playerSkillMultiplier": 1.02,
+        "betPerSpin": 150,
+        "spinsPerHour": 360,
+        "dailyPlayHours": 6,
+        "paybackCycleHours": 8,
+        "jagraCertified": true
+      },
+      "closed_form": {
+        "effectiveRtp": 0.969,
+        "expectedHourlyLoss": 1674.0000000000016,
+        "expectedDailyLoss": 10044.00000000001,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": false,
+        "pachislotComplianceScore": 0.7,
+        "isCompliantFueiho": false
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": -9968.9625
+      },
+      "pass": true
+    },
+    {
+      "name": "F_low_volatility_low_rtp",
+      "regime": "LOW_VOL",
+      "cfg": {
+        "targetRtp": 0.85,
+        "pachislotType": 6,
+        "playerSkillMultiplier": 1.01,
+        "betPerSpin": 100,
+        "spinsPerHour": 300,
+        "dailyPlayHours": 3,
+        "paybackCycleHours": 2.5,
+        "jagraCertified": true
+      },
+      "closed_form": {
+        "effectiveRtp": 0.8584999999999999,
+        "expectedHourlyLoss": 4245.000000000002,
+        "expectedDailyLoss": 12735.000000000005,
+        "rtpWithinTypeLimits": true,
+        "paybackCycleCompliant": true,
+        "pachislotComplianceScore": 1,
+        "isCompliantFueiho": true
+      },
+      "monte_carlo": {
+        "episodes": 200,
+        "observedDailyLossMean": 16957.5075
+      },
+      "pass": true
+    }
+  ]
+}
