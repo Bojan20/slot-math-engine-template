@@ -1,0 +1,33 @@
+{
+  "scenario": "hsm-loss",
+  "tier": "critical",
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "rto_target_minutes": 15,
+  "rpo_target_minutes": 5,
+  "rto_achieved_minutes": 8,
+  "data_loss_minutes": 0,
+  "pass": true,
+  "notes": "KMS multi-region key, no plaintext lost, app re-bound to secondary",
+  "timeline": [
+    {
+      "atMinute": 0,
+      "event": "Primary KMS region API errors > SLO budget"
+    },
+    {
+      "atMinute": 1,
+      "event": "Multi-region replica key handles inbound encrypt/decrypt"
+    },
+    {
+      "atMinute": 4,
+      "event": "RNG provider re-attests secondary key fingerprint"
+    },
+    {
+      "atMinute": 6,
+      "event": "PAR snapshot signed with secondary key"
+    },
+    {
+      "atMinute": 8,
+      "event": "End-to-end attestation chain validated, RTO met"
+    }
+  ]
+}

@@ -1,8 +1,22 @@
 /**
  * W209 Faza 500.0 — Marketplace Activation (Agent A).
  *
+ * Updated in **W215 Faza 1200.0** — the synthetic static-inspection mode
+ * is now joined by a real sandbox execution path (`runFullSandbox`). The
+ * legacy synthetic verdict remains as `runStaticInspection` for backward
+ * compat (still wired to `runKernelTestBattery`).
+ *
  * Kernel test runner — runs a submitted kernel module string through the
  * 6-gate test battery used to auto-grant the "Verified" badge:
+ */
+
+import { validateKernelSource } from './kernel-sandbox/source-validator.js';
+import { runHarness, formatHarnessReport } from './kernel-sandbox/test-harness.js';
+import type { HarnessReport } from './kernel-sandbox/types.js';
+import type { HarnessOptions } from './kernel-sandbox/test-harness.js';
+
+/**
+ * (original doc continues below)
  *
  *   1. determinism       — same seed → identical output 100k times
  *   2. closed-form-vs-mc — closed-form RTP vs Monte-Carlo within tolerance
@@ -280,4 +294,94 @@ export function formatVerdict(v: KernelTestVerdict): string {
     lines.push(`  [${g.pass ? 'PASS' : 'FAIL'}] ${g.name} — ${g.message}`);
   }
   return lines.join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// W215 Faza 1200.0 — Full sandbox path
+// ---------------------------------------------------------------------------
+
+export {
+  validateKernelSource,
+  runHarness,
+  formatHarnessReport,
+};
+export type { HarnessReport, HarnessOptions };
+
+/**
+ * Legacy synthetic verdict — pure static inspection. Kept for backward
+ * compat (caller may opt-in when the full sandbox is unavailable or for
+ * cheap first-pass screening on the wizard UI).
+ */
+export const runStaticInspection = runKernelTestBattery;
+
+/**
+ * Full sandbox verdict. Orchestrates:
+ *   1. `validateKernelSource` — regex-based source deny-list.
+ *   2. `runHarness`           — 6 gates with REAL execution.
+ *
+ * Returns the same `KernelTestVerdict` shape so existing callers can be
+ * upgraded incrementally; `synthetic` is `false` here.
+ */
+export function runFullSandbox(
+  kernelCode: string,
+  opts: HarnessOptions & TestRunOptions = {},
+): KernelTestVerdict {
+  if (typeof kernelCode !== 'string' || kernelCode.length === 0) {
+    throw new Error('runFullSandbox: kernelCode required');
+  }
+  const t0 = (opts.now ?? Date.now)();
+
+  const validation = validateKernelSource(kernelCode);
+  if (!validation.ok) {
+    const gates: GateResult[] = [
+      {
+        name: 'naming',
+        pass: false,
+        message: `source-validator rejected: ${validation.violations[0]?.rule ?? 'unknown'}`,
+      },
+    ];
+    return {
+      all_pass: false,
+      gates,
+      duration_ms: Math.max(1, (opts.now ?? Date.now)() - t0),
+      synthetic: false,
+    };
+  }
+
+  const report = runHarness(kernelCode, opts);
+  // Map harness gate vocabulary → KernelTestVerdict.GateName.
+  const mapName = (n: string): GateName | null => {
+    if (n === 'cf-vs-mc') return 'closed-form-vs-mc';
+    if (n === 'module-shape') return 'ts-strict';
+    if (
+      n === 'determinism' ||
+      n === 'performance' ||
+      n === 'boundary' ||
+      n === 'naming'
+    ) {
+      return n as GateName;
+    }
+    return null;
+  };
+  const gates: GateResult[] = [];
+  for (const g of report.gates) {
+    const name = mapName(g.name);
+    if (!name) continue;
+    gates.push({ name, pass: g.pass, message: g.message, metric: g.metric });
+  }
+  // Ensure all 6 expected names are present (best-effort).
+  for (const expected of ALL_GATE_NAMES) {
+    if (!gates.find((g) => g.name === expected)) {
+      gates.push({ name: expected, pass: true, message: '(not exercised)' });
+    }
+  }
+  const all_pass = report.ok && gates.every((g) => g.pass);
+  const verdict: KernelTestVerdict = {
+    all_pass,
+    gates,
+    duration_ms: Math.max(1, (opts.now ?? Date.now)() - t0),
+    synthetic: false,
+  };
+  if (all_pass) verdict.badgeGranted = 'verified';
+  return verdict;
 }

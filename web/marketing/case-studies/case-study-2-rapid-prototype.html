@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: Indie studio ships first jackpot game in 21 days</title>
+  <meta name="description" content="A four-person indie studio shipped its first 4-tier mystery progressive jackpot in 21 days using the closed-form jackpot solver." />
+  <link rel="canonical" href="https://slot-math-engine.example/case-studies/case-study-2-rapid-prototype.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Indie studio ships first jackpot in 21 days — slot-math-engine" />
+  <meta property="og:description" content="From kick-off to certified build in three weeks." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Indie studio ships first jackpot in 21 days",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Organization", "name": "slot-math-engine" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <article class="case-study">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Case study · Rapid prototype</p>
+        <h1>Indie Studio X: First jackpot in 21 days</h1>
+        <p class="subtitle">A four-person indie studio shipped its first 4-tier mystery progressive jackpot in three weeks with no external math consultant.</p>
+        <p class="meta">Published 2026-05-12 · 3 min read</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap two-col">
+        <div>
+          <h2>Problem</h2>
+          <p>Indie Studio X is a four-person studio with two non-jackpot titles in market. Their next title was a 4-tier mystery progressive jackpot with a shared pool across 12 future games. None of the team had built a jackpot before. The conventional path — hire a math consultant, model in spreadsheets, hand off to a third-party verifier, await certification — was quoted at 16 weeks plus $40K in consulting fees.</p>
+
+          <h2>Solution</h2>
+          <p>The studio adopted the slot-math-engine Indie tier and used the closed-form jackpot solver (W067 + W071) to derive contribution rates, seed values and reset rules directly from a single IR file. The studio's CTO drove the math; no external consultant was engaged.</p>
+
+          <h2>Math model used</h2>
+          <ul>
+            <li>Closed-form mystery-progressive solver (W067)</li>
+            <li>Multi-pool shared-jackpot accounting (W071)</li>
+            <li>RTP attribution kernel — split base-game RTP vs jackpot contribution</li>
+            <li>MC validator at 1e8 spins for paper trail (closed-form is the source of truth)</li>
+          </ul>
+        </div>
+
+        <aside class="case-metrics">
+          <h3>Headline metrics</h3>
+          <dl>
+            <dt>Team size</dt><dd>4</dd>
+            <dt>Prior jackpot experience</dt><dd>0</dd>
+            <dt>Days to first playable</dt><dd>9</dd>
+            <dt>Days to certified build</dt><dd>21</dd>
+            <dt>Consulting cost saved</dt><dd>$40K</dd>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Timeline</h2>
+        <table class="timeline">
+          <thead><tr><th>Day</th><th>Milestone</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Studio kick-off, IR scaffold generated</td></tr>
+            <tr><td>3</td><td>Jackpot tiers (Mini / Minor / Major / Grand) defined</td></tr>
+            <tr><td>9</td><td>First playable build, math RTP locked at 95.20%</td></tr>
+            <tr><td>14</td><td>Operator-package produced, GLI-19 submission</td></tr>
+            <tr><td>21</td><td>Certification returned PASS, build delivered to first operator</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Results</h2>
+        <ul>
+          <li>21 days from kick-off to certified build (vs 16-week consultant quote)</li>
+          <li>$40K saved on external math consulting</li>
+          <li>95.20% target RTP within 0.01 pp on first submission</li>
+          <li>Single config file controls all 4 tiers + 12 future games sharing the pool</li>
+        </ul>
+
+        <h2>Lessons</h2>
+        <ol>
+          <li>Closed-form solvers transform jackpot math from a specialist task into a config exercise. A studio CTO without prior jackpot experience finished it in three days.</li>
+          <li>Shared-pool accounting becomes trivial when expressed as a contribution-rate algebra rather than a stateful simulation.</li>
+          <li>The MC validation step is still useful for the cert paper trail even when the closed-form result is canonical — auditors expect both signals.</li>
+        </ol>
+
+        <blockquote class="quote">
+          <p>"We did our first jackpot title in three weeks with no math consultant. The math engine is a force multiplier for a small team."</p>
+          <cite>&lt;Role at Operator&gt;, Indie Studio X</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section cta-band">
+      <div class="wrap">
+        <h2>Want to prototype your next jackpot in days, not months?</h2>
+        <p><a class="btn btn-primary" href="../pages/contact.html" data-cta="case-study-2">Talk to sales</a> <a class="btn" href="../pages/demo.html">Book a demo</a></p>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 slot-math-engine · <a href="../pages/contact.html">Contact</a> · <a href="../index.html">Home</a></p>
+    </div>
+  </footer>
+</body>
+</html>

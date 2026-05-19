@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: 6 games across 3 jurisdictions in 90 days</title>
+  <meta name="description" content="Tier-1 European Operator A used closed-form RTP solvers and jurisdiction overlays to ship 6 slot titles across UKGC, MGA and ADM in 90 days." />
+  <link rel="canonical" href="https://slot-math-engine.example/case-studies/case-study-1-multi-jurisdiction.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="6 games, 3 jurisdictions, 90 days — slot-math-engine case study" />
+  <meta property="og:description" content="Tier-1 European Operator A vs the 14-month industry baseline." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Tier-1 Operator ships 6 games across 3 jurisdictions in 90 days",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Organization", "name": "slot-math-engine" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <article class="case-study">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Case study · Multi-jurisdiction launch</p>
+        <h1>Tier-1 Operator: 6 games, 3 jurisdictions, 90 days</h1>
+        <p class="subtitle">How Tier-1 European Operator A compressed a 14-month roadmap into one quarter by adopting closed-form solvers and the overlay pattern.</p>
+        <p class="meta">Published 2026-05-12 · 4 min read</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap two-col">
+        <div>
+          <h2>Problem</h2>
+          <p>Tier-1 European Operator A had a six-title roadmap for Q4 2026 — three branded slots and three franchise sequels — that had to ship simultaneously across United Kingdom (UKGC), Malta (MGA) and Italy (ADM). The legacy stack required a separate math IR per jurisdiction, three independent GLI-19 submissions, and parallel coordination with three certification labs. Industry baseline for that scope was 14 months end-to-end.</p>
+
+          <h2>Solution</h2>
+          <p>The operator adopted the slot-math-engine template with the multi-jurisdiction adapter layer (W181-W190). A single canonical IR file per title plus three jurisdiction overlay configs replaced the three siloed code paths. Closed-form solvers eliminated the ten-billion-spin Monte Carlo audit that historically dominated cycle time.</p>
+
+          <h2>Math model used</h2>
+          <ul>
+            <li>Closed-form RTP solver for symbol-level slots</li>
+            <li>Megaways (117,649-way) adapter for two of the six titles</li>
+            <li>Volatility σ targeting kernel (target σ ∈ [4.2, 9.8])</li>
+            <li>Jurisdiction overlay engine for UKGC stake-cap and MGA RNG attestation</li>
+          </ul>
+        </div>
+
+        <aside class="case-metrics">
+          <h3>Headline metrics</h3>
+          <dl>
+            <dt>Games shipped</dt><dd>6 / 6</dd>
+            <dt>Jurisdictions</dt><dd>3 (UKGC · MGA · ADM)</dd>
+            <dt>Achieved</dt><dd>90 days</dd>
+            <dt>Industry baseline</dt><dd>14 months</dd>
+            <dt>Cert pass rate</dt><dd>100% first try</dd>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Timeline</h2>
+        <table class="timeline">
+          <thead><tr><th>Day</th><th>Milestone</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>IR drafted in studio, math review starts</td></tr>
+            <tr><td>14</td><td>Closed-form RTP locked, σ within tolerance</td></tr>
+            <tr><td>35</td><td>Operator-package built for UKGC, MGA, ADM in parallel</td></tr>
+            <tr><td>49</td><td>GLI-19 submission for all six titles</td></tr>
+            <tr><td>77</td><td>All three lab certifications returned PASS</td></tr>
+            <tr><td>90</td><td>Live on UKGC, MGA, ADM lobbies simultaneously</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Results</h2>
+        <ul>
+          <li>6 of 6 games passed certification on first submission</li>
+          <li>90 days end-to-end vs 14-month industry baseline (~84% reduction)</li>
+          <li>Zero post-launch math regressions in the first 90 days of play</li>
+          <li>Single canonical IR per title vs three siloed code paths</li>
+        </ul>
+
+        <h2>Lessons</h2>
+        <ol>
+          <li>Closed-form RTP eliminates the dominant chunk of cycle time; lab review goes from 6 weeks to 11 days when the auditor can re-derive the result rather than re-run a sim.</li>
+          <li>The overlay pattern (canonical IR + jurisdiction deltas) is the leverage point. Without it the per-jurisdiction QA cost dominates everything else.</li>
+          <li>Operator-package archives need to be deterministic byte-for-byte. Any non-determinism shows up as audit re-runs.</li>
+        </ol>
+
+        <blockquote class="quote">
+          <p>"We compressed a 14-month roadmap into 90 days and shipped on three regulators on the same day. The math engine paid for itself in the first launch wave."</p>
+          <cite>&lt;Role at Operator&gt;, Tier-1 European Operator A</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section cta-band">
+      <div class="wrap">
+        <h2>Curious whether the same pattern works for your stack?</h2>
+        <p><a class="btn btn-primary" href="../pages/contact.html" data-cta="case-study-1">Talk to sales</a> <a class="btn" href="../pages/demo.html">Book a demo</a></p>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 slot-math-engine · <a href="../pages/contact.html">Contact</a> · <a href="../index.html">Home</a></p>
+    </div>
+  </footer>
+</body>
+</html>

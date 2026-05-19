@@ -1,0 +1,8 @@
+{
+  "branches": 3,
+  "coverage": {
+    "mp:listing": 16622,
+    "mp:purchase": 16758,
+    "mp:search": 16620
+  }
+}

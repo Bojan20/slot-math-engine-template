@@ -1,0 +1,153 @@
+{
+  "seed": "sme-w215",
+  "windowDays": 30,
+  "generatedAt": "2026-05-19T00:00:00.000Z",
+  "pageviews": [
+    {
+      "page": "/",
+      "views": 55016,
+      "uniques": 37033,
+      "bouncePct": 32.4,
+      "avgScrollPct": 46
+    },
+    {
+      "page": "/pages/how-it-works.html",
+      "views": 25029,
+      "uniques": 16774,
+      "bouncePct": 22.4,
+      "avgScrollPct": 56
+    },
+    {
+      "page": "/pages/pricing.html",
+      "views": 20237,
+      "uniques": 12837,
+      "bouncePct": 31.8,
+      "avgScrollPct": 68
+    },
+    {
+      "page": "/pages/coverage.html",
+      "views": 10363,
+      "uniques": 7434,
+      "bouncePct": 26.9,
+      "avgScrollPct": 48
+    },
+    {
+      "page": "/pages/demo.html",
+      "views": 6791,
+      "uniques": 5255,
+      "bouncePct": 31.1,
+      "avgScrollPct": 69
+    },
+    {
+      "page": "/pages/contact.html",
+      "views": 5356,
+      "uniques": 3464,
+      "bouncePct": 24.8,
+      "avgScrollPct": 43
+    },
+    {
+      "page": "/blog/index.html",
+      "views": 7290,
+      "uniques": 4846,
+      "bouncePct": 29.7,
+      "avgScrollPct": 88
+    },
+    {
+      "page": "/case-studies/case-study-1-multi-jurisdiction.html",
+      "views": 4678,
+      "uniques": 3020,
+      "bouncePct": 25.6,
+      "avgScrollPct": 63
+    }
+  ],
+  "funnel": {
+    "landing": 37033,
+    "pricing": 12837,
+    "demo": 5255,
+    "contact": 3464,
+    "signup": 812
+  },
+  "ctas": [
+    {
+      "label": "Talk to sales",
+      "destination": "/pages/contact.html",
+      "clicks": 3464,
+      "ctr": 9.4
+    },
+    {
+      "label": "Book a demo",
+      "destination": "/pages/demo.html",
+      "clicks": 5255,
+      "ctr": 14.2
+    },
+    {
+      "label": "See pricing",
+      "destination": "/pages/pricing.html",
+      "clicks": 12837,
+      "ctr": 34.7
+    },
+    {
+      "label": "Read how it works",
+      "destination": "/pages/how-it-works.html",
+      "clicks": 16774,
+      "ctr": 45.3
+    }
+  ],
+  "experiments": [
+    {
+      "id": "hero_headline_v2",
+      "variants": [
+        {
+          "name": "A",
+          "impressions": 2982,
+          "conversions": 88
+        },
+        {
+          "name": "B",
+          "impressions": 2998,
+          "conversions": 122
+        },
+        {
+          "name": "C",
+          "impressions": 3017,
+          "conversions": 63
+        }
+      ]
+    },
+    {
+      "id": "pricing_tier_order",
+      "variants": [
+        {
+          "name": "indie-first",
+          "impressions": 2096,
+          "conversions": 131
+        },
+        {
+          "name": "platform-first",
+          "impressions": 2078,
+          "conversions": 144
+        }
+      ]
+    },
+    {
+      "id": "cta_button_color",
+      "variants": [
+        {
+          "name": "cyan",
+          "impressions": 1653,
+          "conversions": 179
+        },
+        {
+          "name": "amber",
+          "impressions": 1609,
+          "conversions": 156
+        },
+        {
+          "name": "emerald",
+          "impressions": 1647,
+          "conversions": 170
+        }
+      ]
+    }
+  ]
+}

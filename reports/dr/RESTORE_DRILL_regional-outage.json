@@ -1,0 +1,37 @@
+{
+  "scenario": "regional-outage",
+  "tier": "critical",
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "rto_target_minutes": 15,
+  "rpo_target_minutes": 5,
+  "rto_achieved_minutes": 12,
+  "data_loss_minutes": 4,
+  "pass": true,
+  "notes": "DNS failover + replica promote, last streaming WAL replayed",
+  "timeline": [
+    {
+      "atMinute": 0,
+      "event": "Primary region health-check fails (3 consecutive)"
+    },
+    {
+      "atMinute": 1,
+      "event": "Route53 health policy flips to replica region"
+    },
+    {
+      "atMinute": 3,
+      "event": "Replica DB promoted to primary, write traffic re-routed"
+    },
+    {
+      "atMinute": 7,
+      "event": "Auto-scaling group warms compute in replica AZ"
+    },
+    {
+      "atMinute": 10,
+      "event": "Wallet provider re-bound to replica wallet endpoint"
+    },
+    {
+      "atMinute": 12,
+      "event": "Synthetic spin/payout transaction succeeds — RTO met"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<!--
+  W215 Faza 800.2 Agent C — Reusable blog card component.
+  Markup template; render server-side or via the analytics dashboard.
+  Required data attributes are documented inline.
+-->
+<li class="blog-card" data-blog-card>
+  <p class="kicker" data-blog-meta>
+    <span data-blog-tag>{{ tag }}</span> ·
+    <span data-blog-read-time>{{ readingTimeMinutes }} min read</span> ·
+    <time datetime="{{ publishDate }}" data-blog-date>{{ publishDate }}</time>
+  </p>
+  <h2><a href="{{ href }}" data-blog-title>{{ title }}</a></h2>
+  <p data-blog-excerpt>{{ excerpt }}</p>
+  <p>
+    <a class="btn" href="{{ href }}" data-blog-cta="blog-card">Read post →</a>
+  </p>
+</li>
+
+<!--
+  Required fields:
+    title              string  (max 120 chars)
+    href               string  (absolute path or relative URL)
+    excerpt            string  (max 240 chars)
+    tag                string  (e.g. "Math & Certification")
+    readingTimeMinutes integer (1-60)
+    publishDate        YYYY-MM-DD
+  Optional:
+    author             string (rendered in author byline footer)
+    coverImage         relative URL (rendered inside the .blog-card if present)
+-->

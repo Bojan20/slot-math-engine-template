@@ -177,3 +177,130 @@ After every SEV1/SEV2:
 - Internal postmortem within 5 business days (blameless).
 - Action items tracked to closure in repository issues.
 - Threat model + SOC 2 evidence updated as needed.
+
+---
+
+## 10. W215 — Engine-driven matrix (canonical reference)
+
+Starting with W215, classification, escalation, and KPI roll-ups are
+authoritative-by-code via
+[`server/lib/incident-response.ts`](../server/lib/incident-response.ts). The
+W205 prose ladder above stays as a human-friendly briefing; the
+engine's matrix below is what fires in production.
+
+### 10.1 Severity matrix (category × impact-scope)
+
+| Category    | global | regional | tenant | partial | cosmetic |
+|-------------|--------|----------|--------|---------|----------|
+| outage      | SEV1   | SEV2     | SEV2   | SEV3    | SEV4     |
+| security    | SEV1   | SEV1     | SEV2   | SEV3    | SEV4     |
+| data        | SEV1   | SEV1     | SEV2   | SEV3    | SEV4     |
+| compliance  | SEV1   | SEV2     | SEV2   | SEV3    | SEV4     |
+| performance | SEV2   | SEV3     | SEV3   | SEV3    | SEV4     |
+
+Anything outside the table collapses to SEV4 by definition.
+
+### 10.2 Roles
+
+| Role              | Page from        | Owns                                                |
+|-------------------|------------------|-----------------------------------------------------|
+| on-call SRE       | SEV3 default     | First-touch triage, mitigation runbook execution     |
+| SRE lead          | SEV2 default     | Mid-incident coordination, comms hand-off            |
+| incident manager  | SEV3 secondary   | Status-page updates, internal stream-of-truth doc    |
+| security lead     | SEV1/2 security  | Forensics, evidence chain, regulator briefing pack   |
+| TPM               | SEV2 secondary   | Stakeholder + customer-success comms                 |
+| comms lead        | SEV1 always      | Public status / press / partner notifications        |
+| CTO               | SEV1 primary     | Executive decision-making, regulator liaison         |
+| CEO               | SEV1 alert       | Board-level visibility, regulator escalation         |
+| regulator liaison | SEV1 compliance  | Files notification within jurisdiction deadlines     |
+
+### 10.3 Lifecycle
+
+1. **Detect** — pager fires (anomaly auto-mitigation, alertmanager,
+   customer report). `openIncident()` records `detectedAt`.
+2. **Acknowledge** — on-call accepts within SEV-SLA. `acknowledge()`
+   stamps MTTA.
+3. **Mitigate** — partial recovery / blast-radius contained.
+   `mitigate()` stamps `mitigatedAt`.
+4. **Resolve** — root cause confirmed fixed, monitoring green.
+   `resolve()` stamps MTTR.
+5. **Postmortem** (SEV1/SEV2 mandatory): blameless within 5 business
+   days; public postmortem within 14 days if customer-impacting.
+
+### 10.4 Communications templates
+
+**Initial (≤ 5 min after page)**
+> We are aware of an issue affecting `<scope>`. We are investigating.
+> Next update in 30 minutes.
+
+**Mid-incident (every 30 min for SEV1, hourly for SEV2)**
+> Status: `<investigating | identified | monitoring>`. Mitigation:
+> `<action>`. Next update at `<HH:MM UTC>`.
+
+**Post-resolution (≤ 1h after resolve)**
+> Resolved at `<HH:MM UTC>`. Root cause: `<one-line>`. Customer impact:
+> `<scope + duration>`. Full postmortem within 14 days.
+
+### 10.5 Regulator notification triggers
+
+| Jurisdiction | Trigger                                            | Deadline       |
+|--------------|----------------------------------------------------|----------------|
+| GLI-19       | Audit-chain gap, RNG seed compromise               | 24h            |
+| UKGC RTS 1B  | Player funds at risk, prolonged outage > 2h        | 24h            |
+| MGA Ch. 6    | Data breach affecting Maltese players              | 72h (GDPR)     |
+| Class III    | Tribal compact violations or jackpot mis-payment   | Per compact    |
+
+The engine's `getEscalationRoute(...).regulator_notify` returns `true`
+when the matrix above is triggered — comms lead must file before the
+deadline.
+
+### 10.6 Postmortem template structure
+
+```
+# Postmortem — <incident id> (<SEVx>)
+
+## Summary
+<one-paragraph what + impact + duration>
+
+## Timeline (UTC)
+- t+00:00 detected via <signal>
+- t+00:XX acknowledged by <role>
+- t+00:YY mitigated by <action>
+- t+HH:ZZ resolved
+
+## Root cause
+<5-whys>
+
+## Impact
+<users / tenants / revenue / data>
+
+## What went well
+<3-5 bullets>
+
+## What went poorly
+<3-5 bullets>
+
+## Action items
+| # | Action | Owner | Due |
+|--|--------|-------|-----|
+
+## References
+- Engine record: server/lib/incident-response.ts → id=<x>
+- DR drill: reports/dr/RESTORE_DRILL_<scenario>.md
+- Pentest baseline: reports/security/AUDIT_REPORT.md
+```
+
+### 10.7 KPI roll-up
+
+`IncidentResponseEngine.summarizeWindow(now, hours)` returns the
+canonical numbers for executive review:
+
+- `total`, `bySeverity` (SEV1..SEV4 counts)
+- `mttrSecondsP50`, `mttrSecondsP95`
+- `postmortemsOpen` — SEV1/SEV2 not yet resolved
+- `regulatorNotifiable` — incidents whose escalation route requires
+  regulator notice
+
+These numbers ship in the monthly DR drill artifact alongside the
+`reports/dr/` outputs.
+

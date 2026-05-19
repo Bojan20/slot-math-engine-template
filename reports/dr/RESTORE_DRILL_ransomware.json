@@ -1,0 +1,41 @@
+{
+  "scenario": "ransomware",
+  "tier": "medium",
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "rto_target_minutes": 240,
+  "rpo_target_minutes": 240,
+  "rto_achieved_minutes": 55,
+  "data_loss_minutes": 15,
+  "pass": true,
+  "notes": "Restore from offline archive, rebuild AZ from gold AMI",
+  "timeline": [
+    {
+      "atMinute": 0,
+      "event": "Anomaly auto-mitigation detects mass crypto-locker pattern"
+    },
+    {
+      "atMinute": 1,
+      "event": "Network segmentation isolates affected AZ"
+    },
+    {
+      "atMinute": 5,
+      "event": "Gold AMI redeploys clean compute fleet"
+    },
+    {
+      "atMinute": 20,
+      "event": "Offline-archive snapshot restored to clean DB"
+    },
+    {
+      "atMinute": 40,
+      "event": "Forensic snapshot of compromised volumes captured"
+    },
+    {
+      "atMinute": 50,
+      "event": "KMS keys rotated, all sessions invalidated"
+    },
+    {
+      "atMinute": 55,
+      "event": "Tenant onboarding flow validated, RTO met"
+    }
+  ]
+}

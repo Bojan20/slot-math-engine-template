@@ -1,0 +1,94 @@
+{
+  "operator": "everi",
+  "region": "NA",
+  "priority": "P2",
+  "inputs": {
+    "portfolioSize": 280,
+    "annualShipsPre": 22,
+    "annualShipsPost": 55,
+    "perTitleSavingUsd": 160000,
+    "discountRate": 0.1
+  },
+  "weightedCoveragePct": 1,
+  "unweightedCoveragePct": 0.5833333333333334,
+  "velocityUpliftFactor": 2.5,
+  "annualTitlesCovered": 55,
+  "annualSavingsUsd": 8800000,
+  "fiveYearNpvUsd": 33358924,
+  "upfrontLicenseUsd": 670000,
+  "paybackMonths": 1,
+  "mechanicBreakdown": {
+    "cascade": {
+      "weight": 0,
+      "covered": false,
+      "confidence": "high",
+      "contribution": 0
+    },
+    "respin": {
+      "weight": 0.16,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.16
+    },
+    "hold_and_win": {
+      "weight": 0.18,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.18
+    },
+    "cluster": {
+      "weight": 0,
+      "covered": false,
+      "confidence": "high",
+      "contribution": 0
+    },
+    "ways": {
+      "weight": 0.12,
+      "covered": true,
+      "confidence": "med",
+      "contribution": 0.12
+    },
+    "megaways": {
+      "weight": 0,
+      "covered": false,
+      "confidence": "high",
+      "contribution": 0
+    },
+    "ante_bet": {
+      "weight": 0,
+      "covered": false,
+      "confidence": "med",
+      "contribution": 0
+    },
+    "buy_feature": {
+      "weight": 0,
+      "covered": false,
+      "confidence": "high",
+      "contribution": 0
+    },
+    "pick_bonus": {
+      "weight": 0.1,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.1
+    },
+    "wheel_bonus": {
+      "weight": 0.12,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.12
+    },
+    "mystery": {
+      "weight": 0.16,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.16
+    },
+    "jackpot": {
+      "weight": 0.16,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.16
+    }
+  }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — slot math, certification, RNG, volatility</title>
+  <meta name="description" content="Technical posts on closed-form RTP, RNG cert pitfalls, Megaways math in config-only mode, and convex volatility tuning. From the slot-math-engine team." />
+  <link rel="canonical" href="https://slot-math-engine.example/blog/index.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog — slot-math-engine" />
+  <meta property="og:description" content="Technical posts on slot math, certification, RNG, and volatility tuning." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="kicker">Blog</p>
+      <h1>Technical posts on slot math, certification, RNG and volatility tuning</h1>
+      <p class="subtitle">Engineering deep-dives from the slot-math-engine team. New posts every two weeks.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="blog-cards">
+        <li class="blog-card">
+          <p class="kicker">Math &amp; Certification · 3 min read · 2026-05-12</p>
+          <h2><a href="./blog-1-closed-form-rtp.html">Why Closed-Form RTP Beats 10⁹-Spin Monte Carlo for Audit Trail</a></h2>
+          <p>Closed-form RTP is re-derivable in minutes; a billion-spin Monte Carlo is a black box. We share Q1 cohort numbers showing 11-day vs 6.5-week lab review wall-clock.</p>
+          <p><a class="btn" href="./blog-1-closed-form-rtp.html">Read post →</a></p>
+        </li>
+        <li class="blog-card">
+          <p class="kicker">Certification · 3 min read · 2026-05-12</p>
+          <h2><a href="./blog-2-rng-cert-pitfalls.html">5 RNG Cert Pitfalls We've Seen in GLI-19 Submissions</a></h2>
+          <p>Bad seeding, nonce re-use, modulo bias, hidden symbols, non-deterministic builds — five RNG mistakes that kill cert submissions, and how to dodge each one.</p>
+          <p><a class="btn" href="./blog-2-rng-cert-pitfalls.html">Read post →</a></p>
+        </li>
+        <li class="blog-card">
+          <p class="kicker">Mechanics · 3 min read · 2026-05-12</p>
+          <h2><a href="./blog-3-megaways-implementation.html">Implementing 117,649-Way Megaways Math in Config-Only Mode</a></h2>
+          <p>Megaways multiplies ways combinatorially. We show how to ship a 117,649-way title in config alone via the closed-form ways-engine kernel — no custom solver code required.</p>
+          <p><a class="btn" href="./blog-3-megaways-implementation.html">Read post →</a></p>
+        </li>
+        <li class="blog-card">
+          <p class="kicker">Game design · 3 min read · 2026-05-12</p>
+          <h2><a href="./blog-4-volatility-tuning.html">Tuning Slot Volatility: σ Targeting Without Breaking Hit Rate</a></h2>
+          <p>Volatility and hit-rate are usually traded against each other. The trade is sharper than studios realise — here's the convex paytable optimization that pins both.</p>
+          <p><a class="btn" href="./blog-4-volatility-tuning.html">Read post →</a></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>© 2026 slot-math-engine · <a href="../index.html">Home</a></p></div>
+  </footer>
+</body>
+</html>

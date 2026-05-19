@@ -4,7 +4,7 @@
 
 This guide walks third-party authors through publishing a kernel on the slot-math-engine marketplace: writing the manifest, passing the automated test gates, earning certification badges, and getting paid.
 
-> **Honest about MVP state**: v0.9 ships with synthetic test gates (static inspection only, not full sandbox execution), in-memory badge store, and manual badge review for the "Engineering Team Endorsed" tier. Automated escalation lands in Q3.
+> **W215 update**: the synthetic static-inspection sandbox shipped in v0.9 has been replaced by a **v1.0 sandbox delivered W215** (real `vm.Script` execution with hard CPU + heap kill, regex deny-list, 6 harness gates). See `docs/KERNEL_SANDBOX.md` for the architecture and security model. The static path remains available as `runStaticInspection` for cheap first-pass screening on the wizard UI.
 
 ---
 
@@ -102,7 +102,7 @@ Every submission runs through six gates. **All must pass** to auto-grant the Ver
 
 ### v0.9 disclosure
 
-The test runner is **synthetic** in this release — it statically inspects the kernel source for the patterns above, but does NOT compile and execute user code in a sandbox. This is honest: full sandbox execution needs a hardened IPC + time-limit + memory-cap process, which lands in W215. Until then, the synthetic verdict flags obvious red flags but cannot catch e.g. an exotic algorithm that fails the closed-form vs MC tolerance in practice.
+The test runner now executes kernels in a **hardened sandbox** (W215 v1.0). Source is screened against a regex deny-list (`eval`, `new Function`, `require`, dynamic `import`, `__proto__`, `Reflect`, `Proxy`, …) and then run inside a frozen `vm` context with a `vm.Script.runInContext({ timeout })` hard CPU kill and heap monitoring. The 6 harness gates are all driven by REAL invocations of your `analyze*` / `simulate*` exports. The legacy static-inspection path is still callable as `runStaticInspection` for cheap pre-screening on the wizard UI.
 
 Verdicts include `synthetic: true` so the UI can disclose this to operators.
 
@@ -222,8 +222,8 @@ Consult a tax professional. The platform reports gross to the relevant authority
 
 ## 10. Roadmap (post-MVP)
 
-- **W215**: full sandbox execution for the test runner (replace synthetic verdict).
-- **W215**: automated badge escalation queue (replace email triage).
+- **W215 (delivered)**: full sandbox execution for the test runner — see `docs/KERNEL_SANDBOX.md`.
+- **W216**: async queue + worker pool, persistent verdict store, local CLI for authors, automated badge escalation queue.
 - **W220**: kernel marketplace search-by-RTP-range + jurisdiction filter.
 - **W225**: revenue dashboard with per-operator install attribution.
 

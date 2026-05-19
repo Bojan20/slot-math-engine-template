@@ -1,0 +1,12 @@
+{
+  "branches": 7,
+  "coverage": {
+    "fail:credit:overflow": 100,
+    "fail:debit:bad_amount": 3421,
+    "fail:debit:bad_balance": 3544,
+    "fail:debit:bad_currency": 12232,
+    "fail:debit:insufficient_funds": 2802,
+    "fail:spin:unknown_game": 8433,
+    "ok": 19468
+  }
+}

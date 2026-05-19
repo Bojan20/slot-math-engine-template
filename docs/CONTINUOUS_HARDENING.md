@@ -20,6 +20,7 @@ scripts shipped in W212-W213. Together they guarantee that:
 | `daily-security-audit.yml` | `0 6 * * *` cron + dispatch | 15 min | npm audit + 11-category audit + dep-review + pentest |
 | `pr-security-gate.yml` | every PR | 10 min | Audit delta vs baseline, comments delta, blocks regression |
 | `fuzz-testing.yml` | Sunday `0 2 * * 0` cron + dispatch | 75 min Rust + 30 min TS | cargo-fuzz 1h × 3 targets, then TS harness |
+| `fuzz-discovery-weekly.yml` | Sunday `0 3 * * 0` cron + dispatch | 240 min | W215 TS discovery sweep (500K iter/target × 7 targets), ingest, dashboard |
 | `dependency-review.yml` | PR if `package*.json` changes | 10 min | License + CVE gate, SBOM (CycloneDX 1.5) |
 
 All workflows have `workflow_dispatch` for ad-hoc runs.

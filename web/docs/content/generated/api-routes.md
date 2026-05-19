@@ -1,7 +1,7 @@
 # Auto-generated API routes
 
 Generated from `server/routes/*.ts` by `scripts/generate-api-docs.mjs`. 
-Captures 74 routes across 17 route files. 
+Captures 90 routes across 19 route files. 
 Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 
 ## admin.ts
@@ -51,6 +51,23 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `POST` | `/api/admin/chaos/disable` |
 | `POST` | `/api/admin/chaos/reset` |
 
+## csm.ts
+> W215 Faza 1300.0 Agent C — Customer Success Manager (CSM) routes. Wires the 5 CSM-operations stores under three top-level paths: /api/csm/customers/...   onboarding tracker /api/support/tickets/... support tickets (tenant-scoped) /api/csm/nps/...         NPS survey /api/csm/churn-risk      churn-risk scorer Admin endpoints require `isAdmin(req)` → true. Tenant-scoped endpoints require a `req.tenantId` set by the W208 tenant-isolation pre-handler (caller injects it for unit te
+| Method | Path |
+|---|---|
+| `POST` | `/api/csm/customers` |
+| `GET` | `/api/csm/customers` |
+| `GET` | `/api/csm/customers/:id` |
+| `POST` | `/api/csm/customers/:id/transition` |
+| `POST` | `/api/support/tickets` |
+| `GET` | `/api/support/tickets` |
+| `GET` | `/api/support/tickets/:id` |
+| `PATCH` | `/api/support/tickets/:id` |
+| `POST` | `/api/support/tickets/:id/comment` |
+| `POST` | `/api/csm/nps/send` |
+| `GET` | `/api/csm/nps/responses` |
+| `POST` | `/api/csm/nps/responses` |
+
 ## csp-report.ts
 > W212 Faza 600.1 — CSP violation report endpoint. POST /api/csp-report Browsers POST `application/csp-report` JSON when a CSP directive (whose `report-uri` points at this endpoint) is violated. We log the event at WARN severity and append a sanitised record to `reports/security/csp-violations.json` for later forensics. Public (no RBAC) by design — browsers can't add headers. Body is length-capped and any field longer than 2 KB is truncated.
 | Method | Path |
@@ -92,6 +109,15 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `GET` | `/api/lobby/games` |
 | `POST` | `/api/lobby/_invalidate` |
 | `POST` | `/api/lobby/launch` |
+
+## marketing-events.ts
+> W215 Faza 800.2 Agent C — Marketing analytics event routes. POST  /api/marketing/event                       insert event batch (public, rate-limited) GET   /api/marketing/analytics/funnel            funnel JSON (admin) GET   /api/marketing/analytics/ab/:experimentId  A/B experiment results (admin) GET   /api/marketing/analytics/pageviews         pageviews breakdown (admin) Public POST accepts {sessionId, events:[…]} or {events:[…]} (each event carries its own sessionId). Reu
+| Method | Path |
+|---|---|
+| `POST` | `/api/marketing/event` |
+| `GET` | `/api/marketing/analytics/funnel` |
+| `GET` | `/api/marketing/analytics/pageviews` |
+| `GET` | `/api/marketing/analytics/ab/:experimentId` |
 
 ## marketing-leads.ts
 > W214 Faza 800.1 Agent C — Public marketing site lead capture route. POST  /api/marketing/lead              insert a new lead (public, rate-limited) GET   /api/marketing/lead/:id          fetch by id (admin) POST  /api/marketing/lead/:id/sent     mark tarball as delivered (admin) GET   /api/marketing/leads             list w/ filters (admin) The POST is the unauthenticated entry the marketing site form posts to. It enforces: * required fields + email regex * honeypot (silent d

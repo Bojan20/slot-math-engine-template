@@ -1,0 +1,534 @@
+{
+  "schemaVersion": "1.0.0",
+  "sprint": "W215",
+  "operators": [
+    "aristocrat",
+    "igt",
+    "konami",
+    "novomatic",
+    "playtech",
+    "everi",
+    "ainsworth",
+    "ags"
+  ],
+  "mechanics": [
+    "cascade",
+    "respin",
+    "hold_and_win",
+    "cluster",
+    "ways",
+    "megaways",
+    "ante_bet",
+    "buy_feature",
+    "pick_bonus",
+    "wheel_bonus",
+    "mystery",
+    "jackpot"
+  ],
+  "cells": {
+    "aristocrat::cascade": {
+      "covered": false,
+      "evidence": "No cascade-native flagship; minor presence on licensed titles",
+      "confidence": "high"
+    },
+    "aristocrat::respin": {
+      "covered": true,
+      "evidence": "Lightning Link / Dragon Link respin trigger",
+      "confidence": "high"
+    },
+    "aristocrat::hold_and_win": {
+      "covered": true,
+      "evidence": "Lightning Link / Dragon Link / Cash Express family",
+      "confidence": "high"
+    },
+    "aristocrat::cluster": {
+      "covered": false,
+      "evidence": "No cluster-pays flagship",
+      "confidence": "high"
+    },
+    "aristocrat::ways": {
+      "covered": true,
+      "evidence": "Reel-Power 243/1024 ways (Buffalo, 5 Dragons)",
+      "confidence": "high"
+    },
+    "aristocrat::megaways": {
+      "covered": true,
+      "evidence": "BTG-licensed titles in catalogue",
+      "confidence": "med"
+    },
+    "aristocrat::ante_bet": {
+      "covered": true,
+      "evidence": "Bet-multiplier on Wonder 4 family",
+      "confidence": "med"
+    },
+    "aristocrat::buy_feature": {
+      "covered": false,
+      "evidence": "Limited; land-based regulators restrict buy-feature in many AU/US jurisdictions",
+      "confidence": "high"
+    },
+    "aristocrat::pick_bonus": {
+      "covered": true,
+      "evidence": "Wonder 4 pick-an-icon",
+      "confidence": "high"
+    },
+    "aristocrat::wheel_bonus": {
+      "covered": true,
+      "evidence": "Wonder 4 Boost wheel",
+      "confidence": "high"
+    },
+    "aristocrat::mystery": {
+      "covered": true,
+      "evidence": "Lightning Link mystery progressive",
+      "confidence": "high"
+    },
+    "aristocrat::jackpot": {
+      "covered": true,
+      "evidence": "Hyperlink shared WAP progressives",
+      "confidence": "high"
+    },
+    "igt::cascade": {
+      "covered": true,
+      "evidence": "Megacascade WoF variants",
+      "confidence": "high"
+    },
+    "igt::respin": {
+      "covered": true,
+      "evidence": "Cash Link, Fortune Coin",
+      "confidence": "high"
+    },
+    "igt::hold_and_win": {
+      "covered": true,
+      "evidence": "Cash Link / Fortune Coin",
+      "confidence": "high"
+    },
+    "igt::cluster": {
+      "covered": false,
+      "evidence": "No cluster flagship",
+      "confidence": "high"
+    },
+    "igt::ways": {
+      "covered": true,
+      "evidence": "Da Vinci Diamonds ways + many licensed",
+      "confidence": "high"
+    },
+    "igt::megaways": {
+      "covered": true,
+      "evidence": "IGT under BTG license",
+      "confidence": "med"
+    },
+    "igt::ante_bet": {
+      "covered": true,
+      "evidence": "Modern IGT online releases",
+      "confidence": "med"
+    },
+    "igt::buy_feature": {
+      "covered": true,
+      "evidence": "Online IGT buy-feature releases",
+      "confidence": "med"
+    },
+    "igt::pick_bonus": {
+      "covered": true,
+      "evidence": "Sphinx pyramid pick + many bonus rounds",
+      "confidence": "high"
+    },
+    "igt::wheel_bonus": {
+      "covered": true,
+      "evidence": "Wheel of Fortune flagship",
+      "confidence": "high"
+    },
+    "igt::mystery": {
+      "covered": true,
+      "evidence": "Da Vinci Diamonds tumbling mystery",
+      "confidence": "high"
+    },
+    "igt::jackpot": {
+      "covered": true,
+      "evidence": "Megabucks WAP — industry-defining",
+      "confidence": "high"
+    },
+    "konami::cascade": {
+      "covered": false,
+      "evidence": "Not a Konami signature",
+      "confidence": "high"
+    },
+    "konami::respin": {
+      "covered": true,
+      "evidence": "All Aboard hold-and-win family",
+      "confidence": "high"
+    },
+    "konami::hold_and_win": {
+      "covered": true,
+      "evidence": "All Aboard family",
+      "confidence": "high"
+    },
+    "konami::cluster": {
+      "covered": false,
+      "evidence": "No cluster flagship",
+      "confidence": "high"
+    },
+    "konami::ways": {
+      "covered": true,
+      "evidence": "243/720 ways on Action Stacked titles",
+      "confidence": "high"
+    },
+    "konami::megaways": {
+      "covered": false,
+      "evidence": "Konami does not license BTG Megaways",
+      "confidence": "high"
+    },
+    "konami::ante_bet": {
+      "covered": false,
+      "evidence": "Limited",
+      "confidence": "med"
+    },
+    "konami::buy_feature": {
+      "covered": true,
+      "evidence": "Newer online titles only",
+      "confidence": "med"
+    },
+    "konami::pick_bonus": {
+      "covered": true,
+      "evidence": "Frogs n Flies, others",
+      "confidence": "high"
+    },
+    "konami::wheel_bonus": {
+      "covered": true,
+      "evidence": "All Aboard wheel ending",
+      "confidence": "high"
+    },
+    "konami::mystery": {
+      "covered": true,
+      "evidence": "Lotus Land / Solstice mystery progressives",
+      "confidence": "high"
+    },
+    "konami::jackpot": {
+      "covered": true,
+      "evidence": "Linked progressives across cabinet bank",
+      "confidence": "high"
+    },
+    "novomatic::cascade": {
+      "covered": false,
+      "evidence": "Limited; modern Greentube releases only",
+      "confidence": "med"
+    },
+    "novomatic::respin": {
+      "covered": true,
+      "evidence": "Reel King hold mini-slot, newer Mystic Fortunes",
+      "confidence": "high"
+    },
+    "novomatic::hold_and_win": {
+      "covered": true,
+      "evidence": "Reel King + newer Greentube releases",
+      "confidence": "med"
+    },
+    "novomatic::cluster": {
+      "covered": false,
+      "evidence": "Not a Novomatic signature",
+      "confidence": "high"
+    },
+    "novomatic::ways": {
+      "covered": true,
+      "evidence": "40-line + ways on Greentube modern releases",
+      "confidence": "med"
+    },
+    "novomatic::megaways": {
+      "covered": true,
+      "evidence": "Greentube has BTG-licensed titles",
+      "confidence": "med"
+    },
+    "novomatic::ante_bet": {
+      "covered": true,
+      "evidence": "Plenty on Twenty bet-multiplier",
+      "confidence": "high"
+    },
+    "novomatic::buy_feature": {
+      "covered": true,
+      "evidence": "Greentube modern releases",
+      "confidence": "high"
+    },
+    "novomatic::pick_bonus": {
+      "covered": true,
+      "evidence": "Faust + various bonus rounds",
+      "confidence": "med"
+    },
+    "novomatic::wheel_bonus": {
+      "covered": false,
+      "evidence": "Not a Novomatic signature",
+      "confidence": "med"
+    },
+    "novomatic::mystery": {
+      "covered": true,
+      "evidence": "Book of Ra expanding bonus symbol",
+      "confidence": "high"
+    },
+    "novomatic::jackpot": {
+      "covered": true,
+      "evidence": "Novomatic Linked Progressive / Greentube Pirate Pots",
+      "confidence": "high"
+    },
+    "playtech::cascade": {
+      "covered": true,
+      "evidence": "Heart of the Frontier + many cascade titles",
+      "confidence": "high"
+    },
+    "playtech::respin": {
+      "covered": true,
+      "evidence": "Newer Asian-themed Playtech releases",
+      "confidence": "med"
+    },
+    "playtech::hold_and_win": {
+      "covered": true,
+      "evidence": "Newer Asian-themed Playtech releases",
+      "confidence": "med"
+    },
+    "playtech::cluster": {
+      "covered": true,
+      "evidence": "A handful of cluster-pays titles",
+      "confidence": "med"
+    },
+    "playtech::ways": {
+      "covered": true,
+      "evidence": "Buffalo Blitz 4096 ways",
+      "confidence": "high"
+    },
+    "playtech::megaways": {
+      "covered": true,
+      "evidence": "Playtech under BTG license",
+      "confidence": "high"
+    },
+    "playtech::ante_bet": {
+      "covered": true,
+      "evidence": "Beach Life option-bet + others",
+      "confidence": "high"
+    },
+    "playtech::buy_feature": {
+      "covered": true,
+      "evidence": "Modern Playtech 2024+ releases",
+      "confidence": "high"
+    },
+    "playtech::pick_bonus": {
+      "covered": true,
+      "evidence": "Gladiator helmet pick + many",
+      "confidence": "high"
+    },
+    "playtech::wheel_bonus": {
+      "covered": true,
+      "evidence": "Various wheel features",
+      "confidence": "high"
+    },
+    "playtech::mystery": {
+      "covered": true,
+      "evidence": "Cat in Vegas mystery features",
+      "confidence": "med"
+    },
+    "playtech::jackpot": {
+      "covered": true,
+      "evidence": "Age of the Gods 4-tier networked",
+      "confidence": "high"
+    },
+    "everi::cascade": {
+      "covered": false,
+      "evidence": "Not Everi signature",
+      "confidence": "high"
+    },
+    "everi::respin": {
+      "covered": true,
+      "evidence": "Power XStream + Cash Machine",
+      "confidence": "high"
+    },
+    "everi::hold_and_win": {
+      "covered": true,
+      "evidence": "Power XStream",
+      "confidence": "high"
+    },
+    "everi::cluster": {
+      "covered": false,
+      "evidence": "No cluster flagship",
+      "confidence": "high"
+    },
+    "everi::ways": {
+      "covered": true,
+      "evidence": "243/720 ways on legacy ports",
+      "confidence": "med"
+    },
+    "everi::megaways": {
+      "covered": false,
+      "evidence": "Not Everi catalogue",
+      "confidence": "high"
+    },
+    "everi::ante_bet": {
+      "covered": false,
+      "evidence": "Limited",
+      "confidence": "med"
+    },
+    "everi::buy_feature": {
+      "covered": false,
+      "evidence": "Land-based regulator restrictions in NA",
+      "confidence": "high"
+    },
+    "everi::pick_bonus": {
+      "covered": true,
+      "evidence": "Multiple bonus rounds use pick trees",
+      "confidence": "high"
+    },
+    "everi::wheel_bonus": {
+      "covered": true,
+      "evidence": "Smokin Hot Stuff Wicked Wheel",
+      "confidence": "high"
+    },
+    "everi::mystery": {
+      "covered": true,
+      "evidence": "Linked mystery across Everi cabinet bank",
+      "confidence": "high"
+    },
+    "everi::jackpot": {
+      "covered": true,
+      "evidence": "Linked progressives",
+      "confidence": "high"
+    },
+    "ainsworth::cascade": {
+      "covered": false,
+      "evidence": "Not Ainsworth signature",
+      "confidence": "high"
+    },
+    "ainsworth::respin": {
+      "covered": true,
+      "evidence": "Mustang Money + Eagle Bucks hold-and-win",
+      "confidence": "high"
+    },
+    "ainsworth::hold_and_win": {
+      "covered": true,
+      "evidence": "Mustang Money + Eagle Bucks",
+      "confidence": "high"
+    },
+    "ainsworth::cluster": {
+      "covered": false,
+      "evidence": "No cluster flagship",
+      "confidence": "high"
+    },
+    "ainsworth::ways": {
+      "covered": true,
+      "evidence": "Quick Spin Reel-Power 243 ways (Aristocrat lineage)",
+      "confidence": "high"
+    },
+    "ainsworth::megaways": {
+      "covered": false,
+      "evidence": "Not Ainsworth catalogue",
+      "confidence": "high"
+    },
+    "ainsworth::ante_bet": {
+      "covered": false,
+      "evidence": "Limited",
+      "confidence": "med"
+    },
+    "ainsworth::buy_feature": {
+      "covered": false,
+      "evidence": "AU regulator restrictions",
+      "confidence": "high"
+    },
+    "ainsworth::pick_bonus": {
+      "covered": true,
+      "evidence": "Big Ben pick-an-icon",
+      "confidence": "high"
+    },
+    "ainsworth::wheel_bonus": {
+      "covered": true,
+      "evidence": "Roll Up Roll Up wheel ending",
+      "confidence": "high"
+    },
+    "ainsworth::mystery": {
+      "covered": true,
+      "evidence": "Jackpot Strike multi-level mystery",
+      "confidence": "high"
+    },
+    "ainsworth::jackpot": {
+      "covered": true,
+      "evidence": "AU linked progressives",
+      "confidence": "high"
+    },
+    "ags::cascade": {
+      "covered": false,
+      "evidence": "Not AGS signature",
+      "confidence": "high"
+    },
+    "ags::respin": {
+      "covered": true,
+      "evidence": "Rakin Bacon + Jade Wins hold-and-win",
+      "confidence": "high"
+    },
+    "ags::hold_and_win": {
+      "covered": true,
+      "evidence": "Rakin Bacon + Jade Wins",
+      "confidence": "high"
+    },
+    "ags::cluster": {
+      "covered": false,
+      "evidence": "No cluster flagship",
+      "confidence": "high"
+    },
+    "ags::ways": {
+      "covered": true,
+      "evidence": "243/720 ways across catalogue",
+      "confidence": "med"
+    },
+    "ags::megaways": {
+      "covered": false,
+      "evidence": "Not AGS catalogue",
+      "confidence": "high"
+    },
+    "ags::ante_bet": {
+      "covered": false,
+      "evidence": "Limited",
+      "confidence": "med"
+    },
+    "ags::buy_feature": {
+      "covered": false,
+      "evidence": "Land + class-II regulator restrictions",
+      "confidence": "high"
+    },
+    "ags::pick_bonus": {
+      "covered": true,
+      "evidence": "Survivor pick + immunity meter",
+      "confidence": "high"
+    },
+    "ags::wheel_bonus": {
+      "covered": true,
+      "evidence": "Capital Plays ending wheel",
+      "confidence": "high"
+    },
+    "ags::mystery": {
+      "covered": true,
+      "evidence": "Olympus Strikes mystery symbol reveal",
+      "confidence": "high"
+    },
+    "ags::jackpot": {
+      "covered": true,
+      "evidence": "Longhorn Jackpots linked progressive",
+      "confidence": "high"
+    }
+  },
+  "operatorCoveragePct": {
+    "aristocrat": 0.75,
+    "igt": 0.9166666666666666,
+    "konami": 0.6666666666666666,
+    "novomatic": 0.75,
+    "playtech": 1,
+    "everi": 0.5833333333333334,
+    "ainsworth": 0.5833333333333334,
+    "ags": 0.5833333333333334
+  },
+  "mechanicCoveragePct": {
+    "cascade": 0.25,
+    "respin": 1,
+    "hold_and_win": 1,
+    "cluster": 0.125,
+    "ways": 1,
+    "megaways": 0.5,
+    "ante_bet": 0.5,
+    "buy_feature": 0.5,
+    "pick_bonus": 1,
+    "wheel_bonus": 0.875,
+    "mystery": 1,
+    "jackpot": 1
+  }
+}

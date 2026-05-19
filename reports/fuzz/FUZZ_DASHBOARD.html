@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fuzz Dashboard</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, sans-serif; padding: 24px; max-width: 1000px; margin: auto; color: #111827; }
+  h1 { color: #1f2937; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 32px; }
+  th, td { border: 1px solid #e5e7eb; padding: 8px 12px; text-align: left; font-size: 14px; }
+  th { background: #f3f4f6; }
+  svg { display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+<h1>Fuzz Dashboard</h1>
+<p>Aggregated last <strong>1</strong> discovery runs.</p>
+<h2>Run timeline</h2>
+<table>
+<thead><tr><th>At</th><th>Mode</th><th>Total iter</th><th>Unique crashes</th><th>Branches</th></tr></thead>
+<tbody>
+<tr><td>2026-05-18T20:54:44.424Z</td><td>synthetic</td><td>350000</td><td>0</td><td>44</td></tr>
+</tbody>
+</table>
+<h2>Per-harness crash & coverage history</h2>
+<table>
+<thead><tr><th>Harness</th><th>Crashes (spark)</th><th>Crashes (raw)</th><th>Branches (spark)</th><th>Branches (raw)</th></tr></thead>
+<tbody>
+<tr><td>canary-controller</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>15</td></tr>
+<tr><td>cert-bundle</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>1</td></tr>
+<tr><td>ir-evaluator</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>1</td></tr>
+<tr><td>license-jwt</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>13</td></tr>
+<tr><td>marketplace-api</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>3</td></tr>
+<tr><td>spin-engine</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>7</td></tr>
+<tr><td>wallet-providers</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,23.0"/></svg></td><td>0</td><td><svg width="120" height="24" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#2563eb" stroke-width="1.5" points="0.0,1.0"/></svg></td><td>4</td></tr>
+</tbody>
+</table>
+</body>
+</html>

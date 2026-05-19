@@ -1,0 +1,37 @@
+{
+  "scenario": "db-corruption",
+  "tier": "high",
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "rto_target_minutes": 60,
+  "rpo_target_minutes": 30,
+  "rto_achieved_minutes": 22,
+  "data_loss_minutes": 3,
+  "pass": true,
+  "notes": "Point-in-time recovery from base + WAL within RPO",
+  "timeline": [
+    {
+      "atMinute": 0,
+      "event": "Audit-chain integrity check fails on tenant slice"
+    },
+    {
+      "atMinute": 2,
+      "event": "Writes frozen for affected tenant"
+    },
+    {
+      "atMinute": 5,
+      "event": "Base backup restored to recovery instance"
+    },
+    {
+      "atMinute": 14,
+      "event": "WAL replayed up to corruption marker"
+    },
+    {
+      "atMinute": 20,
+      "event": "Validation harness re-runs PAR sample — green"
+    },
+    {
+      "atMinute": 22,
+      "event": "Tenant writes thawed, RTO met"
+    }
+  ]
+}

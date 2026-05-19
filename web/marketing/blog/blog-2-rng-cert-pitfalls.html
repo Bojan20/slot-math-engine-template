@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>5 RNG Cert Pitfalls We've Seen in GLI-19 Submissions</title>
+  <meta name="description" content="Five RNG mistakes we keep seeing in GLI-19 submissions: bad seeding, nonce re-use, modulo bias, hidden symbols, non-deterministic builds." />
+  <link rel="canonical" href="https://slot-math-engine.example/blog/blog-2-rng-cert-pitfalls.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="5 RNG Cert Pitfalls We've Seen in GLI-19 Submissions" />
+  <meta property="og:description" content="Bad seeding, nonce re-use, modulo bias, hidden symbols, non-deterministic builds." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "5 RNG Cert Pitfalls We've Seen in GLI-19 Submissions",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Organization", "name": "slot-math-engine" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <article class="post">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Blog · Certification</p>
+        <h1>5 RNG Cert Pitfalls We've Seen in GLI-19 Submissions</h1>
+        <p class="meta">Published 2026-05-12 · 3 min read</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap prose">
+        <p>We've reviewed a few hundred GLI-19 submissions in the last 18 months. Five RNG-related mistakes show up over and over. Catch them before the auditor does.</p>
+
+        <h2>1. Seeding the PRNG from <code>Date.now()</code> at boot</h2>
+        <p>This one is still common. A studio uses a Mersenne-Twister or xoshiro PRNG, seeds it from <code>Date.now()</code> on process start, and calls it a day. Two problems:</p>
+        <ul>
+          <li>If two server replicas boot in the same millisecond, they produce identical spin streams. The audit log shows the collision and the title fails.</li>
+          <li>Replaying a session is impossible because the seed wasn't captured.</li>
+        </ul>
+        <p>Fix: seed from a CSPRNG (<code>crypto.randomBytes(32)</code>), persist the seed alongside every session log, and require the same seed for replay verification.</p>
+
+        <h2>2. Re-using the same nonce stream across jurisdictions</h2>
+        <p>If your overlay engine emits a single global nonce counter, a UK session can collide with an MGA session. The fix is per-jurisdiction nonces — and writing that down explicitly in the architecture document so the auditor doesn't have to infer it.</p>
+
+        <h2>3. Modulo bias on small ranges</h2>
+        <p><code>rand_u32() % 6</code> is not uniform when 2^32 is not divisible by 6. The bias is ~10⁻⁹ per draw, which sounds tiny — until the lab runs 10⁸ spins on a Yahtzee-style mechanic and sees the bias surface in the chi-square.</p>
+        <p>Fix: rejection sampling. Use <code>rand_uniform_below(n)</code> that rejects draws ≥ floor(2^32/n)·n.</p>
+
+        <h2>4. Static reel strips with shared symbol indices</h2>
+        <p>Cosmetic-only "symbols" (i.e., a wild that visually shows different art depending on the line) sometimes share an index with a paying symbol. Lab catches this when the symbol frequency on the reel strip doesn't match the documented frequency.</p>
+        <p>Fix: model every visually distinct symbol as a distinct math symbol. Even if the art collapses them, the math IR should not.</p>
+
+        <h2>5. Cert dossier with a non-deterministic build</h2>
+        <p>This is the one that costs the most. Studio ships an operator-package archive with the same nominal contents, but the tarball bytes change between builds because the build tool emits a non-zero timestamp on every file. Lab hashes don't match. Audit re-run.</p>
+        <p>Fix: deterministic archives. <code>tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner --format=ustar -czf …</code> is a starting point. The slot-math-engine W194 operator-package tooling produces byte-stable archives out of the box.</p>
+
+        <h2>How to dodge all five at once</h2>
+        <p>Most studios catch 1-3 with a careful code review, but 4 and 5 require tooling. The closed-form solver path is naturally deterministic — and the operator-package builder (W194+) enforces byte-stability so the lab gets the same hash every time. Pair that with a CSPRNG seed and per-jurisdiction nonces and your submission stops generating audit re-runs.</p>
+
+        <h2>Want a checklist?</h2>
+        <p>Our cert dossier includes a pre-submission checklist (P-IDs 27, 41, 81). The full version is in the operator-package tarball; we'll mail you a redacted PDF on request — ping <code>cert@slot-math-engine.example</code>.</p>
+
+        <p><a class="btn btn-primary" href="../pages/contact.html" data-cta="blog-2">Talk to sales</a> <a class="btn" href="./index.html">More posts</a></p>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>© 2026 slot-math-engine · <a href="../index.html">Home</a></p></div>
+  </footer>
+</body>
+</html>

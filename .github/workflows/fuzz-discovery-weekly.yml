@@ -1,0 +1,108 @@
+# W215 Faza 600.4 — Weekly TS fuzz discovery sweep.
+#
+# Runs `npm run fuzz:discovery` at 500K iter/target on every fuzz
+# harness and uploads the report. Diffs the new unique-crash list
+# against last week's; new crashes set a workflow warning.
+#
+# Trigger:
+#   - Sunday 03:00 UTC cron — runs AFTER the cargo-fuzz weekly sweep.
+#   - Manual via `gh workflow run fuzz-discovery-weekly.yml`.
+#
+# Acceptance:
+#   - Workflow succeeds even if crashes are found, but emits an issue
+#     stub via the ingest script. Hard-failure occurs only on timeout
+#     or infrastructure error.
+
+name: fuzz-discovery-weekly
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"
+  workflow_dispatch:
+    inputs:
+      iter_per_target:
+        description: "Iterations per fuzz target (default 500000)"
+        required: false
+        default: "500000"
+
+permissions:
+  contents: read
+
+jobs:
+  discovery:
+    name: fuzz · discovery sweep
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install deps
+        run: npm ci --no-audit --no-fund
+
+      - name: Snapshot previous discovery summaries
+        run: |
+          mkdir -p reports/fuzz/discovery
+          # Capture pre-run state for crash-list diff.
+          ls -la reports/fuzz/discovery || true
+
+      - name: Run fuzz discovery sweep
+        env:
+          FUZZ_ITER: ${{ github.event.inputs.iter_per_target || '500000' }}
+        run: |
+          # Override mode to discovery + per-target wall cap honoured inside the script.
+          node scripts/fuzz/discovery-run.mjs --discovery
+        continue-on-error: true
+
+      - name: Ingest findings
+        run: |
+          node scripts/fuzz/ingest-findings.mjs
+        continue-on-error: true
+
+      - name: Refresh dashboard
+        run: |
+          node scripts/fuzz/dashboard.mjs
+        continue-on-error: true
+
+      - name: Diff against previous run
+        id: diff
+        run: |
+          set +e
+          PREV_FILE=$(ls -t reports/fuzz/discovery/*/summary.json 2>/dev/null | sed -n 2p || true)
+          CUR_FILE=$(cat reports/fuzz/discovery/LATEST.txt 2>/dev/null)/summary.json
+          if [ -n "${PREV_FILE}" ] && [ -f "${CUR_FILE}" ]; then
+            PREV=$(jq -r '.totalUniqueCrashes' "${PREV_FILE}")
+            CUR=$(jq -r '.totalUniqueCrashes' "${CUR_FILE}")
+            echo "previous=${PREV}" >> $GITHUB_OUTPUT
+            echo "current=${CUR}" >> $GITHUB_OUTPUT
+            if [ "${CUR}" -gt "${PREV}" ]; then
+              DELTA=$((CUR - PREV))
+              echo "::warning::Fuzz discovery: ${DELTA} new unique crashes vs previous run (${CUR} vs ${PREV})"
+            fi
+          fi
+
+      - name: Upload discovery artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-discovery-${{ github.run_id }}
+          path: |
+            reports/fuzz/discovery/
+            reports/fuzz/ingest/
+            reports/fuzz/INGEST_REPORT.md
+            reports/fuzz/FUZZ_DASHBOARD.*
+          if-no-files-found: warn
+          retention-days: 60
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Fuzz discovery summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/fuzz/INGEST_REPORT.md ]; then
+            cat reports/fuzz/INGEST_REPORT.md >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/fuzz/FUZZ_DASHBOARD.md ]; then
+            cat reports/fuzz/FUZZ_DASHBOARD.md >> $GITHUB_STEP_SUMMARY
+          fi

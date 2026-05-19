@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: GLI-19 cycle 8 weeks → 11 days, $28K saved</title>
+  <meta name="description" content="Mid-Tier US Operator B cut its GLI-19 cert cycle from 8 weeks to 11 days and shaved $28K per title via deterministic operator-packages." />
+  <link rel="canonical" href="https://slot-math-engine.example/case-studies/case-study-3-cert-cost-reduction.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="GLI-19 cycle 8 weeks → 11 days — slot-math-engine case study" />
+  <meta property="og:description" content="Deterministic tarballs eliminate audit re-runs." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Mid-Tier US Operator cuts GLI-19 cert cycle from 8 weeks to 11 days",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Organization", "name": "slot-math-engine" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <article class="case-study">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Case study · Certification cost reduction</p>
+        <h1>Mid-Tier US Operator B: 8 weeks → 11 days</h1>
+        <p class="subtitle">Deterministic operator-package archives + closed-form RTP cut GLI-19 cycle time by 86% and lab cost by $28K per title.</p>
+        <p class="meta">Published 2026-05-12 · 4 min read</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap two-col">
+        <div>
+          <h2>Problem</h2>
+          <p>Mid-Tier US Operator B was certifying ~14 titles per year across NJ, PA, MI and WV. Each title required a separate GLI-19 cycle: 8 weeks median, $38K median lab cost. Cert was the critical-path bottleneck — every quarter the launch slate slipped by at least one title because of audit re-runs caused by non-deterministic operator-package archives and missing Monte-Carlo seeds.</p>
+
+          <h2>Solution</h2>
+          <p>The operator migrated their math layer to slot-math-engine and adopted the deterministic operator-package workflow (W194 + W212-W214). Closed-form RTP results gave the auditor a re-derivable answer instead of a 10⁹-spin black box; deterministic tarballs eliminated audit re-runs; the cert paper trail is generated automatically as part of the build, not hand-curated.</p>
+
+          <h2>Math model used</h2>
+          <ul>
+            <li>Closed-form RTP solver for every title</li>
+            <li>MC validator at 5e8 spins (paper trail, not source of truth)</li>
+            <li>Deterministic operator-package archive (byte-stable across re-builds)</li>
+            <li>Per-jurisdiction overlay engine (NJ, PA, MI, WV)</li>
+            <li>Auto-generated cert dossier with hashed reproducibility manifest</li>
+          </ul>
+        </div>
+
+        <aside class="case-metrics">
+          <h3>Headline metrics</h3>
+          <dl>
+            <dt>Cycle (before)</dt><dd>8 weeks</dd>
+            <dt>Cycle (after)</dt><dd>11 days</dd>
+            <dt>Cost (before)</dt><dd>$38K / title</dd>
+            <dt>Cost (after)</dt><dd>$9.5K / title</dd>
+            <dt>Audit re-runs Q1</dt><dd>0 (was 6)</dd>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Timeline (per title, after migration)</h2>
+        <table class="timeline">
+          <thead><tr><th>Day</th><th>Milestone</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Build complete in studio</td></tr>
+            <tr><td>1</td><td>Operator-package produced, hashed manifest signed</td></tr>
+            <tr><td>3</td><td>GLI-19 submission with closed-form + MC + reproducibility manifest</td></tr>
+            <tr><td>8</td><td>Lab review completes (re-derived RTP matches closed-form)</td></tr>
+            <tr><td>11</td><td>Certification PASS, build live in NJ, PA, MI, WV</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Results</h2>
+        <ul>
+          <li>Cert cycle reduced from 8 weeks to 11 days (~86% reduction)</li>
+          <li>Median lab cost dropped from $38K → $9.5K (audit re-runs eliminated)</li>
+          <li>6 audit re-runs avoided in the first quarter post-migration</li>
+          <li>Launch slate predictability: zero quarter-end slippage in two consecutive quarters</li>
+          <li>Single deterministic tarball per title, signed and hash-pinned</li>
+        </ul>
+
+        <h2>Lessons</h2>
+        <ol>
+          <li>The dominant lab cost is not the initial review — it's audit re-runs caused by non-determinism. Making the archive byte-stable kills the re-run cycle.</li>
+          <li>Closed-form RTP results compress lab review because the auditor can re-derive in minutes instead of replaying a 10⁹-spin trace.</li>
+          <li>A reproducibility manifest (hash of every input, deterministic build flags, pinned tool versions) is more valuable to a lab than any additional simulation data.</li>
+        </ol>
+
+        <blockquote class="quote">
+          <p>"We took an 8-week certification cycle down to 11 days and shaved $28K per title off the lab bill. That's not a marginal improvement — it changes how we plan launches."</p>
+          <cite>&lt;Role at Operator&gt;, Mid-Tier US Operator B</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section cta-band">
+      <div class="wrap">
+        <h2>Tired of audit re-runs blowing up your cert budget?</h2>
+        <p><a class="btn btn-primary" href="../pages/contact.html" data-cta="case-study-3">Talk to sales</a> <a class="btn" href="../pages/demo.html">Book a demo</a></p>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 slot-math-engine · <a href="../pages/contact.html">Contact</a> · <a href="../index.html">Home</a></p>
+    </div>
+  </footer>
+</body>
+</html>

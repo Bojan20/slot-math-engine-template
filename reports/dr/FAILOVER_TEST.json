@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "components": [
+    {
+      "id": "postgres-replica",
+      "label": "PostgreSQL streaming replica",
+      "failoverMs": 4200,
+      "softBudgetMs": 10000,
+      "success": true,
+      "overBudget": false,
+      "notes": "Promote replica via patroni, sync_replication=remote_apply"
+    },
+    {
+      "id": "kms-multiregion",
+      "label": "AWS KMS multi-region key",
+      "failoverMs": 800,
+      "softBudgetMs": 5000,
+      "success": true,
+      "overBudget": false,
+      "notes": "Replica key already in target region, app re-attests fingerprint"
+    },
+    {
+      "id": "s3-crr",
+      "label": "S3 cross-region replication",
+      "failoverMs": 1500,
+      "softBudgetMs": 8000,
+      "success": true,
+      "overBudget": false,
+      "notes": "Bucket policy flips to read from replica, IAM role swap"
+    },
+    {
+      "id": "compute-asg",
+      "label": "Compute ASG (AZ-A → AZ-B)",
+      "failoverMs": 9200,
+      "softBudgetMs": 15000,
+      "success": true,
+      "overBudget": false,
+      "notes": "Pre-warmed instances in AZ-B, ALB health-check drives cutover"
+    }
+  ],
+  "pass": true,
+  "anyOverBudget": false
+}

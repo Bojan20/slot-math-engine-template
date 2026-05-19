@@ -1,0 +1,9 @@
+{
+  "branches": 4,
+  "coverage": {
+    "wp:microgaming": 12508,
+    "wp:netent": 12476,
+    "wp:pam": 12719,
+    "wp:playtech": 12297
+  }
+}

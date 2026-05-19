@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "inputGeneratedAt": "2026-05-19T00:00:00Z",
+  "tiers": [
+    {
+      "tier": "critical",
+      "ok": true,
+      "snapshots": 8,
+      "maxGapMinutes": 4,
+      "rpoTargetMinutes": 5,
+      "gapAt": null,
+      "issues": []
+    },
+    {
+      "tier": "high",
+      "ok": true,
+      "snapshots": 8,
+      "maxGapMinutes": 24,
+      "rpoTargetMinutes": 30,
+      "gapAt": null,
+      "issues": []
+    },
+    {
+      "tier": "medium",
+      "ok": true,
+      "snapshots": 8,
+      "maxGapMinutes": 192,
+      "rpoTargetMinutes": 240,
+      "gapAt": null,
+      "issues": []
+    },
+    {
+      "tier": "low",
+      "ok": true,
+      "snapshots": 8,
+      "maxGapMinutes": 1152,
+      "rpoTargetMinutes": 1440,
+      "gapAt": null,
+      "issues": []
+    }
+  ],
+  "pass": true
+}

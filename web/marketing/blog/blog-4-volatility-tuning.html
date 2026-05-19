@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tuning Slot Volatility: σ Targeting at Constant Hit-Rate</title>
+  <meta name="description" content="Volatility and hit-rate are usually traded against each other. The trade is sharper than studios realise — here is the convex paytable solver." />
+  <link rel="canonical" href="https://slot-math-engine.example/blog/blog-4-volatility-tuning.html" />
+  <link rel="stylesheet" href="../styles.css" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Tuning Slot Volatility: σ Targeting Without Breaking Hit Rate" />
+  <meta property="og:description" content="Convex paytable optimization for stable σ + hit-rate." />
+  <meta property="og:image" content="../og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Tuning Slot Volatility: σ Targeting Without Breaking Hit Rate",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Organization", "name": "slot-math-engine" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html"><span class="logo" aria-hidden="true"></span><span>slot-math-engine</span></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="../pages/how-it-works.html">How it works</a>
+        <a href="../pages/pricing.html">Pricing</a>
+        <a href="../pages/coverage.html">Coverage</a>
+        <a href="../pages/demo.html">Demo</a>
+        <a href="../pages/docs.html">Docs</a>
+      </nav>
+      <a class="btn btn-primary" href="../pages/contact.html">Talk to sales</a>
+    </div>
+  </header>
+
+  <article class="post">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Blog · Game design</p>
+        <h1>Tuning Slot Volatility: σ Targeting Without Breaking Hit Rate</h1>
+        <p class="meta">Published 2026-05-12 · 3 min read</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap prose">
+        <p>Every game designer eventually gets the brief: "make it more volatile but keep the hit-rate the same". This is a hard constraint — and most studios solve it by trial and error. There's a cleaner path.</p>
+
+        <h2>Volatility, defined</h2>
+        <p>Volatility on a slot is the standard deviation σ of the per-spin payout distribution. For a finite paytable:</p>
+        <pre>σ² = Σ_i p_i · (payout_i - RTP)²</pre>
+        <p>If you scale every payout by a constant c, RTP scales by c and σ scales by c. That's the trivial knob — and it doesn't help you because you can't ship a 200% RTP title.</p>
+
+        <h2>The real knob: skewing the paytable</h2>
+        <p>Two paytables can produce the same RTP with very different σ:</p>
+        <table class="dash-table">
+          <thead><tr><th>Paytable</th><th>RTP</th><th>σ</th><th>Hit-rate</th></tr></thead>
+          <tbody>
+            <tr><td>A: many small wins</td><td>96.0%</td><td>3.1</td><td>32%</td></tr>
+            <tr><td>B: mostly big wins</td><td>96.0%</td><td>9.4</td><td>18%</td></tr>
+            <tr><td>C: bimodal</td><td>96.0%</td><td>12.7</td><td>22%</td></tr>
+          </tbody>
+        </table>
+        <p>The lever is how the win mass is distributed across pay-tiers. Concentrate mass in the top tier and σ goes up. Spread it across many tiers and σ comes down. Hit-rate (fraction of spins with payout > 0) moves separately — driven by how often the lowest-tier pays land, not by their size.</p>
+
+        <h2>Pinning σ and hit-rate simultaneously</h2>
+        <p>This is the constraint most designers miss: σ and hit-rate are two equations on the paytable, but a typical slot has dozens of pay-cells (symbol × line-length × wild-state). The system is heavily under-determined. So there's almost always a paytable that hits both targets — you just need a solver.</p>
+        <p>The slot-math-engine volatility kernel takes (target RTP, target σ, target hit-rate) as input and returns a feasible paytable. The optimization is convex (linear constraints + quadratic objective on σ), so it's fast and the result is unique once you fix the symbol weights on the reel strips.</p>
+
+        <h2>Worked example</h2>
+        <p>Target: RTP = 96.20%, σ = 7.5, hit-rate = 24%. Starting from an A-class paytable with σ = 4.1:</p>
+        <pre>$ slot-math tune volatility \
+    --target-rtp 0.962 \
+    --target-sigma 7.5 \
+    --target-hit-rate 0.24 \
+    game.ir > tuned.ir
+{
+  "rtp":      0.96200,
+  "sigma":    7.49,
+  "hit_rate": 0.2401,
+  "iterations": 27,
+  "converged": true,
+  "paytable_delta": "shifted 4.2 pp of win mass from tier-3 to tier-5"
+}</pre>
+        <p>The kernel converges in ~25 iterations on a typical title. You get a re-derived paytable, a delta summary you can hand to the game designer, and the original IR is left untouched.</p>
+
+        <h2>When the constraint is infeasible</h2>
+        <p>Sometimes the brief is impossible: (RTP 96%, σ 15, hit-rate 35%) has no solution because high σ requires a heavy top-tier and a heavy top-tier kills hit-rate. The kernel reports infeasibility with the closest achievable point on the σ-vs-hit-rate frontier:</p>
+        <pre>{
+  "converged": false,
+  "reason": "infeasible",
+  "frontier_point": { "sigma": 10.2, "hit_rate": 0.35 }
+}</pre>
+        <p>That's much more useful than a stuck simulation — the designer knows the Pareto trade and can negotiate with product.</p>
+
+        <h2>Takeaway</h2>
+        <p>Volatility tuning is a convex problem. Most studios solve it heuristically and end up with paytables that drift after the first GLI submission. The closed-form solver path gives you a stable answer that survives audit.</p>
+
+        <p><a class="btn btn-primary" href="../pages/contact.html" data-cta="blog-4">Talk to sales</a> <a class="btn" href="./index.html">More posts</a></p>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>© 2026 slot-math-engine · <a href="../index.html">Home</a></p></div>
+  </footer>
+</body>
+</html>

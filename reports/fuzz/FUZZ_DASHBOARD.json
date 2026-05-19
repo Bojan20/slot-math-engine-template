@@ -1,0 +1,77 @@
+{
+  "runCount": 1,
+  "runs": [
+    {
+      "at": "2026-05-18T20:54:44.424Z",
+      "mode": "synthetic",
+      "totalIter": 350000,
+      "totalUniqueCrashes": 0,
+      "totalBranches": 44
+    }
+  ],
+  "harnesses": [
+    {
+      "id": "canary-controller",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        15
+      ]
+    },
+    {
+      "id": "cert-bundle",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        1
+      ]
+    },
+    {
+      "id": "ir-evaluator",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        1
+      ]
+    },
+    {
+      "id": "license-jwt",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        13
+      ]
+    },
+    {
+      "id": "marketplace-api",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        3
+      ]
+    },
+    {
+      "id": "spin-engine",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        7
+      ]
+    },
+    {
+      "id": "wallet-providers",
+      "crashHistory": [
+        0
+      ],
+      "branchHistory": [
+        4
+      ]
+    }
+  ]
+}

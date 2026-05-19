@@ -1,0 +1,27 @@
+{
+  "name": "license-jwt",
+  "iterations": 50000,
+  "iterFrom": 0,
+  "iterTo": 50000,
+  "seedStart": 1,
+  "durationMs": 311,
+  "iterPerSec": 160772,
+  "crashes": [],
+  "uniqueCrashes": 0,
+  "branches": 13,
+  "coverage": {
+    "roundtrip:ok": 15014,
+    "verify:fail:bad_exp": 51,
+    "verify:fail:bad_header": 259,
+    "verify:fail:bad_header_json": 2366,
+    "verify:fail:bad_length": 7470,
+    "verify:fail:bad_license_id": 35,
+    "verify:fail:bad_payload_json": 1587,
+    "verify:fail:bad_segments": 5115,
+    "verify:fail:bad_signature": 2384,
+    "verify:fail:empty_segment": 831,
+    "verify:fail:expired": 6445,
+    "verify:fail:prototype_pollution": 4911,
+    "verify:ok": 3532
+  }
+}

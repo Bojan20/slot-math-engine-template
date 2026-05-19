@@ -1,0 +1,112 @@
+# W215 Faza 600.4 — Monthly DR + Incident Response drill.
+#
+# Runs on the 1st of every month at 03:00 UTC plus on-demand via
+# `workflow_dispatch`. Exercises:
+#   1. Backup chain verification (per-tier RPO gap check)
+#   2. Restore drill (all 4 canonical scenarios)
+#   3. Failover test (DB / HSM / S3 / compute)
+#
+# All reports land under `reports/dr/` and are uploaded as a 90-day
+# artifact. Any non-zero drill fails the job and surfaces in the
+# Actions summary so on-call can triage same-day.
+
+name: dr-drill
+
+on:
+  schedule:
+    # 03:00 UTC on the 1st — quiet hours for all jurisdictions we serve.
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: "Fail on soft-budget overage"
+        required: false
+        default: "true"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: dr-drill
+  cancel-in-progress: false
+
+jobs:
+  drill:
+    name: Monthly DR drill
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Backup chain verify (strict)
+        id: backup_verify
+        run: |
+          set +e
+          node scripts/dr/backup-verify.mjs --strict
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Restore drill (all 4 scenarios)
+        id: restore_drill
+        run: |
+          set +e
+          node scripts/dr/restore-drill.mjs --all
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Failover test (DB / HSM / S3 / compute)
+        id: failover_test
+        run: |
+          set +e
+          node scripts/dr/failover-test.mjs --strict
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Render summary
+        if: always()
+        run: |
+          {
+            echo "## DR Drill · $(date -u +'%Y-%m-%d')"
+            echo
+            echo "| Stage | Status |"
+            echo "|---|---|"
+            echo "| Backup chain verify | ${{ steps.backup_verify.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo "| Restore drill (all)  | ${{ steps.restore_drill.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo "| Failover test        | ${{ steps.failover_test.outputs.status == '0' && 'PASS' || 'FAIL' }} |"
+            echo
+            if [ -f reports/dr/BACKUP_VERIFY.md ]; then
+              echo "### Backup verify"
+              cat reports/dr/BACKUP_VERIFY.md
+            fi
+            if [ -f reports/dr/FAILOVER_TEST.md ]; then
+              echo "### Failover test"
+              cat reports/dr/FAILOVER_TEST.md
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload DR artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dr-drill-${{ github.run_id }}
+          path: reports/dr/
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Fail job if any drill failed
+        if: |
+          steps.backup_verify.outputs.status != '0'
+            || steps.restore_drill.outputs.status != '0'
+            || steps.failover_test.outputs.status != '0'
+        run: |
+          echo "::error::DR drill detected at least one failure — see artifact dr-drill-${{ github.run_id }}"
+          exit 1

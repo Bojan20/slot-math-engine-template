@@ -1,0 +1,20 @@
+{
+  "branches": 15,
+  "coverage": {
+    "fail:bad_percent": 12122,
+    "fail:bad_state": 17286,
+    "fail:illegal_transition:completed->completed": 3537,
+    "fail:illegal_transition:completed->rolled-back": 804,
+    "fail:illegal_transition:holding->holding": 504,
+    "fail:illegal_transition:idle->idle": 835716,
+    "fail:illegal_transition:idle->rolled-back": 789,
+    "fail:illegal_transition:rolled-back->rolled-back": 321513,
+    "ok:completed": 12,
+    "ok:holding": 1269,
+    "ok:idle": 11458,
+    "ok:ramping": 37788,
+    "ok:rolled-back": 28057,
+    "walk:clean": 83,
+    "walk:had-errors": 49917
+  }
+}

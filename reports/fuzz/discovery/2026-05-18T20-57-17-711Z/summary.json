@@ -1,0 +1,74 @@
+{
+  "at": "2026-05-18T20:57:19.717Z",
+  "mode": "synthetic",
+  "perTargetBudget": 50000,
+  "perTargetWallMsCap": 12000,
+  "totalWallMs": 2005,
+  "harnesses": [
+    {
+      "id": "ir-evaluator",
+      "iterations": 50000,
+      "iterPerSec": 62657,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 1,
+      "wallMs": 798
+    },
+    {
+      "id": "marketplace-api",
+      "iterations": 50000,
+      "iterPerSec": 3571429,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 3,
+      "wallMs": 14
+    },
+    {
+      "id": "wallet-providers",
+      "iterations": 50000,
+      "iterPerSec": 3846154,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 4,
+      "wallMs": 13
+    },
+    {
+      "id": "cert-bundle",
+      "iterations": 50000,
+      "iterPerSec": 1162791,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 1,
+      "wallMs": 43
+    },
+    {
+      "id": "spin-engine",
+      "iterations": 50000,
+      "iterPerSec": 694444,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 7,
+      "wallMs": 72
+    },
+    {
+      "id": "canary-controller",
+      "iterations": 50000,
+      "iterPerSec": 66667,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 15,
+      "wallMs": 751
+    },
+    {
+      "id": "license-jwt",
+      "iterations": 50000,
+      "iterPerSec": 160772,
+      "uniqueCrashes": 0,
+      "totalCrashes": 0,
+      "branches": 13,
+      "wallMs": 311
+    }
+  ],
+  "totalUniqueCrashes": 0,
+  "totalBranches": 44
+}

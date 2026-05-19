@@ -1,0 +1,261 @@
+{
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "snapshots": [
+    {
+      "id": "snap-critical-7",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:32:00.000Z",
+      "sizeBytes": 17825792,
+      "checksum": "3e97ccfafd409de3e7110418863d20109edb5e500d237cec60518115de7dc757",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-critical-6",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:36:00.000Z",
+      "sizeBytes": 16777216,
+      "checksum": "ccc09dd3ce9408281b7e2a386f5d586c366079dca5774e2fdacdcb73bb2eec25",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-critical-5",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:40:00.000Z",
+      "sizeBytes": 15728640,
+      "checksum": "38c6241626006dde9ee6da8569dd1670aa3d305cb656dd3c1226bf8662afd379",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-critical-4",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:44:00.000Z",
+      "sizeBytes": 14680064,
+      "checksum": "2fb8125985d2d43d6341ded5c87a4828ed0db6b85cc703d50ce0d892ec9b7da3",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-critical-3",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:48:00.000Z",
+      "sizeBytes": 13631488,
+      "checksum": "496a1c899f0ecaf090166b6520263ef3baabae4e9bd8aa927119ff47b49efd79",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-critical-2",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:52:00.000Z",
+      "sizeBytes": 12582912,
+      "checksum": "107d04245fc0772c2803bcc2c952cb3b11cfc06d214be4adad2df82447a52ad4",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-critical-1",
+      "tier": "critical",
+      "createdAt": "2026-05-18T23:56:00.000Z",
+      "sizeBytes": 11534336,
+      "checksum": "7e73648116d682089d02ad0c1f9e6b5657514200bee760844cd80f45d19cce1b",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-critical-0",
+      "tier": "critical",
+      "createdAt": "2026-05-19T00:00:00.000Z",
+      "sizeBytes": 10485760,
+      "checksum": "9db55728d832f786e01db3e9f35052cefb2d81ebcbd6c028dca467a8da3fc567",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-high-7",
+      "tier": "high",
+      "createdAt": "2026-05-18T21:12:00.000Z",
+      "sizeBytes": 17825792,
+      "checksum": "ef72b15a3d5b42b8e1dc5a3df1dccdc92491261281efc0dea8b9e8df0d154cce",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-high-6",
+      "tier": "high",
+      "createdAt": "2026-05-18T21:36:00.000Z",
+      "sizeBytes": 16777216,
+      "checksum": "46d5f3d0a130ac37f48120af0369e92e5cc8b17cb44eff1ea1ba65607f9849aa",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-high-5",
+      "tier": "high",
+      "createdAt": "2026-05-18T22:00:00.000Z",
+      "sizeBytes": 15728640,
+      "checksum": "42c08cf974b913a0456e89873fded5549f42bdfec7668705413f2b4b6aa4e7dd",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-high-4",
+      "tier": "high",
+      "createdAt": "2026-05-18T22:24:00.000Z",
+      "sizeBytes": 14680064,
+      "checksum": "c7a4f7c4c7b8cf2bf70b1475ea94bf1d9fcbf1237c2e4e01d13fb2dd92dadaf8",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-high-3",
+      "tier": "high",
+      "createdAt": "2026-05-18T22:48:00.000Z",
+      "sizeBytes": 13631488,
+      "checksum": "797e21f8fb4da3bb23dcb63cb4d10050f952b650a0bf873c3e9cb732ac9202dc",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-high-2",
+      "tier": "high",
+      "createdAt": "2026-05-18T23:12:00.000Z",
+      "sizeBytes": 12582912,
+      "checksum": "e774cc356fd588edae0db8bc00b20ccdb681fb94b2269d63b07be899fee21908",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-high-1",
+      "tier": "high",
+      "createdAt": "2026-05-18T23:36:00.000Z",
+      "sizeBytes": 11534336,
+      "checksum": "a97cbdb2ee256849621810d90db336b89618fed53c01da6880fa43dc49a6c05b",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-high-0",
+      "tier": "high",
+      "createdAt": "2026-05-19T00:00:00.000Z",
+      "sizeBytes": 10485760,
+      "checksum": "6c54935561a44f33bf48ab6d2987417b225971395750ad9b56660a001a204614",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-medium-7",
+      "tier": "medium",
+      "createdAt": "2026-05-18T01:36:00.000Z",
+      "sizeBytes": 17825792,
+      "checksum": "20b9537672623c50edd3ec28129641f0f9fb11732dc0db910a139e66b898e0da",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-medium-6",
+      "tier": "medium",
+      "createdAt": "2026-05-18T04:48:00.000Z",
+      "sizeBytes": 16777216,
+      "checksum": "b21ac8eae52787fbb99b563409cb6d985e369d430df7c0b9b6fb2178c105893a",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-medium-5",
+      "tier": "medium",
+      "createdAt": "2026-05-18T08:00:00.000Z",
+      "sizeBytes": 15728640,
+      "checksum": "76fc4efb2f9168a6456ea3f756d263702de51bb6778cfc0162aec5b91789d672",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-medium-4",
+      "tier": "medium",
+      "createdAt": "2026-05-18T11:12:00.000Z",
+      "sizeBytes": 14680064,
+      "checksum": "52f957ba6fd40b9522ffe6c20c85e98f73ef619c2e5d585fae02152f98f4bac5",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-medium-3",
+      "tier": "medium",
+      "createdAt": "2026-05-18T14:24:00.000Z",
+      "sizeBytes": 13631488,
+      "checksum": "99611cb11e12d2c8ce19456dfe378ca75b402a7eb5e7f5aa6a4610c1b04e8ca0",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-medium-2",
+      "tier": "medium",
+      "createdAt": "2026-05-18T17:36:00.000Z",
+      "sizeBytes": 12582912,
+      "checksum": "aeccd6c5882c5e281ac68c9483d8a48dbb6f9684987e68a969b19e38bcca7304",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-medium-1",
+      "tier": "medium",
+      "createdAt": "2026-05-18T20:48:00.000Z",
+      "sizeBytes": 11534336,
+      "checksum": "aa1596186e8f3b34587e68421c78c412e6c7711afa05f9781cb4ac8ac691a753",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-medium-0",
+      "tier": "medium",
+      "createdAt": "2026-05-19T00:00:00.000Z",
+      "sizeBytes": 10485760,
+      "checksum": "b8c23d5426ca6c2e0d753376236dc490ecfa3b19f890292fb934a2bda449c4b8",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-low-7",
+      "tier": "low",
+      "createdAt": "2026-05-13T09:36:00.000Z",
+      "sizeBytes": 17825792,
+      "checksum": "cd38a8c80ea3eb99a72b6a0e354a7f5a801c7d24161b8cdeffc14c47a9db3f1f",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-low-6",
+      "tier": "low",
+      "createdAt": "2026-05-14T04:48:00.000Z",
+      "sizeBytes": 16777216,
+      "checksum": "d78e85d8da9deed3641501cef53e984d8a01563d56257bd13261e5667088bf2c",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-low-5",
+      "tier": "low",
+      "createdAt": "2026-05-15T00:00:00.000Z",
+      "sizeBytes": 15728640,
+      "checksum": "f3b8354d9835b6676732a4cb1548934222e692e43cd966c198b9444cfad8a5c4",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-low-4",
+      "tier": "low",
+      "createdAt": "2026-05-15T19:12:00.000Z",
+      "sizeBytes": 14680064,
+      "checksum": "d6652d9870b781c37d8efe0064f263fcd8aaf83b00b4c30b897e084dc6dd471d",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-low-3",
+      "tier": "low",
+      "createdAt": "2026-05-16T14:24:00.000Z",
+      "sizeBytes": 13631488,
+      "checksum": "fcd4ca28b622e9bc6c1d436f41aa42297026bced735c6ad431f8e701c05cf68f",
+      "storageLocation": "archive"
+    },
+    {
+      "id": "snap-low-2",
+      "tier": "low",
+      "createdAt": "2026-05-17T09:36:00.000Z",
+      "sizeBytes": 12582912,
+      "checksum": "c0ba99edfd9c379e2b7b28718a2be261ec410de5611a56be30bc0d9352fc7148",
+      "storageLocation": "replica"
+    },
+    {
+      "id": "snap-low-1",
+      "tier": "low",
+      "createdAt": "2026-05-18T04:48:00.000Z",
+      "sizeBytes": 11534336,
+      "checksum": "847c87691cf68427cc3480ef38cd322e5821e3ca418a128d080c05e8466667e3",
+      "storageLocation": "primary"
+    },
+    {
+      "id": "snap-low-0",
+      "tier": "low",
+      "createdAt": "2026-05-19T00:00:00.000Z",
+      "sizeBytes": 10485760,
+      "checksum": "3c0369d1271f3b42ea9f95b49727479f628b0ed05acdaccda722a4d45b65549d",
+      "storageLocation": "archive"
+    }
+  ]
+}

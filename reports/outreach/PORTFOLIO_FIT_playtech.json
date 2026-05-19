@@ -1,0 +1,94 @@
+{
+  "operator": "playtech",
+  "region": "EU+UK",
+  "priority": "P1",
+  "inputs": {
+    "portfolioSize": 1000,
+    "annualShipsPre": 60,
+    "annualShipsPost": 155,
+    "perTitleSavingUsd": 185000,
+    "discountRate": 0.1
+  },
+  "weightedCoveragePct": 1,
+  "unweightedCoveragePct": 1,
+  "velocityUpliftFactor": 2.5833333333333335,
+  "annualTitlesCovered": 155,
+  "annualSavingsUsd": 28675000,
+  "fiveYearNpvUsd": 108700811,
+  "upfrontLicenseUsd": 1750000,
+  "paybackMonths": 1,
+  "mechanicBreakdown": {
+    "cascade": {
+      "weight": 0.12,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.12
+    },
+    "respin": {
+      "weight": 0.08,
+      "covered": true,
+      "confidence": "med",
+      "contribution": 0.08
+    },
+    "hold_and_win": {
+      "weight": 0.08,
+      "covered": true,
+      "confidence": "med",
+      "contribution": 0.08
+    },
+    "cluster": {
+      "weight": 0.04,
+      "covered": true,
+      "confidence": "med",
+      "contribution": 0.04
+    },
+    "ways": {
+      "weight": 0.14,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.14
+    },
+    "megaways": {
+      "weight": 0.08,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.08
+    },
+    "ante_bet": {
+      "weight": 0.04,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.04
+    },
+    "buy_feature": {
+      "weight": 0.1,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.1
+    },
+    "pick_bonus": {
+      "weight": 0.08,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.08
+    },
+    "wheel_bonus": {
+      "weight": 0.06,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.06
+    },
+    "mystery": {
+      "weight": 0.06,
+      "covered": true,
+      "confidence": "med",
+      "contribution": 0.06
+    },
+    "jackpot": {
+      "weight": 0.12,
+      "covered": true,
+      "confidence": "high",
+      "contribution": 0.12
+    }
+  }
+}
