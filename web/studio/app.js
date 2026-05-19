@@ -3245,6 +3245,91 @@
     toast({ kind: "ok", msg: `Closed-form RTP recomputed · <b>${v.rtp.toFixed(4)}%</b> · 1.4 ms` });
     logActivity(`compute RTP ${v.rtp.toFixed(2)}%`);
   });
+
+  /* ============================================================
+     PLAY TEMPLATE — build standalone playable slot from current IR
+     Generates an HTML blob with template + runtime + styles inlined,
+     embeds the IR as JSON, opens the blob URL in a new tab.  The new
+     tab runs the runner independently (no Studio shell required).
+     ============================================================ */
+  const playTemplateBtn = document.querySelector("#btn-play-template");
+  if (playTemplateBtn) {
+    playTemplateBtn.addEventListener("click", async () => {
+      const v = getActiveVariant();
+      if (!v || !Array.isArray(v.symbols) || v.symbols.length === 0) {
+        toast({
+          kind: "warn",
+          msg: "Build or import a math model first — Play Template needs symbols + reels"
+        });
+        return;
+      }
+      try {
+        playTemplateBtn.setAttribute("disabled", "");
+        const ir = variantToFullIR(v);
+        const blobUrl = await buildPlayTemplateBlob(ir);
+        const win = window.open(blobUrl, "_blank", "noopener,noreferrer");
+        if (!win) {
+          toast({
+            kind: "warn",
+            msg: "Pop-up blocked — allow pop-ups for this site to open the slot template",
+            ttl: 6000,
+          });
+        } else {
+          toast({
+            kind: "ok",
+            msg: `🎮 Playable template opened · ${ir.symbols.length} symbols · ${ir.evaluation?.paylines?.length || 0} paylines`,
+          });
+          logActivity(`play template launched · ${ir.meta?.name || "Slot Template"}`);
+        }
+      } catch (err) {
+        console.warn("[studio] Play Template failed:", err);
+        toast({ kind: "warn", msg: `Play Template failed: ${err.message || err}` });
+      } finally {
+        playTemplateBtn.removeAttribute("disabled");
+      }
+    });
+  }
+
+  // Build a canonical IR from a Studio variant — re-uses the
+  // `variantToIrForMc()` shape but adds meta + rtp_allocation so the
+  // standalone runner can render real names + version.
+  function variantToFullIR(v) {
+    const ir = variantToIrForMc(v);
+    if (!ir) return null;
+    const ws = getActiveWorkspace();
+    ir.meta = ir.meta || {};
+    ir.meta.id = ir.meta.id || v.id || "slot-template";
+    ir.meta.name = ws?.name || v.name || "Slot Template";
+    ir.meta.version = ir.meta.version || "1.0.0";
+    if (v.rtpAllocation) ir.rtp_allocation = v.rtpAllocation;
+    if (v.validatedMetrics) ir.validated_metrics = v.validatedMetrics;
+    return ir;
+  }
+
+  // Fetch the runner files (template / runtime / styles) from the
+  // dev/preview server, splice them together with the IR embedded, and
+  // return a blob: URL that opens to a fully-self-contained slot game.
+  async function buildPlayTemplateBlob(ir) {
+    const base = new URL("./runner/", window.location.href).toString();
+    const [templateHtml, runtimeJs, stylesCss] = await Promise.all([
+      fetch(base + "template.html").then((r) => r.text()),
+      fetch(base + "runtime.js").then((r) => r.text()),
+      fetch(base + "styles.css").then((r) => r.text()),
+    ]);
+    // Embed IR as a JSON script tag the runtime reads, plus inline CSS + JS.
+    // We use REPLACER FUNCTIONS (not strings) so `$` characters in the
+    // payload (jQuery-style `$()` selectors are everywhere in runtime.js)
+    // are NOT interpreted as String.replace's `$1` / `$&` substitution
+    // patterns — which would corrupt the bundled output.
+    const irJson = JSON.stringify(ir).replace(/<\/script>/gi, "<\\/script>");
+    const safeRuntime = `window.__IR__ = ${irJson};\n${runtimeJs}`;
+    const finalHtml = templateHtml
+      .replace("/* RUNNER-CSS */", () => stylesCss)
+      .replace(/(<script id="inline-ir"[^>]*>)\{\}(<\/script>)/, (m, open, close) => open + irJson + close)
+      .replace("/* RUNNER-JS */", () => safeRuntime);
+    const blob = new Blob([finalHtml], { type: "text/html" });
+    return URL.createObjectURL(blob);
+  }
   $("#btn-validate").addEventListener("click", () => {
     const v = getActiveVariant();
     // Build a real gate list based on current variant state.  Engine-side

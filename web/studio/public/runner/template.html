@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slot Template — Studio Runner</title>
+  <style id="inline-css">/* RUNNER-CSS */</style>
+</head>
+<body class="theme-onyx">
+  <div class="game-shell">
+
+    <header class="game-top">
+      <div class="game-id">
+        <span class="game-logo" aria-hidden="true">◆</span>
+        <span class="game-title" id="game-title">Slot Template</span>
+        <span class="game-version mono" id="game-version">v0.0</span>
+      </div>
+      <div class="game-balance">
+        <span class="lbl">BALANCE</span>
+        <b class="mono" id="balance">100.00</b>
+        <span class="cur" id="currency">EUR</span>
+      </div>
+    </header>
+
+    <main class="game-stage">
+      <div class="stage-side stage-side-l">
+        <div class="side-card">
+          <span class="side-lbl">SPINS</span>
+          <b class="mono" id="stat-spins">0</b>
+        </div>
+        <div class="side-card">
+          <span class="side-lbl">HITS</span>
+          <b class="mono" id="stat-hits">0</b>
+        </div>
+        <div class="side-card">
+          <span class="side-lbl">HIT %</span>
+          <b class="mono" id="stat-hit-pct">—</b>
+        </div>
+      </div>
+
+      <div class="stage-center">
+        <div class="reels-grid" id="reels-grid" aria-label="Reels"></div>
+        <div class="win-banner" id="win-banner" hidden>
+          <span class="wb-lbl">WIN</span>
+          <b class="mono" id="win-banner-amount">0.00</b>
+          <span class="wb-mult" id="win-banner-mult"></span>
+        </div>
+        <div class="feature-overlay" id="feature-overlay" hidden>
+          <div class="fo-card">
+            <span class="fo-kind" id="fo-kind">—</span>
+            <span class="fo-title" id="fo-title">Feature triggered</span>
+            <span class="fo-detail mono" id="fo-detail">—</span>
+            <button class="fo-go" id="fo-go" type="button">START</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-side stage-side-r">
+        <div class="side-card">
+          <span class="side-lbl">TOTAL WIN</span>
+          <b class="mono" id="stat-total-win">0.00</b>
+        </div>
+        <div class="side-card">
+          <span class="side-lbl">RTP NOW</span>
+          <b class="mono" id="stat-rtp">—%</b>
+        </div>
+        <div class="side-card">
+          <span class="side-lbl">MAX WIN</span>
+          <b class="mono" id="stat-max-win">0.00</b>
+        </div>
+      </div>
+    </main>
+
+    <footer class="game-bottom">
+      <div class="bet-block">
+        <button class="bet-step" id="bet-down" type="button" aria-label="Decrease bet">−</button>
+        <div class="bet-display">
+          <span class="bet-lbl">BET</span>
+          <b class="mono" id="bet-amount">1.00</b>
+        </div>
+        <button class="bet-step" id="bet-up" type="button" aria-label="Increase bet">+</button>
+      </div>
+
+      <button class="spin-btn" id="spin-btn" type="button">SPIN</button>
+
+      <div class="auto-block">
+        <button class="auto-btn" id="auto-10" type="button">AUTO ×10</button>
+        <button class="auto-btn" id="auto-100" type="button">×100</button>
+        <button class="auto-btn auto-stop" id="auto-stop" type="button" hidden>STOP</button>
+      </div>
+    </footer>
+
+    <aside class="paytable-drawer" id="paytable-drawer" hidden>
+      <div class="pd-h">
+        <span>Paytable</span>
+        <button class="pd-close" id="pd-close" type="button" aria-label="Close paytable">×</button>
+      </div>
+      <div class="pd-body" id="paytable-body"></div>
+    </aside>
+
+    <button class="paytable-toggle" id="paytable-toggle" type="button">PAYTABLE</button>
+
+    <div class="history-rail" id="history-rail">
+      <span class="hr-lbl">RECENT</span>
+      <ul id="history-list"></ul>
+    </div>
+
+  </div>
+
+  <script id="inline-ir" type="application/json">{}</script>
+  <script id="inline-js">/* RUNNER-JS */</script>
+</body>
+</html>

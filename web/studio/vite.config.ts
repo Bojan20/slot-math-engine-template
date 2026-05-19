@@ -20,6 +20,8 @@ function copyStaticAssets(): Plugin {
       const root = fileURLToPath(new URL('.', import.meta.url));
       const out = fileURLToPath(new URL('../../dist/studio', import.meta.url));
       mkdirSync(out, { recursive: true });
+      // `public/` is auto-copied by Vite (runner files live there).  We
+      // copy the remaining hand-rolled statics that sit outside it.
       const targets = ['app.js', 'data', 'symbols', 'DESIGN_NOTES.md', 'README.md'];
       for (const rel of targets) {
         const src = resolve(root, rel);
