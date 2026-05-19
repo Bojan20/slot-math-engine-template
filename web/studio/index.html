@@ -154,28 +154,32 @@
       <button class="tab"           data-tab="certify"     role="tab" aria-selected="false" aria-controls="panel-certify"     id="tab-certify"><span class="tab-idx">6</span>Certify</button>
     </nav>
     <div class="tabs-r">
-      <!-- L1 METRICS · always visible · 3 numbers only (default / math view) -->
+      <!-- L1 METRICS · always visible · cold-start shows em-dashes until
+           a math model is loaded (import / preset / built manually).  The
+           refreshL1() function in app.js replaces these with real numbers
+           as soon as `isVariantBlank(v)` returns false. -->
       <div class="l1-metrics persona-headline persona-headline-math" aria-label="Top-level metrics">
-        <div class="l1-m"><span class="l1-lbl">RTP</span><b class="mono" id="l1-rtp" title="Click to copy 4dp RTP">96.4214<span class="pct">%</span></b></div>
-        <div class="l1-m"><span class="l1-lbl">Hit</span><b class="mono" id="l1-hit">27.83<span class="pct">%</span></b></div>
-        <div class="l1-m"><span class="l1-lbl">σ</span><b class="mono" id="l1-sigma">6.42</b></div>
-        <div class="l1-m"><span class="l1-lbl">P99</span><b class="mono" id="l1-p99">245.5×</b></div>
+        <div class="l1-m"><span class="l1-lbl">RTP</span><b class="mono" id="l1-rtp" title="Click to copy 4dp RTP">—<span class="pct">%</span></b></div>
+        <div class="l1-m"><span class="l1-lbl">Hit</span><b class="mono" id="l1-hit">—<span class="pct">%</span></b></div>
+        <div class="l1-m"><span class="l1-lbl">σ</span><b class="mono" id="l1-sigma">—</b></div>
+        <div class="l1-m"><span class="l1-lbl">P99</span><b class="mono" id="l1-p99">—×</b></div>
       </div>
       <!-- Design persona headline · win-feel pill -->
       <div class="persona-headline persona-headline-design" aria-label="Design headline">
         <span class="winfeel-lbl">WIN FEEL</span>
-        <span class="winfeel-pill is-balanced" id="winfeel-pill">Balanced</span>
-        <span class="winfeel-sub mono">hit 1-in-3.7</span>
+        <span class="winfeel-pill is-balanced" id="winfeel-pill">—</span>
+        <span class="winfeel-sub mono">no data yet</span>
       </div>
-      <!-- Producer persona headline · days-to-cert + budget -->
+      <!-- Producer persona headline · cold-start blanks.  Real values
+           appear once a project is loaded (cert pipeline + budget hooks). -->
       <div class="persona-headline persona-headline-producer" aria-label="Producer headline">
         <div class="prod-seg">
           <span class="prod-seg-lbl">DAYS TO CERT</span>
-          <b class="mono cyan" id="prod-days">11</b>
+          <b class="mono cyan" id="prod-days">—</b>
         </div>
         <div class="prod-seg">
           <span class="prod-seg-lbl">SAVED</span>
-          <b class="mono ok" id="prod-saved">$40K</b>
+          <b class="mono ok" id="prod-saved">—</b>
         </div>
       </div>
     </div>
@@ -195,11 +199,10 @@
           <span class="side-h-lbl">Workspaces</span>
           <span class="side-h-meta">3</span>
         </button>
-        <div class="side-body" id="side-ws">
-          <button class="side-item is-active" data-ws="ws-lava"><span class="dot" style="background:#F97316"></span>Untitled<span class="rt">95.4%</span></button>
-          <button class="side-item" data-ws="ws-pearl"><span class="dot" style="background:#60A5FA"></span>Untitled 2<span class="rt">96.0%</span></button>
-          <button class="side-item" data-ws="ws-solar"><span class="dot" style="background:#F59E0B"></span>Untitled 3<span class="rt">94.5%</span></button>
-        </div>
+        <!-- Cold-start: empty list — renderSidebarWorkspaces() in app.js
+             populates this from wsOrder/workspaces (single blank workspace
+             at boot, more as user creates / imports games). -->
+        <div class="side-body" id="side-ws"></div>
       </div>
 
       <div class="side-section">
@@ -969,31 +972,31 @@
             <div class="moment-row">
               <span class="m-sym mono">σ</span>
               <span class="m-lbl">std dev</span>
-              <b class="mono" id="m-sigma">6.42</b>
+              <b class="mono" id="m-sigma">—</b>
               <button class="m-form" title="σ = √E[(X−μ)²]">📐</button>
             </div>
             <div class="moment-row">
               <span class="m-sym mono">μ</span>
               <span class="m-lbl">RTP (mean)</span>
-              <b class="mono cyan" id="m-mu">96.4214%</b>
+              <b class="mono cyan" id="m-mu">—%</b>
               <button class="m-form" title="μ = Σ pᵢ·xᵢ">📐</button>
             </div>
             <div class="moment-row">
               <span class="m-sym mono">μ₃</span>
               <span class="m-lbl">skewness</span>
-              <b class="mono" id="m-skew">+1.82</b>
+              <b class="mono" id="m-skew">—</b>
               <button class="m-form" title="μ₃ = E[(X−μ)³]/σ³">📐</button>
             </div>
             <div class="moment-row">
               <span class="m-sym mono">μ₄</span>
               <span class="m-lbl">kurtosis</span>
-              <b class="mono" id="m-kurt">4.21</b>
+              <b class="mono" id="m-kurt">—</b>
               <button class="m-form" title="μ₄ = E[(X−μ)⁴]/σ⁴ − 3">📐</button>
             </div>
             <div class="moment-row">
               <span class="m-sym mono">P99</span>
               <span class="m-lbl">99th pct</span>
-              <b class="mono" id="m-p99">245.5×</b>
+              <b class="mono" id="m-p99">—×</b>
               <button class="m-form" title="P99 = inf{x : F(x) ≥ 0.99}">📐</button>
             </div>
           </div>
@@ -1050,10 +1053,10 @@
             <span class="wf-tick wf-loose">loose</span>
           </div>
           <div class="rail-mini-row winfeel-stats">
-            <div><span class="caps">avg win ≤ 5×</span><b class="mono">62%</b></div>
-            <div><span class="caps">big win ≥ 100×</span><b class="mono cyan">3.1%</b></div>
-            <div><span class="caps">hit pace</span><b class="mono">1-in-3.7</b></div>
-            <div><span class="caps">dead spin streak</span><b class="mono">≤ 6</b></div>
+            <div><span class="caps">avg win ≤ 5×</span><b class="mono">—</b></div>
+            <div><span class="caps">big win ≥ 100×</span><b class="mono cyan">—</b></div>
+            <div><span class="caps">hit pace</span><b class="mono">—</b></div>
+            <div><span class="caps">dead spin streak</span><b class="mono">—</b></div>
           </div>
         </section>
 
@@ -1220,9 +1223,9 @@
       <!-- Default (legacy / overall) view · still used on Compose / Catalog / Certify tabs -->
       <div id="rail-default" hidden>
         <section class="rail-card">
-          <div class="rail-card-h"><span>Overall RTP</span><span class="rail-card-r mono ok" id="rail-rtp-delta">↗ +0.03</span></div>
+          <div class="rail-card-h"><span>Overall RTP</span><span class="rail-card-r mono" id="rail-rtp-delta">—</span></div>
           <div class="rail-rtp">
-            <b class="mono" id="rail-rtp-big">95.42</b><span class="rail-rtp-pct">%</span>
+            <b class="mono" id="rail-rtp-big">—</b><span class="rail-rtp-pct">%</span>
           </div>
           <svg class="rail-gauge" viewBox="0 0 200 110" preserveAspectRatio="none">
             <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="#252B36" stroke-width="2"/>
@@ -1259,10 +1262,7 @@
         <section class="rail-card">
           <div class="rail-card-h"><span>Recent changes</span><span class="rail-card-r mono small">live</span></div>
           <ul class="rail-activity" id="rail-activity">
-            <li><span class="t mono">12s</span><span class="m">HP1 weight 3.5 → 3.8</span></li>
-            <li><span class="t mono">42s</span><span class="m">auto-balance applied (3 deltas)</span></li>
-            <li><span class="t mono">1m</span><span class="m">preset Standard 11 loaded</span></li>
-            <li><span class="t mono">3m</span><span class="m">workspace Untitled opened</span></li>
+            <li><span class="t mono">—</span><span class="m">no recent changes</span></li>
           </ul>
         </section>
       </div>
@@ -1330,19 +1330,9 @@
     </div>
     <div class="status-c">
       <div class="ticker" id="ticker" aria-hidden="true">
-        <span class="t-track" id="t-track">
-          <span class="t-it">RTP 95.42%</span><span class="t-sep">·</span>
-          <span class="t-it">σ 8.41</span><span class="t-sep">·</span>
-          <span class="t-it">Hit 27.83%</span><span class="t-sep">·</span>
-          <span class="t-it">MaxWin 2 145×</span><span class="t-sep">·</span>
-          <span class="t-it">Drift −0.08pp</span><span class="t-sep">·</span>
-          <span class="t-it">MC queue 0</span><span class="t-sep">·</span>
-          <span class="t-it">Wave W196</span><span class="t-sep">·</span>
-          <span class="t-it">cat v2.63</span><span class="t-sep">·</span>
-          <span class="t-it">P-IDs 97</span><span class="t-sep">·</span>
-          <span class="t-it">recompute 1.4ms</span><span class="t-sep">·</span>
-          <span class="t-it">jurisdictions 15</span>
-        </span>
+        <!-- Ticker is populated dynamically by refreshL1 / refreshRail once
+             a project has math.  Cold start: empty so nothing fake scrolls. -->
+        <span class="t-track" id="t-track"></span>
       </div>
     </div>
     <div class="status-r">

@@ -752,28 +752,57 @@
   }
   function recompute() { recomputeFor(getActiveVariant()); }
 
+  // A variant is considered BLANK (nothing meaningful to display) when the
+  // user has not seeded math: no symbols + no imported rtp_allocation +
+  // RTP is at default 0.  In that case every L1 / mirror metric renders
+  // as "—" instead of computed zeros / heuristic noise.  As soon as the
+  // user picks a preset, builds symbols, or imports an IR, this flag flips
+  // and the real numbers appear.
+  function isVariantBlank(v) {
+    if (!v) return true;
+    if (Array.isArray(v.symbols) && v.symbols.length > 0) return false;
+    if (v.rtpAllocation && (typeof v.rtpAllocation.total_mc_5b === "number" || typeof v.rtpAllocation.total_cf === "number")) return false;
+    if (v.validatedMetrics && typeof v.validatedMetrics.rtp === "number" && v.validatedMetrics.rtp > 0) return false;
+    return true;
+  }
+  const DASH = "—";
+
   function refreshL1() {
     const v = getActiveVariant();
-    // Math headline · 4dp precision so columns align in copy-paste
-    const l1rtp = $("#l1-rtp");   if (l1rtp) l1rtp.innerHTML = `${v.rtp.toFixed(4)}<span class="pct">%</span>`;
-    const l1hit = $("#l1-hit");   if (l1hit) l1hit.innerHTML = `${v.hit.toFixed(2)}<span class="pct">%</span>`;
-    const l1vol = $("#l1-vola");  if (l1vol) l1vol.textContent = v.vola;
-    const l1sig = $("#l1-sigma"); if (l1sig) l1sig.textContent = v.sigma.toFixed(2);
+    const blank = isVariantBlank(v);
+    // Math headline · 4dp precision so columns align in copy-paste.  On a
+    // blank variant we render an em-dash instead of computed zeros / 15σ
+    // / 500× heuristic placeholders.
+    const l1rtp = $("#l1-rtp");
+    if (l1rtp) l1rtp.innerHTML = blank ? `${DASH}<span class="pct">%</span>` : `${v.rtp.toFixed(4)}<span class="pct">%</span>`;
+    const l1hit = $("#l1-hit");
+    if (l1hit) l1hit.innerHTML = blank ? `${DASH}<span class="pct">%</span>` : `${v.hit.toFixed(2)}<span class="pct">%</span>`;
+    const l1vol = $("#l1-vola");
+    if (l1vol) l1vol.textContent = blank ? DASH : v.vola;
+    const l1sig = $("#l1-sigma");
+    if (l1sig) l1sig.textContent = blank ? DASH : v.sigma.toFixed(2);
     // P99 from validated MC win-distribution when available, else fall back
     // to the legacy `maxWin / 10` heuristic.  Wrath's validated P99 is 53.82×,
     // not 500× (which is the cap-divided-by-10 placeholder).
     const l1p99 = $("#l1-p99");
     if (l1p99) {
-      const p99Val = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
-      l1p99.textContent = p99Val.toFixed(p99Val < 100 ? 2 : 1) + "×";
+      if (blank) {
+        l1p99.textContent = DASH + "×";
+      } else {
+        const p99Val = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
+        l1p99.textContent = p99Val.toFixed(p99Val < 100 ? 2 : 1) + "×";
+      }
     }
 
-    // Design headline · classify win-feel from sigma + hit
+    // Design headline · classify win-feel from sigma + hit.  Blank variant
+    // gets a neutral em-dash pill so the user doesn't think "Loose" is a
+    // real assessment of an empty pool.
     const pill = $("#winfeel-pill");
     const pillBig = $("#winfeel-pill-big");
     let feel = "Balanced", feelCls = "is-balanced";
-    if (v.sigma > 9.5)      { feel = "Loose";    feelCls = "is-loose"; }
-    else if (v.sigma < 6.5) { feel = "Tight";    feelCls = "is-tight"; }
+    if (blank)                  { feel = DASH;       feelCls = "is-balanced"; }
+    else if (v.sigma > 9.5)     { feel = "Loose";    feelCls = "is-loose"; }
+    else if (v.sigma < 6.5)     { feel = "Tight";    feelCls = "is-tight"; }
     [pill, pillBig].forEach(p => {
       if (!p) return;
       p.textContent = p === pillBig ? feel.toUpperCase() : feel;
@@ -782,9 +811,11 @@
     });
     $$(".wf-tick").forEach(t => t.classList.remove("is-on"));
     const tick = $(`.wf-${feelCls.replace("is-", "")}`);
-    if (tick) tick.classList.add("is-on");
+    if (tick && !blank) tick.classList.add("is-on");
     const wfSub = $(".winfeel-sub");
-    if (wfSub) wfSub.textContent = `hit 1-in-${(100 / Math.max(v.hit, 1)).toFixed(1)}`;
+    if (wfSub) {
+      wfSub.textContent = blank ? "no data yet" : `hit 1-in-${(100 / Math.max(v.hit, 1)).toFixed(1)}`;
+    }
   }
 
   /* ============================================================
@@ -822,13 +853,19 @@
     const ws = getActiveWorkspace();
     // Legacy "Overall RTP" elements (kept for backwards-compat — currently
     // hidden by persona rails; keep updated so toggling stays accurate)
-    const rrtp = $("#rail-rtp-big"); if (rrtp) rrtp.textContent = v.rtp.toFixed(2);
+    const blankR = isVariantBlank(v);
+    const rrtp = $("#rail-rtp-big"); if (rrtp) rrtp.textContent = blankR ? DASH : v.rtp.toFixed(2);
     const dt = (v.rtp - v.rtpTarget);
     const dtEl = $("#rail-rtp-delta");
     if (dtEl) {
-      dtEl.textContent = `${dt >= 0 ? "↗" : "↘"} ${dt >= 0 ? "+" : ""}${dt.toFixed(2)}`;
-      dtEl.classList.toggle("ok", Math.abs(dt) < 0.5);
-      dtEl.classList.toggle("warn", Math.abs(dt) >= 0.5);
+      if (blankR) {
+        dtEl.textContent = DASH;
+        dtEl.classList.remove("ok", "warn");
+      } else {
+        dtEl.textContent = `${dt >= 0 ? "↗" : "↘"} ${dt >= 0 ? "+" : ""}${dt.toFixed(2)}`;
+        dtEl.classList.toggle("ok", Math.abs(dt) < 0.5);
+        dtEl.classList.toggle("warn", Math.abs(dt) >= 0.5);
+      }
     }
     updateGauge();
     const list = $("#rail-activity");
@@ -838,18 +875,23 @@
       `).join("") || `<li><span class="t mono">—</span><span class="m">no recent changes</span></li>`;
     }
 
-    // Math rail · live moment values driven from active variant
-    const mSigma = $("#m-sigma"); if (mSigma) mSigma.textContent = v.sigma.toFixed(2);
-    const mMu    = $("#m-mu");    if (mMu)    mMu.textContent    = v.rtp.toFixed(4) + "%";
+    // Math rail · live moment values driven from active variant.  Blank
+    // variants show an em-dash so the user doesn't read placeholder noise
+    // (σ=15 from the empty-pool heuristic, etc.) as real math.
+    const mSigma = $("#m-sigma");
+    if (mSigma) mSigma.textContent = blankR ? DASH : v.sigma.toFixed(2);
+    const mMu    = $("#m-mu");
+    if (mMu)    mMu.textContent    = blankR ? `${DASH}%` : (v.rtp.toFixed(4) + "%");
     // P99 from validated MC win-distribution when present, else fall back
     // to the legacy `maxWin / 10` heuristic placeholder.
     const p99Display = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
     const p99Fmt = p99Display.toFixed(p99Display < 100 ? 2 : 1) + "×";
-    const mP99   = $("#m-p99");   if (mP99)   mP99.textContent   = p99Fmt;
+    const mP99   = $("#m-p99");
+    if (mP99)   mP99.textContent   = blankR ? `${DASH}×` : p99Fmt;
 
     // Headline metrics (math / design / producer)
-    const l1sigma = $("#l1-sigma"); if (l1sigma) l1sigma.textContent = v.sigma.toFixed(2);
-    const l1p99   = $("#l1-p99");   if (l1p99)   l1p99.textContent   = p99Fmt;
+    const l1sigma = $("#l1-sigma"); if (l1sigma) l1sigma.textContent = blankR ? DASH : v.sigma.toFixed(2);
+    const l1p99   = $("#l1-p99");   if (l1p99)   l1p99.textContent   = blankR ? `${DASH}×` : p99Fmt;
 
     // Variant lineup mini-section (only if element exists, since it's
     // inside legacy #rail-default now hidden — guarded inside fn)
@@ -927,11 +969,13 @@
     const rows = ws.variantOrder.map(vid => {
       const v = ws.variants[vid];
       const isActive = vid === ws.activeVariantId;
-      const pct = Math.max(0, Math.min(100, (v.rtp - 88) / 11 * 100));
+      const blank = isVariantBlank(v);
+      const pct = blank ? 0 : Math.max(0, Math.min(100, (v.rtp - 88) / 11 * 100));
+      const rtpTxt = blank ? `${DASH}%` : `${v.rtp.toFixed(2)}%`;
       return `<button class="variant-lineup-bar ${isActive ? "is-active" : ""}" data-vid="${vid}" title="Switch to ${v.name}">
         <span class="vlb-name">${v.name}</span>
         <span class="vlb-track"><i style="width:${pct.toFixed(1)}%"></i></span>
-        <span class="vlb-rtp mono">${v.rtp.toFixed(2)}%</span>
+        <span class="vlb-rtp mono">${rtpTxt}</span>
       </button>`;
     }).join("");
     c.innerHTML = rows;
@@ -1107,8 +1151,10 @@
       const w = workspaces[id];
       const v = w.variants[w.activeVariantId];
       const dot = THEME_PALETTE[w.theme]?.dot || "#22D3EE";
+      const blank = isVariantBlank(v);
+      const rtLbl = blank ? DASH : `${v.rtp.toFixed(1)}%`;
       return `<button class="side-item ${id === activeWorkspaceId ? "is-active" : ""}" data-ws="${id}">
-        <span class="dot" style="background:${dot}"></span>${w.name}<span class="rt">${v.rtp.toFixed(1)}%</span>
+        <span class="dot" style="background:${dot}"></span>${w.name}<span class="rt">${rtLbl}</span>
       </button>`;
     }).join("");
     $("#side-ws").parentElement.querySelector(".side-h-meta").textContent = wsOrder.length;
@@ -1151,10 +1197,12 @@
     const tabsHtml = ws.variantOrder.map(vid => {
       const v = ws.variants[vid];
       const isActive = vid === ws.activeVariantId;
+      const blank = isVariantBlank(v);
+      const rtpLbl = blank ? `${DASH}%` : `${v.rtp.toFixed(2)}%`;
       return `<button class="var-tab ${isActive ? "is-active" : ""}" data-vid="${vid}" title="Variant ${v.name}">
         <span class="var-tab-dot" style="background:${isActive ? dot : "transparent"}; border:1px solid ${dot}"></span>
         <span class="var-tab-name">${v.name}</span>
-        <span class="var-tab-rtp mono">${v.rtp.toFixed(2)}%</span>
+        <span class="var-tab-rtp mono">${rtpLbl}</span>
       </button>`;
     }).join("");
     wrap.innerHTML = tabsHtml + `
@@ -1175,7 +1223,8 @@
     $$(".var-tab", $("#var-tabs")).forEach(tab => {
       const v = ws.variants[tab.dataset.vid];
       if (!v) return;
-      tab.querySelector(".var-tab-rtp").textContent = `${v.rtp.toFixed(2)}%`;
+      const blank = isVariantBlank(v);
+      tab.querySelector(".var-tab-rtp").textContent = blank ? `${DASH}%` : `${v.rtp.toFixed(2)}%`;
       const isActive = tab.dataset.vid === ws.activeVariantId;
       tab.classList.toggle("is-active", isActive);
     });
