@@ -1,0 +1,293 @@
+{
+  "overall_pass": true,
+  "configs": [
+    {
+      "name": "A_3way_football_match",
+      "regime": "FOOTBALL_3WAY",
+      "cfg": {
+        "trueProbabilities": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "decimalOdds": [
+          1.95,
+          3.2,
+          4.8
+        ],
+        "annualHandle": 100000000,
+        "customerWagerDistribution": [
+          0.5,
+          0.3,
+          0.2
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.5128205128205129,
+          0.3125,
+          0.20833333333333334
+        ],
+        "overround": 0.033653846153846256,
+        "perOutcomeMargin": [
+          0.025641025641025772,
+          0.041666666666666706,
+          0.04166666666666666
+        ],
+        "weightedExpectedMargin": 0.03250000000000003,
+        "expectedAnnualGgr": 3250000.000000003,
+        "isCompliantUkgcRts12": true
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 3680800
+      },
+      "pass": true
+    },
+    {
+      "name": "B_2way_tennis",
+      "regime": "TENNIS_2WAY",
+      "cfg": {
+        "trueProbabilities": [
+          0.65,
+          0.35
+        ],
+        "decimalOdds": [
+          1.5,
+          2.7
+        ],
+        "annualHandle": 50000000,
+        "customerWagerDistribution": [
+          0.65,
+          0.35
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.6666666666666666,
+          0.37037037037037035
+        ],
+        "overround": 0.03703703703703698,
+        "perOutcomeMargin": [
+          0.02564102564102555,
+          0.05820105820105821
+        ],
+        "weightedExpectedMargin": 0.03549999999999996,
+        "expectedAnnualGgr": 1774999.9999999981,
+        "isCompliantUkgcRts12": true
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 1872200
+      },
+      "pass": true
+    },
+    {
+      "name": "C_horse_racing_8_runners",
+      "regime": "HORSE_8",
+      "cfg": {
+        "trueProbabilities": [
+          0.3,
+          0.2,
+          0.15,
+          0.12,
+          0.1,
+          0.06,
+          0.04,
+          0.03
+        ],
+        "decimalOdds": [
+          3.2,
+          4.8,
+          6.5,
+          8,
+          9.5,
+          16,
+          24,
+          32
+        ],
+        "annualHandle": 30000000,
+        "customerWagerDistribution": [
+          0.3,
+          0.2,
+          0.15,
+          0.12,
+          0.1,
+          0.06,
+          0.04,
+          0.03
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.3125,
+          0.20833333333333334,
+          0.15384615384615385,
+          0.125,
+          0.10526315789473684,
+          0.0625,
+          0.041666666666666664,
+          0.03125
+        ],
+        "overround": 0.04035931174089069,
+        "perOutcomeMargin": [
+          0.041666666666666706,
+          0.04166666666666666,
+          0.025641025641025737,
+          0.041666666666666706,
+          0.05263157894736831,
+          0.041666666666666706,
+          0.04166666666666659,
+          0.041666666666666706
+        ],
+        "weightedExpectedMargin": 0.03875000000000003,
+        "expectedAnnualGgr": 1162500.000000001,
+        "isCompliantUkgcRts12": true
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 1345080
+      },
+      "pass": true
+    },
+    {
+      "name": "D_excessive_overround",
+      "regime": "CORNER_GOUGE",
+      "cfg": {
+        "trueProbabilities": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "decimalOdds": [
+          1.5,
+          2.4,
+          3.6
+        ],
+        "annualHandle": 100000000,
+        "customerWagerDistribution": [
+          0.5,
+          0.3,
+          0.2
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.6666666666666666,
+          0.4166666666666667,
+          0.2777777777777778
+        ],
+        "overround": 0.36111111111111116,
+        "perOutcomeMargin": [
+          0.33333333333333326,
+          0.388888888888889,
+          0.3888888888888889
+        ],
+        "weightedExpectedMargin": 0.265,
+        "expectedAnnualGgr": 26500000,
+        "isCompliantUkgcRts12": false
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 26824000
+      },
+      "pass": true
+    },
+    {
+      "name": "E_tight_pricing_low_margin",
+      "regime": "TIGHT_PRICING",
+      "cfg": {
+        "trueProbabilities": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "decimalOdds": [
+          1.98,
+          3.3,
+          4.95
+        ],
+        "annualHandle": 100000000,
+        "customerWagerDistribution": [
+          0.5,
+          0.3,
+          0.2
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.5050505050505051,
+          0.30303030303030304,
+          0.20202020202020202
+        ],
+        "overround": 0.010101010101010166,
+        "perOutcomeMargin": [
+          0.010101010101010166,
+          0.010101010101010166,
+          0.010101010101010027
+        ],
+        "weightedExpectedMargin": 0.01000000000000002,
+        "expectedAnnualGgr": 1000000.000000002,
+        "isCompliantUkgcRts12": true
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 1443520
+      },
+      "pass": true
+    },
+    {
+      "name": "F_5way_special",
+      "regime": "SPECIAL_5WAY",
+      "cfg": {
+        "trueProbabilities": [
+          0.3,
+          0.25,
+          0.2,
+          0.15,
+          0.1
+        ],
+        "decimalOdds": [
+          3.2,
+          3.8,
+          4.8,
+          6.5,
+          9.5
+        ],
+        "annualHandle": 20000000,
+        "customerWagerDistribution": [
+          0.3,
+          0.25,
+          0.2,
+          0.15,
+          0.1
+        ]
+      },
+      "closed_form": {
+        "impliedProbabilities": [
+          0.3125,
+          0.2631578947368421,
+          0.20833333333333334,
+          0.15384615384615385,
+          0.10526315789473684
+        ],
+        "overround": 0.043100539811065985,
+        "perOutcomeMargin": [
+          0.041666666666666706,
+          0.05263157894736836,
+          0.04166666666666666,
+          0.025641025641025737,
+          0.05263157894736831
+        ],
+        "weightedExpectedMargin": 0.04125000000000002,
+        "expectedAnnualGgr": 825000.0000000005,
+        "isCompliantUkgcRts12": true
+      },
+      "monte_carlo": {
+        "episodes": 50000,
+        "observedGgrMean": 859360
+      },
+      "pass": true
+    }
+  ]
+}
