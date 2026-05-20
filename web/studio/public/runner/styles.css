@@ -2058,26 +2058,37 @@ body.is-bigwin .payline-overlay,
   50%     { opacity: 1;   transform: scale(1.04); }
 }
 
-/* Inner arrow SVG sits in the middle of the button. */
-.spin-btn__icon {
+/* "SPIN" text label sits in the middle of the button.  Centered over
+   the ring + glow, picks up the cyan accent + a strong drop-shadow so
+   it reads cleanly at all viewport sizes.  Letter-spacing widened for
+   the slot-machine display look. */
+.spin-btn__label {
   position: relative;
-  display: flex; align-items: center; justify-content: center;
-  width: 70px; height: 70px;
   z-index: 1;
+  font: 800 28px/1 ui-sans-serif, system-ui, "SF Pro Display", Inter, sans-serif;
+  letter-spacing: 0.18em;
+  color: #fff;
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.55),
+    0 0 14px rgba(34, 211, 238, 0.65);
+  transform: translateZ(0);
+  pointer-events: none;
+  user-select: none;
 }
-.spin-btn__icon svg {
-  width: 70px; height: 70px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+/* Subtle scale-pulse on the label while spinning — matches the ring's
+   fast-rotation tempo so the whole button feels alive. */
+.spin-btn.is-spinning .spin-btn__label {
+  animation: spinBtnLabelPulse 0.6s ease-in-out infinite alternate;
 }
-.spin-btn.is-spinning .spin-btn__icon svg {
-  animation: spinBtnIconRot 0.6s linear infinite;
+@keyframes spinBtnLabelPulse {
+  from { transform: scale(1.00); text-shadow: 0 2px 6px rgba(0,0,0,0.55), 0 0 14px rgba(34,211,238,0.65); }
+  to   { transform: scale(1.06); text-shadow: 0 2px 6px rgba(0,0,0,0.55), 0 0 22px rgba(34,211,238,0.95); }
 }
-@keyframes spinBtnIconRot { to { transform: rotate(360deg); } }
 
-/* Disabled / halted state — dim icon + ring */
+/* Disabled / halted state — dim label + ring */
 .spin-btn[disabled] .spin-btn__ring,
 .spin-btn[disabled] .spin-btn__glow { opacity: 0.25; animation: none; }
-.spin-btn[disabled] .spin-btn__icon svg { opacity: 0.4; }
+.spin-btn[disabled] .spin-btn__label { opacity: 0.4; }
 
 /* AutoPlay icon + counter badge.  Counter is hidden by default; runtime.js
    removes the [hidden] attribute when autoplay starts and updates textContent
