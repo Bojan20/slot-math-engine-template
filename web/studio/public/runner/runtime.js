@@ -69,176 +69,6 @@
   const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  // ╔══════════════════════════════════════════════════════════════╗
-  // ║  1B · AUDIO BUS — WebAudio procedural synth                    ║
-  // ╚══════════════════════════════════════════════════════════════╝
-  //
-  // Inline WebAudio "voices" so the template ships out-of-the-box with
-  // SFX feedback — NO asset files, NO Howler dependency, ~6KB.  Mirrors
-  // the slot-game-template AudioManager.SfxCue enum + classifyWin tiering
-  // (winRatio<1 → none, <10 → small, <50 → big, ≥50 → mega).
-  //
-  // Cues are short additive synth voices (sine/triangle/sawtooth) gated
-  // through ADSR-style ramps.  Total latency from cue() to first sample
-  // is <8ms on M1 — well below the 60ms audio-sync drift threshold.
-  //
-  // AudioContext is created lazily and resumed on the first SPIN click
-  // to comply with Chrome's autoplay policy.  Mute state is mirrored on
-  // soundBtn data-muted attribute (already wired in toggleSound).
-  const audio = (function () {
-    let ctx = null;
-    let master = null;
-    let muted = false;
-    function init() {
-      if (ctx) return;
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      try {
-        ctx = new AC();
-        master = ctx.createGain();
-        master.gain.value = 0.42;
-        master.connect(ctx.destination);
-      } catch (_) { ctx = null; }
-    }
-    function resume() {
-      init();
-      if (ctx && ctx.state === 'suspended') {
-        ctx.resume().catch(() => {});
-      }
-    }
-    function blip(o) {
-      if (!ctx || muted) return;
-      const t = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = o.type || 'triangle';
-      osc.frequency.setValueAtTime(o.freq, t);
-      if (o.toFreq != null) {
-        osc.frequency.exponentialRampToValueAtTime(Math.max(20, o.toFreq), t + o.dur);
-      }
-      const peak = o.gain != null ? o.gain : 0.22;
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.linearRampToValueAtTime(peak, t + 0.006);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + o.dur);
-      osc.connect(g).connect(master);
-      osc.start(t);
-      osc.stop(t + o.dur + 0.04);
-    }
-    function noise(o) {
-      if (!ctx || muted) return;
-      const dur = o.dur;
-      const sr = ctx.sampleRate;
-      const buf = ctx.createBuffer(1, Math.floor(sr * dur), sr);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < d.length; i++) {
-        d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
-      }
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-      const filt = ctx.createBiquadFilter();
-      filt.type = o.filterType || 'bandpass';
-      filt.frequency.value = o.filterFreq || 1100;
-      filt.Q.value = o.filterQ || 1.4;
-      const g = ctx.createGain();
-      const t = ctx.currentTime;
-      const peak = o.gain != null ? o.gain : 0.12;
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.linearRampToValueAtTime(peak, t + 0.008);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      src.connect(filt).connect(g).connect(master);
-      src.start(t);
-      src.stop(t + dur + 0.04);
-    }
-    function chord(freqs, dur, type, gain) {
-      const g = (gain || 0.22) / Math.sqrt(freqs.length);
-      freqs.forEach((f) => blip({ freq: f, dur, type: type || 'triangle', gain: g }));
-    }
-    return {
-      resume,
-      isReady() { return ctx != null; },
-      setMuted(m) { muted = !!m; },
-      cue(name) {
-        if (!ctx || muted) return;
-        switch (name) {
-          case 'spin':
-            // Whoosh: bandpass-noise sweep
-            noise({ dur: 0.30, filterFreq: 700, filterQ: 1.1, gain: 0.10 });
-            break;
-          case 'reelStop':
-            // Tick + low dip — mechanical clack
-            blip({ freq: 240, toFreq: 80, dur: 0.07, type: 'square', gain: 0.17 });
-            break;
-          case 'winSmall':
-            blip({ freq: 659.25, dur: 0.12, type: 'triangle', gain: 0.22 });
-            setTimeout(() => blip({ freq: 880, dur: 0.16, type: 'triangle', gain: 0.22 }), 80);
-            break;
-          case 'winBig':
-            // C major triad ascending sweep
-            chord([523.25, 659.25, 783.99], 0.40, 'triangle', 0.28);
-            setTimeout(() => chord([659.25, 783.99, 987.77], 0.55, 'triangle', 0.30), 160);
-            break;
-          case 'winMega':
-            // 5-voice stack + sub bass thunder
-            chord([523.25, 659.25, 783.99, 987.77, 1318.51], 0.80, 'sawtooth', 0.20);
-            blip({ freq: 110, dur: 0.65, type: 'sine', gain: 0.30 });
-            setTimeout(() => chord([783.99, 987.77, 1318.51, 1760], 0.6, 'triangle', 0.24), 360);
-            break;
-          case 'winEpic':
-            // Tier-3 EPIC — chord stack + bass swell + sparkle
-            chord([523.25, 659.25, 783.99, 987.77, 1318.51, 1760], 1.10, 'sawtooth', 0.22);
-            blip({ freq: 82, dur: 0.9, type: 'sine', gain: 0.34 });
-            setTimeout(() => chord([987.77, 1318.51, 1760, 2349.32], 0.8, 'triangle', 0.22), 380);
-            setTimeout(() => blip({ freq: 2637, toFreq: 5274, dur: 0.5, type: 'triangle', gain: 0.16 }), 620);
-            break;
-          case 'scatterLand':
-            // Bright bell ding
-            chord([1318.51, 1760.0], 0.40, 'sine', 0.28);
-            break;
-          case 'anticipation':
-            // Slow rising tension drone
-            blip({ freq: 220, toFreq: 660, dur: 0.6, type: 'sawtooth', gain: 0.10 });
-            break;
-          case 'fsTrigger':
-            // Fanfare arpeggio — C, E, G, C, E (one octave up)
-            [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f, i) =>
-              setTimeout(() => blip({ freq: f, dur: 0.24, type: 'triangle', gain: 0.28 }), i * 95));
-            setTimeout(() => chord([523.25, 659.25, 783.99, 1046.5], 0.8, 'triangle', 0.28), 510);
-            break;
-          case 'multiplierCollect':
-            // Magical sweep up — sawtooth glide
-            blip({ freq: 440, toFreq: 1760, dur: 0.32, type: 'sawtooth', gain: 0.22 });
-            setTimeout(() => blip({ freq: 1760, dur: 0.14, type: 'sine', gain: 0.18 }), 200);
-            break;
-          case 'cascadeTumble':
-            // Bubble-pop blip
-            blip({ freq: 800, toFreq: 400, dur: 0.10, type: 'sine', gain: 0.16 });
-            break;
-          case 'click':
-            // UI button feedback
-            blip({ freq: 1200, toFreq: 600, dur: 0.04, type: 'square', gain: 0.10 });
-            break;
-        }
-      },
-      // Tier-map: winRatio = winCoins / betCoins → small/big/mega/epic cue.
-      // Mirrors slot-game-template AudioManager.classifyWin() + Wrath
-      // BIG_WIN_TIERS thresholds (10/25/50×).
-      //
-      // IMPORTANT: when `suppressBigWin` is true, only fire the SMALL cue
-      // for sub-tier1 wins (ratio < 10×).  Big/Mega/Epic cues are owned
-      // by runBigWinReveal() to avoid double-firing on the same win.
-      cueWinByRatio(winRatio, suppressBigWin) {
-        if (!ctx || muted) return;
-        if (!isFinite(winRatio) || winRatio <= 0) return;
-        if (winRatio < 1) return;        // sub-stake: no audio
-        if (winRatio < 10) { this.cue('winSmall'); return; }
-        if (suppressBigWin) return;      // big-tier handled by BigWin overlay
-        if (winRatio < 25) this.cue('winBig');
-        else if (winRatio < 50) this.cue('winMega');
-        else this.cue('winEpic');
-      },
-    };
-  })();
-
   // mulberry32 — small, deterministic, cross-language identical with
   // MTL oracle.js.  Replay-from-seed parity is preserved.
   function makeRng(seed) {
@@ -873,10 +703,6 @@
             paintCell(reelIdx, y, finalGrid[reelIdx][y], { bounce: PD.bounceMs > 0 });
             if (c) c.dataset.locked = '1';
           }
-          // Audio: mechanical reel-stop click at the moment of land.
-          // The per-reel stagger naturally produces the canonical
-          // "boom-boom-boom-boom-boom" left-to-right cadence.
-          audio.cue('reelStop');
           if (willHaveScatter) scLandedSoFar++;
           // Trigger anticipation glow on next unland reels if threshold reached
           if (!useSlam && scLandedSoFar === 2 && reelIdx < REELS - 1) {
@@ -1191,9 +1017,6 @@
     clearPaylines();
     // Kick off coin shower — tier-scaled particle burst (24 / 48 / 80 coins)
     playCoinShower(tier);
-    // Audio: tier-1 reveal cue (winBig).  Tier upgrades during count-up
-    // are handled inside the frame loop below (mega/epic chords).
-    audio.cue(tier >= 3 ? 'winEpic' : tier >= 2 ? 'winMega' : 'winBig');
     const stages = BIG_WIN_TIERS.slice(0, tier);
     const totalMs = stages.length * BIG_WIN_TIER_MS;
     const start = performance.now();
@@ -1224,11 +1047,9 @@
         tierEl.textContent = stages[stageIdx].label;
         card.classList.toggle('is-tier-2', stageIdx >= 1);
         card.classList.toggle('is-tier-3', stageIdx >= 2);
-        // Burst extra coins on tier upgrades (MEGA / EPIC entries) + audio
+        // Burst extra coins on tier upgrades (MEGA / EPIC entries)
         if (stageIdx > lastStageIdx) {
           playCoinShower(stageIdx + 1);
-          // stageIdx is 0-indexed → tier label index (BIG=0, MEGA=1, EPIC=2)
-          audio.cue(stageIdx >= 2 ? 'winEpic' : stageIdx >= 1 ? 'winMega' : 'winBig');
           lastStageIdx = stageIdx;
         }
         if (elapsed < totalMs) requestAnimationFrame(frame);
@@ -1263,34 +1084,8 @@
   function rollupStatusWin(amount, durationMs) {
     if (!statusValueEl || !statusTextEl) return Promise.resolve();
     if (amount <= 0) { setStatusText('PRESS SPIN'); return Promise.resolve(); }
-    // Tier-based duration (mirrors slot-game-template rollupDurationMs):
-    //   <3× stake  → small (400ms)
-    //   3-10× stake → medium (600ms)
-    //   10-25× stake → tier1 BIG (2500ms)
-    //   25-50× stake → tier2 MEGA (3500ms)
-    //   ≥50× stake  → tier3 EPIC (4500ms)
-    // Turbo halves all durations.  Falls back to explicit durationMs if passed.
-    if (durationMs == null) {
-      const bet = currentBet();
-      const ratio = bet > 0 ? amount / bet : 0;
-      let d;
-      if (ratio >= 50)      d = 4500;
-      else if (ratio >= 25) d = 3500;
-      else if (ratio >= 10) d = 2500;
-      else if (ratio >= 3)  d = 600;
-      else                  d = 400;
-      durationMs = state.turbo ? Math.max(180, Math.round(d * 0.55)) : d;
-    }
+    durationMs = durationMs || (state.turbo ? 220 : 400);
     const HOLD_MS = state.turbo ? 600 : 1200;
-    // Audio cue at rollup start — choose tier by win/bet ratio (mirrors
-    // AudioManager.classifyWin from slot-game-template).  Sub-stake wins
-    // (ratio < 1) are silent to avoid spam on tiny pushes.
-    // suppressBigWin=true: the BigWin overlay owns the big/mega/epic cue
-    // when ratio ≥ 10× (else we'd double-trigger the brass on the same win).
-    try {
-      const bet = currentBet();
-      if (bet > 0) audio.cueWinByRatio(amount / bet, true);
-    } catch (_) {}
 
     // Cancel any previous rollup fade so back-to-back wins don't strand
     // the counter mid-fade.
@@ -1838,11 +1633,6 @@
     clearWinHighlights();
     clearPaylines();
     hideWinBanner();
-    // Audio: resume AudioContext (autoplay policy honours the user gesture
-    // that opened this blob via the Studio "Play Template" button) and
-    // fire the whoosh cue at spin start.
-    audio.resume();
-    audio.cue('spin');
     // Feature bus: spin started — multiplier strip starts scrolling, etc.
     emitFeatureEvent('spin:start', { bet: bet });
 
@@ -1860,11 +1650,6 @@
       if (lightning > 1) spinWin = spinWin * lightning;
     }
     const lightningPromise = lightning > 1 ? animateLightningRoll(lightning) : Promise.resolve();
-    if (lightning > 1) audio.cue('multiplierCollect');
-    // Scatter-land cue: 2+ scatters trigger anticipation, 3+ scatters
-    // trigger the FREE SPINS sequence — both deserve audio feedback.
-    if (result.scCount >= 2) audio.cue('scatterLand');
-    if (result.scCount >= 2 && result.scCount < 3) audio.cue('anticipation');
     await animateGrid(grid, result, { multAnnounce: lightning });
     await lightningPromise;
     updateZeusMeter(result.baseWin || 0);
@@ -1876,8 +1661,6 @@
 
     let featureLabel = null;
     if (F_FS && result.scCount >= 3) {
-      // FS triggered — fanfare arpeggio before the bonus intro overlay
-      audio.cue('fsTrigger');
       const fsWin = await runFreeSpins(result.scCount, bet);
       spinWin += fsWin * bet;
       featureLabel = `FS +${fmt(fsWin * bet)}`;
@@ -2057,13 +1840,6 @@
     state.soundMuted = !state.soundMuted;
     if (soundBtnEl)   soundBtnEl.setAttribute('data-muted', String(state.soundMuted));
     if (menuSoundBtn) menuSoundBtn.setAttribute('data-muted', String(state.soundMuted));
-    // Wire the WebAudio bus to the UI mute state.  Also resume the
-    // AudioContext on unmute so the next cue plays without delay.
-    audio.setMuted(state.soundMuted);
-    if (!state.soundMuted) {
-      audio.resume();
-      audio.cue('click');
-    }
   }
   function toggleQuickMenu() {
     if (!quickMenuEl) return;
