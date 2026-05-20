@@ -2324,6 +2324,30 @@ body.is-bigwin .payline-overlay,
   from { filter: drop-shadow(0 0 6px var(--gold-glow, rgba(245,158,11,0.4))); }
   to   { filter: drop-shadow(0 0 16px var(--gold-glow, rgba(245,158,11,0.85))); }
 }
+
+/* W223 — tier-progressive status-value color + scale shifts.
+   BIG / MEGA / EPIC each escalate visual weight as the rollup hits
+   the tier badge reveal at 60% progress. */
+#statusBarValue.tier-big {
+  color: #fde68a;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
+  transform: scale(1.05);
+}
+#statusBarValue.tier-mega {
+  color: #fca5a5;
+  text-shadow: 0 0 14px rgba(244, 63, 94, 0.55);
+  transform: scale(1.10);
+  letter-spacing: 0.04em;
+}
+#statusBarValue.tier-epic {
+  color: #c4b5fd;
+  text-shadow:
+    0 0 16px rgba(167, 139, 250, 0.75),
+    0 0 32px rgba(124, 58, 237, 0.45);
+  transform: scale(1.15);
+  letter-spacing: 0.05em;
+  font-weight: 800;
+}
 /* "PRESS SPIN" idle text — soft fade between states so swaps don't pop. */
 #statusBarText {
   opacity: 1;

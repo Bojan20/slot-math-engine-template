@@ -1197,23 +1197,38 @@
 
     statusTextEl.style.display = 'none';
     statusValueEl.removeAttribute('hidden');
-    statusValueEl.classList.remove('is-rolling', 'is-fading-out');
+    statusValueEl.classList.remove('is-rolling', 'is-fading-out', 'tier-big', 'tier-mega', 'tier-epic');
+    // W223 — tier-progressive class hooks for color/scale shifts.
+    // BIG / MEGA / EPIC tiers add CSS classes that styles.css can react to.
+    const bet = currentBet();
+    const xStake = bet > 0 ? amount / bet : 0;
+    if      (xStake >= 50) statusValueEl.classList.add('tier-epic');
+    else if (xStake >= 25) statusValueEl.classList.add('tier-mega');
+    else if (xStake >= 10) statusValueEl.classList.add('tier-big');
     // Force reflow then add fade-in class so the keyframe re-runs.
     void statusValueEl.offsetWidth;
     statusValueEl.classList.add('is-rolling', 'is-fading-in');
 
     return new Promise((resolve) => {
       const t0 = performance.now();
+      // W223 — richer rollup label: lightning multiplier + tier badge.
+      //   "WIN: 12.50 · 2× · BIG"  (10× ≤ stake < 25×)
+      //   "WIN: 80.00 · MEGA"       (25× ≤ stake < 50×)
+      //   "WIN: 500.00 · EPIC"      (≥ 50× stake)
       const multLabel = (state._lastWinMult && state._lastWinMult > 1) ? ` · ${state._lastWinMult}×` : '';
+      const tierLabel = xStake >= 50 ? ' · EPIC' : xStake >= 25 ? ' · MEGA' : xStake >= 10 ? ' · BIG' : '';
       function step(now) {
         const t = clamp((now - t0) / durationMs, 0, 1);
         // W222 — use module-level easeOutCubic helper (was inline `1 - (1-t)^3`)
         const eased = easeOutCubic(t);
-        statusValueEl.textContent = `WIN: ${fmt(amount * eased)}${multLabel}`;
+        // W223 — tier badge appears at 60% through the rollup (suspense),
+        // so it doesn't spoil the build-up.
+        const tierShown = t >= 0.6 ? tierLabel : '';
+        statusValueEl.textContent = `WIN: ${fmt(amount * eased)}${multLabel}${tierShown}`;
         if (t < 1) requestAnimationFrame(step);
         else {
           // Snap to exact final value then schedule fade-out after hold.
-          statusValueEl.textContent = `WIN: ${fmt(amount)}${multLabel}`;
+          statusValueEl.textContent = `WIN: ${fmt(amount)}${multLabel}${tierLabel}`;
           state._statusFadeTimer = setTimeout(() => {
             if (!statusValueEl) return;
             statusValueEl.classList.remove('is-fading-in');
