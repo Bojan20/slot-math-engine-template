@@ -560,15 +560,19 @@ body {
 
 /* Decel — strict easeOutCubic (IGT spec).  No wobble, no extra
    perceptual settle — reels read clean as they slow down so the player
-   can see what symbol is landing. */
+   can see what symbol is landing.  The FINAL symbol is already painted
+   on the cell at the moment decel starts (commitStopSymbols pattern),
+   and this keyframe slides it from FULL-CELL-HEIGHT above the target
+   down into place — so the player visually reads "final strip rolling
+   to a stop" rather than "symbols mid-air randomly change". */
 .cell.is-decel {
   animation: cell-decel var(--t-decel, 300ms) cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
 }
 @keyframes cell-decel {
-  0%   { transform: translateY(-22px); filter: blur(4px); }
-  35%  { transform: translateY(  8px); filter: blur(2.4px); }
-  70%  { transform: translateY(  2px); filter: blur(0.8px); }
-  100% { transform: translateY(   0);  filter: blur(0); }
+  0%   { transform: translateY(calc(-1 * var(--cell-size, 92px))); filter: blur(4px); }
+  40%  { transform: translateY(calc(-0.18 * var(--cell-size, 92px))); filter: blur(2px); }
+  72%  { transform: translateY(-3px); filter: blur(0.6px); }
+  100% { transform: translateY(   0); filter: blur(0); }
 }
 
 /* Pre-stop ghost — the final symbol "nazre se" 50ms before bounce.

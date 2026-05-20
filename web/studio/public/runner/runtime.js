@@ -325,14 +325,25 @@
   //   • bouncePx = 6 (turbo 3), bounceCount = 2 (turbo 1), bounceDecay = 0.3
   //   • windupStaggerMs = 33 between reel STARTS (~2 frames @ 60fps)
   //   • anticipationMs = +2000 on reels 3+ when 2+ scatters landed (turbo +800)
+  // staggerMs lowered to Wrath canonical 90ms (was 180ms) — reels stop
+  // more snappily, "boom-boom-boom-boom-boom" left-to-right rhythm rather
+  // than the slower IGT 250ms cadence.  Wrath src/timing.ts ships 90.
+  //
   // ghostMs = IGT pre-stop "nazre" preview window (final symbol shown 3px
   // above target at opacity 0.6 for N ms before bounce kicks in).  Industry
   // spec is 50ms — short enough to feel intentional, long enough for the
   // player to read what's about to land.
+  //
+  // rotateMs = symbol-rotation interval during steady spin — every N ms
+  // each reel re-picks a random symbol on each visible cell, so the strip
+  // feels alive (real motion) instead of three static symbols translating.
+  // Wrath uses requestAnimationFrame at ~60fps; ours runs ~80ms (~12fps)
+  // which reads identically with the blur(4px) motion filter applied.
   const SPIN_PROFILE = {
     normal: {
       windupMs: 115, accelMs: 130, steadyMs: 1350, decelMs: 300,
-      staggerMs: 180, windupStaggerMs: 33,
+      staggerMs: 90, windupStaggerMs: 33,
+      rotateMs: 80,
       ghostMs: 50,
       bouncePx: 6, bounceCount: 2, bounceDecay: 0.3, bounceElasticity: 1.8,
       anticipationMs: 2000,
@@ -341,7 +352,8 @@
     },
     turbo: {
       windupMs:  65, accelMs:  70, steadyMs:  450, decelMs: 120,
-      staggerMs:  45, windupStaggerMs: 16,
+      staggerMs:  35, windupStaggerMs: 16,
+      rotateMs: 45,
       ghostMs: 25,
       bouncePx: 3, bounceCount: 1, bounceDecay: 0.2, bounceElasticity: 2.0,
       anticipationMs: 800,
@@ -351,6 +363,7 @@
     slam: {
       windupMs: 0, accelMs: 0, steadyMs: 0, decelMs: 100,
       staggerMs: 30, windupStaggerMs: 0,
+      rotateMs: 0,
       ghostMs: 0,
       bouncePx: 0, bounceCount: 0, bounceDecay: 0, bounceElasticity: 0,
       anticipationMs: 0,
@@ -516,6 +529,9 @@
     $$('#reels-grid .cell').forEach((c) => {
       c.classList.remove('is-win', 'is-scatter-win', 'is-anticipate',
                          'is-windup', 'is-spinning', 'is-decel', 'is-ghost', 'is-bounce');
+      // Release the "locked" flag set during the previous spin's decel.
+      // The next spin's rotation interval needs to be free to repaint.
+    delete c.dataset.locked;
     });
   }
   function pickAnyId() {
@@ -575,7 +591,37 @@
     // Also flip on the grid-level speedlines overlay (IGT-style 8 white
     // horizontal lines repeating-linear-gradient).  We let the CSS keyframe
     // fade them in/out automatically — only need to toggle the class.
+    //
+    // CRITICAL: each reel gets a symbol-rotation interval (setInterval at
+    // P.rotateMs) so the visible cells re-randomize while spinning — a
+    // real strip moving, not three static symbols just oscillating on
+    // translateY.  The interval is killed the instant the reel enters
+    // decel phase (commitStopSymbols pattern from Wrath src/reels.ts:7272)
+    // so finalized symbols are NEVER overwritten by another random pick.
     if (reelsEl) reelsEl.classList.add('is-speeding');
+    const reelRotateTimers = new Array(REELS).fill(null);
+    function startReelRotation(reelIdx) {
+      if (P.rotateMs <= 0) return;
+      reelRotateTimers[reelIdx] = setInterval(() => {
+        for (let y = 0; y < ROWS; y++) {
+          const c = cellAt(reelIdx, y);
+          if (!c || c.dataset.locked === '1') continue;
+          const symId = pickAnyId();
+          const tier = displayTierOf(symId);
+          c.className = 'cell tier-' + tier + ' is-spinning';
+          c.setAttribute('data-spin-sym', symId);
+          const sym = SYM_BY_ID[symId];
+          const name = sym && sym.name && sym.name !== symId ? `<span class="cell-name">${sym.name}</span>` : '';
+          c.innerHTML = `<span class="cell-id">${symId || '?'}</span>${name}`;
+        }
+      }, P.rotateMs);
+    }
+    function stopReelRotation(reelIdx) {
+      if (reelRotateTimers[reelIdx]) {
+        clearInterval(reelRotateTimers[reelIdx]);
+        reelRotateTimers[reelIdx] = null;
+      }
+    }
     for (let r = 0; r < REELS; r++) {
       const reelIdx = r;
       setTimeout(() => {
@@ -584,6 +630,7 @@
           if (c) c.style.animationDelay = '';   // clear stagger after windup
           paintCell(reelIdx, y, pickAnyId(), { spinning: true });
         }
+        startReelRotation(reelIdx);
       }, reelIdx * P.windupStaggerMs);
     }
     // The speedlines keyframe runs for 1.2s then fades out; once that
@@ -621,33 +668,40 @@
           // the decel + bounce window).
           const useSlam = !!state.slamRequested;
           const PD = useSlam ? SPIN_PROFILE.slam : P;
-          // Decel sub-phase — push the decel duration into CSS just-in-time
-          // in case slam swapped it.
+          // ── COMMIT STOP SYMBOLS (Wrath src/reels.ts:7272 pattern) ──
+          // STOP the random-symbol rotation for this reel and IMMEDIATELY
+          // paint the FINAL symbols.  From this moment forward those cells
+          // are LOCKED — no further repaints, no random flips.  The decel
+          // CSS animation then visually slides the locked symbols from
+          // above the cell down into place via translateY easeOutCubic.
+          stopReelRotation(reelIdx);
           root.style.setProperty('--t-decel', PD.decelMs + 'ms');
           for (let y = 0; y < ROWS; y++) {
             const c = cellAt(reelIdx, y);
             if (c) c.style.animationDelay = '';
-            paintCell(reelIdx, y, pickAnyId(), { decel: true });
+            paintCell(reelIdx, y, finalGrid[reelIdx][y], { decel: true });
+            if (c) c.dataset.locked = '1';   // hard-lock: no future repaints
           }
           await wait(PD.decelMs);
-          // IGT pre-stop GHOST phase — final symbol is painted but offset
-          // 3px upward at opacity 0.6 for ghostMs window.  Gives the player
-          // visual anticipation time to read what's about to land.  Skipped
-          // entirely on slam (ghostMs=0).
+          // IGT pre-stop GHOST phase — final symbol nazre 3px above
+          // target at opacity 0.6 for ghostMs window before bounce.
           if (PD.ghostMs > 0) {
             root.style.setProperty('--t-ghost', PD.ghostMs + 'ms');
             for (let y = 0; y < ROWS; y++) {
               paintCell(reelIdx, y, finalGrid[reelIdx][y], { ghost: true });
+              const c = cellAt(reelIdx, y);
+              if (c) c.dataset.locked = '1';
             }
             await wait(PD.ghostMs);
           }
-          // Land final cells with cushion bounce.  Set --rbn-px and
-          // --t-bounce inline so bounce honors current (possibly slam) profile.
+          // Land final cells with cushion bounce.  Symbols already locked —
+          // we just toggle the bounce class so the spring keyframe runs.
           root.style.setProperty('--t-bounce', PD.bounceMs + 'ms');
           for (let y = 0; y < ROWS; y++) {
             const c = cellAt(reelIdx, y);
             if (c) c.style.setProperty('--rbn-px', PD.bouncePx + 'px');
             paintCell(reelIdx, y, finalGrid[reelIdx][y], { bounce: PD.bounceMs > 0 });
+            if (c) c.dataset.locked = '1';
           }
           if (willHaveScatter) scLandedSoFar++;
           // Trigger anticipation glow on next unland reels if threshold reached
@@ -668,8 +722,20 @@
     // wins highlight (otherwise the scale-pop overlaps with .is-win pulse).
     await wait(P.bounceMs);
 
-    // Phase D — clear transient classes, highlight wins, banner
+    // Phase D — clear transient classes, highlight wins, banner.
+    // The data-locked flag stays set: we keep the final symbols locked
+    // through the entire win-presentation phase so paylines + dim cycles
+    // don't accidentally re-roll a cell.  It's cleared at next spinOnce()
+    // via clearWinHighlights().
     if (reelsEl) reelsEl.classList.remove('is-speeding');
+    // Defensive: nuke any lingering rotation timer (e.g. if a slam fired
+    // while reel 4 was mid-rotation but Phase C resolved early).
+    for (let r = 0; r < REELS; r++) {
+      if (reelRotateTimers[r]) {
+        clearInterval(reelRotateTimers[r]);
+        reelRotateTimers[r] = null;
+      }
+    }
     $$('#reels-grid .cell').forEach((c) => {
       c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-ghost', 'is-bounce', 'is-anticipate');
       c.style.animationDelay = '';
