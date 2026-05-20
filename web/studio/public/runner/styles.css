@@ -1864,6 +1864,36 @@ body.is-bigwin .payline-overlay,
   .quickMenu { bottom: 180px; }
   .paytable-toggle { bottom: 180px; }
   .cell .cell-name { display: none; }
+
+  /* W224 — mobile-friendly net-spend overlay + jurisdiction pill.
+     Pills repositioned to avoid clobbering the bottom bar and the
+     game logo on narrow viewports. */
+  .net-spend-overlay {
+    bottom: 200px;             /* sit above bottomBar (which is taller on mobile) */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  .net-spend-overlay .ns-val { font-size: 11px; }
+  .jurisdiction-pill {
+    top: 8px;
+    right: 8px;
+    font-size: 9px;
+    padding: 3px 8px 3px 10px;
+  }
+}
+
+/* W224 — extra-small phones (<420px). Hide jurisdiction pill (it's a
+   QA aid, not player-facing); net-spend overlay shrinks further. */
+@media (max-width: 420px) {
+  .jurisdiction-pill { display: none; }
+  .net-spend-overlay {
+    bottom: 180px;
+    padding: 4px 8px;
+    gap: 5px;
+  }
+  .net-spend-overlay .ns-tag { display: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -2156,6 +2186,21 @@ body.is-bigwin .payline-overlay,
 @keyframes spinBtnLabelPulse {
   from { transform: scale(1.00); text-shadow: 0 2px 6px rgba(0,0,0,0.55), 0 0 14px rgba(34,211,238,0.65); }
   to   { transform: scale(1.06); text-shadow: 0 2px 6px rgba(0,0,0,0.55), 0 0 22px rgba(34,211,238,0.95); }
+}
+
+/* W225 — Tactile press feedback on the SPIN button.  Browser's :active
+   pseudo-class fires for ~16-100ms on every press (including throttled
+   ones).  Combined with :not(.is-throttled), this gives a clear visual
+   "press registered" cue for the user — distinct from the longer
+   .is-throttled flash that signals "press rejected".
+   - 96% scale-down for crisp press feel (no rubber-band overshoot)
+   - 60ms cubic-bezier(.4, 0, .2, 1) — Material Design press timing */
+.spin-btn:active:not([disabled]):not(.is-throttled) {
+  transform: scale(0.96);
+  transition: transform 60ms cubic-bezier(.4, 0, .2, 1);
+}
+.spin-btn {
+  transition: transform 140ms cubic-bezier(.34, 1.56, .64, 1);  /* spring-back release */
 }
 
 /* Disabled / halted state — dim label + ring */
