@@ -547,7 +547,11 @@
     });
     const totalWin = result.lineTotal + result.scatterPay;
     if (totalWin > 0) {
+      // The top-of-reels banner is deprecated; capturing mult here lets
+      // rollupStatusWin attach a "· N×" suffix to the bottom counter.
       showWinBanner(totalWin, opts.multAnnounce && opts.multAnnounce > 1 ? opts.multAnnounce : null);
+      // Win amount is shown via the bottom-center #statusBarValue rollup
+      // (see rollupStatusWin), which spinOnce awaits after this returns.
     }
     // Cycle through winning paylines ONE-AT-A-TIME (Wrath-canonical), await
     // so the next SPIN click can't be triggered until the sequence ends.
@@ -734,15 +738,15 @@
   // ║  8 · WIN BANNER + BIG WIN OVERLAY                             ║
   // ╚══════════════════════════════════════════════════════════════╝
 
+  // Wrath-canonical: the top-of-reels "win-banner" pill is deprecated.
+  // Wins now display via #statusBarValue at the BOTTOM of the bar with
+  // a 400ms count-up rollup (see rollupStatusWin below).  We keep these
+  // stubs so older callers don't crash; they intentionally do nothing.
   function showWinBanner(amount, mult) {
-    if (!winBannerEl || amount <= 0) {
-      if (winBannerEl) winBannerEl.setAttribute('hidden', '');
-      return;
-    }
-    winBannerEl.removeAttribute('hidden');
-    void winBannerEl.offsetWidth;
-    if (winBannerAmt)  winBannerAmt.textContent  = fmt(amount);
-    if (winBannerMult) winBannerMult.textContent = mult && mult > 1 ? `${mult}×` : '';
+    if (winBannerEl) winBannerEl.setAttribute('hidden', '');
+    // The multiplier announcement is still useful inside the rollup label
+    // when lightning fires — runtime.js passes the value through.
+    state._lastWinMult = mult && mult > 1 ? mult : null;
   }
   function hideWinBanner() { if (winBannerEl) winBannerEl.setAttribute('hidden', ''); }
 
@@ -854,23 +858,53 @@
       statusTextEl.style.display = '';
     }
   }
+  // Win rollup at bottom-center status bar.  Mirrors Wrath
+  // statusBarController.ts rollupWin():
+  //   • 400ms baseline (220ms turbo) count-up from 0 → amount
+  //   • Linear-ish progression at ~30fps
+  //   • Fade-in animation on appearance (added per Boki's spec — Wrath
+  //     does abrupt swap; we keep the rollup but add a smooth fade)
+  //   • Holds for FADE_HOLD_MS, then fades out and restores 'PRESS SPIN'
   function rollupStatusWin(amount, durationMs) {
     if (!statusValueEl || !statusTextEl) return Promise.resolve();
     if (amount <= 0) { setStatusText('PRESS SPIN'); return Promise.resolve(); }
-    durationMs = durationMs || (state.turbo ? 220 : 700);
+    durationMs = durationMs || (state.turbo ? 220 : 400);
+    const HOLD_MS = state.turbo ? 600 : 1200;
+
+    // Cancel any previous rollup fade so back-to-back wins don't strand
+    // the counter mid-fade.
+    if (state._statusFadeTimer) { clearTimeout(state._statusFadeTimer); state._statusFadeTimer = null; }
+
     statusTextEl.style.display = 'none';
     statusValueEl.removeAttribute('hidden');
-    statusValueEl.classList.remove('is-rolling');
+    statusValueEl.classList.remove('is-rolling', 'is-fading-out');
+    // Force reflow then add fade-in class so the keyframe re-runs.
     void statusValueEl.offsetWidth;
-    statusValueEl.classList.add('is-rolling');
+    statusValueEl.classList.add('is-rolling', 'is-fading-in');
+
     return new Promise((resolve) => {
       const t0 = performance.now();
+      const multLabel = (state._lastWinMult && state._lastWinMult > 1) ? ` · ${state._lastWinMult}×` : '';
       function step(now) {
         const t = clamp((now - t0) / durationMs, 0, 1);
         const eased = 1 - Math.pow(1 - t, 3);
-        statusValueEl.textContent = `WIN: ${fmt(amount * eased)}`;
+        statusValueEl.textContent = `WIN: ${fmt(amount * eased)}${multLabel}`;
         if (t < 1) requestAnimationFrame(step);
-        else resolve();
+        else {
+          // Snap to exact final value then schedule fade-out after hold.
+          statusValueEl.textContent = `WIN: ${fmt(amount)}${multLabel}`;
+          state._statusFadeTimer = setTimeout(() => {
+            if (!statusValueEl) return;
+            statusValueEl.classList.remove('is-fading-in');
+            statusValueEl.classList.add('is-fading-out');
+            state._statusFadeTimer = setTimeout(() => {
+              setStatusText('PRESS SPIN');
+              if (statusValueEl) statusValueEl.classList.remove('is-fading-out');
+              state._statusFadeTimer = null;
+            }, 280);
+          }, HOLD_MS);
+          resolve();
+        }
       }
       requestAnimationFrame(step);
     });
