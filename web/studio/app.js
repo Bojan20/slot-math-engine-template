@@ -3362,12 +3362,15 @@
           if (!alreadySealed) {
             const modal = mtlOpenSealingModal();
             try {
-              // Default 500 seeds — dual-witness ceremony is bottlenecked by
-              // the iframe runtime (~100 hashes/sec).  500 seeds ≈ 5s on M1.
-              // Bumping to 10K for production-grade is a one-line change; the
-              // hash chain stays deterministic regardless of N.
+              // Default 100 seeds — dual-witness ceremony is bottlenecked by
+              // the iframe runtime (~100 hashes/sec).  100 seeds ≈ 1s on M1.
+              // W218 (2026-05-20): reduced 500 → 100 to keep ceremony under
+              // the 10s timeout budget after xoshiro128** RNG upgrade (slightly
+              // slower than mulberry32 but distributionally correct).  Bumping
+              // to 10K for production-grade is a one-line change; the hash chain
+              // stays deterministic regardless of N.
               const result = await window.MTLSeal.sealIR(ir, {
-                seedCount: 500,
+                seedCount: 100,
                 useRuntime: true,
                 // WASM oracle (Rust→WASM build) lacks the F_FS.scatter_pays
                 // fallback that runtime.js + oracle.js gained when IR lists

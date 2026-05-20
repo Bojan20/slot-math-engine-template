@@ -59,42 +59,76 @@ use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  Mulberry32 RNG — bit-identical to oracle.js makeRng()
+//  xoshiro128** RNG — BIT-IDENTICAL to oracle.js + runtime.js makeRng()
+//  (W218 upgrade, 2026-05-20 — replaces mulberry32 which had measured
+//  +0.06% upward bias in Hold-and-Win feature, 11σ event).
 // ═══════════════════════════════════════════════════════════════════════════
 //
-// JavaScript reference:
+// JavaScript reference (oracle.js, runtime.js, sealing-ceremony.js):
 //   function makeRng(seed) {
-//     let a = (seed >>> 0) || 1;
-//     return function () {
-//       a = (a + 0x6D2B79F5) >>> 0;
-//       let t = a;
-//       t = Math.imul(t ^ (t >>> 15), t | 1);
-//       t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-//       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+//     let z = (seed >>> 0) || 0x9E3779B9;
+//     const sm32 = () => {
+//       z = (z + 0x9E3779B9) >>> 0;
+//       let x = z;
+//       x = Math.imul(x ^ (x >>> 16), 0x85EBCA6B) >>> 0;
+//       x = Math.imul(x ^ (x >>> 13), 0xC2B2AE35) >>> 0;
+//       return (x ^ (x >>> 16)) >>> 0;
+//     };
+//     let s0=sm32(), s1=sm32(), s2=sm32(), s3=sm32();
+//     if ((s0|s1|s2|s3) === 0) s0 = 1;
+//     return () => {
+//       const m = Math.imul(s1, 5) >>> 0;
+//       const r = ((m << 7) | (m >>> 25)) >>> 0;
+//       const result = Math.imul(r, 9) >>> 0;
+//       const t = (s1 << 9) >>> 0;
+//       s2 = (s2 ^ s0) >>> 0;
+//       s3 = (s3 ^ s1) >>> 0;
+//       s1 = (s1 ^ s2) >>> 0;
+//       s0 = (s0 ^ s3) >>> 0;
+//       s2 = (s2 ^ t) >>> 0;
+//       s3 = ((s3 << 11) | (s3 >>> 21)) >>> 0;
+//       return result / 4294967296;
 //     };
 //   }
 //
-// The `Math.imul(a, b)` JS intrinsic computes (a * b) mod 2^32 with two's
-// complement semantics — Rust's `wrapping_mul` on u32 is identical.
-// `>>>` unsigned shift = Rust's `wrapping_shr` for u32.  All shifts in the
-// algorithm are within u32 range so no special handling needed.
+// JS bit ops on u32: `Math.imul(a,b)` ≡ Rust `wrapping_mul`, `>>>` ≡ unsigned
+// right shift, `<<` ≡ wrapping left shift (top bits truncated by u32 wrap).
+// Algorithm: Blackman & Vigna 2018, https://prng.di.unimi.it/xoshiro128starstar.c
+// Period: 2^128 − 1.  Passes BigCrush + PractRand 32TB.
 #[derive(Clone)]
-struct Mulberry32 { a: u32 }
+struct Mulberry32 { s0: u32, s1: u32, s2: u32, s3: u32 }
 impl Mulberry32 {
     fn new(seed: u32) -> Self {
-        Self { a: if seed == 0 { 1 } else { seed } }
+        let mut z: u32 = if seed == 0 { 0x9E3779B9 } else { seed };
+        let mut sm32 = || -> u32 {
+            z = z.wrapping_add(0x9E3779B9);
+            let mut x: u32 = z;
+            x = (x ^ (x >> 16)).wrapping_mul(0x85EBCA6B);
+            x = (x ^ (x >> 13)).wrapping_mul(0xC2B2AE35);
+            x ^ (x >> 16)
+        };
+        let s0 = sm32();
+        let s1 = sm32();
+        let s2 = sm32();
+        let s3 = sm32();
+        let (s0, _, _, _) = if (s0 | s1 | s2 | s3) == 0 { (1u32, s1, s2, s3) } else { (s0, s1, s2, s3) };
+        Self { s0, s1, s2, s3 }
     }
     #[inline]
     fn next_f64(&mut self) -> f64 {
-        // a = (a + 0x6D2B79F5) >>> 0
-        self.a = self.a.wrapping_add(0x6D2B_79F5);
-        let mut t: u32 = self.a;
-        // t = Math.imul(t ^ (t >>> 15), t | 1)
-        t = (t ^ (t >> 15)).wrapping_mul(t | 1);
-        // t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-        t ^= t.wrapping_add((t ^ (t >> 7)).wrapping_mul(t | 61));
-        // ((t ^ (t >>> 14)) >>> 0) / 4294967296
-        (t ^ (t >> 14)) as f64 / 4_294_967_296.0_f64
+        // result = rotl(s1 * 5, 7) * 9
+        let m: u32 = self.s1.wrapping_mul(5);
+        let r: u32 = (m << 7) | (m >> 25);
+        let result: u32 = r.wrapping_mul(9);
+        // state update
+        let t: u32 = self.s1 << 9;
+        self.s2 ^= self.s0;
+        self.s3 ^= self.s1;
+        self.s1 ^= self.s2;
+        self.s0 ^= self.s3;
+        self.s2 ^= t;
+        self.s3 = (self.s3 << 11) | (self.s3 >> 21);
+        result as f64 / 4_294_967_296.0_f64
     }
 }
 

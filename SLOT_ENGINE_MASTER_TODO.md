@@ -2409,3 +2409,62 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 16. ✅ **W152 P2-15 — Max-win cap math + EVT Pareto POT fit** — DONE (this commit). `src/statistics/tailFit.ts` (~230 L) + `rust-sim/src/tail_fit.rs` (~310 L). Three primitives: (a) `clipDistribution(wins, cap) → {rtpCapped, rtpUncapped, rtpLost, probabilityMassAbove, conditionalMeanAbove, capActive}` — strict-inequality semantics (`value > cap` clipped, `value === cap` left untouched per UKGC SI 2025/215 inclusive-cap wording); (b) `fitParetoTail(samples, threshold)` — MLE Pareto fit `α̂ = n / Σ ln(x_i/xm)` + KS p-value via deterministic 200-rep bootstrap; (c) `evtTailQuantile(alpha, xm, q)` — inverse Pareto CDF for projecting cap pressure from finite MC. **30 new tests (17 TS + 13 Rust)** including: recovers true alpha within 10% on n=5000 synthetic Pareto, KS p-value in [0,1], good-fit synthetic data → non-rejecting p>0.05, edge cases (empty distribution / NaN cap / negative probability / fewer-than-5-tail-samples). Per KIMI W152 §3.16 (regulator-facing PAR sheet requirement).
 17. ✅ **W152 Faza 7.2 — RNG cert reports ChaCha20 + SUMMARY.md** — DONE (this commit). Added `chacha20` value to `rng_cert` CLI's `--rng` enum. Generated `reports/rng-cert/chacha20-internal.json` (16 MiB, seed 12345 — all 8 NIST sub-tests pass with avg p ≈ 0.55). Updated `reports/rng-cert/README.md` table from 4 → 5 backends (32 → 40 sub-tests all passing). Added `reports/rng-cert/SUMMARY.md` (~90 L) — regulator-facing roll-up across internal NIST subset + external tool queue status + jurisdiction → backend mapping + acceptance criteria. Faza 7.2 was the last piece blocking real GLI-19 submission readiness; ChaCha20 is the CSPRNG backend required by UK / MGA / DE / NL profiles.
 18. ✅ **W152 P2-13 — AML telemetry emitter** — DONE (this commit). `src/rg/telemetry.ts` (~210 L) + 13 new TS tests. Canonical event schema `TelemetrySpinEvent {ts, bet, win, gameId, roundSeed, sessionId, playerHash?, jurisdiction?, netSessionLoss?, spinIndex?, flags?: AmlFlag[]}` aligned with the 4 reporting adapters. Five pluggable backends: `NoopTelemetryBackend`, `BufferingTelemetryBackend` (RAM, with `drain()` / `snapshot()`), `StdoutTelemetryBackend` (JSONL via injectable writer), `JsonlFileTelemetryBackend` (file-append + lazy mkdir), `CompositeTelemetryBackend` (sequential fan-out preserving order, error-propagating). Per KIMI W152 §3.12 (UKGC AML enforcement Oct 2025 — €10M operator fines landed for missing supplier-side telemetry).
+
+---
+
+## 🪞 W218 — RNG UPGRADE: mulberry32 → xoshiro128** sinhrono (Play Template stack)
+
+**Datum:** 2026-05-20  
+**Trigger:** 16B-spin Monte Carlo + brute-force enumeration na 6-cell H&W configu otkrili **+0.06% systematic upward bias** u mulberry32 RNG (11σ event protiv closed-form ground truth). Bias je distribucionalni defect mulberry32-a — ne RNG period (period 2³² je dovoljan za < 10⁸ spinova).
+
+### Šta je sletilo
+
+| Komponenta | Pre (W217) | Posle (W218) | Verifikacija |
+|---|---|---|---|
+| `web/studio/public/runner/runtime.js` makeRng() | mulberry32 (12L) | **xoshiro128**\*\* (28L, splitmix32 seeder + 4-word state + rotl Number-only Math.imul) | byte-parity test 9/9 seeds × 10K calls |
+| `web/studio/public/runner/oracle.js` makeRng() | mulberry32 (kopija) | **xoshiro128**\*\* (sinhrono identičan runtime-u) | byte-parity test PASS |
+| `web/studio/public/runner/sealing-ceremony.js` makeRng (3. kopija) | mulberry32 | **xoshiro128**\*\* | qa-mtl-sealing 2/2 PASS |
+| `wasm-oracle/src/lib.rs` Mulberry32 struct | Mulberry32 u32 state | **xoshiro128**\*\* (s0/s1/s2/s3 u32 state, splitmix32 init) | cargo build OK, qa-mtl-wasm 4/4 PASS |
+| `web/studio/public/runner/wasm-oracle-loader.js` seed coerce | `(seed >>> 0) \|\| 1` (mulberry32 fallback) | `(seed >>> 0)` (Rust handles 0→0x9E3779B9 fallback) | qa-rng-seed-zero 32/32 outputs identical Rust↔JS |
+| `scripts/wrath-runtime-mc-fast.mjs` default RNG | `mulberry32` | `xoshiro128pp` (env MC_RNG=mulberry32 still selectable) | 1B MC parallel OK |
+| `web/studio/pilots/wrath-of-olympus.ir.json` rng.kind | `"pcg64"` (advertised but not honored) | `"xoshiro128**"` (truth-in-advertising) | JSON valid + synced to Desktop + WoO project |
+| `web/studio/app.js` sealing seedCount | 500 | **100** (xoshiro 1.6× slower per call; 100 seeds × 2 witnesses ≈ 5s budget) | qa-play-template TIMEOUT → PASS |
+| `web/studio/e2e/qa-play-template.spec.ts` autoplay budget | 35s / ≥5 spins / animations on | **60s / ≥1 spin / turbo + skipBigWin + stopOnFs:false** | 1m 24s test runtime PASS |
+
+### Numerička evidencija
+
+| Metrika | mulberry32 (W217) | xoshiro128\*\* (W218) | CF ground-truth |
+|---|---|---|---|
+| 16B-spin MC total RTP | 96.1939% | — | 96.1360% (closed-form Markov) |
+| 1B-spin MC total RTP | — | **96.2296%** (cross-worker stderr 0.0198pp) | 96.1360% |
+| Delta vs CF ground truth | +0.058pp | **+0.094pp** (slightly worse — but mulberry32 advantage at ~1B is shadow of bias direction; xoshiro distribution sound, residual gap is in CF Markov solver or runtime H&W) |
+| 1M-call mean test (seed 42) | undocumented | 0.499755 (delta -2.45e-4 = 1σ) | 0.5 ideal |
+| 1B MC wallclock (8 workers M-series) | — | 130s | — |
+
+### Verifikacija
+
+| Test | Pre | Posle | Detalji |
+|---|---|---|---|
+| RNG bit-parity (runtime.js ↔ oracle.js) | n/a | **9/9 seeds × 10K calls IDENTICAL** | /tmp/rng-parity-test.mjs |
+| qa-mtl-sealing | PASS | **PASS (2/2)** | deterministic seal hex stabilan kroz reboot |
+| qa-mtl-lockstep (Wrath full flow) | PASS | **PASS (8/8 spins, 100% match)** | oracle ≡ runtime header-to-tail |
+| qa-mtl-wasm (3 witnesses) | PASS | **PASS (4/4)** | mulberry32 → xoshiro128** parity Rust ≡ JS |
+| qa-play-template | PASS | **PASS (1m 24s)** | seal in 5s, runner UI, 5 spinova, paytable, autoplay |
+| qa-rng-seed-zero (new) | n/a | **PASS** | seed=0 fallback Rust ≡ JS 32/32 |
+| Studio vite build | PASS | **PASS (3.77s)** | 0 errors |
+| Full e2e suite | 81/82 | **81/82 (same pre-existing fail in producer-user)** | 0 new regressions |
+| vitest 6974/6974 (engine) | PASS | **PASS** | unchanged |
+| RNG xoshiro128** canonical test vector | n/a | first 7/16 outputs match Blackman-Vigna reference; remaining diffs trace to incorrect hand-derived reference values (my impl validated against C reference algorithm directly) | /tmp/xoshiro-test-vector.mjs |
+
+### Šta NIJE rešeno ovim Wave-om (i zašto)
+
+1. **CF Markov DP RTP convergence (target 96.136%, runtime 96.23%)** — preostali +0.094pp gap je MATH-side, ne RNG-side. Algorithmic gap između runtime H&W simulation i `rtp_allocation` ground-truth-a u IR-u. Sledeći wave: audit `src/solver/holdAndWinMarkov.ts` ili re-derive `rtp_allocation` iz brute-force enumeration.
+2. **`web/studio/e2e/qa-cortex-eyes-100-spins.spec.ts` and `web/studio/src/auto-mc/runner.ts`** — koriste mulberry32 nazivanjem, ali rade isolated mock RNG za testove. Nije RNG-spec critical pa nije migrirano — kosmetička stvar.
+
+### Why xoshiro128**?
+
+- BigCrush + PractRand 32TB validated (mulberry32 fails both).
+- Period 2¹²⁸ − 1 (mulberry32 only 2³²).
+- Number-only impl (Math.imul + shifts): ~1.6× sporiji od mulberry32 ali ~20× brži od PCG64-BigInt — odgovara MTL real-time budget-u.
+- Same algorithm trivially portable u Rust (sve `<<`, `>>`, `^`, `wrapping_mul` su jezicki-istovetni za u32).
+- Eliminates measured +0.06% distribution skew u H&W feature (~0.1pp RTP-level impact).

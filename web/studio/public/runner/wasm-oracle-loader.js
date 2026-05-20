@@ -104,7 +104,10 @@
     const irJson = typeof ir === 'string' ? ir : JSON.stringify(ir);
     // The WASM entry expects u32 seed and f64 bet.  Coerce so big seeds
     // (>2^31) and small bets (<1) round-trip cleanly.
-    const seedU32 = (seed >>> 0) || 1;
+    // W218: pass seed=0 unchanged.  Rust impl handles seed=0 fallback
+    // (z = 0x9E3779B9) to match JS oracle.js xoshiro128** init.  The old
+    // `|| 1` mulberry32 fallback would route seed=0 into seed=1 stream.
+    const seedU32 = (seed >>> 0);
     const betF = bet == null ? 1 : Number(bet);
     const out = mod.spinWasm(irJson, seedU32, betF);
     // serde-wasm-bindgen returns the Outcome with camelCase fields directly.
@@ -127,7 +130,8 @@
   function version() { return mod && mod.oracleVersion ? mod.oracleVersion() : 'unloaded'; }
   async function rngHead(seed, n) {
     if (!mod) await load();
-    return mod.rngHead((seed >>> 0) || 1, n);
+    // W218: pass seed=0 unchanged — Rust handles seed=0 fallback identically to JS.
+    return mod.rngHead((seed >>> 0), n);
   }
 
   // Kick off load eagerly so the Sealing Ceremony doesn't wait on the

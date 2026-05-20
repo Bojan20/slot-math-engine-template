@@ -131,13 +131,31 @@
                 iframe: iframe,
                 slot: w.__SLOT__,
                 makeRng: function (seed) {
-                  let a = (seed >>> 0) || 1;
+                  // xoshiro128** — BIT-IDENTICAL to runtime.js + oracle.js
+                  // makeRng() (W218 upgrade, 2026-05-20).  All three copies
+                  // MUST agree byte-for-byte or MTL Lockstep sealing fails.
+                  let z = (seed >>> 0) || 0x9E3779B9;
+                  const sm32 = function () {
+                    z = (z + 0x9E3779B9) >>> 0;
+                    let x = z;
+                    x = Math.imul(x ^ (x >>> 16), 0x85EBCA6B) >>> 0;
+                    x = Math.imul(x ^ (x >>> 13), 0xC2B2AE35) >>> 0;
+                    return (x ^ (x >>> 16)) >>> 0;
+                  };
+                  let s0 = sm32(), s1 = sm32(), s2 = sm32(), s3 = sm32();
+                  if ((s0 | s1 | s2 | s3) === 0) s0 = 1;
                   return function () {
-                    a = (a + 0x6D2B79F5) >>> 0;
-                    let t = a;
-                    t = Math.imul(t ^ (t >>> 15), t | 1);
-                    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-                    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+                    const m = Math.imul(s1, 5) >>> 0;
+                    const r = ((m << 7) | (m >>> 25)) >>> 0;
+                    const result = Math.imul(r, 9) >>> 0;
+                    const t = (s1 << 9) >>> 0;
+                    s2 = (s2 ^ s0) >>> 0;
+                    s3 = (s3 ^ s1) >>> 0;
+                    s1 = (s1 ^ s2) >>> 0;
+                    s0 = (s0 ^ s3) >>> 0;
+                    s2 = (s2 ^ t) >>> 0;
+                    s3 = ((s3 << 11) | (s3 >>> 21)) >>> 0;
+                    return result / 4294967296;
                   };
                 },
                 cleanup: cleanup,
@@ -178,7 +196,8 @@
     if (!debug || !debug.drawGrid || !debug.evalBase) {
       throw new Error('runtime.js _debug surface missing — sealing requires Phase A runtime');
     }
-    // Replace the runtime's RNG with our deterministic mulberry32@seed.
+    // Replace the runtime's RNG with our deterministic seed-derived RNG.
+    // (Underlying impl is xoshiro128** as of W218 — kept in sync with oracle.)
     slot.state.rng = runtimeBootResult.makeRng(seed);
     // Reset money state so cap math is comparable (bet=1, ample balance)
     slot.state.balance = 1e9;

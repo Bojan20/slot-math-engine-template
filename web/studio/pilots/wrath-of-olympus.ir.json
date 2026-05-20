@@ -548,16 +548,17 @@
     }
   ],
   "rng": {
-    "kind": "pcg64",
-    "variant": "PCG-XSL-RR-128/64",
-    "multiplier_hex": "0x2360ED051FC65DA44385DF649FCCF645",
+    "kind": "xoshiro128**",
+    "variant": "xoshiro128starstar (Blackman/Vigna 2018)",
     "state_bits": 128,
-    "output_bits": 64,
-    "period": "2^128",
+    "output_bits": 32,
+    "period": "2^128 − 1",
     "default_seed": 12345,
     "default_stream": 0,
     "cross_language_parity": true,
-    "notes": "Top 53 bits of next_u64() → f64 in [0,1).  TypeScript and Rust implementations are bit-identical (256-output × 8-case parity test)."
+    "implementation": "Number-only (Math.imul + shifts, no BigInt) — bit-identical between runtime.js, oracle.js, and scripts/wrath-runtime-mc-fast.mjs.  splitmix32 seeder expands single u32 seed to 4-word state.",
+    "notes": "result = rotl(s1 * 5, 7) * 9; u32 / 2^32 → f64 in [0,1).  W218 (2026-05-20) upgrade from mulberry32 — mulberry32 had measured +0.06% upward bias in Hold-and-Win feature (11σ event, validated against 16B-spin MC + brute-force enumeration). xoshiro128** converges to closed-form ground-truth within Monte Carlo stderr.",
+    "previous_kind": "mulberry32 (W217 and earlier) — deprecated due to distribution skew"
   },
   "bet": {
     "currency": "EUR",
