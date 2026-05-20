@@ -1,33 +1,33 @@
 # Scaled Parity / Determinism Report
 
-> Generated: 2026-05-15T18:20:08.222Z
+> Generated: 2026-05-20T11:34:22.818Z
 > Fixture: `tests/fixtures/parity.json`
-> Seeds: 42, 1337, 3405691582, 3735928559 · Spins/seed: 100,000
-> Total Rust spins this run: 800,000 · Wall: 7550ms
+> Seeds: 42, 1337, 3405691582, 3735928559 · Spins/seed: 1,000,000
+> Total Rust spins this run: 8,000,000 · Wall: 68480ms
 
 ## Headline
 
-- Rust self-determinism @ 100,000 spins/seed: **✅**
-- TS self-determinism @ 100,000 spins/seed: **✅**
+- Rust self-determinism @ 1,000,000 spins/seed: **✅**
+- TS self-determinism @ 1,000,000 spins/seed: **✅**
 - Cross-language bit-exact (existing vitest): **✅**
 
 ## A. Rust self-determinism (per-spin NDJSON SHA-256)
 
 | Seed | NDJSON sha256 (head) | Bit-exact 2× run | Wall A ms | Wall B ms |
 |-----:|----------------------|:----------------:|---------:|---------:|
-| 42 | `0e5bc0bcacb58361…` | ✅ | 140 | 138 |
-| 1337 | `e6fdbaa0854625ff…` | ✅ | 136 | 139 |
-| 3405691582 | `67e1f4e951f4e320…` | ✅ | 137 | 142 |
-| 3735928559 | `b4b3267c8d3f0de4…` | ✅ | 135 | 137 |
+| 42 | `4548695144f464f7…` | ✅ | 1761 | 1372 |
+| 1337 | `1e46878a042f5112…` | ✅ | 1369 | 1360 |
+| 3405691582 | `aeb8d74f95139630…` | ✅ | 1373 | 1362 |
+| 3735928559 | `81135bdfedda56e0…` | ✅ | 1364 | 1361 |
 
 ## B. TS self-determinism (aggregate stats)
 
 | Seed | RTP | Hit rate | Bit-exact 2× run | Wall A ms | Wall B ms |
 |-----:|----:|---------:|:----------------:|---------:|---------:|
-| 42 | 79.413900% | 32.526% | ✅ | 740 | 703 |
-| 1337 | 78.164600% | 32.743% | ✅ | 720 | 714 |
-| 3405691582 | 79.274600% | 32.645% | ✅ | 714 | 704 |
-| 3735928559 | 78.247900% | 32.657% | ✅ | 701 | 710 |
+| 42 | 78.746280% | 32.605% | ✅ | 6899 | 6711 |
+| 1337 | 79.179670% | 32.721% | ✅ | 6761 | 6983 |
+| 3405691582 | 79.354090% | 32.731% | ✅ | 6750 | 6714 |
+| 3735928559 | 78.883950% | 32.723% | ✅ | 6794 | 6943 |
 
 ## C. Cross-language per-spin bit-exact (existing vitest)
 
@@ -42,4 +42,4 @@ It would be apples-to-oranges. The Rust oracle disables FS + lightning to make i
 
 ## Acceptance verdict
 
-**Master TODO 10.3 (scaled mid-tier) acceptance: ✅** Rust + TS self-deterministic at 100,000-spin scale; cross-language bit-exact via existing vitest gate. The cert-grade 10⁹-spin run is operator-initiated CI dispatch.
+**Master TODO 10.3 (scaled mid-tier) acceptance: ✅** Rust + TS self-deterministic at 1,000,000-spin scale; cross-language bit-exact via existing vitest gate. The cert-grade 10⁹-spin run is operator-initiated CI dispatch.

@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generatedAtUtc": "2026-05-15T18:20:08.222Z",
+    "generatedAtUtc": "2026-05-20T11:34:22.818Z",
     "fixture": "tests/fixtures/parity.json",
-    "spinsPerSeed": 100000,
+    "spinsPerSeed": 1000000,
     "seeds": [
       42,
       1337,
@@ -13,81 +13,81 @@
     "tsSelfDeterminism": true,
     "crossLanguageGate": true,
     "overallPassed": true,
-    "wallTotalMs": 7550,
-    "totalRustSpins": 800000,
-    "totalTsSpins": 800000
+    "wallTotalMs": 68480,
+    "totalRustSpins": 8000000,
+    "totalTsSpins": 8000000
   },
   "rust": [
     {
       "seed": 42,
-      "sha256": "0e5bc0bcacb58361e224eeddf34b5bb9c98d832909063d1d17f06740246f1698",
+      "sha256": "4548695144f464f767c5f04b3e041f8c56360566aaa0dd904886ada5bcf09de9",
       "bitExact": true,
-      "msA": 140,
-      "msB": 138
+      "msA": 1761,
+      "msB": 1372
     },
     {
       "seed": 1337,
-      "sha256": "e6fdbaa0854625ff6a8a3af5a86cdd8b538d11868385bd20a3a2b49e416f6103",
+      "sha256": "1e46878a042f51120a4b377c0f2c47c1388b758610ded361ca80aea56de52027",
       "bitExact": true,
-      "msA": 136,
-      "msB": 139
+      "msA": 1369,
+      "msB": 1360
     },
     {
       "seed": 3405691582,
-      "sha256": "67e1f4e951f4e3204255e56419fa774db5e816dd988584334624ab4dcefc2473",
+      "sha256": "aeb8d74f9513963095dc1d4b689ecd71d1bc8bfc78f4707c4e2efb1081c1b4e1",
       "bitExact": true,
-      "msA": 137,
-      "msB": 142
+      "msA": 1373,
+      "msB": 1362
     },
     {
       "seed": 3735928559,
-      "sha256": "b4b3267c8d3f0de4707f936e01c16069b139d2b3e1d1ae2dbe59ef452f48c8e3",
+      "sha256": "81135bdfedda56e04a39baef16517e6d1354c694e53eef8244fb8dfdc31cfa29",
       "bitExact": true,
-      "msA": 135,
-      "msB": 137
+      "msA": 1364,
+      "msB": 1361
     }
   ],
   "ts": [
     {
       "seed": 42,
-      "rtp": 0.7941390000000609,
-      "hitRate": 0.32526,
+      "rtp": 0.787462799999371,
+      "hitRate": 0.326051,
       "totalWin": null,
       "bitExact": true,
-      "msA": 740,
-      "msB": 703
+      "msA": 6899,
+      "msB": 6711
     },
     {
       "seed": 1337,
-      "rtp": 0.7816460000000568,
-      "hitRate": 0.32743,
+      "rtp": 0.7917966999994043,
+      "hitRate": 0.327209,
       "totalWin": null,
       "bitExact": true,
-      "msA": 720,
-      "msB": 714
+      "msA": 6761,
+      "msB": 6983
     },
     {
       "seed": 3405691582,
-      "rtp": 0.7927460000000627,
-      "hitRate": 0.32645,
+      "rtp": 0.7935408999993947,
+      "hitRate": 0.327312,
       "totalWin": null,
       "bitExact": true,
-      "msA": 714,
-      "msB": 704
+      "msA": 6750,
+      "msB": 6714
     },
     {
       "seed": 3735928559,
-      "rtp": 0.7824790000000555,
-      "hitRate": 0.32657,
+      "rtp": 0.7888394999993968,
+      "hitRate": 0.327234,
       "totalWin": null,
       "bitExact": true,
-      "msA": 701,
-      "msB": 710
+      "msA": 6794,
+      "msB": 6943
     }
   ],
   "cross": {
     "exit": 0,
     "pass": true,
-    "stdoutTail": "\n RUN  v1.6.1 /Users/vanvinklstudio/Projects/slot-math-engine-template\n\n ✓ tests/evaluator_parity.test.ts  (6 tests | 1 skipped) 36ms\n\n Test Files  1 passed (1)\n      Tests  5 passed | 1 skipped (6)\n   Start at  20:20:07\n   Duration  228ms (transform 16ms, setup 0ms, collect 17ms, tests 36ms, environment 0ms, prepare 46ms)\n\n"
+    "stdoutTail": "\n RUN  v1.6.1 /Users/vanvinklstudio/Projects/slot-math-engine-template\n\n ✓ tests/evaluator_parity.test.ts  (6 tests | 1 skipped) 31ms\n\n Test Files  1 passed (1)\n      Tests  5 passed | 1 skipped (6)\n   Start at  13:34:22\n   Duration  173ms (transform 14ms, setup 0ms, collect 12ms, tests 31ms, environment 0ms, prepare 38ms)\n\n"
   }
 }
