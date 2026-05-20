@@ -1439,6 +1439,54 @@
   // ║ 11 · FEATURE OVERLAY (FS/H&W intro card)                      ║
   // ╚══════════════════════════════════════════════════════════════╝
 
+  // W228 — Help modal sa keyboard shortcuts cheat sheet.  Full-screen
+  // overlay (esc to close, click backdrop to dismiss).  Mirrors W227
+  // keymap; jurisdiction-disabled shortcuts dim out so player vidi šta
+  // je available pod aktivnoj jurisdikciji.
+  function showHelpModal() {
+    if (document.getElementById('runner-help-modal')) return;
+    const j = activeJurisdiction;
+    const dim = (cond) => cond ? '' : 'style="opacity:0.35;text-decoration:line-through"';
+    const modal = document.createElement('div');
+    modal.id = 'runner-help-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(7,9,15,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:#cbd5e1';
+    modal.innerHTML = `
+      <div style="background:#0f172a;border:1px solid rgba(245,158,11,0.55);border-radius:14px;padding:28px 32px;min-width:380px;max-width:560px;box-shadow:0 24px 60px rgba(0,0,0,0.6)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px">
+          <h3 style="margin:0;font-size:18px;color:#fde68a;font-weight:700;letter-spacing:0.04em">KEYBOARD SHORTCUTS</h3>
+          <button type="button" data-hclose style="background:transparent;border:0;color:#94a3b8;font-size:22px;cursor:pointer;padding:0 4px">×</button>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px">
+          <tbody>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">SPACE</kbd></td><td style="color:#cbd5e1">Spin / Slam stop (mid-spin)</td></tr>
+            <tr ${dim(j.autoplayEnabled)}><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">A</kbd></td><td>Autoplay 10 spins</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">S</kbd></td><td>Stop autoplay</td></tr>
+            <tr ${dim(j.turboEnabled)}><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">T</kbd></td><td>Toggle Turbo</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">M</kbd></td><td>Mute / unmute sound</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">P</kbd></td><td>Toggle paytable</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">+ / ↑</kbd></td><td>Bet up one level</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">− / ↓</kbd></td><td>Bet down one level</td></tr>
+            <tr><td style="padding:6px 12px 6px 0;color:#fde68a"><kbd style="background:rgba(148,163,184,0.18);padding:2px 8px;border-radius:4px">ESC</kbd></td><td>Close all open panels</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(148,163,184,0.20);font-size:11px;color:#64748b">
+          Active jurisdiction: <b style="color:#fde68a">${j.label || 'GENERIC'}</b> ·
+          Min cycle: ${j.minCycleMs}ms ·
+          Max stake: ${(j.maxStakeCents/100).toFixed(2)} ${CURRENCY}
+        </div>
+      </div>
+    `;
+    function close() {
+      if (modal.parentNode) modal.parentNode.removeChild(modal);
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape' || e.key === '?' || e.key === 'h' || e.key === 'H') close(); }
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    modal.querySelector('[data-hclose]').addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(modal);
+  }
+
   function showFeatureOverlay({ kind, title, detail, short, autoMs }) {
     if (!featOverlay) return Promise.resolve();
     return new Promise((resolve) => {
@@ -2205,7 +2253,8 @@
       toggleQuickMenu();
     });
     menuHelpBtn?.addEventListener('click', () => {
-      showFeatureOverlay({ kind: 'HELP', title: 'Controls', detail: 'SPACE = spin · A = auto · S = stop · T = turbo', short: true, autoMs: 5000 });
+      // W228 — full keyboard shortcuts cheat sheet (mirrors W227 keymap)
+      showHelpModal();
       toggleQuickMenu();
     });
     menuSettingsBtn?.addEventListener('click', () => {
@@ -2264,6 +2313,9 @@
       } else if (e.key === '-' || e.key === '_' || e.key === 'ArrowDown') {
         // W227 — bet -
         setBetLevel(-1);
+      } else if (e.key === '?' || e.key === 'h' || e.key === 'H') {
+        // W228 — help modal sa keyboard shortcuts cheat sheet
+        showHelpModal();
       } else if (e.key === 'Escape') {
         closeAutoplayPanel();
         if (quickMenuEl && !quickMenuEl.hasAttribute('hidden')) toggleQuickMenu();
