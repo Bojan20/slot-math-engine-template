@@ -1410,12 +1410,35 @@
   // ║ 16 · AUTOPLAY + AUTOPLAY PANEL                                ║
   // ╚══════════════════════════════════════════════════════════════╝
 
+  // AutoPlay counter badge — small chip on top-right corner of the
+  // autoplay button.  Shows remaining spins; "∞" for infinite (-1);
+  // hidden when autoplay is idle.  Pulses on every decrement.
+  const autoPlayCounterEl = $('#autoPlayCounter');
+  function updateAutoPlayCounter(remaining) {
+    if (!autoPlayCounterEl) return;
+    if (remaining === null || remaining === undefined || remaining === 0) {
+      autoPlayCounterEl.setAttribute('hidden', '');
+      autoPlayCounterEl.textContent = '';
+      return;
+    }
+    autoPlayCounterEl.removeAttribute('hidden');
+    autoPlayCounterEl.textContent = remaining === -1 ? '∞' : String(remaining);
+    // Restart pop animation on each update
+    autoPlayCounterEl.style.animation = 'none';
+    // Force reflow then restore so the keyframe re-runs
+    void autoPlayCounterEl.offsetWidth;
+    autoPlayCounterEl.style.animation = '';
+  }
+
   async function runAutoplay(count) {
     if (state.autoplay.active) return;
     state.autoplay = Object.assign({}, state.autoplay, { active: true, remaining: count, startBalance: state.balance });
     autoStopBtn?.removeAttribute('hidden');
+    autoOpenBtn?.classList.add('is-active');
+    autoOpenBtn?.setAttribute('data-active', 'true');
     if (auto10Btn && count <= 10)  auto10Btn.classList.add('is-active');
     if (auto100Btn && count > 10)  auto100Btn.classList.add('is-active');
+    updateAutoPlayCounter(state.autoplay.remaining);
     while (state.autoplay.active && (state.autoplay.remaining > 0 || state.autoplay.remaining === -1)) {
       if (state.balance < currentBet()) break;
       await spinOnce();
@@ -1424,6 +1447,7 @@
       if (state.autoplay.stopOnLoss > 0 && (state.autoplay.startBalance - state.balance) >= state.autoplay.stopOnLoss) break;
       if (state.autoplay.stopOnProfit > 0 && profit >= state.autoplay.stopOnProfit) break;
       if (state.autoplay.remaining > 0) state.autoplay.remaining -= 1;
+      updateAutoPlayCounter(state.autoplay.remaining);
       await wait(currentProfile().betweenSpinsMs);
     }
     stopAutoplay();
@@ -1431,8 +1455,11 @@
   function stopAutoplay() {
     state.autoplay = Object.assign({}, state.autoplay, { active: false, remaining: 0 });
     autoStopBtn?.setAttribute('hidden', '');
+    autoOpenBtn?.classList.remove('is-active');
+    autoOpenBtn?.setAttribute('data-active', 'false');
     auto10Btn?.classList.remove('is-active');
     auto100Btn?.classList.remove('is-active');
+    updateAutoPlayCounter(null);
   }
   function openAutoplayPanel() {
     if (!autoplayPanelEl) return;

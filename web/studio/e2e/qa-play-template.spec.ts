@@ -74,13 +74,13 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
   // Runner must render: reels grid + spin button + balance
   await expect(newPage.locator('#reels-grid')).toBeVisible();
   await expect(newPage.locator('#spin-btn')).toBeVisible();
-  await expect(newPage.locator('#bal')).toBeVisible();
+  await expect(newPage.locator('#topBalanceValue')).toBeVisible();
   const cellCount = await newPage.locator('#reels-grid .cell').count();
   expect(cellCount, 'reels grid has 5×3 = 15 cells').toBe(15);
   console.log(`✓ Runner UI rendered (${cellCount} cells)`);
 
   // Initial state: balance 100, spins 0
-  const initialBalance = parseFloat(await newPage.locator('#bal').textContent() || '0');
+  const initialBalance = parseFloat(await newPage.locator('#topBalanceValue').textContent() || '0');
   expect(initialBalance, 'starting balance').toBe(100);
   expect(await newPage.locator('#stat-spins').textContent()).toBe('0');
   console.log(`✓ Initial state: balance=${initialBalance}, spins=0`);
@@ -119,9 +119,14 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
   await expect(newPage.locator('#paytable-drawer')).toBeHidden();
   console.log('✓ Paytable drawer open/close works');
 
-  // Autoplay ×10 → all 10 spins execute then auto-stops
+  // Autoplay ×10 → all 10 spins execute then auto-stops.
+  // The visible Wrath-canonical UX opens a modal panel; tests bypass the
+  // panel by calling runAutoplay() directly via the exposed __SLOT__ API.
   const beforeAuto = finalState!.spinsPlayed;
-  await newPage.locator('#auto-10').click();
+  await newPage.evaluate(() => {
+    const w = window as unknown as { __SLOT__?: { runAutoplay?: (n: number) => void } };
+    w.__SLOT__?.runAutoplay?.(10);
+  });
   await newPage.waitForTimeout(12_000); // 10 spins × ~1s + buffer
   const afterAuto = await newPage.evaluate(() => {
     const w = window as unknown as { __SLOT__?: { state: { spinsPlayed: number } } };

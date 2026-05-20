@@ -818,157 +818,354 @@ body.is-bigwin .payline-overlay,
 .spin-hint__msg[data-active], .skip-hint__msg[data-active] { display: inline-flex; align-items: center; gap: 6px; }
 
 
-/* ── 9 · Bottom bar ─────────────────────────────────────────────── */
+/* ── 9 · Bottom bar — Wrath-canonical FREE-FLOATING layout ──────────
+   Svaka sekcija je `position: fixed` i poravnata sa ivicama reel pillars.
+   NIJE jedan horizontalni footer — dugmad su raspoređena po ekranu:
+     • Menu  → bottom-left, poravnato sa LEVOM ivicom reel frame-a
+     • Status (Win/PressSpin) → bottom-center, glass morphism kapsula
+     • Bet (-/+/value) → bottom-right, sa suptilnom tamnom pozadinom
+     • Sound → far right, poravnato sa DESNOM ivicom reel frame-a
+     • SPIN → right of reels, vertical center (150×150 cirkular)
+     • AutoPlay → ispod SPIN-a (56×56 cirkular)
+   Reel frame poluširina = `min(600px, 41vw)`, isto kao u Wrath produkciji. */
 
 .bottomBar,
 .game-bottom {
-  border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
+  /* Container je samo pozicioni sidro — sekcije se same pozicioniraju. */
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: none;
+  border: none;
+  z-index: 50;
 }
 .bottomBar__inner {
-  /* Wrath-canonical layout: menu LEFT, status CENTER, bet stepper RIGHT-CENTER,
-     sound FAR RIGHT.  SPIN button lives on the right edge fixed at 50% vertical
-     (see .spin-btn rules) — NOT inside the bottom bar.  Auto controls sit
-     between bet and sound.  Total bar height ~76px matches production. */
-  display: grid;
-  grid-template-columns: 56px 1fr minmax(220px, auto) minmax(140px, auto) minmax(120px, auto) 56px;
-  align-items: center;
-  gap: 12px;
-  height: 76px;
-  padding: 0 12px;
+  /* Children escape — svaka sekcija ima sopstveni fixed position. */
+  display: contents;
 }
-/* The dedicated `.bottomBar__section--spin` cell from earlier port batches
-   is unused now (SPIN floats fixed-right).  Hide it so the grid columns
-   stay aligned to the Wrath layout. */
-.bottomBar__section--spin { display: none; }
 
 .bottomBar__section {
   display: flex;
   align-items: center;
+  pointer-events: auto;
+}
+
+/* Samo poznate sekcije dobijaju fixed positioning — feature slotovi
+   (`mtl-features-bottom`) ostaju u statičkom flow-u da ne zauzimaju
+   top-left kad su prazni. */
+.bottomBar__section--left,
+.bottomBar__section--status,
+.bottomBar__section--bet,
+.bottomBar__section--auto,
+.bottomBar__section--sound {
+  position: fixed;
+  z-index: 60;
+}
+
+/* Feature slot u dnu — ako MTL feature kompozit dodeli sadržaj, montira
+   ga ovde, inače je nevidljiv (statički, prazan). */
+.mtl-feature-slot--bottom.bottomBar__section {
+  position: static;
+  pointer-events: auto;
+}
+.mtl-feature-slot--bottom.bottomBar__section:empty {
+  display: none;
+}
+
+/* Menu (settings) — donji-levi ugao, poravnat sa levom ivicom reel pillars */
+.bottomBar__section--left {
+  left: calc(50% - min(600px, 41vw));
+  bottom: 54px;
+  transform: translateY(50%);
+  justify-content: flex-start;
+}
+
+/* Balance — sakriven (Wrath: prikazuje se u meniju ako je potreban) */
+.bottomBar__section--balance { display: none; }
+
+/* Status / Win — centar dna, glass morphism kapsula */
+.bottomBar__section--status {
+  left: 50%;
+  bottom: 54px;
+  transform: translate(-50%, 50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 28px;
+  background: rgba(7, 9, 15, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid var(--gold-deep);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 22px var(--gold-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Bet — donji-desni, suptilna staklena kapsula */
+.bottomBar__section--bet {
+  right: calc(50% - min(600px, 41vw) + 60px);
+  bottom: 54px;
+  transform: translateY(50%);
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(7, 9, 15, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid var(--gold-deep);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* SPIN sekcija — wrapper je layout-transparent (display:contents) tako da
+   SPIN dugme unutra (sa `position: fixed`) renderuje normalno, a wrapper
+   ne otima grid ćeliju.  Ranije `display:none` je sakrivao SPIN u testovima
+   zato što display:none na roditelju sakriva i fixed-positioned dete. */
+.bottomBar__section--spin { display: contents; }
+
+/* AutoPlay — desna strana reels-a, ispod SPIN dugmeta */
+.bottomBar__section--auto {
+  left: calc(50% + min(600px, 41vw) + 36px + 12px + 75px);
+  /* Ispod SPIN-a: 50% + half-spin(75) + gap(20) + half-auto(28) */
+  top: calc(50% + 75px + 20px + 28px);
+  transform: translate(-50%, -50%);
   gap: 8px;
 }
-.bottomBar__section--left, .bottomBar__section--sound { justify-content: center; }
-.bottomBar__section--balance { justify-content: center; flex-direction: column; gap: 2px; }
-.bottomBar__section--status  { justify-content: center; }
-.bottomBar__section--bet     { justify-content: center; }
-.bottomBar__section--spin    { justify-content: center; }
-.bottomBar__section--auto    { justify-content: flex-end; gap: 6px; }
+
+/* Sound — krajnji desni, poravnat sa desnom ivicom reel pillars */
+.bottomBar__section--sound {
+  right: calc(50% - min(600px, 41vw));
+  bottom: 54px;
+  transform: translateY(50%);
+  justify-content: flex-end;
+}
 
 .bottomBar__label {
-  font-size: 9.5px;
-  letter-spacing: 0.10em;
-  color: var(--text-3);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .bottomBar__value {
+  font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 600;
-  color: var(--text-0);
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow:
+    0 0 8px var(--gold-glow),
+    0 2px 4px rgba(0, 0, 0, 0.7);
 }
 .bottomBar__section--balance .bottomBar__value { color: var(--cyan); }
 
+/* Menu (burger) + sound — premium 52×52 cirkulari */
 .bottomBar__iconBtn {
-  width: 38px;
-  height: 38px;
-  background: var(--bg-1);
-  border: 1px solid var(--line);
+  width: 52px;
+  height: 52px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.10) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+  border: 2px solid var(--gold-deep);
   border-radius: 50%;
-  color: var(--text-1);
+  color: var(--gold);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  transition: background 140ms, border-color 140ms, color 140ms;
+  font-size: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 200ms,
+    border-color 200ms,
+    color 200ms,
+    box-shadow 200ms;
 }
-.bottomBar__iconBtn:hover { color: var(--text-0); border-color: var(--cyan); background: var(--bg-2); }
+.bottomBar__iconBtn:hover {
+  color: #fff;
+  border-color: var(--gold);
+  transform: scale(1.06) translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 22px rgba(0, 0, 0, 0.55),
+    0 0 18px var(--gold-glow);
+}
+.bottomBar__iconBtn:active { transform: scale(0.94); }
 
 .menuBtn__bars {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 .menuBtn__bar {
-  width: 16px;
-  height: 2px;
+  width: 22px;
+  height: 2.5px;
   background: currentColor;
-  border-radius: 1px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Sound dugme svojstva (nasleđuje .bottomBar__iconBtn) */
+.bottomBar__soundBtn .soundBtn__icon {
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Status — POMPOUS centralni Win / Press-spin display */
 .bottomBar__statusText {
   font-family: var(--font-display);
-  font-size: 13px;
-  letter-spacing: 0.10em;
-  color: var(--text-2);
+  font-size: clamp(20px, 4vw, 30px);
+  letter-spacing: 0.12em;
+  color: rgba(255, 236, 170, 0.98);
   text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow:
+    0 0 16px rgba(255, 200, 100, 0.6),
+    0 0 32px rgba(255, 180, 50, 0.35),
+    0 3px 10px rgba(0, 0, 0, 0.8);
 }
 .bottomBar__statusValue {
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 12px var(--gold-glow);
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5.5vw, 44px);
+  font-weight: 800;
+  color: #fffbe6;
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 0 14px rgba(255, 215, 0, 0.85),
+    0 0 28px rgba(255, 200, 100, 0.5),
+    0 0 48px rgba(255, 180, 50, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.85);
+  transition: transform 0.3s ease;
 }
 .bottomBar__statusValue[hidden] { display: none; }
 .bottomBar__statusValue.is-rolling { animation: status-rolling 1.6s ease-out; }
 @keyframes status-rolling {
   0% { transform: scale(1.0); }
-  35% { transform: scale(1.1); color: #fff; }
-  100% { transform: scale(1.0); color: var(--gold); }
+  35% { transform: scale(1.12); color: #fff; }
+  100% { transform: scale(1.0); color: #fffbe6; }
 }
 
+/* Bet -/+ dugmad — 44×44 zlatne staklene pilule (Wrath sizing) */
 .bottomBar__betBtn {
-  width: 36px;
-  height: 36px;
-  background: var(--bg-1);
-  border: 1px solid var(--line);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 215, 0, 0.14);
+  border: 2px solid var(--gold-deep);
   border-radius: 50%;
-  color: var(--text-0);
-  font-size: 18px;
-  font-weight: 600;
+  color: var(--gold);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  transition: background 140ms, border-color 140ms;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s ease;
 }
-.bottomBar__betBtn:hover { background: var(--bg-2); border-color: var(--cyan); color: var(--cyan); }
-.bottomBar__betBtn:active { transform: scale(0.94); }
+.bottomBar__betBtn:hover {
+  background: rgba(255, 215, 0, 0.22);
+  border-color: var(--gold);
+  color: #fff;
+  transform: scale(1.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    0 0 14px var(--gold-glow);
+}
+.bottomBar__betBtn:active {
+  transform: scale(0.92);
+  background: rgba(255, 215, 0, 0.28);
+}
 
 .bottomBar__betDisplay {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80px;
+  justify-content: center;
+  gap: 3px;
+  min-width: 70px;
+  cursor: pointer;
+}
+.bottomBar__betDisplay .bottomBar__label {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  margin: 0;
+}
+.bottomBar__betDisplay .bottomBar__value {
+  font-size: 20px;
+  color: #fffbe6;
+  text-shadow:
+    -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px  1px 0 #000, 1px  1px 0 #000,
+    0 3px 8px rgba(0, 0, 0, 0.9),
+    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* SPIN button — Wrath-canonical sizing: 150×150 circle, fixed on right
-   side of viewport at desktop, vertically centered around the reel
-   frame.  Sits at z-index 200 to stay above the reel frame + payline
-   overlays but below the Big-Win and modal layers. */
+/* SPIN button — Wrath-canonical: 150×150 cirkular, pored DESNE ivice
+   reel pillars (ne pored viewport edge-a), vertikalno centriran.
+   Pozicija: 50% + half-reelframe(min 600px,41vw) + pillar(36) + gap(12) + half-spin(75).
+   z-index: 200 — iznad reel frame-a + payline overlay-a, ispod modal-a. */
 .spin-btn {
-  position: fixed;
-  right: 28px;
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed !important;
+  left: calc(50% + min(600px, 41vw) + 36px + 12px + 75px) !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
+  padding: 0;
+  margin: 0;
   background:
-    radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.14), transparent 60%),
+    radial-gradient(60% 40% at 50% 0%, rgba(255,255,255,0.18), transparent 65%),
+    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.20) 0%, transparent 60%),
     linear-gradient(180deg, var(--cyan), var(--cyan-deep));
   color: #001017;
   border: 5px solid var(--cyan);
   border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: 0.10em;
   cursor: pointer;
   z-index: 200;
+  pointer-events: auto;
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.4) inset,
-    0 6px 24px rgba(34, 211, 238,0.45),
-    0 0 36px rgba(34, 211, 238,0.22);
-  transition: transform 120ms, box-shadow 120ms;
+    inset 0 3px 6px rgba(255, 255, 255, 0.22),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.35),
+    0 0 36px rgba(34, 211, 238, 0.30),
+    0 10px 30px rgba(0, 0, 0, 0.55);
+  transition: transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 200ms ease-out;
 }
-.spin-btn:hover  { transform: translateY(-50%) scale(1.04); box-shadow: 0 8px 28px rgba(34, 211, 238,0.55), 0 0 40px rgba(34, 211, 238,0.28); }
-.spin-btn:active { transform: translateY(-50%) scale(0.97); box-shadow: 0 3px 12px rgba(34, 211, 238,0.35); }
+.spin-btn:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.28),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.30),
+    0 0 50px rgba(34, 211, 238, 0.50),
+    0 12px 35px rgba(0, 0, 0, 0.55);
+}
+.spin-btn:active {
+  transform: translate(-50%, -50%) scale(0.96);
+  box-shadow:
+    inset 0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(34, 211, 238, 0.35),
+    0 4px 14px rgba(0, 0, 0, 0.5);
+}
 .spin-btn[disabled],
 .spin-btn[aria-disabled="true"] {
   background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
@@ -983,36 +1180,85 @@ body.is-bigwin .payline-overlay,
   border-color: var(--cyan);
 }
 
+/* AutoPlay — `#autoPlayOpenBtn` je glavno autoplay dugme: 56×56 cirkular
+   ispod SPIN-a.  Ostali quick-access auto-btn-ovi (10/100/STOP) skriveni
+   na desktopu — Wrath UX otvara modal panel preko jednog jedinog dugmeta. */
 .auto-btn,
 .turbo-btn {
-  padding: 8px 14px;
-  background: var(--bg-1);
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  color: var(--text-1);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
+  /* Auxiliary auto buttons — skriveni u Wrath layout-u. */
+  display: none;
+}
+
+#autoPlayOpenBtn.auto-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--gold-deep);
+  background:
+    radial-gradient(28px 28px at 50% 38%, rgba(255, 255, 255, 0.12), transparent 55%),
+    radial-gradient(52px 52px at 50% 60%, rgba(255, 215, 0, 0.18), rgba(0, 0, 0, 0.45));
+  color: var(--gold);
   font-family: var(--font-mono);
-  transition: background 140ms, color 140ms, border-color 140ms;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 199;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
 }
-.auto-btn:hover,
-.turbo-btn:hover { color: var(--text-0); border-color: var(--cyan); background: var(--bg-2); }
-.auto-btn.is-active,
-.turbo-btn.is-active {
-  background: var(--cyan-glow);
-  color: var(--cyan);
-  border-color: var(--cyan);
+#autoPlayOpenBtn.auto-btn:hover {
+  border-color: var(--gold);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 18px var(--gold-glow);
 }
+#autoPlayOpenBtn.auto-btn:active {
+  transform: scale(0.94);
+}
+
+/* AutoPlay STOP — vidljiv samo kada je autoplay aktivan; preuzima poziciju
+   glavnog autoplay dugmeta (same X kao SPIN, ispod njega). */
 .auto-btn.auto-stop {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
   background: var(--rose);
   color: #fff;
-  border-color: var(--rose);
+  border: 2px solid var(--rose);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  pointer-events: auto;
+  z-index: 200;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 22px rgba(244, 63, 94, 0.45);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+.auto-btn.auto-stop[hidden] { display: none !important; }
 .auto-btn.auto-stop:hover {
   background: #be1633;
   border-color: #be1633;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 28px rgba(244, 63, 94, 0.65);
 }
 
 .bottomBar__soundBtn[data-muted="true"] .soundBtn__icon--on  { display: none; }
@@ -1440,26 +1686,82 @@ body.is-bigwin .payline-overlay,
   .stage, .game-stage { grid-template-columns: 110px 1fr 110px; gap: 10px; }
   .side-card { padding: 7px 9px; }
   .side-card b { font-size: 13px; }
-  .bottomBar__inner { grid-template-columns: 40px 1fr 1.4fr 1fr auto 1fr 40px; gap: 8px; height: 88px; }
-  .spin-btn { width: 96px; height: 60px; font-size: 16px; }
   .reelFrame { width: min(94vw, 660px); }
+  /* Skupi SPIN i AutoPlay na manjim ekranima */
+  .spin-btn { width: 120px; height: 120px; font-size: 20px; }
+  .bottomBar__section--auto {
+    top: calc(50% + 60px + 16px + 22px);
+  }
 }
 
 @media (max-width: 760px) {
+  /* Mobile — bottomBar postaje horizontalni footer (Wrath mobile UX). */
   .topHub { grid-template-columns: auto 1fr auto; }
   .lightning-meter { display: none; }
   .stage, .game-stage { grid-template-columns: 80px 1fr 80px; gap: 8px; padding: 10px 0; }
   .side-card .side-lbl { font-size: 8px; }
   .side-card b { font-size: 12px; }
   .reelFrame { width: 95vw; aspect-ratio: 5 / 3.2; padding: 10px; }
-  .bottomBar__inner { grid-template-columns: 36px 1fr 1fr 1fr 1fr 36px; }
-  .bottomBar__section--auto .auto-btn:not(.auto-stop) { display: none; }
-  .bottomBar__section--auto .auto-btn:first-child { display: inline-flex; }
+
+  /* Vrati horizontalni footer na mobile */
+  .bottomBar,
+  .game-bottom {
+    position: fixed;
+    inset: auto 0 0 0;
+    background: linear-gradient(180deg, transparent, rgba(7, 9, 15, 0.92) 30%);
+    padding: 10px 12px 14px;
+  }
+  .bottomBar__inner {
+    display: grid;
+    grid-template-columns: 44px 1fr auto 44px;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+  }
+  .bottomBar__section {
+    position: static;
+    transform: none;
+    inset: auto;
+    pointer-events: auto;
+  }
+  .bottomBar__section--left { justify-content: flex-start; }
+  .bottomBar__section--status {
+    justify-content: center;
+    padding: 8px 14px;
+    border-width: 1px;
+  }
+  .bottomBar__section--bet {
+    justify-content: flex-end;
+    padding: 6px 10px;
+  }
+  .bottomBar__section--sound { justify-content: flex-end; }
+
+  /* SPIN na mobile — centralno iznad bara, manji */
+  .spin-btn {
+    width: 96px;
+    height: 96px;
+    font-size: 16px;
+    top: auto !important;
+    bottom: 80px !important;
+    left: 50% !important;
+  }
+
+  /* AutoPlay na mobile — bočno od SPIN-a */
+  .bottomBar__section--auto {
+    position: fixed;
+    top: auto;
+    bottom: 100px;
+    left: calc(50% + 60px);
+    transform: none;
+  }
+
+  .bottomBar__iconBtn { width: 44px; height: 44px; font-size: 15px; }
+  .bottomBar__betBtn  { width: 38px; height: 38px; font-size: 22px; }
+  .bottomBar__betDisplay { min-width: 56px; }
+
   .history-rail { display: none; }
-  .quickMenu { bottom: 100px; }
-  .paytable-toggle { bottom: 100px; }
-  .spin-btn { width: 88px; height: 56px; font-size: 14px; }
-  .bottomBar__betDisplay { min-width: 60px; }
+  .quickMenu { bottom: 180px; }
+  .paytable-toggle { bottom: 180px; }
   .cell .cell-name { display: none; }
 }
 
@@ -1691,3 +1993,100 @@ body.is-bigwin .payline-overlay,
   60%  { transform: scale(1.18); opacity: 1; }
   100% { transform: scale(1.0);  opacity: 1; }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   SPIN BUTTON inner layers + AutoPlay counter badge
+   (added in WoO-port Batch 4 — match Wrath spinBtn__ring / spinBtn__glow /
+    spinBtn__icon + autoPlayBtn__counter shape, generic neutral palette).
+   ════════════════════════════════════════════════════════════════════════ */
+
+.spin-btn { color: #001017; }            /* fallback color for SVG stroke=currentColor */
+
+/* Outer rotating ring — slow, idle.  Spins faster while .is-spinning. */
+.spin-btn__ring {
+  position: absolute; inset: 6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0, 16, 23, 0.45);
+  pointer-events: none;
+  animation: spinBtnRingIdle 14s linear infinite;
+}
+.spin-btn.is-spinning .spin-btn__ring {
+  border-color: var(--cyan);
+  animation: spinBtnRingFast 0.8s linear infinite;
+}
+@keyframes spinBtnRingIdle { to { transform: rotate(360deg); } }
+@keyframes spinBtnRingFast { to { transform: rotate(360deg); } }
+
+/* Soft pulsing glow behind the icon — alive cue when idle. */
+.spin-btn__glow {
+  position: absolute; inset: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+  pointer-events: none;
+  animation: spinBtnGlow 2.4s ease-in-out infinite;
+}
+@keyframes spinBtnGlow {
+  0%,100% { opacity: 0.5; transform: scale(0.92); }
+  50%     { opacity: 1;   transform: scale(1.04); }
+}
+
+/* Inner arrow SVG sits in the middle of the button. */
+.spin-btn__icon {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 70px; height: 70px;
+  z-index: 1;
+}
+.spin-btn__icon svg {
+  width: 70px; height: 70px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+.spin-btn.is-spinning .spin-btn__icon svg {
+  animation: spinBtnIconRot 0.6s linear infinite;
+}
+@keyframes spinBtnIconRot { to { transform: rotate(360deg); } }
+
+/* Disabled / halted state — dim icon + ring */
+.spin-btn[disabled] .spin-btn__ring,
+.spin-btn[disabled] .spin-btn__glow { opacity: 0.25; animation: none; }
+.spin-btn[disabled] .spin-btn__icon svg { opacity: 0.4; }
+
+/* AutoPlay icon + counter badge.  Counter is hidden by default; runtime.js
+   removes the [hidden] attribute when autoplay starts and updates textContent
+   each spin. */
+.autoPlayBtn__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  color: var(--gold);
+}
+.autoPlayBtn__icon svg { width: 28px; height: 28px; }
+.autoPlayBtn__counter {
+  position: absolute;
+  top: -6px; right: -6px;
+  min-width: 22px; height: 22px;
+  padding: 0 5px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rose);
+  color: #fff;
+  font: 700 11px/1 ui-monospace, Menlo, monospace;
+  letter-spacing: 0;
+  border-radius: 999px;
+  border: 2px solid var(--bg-1);
+  box-shadow: 0 0 8px rgba(244,63,94,0.55);
+  pointer-events: none;
+  animation: autoCounterPop 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.autoPlayBtn__counter[hidden] { display: none; }
+.autoPlayBtn.is-active        { border-color: var(--rose); }
+.autoPlayBtn.is-active .autoPlayBtn__icon { color: var(--rose); }
+@keyframes autoCounterPop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Ensure host button is position:relative so the absolute counter anchors */
+#autoPlayOpenBtn.auto-btn { position: fixed; }
+#autoPlayOpenBtn.auto-btn .autoPlayBtn__icon,
+#autoPlayOpenBtn.auto-btn .autoPlayBtn__counter { position: absolute; }
+#autoPlayOpenBtn.auto-btn .autoPlayBtn__icon { position: relative; }
