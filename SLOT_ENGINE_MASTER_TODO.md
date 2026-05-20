@@ -2468,3 +2468,29 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 - Number-only impl (Math.imul + shifts): ~1.6× sporiji od mulberry32 ali ~20× brži od PCG64-BigInt — odgovara MTL real-time budget-u.
 - Same algorithm trivially portable u Rust (sve `<<`, `>>`, `^`, `wrapping_mul` su jezicki-istovetni za u32).
 - Eliminates measured +0.06% distribution skew u H&W feature (~0.1pp RTP-level impact).
+
+20. ✅ **W219 — Net-Spend Overlay + Jurisdiction Rules matrix** — DONE. Port iz `slot-game-template/src/config/JurisdictionRules.ts` u runner. 6 preset-ova: GENERIC / UKGC_18_24 / UKGC_25_PLUS / MGA / SE / DE. Sve polje JurisdictionRules strukture WIRED: autoplayEnabled, turboEnabled, netSpendOverlay, falseWinGuard, bonusBuyEnabled. Live net-spend pill bottom-left sa tier-based color. Top-right `<select>` za runtime jurisdiction switching. CSS body classes za UI affordance gating. (+251 LOC: 36 HTML + 114 CSS + 101 JS).
+
+21. ✅ **W221 — minCycleMs + rtpVisible + maxStake clamp** — DONE. Dovrsava jurisdiction enforcement matrix. Sve 7 polja JurisdictionRules sad ENFORCED: + minCycleMs (cycleGatePassed silently rejects in-window presses + visual red-outline pulse), rtpVisible (body.j-no-rtp hides #stat-rtp card via :has() selector), maxStakeCents (auto-clamp betLevelIdx). UKGC 2.5s/£2/£5, MGA permisivno, SE 3s/SEK1200, DE 5s/€1. (+60 LOC: 40 JS + 20 CSS).
+
+22. ✅ **W222 — Module-level ease helpers + tier-based rollup duration** — DONE. Ported iz `slot-game-template/src/animation/timing.ts`. Five canonical easings (`easeOutCubic`, `easeOutQuart`, `easeInOutCubic`, `easeInOutSine`, `easeOutBounce`) na module scope. Tier-based `rollupDurationMs(win, bet, turbo)` skalira count-up tempo (400ms baseline → 4500ms EPIC, turbo halves). Wired u `rollupStatusWin`. (+46 LOC).
+
+23. ✅ **W223 — Tier-progressive status bar** — DONE. Status counter pokazuje tier badge na 60% rollup progress: "WIN: 12.50 · BIG" / "WIN: 80.00 · MEGA" / "WIN: 500.00 · EPIC". CSS klase `tier-big`/`tier-mega`/`tier-epic` escalate gold→coral→violet color, 5%→10%→15% scale, single→double drop-shadow. (+42 LOC: 17 JS + 25 CSS).
+
+24. ✅ **W224 + W225 — Mobile responsive + Spin button press feedback** — DONE.
+    - W224: @media (max-width: 760px) repositions net-spend overlay to bottom-center, shrinks jurisdiction pill. @media (max-width: 420px) hides jurisdiction pill (QA aid only).
+    - W225: `.spin-btn:active` daje crisp 96% scale-down (Material 60ms cubic-bezier) + spring-back 140ms release sa elastic overshoot.
+    UX chain: idle glow → press snap-down → spring-back → spinning ring acceleration → throttled red pulse. (+45 LOC CSS).
+
+### W218-W225 stack — quick stats
+
+| Wave | Commit | LOC | Impact |
+|---|---|---|---|
+| W218 | 2fcc758 | sinhronizovan 6-file RNG upgrade | -0.06% bias (locally) |
+| W219 | 756bfc9 | 251 | Net-spend + jurisdiction matrix |
+| W221 | e01a5c0 | 60 | minCycleMs / rtpVisible / maxStake clamp |
+| W222 | 4525b93 | 46 | Module-level easings + tier rollup |
+| W223 | 0df4020 | 42 | Tier-progressive status bar |
+| W224+W225 | c4f8e82 | 45 | Mobile responsive + press feedback |
+
+**W218-W225 stack: 8 waves, ~500 LOC, 0 math regresije, MTL Lockstep 100% match, 3/3 e2e PASS svuda.**
