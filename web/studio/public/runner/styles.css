@@ -2090,3 +2090,74 @@ body.is-bigwin .payline-overlay,
 #autoPlayOpenBtn.auto-btn .autoPlayBtn__icon,
 #autoPlayOpenBtn.auto-btn .autoPlayBtn__counter { position: absolute; }
 #autoPlayOpenBtn.auto-btn .autoPlayBtn__icon { position: relative; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   PAYLINE — one-at-a-time cycling visuals
+   (Wrath port — lineMs=700, lineGapMs=60, drawMs=380, per-line palette
+   .line-0..9, per-line floating payout label, current-line cell highlight.)
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Active (currently-displayed) payline gets a thicker stroke + brighter glow */
+.payline-overlay .payline-path--active {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 14px currentColor);
+}
+
+/* Cells of the line currently being shown get extra emphasis on top of
+   the base .is-win pulse — outer glow + slight scale + bright border. */
+.reels-grid .cell.is-line-active {
+  z-index: 5;
+  animation: paylineCellPulse 600ms cubic-bezier(.4,.0,.2,1) infinite alternate;
+  box-shadow:
+    0 0 0 2px var(--cyan, #22d3ee) inset,
+    0 0 18px var(--cyan, #22d3ee),
+    0 0 6px rgba(255,255,255,0.5) inset;
+}
+@keyframes paylineCellPulse {
+  from { transform: scale(1);    filter: brightness(1.0); }
+  to   { transform: scale(1.04); filter: brightness(1.18); }
+}
+
+/* Floating payout label that travels with each cycled line.  Per-line
+   color via `.line-N` modifier on the label; payout font scales with
+   how prominent the win is (small fixed sizes for the template). */
+.payline-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(7, 9, 13, 0.86);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: currentColor;
+  font: 600 12px ui-monospace, Menlo, monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 30;
+  box-shadow:
+    0 0 12px currentColor,
+    0 6px 18px rgba(0, 0, 0, 0.55);
+  animation: paylineLabelIn 240ms cubic-bezier(.34, 1.6, .4, 1) backwards;
+}
+.payline-label .payline-label__line { font-weight: 700; }
+.payline-label .payline-label__sep  { opacity: 0.45; }
+.payline-label .payline-label__sym  { color: #fff; }
+.payline-label .payline-label__pay  { color: #fff; font-weight: 800; }
+@keyframes paylineLabelIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Per-line palette for the label — color resolves to currentColor used in
+   border + glow + pay number underline.  Matches .payline-path .line-N. */
+.payline-label.line-0 { color: #fde68a; }
+.payline-label.line-1 { color: #fda4af; }
+.payline-label.line-2 { color: #93c5fd; }
+.payline-label.line-3 { color: #86efac; }
+.payline-label.line-4 { color: #c4b5fd; }
+.payline-label.line-5 { color: #fcd34d; }
+.payline-label.line-6 { color: #f472b6; }
+.payline-label.line-7 { color: #67e8f9; }
+.payline-label.line-8 { color: #a3e635; }
+.payline-label.line-9 { color: #fb923c; }

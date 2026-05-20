@@ -545,88 +545,189 @@
     $$('#reels-grid .cell').forEach((c) => {
       c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-bounce', 'is-anticipate');
     });
-    highlightWins(result);
     const totalWin = result.lineTotal + result.scatterPay;
     if (totalWin > 0) {
       showWinBanner(totalWin, opts.multAnnounce && opts.multAnnounce > 1 ? opts.multAnnounce : null);
-      await wait(state.turbo ? 200 : 420);
     }
+    // Cycle through winning paylines ONE-AT-A-TIME (Wrath-canonical), await
+    // so the next SPIN click can't be triggered until the sequence ends.
+    // The next click also aborts the sequence via `clearPaylines()`.
+    await highlightWins(result);
   }
 
   function highlightWins(result) {
-    for (const lw of result.lineWins) {
-      for (const c of lw.cells) {
-        const cell = cellAt(c.r, c.y);
-        if (cell) cell.classList.add('is-win');
-      }
-    }
+    // Scatter cells highlight stays persistent through the spin reveal
+    // (independent of payline cycling — scatters are not part of the
+    // sequence loop).
     if (result.scCount >= 3) {
       for (const c of result.scCells) {
         const cell = cellAt(c.r, c.y);
         if (cell) cell.classList.add('is-scatter-win');
       }
     }
-    drawPaylines(result.lineWins);
+    // Per-line cycling sequence — adds + clears `.is-win` per iteration.
+    // Caller can `await` this if it wants the full reveal before the next
+    // spin starts (spinOnce does); user can interrupt by clicking SPIN
+    // again to clip the sequence.
+    return playPaylineSequence(result.lineWins || []);
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
-  // ║ Payline SVG overlay  (Wrath→Template Batch 3)                 ║
-  // ║ Draws one polyline per winning line through cell centres,      ║
-  // ║ animates stroke-dashoffset draw-in, then fades out.            ║
+  // ║ Payline SVG overlay  —  ONE-AT-A-TIME cycling sequence        ║
+  // ║                                                                ║
+  // ║ Mirrors Wrath presentation.ts executeLineHighlight():          ║
+  // ║   for each lineWin:                                            ║
+  // ║     clear → highlight THIS line's cells → draw polyline        ║
+  // ║     → render payout badge → wait LINE_MS → clear → next        ║
+  // ║                                                                ║
+  // ║ Skippable: setting `state.skipPaylineSeq = true` (e.g. on next ║
+  // ║ SPIN click) breaks the loop and clears everything immediately. ║
   // ╚══════════════════════════════════════════════════════════════╝
 
+  // Timing — matches Wrath WIN_TIER_TIMING medium tier (one set for all
+  // tiers in the generic template; finer tiering can be added later).
+  const PAYLINE_LINE_MS    = 700;   // hold time per line
+  const PAYLINE_LINE_GAP   = 60;    // gap before next line starts
+  const PAYLINE_DRAW_MS    = 380;   // stroke draw-in animation duration
+
   const paylineSvg = $('#paylineOverlay');
-  let paylineClearTimer = null;
+  let paylineSeqAborted = false;
   function clearPaylines() {
-    if (paylineClearTimer) { clearTimeout(paylineClearTimer); paylineClearTimer = null; }
+    paylineSeqAborted = true;
     if (paylineSvg) paylineSvg.innerHTML = '';
+    // Drop per-line cell highlights (scatter highlight is cleared by
+    // clearWinHighlights at spin start)
+    $$('#reels-grid .cell.is-win').forEach(function (c) { c.classList.remove('is-win', 'is-line-active'); });
+    // Remove any floating payout label
+    const lbl = document.getElementById('payline-label-floater');
+    if (lbl && lbl.parentNode) lbl.parentNode.removeChild(lbl);
   }
-  function drawPaylines(lineWins) {
-    if (!paylineSvg || !lineWins || lineWins.length === 0) return;
-    clearPaylines();
-    // Use the reels-grid's bounding box for coordinate mapping
+
+  function _paylineFrameCoords() {
     const grid = $('#reels-grid');
-    if (!grid) return;
+    if (!grid || !paylineSvg) return null;
     const gridRect = grid.getBoundingClientRect();
     const svgRect = paylineSvg.getBoundingClientRect();
-    // Configure viewBox to grid coordinates so paths use integer cell centres
-    const cellW = gridRect.width / REELS;
-    const cellH = gridRect.height / ROWS;
-    const offsetX = gridRect.left - svgRect.left;
-    const offsetY = gridRect.top - svgRect.top;
-    const w = svgRect.width;
-    const h = svgRect.height;
-    paylineSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    let html = '';
+    return {
+      cellW: gridRect.width / REELS,
+      cellH: gridRect.height / ROWS,
+      offsetX: gridRect.left - svgRect.left,
+      offsetY: gridRect.top - svgRect.top,
+      w: svgRect.width,
+      h: svgRect.height,
+    };
+  }
+
+  function _renderPaylineLabel(lw, coords) {
+    // Floating payout badge — positioned above the geometric center of
+    // the winning cells.  Created/recreated on each line so the text
+    // pop animation fires fresh.
+    const old = document.getElementById('payline-label-floater');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    const cells = lw.cells || [];
+    if (cells.length === 0) return;
+    let cx = 0, cy = 0;
+    for (const c of cells) {
+      cx += coords.offsetX + c.r * coords.cellW + coords.cellW / 2;
+      cy += coords.offsetY + c.y * coords.cellH + coords.cellH / 2;
+    }
+    cx /= cells.length; cy /= cells.length;
+    const lbl = document.createElement('div');
+    lbl.id = 'payline-label-floater';
+    lbl.className = 'payline-label line-' + (lw.lineIdx % 10);
+    lbl.innerHTML =
+      '<span class="payline-label__line">LINE ' + (lw.lineIdx + 1) + '</span>' +
+      '<span class="payline-label__sep">·</span>' +
+      '<span class="payline-label__sym">' + (lw.count || cells.length) + '× ' + (lw.sym || '') + '</span>' +
+      '<span class="payline-label__sep">·</span>' +
+      '<span class="payline-label__pay">' + fmt(Number(lw.pay) * currentBet()) + '</span>';
+    // Inline absolute position so we can drop it directly into the reelFrame.
+    lbl.style.position = 'absolute';
+    lbl.style.left = cx + 'px';
+    lbl.style.top  = (cy - 36) + 'px';
+    lbl.style.transform = 'translate(-50%, -50%)';
+    const frame = document.querySelector('.reelFrame');
+    (frame || document.body).appendChild(lbl);
+  }
+
+  async function playPaylineSequence(lineWins) {
+    if (!paylineSvg || !lineWins || lineWins.length === 0) return;
+    paylineSeqAborted = false;
+    const coords = _paylineFrameCoords();
+    if (!coords) return;
+    paylineSvg.setAttribute('viewBox', '0 0 ' + coords.w + ' ' + coords.h);
+
+    const seqStart = performance.now();
+    state.paylineSeqRunning = true;
+    state.paylineSeqStartedAt = seqStart;
+
     for (let i = 0; i < lineWins.length; i++) {
+      if (paylineSeqAborted) break;
       const lw = lineWins[i];
       const colorIdx = lw.lineIdx % 10;
       const cells = lw.cells || [];
       if (cells.length < 2) continue;
-      const pts = cells.map((c) => {
-        const cx = offsetX + c.r * cellW + cellW / 2;
-        const cy = offsetY + c.y * cellH + cellH / 2;
-        return `${cx.toFixed(2)},${cy.toFixed(2)}`;
+
+      // Clear previous polyline + previous cell highlights, then highlight
+      // ONLY this line's cells (mirrors Wrath sequential reveal).
+      paylineSvg.innerHTML = '';
+      $$('#reels-grid .cell.is-win, #reels-grid .cell.is-line-active').forEach(function (c) {
+        c.classList.remove('is-win', 'is-line-active');
+      });
+      for (const c of cells) {
+        const cell = cellAt(c.r, c.y);
+        if (cell) { cell.classList.add('is-win'); cell.classList.add('is-line-active'); }
+      }
+
+      // Build polyline through cell centers, then SVG sets up stroke
+      // dashoffset draw-in animation.  Per-line color cycles through
+      // the 10-color CSS palette (.line-0 … .line-9).
+      const pts = cells.map(function (c) {
+        const cx = coords.offsetX + c.r * coords.cellW + coords.cellW / 2;
+        const cy = coords.offsetY + c.y * coords.cellH + coords.cellH / 2;
+        return cx.toFixed(2) + ',' + cy.toFixed(2);
       }).join(' ');
-      // Approximate path length for stroke-dasharray (poly length ≈ N×cellW + Y deltas)
-      const len = Math.round(cellW * (cells.length - 1) * 1.15);
-      // Stagger each line's draw start by 80ms so the player can follow them
-      const delay = i * 80;
-      html += `<polyline class="payline-path line-${colorIdx}" points="${pts}"
-                 style="--len:${len};animation-delay:${delay}ms,${delay + 480}ms"></polyline>`;
-      // Pin a small circle on each cell centre for emphasis
+      const approxLen = Math.round(coords.cellW * (cells.length - 1) * 1.15);
+      paylineSvg.innerHTML =
+        '<polyline class="payline-path payline-path--active line-' + colorIdx + '" points="' + pts + '" ' +
+        'style="--len:' + approxLen + ';animation-duration:' + PAYLINE_DRAW_MS + 'ms;"></polyline>';
+      // Pin markers per cell — slight stagger so player's eye reads
+      // direction.  We append after the polyline so they paint on top.
+      let pinHtml = '';
       for (let k = 0; k < cells.length; k++) {
         const c = cells[k];
-        const cx = offsetX + c.r * cellW + cellW / 2;
-        const cy = offsetY + c.y * cellH + cellH / 2;
-        const pinDelay = delay + 240 + k * 50;
-        html += `<circle class="payline-pin line-${colorIdx}" cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="6"
-                  style="animation-delay:${pinDelay}ms,${pinDelay + 840}ms"></circle>`;
+        const cx = coords.offsetX + c.r * coords.cellW + coords.cellW / 2;
+        const cy = coords.offsetY + c.y * coords.cellH + coords.cellH / 2;
+        const pinDelay = PAYLINE_DRAW_MS * 0.5 + k * 45;
+        pinHtml +=
+          '<circle class="payline-pin line-' + colorIdx + '" cx="' + cx.toFixed(2) + '" cy="' + cy.toFixed(2) +
+          '" r="7" style="animation-delay:' + pinDelay + 'ms;"></circle>';
       }
+      paylineSvg.insertAdjacentHTML('beforeend', pinHtml);
+
+      _renderPaylineLabel(lw, coords);
+
+      // Hold this line for PAYLINE_LINE_MS, abort early if a new spin starts.
+      const holdUntil = performance.now() + PAYLINE_LINE_MS;
+      while (performance.now() < holdUntil) {
+        if (paylineSeqAborted) break;
+        // 60ms slices so we react to abort flag quickly
+        await wait(60);
+      }
+      if (paylineSeqAborted) break;
+
+      // Gap before next line (skip if last)
+      if (i < lineWins.length - 1) await wait(PAYLINE_LINE_GAP);
     }
-    paylineSvg.innerHTML = html;
-    // Auto-clear after the longest fade ends so the next spin starts clean
-    paylineClearTimer = setTimeout(clearPaylines, 480 + (lineWins.length - 1) * 80 + 1800);
+
+    // End state: clear all lines + cell highlights + label
+    if (paylineSvg) paylineSvg.innerHTML = '';
+    $$('#reels-grid .cell.is-win, #reels-grid .cell.is-line-active').forEach(function (c) {
+      c.classList.remove('is-win', 'is-line-active');
+    });
+    const old = document.getElementById('payline-label-floater');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    state.paylineSeqRunning = false;
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
