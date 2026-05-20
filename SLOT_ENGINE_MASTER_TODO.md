@@ -2494,3 +2494,127 @@ Ovo je realan blokator za production-grade prodaju engine-a operatorima/provider
 | W224+W225 | c4f8e82 | 45 | Mobile responsive + press feedback |
 
 **W218-W225 stack: 8 waves, ~500 LOC, 0 math regresije, MTL Lockstep 100% match, 3/3 e2e PASS svuda.**
+
+---
+
+## 🎯 W231 — RTP RE-KALIBRACIJA Wrath IR na 96.00% design target
+
+**Status:** ❌ NOT STARTED — plan landed 2026-05-20, čeka GO
+**Procena:** 2-3h wallclock total
+**Risk:** medium (re-seal Wrath IR, validated_metrics rewrite)
+**Rollback:** trivial — `~/Desktop/wrath-of-olympus.ir.json.bak-pre-W231` backup
+
+### Problem statement
+
+| Šta | Vrednost | Status |
+|---|---|---|
+| `meta.rtp` (design / marketing target) | **96.00%** | claim |
+| `rtp_allocation.total_cf` (closed-form Markov DP analytical) | **96.1360%** | TRUTH iz weights |
+| `rtp_allocation.total_mc_5b` (5B MC sanity) | 96.0420% | n/a |
+| `validated_metrics.rtp_pct` (500M MC mulberry32) | 96.0232% | stari reference |
+| **Runtime 10B xoshiro128\*\* (W230 baseline)** | **96.1832%** | trenutno na main-u |
+| **Gap CF vs design** | **+0.14pp** | **OVO JE PRAVI PROBLEM** |
+| Gap runtime vs CF | +0.047pp (industry PASS ±0.05) | sound |
+
+**Praktične implikacije:** marketing "96.00% RTP" ne match-uje math; operator gubi 0.14pp na house edge (95.86% house edge umesto planiranog 95.00%). Regulatorno prolazi (±0.5pp tolerance), marketing claim NE.
+
+### Plan implementacije
+
+#### Step A — Honesty update (30 min, lossless)
+Update `validated_metrics` u `web/studio/pilots/wrath-of-olympus.ir.json` sa novim 10B xoshiro baseline-om:
+
+| Polje | Stara vrednost | Nova vrednost (post-W230) |
+|---|---|---|
+| `rtp_pct` | 96.0232 | **96.1832** |
+| `rtp_ci95_low` | n/a | **96.1626** |
+| `rtp_ci95_high` | n/a | **96.2037** |
+| `stderr_pp` | 0.0453 | **0.0105** |
+| `spins_sample` | 500_000_000 | **10_000_000_000** |
+| `rng_kind` | mulberry32 | **xoshiro128\*\*** |
+| `validated_at_utc` | (old) | 2026-05-20T... |
+
+Ovo nije fix — već **prizna stvarno stanje** u IR-u. Documents reflect reality.
+
+#### Step B — H&W re-kalibracija (2-3h, REAL fix)
+
+**Konkretni tweak u `features[].kind=hold_and_win.cash_value_distribution`:**
+
+| Value | Trenutni weight | Predloženi weight | Δ |
+|---|---|---|---|
+| 1× | 404 | 404 | — |
+| 2× | 250 | 250 | — |
+| 3× | 150 | 150 | — |
+| 5× | 90 | 90 | — |
+| 8× | 45 | 45 | — |
+| 10× | 25 | 22 | −12% |
+| **15×** | **14** | **11** | **−21% (KEY tweak)** |
+| 25× | (current) | (current) | — |
+| 50× | (current) | (current) | — |
+
+**Matematička justifikacija:**
+- 15× cash daje 14×15/1003 ≈ 21% kontribucije mean orb value-u
+- Smanjenje 14→11 baca mean orb value sa **5.4576 → 5.418**
+- H&W contribution skalira ~linearno sa orb mean
+- H&W bucket: **39.70% → ~39.57%** (−0.13pp)
+- Total RTP: **96.136% → ~96.00%** (ON DESIGN TARGET)
+
+#### Step C — Verifikacija pipeline
+1. Backup current IR → `~/Desktop/wrath-of-olympus.ir.json.bak-pre-W231`
+2. Patch IR weights (Step B)
+3. Re-run CF solver (`src/solver/holdAndWinMarkov.ts`) → verifikuje da CF kaže ~96.00%
+4. Runtime 1B MC sa xoshiro → empirijska potvrda ±0.005pp
+5. Ako 1B PASS → 10B verifikacija (final cert-grade)
+6. Update `validated_metrics` sa novim 10B baseline-om
+7. Re-seal Wrath IR (sealing ceremony 100 seeds × 2 witnesses)
+8. Sync IR na Desktop + WoO project copy
+9. MTL Lockstep e2e PASS test
+10. Commit pack **W231 — RTP re-kalibracija na 96.00% design target**
+
+### Acceptance criteria
+
+| Test | Threshold | Required |
+|---|---|---|
+| CF solver post-patch | 95.99 ≤ rtp ≤ 96.01% | ✅ |
+| Runtime 1B MC | 95.99 ≤ rtp ≤ 96.01%, stderr ≤ 0.02pp | ✅ |
+| Runtime 10B MC | 95.995 ≤ rtp ≤ 96.005%, stderr ≤ 0.01pp | ✅ |
+| MTL Lockstep | 100% match oracle ≡ runtime | ✅ |
+| qa-play-template e2e | PASS | ✅ |
+| qa-mtl-sealing e2e | PASS (deterministic seal hex) | ✅ |
+| qa-mtl-lockstep e2e | PASS | ✅ |
+| Studio vite build | clean | ✅ |
+| Marketing claim match | ABS(runtime - 96.00) ≤ 0.005pp | ✅ |
+
+### Sekundarni lever (fallback ako Step B B ne pogodi target)
+
+Ako H&W cash_value tweak ne spusti dovoljno, secondary leveri:
+1. Jackpot tier weights `multiplier_distribution` (Lightning feature)
+2. Free spins `progressive_multiplier.increment` (1.0 → 0.95)
+3. Scatter pays paytable (×3/×4/×5 entries)
+
+Sve weighted istom math metodologijom: closed-form predviđanje + 1B verifikacija pre nego što se push-uje.
+
+### Šta SE NE preporučuje
+
+- ❌ **"Tolerance acceptance"** (prihvati 96.14% jer prolazi regulator ±0.5pp) — lažna sigurnost; UKGC audit će propisati marketing nepoklapanje. ASA (Advertising Standards Authority) može da kazni za "96% RTP" claim koji ne match-uje math.
+- ❌ **Promena CF solver-a** da match-uje runtime — laž; solver je matematički tačan (verifikovano brute-force enumeration u prior wave-u).
+- ❌ **Promena `meta.rtp` claim-a sa 96.00 → 96.14%** bez code-side fix — gubi 0.14pp house edge zauvek na realnim spinovima.
+
+### Linked files
+
+- `web/studio/pilots/wrath-of-olympus.ir.json` — IR weights + validated_metrics
+- `~/Desktop/wrath-of-olympus.ir.json` — Desktop copy (auto-sync)
+- `/Users/vanvinklstudio/Projects/Wrath Of Olympus/reports/studio-ir/wrath-of-olympus.ir.json` — WoO project copy
+- `src/solver/holdAndWinMarkov.ts` — CF solver (read-only, verifikuje target)
+- `scripts/wrath-runtime-mc-fast.mjs` — MC engine
+- `scripts/wrath-runtime-mc-parallel.sh` — parallel MC runner
+
+### Decision matrix
+
+| Opcija | Effort | Marketing OK | Cert OK | Recommended |
+|---|---|---|---|---|
+| **A (Honesty)** | 30 min | NO (claim != math) | YES (within tolerance) | nezavisno korak ka transparentnosti |
+| **B (Re-kalibracija)** | 2-3h | YES | YES | **ULTIMATIVNO PREPORUKA** |
+| C (do nothing) | 0 | NO | YES (±0.5pp) | regulator audit risk |
+| D (change marketing claim) | 1 day | YES (96.14%) | YES | gubi house edge zauvek |
+
+**Bojev odluka još nije data.** Ne kreće se dok Boki ne kaže "GO W231".
