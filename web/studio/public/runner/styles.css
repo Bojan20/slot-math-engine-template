@@ -497,51 +497,70 @@ body {
 }
 
 
-/* ── 4 · Reel spin animation ─────────────────────────────────────── */
+/* ── 4 · Reel spin animation — Wrath SPIN_PROFILE canonical ─────────
+   Mirrors src/reels.ts pull-up → blur-scroll → ease-out decel → cushion
+   bounce (2 iterations, 30% decay).  Driven by per-cell CSS vars so the
+   JS profile (normal/turbo/slam) can swap timings without touching the
+   keyframes:
+     --rwp-px : windup pull-up distance         (normal 42, turbo 18)
+     --rsp-px : per-frame downward scroll throw (normal 24, turbo 30)
+     --rbn-px : first cushion bounce overshoot  (normal 6,  turbo 3)
+   The cell sets these via inline style in animateGrid().
+─────────────────────────────────────────────────────────────────── */
 
-/* Windup — the brief upward pull right before reels accelerate down */
+/* Windup — sharp upward pull before reels accelerate down (Wrath 42px) */
 .cell.is-windup {
-  animation: cell-windup var(--t-windup) ease-out forwards;
+  animation: cell-windup var(--t-windup, 115ms) cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  will-change: transform;
 }
 @keyframes cell-windup {
   0%   { transform: translateY(0); }
-  100% { transform: translateY(-12px); }
+  100% { transform: translateY(calc(var(--rwp-px, -42px))); }
 }
 
-/* Spin — vertical blur scroll, infinite */
+/* Spin — continuous downward vertical blur scroll, infinite.  Wrath's
+   reels move ~24px/frame at 60fps under blur(4px); we approximate with
+   a fast linear keyframe and motion blur. */
 .cell.is-spinning {
-  animation: cell-spin 92ms linear infinite;
-  filter: blur(2px);
+  animation: cell-spin 70ms linear infinite;
+  filter: blur(4px);
+  will-change: transform, filter;
 }
 @keyframes cell-spin {
-  0%   { transform: translateY(-12px); }
-  100% { transform: translateY(12px);  }
+  0%   { transform: translateY(calc(var(--rsp-px, -24px))); }
+  100% { transform: translateY(calc(var(--rsp-px, 24px)));  }
 }
 
-/* Decel — slow the blur, prepare for cushion bounce */
+/* Decel — ease-out from spin overshoot back to 0, blur fades out */
 .cell.is-decel {
-  animation: cell-decel var(--t-decel) cubic-bezier(0.22, 0.68, 0.4, 1) forwards;
-  filter: blur(1px);
+  animation: cell-decel var(--t-decel, 300ms) cubic-bezier(0.22, 0.68, 0.4, 1) forwards;
 }
 @keyframes cell-decel {
-  0%   { transform: translateY(-6px); filter: blur(2px); }
-  60%  { transform: translateY(3px);  filter: blur(1px); }
-  100% { transform: translateY(0);    filter: blur(0);   }
+  0%   { transform: translateY(-18px); filter: blur(4px); }
+  40%  { transform: translateY(  6px); filter: blur(2px); }
+  75%  { transform: translateY( -2px); filter: blur(0.5px); }
+  100% { transform: translateY(   0);  filter: blur(0); }
 }
 
-/* Soft cushion bounce — 2 bounces, 30% decay (mirrors Wrath bounceDecay) */
+/* Cushion bounce — 2 iterations 30% decay (Wrath SPIN_PROFILE bouncePx=6
+   bounceCount=2 bounceDecay=0.3 bounceElasticity=1.8).  We bundle the
+   y-axis cushion + a scale-pop "landing thump" into one keyframe so the
+   cell feels like it lands with weight. */
 .cell.is-bounce {
-  animation: cell-bounce var(--t-bounce) cubic-bezier(0.22, 1.0, 0.36, 1) forwards;
+  animation: cell-bounce var(--t-bounce, 320ms) cubic-bezier(0.22, 1.0, 0.36, 1) forwards;
+  will-change: transform;
 }
 @keyframes cell-bounce {
-  0%   { transform: translateY(0); }
-  30%  { transform: translateY(-6px); }
-  55%  { transform: translateY(2px); }
-  75%  { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
+  0%   { transform: translateY(0)     scale(1.00); }
+  18%  { transform: translateY(-6px)  scale(1.05); }  /* 1st bounce: 6px up, scale-pop */
+  38%  { transform: translateY( 2px)  scale(0.99); }  /* settle, slight compress */
+  60%  { transform: translateY(-1.8px) scale(1.02); } /* 2nd bounce: 6 × 0.3, decay */
+  82%  { transform: translateY( 0.6px) scale(1.00); }
+  100% { transform: translateY(0)     scale(1.00); }
 }
 
-/* Anticipation — sustained glow on reels still spinning after partial scatter land */
+/* Anticipation — sustained pulse on reels 3+ when 2+ scatters landed.
+   Outlasts the steadyMs; cleared when remaining reels finally stop. */
 .cell.is-anticipate {
   box-shadow: 0 0 0 2px var(--gold), 0 0 22px var(--gold-glow);
   animation: cell-anticipate 480ms ease-in-out infinite alternate;

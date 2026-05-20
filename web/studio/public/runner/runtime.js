@@ -315,9 +315,41 @@
   // shortened for the no-art template so a full spin cycle (windup → spin
   // → 5-reel staggered decel → bounce) lands inside ~1.5s.  Production
   // would use Wrath's heavier 1350ms steady; template ships snappier.
+  // Wrath-canonical timing (src/timing.ts SPIN_PROFILE_NORMAL / TURBO / SLAM).
+  // Numbers verified by audit against the production reels:
+  //   • windupMs = 115 (7 frames @ 60fps) with 42px pull-up
+  //   • accelMs = 130 (acceleration up to steady speed)
+  //   • steadyMs = 1350 (full-speed scroll; turbo 450)
+  //   • decelMs = 300 (ease-out to landing position)
+  //   • staggerMs = 180 between reel STOPS (turbo 45)
+  //   • bouncePx = 6 (turbo 3), bounceCount = 2 (turbo 1), bounceDecay = 0.3
+  //   • windupStaggerMs = 33 between reel STARTS (~2 frames @ 60fps)
+  //   • anticipationMs = +2000 on reels 3+ when 2+ scatters landed (turbo +800)
   const SPIN_PROFILE = {
-    normal: { windupMs: 100, accelMs: 130, steadyMs: 380, decelMs: 260, staggerMs: 110, bounceMs: 240, stopGap: 120, betweenSpinsMs: 200 },
-    turbo:  { windupMs:  30, accelMs:  60, steadyMs: 180, decelMs: 100, staggerMs:  35, bounceMs: 120, stopGap:  40, betweenSpinsMs:  50 },
+    normal: {
+      windupMs: 115, accelMs: 130, steadyMs: 1350, decelMs: 300,
+      staggerMs: 180, windupStaggerMs: 33,
+      bouncePx: 6, bounceCount: 2, bounceDecay: 0.3, bounceElasticity: 1.8,
+      anticipationMs: 2000,
+      stopGap: 120, betweenSpinsMs: 200,
+      bounceMs: 320, // total cushion settle window (2 iterations × ~160ms)
+    },
+    turbo: {
+      windupMs:  65, accelMs:  70, steadyMs:  450, decelMs: 120,
+      staggerMs:  45, windupStaggerMs: 16,
+      bouncePx: 3, bounceCount: 1, bounceDecay: 0.2, bounceElasticity: 2.0,
+      anticipationMs: 800,
+      stopGap:  40, betweenSpinsMs:  50,
+      bounceMs: 160,
+    },
+    slam: {
+      windupMs: 0, accelMs: 0, steadyMs: 0, decelMs: 100,
+      staggerMs: 30, windupStaggerMs: 0,
+      bouncePx: 0, bounceCount: 0, bounceDecay: 0, bounceElasticity: 0,
+      anticipationMs: 0,
+      stopGap: 0, betweenSpinsMs: 0,
+      bounceMs: 0,
+    },
   };
 
   const state = {
@@ -485,49 +517,105 @@
 
   async function animateGrid(finalGrid, result, opts) {
     opts = opts || {};
-    const P = currentProfile();
+    let P = currentProfile();
     const scId = scatterId();
+    state.slamRequested = false;
 
-    // Phase A — windup pull-up (115ms)
+    // Push profile timings to CSS so keyframes pick them up (--t-windup
+    // / --t-decel / --t-bounce drive cell-windup / cell-decel / cell-bounce
+    // durations).  Also set the per-cell pixel vars (--rwp-px windup pull-up,
+    // --rsp-px spin scroll throw, --rbn-px bounce overshoot).  This lets the
+    // turbo/slam profiles override the keyframe geometry without touching CSS.
+    const root = document.documentElement;
+    root.style.setProperty('--t-windup', P.windupMs + 'ms');
+    root.style.setProperty('--t-decel',  P.decelMs  + 'ms');
+    root.style.setProperty('--t-bounce', P.bounceMs + 'ms');
+    const windupPx = state.turbo ? 18 : 42;     // Wrath windupRise
+    const spinPx   = state.turbo ? 30 : 24;     // per-frame scroll throw
+    function applyReelVars(reelIdx) {
+      // Stagger the windup START per reel (windupStaggerMs) — reel 0 begins
+      // at t=0, reel N at t=N*windupStaggerMs.  We bake this in via animation-delay
+      // on each cell so the keyframe itself stays uniform.
+      const delay = reelIdx * P.windupStaggerMs + 'ms';
+      for (let y = 0; y < ROWS; y++) {
+        const c = cellAt(reelIdx, y);
+        if (!c) continue;
+        c.style.setProperty('--rwp-px', -windupPx + 'px');
+        c.style.setProperty('--rsp-px', spinPx + 'px');
+        c.style.setProperty('--rbn-px', P.bouncePx + 'px');
+        c.style.animationDelay = delay;
+      }
+    }
+
+    // Phase A — windup pull-up with per-reel stagger (windupStaggerMs)
     for (let r = 0; r < REELS; r++) {
+      applyReelVars(r);
       for (let y = 0; y < ROWS; y++) {
         paintCell(r, y, pickAnyId(), { windup: true });
       }
     }
-    await wait(P.windupMs);
+    // Wait for the slowest reel's windup to finish (last reel start + windupMs)
+    await wait(P.windupMs + (REELS - 1) * P.windupStaggerMs);
 
-    // Phase B — start spinning all reels (vertical blur scroll)
+    // Phase B — start spinning all reels with the same windup stagger so
+    // reel N "catches up" rather than all reels snapping to spin at once.
     for (let r = 0; r < REELS; r++) {
-      for (let y = 0; y < ROWS; y++) {
-        paintCell(r, y, pickAnyId(), { spinning: true });
-      }
+      const reelIdx = r;
+      setTimeout(() => {
+        for (let y = 0; y < ROWS; y++) {
+          const c = cellAt(reelIdx, y);
+          if (c) c.style.animationDelay = '';   // clear stagger after windup
+          paintCell(reelIdx, y, pickAnyId(), { spinning: true });
+        }
+      }, reelIdx * P.windupStaggerMs);
     }
 
     // Phase C — stop each reel sequentially with stagger + anticipation
+    //   • staggerMs = gap between consecutive reel STOPS (Wrath 180ms)
+    //   • anticipationMs = extra hold on reels 3+ when 2+ scatters landed
+    //   • slam: if state.slamRequested fires mid-spin, all remaining reels
+    //     short-circuit through slam profile (100ms decel, no bounce)
     let scLandedSoFar = 0;
     const stopOps = [];
+    const spinStartedAt = performance.now() + P.windupMs;
     for (let r = 0; r < REELS; r++) {
       const reelIdx = r;
       const willHaveScatter = scId && finalGrid[reelIdx].some((s) => s === scId);
-      // Anticipation: extend steady on remaining reels when 2+ scatters landed
-      // and player is still "chasing" the 3rd scatter on reels 3-5.
       const isAnticipated = scLandedSoFar >= 2 && reelIdx >= 2 && reelIdx < REELS;
-      const baseDelay = P.windupMs + P.steadyMs + reelIdx * P.staggerMs + (isAnticipated ? 280 : 0);
+      const baseDelay =
+        P.windupMs +
+        (REELS - 1) * P.windupStaggerMs +     // wait for last reel to finish windup
+        P.steadyMs +
+        reelIdx * P.staggerMs +
+        (isAnticipated ? P.anticipationMs : 0);
 
       stopOps.push(new Promise((resolve) => {
         setTimeout(async () => {
-          // Decel sub-phase
+          // If a slam was requested, swap to the slam profile for the rest
+          // of the run (Wrath behavior — clicking SPIN mid-spin collapses
+          // the decel + bounce window).
+          const useSlam = !!state.slamRequested;
+          const PD = useSlam ? SPIN_PROFILE.slam : P;
+          // Decel sub-phase — push the decel duration into CSS just-in-time
+          // in case slam swapped it.
+          root.style.setProperty('--t-decel', PD.decelMs + 'ms');
           for (let y = 0; y < ROWS; y++) {
+            const c = cellAt(reelIdx, y);
+            if (c) c.style.animationDelay = '';
             paintCell(reelIdx, y, pickAnyId(), { decel: true });
           }
-          await wait(P.decelMs);
-          // Land final cells with cushion bounce
+          await wait(PD.decelMs);
+          // Land final cells with cushion bounce.  Set --rbn-px and
+          // --t-bounce inline so bounce honors current (possibly slam) profile.
+          root.style.setProperty('--t-bounce', PD.bounceMs + 'ms');
           for (let y = 0; y < ROWS; y++) {
-            paintCell(reelIdx, y, finalGrid[reelIdx][y], { bounce: true });
+            const c = cellAt(reelIdx, y);
+            if (c) c.style.setProperty('--rbn-px', PD.bouncePx + 'px');
+            paintCell(reelIdx, y, finalGrid[reelIdx][y], { bounce: PD.bounceMs > 0 });
           }
           if (willHaveScatter) scLandedSoFar++;
           // Trigger anticipation glow on next unland reels if threshold reached
-          if (scLandedSoFar === 2 && reelIdx < REELS - 1) {
+          if (!useSlam && scLandedSoFar === 2 && reelIdx < REELS - 1) {
             for (let rr = reelIdx + 1; rr < REELS; rr++) {
               for (let y = 0; y < ROWS; y++) {
                 const c = cellAt(rr, y);
@@ -540,11 +628,19 @@
       }));
     }
     await Promise.all(stopOps);
+    // Hold for the bounce window so the cushion animation completes before
+    // wins highlight (otherwise the scale-pop overlaps with .is-win pulse).
+    await wait(P.bounceMs);
 
     // Phase D — clear transient classes, highlight wins, banner
     $$('#reels-grid .cell').forEach((c) => {
       c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-bounce', 'is-anticipate');
+      c.style.animationDelay = '';
+      c.style.removeProperty('--rwp-px');
+      c.style.removeProperty('--rsp-px');
+      c.style.removeProperty('--rbn-px');
     });
+    state.slamRequested = false;
     const totalWin = result.lineTotal + result.scatterPay;
     if (totalWin > 0) {
       // The top-of-reels banner is deprecated; capturing mult here lets
@@ -1706,7 +1802,18 @@
   // ╚══════════════════════════════════════════════════════════════╝
 
   function bindUI() {
-    spinBtn?.addEventListener('click', () => { if (!state.spinning) spinOnce(); });
+    spinBtn?.addEventListener('click', () => {
+      // Wrath behavior: clicking SPIN mid-spin requests SLAM stop — the
+      // in-flight animateGrid short-circuits remaining reels through the
+      // slam profile (100ms decel, no bounce).  A fresh click while idle
+      // launches a new spin.
+      if (state.spinning) {
+        state.slamRequested = true;
+        clearPaylines();
+      } else {
+        spinOnce();
+      }
+    });
     betPlusBtn?.addEventListener('click', () => setBetLevel(+1));
     betMinusBtn?.addEventListener('click', () => setBetLevel(-1));
     auto10Btn?.addEventListener('click', () => runAutoplay(10));
@@ -1758,7 +1865,13 @@
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
       if (e.code === 'Space') {
         e.preventDefault();
-        if (!state.spinning) spinOnce();
+        if (state.spinning) {
+          // Space mid-spin = slam, same as SPIN click
+          state.slamRequested = true;
+          clearPaylines();
+        } else {
+          spinOnce();
+        }
       } else if (e.key === 'a' || e.key === 'A') {
         runAutoplay(10);
       } else if (e.key === 's' || e.key === 'S') {

@@ -13,6 +13,9 @@ const SHOT_DIR = resolve(__dirname, '../../../reports/playwright/qa-play-templat
 mkdirSync(SHOT_DIR, { recursive: true });
 
 test('Play Template: import IR → open standalone game → spin → wins accumulate', async ({ page, context }) => {
+  // Wrath-canonical spin timing pushes each manual spin to ~3s and the
+  // 10-spin autoplay to ~35s — bump test timeout above the global 60s.
+  test.setTimeout(120_000);
   expect(existsSync(DESKTOP_IR), 'Wrath IR fixture on Desktop').toBe(true);
 
   await page.goto('/');
@@ -90,11 +93,13 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
   expect(title || '').toMatch(/Wrath/i);
   console.log(`✓ Title: ${title}`);
 
-  // Spin 5×
+  // Spin 5×. Wrath-canonical timing per spin:
+  //   windup 115 + windupStagger 4×33 + steady 1350 + stagger 4×180 + decel 300 + bounce 320 ≈ 2937ms
+  // Wait 3200ms between clicks so each spin finishes before the next click
+  // (otherwise mid-spin click triggers SLAM stop, not a new spin).
   for (let i = 0; i < 5; i++) {
     await newPage.locator('#spin-btn').click();
-    // Wait for spin animation + result settle (~1.5s max)
-    await newPage.waitForTimeout(1800);
+    await newPage.waitForTimeout(3200);
   }
   await newPage.screenshot({ path: `${SHOT_DIR}/03-after-5-spins.png`, fullPage: true });
 
@@ -127,7 +132,7 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
     const w = window as unknown as { __SLOT__?: { runAutoplay?: (n: number) => void } };
     w.__SLOT__?.runAutoplay?.(10);
   });
-  await newPage.waitForTimeout(12_000); // 10 spins × ~1s + buffer
+  await newPage.waitForTimeout(35_000); // 10 spins × ~3s Wrath-canonical + buffer
   const afterAuto = await newPage.evaluate(() => {
     const w = window as unknown as { __SLOT__?: { state: { spinsPlayed: number } } };
     return w.__SLOT__?.state?.spinsPlayed ?? 0;
