@@ -470,15 +470,53 @@
     },
   };
 
+  // W229 — Session persistence via localStorage.
+  // Player's balance + cumulative stats survive page reload (within the
+  // SAME IR — keyed by ir.meta.id so different games don't bleed state).
+  // Schema bumps invalidate stored state via SESSION_SCHEMA mismatch.
+  const SESSION_SCHEMA = 'v1';
+  const SESSION_KEY = 'mtl_runner_session_' + (IR.meta && IR.meta.id ? IR.meta.id : 'default');
+  function loadSession() {
+    try {
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || obj.schema !== SESSION_SCHEMA) return null;
+      return obj;
+    } catch (_) { return null; }
+  }
+  function saveSession() {
+    try {
+      const obj = {
+        schema: SESSION_SCHEMA,
+        balance: state.balance,
+        betLevelIdx: state.betLevelIdx,
+        spinsPlayed: state.spinsPlayed,
+        hits: state.hits,
+        totalWagered: state.totalWagered,
+        totalWon: state.totalWon,
+        maxWin: state.maxWin,
+        soundMuted: state.soundMuted,
+        turbo: state.turbo,
+        savedAt: Date.now(),
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(obj));
+    } catch (_) {}
+  }
+  function clearSession() {
+    try { localStorage.removeItem(SESSION_KEY); } catch (_) {}
+  }
+  const persisted = loadSession();
+
   const state = {
     rng: makeRng((IR.rng && IR.rng.default_seed) || Math.floor(Math.random() * 1e9)),
-    balance: 100.0,
-    betLevelIdx: 0,
-    spinsPlayed: 0,
-    hits: 0,
-    totalWagered: 0,
-    totalWon: 0,
-    maxWin: 0,
+    balance: (persisted && Number.isFinite(persisted.balance)) ? persisted.balance : 100.0,
+    betLevelIdx: (persisted && Number.isInteger(persisted.betLevelIdx)) ? persisted.betLevelIdx : 0,
+    spinsPlayed: (persisted && Number.isInteger(persisted.spinsPlayed)) ? persisted.spinsPlayed : 0,
+    hits: (persisted && Number.isInteger(persisted.hits)) ? persisted.hits : 0,
+    totalWagered: (persisted && Number.isFinite(persisted.totalWagered)) ? persisted.totalWagered : 0,
+    totalWon: (persisted && Number.isFinite(persisted.totalWon)) ? persisted.totalWon : 0,
+    maxWin: (persisted && Number.isFinite(persisted.maxWin)) ? persisted.maxWin : 0,
     lastWin: 0,
     history: [],
     spinning: false,
@@ -486,10 +524,22 @@
     featureLabel: '',
     hnwLockedCells: null,
     zeusFill: 0,
-    soundMuted: false,
-    turbo: false,
+    soundMuted: (persisted && typeof persisted.soundMuted === 'boolean') ? persisted.soundMuted : false,
+    turbo: (persisted && typeof persisted.turbo === 'boolean') ? persisted.turbo : false,
     skipBigWin: false,
   };
+
+  // W229 — Auto-save session state on key mutations.  Debounced via
+  // setTimeout(0) so multiple sequential state mutations within a single
+  // spin only trigger one localStorage write.
+  let _sessionSaveTimer = null;
+  function scheduleSessionSave() {
+    if (_sessionSaveTimer) return;
+    _sessionSaveTimer = setTimeout(() => {
+      _sessionSaveTimer = null;
+      saveSession();
+    }, 50);
+  }
   function currentProfile() { return state.turbo ? SPIN_PROFILE.turbo : SPIN_PROFILE.normal; }
   function currentBet() { return Number(BASE_BET) * Number(BET_LEVELS[state.betLevelIdx] || 1); }
 
@@ -1952,6 +2002,7 @@
 
     appendHistory({ idx: state.spinsPlayed, win: spinWin, feature: featureLabel });
     renderHud();
+    scheduleSessionSave();  // W229 — persist after each settled spin
 
     if (spinWin > 0) {
       await rollupStatusWin(spinWin, state.turbo ? 220 : 700);
@@ -2101,16 +2152,19 @@
   function setBetLevel(delta) {
     state.betLevelIdx = clamp(state.betLevelIdx + delta, 0, BET_LEVELS.length - 1);
     renderHud();
+    scheduleSessionSave();      // W229 — persist bet selection
   }
   function toggleTurbo() {
     state.turbo = !state.turbo;
     const turboBtn = $('#turbo-btn');
     if (turboBtn) turboBtn.classList.toggle('is-active', state.turbo);
+    scheduleSessionSave();      // W229 — persist turbo preference
   }
   function toggleSound() {
     state.soundMuted = !state.soundMuted;
     if (soundBtnEl)   soundBtnEl.setAttribute('data-muted', String(state.soundMuted));
     if (menuSoundBtn) menuSoundBtn.setAttribute('data-muted', String(state.soundMuted));
+    scheduleSessionSave();      // W229 — persist mute preference
   }
   function toggleQuickMenu() {
     if (!quickMenuEl) return;
