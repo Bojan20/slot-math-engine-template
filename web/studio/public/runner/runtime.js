@@ -215,29 +215,54 @@
   function evalBase(grid) {
     const lineWins = [];
     let lineTotal = 0;
+    // Canonical "best_paying_interpretation: true" — try BOTH candidates and
+    // pick the max-paying:
+    //   (1) first non-wild paying symbol on the line, and
+    //   (2) WILD itself (for pure-wild prefixes).
+    // The old code only used (1), which silently lost the ~0.33pp where
+    // wild paytable beats the leftmost non-wild for short prefixes
+    // (e.g. W,W,W,LA,GM: target=W@3 pays 2.0, target=LA@4 pays 1.55 — old
+    // code returned 1.55).
+    const wildSym = ((IR.symbols || []).find((x) => x.kind === 'wild') || {}).id;
     for (let li = 0; li < PAYLINES.length; li++) {
       const line = PAYLINES[li];
-      let target = grid[0][line[0] ?? 0];
-      if (WILD_SUB && isWild(target)) {
+      const first = grid[0][line[0] ?? 0];
+      const candidates = [];
+      // Candidate A: first non-wild paying symbol along the chain
+      if (WILD_SUB && isWild(first)) {
         for (let c = 1; c < REELS; c++) {
           const s = grid[c][line[c] ?? 0];
-          if (!isWild(s)) { target = s; break; }
+          if (!isWild(s)) { candidates.push(s); break; }
+        }
+      } else if (first) {
+        candidates.push(first);
+      }
+      // Candidate B: WILD itself (always a candidate when wild_substitution
+      // is enabled — covers pure-wild runs).
+      if (WILD_SUB && wildSym && !candidates.includes(wildSym)) {
+        candidates.push(wildSym);
+      }
+      let bestPay = 0, bestTarget = null, bestRun = 0;
+      for (const target of candidates) {
+        let runLen = 0;
+        for (let c = 0; c < REELS; c++) {
+          const s = grid[c][line[c] ?? 0];
+          if (s === target || (WILD_SUB && isWild(s))) runLen++;
+          else break;
+        }
+        if (runLen < MIN_MATCH) continue;
+        const p = payAt(target, Math.min(runLen, 5));
+        if (p > bestPay) {
+          bestPay = p;
+          bestTarget = target;
+          bestRun = runLen;
         }
       }
-      let runLen = 0;
-      for (let c = 0; c < REELS; c++) {
-        const s = grid[c][line[c] ?? 0];
-        if (s === target || (WILD_SUB && isWild(s))) runLen++;
-        else break;
-      }
-      if (runLen >= MIN_MATCH) {
-        const p = payAt(target, runLen);
-        if (p > 0) {
-          lineTotal += p;
-          const cells = [];
-          for (let c = 0; c < runLen; c++) cells.push({ r: c, y: line[c] ?? 0 });
-          lineWins.push({ lineIdx: li, sym: target, count: runLen, pay: p, cells });
-        }
+      if (bestPay > 0 && bestTarget) {
+        lineTotal += bestPay;
+        const cells = [];
+        for (let c = 0; c < bestRun; c++) cells.push({ r: c, y: line[c] ?? 0 });
+        lineWins.push({ lineIdx: li, sym: bestTarget, count: bestRun, pay: bestPay, cells });
       }
     }
     const scId = scatterId();
@@ -1656,12 +1681,15 @@
 
     const grid = drawGrid(state.rng, BASE_REELS);
     const result = evalBase(grid);
-    let spinWin = result.baseWin * bet;
+    // Lightning multiplies LINE wins only — scatter pays untouched.
+    // Mirrors the headless spinOnceInstant fix.
+    let lineWin = result.lineTotal * bet;
     let lightning = 1;
-    if (spinWin > 0 && F_MUL) {
+    if ((lineWin > 0 || result.scatterPay > 0) && F_MUL) {
       lightning = rollLightning(state.rng);
-      if (lightning > 1) spinWin = spinWin * lightning;
+      if (lightning > 1) lineWin = lineWin * lightning;
     }
+    let spinWin = lineWin + result.scatterPay * bet;
     const lightningPromise = lightning > 1 ? animateLightningRoll(lightning) : Promise.resolve();
     await animateGrid(grid, result, { multAnnounce: lightning });
     await lightningPromise;
@@ -2061,12 +2089,18 @@
     state.spinsPlayed += 1;
     const grid = drawGrid(state.rng, BASE_REELS);
     const result = evalBase(grid);
-    let spinWin = result.baseWin * bet;
+    // Lightning multiplies LINE wins only — scatter pays are not multiplied
+    // (canonical Wrath behaviour, per paytable.ts / features.ts).  Putting
+    // scatter_pay inside the multiply (the old code) inflated the
+    // lightning_uplift bucket by ~0.32pp.
+    let lineWin = result.lineTotal * bet;
     let lightning = 1;
-    if (spinWin > 0 && F_MUL) {
+    if ((lineWin > 0 || result.scatterPay > 0) && F_MUL) {
+      // Lightning trigger condition: any winning spin (line OR scatter)
       lightning = rollLightning(state.rng);
-      if (lightning > 1) spinWin = spinWin * lightning;
+      if (lightning > 1) lineWin = lineWin * lightning;
     }
+    let spinWin = lineWin + result.scatterPay * bet;
     let fsWin = 0;
     if (F_FS && result.scCount >= 3) {
       fsWin = runFreeSpinsHeadless(result.scCount);

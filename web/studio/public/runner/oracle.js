@@ -209,35 +209,44 @@
 
     function isWild(id) { return syms[id] && syms[id].kind === 'wild'; }
 
+    // Canonical "best_paying_interpretation" — try both target candidates
+    // (first non-wild AND wild) and pick whichever pays more.  Mirrors
+    // runtime.js evalBase.
+    const wildSym = ((ir.symbols || []).find((x) => x.kind === 'wild') || {}).id;
     const lineWins = [];
     let lineTotal = 0;
     for (let li = 0; li < paylines.length; li++) {
       const line = paylines[li];
-      // Collect the symbols on this line
       const seq = [];
       for (let c = 0; c < t.reels; c++) seq.push(grid[c][line[c] != null ? line[c] : 0]);
 
-      // Resolve target: first non-wild (or all-wilds → first symbol)
-      let target = seq[0];
-      if (wildSubEnabled && isWild(target)) {
+      const candidates = [];
+      const first = seq[0];
+      if (wildSubEnabled && isWild(first)) {
         for (let c = 1; c < seq.length; c++) {
-          if (!isWild(seq[c])) { target = seq[c]; break; }
+          if (!isWild(seq[c])) { candidates.push(seq[c]); break; }
         }
+      } else if (first) {
+        candidates.push(first);
+      }
+      if (wildSubEnabled && wildSym && !candidates.includes(wildSym)) {
+        candidates.push(wildSym);
       }
 
-      // Count run length from left
-      let runLen = 0;
-      for (let c = 0; c < seq.length; c++) {
-        if (seq[c] === target || (wildSubEnabled && isWild(seq[c]))) runLen++;
-        else break;
-      }
-
-      if (runLen >= minMatch) {
-        const p = payAt(ir, target, runLen);
-        if (p > 0) {
-          lineTotal += p;
-          lineWins.push({ lineIdx: li, sym: target, count: runLen, pay: p });
+      let bestPay = 0, bestTarget = null, bestRun = 0;
+      for (const target of candidates) {
+        let runLen = 0;
+        for (let c = 0; c < seq.length; c++) {
+          if (seq[c] === target || (wildSubEnabled && isWild(seq[c]))) runLen++;
+          else break;
         }
+        if (runLen < minMatch) continue;
+        const p = payAt(ir, target, Math.min(runLen, 5));
+        if (p > bestPay) { bestPay = p; bestTarget = target; bestRun = runLen; }
+      }
+      if (bestPay > 0 && bestTarget) {
+        lineTotal += bestPay;
+        lineWins.push({ lineIdx: li, sym: bestTarget, count: bestRun, pay: bestPay });
       }
     }
 
@@ -442,13 +451,17 @@
     grid = applyScatterPrevention(grid, ir, t.reels, t.rows);
     const r = evalBase(grid, ir);
 
-    let win = r.baseWin * bet;
+    // Lightning multiplies LINE wins only — scatter pays untouched.
+    // Mirrors runtime.js spinOnceInstant fix.  Putting scatter_pay inside the
+    // multiply over-paid the lightning_uplift bucket by ~0.32pp.
+    let lineWin = r.lineTotal * bet;
     let lightning = 1;
     const F_MUL = findFeature(ir, 'multiplier');
-    if (win > 0 && F_MUL) {
+    if ((lineWin > 0 || r.scatterPay > 0) && F_MUL) {
       lightning = rollLightning(rng, ir);
-      if (lightning > 1) win = win * lightning;
+      if (lightning > 1) lineWin = lineWin * lightning;
     }
+    let win = lineWin + r.scatterPay * bet;
     let fsWin = 0;
     const F_FS = findFeature(ir, 'free_spins');
     if (F_FS && r.scCount >= 3) {
