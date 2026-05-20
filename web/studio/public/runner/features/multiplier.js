@@ -74,6 +74,65 @@
       box-shadow: 0 0 20px rgba(245,158,11,0.35);
     }
     @keyframes ft-mult-scroll { from { transform: translateX(0); } to { transform: translateX(-320px); } }
+
+    /* ────── BOLT BURST ─────────────────────────────────────────────
+       Full-frame overlay that fires on every winning spin where the
+       multiplier rolled > 1×.  Shows the multiplier value (e.g. "5×")
+       in a giant glowing badge anchored to the reels, with a SVG bolt
+       backdrop.  Lasts ~1.2s total. */
+    .ft-mult-burst {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 12;
+      opacity: 0;
+    }
+    .ft-mult-burst.is-active { animation: ft-burst-show 1300ms cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes ft-burst-show {
+      0%   { opacity: 0; transform: scale(0.6); }
+      18%  { opacity: 1; transform: scale(1.08); }
+      28%  { transform: scale(1.0); }
+      78%  { opacity: 1; transform: scale(1.0); }
+      100% { opacity: 0; transform: scale(0.9); }
+    }
+    .ft-mult-burst__badge {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 200px;
+    }
+    .ft-mult-burst__bolt {
+      position: absolute;
+      inset: 0;
+      filter: drop-shadow(0 0 24px var(--cyan, #22d3ee))
+              drop-shadow(0 0 48px rgba(34, 211, 238, 0.55));
+    }
+    .ft-mult-burst__value {
+      position: relative;
+      font: 800 76px/1 ui-monospace, Menlo, monospace;
+      color: #fff;
+      text-shadow:
+        0 0 12px rgba(34, 211, 238, 0.95),
+        0 0 32px rgba(34, 211, 238, 0.7),
+        0 4px 14px rgba(0, 0, 0, 0.65);
+      letter-spacing: -0.04em;
+    }
+    /* Higher tier multipliers (≥5) flip palette to rose for emphasis */
+    .ft-mult-burst.is-hi .ft-mult-burst__bolt {
+      filter: drop-shadow(0 0 24px var(--rose, #f43f5e))
+              drop-shadow(0 0 48px rgba(244, 63, 94, 0.6));
+    }
+    .ft-mult-burst.is-hi .ft-mult-burst__value {
+      text-shadow:
+        0 0 12px rgba(244, 63, 94, 0.95),
+        0 0 32px rgba(244, 63, 94, 0.7),
+        0 4px 14px rgba(0, 0, 0, 0.65);
+    }
   `;
 
   function buildStrip(distribution) {
@@ -124,6 +183,32 @@
 
     host.appendChild(root);
 
+    // ── Bolt burst overlay — full-frame multiplier reveal ───────────
+    // Anchors to .reelFrame so the burst sits centered over the reels.
+    // We build it once at mount and toggle a class on each lightning event.
+    const burst = document.createElement('div');
+    burst.className = 'ft-mult-burst';
+    burst.setAttribute('aria-hidden', 'true');
+    burst.innerHTML = [
+      '<div class="ft-mult-burst__badge">',
+      '  <svg class="ft-mult-burst__bolt" viewBox="0 0 100 200" aria-hidden="true">',
+      '    <path d="M58 0 L18 110 L46 110 L36 200 L82 80 L52 80 Z" ',
+      '          fill="rgba(34,211,238,0.18)" stroke="currentColor" stroke-width="2" />',
+      '  </svg>',
+      '  <div class="ft-mult-burst__value" data-burst-value>0×</div>',
+      '</div>',
+    ].join('');
+    const frame = document.querySelector('.reelFrame');
+    if (frame) {
+      if (getComputedStyle(frame).position === 'static') frame.style.position = 'relative';
+      frame.appendChild(burst);
+    } else {
+      // Fallback: place it inside the host slot
+      host.appendChild(burst);
+    }
+    const burstValue = burst.querySelector('[data-burst-value]');
+    let burstTimer = null;
+
     const unsubSpin = bus.on('spin:start', function () {
       root.setAttribute('data-state', 'spin');
     });
@@ -141,6 +226,22 @@
           match.style.background = '';
         }, 380);
       }
+      // Trigger giant bolt-burst overlay over the reels with the rolled
+      // multiplier value.  The animation is ~1.3s; we cap concurrent
+      // bursts by clearing any pending timer.
+      if (value > 1 && burst) {
+        if (burstValue) burstValue.textContent = value + '×';
+        burst.classList.remove('is-active', 'is-hi');
+        if (value >= 5) burst.classList.add('is-hi');
+        // Force reflow so the animation restarts cleanly when bursts
+        // fire back-to-back.
+        void burst.offsetWidth;
+        burst.classList.add('is-active');
+        if (burstTimer) clearTimeout(burstTimer);
+        burstTimer = setTimeout(function () {
+          burst.classList.remove('is-active', 'is-hi');
+        }, 1350);
+      }
     });
     const unsubDone = bus.on('spin:render-done', function () {
       setTimeout(function () {
@@ -154,7 +255,9 @@
         unsubSpin && unsubSpin();
         unsubLight && unsubLight();
         unsubDone && unsubDone();
-        if (root.parentNode) root.parentNode.removeChild(root);
+        if (burstTimer) { clearTimeout(burstTimer); burstTimer = null; }
+        if (root.parentNode)  root.parentNode.removeChild(root);
+        if (burst.parentNode) burst.parentNode.removeChild(burst);
       },
     };
   }
