@@ -2356,3 +2356,117 @@ body.is-bigwin .payline-overlay,
 .reels-grid .cell.is-line-active {
   filter: brightness(1.05) saturate(1.05) !important;
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   W219 — NET-SPEND OVERLAY + JURISDICTION SELECTOR
+   ────────────────────────────────────────────────────────────────────────
+   Regulatory footer mandated by UKGC SI 2025/215, SE SFS 2018:1138, and
+   DE GlüStV 2021 §22a.  Floating bottom-left pill with live session
+   `totalWagered - totalWon` display.  Visible only when active jurisdiction
+   preset has `netSpendOverlay = true`.
+
+   Jurisdiction selector (top-right) lets QA / players cycle through
+   regulator presets — each preset enforces autoplay / turbo / maxStake
+   guards.
+   ════════════════════════════════════════════════════════════════════════ */
+
+.net-spend-overlay {
+  position: fixed;
+  left: 16px;
+  bottom: 110px;               /* align with paytable-toggle row */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  border-radius: 999px;
+  font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #fde68a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  z-index: 30;                 /* keep below intro modal / sealing modal (z=9999) */
+  pointer-events: none;        /* purely informational, no interaction */
+  /* Animation removed — Playwright's "element is not stable" assertion
+     trips on long-running fade transitions adjacent to clickable UI. */
+}
+.net-spend-overlay[hidden] { display: none; }
+.net-spend-overlay .ns-lbl { color: #94a3b8; font-size: 9px; }
+.net-spend-overlay .ns-val { color: #fde68a; font-size: 13px; letter-spacing: 0.02em; }
+.net-spend-overlay .ns-val.is-warning { color: #fca5a5; }    /* > 50% balance */
+.net-spend-overlay .ns-val.is-critical { color: #f87171; }   /* > 80% balance */
+.net-spend-overlay .ns-cur { color: #64748b; font-size: 9px; }
+.net-spend-overlay .ns-tag {
+  margin-left: 4px;
+  padding: 2px 6px;
+  background: rgba(245, 158, 11, 0.18);
+  border-radius: 999px;
+  color: #fde68a;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.jurisdiction-pill {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 12px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.30);
+  border-radius: 999px;
+  font: 600 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  z-index: 30;                  /* below modals (9999), same plane as paytable-toggle */
+}
+.jurisdiction-pill .jp-lbl { color: #64748b; font-size: 9px; }
+.jurisdiction-pill .jp-select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #fde68a;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  padding: 2px 12px 2px 4px;
+  outline: none;
+}
+.jurisdiction-pill .jp-select:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.55);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.jurisdiction-pill .jp-select option {
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+/* Body classes set by runtime when jurisdiction enforces a rule.  CSS
+   hides / styles UI affordances accordingly.  Runtime.js adds these
+   classes to `<body>` so descendant selectors can react. */
+body.j-no-autoplay #autoPlayOpenBtn,
+body.j-no-autoplay #auto-10,
+body.j-no-autoplay #auto-100,
+body.j-no-autoplay #auto-stop {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+body.j-no-turbo #turbo-btn {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+body.j-no-bonus-buy #btn-demo-fs,
+body.j-no-bonus-buy #btn-demo-hw,
+body.j-no-bonus-buy [data-feature="bonus_buy"] {
+  display: none !important;
+}
+body.j-false-win-suppressed .win-banner {
+  /* CSS hook for runtime to suppress celebration on sub-stake wins */
+}

@@ -406,6 +406,42 @@
       <span class="hr-lbl">RECENT</span>
       <ul id="history-list"></ul>
     </div>
+
+    <!-- ═════ NET-SPEND OVERLAY — UKGC SI 2025/215 / SE SFS 2018:1138 / DE GlüStV 2021 §22a ═════ -->
+    <!--
+      Mandatory real-time session net-spend display for regulated jurisdictions.
+      Visible only when active jurisdiction has netSpendOverlay=true (UKGC, SE, DE).
+      Shows live `totalWagered - totalWon` so the player always knows their
+      current session loss.  Required by:
+       - UKGC SI 2025/215 (effective 17 Jan 2025) — net spend display
+       - SE Spelinspektionen SFS 2018:1138 — mandatory session display
+       - DE GlüStV 2021 §22a — session display + 1h limit
+    -->
+    <div class="net-spend-overlay" id="net-spend-overlay" hidden>
+      <span class="ns-lbl">SESSION NET</span>
+      <b class="ns-val mono" id="net-spend-value">0.00</b>
+      <span class="ns-cur" id="net-spend-currency">EUR</span>
+      <span class="ns-tag" id="net-spend-tag">UKGC</span>
+    </div>
+
+    <!-- ═════ JURISDICTION SELECTOR (top-right pill) ═════ -->
+    <!--
+      Lets player/QA switch between regulator presets at runtime.  Each
+      preset enforces a different rule set (autoplay on/off, turbo on/off,
+      maxStake cap, falseWinGuard, netSpendOverlay).  Default: GENERIC
+      (no restrictions, dev mode).
+    -->
+    <div class="jurisdiction-pill" id="jurisdiction-pill" aria-label="Jurisdiction selector">
+      <span class="jp-lbl">REG</span>
+      <select id="jurisdiction-select" class="jp-select" aria-label="Regulator preset">
+        <option value="GENERIC">GENERIC</option>
+        <option value="UKGC_18_24">UKGC (18-24)</option>
+        <option value="UKGC_25_PLUS">UKGC (25+)</option>
+        <option value="MGA">MGA</option>
+        <option value="SE">SE</option>
+        <option value="DE">DE</option>
+      </select>
+    </div>
   </div>
 
   <script id="inline-ir" type="application/json">{}</script>

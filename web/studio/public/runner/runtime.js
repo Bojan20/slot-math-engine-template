@@ -1203,6 +1203,94 @@
     if (maxWinEl)     maxWinEl.textContent    = fmt(state.maxWin);
     if (titleEl && IR.meta)   titleEl.textContent   = (IR.meta.name || 'Slot Template');
     if (versionEl && IR.meta) versionEl.textContent = 'v' + (IR.meta.version || '0.0');
+    // W219 — live net-spend update.  Only re-paints if jurisdiction has
+    // netSpendOverlay enabled; the visibility toggle itself is handled
+    // by jurisdictionApply() when the preset changes.
+    renderNetSpend();
+  }
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║ 9B · JURISDICTION RULES (W219, UKGC/MGA/SE/DE/IT/GENERIC)     ║
+  // ╚══════════════════════════════════════════════════════════════╝
+  //
+  // Per-regulator feature-flag matrix mirrored from
+  // slot-game-template/src/config/JurisdictionRules.ts.  Each preset
+  // toggles: autoplay, turbo, maxStake, falseWinGuard, netSpendOverlay.
+  //
+  // Sources (kept inline so the runner blob is self-contained):
+  //   • UKGC SI 2025/215 (eff 17 Jan 2025) — no autoplay, no turbo,
+  //     min 2.5s cycle, age-tier max stake (£2 / £5), net-spend overlay
+  //   • MGA PPD §11 — permissive (autoplay + turbo allowed, no overlay)
+  //   • SE SFS 2018:1138 — mandatory session display, 3s min cycle
+  //   • DE GlüStV 2021 §22a — 5s cycle, €1 max, mandatory overlay
+  //   • GENERIC — no restrictions (dev mode)
+  const JURISDICTIONS = {
+    GENERIC:    { code:'GENERIC',    autoplayEnabled:true,  turboEnabled:true,  minCycleMs:0,    falseWinGuard:false, maxStakeCents:100000, netSpendOverlay:false, rtpVisible:true,  bonusBuyEnabled:true,  label:'GENERIC' },
+    UKGC_18_24: { code:'UKGC',       autoplayEnabled:false, turboEnabled:false, minCycleMs:2500, falseWinGuard:true,  maxStakeCents:200,    netSpendOverlay:true,  rtpVisible:true,  bonusBuyEnabled:false, label:'UKGC' },
+    UKGC_25_PLUS:{code:'UKGC',       autoplayEnabled:false, turboEnabled:false, minCycleMs:2500, falseWinGuard:true,  maxStakeCents:500,    netSpendOverlay:true,  rtpVisible:true,  bonusBuyEnabled:false, label:'UKGC' },
+    MGA:        { code:'MGA',        autoplayEnabled:true,  turboEnabled:true,  minCycleMs:0,    falseWinGuard:true,  maxStakeCents:50000,  netSpendOverlay:false, rtpVisible:true,  bonusBuyEnabled:true,  label:'MGA' },
+    SE:         { code:'SE',         autoplayEnabled:true,  turboEnabled:false, minCycleMs:3000, falseWinGuard:true,  maxStakeCents:1200,   netSpendOverlay:true,  rtpVisible:true,  bonusBuyEnabled:false, label:'SE' },
+    DE:         { code:'DE',         autoplayEnabled:false, turboEnabled:false, minCycleMs:5000, falseWinGuard:true,  maxStakeCents:100,    netSpendOverlay:true,  rtpVisible:true,  bonusBuyEnabled:false, label:'DE' },
+  };
+  let activeJurisdiction = JURISDICTIONS.GENERIC;
+
+  function jurisdictionApply(presetKey) {
+    const j = JURISDICTIONS[presetKey] || JURISDICTIONS.GENERIC;
+    activeJurisdiction = j;
+    const body = document.body;
+    body.classList.toggle('j-no-autoplay', !j.autoplayEnabled);
+    body.classList.toggle('j-no-turbo', !j.turboEnabled);
+    body.classList.toggle('j-no-bonus-buy', !j.bonusBuyEnabled);
+    body.classList.toggle('j-false-win-suppressed', j.falseWinGuard);
+    // Force-off turbo if jurisdiction disallows it
+    if (!j.turboEnabled && state.turbo) {
+      state.turbo = false;
+      const turboBtn = $('#turbo-btn');
+      if (turboBtn) turboBtn.classList.remove('is-active');
+    }
+    // Net-spend overlay visibility
+    const overlay = $('#net-spend-overlay');
+    const tag = $('#net-spend-tag');
+    if (overlay) overlay.toggleAttribute('hidden', !j.netSpendOverlay);
+    if (tag) tag.textContent = j.label;
+    const cur = $('#net-spend-currency');
+    if (cur) cur.textContent = CURRENCY;
+    renderNetSpend();
+    logActivityIfPresent('jurisdiction → ' + j.label + ' · cycle≥' + j.minCycleMs + 'ms · maxStake=' + j.maxStakeCents);
+  }
+
+  function logActivityIfPresent(msg) {
+    // logActivity is optional in some Studio variants; guard it.
+    if (typeof logActivity === 'function') {
+      try { logActivity(msg); } catch (_) {}
+    } else if (window && window.console) {
+      console.log('[runner]', msg);
+    }
+  }
+
+  function renderNetSpend() {
+    if (!activeJurisdiction.netSpendOverlay) return;
+    const v = $('#net-spend-value');
+    if (!v) return;
+    const net = Math.max(0, state.totalWagered - state.totalWon);
+    v.textContent = fmt(net);
+    // Warning tiers — color crosses to red as net approaches initial balance.
+    const init = 100;       // starting balance (matches state.balance init)
+    v.classList.toggle('is-warning', net >= init * 0.5);
+    v.classList.toggle('is-critical', net >= init * 0.8);
+  }
+
+  // falseWinGuard — wrap win-banner reveal so sub-stake wins are not
+  // celebrated.  Pure CSS guard would hide ALL banners; we need the
+  // counter to still rollup, just no audio + no banner flash.
+  function shouldCelebrateWin(winAmount, bet) {
+    if (!activeJurisdiction.falseWinGuard) return true;
+    return winAmount > bet;
+  }
+  // Stake clamp — enforce maxStakeCents (in coin units = cents/100).
+  function clampToJurisdictionStake(bet) {
+    const max = activeJurisdiction.maxStakeCents / 100;
+    return Math.min(bet, max);
   }
 
   // ╔══════════════════════════════════════════════════════════════╗
@@ -2028,6 +2116,19 @@
 
     paytableToggle?.addEventListener('click', () => { paytableDrawer?.removeAttribute('hidden'); });
     paytableCloseBtn?.addEventListener('click', () => { paytableDrawer?.setAttribute('hidden', ''); });
+
+    // W219 — Jurisdiction selector wiring + initial apply.
+    // Default to GENERIC; runtime honors the IR's `jurisdiction` hint
+    // if present (e.g. when Studio embeds a jurisdiction-pinned IR),
+    // otherwise GENERIC is safe.
+    const jSelect = $('#jurisdiction-select');
+    let initialJ = (IR.meta && IR.meta.jurisdiction) || 'GENERIC';
+    if (!(initialJ in JURISDICTIONS)) initialJ = 'GENERIC';
+    if (jSelect) {
+      jSelect.value = initialJ;
+      jSelect.addEventListener('change', () => jurisdictionApply(jSelect.value));
+    }
+    jurisdictionApply(initialJ);
 
     document.addEventListener('keydown', (e) => {
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
