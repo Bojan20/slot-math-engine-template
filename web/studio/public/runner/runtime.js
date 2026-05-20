@@ -599,9 +599,11 @@
   function clearPaylines() {
     paylineSeqAborted = true;
     if (paylineSvg) paylineSvg.innerHTML = '';
-    // Drop per-line cell highlights (scatter highlight is cleared by
-    // clearWinHighlights at spin start)
-    $$('#reels-grid .cell.is-win').forEach(function (c) { c.classList.remove('is-win', 'is-line-active'); });
+    // Drop per-line cell highlights + dim overlay (scatter highlight is
+    // cleared separately by clearWinHighlights at spin start).
+    $$('#reels-grid .cell').forEach(function (c) {
+      c.classList.remove('is-win', 'is-line-active', 'is-dimmed');
+    });
     // Remove any floating payout label
     const lbl = document.getElementById('payline-label-floater');
     if (lbl && lbl.parentNode) lbl.parentNode.removeChild(lbl);
@@ -678,10 +680,24 @@
       $$('#reels-grid .cell.is-win, #reels-grid .cell.is-line-active').forEach(function (c) {
         c.classList.remove('is-win', 'is-line-active');
       });
-      for (const c of cells) {
-        const cell = cellAt(c.r, c.y);
-        if (cell) { cell.classList.add('is-win'); cell.classList.add('is-line-active'); }
-      }
+      // Build a set of "active" cell keys for fast lookup, then in one
+      // pass: add `.is-win` + `.is-line-active` to active cells; add
+      // `.is-dimmed` to everyone else.  Mirrors Wrath renderer.ts
+      // dimNonWinningCells() pattern (45% darken, 200ms cubic ease-in,
+      // instant clear between line transitions).
+      const activeKeys = new Set();
+      for (const c of cells) activeKeys.add(c.r + ':' + c.y);
+      $$('#reels-grid .cell').forEach(function (cellEl) {
+        const r = Number(cellEl.getAttribute('data-r'));
+        const y = Number(cellEl.getAttribute('data-y'));
+        const key = r + ':' + y;
+        if (activeKeys.has(key)) {
+          cellEl.classList.remove('is-dimmed');
+          cellEl.classList.add('is-win', 'is-line-active');
+        } else {
+          cellEl.classList.add('is-dimmed');
+        }
+      });
 
       // Build polyline through cell centers, then SVG sets up stroke
       // dashoffset draw-in animation.  Per-line color cycles through
@@ -724,10 +740,10 @@
       if (i < lineWins.length - 1) await wait(PAYLINE_LINE_GAP);
     }
 
-    // End state: clear all lines + cell highlights + label
+    // End state: clear lines + cell highlights + dim overlay + label
     if (paylineSvg) paylineSvg.innerHTML = '';
-    $$('#reels-grid .cell.is-win, #reels-grid .cell.is-line-active').forEach(function (c) {
-      c.classList.remove('is-win', 'is-line-active');
+    $$('#reels-grid .cell').forEach(function (c) {
+      c.classList.remove('is-win', 'is-line-active', 'is-dimmed');
     });
     const old = document.getElementById('payline-label-floater');
     if (old && old.parentNode) old.parentNode.removeChild(old);

@@ -2226,3 +2226,30 @@ body.is-bigwin .payline-overlay,
   opacity: 1;
   transition: opacity 240ms ease;
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   DIM NON-WINNING CELLS during payline cycling
+   ────────────────────────────────────────────────────────────────────────
+   Wrath spec (renderer.ts:5477–5589):
+     • 45% black overlay = filter brightness(0.55) equivalent in CSS
+     • 200ms cubic ease-in when applying
+     • 150ms quad ease-out when clearing
+     • Per-line cycle: only THIS line's cells stay bright, all others
+       (including scatter highlights + H&W badges) get dimmed
+   ════════════════════════════════════════════════════════════════════════ */
+.reels-grid .cell.is-dimmed {
+  filter: brightness(0.45) saturate(0.85);
+  transition: filter 200ms cubic-bezier(.32, 0, .67, 0), opacity 200ms cubic-bezier(.32, 0, .67, 0);
+  /* Pointer events still pass through; dim is pure visual */
+}
+.reels-grid .cell {
+  /* Default transition for when .is-dimmed is REMOVED (cell brightens
+     back).  Quad ease-out matches Wrath fade-out (150ms). */
+  transition: filter 150ms cubic-bezier(.33, 1, .68, 1);
+}
+/* When line-active, cell should always be FULL brightness regardless
+   of any inherited dim state (defensive — also ensures the active-line
+   pulse animation reads against the brightest reading). */
+.reels-grid .cell.is-line-active {
+  filter: brightness(1.05) saturate(1.05) !important;
+}
