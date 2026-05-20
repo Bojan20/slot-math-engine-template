@@ -93,13 +93,27 @@ test('Play Template: import IR → open standalone game → spin → wins accumu
   expect(title || '').toMatch(/Wrath/i);
   console.log(`✓ Title: ${title}`);
 
-  // Spin 5×. Wrath-canonical timing per spin:
-  //   windup 115 + windupStagger 4×33 + steady 1350 + stagger 4×180 + decel 300 + bounce 320 ≈ 2937ms
-  // Wait 3200ms between clicks so each spin finishes before the next click
-  // (otherwise mid-spin click triggers SLAM stop, not a new spin).
+  // Spin 5×.  IGT-canonical timing pushes a single spin to ~3s (windup
+  // 115 + cascade 4×33 + steady 1350 + stagger 4×180 + decel 300 + ghost 50
+  // + bounce 320 ≈ 2987ms).  We wait for state.spinning === false rather
+  // than a fixed timer so the test stays robust against animation tweaks.
+  async function waitSpinEnd(timeoutMs = 6000) {
+    const t0 = Date.now();
+    while (Date.now() - t0 < timeoutMs) {
+      const spinning = await newPage.evaluate(() => {
+        const w = window as unknown as { __SLOT__?: { state?: { spinning?: boolean } } };
+        return !!w.__SLOT__?.state?.spinning;
+      });
+      if (!spinning) return true;
+      await newPage.waitForTimeout(80);
+    }
+    return false;
+  }
   for (let i = 0; i < 5; i++) {
     await newPage.locator('#spin-btn').click();
-    await newPage.waitForTimeout(3200);
+    await newPage.waitForTimeout(120);  // let the click register
+    await waitSpinEnd();
+    await newPage.waitForTimeout(80);   // tiny buffer between spins
   }
   await newPage.screenshot({ path: `${SHOT_DIR}/03-after-5-spins.png`, fullPage: true });
 

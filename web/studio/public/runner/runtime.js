@@ -325,10 +325,15 @@
   //   • bouncePx = 6 (turbo 3), bounceCount = 2 (turbo 1), bounceDecay = 0.3
   //   • windupStaggerMs = 33 between reel STARTS (~2 frames @ 60fps)
   //   • anticipationMs = +2000 on reels 3+ when 2+ scatters landed (turbo +800)
+  // ghostMs = IGT pre-stop "nazre" preview window (final symbol shown 3px
+  // above target at opacity 0.6 for N ms before bounce kicks in).  Industry
+  // spec is 50ms — short enough to feel intentional, long enough for the
+  // player to read what's about to land.
   const SPIN_PROFILE = {
     normal: {
       windupMs: 115, accelMs: 130, steadyMs: 1350, decelMs: 300,
       staggerMs: 180, windupStaggerMs: 33,
+      ghostMs: 50,
       bouncePx: 6, bounceCount: 2, bounceDecay: 0.3, bounceElasticity: 1.8,
       anticipationMs: 2000,
       stopGap: 120, betweenSpinsMs: 200,
@@ -337,6 +342,7 @@
     turbo: {
       windupMs:  65, accelMs:  70, steadyMs:  450, decelMs: 120,
       staggerMs:  45, windupStaggerMs: 16,
+      ghostMs: 25,
       bouncePx: 3, bounceCount: 1, bounceDecay: 0.2, bounceElasticity: 2.0,
       anticipationMs: 800,
       stopGap:  40, betweenSpinsMs:  50,
@@ -345,6 +351,7 @@
     slam: {
       windupMs: 0, accelMs: 0, steadyMs: 0, decelMs: 100,
       staggerMs: 30, windupStaggerMs: 0,
+      ghostMs: 0,
       bouncePx: 0, bounceCount: 0, bounceDecay: 0, bounceElasticity: 0,
       anticipationMs: 0,
       stopGap: 0, betweenSpinsMs: 0,
@@ -490,11 +497,16 @@
       if (opts.spinning)   cell.classList.add('is-spinning');
       if (opts.windup)     cell.classList.add('is-windup');
       if (opts.decel)      cell.classList.add('is-decel');
+      if (opts.ghost)      cell.classList.add('is-ghost');
       if (opts.bounce)     cell.classList.add('is-bounce');
       if (opts.win)        cell.classList.add('is-win');
       if (opts.scatter)    cell.classList.add('is-scatter-win');
       if (opts.anticipate) cell.classList.add('is-anticipate');
     }
+    // For the strip-motion CSS pseudo-elements we expose the current
+    // symbol via data-spin-sym so the ::before / ::after "ghost trails"
+    // above + below the cell render the same character during spinning.
+    cell.setAttribute('data-spin-sym', symId || '?');
     const sym = SYM_BY_ID[symId];
     const name = sym && sym.name && sym.name !== symId ? `<span class="cell-name">${sym.name}</span>` : '';
     cell.innerHTML = `<span class="cell-id">${symId || '?'}</span>${name}`;
@@ -502,7 +514,8 @@
   function clearWinHighlights() {
     if (!reelsEl) return;
     $$('#reels-grid .cell').forEach((c) => {
-      c.classList.remove('is-win', 'is-scatter-win', 'is-anticipate', 'is-windup', 'is-spinning', 'is-decel', 'is-bounce');
+      c.classList.remove('is-win', 'is-scatter-win', 'is-anticipate',
+                         'is-windup', 'is-spinning', 'is-decel', 'is-ghost', 'is-bounce');
     });
   }
   function pickAnyId() {
@@ -559,6 +572,10 @@
 
     // Phase B — start spinning all reels with the same windup stagger so
     // reel N "catches up" rather than all reels snapping to spin at once.
+    // Also flip on the grid-level speedlines overlay (IGT-style 8 white
+    // horizontal lines repeating-linear-gradient).  We let the CSS keyframe
+    // fade them in/out automatically — only need to toggle the class.
+    if (reelsEl) reelsEl.classList.add('is-speeding');
     for (let r = 0; r < REELS; r++) {
       const reelIdx = r;
       setTimeout(() => {
@@ -569,6 +586,14 @@
         }
       }, reelIdx * P.windupStaggerMs);
     }
+    // The speedlines keyframe runs for 1.2s then fades out; once that
+    // window passes, the grid no longer needs the class.  Schedule the
+    // removal to coincide with the steady→decel transition of the LAST
+    // reel so the lines disappear right as reels start settling.
+    const speedlinesOffAt =
+      P.windupMs + (REELS - 1) * P.windupStaggerMs +
+      P.steadyMs + (REELS - 1) * P.staggerMs;
+    setTimeout(() => { if (reelsEl) reelsEl.classList.remove('is-speeding'); }, speedlinesOffAt);
 
     // Phase C — stop each reel sequentially with stagger + anticipation
     //   • staggerMs = gap between consecutive reel STOPS (Wrath 180ms)
@@ -605,6 +630,17 @@
             paintCell(reelIdx, y, pickAnyId(), { decel: true });
           }
           await wait(PD.decelMs);
+          // IGT pre-stop GHOST phase — final symbol is painted but offset
+          // 3px upward at opacity 0.6 for ghostMs window.  Gives the player
+          // visual anticipation time to read what's about to land.  Skipped
+          // entirely on slam (ghostMs=0).
+          if (PD.ghostMs > 0) {
+            root.style.setProperty('--t-ghost', PD.ghostMs + 'ms');
+            for (let y = 0; y < ROWS; y++) {
+              paintCell(reelIdx, y, finalGrid[reelIdx][y], { ghost: true });
+            }
+            await wait(PD.ghostMs);
+          }
           // Land final cells with cushion bounce.  Set --rbn-px and
           // --t-bounce inline so bounce honors current (possibly slam) profile.
           root.style.setProperty('--t-bounce', PD.bounceMs + 'ms');
@@ -633,9 +669,11 @@
     await wait(P.bounceMs);
 
     // Phase D — clear transient classes, highlight wins, banner
+    if (reelsEl) reelsEl.classList.remove('is-speeding');
     $$('#reels-grid .cell').forEach((c) => {
-      c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-bounce', 'is-anticipate');
+      c.classList.remove('is-windup', 'is-spinning', 'is-decel', 'is-ghost', 'is-bounce', 'is-anticipate');
       c.style.animationDelay = '';
+      c.removeAttribute('data-spin-sym');
       c.style.removeProperty('--rwp-px');
       c.style.removeProperty('--rsp-px');
       c.style.removeProperty('--rbn-px');

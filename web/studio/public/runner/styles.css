@@ -497,20 +497,28 @@ body {
 }
 
 
-/* ── 4 · Reel spin animation — Wrath SPIN_PROFILE canonical ─────────
-   Mirrors src/reels.ts pull-up → blur-scroll → ease-out decel → cushion
-   bounce (2 iterations, 30% decay).  Driven by per-cell CSS vars so the
-   JS profile (normal/turbo/slam) can swap timings without touching the
-   keyframes:
+/* ── 4 · Reel spin animation — IGT industry-standard ────────────────
+   Reference: SLOT_ANIMATION_INDUSTRY_STANDARD.md (FluxForge), citing
+   IGT / Aristocrat / NetEnt / Pragmatic Play / BTG.
+   Six-phase model:  IDLE → ACCEL (easeOutQuad 100ms) → SPINNING (linear)
+     → DECEL (easeOutCubic — strict, no wobble) → GHOST (50ms preview
+     of final symbol nazre 3px above target, opacity 0.6) → BOUNCE
+     (elasticOut 15% overshoot 200ms) → STOPPED.
+   Motion blur ramps  0 → 0.7 → 0  across phases (industry spec).
+   Driven by per-cell CSS vars so the JS profile (normal/turbo/slam/igt)
+   can swap timings without touching the keyframes:
      --rwp-px : windup pull-up distance         (normal 42, turbo 18)
      --rsp-px : per-frame downward scroll throw (normal 24, turbo 30)
      --rbn-px : first cushion bounce overshoot  (normal 6,  turbo 3)
    The cell sets these via inline style in animateGrid().
 ─────────────────────────────────────────────────────────────────── */
 
-/* Windup — sharp upward pull before reels accelerate down (Wrath 42px) */
+/* Windup — sharp upward pull before reels accelerate down (Wrath 42px).
+   IGT spec does NOT use a windup (idle→accel direct), but we keep it
+   for Wrath compatibility — the .igt profile in JS sets windupMs=0 to
+   suppress it cleanly. */
 .cell.is-windup {
-  animation: cell-windup var(--t-windup, 115ms) cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: cell-windup var(--t-windup, 115ms) cubic-bezier(0.5, 0, 1, 1) forwards;
   will-change: transform;
 }
 @keyframes cell-windup {
@@ -518,45 +526,106 @@ body {
   100% { transform: translateY(calc(var(--rwp-px, -42px))); }
 }
 
-/* Spin — continuous downward vertical blur scroll, infinite.  Wrath's
-   reels move ~24px/frame at 60fps under blur(4px); we approximate with
-   a fast linear keyframe and motion blur. */
+/* Spin — continuous downward vertical motion-blur scroll, infinite.
+   Industry-standard motion blur intensity = 0.7 (constant during steady).
+   `cell-id` text gets a vertical blur "trail" via duplicate ::before
+   / ::after pseudo-elements stacked offscreen — gives the genuine IGT
+   strip-motion look without rendering full sibling rows. */
 .cell.is-spinning {
   animation: cell-spin 70ms linear infinite;
-  filter: blur(4px);
+  filter: blur(4px) brightness(1.08);
   will-change: transform, filter;
+  overflow: hidden;
 }
+.cell.is-spinning::before,
+.cell.is-spinning::after {
+  content: attr(data-spin-sym);
+  position: absolute;
+  left: 0; right: 0;
+  text-align: center;
+  font: inherit; color: inherit;
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0.45;
+  filter: blur(2px);
+  transform: translateZ(0);
+}
+.cell.is-spinning::before { top: -88%; }   /* trailing ghost above   */
+.cell.is-spinning::after  { top:  88%; }   /* leading ghost below    */
 @keyframes cell-spin {
   0%   { transform: translateY(calc(var(--rsp-px, -24px))); }
   100% { transform: translateY(calc(var(--rsp-px, 24px)));  }
 }
 
-/* Decel — ease-out from spin overshoot back to 0, blur fades out */
+/* Decel — strict easeOutCubic (IGT spec).  No wobble, no extra
+   perceptual settle — reels read clean as they slow down so the player
+   can see what symbol is landing. */
 .cell.is-decel {
-  animation: cell-decel var(--t-decel, 300ms) cubic-bezier(0.22, 0.68, 0.4, 1) forwards;
+  animation: cell-decel var(--t-decel, 300ms) cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
 }
 @keyframes cell-decel {
-  0%   { transform: translateY(-18px); filter: blur(4px); }
-  40%  { transform: translateY(  6px); filter: blur(2px); }
-  75%  { transform: translateY( -2px); filter: blur(0.5px); }
+  0%   { transform: translateY(-22px); filter: blur(4px); }
+  35%  { transform: translateY(  8px); filter: blur(2.4px); }
+  70%  { transform: translateY(  2px); filter: blur(0.8px); }
   100% { transform: translateY(   0);  filter: blur(0); }
 }
 
-/* Cushion bounce — 2 iterations 30% decay (Wrath SPIN_PROFILE bouncePx=6
-   bounceCount=2 bounceDecay=0.3 bounceElasticity=1.8).  We bundle the
-   y-axis cushion + a scale-pop "landing thump" into one keyframe so the
-   cell feels like it lands with weight. */
+/* Pre-stop ghost — the final symbol "nazre se" 50ms before bounce.
+   Symbol sits 3px above its target position at 60% opacity, then snaps
+   to bounce.  Gives the player anticipation-reading time, IGT-style. */
+.cell.is-ghost {
+  animation: cell-ghost var(--t-ghost, 50ms) cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+@keyframes cell-ghost {
+  0%   { transform: translateY(-3px); opacity: 0.6; }
+  100% { transform: translateY( 0px); opacity: 1.0; }
+}
+
+/* Cushion bounce — IGT elasticOut 15% overshoot (200ms canonical).
+   We bake a two-iteration bounce into the keyframe because CSS doesn't
+   have a real spring; the scale-pop scaffolds the "landing thump".
+   Curve `cubic-bezier(0.34, 1.56, 0.64, 1)` is the classic "back.out"
+   elastic feel — overshoots ~15% then settles cleanly. */
 .cell.is-bounce {
-  animation: cell-bounce var(--t-bounce, 320ms) cubic-bezier(0.22, 1.0, 0.36, 1) forwards;
+  animation: cell-bounce var(--t-bounce, 320ms) cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   will-change: transform;
 }
 @keyframes cell-bounce {
-  0%   { transform: translateY(0)     scale(1.00); }
-  18%  { transform: translateY(-6px)  scale(1.05); }  /* 1st bounce: 6px up, scale-pop */
-  38%  { transform: translateY( 2px)  scale(0.99); }  /* settle, slight compress */
-  60%  { transform: translateY(-1.8px) scale(1.02); } /* 2nd bounce: 6 × 0.3, decay */
-  82%  { transform: translateY( 0.6px) scale(1.00); }
-  100% { transform: translateY(0)     scale(1.00); }
+  0%   { transform: translateY(0)      scale(1.00); }
+  22%  { transform: translateY(-6px)   scale(1.06); }   /* 1st bounce: 6px up + scale-pop */
+  44%  { transform: translateY( 2.2px) scale(0.99); }   /* settle, slight compress */
+  66%  { transform: translateY(-1.8px) scale(1.02); }   /* 2nd bounce: 6 × 0.3 = 1.8, decay */
+  84%  { transform: translateY( 0.5px) scale(1.00); }
+  100% { transform: translateY(0)      scale(1.00); }
+}
+
+/* Speed lines — 8 white horizontal lines across each reel, only at
+   high spin speed (≥30%).  Implemented as a repeating linear gradient
+   so we don't pay for 8 extra DOM nodes per reel.  Driven by a class
+   on the reel grid that JS adds/removes for the steady phase. */
+#reels-grid.is-speeding::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.00) 0px,
+    rgba(255,255,255,0.00) 28px,
+    rgba(255,255,255,0.25) 28px,
+    rgba(255,255,255,0.25) 30px
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: reels-speedlines 1200ms ease-in-out forwards;
+  z-index: 1;
+}
+@keyframes reels-speedlines {
+  0%   { opacity: 0;    transform: translateY(0); }
+  20%  { opacity: 0.55; }
+  80%  { opacity: 0.55; transform: translateY(-30px); }
+  100% { opacity: 0;    transform: translateY(-60px); }
 }
 
 /* Anticipation — sustained pulse on reels 3+ when 2+ scatters landed.
