@@ -2470,3 +2470,23 @@ body.j-no-bonus-buy [data-feature="bonus_buy"] {
 body.j-false-win-suppressed .win-banner {
   /* CSS hook for runtime to suppress celebration on sub-stake wins */
 }
+/* W221 — hide RTP stat when jurisdiction.rtpVisible = false.
+   Targets the side-card containing the #stat-rtp value + its label.
+   The card's `.side-lbl` text is "RTP NOW" so we match the card
+   via the :has() containment of #stat-rtp. */
+body.j-no-rtp .side-card:has(#stat-rtp) {
+  display: none;
+}
+
+/* W221 — cycle-gate throttle feedback.  Brief outline pulse on the
+   spin button when a press is rejected for being inside the active
+   jurisdiction's minCycleMs window.  Communicates "press registered
+   but throttled" without firing the heavy spin animation. */
+.spin-btn.is-throttled {
+  animation: spin-throttle-pulse 320ms ease-out;
+}
+@keyframes spin-throttle-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(244, 63, 94, 0.55); }
+  60%  { box-shadow: 0 0 0 14px rgba(244, 63, 94, 0.00); }
+  100% { box-shadow: 0 0 0 0   rgba(244, 63, 94, 0.00); }
+}

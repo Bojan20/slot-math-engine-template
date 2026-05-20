@@ -1242,12 +1242,21 @@
     body.classList.toggle('j-no-turbo', !j.turboEnabled);
     body.classList.toggle('j-no-bonus-buy', !j.bonusBuyEnabled);
     body.classList.toggle('j-false-win-suppressed', j.falseWinGuard);
+    body.classList.toggle('j-no-rtp', !j.rtpVisible);    // W221 — hide RTP stat
     // Force-off turbo if jurisdiction disallows it
     if (!j.turboEnabled && state.turbo) {
       state.turbo = false;
       const turboBtn = $('#turbo-btn');
       if (turboBtn) turboBtn.classList.remove('is-active');
     }
+    // W221 — clamp current bet to new jurisdiction maxStake
+    const maxBet = j.maxStakeCents / 100;
+    while (state.betLevelIdx > 0) {
+      const bet = Number(BASE_BET) * Number(BET_LEVELS[state.betLevelIdx] || 1);
+      if (bet <= maxBet) break;
+      state.betLevelIdx--;
+    }
+    renderHud();
     // Net-spend overlay visibility
     const overlay = $('#net-spend-overlay');
     const tag = $('#net-spend-tag');
@@ -1256,6 +1265,9 @@
     const cur = $('#net-spend-currency');
     if (cur) cur.textContent = CURRENCY;
     renderNetSpend();
+    // W221 — reset cycle gate so the FIRST spin after a jurisdiction
+    // swap fires immediately (subsequent spins respect the new minCycleMs).
+    lastSpinPressMs = 0;
     logActivityIfPresent('jurisdiction → ' + j.label + ' · cycle≥' + j.minCycleMs + 'ms · maxStake=' + j.maxStakeCents);
   }
 
@@ -2057,6 +2069,30 @@
   // ║ 18 · WIRING                                                   ║
   // ╚══════════════════════════════════════════════════════════════╝
 
+  // W221 — minCycleMs cycle-gate enforcement.  UKGC SI 2025/215 + DE
+  // GlüStV 2021 §22a + SE SFS 2018:1138 mandate a minimum wall-clock
+  // window between SPIN-PRESSED events.  Each press while still inside
+  // the prior cycle window is silently rejected (with a brief visual
+  // tick on the spin-btn to communicate that the press was registered
+  // but throttled).
+  let lastSpinPressMs = 0;
+  function cycleGatePassed() {
+    const min = activeJurisdiction.minCycleMs || 0;
+    if (min <= 0) return true;
+    const now = performance.now();
+    if (now - lastSpinPressMs < min) {
+      // Cosmetic feedback: brief outline pulse
+      const btn = $('#spin-btn');
+      if (btn && !btn.classList.contains('is-throttled')) {
+        btn.classList.add('is-throttled');
+        setTimeout(() => btn.classList.remove('is-throttled'), 320);
+      }
+      return false;
+    }
+    lastSpinPressMs = now;
+    return true;
+  }
+
   function bindUI() {
     spinBtn?.addEventListener('click', () => {
       // Wrath behavior: clicking SPIN mid-spin requests SLAM stop — the
@@ -2067,6 +2103,10 @@
         state.slamRequested = true;
         clearPaylines();
       } else {
+        // W221 — jurisdiction cycle gate (UKGC 2.5s / DE 5s / SE 3s).
+        // Press is silently rejected if the previous cycle's minimum
+        // wall-clock window hasn't elapsed yet.
+        if (!cycleGatePassed()) return;
         spinOnce();
       }
     });
