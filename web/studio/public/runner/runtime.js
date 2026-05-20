@@ -69,6 +69,43 @@
   const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+  // W222 — module-level easing helpers ported from
+  // slot-game-template/src/animation/timing.ts.  Used by reel decel,
+  // rollup counter, cascade fall, and any future settle animation.
+  // Keeping them at module scope (instead of inline) makes them
+  // reusable + benchmarkable + replaceable from a single point.
+  //
+  //   easeOutCubic    — gentle weighted-settle (rollup, reel decel)
+  //   easeOutBounce   — refill landing curve (cascade drop)
+  //   easeInOutSine   — celebrate-pulse / shimmer cycles
+  //   easeOutQuart    — even slower-settle (big-win finale snap)
+  //   easeInOutCubic  — symmetric ramp (intro pan)
+  function easeOutCubic(t)   { const u = 1 - t; return 1 - u * u * u; }
+  function easeOutQuart(t)   { const u = 1 - t; return 1 - u * u * u * u; }
+  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeInOutSine(t)  { return -(Math.cos(Math.PI * t) - 1) / 2; }
+  function easeOutBounce(t) {
+    const n1 = 7.5625, d1 = 2.75;
+    if (t < 1 / d1) return n1 * t * t;
+    if (t < 2 / d1) { const t2 = t - 1.5 / d1;  return n1 * t2 * t2 + 0.75; }
+    if (t < 2.5 / d1){ const t2 = t - 2.25 / d1; return n1 * t2 * t2 + 0.9375; }
+    const t2 = t - 2.625 / d1; return n1 * t2 * t2 + 0.984375;
+  }
+  // Tier-based rollup duration helper — mirrors
+  // slot-game-template/timing.ts `rollupDurationMs` so big-win count-ups
+  // stretch in proportion to win magnitude.  Turbo halves all durations.
+  function rollupDurationMs(winCoins, betCoins, turbo) {
+    if (!(betCoins > 0)) return turbo ? 220 : 400;
+    const x = winCoins / betCoins;
+    let d;
+    if (x >= 50)      d = 4500;   // tier3 EPIC
+    else if (x >= 25) d = 3500;   // tier2 MEGA
+    else if (x >= 10) d = 2500;   // tier1 BIG
+    else if (x >= 3)  d = 600;    // medium
+    else              d = 400;    // small
+    return turbo ? Math.max(180, Math.round(d * 0.55)) : d;
+  }
+
   // xoshiro128** — Blackman/Vigna 2018, 32-bit Number-only impl
   // (Math.imul + shifts, no BigInt).  Distributionally superior to mulberry32
   // (eliminates measured +0.06% H&W upward bias from mulberry32's
@@ -1145,7 +1182,13 @@
   function rollupStatusWin(amount, durationMs) {
     if (!statusValueEl || !statusTextEl) return Promise.resolve();
     if (amount <= 0) { setStatusText('PRESS SPIN'); return Promise.resolve(); }
-    durationMs = durationMs || (state.turbo ? 220 : 400);
+    // W222 — tier-based rollup duration.  When caller doesn't specify
+    // an explicit duration, scale the count-up time with win magnitude
+    // so EPIC wins get a 4.5s ramp (not the 400ms small-win baseline).
+    // Mirrors slot-game-template/src/animation/timing.ts.
+    if (durationMs == null) {
+      durationMs = rollupDurationMs(amount, currentBet(), state.turbo);
+    }
     const HOLD_MS = state.turbo ? 600 : 1200;
 
     // Cancel any previous rollup fade so back-to-back wins don't strand
@@ -1164,7 +1207,8 @@
       const multLabel = (state._lastWinMult && state._lastWinMult > 1) ? ` · ${state._lastWinMult}×` : '';
       function step(now) {
         const t = clamp((now - t0) / durationMs, 0, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
+        // W222 — use module-level easeOutCubic helper (was inline `1 - (1-t)^3`)
+        const eased = easeOutCubic(t);
         statusValueEl.textContent = `WIN: ${fmt(amount * eased)}${multLabel}`;
         if (t < 1) requestAnimationFrame(step);
         else {
