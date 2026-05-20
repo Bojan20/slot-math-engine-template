@@ -15,6 +15,52 @@
   <link rel="apple-touch-icon" href="icons/icon.svg" />
   <title>Slot Math Studio · v5-final — Production Studio</title>
   <link rel="stylesheet" href="styles.css" />
+  <!-- ═══════════════════════════════════════════════════════════════════
+       PRE-APP STALE-SW NUKER  (runs BEFORE app.js so it can't be cached)
+       ═══════════════════════════════════════════════════════════════════
+       The studio used to ship a Workbox-style service worker.  Repeated
+       sessions left stale shells in the cache that served OLD app.js
+       binaries — and bug reports like "X button doesn't close drawer"
+       are almost always the user running a cached pre-fix bundle.
+       We unregister ALL SWs synchronously on every load and clear every
+       CacheStorage entry.  If anything was found, we hard-reload once
+       so the next request bypasses the killed SW and pulls fresh source.
+  ═══════════════════════════════════════════════════════════════════ -->
+  <script>
+    (function killStaleServiceWorker() {
+      try {
+        if (!('serviceWorker' in navigator) && typeof caches === 'undefined') return;
+        var didKill = false;
+        var reloadFlagKey = '__studio_sw_reloaded_at__';
+        // Avoid an infinite reload loop — only auto-reload at most once per 10s.
+        var lastReload = parseInt(sessionStorage.getItem(reloadFlagKey) || '0', 10);
+        var canReload = (Date.now() - lastReload) > 10_000;
+
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) {
+              try { r.unregister(); didKill = true; } catch (_) {}
+            });
+            if (didKill && canReload) {
+              sessionStorage.setItem(reloadFlagKey, String(Date.now()));
+              console.log('[studio] killed ' + regs.length + ' stale SW(s) — reloading once for fresh app.js');
+              location.reload();
+            }
+          }).catch(function () {});
+        }
+        if (typeof caches !== 'undefined') {
+          caches.keys().then(function (keys) {
+            keys.forEach(function (k) {
+              try { caches.delete(k); } catch (_) {}
+            });
+            if (keys.length > 0) {
+              console.log('[studio] cleared ' + keys.length + ' stale CacheStorage entries');
+            }
+          }).catch(function () {});
+        }
+      } catch (_) { /* never block boot */ }
+    })();
+  </script>
 </head>
 <body class="persona-math">
 
@@ -1359,13 +1405,21 @@
        pane matching the active tab is visible.  X in the top-right
        closes the whole drawer (sync with header layout-toggle button). -->
   <div class="bottom-panel" id="bottom-panel" hidden>
+    <!-- Inline onclick handlers below are defense-in-depth.  app.js
+         wires the same behaviour via delegated listeners, but if a
+         stale bundle ever slips through the SW killer the inline
+         handlers still close the drawer / switch tabs.  Cheap, safe. -->
     <div class="bp-h">
       <div class="bp-tabs" role="tablist" aria-label="Bottom panel sections">
-        <button class="bp-tab is-active" data-bp="activity" role="tab" aria-selected="true"  aria-controls="bp-pane-activity">Activity</button>
-        <button class="bp-tab"           data-bp="mc"       role="tab" aria-selected="false" aria-controls="bp-pane-mc">MC progress</button>
-        <button class="bp-tab"           data-bp="ci"       role="tab" aria-selected="false" aria-controls="bp-pane-ci">CI gates</button>
+        <button class="bp-tab is-active" data-bp="activity" role="tab" aria-selected="true"  aria-controls="bp-pane-activity"
+                onclick="(function(b){document.querySelectorAll('#bottom-panel .bp-tab').forEach(function(t){var on=t.dataset.bp===b.dataset.bp;t.classList.toggle('is-active',on);t.setAttribute('aria-selected',on?'true':'false');});['activity','mc','ci'].forEach(function(p){var el=document.getElementById('bp-pane-'+p);if(!el)return;if(p===b.dataset.bp){el.removeAttribute('hidden');el.classList.add('is-active');}else{el.setAttribute('hidden','');el.classList.remove('is-active');}});})(this);return false;">Activity</button>
+        <button class="bp-tab"           data-bp="mc"       role="tab" aria-selected="false" aria-controls="bp-pane-mc"
+                onclick="(function(b){document.querySelectorAll('#bottom-panel .bp-tab').forEach(function(t){var on=t.dataset.bp===b.dataset.bp;t.classList.toggle('is-active',on);t.setAttribute('aria-selected',on?'true':'false');});['activity','mc','ci'].forEach(function(p){var el=document.getElementById('bp-pane-'+p);if(!el)return;if(p===b.dataset.bp){el.removeAttribute('hidden');el.classList.add('is-active');}else{el.setAttribute('hidden','');el.classList.remove('is-active');}});})(this);return false;">MC progress</button>
+        <button class="bp-tab"           data-bp="ci"       role="tab" aria-selected="false" aria-controls="bp-pane-ci"
+                onclick="(function(b){document.querySelectorAll('#bottom-panel .bp-tab').forEach(function(t){var on=t.dataset.bp===b.dataset.bp;t.classList.toggle('is-active',on);t.setAttribute('aria-selected',on?'true':'false');});['activity','mc','ci'].forEach(function(p){var el=document.getElementById('bp-pane-'+p);if(!el)return;if(p===b.dataset.bp){el.removeAttribute('hidden');el.classList.add('is-active');}else{el.setAttribute('hidden','');el.classList.remove('is-active');}});})(this);return false;">CI gates</button>
       </div>
-      <button class="bp-close" id="bp-close" data-bp-close type="button" title="Close drawer (⌘J)" aria-label="Close drawer">×</button>
+      <button class="bp-close" id="bp-close" data-bp-close type="button" title="Close drawer (⌘J)" aria-label="Close drawer"
+              onclick="event.stopPropagation();event.preventDefault();document.getElementById('bottom-panel').setAttribute('hidden','');try{localStorage.setItem('studio.bottomPanel.open.v1','0');}catch(e){}var t=document.getElementById('btn-toggle-panel');if(t){t.classList.remove('is-active');t.setAttribute('aria-pressed','false');}return false;">×</button>
     </div>
     <div class="bp-body" id="bp-body">
       <div class="bp-pane is-active" id="bp-pane-activity" role="tabpanel" aria-labelledby="bp-tab-activity">

@@ -3055,19 +3055,26 @@
   // Wire all open / close affordances.  We use a SINGLE delegated
   // listener on the document for #bp-close (matches both the current
   // button and any future re-render of the drawer), so the X always
-  // works even if the original DOM node was replaced.  Direct binding
-  // would double-fire when combined with delegation, so we don't add
-  // one separately.
+  // works even if the original DOM node was replaced.
+  //
+  // CRITICAL: the X must always CLOSE (idempotent hide), never toggle.
+  // Otherwise the inline onclick in index.html and the delegated handler
+  // here would each toggle once → panel ends up re-opened.  The bug
+  // "X doesn't close drawer" was exactly that double-toggle race.
   //
   // The header `#btn-toggle-panel` and legacy status-footer
   // `#btn-toggle-bottom` are SEPARATE buttons (not #bp-close), so they
-  // get their own direct listeners without conflict.
-  function safeToggleBottom(e) {
+  // get their own direct listeners and still toggle.
+  function closeBottomDrawer(e) {
     try {
       if (e) { e.preventDefault(); e.stopPropagation(); }
-      toggleBottom();
+      const bp = $("#bottom-panel");
+      if (!bp) return;
+      bp.setAttribute("hidden", "");
+      try { localStorage.setItem(BOTTOM_PANEL_STORAGE_KEY, "0"); } catch (_) {}
+      syncBottomToggleBtn();
     } catch (err) {
-      console.warn("[studio] toggleBottom failed:", err);
+      console.warn("[studio] closeBottomDrawer failed:", err);
     }
   }
   // Single delegated listener for the in-panel X.  Survives DOM
@@ -3075,7 +3082,7 @@
   document.addEventListener("click", (e) => {
     const t = e.target;
     if (!(t instanceof Element)) return;
-    if (t.closest("#bp-close, [data-bp-close]")) safeToggleBottom(e);
+    if (t.closest("#bp-close, [data-bp-close]")) closeBottomDrawer(e);
   });
   // Separate buttons — direct listeners, no conflict with the delegated one.
   const legacyBottomBtn = document.querySelector("#btn-toggle-bottom");
@@ -3092,7 +3099,7 @@
     // Skip if a modal/menu is open above the drawer
     const blocked = document.querySelector(".modal-base:not([hidden]), .wiz:not([hidden]), .cmdp:not([hidden]), .picker:not([hidden])");
     if (blocked) return;
-    safeToggleBottom(e);
+    closeBottomDrawer(e);
   });
 
   // Note: an earlier iteration added click-outside-to-close but it was
