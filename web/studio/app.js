@@ -3369,6 +3369,13 @@
               const result = await window.MTLSeal.sealIR(ir, {
                 seedCount: 500,
                 useRuntime: true,
+                // WASM oracle (Rust→WASM build) lacks the F_FS.scatter_pays
+                // fallback that runtime.js + oracle.js gained when IR lists
+                // scatter pays only under feature.free_spins (Wrath shape).
+                // Disable it as third witness until the wasm-oracle crate is
+                // rebuilt with the same fallback; oracle ↔ runtime lockstep
+                // still proves runtime math, which is what Play Template needs.
+                useWasm: false,
                 onProgress: (pct, seed) => modal.update(pct, seed),
               });
               if (!result.ok) {

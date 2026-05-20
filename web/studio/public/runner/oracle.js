@@ -249,7 +249,20 @@
           if (grid[r][y] === scId) scCount++;
         }
       }
-      if (scCount >= 3) scatterPay = payAt(ir, scId, Math.min(scCount, 5));
+      if (scCount >= 3) {
+        scatterPay = payAt(ir, scId, Math.min(scCount, 5));
+        // Wrath-style fallback: IR may declare scatter pays only on
+        // the free_spins feature (paytable has no "S"), in which case
+        // the engine must still pay them.  Mirror runtime.js evalBase.
+        if (scatterPay === 0) {
+          const fFs = findFeature(ir, 'free_spins');
+          if (fFs && fFs.scatter_pays) {
+            const k = String(Math.min(scCount, 5));
+            const v = fFs.scatter_pays[k] ?? fFs.scatter_pays[Math.min(scCount, 5)];
+            scatterPay = Number(v) || 0;
+          }
+        }
+      }
     }
 
     // Bonus count (for H&W trigger)

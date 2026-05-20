@@ -247,7 +247,20 @@
       for (let r = 0; r < REELS; r++)
         for (let y = 0; y < ROWS; y++)
           if (grid[r][y] === scId) { scCount++; scCells.push({ r, y }); }
-      if (scCount >= 3) scatterPay = payAt(scId, Math.min(scCount, 5));
+      if (scCount >= 3) {
+        // 1) IR.paytable[S] is the canonical place for scatter pay
+        scatterPay = payAt(scId, Math.min(scCount, 5));
+        // 2) If author only declared scatter_pays on the FS feature
+        //    (e.g. Wrath of Olympus IR — paytable has no "S" key), fall
+        //    back to F_FS.scatter_pays — the same table the canonical
+        //    Wrath engine reads in features.ts.  Without this fallback
+        //    every scatter pay is silently zero, costing ~1.75pp RTP.
+        if (scatterPay === 0 && F_FS && F_FS.scatter_pays) {
+          const k = String(Math.min(scCount, 5));
+          const v = F_FS.scatter_pays[k] ?? F_FS.scatter_pays[Math.min(scCount, 5)];
+          scatterPay = Number(v) || 0;
+        }
+      }
     }
     const bnId = bonusId();
     let bonusCount = 0;
