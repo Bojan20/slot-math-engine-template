@@ -2230,7 +2230,7 @@
     jurisdictionApply(initialJ);
 
     document.addEventListener('keydown', (e) => {
-      if (e.target && /input|textarea/i.test(e.target.tagName)) return;
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
       if (e.code === 'Space') {
         e.preventDefault();
         if (state.spinning) {
@@ -2238,14 +2238,32 @@
           state.slamRequested = true;
           clearPaylines();
         } else {
+          if (!cycleGatePassed()) return;
           spinOnce();
         }
       } else if (e.key === 'a' || e.key === 'A') {
-        runAutoplay(10);
+        // W227 — jurisdiction-aware: ignore A-key when autoplay disabled
+        if (activeJurisdiction.autoplayEnabled) runAutoplay(10);
       } else if (e.key === 's' || e.key === 'S') {
         stopAutoplay();
       } else if (e.key === 't' || e.key === 'T') {
-        toggleTurbo();
+        // W227 — jurisdiction-aware: ignore T-key when turbo disabled
+        if (activeJurisdiction.turboEnabled) toggleTurbo();
+      } else if (e.key === 'm' || e.key === 'M') {
+        // W227 — keyboard mute toggle (mirrors sound button click)
+        toggleSound();
+      } else if (e.key === 'p' || e.key === 'P') {
+        // W227 — paytable toggle (mirrors paytable-toggle click)
+        if (paytableDrawer) {
+          if (paytableDrawer.hasAttribute('hidden')) paytableDrawer.removeAttribute('hidden');
+          else paytableDrawer.setAttribute('hidden', '');
+        }
+      } else if (e.key === '+' || e.key === '=' || e.key === 'ArrowUp') {
+        // W227 — bet +
+        setBetLevel(+1);
+      } else if (e.key === '-' || e.key === '_' || e.key === 'ArrowDown') {
+        // W227 — bet -
+        setBetLevel(-1);
       } else if (e.key === 'Escape') {
         closeAutoplayPanel();
         if (quickMenuEl && !quickMenuEl.hasAttribute('hidden')) toggleQuickMenu();
