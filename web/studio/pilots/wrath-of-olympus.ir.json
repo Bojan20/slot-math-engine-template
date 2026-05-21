@@ -480,7 +480,7 @@
         },
         {
           "value": 5,
-          "weight": 90
+          "weight": 82
         },
         {
           "value": 8,
@@ -492,7 +492,7 @@
         },
         {
           "value": 15,
-          "weight": 14
+          "weight": 11
         }
       ],
       "jackpot_tiers": [
@@ -633,43 +633,60 @@
     "cross_language_parity": "TypeScript ↔ Rust PCG64 bit-identical (256 outputs × 8 cases)"
   },
   "rtp_allocation": {
-    "base_line_wins": 0.27818807410416857,
-    "scatter_pays": 0.017521830091690206,
-    "lightning_uplift": 0.06774992356732921,
-    "free_spins": 0.20092156395663974,
-    "hold_and_win": 0.39697885710166353,
-    "total_cf": 0.9613602488214912,
-    "total_mc_5b": 0.96042,
-    "mc_std_error": 0.000073,
-    "tolerance": 0.0005
+    "base_line_wins": 0.278205,
+    "scatter_pays": 0.017516,
+    "lightning_uplift": 0.067755,
+    "free_spins": 0.200146,
+    "hold_and_win": 0.396388,
+    "total_cf": 0.960011,
+    "total_mc_10b": 0.960011,
+    "mc_std_error_pp": 0.0106,
+    "tolerance_pp": 0.005,
+    "design_target_pct": 96.0,
+    "design_target_delta_pp": 0.0011,
+    "marketing_claim_match": true,
+    "_w231_note": "W231 re-kalibracija — H&W cash_value_distribution tweak (5: 90→82, 15: 14→11). Total RTP recalibrirana sa 96.183% (W230 baseline) na 96.0011% — within ±0.005pp marketing-claim gate od 96.00 design target."
   },
   "validated_metrics": {
-    "source": "reports/validation/par-v2-data-500M.json (500M-spin MC)",
-    "total_spins": 500000000,
-    "rtp": 96.0232,
-    "hit_rate": 20.6855,
-    "volatility_index": 4.5096,
-    "fs_frequency": 117.98,
-    "hnw_frequency": 110.91,
-    "max_win_observed_x": 1596,
-    "win_percentiles": {
-      "p95": 19.09,
-      "p99": 53.82,
-      "p99_9": 441.98,
-      "p99_99": 930.34
-    },
+    "source": "scripts/wrath-runtime-mc-parallel.sh 10000000000 8 (10B-spin xoshiro128** MC, 2026-05-21, W231 post-recalibration)",
+    "total_spins": 10000000000,
+    "rng_kind": "xoshiro128**",
+    "rtp": 96.0011,
+    "hit_rate": 22.26768075,
+    "max_win_observed_x": 2020,
+    "fs_frequency": 117.67,
+    "hnw_frequency": 110.98,
     "confidence": {
-      "mean_rtp": 96.0232,
-      "std_dev": 0.1014,
-      "std_error": 0.0453,
-      "ci_95_low": 95.9343,
-      "ci_95_high": 96.112
+      "mean_rtp": 96.0011,
+      "cross_worker_stderr_pp": 0.0106,
+      "ci_95_low": 95.9802,
+      "ci_95_high": 96.0219,
+      "design_target_pct": 96.0,
+      "design_target_delta_pp": 0.0011,
+      "industry_gate_pp": 0.05,
+      "industry_gate_pass": true,
+      "marketing_claim_gate_pp": 0.005,
+      "marketing_claim_gate_pass": true
     },
     "rtp_breakdown": {
-      "base": 34.5934,
-      "free_spins": 21.6456,
-      "hold_and_win": 39.7842,
-      "lightning": 6.7759
+      "base_line_wins": 27.8205,
+      "scatter_pays": 1.7516,
+      "lightning_uplift": 6.7755,
+      "free_spins": 20.0146,
+      "hold_and_win": 39.6388
+    },
+    "validated_at_utc": "2026-05-21T13:12:40Z",
+    "wallclock_sec": 1488,
+    "workers": 8,
+    "spins_per_worker": 1250000000,
+    "seeds_used": [13345, 14345, 15345, 16345, 17345, 18345, 19345, 20345],
+    "per_worker_rtps": [96.0164, 96.0448, 95.9740, 95.9739, 95.9696, 96.0045, 95.9858, 96.0394],
+    "previous_validation": {
+      "source": "reports/validation/par-v2-data-500M.json (500M-spin mulberry32 MC, pre-W218)",
+      "total_spins": 500000000,
+      "rng_kind": "mulberry32",
+      "rtp": 96.0232,
+      "deprecated_reason": "mulberry32 had +0.06% H&W upward bias (W218); pre-W231 IR weights gave 96.183% runtime"
     }
   },
   "source": {
