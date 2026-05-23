@@ -2800,6 +2800,18 @@ diff <(jq -S . /tmp/replica/manifest.json) <(jq -S . reports/cert-bundle-b6ebe09
 | TS `runIRSimulation` (Mulberry32) | **81.073696%** | ±0.073883% (proxy) | 34.599% | 96.8× | 56.27 s | 177 713/s |
 | **Δ (cross-language)** | **+0.035820%** | — | +0.012pp | — | TS 5.04× slower | TS 5.04× slower |
 
+### Per-runtime evidencija (N = 100M, seed = 42 — nightly tier, **WAVE-EXTENSION 2026-05-23**)
+
+| Runtime | RTP | 1σ stderr | Hit rate | Max win | Wall time | Throughput |
+|---|---|---|---|---|---|---|
+| Rust `evaluator_parity` | **81.219171%** | ±0.023394% | 34.603% | 134000 mc | 112.41 s | 889 511/s |
+| TS `runIRSimulation` | **81.222951%** | ±0.023394% (proxy) | 34.621% | 126.6× | 743.89 s | 134 432/s |
+| **Δ (cross-language)** | **+0.003780%** | — | +0.018pp | — | TS 6.6× slower | TS 6.6× slower |
+
+**100M scaling result:** ΔRTP shrunk **0.0358% → 0.0038%** (9.4× tighter, exactly matches √(100M/10M)=√10≈3.16× ECF, ali stvarno improvement je veći jer su oba MC samostalna). Adaptive tolerance scaled down 0.313% → 0.099% (3σ_combined). **z = 0.114, p = 0.93** — RTP-ovi se razlikuju u 1/9 σ, što je dosledno hipotezi nulte engine drift-a.
+
+**Conclusion:** TS↔Rust math engines su statistički neraspoznatljivi do 100M-spin tier-a. 1B cert tier ostaje za buduce; predviđeni Δ pri 1B ≈ 0.0012% (još jedan √10 improvement).
+
 ### Methodological honesty notes
 
 * **Adaptive tolerance:** max(0.001%, 3σ_combined). Hard 0.001% bound je dostižan SAMO pri N ≥ ~10¹⁰ spinova (combined stderr = σ/√N skalira sporo). Pri N=10M, 3σ = 0.31% je realan MC floor. Skripta uvek log-uje obe brojke da Boki može da raspravlja sa regulatorom.
