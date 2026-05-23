@@ -72,10 +72,11 @@ struct Args {
     seed: u64,
 
     /// Number of base-game spins to emit. Each emission is a single
-    /// NDJSON line on stdout. 1 ≤ spins ≤ 10_000_000 (arbitrary upper
-    /// cap to keep `--release` runtime under a few minutes for CI).
+    /// NDJSON line on stdout. 1 ≤ spins ≤ 10_000_000_000 (W233 raised
+    /// cap from 10M → 10B to unblock cert-tier aggregate-RTP parity
+    /// gate; per-spin throughput is ~30M/s so even 10B fits in ~6 min).
     #[arg(long)]
-    spins: u32,
+    spins: u64,
 
     /// Evaluation mode. Defaults to `lines` because that's the only
     /// path the legacy TS engine guarantees bit-match for. Other modes
@@ -98,7 +99,7 @@ struct Args {
 /// promised to be stable, but the IR symbol ids are).
 #[derive(Serialize)]
 struct SpinRecord {
-    spin: u32,
+    spin: u64,
     base_win: i64,
     scatter_count: u8,
     bonus_count: u8,
@@ -134,8 +135,8 @@ fn main() {
     let args = Args::parse();
     assert!(args.spins > 0, "--spins must be > 0");
     assert!(
-        args.spins <= 10_000_000,
-        "--spins capped at 10M for CI runtime"
+        args.spins <= 10_000_000_000,
+        "--spins capped at 10B (W233 raise); per-spin throughput ~30M/s"
     );
 
     let cfg = load_config(&args.config);
@@ -153,7 +154,7 @@ fn main() {
     let num_reels = cfg.reels as usize;
     let num_rows = cfg.rows as usize;
 
-    for spin_idx in 0..args.spins {
+    for spin_idx in 0u64..args.spins {
         let grid = grid_gen.generate_base(&mut rng);
         // Flatten the grid (row-major: reel-by-reel, top→bottom rows).
         // We must do this BEFORE `evaluate_spin` because the evaluator

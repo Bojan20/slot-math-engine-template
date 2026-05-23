@@ -1,0 +1,39 @@
+{
+  "wave": "W233",
+  "generatedAt": "2026-05-23T10:22:22.499Z",
+  "config": {
+    "spins": 10000000,
+    "seed": 42,
+    "fixture": "tests/fixtures/parity.json"
+  },
+  "rust": {
+    "n": 10000000,
+    "rtp": 0.81109516,
+    "hitRate": 0.3461138,
+    "maxWin": 134000,
+    "stderr": 0.000738832155054487,
+    "wallMs": 11458.058958000001,
+    "throughputSpinsPerSec": 872748
+  },
+  "ts": {
+    "n": 10000000,
+    "rtp": 0.8107369599848652,
+    "hitRate": 0.3459867,
+    "maxWinX": 96.8,
+    "stderr": 0.000738832155054487,
+    "wallMs": 56564.252667,
+    "throughputSpinsPerSec": 176790
+  },
+  "parity": {
+    "deltaRTP": 0.00035820001513486854,
+    "deltaRTPpct": 0.035820001513486854,
+    "combinedStderr": 0.001044866453995397,
+    "combinedStderrPct": 0.1044866453995397,
+    "tolerance": 0.003134599361986191,
+    "tolerancePct": 0.3134599361986191,
+    "toleranceSource": "3σ_combined",
+    "zScore": 0.34281894472271623,
+    "pValueTwoSided": 0.772165110472109,
+    "verdict": "PASS"
+  }
+}
