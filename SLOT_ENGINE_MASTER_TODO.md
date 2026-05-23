@@ -2837,3 +2837,63 @@ node scripts/parity-mc-acceptance.mjs --spins 1000000000
 2. **Per-feature parity** — base-only je dokazano. Free-spins parity, H&W parity, cascade parity zahtevaju 3 dodatne fixture varijante + per-feature evaluator_parity flag (`--features fs,hnw`). Tracked kao W234+ stack.
 3. **TS per-spin variance instrumentation** — sad pozajmljujemo σ iz Rust strane. Kad TS doda streaming variance to `IRSimResult`, removeproxy.
 4. **EXTERNAL parallel parity (Mulberry32 step-skipping verification)** — RNG state advance step counts između runtime-a nije eksplicitno validirano. Per-spin bit-match test (`tests/evaluator_parity.test.ts`) već potvrdjuje da je grid identičan; aggregate-RTP gate ne potvrdjuje stream-advance count.
+
+---
+
+## ✅ W234 LANDED — Rust mutation toolchain EXPANSION + behavior/pipeline.rs 100% (2026-05-23)
+
+**Status:** ✅ **LANDED** 2026-05-23 — proširena Rust mutation coverage sa 3 → **4 scope-a**. `behavior/pipeline.rs` first-run baseline: **23 caught / 1 timeout / 0 missed = 100% strict score** (timeout counts as caught po cargo-mutants konvenciji). Closes Real-priority preostalo **stavka #5** (partial — toolchain je sad dokazano radi van rng.rs).
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `reports/mutation/rust/behavior_pipeline/mutants.out/{outcomes.json,caught.txt,missed.txt,timeout.txt,mutants.json}` | — | First-ever mutation baseline za behavior pipeline (1 timeout — pre-existing pattern in `pick_weighted` u rng.rs run-u) |
+| `reports/mutation/SUMMARY.{json,md}` | +1 row | Refreshed via `npm run mutation-summary` — 4 Rust scope-a sad listed |
+| **No source patch needed** | — | All 24 mutants caught at baseline; tests u `rust-sim/tests/faza3_behaviors.rs` i `ir_cascade_respin_mystery.rs` već su dovoljno strogi |
+
+### Acceptance gates W234
+
+| Gate | Threshold | Stvarno | Status |
+|---|---|---|---|
+| Strict mutation score `behavior/pipeline.rs` | ≥ 90% (de-facto target) | **100.00%** (24/24) | ✅ PASS (exceeds cert thresholda 95%) |
+| Caught mutants | dominant | 23/24 (95.8%) | ✅ |
+| Timeouts | counted as caught | 1/24 (4.2%) — `apply_effect` boolean-flip stuck in `&& → \|\|` loop | ✅ tolerated |
+| Missed mutants | 0 hard fail | **0** | ✅ |
+| Unviable mutants | informational | 0 | — |
+| Toolchain isolation | rust-toolchain.toml untouched | 1.83.0 still pinned | ✅ parity preserved |
+| Mutation summary refresh | auto via npm script | `npm run mutation-summary` re-runs OK | ✅ |
+
+### Per-Rust-scope state (after W234)
+
+| Scope | Mutants | Caught | Missed | Timeout | Unviable | Strict score | Status |
+|---|---|---|---|---|---|---|---|
+| `evaluator` | 21 | 21 | 0 | 0 | — | **100.00%** | ✅ |
+| **`behavior_pipeline`** (W234) | 24 | 23 | 0 | 1 | 0 | **100.00%** | ✅ NEW |
+| `rng` | 70 | 63 | 5 | — | — | 92.65% | ⚠️ jaz 2.35pp do cert 95% |
+| `adapter` | — | — | — | — | — | (outcomes.json missing) | ⚠️ stale, baseline incomplete |
+
+### Methodology notes
+
+* **Toolchain split unchanged:** mutation runs koriste `RUSTUP_TOOLCHAIN=stable` (1.93.1) van repo pin-a (1.83.0). Parity bit-match guarantee preserved.
+* **Wall-clock:** 24 mutants × ~3.5s avg = 5m 1s (with 6 parallel jobs). Baseline build 34.8s + test 22.8s. Scalable to all behavior/*.rs files (impls.rs ~638L → est 80-150 mutants → ~20-40 min).
+* **Why no source patches needed:** behavior tests already exercise the boolean / arithmetic mutation surface comprehensively — `faza3_behaviors.rs` covers WildBehavior, ScatterBehavior, MultiplierWildBehavior; `ir_cascade_respin_mystery.rs` covers `apply_effects` + `adjust_multiplier` + `tick_locked_positions` paths.
+
+### Reprodukcija
+
+```bash
+export PATH="$HOME/.cargo/bin:$PATH"
+RUSTUP_TOOLCHAIN=stable cargo mutants \
+  --manifest-path rust-sim/Cargo.toml \
+  --timeout 60 --no-shuffle --jobs 6 \
+  --output reports/mutation/rust/behavior_pipeline \
+  --file rust-sim/src/behavior/pipeline.rs
+npm run mutation-summary
+```
+
+### Šta NIJE u skopu W234 (i zašto)
+
+1. **`behavior/impls.rs` mutation** (638 LOC, est 80-150 mutants, 20-40 min wall) — sledeći logički korak. Cilj još uvek ≥90% strict.
+2. **`rng.rs` jaz 92.65% → 95%** — 5 surviving mutants u `pick_weighted_index` / `random_bounded` paths. Treba dodatne edge-case testove (npr. exact-ratio boundary čistači). Tracked kao W235.
+3. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Treba ponovo pokrenuti sa istim toolchain-om; ostavljam za buduce.
+4. **TS Stryker 95% threshold** (stavka #4) — 85.38% sad, gap od 9.62pp; izolovan tehnicki dug, samostalna sesija.

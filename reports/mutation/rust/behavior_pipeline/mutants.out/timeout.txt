@@ -1,0 +1,1 @@
+rust-sim/src/behavior/pipeline.rs:50:45: replace && with || in apply_effect

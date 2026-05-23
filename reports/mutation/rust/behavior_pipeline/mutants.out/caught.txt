@@ -1,0 +1,23 @@
+rust-sim/src/behavior/pipeline.rs:11:5: replace apply_effect with ()
+rust-sim/src/behavior/pipeline.rs:101:29: replace == with != in apply_effect
+rust-sim/src/behavior/pipeline.rs:112:34: replace += with -= in apply_effect
+rust-sim/src/behavior/pipeline.rs:112:34: replace += with *= in apply_effect
+rust-sim/src/behavior/pipeline.rs:116:35: replace += with -= in apply_effect
+rust-sim/src/behavior/pipeline.rs:116:35: replace += with *= in apply_effect
+rust-sim/src/behavior/pipeline.rs:15:53: replace - with + in apply_effect
+rust-sim/src/behavior/pipeline.rs:15:53: replace - with / in apply_effect
+rust-sim/src/behavior/pipeline.rs:50:36: replace == with != in apply_effect
+rust-sim/src/behavior/pipeline.rs:50:55: replace == with != in apply_effect
+rust-sim/src/behavior/pipeline.rs:138:17: replace *= with += in adjust_multiplier
+rust-sim/src/behavior/pipeline.rs:123:5: replace apply_effects with ()
+rust-sim/src/behavior/pipeline.rs:138:17: replace *= with /= in adjust_multiplier
+rust-sim/src/behavior/pipeline.rs:131:5: replace adjust_multiplier with ()
+rust-sim/src/behavior/pipeline.rs:140:17: replace += with -= in adjust_multiplier
+rust-sim/src/behavior/pipeline.rs:140:17: replace += with *= in adjust_multiplier
+rust-sim/src/behavior/pipeline.rs:149:5: replace tick_locked_positions -> Vec<(usize, usize)> with vec![]
+rust-sim/src/behavior/pipeline.rs:149:5: replace tick_locked_positions -> Vec<(usize, usize)> with vec![(0, 0)]
+rust-sim/src/behavior/pipeline.rs:149:5: replace tick_locked_positions -> Vec<(usize, usize)> with vec![(0, 1)]
+rust-sim/src/behavior/pipeline.rs:149:5: replace tick_locked_positions -> Vec<(usize, usize)> with vec![(1, 0)]
+rust-sim/src/behavior/pipeline.rs:149:5: replace tick_locked_positions -> Vec<(usize, usize)> with vec![(1, 1)]
+rust-sim/src/behavior/pipeline.rs:152:31: replace == with != in tick_locked_positions
+rust-sim/src/behavior/pipeline.rs:164:5: replace restore_locked_positions with ()
