@@ -1,0 +1,66 @@
+{
+  "bundle_version": "1.0.0",
+  "wave": "W152-P0-4",
+  "generated_at": "2026-05-23T10:04:26Z",
+  "artifacts": [
+    {
+      "name": "mulberry32",
+      "rng_kind_wire": "mulberry32",
+      "seed": 14627333964952576837,
+      "bytes": 12582912,
+      "file": "mulberry32-12MiB.bin",
+      "sha256": "e9bcad2f0a689828fe76e71e2c984f2d6f41385fdf7f1750a371102062037a2d",
+      "throughput_bytes_per_sec": 346779590
+    },
+    {
+      "name": "pcg64",
+      "rng_kind_wire": "pcg64",
+      "seed": 14627333964952576837,
+      "bytes": 12582912,
+      "file": "pcg64-12MiB.bin",
+      "sha256": "c98e2c783cae49ba002c7a300a8743a76ad8dbe086cd7587e5d4d8b0e4a1632b",
+      "throughput_bytes_per_sec": 360683560
+    },
+    {
+      "name": "xoshiro256ss",
+      "rng_kind_wire": "xoshiro256_star_star",
+      "seed": 14627333964952576837,
+      "bytes": 12582912,
+      "file": "xoshiro256ss-12MiB.bin",
+      "sha256": "0f22ae95ffbd5a62b8fa463c22f99e29461dd2782b98348f555d6b623306a5ad",
+      "throughput_bytes_per_sec": 406593340
+    },
+    {
+      "name": "philox4x32",
+      "rng_kind_wire": "philox4x32",
+      "seed": 14627333964952576837,
+      "bytes": 12582912,
+      "file": "philox4x32-12MiB.bin",
+      "sha256": "8da4b29e101c4390d7b60c31d90074696e7114c947e6d0e0d052e7768f5f1bc6",
+      "throughput_bytes_per_sec": 376623013
+    },
+    {
+      "name": "chacha20",
+      "rng_kind_wire": "cha_cha20",
+      "seed": 14627333964952576837,
+      "bytes": 12582912,
+      "file": "chacha20-12MiB.bin",
+      "sha256": "7cd9343d5d87a4a641a413f57fb1beadf8ca84c1843383c58b50d2ca345887b1",
+      "throughput_bytes_per_sec": 288900946
+    }
+  ],
+  "sha256_map": {
+    "chacha20-12MiB.bin": "7cd9343d5d87a4a641a413f57fb1beadf8ca84c1843383c58b50d2ca345887b1",
+    "mulberry32-12MiB.bin": "e9bcad2f0a689828fe76e71e2c984f2d6f41385fdf7f1750a371102062037a2d",
+    "pcg64-12MiB.bin": "c98e2c783cae49ba002c7a300a8743a76ad8dbe086cd7587e5d4d8b0e4a1632b",
+    "philox4x32-12MiB.bin": "8da4b29e101c4390d7b60c31d90074696e7114c947e6d0e0d052e7768f5f1bc6",
+    "xoshiro256ss-12MiB.bin": "0f22ae95ffbd5a62b8fa463c22f99e29461dd2782b98348f555d6b623306a5ad"
+  },
+  "hardware": {
+    "os": "macos",
+    "arch": "aarch64",
+    "cpu": "Apple M3 Pro",
+    "rustc_version": "1.80",
+    "rng_submission_version": "1.0.0"
+  }
+}

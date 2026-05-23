@@ -1,0 +1,7 @@
+{
+  "os": "macos",
+  "arch": "aarch64",
+  "cpu": "Apple M3 Pro",
+  "rustc_version": "1.80",
+  "rng_submission_version": "1.0.0"
+}

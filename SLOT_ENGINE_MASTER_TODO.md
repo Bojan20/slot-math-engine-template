@@ -2695,3 +2695,71 @@ Sve weighted istom math metodologijom: closed-form predviđanje + 1B verifikacij
 | D (change marketing claim) | 1 day | YES (96.14%) | YES | gubi house edge zauvek |
 
 **Bojev odluka još nije data.** Ne kreće se dok Boki ne kaže "GO W231".
+
+---
+
+## ✅ W232 LANDED — GLI-19 RNG CERT BUNDLE pipeline first real run (2026-05-23)
+
+**Status:** ✅ **LANDED** 2026-05-23 — `scripts/cert-bundle.sh` izvršen prvi put protiv `b6ebe09`. **5 backenda × 12 MiB raw entropy = 60 MiB cryptographically reproducibilan bundle.** Closes Real-priority preostalo **stavka #11** (W152 P0-4).
+
+### Šta je sletilo
+
+| Artifact | Komitovan? | Veličina | Svrha |
+|---|---|---|---|
+| `reports/cert-bundle-b6ebe09/manifest.json` | ✅ tracked | 2.3 KB | Per-backend seed + bytes + sha256 + throughput + hardware fingerprint |
+| `reports/cert-bundle-b6ebe09/manifest.sha256` | ✅ tracked | 80 B | Tamper-evidence digest of manifest.json |
+| `reports/cert-bundle-b6ebe09/hardware.json` | ✅ tracked | 129 B | Host OS / arch / CPU / rustc snapshot (Apple M3 Pro / aarch64 / rustc 1.80) |
+| `reports/cert-bundle-b6ebe09/README.md` | ✅ tracked | 2.4 KB | Lab consumption guide + jurisdiction mapping table |
+| `reports/cert-bundle-b6ebe09/{pcg64,xoshiro256ss,philox4x32,chacha20,mulberry32}-12MiB.bin` | ❌ gitignored | 60 MiB | Raw entropy dumps — reproducibilni iz tarball-a |
+| `reports/cert-bundle-b6ebe09/source-b6ebe09.tar.gz` | ❌ gitignored | 6 MiB | Repo snapshot HEAD — reproducibilan iz git arhive |
+| `reports/slot-math-rng-cert-b6ebe09-12582912bpc.zip` | ❌ gitignored | 66 MiB | Final lab-upload ZIP — generiše ga skripta |
+
+### Per-backend evidencija (GLI-19 §3.3.2 deterministic replay PASS)
+
+| Backend | Seed | Bytes | sha256 | Throughput | Jurisdiction primary |
+|---|---|---|---|---|---|
+| mulberry32 | 14627333964952576837 | 12 582 912 | `e9bcad2f…62037a2d` | 330.7 MiB/s | ❌ legacy / TS parity only |
+| pcg64 | 14627333964952576837 | 12 582 912 | `c98e2c78…e4a1632b` | 344.0 MiB/s | ADM / PGCB / NJ DGE |
+| xoshiro256ss | 14627333964952576837 | 12 582 912 | `0f22ae95…3306a5ad` | 387.8 MiB/s | ADM / NJ DGE |
+| philox4x32 | 14627333964952576837 | 12 582 912 | `8da4b29e…68f5f1bc6` | 359.2 MiB/s | ADM GPU only |
+| **chacha20** | 14627333964952576837 | 12 582 912 | `7cd9343d…45887b1` | 275.5 MiB/s | **UK / MGA / DE primary CSPRNG** |
+
+**Manifest digest:** `fb42ccb91b2d6e693ae869e305dae2ed0eebb41b1993f089247013905f107ef2`
+
+### Acceptance gates W232
+
+| Gate | Threshold | Stvarno | Status |
+|---|---|---|---|
+| Sve 5 backenda generisano | 5/5 | 5/5 | ✅ |
+| Manifest sha256 verifikacija | mora PASS | PASS | ✅ |
+| Source tarball generisan | git archive HEAD | 6.0 MiB | ✅ |
+| ZIP bundle generisan | scripts/cert-bundle.sh non-zero exit | 66 MiB | ✅ |
+| Smoke 1 MiB per backend re-run | sha256 stabilan kroz reboot | identičan | ✅ |
+| Git footprint | < 10 KB metadata only | 8.6 KB tracked, 130 MiB gitignored | ✅ |
+
+### Šta otključava
+
+1. **UKGC / MGA / DE GLI-19 RNG submission path** — lab dobija ZIP, verifikuje manifest, vrti TestU01 BigCrush / PractRand 10TB / NIST STS direktno na raw .bin streamovima.
+2. **Deterministic replay proof** — lab raspakuje tarball, vrti `cargo run --release --bin rng_submission`, byte-identičan output → cert chain of custody čist.
+3. **Stavka #11 iz Real-priority preostalo: CLOSED.** Ostaju 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13.
+
+### Reprodukcija (svako vreme, iz čistog clone-a)
+
+```bash
+git checkout b6ebe090ea073f46816c415b389149995cac8380
+scripts/cert-bundle.sh --bytes-per 12582912 --out /tmp/replica
+diff <(jq -S . /tmp/replica/manifest.json) <(jq -S . reports/cert-bundle-b6ebe09/manifest.json)
+# only `generated_at` polje sme da se razlikuje
+```
+
+### Linked artifacts
+
+- `rust-sim/src/bin/rng_submission.rs` (~405 L) — Rust generator
+- `scripts/cert-bundle.sh` (~207 L) — orchestrator (build + run + verify + tarball + zip)
+- `reports/cert-bundle-b6ebe09/` — committed metadata + gitignored binaries
+- `.gitignore` — dodato W232 blok (raw .bin / source tarball / final ZIP)
+
+### Šta NIJE u skopu W232 (i zašto)
+
+1. **TestU01 BigCrush / PractRand 2³⁸ / NIST STS execution** — Real-priority **stavka #1**, external tool install required (TestU01 + PractRand + NIST STS binari). Bundle je sad SPREMAN za lab; same external runs ostaju ručni korak.
+2. **CI gate auto-run cert-bundle on push** — quick smoke (1 MiB) je ~3s ali full 12 MiB je ~250 ms × 5 = 1.5s + zip vreme. Razmotriti kao W233 (CI integration sa --quick mode).

@@ -53,6 +53,17 @@ reports/mutation/rust/*/mutants.out/debug.log
 # regenerated daily. Tracking them would commit-noise every CI run.
 reports/acceptance/cert-daily/
 
+# ─── GLI-19 cert bundle raw artifacts (W232) ──────────────────────────
+# rng_submission generates 5 × 12 MiB raw entropy dumps + a 6 MiB source
+# tarball + a 66 MiB zip. The bundle is cryptographically reproducible
+# from any tagged commit via `scripts/cert-bundle.sh`, so only the
+# tamper-evidence metadata (manifest.json / manifest.sha256 /
+# hardware.json / README.md) needs to live in git. Raw .bin streams,
+# source tarballs and zip archives stay local / lab-side.
+reports/cert-bundle-*/*.bin
+reports/cert-bundle-*/source-*.tar.gz
+reports/slot-math-rng-cert-*.zip
+
 # ─── Cross-platform RNG parity transient report (W152 Wave 48) ────────
 # CROSS_PLATFORM_RNG_PARITY.json is regenerated on every `npm run
 # cross-platform-rng-parity` run; the committed source-of-truth is
