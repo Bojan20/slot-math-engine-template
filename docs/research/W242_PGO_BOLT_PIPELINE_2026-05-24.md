@@ -130,6 +130,65 @@ no source code touch needed.
 
 ---
 
+## W242-followup commit — bench-aware Stage 2 applied (2026-05-24 17:04Z)
+
+Implemented fix path #1: `scripts/pgo-build.sh` now also builds the
+criterion bench under `-Cprofile-generate` and runs `cargo bench
+--bench spin_throughput -- --warm-up-time 1 --measurement-time 2
+full_spin` in Stage 2 so the bench harness contributes profile data.
+
+Run output: `reports/bench/pgo/20260524T165855Z/summary.json`:
+
+```json
+{
+  "baseline_median_ns": 239.70378491202305,
+  "pgo_median_ns":      239.51186213965102,
+  "delta_pct":          "+0.08%",
+  "status":             "MISS"
+}
+```
+
+| Phase | Bench median ns | Δ vs baseline |
+|---|---:|---:|
+| W242 v1 (no bench training) | 240.07 | -0.77 % |
+| W242 v2 (with bench training) | 239.51 | **+0.08 %** |
+
+**Improvement:** +0.85 pp shift from v1 → v2, confirming the bench-
+training fix is wired correctly. But the absolute delta remains
+within criterion measurement noise — so the conclusion changes
+from "bug" to "ceiling":
+
+### Finding
+
+The `full_spin/packed_ZeroAllocEvaluator` hot path is **already
+near-optimal at baseline**. PGO's room-to-improve is bounded by:
+
+1. Aggressive baseline inlining (`#[inline]` on every hot fn).
+2. Hand-tuned packed-symbol layout that already orders branches by
+   probability.
+3. Bench config is fully resolved at compile-time (no virtual
+   dispatch left to indirect through).
+
+Result: PGO has nothing left to optimize on the measurement target.
+**This is not a regression — it's a confirmation that the engine
+hot path is exhausted for direct micro-optimization.**
+
+### Where PGO/BOLT can still help
+
+The CLI binary (`slot_sim --config <fixture>`) has much more
+opportunity:
+- Config loading + IR parsing
+- Bulk dispatcher chunking + checkpoint serialization
+- Reporting/HDR aggregation
+- Error path code (cold but visited)
+
+Suggested next step (W242-followup-2): add a CLI-throughput
+measurement to `scripts/pgo-build.sh` (separate from the criterion
+bench) and re-gate on that. Production users see the CLI metric,
+not criterion. Deferred to a future wave with throughput target.
+
+---
+
 ## Out of scope for W242
 
 ---

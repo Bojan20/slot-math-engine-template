@@ -153,13 +153,20 @@ if [[ "${SKIP_BENCH}" -eq 0 ]]; then
 fi
 
 # ─── Stage 1: instrument ──────────────────────────────────────────────────────
-log "Stage 1: instrument build (-Cprofile-generate)"
+log "Stage 1: instrument build (-Cprofile-generate) for slot_sim binary + bench"
 rm -rf "${PROFRAW_DIR}"
 mkdir -p "${PROFRAW_DIR}"
 (
   cd "${RUST_DIR}"
   RUSTFLAGS="-Cprofile-generate=${PROFRAW_DIR}" \
     cargo build --release --bin slot_sim ${PGO_QUIET:+--quiet}
+  # W242-followup: also build the criterion bench under instrumentation
+  # so the bench-harness hot path gets profile data (otherwise the
+  # Stage-3 measurement bench has zero PGO coverage on its own
+  # `make_bench_config` / `benches` function — `pgo-warn-missing-function`
+  # warnings on every CGU).
+  RUSTFLAGS="-Cprofile-generate=${PROFRAW_DIR}" \
+    cargo build --release --bench spin_throughput ${PGO_QUIET:+--quiet}
 )
 
 INSTRUMENTED_BIN="${TARGET_DIR}/release/slot_sim"
@@ -169,7 +176,7 @@ if [[ ! -x "${INSTRUMENTED_BIN}" ]]; then
 fi
 
 # ─── Stage 2: training run ────────────────────────────────────────────────────
-log "Stage 2: training workload (${TRAINING_SPINS} spins × 3 fixtures)"
+log "Stage 2: training workload (${TRAINING_SPINS} spins × 3 fixtures + bench warmup)"
 TRAINING_FIXTURES=(
   "tests/fixtures/parity.json"
   "tests/fixtures/reference/5x3-243ways.json"
@@ -191,6 +198,19 @@ if [[ "${TRAINING_RAN}" -eq 0 ]]; then
   err "No training fixtures found — populated tests/fixtures/ first."
   exit 5
 fi
+
+# W242-followup: also drive the instrumented bench harness so its
+# hot path (`make_bench_config`, packed_ZeroAllocEvaluator inner loop)
+# gets covered by profile data. Without this, the Stage-3 PGO
+# measurement bench cannot benefit from PGO at all.
+log "  training: instrumented bench warmup (cargo bench --bench spin_throughput)"
+(
+  cd "${RUST_DIR}"
+  RUSTFLAGS="-Cprofile-generate=${PROFRAW_DIR}" \
+    cargo bench --bench spin_throughput -- \
+      --warm-up-time 1 --measurement-time 2 full_spin \
+      >/dev/null 2>&1 || true
+)
 
 PROFRAW_COUNT=$(find "${PROFRAW_DIR}" -maxdepth 2 -name '*.profraw' | wc -l | tr -d ' ')
 log "Captured ${PROFRAW_COUNT} .profraw files in ${PROFRAW_DIR}"

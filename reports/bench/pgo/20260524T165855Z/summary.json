@@ -1,0 +1,13 @@
+{
+  "timestamp": "20260524T165855Z",
+  "threshold_pct": "0.20",
+  "bench": "full_spin/packed_ZeroAllocEvaluator",
+  "baseline_median_ns": 239.70378491202305,
+  "pgo_median_ns": 239.51186213965102,
+  "delta_fraction": "0.000801",
+  "delta_pct": "0.08%",
+  "status": "MISS",
+  "bolt_binary": null,
+  "rustc_version": "rustc 1.83.0 (90b35a623 2024-11-26)",
+  "host": "Darwin 25.5.0 arm64"
+}
