@@ -649,6 +649,148 @@ fn build_pareto_section(
     }
 }
 
+// ─── PAR-005 — Markov chain section ─────────────────────────────────────────
+
+/// Enumerated game states (Doc §9.1). Order MUST be stable — used as matrix index.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum GameState {
+    BaseGame = 0,
+    FreeSpins = 1,
+    Bonus = 2,
+    ProgressiveJackpot = 3,
+    Respin = 4,
+}
+
+/// Number of game states in the Markov chain.
+pub const MARKOV_STATES: usize = 5;
+
+/// MARKOV section: 5×5 transition matrix + stationary distribution + dwell times.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct MarkovSection {
+    pub states: Vec<String>,
+    /// `transition_matrix[i][j] = P(S_{t+1} = j | S_t = i)`, rows sum to ≈1.
+    pub transition_matrix: Vec<Vec<f64>>,
+    /// Stationary distribution `π = π · P`, sums to ≈1.
+    pub stationary_pi: Vec<f64>,
+    /// Expected dwell time per state (geometric): `1 / (1 − P[i][i])`.
+    pub expected_dwell: Vec<f64>,
+}
+
+impl MarkovSection {
+    /// Build the section from simulation stats. Derivation:
+    /// * `P(BaseGame → FreeSpins) = fs_triggers / total_spins`
+    /// * `P(BaseGame → HoldAndWin) = hnw_triggers / total_spins`
+    /// * `P(FreeSpins → FreeSpins) = 1 − (1 / avg_fs_spins)` (geometric session-length)
+    /// * `P(HoldAndWin → HoldAndWin)` analogously
+    /// * `P(state → BaseGame) = 1 − P(state → state)` for non-base states
+    /// Progressive jackpot / Respin remain absorbing-to-base placeholders until
+    /// the engine wires explicit per-state hooks (left for PAR-019).
+    pub fn from_stats(stats: &AtomicStats, par: &PARMetrics) -> Self {
+        let total_spins = stats.total_spins.load(Ordering::Relaxed).max(1);
+        let fs_triggers = stats.fs_triggers.load(Ordering::Relaxed);
+        let hnw_triggers = stats.hnw_triggers.load(Ordering::Relaxed);
+
+        let p_base_to_fs = (fs_triggers as f64) / (total_spins as f64);
+        let p_base_to_hnw = (hnw_triggers as f64) / (total_spins as f64);
+        let p_base_to_base = (1.0 - p_base_to_fs - p_base_to_hnw).clamp(0.0, 1.0);
+
+        // Self-loop within a feature derived from average session length.
+        let self_loop = |avg: f64| -> f64 {
+            if avg.is_finite() && avg > 1.0 {
+                (1.0 - 1.0 / avg).clamp(0.0, 0.999)
+            } else {
+                0.0
+            }
+        };
+        let p_fs_self = self_loop(par.avg_fs_spins);
+        let p_hnw_self = self_loop(par.avg_hnw_orbs);
+
+        // Build 5×5 matrix.
+        let mut m = vec![vec![0.0_f64; MARKOV_STATES]; MARKOV_STATES];
+        // BaseGame row
+        m[0][0] = p_base_to_base;
+        m[0][1] = p_base_to_fs;
+        m[0][2] = p_base_to_hnw;
+        // FreeSpins row
+        m[1][1] = p_fs_self;
+        m[1][0] = 1.0 - p_fs_self;
+        // HoldAndWin → Bonus row
+        m[2][2] = p_hnw_self;
+        m[2][0] = 1.0 - p_hnw_self;
+        // ProgressiveJackpot row — absorbing to base (no engine hook yet).
+        m[3][0] = 1.0;
+        // Respin row — absorbing to base (placeholder).
+        m[4][0] = 1.0;
+
+        // Renormalise each row defensively against accumulated FP drift.
+        for row in m.iter_mut() {
+            let s: f64 = row.iter().sum();
+            if s > 0.0 {
+                for v in row.iter_mut() {
+                    *v /= s;
+                }
+            } else {
+                row[0] = 1.0;
+            }
+        }
+
+        let pi = stationary_distribution(&m, 200, 1e-12);
+        let expected_dwell: Vec<f64> = (0..MARKOV_STATES)
+            .map(|i| {
+                let p_self = m[i][i].clamp(0.0, 0.9999_999);
+                1.0 / (1.0 - p_self)
+            })
+            .collect();
+
+        MarkovSection {
+            states: vec![
+                "base_game".to_string(),
+                "free_spins".to_string(),
+                "hold_and_win".to_string(),
+                "progressive_jackpot".to_string(),
+                "respin".to_string(),
+            ],
+            transition_matrix: m,
+            stationary_pi: pi,
+            expected_dwell,
+        }
+    }
+}
+
+/// Compute stationary distribution of an N×N transition matrix via power
+/// iteration over `π_{t+1} = π_t · P`. Converges for ergodic chains; otherwise
+/// the last iterate is returned (clamped so it always sums to 1).
+fn stationary_distribution(matrix: &[Vec<f64>], max_iter: usize, eps: f64) -> Vec<f64> {
+    let n = matrix.len();
+    if n == 0 {
+        return Vec::new();
+    }
+    let mut pi = vec![1.0 / n as f64; n];
+    for _ in 0..max_iter {
+        let mut next = vec![0.0_f64; n];
+        for i in 0..n {
+            for j in 0..n {
+                next[j] += pi[i] * matrix[i][j];
+            }
+        }
+        // L1 convergence.
+        let delta: f64 = pi.iter().zip(next.iter()).map(|(a, b)| (a - b).abs()).sum();
+        pi = next;
+        if delta < eps {
+            break;
+        }
+    }
+    // Defensive renormalisation.
+    let s: f64 = pi.iter().sum();
+    if s > 0.0 {
+        for v in pi.iter_mut() {
+            *v /= s;
+        }
+    }
+    pi
+}
+
 // ─── PAR-004 — Time-to-trigger CDF section ──────────────────────────────────
 
 /// One point on a per-feature inter-trigger CDF.
@@ -795,6 +937,9 @@ pub struct PARSheet {
     // ── PAR-004 — Per-feature time-to-trigger CDF (always emitted, may be empty)
     #[serde(default)]
     pub time_to_trigger: TimeToTriggerSection,
+    // ── PAR-005 — Markov chain (always emitted; rows sum to 1, π sums to 1)
+    #[serde(default)]
+    pub markov: MarkovSection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -922,6 +1067,8 @@ impl PARGenerator {
         let time_to_trigger = TimeToTriggerSection {
             features: t2t_features,
         };
+        // PAR-005 — Markov transition matrix + stationary π.
+        let markov = MarkovSection::from_stats(stats, par);
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -1061,6 +1208,8 @@ impl PARGenerator {
             pareto_tail,
             // PAR-004 — Time-to-trigger CDF per feature.
             time_to_trigger,
+            // PAR-005 — Markov chain.
+            markov,
         }
     }
 
@@ -1490,6 +1639,26 @@ impl PARGenerator {
             ParetoFitKind::NotApplicable => {
                 let reason = par.pareto_tail.reason.as_deref().unwrap_or("n/a");
                 let line = format!("    NotApplicable: {reason}");
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
+        }
+
+        // PAR-005: MARKOV CHAIN block (5×5 matrix summary + stationary π).
+        if !par.markov.states.is_empty() {
+            println!("╠{rule}╣");
+            println!("║  MARKOV STATE MODEL{:<width$}║", "", width = w - 21);
+            for (i, name) in par.markov.states.iter().enumerate() {
+                let row = &par.markov.transition_matrix[i];
+                let row_str: String = row
+                    .iter()
+                    .map(|v| format!("{v:5.3}"))
+                    .collect::<Vec<_>>()
+                    .join(" ");
+                let line = format!(
+                    "    {:<22} [{}]  π={:5.3}  dwell={:6.2}",
+                    name, row_str, par.markov.stationary_pi[i], par.markov.expected_dwell[i]
+                );
                 let truncated: String = line.chars().take(w - 4).collect();
                 println!("║  {truncated:<width$}║", width = w - 4);
             }
