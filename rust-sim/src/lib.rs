@@ -68,6 +68,8 @@ pub mod mystery_jackpot;
 pub mod autocorrelation;
 /// PAR-007 + PAR-008 — USIF v1.0 JSON + CSV exporters for the PAR sheet.
 pub mod par_export;
+/// PAR-021 — Exact rational arithmetic (BigRational) for regulator pre-cert.
+pub mod rational_solver;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`

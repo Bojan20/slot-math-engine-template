@@ -40,6 +40,12 @@ sha2 = "0.10"
 # FAZA 9.9 — NUMA-aware allocation: mmap-backed reel strip storage.
 memmap2 = "0.9"
 
+# PAR-021 — Exact rational arithmetic for regulator pre-cert
+# (gives 7/72 instead of the f64 approximation 0.0972...).
+num-rational = { version = "0.4", default-features = false, features = ["num-bigint", "std"] }
+num-bigint = "0.4"
+num-traits = "0.2"
+
 # FAZA 9.8b — GPU compute scaffold. Off by default so the toolchain
 # matrix stays light; flip on with `cargo build --features gpu` once the
 # wgpu integration lands.
