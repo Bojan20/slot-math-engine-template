@@ -1,0 +1,3782 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "feature_kind",
+      "return_type": "-> &'static str",
+      "span": {
+        "start": {
+          "line": 15,
+          "column": 1
+        },
+        "end": {
+          "line": 29,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 16,
+        "column": 5
+      },
+      "end": {
+        "line": 28,
+        "column": 6
+      }
+    },
+    "replacement": "\"\"",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "feature_kind",
+      "return_type": "-> &'static str",
+      "span": {
+        "start": {
+          "line": 15,
+          "column": 1
+        },
+        "end": {
+          "line": 29,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 16,
+        "column": 5
+      },
+      "end": {
+        "line": 28,
+        "column": 6
+      }
+    },
+    "replacement": "\"xyzzy\"",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 34,
+        "column": 5
+      },
+      "end": {
+        "line": 67,
+        "column": 15
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 34,
+        "column": 5
+      },
+      "end": {
+        "line": 67,
+        "column": 15
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 18
+      },
+      "end": {
+        "line": 38,
+        "column": 20
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 12
+      },
+      "end": {
+        "line": 38,
+        "column": 13
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 12
+      },
+      "end": {
+        "line": 38,
+        "column": 13
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 12
+      },
+      "end": {
+        "line": 38,
+        "column": 13
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 25
+      },
+      "end": {
+        "line": 38,
+        "column": 26
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 25
+      },
+      "end": {
+        "line": 38,
+        "column": 26
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 25
+      },
+      "end": {
+        "line": 38,
+        "column": 26
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 45
+      },
+      "end": {
+        "line": 53,
+        "column": 47
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 30
+      },
+      "end": {
+        "line": 53,
+        "column": 31
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 30
+      },
+      "end": {
+        "line": 53,
+        "column": 31
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 30
+      },
+      "end": {
+        "line": 53,
+        "column": 31
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 17
+      },
+      "end": {
+        "line": 53,
+        "column": 18
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 17
+      },
+      "end": {
+        "line": 53,
+        "column": 18
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 70
+      },
+      "end": {
+        "line": 53,
+        "column": 71
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 70
+      },
+      "end": {
+        "line": 53,
+        "column": 71
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 70
+      },
+      "end": {
+        "line": 53,
+        "column": 71
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 57
+      },
+      "end": {
+        "line": 53,
+        "column": 58
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_rtp",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 68,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 53,
+        "column": 57
+      },
+      "end": {
+        "line": 53,
+        "column": 58
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_max_win",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 70,
+          "column": 1
+        },
+        "end": {
+          "line": 87,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 71,
+        "column": 5
+      },
+      "end": {
+        "line": 86,
+        "column": 11
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_max_win",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 70,
+          "column": 1
+        },
+        "end": {
+          "line": 87,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 71,
+        "column": 5
+      },
+      "end": {
+        "line": 86,
+        "column": 11
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_max_win",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 70,
+          "column": 1
+        },
+        "end": {
+          "line": 87,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 72,
+        "column": 32
+      },
+      "end": {
+        "line": 72,
+        "column": 33
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_max_win",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 70,
+          "column": 1
+        },
+        "end": {
+          "line": 87,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 72,
+        "column": 32
+      },
+      "end": {
+        "line": 72,
+        "column": 33
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_max_win",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 70,
+          "column": 1
+        },
+        "end": {
+          "line": 87,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 72,
+        "column": 32
+      },
+      "end": {
+        "line": 72,
+        "column": 33
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_prohibited_features",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 89,
+          "column": 1
+        },
+        "end": {
+          "line": 111,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 93,
+        "column": 5
+      },
+      "end": {
+        "line": 110,
+        "column": 15
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_prohibited_features",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 89,
+          "column": 1
+        },
+        "end": {
+          "line": 111,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 93,
+        "column": 5
+      },
+      "end": {
+        "line": 110,
+        "column": 15
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_prohibited_features",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 89,
+          "column": 1
+        },
+        "end": {
+          "line": 111,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 95,
+        "column": 55
+      },
+      "end": {
+        "line": 95,
+        "column": 57
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 118,
+        "column": 5
+      },
+      "end": {
+        "line": 179,
+        "column": 15
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 118,
+        "column": 5
+      },
+      "end": {
+        "line": 179,
+        "column": 15
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 125,
+        "column": 24
+      },
+      "end": {
+        "line": 125,
+        "column": 25
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 125,
+        "column": 24
+      },
+      "end": {
+        "line": 125,
+        "column": 25
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 125,
+        "column": 24
+      },
+      "end": {
+        "line": 125,
+        "column": 25
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 149,
+        "column": 20
+      },
+      "end": {
+        "line": 149,
+        "column": 21
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 149,
+        "column": 20
+      },
+      "end": {
+        "line": 149,
+        "column": 21
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 149,
+        "column": 20
+      },
+      "end": {
+        "line": 149,
+        "column": 21
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 165,
+        "column": 37
+      },
+      "end": {
+        "line": 165,
+        "column": 39
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 165,
+        "column": 8
+      },
+      "end": {
+        "line": 165,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_stake_cap",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 113,
+          "column": 1
+        },
+        "end": {
+          "line": 180,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 165,
+        "column": 56
+      },
+      "end": {
+        "line": 165,
+        "column": 58
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_autoplay_turbo",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 182,
+          "column": 1
+        },
+        "end": {
+          "line": 221,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 5
+      },
+      "end": {
+        "line": 220,
+        "column": 15
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_autoplay_turbo",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 182,
+          "column": 1
+        },
+        "end": {
+          "line": 221,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 5
+      },
+      "end": {
+        "line": 220,
+        "column": 15
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_pacing",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 223,
+          "column": 1
+        },
+        "end": {
+          "line": 240,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 226,
+        "column": 5
+      },
+      "end": {
+        "line": 239,
+        "column": 11
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_pacing",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 223,
+          "column": 1
+        },
+        "end": {
+          "line": 240,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 226,
+        "column": 5
+      },
+      "end": {
+        "line": 239,
+        "column": 11
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_wagering",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 242,
+          "column": 1
+        },
+        "end": {
+          "line": 259,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 245,
+        "column": 5
+      },
+      "end": {
+        "line": 258,
+        "column": 11
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_wagering",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 242,
+          "column": 1
+        },
+        "end": {
+          "line": 259,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 245,
+        "column": 5
+      },
+      "end": {
+        "line": 258,
+        "column": 11
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 262,
+        "column": 5
+      },
+      "end": {
+        "line": 306,
+        "column": 15
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 262,
+        "column": 5
+      },
+      "end": {
+        "line": 306,
+        "column": 15
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 264,
+        "column": 39
+      },
+      "end": {
+        "line": 264,
+        "column": 41
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 264,
+        "column": 42
+      },
+      "end": {
+        "line": 264,
+        "column": 43
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 275,
+        "column": 45
+      },
+      "end": {
+        "line": 275,
+        "column": 47
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 275,
+        "column": 48
+      },
+      "end": {
+        "line": 275,
+        "column": 49
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_compliance",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 261,
+          "column": 1
+        },
+        "end": {
+          "line": 307,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 291,
+        "column": 20
+      },
+      "end": {
+        "line": 291,
+        "column": 22
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_jurisdiction_declared",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 309,
+          "column": 1
+        },
+        "end": {
+          "line": 331,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 313,
+        "column": 5
+      },
+      "end": {
+        "line": 330,
+        "column": 11
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_jurisdiction_declared",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 309,
+          "column": 1
+        },
+        "end": {
+          "line": 331,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 313,
+        "column": 5
+      },
+      "end": {
+        "line": 330,
+        "column": 11
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_jurisdiction_declared",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 309,
+          "column": 1
+        },
+        "end": {
+          "line": 331,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 313,
+        "column": 8
+      },
+      "end": {
+        "line": 313,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_informational",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 333,
+          "column": 1
+        },
+        "end": {
+          "line": 347,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 5
+      },
+      "end": {
+        "line": 346,
+        "column": 19
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_informational",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 333,
+          "column": 1
+        },
+        "end": {
+          "line": 347,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 5
+      },
+      "end": {
+        "line": 346,
+        "column": 19
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 356,
+        "column": 5
+      },
+      "end": {
+        "line": 484,
+        "column": 9
+      }
+    },
+    "replacement": "None",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 356,
+        "column": 5
+      },
+      "end": {
+        "line": 484,
+        "column": 9
+      }
+    },
+    "replacement": "Some(Default::default())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 388,
+        "column": 24
+      },
+      "end": {
+        "line": 388,
+        "column": 26
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 389,
+        "column": 56
+      },
+      "end": {
+        "line": 389,
+        "column": 58
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 390,
+        "column": 38
+      },
+      "end": {
+        "line": 390,
+        "column": 39
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 390,
+        "column": 38
+      },
+      "end": {
+        "line": 390,
+        "column": 39
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 391,
+        "column": 28
+      },
+      "end": {
+        "line": 391,
+        "column": 29
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 391,
+        "column": 28
+      },
+      "end": {
+        "line": 391,
+        "column": 29
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 391,
+        "column": 28
+      },
+      "end": {
+        "line": 391,
+        "column": 29
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 427,
+        "column": 25
+      },
+      "end": {
+        "line": 427,
+        "column": 27
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 55
+      },
+      "end": {
+        "line": 460,
+        "column": 57
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 43
+      },
+      "end": {
+        "line": 460,
+        "column": 45
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 49
+      },
+      "end": {
+        "line": 460,
+        "column": 50
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 49
+      },
+      "end": {
+        "line": 460,
+        "column": 50
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 49
+      },
+      "end": {
+        "line": 460,
+        "column": 50
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 460,
+        "column": 61
+      },
+      "end": {
+        "line": 460,
+        "column": 63
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 461,
+        "column": 34
+      },
+      "end": {
+        "line": 461,
+        "column": 35
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 461,
+        "column": 34
+      },
+      "end": {
+        "line": 461,
+        "column": 35
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "apply_fix",
+      "return_type": "-> Option<AppliedFix>",
+      "span": {
+        "start": {
+          "line": 351,
+          "column": 1
+        },
+        "end": {
+          "line": 485,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 475,
+        "column": 12
+      },
+      "end": {
+        "line": 475,
+        "column": 13
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "resolve_jurisdictions",
+      "return_type": "-> Vec<String>",
+      "span": {
+        "start": {
+          "line": 489,
+          "column": 1
+        },
+        "end": {
+          "line": 499,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 492,
+        "column": 5
+      },
+      "end": {
+        "line": 498,
+        "column": 60
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "resolve_jurisdictions",
+      "return_type": "-> Vec<String>",
+      "span": {
+        "start": {
+          "line": 489,
+          "column": 1
+        },
+        "end": {
+          "line": 499,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 492,
+        "column": 5
+      },
+      "end": {
+        "line": 498,
+        "column": 60
+      }
+    },
+    "replacement": "vec![String::new()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "resolve_jurisdictions",
+      "return_type": "-> Vec<String>",
+      "span": {
+        "start": {
+          "line": 489,
+          "column": 1
+        },
+        "end": {
+          "line": 499,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 492,
+        "column": 5
+      },
+      "end": {
+        "line": 498,
+        "column": 60
+      }
+    },
+    "replacement": "vec![\"xyzzy\".into()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "resolve_jurisdictions",
+      "return_type": "-> Vec<String>",
+      "span": {
+        "start": {
+          "line": 489,
+          "column": 1
+        },
+        "end": {
+          "line": 499,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 492,
+        "column": 8
+      },
+      "end": {
+        "line": 492,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "resolve_jurisdictions",
+      "return_type": "-> Vec<String>",
+      "span": {
+        "start": {
+          "line": 489,
+          "column": 1
+        },
+        "end": {
+          "line": 499,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 495,
+        "column": 8
+      },
+      "end": {
+        "line": 495,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 503,
+        "column": 5
+      },
+      "end": {
+        "line": 558,
+        "column": 6
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 535,
+        "column": 32
+      },
+      "end": {
+        "line": 535,
+        "column": 34
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 539,
+        "column": 32
+      },
+      "end": {
+        "line": 539,
+        "column": 34
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 543,
+        "column": 32
+      },
+      "end": {
+        "line": 543,
+        "column": 34
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 550,
+        "column": 30
+      },
+      "end": {
+        "line": 550,
+        "column": 32
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 551,
+        "column": 36
+      },
+      "end": {
+        "line": 551,
+        "column": 37
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 551,
+        "column": 36
+      },
+      "end": {
+        "line": 551,
+        "column": 37
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate",
+      "return_type": "-> ComplianceReport",
+      "span": {
+        "start": {
+          "line": 501,
+          "column": 1
+        },
+        "end": {
+          "line": 559,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 551,
+        "column": 36
+      },
+      "end": {
+        "line": 551,
+        "column": 37
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "auto_fix",
+      "return_type": "-> (SlotGameIR, AutoFixResult)",
+      "span": {
+        "start": {
+          "line": 561,
+          "column": 1
+        },
+        "end": {
+          "line": 595,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 563,
+        "column": 5
+      },
+      "end": {
+        "line": 594,
+        "column": 22
+      }
+    },
+    "replacement": "(Default::default(), Default::default())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "auto_fix",
+      "return_type": "-> (SlotGameIR, AutoFixResult)",
+      "span": {
+        "start": {
+          "line": 561,
+          "column": 1
+        },
+        "end": {
+          "line": 595,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 584,
+        "column": 52
+      },
+      "end": {
+        "line": 584,
+        "column": 54
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "auto_fix",
+      "return_type": "-> (SlotGameIR, AutoFixResult)",
+      "span": {
+        "start": {
+          "line": 561,
+          "column": 1
+        },
+        "end": {
+          "line": 595,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 584,
+        "column": 24
+      },
+      "end": {
+        "line": 584,
+        "column": 26
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "auto_fix",
+      "return_type": "-> (SlotGameIR, AutoFixResult)",
+      "span": {
+        "start": {
+          "line": 561,
+          "column": 1
+        },
+        "end": {
+          "line": 595,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 584,
+        "column": 66
+      },
+      "end": {
+        "line": 584,
+        "column": 68
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 616,
+        "column": 5
+      },
+      "end": {
+        "line": 661,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 621,
+        "column": 27
+      },
+      "end": {
+        "line": 621,
+        "column": 29
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 621,
+        "column": 8
+      },
+      "end": {
+        "line": 621,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 621,
+        "column": 36
+      },
+      "end": {
+        "line": 621,
+        "column": 38
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 629,
+        "column": 46
+      },
+      "end": {
+        "line": 629,
+        "column": 48
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 629,
+        "column": 8
+      },
+      "end": {
+        "line": 629,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 636,
+        "column": 8
+      },
+      "end": {
+        "line": 636,
+        "column": 9
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 641,
+        "column": 43
+      },
+      "end": {
+        "line": 641,
+        "column": 45
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 641,
+        "column": 30
+      },
+      "end": {
+        "line": 641,
+        "column": 32
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 641,
+        "column": 50
+      },
+      "end": {
+        "line": 641,
+        "column": 52
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 642,
+        "column": 16
+      },
+      "end": {
+        "line": 642,
+        "column": 17
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 652,
+        "column": 18
+      },
+      "end": {
+        "line": 652,
+        "column": 19
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 652,
+        "column": 18
+      },
+      "end": {
+        "line": 652,
+        "column": 19
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_stake",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 603,
+          "column": 1
+        },
+        "end": {
+          "line": 662,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 652,
+        "column": 18
+      },
+      "end": {
+        "line": 652,
+        "column": 19
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_duration",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 664,
+          "column": 1
+        },
+        "end": {
+          "line": 680,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 666,
+        "column": 5
+      },
+      "end": {
+        "line": 679,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_duration",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 664,
+          "column": 1
+        },
+        "end": {
+          "line": 680,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 671,
+        "column": 22
+      },
+      "end": {
+        "line": 671,
+        "column": 23
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_duration",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 664,
+          "column": 1
+        },
+        "end": {
+          "line": 680,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 671,
+        "column": 22
+      },
+      "end": {
+        "line": 671,
+        "column": 23
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_duration",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 664,
+          "column": 1
+        },
+        "end": {
+          "line": 680,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 671,
+        "column": 22
+      },
+      "end": {
+        "line": 671,
+        "column": 23
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_autoplay",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 682,
+          "column": 1
+        },
+        "end": {
+          "line": 694,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 684,
+        "column": 5
+      },
+      "end": {
+        "line": 693,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_turbo",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 696,
+          "column": 1
+        },
+        "end": {
+          "line": 708,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 698,
+        "column": 5
+      },
+      "end": {
+        "line": 707,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_bonus_wagering",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 710,
+          "column": 1
+        },
+        "end": {
+          "line": 726,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 712,
+        "column": 5
+      },
+      "end": {
+        "line": 725,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_bonus_wagering",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 710,
+          "column": 1
+        },
+        "end": {
+          "line": 726,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 717,
+        "column": 23
+      },
+      "end": {
+        "line": 717,
+        "column": 24
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_bonus_wagering",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 710,
+          "column": 1
+        },
+        "end": {
+          "line": 726,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 717,
+        "column": 23
+      },
+      "end": {
+        "line": 717,
+        "column": 24
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_bonus_wagering",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 710,
+          "column": 1
+        },
+        "end": {
+          "line": 726,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 717,
+        "column": 23
+      },
+      "end": {
+        "line": 717,
+        "column": 24
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin",
+      "return_type": "-> Result<(), ComplianceError>",
+      "span": {
+        "start": {
+          "line": 728,
+          "column": 1
+        },
+        "end": {
+          "line": 745,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 734,
+        "column": 5
+      },
+      "end": {
+        "line": 744,
+        "column": 11
+      }
+    },
+    "replacement": "Ok(())",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_full",
+      "return_type": "-> Vec<ComplianceError>",
+      "span": {
+        "start": {
+          "line": 747,
+          "column": 1
+        },
+        "end": {
+          "line": 770,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 750,
+        "column": 5
+      },
+      "end": {
+        "line": 769,
+        "column": 9
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "validate_spin_full",
+      "return_type": "-> Vec<ComplianceError>",
+      "span": {
+        "start": {
+          "line": 747,
+          "column": 1
+        },
+        "end": {
+          "line": 770,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 750,
+        "column": 5
+      },
+      "end": {
+        "line": 769,
+        "column": 9
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "SpinContext<'a>::with_age",
+      "return_type": "-> Self",
+      "span": {
+        "start": {
+          "line": 799,
+          "column": 5
+        },
+        "end": {
+          "line": 802,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 800,
+        "column": 9
+      },
+      "end": {
+        "line": 801,
+        "column": 13
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "SpinContext<'a>::with_duration_ms",
+      "return_type": "-> Self",
+      "span": {
+        "start": {
+          "line": 804,
+          "column": 5
+        },
+        "end": {
+          "line": 807,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 805,
+        "column": 9
+      },
+      "end": {
+        "line": 806,
+        "column": 13
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "SpinContext<'a>::with_autoplay",
+      "return_type": "-> Self",
+      "span": {
+        "start": {
+          "line": 809,
+          "column": 5
+        },
+        "end": {
+          "line": 812,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 810,
+        "column": 9
+      },
+      "end": {
+        "line": 811,
+        "column": 13
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "SpinContext<'a>::with_turbo",
+      "return_type": "-> Self",
+      "span": {
+        "start": {
+          "line": 814,
+          "column": 5
+        },
+        "end": {
+          "line": 817,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 815,
+        "column": 9
+      },
+      "end": {
+        "line": 816,
+        "column": 13
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  }
+]

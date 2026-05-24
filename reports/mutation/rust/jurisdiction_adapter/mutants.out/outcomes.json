@@ -1,0 +1,1788 @@
+{
+  "outcomes": [
+    {
+      "scenario": "Baseline",
+      "summary": "Success",
+      "log_path": "log/baseline.log",
+      "diff_path": null,
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 100.496610791,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 116.664817667,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "feature_kind",
+            "return_type": "-> &'static str",
+            "span": {
+              "start": {
+                "line": 15,
+                "column": 1
+              },
+              "end": {
+                "line": 29,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 16,
+              "column": 5
+            },
+            "end": {
+              "line": 28,
+              "column": 6
+            }
+          },
+          "replacement": "\"\"",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_16_col_5.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_16_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 44.218371416,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 7.613700209,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 34,
+              "column": 5
+            },
+            "end": {
+              "line": 67,
+              "column": 15
+            }
+          },
+          "replacement": "vec![]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_34_col_5.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_34_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 40.170107292,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 4.344729375,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 34,
+              "column": 5
+            },
+            "end": {
+              "line": 67,
+              "column": 15
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_34_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_34_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.806637458,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 18
+            },
+            "end": {
+              "line": 38,
+              "column": 20
+            }
+          },
+          "replacement": "&&",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_18.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_18.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 37.912817292,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 18.577002959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "feature_kind",
+            "return_type": "-> &'static str",
+            "span": {
+              "start": {
+                "line": 15,
+                "column": 1
+              },
+              "end": {
+                "line": 29,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 16,
+              "column": 5
+            },
+            "end": {
+              "line": 28,
+              "column": 6
+            }
+          },
+          "replacement": "\"xyzzy\"",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_16_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_16_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 129.456328666,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 19.037346334,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 12
+            },
+            "end": {
+              "line": 38,
+              "column": 13
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.542783875,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 13.044032542,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 12
+            },
+            "end": {
+              "line": 38,
+              "column": 13
+            }
+          },
+          "replacement": ">",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 20.07147025,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 7.207238125,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 12
+            },
+            "end": {
+              "line": 38,
+              "column": 13
+            }
+          },
+          "replacement": "<=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12_002.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_12_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.479549209,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 57.819876917,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 25
+            },
+            "end": {
+              "line": 38,
+              "column": 26
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 13.250362042,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 6.956132166,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 25
+            },
+            "end": {
+              "line": 38,
+              "column": 26
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 17.090598875,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 98.669050917,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 38,
+              "column": 25
+            },
+            "end": {
+              "line": 38,
+              "column": 26
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25_002.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_38_col_25_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 19.069215292,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 83.842924084,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 45
+            },
+            "end": {
+              "line": 53,
+              "column": 47
+            }
+          },
+          "replacement": "&&",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_45.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_45.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.164813542,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 89.399504333,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 30
+            },
+            "end": {
+              "line": 53,
+              "column": 31
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.055788667,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 81.45010025,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 30
+            },
+            "end": {
+              "line": 53,
+              "column": 31
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.823039375,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 68.972292,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 30
+            },
+            "end": {
+              "line": 53,
+              "column": 31
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30_002.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_30_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.761400834,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 96.296509916,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 17
+            },
+            "end": {
+              "line": 53,
+              "column": 18
+            }
+          },
+          "replacement": "+",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_17.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.239338541,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 93.913849042,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 17
+            },
+            "end": {
+              "line": 53,
+              "column": 18
+            }
+          },
+          "replacement": "/",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_17_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_17_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 7.152218834,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 82.900811959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 70
+            },
+            "end": {
+              "line": 53,
+              "column": 71
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.920317125,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 84.836769541,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 70
+            },
+            "end": {
+              "line": 53,
+              "column": 71
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.585682875,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 92.476115458,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 70
+            },
+            "end": {
+              "line": 53,
+              "column": 71
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70_002.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_70_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.686690167,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 92.001451666,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 57
+            },
+            "end": {
+              "line": 53,
+              "column": 58
+            }
+          },
+          "replacement": "+",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_57.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_57.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.039796208,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 80.090092833,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_rtp",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 33,
+                "column": 1
+              },
+              "end": {
+                "line": 68,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 57
+            },
+            "end": {
+              "line": 53,
+              "column": 58
+            }
+          },
+          "replacement": "/",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_53_col_57_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_53_col_57_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 8.777670459,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 85.289817542,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_max_win",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 70,
+                "column": 1
+              },
+              "end": {
+                "line": 87,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 71,
+              "column": 5
+            },
+            "end": {
+              "line": 86,
+              "column": 11
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_71_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_71_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.744725292,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_max_win",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 70,
+                "column": 1
+              },
+              "end": {
+                "line": 87,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 71,
+              "column": 5
+            },
+            "end": {
+              "line": 86,
+              "column": 11
+            }
+          },
+          "replacement": "vec![]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_71_col_5.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_71_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 8.918039333,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 104.563968541,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_max_win",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 70,
+                "column": 1
+              },
+              "end": {
+                "line": 87,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 72,
+              "column": 32
+            },
+            "end": {
+              "line": 72,
+              "column": 33
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.791018209,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 92.44612525,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_max_win",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 70,
+                "column": 1
+              },
+              "end": {
+                "line": 87,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 72,
+              "column": 32
+            },
+            "end": {
+              "line": 72,
+              "column": 33
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32_002.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.739959583,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 97.257470542,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_max_win",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 70,
+                "column": 1
+              },
+              "end": {
+                "line": 87,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 72,
+              "column": 32
+            },
+            "end": {
+              "line": 72,
+              "column": 33
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_72_col_32_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 8.9242005,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 104.269290083,
+          "process_status": "Success",
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/jurisdiction/adapter.rs",
+          "function": {
+            "function_name": "check_prohibited_features",
+            "return_type": "-> Vec<ComplianceViolation>",
+            "span": {
+              "start": {
+                "line": 89,
+                "column": 1
+              },
+              "end": {
+                "line": 111,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 93,
+              "column": 5
+            },
+            "end": {
+              "line": 110,
+              "column": 15
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__jurisdiction__adapter.rs_line_93_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__jurisdiction__adapter.rs_line_93_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 2.217381958,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/Users/vanvinklstudio/.rustup/toolchains/1.83.0-aarch64-apple-darwin/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "total_mutants": 28,
+  "missed": 6,
+  "caught": 19,
+  "timeout": 0,
+  "unviable": 3,
+  "success": 0
+}

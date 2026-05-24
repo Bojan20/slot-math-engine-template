@@ -1,0 +1,1562 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 32,
+        "column": 5
+      },
+      "end": {
+        "line": 191,
+        "column": 42
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 40,
+        "column": 12
+      },
+      "end": {
+        "line": 40,
+        "column": 13
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 24
+      },
+      "end": {
+        "line": 51,
+        "column": 25
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 62,
+        "column": 28
+      },
+      "end": {
+        "line": 62,
+        "column": 29
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 78,
+        "column": 24
+      },
+      "end": {
+        "line": 78,
+        "column": 25
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 91,
+        "column": 20
+      },
+      "end": {
+        "line": 91,
+        "column": 21
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 71
+      },
+      "end": {
+        "line": 109,
+        "column": 72
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 71
+      },
+      "end": {
+        "line": 109,
+        "column": 72
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 50
+      },
+      "end": {
+        "line": 109,
+        "column": 51
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 50
+      },
+      "end": {
+        "line": 109,
+        "column": 51
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 31
+      },
+      "end": {
+        "line": 109,
+        "column": 32
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 109,
+        "column": 31
+      },
+      "end": {
+        "line": 109,
+        "column": 32
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 110,
+        "column": 43
+      },
+      "end": {
+        "line": 110,
+        "column": 44
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 110,
+        "column": 43
+      },
+      "end": {
+        "line": 110,
+        "column": 44
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 110,
+        "column": 43
+      },
+      "end": {
+        "line": 110,
+        "column": 44
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 110,
+        "column": 13
+      },
+      "end": {
+        "line": 110,
+        "column": 14
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 110,
+        "column": 13
+      },
+      "end": {
+        "line": 110,
+        "column": 14
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 123,
+        "column": 13
+      },
+      "end": {
+        "line": 130,
+        "column": 14
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 131,
+        "column": 13
+      },
+      "end": {
+        "line": 140,
+        "column": 14
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 141,
+        "column": 13
+      },
+      "end": {
+        "line": 159,
+        "column": 14
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 124,
+        "column": 20
+      },
+      "end": {
+        "line": 124,
+        "column": 21
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 124,
+        "column": 54
+      },
+      "end": {
+        "line": 124,
+        "column": 56
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 133,
+        "column": 21
+      },
+      "end": {
+        "line": 133,
+        "column": 23
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 133,
+        "column": 24
+      },
+      "end": {
+        "line": 133,
+        "column": 25
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 133,
+        "column": 58
+      },
+      "end": {
+        "line": 133,
+        "column": 60
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 145,
+        "column": 20
+      },
+      "end": {
+        "line": 145,
+        "column": 21
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 152,
+        "column": 24
+      },
+      "end": {
+        "line": 152,
+        "column": 25
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 166,
+        "column": 15
+      },
+      "end": {
+        "line": 166,
+        "column": 16
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 166,
+        "column": 15
+      },
+      "end": {
+        "line": 166,
+        "column": 16
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 166,
+        "column": 15
+      },
+      "end": {
+        "line": 166,
+        "column": 16
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 38
+      },
+      "end": {
+        "line": 172,
+        "column": 40
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 29
+      },
+      "end": {
+        "line": 172,
+        "column": 30
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 29
+      },
+      "end": {
+        "line": 172,
+        "column": 30
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 29
+      },
+      "end": {
+        "line": 172,
+        "column": 30
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 62
+      },
+      "end": {
+        "line": 172,
+        "column": 63
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 62
+      },
+      "end": {
+        "line": 172,
+        "column": 63
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 172,
+        "column": 62
+      },
+      "end": {
+        "line": 172,
+        "column": 63
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 28
+      },
+      "end": {
+        "line": 181,
+        "column": 29
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 28
+      },
+      "end": {
+        "line": 181,
+        "column": 29
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "cross_validate",
+      "return_type": "-> ValidationReport",
+      "span": {
+        "start": {
+          "line": 31,
+          "column": 1
+        },
+        "end": {
+          "line": 192,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 28
+      },
+      "end": {
+        "line": 181,
+        "column": 29
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "issue",
+      "return_type": "-> IRValidationIssue",
+      "span": {
+        "start": {
+          "line": 194,
+          "column": 1
+        },
+        "end": {
+          "line": 199,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 195,
+        "column": 5
+      },
+      "end": {
+        "line": 198,
+        "column": 6
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 5
+      },
+      "end": {
+        "line": 251,
+        "column": 6
+      }
+    },
+    "replacement": "()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 203,
+        "column": 9
+      },
+      "end": {
+        "line": 233,
+        "column": 10
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 9
+      },
+      "end": {
+        "line": 241,
+        "column": 10
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 242,
+        "column": 9
+      },
+      "end": {
+        "line": 249,
+        "column": 10
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 36
+      },
+      "end": {
+        "line": 216,
+        "column": 38
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 224,
+        "column": 31
+      },
+      "end": {
+        "line": 224,
+        "column": 33
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "eval_topology_coherence",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 252,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 235,
+        "column": 16
+      },
+      "end": {
+        "line": 235,
+        "column": 17
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "paytable_shape_check",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 254,
+          "column": 1
+        },
+        "end": {
+          "line": 274,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 255,
+        "column": 5
+      },
+      "end": {
+        "line": 273,
+        "column": 6
+      }
+    },
+    "replacement": "()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "paytable_shape_check",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 254,
+          "column": 1
+        },
+        "end": {
+          "line": 274,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 20
+      },
+      "end": {
+        "line": 258,
+        "column": 21
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "paytable_shape_check",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 254,
+          "column": 1
+        },
+        "end": {
+          "line": 274,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 260,
+        "column": 25
+      },
+      "end": {
+        "line": 260,
+        "column": 61
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/validate.rs",
+    "function": {
+      "function_name": "paytable_shape_check",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 254,
+          "column": 1
+        },
+        "end": {
+          "line": 274,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 261,
+        "column": 25
+      },
+      "end": {
+        "line": 261,
+        "column": 59
+      }
+    },
+    "replacement": "",
+    "genre": "MatchArm"
+  }
+]

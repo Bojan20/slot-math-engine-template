@@ -1,0 +1,2684 @@
+{
+  "outcomes": [
+    {
+      "scenario": "Baseline",
+      "summary": "Success",
+      "log_path": "log/baseline.log",
+      "diff_path": null,
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 114.927230416,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 47.8310785,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "<impl From<WorkerResult> for SliceResult>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 29,
+                "column": 5
+              },
+              "end": {
+                "line": 38,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 30,
+              "column": 9
+            },
+            "end": {
+              "line": 37,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_30_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_30_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 1.170277042,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 46,
+              "column": 5
+            },
+            "end": {
+              "line": 68,
+              "column": 8
+            }
+          },
+          "replacement": "vec![]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_46_col_5.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_46_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 56.9855725,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.223522542,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 46,
+              "column": 5
+            },
+            "end": {
+              "line": 68,
+              "column": 8
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_46_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_46_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 86.842556125,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 51,
+              "column": 38
+            },
+            "end": {
+              "line": 51,
+              "column": 39
+            }
+          },
+          "replacement": "%",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_51_col_38.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_51_col_38.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 95.465851209,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.400612583,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 52,
+              "column": 38
+            },
+            "end": {
+              "line": 52,
+              "column": 39
+            }
+          },
+          "replacement": "/",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_52_col_38.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_52_col_38.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 16.351676416,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.494979542,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 52,
+              "column": 38
+            },
+            "end": {
+              "line": 52,
+              "column": 39
+            }
+          },
+          "replacement": "+",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_52_col_38_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_52_col_38_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 14.674982917,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.245678833,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 46,
+              "column": 20
+            },
+            "end": {
+              "line": 46,
+              "column": 22
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_46_col_20.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_46_col_20.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 180.713869833,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 51,
+              "column": 38
+            },
+            "end": {
+              "line": 51,
+              "column": 39
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_51_col_38_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_51_col_38_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 97.447779958,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 55,
+              "column": 26
+            },
+            "end": {
+              "line": 55,
+              "column": 27
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_55_col_26.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_55_col_26.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 12.183109083,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.353760166,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 55,
+              "column": 26
+            },
+            "end": {
+              "line": 55,
+              "column": 27
+            }
+          },
+          "replacement": ">",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_55_col_26_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_55_col_26_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 25.595458875,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 56,
+              "column": 30
+            },
+            "end": {
+              "line": 56,
+              "column": 31
+            }
+          },
+          "replacement": "-",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_56_col_30.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_56_col_30.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 21.707869875,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.193999625,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 56,
+              "column": 30
+            },
+            "end": {
+              "line": 56,
+              "column": 31
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_56_col_30_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_56_col_30_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.157413458,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 60,
+              "column": 30
+            },
+            "end": {
+              "line": 60,
+              "column": 31
+            }
+          },
+          "replacement": "-",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_60_col_30.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_60_col_30.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.415805625,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.120651792,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 60,
+              "column": 30
+            },
+            "end": {
+              "line": 60,
+              "column": 31
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_60_col_30_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_60_col_30_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 22.246904042,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 66,
+              "column": 16
+            },
+            "end": {
+              "line": 66,
+              "column": 18
+            }
+          },
+          "replacement": "-=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_66_col_16.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_66_col_16.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.562828291,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.406475666,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 55,
+              "column": 26
+            },
+            "end": {
+              "line": 55,
+              "column": 27
+            }
+          },
+          "replacement": "<=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_55_col_26_002.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_55_col_26_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 80.042828625,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "merge_slice_results",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 71,
+                "column": 1
+              },
+              "end": {
+                "line": 88,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 79,
+              "column": 5
+            },
+            "end": {
+              "line": 87,
+              "column": 10
+            }
+          },
+          "replacement": "0",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_79_col_5.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_79_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 17.814112917,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 1.458731042,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "merge_slice_results",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 71,
+                "column": 1
+              },
+              "end": {
+                "line": 88,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 79,
+              "column": 5
+            },
+            "end": {
+              "line": 87,
+              "column": 10
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_79_col_5_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_79_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 17.145668917,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "merge_slice_results",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 71,
+                "column": 1
+              },
+              "end": {
+                "line": 88,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 85,
+              "column": 15
+            },
+            "end": {
+              "line": 85,
+              "column": 17
+            }
+          },
+          "replacement": "-=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_85_col_15.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_85_col_15.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 16.81061675,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.956207834,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "merge_slice_results",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 71,
+                "column": 1
+              },
+              "end": {
+                "line": 88,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 85,
+              "column": 15
+            },
+            "end": {
+              "line": 85,
+              "column": 17
+            }
+          },
+          "replacement": "*=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_85_col_15_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_85_col_15_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.842766791,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 91,
+              "column": 5
+            },
+            "end": {
+              "line": 140,
+              "column": 56
+            }
+          },
+          "replacement": "()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_91_col_5.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_91_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 16.907362917,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.870469334,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 100,
+              "column": 17
+            },
+            "end": {
+              "line": 100,
+              "column": 18
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_100_col_17.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_100_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 9.504787416,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "partition_run",
+            "return_type": "-> Vec<WorkSlice>",
+            "span": {
+              "start": {
+                "line": 41,
+                "column": 1
+              },
+              "end": {
+                "line": 69,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 66,
+              "column": 16
+            },
+            "end": {
+              "line": 66,
+              "column": 18
+            }
+          },
+          "replacement": "*=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_66_col_16_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_66_col_16_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 63.522585958,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 100,
+              "column": 17
+            },
+            "end": {
+              "line": 100,
+              "column": 18
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_100_col_17_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_100_col_17_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 17.376509708,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 3.04083075,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 109,
+              "column": 17
+            },
+            "end": {
+              "line": 109,
+              "column": 18
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_109_col_17.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_109_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 13.645736833,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 100,
+              "column": 17
+            },
+            "end": {
+              "line": 100,
+              "column": 18
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_100_col_17_002.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_100_col_17_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.7292035,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 109,
+              "column": 17
+            },
+            "end": {
+              "line": 109,
+              "column": 18
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_109_col_17_002.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_109_col_17_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.907292959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "ClusterCoordinator<'a>::finish",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 165,
+                "column": 5
+              },
+              "end": {
+                "line": 170,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 169,
+              "column": 9
+            },
+            "end": {
+              "line": 169,
+              "column": 74
+            }
+          },
+          "replacement": "0",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_169_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_169_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.819012583,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "ClusterCoordinator<'a>::finish",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 165,
+                "column": 5
+              },
+              "end": {
+                "line": 170,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 169,
+              "column": 9
+            },
+            "end": {
+              "line": 169,
+              "column": 74
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_169_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_169_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 9.864358542,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/protocol.rs",
+          "function": {
+            "function_name": "WorkSlice::span",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 35,
+                "column": 5
+              },
+              "end": {
+                "line": 37,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 36,
+              "column": 9
+            },
+            "end": {
+              "line": 36,
+              "column": 54
+            }
+          },
+          "replacement": "0",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__protocol.rs_line_36_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__protocol.rs_line_36_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 10.856784666,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/protocol.rs",
+          "function": {
+            "function_name": "WorkSlice::span",
+            "return_type": "-> u64",
+            "span": {
+              "start": {
+                "line": 35,
+                "column": 5
+              },
+              "end": {
+                "line": 37,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 36,
+              "column": 9
+            },
+            "end": {
+              "line": 36,
+              "column": 54
+            }
+          },
+          "replacement": "1",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__protocol.rs_line_36_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__protocol.rs_line_36_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.339505834,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/protocol.rs",
+          "function": {
+            "function_name": "<impl std::fmt::Display for ClusterError>::fmt",
+            "return_type": "-> std::fmt::Result",
+            "span": {
+              "start": {
+                "line": 97,
+                "column": 5
+              },
+              "end": {
+                "line": 108,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 98,
+              "column": 9
+            },
+            "end": {
+              "line": 107,
+              "column": 10
+            }
+          },
+          "replacement": "Ok(Default::default())",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__protocol.rs_line_98_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__protocol.rs_line_98_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.28842875,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "InMemoryTransport::pair",
+            "return_type": "-> (Self, Self)",
+            "span": {
+              "start": {
+                "line": 29,
+                "column": 5
+              },
+              "end": {
+                "line": 41,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 30,
+              "column": 9
+            },
+            "end": {
+              "line": 40,
+              "column": 25
+            }
+          },
+          "replacement": "(Default::default(), Default::default())",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_30_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_30_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 5.843977875,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/coordinator.rs",
+          "function": {
+            "function_name": "add_snapshot",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 90,
+                "column": 1
+              },
+              "end": {
+                "line": 141,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 109,
+              "column": 17
+            },
+            "end": {
+              "line": 109,
+              "column": 18
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "MissedMutant",
+      "log_path": "log/rust-sim__src__cluster__coordinator.rs_line_109_col_17_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__coordinator.rs_line_109_col_17_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 11.346198292,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 37.901828291,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for InMemoryTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 52,
+                "column": 5
+              },
+              "end": {
+                "line": 58,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 9
+            },
+            "end": {
+              "line": 57,
+              "column": 26
+            }
+          },
+          "replacement": "Ok(None)",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_53_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_53_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 13.090026959,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for InMemoryTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 52,
+                "column": 5
+              },
+              "end": {
+                "line": 58,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 53,
+              "column": 9
+            },
+            "end": {
+              "line": 57,
+              "column": 26
+            }
+          },
+          "replacement": "Ok(Some(Default::default()))",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_53_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_53_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 7.017625708,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "TcpTransport::connect",
+            "return_type": "-> Result<Self, String>",
+            "span": {
+              "start": {
+                "line": 69,
+                "column": 5
+              },
+              "end": {
+                "line": 73,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 70,
+              "column": 9
+            },
+            "end": {
+              "line": 72,
+              "column": 64
+            }
+          },
+          "replacement": "Ok(Default::default())",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_70_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_70_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.298071916,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "TcpTransport::from_stream",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 74,
+                "column": 5
+              },
+              "end": {
+                "line": 76,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 75,
+              "column": 9
+            },
+            "end": {
+              "line": 75,
+              "column": 54
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_75_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_75_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.816503458,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::send",
+            "return_type": "-> Result<(), String>",
+            "span": {
+              "start": {
+                "line": 80,
+                "column": 5
+              },
+              "end": {
+                "line": 87,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 81,
+              "column": 9
+            },
+            "end": {
+              "line": 86,
+              "column": 15
+            }
+          },
+          "replacement": "Ok(())",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_81_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_81_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 42.808965834,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 89,
+              "column": 9
+            },
+            "end": {
+              "line": 100,
+              "column": 89
+            }
+          },
+          "replacement": "Ok(Some(Default::default()))",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_89_col_9_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_89_col_9_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 6.500862125,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for InMemoryTransport>::send",
+            "return_type": "-> Result<(), String>",
+            "span": {
+              "start": {
+                "line": 45,
+                "column": 5
+              },
+              "end": {
+                "line": 51,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 46,
+              "column": 9
+            },
+            "end": {
+              "line": 50,
+              "column": 15
+            }
+          },
+          "replacement": "Ok(())",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_46_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_46_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 82.447786667,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 93,
+              "column": 23
+            },
+            "end": {
+              "line": 94,
+              "column": 70
+            }
+          },
+          "replacement": "true",
+          "genre": "MatchArmGuard"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_93_col_23.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_93_col_23.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 20.77616225,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 94,
+              "column": 20
+            },
+            "end": {
+              "line": 94,
+              "column": 22
+            }
+          },
+          "replacement": "&&",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_94_col_20.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_94_col_20.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 4.032185209,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 93,
+              "column": 23
+            },
+            "end": {
+              "line": 94,
+              "column": 70
+            }
+          },
+          "replacement": "false",
+          "genre": "MatchArmGuard"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_93_col_23_001.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_93_col_23_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 15.884569792,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 93,
+              "column": 32
+            },
+            "end": {
+              "line": 93,
+              "column": 34
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_93_col_32.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_93_col_32.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.423528417,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 94,
+              "column": 32
+            },
+            "end": {
+              "line": 94,
+              "column": 34
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "Unviable",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_94_col_32.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_94_col_32.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 3.634832916,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "package": "slot_sim",
+          "file": "rust-sim/src/cluster/transport.rs",
+          "function": {
+            "function_name": "<impl ClusterTransport for TcpTransport>::recv",
+            "return_type": "-> Result<Option<ClusterEnvelope>, String>",
+            "span": {
+              "start": {
+                "line": 88,
+                "column": 5
+              },
+              "end": {
+                "line": 101,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 89,
+              "column": 9
+            },
+            "end": {
+              "line": 100,
+              "column": 89
+            }
+          },
+          "replacement": "Ok(None)",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/rust-sim__src__cluster__transport.rs_line_89_col_9.log",
+      "diff_path": "diff/rust-sim__src__cluster__transport.rs_line_89_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 56.225703459,
+          "process_status": "Success",
+          "argv": [
+            "cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 58.5171315,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "cargo",
+            "test",
+            "--verbose",
+            "--package=slot_sim@1.0.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "total_mutants": 47,
+  "missed": 1,
+  "caught": 13,
+  "timeout": 0,
+  "unviable": 33,
+  "success": 0
+}

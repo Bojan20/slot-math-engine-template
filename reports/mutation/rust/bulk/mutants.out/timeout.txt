@@ -1,0 +1,2 @@
+rust-sim/src/bulk/checkpoint.rs:149:5: replace snapshot_hdr_buckets -> Vec<u64> with vec![]
+rust-sim/src/bulk/checkpoint.rs:149:5: replace snapshot_hdr_buckets -> Vec<u64> with vec![0]

@@ -1,0 +1,2 @@
+rust-sim/src/bulk/checkpoint.rs:174:5: replace load_checkpoint -> Result<Option<BulkCheckpoint>, String> with Ok(Some(Default::default()))
+rust-sim/src/bulk/dispatcher.rs:134:9: replace BulkDispatcher<'a>::run -> Result<BulkResult, String> with Ok(Default::default())

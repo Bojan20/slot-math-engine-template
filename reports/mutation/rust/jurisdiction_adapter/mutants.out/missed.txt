@@ -1,0 +1,6 @@
+rust-sim/src/jurisdiction/adapter.rs:53:30: replace > with >= in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:70: replace > with >= in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:71:5: replace check_max_win -> Vec<ComplianceViolation> with vec![]
+rust-sim/src/jurisdiction/adapter.rs:72:32: replace > with == in check_max_win
+rust-sim/src/jurisdiction/adapter.rs:72:32: replace > with >= in check_max_win
+rust-sim/src/jurisdiction/adapter.rs:72:32: replace > with < in check_max_win

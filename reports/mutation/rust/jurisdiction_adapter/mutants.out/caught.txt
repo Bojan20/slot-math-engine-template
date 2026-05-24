@@ -1,0 +1,19 @@
+rust-sim/src/jurisdiction/adapter.rs:16:5: replace feature_kind -> &'static str with ""
+rust-sim/src/jurisdiction/adapter.rs:34:5: replace check_rtp -> Vec<ComplianceViolation> with vec![]
+rust-sim/src/jurisdiction/adapter.rs:38:18: replace || with && in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:16:5: replace feature_kind -> &'static str with "xyzzy"
+rust-sim/src/jurisdiction/adapter.rs:38:12: replace < with == in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:38:12: replace < with > in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:38:12: replace < with <= in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:38:25: replace > with < in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:38:25: replace > with == in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:38:25: replace > with >= in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:45: replace || with && in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:30: replace > with == in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:30: replace > with < in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:17: replace - with + in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:17: replace - with / in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:70: replace > with == in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:70: replace > with < in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:57: replace - with + in check_rtp
+rust-sim/src/jurisdiction/adapter.rs:53:57: replace - with / in check_rtp

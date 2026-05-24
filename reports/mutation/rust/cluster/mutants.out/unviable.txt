@@ -1,0 +1,33 @@
+rust-sim/src/cluster/coordinator.rs:30:9: replace <impl From<WorkerResult> for SliceResult>::from -> Self with Default::default()
+rust-sim/src/cluster/coordinator.rs:46:5: replace partition_run -> Vec<WorkSlice> with vec![Default::default()]
+rust-sim/src/cluster/coordinator.rs:46:20: replace == with != in partition_run
+rust-sim/src/cluster/coordinator.rs:51:38: replace / with * in partition_run
+rust-sim/src/cluster/coordinator.rs:55:26: replace < with > in partition_run
+rust-sim/src/cluster/coordinator.rs:56:30: replace + with * in partition_run
+rust-sim/src/cluster/coordinator.rs:60:30: replace + with * in partition_run
+rust-sim/src/cluster/coordinator.rs:55:26: replace < with <= in partition_run
+rust-sim/src/cluster/coordinator.rs:79:5: replace merge_slice_results -> u64 with 1
+rust-sim/src/cluster/coordinator.rs:85:15: replace += with *= in merge_slice_results
+rust-sim/src/cluster/coordinator.rs:100:17: replace > with == in add_snapshot
+rust-sim/src/cluster/coordinator.rs:66:16: replace += with *= in partition_run
+rust-sim/src/cluster/coordinator.rs:109:17: replace > with == in add_snapshot
+rust-sim/src/cluster/coordinator.rs:100:17: replace > with >= in add_snapshot
+rust-sim/src/cluster/coordinator.rs:109:17: replace > with >= in add_snapshot
+rust-sim/src/cluster/coordinator.rs:169:9: replace ClusterCoordinator<'a>::finish -> u64 with 0
+rust-sim/src/cluster/coordinator.rs:169:9: replace ClusterCoordinator<'a>::finish -> u64 with 1
+rust-sim/src/cluster/protocol.rs:36:9: replace WorkSlice::span -> u64 with 0
+rust-sim/src/cluster/protocol.rs:36:9: replace WorkSlice::span -> u64 with 1
+rust-sim/src/cluster/protocol.rs:98:9: replace <impl std::fmt::Display for ClusterError>::fmt -> std::fmt::Result with Ok(Default::default())
+rust-sim/src/cluster/transport.rs:30:9: replace InMemoryTransport::pair -> (Self, Self) with (Default::default(), Default::default())
+rust-sim/src/cluster/transport.rs:53:9: replace <impl ClusterTransport for InMemoryTransport>::recv -> Result<Option<ClusterEnvelope>, String> with Ok(None)
+rust-sim/src/cluster/transport.rs:53:9: replace <impl ClusterTransport for InMemoryTransport>::recv -> Result<Option<ClusterEnvelope>, String> with Ok(Some(Default::default()))
+rust-sim/src/cluster/transport.rs:70:9: replace TcpTransport::connect -> Result<Self, String> with Ok(Default::default())
+rust-sim/src/cluster/transport.rs:75:9: replace TcpTransport::from_stream -> Self with Default::default()
+rust-sim/src/cluster/transport.rs:81:9: replace <impl ClusterTransport for TcpTransport>::send -> Result<(), String> with Ok(())
+rust-sim/src/cluster/transport.rs:89:9: replace <impl ClusterTransport for TcpTransport>::recv -> Result<Option<ClusterEnvelope>, String> with Ok(Some(Default::default()))
+rust-sim/src/cluster/transport.rs:46:9: replace <impl ClusterTransport for InMemoryTransport>::send -> Result<(), String> with Ok(())
+rust-sim/src/cluster/transport.rs:93:23: replace match guard e.kind() == std::io::ErrorKind::UnexpectedEof || e.kind() == std::io::ErrorKind::ConnectionReset with true in <impl ClusterTransport for TcpTransport>::recv
+rust-sim/src/cluster/transport.rs:94:20: replace || with && in <impl ClusterTransport for TcpTransport>::recv
+rust-sim/src/cluster/transport.rs:93:23: replace match guard e.kind() == std::io::ErrorKind::UnexpectedEof || e.kind() == std::io::ErrorKind::ConnectionReset with false in <impl ClusterTransport for TcpTransport>::recv
+rust-sim/src/cluster/transport.rs:93:32: replace == with != in <impl ClusterTransport for TcpTransport>::recv
+rust-sim/src/cluster/transport.rs:94:32: replace == with != in <impl ClusterTransport for TcpTransport>::recv

@@ -1,0 +1,1 @@
+rust-sim/src/ir/validate.rs:32:5: replace cross_validate -> ValidationReport with Default::default()

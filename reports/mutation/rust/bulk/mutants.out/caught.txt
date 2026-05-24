@@ -1,0 +1,15 @@
+rust-sim/src/bulk/checkpoint.rs:84:9: replace AtomicStatsSnapshot::from_atomic -> Self with Default::default()
+rust-sim/src/bulk/checkpoint.rs:117:9: replace AtomicStatsSnapshot::apply_to with ()
+rust-sim/src/bulk/checkpoint.rs:161:5: replace save_checkpoint -> Result<(), String> with Ok(())
+rust-sim/src/bulk/checkpoint.rs:174:5: replace load_checkpoint -> Result<Option<BulkCheckpoint>, String> with Ok(None)
+rust-sim/src/bulk/checkpoint.rs:174:8: delete ! in load_checkpoint
+rust-sim/src/bulk/checkpoint.rs:182:27: replace != with == in load_checkpoint
+rust-sim/src/bulk/dispatcher.rs:149:18: replace == with != in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:199:46: replace * with + in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:199:46: replace * with / in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:200:37: replace - with + in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:200:37: replace - with / in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:211:42: replace + with - in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:211:42: replace + with * in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:230:17: replace && with || in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:240:37: replace += with -= in BulkDispatcher<'a>::run

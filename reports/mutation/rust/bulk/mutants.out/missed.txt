@@ -1,0 +1,16 @@
+rust-sim/src/bulk/checkpoint.rs:149:5: replace snapshot_hdr_buckets -> Vec<u64> with vec![1]
+rust-sim/src/bulk/checkpoint.rs:156:5: replace apply_hdr_buckets with ()
+rust-sim/src/bulk/dispatcher.rs:181:30: replace > with == in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:181:30: replace > with < in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:181:30: replace > with >= in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:229:17: replace && with || in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:228:50: replace > with == in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:228:50: replace > with < in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:228:50: replace > with >= in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:230:73: replace == with != in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:230:37: replace % with / in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:230:37: replace % with + in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:240:37: replace += with *= in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:245:50: replace && with || in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:245:46: replace > with == in BulkDispatcher<'a>::run
+rust-sim/src/bulk/dispatcher.rs:245:46: replace > with < in BulkDispatcher<'a>::run

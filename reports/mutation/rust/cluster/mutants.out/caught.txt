@@ -1,0 +1,13 @@
+rust-sim/src/cluster/coordinator.rs:46:5: replace partition_run -> Vec<WorkSlice> with vec![]
+rust-sim/src/cluster/coordinator.rs:51:38: replace / with % in partition_run
+rust-sim/src/cluster/coordinator.rs:52:38: replace % with / in partition_run
+rust-sim/src/cluster/coordinator.rs:52:38: replace % with + in partition_run
+rust-sim/src/cluster/coordinator.rs:55:26: replace < with == in partition_run
+rust-sim/src/cluster/coordinator.rs:56:30: replace + with - in partition_run
+rust-sim/src/cluster/coordinator.rs:60:30: replace + with - in partition_run
+rust-sim/src/cluster/coordinator.rs:66:16: replace += with -= in partition_run
+rust-sim/src/cluster/coordinator.rs:79:5: replace merge_slice_results -> u64 with 0
+rust-sim/src/cluster/coordinator.rs:85:15: replace += with -= in merge_slice_results
+rust-sim/src/cluster/coordinator.rs:91:5: replace add_snapshot with ()
+rust-sim/src/cluster/coordinator.rs:100:17: replace > with < in add_snapshot
+rust-sim/src/cluster/transport.rs:89:9: replace <impl ClusterTransport for TcpTransport>::recv -> Result<Option<ClusterEnvelope>, String> with Ok(None)

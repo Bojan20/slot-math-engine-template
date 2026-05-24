@@ -1,0 +1,8672 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 5
+      },
+      "end": {
+        "line": 45,
+        "column": 11
+      }
+    },
+    "replacement": "0.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 5
+      },
+      "end": {
+        "line": 45,
+        "column": 11
+      }
+    },
+    "replacement": "1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 5
+      },
+      "end": {
+        "line": 45,
+        "column": 11
+      }
+    },
+    "replacement": "-1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 10
+      },
+      "end": {
+        "line": 31,
+        "column": 11
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 10
+      },
+      "end": {
+        "line": 31,
+        "column": 11
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 31,
+        "column": 10
+      },
+      "end": {
+        "line": 31,
+        "column": 11
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 34,
+        "column": 15
+      },
+      "end": {
+        "line": 34,
+        "column": 17
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 34,
+        "column": 10
+      },
+      "end": {
+        "line": 34,
+        "column": 12
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 34,
+        "column": 20
+      },
+      "end": {
+        "line": 34,
+        "column": 22
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 39,
+        "column": 21
+      },
+      "end": {
+        "line": 39,
+        "column": 22
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 39,
+        "column": 21
+      },
+      "end": {
+        "line": 39,
+        "column": 22
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 16
+      },
+      "end": {
+        "line": 42,
+        "column": 18
+      }
+    },
+    "replacement": "+=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 16
+      },
+      "end": {
+        "line": 42,
+        "column": 18
+      }
+    },
+    "replacement": "/=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 22
+      },
+      "end": {
+        "line": 42,
+        "column": 23
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 22
+      },
+      "end": {
+        "line": 42,
+        "column": 23
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 43,
+        "column": 16
+      },
+      "end": {
+        "line": 43,
+        "column": 18
+      }
+    },
+    "replacement": "%=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 43,
+        "column": 16
+      },
+      "end": {
+        "line": 43,
+        "column": 18
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 43,
+        "column": 22
+      },
+      "end": {
+        "line": 43,
+        "column": 23
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_f64",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 28,
+          "column": 1
+        },
+        "end": {
+          "line": 46,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 43,
+        "column": 22
+      },
+      "end": {
+        "line": 43,
+        "column": 23
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 5
+      },
+      "end": {
+        "line": 60,
+        "column": 72
+      }
+    },
+    "replacement": "0.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 5
+      },
+      "end": {
+        "line": 60,
+        "column": 72
+      }
+    },
+    "replacement": "1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 5
+      },
+      "end": {
+        "line": 60,
+        "column": 72
+      }
+    },
+    "replacement": "-1.0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 10
+      },
+      "end": {
+        "line": 51,
+        "column": 11
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 10
+      },
+      "end": {
+        "line": 51,
+        "column": 11
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 51,
+        "column": 10
+      },
+      "end": {
+        "line": 51,
+        "column": 11
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 54,
+        "column": 10
+      },
+      "end": {
+        "line": 54,
+        "column": 12
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 55,
+        "column": 21
+      },
+      "end": {
+        "line": 55,
+        "column": 23
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 57,
+        "column": 10
+      },
+      "end": {
+        "line": 57,
+        "column": 12
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 58,
+        "column": 21
+      },
+      "end": {
+        "line": 58,
+        "column": 23
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 40
+      },
+      "end": {
+        "line": 60,
+        "column": 41
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 40
+      },
+      "end": {
+        "line": 60,
+        "column": 41
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 21
+      },
+      "end": {
+        "line": 60,
+        "column": 22
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 21
+      },
+      "end": {
+        "line": 60,
+        "column": 22
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 47
+      },
+      "end": {
+        "line": 60,
+        "column": 48
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 47
+      },
+      "end": {
+        "line": 60,
+        "column": 48
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 60
+      },
+      "end": {
+        "line": 60,
+        "column": 61
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_prob",
+      "return_type": "-> f64",
+      "span": {
+        "start": {
+          "line": 48,
+          "column": 1
+        },
+        "end": {
+          "line": 61,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 60,
+        "column": 60
+      },
+      "end": {
+        "line": 60,
+        "column": 61
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 66,
+        "column": 5
+      },
+      "end": {
+        "line": 74,
+        "column": 8
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 66,
+        "column": 5
+      },
+      "end": {
+        "line": 74,
+        "column": 8
+      }
+    },
+    "replacement": "vec![0.0]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 66,
+        "column": 5
+      },
+      "end": {
+        "line": 74,
+        "column": 8
+      }
+    },
+    "replacement": "vec![1.0]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 66,
+        "column": 5
+      },
+      "end": {
+        "line": 74,
+        "column": 8
+      }
+    },
+    "replacement": "vec![-1.0]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 18
+      },
+      "end": {
+        "line": 69,
+        "column": 20
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 12
+      },
+      "end": {
+        "line": 69,
+        "column": 13
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 12
+      },
+      "end": {
+        "line": 69,
+        "column": 13
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 12
+      },
+      "end": {
+        "line": 69,
+        "column": 13
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 39
+      },
+      "end": {
+        "line": 69,
+        "column": 40
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 39
+      },
+      "end": {
+        "line": 69,
+        "column": 40
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 39
+      },
+      "end": {
+        "line": 69,
+        "column": 40
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 26
+      },
+      "end": {
+        "line": 69,
+        "column": 27
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 69,
+        "column": 26
+      },
+      "end": {
+        "line": 69,
+        "column": 27
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 71,
+        "column": 16
+      },
+      "end": {
+        "line": 71,
+        "column": 18
+      }
+    },
+    "replacement": "%=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "binom_pmf",
+      "return_type": "-> Vec<f64>",
+      "span": {
+        "start": {
+          "line": 63,
+          "column": 1
+        },
+        "end": {
+          "line": 75,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 71,
+        "column": 16
+      },
+      "end": {
+        "line": 71,
+        "column": 18
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 138,
+        "column": 5
+      },
+      "end": {
+        "line": 356,
+        "column": 6
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 156,
+        "column": 48
+      },
+      "end": {
+        "line": 156,
+        "column": 49
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 156,
+        "column": 48
+      },
+      "end": {
+        "line": 156,
+        "column": 49
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 156,
+        "column": 22
+      },
+      "end": {
+        "line": 156,
+        "column": 23
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 156,
+        "column": 22
+      },
+      "end": {
+        "line": 156,
+        "column": 23
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 156,
+        "column": 55
+      },
+      "end": {
+        "line": 156,
+        "column": 57
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 161,
+        "column": 54
+      },
+      "end": {
+        "line": 161,
+        "column": 55
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 161,
+        "column": 54
+      },
+      "end": {
+        "line": 161,
+        "column": 55
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 161,
+        "column": 28
+      },
+      "end": {
+        "line": 161,
+        "column": 29
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 161,
+        "column": 28
+      },
+      "end": {
+        "line": 161,
+        "column": 29
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 32
+      },
+      "end": {
+        "line": 181,
+        "column": 34
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 38
+      },
+      "end": {
+        "line": 181,
+        "column": 39
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 38
+      },
+      "end": {
+        "line": 181,
+        "column": 39
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 181,
+        "column": 38
+      },
+      "end": {
+        "line": 181,
+        "column": 39
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 187,
+        "column": 23
+      },
+      "end": {
+        "line": 187,
+        "column": 24
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 187,
+        "column": 23
+      },
+      "end": {
+        "line": 187,
+        "column": 24
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 37
+      },
+      "end": {
+        "line": 188,
+        "column": 38
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 37
+      },
+      "end": {
+        "line": 188,
+        "column": 38
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 61
+      },
+      "end": {
+        "line": 188,
+        "column": 62
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 61
+      },
+      "end": {
+        "line": 188,
+        "column": 62
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 49
+      },
+      "end": {
+        "line": 188,
+        "column": 50
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 188,
+        "column": 49
+      },
+      "end": {
+        "line": 188,
+        "column": 50
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 50
+      },
+      "end": {
+        "line": 193,
+        "column": 51
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 50
+      },
+      "end": {
+        "line": 193,
+        "column": 51
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 56
+      },
+      "end": {
+        "line": 193,
+        "column": 57
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 193,
+        "column": 56
+      },
+      "end": {
+        "line": 193,
+        "column": 57
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 198,
+        "column": 43
+      },
+      "end": {
+        "line": 198,
+        "column": 44
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 198,
+        "column": 43
+      },
+      "end": {
+        "line": 198,
+        "column": 44
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 198,
+        "column": 43
+      },
+      "end": {
+        "line": 198,
+        "column": 44
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 198,
+        "column": 32
+      },
+      "end": {
+        "line": 198,
+        "column": 33
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 198,
+        "column": 32
+      },
+      "end": {
+        "line": 198,
+        "column": 33
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 25
+      },
+      "end": {
+        "line": 200,
+        "column": 26
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 25
+      },
+      "end": {
+        "line": 200,
+        "column": 26
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 37
+      },
+      "end": {
+        "line": 200,
+        "column": 38
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 200,
+        "column": 37
+      },
+      "end": {
+        "line": 200,
+        "column": 38
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 32
+      },
+      "end": {
+        "line": 202,
+        "column": 33
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 32
+      },
+      "end": {
+        "line": 202,
+        "column": 33
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 22
+      },
+      "end": {
+        "line": 202,
+        "column": 23
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 22
+      },
+      "end": {
+        "line": 202,
+        "column": 23
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 52
+      },
+      "end": {
+        "line": 202,
+        "column": 53
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 52
+      },
+      "end": {
+        "line": 202,
+        "column": 53
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 37
+      },
+      "end": {
+        "line": 202,
+        "column": 38
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 37
+      },
+      "end": {
+        "line": 202,
+        "column": 38
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 44
+      },
+      "end": {
+        "line": 202,
+        "column": 45
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 44
+      },
+      "end": {
+        "line": 202,
+        "column": 45
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 59
+      },
+      "end": {
+        "line": 202,
+        "column": 60
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 202,
+        "column": 59
+      },
+      "end": {
+        "line": 202,
+        "column": 60
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 210,
+        "column": 27
+      },
+      "end": {
+        "line": 210,
+        "column": 28
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 210,
+        "column": 27
+      },
+      "end": {
+        "line": 210,
+        "column": 28
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 41
+      },
+      "end": {
+        "line": 211,
+        "column": 42
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 41
+      },
+      "end": {
+        "line": 211,
+        "column": 42
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 65
+      },
+      "end": {
+        "line": 211,
+        "column": 66
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 65
+      },
+      "end": {
+        "line": 211,
+        "column": 66
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 53
+      },
+      "end": {
+        "line": 211,
+        "column": 54
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 211,
+        "column": 53
+      },
+      "end": {
+        "line": 211,
+        "column": 54
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 46
+      },
+      "end": {
+        "line": 216,
+        "column": 47
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 46
+      },
+      "end": {
+        "line": 216,
+        "column": 47
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 46
+      },
+      "end": {
+        "line": 216,
+        "column": 47
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 35
+      },
+      "end": {
+        "line": 216,
+        "column": 36
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 216,
+        "column": 35
+      },
+      "end": {
+        "line": 216,
+        "column": 36
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 217,
+        "column": 29
+      },
+      "end": {
+        "line": 217,
+        "column": 30
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 217,
+        "column": 29
+      },
+      "end": {
+        "line": 217,
+        "column": 30
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 217,
+        "column": 40
+      },
+      "end": {
+        "line": 217,
+        "column": 41
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 217,
+        "column": 40
+      },
+      "end": {
+        "line": 217,
+        "column": 41
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 35
+      },
+      "end": {
+        "line": 219,
+        "column": 36
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 35
+      },
+      "end": {
+        "line": 219,
+        "column": 36
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 25
+      },
+      "end": {
+        "line": 219,
+        "column": 26
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 25
+      },
+      "end": {
+        "line": 219,
+        "column": 26
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 58
+      },
+      "end": {
+        "line": 219,
+        "column": 59
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 58
+      },
+      "end": {
+        "line": 219,
+        "column": 59
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 44
+      },
+      "end": {
+        "line": 219,
+        "column": 45
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 44
+      },
+      "end": {
+        "line": 219,
+        "column": 45
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 51
+      },
+      "end": {
+        "line": 219,
+        "column": 52
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 51
+      },
+      "end": {
+        "line": 219,
+        "column": 52
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 65
+      },
+      "end": {
+        "line": 219,
+        "column": 66
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 219,
+        "column": 65
+      },
+      "end": {
+        "line": 219,
+        "column": 66
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 228,
+        "column": 27
+      },
+      "end": {
+        "line": 228,
+        "column": 28
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 228,
+        "column": 27
+      },
+      "end": {
+        "line": 228,
+        "column": 28
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 41
+      },
+      "end": {
+        "line": 229,
+        "column": 42
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 41
+      },
+      "end": {
+        "line": 229,
+        "column": 42
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 65
+      },
+      "end": {
+        "line": 229,
+        "column": 66
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 65
+      },
+      "end": {
+        "line": 229,
+        "column": 66
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 53
+      },
+      "end": {
+        "line": 229,
+        "column": 54
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 229,
+        "column": 53
+      },
+      "end": {
+        "line": 229,
+        "column": 54
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 232,
+        "column": 38
+      },
+      "end": {
+        "line": 232,
+        "column": 39
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 232,
+        "column": 38
+      },
+      "end": {
+        "line": 232,
+        "column": 39
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 232,
+        "column": 47
+      },
+      "end": {
+        "line": 232,
+        "column": 48
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 232,
+        "column": 47
+      },
+      "end": {
+        "line": 232,
+        "column": 48
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 25
+      },
+      "end": {
+        "line": 234,
+        "column": 27
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 25
+      },
+      "end": {
+        "line": 234,
+        "column": 27
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 35
+      },
+      "end": {
+        "line": 234,
+        "column": 36
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 35
+      },
+      "end": {
+        "line": 234,
+        "column": 36
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 41
+      },
+      "end": {
+        "line": 234,
+        "column": 42
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 41
+      },
+      "end": {
+        "line": 234,
+        "column": 42
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 48
+      },
+      "end": {
+        "line": 234,
+        "column": 49
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 234,
+        "column": 48
+      },
+      "end": {
+        "line": 234,
+        "column": 49
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 26
+      },
+      "end": {
+        "line": 256,
+        "column": 27
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 26
+      },
+      "end": {
+        "line": 256,
+        "column": 27
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 21
+      },
+      "end": {
+        "line": 256,
+        "column": 22
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 21
+      },
+      "end": {
+        "line": 256,
+        "column": 22
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 32
+      },
+      "end": {
+        "line": 256,
+        "column": 33
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 256,
+        "column": 32
+      },
+      "end": {
+        "line": 256,
+        "column": 33
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 49
+      },
+      "end": {
+        "line": 258,
+        "column": 50
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 49
+      },
+      "end": {
+        "line": 258,
+        "column": 50
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 38
+      },
+      "end": {
+        "line": 258,
+        "column": 39
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 38
+      },
+      "end": {
+        "line": 258,
+        "column": 39
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 44
+      },
+      "end": {
+        "line": 258,
+        "column": 45
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 258,
+        "column": 44
+      },
+      "end": {
+        "line": 258,
+        "column": 45
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 269,
+        "column": 27
+      },
+      "end": {
+        "line": 269,
+        "column": 28
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 269,
+        "column": 27
+      },
+      "end": {
+        "line": 269,
+        "column": 28
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 269,
+        "column": 27
+      },
+      "end": {
+        "line": 269,
+        "column": 28
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 273,
+        "column": 32
+      },
+      "end": {
+        "line": 273,
+        "column": 34
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 273,
+        "column": 27
+      },
+      "end": {
+        "line": 273,
+        "column": 29
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 273,
+        "column": 42
+      },
+      "end": {
+        "line": 273,
+        "column": 44
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 274,
+        "column": 38
+      },
+      "end": {
+        "line": 274,
+        "column": 40
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 274,
+        "column": 38
+      },
+      "end": {
+        "line": 274,
+        "column": 40
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 275,
+        "column": 31
+      },
+      "end": {
+        "line": 275,
+        "column": 33
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 276,
+        "column": 37
+      },
+      "end": {
+        "line": 276,
+        "column": 39
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 276,
+        "column": 37
+      },
+      "end": {
+        "line": 276,
+        "column": 39
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 281,
+        "column": 27
+      },
+      "end": {
+        "line": 281,
+        "column": 28
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 281,
+        "column": 27
+      },
+      "end": {
+        "line": 281,
+        "column": 28
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 46
+      },
+      "end": {
+        "line": 282,
+        "column": 47
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 46
+      },
+      "end": {
+        "line": 282,
+        "column": 47
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 75
+      },
+      "end": {
+        "line": 282,
+        "column": 76
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 75
+      },
+      "end": {
+        "line": 282,
+        "column": 76
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 63
+      },
+      "end": {
+        "line": 282,
+        "column": 64
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 282,
+        "column": 63
+      },
+      "end": {
+        "line": 282,
+        "column": 64
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 47
+      },
+      "end": {
+        "line": 285,
+        "column": 49
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 47
+      },
+      "end": {
+        "line": 285,
+        "column": 49
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 41
+      },
+      "end": {
+        "line": 285,
+        "column": 42
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 41
+      },
+      "end": {
+        "line": 285,
+        "column": 42
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 57
+      },
+      "end": {
+        "line": 285,
+        "column": 58
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 285,
+        "column": 57
+      },
+      "end": {
+        "line": 285,
+        "column": 58
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 287,
+        "column": 40
+      },
+      "end": {
+        "line": 287,
+        "column": 41
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 287,
+        "column": 40
+      },
+      "end": {
+        "line": 287,
+        "column": 41
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 288,
+        "column": 30
+      },
+      "end": {
+        "line": 288,
+        "column": 32
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 289,
+        "column": 46
+      },
+      "end": {
+        "line": 289,
+        "column": 48
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 289,
+        "column": 46
+      },
+      "end": {
+        "line": 289,
+        "column": 48
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 289,
+        "column": 56
+      },
+      "end": {
+        "line": 289,
+        "column": 57
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 289,
+        "column": 56
+      },
+      "end": {
+        "line": 289,
+        "column": 57
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 299,
+        "column": 27
+      },
+      "end": {
+        "line": 299,
+        "column": 28
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 299,
+        "column": 27
+      },
+      "end": {
+        "line": 299,
+        "column": 28
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 299,
+        "column": 27
+      },
+      "end": {
+        "line": 299,
+        "column": 28
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 303,
+        "column": 32
+      },
+      "end": {
+        "line": 303,
+        "column": 34
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 303,
+        "column": 27
+      },
+      "end": {
+        "line": 303,
+        "column": 29
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 303,
+        "column": 42
+      },
+      "end": {
+        "line": 303,
+        "column": 44
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 304,
+        "column": 38
+      },
+      "end": {
+        "line": 304,
+        "column": 40
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 304,
+        "column": 38
+      },
+      "end": {
+        "line": 304,
+        "column": 40
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 305,
+        "column": 31
+      },
+      "end": {
+        "line": 305,
+        "column": 33
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 306,
+        "column": 37
+      },
+      "end": {
+        "line": 306,
+        "column": 39
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 306,
+        "column": 37
+      },
+      "end": {
+        "line": 306,
+        "column": 39
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 311,
+        "column": 27
+      },
+      "end": {
+        "line": 311,
+        "column": 28
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 311,
+        "column": 27
+      },
+      "end": {
+        "line": 311,
+        "column": 28
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 46
+      },
+      "end": {
+        "line": 312,
+        "column": 47
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 46
+      },
+      "end": {
+        "line": 312,
+        "column": 47
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 75
+      },
+      "end": {
+        "line": 312,
+        "column": 76
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 75
+      },
+      "end": {
+        "line": 312,
+        "column": 76
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 63
+      },
+      "end": {
+        "line": 312,
+        "column": 64
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 312,
+        "column": 63
+      },
+      "end": {
+        "line": 312,
+        "column": 64
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 47
+      },
+      "end": {
+        "line": 315,
+        "column": 49
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 47
+      },
+      "end": {
+        "line": 315,
+        "column": 49
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 41
+      },
+      "end": {
+        "line": 315,
+        "column": 42
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 41
+      },
+      "end": {
+        "line": 315,
+        "column": 42
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 57
+      },
+      "end": {
+        "line": 315,
+        "column": 58
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 315,
+        "column": 57
+      },
+      "end": {
+        "line": 315,
+        "column": 58
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 317,
+        "column": 40
+      },
+      "end": {
+        "line": 317,
+        "column": 41
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 317,
+        "column": 40
+      },
+      "end": {
+        "line": 317,
+        "column": 41
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 318,
+        "column": 30
+      },
+      "end": {
+        "line": 318,
+        "column": 32
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 54
+      },
+      "end": {
+        "line": 319,
+        "column": 56
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 54
+      },
+      "end": {
+        "line": 319,
+        "column": 56
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 48
+      },
+      "end": {
+        "line": 319,
+        "column": 49
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 48
+      },
+      "end": {
+        "line": 319,
+        "column": 49
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 64
+      },
+      "end": {
+        "line": 319,
+        "column": 65
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 319,
+        "column": 64
+      },
+      "end": {
+        "line": 319,
+        "column": 65
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 329,
+        "column": 33
+      },
+      "end": {
+        "line": 329,
+        "column": 34
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 329,
+        "column": 33
+      },
+      "end": {
+        "line": 329,
+        "column": 34
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 340,
+        "column": 23
+      },
+      "end": {
+        "line": 340,
+        "column": 24
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 340,
+        "column": 23
+      },
+      "end": {
+        "line": 340,
+        "column": 24
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 340,
+        "column": 23
+      },
+      "end": {
+        "line": 340,
+        "column": 24
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 343,
+        "column": 28
+      },
+      "end": {
+        "line": 343,
+        "column": 30
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 343,
+        "column": 23
+      },
+      "end": {
+        "line": 343,
+        "column": 25
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 343,
+        "column": 38
+      },
+      "end": {
+        "line": 343,
+        "column": 40
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 344,
+        "column": 44
+      },
+      "end": {
+        "line": 344,
+        "column": 46
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 344,
+        "column": 44
+      },
+      "end": {
+        "line": 344,
+        "column": 46
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 344,
+        "column": 54
+      },
+      "end": {
+        "line": 344,
+        "column": 55
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 344,
+        "column": 54
+      },
+      "end": {
+        "line": 344,
+        "column": 55
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 348,
+        "column": 44
+      },
+      "end": {
+        "line": 348,
+        "column": 45
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_hold_and_win",
+      "return_type": "-> HoldAndWinResult",
+      "span": {
+        "start": {
+          "line": 130,
+          "column": 1
+        },
+        "end": {
+          "line": 357,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 348,
+        "column": 44
+      },
+      "end": {
+        "line": 348,
+        "column": 45
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 413,
+        "column": 5
+      },
+      "end": {
+        "line": 455,
+        "column": 6
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 421,
+        "column": 29
+      },
+      "end": {
+        "line": 421,
+        "column": 30
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 421,
+        "column": 29
+      },
+      "end": {
+        "line": 421,
+        "column": 30
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 422,
+        "column": 32
+      },
+      "end": {
+        "line": 422,
+        "column": 33
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 422,
+        "column": 32
+      },
+      "end": {
+        "line": 422,
+        "column": 33
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 422,
+        "column": 39
+      },
+      "end": {
+        "line": 422,
+        "column": 40
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 422,
+        "column": 39
+      },
+      "end": {
+        "line": 422,
+        "column": 40
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 425,
+        "column": 22
+      },
+      "end": {
+        "line": 425,
+        "column": 45
+      }
+    },
+    "replacement": "true",
+    "genre": "MatchArmGuard"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 425,
+        "column": 22
+      },
+      "end": {
+        "line": 425,
+        "column": 45
+      }
+    },
+    "replacement": "false",
+    "genre": "MatchArmGuard"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 425,
+        "column": 40
+      },
+      "end": {
+        "line": 425,
+        "column": 41
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 425,
+        "column": 40
+      },
+      "end": {
+        "line": 425,
+        "column": 41
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 425,
+        "column": 40
+      },
+      "end": {
+        "line": 425,
+        "column": 41
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 429,
+        "column": 40
+      },
+      "end": {
+        "line": 429,
+        "column": 41
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 429,
+        "column": 40
+      },
+      "end": {
+        "line": 429,
+        "column": 41
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 429,
+        "column": 40
+      },
+      "end": {
+        "line": 429,
+        "column": 41
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 430,
+        "column": 38
+      },
+      "end": {
+        "line": 430,
+        "column": 39
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 430,
+        "column": 38
+      },
+      "end": {
+        "line": 430,
+        "column": 39
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 430,
+        "column": 32
+      },
+      "end": {
+        "line": 430,
+        "column": 33
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 430,
+        "column": 32
+      },
+      "end": {
+        "line": 430,
+        "column": 33
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 438,
+        "column": 38
+      },
+      "end": {
+        "line": 438,
+        "column": 39
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 438,
+        "column": 38
+      },
+      "end": {
+        "line": 438,
+        "column": 39
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 438,
+        "column": 14
+      },
+      "end": {
+        "line": 438,
+        "column": 15
+      }
+    },
+    "replacement": "-",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 438,
+        "column": 14
+      },
+      "end": {
+        "line": 438,
+        "column": 15
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 446,
+        "column": 9
+      },
+      "end": {
+        "line": 446,
+        "column": 10
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 446,
+        "column": 9
+      },
+      "end": {
+        "line": 446,
+        "column": 10
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 445,
+        "column": 9
+      },
+      "end": {
+        "line": 445,
+        "column": 10
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 445,
+        "column": 9
+      },
+      "end": {
+        "line": 445,
+        "column": 10
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 444,
+        "column": 9
+      },
+      "end": {
+        "line": 444,
+        "column": 10
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_free_spins",
+      "return_type": "-> FreeSpinsResult",
+      "span": {
+        "start": {
+          "line": 411,
+          "column": 1
+        },
+        "end": {
+          "line": 456,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 444,
+        "column": 9
+      },
+      "end": {
+        "line": 444,
+        "column": 10
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 504,
+        "column": 5
+      },
+      "end": {
+        "line": 547,
+        "column": 6
+      }
+    },
+    "replacement": "Default::default()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 513,
+        "column": 37
+      },
+      "end": {
+        "line": 513,
+        "column": 38
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 513,
+        "column": 37
+      },
+      "end": {
+        "line": 513,
+        "column": 38
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 513,
+        "column": 44
+      },
+      "end": {
+        "line": 513,
+        "column": 45
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 513,
+        "column": 44
+      },
+      "end": {
+        "line": 513,
+        "column": 45
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 522,
+        "column": 34
+      },
+      "end": {
+        "line": 522,
+        "column": 35
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 522,
+        "column": 34
+      },
+      "end": {
+        "line": 522,
+        "column": 35
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 25
+      },
+      "end": {
+        "line": 531,
+        "column": 27
+      }
+    },
+    "replacement": "-=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 25
+      },
+      "end": {
+        "line": 531,
+        "column": 27
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 68
+      },
+      "end": {
+        "line": 531,
+        "column": 69
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 68
+      },
+      "end": {
+        "line": 531,
+        "column": 69
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 36
+      },
+      "end": {
+        "line": 531,
+        "column": 37
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 531,
+        "column": 36
+      },
+      "end": {
+        "line": 531,
+        "column": 37
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 535,
+        "column": 47
+      },
+      "end": {
+        "line": 535,
+        "column": 48
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 535,
+        "column": 47
+      },
+      "end": {
+        "line": 535,
+        "column": 48
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 536,
+        "column": 52
+      },
+      "end": {
+        "line": 536,
+        "column": 53
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 536,
+        "column": 52
+      },
+      "end": {
+        "line": 536,
+        "column": 53
+      }
+    },
+    "replacement": "<",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 536,
+        "column": 52
+      },
+      "end": {
+        "line": 536,
+        "column": 53
+      }
+    },
+    "replacement": ">=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 537,
+        "column": 25
+      },
+      "end": {
+        "line": 537,
+        "column": 26
+      }
+    },
+    "replacement": "%",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/markov.rs",
+    "function": {
+      "function_name": "solve_cascade",
+      "return_type": "-> CascadeResult",
+      "span": {
+        "start": {
+          "line": 498,
+          "column": 1
+        },
+        "end": {
+          "line": 548,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 537,
+        "column": 25
+      },
+      "end": {
+        "line": 537,
+        "column": 26
+      }
+    },
+    "replacement": "*",
+    "genre": "BinaryOperator"
+  }
+]

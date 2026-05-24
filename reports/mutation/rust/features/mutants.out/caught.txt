@@ -1,0 +1,49 @@
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (0, None)
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (1, None)
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (1, Some(String::new()))
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (0, Some(String::new()))
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (1, Some("xyzzy".into()))
+rust-sim/src/features.rs:87:9: replace FeatureSim<'a>::generate_orb -> (u32, Option<String>) with (0, Some("xyzzy".into()))
+rust-sim/src/features.rs:87:37: replace * with + in FeatureSim<'a>::generate_orb
+rust-sim/src/features.rs:87:37: replace * with / in FeatureSim<'a>::generate_orb
+rust-sim/src/features.rs:90:18: replace -= with += in FeatureSim<'a>::generate_orb
+rust-sim/src/features.rs:90:18: replace -= with /= in FeatureSim<'a>::generate_orb
+rust-sim/src/features.rs:91:21: replace <= with > in FeatureSim<'a>::generate_orb
+rust-sim/src/features.rs:106:9: replace FeatureSim<'a>::simulate_free_spins -> FSResult with Default::default()
+rust-sim/src/features.rs:118:83: replace / with % in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:68: replace / with % in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:68: replace / with * in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:53: replace * with + in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:53: replace * with / in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:36: replace * with + in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:122:36: replace * with / in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:124:33: replace += with -= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:124:33: replace += with *= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:35: replace && with || in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:31: replace > with == in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:31: replace > with < in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:31: replace > with >= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:49: replace < with == in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:128:49: replace < with > in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:129:24: replace += with -= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:131:33: replace += with -= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:131:33: replace += with *= in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:173:36: replace >= with < in FeatureSim<'a>::simulate_free_spins
+rust-sim/src/features.rs:190:9: replace FeatureSim<'a>::simulate_hnw -> HNWResult with Default::default()
+rust-sim/src/features.rs:199:83: replace / with % in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:199:68: replace * with / in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:199:51: replace * with / in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:211:60: replace += with -= in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:212:62: replace += with -= in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:213:62: replace += with -= in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:230:13: replace && with || in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:229:13: replace && with || in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:228:33: replace > with == in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:228:33: replace > with < in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:228:33: replace > with >= in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:229:26: replace < with == in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:229:26: replace < with > in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:230:27: replace < with == in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:230:27: replace < with > in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:232:24: replace += with -= in FeatureSim<'a>::simulate_hnw
+rust-sim/src/features.rs:234:34: replace += with -= in FeatureSim<'a>::simulate_hnw

@@ -1,5 +1,5 @@
 {
-  "generatedAtUtc": "2026-05-24T10:10:20.594Z",
+  "generatedAtUtc": "2026-05-24T16:36:02.153Z",
   "typescript": {
     "runtime": "typescript",
     "tool": "stryker",
@@ -47,13 +47,13 @@
       "runtime": "rust",
       "tool": "cargo-mutants",
       "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/adapter/mutants.out/outcomes.json",
-      "total": 78,
-      "caught": 39,
-      "missed": 11,
-      "timeout": 6,
-      "unviable": 22,
+      "total": 18,
+      "caught": 16,
+      "missed": 0,
+      "timeout": 0,
+      "unviable": 2,
       "success": 0,
-      "scoreStrict": 0.8035714285714286
+      "scoreStrict": 1
     },
     {
       "crate": "behavior_impls",
@@ -95,6 +95,32 @@
       "scoreStrict": 1
     },
     {
+      "crate": "bulk",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/bulk/mutants.out/outcomes.json",
+      "total": 35,
+      "caught": 15,
+      "missed": 16,
+      "timeout": 2,
+      "unviable": 2,
+      "success": 0,
+      "scoreStrict": 0.5151515151515151
+    },
+    {
+      "crate": "cluster",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/cluster/mutants.out/outcomes.json",
+      "total": 47,
+      "caught": 13,
+      "missed": 1,
+      "timeout": 0,
+      "unviable": 33,
+      "success": 0,
+      "scoreStrict": 0.9285714285714286
+    },
+    {
       "crate": "evaluator",
       "runtime": "rust",
       "tool": "cargo-mutants",
@@ -106,6 +132,45 @@
       "unviable": 3,
       "success": 0,
       "scoreStrict": 1
+    },
+    {
+      "crate": "features",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/features/mutants.out/outcomes.json",
+      "total": 112,
+      "caught": 49,
+      "missed": 63,
+      "timeout": 0,
+      "unviable": 0,
+      "success": 0,
+      "scoreStrict": 0.4375
+    },
+    {
+      "crate": "jurisdiction_adapter",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/jurisdiction_adapter/mutants.out/outcomes.json",
+      "total": 28,
+      "caught": 19,
+      "missed": 6,
+      "timeout": 0,
+      "unviable": 3,
+      "success": 0,
+      "scoreStrict": 0.76
+    },
+    {
+      "crate": "markov",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/markov/mutants.out/outcomes.json",
+      "total": 220,
+      "caught": 172,
+      "missed": 47,
+      "timeout": 0,
+      "unviable": 1,
+      "success": 0,
+      "scoreStrict": 0.7853881278538812
     },
     {
       "crate": "rng",
@@ -132,6 +197,19 @@
       "unviable": 1,
       "success": 0,
       "scoreStrict": 0.7096774193548387
+    },
+    {
+      "crate": "validate",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/validate/mutants.out/outcomes.json",
+      "total": 26,
+      "caught": 25,
+      "missed": 0,
+      "timeout": 0,
+      "unviable": 1,
+      "success": 0,
+      "scoreStrict": 1
     }
   ]
 }

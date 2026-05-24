@@ -1,0 +1,25 @@
+rust-sim/src/ir/validate.rs:40:12: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:62:28: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:78:24: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:51:24: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:91:20: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:109:71: replace + with - in cross_validate
+rust-sim/src/ir/validate.rs:109:71: replace + with * in cross_validate
+rust-sim/src/ir/validate.rs:109:50: replace + with * in cross_validate
+rust-sim/src/ir/validate.rs:109:50: replace + with - in cross_validate
+rust-sim/src/ir/validate.rs:109:31: replace + with - in cross_validate
+rust-sim/src/ir/validate.rs:109:31: replace + with * in cross_validate
+rust-sim/src/ir/validate.rs:110:43: replace > with < in cross_validate
+rust-sim/src/ir/validate.rs:110:43: replace > with == in cross_validate
+rust-sim/src/ir/validate.rs:110:13: replace - with + in cross_validate
+rust-sim/src/ir/validate.rs:110:43: replace > with >= in cross_validate
+rust-sim/src/ir/validate.rs:110:13: replace - with / in cross_validate
+rust-sim/src/ir/validate.rs:123:13: delete match arm Feature::HoldAndWin{..} in cross_validate
+rust-sim/src/ir/validate.rs:131:13: delete match arm Feature::FreeSpins{trigger, ..} in cross_validate
+rust-sim/src/ir/validate.rs:141:13: delete match arm Feature::MysterySymbol{symbol_id, reveal_distribution,} in cross_validate
+rust-sim/src/ir/validate.rs:124:20: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:124:54: replace == with != in cross_validate
+rust-sim/src/ir/validate.rs:133:21: replace && with || in cross_validate
+rust-sim/src/ir/validate.rs:133:24: delete ! in cross_validate
+rust-sim/src/ir/validate.rs:133:58: replace == with != in cross_validate
+rust-sim/src/ir/validate.rs:145:20: delete ! in cross_validate
