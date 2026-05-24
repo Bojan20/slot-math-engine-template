@@ -3189,6 +3189,41 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 ---
 
+## ✅ W241-followup LANDED — live-missed kill across cluster/bulk/markov (+9 tests) (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — three follow-up commits address mutants the original W241 specs did not kill on first cargo-mutants baseline pass.
+
+| Commit | Module | Δ specs | What was killed |
+|---|---|---:|---|
+| `13745ae` | cluster + bulk + markov | +9 | cluster L109 `> with < in max_u CAS` (max_mult_seen now MAX not MIN); bulk L149/L156 (`snapshot_hdr_buckets` shape + sum, `apply_hdr_buckets` non-empty body); markov VARY_RESPINS_2 / VARY_INIT_LOCKED_5 / BASE_CHANCE_HIGH snapshots |
+| `768f4bb` | bulk dispatcher | +5 | BulkDispatcher::run checkpoint logic (L181, L228, L229, L230 — resume, every>0, path Some, modulo == 0) |
+| `0fdec15` | bulk final-ckpt | +1 | L240/L245 final-checkpoint path (++ counter + && gate) |
+
+**Cumulative count after W237-W241 + followups: ≈208 dedicated mutation kill specs across 9 modules, plus 73 W239 Stryker specs.**
+
+### Final per-test-file count
+
+| File | Specs |
+|---|---:|
+| `rust-sim/tests/w237_*.rs` (ir/adapter) | 23 |
+| `rust-sim/tests/w240_validate_kills.rs` | 18 |
+| `rust-sim/tests/w240_jurisdiction_adapter_kills.rs` | 34 |
+| `rust-sim/tests/w240_jurisdiction_kills.rs` (daemon parallel) | 14 |
+| `rust-sim/tests/w240_markov_kills.rs` | 24 |
+| `rust-sim/tests/w240_features_kills.rs` | 20 |
+| `rust-sim/tests/w241_cluster_kills.rs` | 24 |
+| `rust-sim/tests/w241_bulk_kills.rs` | 30 |
+| `rust-sim/tests/w241_gpu_kills.rs` | 8 |
+| `rust-sim/tests/w240_snapshot_seeds.rs` (helper, ignored) | 2 |
+| **Total** | **197 kill + 14 daemon + 2 helper = 213** |
+
+QA gates:
+  cargo test --tests w24[01]_              213 passing
+  cargo clippy --all-targets -D warnings   clean
+  npm run lint                             clean
+
+---
+
 ## ✅ W237 LANDED — `adapter.rs` mutation kill, effective 100% (2026-05-24)
 
 **Status:** ✅ **LANDED** 2026-05-24 — 11 new tests in `rust-sim/src/ir/adapter.rs::w237_kill_tests` kill every viable mutant in the IR → GameConfig adapter. Final state: **0 missed, 16/16 caught on surgical re-run** over the previously-missed lines (regex `adapter\.rs:(266|334|335|598|637|651):`).
