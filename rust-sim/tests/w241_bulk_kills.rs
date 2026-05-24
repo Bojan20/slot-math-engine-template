@@ -348,6 +348,117 @@ fn w241_bulk_checkpoint_load_missing_returns_none() {
     assert!(r.is_none(), "missing checkpoint must return Ok(None), not error");
 }
 
+// ── BulkDispatcher::run dispatcher path kills (L181, L228-230) ───────────
+
+use slot_sim::bulk::BulkDispatcher;
+use slot_sim::bulk::progress::NoOpProgress;
+use slot_sim::config::GameConfig;
+use std::sync::Arc;
+use std::sync::atomic::Ordering as AtomicOrd;
+
+fn small_bulk(total: u64, base_seed: u64) -> BulkConfig {
+    let mut b = BulkConfig::new(total, base_seed);
+    b.chunk_spins = 25_000;
+    b.spins_per_worker = 5_000;
+    b.threads_per_chunk = 4;
+    b.config_hash = "w241-bulk-kill".into();
+    b
+}
+
+#[test]
+fn w241_bulk_dispatcher_run_no_resume_starts_from_zero() {
+    // L181:30 `resumed_completed > 0` — when no resume_path, this branch
+    // must NOT enter (no HDR restore). Mutant `== 0` would invert.
+    let config = GameConfig::default();
+    let bulk = small_bulk(50_000, 42);
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    assert_eq!(r.total_spins, 50_000);
+    assert_eq!(r.resumed_from, None, "fresh run has no resume marker");
+    assert_eq!(r.stats.total_spins.load(AtomicOrd::Relaxed), 50_000);
+}
+
+#[test]
+fn w241_bulk_dispatcher_checkpoint_every_zero_writes_no_checkpoints() {
+    // L228:50 `checkpoint_every_chunks > 0` — when 0, the gate must
+    // block.  Mutant `==` would also block (vacuously); but mutant `<`
+    // or `>=` would let it through and try to write to a None path.
+    let config = GameConfig::default();
+    let mut bulk = small_bulk(50_000, 42);
+    bulk.checkpoint_every_chunks = 0; // disabled
+    bulk.checkpoint_path = None;
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    assert_eq!(
+        r.checkpoints_written, 0,
+        "checkpoint_every_chunks=0 must write zero checkpoints",
+    );
+}
+
+#[test]
+fn w241_bulk_dispatcher_checkpoint_path_none_skips_write() {
+    // L229:17 `&&` — even with checkpoint_every_chunks > 0, missing
+    // path must skip.  Mutant `||` would crash trying to write to None.
+    let config = GameConfig::default();
+    let mut bulk = small_bulk(50_000, 42);
+    bulk.checkpoint_every_chunks = 1;
+    bulk.checkpoint_path = None;
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    // No path → no writes (would otherwise crash).
+    assert_eq!(r.checkpoints_written, 0);
+}
+
+#[test]
+fn w241_bulk_dispatcher_checkpoint_modulo_zero_triggers_write() {
+    // L230:37 `%` and L230:73 `== 0` — every Nth chunk triggers write.
+    // 50_000 total, 25_000 chunk → 2 chunks; checkpoint_every=1 → 2 writes.
+    let tmp = std::env::temp_dir().join("w241-bulk-dispatcher-ckpt.json");
+    let _ = std::fs::remove_file(&tmp);
+    let config = GameConfig::default();
+    let mut bulk = small_bulk(50_000, 42);
+    bulk.checkpoint_every_chunks = 1;
+    bulk.checkpoint_path = Some(tmp.clone());
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    assert!(
+        r.checkpoints_written >= 1,
+        "checkpoint_every=1 must produce at least 1 write (got {})",
+        r.checkpoints_written,
+    );
+    // File exists on disk.
+    assert!(tmp.exists(), "checkpoint file must be on disk");
+    let _ = std::fs::remove_file(&tmp);
+}
+
+#[test]
+fn w241_bulk_dispatcher_checkpoint_every_two_writes_fewer() {
+    // checkpoint_every=2 → write only on even chunk indices.  4 chunks
+    // (100_000 / 25_000) with every=2 → 2 writes (chunks 2, 4).
+    let tmp = std::env::temp_dir().join("w241-bulk-dispatcher-every2.json");
+    let _ = std::fs::remove_file(&tmp);
+    let config = GameConfig::default();
+    let mut bulk = small_bulk(100_000, 42);
+    bulk.checkpoint_every_chunks = 2;
+    bulk.checkpoint_path = Some(tmp.clone());
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    // Either 2 (modulo path) or 3 (final flush).  Mutant `% → /` would
+    // produce widely different counts (chunks_completed / every is
+    // almost always 0, then jumps).
+    assert!(
+        r.checkpoints_written >= 1 && r.checkpoints_written <= 4,
+        "checkpoint count must be in [1, 4] for 4 chunks × every=2 (got {})",
+        r.checkpoints_written,
+    );
+    let _ = std::fs::remove_file(&tmp);
+}
+
 // ── ParseSpinCountError variants are distinct ────────────────────────────
 
 #[test]
