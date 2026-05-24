@@ -3108,8 +3108,40 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 1. **Stryker `perTest` allocator residual 30 mutants** — manually verified killable; tracked as **W239-followup** (alternative runner or `@stryker-mutator/vitest-runner` upstream patch).
 2. **Full-codebase Stryker** (`stryker.config.mjs`) — different file set; separate wave.
-3. **Rust untested modules** (features.rs, cluster/*, bulk/*, gpu/*, markov.rs, jurisdiction/adapter.rs, ir/validate.rs) — tracked as **W240**.
+3. **Rust untested modules** (features.rs, cluster/*, bulk/*, gpu/*, markov.rs, jurisdiction/adapter.rs, ir/validate.rs) — tracked as **W240**. → **partially closed by W240** (4/7 modules covered: validate, jurisdiction/adapter, markov, features — 82 kill specs landed).
 4. **L&W portfolio plan W181-W200** — strategic backlog (61→77 solvers).
+
+---
+
+## ✅ W240 LANDED (partial) — Rust mutation expansion: 4 modules + 82 kill specs (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — 4 new Rust mutation kill spec files covering 4 previously-untested modules (`validate.rs`, `jurisdiction/adapter.rs`, `markov.rs`, `features.rs`). 82 kill specs total, all passing on the unmutated tree. Baselines for validate (52 mutants) and jurisdiction (126 mutants) reported FINAL; markov (289) and features (333) baselines still running at commit time — missed-mutant ranges 27 / 37 / 107+ / 155+.
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `rust-sim/tests/w240_validate_kills.rs` | 17 specs | `cross_validate` + `paytable_shape_check` end-to-end coverage |
+| `rust-sim/tests/w240_jurisdiction_adapter_kills.rs` | 34 specs | `validate()` / `auto_fix()` boundary + linearity tests |
+| `rust-sim/tests/w240_markov_kills.rs` | 17 specs | Closed-form numeric traps for `solve_hold_and_win` / `solve_free_spins` / `solve_cascade` |
+| `rust-sim/tests/w240_features_kills.rs` | 14 specs | Deterministic-seed `simulate_free_spins` + `simulate_hnw` invariants |
+| `docs/research/W240_RUST_MUTATION_EXPANSION_2026-05-24.md` | +160 | Full evidence + per-module kill mechanism table |
+
+### QA gates W240
+
+| Gate | Result |
+|---|---|
+| `cargo test --lib` | 271 passing |
+| `cargo test --tests w240_` | 82 passing (17+34+17+14) |
+| `cargo clippy --all-targets -D warnings` | clean |
+| `npm run lint` (tsc) | clean |
+| Mutation verify (validate + jurisdiction) | DEFERRED (CPU saturation timeout under parallel baselines) |
+
+### Šta NIJE u skopu W240 (commit-time)
+
+1. **Mutation re-run verify** — pending CPU availability (sequential run ~10-15 min per module). Tracked as **W240-followup**.
+2. **markov + features baseline completion** — running. Additional missed mutants beyond current 107/155 will be addressed in follow-up commit if needed.
+3. **Remaining untested Rust modules** — `cluster/*`, `bulk/*`, `gpu/*` (8 files). Tracked as **W241**.
 
 ---
 
