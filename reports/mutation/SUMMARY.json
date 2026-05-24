@@ -1,43 +1,43 @@
 {
-  "generatedAtUtc": "2026-05-24T04:08:30.444Z",
+  "generatedAtUtc": "2026-05-24T10:10:20.594Z",
   "typescript": {
     "runtime": "typescript",
     "tool": "stryker",
-    "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/scoped-2026-05-13.json",
+    "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/scoped-2026-05-24.json",
     "total": 342,
-    "killed": 290,
-    "survived": 50,
+    "killed": 310,
+    "survived": 30,
     "timeout": 2,
     "noCoverage": 0,
     "ignored": 0,
     "runtimeError": 0,
     "other": 0,
-    "scoreStrict": 0.8538011695906432,
-    "scoreLenient": 0.8538011695906432,
+    "scoreStrict": 0.9122807017543859,
+    "scoreLenient": 0.9122807017543859,
     "perFile": [
       {
         "file": "src/rg/session.ts",
         "total": 214,
-        "killed": 191,
-        "survived": 23,
+        "killed": 201,
+        "survived": 13,
         "timeout": 0,
         "noCoverage": 0,
         "ignored": 0,
         "runtimeError": 0,
-        "scoreStrict": 0.8925233644859814,
-        "scoreLenient": 0.8925233644859814
+        "scoreStrict": 0.9392523364485982,
+        "scoreLenient": 0.9392523364485982
       },
       {
         "file": "src/sensitivity/analyzer.ts",
         "total": 128,
-        "killed": 99,
-        "survived": 27,
+        "killed": 109,
+        "survived": 17,
         "timeout": 2,
         "noCoverage": 0,
         "ignored": 0,
         "runtimeError": 0,
-        "scoreStrict": 0.7890625,
-        "scoreLenient": 0.7890625
+        "scoreStrict": 0.8671875,
+        "scoreLenient": 0.8671875
       }
     ]
   },

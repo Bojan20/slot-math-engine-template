@@ -1,10 +1,10 @@
 # Mutation Testing Consolidated Report
 
-> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-24T04:08:30.444Z from stored mutation artifacts. Pure read — no mutation engine spawned.
+> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-24T10:10:20.594Z from stored mutation artifacts. Pure read — no mutation engine spawned.
 
 ## Headline
 
-* **TypeScript (Stryker scoped)**: 292 / 342 mutants killed → strict 85.38 % / lenient 85.38 %.
+* **TypeScript (Stryker scoped)**: 312 / 342 mutants killed → strict 91.23 % / lenient 91.23 %.
 * **Rust adapter** (cargo-mutants): 45 / 56 scored mutants killed → strict 80.36 %.
 * **Rust behavior_impls** (cargo-mutants): 148 / 148 scored mutants killed → strict 100.00 %.
 * **Rust behavior_pipeline** (cargo-mutants): 24 / 24 scored mutants killed → strict 100.00 %.
@@ -19,7 +19,7 @@ Acceptance: mutation score ≥ 95 % both runtimes.
 
 | Runtime | Strict score | Faza 10.7 ≥ 95 % | Notes |
 |---|---:|:---:|---|
-| TypeScript (Stryker scoped) | 85.38 % | ⚠️ | scoped to RG/sensitivity hot-paths |
+| TypeScript (Stryker scoped) | 91.23 % | ⚠️ | scoped to RG/sensitivity hot-paths |
 | Rust `adapter` | 80.36 % | ⚠️ | 
 | Rust `behavior_impls` | 100.00 % | ✅ | 
 | Rust `behavior_pipeline` | 100.00 % | ✅ | 
@@ -32,8 +32,8 @@ Acceptance: mutation score ≥ 95 % both runtimes.
 
 | File | Mutants | Killed | Survived | NoCov | Strict | Lenient |
 |---|---:|---:|---:|---:|---:|---:|
-| `src/sensitivity/analyzer.ts` | 128 | 99 | 27 | 0 | 78.91 % | 78.91 % |
-| `src/rg/session.ts` | 214 | 191 | 23 | 0 | 89.25 % | 89.25 % |
+| `src/sensitivity/analyzer.ts` | 128 | 109 | 17 | 0 | 86.72 % | 86.72 % |
+| `src/rg/session.ts` | 214 | 201 | 13 | 0 | 93.93 % | 93.93 % |
 
 ## Methodology
 

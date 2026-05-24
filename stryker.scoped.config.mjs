@@ -12,10 +12,10 @@ export default {
   coverageAnalysis: 'perTest',
   mutate: ['src/rg/session.ts', 'src/sensitivity/analyzer.ts'],
   thresholds: { high: 95, low: 80, break: 70 },
-  vitest: { configFile: 'vitest.config.ts' },
+  vitest: { configFile: 'vitest.stryker.config.ts' },
   concurrency: 4,
   timeoutMS: 30_000,
   timeoutFactor: 2.5,
-  jsonReporter: { fileName: 'reports/mutation/scoped-2026-05-13.json' },
+  jsonReporter: { fileName: 'reports/mutation/scoped-2026-05-24.json' },
   disableTypeChecks: true,
 };
