@@ -262,7 +262,27 @@
 - 🔴 Blocked
 - ⚪ Skipped (with reason)
 
-**Next action:** PAR-001 LANDED (5/5 atoma, 6/6 testova, clippy strict, 1071 workspace tests pass). Start **PAR-002 / A1** (`config_hash: String` SHA-256 nad canonical IR JSON).
+**Status:** PAR-001..PAR-021 svi 🟢 Done. W250 `gen_par_sheet` CLI + `PARGeneratorAgent` orchestrator bridge LANDED. **W251 — Ultimate E2E Submission Acceptance + Math Review LANDED 2026-05-24**.
+
+### W251 — Ultimate E2E PAR Submission Acceptance (LANDED)
+
+| # | Atom | File | Test |
+|---|---|---|---|
+| A1 | Multi-fixture sweep (classic-3x3-lines, fs-multiplier-ladder, 5x3-243ways) × all 4 formats | `rust-sim/tests/par_submission_e2e_w251.rs` | `multi_fixture_acceptance_all_formats_all_invariants` |
+| A2 | Mathematical invariants helper — covers PAR-001/002/003/004/005/006/007/008/009/010/015/016/017 in one shared assertion pass | same file | invoked per-fixture in A1 |
+| A3 | Determinism — same IR + same seeds → identical `config_hash` + identical `pay_rule_rtp` key set | same file | `determinism_same_ir_same_config_hash_two_runs` |
+| A4 | Multi-seed CI bands populate `std_dev_across_seeds` + non-degenerate CI95 interval | same file | `multi_seed_run_populates_ci_bands` |
+| A5 | Jurisdiction band sanity — MGA band contains canonical 96 % target; `pass` is a pure function of `(min, max, simulated_rtp)` | same file | `jurisdiction_band_contains_target_for_clean_fixture` |
+| A6 | Negative paths — missing IR path + malformed IR JSON both exit non-zero | same file | `missing_ir_path_exits_non_zero` + `malformed_ir_json_exits_non_zero` |
+
+**Acceptance gate**
+- ✅ 6/6 W251 tests pass (`cargo test --test par_submission_e2e_w251`)
+- ✅ `cargo clippy -p slot_sim --all-targets -- -D warnings` clean (wasm-oracle clippy noise is pre-existing — W218 mtl Phase D)
+- ✅ Full `cargo test -p slot_sim` zero regression (exit 0)
+- ✅ Negative tests prove CLI exits 2 on missing IR + non-zero on malformed JSON (no panic)
+- ✅ Math invariants validated per fixture: Markov rows ≈ 1, π ≈ 1, EVT alpha > 0, CDF monotone, reach-curve ↓, RoR ↓, Σ pay_rule ≤ base + 1.5pp, jurisdiction sort deterministic, USIF schemaVersion 1.0.0, CSV RFC 4180 header, Markdown H1.
+
+**Next action:** none — full Tier-1 + Ultimate Math + Orchestrator + E2E acceptance loop closed. Future expansion = jurisdiction profile coverage (currently MGA / Nevada / NJ / UK / AU / SE) or PDF renderer.
 
 ---
 
