@@ -23,7 +23,7 @@
 
 use crate::ir::{ReelSet, RngKind, SlotGameIR, SymbolKind};
 use crate::jackpot::JackpotMetrics;
-use crate::stats::{AtomicStats, HdrHistogram, PARMetrics, HDR_BUCKET_COUNT};
+use crate::stats::{AtomicStats, BonusDistanceTracker, HdrHistogram, PARMetrics, DISTANCE_THRESHOLDS, HDR_BUCKET_COUNT};
 use crate::tail_fit::{evt_tail_quantile, fit_pareto_tail, ParetoFitOpts, TailFitError};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -649,6 +649,85 @@ fn build_pareto_section(
     }
 }
 
+// ─── PAR-004 — Time-to-trigger CDF section ──────────────────────────────────
+
+/// One point on a per-feature inter-trigger CDF.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct CdfPoint {
+    pub spin_index: u64,
+    pub probability: f64,
+}
+
+/// CDF of spins-between-triggers for a single feature.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct TimeToTriggerCdf {
+    pub feature_id: String,
+    pub n_samples: u64,
+    pub mean_distance: f64,
+    pub max_distance: u64,
+    /// Empirical CDF — monotone non-decreasing, last point ≈ 1.0.
+    pub points: Vec<CdfPoint>,
+}
+
+/// Section grouping CDF entries for every feature that recorded triggers.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct TimeToTriggerSection {
+    pub features: Vec<TimeToTriggerCdf>,
+}
+
+impl TimeToTriggerCdf {
+    /// Build from a `BonusDistanceTracker` snapshot.
+    /// `feature_id` is the audit label (e.g. `"free_spins"`, `"hold_and_win"`).
+    pub fn from_tracker(feature_id: &str, tracker: &BonusDistanceTracker) -> Self {
+        let counts = tracker.snapshot_counts();
+        let n = tracker.total_intervals();
+        let mean = sanitize_f64_for_json(tracker.mean_distance());
+        let max = tracker.max_distance();
+        if n == 0 {
+            return TimeToTriggerCdf {
+                feature_id: feature_id.to_string(),
+                n_samples: 0,
+                mean_distance: 0.0,
+                max_distance: 0,
+                points: Vec::new(),
+            };
+        }
+        let total = n as f64;
+        let mut cumulative = 0u64;
+        let mut points: Vec<CdfPoint> = Vec::with_capacity(13);
+        for (i, &threshold) in DISTANCE_THRESHOLDS.iter().enumerate() {
+            cumulative += counts[i];
+            points.push(CdfPoint {
+                spin_index: threshold,
+                probability: (cumulative as f64) / total,
+            });
+        }
+        // Overflow bucket: P(X ≥ 100_000) — terminal point with the same x as max.
+        cumulative += counts[12];
+        points.push(CdfPoint {
+            spin_index: max.max(*DISTANCE_THRESHOLDS.last().unwrap_or(&100_000)),
+            probability: (cumulative as f64) / total,
+        });
+        TimeToTriggerCdf {
+            feature_id: feature_id.to_string(),
+            n_samples: n,
+            mean_distance: mean,
+            max_distance: max,
+            points,
+        }
+    }
+
+    /// Approximate P-quantile (returns the smallest CDF point with probability ≥ q).
+    pub fn quantile(&self, q: f64) -> Option<u64> {
+        for p in &self.points {
+            if p.probability >= q {
+                return Some(p.spin_index);
+            }
+        }
+        None
+    }
+}
+
 /// SHA-256 (lowercase hex) over the canonical JSON serialisation of an IR.
 ///
 /// **Canonical** here = `serde_json::to_string` (no whitespace), relying on
@@ -713,6 +792,9 @@ pub struct PARSheet {
     // ── PAR-003 — EVT Pareto tail (always emitted; kind=NotApplicable when fit fails)
     #[serde(default)]
     pub pareto_tail: ParetoTailSection,
+    // ── PAR-004 — Per-feature time-to-trigger CDF (always emitted, may be empty)
+    #[serde(default)]
+    pub time_to_trigger: TimeToTriggerSection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -827,6 +909,19 @@ impl PARGenerator {
         let win_distribution = Self::build_win_buckets(&hdr, total_spins);
         // PAR-003 — EVT Pareto tail fit (Coles 2001 POT).
         let pareto_tail = build_pareto_section(&hdr, total_spins, max_win_cap, None);
+        // PAR-004 — Time-to-trigger CDF for every feature that recorded triggers.
+        let mut t2t_features: Vec<TimeToTriggerCdf> = Vec::new();
+        let fs_cdf = TimeToTriggerCdf::from_tracker("free_spins", &stats.fs_distance);
+        if fs_cdf.n_samples > 0 {
+            t2t_features.push(fs_cdf);
+        }
+        let hnw_cdf = TimeToTriggerCdf::from_tracker("hold_and_win", &stats.hnw_distance);
+        if hnw_cdf.n_samples > 0 {
+            t2t_features.push(hnw_cdf);
+        }
+        let time_to_trigger = TimeToTriggerSection {
+            features: t2t_features,
+        };
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -964,6 +1059,8 @@ impl PARGenerator {
             rng_attestation,
             // PAR-003 — EVT Pareto tail.
             pareto_tail,
+            // PAR-004 — Time-to-trigger CDF per feature.
+            time_to_trigger,
         }
     }
 
@@ -1393,6 +1490,23 @@ impl PARGenerator {
             ParetoFitKind::NotApplicable => {
                 let reason = par.pareto_tail.reason.as_deref().unwrap_or("n/a");
                 let line = format!("    NotApplicable: {reason}");
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
+        }
+
+        // PAR-004: TIME-TO-TRIGGER CDF block (sažet summary, full CDF u JSON).
+        if !par.time_to_trigger.features.is_empty() {
+            println!("╠{rule}╣");
+            println!("║  TIME-TO-TRIGGER CDF{:<width$}║", "", width = w - 22);
+            for cdf in &par.time_to_trigger.features {
+                let p10 = cdf.quantile(0.10).unwrap_or(0);
+                let p50 = cdf.quantile(0.50).unwrap_or(0);
+                let p90 = cdf.quantile(0.90).unwrap_or(0);
+                let line = format!(
+                    "    {}: n={}, P10={} P50={} P90={} (mean={:.1}, max={})",
+                    cdf.feature_id, cdf.n_samples, p10, p50, p90, cdf.mean_distance, cdf.max_distance
+                );
                 let truncated: String = line.chars().take(w - 4).collect();
                 println!("║  {truncated:<width$}║", width = w - 4);
             }

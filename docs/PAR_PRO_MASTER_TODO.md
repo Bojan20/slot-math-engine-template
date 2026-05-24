@@ -42,7 +42,7 @@
 | **PAR-001** | Sign-off block + Reel config + Paytable + **per-pay-rule RTP** | 5 | 30 min | `par.rs`, `ir.rs`, `tests/par_pro_001.rs` | 🟢 Done |
 | **PAR-002** | configHash + RNG attestation + **rng_kind stale-fix** | 4 | 25 min | `par.rs`, `rng.rs`, `tests/par_pro_002.rs` | 🟢 Done |
 | **PAR-003** | EVT Pareto tail u PAR sheet | 3 | 20 min | `par.rs`, `tail_fit.rs`, `tests/par_pro_003.rs` | 🟢 Done |
-| **PAR-004** | Per-feature time-to-trigger CDF | 4 | 25 min | `par.rs`, `stats.rs`, `tests/par_pro_004.rs` | 🔵 Planned |
+| **PAR-004** | Per-feature time-to-trigger CDF | 4 | 25 min | `par.rs`, `stats.rs`, `tests/par_pro_004.rs` | 🟢 Done |
 | **PAR-005** | Markov transition matrix + stationary π | 4 | 30 min | `par.rs`, `stats.rs`, `tests/par_pro_005.rs` | 🔵 Planned |
 | **PAR-006** | Jurisdiction-gated RTP variants + **theoretical vs simulated PASS/FAIL gate (GLI §8.2)** | 4 | 25 min | `par.rs`, `jurisdiction/`, `tests/par_pro_006.rs` | 🔵 Planned |
 | **PAR-007** | USIF v1.0 JSON exporter + validator hook | 3 | 25 min | `par/usif_export.rs` (new), schema validator, `tests/par_pro_007.rs` | 🔵 Planned |
