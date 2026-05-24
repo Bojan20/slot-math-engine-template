@@ -138,3 +138,8 @@ mobile/ios/Pods/
 mobile/android/.gradle/
 mobile/android/build/
 server/server/data/hsm-test-*.json
+
+# W235 — daemon-generated transient fuzz exploration corpora.
+# Long-lived seed-corpora live under reports/fuzz/seed-corpus/<spec>/ (tracked).
+# Per-run exploration dumps under spec-corpus-<unix_ms>/ are ephemeral.
+reports/fuzz/seed-corpus/spec-corpus-*/

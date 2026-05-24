@@ -2905,7 +2905,94 @@ npm run mutation-summary
 
 ### Šta NIJE u skopu W234 (i zašto)
 
-1. **`behavior/impls.rs` mutation** (638 LOC, est 80-150 mutants, 20-40 min wall) — sledeći logički korak. Cilj još uvek ≥90% strict.
-2. **`rng.rs` jaz 92.65% → 95%** — 5 surviving mutants u `pick_weighted_index` / `random_bounded` paths. Treba dodatne edge-case testove (npr. exact-ratio boundary čistači). Tracked kao W235.
+1. **`behavior/impls.rs` mutation** (638 LOC, est 80-150 mutants, 20-40 min wall) — sledeći logički korak. Cilj još uvek ≥90% strict. → **closed by W235**.
+2. **`rng.rs` jaz 92.65% → 95%** — 5 surviving mutants u `pick_weighted_index` / `random_bounded` paths. Treba dodatne edge-case testove (npr. exact-ratio boundary čistači). Tracked kao **W236**.
 3. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Treba ponovo pokrenuti sa istim toolchain-om; ostavljam za buduce.
 4. **TS Stryker 95% threshold** (stavka #4) — 85.38% sad, gap od 9.62pp; izolovan tehnicki dug, samostalna sesija.
+
+---
+
+## ✅ W235 LANDED — `behavior/impls.rs` mutation 100% strict + 53 hardening tests (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — proširena Rust mutation coverage sa 4 → **5 scope-a**. `behavior/impls.rs` first-run baseline: **172 mutants, 139 caught / 6 missed / 3 timeouts / 24 unviable** (strict 95.95%). Six missed mutants → analyzed → 9 targeted kill tests dodati u nov `faza3_behaviors_extra.rs` → **final full rerun: 146 caught / 0 missed / 2 timeouts / 24 unviable → 148/148 = 100.00% strict** (14m 40s). Toolchain pin (1.83.0) i parity preserved. Closes Real-priority preostalo **stavka #5** kompletno (behavior portion).
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `rust-sim/tests/faza3_behaviors_extra.rs` | +700 | **53 nova testa** za 4 prethodno nepokrivena behaviora (MultiplierSymbol/Mystery/Transform/WalkingWild) + smoke `id()/kind()` za svih 11 + targeted kill tests za missed mutante |
+| `reports/mutation/rust/behavior_impls/mutants.out/{outcomes.json,caught.txt,missed.txt,timeout.txt,mutants.json,_run.log}` | — | First-ever baseline za behavior implementations (largest behavior scope, 638 LOC) |
+| `reports/mutation/SUMMARY.{json,md}` | +1 row | Refreshed via `npm run mutation-summary` — 5 Rust scope-a sad listed |
+| `.gitignore` | +4 | Ignore daemon-generated transient fuzz exploration `spec-corpus-<unix_ms>/` (long-lived corpora `spec-<name>/` ostaju tracked) |
+
+### Acceptance gates W235
+
+| Gate | Threshold | Stvarno | Status |
+|---|---|---|---|
+| Strict mutation score `behavior/impls.rs` | ≥ 90% (de-facto target) | **100.00%** (148/148) | ✅ PASS (exceeds cert 95%) |
+| Caught mutants | dominant | 146/148 (98.65%) | ✅ |
+| Timeouts | counted as caught | 2/148 (1.35%) — `< → <=` on L591 in `next_pos` (recursion blowup) | ✅ tolerated |
+| Missed mutants | 0 hard fail | **0** | ✅ (down from 6 in baseline) |
+| Unviable mutants | informational | 24/172 (compile-only) | — |
+| Targeted kill tests | each missed verified | 9 new tests in R3X-06 group | ✅ all PASS |
+| Toolchain isolation | rust-toolchain.toml untouched | 1.83.0 still pinned | ✅ parity preserved |
+| `cargo clippy --tests -D warnings` | 0 warnings | 0 | ✅ |
+| Mutation summary refresh | auto via npm script | `npm run mutation-summary` re-runs OK | ✅ |
+
+### Per-Rust-scope state (after W235)
+
+| Scope | Mutants | Caught | Missed | Timeout | Unviable | Strict score | Status |
+|---|---|---|---|---|---|---|---|
+| `evaluator` | 21 | 21 | 0 | 0 | — | **100.00%** | ✅ |
+| `behavior_pipeline` (W234) | 24 | 23 | 0 | 1 | 0 | **100.00%** | ✅ |
+| **`behavior_impls`** (W235) | 172 | 146 | 0 | 2 | 24 | **100.00%** | ✅ NEW |
+| `rng` | 70 | 63 | 5 | — | — | 92.65% | ⚠️ jaz 2.35pp do cert 95% — **W236** |
+| `adapter` | — | — | — | — | — | (outcomes.json missing) | ⚠️ stale, baseline incomplete |
+
+### Six killed mutants — surgical kill summary
+
+| # | Line | Mutation | Kill test |
+|---|---|---|---|
+| 1 | impls.rs:99:44 | `lp.reel == ctx.reel && lp.row == ctx.row` → `\|\|` (Sticky on_win) | `r3x_06_sticky_on_win_does_not_upgrade_when_only_{reel,row}_matches_locked_position` |
+| 2 | impls.rs:602:19 | `br < 0` → `<=` (WalkingWild bounce reels-axis) | `r3x_06_walking_right_bounce_at_reels_2_lands_on_reel_0` |
+| 3 | impls.rs:602:50 | `br < 0 \|\| ... \|\| brow < 0` → `&&` (bounce OOB guard) | `r3x_06_walking_left_at_reel_0_with_reels_1_bounces_oob_returns_none` |
+| 4 | impls.rs:602:58 | `brow < 0` → `<=` (WalkingWild bounce rows-axis) | `r3x_06_walking_down_bounce_at_rows_2_lands_on_row_0` |
+| 5 | impls.rs:602:62 | `brow < 0 \|\| brow >= rows` → `&&` (bounce OOB guard) | `r3x_06_walking_up_at_row_0_with_rows_1_bounces_oob_returns_none` |
+| 6 | impls.rs:624:32 | `c.as_str() == prefix \|\| c.starts_with(...)` → `!=` (count_coin_prefix filter) | `r3x_06_coin_prefix_filter_excludes_non_coin_cells` (1 vs 8 count → trigger=5 boundary detects difference) |
+
+### Methodology notes
+
+* **Toolchain split unchanged:** mutation runs koriste `RUSTUP_TOOLCHAIN=stable` (1.93.1) van repo pin-a (1.83.0). Parity bit-match guarantee preserved.
+* **Wall-clock:** 172 mutants × ~30s avg = **14m 31s** (6 parallel jobs, baseline 53s). Surgical re-run na 16 candidate mutants (regex `:99|:602|:624`) ubacio dodatne 4m 21s i potvrdio **0 missed**.
+* **Why pre-emptive tests + reactive kill tests:** prvih 44 testa iz R3X-00…R3X-05 grupe je dodato BEFORE prvi mutants run (na osnovu coverage scan da 4 behaviora nemaju direktnih unit testova). Reaktivnih 9 testova u R3X-06 grupi je tačno targetiranih nakon prvog rezultata. Combined effect: 95.95% → 100.00% strict.
+* **3 surviving timeouts:** sva 3 su pre-existing pattern u `next_pos` boundary comparisons (`< → <=` na L591) gde mutant uđe u beskonačnu rekurziju ili dugi test (90s budget). Po cargo-mutants konvenciji counted as caught.
+
+### Reprodukcija
+
+```bash
+# Full baseline (~15 min, 6 parallel jobs)
+export PATH="$HOME/.cargo/bin:$PATH"
+RUSTUP_TOOLCHAIN=stable cargo mutants \
+  --manifest-path rust-sim/Cargo.toml \
+  --timeout 90 --no-shuffle --jobs 6 \
+  --output reports/mutation/rust/behavior_impls \
+  --file rust-sim/src/behavior/impls.rs
+
+# Surgical re-run on previously-missed mutants only (~4 min)
+RUSTUP_TOOLCHAIN=stable cargo mutants \
+  --manifest-path rust-sim/Cargo.toml \
+  --timeout 90 --no-shuffle --jobs 6 \
+  --output reports/mutation/rust/behavior_impls_rerun \
+  --file rust-sim/src/behavior/impls.rs \
+  --regex "impls.rs:(99|602|624)"
+
+# Refresh summary
+npm run mutation-summary
+```
+
+### Šta NIJE u skopu W235 (i zašto)
+
+1. **`rng.rs` jaz 92.65% → 95%** — 5 surviving mutants u `pick_weighted_index` / `random_bounded`. Tracked kao **W236**.
+2. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Tracked kao **W237**.
+3. **TS Stryker 95% threshold** — 85.38% sad, gap od 9.62pp; izolovan tehnicki dug, samostalna sesija.
+4. **`behavior/registry.rs`, `behavior/pipeline.rs` re-run** — pipeline već 100% u W234. Registry baseline tek treba; tracked **W238**.

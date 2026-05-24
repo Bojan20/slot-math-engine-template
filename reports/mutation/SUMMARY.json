@@ -1,5 +1,5 @@
 {
-  "generatedAtUtc": "2026-05-23T10:31:41.484Z",
+  "generatedAtUtc": "2026-05-24T02:31:15.514Z",
   "typescript": {
     "runtime": "typescript",
     "tool": "stryker",
@@ -42,6 +42,19 @@
     ]
   },
   "rust": [
+    {
+      "crate": "behavior_impls",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/behavior_impls/mutants.out/outcomes.json",
+      "total": 172,
+      "caught": 146,
+      "missed": 0,
+      "timeout": 2,
+      "unviable": 24,
+      "success": 0,
+      "scoreStrict": 1
+    },
     {
       "crate": "behavior_pipeline",
       "runtime": "rust",

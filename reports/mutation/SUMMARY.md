@@ -1,10 +1,11 @@
 # Mutation Testing Consolidated Report
 
-> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-23T10:31:41.484Z from stored mutation artifacts. Pure read — no mutation engine spawned.
+> **W152 Wave 17 — Faza 10.7 acceptance proof.** Generated 2026-05-24T02:31:15.514Z from stored mutation artifacts. Pure read — no mutation engine spawned.
 
 ## Headline
 
 * **TypeScript (Stryker scoped)**: 292 / 342 mutants killed → strict 85.38 % / lenient 85.38 %.
+* **Rust behavior_impls** (cargo-mutants): 148 / 148 scored mutants killed → strict 100.00 %.
 * **Rust behavior_pipeline** (cargo-mutants): 24 / 24 scored mutants killed → strict 100.00 %.
 * **Rust evaluator** (cargo-mutants): 21 / 21 scored mutants killed → strict 100.00 %.
 * **Rust rng** (cargo-mutants): 63 / 68 scored mutants killed → strict 92.65 %.
@@ -16,6 +17,7 @@ Acceptance: mutation score ≥ 95 % both runtimes.
 | Runtime | Strict score | Faza 10.7 ≥ 95 % | Notes |
 |---|---:|:---:|---|
 | TypeScript (Stryker scoped) | 85.38 % | ⚠️ | scoped to RG/sensitivity hot-paths |
+| Rust `behavior_impls` | 100.00 % | ✅ | 
 | Rust `behavior_pipeline` | 100.00 % | ✅ | 
 | Rust `evaluator` | 100.00 % | ✅ | 
 | Rust `rng` | 92.65 % | ⚠️ | 

@@ -1,0 +1,2 @@
+rust-sim/src/behavior/impls.rs:591:15: replace < with <= in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:54: replace < with <= in WalkingWildBehavior::next_pos

@@ -1,0 +1,146 @@
+rust-sim/src/behavior/impls.rs:18:9: replace <impl SymbolBehavior for WildBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:18:9: replace <impl SymbolBehavior for WildBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:40:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:43:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:43:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:47:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:77:9: replace <impl SymbolBehavior for StickyWildBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:40:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:77:9: replace <impl SymbolBehavior for StickyWildBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:21:9: replace <impl SymbolBehavior for WildBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:80:9: replace <impl SymbolBehavior for StickyWildBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:80:9: replace <impl SymbolBehavior for StickyWildBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:57:9: replace <impl SymbolBehavior for ExpandingWildBehavior>::on_win -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:21:9: replace <impl SymbolBehavior for WildBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:84:9: replace <impl SymbolBehavior for StickyWildBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:99:44: replace && with || in <impl SymbolBehavior for StickyWildBehavior>::on_win
+rust-sim/src/behavior/impls.rs:99:32: replace == with != in <impl SymbolBehavior for StickyWildBehavior>::on_win
+rust-sim/src/behavior/impls.rs:92:9: replace <impl SymbolBehavior for StickyWildBehavior>::on_win -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:57:12: delete ! in <impl SymbolBehavior for ExpandingWildBehavior>::on_win
+rust-sim/src/behavior/impls.rs:92:12: delete ! in <impl SymbolBehavior for StickyWildBehavior>::on_win
+rust-sim/src/behavior/impls.rs:123:9: replace <impl SymbolBehavior for MultiplierWildBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:99:54: replace == with != in <impl SymbolBehavior for StickyWildBehavior>::on_win
+rust-sim/src/behavior/impls.rs:123:9: replace <impl SymbolBehavior for MultiplierWildBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:126:9: replace <impl SymbolBehavior for MultiplierWildBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:126:9: replace <impl SymbolBehavior for MultiplierWildBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:134:9: replace <impl SymbolBehavior for MultiplierWildBehavior>::on_win -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:159:9: replace <impl SymbolBehavior for ScatterBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:159:9: replace <impl SymbolBehavior for ScatterBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:162:9: replace <impl SymbolBehavior for ScatterBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:162:9: replace <impl SymbolBehavior for ScatterBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:166:9: replace <impl SymbolBehavior for ScatterBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:169:18: replace >= with < in <impl SymbolBehavior for ScatterBehavior>::on_land
+rust-sim/src/behavior/impls.rs:202:9: replace <impl SymbolBehavior for CoinBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:202:9: replace <impl SymbolBehavior for CoinBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:205:9: replace <impl SymbolBehavior for CoinBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:205:9: replace <impl SymbolBehavior for CoinBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:209:9: replace <impl SymbolBehavior for CoinBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:218:23: replace >= with < in <impl SymbolBehavior for CoinBehavior>::on_land
+rust-sim/src/behavior/impls.rs:256:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:256:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:259:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:259:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:264:13: delete match arm MultiplierTrigger::Land | MultiplierTrigger::Both in <impl SymbolBehavior for MultiplierSymbolBehavior>::on_land
+rust-sim/src/behavior/impls.rs:263:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:270:9: replace <impl SymbolBehavior for MultiplierSymbolBehavior>::on_win -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:271:13: delete match arm MultiplierTrigger::Win | MultiplierTrigger::Both in <impl SymbolBehavior for MultiplierSymbolBehavior>::on_win
+rust-sim/src/behavior/impls.rs:279:9: replace MultiplierSymbolBehavior::make_effects -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:319:23: replace <= with > in MysteryBehavior::draw
+rust-sim/src/behavior/impls.rs:317:9: replace MysteryBehavior::draw -> &str with ""
+rust-sim/src/behavior/impls.rs:317:24: replace * with + in MysteryBehavior::draw
+rust-sim/src/behavior/impls.rs:329:9: replace <impl SymbolBehavior for MysteryBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:317:9: replace MysteryBehavior::draw -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:317:24: replace * with / in MysteryBehavior::draw
+rust-sim/src/behavior/impls.rs:329:9: replace <impl SymbolBehavior for MysteryBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:332:9: replace <impl SymbolBehavior for MysteryBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:332:9: replace <impl SymbolBehavior for MysteryBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:389:9: replace <impl SymbolBehavior for JackpotBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:345:55: replace == with != in <impl SymbolBehavior for MysteryBehavior>::on_land
+rust-sim/src/behavior/impls.rs:392:9: replace <impl SymbolBehavior for JackpotBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:392:9: replace <impl SymbolBehavior for JackpotBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:389:9: replace <impl SymbolBehavior for JackpotBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:337:9: replace <impl SymbolBehavior for MysteryBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:396:9: replace <impl SymbolBehavior for JackpotBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:397:37: replace match guard self.should_trigger(ctx) with true in <impl SymbolBehavior for JackpotBehavior>::on_land
+rust-sim/src/behavior/impls.rs:397:37: replace match guard self.should_trigger(ctx) with false in <impl SymbolBehavior for JackpotBehavior>::on_land
+rust-sim/src/behavior/impls.rs:409:36: replace match guard self.should_trigger(ctx) with false in <impl SymbolBehavior for JackpotBehavior>::on_win
+rust-sim/src/behavior/impls.rs:422:9: replace JackpotBehavior::should_trigger -> bool with true
+rust-sim/src/behavior/impls.rs:408:9: replace <impl SymbolBehavior for JackpotBehavior>::on_win -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:422:27: replace <= with > in JackpotBehavior::should_trigger
+rust-sim/src/behavior/impls.rs:422:9: replace JackpotBehavior::should_trigger -> bool with false
+rust-sim/src/behavior/impls.rs:425:49: replace >= with < in JackpotBehavior::should_trigger
+rust-sim/src/behavior/impls.rs:450:9: replace <impl SymbolBehavior for TransformBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:450:9: replace <impl SymbolBehavior for TransformBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:409:36: replace match guard self.should_trigger(ctx) with true in <impl SymbolBehavior for JackpotBehavior>::on_win
+rust-sim/src/behavior/impls.rs:453:9: replace <impl SymbolBehavior for TransformBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:453:9: replace <impl SymbolBehavior for TransformBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:457:9: replace <impl SymbolBehavior for TransformBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:466:46: replace == with != in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:478:35: replace + with - in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:478:35: replace + with * in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:480:44: replace + with - in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:480:44: replace + with * in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:499:37: replace == with != in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:486:50: replace == with != in <impl SymbolBehavior for TransformBehavior>::on_land
+rust-sim/src/behavior/impls.rs:540:9: replace <impl SymbolBehavior for WalkingWildBehavior>::id -> &str with ""
+rust-sim/src/behavior/impls.rs:540:9: replace <impl SymbolBehavior for WalkingWildBehavior>::id -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:543:9: replace <impl SymbolBehavior for WalkingWildBehavior>::kind -> &str with ""
+rust-sim/src/behavior/impls.rs:543:9: replace <impl SymbolBehavior for WalkingWildBehavior>::kind -> &str with "xyzzy"
+rust-sim/src/behavior/impls.rs:547:9: replace <impl SymbolBehavior for WalkingWildBehavior>::on_land -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:559:9: replace <impl SymbolBehavior for WalkingWildBehavior>::on_spin_end -> Vec<Effect> with vec![]
+rust-sim/src/behavior/impls.rs:585:9: replace WalkingWildBehavior::next_pos -> Option<(usize, usize)> with None
+rust-sim/src/behavior/impls.rs:585:9: replace WalkingWildBehavior::next_pos -> Option<(usize, usize)> with Some((0, 0))
+rust-sim/src/behavior/impls.rs:585:9: replace WalkingWildBehavior::next_pos -> Option<(usize, usize)> with Some((0, 1))
+rust-sim/src/behavior/impls.rs:585:9: replace WalkingWildBehavior::next_pos -> Option<(usize, usize)> with Some((1, 0))
+rust-sim/src/behavior/impls.rs:585:9: replace WalkingWildBehavior::next_pos -> Option<(usize, usize)> with Some((1, 1))
+rust-sim/src/behavior/impls.rs:586:49: replace - with + in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:586:49: replace - with / in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:587:50: replace + with - in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:587:50: replace + with * in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:588:59: replace - with + in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:588:59: replace - with / in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:589:61: replace + with - in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:589:61: replace + with * in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:58: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:46: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:19: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:15: replace < with == in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:15: replace < with > in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:25: replace >= with < in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:54: replace < with == in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:54: replace < with > in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:591:66: replace >= with < in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:597:53: replace + with - in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:597:53: replace + with * in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:598:54: replace - with + in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:598:54: replace - with / in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:599:63: replace + with - in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:599:63: replace + with * in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:600:65: replace - with + in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:600:65: replace - with / in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:62: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:50: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:23: replace || with && in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:19: replace < with == in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:19: replace < with > in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:19: replace < with <= in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:29: replace >= with < in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:58: replace < with == in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:58: replace < with > in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:58: replace < with <= in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:602:70: replace >= with < in WalkingWildBehavior::next_pos
+rust-sim/src/behavior/impls.rs:614:5: replace count_symbol -> usize with 0
+rust-sim/src/behavior/impls.rs:614:5: replace count_symbol -> usize with 1
+rust-sim/src/behavior/impls.rs:616:32: replace == with != in count_symbol
+rust-sim/src/behavior/impls.rs:621:5: replace count_coin_prefix -> usize with 0
+rust-sim/src/behavior/impls.rs:621:5: replace count_coin_prefix -> usize with 1
+rust-sim/src/behavior/impls.rs:624:42: replace || with && in count_coin_prefix
+rust-sim/src/behavior/impls.rs:624:32: replace == with != in count_coin_prefix
+rust-sim/src/behavior/impls.rs:629:5: replace parse_coin_amount -> f64 with 0.0
+rust-sim/src/behavior/impls.rs:629:5: replace parse_coin_amount -> f64 with 1.0
+rust-sim/src/behavior/impls.rs:629:5: replace parse_coin_amount -> f64 with -1.0
+rust-sim/src/behavior/impls.rs:631:40: replace + with * in parse_coin_amount
+rust-sim/src/behavior/impls.rs:631:40: replace + with - in parse_coin_amount
+rust-sim/src/behavior/impls.rs:632:18: replace > with == in parse_coin_amount
+rust-sim/src/behavior/impls.rs:632:18: replace > with < in parse_coin_amount
+rust-sim/src/behavior/impls.rs:632:18: replace > with >= in parse_coin_amount
