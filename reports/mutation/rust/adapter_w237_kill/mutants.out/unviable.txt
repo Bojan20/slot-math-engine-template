@@ -1,1 +1,0 @@
-rust-sim/src/ir/adapter.rs:266:5: replace strips_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![vec![Default::default()]])

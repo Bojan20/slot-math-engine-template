@@ -3042,13 +3042,10 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 ### Šta NIJE u skopu W236
 
-1. **`adapter` re-run** — outcomes.json missing baseline. Tracked **W237**. → **closed by W237** (effective 100%, 0 missed).
+1. **`adapter` re-run** — outcomes.json missing baseline. Tracked **W237**. → **closed by W237** (effective 100%, 0 missed) — daemon parallel-implemented inline mod in `rust-sim/src/ir/adapter.rs::w237_kill_tests`.
 2. **`behavior/registry.rs` baseline** — no mutation run yet. Tracked **W238**.
 3. **TS Stryker 95% threshold** — 85.38% sad, gap 9.62pp; izolovan tehnički dug.
 4. **Performance test for L62 `%→/` mutant** — would require benchmark assertion (e.g. 100K calls < 50ms); deferred — not part of correctness suite.
-2. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Tracked kao **W237**. → **closed by W237**.
-3. **TS Stryker 95% threshold** — 85.38% sad, gap od 9.62pp; izolovan tehnicki dug, samostalna sesija.
-4. **`behavior/registry.rs`, `behavior/pipeline.rs` re-run** — pipeline već 100% u W234. Registry baseline tek treba; tracked **W238**.
 
 ---
 
