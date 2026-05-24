@@ -283,7 +283,7 @@ math gap koji vendor mora da ima da bi nadmašio IGT + Pragmatic + NetEnt.
 | **PAR-016** | Cumulative reach curves | 3 | 20 min | P(N spinova bez win) distribution — churn risk modeling | 🟢 Done |
 | **PAR-017** | Risk-of-Ruin formula | 2 | 15 min | RoR = ((1−edge)/(1+edge))^bankroll — bankroll modeling | 🟢 Done |
 | **PAR-018** | NIST SP 800-22 + DIEHARDER suite | 5 | 50 min | RNG cert za US tribal casinos (Nevada/NJ) | 🟢 Done |
-| **PAR-019** | Multi-tier mystery jackpot (Mini/Minor/Major/Grand) | 3 | 25 min | Aristocrat Dragon Link / IGT MegaJackpots math | 🔵 Planned |
+| **PAR-019** | Multi-tier mystery jackpot (Mini/Minor/Major/Grand) | 3 | 25 min | Aristocrat Dragon Link / IGT MegaJackpots math | 🟢 Done |
 | **PAR-020** | Autokorelacija test (Ljung-Box + runs test) | 3 | 25 min | Regulatorni guard protiv "chasing" iluzija | 🔵 Planned |
 | **PAR-021** | Exact rational arithmetic (BigRational) | 2 | 20 min | Mathematica-grade exactness — daje 7/72 umesto 0.09722... | 🔵 Planned |
 | **TOTAL F-B..F-F** | | **41** | **~5 h 25 min** | | |

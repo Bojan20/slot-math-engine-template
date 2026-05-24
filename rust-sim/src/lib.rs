@@ -62,6 +62,8 @@ pub mod cluster_pays;
 pub mod megaways;
 /// PAR-018 — NIST SP 800-22 + DIEHARDER statistical battery (essential subset).
 pub mod rng_battery;
+/// PAR-019 — Multi-tier mystery jackpot (Mini/Minor/Major/Grand).
+pub mod mystery_jackpot;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`
