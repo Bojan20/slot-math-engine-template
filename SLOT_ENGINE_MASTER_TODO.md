@@ -3141,7 +3141,51 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 1. **Mutation re-run verify** — pending CPU availability (sequential run ~10-15 min per module). Tracked as **W240-followup**.
 2. **markov + features baseline completion** — running. Additional missed mutants beyond current 107/155 will be addressed in follow-up commit if needed.
-3. **Remaining untested Rust modules** — `cluster/*`, `bulk/*`, `gpu/*` (8 files). Tracked as **W241**.
+3. **Remaining untested Rust modules** — `cluster/*`, `bulk/*`, `gpu/*` (8 files). Tracked as **W241**. → **closed by W241** (51 kill specs, 12 source files).
+
+---
+
+## ✅ W241 LANDED — Rust mutation expansion final: cluster + bulk + gpu (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — 51 kill specs across 3 new files cover the last untested Rust module groups (cluster/, bulk/, gpu/ — 12 source files, 2,125 LOC). gpu baseline reports 1 unviable / 0 missed (feature-flag gating). cluster + bulk baselines in flight at commit time, follow-up commit if any mutants slip past the 51 specs.
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `rust-sim/tests/w241_gpu_kills.rs` | 8 specs | `GpuAvailability` variants, `probe_gpu` shape, `GpuRequest`/`GpuResult` field round-trip, `SPIN_EVAL_WGSL` source invariants |
+| `rust-sim/tests/w241_cluster_kills.rs` | 21 specs | `partition_run` slice arithmetic, `WorkSlice::span` saturating sub, `merge_slice_results` additive + max-monotonic, `InMemoryTransport` FIFO/clone, `ClusterError` Display, `ClusterEnvelope` serde round-trip |
+| `rust-sim/tests/w241_bulk_kills.rs` | 22 specs | `parse_spin_count` K/M/B/T + case + fractional + edge errors, `ProgressSnapshot::fraction`, `BulkConfig::new` defaults, `AtomicStatsSnapshot` serde + from_atomic + apply_to, HDR round-trip, `BulkCheckpoint` disk round-trip |
+| `docs/research/W241_RUST_MUTATION_FINAL_2026-05-24.md` | +180 | Full evidence + per-module kill mechanism table + cumulative state |
+
+### Cumulative Rust mutation state (after W241)
+
+| Wave | Module | Status |
+|---|---|---|
+| W201-W236 | evaluator, behavior_pipeline, behavior_impls, rng | ✅ 100% (W236 has 9 documented equivalents) |
+| W237 | ir/adapter.rs | ✅ 100% (verified, 0 missed) |
+| W238 | behavior/registry.rs | ✅ 100% |
+| W240 | ir/validate.rs | ✅ 0 missed verified (validate-v3) |
+| W240 | jurisdiction/adapter.rs | ✅ 1 missed (close, jur-v3) |
+| W240 | markov.rs, features.rs | ✅ snapshot kills added (`086bf17`) |
+| **W241** | **cluster/, bulk/, gpu/** | ✅ landed (cluster/bulk verify pending) |
+
+**Total Rust mutation kill specs across W237-W241: 197.**
+
+### QA gates W241
+
+| Gate | Result |
+|---|---|
+| `cargo test --lib` | 271 passing |
+| `cargo test --tests w241_` | 51 passing |
+| `cargo clippy --all-targets -D warnings` | clean |
+| `npm run lint` (tsc) | clean |
+
+### Šta NIJE u skopu W241
+
+1. **cluster + bulk mutation verify completion** — running. Any survivors will be addressed in W241-followup.
+2. **TS Stryker `vitest-runner` allocator bug** — tracked as W239-followup, requires upstream patch.
+3. **L&W portfolio plan W181-W200** — strategic backlog (61→77 solvers).
 
 ---
 
