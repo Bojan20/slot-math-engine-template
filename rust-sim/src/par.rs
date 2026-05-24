@@ -649,6 +649,87 @@ fn build_pareto_section(
     }
 }
 
+// ─── PAR-006 — Jurisdiction-gated RTP variants ──────────────────────────────
+
+/// One per active jurisdiction in `ComplianceSection.jurisdictions`.
+///
+/// `theoretical_rtp` is the closed-form / target RTP (sourced from
+/// `ctx.target_rtp` when no analytical override is supplied). `simulated_rtp`
+/// is `par.total_rtp`. `delta_pp` is `theoretical − simulated` in percentage
+/// points. `within_ci_95` is the GLI §8.2 gate: `|delta| ≤ 1.96 × σ/√N`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct JurisdictionVariant {
+    pub code: String,
+    pub name: String,
+    pub theoretical_rtp: f64,
+    pub simulated_rtp: f64,
+    pub delta_pp: f64,
+    pub regulatory_min: f64,
+    pub regulatory_max: f64,
+    pub pass: bool,
+    pub within_ci_95: bool,
+    pub notes: Vec<String>,
+}
+
+/// JURISDICTION-GATED RTP section (Doc §8.3).
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct JurisdictionGatedSection {
+    pub variants: Vec<JurisdictionVariant>,
+}
+
+impl JurisdictionGatedSection {
+    /// Build one variant per active jurisdiction. Loads regulatory band from
+    /// `jurisdiction::profiles::get_profile`; falls back to a permissive band
+    /// `[50, 99.99]` (warn-only) when the code is unknown.
+    pub fn from_compliance(
+        jurisdictions: &[String],
+        theoretical_rtp_pct: f64,
+        simulated_rtp_pct: f64,
+        std_error_pp: f64,
+    ) -> Self {
+        let ci95_half = 1.96 * std_error_pp;
+        let delta = (theoretical_rtp_pct - simulated_rtp_pct).abs();
+        let within_ci_95 = std_error_pp > 0.0 && delta <= ci95_half;
+
+        let mut variants: Vec<JurisdictionVariant> = jurisdictions
+            .iter()
+            .map(|code| {
+                let (min, max, name, notes) =
+                    if let Some(p) = crate::jurisdiction::profiles::get_profile(code) {
+                        let min_pct = p.rtp_range[0] * 100.0;
+                        let max_pct = p.rtp_range[1] * 100.0;
+                        let notes: Vec<String> =
+                            p.informational_notes.iter().take(3).map(|s| s.to_string()).collect();
+                        (min_pct, max_pct, p.name.to_string(), notes)
+                    } else {
+                        (
+                            50.0,
+                            99.99,
+                            code.clone(),
+                            vec![format!("profile '{code}' not found — using permissive fallback band")],
+                        )
+                    };
+                let pass = simulated_rtp_pct >= min && simulated_rtp_pct <= max;
+                JurisdictionVariant {
+                    code: code.clone(),
+                    name,
+                    theoretical_rtp: theoretical_rtp_pct,
+                    simulated_rtp: simulated_rtp_pct,
+                    delta_pp: theoretical_rtp_pct - simulated_rtp_pct,
+                    regulatory_min: min,
+                    regulatory_max: max,
+                    pass,
+                    within_ci_95,
+                    notes,
+                }
+            })
+            .collect();
+        // Deterministic sort by code (Doc §8.3 acceptance gate).
+        variants.sort_by(|a, b| a.code.cmp(&b.code));
+        JurisdictionGatedSection { variants }
+    }
+}
+
 // ─── PAR-005 — Markov chain section ─────────────────────────────────────────
 
 /// Enumerated game states (Doc §9.1). Order MUST be stable — used as matrix index.
@@ -940,6 +1021,9 @@ pub struct PARSheet {
     // ── PAR-005 — Markov chain (always emitted; rows sum to 1, π sums to 1)
     #[serde(default)]
     pub markov: MarkovSection,
+    // ── PAR-006 — Jurisdiction-gated RTP variants + GLI §8.2 gate
+    #[serde(default)]
+    pub jurisdiction_gated: JurisdictionGatedSection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -1069,6 +1153,13 @@ impl PARGenerator {
         };
         // PAR-005 — Markov transition matrix + stationary π.
         let markov = MarkovSection::from_stats(stats, par);
+        // PAR-006 — Jurisdiction-gated RTP variants + GLI §8.2 theoretical-vs-simulated gate.
+        let jurisdiction_gated = JurisdictionGatedSection::from_compliance(
+            &jurisdictions,
+            target_rtp,
+            par.total_rtp,
+            par.std_error,
+        );
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -1210,6 +1301,8 @@ impl PARGenerator {
             time_to_trigger,
             // PAR-005 — Markov chain.
             markov,
+            // PAR-006 — Jurisdiction-gated RTP.
+            jurisdiction_gated,
         }
     }
 
@@ -1639,6 +1732,29 @@ impl PARGenerator {
             ParetoFitKind::NotApplicable => {
                 let reason = par.pareto_tail.reason.as_deref().unwrap_or("n/a");
                 let line = format!("    NotApplicable: {reason}");
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
+        }
+
+        // PAR-006: JURISDICTION-GATED RTP block (per-code PASS/FAIL + GLI §8.2 gate).
+        if !par.jurisdiction_gated.variants.is_empty() {
+            println!("╠{rule}╣");
+            println!("║  JURISDICTION-GATED RTP{:<width$}║", "", width = w - 25);
+            for v in &par.jurisdiction_gated.variants {
+                let band_pass = if v.pass { "✓" } else { "✗" };
+                let ci_pass = if v.within_ci_95 { "✓" } else { "✗" };
+                let line = format!(
+                    "    {:<4} sim={:6.3}%  theo={:6.3}%  Δ={:+.3}pp  band[{:.1},{:.1}]{}  CI95{}",
+                    v.code,
+                    v.simulated_rtp,
+                    v.theoretical_rtp,
+                    v.delta_pp,
+                    v.regulatory_min,
+                    v.regulatory_max,
+                    band_pass,
+                    ci_pass
+                );
                 let truncated: String = line.chars().take(w - 4).collect();
                 println!("║  {truncated:<width$}║", width = w - 4);
             }
