@@ -278,7 +278,7 @@ math gap koji vendor mora da ima da bi nadmašio IGT + Pragmatic + NetEnt.
 | **PAR-011** | Quasi-Monte Carlo (Halton + Sobol + Lattice) | 5 | 45 min | 100× variance reduction za P99.999 jackpot tail | 🟢 Done |
 | **PAR-012** | Bonus Buy EV calculator | 3 | 25 min | EV(buy) vs cost premium — modern slot economics (Pragmatic/Nolimit standard) | 🟢 Done |
 | **PAR-013** | Cluster Pays evaluator | 4 | 30 min | Connected-component scoring (NetEnt/Push Gaming math) | 🟢 Done |
-| **PAR-014** | Megaways / variable reel heights | 4 | 30 min | `Ways = ∏ S_i` sa per-spin varijabilnim height (BTG/Blueprint) | 🔵 Planned |
+| **PAR-014** | Megaways / variable reel heights | 4 | 30 min | `Ways = ∏ S_i` sa per-spin varijabilnim height (BTG/Blueprint) | 🟢 Done |
 | **PAR-015** | Variance decomposition (ANOVA) | 3 | 25 min | σ²_total = σ²_base + σ²_fs + σ²_jp + 2·cov(...) — operator "koja feature truje varijans" | 🔵 Planned |
 | **PAR-016** | Cumulative reach curves | 3 | 20 min | P(N spinova bez win) distribution — churn risk modeling | 🔵 Planned |
 | **PAR-017** | Risk-of-Ruin formula | 2 | 15 min | RoR = ((1−edge)/(1+edge))^bankroll — bankroll modeling | 🔵 Planned |

@@ -58,6 +58,8 @@ pub mod qmc;
 pub mod bonus_buy;
 /// PAR-013 — Cluster Pays evaluator (connected-component scoring).
 pub mod cluster_pays;
+/// PAR-014 — Megaways analytics: variable reel heights + expected/max ways.
+pub mod megaways;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`
