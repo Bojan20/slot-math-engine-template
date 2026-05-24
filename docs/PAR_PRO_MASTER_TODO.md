@@ -40,7 +40,7 @@
 | Wave | Naziv | Atoms | ETA | Files touched | Status |
 |---|---|---|---|---|---|
 | **PAR-001** | Sign-off block + Reel config + Paytable + **per-pay-rule RTP** | 5 | 30 min | `par.rs`, `ir.rs`, `tests/par_pro_001.rs` | 🟢 Done |
-| **PAR-002** | configHash + RNG attestation + **rng_kind stale-fix** | 4 | 25 min | `par.rs`, `rng.rs`, `tests/par_pro_002.rs` | 🔵 Planned |
+| **PAR-002** | configHash + RNG attestation + **rng_kind stale-fix** | 4 | 25 min | `par.rs`, `rng.rs`, `tests/par_pro_002.rs` | 🟢 Done |
 | **PAR-003** | EVT Pareto tail u PAR sheet | 3 | 20 min | `par.rs`, `tail_fit.rs`, `tests/par_pro_003.rs` | 🔵 Planned |
 | **PAR-004** | Per-feature time-to-trigger CDF | 4 | 25 min | `par.rs`, `stats.rs`, `tests/par_pro_004.rs` | 🔵 Planned |
 | **PAR-005** | Markov transition matrix + stationary π | 4 | 30 min | `par.rs`, `stats.rs`, `tests/par_pro_005.rs` | 🔵 Planned |
@@ -263,6 +263,43 @@
 - ⚪ Skipped (with reason)
 
 **Next action:** PAR-001 LANDED (5/5 atoma, 6/6 testova, clippy strict, 1071 workspace tests pass). Start **PAR-002 / A1** (`config_hash: String` SHA-256 nad canonical IR JSON).
+
+---
+
+## 16. Ultimate Math Extension (PAR-010 → PAR-021)
+
+PAR-001..009 daje **Tier-1 PAR sheet certifikat**, ali nije ultimativan math
+simulator. Boki je rekao "ULTIMATIVNO ZAUVEK" — ova ekstenzija pokriva svaki
+math gap koji vendor mora da ima da bi nadmašio IGT + Pragmatic + NetEnt.
+
+| Wave | Naziv | Atoms | ETA | Cilj | Status |
+|---|---|---|---|---|---|
+| **PAR-010** | Closed-form per-pay-rule RTP solver | 4 | 35 min | Bez ovog `pay_rule_rtp` polje ostaje 0.0 — pravi audit trail vrednosti | 🔵 Planned |
+| **PAR-011** | Quasi-Monte Carlo (Halton + Sobol + Lattice) | 5 | 45 min | 100× variance reduction za P99.999 jackpot tail | 🔵 Planned |
+| **PAR-012** | Bonus Buy EV calculator | 3 | 25 min | EV(buy) vs cost premium — modern slot economics (Pragmatic/Nolimit standard) | 🔵 Planned |
+| **PAR-013** | Cluster Pays evaluator | 4 | 30 min | Connected-component scoring (NetEnt/Push Gaming math) | 🔵 Planned |
+| **PAR-014** | Megaways / variable reel heights | 4 | 30 min | `Ways = ∏ S_i` sa per-spin varijabilnim height (BTG/Blueprint) | 🔵 Planned |
+| **PAR-015** | Variance decomposition (ANOVA) | 3 | 25 min | σ²_total = σ²_base + σ²_fs + σ²_jp + 2·cov(...) — operator "koja feature truje varijans" | 🔵 Planned |
+| **PAR-016** | Cumulative reach curves | 3 | 20 min | P(N spinova bez win) distribution — churn risk modeling | 🔵 Planned |
+| **PAR-017** | Risk-of-Ruin formula | 2 | 15 min | RoR = ((1−edge)/(1+edge))^bankroll — bankroll modeling | 🔵 Planned |
+| **PAR-018** | NIST SP 800-22 + DIEHARDER suite | 5 | 50 min | RNG cert za US tribal casinos (Nevada/NJ) | 🔵 Planned |
+| **PAR-019** | Multi-tier mystery jackpot (Mini/Minor/Major/Grand) | 3 | 25 min | Aristocrat Dragon Link / IGT MegaJackpots math | 🔵 Planned |
+| **PAR-020** | Autokorelacija test (Ljung-Box + runs test) | 3 | 25 min | Regulatorni guard protiv "chasing" iluzija | 🔵 Planned |
+| **PAR-021** | Exact rational arithmetic (BigRational) | 2 | 20 min | Mathematica-grade exactness — daje 7/72 umesto 0.09722... | 🔵 Planned |
+| **TOTAL F-B..F-F** | | **41** | **~5 h 25 min** | | |
+
+**Sveukupno** (PAR-001 done + 002..009 + 010..021): **74 atoma, ~9 h 10 min** za ultimativni math simulator.
+
+**Faze izvršavanja:**
+
+| Faza | Waves | Cilj | ETA |
+|---|---|---|---:|
+| F-A | PAR-002..005 + 006/A4 | Tier-1 PAR sheet (math core) | ~2 h |
+| F-B | PAR-010, 011, 018, 020 | Critical math gaps (per-rule, QMC, NIST, autokor.) | ~2 h 35 min |
+| F-C | PAR-012, 013, 014, 019 | Modern slot economics | ~1 h 50 min |
+| F-D | PAR-015, 016, 017 | Operator analytics | ~1 h |
+| F-E | PAR-007, 008 | Deliverable polish (JSON + CSV exporter) | ~40 min |
+| F-F | PAR-009, 021 | Optional luxury (PDF + rational arithmetic) | ~50 min |
 
 ---
 

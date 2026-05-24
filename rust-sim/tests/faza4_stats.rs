@@ -188,7 +188,8 @@ fn par_generates_all_sections() {
     assert_eq!(par.meta.game_id, "faza4-test");
     assert_eq!(par.meta.seeds_used, 20);
     assert_eq!(par.meta.total_spins, 1_000_000);
-    assert_eq!(par.schema_version, "1.0.0");
+    // PAR-002 bumped schema from 1.0.0 to 1.1.0 (added rng_attestation + config_hash).
+    assert_eq!(par.schema_version, "1.1.0");
     assert_eq!(par.win_distribution.len(), HDR_BUCKET_COUNT);
 }
 

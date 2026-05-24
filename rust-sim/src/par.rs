@@ -21,10 +21,11 @@
 //! 14. **Reel config** *(PAR-001)* — per-reel mode, length, symbol counts, total cycle
 //! 15. **Paytable** *(PAR-001)* — n-of-a-kind multiplier matrix + per-pay-rule RTP audit trail
 
-use crate::ir::{ReelSet, SlotGameIR, SymbolKind};
+use crate::ir::{ReelSet, RngKind, SlotGameIR, SymbolKind};
 use crate::jackpot::JackpotMetrics;
 use crate::stats::{AtomicStats, PARMetrics, HDR_BUCKET_COUNT};
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 use std::sync::atomic::Ordering;
 
@@ -38,7 +39,15 @@ pub struct PARMeta {
     pub generated_at_utc: String,
     pub total_spins: u64,
     pub seeds_used: u32,
+    /// Live RNG family used for this PAR run. Populated from `ir.rng.kind` when
+    /// `ctx.ir = Some(...)`, otherwise the legacy fallback `"unknown"`.
+    /// The previous stale literal `"mulberry32"` was fixed in PAR-002/A4.
     pub rng_kind: String,
+    /// SHA-256 (lowercase hex) over the **canonical** JSON serialization of the IR.
+    /// Two PAR sheets produced from byte-identical IRs share the same `config_hash`.
+    /// Empty string when `ctx.ir = None` (legacy shim path).
+    #[serde(default)]
+    pub config_hash: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -397,6 +406,81 @@ impl PaytableSection {
     }
 }
 
+// ─── PAR-002 sections ────────────────────────────────────────────────────────
+
+/// Verdict for a single RNG statistical battery test.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum TestVerdict {
+    Pass,
+    Fail,
+    #[default]
+    NotRun,
+}
+
+/// Outcome of the suite of RNG quality tests typically required for GLI-19
+/// certification. `NotRun` is permitted for in-progress builds — final
+/// certification packages must show `Pass` for every entry.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct RngTestResults {
+    pub diehard: TestVerdict,
+    pub nist_sp_800_22: TestVerdict,
+    pub chi_square: TestVerdict,
+}
+
+/// RNG ATTESTATION block — Doc §8.1 / §10.4 + PAR-002 (MLAgent gap L fix).
+///
+/// `kind` is the actual RNG family used (read from `ir.rng.kind` when present).
+/// `period` is `2^N − 1` for shift-register / LCG families and `2^96 blocks`
+/// for ChaCha20 — emitted as a free-form string so we don't lose meaning when
+/// the period isn't a clean power of two.
+/// `seed_hex` is `seed:016x` so consumers can replay deterministically.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct RngAttestationSection {
+    pub kind: String,
+    pub period: String,
+    pub seed_hex: String,
+    pub tests: RngTestResults,
+}
+
+impl RngAttestationSection {
+    /// Build from an IR (uses `ir.rng.kind` + `ir.rng.default_seed`).
+    pub fn from_ir(ir: &SlotGameIR) -> Self {
+        let (kind, period) = rng_kind_meta(ir.rng.kind);
+        RngAttestationSection {
+            kind,
+            period,
+            seed_hex: format!("{:016x}", ir.rng.default_seed),
+            tests: RngTestResults::default(),
+        }
+    }
+}
+
+/// Map an `RngKind` to the snake_case label + theoretical period string.
+/// Period strings match Doc §8.1 / `rng.rs` header table.
+fn rng_kind_meta(kind: RngKind) -> (String, String) {
+    let (label, period) = match kind {
+        RngKind::Mulberry32 => ("mulberry32", "2^32"),
+        RngKind::Pcg64 => ("pcg64", "2^126"),
+        RngKind::Xoshiro256pp => ("xoshiro256pp", "2^256 - 1"),
+        RngKind::AesCtrDrbg => ("aes_ctr_drbg", "2^128 blocks (NIST SP 800-90A)"),
+    };
+    (label.to_string(), period.to_string())
+}
+
+/// SHA-256 (lowercase hex) over the canonical JSON serialisation of an IR.
+///
+/// **Canonical** here = `serde_json::to_string` (no whitespace), relying on
+/// `SlotGameIR`'s `BTreeMap` fields for stable key ordering. Two byte-identical
+/// IRs produce identical hashes; flipping a single weight digit changes it.
+pub fn compute_config_hash(ir: &SlotGameIR) -> String {
+    let canonical =
+        serde_json::to_string(ir).expect("SlotGameIR must serialise deterministically");
+    let mut h = Sha256::new();
+    h.update(canonical.as_bytes());
+    format!("{:x}", h.finalize())
+}
+
 fn symbol_kind_string(kind: SymbolKind) -> String {
     match kind {
         SymbolKind::Lp => "lp",
@@ -442,6 +526,9 @@ pub struct PARSheet {
     pub reel_config: Option<ReelConfigSection>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub paytable: Option<PaytableSection>,
+    // ── PAR-002 additions (RNG attestation — Option so legacy path stays compat) ─
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rng_attestation: Option<RngAttestationSection>,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -580,8 +667,18 @@ impl PARGenerator {
         let reel_config = ir.map(ReelConfigSection::from_ir);
         let paytable_section = ir.map(PaytableSection::from_ir);
 
+        // PAR-002 — RNG attestation + canonical config hash (only when IR available).
+        let rng_attestation = ir.map(RngAttestationSection::from_ir);
+        let config_hash = ir.map(compute_config_hash).unwrap_or_default();
+        // PAR-002/A4 — stop emitting stale "mulberry32" literal. When the IR
+        // is present we use its declared `rng.kind`; otherwise we mark the
+        // attestation as `unknown` so downstream consumers can flag it.
+        let rng_kind_label = ir
+            .map(|i| rng_kind_meta(i.rng.kind).0)
+            .unwrap_or_else(|| "unknown".to_string());
+
         PARSheet {
-            schema_version: "1.0.0".to_string(),
+            schema_version: "1.1.0".to_string(),
             meta: PARMeta {
                 game_id,
                 game_version,
@@ -589,7 +686,8 @@ impl PARGenerator {
                 generated_at_utc: "2026-05-12T00:00:00Z".to_string(),
                 total_spins,
                 seeds_used,
-                rng_kind: "mulberry32".to_string(),
+                rng_kind: rng_kind_label,
+                config_hash,
             },
             rtp: RTPSection {
                 total_rtp_pct: actual_rtp,
@@ -675,6 +773,8 @@ impl PARGenerator {
             sign_off,
             reel_config,
             paytable: paytable_section,
+            // PAR-002 — RNG attestation.
+            rng_attestation,
         }
     }
 
@@ -1048,6 +1148,37 @@ impl PARGenerator {
             "",
             width = w - 31
         );
+
+        // PAR-002: RNG ATTESTATION block.
+        if let Some(rng) = &par.rng_attestation {
+            println!("╠{rule}╣");
+            println!("║  RNG ATTESTATION{:<width$}║", "", width = w - 18);
+            let line = format!(
+                "    Family: {}  ·  Period: {}  ·  Seed: 0x{}",
+                rng.kind, rng.period, rng.seed_hex
+            );
+            let truncated: String = line.chars().take(w - 4).collect();
+            println!("║  {truncated:<width$}║", width = w - 4);
+            let verdict = |v: TestVerdict| match v {
+                TestVerdict::Pass => "PASS",
+                TestVerdict::Fail => "FAIL",
+                TestVerdict::NotRun => "n/r",
+            };
+            let test_line = format!(
+                "    DIEHARD: {}   NIST SP 800-22: {}   χ²: {}",
+                verdict(rng.tests.diehard),
+                verdict(rng.tests.nist_sp_800_22),
+                verdict(rng.tests.chi_square)
+            );
+            println!("║  {test_line:<width$}║", width = w - 4);
+        }
+        if !par.meta.config_hash.is_empty() {
+            let hash_line = format!(
+                "    config_hash (SHA-256): {}",
+                &par.meta.config_hash[..16.min(par.meta.config_hash.len())]
+            );
+            println!("║  {hash_line:<width$}║", width = w - 4);
+        }
 
         // PAR-001: REEL CONFIGURATION block.
         if let Some(rc) = &par.reel_config {
