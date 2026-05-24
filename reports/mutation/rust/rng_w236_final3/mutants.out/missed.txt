@@ -1,0 +1,9 @@
+rust-sim/src/rng.rs:61:15: replace < with == in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:63:22: replace < with > in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:63:22: replace < with <= in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:61:15: replace < with > in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:62:48: replace % with / in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:61:15: replace < with <= in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:153:20: replace | with ^ in <impl RngBackend for Mulberry32Backend>::next_u64
+rust-sim/src/rng.rs:63:22: replace < with == in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:186:68: replace | with ^

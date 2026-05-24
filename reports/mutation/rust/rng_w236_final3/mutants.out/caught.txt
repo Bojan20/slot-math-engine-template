@@ -1,0 +1,19 @@
+rust-sim/src/rng.rs:62:48: replace % with + in RngBackend::next_u32_bounded
+rust-sim/src/rng.rs:164:41: replace ^ with | in <impl RngBackend for Mulberry32Backend>::split
+rust-sim/src/rng.rs:164:41: replace ^ with & in <impl RngBackend for Mulberry32Backend>::split
+rust-sim/src/rng.rs:164:33: replace ^ with | in <impl RngBackend for Mulberry32Backend>::split
+rust-sim/src/rng.rs:164:33: replace ^ with & in <impl RngBackend for Mulberry32Backend>::split
+rust-sim/src/rng.rs:186:68: replace | with &
+rust-sim/src/rng.rs:186:62: replace << with >>
+rust-sim/src/rng.rs:234:95: replace | with & in <impl RngBackend for Pcg64Backend>::split
+rust-sim/src/rng.rs:234:95: replace | with ^ in <impl RngBackend for Pcg64Backend>::split
+rust-sim/src/rng.rs:234:33: replace ^ with | in <impl RngBackend for Pcg64Backend>::split
+rust-sim/src/rng.rs:625:31: replace > with == in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:234:33: replace ^ with & in <impl RngBackend for Pcg64Backend>::split
+rust-sim/src/rng.rs:625:31: replace > with < in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:625:31: replace > with >= in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:625:27: replace + with - in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:625:27: replace + with * in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:631:24: replace += with -= in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:631:24: replace += with *= in ChaCha20Backend::next_u32
+rust-sim/src/rng.rs:625:9: replace ChaCha20Backend::next_u32 -> u32 with 1
