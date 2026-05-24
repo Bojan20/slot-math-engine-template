@@ -23,11 +23,39 @@
 
 use crate::ir::{ReelSet, RngKind, SlotGameIR, SymbolKind};
 use crate::jackpot::JackpotMetrics;
-use crate::stats::{AtomicStats, PARMetrics, HDR_BUCKET_COUNT};
+use crate::stats::{AtomicStats, HdrHistogram, PARMetrics, HDR_BUCKET_COUNT};
+use crate::tail_fit::{evt_tail_quantile, fit_pareto_tail, ParetoFitOpts, TailFitError};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 use std::sync::atomic::Ordering;
+
+// ─── serde helpers ────────────────────────────────────────────────────────────
+
+/// Sentinel value substituted for `+Inf` when emitting JSON (the literal `Inf`
+/// is not valid JSON and serde_json silently produces `null`, which then fails
+/// to deserialise back to `f64`). 1e308 is finite, double-precision safe, and
+/// stands out as "essentially infinite" in audit reports.
+const F64_POSITIVE_INFINITY_SENTINEL: f64 = 1.0e308;
+
+/// Sentinel for `NaN` — emitted as 0.0. The accompanying `reason` field on
+/// EVT-style sections distinguishes "legitimate zero" from "fit unavailable".
+const F64_NAN_SENTINEL: f64 = 0.0;
+
+/// Replace `NaN` / `±Inf` in an `f64` with sentinels so JSON roundtrip is lossless.
+fn sanitize_f64_for_json(v: f64) -> f64 {
+    if v.is_nan() {
+        F64_NAN_SENTINEL
+    } else if v.is_infinite() {
+        if v > 0.0 {
+            F64_POSITIVE_INFINITY_SENTINEL
+        } else {
+            -F64_POSITIVE_INFINITY_SENTINEL
+        }
+    } else {
+        v
+    }
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -468,6 +496,159 @@ fn rng_kind_meta(kind: RngKind) -> (String, String) {
     (label.to_string(), period.to_string())
 }
 
+// ─── PAR-003 — EVT Pareto tail section ──────────────────────────────────────
+
+/// Outcome of the Pareto fit. `NotApplicable` covers under-determined cases
+/// (fewer than 5 samples above threshold, degenerate α, etc.) so the section
+/// still serialises and downstream readers can flag missing fits explicitly.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum ParetoFitKind {
+    #[default]
+    Fitted,
+    NotApplicable,
+}
+
+/// EVT Pareto-tail section per Doc §3.2 (Coles 2001 POT method).
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct ParetoTailSection {
+    pub kind: ParetoFitKind,
+    /// `xm` threshold actually used for the fit (bet-multiples).
+    pub threshold: f64,
+    pub samples_above_threshold: u64,
+    /// MLE shape parameter `α̂`. `NaN` when `kind = NotApplicable`.
+    pub alpha: f64,
+    pub ks_statistic: f64,
+    pub ks_p_value: f64,
+    /// Bootstrap PRNG seed (deterministic — Doc reproducibility requirement).
+    pub ks_p_seed: u64,
+    /// Pareto-projected P99.999 win level (bet-multiples).
+    pub evt_p99999: f64,
+    /// Probability mass `P(W > max_win_cap)` derived from the fit.
+    pub cap_pressure_pct: f64,
+    /// Free-form explanation when `kind = NotApplicable` (e.g. "too few tail samples").
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reason: Option<String>,
+}
+
+/// Number of HDR midpoint observations to materialise above the threshold.
+const PARETO_HDR_REPLICATION_CAP: u64 = 100_000;
+
+/// Build a Pareto-tail section from an HDR histogram + cap.
+///
+/// The HDR exposes (bucket, count) pairs; we materialise samples by midpoint
+/// (or top edge for the open-ended top bucket) and replicate each midpoint
+/// `count` times — capped at `PARETO_HDR_REPLICATION_CAP` per bucket to keep
+/// the bootstrap cheap. Threshold defaults to the P95 cell midpoint when no
+/// override is supplied.
+fn build_pareto_section(
+    hdr: &[u64; HDR_BUCKET_COUNT],
+    total_spins: u64,
+    max_win_cap: f64,
+    threshold_override: Option<f64>,
+) -> ParetoTailSection {
+    let thresholds = HdrHistogram::THRESHOLDS;
+
+    // Materialise pseudo-samples from HDR midpoints (capped per bucket).
+    let mut samples: Vec<f64> = Vec::new();
+    for i in 0..thresholds.len() {
+        let from = if i == 0 { 0.0 } else { thresholds[i - 1] };
+        let to = thresholds[i];
+        let midpoint = (from + to) / 2.0;
+        let count = hdr[i + 1].min(PARETO_HDR_REPLICATION_CAP);
+        for _ in 0..count {
+            samples.push(midpoint);
+        }
+    }
+    // Open-ended top bucket — use its left edge (lower bound on win level).
+    let top_from = *thresholds.last().unwrap_or(&50_000.0);
+    let top_count = hdr[HDR_BUCKET_COUNT - 1].min(PARETO_HDR_REPLICATION_CAP);
+    for _ in 0..top_count {
+        samples.push(top_from * 1.5);
+    }
+
+    if total_spins == 0 || samples.is_empty() {
+        return ParetoTailSection {
+            kind: ParetoFitKind::NotApplicable,
+            threshold: 0.0,
+            samples_above_threshold: 0,
+            // NaN does not roundtrip through JSON — use 0.0 sentinel + reason field.
+            alpha: 0.0,
+            ks_statistic: 0.0,
+            ks_p_value: 0.0,
+            ks_p_seed: ParetoFitOpts::default().bootstrap_seed,
+            evt_p99999: 0.0,
+            cap_pressure_pct: 0.0,
+            reason: Some("no HDR samples".to_string()),
+        };
+    }
+
+    // Threshold default: P95 cell midpoint (95% of mass below threshold).
+    let threshold = threshold_override.unwrap_or_else(|| {
+        let mut cumulative = 0u64;
+        let target = (total_spins as f64 * 0.95).ceil() as u64;
+        for i in 0..thresholds.len() {
+            cumulative += hdr[i + 1];
+            if cumulative >= target {
+                let from = if i == 0 { 0.0 } else { thresholds[i - 1] };
+                let to = thresholds[i];
+                return (from + to) / 2.0;
+            }
+        }
+        thresholds[thresholds.len() - 1]
+    });
+
+    let opts = ParetoFitOpts::default();
+    let seed = opts.bootstrap_seed;
+    match fit_pareto_tail(&samples, threshold, opts) {
+        Ok(fit) => {
+            let evt_p99999 = evt_tail_quantile(fit.alpha, fit.xm, 1e-5).unwrap_or(0.0);
+            // P(W > cap) = (xm / cap)^α   (Pareto tail CCDF), clamped to [0, 1].
+            let cap_pressure = if max_win_cap > fit.xm && max_win_cap.is_finite() {
+                (fit.xm / max_win_cap).powf(fit.alpha).clamp(0.0, 1.0)
+            } else if max_win_cap.is_finite() {
+                1.0
+            } else {
+                0.0
+            };
+            ParetoTailSection {
+                kind: ParetoFitKind::Fitted,
+                threshold: fit.xm,
+                samples_above_threshold: fit.tail_count as u64,
+                alpha: fit.alpha,
+                ks_statistic: fit.ks_statistic,
+                ks_p_value: fit.ks_p_value,
+                ks_p_seed: seed,
+                evt_p99999,
+                cap_pressure_pct: cap_pressure * 100.0,
+                reason: None,
+            }
+        }
+        Err(e) => {
+            let reason = match e {
+                TailFitError::TooFewTailSamples { got, .. } => {
+                    format!("too few tail samples ({got} < 5)")
+                }
+                TailFitError::DegenerateAlpha(a) => format!("degenerate alpha = {a}"),
+                other => format!("{other:?}"),
+            };
+            ParetoTailSection {
+                kind: ParetoFitKind::NotApplicable,
+                threshold,
+                samples_above_threshold: samples.iter().filter(|s| **s > threshold).count() as u64,
+                // NaN does not survive JSON roundtrip — use 0.0 + reason field.
+                alpha: 0.0,
+                ks_statistic: 0.0,
+                ks_p_value: 0.0,
+                ks_p_seed: seed,
+                evt_p99999: 0.0,
+                cap_pressure_pct: 0.0,
+                reason: Some(reason),
+            }
+        }
+    }
+}
+
 /// SHA-256 (lowercase hex) over the canonical JSON serialisation of an IR.
 ///
 /// **Canonical** here = `serde_json::to_string` (no whitespace), relying on
@@ -529,6 +710,9 @@ pub struct PARSheet {
     // ── PAR-002 additions (RNG attestation — Option so legacy path stays compat) ─
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub rng_attestation: Option<RngAttestationSection>,
+    // ── PAR-003 — EVT Pareto tail (always emitted; kind=NotApplicable when fit fails)
+    #[serde(default)]
+    pub pareto_tail: ParetoTailSection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -641,6 +825,8 @@ impl PARGenerator {
         let total_spins = stats.total_spins.load(Ordering::Relaxed);
         let hdr = stats.get_hdr_histogram();
         let win_distribution = Self::build_win_buckets(&hdr, total_spins);
+        // PAR-003 — EVT Pareto tail fit (Coles 2001 POT).
+        let pareto_tail = build_pareto_section(&hdr, total_spins, max_win_cap, None);
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -756,11 +942,12 @@ impl PARGenerator {
             },
             bonus_distances: BonusDistancesSection {
                 free_spins: BonusDistanceEntry {
-                    mean_distance: par.fs_mean_distance,
+                    // `Infinity` (never-triggered case) must not leak into JSON.
+                    mean_distance: sanitize_f64_for_json(par.fs_mean_distance),
                     max_distance: par.fs_max_distance,
                 },
                 hold_and_win: BonusDistanceEntry {
-                    mean_distance: par.hnw_mean_distance,
+                    mean_distance: sanitize_f64_for_json(par.hnw_mean_distance),
                     max_distance: par.hnw_max_distance,
                 },
             },
@@ -775,6 +962,8 @@ impl PARGenerator {
             paytable: paytable_section,
             // PAR-002 — RNG attestation.
             rng_attestation,
+            // PAR-003 — EVT Pareto tail.
+            pareto_tail,
         }
     }
 
@@ -1178,6 +1367,35 @@ impl PARGenerator {
                 &par.meta.config_hash[..16.min(par.meta.config_hash.len())]
             );
             println!("║  {hash_line:<width$}║", width = w - 4);
+        }
+
+        // PAR-003: EVT PARETO TAIL block (always — emits NotApplicable verdict if no fit).
+        println!("╠{rule}╣");
+        println!("║  EVT PARETO TAIL (Coles 2001 POT){:<width$}║", "", width = w - 35);
+        match par.pareto_tail.kind {
+            ParetoFitKind::Fitted => {
+                let line = format!(
+                    "    α̂={:.4}  xm={:.2}x  tail_n={}  KS_p={:.4} (seed=0x{:x})",
+                    par.pareto_tail.alpha,
+                    par.pareto_tail.threshold,
+                    par.pareto_tail.samples_above_threshold,
+                    par.pareto_tail.ks_p_value,
+                    par.pareto_tail.ks_p_seed
+                );
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+                let proj_line = format!(
+                    "    EVT P99.999 = {:.2}x   cap_pressure = {:.4}%",
+                    par.pareto_tail.evt_p99999, par.pareto_tail.cap_pressure_pct
+                );
+                println!("║  {proj_line:<width$}║", width = w - 4);
+            }
+            ParetoFitKind::NotApplicable => {
+                let reason = par.pareto_tail.reason.as_deref().unwrap_or("n/a");
+                let line = format!("    NotApplicable: {reason}");
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
         }
 
         // PAR-001: REEL CONFIGURATION block.
