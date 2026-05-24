@@ -66,6 +66,8 @@ pub mod rng_battery;
 pub mod mystery_jackpot;
 /// PAR-020 — Autocorrelation tests (Ljung-Box + Wald-Wolfowitz runs).
 pub mod autocorrelation;
+/// PAR-007 + PAR-008 — USIF v1.0 JSON + CSV exporters for the PAR sheet.
+pub mod par_export;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`
