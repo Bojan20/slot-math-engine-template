@@ -47,7 +47,7 @@
 | **PAR-006** | Jurisdiction-gated RTP variants + **theoretical vs simulated PASS/FAIL gate (GLI §8.2)** | 4 | 25 min | `par.rs`, `jurisdiction/`, `tests/par_pro_006.rs` | 🟢 Done |
 | **PAR-007** | USIF v1.0 JSON exporter + validator hook | 3 | 25 min | `par/usif_export.rs` (new), schema validator, `tests/par_pro_007.rs` | 🟢 Done |
 | **PAR-008** | CSV exporter (flat regulator schema) | 2 | 15 min | `par/csv_export.rs` (new), `tests/par_pro_008.rs` | 🟢 Done |
-| **PAR-009** | PDF generator (GLI-16 App D layout) | 4 | 30 min | `par/pdf_export.rs` (new), template, `tests/par_pro_009.rs` | 🔵 Planned |
+| **PAR-009** | PDF-ready Markdown report (pandoc downstream) | 4 | 30 min | `par_export::to_markdown_report` — printpdf deferred (needs Rust 1.88) | 🟢 Done |
 | **Total** | | **33** | **~3 h 45 min** | | |
 
 **Acceptance svaki wave:** TS lint + TS build + full vitest + `cargo clippy --all -- -D warnings` + 0 regresija + USIF validator green (od PAR-007 nadalje).

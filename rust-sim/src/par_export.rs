@@ -226,6 +226,126 @@ pub fn to_csv(par: &PARSheet) -> String {
     out
 }
 
+// ─── PAR-009 — Markdown report (pandoc-ready for PDF render) ───────────────
+
+/// Emit a PDF-ready Markdown report. Convert downstream with
+/// `pandoc out.md -o par.pdf` (any LaTeX engine or `wkhtmltopdf`).
+///
+/// We deliberately avoid bundling `printpdf` (requires Rust 1.88) — Markdown
+/// is more portable, regulator-friendly, and the LaTeX template fixes layout
+/// once for every game built.
+pub fn to_markdown_report(par: &PARSheet) -> String {
+    let mut out = String::new();
+    out.push_str(&format!(
+        "# PAR Sheet — {} v{}\n\n",
+        par.meta.game_id, par.meta.game_version
+    ));
+    out.push_str(&format!("- **Engine:** {}\n", par.meta.engine_version));
+    out.push_str(&format!("- **Generated:** {}\n", par.meta.generated_at_utc));
+    out.push_str(&format!(
+        "- **Total spins:** {}  ·  **Seeds:** {}\n",
+        par.meta.total_spins, par.meta.seeds_used
+    ));
+    if !par.meta.config_hash.is_empty() {
+        out.push_str(&format!(
+            "- **Config hash (SHA-256):** `{}`\n",
+            par.meta.config_hash
+        ));
+    }
+    out.push_str(&format!("- **RNG family:** `{}`\n\n", par.meta.rng_kind));
+
+    if let Some(so) = &par.sign_off {
+        out.push_str("## Sign-off\n\n");
+        if let Some(m) = &so.mathematician {
+            out.push_str(&format!("- Mathematician: **{m}**\n"));
+        }
+        if let Some(a) = &so.approved_by {
+            out.push_str(&format!("- Approved by: **{a}**\n"));
+        }
+        out.push('\n');
+    }
+
+    out.push_str("## RTP\n\n");
+    out.push_str("| Component | Value |\n|---|---:|\n");
+    out.push_str(&format!("| Total | {:.4}% |\n", par.rtp.total_rtp_pct));
+    out.push_str(&format!("| Base game | {:.4}% |\n", par.rtp.base_rtp_pct));
+    out.push_str(&format!("| Free spins | {:.4}% |\n", par.rtp.free_spins_rtp_pct));
+    out.push_str(&format!("| Hold & Win | {:.4}% |\n", par.rtp.hold_and_win_rtp_pct));
+    out.push_str(&format!(
+        "| Target | {:.4}% (±{:.4}%) |\n",
+        par.rtp.target_rtp_pct, par.rtp.rtp_tolerance_pct
+    ));
+    out.push_str(&format!(
+        "| Within tolerance? | {} |\n\n",
+        if par.rtp.within_tolerance { "✅" } else { "❌" }
+    ));
+
+    out.push_str("## Volatility & Tails\n\n");
+    out.push_str(&format!(
+        "- Category: **{}**  ·  CV: {:.4}  ·  σ: {:.4}\n",
+        par.volatility.category, par.volatility.cv, par.volatility.std_dev
+    ));
+    out.push_str(&format!(
+        "- Quantiles — P50: {:.2}x · P90: {:.2}x · P99: {:.2}x · P99.9: {:.2}x\n",
+        par.quantiles.p50, par.quantiles.p90, par.quantiles.p99, par.quantiles.p999
+    ));
+    out.push_str(&format!(
+        "- EVT Pareto — α̂: {:.4}  ·  P99.999: {:.2}x  ·  cap pressure: {:.4}%\n\n",
+        par.pareto_tail.alpha, par.pareto_tail.evt_p99999, par.pareto_tail.cap_pressure_pct
+    ));
+
+    if !par.jurisdiction_gated.variants.is_empty() {
+        out.push_str("## Jurisdiction gating\n\n");
+        out.push_str("| Code | Sim RTP | Theo RTP | Δpp | Band | CI95 |\n|---|---:|---:|---:|:---:|:---:|\n");
+        for v in &par.jurisdiction_gated.variants {
+            out.push_str(&format!(
+                "| {} | {:.4}% | {:.4}% | {:+.4} | {} | {} |\n",
+                v.code,
+                v.simulated_rtp,
+                v.theoretical_rtp,
+                v.delta_pp,
+                if v.pass { "✅" } else { "❌" },
+                if v.within_ci_95 { "✅" } else { "❌" }
+            ));
+        }
+        out.push('\n');
+    }
+
+    if !par.markov.states.is_empty() {
+        out.push_str("## Markov state model\n\n");
+        out.push_str("| State | π | Expected dwell |\n|---|---:|---:|\n");
+        for (i, s) in par.markov.states.iter().enumerate() {
+            out.push_str(&format!(
+                "| {} | {:.4} | {:.2} |\n",
+                s, par.markov.stationary_pi[i], par.markov.expected_dwell[i]
+            ));
+        }
+        out.push('\n');
+    }
+
+    out.push_str("## Statistical confidence\n\n");
+    out.push_str(&format!(
+        "- CI95: [{:.4}%, {:.4}%]\n- CI99: [{:.4}%, {:.4}%]\n- CI99.9: [{:.4}%, {:.4}%]\n",
+        par.statistics.ci_95_low,
+        par.statistics.ci_95_high,
+        par.statistics.ci_99_low,
+        par.statistics.ci_99_high,
+        par.statistics.ci_999_low,
+        par.statistics.ci_999_high
+    ));
+    out.push_str(&format!(
+        "- Std error: {:.4}pp ({})\n",
+        par.statistics.std_error,
+        if par.statistics.confidence_adequate {
+            "adequate"
+        } else {
+            "INSUFFICIENT"
+        }
+    ));
+
+    out
+}
+
 /// RFC 4180 — quote if field contains comma, quote, or CRLF; double-up internal quotes.
 fn csv_field(s: &str) -> String {
     if s.contains(',') || s.contains('"') || s.contains('\r') || s.contains('\n') {

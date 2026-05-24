@@ -46,6 +46,10 @@ num-rational = { version = "0.4", default-features = false, features = ["num-big
 num-bigint = "0.4"
 num-traits = "0.2"
 
+# PAR-009 — PDF generator: emitted as PDF-ready Markdown (pandoc-converted
+# downstream). Avoids printpdf 0.7+ which pulls time 0.3.47 → edition2024
+# (requires Rust 1.88+, our toolchain is pinned at 1.83 across CI).
+
 # FAZA 9.8b — GPU compute scaffold. Off by default so the toolchain
 # matrix stays light; flip on with `cargo build --features gpu` once the
 # wgpu integration lands.

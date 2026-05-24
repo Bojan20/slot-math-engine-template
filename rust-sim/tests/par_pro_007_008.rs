@@ -1,7 +1,7 @@
 //! PAR-007 + PAR-008 — USIF v1.0 JSON + CSV exporters.
 
 use slot_sim::par::{PARBuildContext, PARGenerator, PARSheet};
-use slot_sim::par_export::{to_csv, to_usif_v1};
+use slot_sim::par_export::{to_csv, to_markdown_report, to_usif_v1};
 use slot_sim::stats::{AtomicStats, MultiSeedStats, PARMetrics, SeedStats};
 use std::sync::atomic::Ordering;
 
@@ -107,4 +107,30 @@ fn csv_emits_per_jurisdiction_rows() {
     let csv = to_csv(&sheet);
     assert!(csv.contains("MGA_pass"));
     assert!(csv.contains("UKGC_pass"));
+}
+
+// ─── PAR-009 — Markdown PDF-ready report ────────────────────────────────────
+
+#[test]
+fn markdown_report_has_required_sections() {
+    let sheet = make_sheet();
+    let md = to_markdown_report(&sheet);
+    assert!(md.starts_with("# PAR Sheet"), "must start with H1 title");
+    for h in [
+        "## RTP",
+        "## Volatility & Tails",
+        "## Jurisdiction gating",
+        "## Markov state model",
+        "## Statistical confidence",
+    ] {
+        assert!(md.contains(h), "Markdown missing heading `{h}`");
+    }
+}
+
+#[test]
+fn markdown_jurisdiction_rows_use_pipe_table() {
+    let sheet = make_sheet();
+    let md = to_markdown_report(&sheet);
+    assert!(md.contains("| MGA |"));
+    assert!(md.contains("| UKGC |"));
 }
