@@ -599,6 +599,86 @@ fn w240_features_snapshot_fs_multiple_seeds_invariant() {
     }
 }
 
+// ── FS internal-loop kills (L118, L128, L129) ────────────────────────────
+
+#[test]
+fn w240_features_fs_max_win_cap_division_direction() {
+    // L118:83 `/ 1000` — divides millicredit conversion.  Mutant `*`
+    // would yield max_win_mc 1_000_000× too high → cap never hits →
+    // payout grows unbounded. Set max_win_cap=1 (1x bet) so the
+    // payout WOULD be capped tightly under original arithmetic.
+    let mut cfg = build_config();
+    cfg.max_win_cap = 1.0; // payout cap = 1x bet
+    let mut scatter_pays = HashMap::new();
+    scatter_pays.insert(3u8, 100.0); // 100x scatter pay > 1x cap
+    cfg.free_spins.scatter_pays = scatter_pays;
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    let r = fsim.simulate_free_spins(&mut rng, 3, 1000);
+    // Original: max_win_mc = 1.0 × 1000 × 1000 / 1000 = 1000mc → payout
+    // capped to 1000mc even though scatter_pay yields 100_000mc.
+    // Mutant: max_win_mc = 1.0 × 1000 × 1000 × 1000 = 1_000_000_000mc →
+    // no cap effect → full 100_000mc payout from scatter pay (then mults).
+    assert!(
+        r.total_payout <= 1_000,
+        "max_win cap (1x) must clamp payout (got {})",
+        r.total_payout,
+    );
+}
+
+#[test]
+fn w240_features_fs_loop_cap_strictly_less() {
+    // L128:49 `loop_count < feature_loop_cap` strict.  Set cap=1 →
+    // loop runs exactly 1 iteration.  Mutant `<=` would run 2.
+    let mut cfg = build_config();
+    cfg.feature_loop_cap = 1; // hard one-shot
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    // scatter=3 awards 10 spins, but feature_loop_cap=1 limits to 1.
+    let r = fsim.simulate_free_spins(&mut rng, 3, 1000);
+    assert_eq!(
+        r.spins_played, 1,
+        "feature_loop_cap=1 with strict `<` must yield exactly 1 spin \
+         (mutant `<=` would yield 2)",
+    );
+}
+
+#[test]
+fn w240_features_fs_loop_count_increments_not_multiplies() {
+    // L129:24 `loop_count += 1` — mutant `*=` would set loop_count
+    // to 0 forever (0 * 1 = 0) → loop never advances → spins_remaining
+    // also drops by 1 each iter, so loop terminates when
+    // spins_remaining = 0.  Net effect: spins_played reaches the
+    // award value (10) EVEN with broken loop_count, BECAUSE
+    // spins_remaining is the dominant gate.  Stryker therefore can't
+    // distinguish `*=` from `+=` on the loop_count line through
+    // observable output of simulate_free_spins alone.
+    //
+    // Strategy: set feature_loop_cap LOW so it becomes the dominant gate,
+    // and observe that spins_played equals exactly feature_loop_cap (not
+    // 0, which mutant `*=` would force).
+    let mut cfg = build_config();
+    cfg.feature_loop_cap = 5; // forces loop_count to be the binding gate
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    // scatter=3 awards 10 spins, but loop cap=5 limits to 5.
+    let r = fsim.simulate_free_spins(&mut rng, 3, 1000);
+    assert_eq!(
+        r.spins_played, 5,
+        "feature_loop_cap=5 must yield exactly 5 spins (mutant `*=` \
+         would yield 10 spins because loop_count stuck at 0)",
+    );
+}
+
 // ── generate_orb sampling distribution ───────────────────────────────────
 
 #[test]

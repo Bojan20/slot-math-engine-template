@@ -490,6 +490,48 @@ fn w241_bulk_dispatcher_checkpoint_every_two_writes_fewer() {
     let _ = std::fs::remove_file(&tmp);
 }
 
+// ── compute_sps / compute_eta integration kills ──────────────────────────
+
+#[test]
+fn w241_bulk_dispatcher_spins_per_sec_positive_after_run() {
+    // L427 `compute_sps`: secs > 0 → returns spins/sec.
+    // L428 mutant `secs == 0` would always return 0.
+    // After a real run, sps must be strictly > 0 (always some elapsed).
+    let config = GameConfig::default();
+    let bulk = small_bulk(50_000, 42);
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    assert!(
+        r.spins_per_sec > 0.0,
+        "spins_per_sec must be > 0 after a finished run (got {})",
+        r.spins_per_sec,
+    );
+    assert!(
+        r.spins_per_sec.is_finite(),
+        "spins_per_sec must be finite (got {})",
+        r.spins_per_sec,
+    );
+}
+
+#[test]
+fn w241_bulk_dispatcher_spins_per_sec_matches_completed_over_duration() {
+    // sps = completed / duration.  Mutant `*` → `+` or `/` → `%` would
+    // give wildly wrong values.  We sanity check sps × duration ≈ completed.
+    let config = GameConfig::default();
+    let bulk = small_bulk(75_000, 17);
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    let estimated = r.spins_per_sec * r.duration.as_secs_f64();
+    let drift = (estimated - r.total_spins as f64).abs();
+    assert!(
+        drift < (r.total_spins as f64) * 0.10,
+        "estimated spins (sps × secs = {}) must be within 10% of actual ({})",
+        estimated, r.total_spins,
+    );
+}
+
 // ── ParseSpinCountError variants are distinct ────────────────────────────
 
 #[test]

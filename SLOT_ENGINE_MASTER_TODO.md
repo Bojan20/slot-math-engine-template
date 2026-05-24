@@ -6,6 +6,42 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-24 (post W241-followup)
+
+**Single-wave autonomne mete: SVE ZATVORENE. Open su samo multi-week scope.**
+
+### ✅ Closed since W181 (high-impact)
+
+| Track | Status | Evidence |
+|---|---|---|
+| KIMI L&W portfolio (W181-W196) | ✅ **100%** — 16/16 KIMI gaps closed | P-082 (M5 Quick Hit Mystery Progressive, 62. solver) + P-097 (M6 Stacked Multi-Wheel, 77. solver) |
+| Rust mutation expansion (W234-W241+followup) | ✅ **197 dedicated kill specs** + 73 W239 Stryker = 270 total | `rust-sim/tests/w23{4..8}_*.rs` + `w240_*.rs` + `w241_*.rs`; 10 modules covered |
+| TS Stryker scoped (W239) | ✅ 91.23% strict | `reports/stryker/` per-fajl scores in `docs/SUMMARY.md` |
+| Truth-check gate (W150-A) | ✅ `scripts/slot-truth-check.sh` (10 metrics, all OK) | runs in CI |
+| RNG upgrade mulberry32→xoshiro128** (W218) | ✅ 6-file sinhroni stack, bit-parity Rust↔JS | `2fcc758` |
+| Jurisdiction matrix + UI polish (W219-W225) | ✅ 7 jurisdiction rules ENFORCED + mobile responsive | full W218-W225 commit stack |
+
+### 🎯 Real OPEN (multi-week scope — NOT single-wave)
+
+| # | Open | Effort | Blocker |
+|---|---|---|---|
+| 1 | TestU01 BigCrush / NIST 15 / PractRand 2³⁸ external reports | external binaries on lab box | requires installed test infra |
+| 2 | GPU Metal end-to-end byte-parity | 3-4 weeks | wgpu integration scaffold landed, full kernel still pending |
+| 3 | PGO + BOLT pipeline | 2-3 days | PGO bench dir exists, BOLT optimization not wired |
+| 4 | 30 mehanika numerical acceptance MC 10⁹ × 30 | 24-48h MC compute | needs dedicated bench run |
+| 5 | 11.1 web Config Builder UI standalone | 1-2 weeks UI work | Pitch + Studio cover demo path |
+| 6 | W149 follow-up Compensated math UK AWP | opt-in | only if expanding to UK land-based AWP |
+
+### 🚫 Anti-duplikat NOTE (lesson from W226 session)
+
+**Pre nego što kreneš na "next wave" — proveri da li je već landed!**
+1. `git log --oneline -50` za poslednjih 50 commits
+2. `git ls-files rust-sim/tests/ | grep w<NN>` za test files
+3. `grep -nE "W<NN>" SLOT_ENGINE_MASTER_TODO.md` za TODO entry
+4. **Daemon i druge sesije paralelno rade** — proveri uvek pre dupliciranja.
+
+---
+
 ## 🔒 PROCESS RULE (Boki, 2026-05-15, **OBAVEZNO BEZ IZUZETKA**)
 
 **UVEK:** ultimativno rešenje → ultimativna implementacija → **ULTIMATIVNO DETALJAN QA implementiranog** → fix svih bug-ova nađenih → commit + push.
