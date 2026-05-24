@@ -529,6 +529,86 @@ fn w240_markov_snapshot_reset_false() {
 }
 
 #[test]
+fn w240_markov_snapshot_vary_respins_2() {
+    // 9-cell × 2-respin × base_chance=0.2 × fill_bonus=0.1 × award=100.
+    // Reset-on-orb=true. Snapshot 2026-05-24.
+    let cfg = HoldAndWinConfig {
+        total_cells: 9,
+        init_locked_cells: 0,
+        initial_respins: 2,
+        expected_cell_value: 5.0,
+        base_chance: 0.2,
+        fill_bonus_cap: 0.1,
+        respin_reset_on_new: true,
+        grid_full_award: 100.0,
+    };
+    let r = solve_hold_and_win(&cfg);
+    assert!(
+        (r.expected_payout - 71.220_354_351_681_21).abs() < 1e-10,
+        "expected_payout snapshot drift: {}",
+        r.expected_payout,
+    );
+    assert!(
+        (r.expected_orb_count - 7.340_471_255_078_453).abs() < 1e-10,
+        "orb_count snapshot drift: {}",
+        r.expected_orb_count,
+    );
+    assert!(
+        (r.grid_full_probability - 0.345_179_980_762_889_4).abs() < 1e-10,
+        "grid_full_probability snapshot drift: {}",
+        r.grid_full_probability,
+    );
+    assert!(
+        (r.expected_respins_used - 1.309_640_038_474_221_3).abs() < 1e-10,
+        "respins_used snapshot drift: {}",
+        r.expected_respins_used,
+    );
+}
+
+#[test]
+fn w240_markov_snapshot_vary_init_locked_5() {
+    let cfg = HoldAndWinConfig {
+        total_cells: 9,
+        init_locked_cells: 5,
+        initial_respins: 3,
+        expected_cell_value: 1.5,
+        base_chance: 0.1,
+        fill_bonus_cap: 0.05,
+        respin_reset_on_new: true,
+        grid_full_award: 25.0,
+    };
+    let r = solve_hold_and_win(&cfg);
+    assert!((r.expected_payout - 14.719_812_635_079_22).abs() < 1e-10);
+    assert!((r.expected_orb_count - 7.005_638_824_696_12).abs() < 1e-10);
+    assert!((r.grid_full_probability - 0.168_454_175_921_401_53).abs() < 1e-10);
+}
+
+#[test]
+fn w240_markov_snapshot_base_chance_high() {
+    // 12-cell × 4-respin × base_chance=0.6 × fill_bonus=0.2 × award=75.
+    // Reset=false. Snapshot 2026-05-24.
+    let cfg = HoldAndWinConfig {
+        total_cells: 12,
+        init_locked_cells: 2,
+        initial_respins: 4,
+        expected_cell_value: 2.0,
+        base_chance: 0.6,
+        fill_bonus_cap: 0.2,
+        respin_reset_on_new: false,
+        grid_full_award: 75.0,
+    };
+    let r = solve_hold_and_win(&cfg);
+    assert!(
+        (r.expected_payout - 95.177_094_496_910_24).abs() < 1e-10,
+        "expected_payout snapshot drift: {}",
+        r.expected_payout,
+    );
+    assert!((r.expected_orb_count - 11.948_729_992_325_232).abs() < 1e-10);
+    assert!((r.grid_full_probability - 0.950_395_126_830_130_4).abs() < 1e-10);
+    assert!((r.expected_respins_used - 2.827_736_555_344_051_5).abs() < 1e-10);
+}
+
+#[test]
 fn w240_markov_snapshot_renorm_path() {
     // 40-cell × p=0.5 grid forces accumulated f64 noise > 1e-12 → triggers
     // the `binom_pmf` renormalisation branch (L69-L71).  Snapshot pins

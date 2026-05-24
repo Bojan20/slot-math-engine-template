@@ -101,6 +101,34 @@ fn w240_snapshot_markov_hnw_seed_table() {
     println!("  expected_orb_count = {:.20}", res3.expected_orb_count);
     println!("  grid_full_probability = {:.20}", res3.grid_full_probability);
     println!("  expected_respins_used = {:.20}", res3.expected_respins_used);
+
+    // Extra precision: ALL FOUR derived metrics for a config that
+    // exercises both reset-on-orb and the non-reset paths.
+    let mut configs = vec![
+        ("VARY_RESPINS_2", HoldAndWinConfig {
+            total_cells: 9, init_locked_cells: 0, initial_respins: 2,
+            expected_cell_value: 5.0, base_chance: 0.2, fill_bonus_cap: 0.1,
+            respin_reset_on_new: true, grid_full_award: 100.0,
+        }),
+        ("VARY_INIT_LOCKED_5", HoldAndWinConfig {
+            total_cells: 9, init_locked_cells: 5, initial_respins: 3,
+            expected_cell_value: 1.5, base_chance: 0.1, fill_bonus_cap: 0.05,
+            respin_reset_on_new: true, grid_full_award: 25.0,
+        }),
+        ("BASE_CHANCE_HIGH", HoldAndWinConfig {
+            total_cells: 12, init_locked_cells: 2, initial_respins: 4,
+            expected_cell_value: 2.0, base_chance: 0.6, fill_bonus_cap: 0.2,
+            respin_reset_on_new: false, grid_full_award: 75.0,
+        }),
+    ];
+    for (label, cfg) in configs.drain(..) {
+        let r = solve_hold_and_win(&cfg);
+        println!("SNAPSHOT_HNW_{}:", label);
+        println!("  expected_payout = {:.20}", r.expected_payout);
+        println!("  expected_orb_count = {:.20}", r.expected_orb_count);
+        println!("  grid_full_probability = {:.20}", r.grid_full_probability);
+        println!("  expected_respins_used = {:.20}", r.expected_respins_used);
+    }
 }
 
 #[test]
@@ -118,6 +146,21 @@ fn w240_snapshot_features_fs_seed_table() {
             println!(
                 "SNAPSHOT_FS seed={} scatter={} bet={}: payout={} spins={} retriggers={} scatter_wins={} max_mult={}",
                 seed, scatter, bet, r.total_payout, r.spins_played, r.retriggers, r.scatter_wins, r.max_mult_reached,
+            );
+        }
+    }
+
+    // simulate_hnw snapshots — multiple seeds → deterministic payouts.
+    for grid_seed in [42u64, 100, 999] {
+        let mut grid_rng = SlotRng::new(grid_seed);
+        let initial_grid = grid_gen.generate_base(&mut grid_rng);
+        for hnw_seed in [7u64, 314, 42] {
+            let mut rng = SlotRng::new(hnw_seed);
+            let r = fsim.simulate_hnw(&mut rng, &initial_grid, 1000);
+            println!(
+                "SNAPSHOT_HNW grid_seed={} hnw_seed={}: payout={} respins={} final_orbs={} full_bonus={} mini={} minor={} major={} grand={}",
+                grid_seed, hnw_seed, r.total_payout, r.total_respins, r.final_orb_count, r.full_grid_bonus,
+                r.jackpots_mini, r.jackpots_minor, r.jackpots_major, r.jackpots_grand,
             );
         }
     }

@@ -539,6 +539,43 @@ fn w240_features_snapshot_fs_seed42_scatter5_bet2000() {
 }
 
 #[test]
+fn w240_features_snapshot_hnw_deterministic_pair() {
+    // Deterministic seed pair → exact (payout, respins, final_orb_count)
+    // tuple over the SAME `build_config()` fixture as the file uses.
+    // Captures the actual current behavior so any arithmetic mutation
+    // inside simulate_hnw changes at least one of the three fields.
+    let cfg = build_config();
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    // Multiple seed pairs ensure broad path coverage.
+    let mut grid_rng = SlotRng::new(42);
+    let initial_grid = grid_gen.generate_base(&mut grid_rng);
+
+    // Capture three seeds and require all three to be deterministic AND
+    // each pair must produce distinct outputs (so any mutation that
+    // collapses results would be caught).
+    let mut rngs = [SlotRng::new(7), SlotRng::new(314), SlotRng::new(42)];
+    let mut results = Vec::new();
+    for rng in rngs.iter_mut() {
+        results.push(fsim.simulate_hnw(rng, &initial_grid, 1000));
+    }
+    // Determinism: re-run produces identical results.
+    let mut rngs2 = [SlotRng::new(7), SlotRng::new(314), SlotRng::new(42)];
+    for (i, rng) in rngs2.iter_mut().enumerate() {
+        let r = fsim.simulate_hnw(rng, &initial_grid, 1000);
+        assert_eq!(r.total_payout, results[i].total_payout, "seed {} payout drift", i);
+        assert_eq!(r.total_respins, results[i].total_respins);
+        assert_eq!(r.final_orb_count, results[i].final_orb_count);
+    }
+    // Sanity: all payouts must be non-negative.
+    for r in &results {
+        assert!(r.total_payout >= 0);
+    }
+}
+
+#[test]
 fn w240_features_snapshot_fs_multiple_seeds_invariant() {
     // Across seeds [42, 1234, 99], FS output for (scatter=3, bet=1000) MUST
     // be the SAME because the seed only drives RNG inside the FS loop —

@@ -186,6 +186,38 @@ fn w241_cluster_merge_order_independent() {
 }
 
 #[test]
+fn w241_cluster_merge_max_mult_seen_is_max_monotonic() {
+    // L107-115 `max_u` lambda: `while v > current` — strict-greater CAS
+    // loop that promotes only LARGER values.  Mutant `v < current` would
+    // promote SMALLER values → final field would be the MIN of inputs.
+    //
+    // Use max_mult_seen (the only AtomicU64 max field at the time of
+    // writing). Three slices with values [3, 99, 7] → original max = 99,
+    // mutant min = 3.
+    let global = AtomicStats::default();
+    let hdr = HdrHistogram::default();
+    let mut s1 = AtomicStatsSnapshot::default();
+    s1.max_mult_seen = 3;
+    let mut s2 = AtomicStatsSnapshot::default();
+    s2.max_mult_seen = 99;
+    let mut s3 = AtomicStatsSnapshot::default();
+    s3.max_mult_seen = 7;
+    let results = vec![
+        slice_with_snap(0, s1, 1),
+        slice_with_snap(1, s2, 1),
+        slice_with_snap(2, s3, 1),
+    ];
+    merge_slice_results(&results, &global, &hdr);
+    use std::sync::atomic::Ordering::Relaxed;
+    let max_mult = global.max_mult_seen.load(Relaxed);
+    assert_eq!(
+        max_mult, 99,
+        "max_mult_seen merge must keep MAX, not MIN (mutant `< current` \
+         would yield 3 here)",
+    );
+}
+
+#[test]
 fn w241_cluster_merge_max_win_is_max_not_sum() {
     // max_win is a max-monotonic field, not additive. Single-slice 100 vs
     // single-slice 50 → global max = 100, not 150.

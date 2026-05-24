@@ -253,6 +253,58 @@ fn w241_bulk_hdr_snapshot_round_trip() {
     assert_eq!(buckets, buckets2);
 }
 
+#[test]
+fn w241_bulk_hdr_snapshot_records_actual_counts() {
+    // Kill the `snapshot_hdr_buckets -> vec![1]` mutant (L149): the
+    // returned bucket vector must have more than 1 element (HDR has 32
+    // buckets) and the sum of all counts must equal the number of
+    // recorded samples (3 here).  Mutant returning `vec![1]` or `vec![]`
+    // breaks both invariants simultaneously.
+    let hdr = HdrHistogram::default();
+    hdr.record(100.0);
+    hdr.record(200.0);
+    hdr.record(1_000.0);
+    let buckets = snapshot_hdr_buckets(&hdr);
+    assert!(
+        buckets.len() > 1,
+        "snapshot must return all HDR buckets (got {} elements)",
+        buckets.len(),
+    );
+    let total: u64 = buckets.iter().sum();
+    assert_eq!(
+        total, 3,
+        "snapshot bucket sum must equal recorded sample count (3)",
+    );
+}
+
+#[test]
+fn w241_bulk_hdr_apply_actually_modifies_target() {
+    // Kill the `apply_hdr_buckets -> ()` mutant (L156): after applying
+    // a non-zero snapshot, the target histogram must reflect non-zero
+    // bucket counts.  Empty-body mutant leaves it untouched.
+    let hdr_src = HdrHistogram::default();
+    for v in [10.0, 50.0, 100.0, 500.0, 1000.0] {
+        hdr_src.record(v);
+    }
+    let src_buckets = snapshot_hdr_buckets(&hdr_src);
+    let src_sum: u64 = src_buckets.iter().sum();
+    assert_eq!(src_sum, 5, "source HDR must have 5 samples");
+
+    let hdr_target = HdrHistogram::default();
+    // Confirm target is empty before apply.
+    let pre = snapshot_hdr_buckets(&hdr_target);
+    let pre_sum: u64 = pre.iter().sum();
+    assert_eq!(pre_sum, 0, "target must be empty before apply");
+
+    apply_hdr_buckets(&hdr_target, &src_buckets);
+    let post = snapshot_hdr_buckets(&hdr_target);
+    let post_sum: u64 = post.iter().sum();
+    assert_eq!(
+        post_sum, 5,
+        "after apply, target HDR must contain the 5 samples from source",
+    );
+}
+
 // ── BulkCheckpoint disk round-trip ───────────────────────────────────────
 
 #[test]
