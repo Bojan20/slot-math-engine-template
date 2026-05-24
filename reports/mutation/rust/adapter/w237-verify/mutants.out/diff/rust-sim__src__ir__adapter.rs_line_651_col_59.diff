@@ -1,0 +1,21 @@
+--- rust-sim/src/ir/adapter.rs
++++ replace == with != in convert_hold_and_win
+@@ -643,17 +643,17 @@
+             }
+         })
+         .collect();
+ 
+     // Full grid bonus: the `grid_full_award` field in the IR is a jackpot
+     // tier id (e.g. "GRAND").  Map it to the multiplier of that tier.
+     let full_grid_bonus = grid_full_award
+         .as_deref()
+-        .and_then(|id| jackpot_tiers.iter().find(|t| t.id == id))
++        .and_then(|id| jackpot_tiers.iter().find(|t| t.id != /* ~ changed by cargo-mutants ~ */ id))
+         .map(|t| t.multiplier)
+         .unwrap_or(500.0);
+ 
+     HoldAndWinConfig {
+         trigger_count,
+         initial_respins: respins_initial as u8,
+         respins_on_new_orb: respins_initial as u8, // same reset count by convention
+         full_grid_bonus,

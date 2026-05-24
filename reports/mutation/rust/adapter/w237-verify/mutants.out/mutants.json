@@ -1,0 +1,542 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_free_spins",
+      "return_type": "-> FreeSpinsConfig",
+      "span": {
+        "start": {
+          "line": 557,
+          "column": 1
+        },
+        "end": {
+          "line": 608,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 598,
+        "column": 81
+      },
+      "end": {
+        "line": 598,
+        "column": 82
+      }
+    },
+    "replacement": "",
+    "genre": "UnaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_paylines",
+      "return_type": "-> Result<Vec<Vec<u8>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 298,
+          "column": 1
+        },
+        "end": {
+          "line": 355,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 37
+      },
+      "end": {
+        "line": 334,
+        "column": 38
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 651,
+        "column": 59
+      },
+      "end": {
+        "line": 651,
+        "column": 61
+      }
+    },
+    "replacement": "!=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_informational",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 333,
+          "column": 1
+        },
+        "end": {
+          "line": 347,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 5
+      },
+      "end": {
+        "line": 346,
+        "column": 19
+      }
+    },
+    "replacement": "vec![Default::default()]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 637,
+        "column": 61
+      },
+      "end": {
+        "line": 637,
+        "column": 62
+      }
+    },
+    "replacement": "<=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 637,
+        "column": 61
+      },
+      "end": {
+        "line": 637,
+        "column": 62
+      }
+    },
+    "replacement": "==",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_paylines",
+      "return_type": "-> Result<Vec<Vec<u8>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 298,
+          "column": 1
+        },
+        "end": {
+          "line": 355,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 335,
+        "column": 25
+      },
+      "end": {
+        "line": 335,
+        "column": 27
+      }
+    },
+    "replacement": "%=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_paylines",
+      "return_type": "-> Result<Vec<Vec<u8>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 298,
+          "column": 1
+        },
+        "end": {
+          "line": 355,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 37
+      },
+      "end": {
+        "line": 334,
+        "column": 38
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "strips_to_reel_weights",
+      "return_type": "-> Result<Vec<Vec<ReelWeight>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 260,
+          "column": 1
+        },
+        "end": {
+          "line": 294,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 266,
+        "column": 5
+      },
+      "end": {
+        "line": 293,
+        "column": 19
+      }
+    },
+    "replacement": "Ok(vec![])",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 637,
+        "column": 61
+      },
+      "end": {
+        "line": 637,
+        "column": 62
+      }
+    },
+    "replacement": ">",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_paylines",
+      "return_type": "-> Result<Vec<Vec<u8>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 298,
+          "column": 1
+        },
+        "end": {
+          "line": 355,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 335,
+        "column": 25
+      },
+      "end": {
+        "line": 335,
+        "column": 27
+      }
+    },
+    "replacement": "*=",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/jurisdiction/adapter.rs",
+    "function": {
+      "function_name": "check_informational",
+      "return_type": "-> Vec<ComplianceViolation>",
+      "span": {
+        "start": {
+          "line": 333,
+          "column": 1
+        },
+        "end": {
+          "line": 347,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 334,
+        "column": 5
+      },
+      "end": {
+        "line": 346,
+        "column": 19
+      }
+    },
+    "replacement": "vec![]",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "strips_to_reel_weights",
+      "return_type": "-> Result<Vec<Vec<ReelWeight>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 260,
+          "column": 1
+        },
+        "end": {
+          "line": 294,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 266,
+        "column": 5
+      },
+      "end": {
+        "line": 293,
+        "column": 19
+      }
+    },
+    "replacement": "Ok(vec![vec![]])",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_free_spins",
+      "return_type": "-> FreeSpinsConfig",
+      "span": {
+        "start": {
+          "line": 557,
+          "column": 1
+        },
+        "end": {
+          "line": 608,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 598,
+        "column": 29
+      },
+      "end": {
+        "line": 598,
+        "column": 31
+      }
+    },
+    "replacement": "&&",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_free_spins",
+      "return_type": "-> FreeSpinsConfig",
+      "span": {
+        "start": {
+          "line": 557,
+          "column": 1
+        },
+        "end": {
+          "line": 608,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 598,
+        "column": 78
+      },
+      "end": {
+        "line": 598,
+        "column": 80
+      }
+    },
+    "replacement": "||",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 637,
+        "column": 41
+      },
+      "end": {
+        "line": 637,
+        "column": 42
+      }
+    },
+    "replacement": "/",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "convert_hold_and_win",
+      "return_type": "-> HoldAndWinConfig",
+      "span": {
+        "start": {
+          "line": 610,
+          "column": 1
+        },
+        "end": {
+          "line": 664,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 637,
+        "column": 41
+      },
+      "end": {
+        "line": 637,
+        "column": 42
+      }
+    },
+    "replacement": "+",
+    "genre": "BinaryOperator"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/ir/adapter.rs",
+    "function": {
+      "function_name": "strips_to_reel_weights",
+      "return_type": "-> Result<Vec<Vec<ReelWeight>>, AdapterError>",
+      "span": {
+        "start": {
+          "line": 260,
+          "column": 1
+        },
+        "end": {
+          "line": 294,
+          "column": 2
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 266,
+        "column": 5
+      },
+      "end": {
+        "line": 293,
+        "column": 19
+      }
+    },
+    "replacement": "Ok(vec![vec![Default::default()]])",
+    "genre": "FnValue"
+  }
+]

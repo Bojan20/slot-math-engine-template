@@ -1,0 +1,2 @@
+rust-sim/src/jurisdiction/adapter.rs:334:5: replace check_informational -> Vec<ComplianceViolation> with vec![Default::default()]
+rust-sim/src/ir/adapter.rs:266:5: replace strips_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![vec![Default::default()]])

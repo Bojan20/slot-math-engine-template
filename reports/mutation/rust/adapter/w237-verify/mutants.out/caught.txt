@@ -1,0 +1,16 @@
+rust-sim/src/ir/adapter.rs:598:81: delete ! in convert_free_spins
+rust-sim/src/ir/adapter.rs:334:37: replace % with + in convert_paylines
+rust-sim/src/ir/adapter.rs:637:61: replace < with == in convert_hold_and_win
+rust-sim/src/ir/adapter.rs:335:25: replace /= with %= in convert_paylines
+rust-sim/src/ir/adapter.rs:334:37: replace % with / in convert_paylines
+rust-sim/src/ir/adapter.rs:637:61: replace < with > in convert_hold_and_win
+rust-sim/src/ir/adapter.rs:651:59: replace == with != in convert_hold_and_win
+rust-sim/src/ir/adapter.rs:335:25: replace /= with *= in convert_paylines
+rust-sim/src/ir/adapter.rs:637:61: replace < with <= in convert_hold_and_win
+rust-sim/src/jurisdiction/adapter.rs:334:5: replace check_informational -> Vec<ComplianceViolation> with vec![]
+rust-sim/src/ir/adapter.rs:266:5: replace strips_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![])
+rust-sim/src/ir/adapter.rs:266:5: replace strips_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![vec![]])
+rust-sim/src/ir/adapter.rs:598:29: replace || with && in convert_free_spins
+rust-sim/src/ir/adapter.rs:598:78: replace && with || in convert_free_spins
+rust-sim/src/ir/adapter.rs:637:41: replace - with + in convert_hold_and_win
+rust-sim/src/ir/adapter.rs:637:41: replace - with / in convert_hold_and_win

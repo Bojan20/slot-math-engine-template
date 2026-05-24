@@ -1,0 +1,33 @@
+--- rust-sim/src/jurisdiction/adapter.rs
++++ replace check_informational -> Vec<ComplianceViolation> with vec![Default::default()]
+@@ -326,29 +326,17 @@
+             field: Some("compliance.jurisdictions".to_string()),
+             can_auto_fix: true,
+         }];
+     }
+     vec![]
+ }
+ 
+ fn check_informational(profile: &JurisdictionProfile) -> Vec<ComplianceViolation> {
+-    profile
+-        .informational_notes
+-        .iter()
+-        .enumerate()
+-        .map(|(idx, note)| ComplianceViolation {
+-            rule_id: format!("{}-INFO-{:03}", profile.id, idx + 1),
+-            jurisdiction: profile.id.to_string(),
+-            severity: ViolationSeverity::Info,
+-            message: note.to_string(),
+-            field: None,
+-            can_auto_fix: false,
+-        })
+-        .collect()
++    vec![Default::default()] /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ // ─── apply fix ──────────────────────────────────────────────────────────────
+ 
+ fn apply_fix(
+     ir: &mut SlotGameIR,
+     violation: &ComplianceViolation,
+     profile: &JurisdictionProfile,

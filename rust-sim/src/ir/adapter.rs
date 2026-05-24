@@ -993,3 +993,409 @@ mod cascade_respin_mystery_tests {
         assert!(json.contains(r#""max_steps":3"#));
     }
 }
+
+// ─── W237 — adapter mutation kill tests ────────────────────────────────────
+//
+// Targeted unit tests covering 11 mutants from cargo-mutants baseline
+// (reports/mutation/rust/adapter/mutants.out/missed.txt) so the adapter
+// reaches effective 100 % mutation coverage.
+//
+// Mutant map (line:col → kill test):
+//   266 strips_to_reel_weights → Ok(vec![])           → kill_strips_outer_len
+//   266 strips_to_reel_weights → Ok(vec![vec![]])     → kill_strips_inner_nonempty
+//   334 convert_paylines % → +                         → kill_ways_modulo
+//   335 convert_paylines /= → *=                       → kill_ways_division
+//   598 convert_free_spins && → ||                     → kill_free_spins_and_op
+//   598 convert_free_spins || → &&                     → kill_free_spins_or_op
+//   637 convert_hold_and_win < → >                     → kill_haw_tier_match_lt_gt
+//   637 convert_hold_and_win < → <=                    → kill_haw_tier_match_strict_lt
+//   637 convert_hold_and_win - → +                     → kill_haw_tier_match_minus_plus
+//   637 convert_hold_and_win - → /                     → kill_haw_tier_match_minus_div
+//   651 convert_hold_and_win == → !=                   → kill_haw_full_grid_id_match
+#[cfg(test)]
+mod w237_kill_tests {
+    use super::*;
+    use crate::ir::{CashValueDist, JackpotTier, RetriggerSpec, TriggerByCount};
+
+    // ── helpers ────────────────────────────────────────────────────────────
+
+    fn sym_index() -> HashMap<&'static str, usize> {
+        let mut m: HashMap<&'static str, usize> = HashMap::new();
+        m.insert("S_A", 0);
+        m.insert("S_B", 1);
+        m.insert("S_C", 2);
+        m
+    }
+
+    fn ir_ways(reels: u32, rows: u32) -> SlotGameIR {
+        // Skeleton IR with Ways evaluation.  `convert_paylines` reads only
+        // `ir.evaluation`, so the rest is filler with safe defaults that
+        // satisfy the struct signatures (kept here to insulate the kill
+        // tests from unrelated schema drift).
+        SlotGameIR {
+            schema_version: "1.0".into(),
+            meta: crate::ir::Meta {
+                id: "W237-T".into(),
+                name: "ways-kill".into(),
+                version: "1".into(),
+                description: None,
+                theme_tags: vec![],
+                author: None,
+                created_at_utc: None,
+            },
+            topology: Topology::Rectangular { reels, rows },
+            symbols: vec![],
+            reels: ReelSet::Weighted {
+                base: vec![],
+                free_spins: None,
+            },
+            evaluation: Evaluation::Ways {
+                direction: crate::ir::Direction::Ltr,
+                min_match: 3,
+                max_ways_per_spin: 1024,
+            },
+            paytable: BTreeMap::new(),
+            features: vec![],
+            rng: crate::ir::Rng {
+                kind: crate::ir::RngKind::Mulberry32,
+                default_seed: 1,
+                jump_function: None,
+            },
+            bet: crate::ir::Bet {
+                currency: "USD".into(),
+                base_bet: 1.0,
+                denominations: vec![1.0],
+                ante_bet: None,
+                buy_feature: None,
+            },
+            limits: crate::ir::Limits {
+                target_rtp: 0.96,
+                rtp_tolerance: 0.01,
+                max_win_x: 5000.0,
+                win_cap_apply: crate::ir::WinCapApply::PerSpin,
+                target_volatility: crate::ir::Volatility::Medium,
+                hit_freq_target: 0.25,
+            },
+            compliance: crate::ir::Compliance {
+                jurisdictions: vec!["XX".into()],
+                rtp_range_required: [0.85, 0.99],
+                max_win_cap_required: 5000.0,
+                near_miss_rule: crate::ir::NearMissRule::MustBeRandom,
+                ldw_disclosure: false,
+                session_time_display: false,
+            },
+            rtp_allocation: crate::ir::RtpAllocation {
+                base_game: 80.0,
+                free_spins: 15.0,
+                hold_and_win: 5.0,
+                jackpot: 0.0,
+                tolerance: 1.0,
+            },
+        }
+    }
+
+    // ── 1-2. strips_to_reel_weights ────────────────────────────────────────
+
+    #[test]
+    fn kill_strips_outer_len() {
+        // Three non-empty strips → outer Vec must have length 3, never 0.
+        // Kills: Ok(vec![]) — empty outer.
+        let idx = sym_index();
+        let reels: Vec<Vec<String>> = vec![
+            vec!["S_A".into(), "S_B".into()],
+            vec!["S_B".into(), "S_C".into()],
+            vec!["S_A".into(), "S_C".into()],
+        ];
+        let out = strips_to_reel_weights(&reels, &idx).expect("strips conversion");
+        assert_eq!(out.len(), 3, "outer length must match reel count");
+    }
+
+    #[test]
+    fn kill_strips_inner_nonempty() {
+        // Inner reel must contain at least one weight entry — kills
+        // Ok(vec![vec![]]) which would emit a single empty reel.
+        let idx = sym_index();
+        let reels: Vec<Vec<String>> = vec![
+            vec!["S_A".into(), "S_A".into(), "S_B".into()],
+        ];
+        let out = strips_to_reel_weights(&reels, &idx).expect("strips conversion");
+        assert_eq!(out.len(), 1);
+        assert!(!out[0].is_empty(), "inner weights must not be empty");
+        // S_A counted twice, S_B once → 2 distinct weights.
+        assert_eq!(out[0].len(), 2);
+        // BTreeMap orders by key — A before B.
+        assert_eq!(out[0][0].symbol, "S_A");
+        assert_eq!(out[0][0].weight, 2);
+        assert_eq!(out[0][1].symbol, "S_B");
+        assert_eq!(out[0][1].weight, 1);
+    }
+
+    // ── 3-4. convert_paylines (Ways generation) ───────────────────────────
+
+    #[test]
+    fn kill_ways_modulo() {
+        // Ways on 2 reels × 3 rows = 9 paylines; each cell ∈ [0,2].
+        // Mutating `%` → `+` produces values up to (rem + rows) which on
+        // the last iteration exceeds the row count — assertion catches it.
+        let ir = ir_ways(2u32, 3u32);
+        let out = convert_paylines(&ir, 2, 3).expect("ways paylines");
+        assert_eq!(out.len(), 9);
+        for pl in &out {
+            assert_eq!(pl.len(), 2);
+            for &cell in pl {
+                assert!(
+                    cell < 3,
+                    "ways payline cell must be < rows (got {cell})",
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn kill_ways_division() {
+        // Verify concrete payline contents.  Lexicographic enumeration of
+        // 2 reels × 3 rows yields (reel0, reel1):
+        //   combo 0 → [0,0],  1 → [0,1],  2 → [0,2],
+        //   combo 3 → [1,0],  4 → [1,1],  5 → [1,2],
+        //   combo 6 → [2,0],  7 → [2,1],  8 → [2,2].
+        // Mutating `/=` → `*=` causes `rem` to explode → reel0 value
+        // becomes `(rem * rows) % rows`, which is always 0 for any non-zero
+        // rows — every payline's first cell would be 0, breaking the
+        // strict equality below.
+        let ir = ir_ways(2u32, 3u32);
+        let out = convert_paylines(&ir, 2, 3).expect("ways paylines");
+        let expected = vec![
+            vec![0u8, 0],
+            vec![0, 1],
+            vec![0, 2],
+            vec![1, 0],
+            vec![1, 1],
+            vec![1, 2],
+            vec![2, 0],
+            vec![2, 1],
+            vec![2, 2],
+        ];
+        assert_eq!(out, expected, "lexicographic ways enumeration");
+    }
+
+    // ── 5-6. convert_free_spins (retrigger_enabled boolean) ───────────────
+
+    #[test]
+    fn kill_free_spins_and_op() {
+        // Setup: retrigger=None, trigger.by=BonusCount (not ScatterCount),
+        // awards populated.  With original `&& !awards.is_empty()`:
+        //   None.is_some() || (false && true) = false
+        // Mutant `|| !awards.is_empty()`:
+        //   None.is_some() || false || true = true
+        // → expected `retrigger_enabled == false`.
+        let mut thresholds = BTreeMap::new();
+        thresholds.insert("3".into(), 10.0);
+        let trigger = TriggerByCount {
+            by: TriggerBy::BonusCount,
+            thresholds: Some(thresholds),
+            min: None,
+        };
+        let out = convert_free_spins(&trigger, None, &None);
+        assert!(
+            !out.retrigger_enabled,
+            "BonusCount + no retrigger → retrigger_enabled must be false",
+        );
+    }
+
+    #[test]
+    fn kill_free_spins_or_op() {
+        // Setup: retrigger=Some(_), trigger.by=BonusCount, awards empty.
+        // Original `A || (B && C)` with A=true → true.
+        // Mutant `A && (B && C)` = A && B && C with B=false → false.
+        // Also catches `A && B || C` re-parse (false || false = false).
+        let trigger = TriggerByCount {
+            by: TriggerBy::BonusCount,
+            thresholds: None,
+            min: None,
+        };
+        let retrigger = Some(RetriggerSpec {
+            trigger: TriggerByCount {
+                by: TriggerBy::BonusCount,
+                thresholds: None,
+                min: Some(2),
+            },
+            max_total: Some(50),
+        });
+        let out = convert_free_spins(&trigger, None, &retrigger);
+        assert!(
+            out.retrigger_enabled,
+            "retrigger.is_some() → retrigger_enabled must be true regardless of trigger.by",
+        );
+    }
+
+    #[test]
+    fn kill_free_spins_negation() {
+        // Surface-only mutant that became visible after W237 killed the
+        // 598:78 boolean-op mutants: `delete !` rewrites
+        //   ... && !awards.is_empty()
+        // to
+        //   ... && awards.is_empty()
+        // Killer setup: retrigger=None, by=ScatterCount, awards populated
+        // (single threshold `"3":10`).  Original `false || (true && true)`
+        // = true; mutant `false || (true && false)` = false.
+        let mut thresholds = BTreeMap::new();
+        thresholds.insert("3".into(), 10.0);
+        let trigger = TriggerByCount {
+            by: TriggerBy::ScatterCount,
+            thresholds: Some(thresholds),
+            min: None,
+        };
+        let out = convert_free_spins(&trigger, None, &None);
+        assert!(
+            out.retrigger_enabled,
+            "ScatterCount with populated awards must enable retrigger \
+             (mutant `awards.is_empty()` would flip this to false)",
+        );
+    }
+
+    // ── 7-11. convert_hold_and_win (jackpot match + grid full bonus) ──────
+
+    fn haw_trigger() -> TriggerByCount {
+        TriggerByCount {
+            by: TriggerBy::SpecialCount,
+            thresholds: None,
+            min: Some(6),
+        }
+    }
+
+    #[test]
+    fn kill_haw_tier_match_lt_gt() {
+        // dist.value = 100.0; tier.multiplier = 100.0 → diff = 0.0.
+        // Original `0.0 < 0.01` → true → orb.jackpot = Some("GRAND").
+        // Mutant `0.0 > 0.01` → false → orb.jackpot = None.
+        let dist = vec![CashValueDist {
+            value: 100.0,
+            weight: 1.0,
+        }];
+        let tiers = vec![JackpotTier {
+            id: "GRAND".into(),
+            multiplier: 100.0,
+        }];
+        let out = convert_hold_and_win(&haw_trigger(), 3, &dist, &tiers, &None);
+        assert_eq!(out.orb_values.len(), 1);
+        assert_eq!(
+            out.orb_values[0].jackpot.as_deref(),
+            Some("GRAND"),
+            "exact-match tier must populate jackpot id",
+        );
+    }
+
+    #[test]
+    fn kill_haw_tier_match_strict_lt() {
+        // Killing 637:61 `<` → `<=` requires an input that lands the
+        // `(t.multiplier - dist.value).abs()` expression exactly on the
+        // f64-representable value of `0.01_f64`.
+        //
+        // The trick: `0.01_f64` is the literal constant in the source,
+        // so subtracting `0.0_f64` from `0.01_f64` reproduces *the same
+        // bit pattern* — diff == 0.01_f64 exactly.
+        //
+        //   diff = (0.01_f64 - 0.0_f64).abs() = 0.01_f64  (bit-identical)
+        //   original `<`  : 0.01 <  0.01 = false → no match → jackpot=None
+        //   mutant   `<=` : 0.01 <= 0.01 = true  → match    → jackpot=Some
+        //
+        // Verified empirically: see /tmp/floateq.rs scratch in W237 notes.
+        let dist = vec![CashValueDist {
+            value: 0.0,
+            weight: 1.0,
+        }];
+        let tiers = vec![JackpotTier {
+            id: "EDGE".into(),
+            multiplier: 0.01,
+        }];
+        let out = convert_hold_and_win(&haw_trigger(), 3, &dist, &tiers, &None);
+        assert_eq!(
+            out.orb_values[0].jackpot, None,
+            "strict `<` must reject diff == 0.01_f64 exactly \
+             (mutant `<=` would emit Some(\"EDGE\"))",
+        );
+    }
+
+    #[test]
+    fn kill_haw_tier_match_minus_plus() {
+        // Original predicate: |t.multiplier - dist.value| < 0.01
+        // Mutant `-` → `+`: |t.multiplier + dist.value| < 0.01.
+        // With multiplier=50 and value=50, original |0|<0.01 → match.
+        // Mutant |100|<0.01 → no match.  We use small positive numbers so
+        // the original matches (diff 0) and the mutant cannot (sum 100).
+        let dist = vec![CashValueDist {
+            value: 50.0,
+            weight: 1.0,
+        }];
+        let tiers = vec![JackpotTier {
+            id: "MAJOR".into(),
+            multiplier: 50.0,
+        }];
+        let out = convert_hold_and_win(&haw_trigger(), 3, &dist, &tiers, &None);
+        assert_eq!(
+            out.orb_values[0].jackpot.as_deref(),
+            Some("MAJOR"),
+            "subtraction-based equality must match equal values",
+        );
+    }
+
+    #[test]
+    fn kill_haw_tier_match_minus_div() {
+        // Mutant `-` → `/`: |t.multiplier / dist.value| < 0.01.
+        // With multiplier=5, value=5: original |0|<0.01 → match.
+        // Mutant |1.0|<0.01 → false → no match.
+        // (Same input shape as plus mutant, but using a smaller magnitude
+        // so this assertion is robust independently.)
+        let dist = vec![CashValueDist {
+            value: 5.0,
+            weight: 1.0,
+        }];
+        let tiers = vec![JackpotTier {
+            id: "MINI".into(),
+            multiplier: 5.0,
+        }];
+        let out = convert_hold_and_win(&haw_trigger(), 3, &dist, &tiers, &None);
+        assert_eq!(
+            out.orb_values[0].jackpot.as_deref(),
+            Some("MINI"),
+            "subtraction (not division) must drive jackpot tier match",
+        );
+    }
+
+    #[test]
+    fn kill_haw_full_grid_id_match() {
+        // Original `t.id == id` matches by string equality → full_grid_bonus
+        // uses the tier multiplier (777.0).
+        // Mutant `t.id != id` matches the *first* non-matching tier (DUMMY)
+        // → full_grid_bonus would be 1.0, not 777.0.
+        // We also include a sentinel tier "DUMMY" with multiplier 1.0 so the
+        // mutant has a wrong candidate to lock onto, and so the assertion
+        // is non-trivial (i.e. not just default 500.0).
+        let dist = vec![CashValueDist {
+            value: 10.0,
+            weight: 1.0,
+        }];
+        let tiers = vec![
+            JackpotTier {
+                id: "DUMMY".into(),
+                multiplier: 1.0,
+            },
+            JackpotTier {
+                id: "GRAND".into(),
+                multiplier: 777.0,
+            },
+        ];
+        let out = convert_hold_and_win(
+            &haw_trigger(),
+            3,
+            &dist,
+            &tiers,
+            &Some("GRAND".to_owned()),
+        );
+        assert!(
+            (out.full_grid_bonus - 777.0).abs() < f64::EPSILON,
+            "grid_full_award lookup must use string equality (got {})",
+            out.full_grid_bonus,
+        );
+    }
+}

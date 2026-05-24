@@ -1,0 +1,21 @@
+--- rust-sim/src/ir/adapter.rs
++++ replace % with / in convert_paylines
+@@ -326,17 +326,17 @@
+             // Each payline[reel] = row index; we enumerate them in
+             // lexicographic order.
+             let total = rows.pow(reels as u32);
+             let mut paylines: Vec<Vec<u8>> = Vec::with_capacity(total);
+             for combo in 0..total {
+                 let mut pl = vec![0u8; reels];
+                 let mut rem = combo;
+                 for reel in (0..reels).rev() {
+-                    pl[reel] = (rem % rows) as u8;
++                    pl[reel] = (rem / /* ~ changed by cargo-mutants ~ */ rows) as u8;
+                     rem /= rows;
+                 }
+                 paylines.push(pl);
+             }
+             Ok(paylines)
+         }
+ 
+         Evaluation::Cluster { .. } | Evaluation::PayAnywhere { .. } => {

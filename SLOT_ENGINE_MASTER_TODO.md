@@ -3042,10 +3042,49 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 ### Šta NIJE u skopu W236
 
-1. **`adapter` re-run** — outcomes.json missing baseline. Tracked **W237**.
+1. **`adapter` re-run** — outcomes.json missing baseline. Tracked **W237**. → **closed by W237** (effective 100%, 0 missed).
 2. **`behavior/registry.rs` baseline** — no mutation run yet. Tracked **W238**.
 3. **TS Stryker 95% threshold** — 85.38% sad, gap 9.62pp; izolovan tehnički dug.
 4. **Performance test for L62 `%→/` mutant** — would require benchmark assertion (e.g. 100K calls < 50ms); deferred — not part of correctness suite.
-2. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Tracked kao **W237**.
+2. **`adapter` re-run** — outcomes.json missing, baseline crash-ovan. Tracked kao **W237**. → **closed by W237**.
 3. **TS Stryker 95% threshold** — 85.38% sad, gap od 9.62pp; izolovan tehnicki dug, samostalna sesija.
 4. **`behavior/registry.rs`, `behavior/pipeline.rs` re-run** — pipeline već 100% u W234. Registry baseline tek treba; tracked **W238**.
+
+---
+
+## ✅ W237 LANDED — `adapter.rs` mutation kill, effective 100% (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — 11 new tests in `rust-sim/src/ir/adapter.rs::w237_kill_tests` kill every viable mutant in the IR → GameConfig adapter. Final state: **0 missed, 16/16 caught on surgical re-run** over the previously-missed lines (regex `adapter\.rs:(266|334|335|598|637|651):`).
+
+### Baseline (`bqp28ai17`, 2026-05-24 05:35)
+
+| Outcome | Count | % viable |
+|---|---:|---:|
+| Caught | 39 | 69.6% |
+| Timeout (≡caught) | 6 | 10.7% |
+| Missed | 11 | 19.6% |
+| Unviable | 22 | — |
+| **Viable** | **56** | **80.4% effective** |
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `rust-sim/src/ir/adapter.rs` (`w237_kill_tests` mod) | +300 | **12 new tests** — strips outer/inner length, Ways modulo+division, FreeSpins `\|\|`/`&&` precedence + `!` negation, HoldAndWin tier match (`<`/`>`/`<=`, `-`/`+`/`/`), grid-full id `==`/`!=`. |
+| `reports/mutation/rust/adapter/w237-verify/mutants.out/{outcomes,caught,missed,timeout,unviable}.{json,txt}` | — | Surgical re-run confirming 16/16 kill (0 missed) after two passes. |
+| `docs/research/W237_ADAPTER_MUTATION_KILL_2026-05-24.md` | +160 | Full evidence + per-mutant kill mechanism table + f64 boundary trick. |
+
+### Per-Rust-scope state (after W237)
+
+| Scope | Mutants | Caught | Missed | Timeout | Unviable | Nominal | Effective | Status |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| `evaluator` | 21 | 21 | 0 | 0 | — | 100.00% | 100% | ✅ |
+| `behavior_pipeline` (W234) | 24 | 23 | 0 | 1 | 0 | 100.00% | 100% | ✅ |
+| `behavior_impls` (W235) | 172 | 146 | 0 | 2 | 24 | 100.00% | 100% | ✅ |
+| `rng` (W236, surgical) | 32 | 19 | 9 (all equivalent) | 3 | 1 | 70.97% | 100% | ✅ |
+| **`adapter` (W237, surgical on 6 missed lines)** | **16** | **16** | **0** | **0** | **0** | **100.00%** | **100%** | ✅ |
+
+### Šta NIJE u skopu W237
+
+1. **`behavior/registry.rs` baseline** — no mutation run yet. Tracked **W238**.
+2. **TS Stryker 95% threshold** — 85.38% sada, gap 9.62pp; izolovan tehnički dug.

@@ -1,0 +1,21 @@
+--- rust-sim/src/ir/adapter.rs
++++ replace < with == in convert_hold_and_win
+@@ -629,17 +629,17 @@
+ 
+     // Orb values from cash_value_distribution.
+     let orb_values: Vec<OrbValue> = cash_value_distribution
+         .iter()
+         .map(|dist| {
+             // Check if any jackpot tier multiplier matches this cash value.
+             let jackpot = jackpot_tiers
+                 .iter()
+-                .find(|t| (t.multiplier - dist.value).abs() < 0.01)
++                .find(|t| (t.multiplier - dist.value).abs() == /* ~ changed by cargo-mutants ~ */ 0.01)
+                 .map(|t| t.id.clone());
+             OrbValue {
+                 value: dist.value as u32,
+                 weight: f64_to_weight(dist.weight),
+                 jackpot,
+             }
+         })
+         .collect();

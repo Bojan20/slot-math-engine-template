@@ -1,0 +1,21 @@
+--- rust-sim/src/ir/adapter.rs
++++ replace && with || in convert_free_spins
+@@ -590,17 +590,17 @@
+     let mult_increment = if global_multiplier.is_some() { 0 } else { 1 };
+     let mult_max = if global_multiplier.is_some() {
+         mult_start
+     } else {
+         10
+     };
+ 
+     let retrigger_enabled =
+-        retrigger.is_some() || matches!(trigger.by, TriggerBy::ScatterCount) && !awards.is_empty();
++        retrigger.is_some() || matches!(trigger.by, TriggerBy::ScatterCount) || /* ~ changed by cargo-mutants ~ */ !awards.is_empty();
+ 
+     FreeSpinsConfig {
+         awards,
+         mult_start,
+         mult_increment,
+         mult_max,
+         retrigger_enabled,
+         scatter_pays,

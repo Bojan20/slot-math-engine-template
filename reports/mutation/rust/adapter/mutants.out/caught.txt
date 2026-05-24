@@ -1,0 +1,39 @@
+rust-sim/src/ir/adapter.rs:45:9: replace <impl std::fmt::Display for AdapterError>::fmt -> std::fmt::Result with Ok(Default::default())
+rust-sim/src/ir/adapter.rs:85:43: replace * with + in ir_to_game_config
+rust-sim/src/ir/adapter.rs:85:43: replace * with / in ir_to_game_config
+rust-sim/src/ir/adapter.rs:125:5: replace topology_to_dims -> Result<(usize, usize), AdapterError> with Ok((0, 0))
+rust-sim/src/ir/adapter.rs:125:5: replace topology_to_dims -> Result<(usize, usize), AdapterError> with Ok((0, 1))
+rust-sim/src/ir/adapter.rs:69:5: replace f64_to_weight -> u32 with 1
+rust-sim/src/ir/adapter.rs:69:5: replace f64_to_weight -> u32 with 0
+rust-sim/src/ir/adapter.rs:69:8: replace * with / in f64_to_weight
+rust-sim/src/ir/adapter.rs:80:5: replace ir_to_game_config -> Result<GameConfig, AdapterError> with Ok(Default::default())
+rust-sim/src/ir/adapter.rs:125:5: replace topology_to_dims -> Result<(usize, usize), AdapterError> with Ok((1, 0))
+rust-sim/src/ir/adapter.rs:125:5: replace topology_to_dims -> Result<(usize, usize), AdapterError> with Ok((1, 1))
+rust-sim/src/ir/adapter.rs:69:8: replace * with + in f64_to_weight
+rust-sim/src/ir/adapter.rs:153:5: replace convert_symbols -> Vec<SymbolDef> with vec![]
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (true, false, true)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (true, false, false)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (true, true, true)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (false, false, true)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (false, true, false)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (false, false, false)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (true, true, false)
+rust-sim/src/ir/adapter.rs:177:5: replace map_symbol_kind -> (bool, bool, bool) with (false, true, true)
+rust-sim/src/ir/adapter.rs:197:5: replace convert_reels -> Result<(Vec<Vec<ReelWeight>>, Vec<Vec<ReelWeight>>), AdapterError> with Ok((vec![], vec![]))
+rust-sim/src/ir/adapter.rs:197:5: replace convert_reels -> Result<(Vec<Vec<ReelWeight>>, Vec<Vec<ReelWeight>>), AdapterError> with Ok((vec![], vec![vec![]]))
+rust-sim/src/ir/adapter.rs:233:5: replace weighted_map_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![vec![]])
+rust-sim/src/ir/adapter.rs:233:5: replace weighted_map_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![])
+rust-sim/src/ir/adapter.rs:197:5: replace convert_reels -> Result<(Vec<Vec<ReelWeight>>, Vec<Vec<ReelWeight>>), AdapterError> with Ok((vec![vec![]], vec![vec![]]))
+rust-sim/src/ir/adapter.rs:197:5: replace convert_reels -> Result<(Vec<Vec<ReelWeight>>, Vec<Vec<ReelWeight>>), AdapterError> with Ok((vec![vec![]], vec![]))
+rust-sim/src/ir/adapter.rs:314:5: replace convert_paylines -> Result<Vec<Vec<u8>>, AdapterError> with Ok(vec![])
+rust-sim/src/ir/adapter.rs:314:5: replace convert_paylines -> Result<Vec<Vec<u8>>, AdapterError> with Ok(vec![vec![]])
+rust-sim/src/ir/adapter.rs:314:5: replace convert_paylines -> Result<Vec<Vec<u8>>, AdapterError> with Ok(vec![vec![0]])
+rust-sim/src/ir/adapter.rs:314:5: replace convert_paylines -> Result<Vec<Vec<u8>>, AdapterError> with Ok(vec![vec![1]])
+rust-sim/src/ir/adapter.rs:369:5: replace convert_paytable -> HashMap<String, PayEntry> with HashMap::new()
+rust-sim/src/ir/adapter.rs:369:5: replace convert_paytable -> HashMap<String, PayEntry> with HashMap::from_iter([(String::new(), Default::default())])
+rust-sim/src/ir/adapter.rs:369:5: replace convert_paytable -> HashMap<String, PayEntry> with HashMap::from_iter([("xyzzy".into(), Default::default())])
+rust-sim/src/ir/adapter.rs:378:17: delete match arm "3" in convert_paytable
+rust-sim/src/ir/adapter.rs:380:17: delete match arm "5" in convert_paytable
+rust-sim/src/ir/adapter.rs:379:17: delete match arm "4" in convert_paytable
+rust-sim/src/ir/adapter.rs:455:5: replace convert_features with ()
+rust-sim/src/ir/adapter.rs:413:5: replace convert_pattern_to_config -> Option<crate::config::PatternConfig> with None

@@ -1,0 +1,48 @@
+--- rust-sim/src/ir/adapter.rs
++++ replace strips_to_reel_weights -> Result<Vec<Vec<ReelWeight>>, AdapterError> with Ok(vec![])
+@@ -258,44 +258,17 @@
+ }
+ 
+ /// Convert `Vec<Vec<SymbolKey>>` (strips mode) into count-based weights.
+ /// Each symbol's weight = number of times it appears in the strip.
+ fn strips_to_reel_weights(
+     reels: &[Vec<String>],
+     sym_index: &HashMap<&str, usize>,
+ ) -> Result<Vec<Vec<ReelWeight>>, AdapterError> {
+-    reels
+-        .iter()
+-        .enumerate()
+-        .map(|(reel_idx, strip)| {
+-            if strip.is_empty() {
+-                return Err(AdapterError::MissingWeights { reel: reel_idx });
+-            }
+-            // Count appearances.
+-            let mut counts: std::collections::BTreeMap<&str, u32> =
+-                std::collections::BTreeMap::new();
+-            for sym_id in strip {
+-                if sym_index.contains_key(sym_id.as_str()) {
+-                    *counts.entry(sym_id.as_str()).or_insert(0) += 1;
+-                }
+-            }
+-            if counts.is_empty() {
+-                return Err(AdapterError::MissingWeights { reel: reel_idx });
+-            }
+-            let weights: Vec<ReelWeight> = counts
+-                .into_iter()
+-                .map(|(sym_id, count)| ReelWeight {
+-                    symbol: sym_id.to_string(),
+-                    weight: count,
+-                })
+-                .collect();
+-            Ok(weights)
+-        })
+-        .collect()
++    Ok(vec![]) /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ // ─── Paylines ──────────────────────────────────────────────────────────────
+ 
+ /// Convert IR evaluation into GameConfig paylines.
+ ///
+ /// - `Lines`      → use the payline array directly (cast u32 → u8).
+ /// - `Ways`       → generate synthetic paylines: one per combination of
