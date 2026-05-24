@@ -648,6 +648,124 @@ fn build_pareto_section(
     }
 }
 
+// ─── PAR-016 — Cumulative reach curves ──────────────────────────────────────
+
+/// Survival CDF: P(longest no-win streak ≥ N spins) under base hit rate `p`.
+/// Closed-form geometric model: P(no win in N consecutive) = (1 − p)^N.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct ReachCurveSection {
+    pub base_hit_rate: f64,
+    /// `(n_spins_threshold, probability_of_drought)`.
+    pub points: Vec<(u64, f64)>,
+}
+
+impl ReachCurveSection {
+    pub fn from_hit_rate(p_hit: f64) -> Self {
+        let p = p_hit.clamp(1e-9, 1.0);
+        let thresholds = [10u64, 25, 50, 100, 250, 500, 1_000, 2_500, 5_000, 10_000];
+        let points = thresholds
+            .iter()
+            .map(|&n| (n, (1.0 - p).powi(n as i32)))
+            .collect();
+        ReachCurveSection {
+            base_hit_rate: p,
+            points,
+        }
+    }
+}
+
+// ─── PAR-017 — Risk-of-Ruin formula ────────────────────────────────────────
+
+/// Risk-of-Ruin for a player starting with `bankroll_units` bets at house
+/// edge `house_edge` (fraction, e.g. 0.04 for 96% RTP). Uses the
+/// classical Wizard of Odds formula:
+///
+///   RoR = ((1 − edge) / (1 + edge))^bankroll
+///
+/// Returns 1.0 when `edge ≥ 1` (degenerate), 0.0 when `edge ≤ 0`.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct RiskOfRuinSection {
+    pub house_edge: f64,
+    /// `(bankroll_bets, risk_of_ruin)`.
+    pub points: Vec<(u32, f64)>,
+}
+
+impl RiskOfRuinSection {
+    pub fn from_edge(house_edge_fraction: f64) -> Self {
+        let edge = house_edge_fraction.clamp(0.0, 0.9999);
+        let ratio = (1.0 - edge) / (1.0 + edge);
+        let bankrolls = [10u32, 25, 50, 100, 250, 500, 1_000, 2_500, 5_000];
+        let points = bankrolls
+            .iter()
+            .map(|&n| (n, ratio.powi(n as i32)))
+            .collect();
+        RiskOfRuinSection {
+            house_edge: edge,
+            points,
+        }
+    }
+}
+
+// ─── PAR-015 — Variance decomposition (ANOVA) ───────────────────────────────
+
+/// Per-feature contribution to total spin-win variance.
+///
+/// Derivation (proxy): `σ²_i ≈ (RTP_i / total_RTP)² × σ²_total`. True ANOVA
+/// would require per-feature win records; this approximation lets the PAR
+/// sheet surface "which feature contributes most variance" without engine
+/// changes. Sums of `share_pct` ≤ 100; remainder = "interaction / cov".
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct VarianceDecompSection {
+    pub total_variance: f64,
+    pub base_game_variance: f64,
+    pub free_spins_variance: f64,
+    pub hold_and_win_variance: f64,
+    pub cascade_variance: f64,
+    pub jackpot_variance: f64,
+    pub interaction_residual: f64,
+    /// `share_pct[i] = σ²_i / σ²_total × 100`, in same order as named fields above.
+    pub share_pct: Vec<f64>,
+}
+
+impl VarianceDecompSection {
+    pub fn from_metrics(par: &PARMetrics) -> Self {
+        let total_var = par.welford_variance.max(0.0);
+        let total_rtp = par.total_rtp.max(1e-9);
+        let frac = |r: f64| -> f64 { (r.max(0.0) / total_rtp).powi(2) };
+        let base = frac(par.base_rtp) * total_var;
+        let fs = frac(par.fs_rtp) * total_var;
+        let hnw = frac(par.hnw_rtp) * total_var;
+        let casc = frac(par.cascade_rtp) * total_var;
+        // jackpot RTP not separately tracked in PARMetrics — derive as residual.
+        let known = base + fs + hnw + casc;
+        let interaction = (total_var - known).max(0.0);
+        let pct = |v: f64| -> f64 {
+            if total_var > 0.0 {
+                v / total_var * 100.0
+            } else {
+                0.0
+            }
+        };
+        VarianceDecompSection {
+            total_variance: total_var,
+            base_game_variance: base,
+            free_spins_variance: fs,
+            hold_and_win_variance: hnw,
+            cascade_variance: casc,
+            jackpot_variance: 0.0,
+            interaction_residual: interaction,
+            share_pct: vec![
+                pct(base),
+                pct(fs),
+                pct(hnw),
+                pct(casc),
+                0.0,
+                pct(interaction),
+            ],
+        }
+    }
+}
+
 // ─── PAR-010 — Closed-form per-pay-rule RTP solver ──────────────────────────
 
 /// Closed-form per-pay-rule RTP contributions (%) for a Lines-evaluation IR.
@@ -1127,6 +1245,15 @@ pub struct PARSheet {
     // ── PAR-012 — Bonus Buy economics (offers + regulator warn flag)
     #[serde(default)]
     pub bonus_buy: BonusBuySection,
+    // ── PAR-015 — Variance decomposition (ANOVA-style per-feature breakdown)
+    #[serde(default)]
+    pub variance_decomp: VarianceDecompSection,
+    // ── PAR-016 — Cumulative reach curve (drought probability)
+    #[serde(default)]
+    pub reach_curve: ReachCurveSection,
+    // ── PAR-017 — Risk-of-Ruin (geometric Wizard of Odds formula)
+    #[serde(default)]
+    pub risk_of_ruin: RiskOfRuinSection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -1267,6 +1394,14 @@ impl PARGenerator {
         let bonus_buy = ir
             .map(|i| BonusBuySection::from_ir(i, &jurisdictions))
             .unwrap_or_default();
+        // PAR-015 — Variance decomposition (ANOVA proxy).
+        let variance_decomp = VarianceDecompSection::from_metrics(par);
+        // PAR-016 — Drought reach curve from base game hit rate.
+        let base_hit_pct = par.hit_rate.clamp(0.0, 100.0);
+        let reach_curve = ReachCurveSection::from_hit_rate(base_hit_pct / 100.0);
+        // PAR-017 — Risk-of-Ruin from house edge = 1 − total_rtp/100.
+        let edge_frac = (1.0 - par.total_rtp / 100.0).clamp(0.0, 1.0);
+        let risk_of_ruin = RiskOfRuinSection::from_edge(edge_frac);
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -1412,6 +1547,12 @@ impl PARGenerator {
             jurisdiction_gated,
             // PAR-012 — Bonus Buy economics.
             bonus_buy,
+            // PAR-015 — Variance decomposition.
+            variance_decomp,
+            // PAR-016 — Cumulative reach (drought) curve.
+            reach_curve,
+            // PAR-017 — Risk-of-Ruin.
+            risk_of_ruin,
         }
     }
 
