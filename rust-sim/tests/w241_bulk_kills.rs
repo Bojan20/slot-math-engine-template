@@ -436,6 +436,37 @@ fn w241_bulk_dispatcher_checkpoint_modulo_zero_triggers_write() {
 }
 
 #[test]
+fn w241_bulk_dispatcher_final_checkpoint_always_writes_when_enabled() {
+    // L245:46-50 — final-checkpoint gate `checkpoint_every > 0 && path.is_some()`.
+    // Run with checkpoint_every=100 (never hits modulo with only 2 chunks)
+    // but with a path: final checkpoint should STILL fire because of the
+    // L245 unconditional final write.
+    //
+    // Mutant `> ==`: would fail when checkpoint_every is exactly 0.
+    // Mutant `> <`: would only fire when checkpoint_every < 0 (never).
+    // Mutant `&& ||`: would crash trying to write to None when path missing.
+    let tmp = std::env::temp_dir().join("w241-bulk-final-ckpt.json");
+    let _ = std::fs::remove_file(&tmp);
+    let config = GameConfig::default();
+    let mut bulk = small_bulk(50_000, 42); // 2 chunks
+    bulk.checkpoint_every_chunks = 100; // never triggers modulo
+    bulk.checkpoint_path = Some(tmp.clone());
+    let r = BulkDispatcher::new(&config, bulk, Arc::new(NoOpProgress))
+        .run()
+        .unwrap();
+    // The final-checkpoint path must produce at least 1 write.
+    // L240:37 `+=` keeps the counter going; mutant `*=` would multiply,
+    // producing weird counts like 0 or huge numbers.
+    assert!(
+        r.checkpoints_written >= 1,
+        "final checkpoint must fire when every>0 + path set (got {})",
+        r.checkpoints_written,
+    );
+    assert!(tmp.exists(), "final checkpoint file must exist on disk");
+    let _ = std::fs::remove_file(&tmp);
+}
+
+#[test]
 fn w241_bulk_dispatcher_checkpoint_every_two_writes_fewer() {
     // checkpoint_every=2 → write only on even chunk indices.  4 chunks
     // (100_000 / 25_000) with every=2 → 2 writes (chunks 2, 4).
