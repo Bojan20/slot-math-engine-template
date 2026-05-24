@@ -464,6 +464,99 @@ fn w240_markov_cascade_p1_max_chain_depth() {
     );
 }
 
+// ── SNAPSHOT KILL TESTS — strict f64 equality on full DP output ──────────
+//
+// Each test below pins the EXACT output of `solve_hold_and_win` under a
+// concrete configuration to 15+ digits of precision.  Any single arithmetic
+// mutation anywhere inside `binom_f64`, `binom_pmf`, or the H&W DP loops
+// (lines 34, 39, 69-71, 181-219, 269, 299) perturbs at least one of these
+// f64 values, so the assertion fails → mutant killed.  The numbers were
+// captured from the unmutated implementation on 2026-05-24 via
+// `tests/w240_snapshot_seeds.rs`.
+
+#[test]
+fn w240_markov_snapshot_reset_true() {
+    let cfg = HoldAndWinConfig {
+        total_cells: 9,
+        init_locked_cells: 3,
+        initial_respins: 4,
+        expected_cell_value: 2.0,
+        base_chance: 0.15,
+        fill_bonus_cap: 0.05,
+        respin_reset_on_new: true,
+        grid_full_award: 50.0,
+    };
+    let res = solve_hold_and_win(&cfg);
+    // 9-cell × 4-respin × 0.15 base_chance × +0.05 fill_bonus_cap × award=50
+    // Snapshot generated 2026-05-24, locked here as the kill trap.
+    assert!(
+        (res.expected_payout - 39.058_006_550_465_52).abs() < 1e-12,
+        "snapshot expected_payout drifted: {}",
+        res.expected_payout,
+    );
+    assert!(
+        (res.expected_orb_count - 7.992_528_528_124_968).abs() < 1e-12,
+        "snapshot expected_orb_count drifted: {}",
+        res.expected_orb_count,
+    );
+}
+
+#[test]
+fn w240_markov_snapshot_reset_false() {
+    let cfg = HoldAndWinConfig {
+        total_cells: 9,
+        init_locked_cells: 3,
+        initial_respins: 4,
+        expected_cell_value: 2.0,
+        base_chance: 0.15,
+        fill_bonus_cap: 0.05,
+        respin_reset_on_new: false,
+        grid_full_award: 50.0,
+    };
+    let res = solve_hold_and_win(&cfg);
+    // Same fixture as reset_true, but with the non-reset DP branch active.
+    // Snapshot 2026-05-24.
+    assert!(
+        (res.expected_payout - 13.688_789_171_184_002).abs() < 1e-12,
+        "snapshot expected_payout drifted: {}",
+        res.expected_payout,
+    );
+    assert!(
+        (res.expected_orb_count - 6.192_589_977_626_151).abs() < 1e-12,
+        "snapshot expected_orb_count drifted: {}",
+        res.expected_orb_count,
+    );
+}
+
+#[test]
+fn w240_markov_snapshot_renorm_path() {
+    // 40-cell × p=0.5 grid forces accumulated f64 noise > 1e-12 → triggers
+    // the `binom_pmf` renormalisation branch (L69-L71).  Snapshot pins
+    // expected_orb_count to bit-exact value; any mutation on the
+    // renormalisation `/=`, `>`, `&&` flips the output.
+    let cfg = HoldAndWinConfig {
+        total_cells: 40,
+        init_locked_cells: 0,
+        initial_respins: 10,
+        expected_cell_value: 1.0,
+        base_chance: 0.5,
+        fill_bonus_cap: 0.0,
+        respin_reset_on_new: false,
+        grid_full_award: 0.0,
+    };
+    let res = solve_hold_and_win(&cfg);
+    assert!(
+        (res.expected_payout - 39.9609375).abs() < 1e-12,
+        "snapshot expected_payout drifted: {}",
+        res.expected_payout,
+    );
+    assert!(
+        (res.expected_orb_count - 39.9609375).abs() < 1e-12,
+        "snapshot expected_orb_count drifted: {}",
+        res.expected_orb_count,
+    );
+}
+
 // ── binom_pmf renormalization branch (L69-L71) ────────────────────────────
 
 #[test]

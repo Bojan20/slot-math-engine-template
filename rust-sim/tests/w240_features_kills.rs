@@ -472,6 +472,96 @@ fn w240_features_simulate_hnw_jackpot_per_arm_exact_count() {
     );
 }
 
+// ── SNAPSHOT KILL TESTS — strict u32/i64 equality on full FS output ──────
+//
+// Each test below pins the EXACT output of `FeatureSim::simulate_free_spins`
+// for a fixed `(seed, scatter_count, bet)` triple.  Any mutation inside the
+// FS loop (lines 118, 122-124, 128-131, 138-141, 146-148, 162-167) changes
+// at least one of these u32/i64 fields, so the assertion fails → mutant
+// killed.  Numbers captured 2026-05-24 via `tests/w240_snapshot_seeds.rs`.
+
+#[test]
+fn w240_features_snapshot_fs_seed42_scatter3_bet1000() {
+    // Configure a scatter_pay so the scatter_wins field is non-trivial.
+    let mut cfg = build_config();
+    let mut scatter_pays = HashMap::new();
+    scatter_pays.insert(3u8, 10.0);
+    cfg.free_spins.scatter_pays = scatter_pays;
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    let r = fsim.simulate_free_spins(&mut rng, 3, 1000);
+    assert_eq!(r.total_payout, 10_000, "snapshot total_payout drift");
+    assert_eq!(r.spins_played, 10, "snapshot spins_played drift");
+    assert_eq!(r.retriggers, 0, "snapshot retriggers drift");
+    assert_eq!(r.scatter_wins, 10_000, "snapshot scatter_wins drift");
+    assert_eq!(r.max_mult_reached, 1, "snapshot max_mult_reached drift");
+}
+
+#[test]
+fn w240_features_snapshot_fs_seed42_scatter4_no_scatter_pay() {
+    // scatter=4 has no scatter_pay entry → scatter_wins=0 strictly.
+    let cfg = build_config();
+    let mut scatter_pays = HashMap::new();
+    scatter_pays.insert(3u8, 10.0); // only 3 entry
+    let mut cfg2 = cfg;
+    cfg2.free_spins.scatter_pays = scatter_pays;
+    let grid_gen = GridGenerator::new(&cfg2);
+    let evaluator = Evaluator::new(&cfg2, &grid_gen);
+    let fsim = FeatureSim::new(&cfg2, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    let r = fsim.simulate_free_spins(&mut rng, 4, 1000);
+    assert_eq!(r.total_payout, 0, "scatter=4 no scatter_pay → payout 0");
+    assert_eq!(r.spins_played, 12, "scatter=4 awards 12 spins");
+    assert_eq!(r.scatter_wins, 0, "scatter_wins=0 when no map entry");
+    assert_eq!(r.retriggers, 0);
+}
+
+#[test]
+fn w240_features_snapshot_fs_seed42_scatter5_bet2000() {
+    let cfg = build_config();
+    let mut scatter_pays = HashMap::new();
+    scatter_pays.insert(3u8, 10.0);
+    let mut cfg2 = cfg;
+    cfg2.free_spins.scatter_pays = scatter_pays;
+    let grid_gen = GridGenerator::new(&cfg2);
+    let evaluator = Evaluator::new(&cfg2, &grid_gen);
+    let fsim = FeatureSim::new(&cfg2, &grid_gen, &evaluator);
+
+    let mut rng = SlotRng::new(42);
+    let r = fsim.simulate_free_spins(&mut rng, 5, 2000);
+    assert_eq!(r.spins_played, 15, "scatter=5 awards 15 spins");
+    assert_eq!(r.scatter_wins, 0, "scatter=5 no map entry → 0");
+    assert_eq!(r.retriggers, 0);
+}
+
+#[test]
+fn w240_features_snapshot_fs_multiple_seeds_invariant() {
+    // Across seeds [42, 1234, 99], FS output for (scatter=3, bet=1000) MUST
+    // be the SAME because the seed only drives RNG inside the FS loop —
+    // base outcome (10 spins, 0 retriggers in this fixture, scatter pay
+    // = bet × 10) is deterministic on the scatter pay path.
+    let cfg = build_config();
+    let mut scatter_pays = HashMap::new();
+    scatter_pays.insert(3u8, 10.0);
+    let mut cfg2 = cfg;
+    cfg2.free_spins.scatter_pays = scatter_pays;
+    let grid_gen = GridGenerator::new(&cfg2);
+    let evaluator = Evaluator::new(&cfg2, &grid_gen);
+    let fsim = FeatureSim::new(&cfg2, &grid_gen, &evaluator);
+
+    for seed in [42u64, 1234, 99] {
+        let mut rng = SlotRng::new(seed);
+        let r = fsim.simulate_free_spins(&mut rng, 3, 1000);
+        assert_eq!(r.total_payout, 10_000, "seed={} payout drift", seed);
+        assert_eq!(r.spins_played, 10, "seed={} spins drift", seed);
+        assert_eq!(r.scatter_wins, 10_000, "seed={} scatter_wins drift", seed);
+    }
+}
+
 // ── generate_orb sampling distribution ───────────────────────────────────
 
 #[test]

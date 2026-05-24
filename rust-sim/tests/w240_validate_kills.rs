@@ -786,6 +786,39 @@ fn w240_validate_fs_reels_unknown_symbol() {
     );
 }
 
+// ─── L62 (delete `!`) — ONLY known symbols on FS reels must emit ZERO errors.
+//
+//    Original `if !sym_ids.contains(k)`: known sym → condition false → no error.
+//    Mutant   `if  sym_ids.contains(k)`: known sym → condition true  → 5 errors
+//    emitted (1 per reel × 5 reels), one for each known key. Differs from the
+//    `S_PHANTOM` variant above because that test mixes known + unknown — the
+//    mutant emits 10 errors there but the assertion expected 5 → coincidentally
+//    surviving via path-explosion. This test pins the EXACT clean case.
+#[test]
+fn w240_validate_kill_l62_fs_reels_only_known_symbols_zero_errors() {
+    let mut ir = base_lines();
+    let mut fs_reel: BTreeMap<String, f64> = BTreeMap::new();
+    fs_reel.insert("S_LP1".to_string(), 1.0); // KNOWN only
+    let fs_reels = vec![
+        fs_reel.clone(),
+        fs_reel.clone(),
+        fs_reel.clone(),
+        fs_reel.clone(),
+        fs_reel,
+    ];
+    if let slot_sim::ir::ReelSet::Weighted { base, .. } = &ir.reels {
+        ir.reels = slot_sim::ir::ReelSet::Weighted {
+            base: base.clone(),
+            free_spins: Some(fs_reels),
+        };
+    }
+    let n = count_with_path_prefix(&ir, "/reels/free_spins/");
+    assert_eq!(
+        n, 0,
+        "L62 (delete `!`): FS reels with ONLY known symbols must emit 0 errors, got {n}"
+    );
+}
+
 // Retrigger touchpoint (does not directly kill validate.rs mutants but
 // exercises the FreeSpins variant with `retrigger: Some(...)` to keep the
 // match-arm coverage warm across crates).

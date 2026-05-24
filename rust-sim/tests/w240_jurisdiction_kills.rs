@@ -249,8 +249,11 @@ fn w240_juris_kill_l313_jurisdiction_declared_check() {
 // ─── L390 / L391: apply_fix FEAT branch — `before - len` arithmetic & `> 0` ───
 #[test]
 fn w240_juris_kill_l390_l391_feat_removal_count() {
-    // Insert TWO prohibited Gamble features → auto_fix must REMOVE both
-    // and emit one AppliedFix mentioning "Removed 2 'gamble' feature(s)".
+    // Mixed feature payload: 2 Gamble (prohibited) + 1 BuyFeature (also
+    // prohibited under UKGC) + we look ONLY at the GAMBLE fix. After the
+    // GAMBLE fix runs, `before = 3, after = 1` (the surviving BuyFeature
+    // hasn't been processed yet in this branch), so `before - after = 2`
+    // while mutant `before + after = 4` → description diverges.
     let mut ir = base();
     ir.features.push(Feature::Gamble {
         ty: GambleType::RedBlack,
@@ -262,35 +265,55 @@ fn w240_juris_kill_l390_l391_feat_removal_count() {
         max_steps: 3,
         tie_resolution: TieResolution::Push,
     });
-    let (fixed_ir, result) = auto_fix(&ir, &["UKGC"]);
+    ir.features.push(Feature::BuyFeature {
+        offers: vec![slot_sim::ir::BuyOffer {
+            id: "bf1".to_string(),
+            cost_x: 100.0,
+            guaranteed: "free_spins".to_string(),
+        }],
+    });
+    let (_, result) = auto_fix(&ir, &["UKGC"]);
     let feat_fix = result
         .applied_fixes
         .iter()
         .find(|f| f.rule_id == "UKGC-FEAT-GAMBLE")
         .expect("L390: GAMBLE fix must be applied");
-    // L390: `before - after` arithmetic — must say "Removed 2" not "Removed 0/-2/+x".
+    // L390 (`-`→`+`): mutant would say "Removed 4" (before=3, after=1, 3+1=4).
     assert!(
         feat_fix.description.contains("Removed 2"),
         "L390 (`-`→`+`): fix description must say 'Removed 2', got: {}",
         feat_fix.description
     );
-    // L391: `removed > 0` — kills `>=` (0 case would emit spurious fix).
-    assert_eq!(
-        fixed_ir.features.len(),
-        0,
-        "L391 boundary: both gamble features must be removed (final len 0), got {}",
-        fixed_ir.features.len()
-    );
 
-    // Now run again on the cleaned IR — `removed` will be 0 → no fix emitted.
-    let (_, result2) = auto_fix(&fixed_ir, &["UKGC"]);
-    let extra_feat = result2
+    // Second scenario: ZERO matching features → fix must NOT be applied.
+    // Mutant `>=` would emit a spurious fix with "Removed 0".
+    let mut clean = base();
+    // No Gamble at all → loop reaches `removed = 0` branch.
+    clean.features.push(Feature::BuyFeature {
+        offers: vec![slot_sim::ir::BuyOffer {
+            id: "bf1".to_string(),
+            cost_x: 100.0,
+            guaranteed: "free_spins".to_string(),
+        }],
+    });
+    let (_, clean_result) = auto_fix(&clean, &["UKGC"]);
+    let no_gamble_fix = clean_result
         .applied_fixes
         .iter()
         .any(|f| f.rule_id == "UKGC-FEAT-GAMBLE");
     assert!(
-        !extra_feat,
-        "L391 (>→>=): no fix should be emitted when zero features were removed"
+        !no_gamble_fix,
+        "L391 (>→>=): no GAMBLE fix must be emitted when ir has 0 Gamble features"
+    );
+
+    // Also confirm BuyFeature fix WAS applied (sanity that auto_fix did run).
+    let bf_fix = clean_result
+        .applied_fixes
+        .iter()
+        .any(|f| f.rule_id == "UKGC-FEAT-BUYFEATURE");
+    assert!(
+        bf_fix,
+        "Sanity: BuyFeature fix should still be applied"
     );
 }
 
