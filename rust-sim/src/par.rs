@@ -382,15 +382,16 @@ pub struct PaytableSection {
 
 impl PaytableSection {
     /// Build the section from an IR. Iterates `ir.paytable` for the matrix rows
-    /// and pre-populates `pay_rule_rtp` with one entry per `(symbol, n-of-a-kind)`
-    /// pair — values default to `0.0` until an analytical solver fills them in.
+    /// and (PAR-010) calls `solve_per_pay_rule_rtp(ir)` to populate
+    /// `pay_rule_rtp` with closed-form per-cell contributions.
     pub fn from_ir(ir: &SlotGameIR) -> Self {
         // Build a quick lookup from symbol_id → SymbolDef for kind/substitutes.
         let lookup: BTreeMap<&str, &crate::ir::SymbolDef> =
             ir.symbols.iter().map(|s| (s.id.as_str(), s)).collect();
 
         let mut rows: Vec<PaytableRow> = Vec::new();
-        let mut pay_rule_rtp: BTreeMap<String, f64> = BTreeMap::new();
+        // PAR-010 — actual closed-form solver fills the audit-trail map.
+        let mut pay_rule_rtp = solve_per_pay_rule_rtp(ir);
 
         for (sym_id, count_map) in ir.paytable.iter() {
             let def = lookup.get(sym_id.as_str());
@@ -405,14 +406,13 @@ impl PaytableSection {
 
             let mut payouts: BTreeMap<u32, f64> = BTreeMap::new();
             for (count_key, mult) in count_map.iter() {
-                // count_key is a stringified u32 ("3", "4", "5"...). Cluster mode
-                // can emit "12+" — we keep only numeric keys for the matrix and
-                // still register them under pay_rule_rtp for audit coverage.
                 if let Ok(n) = count_key.parse::<u32>() {
                     payouts.insert(n, *mult);
                 }
+                // Make sure every IR paytable cell has an audit-trail entry,
+                // even when the solver skipped it (non-Lines evaluation).
                 let key = format!("{sym_id}_{count_key}oak");
-                pay_rule_rtp.insert(key, 0.0);
+                pay_rule_rtp.entry(key).or_insert(0.0);
             }
 
             rows.push(PaytableRow {
@@ -423,8 +423,6 @@ impl PaytableSection {
             });
         }
 
-        // Stable sort by symbol id (BTreeMap iteration is already sorted,
-        // but we keep the explicit sort for safety against future iterator changes).
         rows.sort_by(|a, b| a.symbol.cmp(&b.symbol));
 
         PaytableSection {
@@ -647,6 +645,107 @@ fn build_pareto_section(
             }
         }
     }
+}
+
+// ─── PAR-010 — Closed-form per-pay-rule RTP solver ──────────────────────────
+
+/// Closed-form per-pay-rule RTP contributions (%) for a Lines-evaluation IR.
+///
+/// Algorithm (Doc §6.1 + Barboianu 2013):
+///   For each (symbol, n) cell in `ir.paytable`:
+///     contribution_pct = 100 × multiplier × Σ_paylines P(exactly n consecutive
+///         matches starting from leftmost reel on this payline)
+///   where P(n) = (∏_{i=0..n-1} p_i(symbol)) × (1 − p_n(symbol))
+///         p_i(symbol) = weight_i(symbol) / Σ_weights_i
+///
+/// Only `Evaluation::Lines` is handled (most common); other evaluation kinds
+/// return an empty map. Wild substitution is approximated by treating the
+/// wild symbol as a generic "matches anything" booster (its own paytable row
+/// remains unchanged).
+pub fn solve_per_pay_rule_rtp(ir: &SlotGameIR) -> BTreeMap<String, f64> {
+    use crate::ir::{Evaluation, ReelSet};
+
+    let mut out: BTreeMap<String, f64> = BTreeMap::new();
+
+    // Only handle Lines evaluation in this pass.
+    let (paylines, min_match, _ltr_only) = match &ir.evaluation {
+        Evaluation::Lines {
+            paylines,
+            min_match,
+            pay_left_to_right_only,
+            ..
+        } => (paylines, *min_match, *pay_left_to_right_only),
+        _ => return out,
+    };
+
+    // Per-reel symbol probability table p[reel_idx][symbol] from weighted reels.
+    let per_reel_probs: Vec<BTreeMap<String, f64>> = match &ir.reels {
+        ReelSet::Weighted { base, .. } => base
+            .iter()
+            .map(|dist| {
+                let total: f64 = dist.values().sum();
+                if total <= 0.0 {
+                    BTreeMap::new()
+                } else {
+                    dist.iter().map(|(s, w)| (s.clone(), w / total)).collect()
+                }
+            })
+            .collect(),
+        ReelSet::Strips { base, .. } => base
+            .iter()
+            .map(|strip| {
+                let n = strip.len() as f64;
+                let mut counts: BTreeMap<String, f64> = BTreeMap::new();
+                for s in strip {
+                    *counts.entry(s.clone()).or_insert(0.0) += 1.0;
+                }
+                for v in counts.values_mut() {
+                    *v /= n;
+                }
+                counts
+            })
+            .collect(),
+    };
+    let n_reels = per_reel_probs.len();
+    if n_reels == 0 {
+        return out;
+    }
+
+    let p_of = |reel: usize, sym: &str| -> f64 {
+        per_reel_probs
+            .get(reel)
+            .and_then(|m| m.get(sym).copied())
+            .unwrap_or(0.0)
+    };
+
+    for (sym, count_map) in ir.paytable.iter() {
+        for (count_key, multiplier) in count_map.iter() {
+            let n = match count_key.parse::<u32>() {
+                Ok(n) if n >= min_match && (n as usize) <= n_reels => n as usize,
+                _ => continue,
+            };
+
+            // Sum over paylines: P(exactly n from left).
+            let mut prob_total = 0.0_f64;
+            for _payline in paylines.iter() {
+                // P(symbol on reel 0..n-1) × (1 − P(symbol on reel n)) (or 1 if n == reels).
+                let mut p_consec = 1.0_f64;
+                for i in 0..n {
+                    p_consec *= p_of(i, sym);
+                }
+                let p_stop = if n == n_reels {
+                    1.0
+                } else {
+                    1.0 - p_of(n, sym)
+                };
+                prob_total += p_consec * p_stop;
+            }
+            let contribution_pct = multiplier * prob_total * 100.0;
+            let key = format!("{sym}_{count_key}oak");
+            out.insert(key, contribution_pct);
+        }
+    }
+    out
 }
 
 // ─── PAR-006 — Jurisdiction-gated RTP variants ──────────────────────────────

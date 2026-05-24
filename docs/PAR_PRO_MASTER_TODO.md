@@ -274,7 +274,7 @@ math gap koji vendor mora da ima da bi nadmašio IGT + Pragmatic + NetEnt.
 
 | Wave | Naziv | Atoms | ETA | Cilj | Status |
 |---|---|---|---|---|---|
-| **PAR-010** | Closed-form per-pay-rule RTP solver | 4 | 35 min | Bez ovog `pay_rule_rtp` polje ostaje 0.0 — pravi audit trail vrednosti | 🔵 Planned |
+| **PAR-010** | Closed-form per-pay-rule RTP solver | 4 | 35 min | Bez ovog `pay_rule_rtp` polje ostaje 0.0 — pravi audit trail vrednosti | 🟢 Done |
 | **PAR-011** | Quasi-Monte Carlo (Halton + Sobol + Lattice) | 5 | 45 min | 100× variance reduction za P99.999 jackpot tail | 🔵 Planned |
 | **PAR-012** | Bonus Buy EV calculator | 3 | 25 min | EV(buy) vs cost premium — modern slot economics (Pragmatic/Nolimit standard) | 🔵 Planned |
 | **PAR-013** | Cluster Pays evaluator | 4 | 30 min | Connected-component scoring (NetEnt/Push Gaming math) | 🔵 Planned |
