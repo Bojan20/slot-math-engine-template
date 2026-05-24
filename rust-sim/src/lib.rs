@@ -64,6 +64,8 @@ pub mod megaways;
 pub mod rng_battery;
 /// PAR-019 — Multi-tier mystery jackpot (Mini/Minor/Major/Grand).
 pub mod mystery_jackpot;
+/// PAR-020 — Autocorrelation tests (Ljung-Box + Wald-Wolfowitz runs).
+pub mod autocorrelation;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`

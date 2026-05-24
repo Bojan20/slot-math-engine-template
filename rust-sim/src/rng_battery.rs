@@ -190,6 +190,18 @@ pub fn chi_square_uniformity(samples: &[f64], n_buckets: usize) -> BatteryVerdic
     }
 }
 
+// ─── Public re-exports for sibling modules (PAR-020) ────────────────────────
+
+/// PAR-020 use-site: public wrapper around the internal `erfc`.
+pub fn erfc_pub(x: f64) -> f64 {
+    erfc(x)
+}
+
+/// PAR-020 use-site: χ² upper-tail p-value with `dof` degrees of freedom.
+pub fn chi_square_uniformity_p(chi_sq: f64, dof: f64) -> f64 {
+    igamc(dof / 2.0, chi_sq / 2.0)
+}
+
 // ─── Numerical helpers (NIST SP 800-22 Appendix C) ──────────────────────────
 
 /// Complementary error function (Numerical Recipes rational approximation).
