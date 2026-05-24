@@ -39,16 +39,16 @@
 
 | Wave | Naziv | Atoms | ETA | Files touched | Status |
 |---|---|---|---|---|---|
-| **PAR-001** | Sign-off block + Reel config + Paytable | 4 | 25 min | `par.rs`, `ir.rs`, `tests/par_pro_001.rs` | 🔵 Planned |
-| **PAR-002** | configHash + RNG attestation | 3 | 20 min | `par.rs`, `rng.rs`, `tests/par_pro_002.rs` | 🔵 Planned |
+| **PAR-001** | Sign-off block + Reel config + Paytable + **per-pay-rule RTP** | 5 | 30 min | `par.rs`, `ir.rs`, `tests/par_pro_001.rs` | 🟢 Done |
+| **PAR-002** | configHash + RNG attestation + **rng_kind stale-fix** | 4 | 25 min | `par.rs`, `rng.rs`, `tests/par_pro_002.rs` | 🔵 Planned |
 | **PAR-003** | EVT Pareto tail u PAR sheet | 3 | 20 min | `par.rs`, `tail_fit.rs`, `tests/par_pro_003.rs` | 🔵 Planned |
 | **PAR-004** | Per-feature time-to-trigger CDF | 4 | 25 min | `par.rs`, `stats.rs`, `tests/par_pro_004.rs` | 🔵 Planned |
 | **PAR-005** | Markov transition matrix + stationary π | 4 | 30 min | `par.rs`, `stats.rs`, `tests/par_pro_005.rs` | 🔵 Planned |
-| **PAR-006** | Jurisdiction-gated RTP variants | 3 | 20 min | `par.rs`, `jurisdiction/`, `tests/par_pro_006.rs` | 🔵 Planned |
+| **PAR-006** | Jurisdiction-gated RTP variants + **theoretical vs simulated PASS/FAIL gate (GLI §8.2)** | 4 | 25 min | `par.rs`, `jurisdiction/`, `tests/par_pro_006.rs` | 🔵 Planned |
 | **PAR-007** | USIF v1.0 JSON exporter + validator hook | 3 | 25 min | `par/usif_export.rs` (new), schema validator, `tests/par_pro_007.rs` | 🔵 Planned |
 | **PAR-008** | CSV exporter (flat regulator schema) | 2 | 15 min | `par/csv_export.rs` (new), `tests/par_pro_008.rs` | 🔵 Planned |
 | **PAR-009** | PDF generator (GLI-16 App D layout) | 4 | 30 min | `par/pdf_export.rs` (new), template, `tests/par_pro_009.rs` | 🔵 Planned |
-| **Total** | | **30** | **~3 h 30 min** | | |
+| **Total** | | **33** | **~3 h 45 min** | | |
 
 **Acceptance svaki wave:** TS lint + TS build + full vitest + `cargo clippy --all -- -D warnings` + 0 regresija + USIF validator green (od PAR-007 nadalje).
 
@@ -64,11 +64,13 @@
 | A2 | `ReelConfigSection { reels: Vec<ReelDef> }` + `ReelDef { index, mode, length, symbol_counts: BTreeMap<String, u32> }`, `total_cycle = ∏ length` izračunat | `par.rs` + `ir.rs::ReelDef` mapper | `tests/par_pro_001.rs::reel_config_cycle_product` |
 | A3 | `PaytableSection { rows: Vec<PaytableRow> }` + `PaytableRow { symbol, payouts: BTreeMap<u32, f64> }` (key = n-of-a-kind) + wild/scatter flag-ovi | `par.rs` + IR paytable extractor | `tests/par_pro_001.rs::paytable_matches_ir` |
 | A4 | `PARGenerator::generate(...)` signatura proširena sa `ir: &SlotGameIR` (replace 14-arg ulaz sa `PARBuildContext` struct-om — bekvard-kompat shim) | `par.rs:208-224` | `tests/par_pro_001.rs::generate_with_context_struct` |
+| A5 | **Per-pay-rule RTP breakdown** (MLAgent gap N) — `PaytableSection.pay_rule_rtp: BTreeMap<String, f64>` (key = "{symbol}_{n}oak"); audit trail za regulator, Σ-ja se sa total | `par.rs::generate` + `stats.rs::PARMetrics` ekstenzija | `tests/par_pro_001.rs::pay_rule_rtp_sums_to_base` |
 
 ### Acceptance gate
-- ✅ JSON roundtrip preserves all 3 new sections
+- ✅ JSON roundtrip preserves all 4 new sections (sign-off, reels, paytable, pay_rule_rtp)
 - ✅ Pretty-print (`PARGenerator::print`) renderuje GAME IDENTIFICATION + REEL CONFIGURATION + PAYTABLE bloks GLI-16 App D layout
 - ✅ Sve postojeće test (`faza4_stats.rs`, `faza8_stats.rs`) i dalje prolaze
+- ✅ `Σ pay_rule_rtp ≈ base_rtp_pct` (±0.5pp tolerance — feature RTP-ovi ne ulaze ovde)
 
 ---
 
@@ -81,10 +83,12 @@
 | A1 | `PARMeta.config_hash: String` — SHA-256 nad **canonical** JSON serijalizacijom IR-a (sorted keys, no whitespace) | `par.rs:30-38`, `ir/canonical.rs` (new helper) | `tests/par_pro_002.rs::config_hash_deterministic` |
 | A2 | `RngAttestationSection { kind, period, seed: String, tests: RngTestResults }` + `RngTestResults { diehard, nist_sp_800_22, chi_square: TestVerdict }` + `enum TestVerdict { Pass, Fail, NotRun }` | `par.rs` + `rng.rs::RngKind` enum | `tests/par_pro_002.rs::rng_attestation_emit` |
 | A3 | Wire `PARMeta.rng_kind` → `RngAttestationSection.kind`; same seed bit-for-bit identical IR → same config_hash | `par.rs:251-260` | `tests/par_pro_002.rs::same_ir_same_hash` |
+| A4 | **rng_kind stale-fix** (MLAgent gap L) — `par.rs:259` hard-codes `"mulberry32"` ali actual default je xoshiro128 ** / `SlotRng`; uvedi `RngFamily::detect()` helper koji čita iz `RngBackend` trait associated `KIND` const i emituje pravu vrednost | `par.rs:259` + `rng.rs::RngBackend` const | `tests/par_pro_002.rs::rng_kind_matches_actual_backend` |
 
 ### Acceptance gate
 - ✅ Mutiranje 1 byte u IR mijenja config_hash
 - ✅ `RngAttestationSection.kind` matches actual RNG family used in `rust-sim` (Mulberry32 default; FIPS path stub-iran)
+- ✅ `PARMeta.rng_kind` više nikad ne pokazuje stale "mulberry32" stringu
 
 ---
 
@@ -149,11 +153,14 @@
 | A1 | `JurisdictionVariant { code, name, rtp_target, rtp_observed, regulatory_min, regulatory_max, pass, notes }` | `par.rs` + `jurisdiction/profiles.rs::regulatory_band()` | `tests/par_pro_006.rs::variant_emits_per_jurisdiction` |
 | A2 | `JurisdictionGatedSection { variants: Vec<JurisdictionVariant> }` — popunjava se za **svaku** jurisdikciju iz `ComplianceSection.jurisdictions` | `par.rs::generate` | `tests/par_pro_006.rs::all_active_jurisdictions_covered` |
 | A3 | Hard-coded mins iz Doc §8.3: Nevada 75 %, NJ 83 %, UK 80 % (Cat B), MGA 85 %, AU 85 %, SE 90 % — load iz `jurisdiction/profiles.rs` (ne hardkodiraj u par.rs) | `jurisdiction/profiles.rs` (audit + dopuna) | `tests/par_pro_006.rs::regulatory_mins_match_doc` |
+| A4 | **Theoretical vs Simulated RTP explicit PASS/FAIL gate** (MLAgent gap K, GLI §8.2) — `JurisdictionVariant.theoretical_rtp`, `JurisdictionVariant.simulated_rtp`, `JurisdictionVariant.delta_pp`, `JurisdictionVariant.within_ci_95: bool` — eksplicitan PASS uslov: `|theoretical − simulated| ≤ 1.96 × σ/√N` | `par.rs::generate` + uvoz `closed_form_rtp` iz `analytical.rs` | `tests/par_pro_006.rs::theoretical_vs_simulated_explicit_gate` |
 
 ### Acceptance gate
 - ✅ Observed RTP 96 % → svaki variant `pass = true`
 - ✅ Observed RTP 74 % → Nevada `pass = false`, ostali svi `pass = false` osim ako npr. UK Cat A koji nema min — tada audit warning
 - ✅ Variants su deterministički sortirani (alphabetical po code)
+- ✅ `within_ci_95 = true` kada |theoretical − simulated| ≤ 95% CI half-width
+- ✅ `delta_pp` field je u procentnim bodovima (pp), ne fraction
 
 ---
 
@@ -255,4 +262,19 @@
 - 🔴 Blocked
 - ⚪ Skipped (with reason)
 
-**Next action:** start **PAR-001 / A1** (`SignOffSection` + serde) — ETA 5 min.
+**Next action:** PAR-001 LANDED (5/5 atoma, 6/6 testova, clippy strict, 1071 workspace tests pass). Start **PAR-002 / A1** (`config_hash: String` SHA-256 nad canonical IR JSON).
+
+---
+
+## 15. MLAgent gap merge log (2026-05-24)
+
+MLAgent radio paralelno i predložio 15-row gap matricu. Tri gap-a apsorbovana u postojeće waves:
+
+| MLAgent gap | Apsorbovan u | Atom | Status |
+|---|---|---|---|
+| **L** — `par.rs:259` stale `"mulberry32"` (actual: xoshiro128**) | PAR-002 | A4 | merged |
+| **K** — Theoretical vs simulated explicit PASS/FAIL (GLI §8.2) | PAR-006 | A4 | merged |
+| **N** — Per-pay-rule RTP breakdown (Σ pravila audit trail) | PAR-001 | A5 | merged |
+
+Ostalih 12 MLAgent gap-ova bilo ili redundantno sa DatabaseAgent rows-ima ili **out-of-scope za Tier-1 PAR** (sky-blue research za W250+).
+

@@ -1,4 +1,4 @@
-//! GLI-16 compliant PAR Sheet generator — Faza 8 extended.
+//! GLI-16 compliant PAR Sheet generator — Faza 8 extended + PAR-001 Tier-1.
 //!
 //! Produces a structured [`PARSheet`] that can be serialised to JSON or
 //! printed as a human-readable report. The field set mirrors GLI-16 Appendix D
@@ -17,7 +17,11 @@
 //! 10. **Moments** *(Faza 8)* — Welford mean, variance, skewness, excess kurtosis
 //! 11. **Bonus distances** *(Faza 8)* — FS + H&W inter-trigger distribution
 //! 12. **Required spins** *(Faza 8)* — sample-size estimates for precision targets
+//! 13. **Sign-off** *(PAR-001)* — mathematician / approver names + signature blobs
+//! 14. **Reel config** *(PAR-001)* — per-reel mode, length, symbol counts, total cycle
+//! 15. **Paytable** *(PAR-001)* — n-of-a-kind multiplier matrix + per-pay-rule RTP audit trail
 
+use crate::ir::{ReelSet, SlotGameIR, SymbolKind};
 use crate::jackpot::JackpotMetrics;
 use crate::stats::{AtomicStats, PARMetrics, HDR_BUCKET_COUNT};
 use serde::{Deserialize, Serialize};
@@ -174,6 +178,242 @@ pub struct RequiredSpinsSection {
     pub for_01pp_ci_99: u64,
 }
 
+// ─── PAR-001 sections ─────────────────────────────────────────────────────────
+
+/// A single sign-off signature blob — mathematician, regulator, or QA approver.
+///
+/// `sha256_signature` is a hex-encoded SHA-256 over the signed payload. When the
+/// PAR is generated unsigned (e.g. dev / CI runs) the value is `"unsigned"`.
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq)]
+pub struct Signature {
+    pub name: String,
+    pub role: String,
+    pub sha256_signature: String,
+}
+
+/// GAME IDENTIFICATION block — GLI-16 App D + Doc §11 requirement.
+///
+/// Captures the human chain of custody behind the PAR sheet. Empty / `None`
+/// values are tolerated for in-progress drafts; certification builds must
+/// populate `mathematician` and `approved_by`.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct SignOffSection {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mathematician: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mathematician_signed_at_utc: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub approved_by: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub approved_at_utc: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub signatures: Vec<Signature>,
+}
+
+/// Whether a reel strip is defined as a weight distribution, an explicit strip,
+/// or a virtual-stops mapping. Drives downstream cycle math.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum ReelMode {
+    /// Per-symbol weight distribution → cycle = ∏(Σ weights).
+    Weighted,
+    /// Explicit ordered strip → cycle = ∏(strip lengths).
+    Strips,
+    /// Virtual stop map (Doc §5.3 weighted reels) — not yet exposed by IR.
+    VirtualMapped,
+}
+
+/// One physical reel definition for the REEL CONFIGURATION block.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ReelDef {
+    pub index: u32,
+    pub mode: ReelMode,
+    pub length: u32,
+    pub symbol_counts: BTreeMap<String, u32>,
+}
+
+/// REEL CONFIGURATION block — per-reel symbol distribution + total cycle.
+///
+/// `total_cycle = ∏ length_i` (saturating to `u64::MAX` on overflow — flagged via
+/// `total_cycle_overflow`). For Megaways games where reel heights are variable
+/// we still emit the maximum length per reel and the consumer must consult IR
+/// topology for `row_range_per_reel`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ReelConfigSection {
+    pub reels: Vec<ReelDef>,
+    pub total_cycle: u64,
+    pub total_cycle_overflow: bool,
+}
+
+impl ReelConfigSection {
+    /// Build the section from an IR's `ReelSet`. Strips → counts symbols on the
+    /// strip; Weighted → rounds weights to integer counts (×10_000 precision
+    /// matches the IR→GameConfig adapter contract).
+    pub fn from_ir(ir: &SlotGameIR) -> Self {
+        let mut reels: Vec<ReelDef> = Vec::new();
+        match &ir.reels {
+            ReelSet::Weighted { base, .. } => {
+                for (i, dist) in base.iter().enumerate() {
+                    // Use weight integer-rounded counts so a "10A / 9X" weight pair
+                    // produces sensible u32 stop counts even when authored as floats.
+                    let mut counts: BTreeMap<String, u32> = BTreeMap::new();
+                    let mut total = 0u32;
+                    for (sym, weight) in dist.iter() {
+                        let stops = (weight.max(0.0)).round() as u32;
+                        if stops > 0 {
+                            counts.insert(sym.clone(), stops);
+                            total = total.saturating_add(stops);
+                        }
+                    }
+                    reels.push(ReelDef {
+                        index: i as u32,
+                        mode: ReelMode::Weighted,
+                        length: total,
+                        symbol_counts: counts,
+                    });
+                }
+            }
+            ReelSet::Strips { base, .. } => {
+                for (i, strip) in base.iter().enumerate() {
+                    let mut counts: BTreeMap<String, u32> = BTreeMap::new();
+                    for sym in strip {
+                        *counts.entry(sym.clone()).or_insert(0) += 1;
+                    }
+                    reels.push(ReelDef {
+                        index: i as u32,
+                        mode: ReelMode::Strips,
+                        length: strip.len() as u32,
+                        symbol_counts: counts,
+                    });
+                }
+            }
+        }
+
+        // Total cycle = ∏ length_i with overflow guard.
+        let mut cycle: u128 = 1;
+        let mut overflow = false;
+        for r in &reels {
+            let next = cycle.saturating_mul(r.length as u128);
+            if next == u128::MAX || (r.length > 0 && next / r.length as u128 != cycle) {
+                overflow = true;
+            }
+            cycle = next;
+        }
+        let total_cycle = if cycle > u64::MAX as u128 {
+            overflow = true;
+            u64::MAX
+        } else {
+            cycle as u64
+        };
+
+        ReelConfigSection {
+            reels,
+            total_cycle,
+            total_cycle_overflow: overflow,
+        }
+    }
+}
+
+/// One row of the n-of-a-kind paytable (one symbol).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PaytableRow {
+    pub symbol: String,
+    pub kind: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub substitutes: Option<Vec<String>>,
+    /// Key = n-of-a-kind (or cluster size); Value = multiplier (× bet).
+    pub payouts: BTreeMap<u32, f64>,
+}
+
+/// PAYTABLE block — symbol × n-of-a-kind matrix + per-pay-rule RTP audit trail.
+///
+/// `pay_rule_rtp` (MLAgent gap N): a regulator audit-trail map keyed by
+/// `"{symbol}_{n}oak"` containing the **theoretical** RTP contribution
+/// (percent of bet) for each individual paytable cell. Sum of these
+/// contributions approximates the base-game RTP; feature RTP enters via
+/// `RTPSection.{free_spins,hold_and_win,cascade,jackpot}_rtp_pct`.
+///
+/// When the IR cannot be analytically scored (e.g. non-Lines evaluation),
+/// values are emitted as `0.0` and the map serves purely as a key-coverage
+/// audit trail.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct PaytableSection {
+    pub rows: Vec<PaytableRow>,
+    #[serde(default)]
+    pub pay_rule_rtp: BTreeMap<String, f64>,
+}
+
+impl PaytableSection {
+    /// Build the section from an IR. Iterates `ir.paytable` for the matrix rows
+    /// and pre-populates `pay_rule_rtp` with one entry per `(symbol, n-of-a-kind)`
+    /// pair — values default to `0.0` until an analytical solver fills them in.
+    pub fn from_ir(ir: &SlotGameIR) -> Self {
+        // Build a quick lookup from symbol_id → SymbolDef for kind/substitutes.
+        let lookup: BTreeMap<&str, &crate::ir::SymbolDef> =
+            ir.symbols.iter().map(|s| (s.id.as_str(), s)).collect();
+
+        let mut rows: Vec<PaytableRow> = Vec::new();
+        let mut pay_rule_rtp: BTreeMap<String, f64> = BTreeMap::new();
+
+        for (sym_id, count_map) in ir.paytable.iter() {
+            let def = lookup.get(sym_id.as_str());
+            let kind = def
+                .map(|d| symbol_kind_string(d.kind))
+                .unwrap_or_else(|| "unknown".to_string());
+            let substitutes = def.and_then(|d| match &d.substitutes {
+                Some(crate::ir::Substitutes::All(_)) => Some(vec!["*".to_string()]),
+                Some(crate::ir::Substitutes::List(v)) => Some(v.to_vec()),
+                None => None,
+            });
+
+            let mut payouts: BTreeMap<u32, f64> = BTreeMap::new();
+            for (count_key, mult) in count_map.iter() {
+                // count_key is a stringified u32 ("3", "4", "5"...). Cluster mode
+                // can emit "12+" — we keep only numeric keys for the matrix and
+                // still register them under pay_rule_rtp for audit coverage.
+                if let Ok(n) = count_key.parse::<u32>() {
+                    payouts.insert(n, *mult);
+                }
+                let key = format!("{sym_id}_{count_key}oak");
+                pay_rule_rtp.insert(key, 0.0);
+            }
+
+            rows.push(PaytableRow {
+                symbol: sym_id.clone(),
+                kind,
+                substitutes,
+                payouts,
+            });
+        }
+
+        // Stable sort by symbol id (BTreeMap iteration is already sorted,
+        // but we keep the explicit sort for safety against future iterator changes).
+        rows.sort_by(|a, b| a.symbol.cmp(&b.symbol));
+
+        PaytableSection {
+            rows,
+            pay_rule_rtp,
+        }
+    }
+}
+
+fn symbol_kind_string(kind: SymbolKind) -> String {
+    match kind {
+        SymbolKind::Lp => "lp",
+        SymbolKind::Hp => "hp",
+        SymbolKind::Wild => "wild",
+        SymbolKind::Scatter => "scatter",
+        SymbolKind::Bonus => "bonus",
+        SymbolKind::Multiplier => "multiplier",
+        SymbolKind::Sticky => "sticky",
+        SymbolKind::Expanding => "expanding",
+        SymbolKind::Mystery => "mystery",
+        SymbolKind::Transform => "transform",
+        SymbolKind::ChainWild => "chain_wild",
+    }
+    .to_string()
+}
+
 /// Complete GLI-compliant PAR sheet (serialisable to JSON).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PARSheet {
@@ -195,6 +435,45 @@ pub struct PARSheet {
     pub bonus_distances: BonusDistancesSection,
     #[serde(default)]
     pub required_spins: RequiredSpinsSection,
+    // ── PAR-001 additions (Tier-1 — Option so unsigned drafts skip them) ───────
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sign_off: Option<SignOffSection>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reel_config: Option<ReelConfigSection>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub paytable: Option<PaytableSection>,
+}
+
+// ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
+
+/// Replacement for the legacy 14-positional-arg `PARGenerator::generate`.
+///
+/// Old call sites continue to work through the deprecated shim; new code should
+/// build a `PARBuildContext`, mutate it, and call `PARGenerator::generate_with_context`.
+///
+/// `ir` and `sign_off` are optional — when present, they populate the Tier-1
+/// sections (`reel_config`, `paytable`, `sign_off`). When absent (e.g. quick
+/// CI runs), those sections are emitted as `None` and the JSON remains
+/// backward-compatible with the Faza 4/8 schema.
+pub struct PARBuildContext<'a> {
+    pub stats: &'a AtomicStats,
+    pub par: &'a PARMetrics,
+    pub jackpots: Vec<JackpotMetrics>,
+    pub game_id: String,
+    pub game_version: String,
+    pub target_rtp: f64,
+    pub rtp_tolerance: f64,
+    pub max_win_cap: f64,
+    pub jurisdictions: Vec<String>,
+    pub rtp_range_required: [f64; 2],
+    pub near_miss_rule: String,
+    pub ldw_disclosure: bool,
+    pub session_time_display: bool,
+    pub seeds_used: u32,
+    /// Optional IR — when present populates reel_config + paytable sections.
+    pub ir: Option<&'a SlotGameIR>,
+    /// Optional sign-off block — when `None`, an empty placeholder is emitted.
+    pub sign_off: Option<SignOffSection>,
 }
 
 // ─── Generator ────────────────────────────────────────────────────────────────
@@ -205,6 +484,11 @@ impl PARGenerator {
     /// Build a complete PAR sheet from accumulated simulation stats.
     ///
     /// All RTP / tolerance values are in **percentage points** (e.g., 96.0).
+    ///
+    /// **Deprecated since PAR-001**: prefer `PARGenerator::generate_with_context`
+    /// + `PARBuildContext`. This shim forwards to it with `ir = None` /
+    /// `sign_off = None` so the Tier-1 sections are absent — JSON shape stays
+    /// backward-compatible with Faza 4 / Faza 8 schema readers.
     #[allow(clippy::too_many_arguments)]
     pub fn generate(
         stats: &AtomicStats,
@@ -222,6 +506,51 @@ impl PARGenerator {
         session_time_display: bool,
         seeds_used: u32,
     ) -> PARSheet {
+        let ctx = PARBuildContext {
+            stats,
+            par,
+            jackpots,
+            game_id: game_id.to_string(),
+            game_version: game_version.to_string(),
+            target_rtp,
+            rtp_tolerance,
+            max_win_cap,
+            jurisdictions,
+            rtp_range_required,
+            near_miss_rule: near_miss_rule.to_string(),
+            ldw_disclosure,
+            session_time_display,
+            seeds_used,
+            ir: None,
+            sign_off: None,
+        };
+        Self::generate_with_context(ctx)
+    }
+
+    /// Build a complete PAR sheet from a `PARBuildContext`.
+    ///
+    /// When `ctx.ir` is `Some`, populates `reel_config` + `paytable`.
+    /// When `ctx.sign_off` is `Some`, attaches it; otherwise the section is `None`.
+    pub fn generate_with_context(ctx: PARBuildContext<'_>) -> PARSheet {
+        let PARBuildContext {
+            stats,
+            par,
+            jackpots,
+            game_id,
+            game_version,
+            target_rtp,
+            rtp_tolerance,
+            max_win_cap,
+            jurisdictions,
+            rtp_range_required,
+            near_miss_rule,
+            ldw_disclosure,
+            session_time_display,
+            seeds_used,
+            ir,
+            sign_off,
+        } = ctx;
+
         let total_spins = stats.total_spins.load(Ordering::Relaxed);
         let hdr = stats.get_hdr_histogram();
         let win_distribution = Self::build_win_buckets(&hdr, total_spins);
@@ -247,11 +576,15 @@ impl PARGenerator {
             feature_freq.insert("hold_and_win".to_string(), par.hnw_frequency);
         }
 
+        // PAR-001 Tier-1 sections (lifted from IR when present).
+        let reel_config = ir.map(ReelConfigSection::from_ir);
+        let paytable_section = ir.map(PaytableSection::from_ir);
+
         PARSheet {
             schema_version: "1.0.0".to_string(),
             meta: PARMeta {
-                game_id: game_id.to_string(),
-                game_version: game_version.to_string(),
+                game_id,
+                game_version,
                 engine_version: env!("CARGO_PKG_VERSION").to_string(),
                 generated_at_utc: "2026-05-12T00:00:00Z".to_string(),
                 total_spins,
@@ -292,7 +625,7 @@ impl PARGenerator {
                 rtp_within_required,
                 max_win_cap_required: max_win_cap,
                 max_win_within_cap,
-                near_miss_rule: near_miss_rule.to_string(),
+                near_miss_rule,
                 ldw_disclosure,
                 session_time_display,
             },
@@ -338,6 +671,10 @@ impl PARGenerator {
                 for_001pp_ci_95: par.required_spins_001pp_95,
                 for_01pp_ci_99: par.required_spins_01pp_99,
             },
+            // PAR-001 Tier-1 sections.
+            sign_off,
+            reel_config,
+            paytable: paytable_section,
         }
     }
 
@@ -442,6 +779,28 @@ impl PARGenerator {
                 par.meta.engine_version.len() + par.meta.seeds_used.to_string().len() + 33
             )
         );
+
+        // PAR-001: GAME IDENTIFICATION sign-off block.
+        if let Some(so) = &par.sign_off {
+            println!("╠{rule}╣");
+            println!("║  GAME IDENTIFICATION{:<width$}║", "", width = w - 22);
+            let m = so.mathematician.as_deref().unwrap_or("(unsigned)");
+            let a = so.approved_by.as_deref().unwrap_or("(unapproved)");
+            let line_m = format!("    Mathematician: {m}");
+            let line_a = format!("    Approved by:   {a}");
+            println!("║  {line_m:<width$}║", width = w - 4);
+            println!("║  {line_a:<width$}║", width = w - 4);
+            for sig in &so.signatures {
+                let line = format!(
+                    "    Sig · {} ({}): {}…",
+                    sig.name,
+                    sig.role,
+                    sig.sha256_signature.chars().take(16).collect::<String>()
+                );
+                println!("║  {line:<width$}║", width = w - 4);
+            }
+        }
+
         println!("╠{rule}╣");
 
         // RTP section.
@@ -689,6 +1048,64 @@ impl PARGenerator {
             "",
             width = w - 31
         );
+
+        // PAR-001: REEL CONFIGURATION block.
+        if let Some(rc) = &par.reel_config {
+            println!("╠{rule}╣");
+            let cycle_label = if rc.total_cycle_overflow {
+                format!("∏ = {} (overflow saturated)", rc.total_cycle)
+            } else {
+                format!("∏ = {}", rc.total_cycle)
+            };
+            let header = format!("  REEL CONFIGURATION   {cycle_label}");
+            println!("║{header:<width$}║", width = w - 2);
+            for r in &rc.reels {
+                let mode_s = match r.mode {
+                    ReelMode::Weighted => "weighted",
+                    ReelMode::Strips => "strips",
+                    ReelMode::VirtualMapped => "virtual",
+                };
+                let counts: Vec<String> = r
+                    .symbol_counts
+                    .iter()
+                    .map(|(s, n)| format!("{s}:{n}"))
+                    .collect();
+                let line = format!(
+                    "    Reel {} ({}, len={}): {}",
+                    r.index,
+                    mode_s,
+                    r.length,
+                    counts.join(", ")
+                );
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
+        }
+
+        // PAR-001: PAYTABLE block.
+        if let Some(pt) = &par.paytable {
+            println!("╠{rule}╣");
+            println!("║  PAYTABLE{:<width$}║", "", width = w - 11);
+            for row in &pt.rows {
+                let payouts: Vec<String> = row
+                    .payouts
+                    .iter()
+                    .map(|(n, m)| format!("{n}oak={m:.0}x"))
+                    .collect();
+                let line = format!("    {} ({}): {}", row.symbol, row.kind, payouts.join("  "));
+                let truncated: String = line.chars().take(w - 4).collect();
+                println!("║  {truncated:<width$}║", width = w - 4);
+            }
+            if !pt.pay_rule_rtp.is_empty() {
+                let total: f64 = pt.pay_rule_rtp.values().sum();
+                let line = format!(
+                    "    Σ pay_rule_rtp = {:.4}% across {} rule(s)",
+                    total,
+                    pt.pay_rule_rtp.len()
+                );
+                println!("║  {line:<width$}║", width = w - 4);
+            }
+        }
 
         // Faza 8: Bonus distances (only if triggered at all).
         if par.bonus_distances.free_spins.mean_distance.is_finite()
