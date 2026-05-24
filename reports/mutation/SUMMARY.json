@@ -1,5 +1,5 @@
 {
-  "generatedAtUtc": "2026-05-24T03:55:51.428Z",
+  "generatedAtUtc": "2026-05-24T04:08:30.444Z",
   "typescript": {
     "runtime": "typescript",
     "tool": "stryker",
@@ -56,19 +56,6 @@
       "scoreStrict": 0.8035714285714286
     },
     {
-      "crate": "adapter_w237_kill",
-      "runtime": "rust",
-      "tool": "cargo-mutants",
-      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/adapter_w237_kill/mutants.out/outcomes.json",
-      "total": 16,
-      "caught": 14,
-      "missed": 1,
-      "timeout": 0,
-      "unviable": 1,
-      "success": 0,
-      "scoreStrict": 0.9333333333333333
-    },
-    {
       "crate": "behavior_impls",
       "runtime": "rust",
       "tool": "cargo-mutants",
@@ -91,6 +78,19 @@
       "missed": 0,
       "timeout": 1,
       "unviable": 0,
+      "success": 0,
+      "scoreStrict": 1
+    },
+    {
+      "crate": "behavior_registry",
+      "runtime": "rust",
+      "tool": "cargo-mutants",
+      "source": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/mutation/rust/behavior_registry/mutants.out/outcomes.json",
+      "total": 13,
+      "caught": 12,
+      "missed": 0,
+      "timeout": 0,
+      "unviable": 1,
       "success": 0,
       "scoreStrict": 1
     },

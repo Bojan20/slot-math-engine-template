@@ -1,0 +1,392 @@
+[
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::register",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 20,
+          "column": 5
+        },
+        "end": {
+          "line": 30,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 22,
+        "column": 9
+      },
+      "end": {
+        "line": 29,
+        "column": 39
+      }
+    },
+    "replacement": "()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::override_behavior",
+      "return_type": "",
+      "span": {
+        "start": {
+          "line": 32,
+          "column": 5
+        },
+        "end": {
+          "line": 39,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 38,
+        "column": 9
+      },
+      "end": {
+        "line": 38,
+        "column": 53
+      }
+    },
+    "replacement": "()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::get",
+      "return_type": "-> Option<&dyn SymbolBehavior>",
+      "span": {
+        "start": {
+          "line": 41,
+          "column": 5
+        },
+        "end": {
+          "line": 43,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 9
+      },
+      "end": {
+        "line": 42,
+        "column": 52
+      }
+    },
+    "replacement": "None",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::get",
+      "return_type": "-> Option<&dyn SymbolBehavior>",
+      "span": {
+        "start": {
+          "line": 41,
+          "column": 5
+        },
+        "end": {
+          "line": 43,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 42,
+        "column": 9
+      },
+      "end": {
+        "line": 42,
+        "column": 52
+      }
+    },
+    "replacement": "Some(Box::leak(Box::new(Default::default())))",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::has",
+      "return_type": "-> bool",
+      "span": {
+        "start": {
+          "line": 45,
+          "column": 5
+        },
+        "end": {
+          "line": 47,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 46,
+        "column": 9
+      },
+      "end": {
+        "line": 46,
+        "column": 41
+      }
+    },
+    "replacement": "true",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::has",
+      "return_type": "-> bool",
+      "span": {
+        "start": {
+          "line": 45,
+          "column": 5
+        },
+        "end": {
+          "line": 47,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 46,
+        "column": 9
+      },
+      "end": {
+        "line": 46,
+        "column": 41
+      }
+    },
+    "replacement": "false",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::len",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 49,
+          "column": 5
+        },
+        "end": {
+          "line": 51,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 50,
+        "column": 9
+      },
+      "end": {
+        "line": 50,
+        "column": 23
+      }
+    },
+    "replacement": "0",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::len",
+      "return_type": "-> usize",
+      "span": {
+        "start": {
+          "line": 49,
+          "column": 5
+        },
+        "end": {
+          "line": 51,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 50,
+        "column": 9
+      },
+      "end": {
+        "line": 50,
+        "column": 23
+      }
+    },
+    "replacement": "1",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::is_empty",
+      "return_type": "-> bool",
+      "span": {
+        "start": {
+          "line": 53,
+          "column": 5
+        },
+        "end": {
+          "line": 55,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 54,
+        "column": 9
+      },
+      "end": {
+        "line": 54,
+        "column": 28
+      }
+    },
+    "replacement": "true",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::is_empty",
+      "return_type": "-> bool",
+      "span": {
+        "start": {
+          "line": 53,
+          "column": 5
+        },
+        "end": {
+          "line": 55,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 54,
+        "column": 9
+      },
+      "end": {
+        "line": 54,
+        "column": 28
+      }
+    },
+    "replacement": "false",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::symbol_ids",
+      "return_type": "-> impl Iterator<Item =&str>",
+      "span": {
+        "start": {
+          "line": 57,
+          "column": 5
+        },
+        "end": {
+          "line": 59,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 58,
+        "column": 9
+      },
+      "end": {
+        "line": 58,
+        "column": 44
+      }
+    },
+    "replacement": "::std::iter::empty()",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::symbol_ids",
+      "return_type": "-> impl Iterator<Item =&str>",
+      "span": {
+        "start": {
+          "line": 57,
+          "column": 5
+        },
+        "end": {
+          "line": 59,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 58,
+        "column": 9
+      },
+      "end": {
+        "line": 58,
+        "column": 44
+      }
+    },
+    "replacement": "::std::iter::once(\"\")",
+    "genre": "FnValue"
+  },
+  {
+    "package": "slot_sim",
+    "file": "rust-sim/src/behavior/registry.rs",
+    "function": {
+      "function_name": "BehaviorRegistry::symbol_ids",
+      "return_type": "-> impl Iterator<Item =&str>",
+      "span": {
+        "start": {
+          "line": 57,
+          "column": 5
+        },
+        "end": {
+          "line": 59,
+          "column": 6
+        }
+      }
+    },
+    "span": {
+      "start": {
+        "line": 58,
+        "column": 9
+      },
+      "end": {
+        "line": 58,
+        "column": 44
+      }
+    },
+    "replacement": "::std::iter::once(\"xyzzy\")",
+    "genre": "FnValue"
+  }
+]

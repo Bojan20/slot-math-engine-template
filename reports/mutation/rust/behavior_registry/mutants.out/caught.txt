@@ -1,0 +1,12 @@
+rust-sim/src/behavior/registry.rs:22:9: replace BehaviorRegistry::register with ()
+rust-sim/src/behavior/registry.rs:38:9: replace BehaviorRegistry::override_behavior with ()
+rust-sim/src/behavior/registry.rs:50:9: replace BehaviorRegistry::len -> usize with 1
+rust-sim/src/behavior/registry.rs:54:9: replace BehaviorRegistry::is_empty -> bool with true
+rust-sim/src/behavior/registry.rs:58:9: replace BehaviorRegistry::symbol_ids -> impl Iterator<Item =&str> with ::std::iter::empty()
+rust-sim/src/behavior/registry.rs:58:9: replace BehaviorRegistry::symbol_ids -> impl Iterator<Item =&str> with ::std::iter::once("")
+rust-sim/src/behavior/registry.rs:42:9: replace BehaviorRegistry::get -> Option<&dyn SymbolBehavior> with None
+rust-sim/src/behavior/registry.rs:58:9: replace BehaviorRegistry::symbol_ids -> impl Iterator<Item =&str> with ::std::iter::once("xyzzy")
+rust-sim/src/behavior/registry.rs:46:9: replace BehaviorRegistry::has -> bool with false
+rust-sim/src/behavior/registry.rs:46:9: replace BehaviorRegistry::has -> bool with true
+rust-sim/src/behavior/registry.rs:50:9: replace BehaviorRegistry::len -> usize with 0
+rust-sim/src/behavior/registry.rs:54:9: replace BehaviorRegistry::is_empty -> bool with false

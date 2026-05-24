@@ -3043,7 +3043,36 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 ### Šta NIJE u skopu W236
 
 1. **`adapter` re-run** — outcomes.json missing baseline. Tracked **W237**. → **closed by W237** (effective 100%, 0 missed) — daemon parallel-implemented inline mod in `rust-sim/src/ir/adapter.rs::w237_kill_tests`.
-2. **`behavior/registry.rs` baseline** — no mutation run yet. Tracked **W238**.
+2. **`behavior/registry.rs` baseline** — no mutation run yet. Tracked **W238**. → **closed by W238** (12/12 caught, 1 unviable, **100.00% strict**).
+
+---
+
+## ✅ W238 LANDED — `behavior/registry.rs` mutation 100% on first proper baseline (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — first-ever mutation baseline for `behavior/registry.rs` (66 LOC). Initial run: **5 caught / 7 missed / 1 unviable / 0 timeouts** = 41.67% nominal. All 7 missed were accessor-coverage gaps (`len`, `is_empty`, `symbol_ids`). Added 8 targeted unit tests in new `rust-sim/tests/faza3_registry_mutation_kills.rs`. Final re-run: **12 caught / 0 missed / 1 unviable = 100.00% strict**.
+
+### Šta je sletilo
+
+| Artifact | LOC | Svrha |
+|---|---|---|
+| `rust-sim/tests/faza3_registry_mutation_kills.rs` | +110 | **8 nova testa** — len() 3 sizes, is_empty() both branches, symbol_ids() actual keys + empty case + phantom-string detection |
+| `reports/mutation/rust/behavior_registry/mutants.out/{outcomes,caught,missed,timeout,unviable}.{json,txt}` | — | First-ever mutation baseline for behavior registry |
+
+### Per-Rust-scope state (after W238)
+
+| Scope | Mutants | Caught | Missed | Timeout | Unviable | Nominal | Effective | Status |
+|---|---|---|---|---|---|---|---|---|
+| `evaluator` | 21 | 21 | 0 | 0 | — | 100.00% | 100% | ✅ |
+| `behavior_pipeline` (W234) | 24 | 23 | 0 | 1 | 0 | 100.00% | 100% | ✅ |
+| `behavior_impls` (W235) | 172 | 146 | 0 | 2 | 24 | 100.00% | 100% | ✅ |
+| `rng` (W236, surgical) | 32 | 19 | 9 (all equivalent) | 3 | 1 | 70.97% | 100% | ✅ |
+| `adapter` (W237, surgical) | 16 | 16 | 0 | 0 | 2 | 100.00% | 100% | ✅ |
+| **`behavior_registry` (W238)** | 13 | 12 | 0 | 0 | 1 | **100.00%** | **100%** | ✅ NEW |
+
+### Šta NIJE u skopu W238
+
+1. **TS Stryker 95% threshold** — 85.38% sad, gap 9.62pp; izolovan tehnički dug, samostalna sesija (tracked **W239**).
+2. **Performance test za L62 `%→/` mutant u rng.rs** — would require benchmark assertion; deferred.
 3. **TS Stryker 95% threshold** — 85.38% sad, gap 9.62pp; izolovan tehnički dug.
 4. **Performance test for L62 `%→/` mutant** — would require benchmark assertion (e.g. 100K calls < 50ms); deferred — not part of correctness suite.
 

@@ -1,0 +1,1 @@
+rust-sim/src/behavior/registry.rs:42:9: replace BehaviorRegistry::get -> Option<&dyn SymbolBehavior> with Some(Box::leak(Box::new(Default::default())))
