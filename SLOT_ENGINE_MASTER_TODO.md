@@ -3225,6 +3225,23 @@ These are **proven equivalents** by algorithm analysis (Lemire 2019; bit-arithme
 
 ---
 
+## ✅ W241-followup-2 LANDED — features FS internal-loop + markov equivalent dokumentacija (2026-05-24)
+
+**Status:** ✅ **LANDED** 2026-05-24 — Background mutation verify runs confirmed kill specs reduce live missed mutants from 47→11 (markov) and 63→2 (features). Commit `304cfce` ships 3 features kill tests for the remaining survivors and documents the 11 markov survivors as PROVABLY EQUIVALENT (renormalisation-mask + short-circuit-vs-loop equivalence).
+
+| Module | Initial Missed | Post-Snapshot Missed | After-FS-Kill | Status |
+|---|---:|---:|---:|---|
+| markov | 47 | 11 | 11 (equivalent) | ✅ effective 95% |
+| features | 63 | 2 | 0 (kills landed) | ✅ effective 100% |
+| cluster | 1 | 0 (W241-followup) | 0 | ✅ 100% |
+| bulk | 16 | 0 (W241-followup) | 0 | ✅ 100% |
+
+### Cumulative wave era summary (W181-W241)
+
+**77 closed-form solvers**, **97 P-IDs in INDUSTRY_PATTERN_CATALOG**, **226 mutation kill specs** across 10 Rust modules, 73 Stryker specs. **Single-wave autonomous targets: COMPLETE.** Multi-week scope (TestU01 external, GPU Metal, PGO+BOLT, 10⁹×30 acceptance MC, Config Builder UI, UK AWP) remains.
+
+---
+
 ## ✅ W241-followup LANDED — live-missed kill across cluster/bulk/markov (+9 tests) (2026-05-24)
 
 **Status:** ✅ **LANDED** 2026-05-24 — three follow-up commits address mutants the original W241 specs did not kill on first cargo-mutants baseline pass.
