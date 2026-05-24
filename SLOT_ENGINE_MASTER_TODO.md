@@ -27,7 +27,7 @@
 |---|---|---|---|
 | 1 | TestU01 BigCrush / NIST 15 / PractRand 2³⁸ external reports | external binaries on lab box | requires installed test infra |
 | 2 | GPU Metal end-to-end byte-parity | 3-4 weeks | wgpu integration scaffold landed, full kernel still pending |
-| 3 | PGO + BOLT pipeline | 2-3 days | PGO bench dir exists, BOLT optimization not wired |
+| 3 | PGO + BOLT pipeline | 2-3 days | PGO bench dir exists, BOLT optimization not wired. → **W242 LANDED 2026-05-24** (`e1fb834`+`d8b204d`): PGO v1 -0.77% (bench-training mismatch); PGO v2 +0.08% (bench-aware Stage 2 fix). **Finding:** `full_spin/packed_ZeroAllocEvaluator` hot path is already near-optimal at baseline — PGO has nothing left to optimize on the criterion bench. Future PGO uplift requires CLI-throughput measurement (W242-followup-2). |
 | 4 | 30 mehanika numerical acceptance MC 10⁹ × 30 | 24-48h MC compute | needs dedicated bench run |
 | 5 | 11.1 web Config Builder UI standalone | 1-2 weeks UI work | Pitch + Studio cover demo path |
 | 6 | W149 follow-up Compensated math UK AWP | opt-in | only if expanding to UK land-based AWP |
