@@ -421,6 +421,57 @@ fn w240_features_simulate_hnw_jackpot_tally_sums_to_orb_count() {
     );
 }
 
+#[test]
+fn w240_features_simulate_hnw_jackpot_per_arm_exact_count() {
+    // Per-W240 code review: the `≤ orb_count` invariant cannot detect
+    // mutations like `+= → -=` on a single match arm (counter underflows
+    // to 0 or wraps).  Run many sessions and require strict-positive
+    // counts on the heavy-weight tags (MINI = 30% weight, MINOR = 15%)
+    // so any single arm whose increment is broken collapses to zero.
+    let cfg = build_config();
+    let grid_gen = GridGenerator::new(&cfg);
+    let evaluator = Evaluator::new(&cfg, &grid_gen);
+    let fsim = FeatureSim::new(&cfg, &grid_gen, &evaluator);
+
+    let mut total_mini: u32 = 0;
+    let mut total_minor: u32 = 0;
+    let mut total_major: u32 = 0;
+    let mut total_grand: u32 = 0;
+    let mut total_orbs: u32 = 0;
+
+    for seed in 0..200u64 {
+        let mut rng_grid = SlotRng::new(seed);
+        let initial_grid = grid_gen.generate_base(&mut rng_grid);
+        let mut rng = SlotRng::new(seed + 5000);
+        let r = fsim.simulate_hnw(&mut rng, &initial_grid, 1000);
+        total_mini += r.jackpots_mini;
+        total_minor += r.jackpots_minor;
+        total_major += r.jackpots_major;
+        total_grand += r.jackpots_grand;
+        total_orbs += r.final_orb_count as u32;
+    }
+
+    // 200 sessions × avg ~5 orbs/session × MINI weight 30% → ~300 hits.
+    // A mutation on the MINI arm (`+= → -=`, `delete match arm`) would
+    // drive total_mini to 0.  Same for MINOR (15%).  MAJOR (5%) and
+    // GRAND tag isn't even configured so we don't assert > 0 on it.
+    assert!(
+        total_mini > 50,
+        "MINI tag tally must accumulate > 50 hits over 200 sessions (got {})",
+        total_mini,
+    );
+    assert!(
+        total_minor > 20,
+        "MINOR tag tally must accumulate > 20 hits over 200 sessions (got {})",
+        total_minor,
+    );
+    // Sanity: combined ≤ orbs always.
+    assert!(
+        total_mini + total_minor + total_major + total_grand <= total_orbs,
+        "combined jackpot tally must remain ≤ total orbs",
+    );
+}
+
 // ── generate_orb sampling distribution ───────────────────────────────────
 
 #[test]

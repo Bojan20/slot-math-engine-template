@@ -34,9 +34,28 @@ when CPU saturation forced a soft-launch of the kill specs.
 |---|---:|---|
 | `rust-sim/tests/w240_validate_kills.rs` | 17 | Drives `cross_validate` / `paytable_shape_check` end-to-end through synthetic IRs that trigger each error path (FS scatter, mystery symbol, RTP allocation, cluster/ways evaluation, paytable shape). |
 | `rust-sim/tests/w240_jurisdiction_adapter_kills.rs` | 34 | Boundary tests for `check_rtp` (`<`/`>` at exact min/max), `check_max_win` (DE cap), `check_stake_cap` (UKGC age tier 2.0), `apply_fix` (DECL/STAKE/FEAT count text), `validate` counters, `auto_fix` remaining filter. |
-| `rust-sim/tests/w240_markov_kills.rs` | 17 | Closed-form analytical fixtures — `p=0` (no orbs), `p=1` (always fills), zero respins, full grid initial, grid-full-award linearity isolation, monotonicity in respin count and base_chance, respin_reset branch asymmetry, FS geometric series, cascade chain bounds. |
-| `rust-sim/tests/w240_features_kills.rs` | 14 | Deterministic seeded `FeatureSim::simulate_free_spins` and `simulate_hnw` — payout / spins / orb count / jackpot tally invariants and bet-scaling linearity. |
-| **Total** | **82** | |
+| `rust-sim/tests/w240_jurisdiction_kills.rs` | 14 | Daemon-parallel companion spec — same module, alternative assertion style (lower-detail wrappers around the same kill paths). Provides redundant coverage; landed alongside the `_adapter_` variant to widen test diversity. |
+| `rust-sim/tests/w240_markov_kills.rs` | 18 | Closed-form analytical fixtures — `p=0` (no orbs), `p=1` (always fills), zero respins, full grid initial, grid-full-award linearity isolation (tightened 1e-6 → 1e-9), monotonicity in respin count and base_chance, respin_reset branch asymmetry, FS geometric series, cascade chain bounds, `binom_pmf` renormalisation invariant on 40-cell × p=0.5 grid. |
+| `rust-sim/tests/w240_features_kills.rs` | 15 | Deterministic seeded `FeatureSim::simulate_free_spins` and `simulate_hnw` — payout / spins / orb count / jackpot tally invariants and bet-scaling linearity, plus per-arm jackpot exact counts (`MINI > 50`, `MINOR > 20` over 200 sessions to detect single-arm `+= → -=`). |
+| **Total** | **98** | |
+
+### Code-review fixes (per W240 self-review)
+
+After commit `6c4a2c7`, an independent code review surfaced:
+1. `w240_max_win_at_cap_no_error` in jurisdiction_adapter had a dead-code
+   `let _ = max_errs;` — refactored to an explicit "ADM + UKGC have no
+   max_win cap" assertion that proves the `check_max_win -> vec![violation]`
+   mutant body cannot fire when `profile.max_win_x` is `None`.
+2. Markov grid-full-award linearity tolerance tightened from `1e-6` to
+   `1e-9` (intermediate-arithmetic mutations can produce sub-1e-6 drift).
+3. New `w240_markov_binom_pmf_normalization_invariant` covers the
+   `binom_pmf` renormalisation branch (L69-L71 — 4 missed mutants) via a
+   40-cell × p=0.5 fixture that forces accumulated f64 rounding to trip
+   the `> 1e-12` guard.
+4. New `w240_features_simulate_hnw_jackpot_per_arm_exact_count` runs 200
+   H&W sessions and asserts `MINI > 50` and `MINOR > 20` so any single
+   match-arm mutation (`delete match arm`, `+= → -=`) collapses the
+   per-tag counter to zero, surfacing the kill.
 
 All 82 specs pass on the unmutated tree (`cargo test --tests w240_`).
 

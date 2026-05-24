@@ -228,23 +228,33 @@ fn w240_rtp_range_subtraction_direction() {
 // ── check_max_win (L71-L72) ───────────────────────────────────────────────
 
 #[test]
-fn w240_max_win_at_cap_no_error() {
-    // ADM has max_win_x cap = 100_000.  Set IR exactly at cap.
-    // Original `>`: 100000 > 100000 = false → compliant.
-    // Mutant `>=`: true → spurious MAXWIN-001.
+fn w240_max_win_at_cap_no_error_unboundedjurisdictions() {
+    // ADM and UKGC declare `max_win_x = None` → check_max_win must
+    // return empty vec regardless of ir.limits.max_win_x.  This kills
+    // the `check_max_win -> vec![ComplianceViolation { ... }]` mutant
+    // that would falsely report a violation when no cap is defined.
     let mut ir = base_ir();
-    ir.limits.max_win_x = 100_000.0;
-    ir.compliance.jurisdictions = vec!["ADM".to_string()];
-    ir.limits.target_rtp = 0.96; // inside ADM range
-    let report = validate(&ir, &["ADM"]);
-    let max_errs: Vec<_> = report
+    ir.limits.max_win_x = 1_000_000_000.0; // absurdly high
+    let report_adm = validate(&ir, &["ADM"]);
+    let adm_maxwin: Vec<_> = report_adm
         .violations
         .iter()
         .filter(|v| v.rule_id == "ADM-MAXWIN-001")
         .collect();
-    // ADM has no max_win_x cap, so this is a no-op test for ADM.
-    // Use a jurisdiction with max_win cap — DE (German).
-    let _ = max_errs;
+    assert!(
+        adm_maxwin.is_empty(),
+        "ADM has no max_win cap → no MAXWIN-001 violation regardless of limits.max_win_x",
+    );
+    let report_ukgc = validate(&ir, &["UKGC"]);
+    let ukgc_maxwin: Vec<_> = report_ukgc
+        .violations
+        .iter()
+        .filter(|v| v.rule_id == "UKGC-MAXWIN-001")
+        .collect();
+    assert!(
+        ukgc_maxwin.is_empty(),
+        "UKGC has no max_win cap → no MAXWIN-001 violation regardless of limits.max_win_x",
+    );
 }
 
 #[test]

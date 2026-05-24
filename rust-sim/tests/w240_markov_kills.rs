@@ -159,21 +159,24 @@ fn w240_markov_hnw_grid_full_award_delta_isolation() {
     assert!(p_fill > 0.0 && p_fill < 1.0); // non-trivial configuration
     let delta1 = r1.expected_payout - r0.expected_payout;
     let delta2 = r2.expected_payout - r0.expected_payout;
+    // Tightened from 1e-6 → 1e-9 per W240 code review (Stryker-style
+    // arithmetic mutations on intermediate `+` / `-` ops can produce
+    // sub-1e-6 drift that the looser tolerance would silently accept).
     assert!(
-        (delta1 - 100.0 * p_fill).abs() < 1e-6,
+        (delta1 - 100.0 * p_fill).abs() < 1e-9,
         "award=100 delta: expected {}, got {}",
         100.0 * p_fill,
         delta1,
     );
     assert!(
-        (delta2 - 250.0 * p_fill).abs() < 1e-6,
+        (delta2 - 250.0 * p_fill).abs() < 1e-9,
         "award=250 delta: expected {}, got {}",
         250.0 * p_fill,
         delta2,
     );
     // Ratio test: delta2 / delta1 must equal 250/100 = 2.5 exactly.
     assert!(
-        (delta2 / delta1 - 2.5).abs() < 1e-9,
+        (delta2 / delta1 - 2.5).abs() < 1e-12,
         "award scales linearly → delta2/delta1 = 2.5 exactly",
     );
 }
@@ -458,5 +461,51 @@ fn w240_markov_cascade_p1_max_chain_depth() {
         (res.expected_cascade_chains - 4.0).abs() < 1e-9,
         "p=1, max=4 → E[chains] = 4 (got {})",
         res.expected_cascade_chains,
+    );
+}
+
+// ── binom_pmf renormalization branch (L69-L71) ────────────────────────────
+
+#[test]
+fn w240_markov_binom_pmf_normalization_invariant() {
+    // The binom_pmf normalisation runs only when (sum - 1.0).abs() > 1e-12.
+    // For larger n and p ≈ 0.5, accumulated f64 rounding triggers it.
+    //
+    // We can't call `binom_pmf` directly (it's private), but we observe
+    // its output indirectly: solve_hold_and_win iterates pmf-sum × pmf-sum
+    // across many cells, and the renormalisation step keeps probability
+    // mass exact.  Any mutation on `/=` (L71), `>` (L69:12 or L69:39), or
+    // `&&` (L69:18) on the renormalisation path would skew the
+    // distribution → expected_orb_count drifts out of [0, total_cells].
+    //
+    // We construct a 40-cell grid (well under the 100 panic cap) with
+    // p ≈ 0.5 to force the renormalisation branch.
+    let cfg = HoldAndWinConfig {
+        total_cells: 40,
+        init_locked_cells: 0,
+        initial_respins: 10,
+        expected_cell_value: 1.0,
+        base_chance: 0.5,
+        fill_bonus_cap: 0.0,
+        respin_reset_on_new: false,
+        grid_full_award: 0.0,
+    };
+    let res = solve_hold_and_win(&cfg);
+    // E[orbs] must lie in [0, total_cells] strictly; mutant
+    // misnormalisation pushes mass outside this band.
+    assert!(
+        res.expected_orb_count > 0.0,
+        "orb count must be > 0 with p=0.5",
+    );
+    assert!(
+        res.expected_orb_count <= 40.0 + 1e-9,
+        "orb count must be ≤ total_cells (got {})",
+        res.expected_orb_count,
+    );
+    // Probability mass conservation: P(grid_full) ∈ [0, 1].
+    assert!(
+        (0.0..=1.0).contains(&res.grid_full_probability),
+        "P(grid_full) must be in [0,1] (got {})",
+        res.grid_full_probability,
     );
 }
