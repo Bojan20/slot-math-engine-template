@@ -21,6 +21,7 @@
 //! 14. **Reel config** *(PAR-001)* — per-reel mode, length, symbol counts, total cycle
 //! 15. **Paytable** *(PAR-001)* — n-of-a-kind multiplier matrix + per-pay-rule RTP audit trail
 
+use crate::bonus_buy::BonusBuySection;
 use crate::ir::{ReelSet, RngKind, SlotGameIR, SymbolKind};
 use crate::jackpot::JackpotMetrics;
 use crate::stats::{AtomicStats, BonusDistanceTracker, HdrHistogram, PARMetrics, DISTANCE_THRESHOLDS, HDR_BUCKET_COUNT};
@@ -1123,6 +1124,9 @@ pub struct PARSheet {
     // ── PAR-006 — Jurisdiction-gated RTP variants + GLI §8.2 gate
     #[serde(default)]
     pub jurisdiction_gated: JurisdictionGatedSection,
+    // ── PAR-012 — Bonus Buy economics (offers + regulator warn flag)
+    #[serde(default)]
+    pub bonus_buy: BonusBuySection,
 }
 
 // ─── Build context (PAR-001 A4) ───────────────────────────────────────────────
@@ -1259,6 +1263,10 @@ impl PARGenerator {
             par.total_rtp,
             par.std_error,
         );
+        // PAR-012 — Bonus Buy economics (offers + warn flag for banned jurisdictions).
+        let bonus_buy = ir
+            .map(|i| BonusBuySection::from_ir(i, &jurisdictions))
+            .unwrap_or_default();
 
         let jackpot_rtp_pct: f64 = jackpots.iter().map(|j| j.contribution_rtp * 100.0).sum();
 
@@ -1402,6 +1410,8 @@ impl PARGenerator {
             markov,
             // PAR-006 — Jurisdiction-gated RTP.
             jurisdiction_gated,
+            // PAR-012 — Bonus Buy economics.
+            bonus_buy,
         }
     }
 

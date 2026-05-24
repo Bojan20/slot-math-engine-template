@@ -54,6 +54,8 @@ pub mod tail_fit;
 pub mod par;
 /// PAR-011 — Quasi-Monte Carlo low-discrepancy sequences (Halton/Sobol/Lattice).
 pub mod qmc;
+/// PAR-012 — Bonus Buy EV calculator + regulatory ban audit.
+pub mod bonus_buy;
 /// FAZA 8.5 — Spin Recall & Replay.
 /// Hash-chained NDJSON journal + sha256 canonical-JSON integrity +
 /// deterministic replay. Cross-language KAT in `tests/recall_kat.rs`
