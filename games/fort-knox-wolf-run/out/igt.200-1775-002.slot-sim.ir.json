@@ -13,8 +13,9 @@
     "hit_frequency": 0.24430426,
     "win_frequency": 0.114143134,
     "notes": [
-      "Auto-mapped from IGT parse_par IR · SWID=200-1775-002 · W4.3b"
-    ]
+      "Auto-mapped from IGT parse_par IR · SWID=200-1775-002 · W4.3b/c/d"
+    ],
+    "sampling_mode": "physical_strip"
   },
   "topology": {
     "kind": "rectangular",
@@ -4453,11 +4454,12 @@
       "trigger_count_min": 3,
       "awards": [
         {
-          "label": "FortKnox_avg",
+          "label": "FortKnox_avg_BM1",
           "weight": 1,
-          "pays_coins": 986.8205582356183
+          "pays_coins": 26.59187029818189
         }
-      ]
+      ],
+      "trigger_prob": 0.00670005
     },
     {
       "kind": "linear_progressive",

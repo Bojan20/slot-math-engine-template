@@ -160,7 +160,7 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W5.5a — IGT PAR_002 FK award bug** | 60-90 min | fix FK Trigger/Award parser za PAR_002 (FK award 986.82× sumnjivo high; 4.46 RTP drift) |
+| 🥇 1 | **~~W5.5a — IGT PAR_002 FK award bug~~** | _fixed_ | ✅ root cause was stale IR (generated pre-W4.3c parser); regen via `slot-build` → 3/3 games pass quick gate |
 | 🥈 2 | **W4.3e — IGT base eval gap audit** | 60-90 min | check IGT wild expansion / scatter pay possibilities (0.9 % gap) |
 | 🥉 3 | **W5.4 — IR → Studio UI skeleton** | 120-180 min | Svelte scaffold sa reel viz + paytable; mirror W5.3 codegen pattern |
 
