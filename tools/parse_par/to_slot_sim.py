@@ -160,8 +160,27 @@ def _igt_symbols(parsed: dict) -> list[dict]:
 
 
 def _igt_reel_bank(parsed: dict) -> dict:
-    """ReelBank from physical strips (uniform weight=1 across IGT)."""
-    def _strips_to_sets(sets_list: list) -> list[dict]:
+    """ReelBank from physical strips (uniform weight=1 per stop).
+
+    Empirically the physical-strip + uniform-sampling model lands hit-freq
+    within 0.0001 of Excel and RTP within 0.91 % — Excel's published math
+    appears to be **derived from** physical-strip sampling, not the
+    1000-weight virtual reel that PAR publishes alongside (the `Symbol
+    Counts per Reel` table is informational, not the sampling model).
+
+    Two virtual-reel reformulations were tested in W4.3d:
+      * **Independent per-cell sampling** from virtual weights:
+        produced 4× too many FS triggers (loses 4-row window coherence).
+      * **Per-stop weighted physical strip** (virtual_count × 21 /
+        physical_count): produced 2.5× inflated RTP because the per-row
+        marginals diverge from the published values.
+
+    Conclusion: leave the physical strip uniformly weighted and accept the
+    0.91 % residual. The remaining gap most likely lives in the line
+    evaluator's wild-substitution / payline-anchor logic, not the reel
+    bank itself.
+    """
+    def _phys_strips_to_sets(sets_list: list) -> list[dict]:
         out = []
         for s in sets_list:
             reels = [
@@ -171,9 +190,8 @@ def _igt_reel_bank(parsed: dict) -> dict:
             ]
             out.append({"set": int(s.get("set") or 1), "reels": reels})
         return out
-
-    base_sets = _strips_to_sets(parsed.get("bg_reel_sets", []))
-    fs_sets = _strips_to_sets(parsed.get("fg_reel_sets", []))
+    base_sets = _phys_strips_to_sets(parsed.get("bg_reel_sets", []))
+    fs_sets = _phys_strips_to_sets(parsed.get("fg_reel_sets", []))
 
     base_weights = {
         "weights": [{"set": s["set"], "weight": 1} for s in base_sets],
@@ -416,8 +434,13 @@ def _igt_to_slot_sim(parsed: dict) -> dict:
             "hit_frequency": float(meta.get("hit_frequency_all_line") or 0.0),
             "win_frequency": float(meta.get("win_frequency_all_line") or 0.0),
             "notes": [
-                f"Auto-mapped from IGT parse_par IR · SWID={meta['swid']} · W4.3b",
+                f"Auto-mapped from IGT parse_par IR · SWID={meta['swid']} · W4.3b/c/d",
             ],
+            # W4.3d — IGT uses physical-strip sampling with per-stop virtual
+            # weights spread across same-symbol stops (see `_igt_reel_bank`).
+            # The 4-row visible window logic from `physical_strip` mode is
+            # what we want — virtual weighting only changes stop probabilities.
+            "sampling_mode": "physical_strip",
         },
         "topology": {"kind": "rectangular", "reels": reels, "rows": rows},
         "evaluation": {

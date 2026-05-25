@@ -14,6 +14,8 @@ pub struct Engine<'a> {
     pub pt: CompiledPaytable,
     pub rows: usize,
     pub lines: u32,
+    /// W4.3d — true when `meta.sampling_mode == "virtual_independent"`.
+    pub virtual_mode: bool,
 }
 
 impl<'a> Engine<'a> {
@@ -30,7 +32,12 @@ impl<'a> Engine<'a> {
             Evaluation::Lines { lines, .. } => lines.len() as u32,
             _ => ir.bet_table.lines,
         };
-        Engine { ir, base_picker, fs_picker, pt, rows, lines }
+        let virtual_mode = ir
+            .meta
+            .sampling_mode
+            .as_deref()
+            == Some("virtual_independent");
+        Engine { ir, base_picker, fs_picker, pt, rows, lines, virtual_mode }
     }
 
     pub fn run(&self, n_spins: u64, bet_multiplier: i64, seed: u64) -> SimStats {
@@ -38,7 +45,11 @@ impl<'a> Engine<'a> {
         let mut s = SimStats::default();
         for _ in 0..n_spins {
             let rs = self.base_picker.pick(&mut rng);
-            let grid = Grid::spin(rs, self.rows, &mut rng);
+            let grid = if self.virtual_mode {
+                Grid::spin_virtual(rs, self.rows, &mut rng)
+            } else {
+                Grid::spin(rs, self.rows, &mut rng)
+            };
             let base = evaluate_lines(&grid, self.ir, &self.pt);
             let mut spin_x = base.payout_total_bet_x(self.lines);
             s.base_x += spin_x;
@@ -51,6 +62,7 @@ impl<'a> Engine<'a> {
                 &mut rng,
                 self.fs_picker.as_ref(),
                 &self.pt,
+                self.virtual_mode,
             );
             spin_x += feat.coins / (self.lines as f64);
             for ev in &feat.events {

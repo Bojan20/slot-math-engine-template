@@ -13,8 +13,9 @@
     "hit_frequency": 0.244331512,
     "win_frequency": 0.11490461,
     "notes": [
-      "Auto-mapped from IGT parse_par IR · SWID=200-1775-001 · W4.3b"
-    ]
+      "Auto-mapped from IGT parse_par IR · SWID=200-1775-001 · W4.3b/c/d"
+    ],
+    "sampling_mode": "physical_strip"
   },
   "topology": {
     "kind": "rectangular",

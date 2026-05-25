@@ -34,6 +34,7 @@ pub fn run(
     pt: &CompiledPaytable,
     base: &SpinWin,
     rng: &mut Prng,
+    virtual_mode: bool,
 ) -> FeatureOutcome {
     let mut out = FeatureOutcome::default();
 
@@ -65,7 +66,11 @@ pub fn run(
         remaining -= 1;
         total_executed += 1;
         let rs = fs_picker.pick(rng);
-        let grid = Grid::spin(rs, rows, rng);
+        let grid = if virtual_mode {
+            Grid::spin_virtual(rs, rows, rng)
+        } else {
+            Grid::spin(rs, rows, rng)
+        };
         let w = evaluate_lines(&grid, ir, pt);
         out.coins += w.line_coins;
         // `evaluate_lines` returns scatter as total-bet-× while

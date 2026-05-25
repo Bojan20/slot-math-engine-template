@@ -177,6 +177,29 @@ impl Grid {
         g
     }
 
+    /// W4.3d — IGT virtual-reel sampling.
+    ///
+    /// Per-cell independent sample from each reel's weighted strip. This
+    /// matches how IGT publishes `Symbol Counts per Reel` (virtual reel of
+    /// weight-total ~1000 per reel) rather than the L&W positional model
+    /// where four adjacent rows of a physical strip share a window.
+    ///
+    /// Equivalent to drawing each (reel, row) cell independently from the
+    /// reel's symbol distribution — no row-to-row correlation on the same
+    /// reel. Stops are not meaningful in virtual mode and are zeroed.
+    pub fn spin_virtual(rs: &CompiledReelSet, rows: usize, rng: &mut Prng) -> Self {
+        let reels = rs.strips.len();
+        let mut g = Grid::new(reels, rows);
+        for r in 0..reels {
+            for row in 0..rows {
+                let stop = rs.strips[r].sample_stop(rng);
+                g.cells[r][row] = rs.strips[r].symbols[stop].clone();
+            }
+            g.stops[r] = 0; // not meaningful in virtual mode
+        }
+        g
+    }
+
     /// Linked-reels spin: a subset of reels share one stop (CE FS reels 2/3/4).
     pub fn spin_linked(
         rs: &CompiledReelSet,

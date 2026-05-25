@@ -45,6 +45,7 @@ pub fn run_features(
     rng: &mut Prng,
     fs_picker: Option<&ReelSetPicker>,
     pt: &CompiledPaytable,
+    virtual_mode: bool,
 ) -> FeatureOutcome {
     let mut out = FeatureOutcome::default();
     for feat in &ir.features {
@@ -66,7 +67,7 @@ pub fn run_features(
                     retrigger_spins: *retrigger_spins,
                     max_total_spins: *max_total_spins,
                 };
-                out.merge(free_spins::run(params, ir, picker, pt, base, rng));
+                out.merge(free_spins::run(params, ir, picker, pt, base, rng, virtual_mode));
             }
             Feature::PickBonus {
                 trigger_symbol,

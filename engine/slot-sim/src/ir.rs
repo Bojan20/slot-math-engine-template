@@ -301,6 +301,14 @@ pub struct Meta {
     pub win_frequency: f64,
     #[serde(default)]
     pub notes: Vec<String>,
+    /// W4.3d — sampling mode override.
+    ///   * `Some("virtual_independent")` — per-cell independent sample
+    ///     from a weighted per-reel strip (IGT virtual-reel model).
+    ///   * `Some("physical_strip")` (default) — adjacent-row sampling
+    ///     from a physical strip with `visible()` window (L&W model).
+    ///   * `None` — defaults to `physical_strip`.
+    #[serde(default)]
+    pub sampling_mode: Option<String>,
 }
 
 // ───────────────────────────── ROOT IR ─────────────────────────────
