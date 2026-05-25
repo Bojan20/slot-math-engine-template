@@ -42,8 +42,16 @@ impl<'a> Engine<'a> {
             let base = evaluate_lines(&grid, self.ir, &self.pt);
             let mut spin_x = base.payout_total_bet_x(self.lines);
             s.base_x += spin_x;
-            // Feature dispatch — stub for now, returns 0 coins.
-            let feat = run_features(self.ir, &grid, &base, bet_multiplier, &mut rng);
+            // Feature dispatch — W4.3c: FreeSpins / PickBonus / LinearProgressive live.
+            let feat = run_features(
+                self.ir,
+                &grid,
+                &base,
+                bet_multiplier,
+                &mut rng,
+                self.fs_picker.as_ref(),
+                &self.pt,
+            );
             spin_x += feat.coins / (self.lines as f64);
             for ev in &feat.events {
                 *s.event_count.entry(ev.clone()).or_insert(0) += 1;

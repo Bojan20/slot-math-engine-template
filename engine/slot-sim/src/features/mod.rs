@@ -11,9 +11,9 @@ pub mod wild_expand;
 pub mod pattern_win;
 pub mod linear_progressive;
 
-use crate::evaluate::SpinWin;
-use crate::ir::Ir;
-use crate::reels::Grid;
+use crate::evaluate::{CompiledPaytable, SpinWin};
+use crate::ir::{Feature, Ir};
+use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
 
 #[derive(Debug, Clone, Default)]
@@ -24,15 +24,79 @@ pub struct FeatureOutcome {
     pub events: Vec<String>,
 }
 
-/// Dispatches every active feature for one spin. Stub — full implementations
-/// in `hold_and_win.rs` / `pick_bonus.rs` / etc.
+impl FeatureOutcome {
+    fn merge(&mut self, other: FeatureOutcome) {
+        self.coins += other.coins;
+        self.events.extend(other.events);
+    }
+}
+
+/// Per-spin feature dispatch (W4.3c).
+///
+/// Walks the IR's feature list in declaration order. Each variant routes to
+/// its own module runner. Sub-feature spawning (e.g. FS inside hold-and-win)
+/// is owned by the individual runner — this dispatcher only handles the
+/// top-level fire decisions.
 pub fn run_features(
-    _ir: &Ir,
+    ir: &Ir,
     _grid: &Grid,
-    _base: &SpinWin,
-    _bet_multiplier: i64,
-    _rng: &mut Prng,
+    base: &SpinWin,
+    bet_multiplier: i64,
+    rng: &mut Prng,
+    fs_picker: Option<&ReelSetPicker>,
+    pt: &CompiledPaytable,
 ) -> FeatureOutcome {
-    // TODO Wave 4.2: per-Feature variant dispatch
-    FeatureOutcome::default()
+    let mut out = FeatureOutcome::default();
+    for feat in &ir.features {
+        match feat {
+            Feature::FreeSpins {
+                trigger_symbol,
+                trigger_count_min,
+                initial_spins,
+                retrigger_spins,
+                max_total_spins,
+                reel_bank: _,
+                linked_reels: _,
+            } => {
+                let Some(picker) = fs_picker else { continue };
+                let params = free_spins::FreeSpinsParams {
+                    trigger_symbol,
+                    trigger_count_min: *trigger_count_min,
+                    initial_spins: *initial_spins,
+                    retrigger_spins: *retrigger_spins,
+                    max_total_spins: *max_total_spins,
+                };
+                out.merge(free_spins::run(params, ir, picker, pt, base, rng));
+            }
+            Feature::PickBonus {
+                trigger_symbol,
+                trigger_count_min,
+                awards,
+                trigger_prob,
+            } => {
+                let params = pick_bonus::PickBonusParams {
+                    trigger_symbol,
+                    trigger_count_min: *trigger_count_min,
+                    awards,
+                    trigger_prob: *trigger_prob,
+                };
+                out.merge(pick_bonus::run(params, ir, base, rng));
+            }
+            Feature::LinearProgressive {
+                odds_at_bm1,
+                top_award_coins,
+            } => {
+                let params = linear_progressive::LinearProgressiveParams {
+                    odds_at_bm1: *odds_at_bm1,
+                    top_award_coins: *top_award_coins,
+                };
+                out.merge(linear_progressive::run(params, ir, bet_multiplier, base, rng));
+            }
+            // Other variants (HoldAndWin / WildExpand / PatternWin /
+            // GrandPrize) remain to be implemented when those vendor paths
+            // arrive (CE COPY TEST / L&W route in W4.4).
+            _ => {}
+        }
+    }
+    out
 }

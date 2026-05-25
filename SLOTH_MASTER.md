@@ -52,8 +52,9 @@
 |---|---|:---:|---|
 | P2.1 | `parse_par` engine + vendor profile YAML system | ✅ | `tools/parse_par/` (W4.2 = `612bc68`) |
 | P2.2 | **W4.3a — Per-reel IGT strip parser** ("Reel N / Weights" stripe layout) | ✅ | `tools/parse_par/core.py::_parse_reel_sets_stripe` + `igt.yaml` v2 — strip lengths bit-exact (71/109/70/101/89 base, 105/94/102/68/91 fs PAR_001; FS reel 1 = 107 for PAR_002) |
-| P2.3 | **W4.3b — IGT → slot-sim model** (FK pick bonus + linear progressive primitive mapping) | ✅ | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test. IR JSON deserializes to `slot_sim::ir::Ir`, engine runs 10k+ spins, line-eval RTP ~0.70 (gap = features::run_features stub = W4.3c) |
-| P2.4 | **W4.3c — IGT feature dispatch + 10B MC verify** PAR_001+002 vs Excel (target ≤0.05%) | 🚧 NEXT | implement `run_features` for FreeSpins/PickBonus/LinearProgressive; then 10B MC parity gate |
+| P2.3 | **W4.3b — IGT → slot-sim model** (FK pick bonus + linear progressive primitive mapping) | ✅ | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test. IR JSON deserializes to `slot_sim::ir::Ir`, engine runs 10k+ spins, line-eval RTP ~0.70 |
+| P2.4 | **W4.3c — IGT feature dispatch live** (FreeSpins / PickBonus Bernoulli / LinearProgressive) | ✅ | `engine/slot-sim/src/features/{free_spins,pick_bonus,linear_progressive}.rs` + `mod.rs` dispatcher + FK Trigger Table + Award Table parser + Bernoulli trigger on PickBonus + Wild-prefix MAX bug fix in `evaluate_lines`. **RTP 0.9523 vs Excel 0.9614 (gap 0.9 %)**; hit-freq 0.2444 ✅ exact match; win-freq 0.1146 ✅ within 0.0003 |
+| P2.5 | **W4.3d — Virtual reel sampler** (IGT 1000-stop weights vs physical 71-stop strip) | 🚧 NEXT | close remaining 0.9 % RTP gap: physical strip → virtual reel mapping using `symbol_counts_per_reel` |
 | P2.5 | **W4.4 — Aristocrat profile** (Lightning Link / Dragon Link layout) | ⏳ | new profile YAML + 3 PAR test |
 | P2.6 | **W4.5 — NetEnt profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
 | P2.7 | **W4.6 — Pragmatic Play profile** (Megaways + Sticky Bonus) | ⏳ | new |
@@ -151,7 +152,7 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W4.3c — IGT feature dispatch + 10B MC verify** | 2-3h impl + 90min sim | FreeSpins/PickBonus/LinearProgressive runners; 10B parity ≤0.05% |
+| 🥇 1 | **W4.3d — Virtual-reel sampler** | 45-60 min | close 0.9 % RTP gap (`symbol_counts_per_reel` → independent per-cell virtual sample) |
 | 🥈 2 | **W5.1 — `slot-build` CLI scaffold** | 60-90 min | `<input>` → detect format → dispatch parser → IR; entry point |
 | 🥉 3 | **W4.4 — L&W → slot-sim adapter** | 90-120 min | Mirror IGT path for CE COPY TEST: CE-specific HoldAndWin + GRAND + Cash Eruption mapping |
 
@@ -160,7 +161,8 @@
 | Wave | Commit | Δ |
 |---|---|---|
 | W4.3a | `d393d25` | `_parse_reel_sets_stripe()` + IGT profile v2 + 10 stripe unit tests; strip lengths bit-exact vs Excel Total row |
-| W4.3b | _(pending)_ | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); IGT IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
+| W4.3b | `269641a` | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); IGT IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
+| W4.3c | _(pending)_ | Feature dispatch live: FreeSpins / PickBonus(Bernoulli) / LinearProgressive runners + FK Trigger&Award table parser + Wild-prefix MAX fix; RTP 0.9523 vs 0.9614 (Δ0.91 %), hit-freq EXACT, +4 Rust integration tests |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 

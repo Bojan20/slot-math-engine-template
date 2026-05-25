@@ -172,12 +172,24 @@ pub enum Feature {
         // Per-bet-multiplier coin-value distributions (CE 21 pages).
         pages: BTreeMap<String, HoldAndWinPage>,
     },
-    /// Wolf Run-style pick-bonus: 3 Bonus symbols → pick from Award Table.
+    /// Wolf Run-style pick-bonus.
+    ///
+    /// Two trigger modes supported (W4.3c):
+    ///   ▸ **Scatter-based** (default): when `trigger_prob` is `None`, fires
+    ///     when `trigger_symbol` count on the grid ≥ `trigger_count_min`.
+    ///   ▸ **Bernoulli-based**: when `trigger_prob` is `Some(p)`, fires with
+    ///     probability `p` on every spin regardless of scatter count. Used by
+    ///     IGT Fort Knox Bonus where the trigger is drawn from a published
+    ///     trigger weight table (e.g. Yes=670005 / Total=100M ⇒ p=0.00670).
     PickBonus {
         trigger_symbol: String,
         trigger_count_min: u32,
         // Award Table: each entry has weight + pay (in coins or total-bet multiples).
         awards: Vec<PickAward>,
+        /// W4.3c — Bernoulli trigger probability. When `Some`, overrides the
+        /// scatter-count trigger; when `None`, falls back to scatter logic.
+        #[serde(default)]
+        trigger_prob: Option<f64>,
     },
     /// Free spins: N+ scatter → K free spins, optional retrigger, optional reel-set swap.
     FreeSpins {

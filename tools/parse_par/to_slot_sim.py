@@ -261,14 +261,39 @@ def _igt_features(parsed: dict) -> list[dict]:
             "reel_bank": "fs",
         })
 
-    # Fort Knox Pick Bonus
+    # Fort Knox Pick Bonus (W4.3c — real trigger table + award table)
     fk = parsed.get("fort_knox_pick_bonus") or {}
+    trig_tbl = fk.get("trigger_table") or {}
+    award_tbl = fk.get("award_table") or {}
     fk_per_bm = fk.get("per_bet_multiplier") or []
-    if fk_per_bm:
-        # PAR doesn't expose the full Award Table (weights × pays) directly;
-        # we synthesize a single-award proxy at the BM-invariant expected
-        # value so RTP rolls up correctly in MC. Real award distribution
-        # comes from the Fort Knox detail section (TODO W4.3b-followup).
+
+    trigger_prob = float(trig_tbl.get("trigger_prob") or 0.0)
+    bm1_avg_pay = None
+    if award_tbl:
+        # JSON round-trip may stringify the BM int keys — handle both.
+        per_bm_avg = award_tbl.get("per_bm_avg_pay") or {}
+        bm1_avg_pay = per_bm_avg.get(1) or per_bm_avg.get("1")
+
+    if trigger_prob > 0 and bm1_avg_pay is not None:
+        # Real Bernoulli trigger + BM=1 average award (in total coins).
+        # RTP/spin = trigger_prob × avg_pay / total_bet. Engine divides
+        # feat.coins by lines → so we emit pays_coins = avg_pay directly
+        # and rely on Engine::run with bet_multiplier=1.
+        features.append({
+            "kind": "pick_bonus",
+            "trigger_symbol": "Bonus",
+            "trigger_count_min": 3,
+            "awards": [
+                {
+                    "label": "FortKnox_avg_BM1",
+                    "weight": 1,
+                    "pays_coins": float(bm1_avg_pay) / 40.0,
+                }
+            ],
+            "trigger_prob": trigger_prob,
+        })
+    elif fk_per_bm:
+        # Legacy fallback: per-BM RTP-only injection.
         fkb_rtp = float(fk_per_bm[0].get("fkb_rtp") or 0.0)
         features.append({
             "kind": "pick_bonus",
@@ -276,7 +301,7 @@ def _igt_features(parsed: dict) -> list[dict]:
             "trigger_count_min": 3,
             "awards": [
                 {
-                    "label": "FortKnox_avg",
+                    "label": "FortKnox_legacy",
                     "weight": 1,
                     "pays_coins": fkb_rtp / max(_estimate_fk_trigger_rate(parsed), 1e-9),
                 }

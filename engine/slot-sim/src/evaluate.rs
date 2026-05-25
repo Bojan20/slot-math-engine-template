@@ -173,19 +173,46 @@ pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
         let sym = anchor.unwrap();
         let sym_role = role.get(sym).copied().unwrap_or_default();
         let wild_subs = sym_role != SymbolRole::Cash && sym_role != SymbolRole::Bonus;
-        let mut count = 0u32;
+        // Anchor-led count (allows wild substitutions in the run).
+        let mut anchor_count = 0u32;
         for c in &cells {
             let r = role.get(c).copied().unwrap_or_default();
             if *c == sym || (wild_subs && r == SymbolRole::Wild) {
-                count += 1;
+                anchor_count += 1;
             } else {
                 break;
             }
         }
-        if count >= 3 {
-            if let Some(p) = pt.lines.get(&(sym.to_string(), count)) {
-                total_coins += p;
+        let anchor_pay = if anchor_count >= 3 {
+            pt.lines.get(&(sym.to_string(), anchor_count)).copied().unwrap_or(0.0)
+        } else {
+            0.0
+        };
+        // Industry standard: a line with a wild prefix pays the BEST of
+        // (anchor symbol N-of-a-kind) vs (pure wild prefix N-of-a-kind).
+        // Without this, [W,W,W,Y,Z] would only score the lower Y×4 pay
+        // and miss the higher W×3 pay, undercounting base RTP by ~1–2 %.
+        let mut wild_only_count = 0u32;
+        for c in &cells {
+            if role.get(c).copied().unwrap_or_default() == SymbolRole::Wild {
+                wild_only_count += 1;
+            } else {
+                break;
             }
+        }
+        let wild_pay = if wild_only_count >= 3 {
+            ir.symbols
+                .iter()
+                .find(|s| s.role == SymbolRole::Wild)
+                .and_then(|w| pt.lines.get(&(w.id.clone(), wild_only_count)))
+                .copied()
+                .unwrap_or(0.0)
+        } else {
+            0.0
+        };
+        let line_pay = anchor_pay.max(wild_pay);
+        if line_pay > 0.0 {
+            total_coins += line_pay;
         }
     }
     w.line_coins = total_coins;

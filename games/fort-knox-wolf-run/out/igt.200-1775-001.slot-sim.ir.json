@@ -4445,11 +4445,12 @@
       "trigger_count_min": 3,
       "awards": [
         {
-          "label": "FortKnox_avg",
+          "label": "FortKnox_avg_BM1",
           "weight": 1,
-          "pays_coins": 986.8205582356183
+          "pays_coins": 26.59187029818189
         }
-      ]
+      ],
+      "trigger_prob": 0.00670005
     },
     {
       "kind": "linear_progressive",

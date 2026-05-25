@@ -138,7 +138,7 @@ features:
   - type: fort_knox_pick_bonus
     config:
       section_label: "Fort Knox Bonus"
-      section_label_col: 2
+      section_label_col: 1
       rtp_label_col: 3
       rtp_value_col: 7
       max_search_rows: 800
