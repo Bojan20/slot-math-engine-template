@@ -195,6 +195,136 @@ class TestVendorProfileSchema(unittest.TestCase):
                 self.assertIsInstance(p.data["profile_version"], int)
 
 
+class TestIgtStripeReelParser(unittest.TestCase):
+    """W4.3a — per-reel IGT strip parser (stripe layout).
+
+    Fixed expectations from `games/fort-knox-wolf-run/raw/PAR_001.tsv`:
+
+      Base Game Reel Strips section ends at the `Total` row:
+        Reel 1: 71 stops · Reel 2: 109 · Reel 3: 70 · Reel 4: 101 · Reel 5: 89
+
+      Bonus (FS) Reel Strips section ends at its own `Total` row:
+        Reel 1: 105 stops · Reel 2: 94 · Reel 3: 102 · Reel 4: 68 · Reel 5: 91
+
+    PAR_002 keeps identical base lengths; FS reel 1 differs (107 instead of
+    105) by design — the alternate-hold variant adds two stops on the first
+    FS reel to lift the base+bonus RTP.
+
+    Bit-equality on length AND first-3-symbols anchors the parser against
+    regressions on the column-stride / offset / `Total` detection.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.profile = load_profile("igt")
+        cls.raw_dir = ROOT / "games/fort-knox-wolf-run/raw"
+
+    EXPECTED_BASE_LENS = [71, 109, 70, 101, 89]
+    EXPECTED_FS_LENS_001 = [105, 94, 102, 68, 91]
+    EXPECTED_FS_LENS_002 = [107, 94, 102, 68, 91]
+
+    # Anchor symbols (rows 200-202 of PAR_001) — guards stride / offset.
+    EXPECTED_BASE_HEAD_001 = [
+        ["Ace", "Whitewolf", "Ten"],
+        ["BearTotem", "Jack", "Ten"],
+        ["BirdTotem", "Jack", "Whitewolf"],
+        ["BearTotem", "Ten", "BearTotem"],
+        ["DarkWolf", "Queen", "Nine"],
+    ]
+
+    def test_par_001_base_reel_lengths(self):
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        bg = ir["bg_reel_sets"]
+        self.assertEqual(len(bg), 1, "stripe layout yields single set")
+        self.assertEqual(bg[0]["set"], 1)
+        lens = [len(r) for r in bg[0]["reels"]]
+        self.assertEqual(lens, self.EXPECTED_BASE_LENS)
+
+    def test_par_001_fs_reel_lengths(self):
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        fg = ir["fg_reel_sets"]
+        self.assertEqual(len(fg), 1)
+        lens = [len(r) for r in fg[0]["reels"]]
+        self.assertEqual(lens, self.EXPECTED_FS_LENS_001)
+
+    def test_par_001_base_head_symbols(self):
+        """Stride / offset guard: top-3 symbols per reel must match raw TSV."""
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        bg = ir["bg_reel_sets"][0]["reels"]
+        for k, expected in enumerate(self.EXPECTED_BASE_HEAD_001):
+            actual = [stop["symbol"] for stop in bg[k][:3]]
+            self.assertEqual(actual, expected, f"reel {k+1} head mismatch")
+
+    def test_par_001_all_weights_one(self):
+        """IGT physical strips use uniform weight=1 (virtual reel encoding
+        is in `symbol_counts_per_reel` instead)."""
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        for layer in ("bg_reel_sets", "fg_reel_sets"):
+            for k, reel in enumerate(ir[layer][0]["reels"]):
+                weights = {stop["weight"] for stop in reel}
+                self.assertEqual(
+                    weights, {1},
+                    f"{layer} reel {k+1} weights ≠ {{1}}: {weights}",
+                )
+
+    def test_par_002_alternate_hold_variant(self):
+        """PAR_002 has identical base strips but FS reel 1 +2 stops."""
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_002")
+        base = [len(r) for r in ir["bg_reel_sets"][0]["reels"]]
+        fs = [len(r) for r in ir["fg_reel_sets"][0]["reels"]]
+        self.assertEqual(base, self.EXPECTED_BASE_LENS)
+        self.assertEqual(fs, self.EXPECTED_FS_LENS_002)
+
+    def test_no_total_label_leakage(self):
+        """The `Total` row must terminate the section — no `Total` strings or
+        sentinel rows should leak into parsed symbols."""
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        for layer in ("bg_reel_sets", "fg_reel_sets"):
+            for k, reel in enumerate(ir[layer][0]["reels"]):
+                symbols = {stop["symbol"] for stop in reel}
+                self.assertNotIn(
+                    "Total", symbols,
+                    f"{layer} reel {k+1} leaked 'Total' marker",
+                )
+                # Sanity: every symbol is alphabetic (no numerics from total row)
+                for sym in symbols:
+                    self.assertFalse(
+                        sym.replace(".", "").isdigit(),
+                        f"{layer} reel {k+1} leaked numeric symbol {sym!r}",
+                    )
+
+    def test_stripe_does_not_cross_fs_section(self):
+        """Bug guard: a buggy total_col would let the base parser continue
+        past the FS section header, bloating base reel 1 to ~140-150 stops.
+        Anchor on exact length 71."""
+        ir = parse_par(self.profile, self.raw_dir, sheet="PAR_001")
+        self.assertEqual(len(ir["bg_reel_sets"][0]["reels"][0]), 71)
+
+    def test_stripe_layout_explicit_field(self):
+        """Profile must declare `layout: stripe` for both base and fs."""
+        rs = self.profile.data["reel_sets"]
+        self.assertEqual(rs["base"]["layout"], "stripe")
+        self.assertEqual(rs["fs"]["layout"], "stripe")
+        self.assertEqual(rs["base"]["header_substr"], "Base Game Reel Strips")
+        self.assertEqual(rs["fs"]["header_substr"], "Bonus Reel Strips")
+
+    def test_lw_block_layout_still_works(self):
+        """Regression: L&W block layout must continue to parse correctly
+        after the layout dispatch was added in W4.3a."""
+        lw_profile = load_profile("lw")
+        rs = lw_profile.data["reel_sets"]
+        # L&W has no `layout` key → defaults to "block"
+        self.assertNotIn("layout", rs["base"])
+        ir = parse_par(lw_profile, ROOT / "games/ce-copy-test/raw", sheet="PAR-001")
+        bg = ir["bg_reel_sets"]
+        # L&W ships multiple alternate sets (1..N) — block layout returns
+        # all of them, not just the first.
+        self.assertGreaterEqual(len(bg), 1)
+        # Every set carries 5 reels (L&W is 5×3).
+        for sset in bg:
+            self.assertEqual(len(sset["reels"]), 5)
+
+
 class TestMiniYamlParser(unittest.TestCase):
     """Direct unit tests for the tiny YAML loader in profile.py."""
 

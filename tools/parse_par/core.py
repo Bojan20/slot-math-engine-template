@@ -141,18 +141,52 @@ def parse_paytable(rows: list[list[str]], profile: VendorProfile) -> list[dict]:
 def parse_reel_sets(rows: list[list[str]], cfg: dict) -> list[dict]:
     """Generic reel-set walker driven by profile cfg.
 
-    cfg keys:
-      header_label       — exact cell text marking a reel set header
-      header_col         — column where header label is found (default 1)
-      set_num_col        — column with set number on the header row (default 3)
-      data_offset        — rows below header where stop-by-stop data starts
+    Two layouts supported:
+
+    **`block` (default, L&W-style):** each reel set has a header row with a
+    label like `"Base Game Reel Set: 1"`. Multiple sets may be present.
+    Default since L&W published numbered alternate strip sets per RTP tier.
+
+    **`stripe` (IGT-style, W4.3a):** one continuous strip section per type.
+    Section header text spans multiple cells (`"Base Game Reel Strips"`),
+    detected via substring on the joined row. A column-header row sits one
+    row below (`"Reel 1 Weights Reel 2 Weights ..."`), and stop-by-stop data
+    starts another row below that. Single set returned with `set=1`.
+
+    Common cfg keys (both layouts):
       reel_count         — number of reels (default 5; override for Megaways etc.)
       symbol_col_start   — first column of stop data (where reel-1 symbol lives)
       stride             — cols per reel (default 2 — symbol + weight)
       index_col          — column with the stop index (default symbol_col_start - 1)
-      total_label        — string in symbol_col_start marking end-of-set (default "Total")
+      total_label        — string marking end-of-set (default "Total")
       max_stops          — safety cap to avoid runaway walks (default 200)
+
+    `block` cfg keys:
+      header_label       — exact cell text marking a reel set header
+      header_col         — column where header label is found (default 1)
+      set_num_col        — column with set number on the header row (default 3)
+      data_offset        — rows below header where stop-by-stop data starts
+
+    `stripe` cfg keys:
+      header_substr      — substring on joined row text marking the section
+                           (e.g. "Base Game Reel Strips" — cells `["Base",
+                           "Game", "Reel", "Strips"]` join with "\\t" and
+                           contain the substring)
+      data_offset        — rows below the section header where data starts
+                           (default 3 → section-hdr, blank, col-hdr, data)
+      total_col          — column where `total_label` is found (default
+                           `index_col`); for stripe this is the index col
+                           since IGT writes "Total" in col 0 of the totals
+                           row
     """
+    layout = cfg.get("layout", "block")
+    if layout == "stripe":
+        return _parse_reel_sets_stripe(rows, cfg)
+    return _parse_reel_sets_block(rows, cfg)
+
+
+def _parse_reel_sets_block(rows: list[list[str]], cfg: dict) -> list[dict]:
+    """L&W-style block layout. See `parse_reel_sets` docstring for details."""
     label = cfg["header_label"]
     header_col = cfg.get("header_col", 1)
     set_num_col = cfg.get("set_num_col", 3)
@@ -193,6 +227,52 @@ def parse_reel_sets(rows: list[list[str]], cfg: dict) -> list[dict]:
         else:
             i += 1
     return sets
+
+
+def _parse_reel_sets_stripe(rows: list[list[str]], cfg: dict) -> list[dict]:
+    """IGT-style stripe layout. See `parse_reel_sets` docstring for details.
+
+    Returns a single-element list `[{"set": 1, "reels": [[...], ...]}]` since
+    IGT PARs do not enumerate alternate strip sets — the linear progressive +
+    Fort Knox pick bonus carry RTP variation instead.
+    """
+    needle = cfg["header_substr"]
+    data_offset = cfg.get("data_offset", 3)
+    reel_count = cfg.get("reel_count", 5)
+    sym_c0 = cfg.get("symbol_col_start", 1)
+    stride = cfg.get("stride", 2)
+    index_col = cfg.get("index_col", 0)
+    total_label = cfg.get("total_label", "Total")
+    total_col = cfg.get("total_col", index_col)
+    max_stops = cfg.get("max_stops", 200)
+
+    hdr = find_substr_row(rows, needle)
+    if hdr is None:
+        return []
+    data_start = hdr + data_offset
+    reels: list[list[dict]] = [[] for _ in range(reel_count)]
+    j = data_start
+    scanned = 0
+    while j < len(rows) and scanned < max_stops:
+        if s(rows, j, total_col).strip() == total_label:
+            break
+        idx = n(rows, j, index_col)
+        if idx is None:
+            # Sparse / blank row inside the strip block — treat as gap, not
+            # end-of-set. Common when a reel has fewer stops than the deepest
+            # reel: rows past its tail still appear but with blank cells.
+            # We continue scanning until `Total` or `max_stops`.
+            j += 1
+            scanned += 1
+            continue
+        for reel in range(reel_count):
+            sym = s(rows, j, sym_c0 + reel * stride).strip()
+            w = n(rows, j, sym_c0 + reel * stride + 1)
+            if sym:
+                reels[reel].append({"symbol": sym, "weight": w if w is not None else 0})
+        j += 1
+        scanned += 1
+    return [{"set": 1, "reels": reels}]
 
 
 def parse_reel_set_weights(rows: list[list[str]], cfg: dict) -> dict:

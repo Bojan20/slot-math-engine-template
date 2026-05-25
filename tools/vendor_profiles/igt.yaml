@@ -9,14 +9,17 @@
 # Profile version 1 covers: meta · bet table · base paytable · scatter ·
 # linear progressive · Fort Knox pick bonus · Bonus Summary.
 #
-# RESERVED for W4.3: reel strip parser (IGT uses per-reel "Reel N / Weights"
-# stripe layout starting row 197 instead of L&W's "Base Game Reel Set: K"
-# header blocks). The reel_sets section is intentionally absent; downstream
-# `slot-sim` will need a per-reel-strip reader added.
+# Profile version 2 (W4.3a, 2026-05-25): per-reel strip parser using the
+# `stripe` layout. IGT writes reel strips as a single section beginning at
+# `Base Game Reel Strips` (row 197) and `Bonus Reel Strips` (row 322). The
+# row immediately below the section header is a column header
+# (`Reel 1 Weights Reel 2 Weights ...`); two rows below is per-stop data.
+# Each reel pair occupies two adjacent columns (symbol + weight) starting at
+# col 1. The strip section terminates at a `Total` row in col 0.
 
 vendor: igt
 display_name: International Game Technology
-profile_version: 1
+profile_version: 2
 game_name: Fort Knox Wolf Run
 
 sheets:
@@ -67,6 +70,45 @@ symbol_counts:
   row_range: [128, 140]
   name_col: 1
   reel_col_range: [2, 7]
+
+# W4.3a — per-reel strip parser (stripe layout)
+#
+# Layout (per IGT Fort Knox Wolf Run PAR_001/002, 0-indexed rows):
+#   row 197: section hdr  ""  "Base Game Reel Strips"  ""  ""  ...
+#   row 198: blank
+#   row 199: col hdr       ""  Reel 1  Weights  Reel 2  Weights  ...  Reel 5  Weights
+#   row 200..308: data     idx  sym1 w1  sym2 w2  sym3 w3  sym4 w4  sym5 w5
+#   row 309: Total         ""  Total  R1tot  ""  R2tot  ""  R3tot  ""  R4tot  ""  R5tot
+#
+# So:  symbol_col_start=1, stride=2, index_col=0, total_col=1 (Total in col 1).
+# Different reel lengths are normal (sparse cells past per-reel tail); the
+# parser ignores blank symbol cells row-by-row.
+#
+# Bonus (FS) strips follow the same layout starting row 322 with section
+# header `Bonus Reel Strips` in col 1 and data running 325..end.
+reel_sets:
+  base:
+    layout: stripe
+    header_substr: "Base Game Reel Strips"
+    data_offset: 3
+    reel_count: 5
+    index_col: 0
+    symbol_col_start: 1
+    stride: 2
+    total_label: "Total"
+    total_col: 1
+    max_stops: 200
+  fs:
+    layout: stripe
+    header_substr: "Bonus Reel Strips"
+    data_offset: 3
+    reel_count: 5
+    index_col: 0
+    symbol_col_start: 1
+    stride: 2
+    total_label: "Total"
+    total_col: 1
+    max_stops: 200
 
 features:
   - type: free_spins
