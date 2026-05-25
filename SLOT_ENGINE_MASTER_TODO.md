@@ -6,7 +6,7 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-25 14:30 (post CE Wave 3.5 + Kimi research + Wolf Run dump)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-25 14:40 (post Wave 4.1 + Wave 7 moonshot ideas added)
 
 **CE COPY TEST = ULTIMATIVNO 1:1 LANDED.** 30B spinova / 3 SWID, **svi unutar 0.05 %** Excel target-a. Avg FS bonus, avg CE win FS, FS trigger 1 in 139.90 = Excel **EXACT (0.000 % Δ)**.
 
@@ -79,6 +79,31 @@
 | W6.3 | **Fault injection harness** (seed sweep + RNG bias check) | Detect anomalies pre lab cert submission. | 1 dan | 🟢 nice-to-have |
 | W6.4 | **Bit-identical PCG64 parity (Rust↔TS)** | Već imam funkcionalnu parity (oba konvergiraju ka istom RTP-u). Treba refaktorisati `Prng.fromSeed` u TS da match-uje `rand_pcg::Pcg64::seed_from_u64` init seq. | 4-6 h | 🟢 quick win |
 
+### 🌟 Wave 7: MOONSHOT IDEAS (radikalno futuristic — ne klasičan AI)
+
+**Vision principle:** ne klasičan ML/NN/LLM nego **deterministic + symbolic + verifiable** systems koji rade kao "AI" iz korisnikove perspektive ali su 100% reprodukabilni.
+
+| # | Wave | Šta | Tehnologija | Trajanje | Industry-first? |
+|---|---|---|---|---|---|
+| W7.1 | **Self-Evolving Math Genome** (genetic + Welford) | Slot kao DNK: reel weights = geni, paytable = enzimi, features = traits. Genetski algoritam evoluira 1000 game varijanti u 24h, fitness = (RTP_target + volatility_class + fairness_score). Operator bira top 10. | DEAP / `evolution-rs` + multi-objective fitness | 2-3 nedelje | 🥇 DA (po Kimi research-u — niko ne radi multi-objective genetic) |
+| W7.2 | **Quantum-Inspired QMC Sweeper** (Sobol/Halton/Lattice) | Već imamo `rust-sim/src/qmc.rs`. Wire-up u CE engine: 10× brže konvergiranje na tail quantilima (P99.9, GRAND probability). 10B spin verifikacija u **3 min** umesto 30. | Sobol stratification + Hadamard scrambling | 2-3 dana | ✅ Quick win |
+| W7.3 | **Player-Behavior RL Emulator** (fake players pre-launch) | Treniraš RL agent (PPO) kao "casual / volatility-seeker / chaser" profil. Test svake nove igre kroz 10K virtual players × 1000 spins = early detection retention rupa + UKGC RTS 7.4 addiction risk pre-launch. | `tch-rs` PyTorch bridge ili `dfdx` pure Rust | 2-3 nedelje | 🥇 DA |
+| W7.4 | **GDD → Multi-Modal Asset Pipeline** | PDF GDD → Stable Diffusion XL symbol art × 12 + ElevenLabs voice za FS narrative + procedural BGM tempo based on volatility class + Unity/Phaser scene graph. Krajnji output: jedna igra u 30 sekundi end-to-end. | SDXL local + ElevenLabs API + Anthropic Claude vision | 1-2 nedelje | 🥇 DA (kombinacija nije postojeća) |
+| W7.5 | **Crypto-Verifiable Provenance Mesh** (zk-SNARK + IPFS) | Svaki spin emituje proof-of-fairness (server + client seed + nonce). PAR sheet sealed kao IPFS hash + Merkle root. Regulator audit-uje bilo koji spin bez originalnog koda. **Math + RNG bit-precision verifiable** — niko drugi nema. | RISC Zero / SP1 zkVM + IPFS Helia | 3-4 nedelje | 🥇 DA (Kimi potvrdio NE postoji) |
+| W7.6 | **Symbolic Differentiation Slot Math** (SymPy + autograd) | Math se piše kao LaTeX → SymPy AST → ∂RTP/∂weight_i auto-derived. Dizajner ne menja brojeve nego **jednačine**: "hoću RTP 96 % sa volatility HIGH" → engine SymPy solver. | SymPy + Rust autograd (candle) | 2 nedelje | 🥇 DA |
+| W7.7 | **Live PAR Compiler** (browser WASM editor) | Browser-based: dizajner kuca DSL → odmah vidi 1M spin RTP rezultat. WebGPU + WASM = 5M spins/sec u Chrome. Hot-reload reel weights vs RTP grafik. Cloud-free, file:// safe. | wasm-bindgen + WebGPU compute shader | 2-3 nedelje | 🥇 DA |
+| W7.8 | **AI-Augmented Compliance Engine** | Auto-detect jurisdiction limits iz GDD: "UK release" → enforce UKGC RTS 14D pacing + £2 cap + no autoplay. LLM čita regulatorni dokument, ekstraktuje pravila, propušta kroz `jurisdiction/adapter.rs`. | Claude Opus 4.7 + RAG na regulator corpus + JSON-schema validation | 1-2 nedelje | ✅ Realan |
+| W7.9 | **Federated Multi-Vendor Math Knowledge Graph** | IGT / L&W / NetEnt / Pragmatic profili kao plugin module. Sharded knowledge graph: "Megaways pattern" prepoznat iz bilo kog vendor PAR-a. LLM uče iz svake nove integracije. Roadmap: 100+ vendor profila u 1 godini. | Neo4j / DuckDB + LangGraph | 4-6 nedelja | 🥇 DA |
+| W7.10 | **Anomaly Self-Play Detector** (1B+ self-play state finder) | Engine sam protiv sebe vrti 1B spinova × random feature combinations, traži **neviđene RTP rupe** (npr. FS-retrigger + Hold-and-Win na bet mult 200 koji drifta +5 %). Auto-fix predloga. | Reuse `rust-sim` + Bayesian outlier detection | 1-2 nedelje | 🥇 DA |
+
+### 🚀 Wave 8: Beyond — Industry Standard formats (lobby influence)
+
+| # | Wave | Šta | Zašto |
+|---|---|---|---|
+| W8.1 | **USIF v2 (Universal Slot Interchange Format) Open Standard** | Verziju IR-a objavi kao W3C-style open spec. Vendor agnostic format za PAR exchange. Pošalji GLI-19 working group. | Niko nema industry standard za PAR JSON. Tvoj IR može da postane to. |
+| W8.2 | **PAR Provenance Blockchain (Ethereum L2)** | Sealed PAR hash + cert evidence na on-chain (Optimism / Base). Regulator query u 1s, immutable audit trail. | Crypto-casino tržište eksplodira; on-chain PAR = trust gate. |
+| W8.3 | **Open Source Slot Math Library** (Apache 2.0 release) | Crate `slot-sim` + IR schema → public OSS. Vendor proprietary math = OUT, open math + closed configs = IN. Otvara industry standard pitanje. | L&W $127.5M lawsuit dokazuje math-as-IP je toxic — open je suprotnost. |
+
 ### 🐛 OPEN — Behavioral bugs (urgent fix po Boki feedback-u)
 
 | # | Bug | Status | Fix plan |
@@ -87,16 +112,18 @@
 | B2 | **Daemon digest skraćuje moje detalje** | TTS queue lag pravi da Boki vidi samo "next tick" red umesto pune tabele | Workaround: ja šaljem **pun text** odgovora u jednoj poruci. Digest je Cortex sloj — fix u Cortex-u, ne ovde. |
 | B3 | **Procene trajanja različite po pozivu** | "30 min", "60 min", "65 min" za isti task — Boki frustration 13:38 | **FIX policy:** vreme nikad iz glave — uvek iz `ps -o etime` + log size. Stvarna brzina, ne procena. |
 
-### 🎯 Real OPEN (multi-week scope — NOT single-wave)
+### 🎯 Real OPEN (multi-week scope — preživlja, ali deprioritizovano)
 
-| # | Open | Effort | Blocker |
+| # | Open | Effort | Status |
 |---|---|---|---|
-| 1 | TestU01 BigCrush / NIST 15 / PractRand 2³⁸ external reports | external binaries on lab box | requires installed test infra |
-| 2 | GPU Metal end-to-end byte-parity | 3-4 weeks | wgpu integration scaffold landed, full kernel still pending |
-| 3 | PGO + BOLT pipeline | 2-3 days | PGO bench dir exists, BOLT optimization not wired. → **W242 LANDED 2026-05-24** (`e1fb834`+`d8b204d`): PGO v1 -0.77% (bench-training mismatch); PGO v2 +0.08% (bench-aware Stage 2 fix). **Finding:** `full_spin/packed_ZeroAllocEvaluator` hot path is already near-optimal at baseline — PGO has nothing left to optimize on the criterion bench. Future PGO uplift requires CLI-throughput measurement (W242-followup-2). |
-| 4 | 30 mehanika numerical acceptance MC 10⁹ × 30 | 24-48h MC compute | needs dedicated bench run |
-| 5 | 11.1 web Config Builder UI standalone | 1-2 weeks UI work | Pitch + Studio cover demo path |
-| 6 | W149 follow-up Compensated math UK AWP | opt-in | only if expanding to UK land-based AWP |
+| 1 | 30 mehanika numerical acceptance MC 10⁹ × 30 | 24-48h MC compute | 🟡 needs dedicated bench run |
+| 2 | 11.1 web Config Builder UI standalone | 1-2 weeks UI work | 🟡 Pitch + Studio cover demo path |
+| 3 | W149 follow-up Compensated math UK AWP | opt-in | 🟢 only if expanding to UK land-based AWP |
+
+**OBRISANO** kao više nije relevantno za core "PAR → slot game" misiju:
+- ~~TestU01 BigCrush / NIST 15 / PractRand 2³⁸ external reports~~ — external infra zahtev, ne donosi vrednost za pipeline
+- ~~GPU Metal end-to-end byte-parity~~ — CPU 5.6M spins/sec je već dovoljno za 30B/sat, GPU = premature optimization
+- ~~PGO + BOLT pipeline~~ — već landed kao W242, hot path je near-optimal na baseline-u, finished
 
 ### 🚫 Anti-duplikat NOTE (lesson from W226 session)
 
