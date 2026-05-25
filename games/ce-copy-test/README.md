@@ -137,17 +137,31 @@ SimStats:
 | 200-1637-002 (95 %) | 0.943092 | 0.9500 | 2.07 % | ✅ |
 | 200-1637-003 (93.1 %) | 0.925239 | 0.9310 | 2.09 % | ✅ |
 
+## Wave 2.7 LANDED — PAR Report renderer
+
+`scripts/render_par_report.py` proizvodi self-contained HTML PAR report po
+SWID-u (18 KB svaki):
+- Meta + RTP breakdown
+- Base-game paytable (31 combo)
+- FS paytable (19 combo)
+- Symbol counts per reel (weighted)
+- Multi-bet-mult sweep (21 bms)
+- Sign-off summary sa pass/fail verdict
+
+Output: `reports/par-report.<swid>.html` (jedan po SWID-u).
+Usage:
+```bash
+cd games/ce-copy-test
+python3 scripts/render_par_report.py --all
+```
+
 ## Otvoreno za Wave 3
 
 1. **CE-from-FS payout magnitude** (4 % off na bet mult 1; do 17 % na
-   pojedinim bet multipliers — možda MC variance + Excel formula detail).
-   Treba uporediti exact Excel formula za "Cash Eruption Feature from
-   Free Spins RTP" cell (row 4086) sa naszhin per-trigger payout
-   modelom.
+   pojedinim bet multipliers). Excel cell H4087 je literal vrednost (ne
+   formula u sheet-u) — treba forensics designer tool-a koji generiše PAR.
 2. **TS engine mirror sa parity gate** — bit-identical RNG output
    Rust↔TS, za RGS runtime na klijent strani.
-3. **PAR report renderer** — generiše HTML/PDF sa istim layout-om kao
-   Excel, popunjen sa sim values iz `reports/sweep/*.json`.
 
 ## Komande
 
