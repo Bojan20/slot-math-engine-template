@@ -318,10 +318,13 @@ pub fn run_cash_eruption(
     }
     // Step 2: Pool select (low / med / high) once per feature.
     let pool = ce.set_pool.pick(rng);
-    let dist = match ctx {
-        CeContext::Base => &ce.small_dist,
-        CeContext::FreeSpins => &ce.big_dist,
-    };
+    // Coin distribution: BOTH contexts use the Small Fireball table.
+    // The Big Fireball table only governs the GRAND/Big-Volcano payouts
+    // on the FS reel block; the held coin awards themselves draw from
+    // Small per per-cell. Cross-checked against Excel "Average Coin Value"
+    // row 4083: small fireball 44.17/80.00/216.68 ↔ matches both contexts.
+    let dist = &ce.small_dist;
+    let _ = ctx; // ctx retained for grand-prob branch above
     // Step 3: Accumulate coin value of initial Fireballs.
     let mut payout = 0.0f64;
     for _ in 0..n_initial {
