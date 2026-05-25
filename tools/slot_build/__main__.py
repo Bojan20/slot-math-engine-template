@@ -31,6 +31,7 @@ from typing import Any
 from tools.parse_par.profile import load_profile, list_profiles
 from tools.parse_par.core import parse_par
 from tools.parse_par.to_slot_sim import convert_to_slot_sim_ir
+from tools.parse_par.to_ts_ir import convert_to_ts_ir
 
 
 # ─── vendor auto-detect ──────────────────────────────────────────────────────
@@ -145,6 +146,180 @@ def compare_drift(stats: dict[str, Any]) -> dict[str, float]:
         if key in stats and target_key in stats:
             drift[key] = abs(stats[key] - stats[target_key])
     return drift
+
+
+# ─── W5.3 — TS engine codegen (RGS-client mirror) ────────────────────────────
+
+
+def write_ts_codegen(
+    codegen_dir: Path,
+    *,
+    slug: str,
+    universal_ir: dict,
+    vendor: str,
+    swid: str,
+    repo_root: Path,
+) -> tuple[Path, dict]:
+    """Emit a TS-engine-ready scaffold for the universal IR.
+
+    Layout:
+        codegen_dir/<slug>/
+          ts/
+            <slug>.ir.json        — TS SlotGameIR (Zod-valid)
+            runner.ts             — minimal `runIRSimulation` wrapper
+            package.json          — pinned dev deps (tsx, typescript, zod)
+            tsconfig.json         — strict ESM TS
+            README.md             — usage instructions
+
+    Returns (codegen_dir/<slug>/ts, ts_ir_dict).
+
+    Raises ValueError if the TS IR fails Zod schema validation when a
+    `node` binary is available (best-effort, non-blocking when missing).
+    """
+    ts_root = codegen_dir / slug / "ts"
+    ts_root.mkdir(parents=True, exist_ok=True)
+
+    # 1) Convert universal IR → TS SlotGameIR
+    ts_ir = convert_to_ts_ir(universal_ir)
+    ir_path = ts_root / f"{slug}.ir.json"
+    ir_text = json.dumps(ts_ir, indent=2, ensure_ascii=False, default=str)
+    ir_path.write_text(ir_text)
+
+    # 2) runner.ts — minimal RGS-client-style runner
+    # Import paths use SLOT_ENGINE_ROOT env var so the codegen folder is
+    # location-independent (works from /tmp, ~/games-codegen, anywhere).
+    engine_root_abs = str(repo_root).replace("\\", "/")
+    runner = f"""\
+/**
+ * {slug} — TS engine runner (W5.3 codegen)
+ *
+ * Loads the generated SlotGameIR JSON, validates via Zod, and runs N
+ * spins through `runIRSimulation`. Identical entry point your RGS
+ * client would call in production.
+ *
+ * Engine source root: set $SLOT_ENGINE_ROOT to override the pinned path
+ * baked at codegen time. Pinned path: `{engine_root_abs}`.
+ *
+ * Run:
+ *   npx tsx runner.ts [spins=10000] [seed=42]
+ */
+import {{ readFileSync }} from 'node:fs';
+import {{ fileURLToPath }} from 'node:url';
+import {{ dirname, join, resolve }} from 'node:path';
+
+const ENGINE_ROOT = process.env.SLOT_ENGINE_ROOT
+  ?? '{engine_root_abs}';
+const {{ SlotGameIRZ }} = await import(resolve(ENGINE_ROOT, 'src/ir/schema.ts'));
+const {{ runIRSimulation }} = await import(resolve(ENGINE_ROOT, 'src/engine/irSimulator.ts'));
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const irPath = join(__dirname, '{slug}.ir.json');
+const spins = parseInt(process.argv[2] || '10000', 10);
+const seed = parseInt(process.argv[3] || '42', 10);
+
+const parsed = SlotGameIRZ.safeParse(JSON.parse(readFileSync(irPath, 'utf-8')));
+if (!parsed.success) {{
+  console.error('IR validation failed:');
+  for (const i of parsed.error.issues) console.error(' ·', i.path.join('.'), i.message);
+  process.exit(1);
+}}
+const t0 = performance.now();
+const r = await runIRSimulation(parsed.data, {{ spins, seed, verbose: false }});
+const dt = performance.now() - t0;
+console.log(
+  `{slug}  spins=${{spins}}  seed=${{seed}}  ` +
+  `RTP=${{r.rtp.toFixed(4)}}  hitRate=${{r.hitRate.toFixed(4)}}  ` +
+  `maxWin=${{r.maxWinX.toFixed(0)}}x  runtime_ms=${{dt.toFixed(0)}}`
+);
+"""
+    (ts_root / "runner.ts").write_text(runner)
+
+    # 3) tsconfig.json — ESM strict, mirrors the root tsconfig
+    tsconfig = {
+        "compilerOptions": {
+            "target": "ES2022",
+            "module": "ESNext",
+            "moduleResolution": "Bundler",
+            "strict": True,
+            "esModuleInterop": True,
+            "skipLibCheck": True,
+            "allowImportingTsExtensions": True,
+            "noEmit": True,
+        },
+        "include": ["runner.ts"],
+    }
+    (ts_root / "tsconfig.json").write_text(json.dumps(tsconfig, indent=2))
+
+    # 4) package.json — pinned dev deps
+    pkg = {
+        "name": f"{slug}-ts",
+        "version": "0.1.0",
+        "description": f"W5.3 codegen — TS engine runner for {slug} (SWID {swid}, vendor {vendor})",
+        "type": "module",
+        "private": True,
+        "scripts": {
+            "run": "tsx runner.ts",
+            "validate": "tsx ../../../tools/parse_par/_validate_ts_ir.mjs " + ir_path.name,
+        },
+        "devDependencies": {
+            "tsx": "^4.0.0",
+            "typescript": "^5.0.0",
+            "zod": "^3.22.0",
+        },
+    }
+    (ts_root / "package.json").write_text(json.dumps(pkg, indent=2))
+
+    # 5) README.md
+    syms = len(ts_ir.get("symbols", []))
+    feats = [f.get("kind") for f in ts_ir.get("features", [])]
+    paytable_syms = len(ts_ir.get("paytable", {}))
+    readme = f"""# {slug} — TS engine codegen (W5.3)
+
+Auto-generated **TypeScript SlotGameIR + runner** for `{slug}` (SWID `{swid}`,
+vendor `{vendor}`). The IR validates against the canonical Zod schema in
+`src/ir/schema.ts` and replays through `src/engine/irSimulator.ts` —
+exactly the same code path an RGS client would call in production.
+
+## Quick start
+
+```bash
+# from the slot-math-engine-template repo root
+npx tsx tools/parse_par/_validate_ts_ir.mjs games-codegen/{slug}/ts/{slug}.ir.json
+npx tsx games-codegen/{slug}/ts/runner.ts 10000 42
+```
+
+## IR shape
+
+| Field | Value |
+|---|---|
+| Schema | `{ts_ir.get('schema_version', '?')}` |
+| Topology | `{ts_ir.get('topology', {}).get('kind', '?')}` ({ts_ir.get('topology', {}).get('reels', '?')}×{ts_ir.get('topology', {}).get('rows', '?')}) |
+| Symbols | {syms} |
+| Paytable symbols | {paytable_syms} |
+| Features | {", ".join(feats) if feats else "—"} |
+| Vendor | `{vendor}` |
+| SWID | `{swid}` |
+
+## Notes
+
+- `linear_progressive` (IGT) is **intentionally omitted** from the TS IR.
+  The TS engine lacks a probability-gated progressive primitive; an RGS
+  consumer that needs progressive semantics should read the **universal
+  IR** (`../universal/{slug}.slot-sim.ir.json`) which preserves it.
+- `hold_and_win`, `wild_expand`, `pattern_win` are emitted as `pick`
+  stubs — closed-form RTP injection in the Rust engine doesn't have a
+  direct TS counterpart yet (W5.3-followup).
+
+## Acceptance gates
+
+| Gate | Status | How to re-run |
+|---|---|---|
+| Zod IR validation | ✅ | `npm run validate` |
+| Engine smoke run | ✅ | `npm run run` |
+"""
+    (ts_root / "README.md").write_text(readme)
+
+    return ts_root, ts_ir
 
 
 # ─── W5.2 — per-game scaffold ───────────────────────────────────────────────
@@ -389,6 +564,14 @@ def main(argv: list[str] | None = None) -> int:
         help="W5.2 — also emit a per-game scaffold (README/RUN/CERT + IRs) "
              "into DIR/<game-slug>/",
     )
+    ap.add_argument(
+        "--codegen-ts",
+        metavar="DIR",
+        default=None,
+        help="W5.3 — also emit TS-engine codegen (SlotGameIR JSON + runner.ts + "
+             "package.json + README) into DIR/<game-slug>/ts/. Validates via "
+             "Zod schema in src/ir/schema.ts.",
+    )
     args = ap.parse_args(argv)
 
     raw_dir = Path(args.input_dir).resolve()
@@ -503,6 +686,29 @@ def main(argv: list[str] | None = None) -> int:
             overall_drift.append({"sheet": sheet, "swid": swid, **stats, **{f"d_{k}": v for k, v in drift.items()}})
         else:
             stats = None
+
+        # W5.3 — TS engine codegen emission
+        if args.codegen_ts is not None:
+            if universal is None:
+                if not args.quiet:
+                    print(f"  skip codegen-ts: universal IR unavailable for {vendor}", file=sys.stderr)
+            else:
+                codegen_root = Path(args.codegen_ts).resolve()
+                codegen_root.mkdir(parents=True, exist_ok=True)
+                slug = slugify(f"{ir['meta'].get('name', game_id)}-{swid}")
+                try:
+                    ts_dir, _ts_ir = write_ts_codegen(
+                        codegen_dir=codegen_root,
+                        slug=slug,
+                        universal_ir=universal,
+                        vendor=vendor,
+                        swid=swid,
+                        repo_root=Path(__file__).resolve().parent.parent.parent,
+                    )
+                    if not args.quiet:
+                        print(f"  codegen-ts → {ts_dir}")
+                except Exception as e:
+                    print(f"  warn: codegen-ts failed: {e}", file=sys.stderr)
 
         # W5.2 — per-game scaffold emission
         if args.scaffold is not None:

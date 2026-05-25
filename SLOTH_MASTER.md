@@ -79,7 +79,7 @@
 | P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → vendor auto-detect → parse → universal IR → optional MC) | ✅ `tools/slot_build/` + 10 unit tests; IGT auto-detected on Fort Knox + L&W on CE; MC drift comparison RTP/hit/win vs Excel target |
 | P3.2 | **W5.2 — Per-game scaffold codegen** (`--scaffold DIR` → README + RUN + CERT + IR copies) | ✅ `tools/slot_build/__main__.py::write_scaffold` + `slugify` helper; 3 new unit tests; smoke run on Fort Knox + CE COPY TEST produces self-contained game folders with auto-generated certification summary |
 | P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
-| P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ⏳ |
+| P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for IGT + L&W; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
 | P3.4 | **W5.4 — IR → Studio UI skeleton** (Svelte/Phaser scaffold sa reel viz + paytable + features panel) | ⏳ |
 | P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ⏳ |
 | P3.6 | **W5.6 — Auto cert paket** (HSM seed + RNG 90B + PAR commitment hash + audit log → ZIP) | ⏳ |
@@ -160,9 +160,9 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W5.3 — IR → TS engine codegen** | 90-120 min | Phase 3.3 — RGS client codegen (mirror W5.2 pattern) |
-| 🥈 2 | **W5.5 — Auto MC verify CI gate** | 60-90 min | post-build 1B MC convergence gate vs Excel target |
-| 🥉 3 | **W4.3e — IGT base eval gap audit** | 60-90 min | check IGT wild expansion / scatter pay possibilities |
+| 🥇 1 | **W5.5 — Auto MC verify CI gate** | 60-90 min | post-build 1B MC convergence gate vs Excel target |
+| 🥈 2 | **W4.3e — IGT base eval gap audit** | 60-90 min | check IGT wild expansion / scatter pay possibilities |
+| 🥉 3 | **W5.4 — IR → Studio UI skeleton** | 120-180 min | Svelte scaffold sa reel viz + paytable; mirror W5.3 codegen pattern |
 
 ### ✅ Just landed
 
@@ -179,7 +179,8 @@
 | W4.7 | `578a271` | FS paytable override + linked reels + Big_X equivalence; Engine pre-compiles `fs_pt` from Feature::FreeSpins.fs_paytable; FS runner uses Grid::spin_linked for [1,2,3]; adapter emits Big_X paytable rows = X pays; symbols list scans FS reels too; L&W RTP 0.569 → 0.614 (+0.045) |
 | W4.8 | `4c0cc25` | CE-from-FS HoldAndWin trigger inside FS — IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger`; adapter derives `fs_trigger_rate` from published `rtp_breakdown.free_spins` + `single_spin_payback_pct` (bypasses Volcano structural estimator drift); L&W RTP 0.614 → 0.691 (+0.077) |
 | **W4.9** | `756f2fa` | **🏆 Wild expansion runner** — L&W CE base reels 2-5 wild-expand on winning condition; **L&W RTP 0.691 → 0.952** (+0.261, single biggest single-wave RTP lift in the project); within 0.8 % of Excel 0.96 target; hit-freq 0.196 vs Excel 0.190 (1.1 σ MC noise), win-freq 0.096 vs Excel 0.089 (3 σ noise); +4 W4.9 Rust integration tests |
-| W5.2 | _(pending)_ | Per-game scaffold codegen — `slot-build --scaffold DIR` emits README/RUN/CERT.md + IR copies into a folder named after slugified game + SWID; 3 new Py unit tests; smoke on IGT + L&W games |
+| W5.2 | `0c808b0` | Per-game scaffold codegen — `slot-build --scaffold DIR` emits README/RUN/CERT.md + IR copies into a folder named after slugified game + SWID; 3 new Py unit tests; smoke on IGT + L&W games |
+| **W5.3** | _(this commit)_ | **IR → TS engine codegen** — `tools/parse_par/to_ts_ir.py` (universal Rust IR → TS SlotGameIR; symbol-role → kind, paytable combo[] → nested map, substitutes_except expansion, vendor-aware feature filtering for `linear_progressive`); `slot-build --codegen-ts DIR` emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README) per game with portable engine root via `$SLOT_ENGINE_ROOT`; Zod schema validation gate; 8/8 W5.3 unit tests pass (3 converter shape + 3 Zod via `tsx` + 2 end-to-end with real `npx tsx runner.ts` smoke); 61/61 total Python tests green; cargo workspace clean |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 
