@@ -21,7 +21,7 @@
 | 7 | 10⁹ spinova / 60s na M2 Max — sustained MC throughput | ✅ landed (Wave 3) |
 | 8 | Studio UI: A/B compare, real-time MC, IR editor, vendor + jurisdiction switcher | 🚧 Phase 5 |
 | 9 | GLI-16 auto cert paket (HSM seed, RNG 90B, PAR commitment, audit log) | ✅ **DONE** — W5.6 (ed25519 sig + IRs + MC + PAR commitments + verify.sh) |
-| 10 | Genetic optimizer: target RTP+vol → 1000 varijanti za 24h sa Pareto fitness | 🟡 W7.1 evolution kernel ✅; Pareto multi-objective + 1000-variant batch = W7.4 |
+| 10 | Genetic optimizer: target RTP+vol → 1000 varijanti za 24h sa Pareto fitness | 🟢 **W7.1 + W7.4 ✅** (kernel + Pareto NSGA-II); 1000-variant 24h batch = W7.4-batch follow-up |
 
 ---
 
@@ -137,7 +137,7 @@
 | P6.1 | **W7.2 — Quasi-Monte Carlo sweeper** (Sobol/Halton/Lattice, 10× brže za tail) | ✅ (`05ef411`) |
 | P6.2 | **W7.1 — Self-Evolving Math Genome** (μ+λ evolution, paytable/reel/feature genome) | ✅ industry-first | `tools/evolution/genetic_solver.py` — Genome dataclass (paytable_scale + reel_weight_jitter + feature_trigger_scale + feature_avg_pay_scale, each bounded); `evolve_to_target(baseline, target_rtp, population, generations, spins_per_eval)` runs μ+λ greedy ES with annealing noise. Engine MC integration via slot-sim binary. CLI: `python -m tools.evolution.genetic_solver <ir> --target-rtp 0.95 --population 10 --generations 20`. 12/12 tests (genome apply semantics, mutation bounds × 500 iter, E2E evolution, IR JSON round-trip). E2E smoke: Vendor B baseline 0.96 RTP → target 0.70 → evolved genome paytable_scale=0.92 + trigger_scale=0.43 → measured 0.714 (gap 0.014 in 8 generations × 8 pop × 10K spins, ~10 s wall). |
 | P6.3 | **W7.3 — SMT/Z3 solver** za egzaktan RTP-target IR sinteza (paytable + reel weights) | ⏳ industry-first |
-| P6.4 | **W7.4 — Multi-objective Pareto** (RTP × volatility × hit-rate × max-win → frontier) | ⏳ |
+| P6.4 | **W7.4 — Multi-objective Pareto** (RTP × volatility × hit-rate × max-win → frontier) | ✅ industry-first | `tools/evolution/pareto_solver.py` — full NSGA-II implementation: `dominates()` (Pareto reflexive-free + antisymmetric + transitive), `fast_non_dominated_sort()` (front decomposition), `crowding_distance()` (boundary=∞ + spread-normalized inner), `crowded_compare()` (rank → crowding tiebreak), `evolve_pareto()` (μ+λ with tournament selection + child mutation + combined non-dominated sort). 4 objectives supported: RTP gap, hit-freq gap, volatility-class gap (low/medium/high/ultra → numeric), max-win cap penalty. 17/17 tests (dominance × 4, sort × 4, crowding × 3, crowded compare × 2, volatility labels × 2, E2E × 2). Smoke test Vendor B with target RTP 0.85 + hit 0.20: 3 non-dominated genomes evolved in 4 gens × 6 pop × 5K spins (~2 s), front[0] genome reaches RTP 0.849 + hit 0.202 (objectives 0.0008 + 0.0016). |
 | P6.5 | **W7.5 — Verifiable PAR provenance** (Merkle commitment + signature chain + reproducible build) | ⏳ industry-first |
 | P6.6 | **W7.6 — Active-learning balance loop** (real RGS telemetry → re-balance suggest) | ⏳ |
 
