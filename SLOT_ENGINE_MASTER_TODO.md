@@ -6,7 +6,7 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-25 14:40 (post Wave 4.1 + Wave 7 moonshot ideas added)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-25 15:30 (post Wave 4.1 LANDED + Wave 4.2 LANDED + Wave 7.2 LANDED)
 
 **CE COPY TEST = ULTIMATIVNO 1:1 LANDED.** 30B spinova / 3 SWID, **svi unutar 0.05 %** Excel target-a. Avg FS bonus, avg CE win FS, FS trigger 1 in 139.90 = Excel **EXACT (0.000 % Δ)**.
 
@@ -37,6 +37,9 @@
 | **CE COPY TEST Wave 3.5** (30B re-verify sa Wave 3.2 fix + live monitor infrastructure) | ✅ **LANDED** `e412158` + `cc31f44` | Re-run svih 3 SWID-a 10B spinova **bez ručne intervencije** kroz `live_chain.sh` + `watchdog.sh` + `chain_runner.sh` + Monitor (`b40hu310k`). Trajanje 12:29 → 13:59 (1h 30m). Final 30B: PAR-001 −0.018 %, PAR-002 −0.023 %, PAR-003 −0.019 % vs Excel target — **svi unutar 0.05 %** na svim Excel-objavljenim metrikama. Avg FS bonus sad 9.79× = Excel **EXACT** za sve 3 SWID-a; avg_ce_win_fs 29.03× EXACT; FS trigger 1 in 139.90 EXACT |
 | **Kimi deep research** (math-first slot synthesis tail-of-field 2025-2026) | ✅ **DONE** 14:20, `/tmp/slot-math-compiler-research.md` (9.3 KB, 15 sources) | Verdikt: **NE postoji industrijski DSL/compiler** za slot math synthesis; postoje samo evolucioni optimizatori (Balabanov 2015, Kamanas 2021) + formalni RTP solveri (Groote 2024 mCRL2/PRISM/Storm) + Slotopol Go + Math_Simulator Python. SMT/Z3 **NIJE** primenjeno. Verifiable math provenance (Merkle/zk-SNARK) **NE postoji**. LLM samo skin/personalization, ne core math. L&W vs Aristocrat $127.5M lawsuit potvrđuje math je core IP — **opportunity space za prvog DSL/compiler-a u svetu** |
 | **Fort Knox Wolf Run Wave 0** (IGT 4×5 / 40 paylines + Fort Knox pick-bonus + linear progressive) | 🟡 **DUMP DONE** | `games/fort-knox-wolf-run/raw/` sa 4416 cells × 5 tabs; SWID 001 RTP 0.964 (Base 0.71 + Bonus 0.074 + FK Bonus 0.177 + Progressive 0.003), SWID 002 RTP 0.943; openpyxl stylesheet patch (`textRotation > 180` strip) za vendor-export bug. **TODO: parser → IR JSON → Rust engine → 10B verify** (čeka Wave 4 multi-game refactor) |
+| **W4.1 universal slot-sim crate** (IR-driven game-agnostic MC engine) | ✅ **LANDED** `dc65435` | `engine/slot-sim/` workspace crate; lib + 3 bins (`slot-sim`, `qmc-demo`, `qmc-tail`); cargo check clean |
+| **W4.2 universal parse_par.py + vendor profile system** | ✅ **LANDED** | `tools/parse_par/` (core + 4 feature parsers + 0-dep mini-YAML), `tools/vendor_profiles/{lw,igt}.yaml`, `python -m tools.parse_par` CLI, `tools/tests/test_w4_2_parse_par.py` 15/15 pass. L&W bit-identičan round-trip (3 SWID); IGT Fort Knox PAR_001/002 parsing clean (meta+bet table+paytable+FS+linear progressive+FK bonus per-BM). Per-reel IGT strip parser ostavljen za W4.3. |
+| **W7.2 Quasi-Monte Carlo sweeper** (Sobol/Halton/Lattice tail variance reduction) | ✅ **LANDED** `05ef411` | `engine/slot-sim/src/qmc.rs` + 9 tests, 0 clippy warnings; Sobol speedup **252×–534× vs MC** za rare-event probability (τ ∈ {0.5..0.9999}, N=1M); 35× on smooth integrali |
 
 ### 🚀 OPEN — Wave 4: Universal Slot Engine + Math Compiler Vision
 
@@ -44,9 +47,9 @@
 
 | # | Wave | Šta | ETA | Status |
 |---|---|---|---|---|
-| W4.1 | **`ce-sim` → `slot-sim` refactor** | Univerzalni MC driver koji konzumira bilo koji IR (sa već-naučenim primitivima: paylines, wild expand, scatter pay, hold-and-win, FS, pattern win, linked reels, GRAND, pick-bonus, progressive). Iz `engine-rust/src/sim.rs` u workspace crate koji ne zavisi od CE-specifične math-e. | 1-2 dana | 🔴 next |
-| W4.2 | **Universal `parse_par.py` sa vendor profil sistemom** | YAML configs (`vendors/igt.yaml`, `vendors/lw.yaml`, `vendors/netent.yaml`) opisuju layout konvencije po vendoru. Excel → IR potpuno auto, bez ručnog mapiranja po game-u. | 4-6 h | 🔴 next |
-| W4.3 | **Fort Knox Wolf Run integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. Output: 10B verify za sva 2 SWID-a Wolf Run-a, 1:1 sa Excel-om. | 3-4 h | 🟡 čeka W4.1 |
+| W4.1 | **`ce-sim` → `slot-sim` refactor** | Univerzalni MC driver koji konzumira bilo koji IR. Iz `engine-rust/src/sim.rs` u workspace crate `engine/slot-sim/` koji ne zavisi od CE-specifične math-e. | 1-2 dana → 1 sesija | ✅ **LANDED** `dc65435` |
+| W4.2 | **Universal `parse_par.py` sa vendor profil sistemom** | `tools/parse_par/` paket sa vendor-agnostic engine + pluggable feature parserima (free_spins, cash_eruption_pages, linear_progressive, fort_knox_pick_bonus) + 0-dep mini-YAML loader. `tools/vendor_profiles/{lw,igt}.yaml` opisuju layout konvencije; profile schema validation. CLI: `python -m tools.parse_par <vendor> <raw_dir>`. **L&W round-trip bit-identičan** (3/3 SWID, modulo `vendor:` enrichment). **IGT Fort Knox parse-out** SWID+RTP+bet table (24 bm)+paytable+FS+linear progressive (odds*bm ≡ 7.5M)+FK bonus per-BM (24/24 rows). 15/15 unit tests pass. | 4-6 h → 1 sesija | ✅ **LANDED** |
+| W4.3 | **Fort Knox Wolf Run integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. **W4.2 deo:** meta/paytable/FS/progressive radi clean za PAR_001+PAR_002. **Preostalo:** IGT-style per-reel reel strip parser (rows 197+: "Reel N / Weights" stripe layout, ne L&W "Reel Set: K" header blokovi) → onda 10B verify za sva 2 SWID-a Wolf Run-a, 1:1 sa Excel-om. | 3-4 h | 🟡 čeka per-reel strip parser |
 | W4.4 | **Rust engine codegen iz IR** (template-based, Tera) | Umesto da ručno pišem `cash_eruption.rs` za svaki novi game, codegen emituje game-specific Rust code iz IR-a. | 1-2 dana | 🔴 needs design |
 | W4.5 | **TS engine codegen + parity gate** | Mirror W4.4 ali za RGS-client TS runtime. Bit-identical PCG64 output Rust↔TS po seed-u. | 1 dan | 🟡 čeka W4.4 |
 | W4.6 | **UI skeleton codegen** | Svelte komponenta: reel grid + paytable display + spin button + bonus screens. Generic iz IR meta (rows × cols, paylines viz, bonus type). | 1 dan | 🟡 čeka W4.4 |

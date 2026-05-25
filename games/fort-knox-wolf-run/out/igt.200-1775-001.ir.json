@@ -1,0 +1,1291 @@
+{
+  "meta": {
+    "name": "Fort Knox Wolf Run",
+    "vendor": "igt",
+    "swid": "200-1775-001",
+    "reels": 5,
+    "rows": 4,
+    "lines": 40,
+    "left_to_right_only": true,
+    "hold": 0.035557304768723985,
+    "hit_frequency_all_line": 0.244331512,
+    "win_frequency_all_line": 0.11490461,
+    "rtp_breakdown": {
+      "base_game": 0.709879974251824,
+      "bonus": 0.0742835856582393,
+      "base_plus_bonus": 0.7841635599100634
+    },
+    "rtp_total": null,
+    "bet_multipliers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      15,
+      20,
+      25,
+      30,
+      40,
+      50,
+      70,
+      80,
+      100,
+      120,
+      150,
+      160,
+      200,
+      300
+    ],
+    "total_bets": [],
+    "max_liabilities": []
+  },
+  "symbol_counts_per_reel": {
+    "WildWolf": [
+      238.09523809523807,
+      148.93617021276594,
+      156.86274509803923,
+      117.6470588235294,
+      65.93406593406594
+    ],
+    "DarkWolf": [
+      19.04761904761905,
+      21.27659574468085,
+      19.607843137254903,
+      29.41176470588235,
+      21.978021978021978
+    ],
+    "Whitewolf": [
+      19.04761904761905,
+      21.27659574468085,
+      19.607843137254903,
+      29.41176470588235,
+      21.978021978021978
+    ],
+    "BirdTotem": [
+      47.61904761904761,
+      53.191489361702125,
+      39.21568627450981,
+      44.11764705882353,
+      98.90109890109889
+    ],
+    "BearTotem": [
+      47.61904761904761,
+      53.191489361702125,
+      49.01960784313725,
+      44.11764705882353,
+      87.91208791208791
+    ],
+    "Ace": [
+      95.23809523809523,
+      85.1063829787234,
+      78.43137254901961,
+      44.11764705882353,
+      131.86813186813188
+    ],
+    "King": [
+      95.23809523809523,
+      85.1063829787234,
+      117.6470588235294,
+      73.52941176470588,
+      153.84615384615387
+    ],
+    "Queen": [
+      95.23809523809523,
+      127.6595744680851,
+      98.0392156862745,
+      102.94117647058823,
+      109.89010989010988
+    ],
+    "Jack": [
+      47.61904761904761,
+      106.38297872340425,
+      137.25490196078434,
+      117.6470588235294,
+      109.89010989010988
+    ],
+    "Ten": [
+      104.76190476190476,
+      117.02127659574468,
+      117.6470588235294,
+      147.05882352941177,
+      120.87912087912088
+    ],
+    "Nine": [
+      190.47619047619045,
+      106.38297872340425,
+      107.84313725490196,
+      147.05882352941177,
+      76.92307692307693
+    ],
+    "Bonus": [
+      0,
+      74.46808510638297,
+      58.8235294117647,
+      102.94117647058823,
+      0
+    ]
+  },
+  "paytable": [
+    {
+      "marker": "",
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf"
+      ],
+      "pays": 1000,
+      "pph": 176128.86899594907,
+      "rtp_pct": 0.005677660940541211
+    },
+    {
+      "marker": "",
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "--"
+      ],
+      "pays": 200,
+      "pph": 44969.07293513593,
+      "rtp_pct": 0.004447501070090615
+    },
+    {
+      "marker": "",
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "--",
+        "--"
+      ],
+      "pays": 50,
+      "pph": 11482.764973589889,
+      "rtp_pct": 0.004354351945284861
+    },
+    {
+      "marker": "",
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf"
+      ],
+      "pays": 400,
+      "pph": 10136.91332350786,
+      "rtp_pct": 0.03945974353676142
+    },
+    {
+      "marker": "",
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "--"
+      ],
+      "pays": 100,
+      "pph": 3271.743696519178,
+      "rtp_pct": 0.030564741396580188
+    },
+    {
+      "marker": "",
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "--",
+        "--"
+      ],
+      "pays": 25,
+      "pph": 1040.9956240487063,
+      "rtp_pct": 0.024015470788213703
+    },
+    {
+      "marker": "",
+      "combo": [
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf"
+      ],
+      "pays": 400,
+      "pph": 10496.66099758579,
+      "rtp_pct": 0.03810735624328528
+    },
+    {
+      "marker": "",
+      "combo": [
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf",
+        "--"
+      ],
+      "pays": 100,
+      "pph": 2951.7087152070603,
+      "rtp_pct": 0.033878681688611356
+    },
+    {
+      "marker": "",
+      "combo": [
+        "WhiteWolf",
+        "WhiteWolf",
+        "WhiteWolf",
+        "--",
+        "--"
+      ],
+      "pays": 25,
+      "pph": 671.1158129722304,
+      "rtp_pct": 0.037251394642722355
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem"
+      ],
+      "pays": 250,
+      "pph": 8433.628741747545,
+      "rtp_pct": 0.02964323041189469
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "--"
+      ],
+      "pays": 75,
+      "pph": 2701.5212777052875,
+      "rtp_pct": 0.027762135585956263
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "--",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 556.9496131921824,
+      "rtp_pct": 0.0359098911755573
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem"
+      ],
+      "pays": 250,
+      "pph": 7477.754544212109,
+      "rtp_pct": 0.033432496148660514
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "--"
+      ],
+      "pays": 75,
+      "pph": 1797.3766428670558,
+      "rtp_pct": 0.041727481158520555
+    },
+    {
+      "marker": "",
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "--",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 616.3234432729566,
+      "rtp_pct": 0.0324504936787589
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace"
+      ],
+      "pays": 150,
+      "pph": 8775.591760016147,
+      "rtp_pct": 0.017092864401855905
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace",
+        "--"
+      ],
+      "pays": 50,
+      "pph": 2710.1092200049866,
+      "rtp_pct": 0.018449440941685737
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 487.75789830266723,
+      "rtp_pct": 0.010250987256996425
+    },
+    {
+      "marker": "",
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "King",
+        "King"
+      ],
+      "pays": 150,
+      "pph": 9508.76745203254,
+      "rtp_pct": 0.015774915177669727
+    },
+    {
+      "marker": "",
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "King",
+        "--"
+      ],
+      "pays": 50,
+      "pph": 3313.6613847992185,
+      "rtp_pct": 0.015089049300379739
+    },
+    {
+      "marker": "",
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 666.6024610136452,
+      "rtp_pct": 0.007500722383168116
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen"
+      ],
+      "pays": 100,
+      "pph": 7134.898403823556,
+      "rtp_pct": 0.014015616528808665
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 2421.481284233505,
+      "rtp_pct": 0.008259407219135617
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 537.5255919049023,
+      "rtp_pct": 0.009301882692284144
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack"
+      ],
+      "pays": 100,
+      "pph": 4531.253228892164,
+      "rtp_pct": 0.02206894979128076
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 1089.7377818774885,
+      "rtp_pct": 0.018353038990299466
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 274.7799339098643,
+      "rtp_pct": 0.01819637965864037
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten"
+      ],
+      "pays": 100,
+      "pph": 5173.128781891116,
+      "rtp_pct": 0.019330661233498907
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 1348.632806355199,
+      "rtp_pct": 0.014829833521588277
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 372.9702113156101,
+      "rtp_pct": 0.01340589636465354
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine"
+      ],
+      "pays": 100,
+      "pph": 3985.708391445839,
+      "rtp_pct": 0.025089642838553076
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine",
+        "--"
+      ],
+      "pays": 20,
+      "pph": 1039.1199018241318,
+      "rtp_pct": 0.01924705701901275
+    },
+    {
+      "marker": "",
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "--",
+        "--"
+      ],
+      "pays": 5,
+      "pph": 333.88699716852176,
+      "rtp_pct": 0.014975126442184765
+    }
+  ],
+  "free_spins": {
+    "fs_paytable": [
+      {
+        "marker": "",
+        "combo": [
+          "WildWolf",
+          "WildWolf",
+          "WildWolf",
+          "WildWolf",
+          "WildWolf"
+        ],
+        "pays": 1000,
+        "pph": 176128.86899594907,
+        "rtp_pct": 0.005677660940541211
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WildWolf",
+          "WildWolf",
+          "WildWolf",
+          "WildWolf",
+          "--"
+        ],
+        "pays": 200,
+        "pph": 44969.07293513593,
+        "rtp_pct": 0.004447501070090615
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WildWolf",
+          "WildWolf",
+          "WildWolf",
+          "--",
+          "--"
+        ],
+        "pays": 50,
+        "pph": 11482.764973589889,
+        "rtp_pct": 0.004354351945284861
+      },
+      {
+        "marker": "",
+        "combo": [
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf"
+        ],
+        "pays": 400,
+        "pph": 10136.91332350786,
+        "rtp_pct": 0.03945974353676142
+      },
+      {
+        "marker": "",
+        "combo": [
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf",
+          "--"
+        ],
+        "pays": 100,
+        "pph": 3271.743696519178,
+        "rtp_pct": 0.030564741396580188
+      },
+      {
+        "marker": "",
+        "combo": [
+          "DarkWolf",
+          "DarkWolf",
+          "DarkWolf",
+          "--",
+          "--"
+        ],
+        "pays": 25,
+        "pph": 1040.9956240487063,
+        "rtp_pct": 0.024015470788213703
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf"
+        ],
+        "pays": 400,
+        "pph": 10496.66099758579,
+        "rtp_pct": 0.03810735624328528
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf",
+          "--"
+        ],
+        "pays": 100,
+        "pph": 2951.7087152070603,
+        "rtp_pct": 0.033878681688611356
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WhiteWolf",
+          "WhiteWolf",
+          "WhiteWolf",
+          "--",
+          "--"
+        ],
+        "pays": 25,
+        "pph": 671.1158129722304,
+        "rtp_pct": 0.037251394642722355
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem"
+        ],
+        "pays": 250,
+        "pph": 8433.628741747545,
+        "rtp_pct": 0.02964323041189469
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem",
+          "--"
+        ],
+        "pays": 75,
+        "pph": 2701.5212777052875,
+        "rtp_pct": 0.027762135585956263
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BirdTotem",
+          "BirdTotem",
+          "BirdTotem",
+          "--",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 556.9496131921824,
+        "rtp_pct": 0.0359098911755573
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BearTotem",
+          "BearTotem",
+          "BearTotem",
+          "BearTotem",
+          "BearTotem"
+        ],
+        "pays": 250,
+        "pph": 7477.754544212109,
+        "rtp_pct": 0.033432496148660514
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BearTotem",
+          "BearTotem",
+          "BearTotem",
+          "BearTotem",
+          "--"
+        ],
+        "pays": 75,
+        "pph": 1797.3766428670558,
+        "rtp_pct": 0.041727481158520555
+      },
+      {
+        "marker": "",
+        "combo": [
+          "BearTotem",
+          "BearTotem",
+          "BearTotem",
+          "--",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 616.3234432729566,
+        "rtp_pct": 0.0324504936787589
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ace",
+          "Ace",
+          "Ace",
+          "Ace",
+          "Ace"
+        ],
+        "pays": 150,
+        "pph": 8775.591760016147,
+        "rtp_pct": 0.017092864401855905
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ace",
+          "Ace",
+          "Ace",
+          "Ace",
+          "--"
+        ],
+        "pays": 50,
+        "pph": 2710.1092200049866,
+        "rtp_pct": 0.018449440941685737
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ace",
+          "Ace",
+          "Ace",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 487.75789830266723,
+        "rtp_pct": 0.010250987256996425
+      },
+      {
+        "marker": "",
+        "combo": [
+          "King",
+          "King",
+          "King",
+          "King",
+          "King"
+        ],
+        "pays": 150,
+        "pph": 9508.76745203254,
+        "rtp_pct": 0.015774915177669727
+      },
+      {
+        "marker": "",
+        "combo": [
+          "King",
+          "King",
+          "King",
+          "King",
+          "--"
+        ],
+        "pays": 50,
+        "pph": 3313.6613847992185,
+        "rtp_pct": 0.015089049300379739
+      },
+      {
+        "marker": "",
+        "combo": [
+          "King",
+          "King",
+          "King",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 666.6024610136452,
+        "rtp_pct": 0.007500722383168116
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Queen",
+          "Queen",
+          "Queen",
+          "Queen",
+          "Queen"
+        ],
+        "pays": 100,
+        "pph": 7134.898403823556,
+        "rtp_pct": 0.014015616528808665
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Queen",
+          "Queen",
+          "Queen",
+          "Queen",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 2421.481284233505,
+        "rtp_pct": 0.008259407219135617
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Queen",
+          "Queen",
+          "Queen",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 537.5255919049023,
+        "rtp_pct": 0.009301882692284144
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Jack",
+          "Jack",
+          "Jack",
+          "Jack",
+          "Jack"
+        ],
+        "pays": 100,
+        "pph": 4531.253228892164,
+        "rtp_pct": 0.02206894979128076
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Jack",
+          "Jack",
+          "Jack",
+          "Jack",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 1089.7377818774885,
+        "rtp_pct": 0.018353038990299466
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Jack",
+          "Jack",
+          "Jack",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 274.7799339098643,
+        "rtp_pct": 0.01819637965864037
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ten",
+          "Ten",
+          "Ten",
+          "Ten",
+          "Ten"
+        ],
+        "pays": 100,
+        "pph": 5173.128781891116,
+        "rtp_pct": 0.019330661233498907
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ten",
+          "Ten",
+          "Ten",
+          "Ten",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 1348.632806355199,
+        "rtp_pct": 0.014829833521588277
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Ten",
+          "Ten",
+          "Ten",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 372.9702113156101,
+        "rtp_pct": 0.01340589636465354
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Nine",
+          "Nine",
+          "Nine",
+          "Nine",
+          "Nine"
+        ],
+        "pays": 100,
+        "pph": 3985.708391445839,
+        "rtp_pct": 0.025089642838553076
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Nine",
+          "Nine",
+          "Nine",
+          "Nine",
+          "--"
+        ],
+        "pays": 20,
+        "pph": 1039.1199018241318,
+        "rtp_pct": 0.01924705701901275
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Nine",
+          "Nine",
+          "Nine",
+          "--",
+          "--"
+        ],
+        "pays": 5,
+        "pph": 333.88699716852176,
+        "rtp_pct": 0.014975126442184765
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Scatter",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "*",
+        "combo": [
+          "--",
+          "Bonus",
+          "Bonus",
+          "Bonus",
+          "--"
+        ],
+        "pays": null,
+        "pph": 200.68489583333334,
+        "rtp_pct": 0.009965872078688865
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Notes:",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "40 lines fixed bet for 40 coins times the bet multiplier. Highest win pays left to right on paylines.",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "WildWolf Symbol is wild and substitutes for all symbols except the Bonus symbol.",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Three Bonus symbols on middle reels pay 2x total bet and initiate Bonus with 5 bonus spins.",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "Software ID:",
+        "combo": [
+          "",
+          "200-1775-001",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "Bonus",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "In the Bonus three Bonus symbols on middle reels pay 2x total bet and retrigger 5 additional bonus spins",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      },
+      {
+        "marker": "",
+        "combo": [
+          "up to a maximum of 255 bonus spins per bonus round.",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "pays": null,
+        "pph": null,
+        "rtp_pct": null
+      }
+    ],
+    "bonus_summary": {
+      "avg_free_spins": 5.84315581175256,
+      "single_spin_payback_pct": 2.5512914819019614,
+      "total_payback_pct": 14.907593649950247
+    }
+  },
+  "linear_progressive": {
+    "per_bet_multiplier": {
+      "bet_multipliers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        15,
+        20,
+        25,
+        30,
+        40,
+        50,
+        70,
+        80,
+        100,
+        120,
+        150,
+        160,
+        200,
+        300
+      ],
+      "progressive_odds": [
+        7499999.999999999,
+        3749999.9999999995,
+        2500000,
+        1874999.9999999998,
+        1500000,
+        1250000,
+        1071428.5714285714,
+        937499.9999999999,
+        833333.3333333334,
+        750000,
+        500000,
+        375000,
+        300000,
+        250000,
+        187500,
+        150000,
+        107142.85714285714,
+        93750,
+        75000,
+        62500,
+        50000,
+        46875,
+        37500,
+        25000
+      ]
+    }
+  },
+  "fort_knox_pick_bonus": {
+    "present": false,
+    "section_start_row": null,
+    "per_bet_multiplier": [
+      {
+        "bet_multiplier": 1,
+        "fkb_rtp": 0.17727913532121262
+      },
+      {
+        "bet_multiplier": 2,
+        "fkb_rtp": 0.17727916847374528
+      },
+      {
+        "bet_multiplier": 3,
+        "fkb_rtp": 0.17727912687710312
+      },
+      {
+        "bet_multiplier": 4,
+        "fkb_rtp": 0.17727914730046912
+      },
+      {
+        "bet_multiplier": 5,
+        "fkb_rtp": 0.17727916772383512
+      },
+      {
+        "bet_multiplier": 6,
+        "fkb_rtp": 0.17727913841109003
+      },
+      {
+        "bet_multiplier": 7,
+        "fkb_rtp": 0.1772791376191783
+      },
+      {
+        "bet_multiplier": 8,
+        "fkb_rtp": 0.177279170771711
+      },
+      {
+        "bet_multiplier": 9,
+        "fkb_rtp": 0.17727912890923822
+      },
+      {
+        "bet_multiplier": 10,
+        "fkb_rtp": 0.17727914933260425
+      },
+      {
+        "bet_multiplier": 15,
+        "fkb_rtp": 0.1772791313866429
+      },
+      {
+        "bet_multiplier": 20,
+        "fkb_rtp": 0.17727917572652033
+      },
+      {
+        "bet_multiplier": 25,
+        "fkb_rtp": 0.17727915760112
+      },
+      {
+        "bet_multiplier": 30,
+        "fkb_rtp": 0.1772791478754392
+      },
+      {
+        "bet_multiplier": 40,
+        "fkb_rtp": 0.17727917408991628
+      },
+      {
+        "bet_multiplier": 50,
+        "fkb_rtp": 0.17727918790550182
+      },
+      {
+        "bet_multiplier": 70,
+        "fkb_rtp": 0.17727912338695334
+      },
+      {
+        "bet_multiplier": 80,
+        "fkb_rtp": 0.17727919948837761
+      },
+      {
+        "bet_multiplier": 100,
+        "fkb_rtp": 0.17727919803121261
+      },
+      {
+        "bet_multiplier": 120,
+        "fkb_rtp": 0.1772791335126641
+      },
+      {
+        "bet_multiplier": 150,
+        "fkb_rtp": 0.17727914527497896
+      },
+      {
+        "bet_multiplier": 160,
+        "fkb_rtp": 0.17727917122362546
+      },
+      {
+        "bet_multiplier": 200,
+        "fkb_rtp": 0.1772791052479119
+      },
+      {
+        "bet_multiplier": 300,
+        "fkb_rtp": 0.17727916672073057
+      }
+    ]
+  }
+}

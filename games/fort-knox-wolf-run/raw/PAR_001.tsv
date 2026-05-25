@@ -1,0 +1,1540 @@
+Fort Knox Wolf Run											Hold*:	0.035557304768723985																																																									
+4x5 Reels / 40 Lines											All Line Hit Frequency*:	0.244331512																																																									
+Software ID: 		200-1775-001		Tweak of paymodels 200-1646-001 (Fort Knox Cats) and 200-1196-001 (Wolf Run)							All Line Win Frequency*:	0.11490461																																																									
+* Hold percentages and Hit Frequencies represent long term statistical probabilities.																																																																					
+																																																																					
+																																																																					
+	Summary																																																																				
+																																																																					
+	Cost	40																																																																			
+																																																																					
+																																																																					
+	Bet Multiplier	Base  RTP	Bonus RTP	Fort Knox Bonus RTP	Increment	Total RTP	Progressive Odds																																																														
+	1	0.709879974251824	0.0742835856582393	0.17727913532121262	0.003	0.964442695231276	7499999.999999999																																																														
+	2	0.709879974251824	0.0742835856582393	0.17727916847374528	0.003	0.9644427283838086	3749999.9999999995																																																														
+	3	0.709879974251824	0.0742835856582393	0.17727912687710312	0.003	0.9644426867871665	2500000																																																														
+	4	0.709879974251824	0.0742835856582393	0.17727914730046912	0.003	0.9644427072105325	1874999.9999999998																																																														
+	5	0.709879974251824	0.0742835856582393	0.17727916772383512	0.003	0.9644427276338985	1500000																																																														
+	6	0.709879974251824	0.0742835856582393	0.17727913841109003	0.003	0.9644426983211534	1250000																																																														
+	7	0.709879974251824	0.0742835856582393	0.1772791376191783	0.003	0.9644426975292416	1071428.5714285714																																																														
+	8	0.709879974251824	0.0742835856582393	0.177279170771711	0.003	0.9644427306817743	937499.9999999999																																																														
+	9	0.709879974251824	0.0742835856582393	0.17727912890923822	0.003	0.9644426888193016	833333.3333333334																																																														
+	10	0.709879974251824	0.0742835856582393	0.17727914933260425	0.003	0.9644427092426676	750000																																																														
+	15	0.709879974251824	0.0742835856582393	0.1772791313866429	0.003	0.9644426912967062	500000																																																														
+	20	0.709879974251824	0.0742835856582393	0.17727917572652033	0.003	0.9644427356365837	375000																																																														
+	25	0.709879974251824	0.0742835856582393	0.17727915760112	0.003	0.9644427175111834	300000																																																														
+	30	0.709879974251824	0.0742835856582393	0.1772791478754392	0.003	0.9644427077855026	250000																																																														
+	40	0.709879974251824	0.0742835856582393	0.17727917408991628	0.003	0.9644427339999796	187500																																																														
+	50	0.709879974251824	0.0742835856582393	0.17727918790550182	0.003	0.9644427478155652	150000																																																														
+	70	0.709879974251824	0.0742835856582393	0.17727912338695334	0.003	0.9644426832970167	107142.85714285714																																																														
+	80	0.709879974251824	0.0742835856582393	0.17727919948837761	0.003	0.9644427593984409	93750																																																														
+	100	0.709879974251824	0.0742835856582393	0.17727919803121261	0.003	0.964442757941276	75000																																																														
+	120	0.709879974251824	0.0742835856582393	0.1772791335126641	0.003	0.9644426934227275	62500																																																														
+	150	0.709879974251824	0.0742835856582393	0.17727914527497896	0.003	0.9644427051850423	50000																																																														
+	160	0.709879974251824	0.0742835856582393	0.17727917122362546	0.003	0.9644427311336888	46875																																																														
+	200	0.709879974251824	0.0742835856582393	0.1772791052479119	0.003	0.9644426651579753	37500																																																														
+	300	0.709879974251824	0.0742835856582393	0.17727916672073057	0.003	0.9644427266307939	25000																																																														
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 2																																																									
+Software ID: 		200-1775-001																																																																			
+																																																																					
+	Base Game																																																																				
+																																																																					
+		Reel 1	Reel 2	Reel 3	Reel 4	Reel 5																																																															
+	WildWolf	56.33802816901409	82.56880733944955	57.14285714285714	158.41584158415841	134.8314606741573																																																															
+	DarkWolf	28.169014084507044	64.22018348623854	71.42857142857143	118.8118811881188	101.12359550561797																																																															
+	Whitewolf	42.25352112676056	27.522935779816514	142.85714285714286	59.4059405940594	78.65168539325842																																																															
+	BirdTotem	42.25352112676056	45.87155963302752	142.85714285714286	49.504950495049506	101.12359550561797																																																															
+	BearTotem	70.42253521126761	73.39449541284404	71.42857142857143	128.7128712871287	56.17977528089887																																																															
+	Ace	70.42253521126761	110.09174311926606	57.14285714285714	29.7029702970297	101.12359550561797																																																															
+	King	126.76056338028168	82.56880733944955	14.285714285714285	49.504950495049506	123.59550561797752																																																															
+	Queen	70.42253521126761	128.44036697247708	42.857142857142854	69.30693069306932	112.35955056179775																																																															
+	Jack	14.084507042253522	110.09174311926606	314.2857142857143	79.20792079207921	56.17977528089887																																																															
+	Ten	225.35211267605635	110.09174311926606	14.285714285714285	99.00990099009901	67.41573033707866																																																															
+	Nine	253.52112676056336	119.26605504587157	14.285714285714285	128.7128712871287	67.41573033707866																																																															
+	Bonus	0	45.87155963302752	57.14285714285714	29.7029702970297	0																																																															
+	Total	1000	1000	1000	1000	1000																																																															
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+	Combination					Hits	PPH	Pays	RTP% 																																																												
+	WildWolf	WildWolf	WildWolf	WildWolf	WildWolf	27648	176128.86899594907	1000	0.005677660940541211																																																												
+	WildWolf	WildWolf	WildWolf	WildWolf	--	108288	44969.07293513593	200	0.004447501070090615																																																												
+	WildWolf	WildWolf	WildWolf	--	--	424080	11482.764973589889	50	0.004354351945284861																																																												
+	DarkWolf	DarkWolf	DarkWolf	DarkWolf	DarkWolf	480384	10136.91332350786	400	0.03945974353676142																																																												
+	DarkWolf	DarkWolf	DarkWolf	DarkWolf	--	1488384	3271.743696519178	100	0.030564741396580188																																																												
+	DarkWolf	DarkWolf	DarkWolf	--	--	4677840	1040.9956240487063	25	0.024015470788213703																																																												
+	WhiteWolf	WhiteWolf	WhiteWolf	WhiteWolf	WhiteWolf	463920	10496.66099758579	400	0.03810735624328528																																																												
+	WhiteWolf	WhiteWolf	WhiteWolf	WhiteWolf	--	1649760	2951.7087152070603	100	0.033878681688611356																																																												
+	WhiteWolf	WhiteWolf	WhiteWolf	--	--	7255992	671.1158129722304	25	0.037251394642722355																																																												
+	BirdTotem	BirdTotem	BirdTotem	BirdTotem	BirdTotem	577404	8433.628741747545	250	0.02964323041189469																																																												
+	BirdTotem	BirdTotem	BirdTotem	BirdTotem	--	1802544	2701.5212777052875	75	0.027762135585956263																																																												
+	BirdTotem	BirdTotem	BirdTotem	--	--	8743360	556.9496131921824	20	0.0359098911755573																																																												
+	BearTotem	BearTotem	BearTotem	BearTotem	BearTotem	651213	7477.754544212109	250	0.033432496148660514																																																												
+	BearTotem	BearTotem	BearTotem	BearTotem	--	2709288	1797.3766428670558	75	0.041727481158520555																																																												
+	BearTotem	BearTotem	BearTotem	--	--	7901064	616.3234432729566	20	0.0324504936787589																																																												
+	Ace	Ace	Ace	Ace	Ace	554904	8775.591760016147	150	0.017092864401855905																																																												
+	Ace	Ace	Ace	Ace	--	1796832	2710.1092200049866	50	0.018449440941685737																																																												
+	Ace	Ace	Ace	--	--	9983664	487.75789830266723	5	0.010250987256996425																																																												
+	King	King	King	King	King	512118	9508.76745203254	150	0.015774915177669727																																																												
+	King	King	King	King	--	1469556	3313.6613847992185	50	0.015089049300379739																																																												
+	King	King	King	--	--	7305120	666.6024610136452	5	0.007500722383168116																																																												
+	Queen	Queen	Queen	Queen	Queen	682506	7134.898403823556	100	0.014015616528808665																																																												
+	Queen	Queen	Queen	Queen	--	2011005	2421.481284233505	20	0.008259407219135617																																																												
+	Queen	Queen	Queen	--	--	9059310	537.5255919049023	5	0.009301882692284144																																																												
+	Jack	Jack	Jack	Jack	Jack	1074672	4531.253228892164	100	0.02206894979128076																																																												
+	Jack	Jack	Jack	Jack	--	4468608	1089.7377818774885	20	0.018353038990299466																																																												
+	Jack	Jack	Jack	--	--	17721858	274.7799339098643	5	0.01819637965864037																																																												
+	Ten	Ten	Ten	Ten	Ten	941328	5173.128781891116	100	0.019330661233498907																																																												
+	Ten	Ten	Ten	Ten	--	3610776	1348.632806355199	20	0.014829833521588277																																																												
+	Ten	Ten	Ten	--	--	13056300	372.9702113156101	5	0.01340589636465354																																																												
+	Nine	Nine	Nine	Nine	Nine	1221768	3985.708391445839	100	0.025089642838553076																																																												
+	Nine	Nine	Nine	Nine	--	4686284	1039.1199018241318	20	0.01924705701901275																																																												
+	Nine	Nine	Nine	--	--	14584608	333.88699716852176	5	0.014975126442184765																																																												
+	Scatter					Hits	PPH	Pays	RTP% 																																																												
+*	--	Bonus	Bonus	Bonus	--	24264960	200.68489583333334	2*	0.009965872078688865																																																												
+								Total	0.709879974251824																																																												
+																																																																					
+																																																																					
+								Base RTP	0.709879974251824																																																												
+								Bonus RTP	0.0742835856582393																																																												
+								Total	0.7841635599100634																																																												
+	Notes:																																																																				
+	40 lines fixed bet for 40 coins times the bet multiplier. Highest win pays left to right on paylines.																																																																				
+	WildWolf Symbol is wild and substitutes for all symbols except the Bonus symbol.																																																																				
+	Three Bonus symbols on middle reels pay 2x total bet and initiate Bonus with 5 bonus spins.																																																																				
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 3																																																									
+Software ID: 		200-1775-001																																																																			
+																																																																					
+	Bonus																																																																				
+																																																																					
+	In the Bonus three Bonus symbols on middle reels pay 2x total bet and retrigger 5 additional bonus spins																																																																				
+	up to a maximum of 255 bonus spins per bonus round.																																																																				
+																																																																					
+																																																																					
+		Reel 1	Reel 2	Reel 3	Reel 4	Reel 5																																																															
+	WildWolf	238.09523809523807	148.93617021276594	156.86274509803923	117.6470588235294	65.93406593406594																																																															
+	DarkWolf	19.04761904761905	21.27659574468085	19.607843137254903	29.41176470588235	21.978021978021978																																																															
+	Whitewolf	19.04761904761905	21.27659574468085	19.607843137254903	29.41176470588235	21.978021978021978																																																															
+	BirdTotem	47.61904761904761	53.191489361702125	39.21568627450981	44.11764705882353	98.90109890109889																																																															
+	BearTotem	47.61904761904761	53.191489361702125	49.01960784313725	44.11764705882353	87.91208791208791																																																															
+	Ace	95.23809523809523	85.1063829787234	78.43137254901961	44.11764705882353	131.86813186813188																																																															
+	King	95.23809523809523	85.1063829787234	117.6470588235294	73.52941176470588	153.84615384615387																																																															
+	Queen	95.23809523809523	127.6595744680851	98.0392156862745	102.94117647058823	109.89010989010988																																																															
+	Jack	47.61904761904761	106.38297872340425	137.25490196078434	117.6470588235294	109.89010989010988																																																															
+	Ten	104.76190476190476	117.02127659574468	117.6470588235294	147.05882352941177	120.87912087912088																																																															
+	Nine	190.47619047619045	106.38297872340425	107.84313725490196	147.05882352941177	76.92307692307693																																																															
+	Bonus	0	74.46808510638297	58.8235294117647	102.94117647058823	0																																																															
+	Total	1000	1000	1000	1000	1000																																																															
+																																																																					
+																																																																					
+	Combination					Hits	PPH	Pays	RTP%																																																												
+	WildWolf	WildWolf	WildWolf	WildWolf	WildWolf	268800	15021	1000	0.04314809586104587																																																												
+	WildWolf	WildWolf	WildWolf	WildWolf	--	2867200	1288	200	0.09204927117023119																																																												
+	WildWolf	WildWolf	WildWolf	--	--	18379200	240	50	0.14751255272495056																																																												
+	DarkWolf	DarkWolf	DarkWolf	DarkWolf	DarkWolf	353280	12290	400	0.022683570395521258																																																												
+	DarkWolf	DarkWolf	DarkWolf	DarkWolf	--	2735680	1629	100	0.043913460894771564																																																												
+	DarkWolf	DarkWolf	DarkWolf	--	--	11484928	410	25	0.04608935772890717																																																												
+	Whitewolf	Whitewolf	Whitewolf	Whitewolf	Whitewolf	353280	12290	400	0.022683570395521258																																																												
+	Whitewolf	Whitewolf	Whitewolf	Whitewolf	--	2735680	1629	100	0.043913460894771564																																																												
+	Whitewolf	Whitewolf	Whitewolf	--	--	11484928	410	25	0.04608935772890717																																																												
+	BirdTotem	BirdTotem	BirdTotem	BirdTotem	BirdTotem	1612200	3085	250	0.06469806561307492																																																												
+	BirdTotem	BirdTotem	BirdTotem	BirdTotem	--	6125600	590	75	0.07374664509107773																																																												
+	BirdTotem	BirdTotem	BirdTotem	--	--	30084600	148	20	0.09658431582895986																																																												
+	BearTotem	BearTotem	BearTotem	BearTotem	BearTotem	1574580	3111	250	0.06318836382150819																																																												
+	BearTotem	BearTotem	BearTotem	BearTotem	--	6688990	517	75	0.08052934758191328																																																												
+	BearTotem	BearTotem	BearTotem	--	--	33041190	151	20	0.10607622272939213																																																												
+	Ace	Ace	Ace	Ace	Ace	2852640	1685	150	0.06868637509880239																																																												
+	Ace	Ace	Ace	Ace	--	11569040	415	50	0.09285380337430695																																																												
+	Ace	Ace	Ace	--	--	66808560	74	5	0.0536209477533191																																																												
+	King	King	King	King	King	4709600	1007	150	0.11339858943481118																																																												
+	King	King	King	King	--	16719080	284	50	0.13418833083119322																																																												
+	King	King	King	--	--	79879800	61	5	0.06411200274853371																																																												
+	Queen	Queen	Queen	Queen	Queen	4961600	976	100	0.0796441936101805																																																												
+	Queen	Queen	Queen	Queen	--	20317500	245	20	0.06522778553994044																																																												
+	Queen	Queen	Queen	--	--	87103380	57	5	0.06990969103536283																																																												
+	Jack	Jack	Jack	Jack	Jack	4812800	970	100	0.0772556383035869																																																												
+	Jack	Jack	Jack	Jack	--	19200000	250	20	0.06164013694435125																																																												
+	Jack	Jack	Jack	--	--	75712000	63	5	0.060766901670972935																																																												
+	Ten	Ten	Ten	Ten	Ten	6949600	747	100	0.11155580617407901																																																												
+	Ten	Ten	Ten	Ten	--	26107200	216	20	0.08381517621008161																																																												
+	Ten	Ten	Ten	--	--	89180000	53	5	0.0715763986028287																																																												
+	Nine	Nine	Nine	Nine	Nine	6241040	848	100	0.10018191673832653																																																												
+	Nine	Nine	Nine	Nine	--	33078240	258	20	0.10619516893115194																																																												
+	Nine	Nine	Nine	--	--	107198000	69	5	0.08603775260625736																																																												
+	Scatter					Hits	PPH	Pays	RTP%																																																												
+	--	Bonus	Bonus	Bonus	--	179786880	35	2*	0.057719207833321066																																																												
+								Total	2.551291481901962																																																												
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+	Ave # Spins	Single Spin Pay%	Total Pay%																																																																		
+	5.84315581175256	2.5512914819019614	14.907593649950247																																																																		
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 4																																																									
+Software ID: 			200-1775-001																																																																		
+																																																																					
+	Base Game Reel Strips																																																																				
+																																																																					
+	Reel 1	Weights	Reel 2	Weights	Reel 3	Weights	Reel 4	Weights	Reel 5	Weights																																																											
+1	Ace	1	BearTotem	1	BirdTotem	1	BearTotem	1	DarkWolf	1																																																											
+2	Whitewolf	1	Jack	1	Jack	1	Ten	1	Queen	1																																																											
+3	Ten	1	Ten	1	Whitewolf	1	BearTotem	1	Nine	1																																																											
+4	Nine	1	King	1	Queen	1	Nine	1	Whitewolf	1																																																											
+5	Ten	1	Nine	1	BearTotem	1	DarkWolf	1	Queen	1																																																											
+6	BearTotem	1	Ten	1	Jack	1	WildWolf	1	BirdTotem	1																																																											
+7	King	1	Queen	1	BirdTotem	1	WildWolf	1	Nine	1																																																											
+8	Ace	1	Jack	1	Jack	1	WildWolf	1	King	1																																																											
+9	DarkWolf	1	Whitewolf	1	DarkWolf	1	WildWolf	1	Whitewolf	1																																																											
+10	King	1	Ten	1	Jack	1	WildWolf	1	Nine	1																																																											
+11	Ten	1	Bonus	1	BirdTotem	1	BearTotem	1	Queen	1																																																											
+12	BearTotem	1	Queen	1	Ace	1	Ace	1	BirdTotem	1																																																											
+13	Ten	1	BearTotem	1	BearTotem	1	Whitewolf	1	King	1																																																											
+14	Ace	1	Queen	1	Jack	1	Ten	1	Nine	1																																																											
+15	Queen	1	King	1	Whitewolf	1	DarkWolf	1	Whitewolf	1																																																											
+16	Nine	1	Queen	1	Jack	1	King	1	Queen	1																																																											
+17	Nine	1	BirdTotem	1	Bonus	1	Whitewolf	1	Jack	1																																																											
+18	Ten	1	Nine	1	BirdTotem	1	Queen	1	Ace	1																																																											
+19	Ace	1	DarkWolf	1	Jack	1	BearTotem	1	DarkWolf	1																																																											
+20	Nine	1	Ace	1	BirdTotem	1	Bonus	1	Nine	1																																																											
+21	Queen	1	Jack	1	Ace	1	Queen	1	DarkWolf	1																																																											
+22	BirdTotem	1	Nine	1	Whitewolf	1	DarkWolf	1	Queen	1																																																											
+23	Nine	1	DarkWolf	1	Jack	1	Queen	1	BirdTotem	1																																																											
+24	Ten	1	Ten	1	Whitewolf	1	BearTotem	1	Queen	1																																																											
+25	King	1	BearTotem	1	Jack	1	Queen	1	BirdTotem	1																																																											
+26	Nine	1	Queen	1	Bonus	1	Bonus	1	Nine	1																																																											
+27	Ten	1	Bonus	1	Jack	1	Nine	1	Ten	1																																																											
+28	King	1	Nine	1	Whitewolf	1	Whitewolf	1	Ace	1																																																											
+29	Nine	1	DarkWolf	1	Ace	1	Queen	1	BearTotem	1																																																											
+30	BirdTotem	1	Jack	1	BirdTotem	1	BearTotem	1	Ace	1																																																											
+31	Ten	1	Bonus	1	Jack	1	Bonus	1	Jack	1																																																											
+32	Ace	1	Jack	1	BearTotem	1	BearTotem	1	DarkWolf	1																																																											
+33	Nine	1	Ten	1	Jack	1	Queen	1	Ten	1																																																											
+34	WildWolf	1	BearTotem	1	BirdTotem	1	Ten	1	King	1																																																											
+35	WildWolf	1	Nine	1	Jack	1	King	1	BirdTotem	1																																																											
+36	WildWolf	1	Ten	1	Whitewolf	1	DarkWolf	1	King	1																																																											
+37	WildWolf	1	BearTotem	1	Bonus	1	Ten	1	WildWolf	1																																																											
+38	King	1	Jack	1	DarkWolf	1	BearTotem	1	WildWolf	1																																																											
+39	Nine	1	Ace	1	Ace	1	King	1	WildWolf	1																																																											
+40	Whitewolf	1	Jack	1	BirdTotem	1	Nine	1	WildWolf	1																																																											
+41	Ten	1	BirdTotem	1	Jack	1	Jack	1	WildWolf	1																																																											
+42	Nine	1	Nine	1	Whitewolf	1	DarkWolf	1	WildWolf	1																																																											
+43	Whitewolf	1	Ace	1	Jack	1	Ten	1	Whitewolf	1																																																											
+44	King	1	Nine	1	BearTotem	1	Whitewolf	1	King	1																																																											
+45	Ten	1	Ace	1	WildWolf	1	Nine	1	DarkWolf	1																																																											
+46	Nine	1	Jack	1	WildWolf	1	BearTotem	1	Ace	1																																																											
+47	Ten	1	Ace	1	WildWolf	1	Jack	1	BearTotem	1																																																											
+48	Nine	1	Ten	1	WildWolf	1	WildWolf	1	Jack	1																																																											
+49	BirdTotem	1	Nine	1	Whitewolf	1	WildWolf	1	Ten	1																																																											
+50	Nine	1	BirdTotem	1	Jack	1	WildWolf	1	BirdTotem	1																																																											
+51	King	1	Queen	1	DarkWolf	1	WildWolf	1	Queen	1																																																											
+52	Ten	1	Ace	1	Ten	1	WildWolf	1	King	1																																																											
+53	BearTotem	1	BearTotem	1	DarkWolf	1	Ace	1	DarkWolf	1																																																											
+54	Ten	1	Queen	1	Jack	1	DarkWolf	1	Ace	1																																																											
+55	King	1	Ace	1	BirdTotem	1	Jack	1	BirdTotem	1																																																											
+56	Nine	1	WildWolf	1	Jack	1	DarkWolf	1	Ten	1																																																											
+57	Ten	1	WildWolf	1	DarkWolf	1	Ten	1	BearTotem	1																																																											
+58	Jack	1	WildWolf	1	Jack	1	BearTotem	1	Ace	1																																																											
+59	Nine	1	WildWolf	1	Whitewolf	1	Jack	1	King	1																																																											
+60	BearTotem	1	WildWolf	1	Jack	1	Nine	1	Whitewolf	1																																																											
+61	Ten	1	Nine	1	Queen	1	DarkWolf	1	Ten	1																																																											
+62	Nine	1	Bonus	1	Jack	1	Queen	1	King	1																																																											
+63	Queen	1	Queen	1	BirdTotem	1	BearTotem	1	Queen	1																																																											
+64	BearTotem	1	Nine	1	King	1	Ten	1	DarkWolf	1																																																											
+65	Nine	1	BearTotem	1	Jack	1	Jack	1	Jack	1																																																											
+66	King	1	Queen	1	BearTotem	1	DarkWolf	1	BirdTotem	1																																																											
+67	Queen	1	King	1	Nine	1	Nine	1	King	1																																																											
+68	Nine	1	Queen	1	Whitewolf	1	King	1	Ten	1																																																											
+69	DarkWolf	1	DarkWolf	1	Bonus	1	BirdTotem	1	BearTotem	1																																																											
+70	Queen	1	Jack	1	Queen	1	Nine	1	Ace	1																																																											
+71	Ten	1	King	1			Ten	1	Whitewolf	1																																																											
+72			Queen	1			DarkWolf	1	Jack	1																																																											
+73			DarkWolf	1			Nine	1	BearTotem	1																																																											
+74			Jack	1			WildWolf	1	Ace	1																																																											
+75			WildWolf	1			WildWolf	1	BirdTotem	1																																																											
+76			WildWolf	1			WildWolf	1	King	1																																																											
+77			WildWolf	1			WildWolf	1	WildWolf	1																																																											
+78			WildWolf	1			WildWolf	1	WildWolf	1																																																											
+79			Nine	1			WildWolf	1	WildWolf	1																																																											
+80			Whitewolf	1			DarkWolf	1	WildWolf	1																																																											
+81			King	1			Nine	1	WildWolf	1																																																											
+82			Nine	1			BirdTotem	1	WildWolf	1																																																											
+83			Bonus	1			Nine	1	Queen	1																																																											
+84			Ace	1			BirdTotem	1	DarkWolf	1																																																											
+85			BearTotem	1			Ace	1	Queen	1																																																											
+86			King	1			BearTotem	1	Whitewolf	1																																																											
+87			Whitewolf	1			Nine	1	Ace	1																																																											
+88			Ace	1			DarkWolf	1	DarkWolf	1																																																											
+89			King	1			Jack	1	King	1																																																											
+90			Ten	1			Whitewolf	1																																																													
+91			DarkWolf	1			Ten	1																																																													
+92			King	1			BirdTotem	1																																																													
+93			Ace	1			King	1																																																													
+94			King	1			Whitewolf	1																																																													
+95			BirdTotem	1			Nine	1																																																													
+96			Queen	1			BirdTotem	1																																																													
+97			Ten	1			Jack	1																																																													
+98			Queen	1			BearTotem	1																																																													
+99			DarkWolf	1			Ten	1																																																													
+100			Ten	1			Nine	1																																																													
+101			Ace	1			Jack	1																																																													
+102			Ten	1																																																																	
+103			BirdTotem	1																																																																	
+104			Ace	1																																																																	
+105			Queen	1																																																																	
+106			Jack	1																																																																	
+107			Nine	1																																																																	
+108			Ten	1																																																																	
+109			Jack	1																																																																	
+	Total	71		109		70		101		89																																																											
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 5																																																									
+Software ID: 			200-1775-001																																																																		
+																																																																					
+	Bonus Reel Strips																																																																				
+																																																																					
+	Reel 1	Weights	Reel 2	Weights	Reel 3	Weights	Reel 4	Weights	Reel 5	Weights																																																											
+1	Ace	1	Queen	1	BirdTotem	1	BearTotem	1	King	1																																																											
+2	King	1	Jack	1	WildWolf	1	Ten	1	Queen	1																																																											
+3	Ten	1	BearTotem	1	WildWolf	1	Nine	1	BirdTotem	1																																																											
+4	Nine	1	Queen	1	WildWolf	1	Ten	1	King	1																																																											
+5	Ten	1	King	1	WildWolf	1	Jack	1	Jack	1																																																											
+6	BearTotem	1	BirdTotem	1	BearTotem	1	Ten	1	BirdTotem	1																																																											
+7	Queen	1	Ten	1	Ten	1	Nine	1	Nine	1																																																											
+8	Ace	1	Jack	1	Ace	1	Bonus	1	King	1																																																											
+9	Nine	1	Queen	1	DarkWolf	1	Jack	1	Ten	1																																																											
+10	Ten	1	Ace	1	Jack	1	Ace	1	BearTotem	1																																																											
+11	Queen	1	Bonus	1	King	1	BearTotem	1	Queen	1																																																											
+12	BearTotem	1	King	1	Ace	1	Jack	1	BirdTotem	1																																																											
+13	Ten	1	Queen	1	Nine	1	Nine	1	King	1																																																											
+14	Ace	1	Ace	1	Jack	1	Ten	1	Nine	1																																																											
+15	Queen	1	Jack	1	Queen	1	King	1	Jack	1																																																											
+16	BirdTotem	1	Queen	1	Ten	1	Bonus	1	Queen	1																																																											
+17	Nine	1	BirdTotem	1	Bonus	1	Ace	1	King	1																																																											
+18	Ten	1	Ten	1	Queen	1	Queen	1	Ace	1																																																											
+19	Ace	1	Nine	1	Jack	1	BearTotem	1	Ten	1																																																											
+20	Nine	1	Queen	1	BirdTotem	1	Bonus	1	Nine	1																																																											
+21	Queen	1	Jack	1	Ace	1	Queen	1	King	1																																																											
+22	BirdTotem	1	Nine	1	Bonus	1	Jack	1	BirdTotem	1																																																											
+23	Nine	1	DarkWolf	1	Jack	1	Queen	1	Ace	1																																																											
+24	Ten	1	Ten	1	Ten	1	Nine	1	Queen	1																																																											
+25	King	1	King	1	Whitewolf	1	Queen	1	BirdTotem	1																																																											
+26	Nine	1	Queen	1	Bonus	1	Bonus	1	Nine	1																																																											
+27	BearTotem	1	Bonus	1	Jack	1	Whitewolf	1	Ten	1																																																											
+28	King	1	Nine	1	King	1	Nine	1	Ace	1																																																											
+29	Nine	1	Jack	1	Ace	1	Queen	1	BearTotem	1																																																											
+30	BirdTotem	1	DarkWolf	1	Bonus	1	Ten	1	Ace	1																																																											
+31	Ten	1	Bonus	1	King	1	Bonus	1	Jack	1																																																											
+32	Ace	1	Jack	1	Ace	1	BirdTotem	1	Queen	1																																																											
+33	Nine	1	BirdTotem	1	Jack	1	Queen	1	Ten	1																																																											
+34	WildWolf	1	Nine	1	Ace	1	Nine	1	BirdTotem	1																																																											
+35	WildWolf	1	WildWolf	1	Queen	1	King	1	King	1																																																											
+36	WildWolf	1	WildWolf	1	Ace	1	WildWolf	1	WildWolf	1																																																											
+37	Nine	1	WildWolf	1	Nine	1	WildWolf	1	WildWolf	1																																																											
+38	Jack	1	WildWolf	1	King	1	WildWolf	1	WildWolf	1																																																											
+39	Nine	1	King	1	Jack	1	WildWolf	1	WildWolf	1																																																											
+40	Whitewolf	1	Ten	1	King	1	Jack	1	WildWolf	1																																																											
+41	Queen	1	King	1	WildWolf	1	DarkWolf	1	WildWolf	1																																																											
+42	Nine	1	Nine	1	WildWolf	1	Ten	1	Ace	1																																																											
+43	Jack	1	Ace	1	WildWolf	1	Bonus	1	BearTotem	1																																																											
+44	DarkWolf	1	BirdTotem	1	WildWolf	1	Nine	1	King	1																																																											
+45	Ten	1	Ten	1	BearTotem	1	Whitewolf	1	Queen	1																																																											
+46	Nine	1	Jack	1	Ace	1	Jack	1	Ace	1																																																											
+47	WildWolf	1	Ace	1	Queen	1	BirdTotem	1	BearTotem	1																																																											
+48	WildWolf	1	BearTotem	1	BearTotem	1	WildWolf	1	Jack	1																																																											
+49	WildWolf	1	Ten	1	Jack	1	WildWolf	1	Ten	1																																																											
+50	DarkWolf	1	BirdTotem	1	Nine	1	WildWolf	1	DarkWolf	1																																																											
+51	King	1	Queen	1	BearTotem	1	WildWolf	1	Queen	1																																																											
+52	Nine	1	Ace	1	Ten	1	Nine	1	King	1																																																											
+53	WildWolf	1	BearTotem	1	Nine	1	Ten	1	BirdTotem	1																																																											
+54	WildWolf	1	Queen	1	BearTotem	1	King	1	Ace	1																																																											
+55	WildWolf	1	Ten	1	King	1	Jack	1	Jack	1																																																											
+56	Nine	1	Nine	1	Bonus	1	DarkWolf	1	BearTotem	1																																																											
+57	Queen	1	WildWolf	1	Queen	1	Ten	1	Ace	1																																																											
+58	WildWolf	1	WildWolf	1	King	1	Nine	1	Ace	1																																																											
+59	WildWolf	1	WildWolf	1	Ten	1	Bonus	1	King	1																																																											
+60	WildWolf	1	WildWolf	1	Nine	1	Ten	1	Whitewolf	1																																																											
+61	WildWolf	1	Ten	1	King	1	Nine	1	Ten	1																																																											
+62	Nine	1	Bonus	1	Nine	1	Queen	1	Nine	1																																																											
+63	Queen	1	Queen	1	Queen	1	King	1	Queen	1																																																											
+64	Ace	1	Ten	1	WildWolf	1	Ten	1	DarkWolf	1																																																											
+65	King	1	BearTotem	1	WildWolf	1	Jack	1	Jack	1																																																											
+66	Nine	1	Queen	1	WildWolf	1	Ace	1	BirdTotem	1																																																											
+67	Queen	1	Ten	1	WildWolf	1	BirdTotem	1	King	1																																																											
+68	King	1	King	1	Jack	1	King	1	Ten	1																																																											
+69	WildWolf	1	Ace	1	Queen	1			Whitewolf	1																																																											
+70	WildWolf	1	Jack	1	Nine	1			Ace	1																																																											
+71	WildWolf	1	Nine	1	Queen	1			King	1																																																											
+72	WildWolf	1	Bonus	1	Ten	1			Jack	1																																																											
+73	Ten	1	King	1	WildWolf	1			Ace	1																																																											
+74	BearTotem	1	Jack	1	WildWolf	1			BearTotem	1																																																											
+75	Queen	1	Ten	1	WildWolf	1			Queen	1																																																											
+76	Ten	1	King	1	WildWolf	1			King	1																																																											
+77	Nine	1	Whitewolf	1	Queen	1			BirdTotem	1																																																											
+78	WildWolf	1	Bonus	1	Ten	1			Jack	1																																																											
+79	WildWolf	1	Ace	1	Jack	1			King	1																																																											
+80	WildWolf	1	Nine	1	Bonus	1			Ten	1																																																											
+81	WildWolf	1	Nine	1	BirdTotem	1			BearTotem	1																																																											
+82	Ace	1	WildWolf	1	Jack	1			Jack	1																																																											
+83	King	1	WildWolf	1	Ten	1			Ten	1																																																											
+84	BirdTotem	1	WildWolf	1	BirdTotem	1			Queen	1																																																											
+85	Ace	1	BearTotem	1	Nine	1			Jack	1																																																											
+86	Jack	1	Queen	1	Ten	1			Ten	1																																																											
+87	BirdTotem	1	Bonus	1	Jack	1			Nine	1																																																											
+88	Ten	1	Ace	1	Nine	1			BearTotem	1																																																											
+89	Nine	1	Nine	1	King	1			Ten	1																																																											
+90	Jack	1	WildWolf	1	Ten	1			Nine	1																																																											
+91	King	1	WildWolf	1	King	1			Ace	1																																																											
+92	Ace	1	WildWolf	1	Nine	1																																																															
+93	Queen	1	Jack	1	Queen	1																																																															
+94	Whitewolf	1	Whitewolf	1	Whitewolf	1																																																															
+95	King	1			King	1																																																															
+96	Ace	1			Ten	1																																																															
+97	BearTotem	1			Nine	1																																																															
+98	King	1			King	1																																																															
+99	Nine	1			Jack	1																																																															
+100	WildWolf	1			Ten	1																																																															
+101	WildWolf	1			DarkWolf	1																																																															
+102	WildWolf	1			Jack	1																																																															
+103	WildWolf	1																																																																			
+104	Nine	1																																																																			
+105	Jack	1																																																																			
+	Total	105		94		102		68		91																																																											
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 6																																																									
+Software ID: 			200-1775-001																																																																		
+																																																																					
+	Fort Knox Bonus																																																																				
+	The Fort Knox Bonus may be randomly triggered on any base game spin that does not trigger the Bonus. A random draw is made from the Trigger table to determine if the Fort Knox Bonus is triggered.																																																																				
+																																																																					
+	When the Fort Knox Bonus is triggered, a random draw is made from the Award table using the corresponding bet multiplier from the spin that triggered the Fort Knox Bonus, 																																																																				
+	to determine if the progressive or a fixed award with or without boost is awarded. 																																																																				
+	The listed average pay values have already been multiplied by the bet multiplier. The Copper, Silver, Gold, and Platinum No Boost awards scale directly with the bet multiplier. 																																																																				
+	The value listed for the Progressive award does not include the increment.																																																																				
+	If an award with Boost A or Boost B is chosen, then a random draw is also made from the Scenario table corresponding to the award chosen. 																																																																				
+	Once the scenario is chosen and if a Boost award is determined, then the Boost values are determined from the corresponding Boost tables. Boost values are multiplied by the bet multiplier.																																																																				
+	If an award with Boost A is chosen, a boost value is selected from the evenly weighted (1 - 6) Boost A table and is added to the No Boost award value. 																																																																				
+	For example, if at bet multiplier 1, Platinum Boost A is chosen, scenario 1 is chosen, and 5000 is chosen from the Boost A table, the total award is 25,000 + 5000 = 30,000. 																																																																				
+	If an award with Boost B is chosen, a boost value is selected from both the evenly weighted (1 - 6) Boost A and the evenly weighted (1 - 6) Boost B tables and is added to the No Boost award value.																																																																				
+	For example, if at bet multiplier 2, Gold Boost B and scenario 2 are chosen, then a draw is made from the Scenario 2 Boost A and Scenario 2 Boost B tables and 1,250 and 750 are determined, respectively.																																																																				
+	Then the awarded value is 10,000 + 2*(1250+750) = 14,000.																																																																				
+	The Fort Knox Bonus ends after the prize is awarded.																																																																				
+																																																																					
+																																																																					
+																																																																					
+	Trigger Table																																																																				
+	Trigger?	Weight			Overall Trigger Odds																																																																
+	Yes	670005			150																																																																
+	No	99329995																																																																			
+	Total	100000000																																																																			
+																																																																					
+																																																																					
+	Award Table																																																																				
+		Bet Multiplier																																																																			
+		1		2		3		4		5																																																											
+	Award	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight																																																										
+	Progressive	1000000	2000	1000000	4000	1000000	6000	1000000	8000	1000000	10000																																																										
+	Platinum - No Boost	25000	163689	50000	163695	75000	163701	100000	163707	125000	163713																																																										
+	Gold - No Boost	5000	952480	10000	952480	15000	952480	20000	952480	25000	952480																																																										
+	Silver - No Boost	500	6852000	1000	6852000	1500	6852000	2000	6852000	2500	6852000																																																										
+	Copper - No Boost	250	14477003	500	14476517	750	14476031	1000	14475545	1250	14475059																																																										
+	Platinum - Boost A	30091.666666666657	176784	60183.333333333314	176790	90274.99999999997	176797	120366.66666666663	176804	150458.33333333328	176811																																																										
+	Gold - Boost A	5916.666666666659	1428720	11833.333333333318	1428720	17749.999999999975	1428720	23666.666666666635	1428720	29583.333333333292	1428720																																																										
+	Silver - Boost A	718.2979880369774	10278000	1436.5959760739547	10278000	2154.893964110932	10278000	2873.1919521479094	10278000	3591.4899401848866	10278000																																																										
+	Copper - Boost A	357.66339869281063	21715505	715.3267973856213	21714776	1072.9901960784318	21714047	1430.6535947712425	21713318	1788.316993464053	21712589																																																										
+	Platinum - Boost B	37729.16666666672	314281	75458.33333333344	314294	113187.50000000013	314305	150916.6666666669	314317	188645.83333333358	314329																																																										
+	Gold - Boost B	7291.6666666666815	2381200	14583.333333333363	2381200	21875.000000000044	2381200	29166.666666666726	2381200	36458.33333333341	2381200																																																										
+	Silver - Boost B	1041.8202827623722	17130000	2083.6405655247445	17130000	3125.4608482871163	17130000	4167.281131049489	17130000	5209.101413811861	17130000																																																										
+	Copper - Boost B	517.1617647058816	24128338	1034.3235294117633	24127528	1551.485294117645	24126719	2068.6470588235265	24125909	2585.8088235294085	24125099																																																										
+	Total		100000000		100000000		100000000		100000000		100000000																																																										
+	Average Pay	1063.6748119272756		2127.3500216849434		3191.0242837878563		4254.69953521126		5318.375031715055																																																											
+																																																																					
+		Bet Multiplier																																																																			
+		6		7		8		9		10																																																											
+	Award	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight																																																										
+	Progressive	1000000	12000	1000000	14000	1000000	16000	1000000	18000	1000000	20000																																																										
+	Platinum - No Boost	150000	163719	175000	163726	200000	163732	225000	163738	250000	163744																																																										
+	Gold - No Boost	30000	952480	35000	952480	40000	952480	45000	952480	50000	952480																																																										
+	Silver - No Boost	3000	6852000	3500	6852000	4000	6852000	4500	6852000	5000	6852000																																																										
+	Copper - No Boost	1500	14474574	1750	14474088	2000	14473602	2250	14473116	2500	14472630																																																										
+	Platinum - Boost A	180549.99999999994	176817	210641.6666666666	176824	240733.33333333326	176830	270824.9999999999	176837	300916.66666666657	176844																																																										
+	Gold - Boost A	35499.99999999995	1428720	41416.66666666661	1428720	47333.33333333327	1428720	53249.999999999935	1428720	59166.666666666584	1428720																																																										
+	Silver - Boost A	4309.787928221864	10278000	5028.085916258841	10278000	5746.383904295819	10278000	6464.6818923327955	10278000	7182.979880369773	10278000																																																										
+	Copper - Boost A	2145.9803921568637	21711860	2503.6437908496746	21711131	2861.307189542485	21710402	3218.9705882352955	21709674	3576.633986928106	21708945																																																										
+	Platinum - Boost B	226375.00000000026	314341	264104.16666666704	314352	301833.3333333338	314365	339562.50000000047	314376	377291.66666666715	314388																																																										
+	Gold - Boost B	43750.00000000009	2381200	51041.66666666677	2381200	58333.33333333345	2381200	65625.00000000013	2381200	72916.66666666682	2381200																																																										
+	Silver - Boost B	6250.921696574233	17130000	7292.741979336605	17130000	8334.562262098978	17130000	9376.38254486135	17130000	10418.202827623722	17130000																																																										
+	Copper - Boost B	3102.97058823529	24124289	3620.1323529411716	24123479	4137.294117647053	24122669	4654.455882352935	24121859	5171.617647058817	24121049																																																										
+	Total		100000000		100000000		100000000		100000000		100000000																																																										
+	Average Pay	6382.048982799242		7445.723780005489		8509.400197042127		9573.072961098862		10636.748959956254																																																											
+																																																																					
+		Bet Multiplier																																																																			
+		15		20		25		30		40																																																											
+	Award	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight																																																										
+	Progressive	1000000	30000	1000000	40000	1000000	50000	1000000	60000	1000000	80000																																																										
+	Platinum - No Boost	375000	163775	500000	163806	625000	163837	750000	163867	1000000	163929																																																										
+	Gold - No Boost	75000	952480	100000	952480	125000	952480	150000	952480	200000	952480																																																										
+	Silver - No Boost	7500	6852000	10000	6852000	12500	6852000	15000	6852000	20000	6852000																																																										
+	Copper - No Boost	3750	14470200	5000	14467770	6250	14465341	7500	14462911	10000	14458052																																																										
+	Platinum - Boost A	451374.9999999998	176877	601833.3333333331	176910	752291.6666666664	176943	902749.9999999997	176977	1203666.6666666663	177043																																																										
+	Gold - Boost A	88749.99999999987	1428720	118333.33333333317	1428720	147916.66666666648	1428720	177499.99999999974	1428720	236666.66666666634	1428720																																																										
+	Silver - Boost A	10774.46982055466	10278000	14365.959760739546	10278000	17957.44970092443	10278000	21548.93964110932	10278000	28731.919521479093	10278000																																																										
+	Copper - Boost A	5364.950980392159	21705301	7153.267973856212	21701656	8941.584967320267	21698011	10729.901960784318	21694368	14306.535947712424	21687078																																																										
+	Platinum - Boost B	565937.5000000007	314447	754583.3333333343	314507	943229.1666666679	314566	1131875.0000000014	314625	1509166.6666666686	314744																																																										
+	Gold - Boost B	109375.00000000023	2381200	145833.33333333363	2381200	182291.666666667	2381200	218750.00000000047	2381200	291666.66666666727	2381200																																																										
+	Silver - Boost B	15627.30424143558	17130000	20836.405655247443	17130000	26045.507069059306	17130000	31254.60848287116	17130000	41672.811310494886	17130000																																																										
+	Copper - Boost B	7757.426470588226	24117000	10343.235294117634	24112951	12929.044117647041	24108902	15514.852941176452	24104852	20686.47058823527	24096754																																																										
+	Total		100000000		100000000		100000000		100000000		100000000																																																										
+	Average Pay	15955.121824797861		21273.50108718244		26591.873640168003		31910.246617579058		42547.001781579915																																																											
+																																																																					
+		Bet Multiplier																																																																			
+		50		70		80		100		120																																																											
+	Award	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight																																																										
+	Progressive	1000000	100000	1000000	140000	1000000	160000	1000000	200000	1000000	240000																																																										
+	Platinum - No Boost	1250000	163991	1750000	164114	2000000	164176	2500000	164299	3000000	164422																																																										
+	Gold - No Boost	250000	952480	350000	952480	400000	952480	500000	952480	600000	952480																																																										
+	Silver - No Boost	25000	6852000	35000	6852000	40000	6852000	50000	6852000	60000	6852000																																																										
+	Copper - No Boost	12500	14453193	17500	14443475	20000	14438616	25000	14428897	30000	14419179																																																										
+	Platinum - Boost A	1504583.3333333328	177110	2106416.666666666	177243	2407333.3333333326	177310	3009166.6666666656	177443	3610999.9999999986	177576																																																										
+	Gold - Boost A	295833.33333333296	1428720	414166.66666666605	1428720	473333.3333333327	1428720	591666.6666666659	1428720	709999.999999999	1428720																																																										
+	Silver - Boost A	35914.89940184886	10278000	50280.85916258841	10278000	57463.839042958185	10278000	71829.79880369772	10278000	86195.75856443727	10278000																																																										
+	Copper - Boost A	17883.169934640533	21679790	25036.437908496744	21665212	28613.071895424848	21657923	35766.339869281066	21643346	42919.60784313727	21628768																																																										
+	Platinum - Boost B	1886458.3333333358	314862	2641041.6666666702	315098	3018333.333333337	315217	3772916.6666666716	315454	4527500.000000006	315690																																																										
+	Gold - Boost B	364583.333333334	2381200	510416.6666666677	2381200	583333.3333333345	2381200	729166.666666668	2381200	875000.0000000019	2381200																																																										
+	Silver - Boost B	52091.01413811861	17130000	72927.41979336605	17130000	83345.62262098977	17130000	104182.02827623722	17130000	125018.43393148464	17130000																																																										
+	Copper - Boost B	25858.088235294083	24088655	36201.32352941172	24072458	41372.94117647054	24064359	51716.176470588165	24048162	62059.41176470581	24031965																																																										
+	Total		100000001		100000000		100000001		100000001		100000000																																																										
+	Average Pay	53183.75583981298		74457.2318225204		85094.01490348112		106367.51775505238		127640.97612911818																																																											
+																																																																					
+		Bet Multiplier																																																																			
+		150		160		200		300																																																													
+	Award	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight	Average Pay	Weight																																																												
+	Progressive	1000000	300000	1000000	320000	1000000	400000	1000000	600000																																																												
+	Platinum - No Boost	3750000	164607	4000000	164669	5000000	164915	7500000	165532																																																												
+	Gold - No Boost	750000	952480	800000	952480	1000000	952480	1500000	952480																																																												
+	Silver - No Boost	75000	6852000	80000	6852000	100000	6852000	150000	6852000																																																												
+	Copper - No Boost	37500	14404601	40000	14399742	50000	14380305	75000	14331714																																																												
+	Platinum - Boost A	4513749.999999998	177776	4814666.666666665	177842	6018333.333333331	178108	9027499.999999996	178774																																																												
+	Gold - Boost A	887499.9999999987	1428720	946666.6666666653	1428720	1183333.3333333319	1428720	1774999.9999999974	1428720																																																												
+	Silver - Boost A	107744.69820554659	10278000	114927.67808591637	10278000	143659.59760739544	10278000	215489.39641109318	10278000																																																												
+	Copper - Boost A	53649.509803921595	21606902	57226.143790849696	21599613	71532.67973856213	21570458	107299.01960784319	21497570																																																												
+	Platinum - Boost B	5659375.000000007	316045	6036666.666666674	316164	7545833.333333343	316637	11318750.000000015	317821																																																												
+	Gold - Boost B	1093750.000000002	2381200	1166666.666666669	2381200	1458333.333333336	2381200	2187500.000000004	2381200																																																												
+	Silver - Boost B	156273.04241435585	17130000	166691.24524197954	17130000	208364.05655247445	17130000	312546.0848287117	17130000																																																												
+	Copper - Boost B	77574.26470588225	24007669	82745.88235294107	23999570	103432.35294117633	23967176	155148.5294117645	23886189																																																												
+	Total		100000000		100000000		99999999		100000000																																																												
+	Average Pay	159551.23074748102		170188.00437468043		212734.92842484362		319102.500097315																																																													
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 7																																																									
+Software ID: 			200-1775-001																																																																		
+																																																																					
+	Scenario Table																																																																				
+		Scenario																																																																			
+	Award	1	2	3	Total																																																																
+	Platinum - Boost A	599	6	6	611																																																																
+	Gold - Boost A	599	6	6	611																																																																
+	Silver - Boost A	480	6	127	613																																																																
+	Copper - Boost A	489	117	6	612																																																																
+	Platinum - Boost B	600	6	6	612																																																																
+	Gold - Boost B	600	6	6	612																																																																
+	Silver - Boost B	449	6	158	613																																																																
+	Copper - Boost B	456	150	6	612																																																																
+																																																																					
+																																																																					
+																																																																					
+	Scenario 1																																																																				
+		Boost A																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	5000	4150	5750	4150	5000	6500																																																													
+		Gold	1500	1250	1000	750	500	500																																																													
+		Silver	225	250	175	225	275	200																																																													
+		Copper	100	75	125	115	100	150																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+		Boost B																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	7500	6225	8625	6225	7500	9750																																																													
+		Gold	2250	1875	1500	1125	750	750																																																													
+		Silver	338	375	263	338	413	300																																																													
+		Copper	150	113	188	173	150	225																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+	Scenario 2																																																																				
+		Boost A																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	5000	4150	5750	4150	5000	6500																																																													
+		Gold	1250	1000	750	500	500	1500																																																													
+		Silver	250	275	225	200	275	250																																																													
+		Copper	100	75	125	100	75	90																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+		Boost B																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	7500	6225	8625	6225	7500	9750																																																													
+		Gold	1875	1500	1125	750	750	2250																																																													
+		Silver	375	413	338	300	413	375																																																													
+		Copper	150	113	188	150	113	135																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+	Scenario 3																																																																				
+		Boost A																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	5000	4150	5750	4150	5000	6500																																																													
+		Gold	1000	750	500	500	1500	1250																																																													
+		Silver	150	250	200	175	175	200																																																													
+		Copper	100	75	125	150	125	100																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+		Boost B																																																																			
+		Award	1	2	3	4	5	6																																																													
+		Platinum	7500	6225	8625	6225	7500	9750																																																													
+		Gold	1500	1125	750	750	2250	1875																																																													
+		Silver	225	375	300	263	263	300																																																													
+		Copper	150	113	188	225	188	150																																																													
+		Weight	1	1	1	1	1	1	6																																																												
+									Total																																																												
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+Fort Knox Wolf Run												Page 8																																																									
+Software ID: 			200-1775-001																																																																		
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+	Min Volatility						Max Volatility																																																														
+																																																																					
+	Bet Multiplier 20						Bet Multiplier 300																																																														
+																																																																					
+	Payback Volatility (95% Confidence Intervals)						Payback Volatility (95% Confidence Intervals)																																																														
+	Games Played	Maximum Deviation	Minimum %	Maximum %			Games Played	Maximum Deviation	Minimum %	Maximum %																																																											
+																																																																					
+	1000	0.4734741730674592	0.4846351888304834	1.4315835349654018			1000	0.4794567392242756	0.478652622673667	1.4375661011222183																																																											
+	10000	0.1497256800157923	0.8083836818821503	1.1078350419137348			10000	0.1516175335466103	0.8064918283513323	1.109726895444553																																																											
+	100000	0.047347417306745916	0.9107619445911966	1.0054567792046885			100000	0.04794567392242755	0.9101636879755151	1.0060550358203701																																																											
+	127749.33166894298	0.0418906381020574	0.9162187237958852	1			130998.07180224685	0.0418906381020574	0.9162187237958852	1																																																											
+	500000	0.021174408731386776	0.9369349531665558	0.9792837706293294			500000	0.0214419572235174	0.9366674046744252	0.97955131912146																																																											
+	1000000	0.014972568001579232	0.9431367938963634	0.9730819298995218			1000000	0.01516175335466103	0.9429476085432815	0.9732711152526037																																																											
+	2241777.925619143	0.01	0.9481093618979426	0.9681093618979426			2298787.64787575	0.01	0.9481093618979426	0.9681093618979426																																																											
+	10000000	0.004734741730674592	0.953374620167268	0.9628441036286172			10000000	0.004794567392242756	0.9533147945056999	0.9629039292901853																																																											
+																																																																					
+			Volatility Index*:	14.972568001579232					Volatility Index*:	15.16175335466103																																																											
+			Min Std Dev:	7.639221209401841					Max Std Dev:	7.735746318629477																																																											
+																																																																					
+																																																																					
+	* Volatility index represents how far from average actual payback can be 95% of the time after 10,000 games played.																																																																				
+	The larger the index, the more volatile the game.																																																																				
+	Excludes the Progressive award.																																																																				
+																																																																					
+																																																																					
+	Top Single Award is the Progressive award in the Fort Knox Bonus.																																																																				
+	Top Single Award Odds are 1 in 7,500,000 at min bet. Odds scale linearly with the bet.						Fort Knox Progressive																																																														
+																																																																					
+							Sample Jackpots	RTP																																																													
+							10000	0.9614426952312759																																																													
+							20000	0.9647760285646093																																																													
+							50000	0.9747760285646093																																																													
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+	Initial Base Game State																																																																				
+																																																																					
+	Reel 1	Reel 2	Reel 3	Reel 4	Reel 5																																																																
+	Ace	Whitewolf	Whitewolf	WildWolf	Ace																																																																
+	DarkWolf (9)	Ten (10)	Bonus (37)	WildWolf (49)	DarkWolf (19)																																																																
+	King	Bonus	DarkWolf	WildWolf	Nine																																																																
+	Ten	Queen	Ace	WildWolf	DarkWolf																																																																
+																																																																					
+	Initial Bonus Reels State																																																																				
+																																																																					
+	Reel 1	Reel 2	Reel 3	Reel 4	Reel 5																																																																
+	Jack	DarkWolf	Queen	WildWolf	Queen																																																																
+	DarkWolf (44)	Bonus (31)	Ten (16)	WildWolf (37)	DarkWolf (64)																																																																
+	Ten	Jack	Bonus	WildWolf	Jack																																																																
+	Nine	BirdTotem	Queen	WildWolf	BirdTotem																																																																
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
+																																																																					
