@@ -66789,6 +66789,17 @@
       ]
     },
     {
+      "kind": "wild_expand",
+      "wild_symbol": "Wild",
+      "on_reels": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "only_if_winning": true
+    },
+    {
       "kind": "pattern_win",
       "anchor_symbol": "Red7",
       "anchor_count": 3,

@@ -155,7 +155,19 @@ pub fn run_features(
                 };
                 out.merge(pattern_win::run(&params, ir, grid, base, rng));
             }
-            // WildExpand / GrandPrize remain future waves.
+            Feature::WildExpand {
+                wild_symbol,
+                on_reels,
+                only_if_winning,
+            } => {
+                let params = wild_expand::WildExpandParams {
+                    wild_symbol,
+                    on_reels,
+                    only_if_winning: *only_if_winning,
+                };
+                out.merge(wild_expand::run(&params, ir, grid, base, pt, rng));
+            }
+            // GrandPrize remains future wave.
             _ => {}
         }
     }

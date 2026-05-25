@@ -762,6 +762,17 @@ def _lw_features(parsed: dict) -> list[dict]:
             feature["fs_paytable"] = _lw_paytable_rows(fs_pt_raw)
         features.append(feature)
 
+    # Wild Expansion (W4.9 — L&W CE base-game wild expand on reels 2-5)
+    # Per PAR documentation: "Wild appears on reels 2,3,4,5 and EXPANDS
+    # to fill the corresponding reel with Wild. Wild expansion only
+    # occurs if it results in a winning combo."
+    features.append({
+        "kind": "wild_expand",
+        "wild_symbol": "Wild",
+        "on_reels": [1, 2, 3, 4],  # 0-indexed = reels 2,3,4,5
+        "only_if_winning": True,
+    })
+
     # Pattern Win (W4.6 — Red7 5OAK pattern)
     # Standard CE family: 3 Red7 visible on reel 0 + Wild on reels 1-4 →
     # pays 1000 × total bet. Detect by presence of "Pattern Win" row in
