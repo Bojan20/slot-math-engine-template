@@ -59,7 +59,8 @@
 | P2.7 | **W4.4 — L&W → slot-sim adapter** (CE COPY TEST family) | ✅ | `_lw_to_slot_sim` w/ 36 base + 16 FS reel sets, FreeSpins + HoldAndWin stub, +6 Rust integration tests; IR deserializes + engine runs (RTP 0.12 — HoldAndWin runner is W4.5) |
 | P2.8 | **W4.5 — HoldAndWin runner + RTP-only CE injection** | ✅ | `features/hold_and_win.rs` runner with Bernoulli trigger + deterministic avg pay; L&W adapter computes `trigger_prob` from physical-strip cash density + `avg_pay = ce_from_base_rtp / trigger_prob`; L&W MC RTP lifted 0.115 → 0.52 (+0.41 CE contribution) |
 | P2.8b | **W4.6 — Red7 pattern win** (PatternWin runner + adapter emit) | ✅ | `features/pattern_win.rs` runner, role recalibration (Red7/Blue7/Bell/Melon = HP), adapter emits `Feature::PatternWin` with anchor_symbol=Red7 + anchor_reel=0 + required_wild_reels=[1..4] + pays=1000; L&W RTP 0.523 → 0.569 (+0.046); +4 Rust tests |
-| P2.8c | **W4.7 — FS internal eval + scatter pay audit** (close remaining 0.39 L&W RTP gap) | 🚧 NEXT | win-freq gap 0.043 vs 0.089 suggests FS internal evaluator or scatter Volcano underpaying; needs base + FS breakdown audit |
+| P2.8c | **W4.7 — FS paytable override + linked reels + Big_X equivalence** | ✅ | New IR field `Feature::FreeSpins.fs_paytable`; engine pre-compiles FS pt; FS runner uses `Grid::spin_linked` when `linked_reels` set; adapter emits Big_X paytable equivalents (Big Red7 = Red7 pays, etc.); symbols scan now includes FS reel sets so Big_X family registered; L&W RTP 0.569 → 0.614 (+0.045) |
+| P2.8d | **W4.8 — CE-from-FS HoldAndWin trigger inside FS** (close further 0.062 RTP) | 🚧 NEXT | FS runner should fire HoldAndWin runner on each FS spin when Fireball count ≥ 6 |
 | P2.9 | **W4.6 — Aristocrat profile** (Lightning Link / Dragon Link layout) | ⏳ | new profile YAML + 3 PAR test |
 | P2.10 | **W4.7 — NetEnt profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
 | P2.11 | **W4.8 — Pragmatic Play profile** (Megaways + Sticky Bonus) | ⏳ | new |
@@ -157,8 +158,8 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W4.7 — FS internal eval + scatter pay audit** | 90-120 min | close L&W 0.39 RTP gap — FS evaluator review + scatter Volcano pay |
-| 🥈 2 | **W4.3e — IGT base eval gap audit** | 60-90 min | hunt the last 0.9 % IGT RTP gap |
+| 🥇 1 | **W4.8 — CE-from-FS trigger** | 60-90 min | FS-spin Fireball detection → HoldAndWin trigger inside FS (close ~0.062 RTP) |
+| 🥈 2 | **W4.3e — IGT base eval gap** | 60-90 min | hunt the last 0.9 % IGT RTP gap |
 | 🥉 3 | **W5.2 — IR → Rust engine codegen** | 90-120 min | Tera template iz IR → `games/{slug}/src/` (Phase 3.2) |
 
 ### ✅ Just landed
@@ -172,7 +173,8 @@
 | W5.1 | `298e447` | `slot-build` CLI scaffold — vendor auto-detect (IGT/L&W), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
 | W4.4 | `4e8936e` | L&W → slot-sim adapter; 36+16 reel sets, FreeSpins + HoldAndWin stub feature, +6 Rust integration tests; CE PAR-001 IR deserializes + engine runs (RTP 0.12 base-only) |
 | W4.5 | `7a4e635` | HoldAndWin runner — Bernoulli trigger + deterministic avg-pay model, IR fields `trigger_prob` + `avg_pay_per_trigger` added to `Feature::HoldAndWin`; L&W adapter computes both from `cash_eruption_pages[BM=1]`; L&W RTP lifted 0.115 → 0.52; +3 W4.5 Rust integration tests |
-| W4.6 | _(pending)_ | PatternWin runner — Red7×3 on reel 0 + Wild on reels 1-4 → pays 1000; adapter symbol-role recalibration (Red7/Blue7/Bell/Melon=HP, Cherry/Lemon/Orange/Plum/Grapes=LP); L&W RTP 0.523 → 0.569 (+0.046); +4 W4.6 Rust tests |
+| W4.6 | `d629469` | PatternWin runner — Red7×3 on reel 0 + Wild on reels 1-4 → pays 1000; adapter symbol-role recalibration (Red7/Blue7/Bell/Melon=HP, Cherry/Lemon/Orange/Plum/Grapes=LP); L&W RTP 0.523 → 0.569 (+0.046); +4 W4.6 Rust tests |
+| W4.7 | _(pending)_ | FS paytable override + linked reels + Big_X equivalence; Engine pre-compiles `fs_pt` from Feature::FreeSpins.fs_paytable; FS runner uses Grid::spin_linked for [1,2,3]; adapter emits Big_X paytable rows = X pays; symbols list scans FS reels too; L&W RTP 0.569 → 0.614 (+0.045); 3 new probe/integration tests |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 

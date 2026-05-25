@@ -496,10 +496,18 @@ def _lw_symbol_role(sym: str) -> str:
       ▸ Fireball           → cash (CE trigger)
       ▸ Wild / Big_Wild    → wild
       ▸ Pattern Win        → synthetic paytable row, NOT a real symbol
+
+    W4.7 — Big_X symbols (FS stacked variants):
+      ▸ "Big Fireball"     → cash
+      ▸ "Big Red7"/"Big Blue7"/"Big Bell"/"Big Melon" → hp
+      ▸ other "Big X" → role of underlying X
     """
-    s = sym.lower().replace(" ", "_")
+    s = sym.lower().replace(" ", "_").replace("__", "_")
     if "pattern" in s and "win" in s:
         return "lp"  # filtered out by `_lw_symbols` paytable filter
+    # Strip the "big_" prefix for role-mapping; underlying symbol role wins.
+    if s.startswith("big_"):
+        return _lw_symbol_role(s[4:])
     if "wild" in s and "big" in s:
         return "wild"
     if "wild" in s:
@@ -524,10 +532,8 @@ def _lw_symbol_role(sym: str) -> str:
 def _lw_symbols(parsed: dict) -> list[dict]:
     """Build the symbols list from parsed L&W IR.
 
-    Roles are inferred per `_lw_symbol_role`. The wild substitutes for all
-    non-special symbols (`substitutes: ["*"]`, `substitutes_except` left
-    populated with Cash/Bonus IDs so the engine respects CE feature
-    triggers exclusively to cash-symbol landings).
+    Scans BOTH base and FS reel sets (W4.7 fix — earlier wave omitted FS
+    scan, hiding the Big_X family from the engine).
     """
     seen: dict[str, str] = {}
     sc = parsed.get("symbol_counts_per_reel", {}) or {}
@@ -535,12 +541,13 @@ def _lw_symbols(parsed: dict) -> list[dict]:
         if name in seen:
             continue
         seen[name] = _lw_symbol_role(name)
-    for set_data in parsed.get("bg_reel_sets", []):
-        for reel in set_data.get("reels", []):
-            for stop in reel:
-                sym = stop["symbol"]
-                if sym and sym not in seen:
-                    seen[sym] = _lw_symbol_role(sym)
+    for layer_key in ("bg_reel_sets", "fg_reel_sets"):
+        for set_data in parsed.get(layer_key, []):
+            for reel in set_data.get("reels", []):
+                for stop in reel:
+                    sym = stop["symbol"]
+                    if sym and sym not in seen:
+                        seen[sym] = _lw_symbol_role(sym)
 
     out = []
     cash_or_scatter = [k for k, v in seen.items() if v in ("cash", "scatter", "bonus")]
@@ -673,6 +680,36 @@ def _lw_paytable(parsed: dict) -> list[dict]:
     return out
 
 
+def _lw_paytable_rows(rows: list[dict]) -> list[dict]:
+    """Translate a raw paytable row list (FS or base) through the same
+    pattern/scatter/line dispatch as `_lw_paytable`.
+
+    W4.7 — for each base-symbol combo (Red7×N etc.) also emit the
+    equivalent Big_X combo with the same pays so FS internal eval matches
+    when the linked reels show stacked Big symbols.
+    """
+    base_rows = _lw_paytable({"paytable": rows})
+    out = list(base_rows)
+    # Big_X equivalence: clone every line-scope entry, replacing each non-`--`
+    # cell with its Big counterpart.
+    for entry in base_rows:
+        if entry.get("scope") != "line":
+            continue
+        combo = entry.get("combo", [])
+        big_combo = [
+            f"Big {c}" if (c and c != "--" and not c.startswith("Big ")) else c
+            for c in combo
+        ]
+        if big_combo != combo:
+            out.append({
+                "combo": big_combo,
+                "pays": float(entry["pays"]),
+                "scope": "line",
+                "marker": entry.get("marker", "") or "",
+            })
+    return out
+
+
 def _parse_lw_any_n(cell: str) -> tuple[int, str] | None:
     """Parse `Any 3 Volcano` / `Any 5 Volcano` → (N, sym). Returns None if
     the cell doesn't match the pattern."""
@@ -706,10 +743,11 @@ def _lw_features(parsed: dict) -> list[dict]:
     # Free Spins
     fs = parsed.get("free_spins") or {}
     fs_summary = fs.get("bonus_summary") or {}
-    if fs_summary or fs.get("fs_paytable"):
+    fs_pt_raw = fs.get("fs_paytable") or []
+    if fs_summary or fs_pt_raw:
         # Standard L&W CE trigger: 3 Volcano scatter → 8 FS, 2× retrigger
         # cap depends on per-game config; we use 250 as a safe ceiling.
-        features.append({
+        feature = {
             "kind": "free_spins",
             "trigger_symbol": "Volcano",
             "trigger_count_min": 3,
@@ -718,7 +756,11 @@ def _lw_features(parsed: dict) -> list[dict]:
             "max_total_spins": 250,
             "reel_bank": "fs",
             "linked_reels": [1, 2, 3],
-        })
+        }
+        # W4.7 — FS-specific paytable override
+        if fs_pt_raw:
+            feature["fs_paytable"] = _lw_paytable_rows(fs_pt_raw)
+        features.append(feature)
 
     # Pattern Win (W4.6 — Red7 5OAK pattern)
     # Standard CE family: 3 Red7 visible on reel 0 + Wild on reels 1-4 →

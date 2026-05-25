@@ -215,6 +215,14 @@ pub enum Feature {
         // Linked-block configuration (CE has reels 2/3/4 linked).
         #[serde(default)]
         linked_reels: Option<Vec<u32>>,
+        /// W4.7 — Optional FS-specific paytable override. When `Some`,
+        /// the runner compiles a separate `CompiledPaytable` and uses
+        /// it for line/scatter eval inside FS spins instead of falling
+        /// back to the base-game paytable. L&W publishes a distinct
+        /// `fs_paytable` (different pays for the same combos) for the
+        /// CE COPY TEST family.
+        #[serde(default)]
+        fs_paytable: Option<Vec<PaytableEntry>>,
     },
     /// Wild expansion on specific reels when wild lands.
     WildExpand {

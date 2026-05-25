@@ -181,7 +181,9 @@
       ],
       "substitutes_except": [
         "Volcano",
-        "Fireball"
+        "Fireball",
+        "Big Fireball",
+        "Big Volcano"
       ]
     },
     {
@@ -238,6 +240,75 @@
       "id": "Fireball",
       "name": "Fireball",
       "role": "cash"
+    },
+    {
+      "id": "Big Blue7",
+      "name": "Big Blue7",
+      "role": "hp"
+    },
+    {
+      "id": "Big Grapes",
+      "name": "Big Grapes",
+      "role": "lp"
+    },
+    {
+      "id": "Big Red7",
+      "name": "Big Red7",
+      "role": "hp"
+    },
+    {
+      "id": "Big Lemon",
+      "name": "Big Lemon",
+      "role": "lp"
+    },
+    {
+      "id": "Big Cherry",
+      "name": "Big Cherry",
+      "role": "lp"
+    },
+    {
+      "id": "Big Wild",
+      "name": "Big Wild",
+      "role": "wild",
+      "substitutes": [
+        "*"
+      ],
+      "substitutes_except": [
+        "Volcano",
+        "Fireball",
+        "Big Fireball",
+        "Big Volcano"
+      ]
+    },
+    {
+      "id": "Big Melon",
+      "name": "Big Melon",
+      "role": "hp"
+    },
+    {
+      "id": "Big Plum",
+      "name": "Big Plum",
+      "role": "lp"
+    },
+    {
+      "id": "Big Fireball",
+      "name": "Big Fireball",
+      "role": "cash"
+    },
+    {
+      "id": "Big Bell",
+      "name": "Big Bell",
+      "role": "hp"
+    },
+    {
+      "id": "Big Volcano",
+      "name": "Big Volcano",
+      "role": "scatter"
+    },
+    {
+      "id": "Big Orange",
+      "name": "Big Orange",
+      "role": "lp"
     }
   ],
   "reels": {
@@ -66273,6 +66344,448 @@
         1,
         2,
         3
+      ],
+      "fs_paytable": [
+        {
+          "combo": [
+            "Red7",
+            "Red7",
+            "Red7",
+            "Red7",
+            "Red7"
+          ],
+          "pays": 200.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Red7",
+            "Red7",
+            "Red7",
+            "Red7",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Blue7",
+            "Blue7",
+            "Blue7",
+            "Blue7",
+            "Blue7"
+          ],
+          "pays": 100.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Blue7",
+            "Blue7",
+            "Blue7",
+            "Blue7",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Bell",
+            "Bell",
+            "Bell",
+            "Bell",
+            "Bell"
+          ],
+          "pays": 25.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Bell",
+            "Bell",
+            "Bell",
+            "Bell",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Melon",
+            "Melon",
+            "Melon",
+            "Melon",
+            "Melon"
+          ],
+          "pays": 25.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Melon",
+            "Melon",
+            "Melon",
+            "Melon",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Grapes",
+            "Grapes",
+            "Grapes",
+            "Grapes",
+            "Grapes"
+          ],
+          "pays": 20.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Grapes",
+            "Grapes",
+            "Grapes",
+            "Grapes",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Plum",
+            "Plum",
+            "Plum",
+            "Plum",
+            "Plum"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Plum",
+            "Plum",
+            "Plum",
+            "Plum",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Orange",
+            "Orange",
+            "Orange",
+            "Orange",
+            "Orange"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Orange",
+            "Orange",
+            "Orange",
+            "Orange",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Lemon",
+            "Lemon",
+            "Lemon",
+            "Lemon",
+            "Lemon"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Lemon",
+            "Lemon",
+            "Lemon",
+            "Lemon",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Cherry",
+            "Cherry",
+            "Cherry",
+            "Cherry",
+            "Cherry"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Cherry",
+            "Cherry",
+            "Cherry",
+            "Cherry",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Volcano:1"
+          ],
+          "pays": 1.0,
+          "scope": "scatter",
+          "marker": "*"
+        },
+        {
+          "combo": [
+            "Big Red7",
+            "Big Red7",
+            "Big Red7",
+            "Big Red7",
+            "Big Red7"
+          ],
+          "pays": 200.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Red7",
+            "Big Red7",
+            "Big Red7",
+            "Big Red7",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Blue7",
+            "Big Blue7",
+            "Big Blue7",
+            "Big Blue7",
+            "Big Blue7"
+          ],
+          "pays": 100.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Blue7",
+            "Big Blue7",
+            "Big Blue7",
+            "Big Blue7",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Bell",
+            "Big Bell",
+            "Big Bell",
+            "Big Bell",
+            "Big Bell"
+          ],
+          "pays": 25.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Bell",
+            "Big Bell",
+            "Big Bell",
+            "Big Bell",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Melon",
+            "Big Melon",
+            "Big Melon",
+            "Big Melon",
+            "Big Melon"
+          ],
+          "pays": 25.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Melon",
+            "Big Melon",
+            "Big Melon",
+            "Big Melon",
+            "--"
+          ],
+          "pays": 10.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Grapes",
+            "Big Grapes",
+            "Big Grapes",
+            "Big Grapes",
+            "Big Grapes"
+          ],
+          "pays": 20.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Grapes",
+            "Big Grapes",
+            "Big Grapes",
+            "Big Grapes",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Plum",
+            "Big Plum",
+            "Big Plum",
+            "Big Plum",
+            "Big Plum"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Plum",
+            "Big Plum",
+            "Big Plum",
+            "Big Plum",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Orange",
+            "Big Orange",
+            "Big Orange",
+            "Big Orange",
+            "Big Orange"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Orange",
+            "Big Orange",
+            "Big Orange",
+            "Big Orange",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Lemon",
+            "Big Lemon",
+            "Big Lemon",
+            "Big Lemon",
+            "Big Lemon"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Lemon",
+            "Big Lemon",
+            "Big Lemon",
+            "Big Lemon",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Cherry",
+            "Big Cherry",
+            "Big Cherry",
+            "Big Cherry",
+            "Big Cherry"
+          ],
+          "pays": 15.0,
+          "scope": "line",
+          "marker": ""
+        },
+        {
+          "combo": [
+            "Big Cherry",
+            "Big Cherry",
+            "Big Cherry",
+            "Big Cherry",
+            "--"
+          ],
+          "pays": 5.0,
+          "scope": "line",
+          "marker": ""
+        }
       ]
     },
     {

@@ -46,6 +46,7 @@ pub fn run_features(
     fs_picker: Option<&ReelSetPicker>,
     pt: &CompiledPaytable,
     virtual_mode: bool,
+    fs_pt: Option<&CompiledPaytable>,
 ) -> FeatureOutcome {
     let mut out = FeatureOutcome::default();
     for feat in &ir.features {
@@ -57,7 +58,8 @@ pub fn run_features(
                 retrigger_spins,
                 max_total_spins,
                 reel_bank: _,
-                linked_reels: _,
+                linked_reels,
+                fs_paytable: _,
             } => {
                 let Some(picker) = fs_picker else { continue };
                 let params = free_spins::FreeSpinsParams {
@@ -66,6 +68,8 @@ pub fn run_features(
                     initial_spins: *initial_spins,
                     retrigger_spins: *retrigger_spins,
                     max_total_spins: *max_total_spins,
+                    fs_pt,
+                    linked_reels: linked_reels.as_deref(),
                 };
                 out.merge(free_spins::run(params, ir, picker, pt, base, rng, virtual_mode));
             }

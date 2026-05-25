@@ -24,6 +24,11 @@ pub struct FreeSpinsParams<'a> {
     pub initial_spins: u32,
     pub retrigger_spins: u32,
     pub max_total_spins: Option<u32>,
+    /// W4.7 — optional override; runner uses it instead of `pt`.
+    pub fs_pt: Option<&'a CompiledPaytable>,
+    /// W4.7 — when populated, the listed reels share one stop per spin
+    /// (L&W CE FS reels 2/3/4 linked-block behavior).
+    pub linked_reels: Option<&'a [u32]>,
 }
 
 /// Runs the FS sequence for one base-game spin if the trigger fires.
@@ -68,10 +73,16 @@ pub fn run(
         let rs = fs_picker.pick(rng);
         let grid = if virtual_mode {
             Grid::spin_virtual(rs, rows, rng)
+        } else if let Some(linked) = params.linked_reels {
+            // L&W CE FS pattern — middle reels share one stop per spin.
+            Grid::spin_linked(rs, rows, linked, rng)
         } else {
             Grid::spin(rs, rows, rng)
         };
-        let w = evaluate_lines(&grid, ir, pt);
+        // FS paytable override (W4.7): when available, the FS spins use
+        // a different pay table than the base game (L&W CE pattern).
+        let effective_pt = params.fs_pt.unwrap_or(pt);
+        let w = evaluate_lines(&grid, ir, effective_pt);
         out.coins += w.line_coins;
         // `evaluate_lines` returns scatter as total-bet-× while
         // `line_coins` is per-line. Convert scatter to per-line by × lines
