@@ -122,19 +122,35 @@ def parse_paytable(rows: list[list[str]], profile: VendorProfile) -> list[dict]:
     combos = []
     for r in range(r0, r1):
         cells = [s(rows, r, c).strip() for c in range(cc0, cc1)]
+        pays_raw = s(rows, r, pays_c).strip()
         pays = n(rows, r, pays_c)
+        # W4.3e-scatter — parse "2*" / "5*" / "N*" style regulator notation
+        # for total-bet multipliers (IGT scatter pay). The numeric value
+        # is captured + the trailing "*" preserved in `pays_marker`.
+        pays_marker = ""
+        if pays is None and pays_raw and pays_raw[-1] in ("*", "†", "‡"):
+            try:
+                pays = float(pays_raw[:-1])
+                if pays.is_integer():
+                    pays = int(pays)
+                pays_marker = pays_raw[-1]
+            except ValueError:
+                pays = None
         pph = n(rows, r, pph_c) if pph_c is not None else None
         rtp_pct = n(rows, r, rtp_c) if rtp_c is not None else None
         marker = s(rows, r, mk_c).strip() if mk_c is not None else ""
         if pays is None or all(c == "" for c in cells):
             continue
-        combos.append({
+        entry = {
             "marker": marker,
             "combo": cells,
             "pays": pays,
             "pph": pph,
             "rtp_pct": rtp_pct,
-        })
+        }
+        if pays_marker:
+            entry["pays_marker"] = pays_marker
+        combos.append(entry)
     return combos
 
 

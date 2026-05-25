@@ -65,6 +65,7 @@ pub fn run_features(
                 reel_bank: _,
                 linked_reels,
                 fs_paytable: _,
+                scatter_pay_total_bet,
             } => {
                 let Some(picker) = fs_picker else { continue };
                 // W4.8 — look up any HoldAndWin feature in the IR to
@@ -99,6 +100,7 @@ pub fn run_features(
                     fs_pt,
                     linked_reels: linked_reels.as_deref(),
                     fs_hold_and_win: fs_hw,
+                    scatter_pay_total_bet: *scatter_pay_total_bet,
                 };
                 let r = free_spins::run(params, ir, picker, pt, base, rng, virtual_mode);
                 let c = r.coins;

@@ -4428,6 +4428,14 @@
       "pays": 5.0,
       "scope": "line",
       "marker": ""
+    },
+    {
+      "combo": [
+        "Bonus:3"
+      ],
+      "pays": 2.0,
+      "scope": "scatter",
+      "marker": "*"
     }
   ],
   "features": [

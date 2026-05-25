@@ -231,6 +231,15 @@ pub enum Feature {
         /// CE COPY TEST family.
         #[serde(default)]
         fs_paytable: Option<Vec<PaytableEntry>>,
+        /// W4.3e-scatter — Immediate scatter pay on FS trigger
+        /// (multiplier of TOTAL BET). IGT Fort Knox Wolf Run publishes
+        /// this as "2*" in the paytable Pays column: "Three Bonus
+        /// symbols on middle reels pay 2x total bet AND initiate Bonus
+        /// with 5 bonus spins". When non-zero, the engine adds
+        /// `scatter_pay_total_bet × total_bet` to the trigger spin
+        /// payout in addition to running the FS session.
+        #[serde(default)]
+        scatter_pay_total_bet: f64,
     },
     /// Wild expansion on specific reels when wild lands.
     WildExpand {

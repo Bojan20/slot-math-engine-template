@@ -36,6 +36,10 @@ pub struct FreeSpinsParams<'a> {
     /// HoldAndWin Feature variant. When `None`, FS spins never trigger
     /// the Cash Eruption feature.
     pub fs_hold_and_win: Option<FsHoldAndWinCfg<'a>>,
+    /// W4.3e-scatter — immediate scatter pay on trigger spin
+    /// (multiplier of TOTAL BET). IGT Fort Knox Wolf Run pays 2× total
+    /// bet AND awards FS on a "Bonus×3 middle reels" trigger.
+    pub scatter_pay_total_bet: f64,
 }
 
 /// W4.8 — config for triggering Cash Eruption inside FS spins.
@@ -82,6 +86,14 @@ pub fn run(
     let mut remaining = params.initial_spins.min(cap);
     let mut total_executed: u32 = 0;
     out.events.push(format!("fs_trigger:{}", scatter_count));
+
+    // W4.3e-scatter — immediate scatter pay on FS trigger (IGT Wolf Run
+    // pays 2× total bet on "Bonus×3 middle reels" trigger in addition to
+    // awarding free spins). `coins` is per-line; multiply by line count.
+    if params.scatter_pay_total_bet > 0.0 {
+        out.coins += params.scatter_pay_total_bet * (lines as f64);
+        out.events.push(format!("fs_scatter_pay:{}", params.scatter_pay_total_bet));
+    }
 
     while remaining > 0 {
         remaining -= 1;

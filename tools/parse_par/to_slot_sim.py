@@ -260,6 +260,32 @@ def _igt_paytable(parsed: dict) -> list[dict]:
     return out
 
 
+def _detect_igt_scatter_pay_on_trigger(parsed: dict, trigger_symbol: str) -> float:
+    """W4.3e-scatter — find scatter pay rows that pay on FS trigger.
+
+    IGT publishes these as paytable rows with combos containing the
+    `trigger_symbol` ≥ trigger_count_min times AND a `pays_marker == '*'`
+    (regulator notation for "× total bet" instead of "× line bet").
+
+    Returns the multiplier of total bet that pays on each trigger; 0 if
+    no such row is found. Currently filters by `trigger_symbol` count;
+    a future extension can pull `trigger_count_min` from the FreeSpins
+    config to support 4-symbol / 5-symbol scatter triggers.
+    """
+    pt = parsed.get("paytable") or []
+    for row in pt:
+        if row.get("pays_marker") != "*":
+            continue
+        combo = row.get("combo") or []
+        if combo.count(trigger_symbol) < 3:
+            continue
+        try:
+            return float(row.get("pays") or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+    return 0.0
+
+
 def _igt_features(parsed: dict) -> list[dict]:
     """Map IGT vendor sections to slot-sim Feature variants."""
     features: list[dict] = []
@@ -268,7 +294,13 @@ def _igt_features(parsed: dict) -> list[dict]:
     fs = parsed.get("free_spins") or {}
     fs_summary = fs.get("bonus_summary") or {}
     if fs_summary:
-        # Bonus-triple scatter triggers 5 FS @ 2× retrigger up to 255.
+        # W4.3e-scatter NOTE: the scatter pay "2× total bet" on FS trigger
+        # is NOT emitted as `Feature::FreeSpins.scatter_pay_total_bet`
+        # because the adapter's `_igt_paytable_to_slot_sim()` already
+        # converts the IGT scatter row `[--, Bonus, Bonus, Bonus, --]`
+        # with `pays_marker="*"` into a `scope: scatter` paytable entry
+        # `Bonus:3` that slot-sim's CompiledPaytable evaluates natively.
+        # Emitting both would double-count the scatter pay.
         features.append({
             "kind": "free_spins",
             "trigger_symbol": "Bonus",
