@@ -81,7 +81,7 @@
 | P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
 | P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for IGT + L&W; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
 | P3.4 | **W5.4 — IR → Studio UI skeleton** (Svelte/Phaser scaffold sa reel viz + paytable + features panel) | ⏳ |
-| P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ⏳ |
+| P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ✅ `tools/slot_build/verify.py` (3-tier CI matrix: quick 1M/5%, standard 100M/0.5%, strict 1B/0.05%); `scripts/ci_mc_verify.sh` CI orchestrator (bash-3 portable); exit-code contract (0/1/2); JSON report w/ per-game drift + overall verdict; 13/13 W5.5 tests; **discovered real bug** — IGT PAR_002 FK award size 986.82 vs PAR_001's 26.59 (W5.5a follow-up). Quick tier on shipped 3 games: L&W ✅, IGT PAR_001 ✅, IGT PAR_002 ❌ (caught by gate as designed). |
 | P3.6 | **W5.6 — Auto cert paket** (HSM seed + RNG 90B + PAR commitment hash + audit log → ZIP) | ⏳ |
 | P3.7 | **W5.7 — `slot-build` integration tests** (E2E sa CE + Fort Knox + 1 sintetički Megaways) | ⏳ |
 
@@ -160,8 +160,8 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W5.5 — Auto MC verify CI gate** | 60-90 min | post-build 1B MC convergence gate vs Excel target |
-| 🥈 2 | **W4.3e — IGT base eval gap audit** | 60-90 min | check IGT wild expansion / scatter pay possibilities |
+| 🥇 1 | **W5.5a — IGT PAR_002 FK award bug** | 60-90 min | fix FK Trigger/Award parser za PAR_002 (FK award 986.82× sumnjivo high; 4.46 RTP drift) |
+| 🥈 2 | **W4.3e — IGT base eval gap audit** | 60-90 min | check IGT wild expansion / scatter pay possibilities (0.9 % gap) |
 | 🥉 3 | **W5.4 — IR → Studio UI skeleton** | 120-180 min | Svelte scaffold sa reel viz + paytable; mirror W5.3 codegen pattern |
 
 ### ✅ Just landed
@@ -180,7 +180,8 @@
 | W4.8 | `4c0cc25` | CE-from-FS HoldAndWin trigger inside FS — IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger`; adapter derives `fs_trigger_rate` from published `rtp_breakdown.free_spins` + `single_spin_payback_pct` (bypasses Volcano structural estimator drift); L&W RTP 0.614 → 0.691 (+0.077) |
 | **W4.9** | `756f2fa` | **🏆 Wild expansion runner** — L&W CE base reels 2-5 wild-expand on winning condition; **L&W RTP 0.691 → 0.952** (+0.261, single biggest single-wave RTP lift in the project); within 0.8 % of Excel 0.96 target; hit-freq 0.196 vs Excel 0.190 (1.1 σ MC noise), win-freq 0.096 vs Excel 0.089 (3 σ noise); +4 W4.9 Rust integration tests |
 | W5.2 | `0c808b0` | Per-game scaffold codegen — `slot-build --scaffold DIR` emits README/RUN/CERT.md + IR copies into a folder named after slugified game + SWID; 3 new Py unit tests; smoke on IGT + L&W games |
-| **W5.3** | _(this commit)_ | **IR → TS engine codegen** — `tools/parse_par/to_ts_ir.py` (universal Rust IR → TS SlotGameIR; symbol-role → kind, paytable combo[] → nested map, substitutes_except expansion, vendor-aware feature filtering for `linear_progressive`); `slot-build --codegen-ts DIR` emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README) per game with portable engine root via `$SLOT_ENGINE_ROOT`; Zod schema validation gate; 8/8 W5.3 unit tests pass (3 converter shape + 3 Zod via `tsx` + 2 end-to-end with real `npx tsx runner.ts` smoke); 61/61 total Python tests green; cargo workspace clean |
+| **W5.3** | `b488158` | **IR → TS engine codegen** — `tools/parse_par/to_ts_ir.py` (universal Rust IR → TS SlotGameIR; symbol-role → kind, paytable combo[] → nested map, substitutes_except expansion, vendor-aware feature filtering for `linear_progressive`); `slot-build --codegen-ts DIR` emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README) per game with portable engine root via `$SLOT_ENGINE_ROOT`; Zod schema validation gate; 8/8 W5.3 unit tests pass (3 converter shape + 3 Zod via `tsx` + 2 end-to-end with real `npx tsx runner.ts` smoke); 61/61 total Python tests green; cargo workspace clean |
+| **W5.5** | _(this commit)_ | **Auto MC verify CI gate** — `tools/slot_build/verify.py` (3-tier CI matrix: `quick` 1M/5%, `standard` 100M/0.5%, `strict` 1B/0.05% Excel parity); `scripts/ci_mc_verify.sh` orchestrator (bash-3 portable); exit-code contract (0=pass, 1=drift>thresh, 2=infra error); JSON report w/ per-game drift + verdict; 13/13 W5.5 tests (CI tier matrix · IR discovery · verify_one shape · CLI exit codes · JSON report schema); **immediate gate success** — discovered real bug: IGT PAR_002 FK award size 986.82 vs PAR_001's 26.59, causing 4.46 RTP drift (W5.5a follow-up tracked). L&W + IGT PAR_001 ✅ within 5% threshold (W4.9 achieved 0.8% gap on L&W). |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 
