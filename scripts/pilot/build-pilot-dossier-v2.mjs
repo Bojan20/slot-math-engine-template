@@ -13,7 +13,7 @@
  *
  * Backward compat:
  *   - Without an operator manifest, falls back to W211 v1 output (same
- *     `# L&W Pilot Evaluation Dossier` title + same 12 section headings).
+ *     `# Vendor B Pilot Evaluation Dossier` title + same 12 section headings).
  *
  * Output files:
  *   - dist/pilot/{operatorId}-pilot-dossier-v2.md
@@ -126,7 +126,7 @@ export function renderOperatorBlocks(manifest, opts = {}) {
   lines.push(`${manifest.jurisdictions.join(', ')}, against an RTP standard of`);
   lines.push(`${manifest.rtpStandard}. The slot-math-engine accelerates this pipeline by:`);
   lines.push('');
-  lines.push(`- **Closed-form solver coverage** — 77 solvers covering 100% of L&W M1-M16`);
+  lines.push(`- **Closed-form solver coverage** — 77 solvers covering 100% of Vendor B M1-M16`);
   lines.push(`  mechanics + 97 industry pattern IDs (P-001..P-097). RTP drift vs MC < 0.05pp.`);
   lines.push(`- **Cert lab pre-flight** — bundle-builders for ${manifest.certLabsUsed.join(', ')}`);
   lines.push(`  (GLI/BMM/eCOGRA/NMi available) cut lab-submission prep from weeks to hours.`);
@@ -185,10 +185,10 @@ export function renderOperatorBlocks(manifest, opts = {}) {
 }
 
 export function rewriteV1Header(md, manifest) {
-  // Swap the L&W-specific title + intro for an operator-aware variant.
-  // V1 starts with `# L&W Pilot Evaluation Dossier` — replace first line.
+  // Swap the Vendor B-specific title + intro for an operator-aware variant.
+  // V1 starts with `# Vendor B Pilot Evaluation Dossier` — replace first line.
   const lines = md.split('\n');
-  if (lines[0] === '# L&W Pilot Evaluation Dossier') {
+  if (lines[0] === '# Vendor B Pilot Evaluation Dossier') {
     lines[0] = `# ${manifest.displayName} Pilot Evaluation Dossier`;
   }
   // Insert an `**Operator:**` line right after the run-id metadata block.
@@ -233,7 +233,7 @@ export async function buildDossierV2(opts = {}) {
     }
   }
   const md = renderMarkdownV2({ state: sources.state, suite: sources.suite, manifest });
-  const titleSuffix = manifest ? `${manifest.displayName} Pilot Evaluation Dossier` : 'L&W Pilot Evaluation Dossier';
+  const titleSuffix = manifest ? `${manifest.displayName} Pilot Evaluation Dossier` : 'Vendor B Pilot Evaluation Dossier';
   const html = markdownToHtml(md, titleSuffix);
   const outDir = resolve(opts.root ?? REPO_ROOT, opts.out ?? 'dist/pilot');
   const idForFilename = manifest?.operatorId ?? DEFAULT_OPERATOR_ID;

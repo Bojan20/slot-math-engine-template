@@ -1,7 +1,7 @@
 # Per-Operator Branding (W213 Faza 700.1)
 
 The slot-math-engine pitch toolchain ships with a manifest-driven branding
-engine that swaps every reference to "L&W" / "Light & Wonder" / "LNW" with
+engine that swaps every reference to "Vendor B" / "Vendor B" / "Vendor B" with
 the equivalent token for the target operator. Same content, same proof
 artifacts — different cover.
 
@@ -11,12 +11,12 @@ Source-of-truth manifests live in `scripts/pitch/operators/*.json`.
 
 | operatorId  | Display name     | Tier         | HQ                          |
 |-------------|------------------|--------------|-----------------------------|
-| `lw`        | L&W              | Tier-1       | Las Vegas, NV               |
-| `aristocrat`| Aristocrat       | Tier-1       | Sydney, Australia           |
-| `igt`       | IGT              | Tier-1       | London, UK / Providence, RI |
-| `pragmatic` | Pragmatic Play   | Tier-1       | Sliema, Malta               |
+| `lw`        | Vendor B              | Tier-1       | Las Vegas, NV               |
+| `aristocrat`| Vendor C       | Tier-1       | Sydney, Australia           |
+| `igt`       | Vendor A              | Tier-1       | London, UK / Providence, RI |
+| `pragmatic` | Vendor E   | Tier-1       | Sliema, Malta               |
 | `evolution` | Evolution        | Tier-1       | Stockholm, Sweden           |
-| `playtech`  | Playtech         | Tier-1       | Douglas, Isle of Man        |
+| `playtech`  | Vendor F         | Tier-1       | Douglas, Isle of Man        |
 | `hacksaw`   | Hacksaw Gaming   | Tier-2       | Stockholm, Sweden           |
 
 `_template.json` is the empty starter for adding new operators.
@@ -35,8 +35,8 @@ Required fields (21 total):
 | `legalName`          | string           | "_Inc._ / _PLC_ / _AB_" form                   |
 | `shortName`          | string           | medium-length brand label                      |
 | `hqLocation`         | string           | "City, Country" form                           |
-| `tickerSymbol`       | string \| null   | "LNW", "ALL.AX" — null for private             |
-| `primaryColor`       | hex CSS color    | swaps `#22d3ee` (L&W cyan) in HTML             |
+| `tickerSymbol`       | string \| null   | "Vendor B", "ALL.AX" — null for private             |
+| `primaryColor`       | hex CSS color    | swaps `#22d3ee` (Vendor B cyan) in HTML             |
 | `accentColor`        | hex CSS color    | swaps `#0e7490`                                |
 | `industryRank`       | int \| null      | 1 = largest, etc.                              |
 | `estimatedRevenue`   | string           | "$3.0B"                                        |
@@ -44,7 +44,7 @@ Required fields (21 total):
 | `contactRole`        | string           | "Slot Math Director", etc.                     |
 | `contactName`        | string           | placeholder _<…>_                              |
 | `contactEmail`       | string           | placeholder _<…>_                              |
-| `typicalTitle`       | string           | "Quick Hit Platinum Phoenix" etc.              |
+| `typicalTitle`       | string           | "Pattern-QHP" etc.              |
 | `portfolioSize`      | int              | active titles                                  |
 | `annualReleases`     | int              |                                                |
 | `certLabsUsed`       | string[]         | ["GLI", "BMM"]                                 |
@@ -67,18 +67,18 @@ Optional:
 `applyBranding(content, manifest)` does ordered literal string replacement:
 
 ```
-'Light & Wonder, Inc.'  → manifest.legalName
-'Light & Wonder Inc.'   → manifest.legalName
-'Light & Wonder'        → manifest.shortName
+'Vendor B, Inc.'  → manifest.legalName
+'Vendor B Inc.'   → manifest.legalName
+'Vendor B'        → manifest.shortName
 'light & wonder'        → manifest.shortName.lowercase
 'L&amp;W'               → manifest.displayName.escaped
 'L_AND_W'               → manifest.displayName.upperscored
-'L&W'                   → manifest.displayName
-'LNW'                   → manifest.tickerSymbol
+'Vendor B'                   → manifest.displayName
+'Vendor B'                   → manifest.tickerSymbol
 ```
 
-Longest tokens are tried first to avoid `Light & Wonder` getting
-half-mangled by an earlier `L&W` swap.
+Longest tokens are tried first to avoid `Vendor B` getting
+half-mangled by an earlier `Vendor B` swap.
 
 **Code-region protection**: text inside fenced code blocks ` ``` … ``` `
 is left untouched, so JSON keys and code samples never get rewritten.

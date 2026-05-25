@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 190 — Nested Mini-Slot Inside Bonus acceptance (71. solver, L&W M14 P1).
+// W152 Wave 190 — Nested Mini-Slot Inside Bonus acceptance (71. solver, Vendor B M14 P1).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -20,17 +20,17 @@ const TOL_NESTED_ABS = 0.04;
 const CONFIGS = [
   {
     name: "A_lotr_two_towers_tower_spin_nested",
-    description: "LNW WMS Lord of the Rings Two Towers (2013, defining title) — Tower Spin nested mini-slot inside main bonus.",
+    description: "Vendor B WMS Lord of the Rings Two Towers (2013, defining title) — Tower Spin nested mini-slot inside main bonus.",
     cfg: { probBonusTriggerPerParentSpin: 0.02, numOuterBonusSpins: 10, outerBaseMean: 2.0, outerBaseVar: 1, probNestedTriggerPerOuterSpin: 0.15, numNestedInnerSpins: 5, nestedInnerMean: 8, nestedInnerVar: 4 },
   },
   {
     name: "B_lotr_return_of_the_king_extended",
-    description: "LNW WMS Lord of the Rings Return of the King (2013) — extended nested-slot variant.",
+    description: "Vendor B WMS Lord of the Rings Return of the King (2013) — extended nested-slot variant.",
     cfg: { probBonusTriggerPerParentSpin: 0.015, numOuterBonusSpins: 12, outerBaseMean: 2.5, outerBaseVar: 2, probNestedTriggerPerOuterSpin: 0.20, numNestedInnerSpins: 4, nestedInnerMean: 10, nestedInnerVar: 6 },
   },
   {
     name: "C_star_trek_trek_through_stars",
-    description: "LNW WMS Star Trek Trek Through the Stars — nested-slot sub-game variant.",
+    description: "Vendor B WMS Star Trek Trek Through the Stars — nested-slot sub-game variant.",
     cfg: { probBonusTriggerPerParentSpin: 0.03, numOuterBonusSpins: 6, outerBaseMean: 1.8, outerBaseVar: 1, probNestedTriggerPerOuterSpin: 0.25, numNestedInnerSpins: 3, nestedInnerMean: 7, nestedInnerVar: 3 },
   },
   {
@@ -104,13 +104,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'NESTED_MINI_SLOT_INSIDE_BONUS.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# NESTED_MINI_SLOT_INSIDE_BONUS — Nested Mini-Slot Inside Bonus Compositional Aggregator Acceptance (W190, 71. solver, L&W M14 P1 GAP CLOSURE)');
+  md.push('# NESTED_MINI_SLOT_INSIDE_BONUS — Nested Mini-Slot Inside Bonus Compositional Aggregator Acceptance (W190, 71. solver, Vendor B M14 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${SPINS} MC parent-spins each.`);
   md.push('');
-  md.push('Closes L&W M14 GAP — LOTR Two Towers + Return of the King + Star Trek.');
+  md.push('Closes Vendor B M14 GAP — LOTR Two Towers + Return of the King + Star Trek.');
   md.push('');
   md.push('## Method');
   md.push('');

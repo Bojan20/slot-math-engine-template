@@ -2,7 +2,7 @@
 //
 // W152 Wave 181 — Reel-Bound Mystery Progressive Analyzer acceptance.
 //
-// 6 industry L&W Quick Hit family configs × 200K MC spins = 1.2M total
+// 6 industry Vendor B Quick Hit family configs × 200K MC spins = 1.2M total
 // spin sims. Per-reel Bernoulli adjacency cascade closed-form
 // cross-validated against per-spin reel-walk MC.
 //
@@ -13,7 +13,7 @@
 // (progressive contribution audit trail), NIGC 25 CFR 542.7(c) (Class III
 // mystery progressive).
 //
-// L&W M5 gap closure — covers 8+ L&W titles iz Quick Hit family.
+// Vendor B M5 gap closure — covers 8+ Vendor B titles iz Quick Hit family.
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -76,7 +76,7 @@ const CONFIGS = [
   },
   {
     name: 'E_bally_smokin_7s_single_tier',
-    description: 'Bally Smokin 7s — degenerate 1-tier mehanika (only top), all reels equal.',
+    description: 'Vendor H Smokin 7s — degenerate 1-tier mehanika (only top), all reels equal.',
     cfg: {
       numReels: 5,
       perReelScatterPresenceProb: [0.20, 0.20, 0.20, 0.20, 0.20],
@@ -189,7 +189,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# REEL_BOUND_MYSTERY_PROGRESSIVE — Reel-Bound Mystery Progressive Analyzer Acceptance (L&W M5 GAP CLOSURE)');
+  md.push('# REEL_BOUND_MYSTERY_PROGRESSIVE — Reel-Bound Mystery Progressive Analyzer Acceptance (Vendor B M5 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -197,7 +197,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${SPINS} MC spins each = ${(CONFIGS.length * SPINS / 1e6).toFixed(2)}M total spin sims.`);
   md.push('');
-  md.push('**Covers 8+ L&W titles iz Quick Hit family** (Platinum / Black Gold / Pro / Wild / Blitz / Cash Wheel / Triple Cash Wheel / Smokin 7s).');
+  md.push('**Covers 8+ Vendor B titles iz Quick Hit family** (Platinum / Black Gold / Pro / Wild / Blitz / Cash Wheel / Triple Cash Wheel / Smokin 7s).');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -207,7 +207,7 @@ async function main() {
   md.push('  - **E[payout]** = Σ tier_k · payout_k');
   md.push('  - **1-in-N** = 1 / tier_k (regulator disclosure form)');
   md.push('');
-  md.push('## Configs — L&W Quick Hit family operator disclosure table');
+  md.push('## Configs — Vendor B Quick Hit family operator disclosure table');
   md.push('');
   md.push('| Config | Pass | R | kMin | Top-tier 1-in-N | E[RTP] CF/MC |');
   md.push('|---|---|---|---|---|---|');
@@ -226,7 +226,7 @@ async function main() {
   md.push('- **GLI-19 §3.4** — progressive contribution audit trail.');
   md.push('- **NIGC 25 CFR 542.7(c)** — Class III mystery progressive.');
   md.push('');
-  md.push('**L&W M5 GAP CLOSURE**: this kernel covers the per-reel scatter-presence + adjacency-reel tier mapping');
+  md.push('**Vendor B M5 GAP CLOSURE**: this kernel covers the per-reel scatter-presence + adjacency-reel tier mapping');
   md.push('mehaniku iconic za Quick Hit family — 8+ titles dependent on this kernel for cert dossier.');
 
   writeFileSync(join(OUT_DIR, 'REEL_BOUND_MYSTERY_PROGRESSIVE.md'), md.join('\n'));

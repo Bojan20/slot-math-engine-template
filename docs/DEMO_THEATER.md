@@ -1,10 +1,10 @@
 # Demo Theater — 30-day Pilot Simulation
 
 The Demo Theater is a scripted, deterministic, time-compressed
-simulation of a 30-day L&W pilot deployment that can be replayed in
+simulation of a 30-day Vendor B pilot deployment that can be replayed in
 under five minutes for any C-level demo. It generates a full timeline
 of events, metrics, dashboards, alerts and decisions — essentially a
-flight simulator for "what happens when L&W signs the pilot."
+flight simulator for "what happens when Vendor B signs the pilot."
 
 W211 Faza 700.0 ships this on top of the W210 deployment harness:
 canary controller, smoke orchestrator, lab adapters and observability.

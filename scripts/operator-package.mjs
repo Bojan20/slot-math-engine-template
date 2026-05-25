@@ -260,13 +260,13 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 167 AWP Cycle Convergence (W152 Wave 168, 55. solver, INDUSTRY-FIRST UK Class III B3 UKGC LCCP)
   { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/AWP_CYCLE_CONVERGENCE.md' },
-  // REPORTS — Wave 169 Drop-and-Stick Wild Expansion (W152 Wave 170, 56. solver, per-cell sticky NetEnt Witchcraft / Pragmatic / Hacksaw)
+  // REPORTS — Wave 169 Drop-and-Stick Wild Expansion (W152 Wave 170, 56. solver, per-cell sticky Vendor D Witchcraft / Pragmatic / Hacksaw)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DROP_STICK_WILD_EXPANSION.md' },
   // REPORTS — Wave 171 Tumbling Cascade Chain Length (W152 Wave 172, 57. solver, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
   { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.md' },
-  // REPORTS — Wave 173 Pick-and-Click Pooper Bonus (W152 Wave 174, 58. solver, Negative Hypergeometric Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF)
+  // REPORTS — Wave 173 Pick-and-Click Pooper Bonus (W152 Wave 174, 58. solver, Negative Hypergeometric Vendor C 5 Dragons / Vendor H Quick Hit / Vendor D Gonzo / Vendor A WoF)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_CLICK_POOPER_BONUS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PICK_CLICK_POOPER_BONUS.md' },
   // REPORTS — Wave 175 Skill-Stop Near-Miss Rate (W152 Wave 176, 59. solver, INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 / JP Pachislot 風営法 / AU NCPF / AGCO)
@@ -278,34 +278,34 @@ const PACKAGE_FILES = [
   // REPORTS — Wave 179 Sticky Multiplier FS Trail Aggregator (W152 Wave 180, 61. solver compound Binomial trail quadratic-in-N BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf)
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_MULTIPLIER_FS_TRAIL.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/STICKY_MULTIPLIER_FS_TRAIL.md' },
-  // REPORTS — Wave 181 Reel-Bound Mystery Progressive (W152 Wave 181, 62. solver L&W M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
+  // REPORTS — Wave 181 Reel-Bound Mystery Progressive (W152 Wave 181, 62. solver Vendor B M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
   { kind: 'reports/acceptance', src: 'reports/acceptance/REEL_BOUND_MYSTERY_PROGRESSIVE.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/REEL_BOUND_MYSTERY_PROGRESSIVE.md' },
-  // REPORTS — Wave 182 Dynamic Grid-Expansion H&S (L&W M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Lock It Link Eureka Reel Blast)
+  // REPORTS — Wave 182 Dynamic Grid-Expansion H&S (Vendor B M3 GAP CLOSURE — Ultimate Fire Link family 7+ variants + Pattern-LIL Eureka Reel Blast)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.md' },
-  // REPORTS — Wave 183 Multi-State Frame Upgrade Markov (L&W M2 GAP CLOSURE — Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion)
+  // REPORTS — Wave 183 Multi-State Frame Upgrade Markov (Vendor B M2 GAP CLOSURE — Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion)
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_STATE_FRAME_UPGRADE_MARKOV.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/MULTI_STATE_FRAME_UPGRADE_MARKOV.md' },
-  // REPORTS — Wave 184 Colossal Reels Wild-Transfer (L&W M7 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles)
+  // REPORTS — Wave 184 Colossal Reels Wild-Transfer (Vendor B M7 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles)
   { kind: 'reports/acceptance', src: 'reports/acceptance/COLOSSAL_REELS_WILD_TRANSFER.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/COLOSSAL_REELS_WILD_TRANSFER.md' },
-  // REPORTS — Wave 185 Per-Reel Bag × Row-Multiplier Coupled (L&W M1 GAP CLOSURE — Dragon Spin CrossLink Water)
+  // REPORTS — Wave 185 Per-Reel Bag × Row-Multiplier Coupled (Vendor B M1 GAP CLOSURE — Dragon Spin CrossLink Water)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.md' },
-  // REPORTS — Wave 186 Big Bet Paid-Package Multi-Spin (UK-CRITICAL L&W M9 GAP CLOSURE — Barcrest UK family)
+  // REPORTS — Wave 186 Big Bet Paid-Package Multi-Spin (UK-CRITICAL Vendor B M9 GAP CLOSURE — Barcrest UK family)
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIG_BET_PAID_PACKAGE_MULTI_SPIN.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/BIG_BET_PAID_PACKAGE_MULTI_SPIN.md' },
-  // REPORTS — Wave 187 Deterministic Explosion Multiplier-Drop (L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
+  // REPORTS — Wave 187 Deterministic Explosion Multiplier-Drop (Vendor B M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution)
   { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.md' },
-  // REPORTS — Wave 188 Player-Elects Feature Composition (L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
+  // REPORTS — Wave 188 Player-Elects Feature Composition (Vendor B M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
   { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.md' },
-  // REPORTS — Wave 189 Random Feature-Injection During FS (L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
+  // REPORTS — Wave 189 Random Feature-Injection During FS (Vendor B M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland + WMS sub-feature library)
   { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.md' },
-  // REPORTS — Wave 190 Nested Mini-Slot Inside Bonus (L&W M14 P1 GAP CLOSURE — LOTR Two Towers + Return of the King + Star Trek)
+  // REPORTS — Wave 190 Nested Mini-Slot Inside Bonus (Vendor B M14 P1 GAP CLOSURE — LOTR Two Towers + Return of the King + Star Trek)
   { kind: 'reports/acceptance', src: 'reports/acceptance/NESTED_MINI_SLOT_INSIDE_BONUS.json' },
   { kind: 'reports/acceptance', src: 'reports/acceptance/NESTED_MINI_SLOT_INSIDE_BONUS.md' },
   // REPORTS — Wave 100 Centenary Retrospective (W152 milestone)

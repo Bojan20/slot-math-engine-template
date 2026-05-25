@@ -29,7 +29,7 @@ const TOL_TIMEAVG_REL = 0.05;      // time-avg rel ≤ 5%
 const CONFIGS = [
   {
     name: 'A_netent_witchcraft_3x5_S5',
-    description: 'NetEnt Witchcraft Academy-class: 3×5 grid, q=0.08 per-cell, sticky=5 spins (full FS)',
+    description: 'Vendor D Witchcraft Academy-class: 3×5 grid, q=0.08 per-cell, sticky=5 spins (full FS)',
     cfg: { gridRows: 3, gridCols: 5, probWildLandPerCellPerSpin: 0.08, stickyDurationSpins: 5 },
   },
   {
@@ -180,7 +180,7 @@ async function main() {
   md.push('- **MGA PPD §11** — sticky feature transparency (per-cell active prob disclosed)');
   md.push('- **eCOGRA Generic Slots Audit** — sticky-wild auditor verification');
   md.push('');
-  md.push('Industry use: NetEnt Witchcraft Academy spreading sticky wilds, Pragmatic Wild West Gold');
+  md.push('Industry use: Vendor D Witchcraft Academy spreading sticky wilds, Pragmatic Wild West Gold');
   md.push('money wilds, Hacksaw Tombstone skull wilds, Pragmatic Gates of Olympus 1000 multiplier wilds.');
 
   writeFileSync(join(OUT_DIR, 'DROP_STICK_WILD_EXPANSION.md'), md.join('\n'));

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// W152 Wave 196 — Stacked Multi-Wheel Composition acceptance (77. solver, L&W M6 P1 FINAL GAP).
-// **16/16 L&W KIMI gaps closed milestone.** 🏆
+// W152 Wave 196 — Stacked Multi-Wheel Composition acceptance (77. solver, Vendor B M6 P1 FINAL GAP).
+// **16/16 Vendor B KIMI gaps closed milestone.** 🏆
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -20,7 +20,7 @@ const TOL_TOP_PROB_ABS = 0.01;
 const CONFIGS = [
   {
     name: "A_bally_triple_cash_wheel_3_stacked",
-    description: "LNW Bally Triple Cash Wheel (2022, defining title) — 3 stacked wheels sa pyramid slice prizes.",
+    description: "Vendor B Vendor H Triple Cash Wheel (2022, defining title) — 3 stacked wheels sa pyramid slice prizes.",
     cfg: {
       wheels: [
         { label: 'w1', slices: [
@@ -46,7 +46,7 @@ const CONFIGS = [
   },
   {
     name: "B_quick_hit_cash_wheel_2_wheel_composition",
-    description: "LNW Bally Quick Hit Cash Wheel (2014) — cash-tier wheel × multiplier wheel composition.",
+    description: "Vendor B Vendor H Quick Hit Cash Wheel (2014) — cash-tier wheel × multiplier wheel composition.",
     cfg: {
       wheels: [
         { label: 'cash_wheel', slices: [
@@ -66,7 +66,7 @@ const CONFIGS = [
   },
   {
     name: "C_cash_wheel_quick_hit_3_tier_balanced",
-    description: "LNW Bally Cash Wheel Quick Hit (2014) — 3-wheel balanced tier composition.",
+    description: "Vendor B Vendor H Cash Wheel Quick Hit (2014) — 3-wheel balanced tier composition.",
     cfg: {
       wheels: [
         { label: 'tier_1', slices: [
@@ -200,13 +200,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'STACKED_MULTI_WHEEL_COMPOSITION.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# STACKED_MULTI_WHEEL_COMPOSITION — Stacked Multi-Wheel Composition Aggregator Acceptance (W196, 77. solver, L&W M6 P1 FINAL GAP CLOSURE — 16/16 L&W GAPS 🏆)');
+  md.push('# STACKED_MULTI_WHEEL_COMPOSITION — Stacked Multi-Wheel Composition Aggregator Acceptance (W196, 77. solver, Vendor B M6 P1 FINAL GAP CLOSURE — 16/16 Vendor B GAPS 🏆)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${SPINS} MC spins each.`);
   md.push('');
-  md.push('🏆 **Closes 16th and FINAL L&W KIMI gap** — Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit family.');
+  md.push('🏆 **Closes 16th and FINAL Vendor B KIMI gap** — Vendor H Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit family.');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -228,16 +228,16 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-14 mandatory per-wheel RTP / UKGC RTS-3 joint top-slice probability / MGA PPD §11 multi-wheel transparency / eCOGRA / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW Bally Triple Cash Wheel (2022 defining) + Quick Hit Cash Wheel (2014) + Cash Wheel Quick Hit (2014) + future L&W multi-wheel flagships.");
+  md.push("Industry: Vendor B Vendor H Triple Cash Wheel (2022 defining) + Quick Hit Cash Wheel (2014) + Cash Wheel Quick Hit (2014) + future Vendor B multi-wheel flagships.");
   md.push('');
-  md.push('🏆 **W196 MILESTONE: 16/16 L&W KIMI gaps CLOSED — ALL P0 + ALL P1 + M-codes complete.** Engine now ships full L&W mehanika coverage 100%.');
+  md.push('🏆 **W196 MILESTONE: 16/16 Vendor B KIMI gaps CLOSED — ALL P0 + ALL P1 + M-codes complete.** Engine now ships full Vendor B mehanika coverage 100%.');
   writeFileSync(join(OUT_DIR, 'STACKED_MULTI_WHEEL_COMPOSITION.md'), md.join('\n'));
 
   console.log('');
   console.log(`Overall: ${allOK ? '✅ PASS' : '❌ FAIL'}`);
   if (allOK) {
     console.log('');
-    console.log('🏆 W196 MILESTONE — 16/16 L&W KIMI gaps CLOSED. 100% L&W mehanika coverage.');
+    console.log('🏆 W196 MILESTONE — 16/16 Vendor B KIMI gaps CLOSED. 100% Vendor B mehanika coverage.');
   }
   if (!allOK) process.exit(1);
 }

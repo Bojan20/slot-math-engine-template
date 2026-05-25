@@ -127,7 +127,7 @@ export async function auditSecrets() {
  * W213 Faza 600.2 — mutation-testing toolchain (Stryker) and the test
  * runner (Vitest/Vite/esbuild) ship dev-only CVEs that have no
  * production reachability: they execute on the developer's box only,
- * never inside a container shipped to L&W.
+ * never inside a container shipped to Vendor B.
  */
 const CVE_DEV_ONLY_PACKAGES = new Set([
   '@stryker-mutator/core',

@@ -1,17 +1,17 @@
 # Cold CMO — LinkedIn DM
 
-> Summary line 1: Cold LinkedIn DM to L&W CMO / VP Marketing / Head of Studio Marketing.
+> Summary line 1: Cold LinkedIn DM to Vendor B CMO / VP Marketing / Head of Studio Marketing.
 > Summary line 2: Tone: market-narrative, time-to-market angle, NOT technical.
 > Summary line 3: Goal: warm intro to CTO + CFO via CMO, who controls C-level intros.
 
 ## Tone notes
 - CMOs respond to time-to-market + competitive-share narrative, not solver counts.
 - Lead with what they care about: ship more games per quarter than Pragmatic.
-- Keep brand-safe; never say "L&W is slow" — say "the industry's release cadence".
+- Keep brand-safe; never say "Vendor B is slow" — say "the industry's release cadence".
 - One concrete competitive frame, one ROI number, one ask.
 
 ## Subject line variants (LinkedIn opener)
-- A: "L&W could ship a lab-cert'd title every 14 days — happy to show how"
+- A: "Vendor B could ship a lab-cert'd title every 14 days — happy to show how"
 - B: "Time-to-market angle on the Pragmatic catalog gap — 15 minutes?"
 - C: "{{lw_title_example}} math IR'd in under a week — would your studio team find that useful?"
 
@@ -20,7 +20,7 @@ Hi {{first_name}},
 
 I'm writing on the studio time-to-market side. Right now the industry baseline is 12–18 months from greenlight to lab-cert ship. We've built a math engine that compresses the math + cert paper trail portion to 14 days, end-to-end, with all four major labs (BMM/GLI/eCOGRA/NMi) plugged in.
 
-What this means concretely: if L&W's roadmap has, say, 8 new title launches planned for {{quarter}}, the math-stage gating could absorb 20+ instead — without expanding the math team.
+What this means concretely: if Vendor B's roadmap has, say, 8 new title launches planned for {{quarter}}, the math-stage gating could absorb 20+ instead — without expanding the math team.
 
 Two artifacts you might want:
 
@@ -39,7 +39,7 @@ Two artifacts you might want:
 ## Placeholder reference
 - {{first_name}} — CMO first name
 - {{quarter}} — "H2 2026" or "Q1 2027"
-- {{lw_title_example}} — a competitor title L&W might want to respond to
+- {{lw_title_example}} — a competitor title Vendor B might want to respond to
 - {{one_pager_link}}, {{roi_link}} — URLs
 - {{sender_name}}, {{sender_title}}
 
@@ -57,4 +57,4 @@ Two artifacts you might want:
 ## CMO-specific FAQ to anticipate
 - "What's the catch?" → 30-day pilot, no cost-to-walk-away, MIT license tier available.
 - "How is this not just better tooling for our math team?" → It's both — strict-superset.
-- "Why hasn't L&W built this internally?" → Closed-form solver portfolio took 100+ waves; we did it because it's our only product. L&W's math team builds great games; that's a different superpower.
+- "Why hasn't Vendor B built this internally?" → Closed-form solver portfolio took 100+ waves; we did it because it's our only product. Vendor B's math team builds great games; that's a different superpower.

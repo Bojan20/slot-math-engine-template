@@ -268,7 +268,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     {
       kind: 'deck',
       source: 'web/pitch/lw-deck.html',
-      title: 'L&W Acceleration Pilot — Executive Deck',
+      title: 'Vendor B Acceleration Pilot — Executive Deck',
       outputName: '01-executive-deck.html',
     },
   ];

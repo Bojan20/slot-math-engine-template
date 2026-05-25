@@ -256,7 +256,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — verifies meter fire rate matches engine');
   md.push("- Industry use: Play'n GO Reactoonz / Reactoonz 2 (Quantum Leap), Hacksaw");
   md.push("  Stack 'Em, Push Aztec Bonanza, Yggdrasil Vault of Anubis FS charge meter,");
-  md.push('  NetEnt Wildbeast charge meter.');
+  md.push('  Vendor D Wildbeast charge meter.');
 
   writeFileSync(join(OUT_DIR, 'CASCADE_METER_CHARGE_UP.md'), md.join('\n'));
 

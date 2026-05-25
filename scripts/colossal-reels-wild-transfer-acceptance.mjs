@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 184 — Colossal Reels Wild-Transfer Two-Grid Aggregator acceptance
-// (65. solver, L&W M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles).
+// (65. solver, Vendor B M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles).
 //
 // 6 industry configs × 30K MC spins each = 180K total spin sims sa per-reel
 // Bernoulli main + Bernoulli transfer MC vs exact 2-stage Binomial closed-form.
@@ -227,7 +227,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# COLOSSAL_REELS_WILD_TRANSFER — Colossal Reels Wild-Transfer Two-Grid Aggregator Acceptance (W184, 65. solver, L&W M7 P0 GAP CLOSURE)');
+  md.push('# COLOSSAL_REELS_WILD_TRANSFER — Colossal Reels Wild-Transfer Two-Grid Aggregator Acceptance (W184, 65. solver, Vendor B M7 P0 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -235,7 +235,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${SPINS} MC spins each = ${(CONFIGS.length * SPINS / 1e3).toFixed(0)}K total spin sims.`);
   md.push('');
-  md.push("Closes Faza 12 ext (post-W100): ✅ \"Colossal Reels Wild-Transfer Two-Grid Aggregator\" (Wave 184 — 65. closed-form solver, L&W M7 GAP CLOSED — Spartacus family + 50+ WMS land-based titles).");
+  md.push("Closes Faza 12 ext (post-W100): ✅ \"Colossal Reels Wild-Transfer Two-Grid Aggregator\" (Wave 184 — 65. closed-form solver, Vendor B M7 GAP CLOSED — Spartacus family + 50+ WMS land-based titles).");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -266,7 +266,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — joint-grid evaluation audit.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push('Industry use: L&W M7 gap — WMS Spartacus Gladiator of Rome (2012, defining title 100 paylines 5×4+5×12), Super Colossal Reels (2019 full transfer), Call to Arms (2017 50 paylines variant), 50+ WMS land-based dependent titles (Caesar Empire, Forbidden Dragons, etc.).');
+  md.push('Industry use: Vendor B M7 gap — WMS Spartacus Gladiator of Rome (2012, defining title 100 paylines 5×4+5×12), Super Colossal Reels (2019 full transfer), Call to Arms (2017 50 paylines variant), 50+ WMS land-based dependent titles (Caesar Empire, Forbidden Dragons, etc.).');
 
   writeFileSync(join(OUT_DIR, 'COLOSSAL_REELS_WILD_TRANSFER.md'), md.join('\n'));
 

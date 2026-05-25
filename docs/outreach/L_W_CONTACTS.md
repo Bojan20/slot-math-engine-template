@@ -1,4 +1,4 @@
-# L&W Contact List — Template
+# Vendor B Contact List — Template
 
 > Structured template (schema only, no real PII). Use this as the canonical contact tracking format.
 > Companion CSV with same columns lives at `docs/outreach/L_W_CONTACTS.csv` (generate from your CRM).
@@ -35,7 +35,7 @@
 
 ## Suggested categories to populate
 
-For an L&W full-spectrum coverage, aim to source contacts in each of these categories:
+For an Vendor B full-spectrum coverage, aim to source contacts in each of these categories:
 
 ### Executives (highest priority)
 - CEO
@@ -47,7 +47,7 @@ For an L&W full-spectrum coverage, aim to source contacts in each of these categ
 - Chief Compliance Officer
 
 ### Heads of Studio
-- Head of Studio (per studio: e.g., Bally Studio, SG Studio, Reno Studio)
+- Head of Studio (per studio: e.g., Vendor H Studio, SG Studio, Reno Studio)
 - Studio Math Director
 - Studio Producer
 
@@ -93,8 +93,8 @@ For an L&W full-spectrum coverage, aim to source contacts in each of these categ
 | Source | What it gives you | Caveats |
 |---|---|---|
 | LinkedIn | Name, role, tenure, mutual connections, recent activity | Public profile is the most reliable source |
-| L&W investor relations page | Press releases name C-level when they're quoted | Use as a tenure / role-confirmation cross-check |
-| L&W annual report | Top 5–8 named executives w/ photos | Available via SEC EDGAR for the publicly-traded parent |
+| Vendor B investor relations page | Press releases name C-level when they're quoted | Use as a tenure / role-confirmation cross-check |
+| Vendor B annual report | Top 5–8 named executives w/ photos | Available via SEC EDGAR for the publicly-traded parent |
 | G2E / ICE / SBC speaker pages | Bio + role + sometimes email | Conference organizer sites are public |
 | Crunchbase | C-level history, prior companies | Free tier sufficient |
 | Glassdoor | Org culture signals, internal review themes | Take individual reviews with salt; trend lines matter |

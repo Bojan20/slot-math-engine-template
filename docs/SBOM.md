@@ -7,7 +7,7 @@ cadence + distribution policy.
 
 CycloneDX is an OWASP-maintained, regulator-friendly SBOM standard.
 We emit `specVersion: "1.5"` which is what GLI/BMM/iTechLabs accept
-as part of the cert dossier paper trail. It is also what L&W's own
+as part of the cert dossier paper trail. It is also what Vendor B's own
 security team uses internally.
 
 ## What our SBOM contains
@@ -78,7 +78,7 @@ byte-identical SBOM (modulo `metadata.timestamp` and the random
 - Public: yes, the SBOM is included in `operator-package.zip`.
 - Regulators: GLI/BMM/iTechLabs receive the JSON + XML during cert
   submission.
-- L&W security team: receives the SBOM with every release.
+- Vendor B security team: receives the SBOM with every release.
 - We do NOT redact license info — a transparent SBOM is the entire
   point of shipping one.
 

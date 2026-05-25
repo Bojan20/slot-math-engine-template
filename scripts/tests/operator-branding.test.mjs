@@ -104,50 +104,50 @@ describe('operator-branding — replacements', () => {
     const m = await loadOperatorManifest('lw');
     expect(operatorReplacements(m).length).toBe(0);
     // applyBranding is identity for default operator.
-    const txt = 'Hello L&W team — Light & Wonder rocks. LNW ticker.';
+    const txt = 'Hello Vendor B team — Vendor B rocks. Vendor B ticker.';
     expect(applyBranding(txt, m)).toBe(txt);
   });
 
-  it('aristocrat manifest produces replacements for L&W tokens', async () => {
+  it('aristocrat manifest produces replacements for Vendor B tokens', async () => {
     const m = await loadOperatorManifest('aristocrat');
     const reps = operatorReplacements(m);
     const froms = reps.map((r) => r.from);
-    expect(froms).toContain('L&W');
-    expect(froms).toContain('Light & Wonder');
-    expect(froms).toContain('LNW');
+    expect(froms).toContain('Vendor B');
+    expect(froms).toContain('Vendor B');
+    expect(froms).toContain('Vendor B');
   });
 
-  it('applyBranding swaps "L&W" → "Aristocrat" in plain text', async () => {
+  it('applyBranding swaps "Vendor B" → "Vendor C" in plain text', async () => {
     const m = await loadOperatorManifest('aristocrat');
-    const out = applyBranding('Hello L&W team — welcome to L&W.', m);
-    expect(out).toBe('Hello Aristocrat team — welcome to Aristocrat.');
+    const out = applyBranding('Hello Vendor B team — welcome to Vendor B.', m);
+    expect(out).toBe('Hello Vendor C team — welcome to Vendor C.');
   });
 
   it('applyBranding does NOT swap inside fenced code blocks', async () => {
     const m = await loadOperatorManifest('aristocrat');
     const src = [
-      'Hello L&W team',
+      'Hello Vendor B team',
       '```',
-      'const operator = "L&W";', // must remain L&W
+      'const operator = "Vendor B";', // must remain Vendor B
       '```',
-      'See you at L&W.',
+      'See you at Vendor B.',
     ].join('\n');
     const out = applyBranding(src, m);
-    expect(out).toContain('const operator = "L&W"');
-    expect(out).toContain('Hello Aristocrat team');
-    expect(out).toContain('See you at Aristocrat.');
+    expect(out).toContain('const operator = "Vendor B"');
+    expect(out).toContain('Hello Vendor C team');
+    expect(out).toContain('See you at Vendor C.');
   });
 
-  it('applyBranding swaps "Light & Wonder" before "L&W" so legal name wins', async () => {
+  it('applyBranding swaps "Vendor B" before "Vendor B" so legal name wins', async () => {
     const m = await loadOperatorManifest('aristocrat');
-    const out = applyBranding('Visit Light & Wonder HQ — L&W rules.', m);
-    expect(out).toContain('Aristocrat HQ');
-    expect(out).not.toContain('Light & Wonder');
+    const out = applyBranding('Visit Vendor B HQ — Vendor B rules.', m);
+    expect(out).toContain('Vendor C HQ');
+    expect(out).not.toContain('Vendor B');
   });
 
-  it('applyBranding swaps LNW ticker → ALL.AX for aristocrat', async () => {
+  it('applyBranding swaps Vendor B ticker → ALL.AX for aristocrat', async () => {
     const m = await loadOperatorManifest('aristocrat');
-    const out = applyBranding('Ticker: LNW.', m);
+    const out = applyBranding('Ticker: Vendor B.', m);
     expect(out).toBe('Ticker: ALL.AX.');
   });
 
@@ -155,12 +155,12 @@ describe('operator-branding — replacements', () => {
     const m = await loadOperatorManifest('aristocrat');
     const html = '<html><head><title>L&amp;W deck</title><style>:root{--brand-primary:#22d3ee}.x{color:#22d3ee}</style></head><body>L&amp;W</body></html>';
     const out = applyBrandingToHtml(html, m);
-    expect(out).toContain('<title>Aristocrat deck</title>');
+    expect(out).toContain('<title>Vendor C deck</title>');
     expect(out).toContain('--brand-primary: #dc2626');
     expect(out).toContain(m.primaryColor);
   });
 
-  it('applyBrandingToCss replaces L&W cyan with operator primary', async () => {
+  it('applyBrandingToCss replaces Vendor B cyan with operator primary', async () => {
     const m = await loadOperatorManifest('hacksaw');
     const out = applyBrandingToCss('.h1 { color: #22d3ee } --brand-primary: #22d3ee;', m);
     expect(out).toContain('#a855f7');
@@ -181,8 +181,8 @@ describe('operator-branding — placeholders', () => {
   it('renderContactPlaceholders returns the canonical 5 fields', async () => {
     const m = await loadOperatorManifest('aristocrat');
     const p = renderContactPlaceholders(m);
-    expect(p.name).toContain('Aristocrat');
-    expect(p.email).toContain('Aristocrat');
+    expect(p.name).toContain('Vendor C');
+    expect(p.email).toContain('Vendor C');
     expect(p.role).toBe(m.contactRole);
     expect(p.calendar).toContain('aristocrat-pilot');
     expect(p.decisionMaker).toBe(m.decisionMakerRole);

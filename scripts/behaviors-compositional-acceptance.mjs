@@ -58,7 +58,7 @@ const REL_SIGMA_TOL = 0.10;
 //
 // Każda je dvo-behavior kombinacija koja nije imala dedicated combo test.
 // Odabir je vođen industrijskim relevancijom: ovo su parovi koji se vrte
-// u FS modovima Pragmatic-style, IGT Megaways-style i Tumbling-style igara.
+// u FS modovima Pragmatic-style, Vendor A Megaways-style i Tumbling-style igara.
 
 const COMPOSITIONS = [
   { id: 'C1', name: 'ExpandingWild + StickyWild', kinds: ['expanding', 'sticky'] },

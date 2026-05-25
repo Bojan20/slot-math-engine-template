@@ -1,6 +1,6 @@
 // W152 Wave 196 — Stacked Multi-Wheel Composition vitest specs
-// (77. solver, L&W M6 P1 FINAL GAP CLOSURE — Bally Triple Cash Wheel + Quick Hit Cash Wheel family).
-// **16/16 L&W KIMI gaps now closed.** 🏆
+// (77. solver, Vendor B M6 P1 FINAL GAP CLOSURE — Vendor H Triple Cash Wheel + Quick Hit Cash Wheel family).
+// **16/16 Vendor B KIMI gaps now closed.** 🏆
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -41,7 +41,7 @@ const baseCfg: StackedMultiWheelCompositionConfig = {
   ],
 };
 
-describe('Wave 196 — Stacked Multi-Wheel Composition (FINAL L&W GAP)', () => {
+describe('Wave 196 — Stacked Multi-Wheel Composition (FINAL Vendor B GAP)', () => {
   describe('validation', () => {
     it('rejects fewer than 2 wheels', () => {
       expect(() => analyzeStackedMultiWheelComposition({ wheels: [] })).toThrow();
@@ -294,8 +294,8 @@ describe('Wave 196 — Stacked Multi-Wheel Composition (FINAL L&W GAP)', () => {
     });
   });
 
-  describe('industry use-cases (L&W M6 Triple Cash Wheel family)', () => {
-    it('Bally Triple Cash Wheel — 3 stacked wheels', () => {
+  describe('industry use-cases (Vendor B M6 Triple Cash Wheel family)', () => {
+    it('Vendor H Triple Cash Wheel — 3 stacked wheels', () => {
       const r = analyzeStackedMultiWheelComposition(baseCfg);
       expect(r.numWheels).toBe(3);
       expect(r.expectedTotalPayout).toBeGreaterThan(0);

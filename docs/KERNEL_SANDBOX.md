@@ -153,7 +153,7 @@ for an effectively-infinite budget.
 | `cf-vs-mc`    | `analyze*` vs `simulate*`; primary numeric (rtp/expected…) within 5% relative deviation. |
 | `performance` | 10000 invocations of `analyze*` complete in < 2s.        |
 | `boundary`    | `analyze*` invoked with 0 / max-int / NaN / Infinity / null inputs; no fatal crash (thrown Error is acceptable). |
-| `naming`      | Source has no reserved vendor terms (L&W, IGT, NetEnt…). |
+| `naming`      | Source has no reserved vendor terms (Vendor B, Vendor A, Vendor D…). |
 | `module-shape`| At least one `analyze*`/`solve*` AND at least one `simulate*` exported. |
 
 A submission gets the **Verified** badge iff all 6 gates pass.

@@ -98,7 +98,7 @@ scaffold for real Groth16/PLONK", bez real circuit evaluation.
 - BigCrush wall-clock: MT19937 ~3 h, PCG64 ~4–6 h, Xoshiro256SS ~4 h.
 - **Philox4x32 64-bit key recovery za ~1 dan na 500–1 k RTX 4090** (ePrint 2025).
 - Mersenne Twister: 624 outputs = full state reveal (open-source crackers).
-- "Alex" 2017: reverse-eng. Novomatic/Aristocrat PRNG → $250 k/week.
+- "Alex" 2017: reverse-eng. Novomatic/Vendor C PRNG → $250 k/week.
 
 **Rupa u template-u:**
 - `src/rng/` koristi PCG-64 + Xoshiro256SS — **ni jedan nije CSPRNG**.
@@ -282,7 +282,7 @@ scaffold for real Groth16/PLONK", bez real circuit evaluation.
 | 10 | Buy-feature regulatory ban deep-dive 2024-2026 | ✅ landed |
 | 11 | RG technical hooks (UKGC RTS 8/8B, MGA PPD, GAMSTOP, CRUKS) | ✅ landed |
 | 12 | AML/transaction monitoring obligations | ✅ landed |
-| 13 | RGS integration protocols (Pragmatic, Relax, OneTouch, L&W, IGT) | ✅ landed |
+| 13 | RGS integration protocols (Pragmatic, Relax, OneTouch, Vendor B, Vendor A) | ✅ landed |
 | 14 | Math studio toolchain (Mathematica/Rust/Python) | ✅ landed |
 | 15 | ZK / verifiable RNG state-of-art | ✅ landed |
 | 16 | Megaways / Cluster / Infinity-Reels closed-form vs sim | ✅ landed |
@@ -389,7 +389,7 @@ Stein/saddle-point/Cramér-tilting).
   weighted virtual reels = zero closed-form.
 - ReelPlay Infinity Reels = trademark/patent maths engine, reverse-eng
   "almost impossible".
-- NetEnt cluster-pays = percolation/adjacency; coinciding wins =
+- Vendor D cluster-pays = percolation/adjacency; coinciding wins =
   analytically intractable.
 - GLI/BMM/iTech sample sizes nesistematski: academic 100 M, Gamix 10 B,
   UKGC pretpostavlja normal convergence ~1 M.

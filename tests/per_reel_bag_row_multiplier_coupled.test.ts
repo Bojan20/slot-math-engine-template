@@ -1,5 +1,5 @@
 // W152 Wave 185 — Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator vitest specs
-// (66. solver, L&W M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water).
+// (66. solver, Vendor B M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -285,7 +285,7 @@ describe('Wave 185 — Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulat
     });
   });
 
-  describe('industry use-cases (L&W M1 Dragon Spin CrossLink Water)', () => {
+  describe('industry use-cases (Vendor B M1 Dragon Spin CrossLink Water)', () => {
     it('Dragon Spin CrossLink Water classic 5×4 grid with escalating row multipliers', () => {
       const cfg: PerReelBagRowMultiplierConfig = {
         numReels: 5,

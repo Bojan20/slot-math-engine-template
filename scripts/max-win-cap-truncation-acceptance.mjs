@@ -25,7 +25,7 @@ const TOL_CAP_HIT_ABS = 0.005;      // P(cap hit) abs (5pp for rare events)
 const CONFIGS = [
   {
     name: 'A_pragmatic_5000x_sweet_bonanza_tail',
-    description: 'Pragmatic Play 5000x cap, Sweet Bonanza-like heavy tail',
+    description: 'Vendor E 5000x cap, Sweet Bonanza-like heavy tail',
     cfg: {
       payoutPmf: [
         { value: 0,    probability: 0.70 },
@@ -72,7 +72,7 @@ const CONFIGS = [
   },
   {
     name: 'D_netent_10000x_classic',
-    description: 'NetEnt 10000x cap, classic distribution',
+    description: 'Vendor D 10000x cap, classic distribution',
     cfg: {
       payoutPmf: [
         { value: 0,    probability: 0.78 },
@@ -247,8 +247,8 @@ async function main() {
   md.push('- **AU NCRG** — post-2023 reform max-win disclosure');
   md.push('- **BE Belgian Gaming Commission** — max-win disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — verifies cap matches engine');
-  md.push('- Industry use: Pragmatic Play 5000x (Sweet Bonanza family), Hacksaw');
-  md.push('  Gaming 7500x, Nolimit City 25000x (Mental, Tombstone RIP), NetEnt');
+  md.push('- Industry use: Vendor E 5000x (Sweet Bonanza family), Hacksaw');
+  md.push('  Gaming 7500x, Nolimit City 25000x (Mental, Tombstone RIP), Vendor D');
   md.push('  10000x, Stake.com 5000x, Push Gaming 10000-15000x, Yggdrasil 7777x.');
 
   writeFileSync(join(OUT_DIR, 'MAX_WIN_CAP_TRUNCATION.md'), md.join('\n'));

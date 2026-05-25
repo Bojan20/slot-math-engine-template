@@ -4,7 +4,7 @@
 name = "ce-copy-test"
 version = "0.1.0"
 edition = "2021"
-description = "CE COPY TEST — 1:1 paymodel copy of Cash Eruption (verification/stomping engine)."
+description = "CE COPY TEST — 1:1 paymodel copy of Pattern-CE (verification/stomping engine)."
 
 [lib]
 path = "src/lib.rs"

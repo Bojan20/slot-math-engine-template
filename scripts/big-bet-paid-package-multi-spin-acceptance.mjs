@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 186 — Big Bet Paid-Package Multi-Spin Schedule Aggregator
-// acceptance (67. solver, UK-CRITICAL L&W M9 P0 GAP CLOSURE — Barcrest UK
+// acceptance (67. solver, UK-CRITICAL Vendor B M9 P0 GAP CLOSURE — Barcrest UK
 // family: Monopoly Big Event / Rainbow Riches Pick n Mix / Action Bank /
 // Pearl of Caribbean — UKGC RTS-12 mandatory disclosure).
 //
@@ -27,7 +27,7 @@ const TOL_STDDEV_REL = 0.20;
 const CONFIGS = [
   {
     name: "A_monopoly_big_event_5spin_98pct_top",
-    description: "LNW Barcrest Monopoly Big Event (2010, defining UK Big Bet title) — 5-spin progressive RTP 90→98%, stake £4/spin.",
+    description: "Vendor B Barcrest Monopoly Big Event (2010, defining UK Big Bet title) — 5-spin progressive RTP 90→98%, stake £4/spin.",
     cfg: {
       packageSpinCount: 5,
       perSpinStakeAllocation: [4, 4, 4, 4, 4],
@@ -39,7 +39,7 @@ const CONFIGS = [
   },
   {
     name: "B_rainbow_riches_pick_n_mix_flat_96pct",
-    description: "LNW Barcrest Rainbow Riches Pick n Mix Big Bet — flat 96% RTP, stake £5/spin, 5 spins.",
+    description: "Vendor B Barcrest Rainbow Riches Pick n Mix Big Bet — flat 96% RTP, stake £5/spin, 5 spins.",
     cfg: {
       packageSpinCount: 5,
       perSpinStakeAllocation: [5, 5, 5, 5, 5],
@@ -50,7 +50,7 @@ const CONFIGS = [
   },
   {
     name: "C_action_bank_5spin_progressive_to_102pct",
-    description: "LNW Barcrest Action Bank — 5-spin Big Bet sa final spin RTP 102% (player advantage), stake £3/spin.",
+    description: "Vendor B Barcrest Action Bank — 5-spin Big Bet sa final spin RTP 102% (player advantage), stake £3/spin.",
     cfg: {
       packageSpinCount: 5,
       perSpinStakeAllocation: [3, 3, 3, 3, 3],
@@ -62,7 +62,7 @@ const CONFIGS = [
   },
   {
     name: "D_pearl_of_caribbean_5spin_high_vol",
-    description: "LNW Barcrest Pearl of Caribbean — 5-spin Big Bet high-vol, stake £4/spin.",
+    description: "Vendor B Barcrest Pearl of Caribbean — 5-spin Big Bet high-vol, stake £4/spin.",
     cfg: {
       packageSpinCount: 5,
       perSpinStakeAllocation: [4, 4, 4, 4, 4],
@@ -209,7 +209,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# BIG_BET_PAID_PACKAGE_MULTI_SPIN — Big Bet Paid-Package Multi-Spin Schedule Aggregator Acceptance (W186, 67. solver, UK-CRITICAL L&W M9 P0 GAP CLOSURE)');
+  md.push('# BIG_BET_PAID_PACKAGE_MULTI_SPIN — Big Bet Paid-Package Multi-Spin Schedule Aggregator Acceptance (W186, 67. solver, UK-CRITICAL Vendor B M9 P0 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -217,7 +217,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${PACKAGES} MC packages each = ${(CONFIGS.length * PACKAGES / 1e3).toFixed(0)}K total package sims.`);
   md.push('');
-  md.push("Closes Faza 12 ext (post-W100): ✅ \"Big Bet Paid-Package Multi-Spin Schedule Aggregator\" (Wave 186 — 67. closed-form solver, UK-CRITICAL L&W M9 GAP CLOSED — Barcrest UK family + UKGC RTS-12 mandatory disclosure).");
+  md.push("Closes Faza 12 ext (post-W100): ✅ \"Big Bet Paid-Package Multi-Spin Schedule Aggregator\" (Wave 186 — 67. closed-form solver, UK-CRITICAL Vendor B M9 GAP CLOSED — Barcrest UK family + UKGC RTS-12 mandatory disclosure).");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -253,7 +253,7 @@ async function main() {
   md.push('- **MGA PPD §17** — paid-package transparency.');
   md.push('- **eCOGRA Generic Slots Audit** — multi-spin schedule audit trail.');
   md.push('');
-  md.push('Industry use: L&W M9 gap (UK-CRITICAL) — LNW Barcrest Monopoly Big Event (2010, defining UK title), Rainbow Riches Pick n Mix (2014, Big Bet + feature composition), Action Bank (2017, vault-pick), Pearl of Caribbean variants. **First Belgian-ban-impact-aware analyzer** za UK Big Bet familiju (Belgian Big Bet ban 2018 forced operator disclosure shift).');
+  md.push('Industry use: Vendor B M9 gap (UK-CRITICAL) — Vendor B Barcrest Monopoly Big Event (2010, defining UK title), Rainbow Riches Pick n Mix (2014, Big Bet + feature composition), Action Bank (2017, vault-pick), Pearl of Caribbean variants. **First Belgian-ban-impact-aware analyzer** za UK Big Bet familiju (Belgian Big Bet ban 2018 forced operator disclosure shift).');
 
   writeFileSync(join(OUT_DIR, 'BIG_BET_PAID_PACKAGE_MULTI_SPIN.md'), md.join('\n'));
 

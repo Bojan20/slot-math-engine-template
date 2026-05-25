@@ -46,7 +46,7 @@ const CONFIGS = [
   },
   {
     name: 'C_netent_suspense_5reel_lowT',
-    description: 'NetEnt suspense style: low threshold 0.3 (early UX activation)',
+    description: 'Vendor D suspense style: low threshold 0.3 (early UX activation)',
     cfg: {
       reelCount: 5,
       scatterProbabilityPerReel: 0.25,
@@ -217,7 +217,7 @@ async function main() {
   md.push('- **MGA PPD §11.f** — anticipation rate operator-facing disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — verifies anticipation matches Bayesian conditional');
   md.push('- Industry use: BTG Megaways tease reels, Pragmatic anticipation reels,');
-  md.push('  NetEnt suspense reels, branded slot-game UX patterns.');
+  md.push('  Vendor D suspense reels, branded slot-game UX patterns.');
 
   writeFileSync(join(OUT_DIR, 'ANTICIPATION_REEL_TEASE.md'), md.join('\n'));
 

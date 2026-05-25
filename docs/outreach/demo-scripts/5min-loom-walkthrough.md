@@ -5,7 +5,7 @@
 > Summary line 3: Total duration: 5 minutes. VO: ~600 words. Interactive-friendly.
 
 ## Goal
-Make a L&W CTO see themselves as the protagonist of the pilot story.
+Make a Vendor B CTO see themselves as the protagonist of the pilot story.
 
 ## Frame
 You are narrating the pilot AS THE CTO experiencing it. First-person CTO POV. The viewer is the CTO. You are saying what they would feel.
@@ -21,7 +21,7 @@ You are narrating the pilot AS THE CTO experiencing it. First-person CTO POV. Th
 
 ### 0:00–0:30 (30 sec) — Persona open
 - **Screen**: webcam + Studio app open, blank.
-- **VO (verbatim)**: "Hi — pretend you're the CTO of L&W. It's Monday morning. You decided last Friday to pilot the slot-math-engine. Today is Day 0. The next five minutes is the pilot, compressed."
+- **VO (verbatim)**: "Hi — pretend you're the CTO of Vendor B. It's Monday morning. You decided last Friday to pilot the slot-math-engine. Today is Day 0. The next five minutes is the pilot, compressed."
 - **Pacing note**: address the viewer directly. "You" is the protagonist.
 
 ### 0:30–1:15 (45 sec) — Day 0: Seed
@@ -31,8 +31,8 @@ You are narrating the pilot AS THE CTO experiencing it. First-person CTO POV. Th
 - **Pacing note**: don't rush the 2.5-second wait. Confidence comes from "we don't need to fake speed".
 
 ### 1:15–2:00 (45 sec) — Day 1: Integration
-- **Screen**: Studio app, drag-drop one of L&W's IR files.
-- **VO**: "Day 1. Your math team takes one of L&W's existing titles — pick any of the sixteen mechanic families — and drops the IR into the Studio. Engine compiles. Closed-form solver runs. The RTP comes back in a hundred milliseconds. Your math team compares it against L&W's internal cert dossier RTP — and they match to four decimal places. That's Day 1. Math reconciled."
+- **Screen**: Studio app, drag-drop one of Vendor B's IR files.
+- **VO**: "Day 1. Your math team takes one of Vendor B's existing titles — pick any of the sixteen mechanic families — and drops the IR into the Studio. Engine compiles. Closed-form solver runs. The RTP comes back in a hundred milliseconds. Your math team compares it against Vendor B's internal cert dossier RTP — and they match to four decimal places. That's Day 1. Math reconciled."
 - **Cue**: highlight the green RTP value vs reference RTP side-by-side.
 - **Pacing note**: pause for 2 seconds on the side-by-side comparison.
 
@@ -87,7 +87,7 @@ You are narrating the pilot AS THE CTO experiencing it. First-person CTO POV. Th
 - **Answer**: "Pilot dry-runs are no-fee; production cert submissions you pay the lab directly per their standard rates. We handle the format generation, lab handles the validation."
 
 ### Q5: "What's the team behind this?"
-- **Answer**: "Small focused team. Our only product is the math engine. That focus is why we got to 77 closed-form solvers and 16/16 L&W mechanic coverage; broader companies don't dedicate this depth to one layer."
+- **Answer**: "Small focused team. Our only product is the math engine. That focus is why we got to 77 closed-form solvers and 16/16 Vendor B mechanic coverage; broader companies don't dedicate this depth to one layer."
 
 ## Voiceover total word count
 - Target: 600–650 words at conversational pace (120–125 wpm).
@@ -111,7 +111,7 @@ You are narrating the pilot AS THE CTO experiencing it. First-person CTO POV. Th
 ## Where to use
 - Post-meeting follow-up Loom (sent within 4 hours of demo)
 - Pre-meeting send-ahead in `warm-cto-intro.md`
-- L&W internal forwarding artifact (CTO forwards to math lead, EM, head of compliance)
+- Vendor B internal forwarding artifact (CTO forwards to math lead, EM, head of compliance)
 
 ## Success metric
 - View completion rate ≥50% (5 min is long; we accept lower completion than 30-sec)

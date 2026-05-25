@@ -18,7 +18,7 @@ pressure.
 
 | Wall t | Day | Talking point                                                       |
 | ------ | --- | ------------------------------------------------------------------- |
-| 0:00   | 0   | "This is the moment L&W signs. Watch."                              |
+| 0:00   | 0   | "This is the moment Vendor B signs. Watch."                              |
 | 0:25   | 3   | "Canary opens at 1%. Four health gates greenlight us."              |
 | 1:20   | 8   | "Real-world anomaly: wallet provider spikes. We auto-mitigate."     |
 | 2:30   | 15  | "Mid-rollout, 25% live, RTP drift inside 0.5pp."                    |
@@ -68,7 +68,7 @@ the player to switch frame.
 
 ## 90-minute mode — "full board"
 
-**Audience:** L&W board of directors (10+).
+**Audience:** Vendor B board of directors (10+).
 **Speed:** 16× (~90 min for 30 days). Allows two breakouts.
 **Persona:** all four (incl. unfiltered).
 

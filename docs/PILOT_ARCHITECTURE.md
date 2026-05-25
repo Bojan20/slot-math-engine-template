@@ -2,7 +2,7 @@
 
 *Companion to `docs/PILOT_GUIDE.md`.*
 
-This document captures the system-level architecture of the L&W pilot
+This document captures the system-level architecture of the Vendor B pilot
 flow built in W211. It shows the data-flow between the seed script,
 integration harness, dossier generator, server-side state stores, and
 the underlying W208-W210 infrastructure they depend on.

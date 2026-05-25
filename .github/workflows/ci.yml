@@ -234,11 +234,11 @@ jobs:
         run: npm run paroli-streak-cash-out-acceptance
       - name: AWP Cycle Convergence Analyzer acceptance (6/6 configs × 3K cycles, Wave 167/168, INDUSTRY-FIRST UK Class III B3/B3A/C/D UKGC LCCP)
         run: npm run awp-cycle-convergence-acceptance
-      - name: Drop-and-Stick Wild Expansion Analyzer acceptance (6/6 configs × 2K episodes, Wave 169/170, per-cell sticky NetEnt Witchcraft / Pragmatic Wild West Gold / Hacksaw Tombstone)
+      - name: Drop-and-Stick Wild Expansion Analyzer acceptance (6/6 configs × 2K episodes, Wave 169/170, per-cell sticky Vendor D Witchcraft / Pragmatic Wild West Gold / Hacksaw Tombstone)
         run: npm run drop-stick-wild-expansion-acceptance
       - name: Tumbling Cascade Chain Length Analyzer acceptance (6/6 configs × 10K spins, Wave 171/172, Wald identity Sweet Bonanza / Gonzo / Reactoonz / Big Bass tumble)
         run: npm run tumbling-cascade-chain-length-acceptance
-      - name: Pick-and-Click Pooper Bonus Analyzer acceptance (6/6 configs × 20K rounds, Wave 173/174, Negative Hypergeometric Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo / IGT WoF)
+      - name: Pick-and-Click Pooper Bonus Analyzer acceptance (6/6 configs × 20K rounds, Wave 173/174, Negative Hypergeometric Vendor C 5 Dragons / Vendor H Quick Hit / Vendor D Gonzo / Vendor A WoF)
         run: npm run pick-click-pooper-bonus-acceptance
       - name: Skill-Stop Near-Miss Rate Analyzer acceptance (6/6 configs × 50K spins, Wave 175/176, INDUSTRY-FIRST anti-near-miss regulatory inflation detector UKGC RTS 12 BANNED / JP Pachislot 風営法 1.5× cap / AU NCPF 1.2× cap / AGCO Ontario)
         run: npm run skill-stop-near-miss-acceptance
@@ -246,35 +246,35 @@ jobs:
         run: npm run avalanche-reactor-wave-aggregator-acceptance
       - name: Sticky Multiplier FS Trail Aggregator acceptance (6/6 configs × 20K FS-bonus runs, Wave 179/180, 61. solver compound Binomial trail quadratic-in-N BTG Bonanza Megaways / Sweet Bonanza FS mult-coin / White Rabbit / Wanted Dead bounty / Money Cart 4 EXTRA SHIFT / Big Bad Wolf)
         run: npm run sticky-multiplier-fs-trail-acceptance
-      - name: Reel-Bound Mystery Progressive acceptance (6/6 configs × 500K spins, Wave 181, 62. solver L&W M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
+      - name: Reel-Bound Mystery Progressive acceptance (6/6 configs × 500K spins, Wave 181, 62. solver Vendor B M5 GAP CLOSURE Quick Hit family Platinum/Black Gold/Pro/Wild/Blitz/Cash Wheel/Triple Cash Wheel/Smokin 7s)
         run: npm run reel-bound-mystery-progressive-acceptance
-      - name: Dynamic Grid-Expansion H&S acceptance (6/6 configs × 30K features, Wave 182, 63. solver L&W M3 GAP CLOSURE Ultimate Fire Link Olvera/China/Riverwalk/Power 4/Cash Falls + Lock It Link Eureka Reel Blast — exact Markov DP)
+      - name: Dynamic Grid-Expansion H&S acceptance (6/6 configs × 30K features, Wave 182, 63. solver Vendor B M3 GAP CLOSURE Ultimate Fire Link Olvera/China/Riverwalk/Power 4/Cash Falls + Pattern-LIL Eureka Reel Blast — exact Markov DP)
         run: npm run dynamic-grid-expansion-hold-spin-acceptance
-      - name: Multi-State Frame Upgrade Markov acceptance (6/6 configs × 5K features, Wave 183, 64. solver L&W M2 GAP CLOSURE Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion — per-cell K-state Markov)
+      - name: Multi-State Frame Upgrade Markov acceptance (6/6 configs × 5K features, Wave 183, 64. solver Vendor B M2 GAP CLOSURE Huff N' Puff family 8 titles original/More/Even More/Lots of/Xtra/Hard Hat/Grand/Money Mansion — per-cell K-state Markov)
         run: npm run multi-state-frame-upgrade-markov-acceptance
-      - name: Colossal Reels Wild-Transfer acceptance (6/6 configs × 30K spins, Wave 184, 65. solver L&W M7 GAP CLOSURE Spartacus family + 50+ WMS land-based titles — 2-stage Binomial conditional coupling)
+      - name: Colossal Reels Wild-Transfer acceptance (6/6 configs × 30K spins, Wave 184, 65. solver Vendor B M7 GAP CLOSURE Spartacus family + 50+ WMS land-based titles — 2-stage Binomial conditional coupling)
         run: npm run colossal-reels-wild-transfer-acceptance
-      - name: Per-Reel Bag × Row-Multiplier Coupled acceptance (6/6 configs × 20K spins, Wave 185, 66. solver L&W M1 GAP CLOSURE Dragon Spin CrossLink Water — per-reel bag × per-row multiplier coupled aggregator)
+      - name: Per-Reel Bag × Row-Multiplier Coupled acceptance (6/6 configs × 20K spins, Wave 185, 66. solver Vendor B M1 GAP CLOSURE Dragon Spin CrossLink Water — per-reel bag × per-row multiplier coupled aggregator)
         run: npm run per-reel-bag-row-multiplier-coupled-acceptance
-      - name: Big Bet Paid-Package Multi-Spin acceptance (6/6 configs × 30K packages, Wave 186, 67. solver UK-CRITICAL L&W M9 GAP CLOSURE Barcrest UK family Monopoly Big Event/RR Pick n Mix/Action Bank/Pearl of Caribbean — UKGC RTS-12 mandatory)
+      - name: Big Bet Paid-Package Multi-Spin acceptance (6/6 configs × 30K packages, Wave 186, 67. solver UK-CRITICAL Vendor B M9 GAP CLOSURE Barcrest UK family Monopoly Big Event/RR Pick n Mix/Action Bank/Pearl of Caribbean — UKGC RTS-12 mandatory)
         run: npm run big-bet-paid-package-multi-spin-acceptance
-      - name: Deterministic Explosion Multiplier-Drop acceptance (6/6 configs × 100K spins, Wave 187, 68. solver L&W M4 P1 GAP CLOSURE Dancing Drums Explosion + Revolution)
+      - name: Deterministic Explosion Multiplier-Drop acceptance (6/6 configs × 100K spins, Wave 187, 68. solver Vendor B M4 P1 GAP CLOSURE Dancing Drums Explosion + Revolution)
         run: npm run deterministic-explosion-multiplier-drop-acceptance
-      - name: Player-Elects Feature Composition acceptance (6/6 configs × 60K spins, Wave 188, 69. solver L&W M11 P1 GAP CLOSURE RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
+      - name: Player-Elects Feature Composition acceptance (6/6 configs × 60K spins, Wave 188, 69. solver Vendor B M11 P1 GAP CLOSURE RR Pick n Mix + MJ KOP + KISS + 5 Treasures)
         run: npm run player-elects-feature-composition-acceptance
-      - name: Random Feature-Injection During FS acceptance (6/6 configs × 30K FS-bonuses, Wave 189, 70. solver L&W M12 P1 GAP CLOSURE Wizard of Oz Munchkinland + WMS sub-feature library)
+      - name: Random Feature-Injection During FS acceptance (6/6 configs × 30K FS-bonuses, Wave 189, 70. solver Vendor B M12 P1 GAP CLOSURE Wizard of Oz Munchkinland + WMS sub-feature library)
         run: npm run random-feature-injection-during-fs-acceptance
-      - name: Nested Mini-Slot Inside Bonus acceptance (6/6 configs × 50K parent-spins, Wave 190, 71. solver L&W M14 P1 GAP CLOSURE LOTR Two Towers + Return of the King + Star Trek)
+      - name: Nested Mini-Slot Inside Bonus acceptance (6/6 configs × 50K parent-spins, Wave 190, 71. solver Vendor B M14 P1 GAP CLOSURE LOTR Two Towers + Return of the King + Star Trek)
         run: npm run nested-mini-slot-inside-bonus-acceptance
-      - name: Bonus Bank Running-Balance Offset acceptance (6/6 configs × 30K bonus-sessions, Wave 191, 72. solver L&W M10 P0 GAP CLOSURE Barcrest Rainbow Riches Megaways Bonus Bank UK-banking flagship)
+      - name: Bonus Bank Running-Balance Offset acceptance (6/6 configs × 30K bonus-sessions, Wave 191, 72. solver Vendor B M10 P0 GAP CLOSURE Barcrest Rainbow Riches Megaways Bonus Bank UK-banking flagship)
         run: npm run bonus-bank-running-balance-offset-acceptance
-      - name: Race Competitive Pick Winner acceptance (6/6 configs × 50K races, Wave 192, 73. solver L&W M8 P1 GAP CLOSURE WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks fishing contest)
+      - name: Race Competitive Pick Winner acceptance (6/6 configs × 50K races, Wave 192, 73. solver Vendor B M8 P1 GAP CLOSURE WMS Goldfish Race for the Gold + Reel'em In Big Bass Bucks fishing contest)
         run: npm run race-competitive-pick-winner-acceptance
-      - name: Multi-Pot Branched H&S Sub-Feature acceptance (6/6 configs × 100K spins, Wave 193, 74. solver L&W M15 P1 GAP CLOSURE Bally Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
+      - name: Multi-Pot Branched H&S Sub-Feature acceptance (6/6 configs × 100K spins, Wave 193, 74. solver Vendor B M15 P1 GAP CLOSURE Vendor H Rich Little Piggies Piggy Bankin' Break In + World Class + Hens)
         run: npm run multi-pot-branched-hold-spin-sub-feature-acceptance
-      - name: Arcade-Shooter Survival Level Progression acceptance (6/6 configs × 100K runs, Wave 194, 75. solver L&W M16 P1 GAP CLOSURE Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)
+      - name: Arcade-Shooter Survival Level Progression acceptance (6/6 configs × 100K runs, Wave 194, 75. solver Vendor B M16 P1 GAP CLOSURE Lightning Box Stellar Jackpots wrapper Thundering Bison/Chicken Fox/Lightning Horseman)
         run: npm run arcade-shooter-survival-levels-acceptance
-      - name: Mid-Spin Reel-Reshape Mixture acceptance (6/6 configs × 100K spins, Wave 195, 76. solver L&W M13 P1 GAP CLOSURE WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)
+      - name: Mid-Spin Reel-Reshape Mixture acceptance (6/6 configs × 100K spins, Wave 195, 76. solver Vendor B M13 P1 GAP CLOSURE WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape)
         run: npm run mid-spin-reel-reshape-mixture-acceptance
-      - name: Stacked Multi-Wheel Composition acceptance (6/6 configs × 100K spins, Wave 196, 77. solver L&W M6 P1 FINAL GAP CLOSURE 🏆 16/16 L&W KIMI gaps Bally Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)
+      - name: Stacked Multi-Wheel Composition acceptance (6/6 configs × 100K spins, Wave 196, 77. solver Vendor B M6 P1 FINAL GAP CLOSURE 🏆 16/16 Vendor B KIMI gaps Vendor H Triple Cash Wheel + Quick Hit Cash Wheel + Cash Wheel Quick Hit)
         run: npm run stacked-multi-wheel-composition-acceptance

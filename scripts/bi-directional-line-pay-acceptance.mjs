@@ -26,7 +26,7 @@ const TOL_UPLIFT_REL = 0.05;   // uplift ratio relative
 const CONFIGS = [
   {
     name: 'A_microgaming_avalon_5reel_k3',
-    description: 'Microgaming Avalon style: 5-reel both-ways, kMin=3, mid-density paytable',
+    description: 'Vendor G Avalon style: 5-reel both-ways, kMin=3, mid-density paytable',
     cfg: {
       reelCount: 5,
       minMatchLength: 3,
@@ -39,7 +39,7 @@ const CONFIGS = [
   },
   {
     name: 'B_netent_lights_5reel_k2',
-    description: 'NetEnt Lights style: 5-reel both-ways, kMin=2 (scatter-like)',
+    description: 'Vendor D Lights style: 5-reel both-ways, kMin=2 (scatter-like)',
     cfg: {
       reelCount: 5,
       minMatchLength: 2,
@@ -238,7 +238,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — pay-frequency disclosure both-directions');
   md.push('- **MGA PPD §11.f** — operator-facing line-evaluation rule');
   md.push('- **eCOGRA Generic Slots Audit** — verifies bi-directional pay match engine');
-  md.push('- Industry use: Microgaming Avalon, NetEnt Lights / Witches Wheel, IGT Cleopatra');
+  md.push('- Industry use: Vendor G Avalon, Vendor D Lights / Witches Wheel, Vendor A Pattern-CL');
   md.push('  Bi-Way variants, Stakelogic Witchcraft Academy.');
 
   writeFileSync(join(OUT_DIR, 'BIDIRECTIONAL_LINE_PAY.md'), md.join('\n'));

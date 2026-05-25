@@ -78,7 +78,7 @@ export class WalletOrchestrator {
   private readonly http: HttpClient | undefined;
   private readonly healthCache: Cache<HealthCacheValue>;
   /** Provider instances cached per tenant — they're cheap to rebuild but
-   *  re-using lets sticky session state (Playtech) carry across calls. */
+   *  re-using lets sticky session state (Vendor F) carry across calls. */
   private readonly instances = new Map<string, WalletProvider>();
 
   constructor(deps: OrchestratorDeps) {

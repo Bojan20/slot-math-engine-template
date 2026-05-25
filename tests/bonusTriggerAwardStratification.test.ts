@@ -248,7 +248,7 @@ describe('industry parametrizations', () => {
     expect(r.probTriggerPerSpin).toBeGreaterThan(0);
     expect(r.expectedFreeSpinsAwardedPerSpin).toBeGreaterThan(0);
   });
-  it('NetEnt Vikings 3/4/5 with higher 5-scatter award', () => {
+  it('Vendor D Vikings 3/4/5 with higher 5-scatter award', () => {
     const r = solveBonusTriggerAwardStratification({
       reelCount: 5,
       scatterProbabilityPerReel: 0.10,
@@ -261,7 +261,7 @@ describe('industry parametrizations', () => {
     });
     expect(r.probTriggerPerSpin).toBeGreaterThan(0);
   });
-  it('Microgaming Mega Moolah-style 4-scatter trigger only', () => {
+  it('Vendor G Mega Moolah-style 4-scatter trigger only', () => {
     const r = solveBonusTriggerAwardStratification({
       reelCount: 5,
       scatterProbabilityPerReel: 0.12,

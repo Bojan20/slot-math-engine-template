@@ -1,5 +1,5 @@
 // W152 Wave 190 — Nested Mini-Slot Inside Bonus vitest specs
-// (71. solver, L&W M14 P1 GAP CLOSURE — LOTR Two Towers + Star Trek).
+// (71. solver, Vendor B M14 P1 GAP CLOSURE — LOTR Two Towers + Star Trek).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -204,7 +204,7 @@ describe('Wave 190 — Nested Mini-Slot Inside Bonus', () => {
     });
   });
 
-  describe('industry use-cases (L&W M14 nested-slot family)', () => {
+  describe('industry use-cases (Vendor B M14 nested-slot family)', () => {
     it("LOTR Two Towers — Tower Spin nested mini-slot", () => {
       const cfg: NestedMiniSlotInsideBonusConfig = {
         probBonusTriggerPerParentSpin: 0.02,

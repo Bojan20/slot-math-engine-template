@@ -13,7 +13,7 @@
 Hi {{primary_contact_first_name}},
 
 Per our conversation on {{prediscussion_date}}, here is the formal
-proposal for renewing {{customer_name}}'s agreement on the L&W
+proposal for renewing {{customer_name}}'s agreement on the Vendor B
 slot-math platform.
 
 ### Highlights

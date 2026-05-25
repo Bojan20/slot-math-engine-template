@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — Dossier generator.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — Dossier generator.
  *
  * Builds a publishable, 12-section evaluation dossier for the pilot
  * tenant. Sources:
@@ -67,7 +67,7 @@ function findVerdict(suite, id) {
 export function renderMarkdown(state, suite) {
   const lines = [];
   const today = new Date().toISOString().slice(0, 10);
-  lines.push(`# L&W Pilot Evaluation Dossier`);
+  lines.push(`# Vendor B Pilot Evaluation Dossier`);
   lines.push(``);
   lines.push(`**Tenant:** ${state.tenant.name}`);
   lines.push(`**Tenant ID:** \`${state.tenant.id}\``);
@@ -141,7 +141,7 @@ export function renderMarkdown(state, suite) {
     lines.push(`| Verdict | ${catalog.ok ? 'PASS' : 'FAIL'} |`);
     lines.push(`| Templates installed | ${catalog.metrics?.totalInstalled ?? 0} |`);
     lines.push(`| Marketplace catalog size | ${catalog.metrics?.catalogSize ?? 0} |`);
-    lines.push(`| L&W M5 matches | ${catalog.metrics?.m5Matches ?? 0} |`);
+    lines.push(`| Vendor B M5 matches | ${catalog.metrics?.m5Matches ?? 0} |`);
   }
   lines.push(``);
   lines.push(`Certification badges asserted (kernel acceptance gates passed in W202–W210).`);
@@ -284,7 +284,7 @@ export function renderMarkdown(state, suite) {
   return lines.join('\n');
 }
 
-export function markdownToHtml(md, title = 'L&W Pilot Evaluation Dossier') {
+export function markdownToHtml(md, title = 'Vendor B Pilot Evaluation Dossier') {
   // Very small md → html converter sufficient for the dossier's
   // headings/lists/tables. No external deps.
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

@@ -19,7 +19,7 @@ import {
   simulateHitFrequencyDistribution,
 } from '../src/features/hitFrequencyDistribution.js';
 
-// Industry baseline: NetEnt Starburst-class — simple medium-vol slot PMF
+// Industry baseline: Vendor D Starburst-class — simple medium-vol slot PMF
 const starburstLikePmf = [
   { multiple: 0, probability: 0.732 },
   { multiple: 1, probability: 0.10 },

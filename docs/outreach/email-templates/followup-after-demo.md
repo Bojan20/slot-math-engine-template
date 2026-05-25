@@ -12,7 +12,7 @@
 
 ## Subject line variants
 - A: "Re: today's demo — tarball + proposed pilot start date inside"
-- B: "Pilot proposal for L&W: 30 days starting {{proposed_start_date}}"
+- B: "Pilot proposal for Vendor B: 30 days starting {{proposed_start_date}}"
 - C: "Demo recap + the four things you'd need to start a pilot"
 
 ## Body

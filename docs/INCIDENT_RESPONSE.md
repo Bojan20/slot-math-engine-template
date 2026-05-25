@@ -118,7 +118,7 @@ Containment steps taken: <bullets>.
 Point of contact: <name, email, phone>.
 
 Sincerely,
-<L&W ops contact>
+<Vendor B ops contact>
 ```
 
 ### 5.4 Press / public statement

@@ -58,7 +58,7 @@ const CONFIGS = [
   },
   {
     name: 'C_netent_vikings_N7_step1',
-    description: 'NetEnt Vikings Berzerk style: N=7, M=[1..7]',
+    description: 'Vendor D Vikings Berzerk style: N=7, M=[1..7]',
     cfg: {
       landProbability: 0.02,
       stickyDuration: 7,
@@ -255,7 +255,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — variance + tail-multiplier disclosure (maxM + Var[Y])');
   md.push('- **MGA PPD §11.f** — operator-facing volatility metric');
   md.push('- **eCOGRA Generic Slots Audit** — verifies steady-state E[M], E[Y] match engine');
-  md.push('- Industry use: Pragmatic Hot Fiesta, NetEnt Vikings Berzerk, Push Gaming Wild Swarm,');
+  md.push('- Industry use: Pragmatic Hot Fiesta, Vendor D Vikings Berzerk, Push Gaming Wild Swarm,');
   md.push('  Quickspin Sakura Fortune, Yggdrasil Vault of Anubis, plus dozens of branded clones.');
 
   writeFileSync(join(OUT_DIR, 'STICKY_WILD_COUNTDOWN_MULT.md'), md.join('\n'));

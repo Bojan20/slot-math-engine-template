@@ -38,10 +38,10 @@ describe('multi-operator parseArgs', () => {
     expect(a.operatorId).toBe('aristocrat');
   });
 
-  it('parses --operator=L&W as legacy free-text label', () => {
-    const a = parseArgs(['node', 'x', '--operator=L&W']);
+  it('parses --operator=Vendor B as legacy free-text label', () => {
+    const a = parseArgs(['node', 'x', '--operator=Vendor B']);
     expect(a.operatorId).toBeNull();
-    expect(a.operator).toBe('L&W');
+    expect(a.operator).toBe('Vendor B');
   });
 });
 
@@ -50,7 +50,7 @@ describe('multi-operator builds — output paths differ', () => {
     const r = await buildFor('aristocrat');
     expect(r.filename).toContain('aristocrat');
     expect(r.operatorId).toBe('aristocrat');
-    expect(r.operator).toBe('Aristocrat');
+    expect(r.operator).toBe('Vendor C');
   });
 
   it('lw tarball filename does NOT include operatorId (backward compat)', async () => {
@@ -67,14 +67,14 @@ describe('multi-operator builds — output paths differ', () => {
 });
 
 describe('multi-operator builds — content differs', () => {
-  it('README contains operator displayName instead of L&W', async () => {
+  it('README contains operator displayName instead of Vendor B', async () => {
     const r = await buildFor('aristocrat');
     const tar = gunzipSync(await fs.readFile(r.outputPath));
     const entries = parseTar(tar);
     const readme = entries.find((e) => e.path === 'pitch-package/README.md');
     expect(readme).toBeDefined();
     const text = readme.data.toString('utf8');
-    expect(text).toContain('Aristocrat');
+    expect(text).toContain('Vendor C');
   });
 
   it('MANIFEST.json includes operator metadata block', async () => {
@@ -85,13 +85,13 @@ describe('multi-operator builds — content differs', () => {
     const manifest = JSON.parse(manifestEntry.data.toString('utf8'));
     expect(manifest.operator).toBeDefined();
     expect(manifest.operator.operatorId).toBe('aristocrat');
-    expect(manifest.operator.displayName).toBe('Aristocrat');
+    expect(manifest.operator.displayName).toBe('Vendor C');
     expect(manifest.operator.tier).toBe('Tier-1');
     expect(manifest.pricingTier).toBe('Tier-1 Enterprise');
     expect(manifest.expiresAt).toBeDefined();
   });
 
-  it('aristocrat README differs from L&W README', async () => {
+  it('aristocrat README differs from Vendor B README', async () => {
     const a = await buildFor('aristocrat');
     const l = await buildFor('lw');
     const tarA = gunzipSync(await fs.readFile(a.outputPath));
@@ -99,16 +99,16 @@ describe('multi-operator builds — content differs', () => {
     const readmeA = parseTar(tarA).find((e) => e.path === 'pitch-package/README.md').data.toString('utf8');
     const readmeL = parseTar(tarL).find((e) => e.path === 'pitch-package/README.md').data.toString('utf8');
     expect(readmeA).not.toBe(readmeL);
-    expect(readmeA).toContain('Aristocrat');
-    expect(readmeL).toContain('L&W');
+    expect(readmeA).toContain('Vendor C');
+    expect(readmeL).toContain('Vendor B');
   });
 
-  it('aristocrat CONTACT.md contains Aristocrat in place of L&W', async () => {
+  it('aristocrat CONTACT.md contains Vendor C in place of Vendor B', async () => {
     const r = await buildFor('aristocrat');
     const tar = gunzipSync(await fs.readFile(r.outputPath));
     const contact = parseTar(tar).find((e) => e.path === 'pitch-package/CONTACT.md').data.toString('utf8');
-    expect(contact).toContain('Aristocrat');
-    expect(contact).not.toContain('L&W Pilot');
+    expect(contact).toContain('Vendor C');
+    expect(contact).not.toContain('Vendor B Pilot');
   });
 });
 
@@ -122,16 +122,16 @@ describe('multi-operator builds — fields + rebrand helper', () => {
 
   it('rebrandEntry rewrites README.md when operator differs', async () => {
     const m = await loadOperatorManifest('aristocrat');
-    const entry = { bundlePath: 'pitch-package/README.md', data: Buffer.from('Hello L&W team!') };
+    const entry = { bundlePath: 'pitch-package/README.md', data: Buffer.from('Hello Vendor B team!') };
     const out = rebrandEntry(entry, m);
-    expect(out.data.toString('utf8')).toBe('Hello Aristocrat team!');
+    expect(out.data.toString('utf8')).toBe('Hello Vendor C team!');
   });
 
   it('rebrandEntry returns identical object for default lw operator', async () => {
     const m = await loadOperatorManifest('lw');
-    const entry = { bundlePath: 'pitch-package/README.md', data: Buffer.from('Hello L&W team!') };
+    const entry = { bundlePath: 'pitch-package/README.md', data: Buffer.from('Hello Vendor B team!') };
     const out = rebrandEntry(entry, m);
-    expect(out.data.toString('utf8')).toBe('Hello L&W team!');
+    expect(out.data.toString('utf8')).toBe('Hello Vendor B team!');
   });
 
   it('manifest expiresAt is 90 days from generatedAt by default', async () => {

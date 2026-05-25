@@ -2,7 +2,7 @@
 
 **Author:** CORTI W205-SECURITY
 **Last updated:** 2026-05-18
-**Audience:** L&W audit committee, external auditor, SRE.
+**Audience:** Vendor B audit committee, external auditor, SRE.
 
 This document is the entry point for SOC 2 Type I preparation work on
 the `slot-math-engine-template` platform. Type I reports on the *design*

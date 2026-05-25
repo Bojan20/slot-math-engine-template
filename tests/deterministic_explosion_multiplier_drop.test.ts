@@ -1,5 +1,5 @@
 // W152 Wave 187 — Deterministic Explosion Multiplier-Drop Aggregator vitest specs
-// (68. solver, L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution).
+// (68. solver, Vendor B M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -341,7 +341,7 @@ describe('Wave 187 — Deterministic Explosion Multiplier-Drop Aggregator', () =
     });
   });
 
-  describe('industry use-cases (L&W M4 Dancing Drums Explosion family)', () => {
+  describe('industry use-cases (Vendor B M4 Dancing Drums Explosion family)', () => {
     it('Dancing Drums Explosion 5-position 2×/3×/5× distribution', () => {
       const cfg: DeterministicExplosionConfig = {
         probTriggerPerSpin: 0.03,

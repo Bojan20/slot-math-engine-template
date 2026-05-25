@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 192 — Race Competitive Pick Winner acceptance (73. solver, L&W M8 P1).
+// W152 Wave 192 — Race Competitive Pick Winner acceptance (73. solver, Vendor B M8 P1).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -19,7 +19,7 @@ const TOL_PICK_WIN_ABS = 0.015;
 const CONFIGS = [
   {
     name: "A_goldfish_race_for_gold_4_fish",
-    description: "LNW WMS Goldfish Race for the Gold (2017, defining title) — 4 fish race red/blue/yellow/gold sa pyramid prize structure.",
+    description: "Vendor B WMS Goldfish Race for the Gold (2017, defining title) — 4 fish race red/blue/yellow/gold sa pyramid prize structure.",
     cfg: {
       candidates: [
         { label: 'red',    weight: 4, basePrize: 5,   multiplierMean: 1, multiplierVariance: 0 },
@@ -31,7 +31,7 @@ const CONFIGS = [
   },
   {
     name: "B_big_bass_bucks_5_anglers_14_to_55",
-    description: "LNW WMS Reel'em In Big Bass Bucks (2014) — 5-angler fishing contest sa 14×–55× per-angler multiplier.",
+    description: "Vendor B WMS Reel'em In Big Bass Bucks (2014) — 5-angler fishing contest sa 14×–55× per-angler multiplier.",
     cfg: {
       candidates: [
         { label: 'angler_1', weight: 5, basePrize: 1, multiplierMean: 14, multiplierVariance: 4 },
@@ -163,13 +163,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'RACE_COMPETITIVE_PICK_WINNER.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# RACE_COMPETITIVE_PICK_WINNER — Race/Competitive Pick One-Winner-Among-N Aggregator Acceptance (W192, 73. solver, L&W M8 P1 GAP CLOSURE)');
+  md.push('# RACE_COMPETITIVE_PICK_WINNER — Race/Competitive Pick One-Winner-Among-N Aggregator Acceptance (W192, 73. solver, Vendor B M8 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${RACES} MC races each (2 strategies = ${(RACES * 2).toLocaleString()} sim spins per config).`);
   md.push('');
-  md.push('Closes L&W M8 P1 GAP — WMS Goldfish Race for the Gold + Reel\'em In Big Bass Bucks fishing contest.');
+  md.push('Closes Vendor B M8 P1 GAP — WMS Goldfish Race for the Gold + Reel\'em In Big Bass Bucks fishing contest.');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -193,7 +193,7 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-12 player-skill mechanic RTP / UKGC RTS-14 per-candidate transparency / MGA PPD §11 / eCOGRA / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW WMS Goldfish Race for the Gold (2017) + Reel'em In Big Bass Bucks (2014) + competitive-pick variants.");
+  md.push("Industry: Vendor B WMS Goldfish Race for the Gold (2017) + Reel'em In Big Bass Bucks (2014) + competitive-pick variants.");
   writeFileSync(join(OUT_DIR, 'RACE_COMPETITIVE_PICK_WINNER.md'), md.join('\n'));
 
   console.log('');

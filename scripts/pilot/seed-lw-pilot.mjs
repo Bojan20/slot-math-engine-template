@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — Seed script.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — Seed script.
  *
- * Bootstraps a fully functioning pilot tenant for the "Light & Wonder
+ * Bootstraps a fully functioning pilot tenant for the "Vendor B
  * Pilot UK" engagement. The seed is deterministic (env-driven HMAC
  * keys) so the demo replay is repeatable. The output JSON state file is
  * consumed by `run-integration-suite.mjs` and `build-pilot-dossier.mjs`.
@@ -25,7 +25,7 @@ import { createHmac, createHash, randomBytes } from 'node:crypto';
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 const PILOT_TENANT_ID = '11111111-2222-3333-4444-555555555555';
-const PILOT_OPERATOR_NAME = 'Light & Wonder Pilot UK';
+const PILOT_OPERATOR_NAME = 'Vendor B Pilot UK';
 const JURISDICTIONS = ['UKGC', 'MGA'];
 const REGULATORS = ['UKGC-Online', 'MGA-Class-3'];
 const CURRENCIES = ['GBP'];

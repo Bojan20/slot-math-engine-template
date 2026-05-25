@@ -1,5 +1,5 @@
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — pilot run store + routes.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — pilot run store + routes.
  */
 import { describe, it, expect, beforeEach } from 'vitest';
 import { build } from '../index.js';

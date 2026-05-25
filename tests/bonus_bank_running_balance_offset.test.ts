@@ -1,5 +1,5 @@
 // W152 Wave 191 — Bonus Bank Running-Balance Offset vitest specs
-// (72. solver, L&W M10 P0 GAP CLOSURE — Rainbow Riches Megaways Bonus Bank).
+// (72. solver, Vendor B M10 P0 GAP CLOSURE — Rainbow Riches Megaways Bonus Bank).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -245,7 +245,7 @@ describe('Wave 191 — Bonus Bank Running-Balance Offset', () => {
     });
   });
 
-  describe('industry use-cases (L&W M10 Bonus Bank family)', () => {
+  describe('industry use-cases (Vendor B M10 Bonus Bank family)', () => {
     it('Rainbow Riches Megaways — Bonus Bank "Bank All Wins" mode', () => {
       const core = {
         numFreeSpins: 15,

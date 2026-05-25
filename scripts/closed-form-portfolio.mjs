@@ -1204,7 +1204,7 @@ async function main() {
     showcase.push({ wave: 171, solver: 'Tumbling Cascade Chain Length', metric: 'E[chainLen]', cf: cf.expectedChainLength, mc: mc.observedExpectedChainLength, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W173: Pick-and-Click Pooper Bonus (Aristocrat 5 Dragons / Bally Quick Hit / NetEnt Gonzo) ──
+  // ── W173: Pick-and-Click Pooper Bonus (Vendor C 5 Dragons / Vendor H Quick Hit / Vendor D Gonzo) ──
   {
     const t0 = Date.now();
     const cfg = {
@@ -1275,7 +1275,7 @@ async function main() {
     showcase.push({ wave: 179, solver: 'Sticky Multiplier FS Trail (BTG Bonanza-class)', metric: 'E[M_N]', cf: cf.expectedFinalMultiplier, mc: mc.meanFinalMultiplier, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W181: Reel-Bound Mystery Progressive (L&W M5 — Quick Hit family) ──
+  // ── W181: Reel-Bound Mystery Progressive (Vendor B M5 — Quick Hit family) ──
   {
     const t0 = Date.now();
     const cfg = {
@@ -1290,10 +1290,10 @@ async function main() {
       Math.max(cf.expectedPayoutPerSpin, 1e-9);
     // Heavy-tail aggregator — 10% tol (top-tier prize dominates RTP)
     const ok = rel < 0.10;
-    showcase.push({ wave: 181, solver: 'Reel-Bound Mystery Progressive (L&W Quick Hit M5)', metric: 'E[RTP/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.observedExpectedPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 181, solver: 'Reel-Bound Mystery Progressive (Vendor B Quick Hit M5)', metric: 'E[RTP/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.observedExpectedPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W182: Dynamic Grid-Expansion Hold-and-Spin (L&W M3 — Ultimate Fire Link / Lock It Link Eureka) ──
+  // ── W182: Dynamic Grid-Expansion Hold-and-Spin (Vendor B M3 — Ultimate Fire Link / Pattern-LIL Eureka) ──
   {
     const { analyzeDynamicGridExpansion, simulateDynamicGridExpansion } =
       await import(join(REPO_ROOT, 'dist', 'features', 'dynamicGridExpansionHoldSpin.js'));
@@ -1312,10 +1312,10 @@ async function main() {
     const mc = simulateDynamicGridExpansion(cfg, 30_000, SEED);
     const rel = Math.abs(cf.expectedTotalBags - mc.meanTotalBags) / Math.max(mc.meanTotalBags, 1e-9);
     const ok = rel < 0.08; // DP exact — tight tolerance vs MC
-    showcase.push({ wave: 182, solver: 'Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3)', metric: 'E[bags]', cf: cf.expectedTotalBags, mc: mc.meanTotalBags, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 182, solver: 'Dynamic Grid-Expansion H&S (Vendor B Ultimate Fire Link M3)', metric: 'E[bags]', cf: cf.expectedTotalBags, mc: mc.meanTotalBags, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W183: Multi-State Frame Upgrade Markov (L&W M2 — Huff N' Puff family) ──
+  // ── W183: Multi-State Frame Upgrade Markov (Vendor B M2 — Huff N' Puff family) ──
   {
     const { analyzeMultiStateFrameUpgrade, simulateMultiStateFrameUpgrade } =
       await import(join(REPO_ROOT, 'dist', 'features', 'multiStateFrameUpgradeMarkov.js'));
@@ -1340,10 +1340,10 @@ async function main() {
     const rel = Math.abs(cf.expectedTotalPayoutPerFeature - mc.meanTotalPayoutPerFeature) /
       Math.max(mc.meanTotalPayoutPerFeature, 1e-9);
     const ok = rel < 0.05; // Markov DP exact — tight
-    showcase.push({ wave: 183, solver: "Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2)", metric: 'E[total payout]', cf: cf.expectedTotalPayoutPerFeature, mc: mc.meanTotalPayoutPerFeature, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 183, solver: "Multi-State Frame Upgrade Markov (Vendor B Huff N' Puff M2)", metric: 'E[total payout]', cf: cf.expectedTotalPayoutPerFeature, mc: mc.meanTotalPayoutPerFeature, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W184: Colossal Reels Wild-Transfer (L&W M7 — Spartacus family) ──
+  // ── W184: Colossal Reels Wild-Transfer (Vendor B M7 — Spartacus family) ──
   {
     const { analyzeColossalReelsWildTransfer, simulateColossalReelsWildTransfer } =
       await import(join(REPO_ROOT, 'dist', 'features', 'colossalReelsWildTransfer.js'));
@@ -1360,10 +1360,10 @@ async function main() {
     const rel = Math.abs(cf.expectedWildReelsColossal - mc.meanWildReelsColossal) /
       Math.max(mc.meanWildReelsColossal, 1e-9);
     const ok = rel < 0.05; // 2-stage Binomial exact — tight
-    showcase.push({ wave: 184, solver: 'Colossal Reels Wild-Transfer (L&W Spartacus M7)', metric: 'E[K_col]', cf: cf.expectedWildReelsColossal, mc: mc.meanWildReelsColossal, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 184, solver: 'Colossal Reels Wild-Transfer (Vendor B Spartacus M7)', metric: 'E[K_col]', cf: cf.expectedWildReelsColossal, mc: mc.meanWildReelsColossal, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W185: Per-Reel Bag × Row-Multiplier Coupled (L&W M1 — Dragon Spin CrossLink) ──
+  // ── W185: Per-Reel Bag × Row-Multiplier Coupled (Vendor B M1 — Dragon Spin CrossLink) ──
   {
     const { analyzePerReelBagRowMultiplierCoupled, simulatePerReelBagRowMultiplierCoupled } =
       await import(join(REPO_ROOT, 'dist', 'features', 'perReelBagRowMultiplierCoupled.js'));
@@ -1381,10 +1381,10 @@ async function main() {
     const rel = Math.abs(cf.expectedTotalPayoutPerSpin - mc.meanTotalPayoutPerSpin) /
       Math.max(mc.meanTotalPayoutPerSpin, 1e-9);
     const ok = rel < 0.05; // 2D Binomial exact — tight
-    showcase.push({ wave: 185, solver: 'Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1)', metric: 'E[Y]', cf: cf.expectedTotalPayoutPerSpin, mc: mc.meanTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 185, solver: 'Per-Reel Bag × Row-Mult Coupled (Vendor B Dragon Spin M1)', metric: 'E[Y]', cf: cf.expectedTotalPayoutPerSpin, mc: mc.meanTotalPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W186: Big Bet Paid-Package (UK-CRITICAL L&W M9 — Barcrest family) ──
+  // ── W186: Big Bet Paid-Package (UK-CRITICAL Vendor B M9 — Barcrest family) ──
   {
     const { analyzeBigBetPaidPackage, simulateBigBetPaidPackage } =
       await import(join(REPO_ROOT, 'dist', 'features', 'bigBetPaidPackageMultiSpin.js'));
@@ -1401,10 +1401,10 @@ async function main() {
     const rel = Math.abs(cf.expectedTotalPayout - mc.meanTotalPayoutPerPackage) /
       Math.max(mc.meanTotalPayoutPerPackage, 1e-9);
     const ok = rel < 0.05; // CF math is exact (linear aggregation)
-    showcase.push({ wave: 186, solver: 'Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9)', metric: 'E[total payout]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayoutPerPackage, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 186, solver: 'Big Bet Paid-Package (UK-CRITICAL Vendor B Monopoly M9)', metric: 'E[total payout]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayoutPerPackage, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W187: Deterministic Explosion Multiplier-Drop (L&W M4 — Dancing Drums) ──
+  // ── W187: Deterministic Explosion Multiplier-Drop (Vendor B M4 — Dancing Drums) ──
   {
     const { analyzeDeterministicExplosion, simulateDeterministicExplosion } =
       await import(join(REPO_ROOT, 'dist', 'features', 'deterministicExplosionMultiplierDrop.js'));
@@ -1425,10 +1425,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
       Math.max(mc.meanPayoutPerSpin, 1e-9);
     const ok = rel < 0.10;
-    showcase.push({ wave: 187, solver: 'Deterministic Explosion Mult-Drop (L&W Dancing Drums M4)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 187, solver: 'Deterministic Explosion Mult-Drop (Vendor B Dancing Drums M4)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W188: Player-Elects Feature Composition (L&W M11 — RR Pick n Mix family) ──
+  // ── W188: Player-Elects Feature Composition (Vendor B M11 — RR Pick n Mix family) ──
   {
     const { analyzePlayerElectsFeatureComposition, simulatePlayerElectsFeatureComposition } =
       await import(join(REPO_ROOT, 'dist', 'features', 'playerElectsFeatureComposition.js'));
@@ -1448,10 +1448,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutBestPick - mc.meanPayoutPerSpin) /
       Math.max(mc.meanPayoutPerSpin, 1e-9);
     const ok = rel < 0.05;
-    showcase.push({ wave: 188, solver: 'Player-Elects Feature Composition (L&W RR Pick n Mix M11)', metric: 'best E[Y]', cf: cf.expectedPayoutBestPick, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 188, solver: 'Player-Elects Feature Composition (Vendor B RR Pick n Mix M11)', metric: 'best E[Y]', cf: cf.expectedPayoutBestPick, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W189: Random Feature-Injection During FS (L&W M12 — Wizard of Oz Munchkinland) ──
+  // ── W189: Random Feature-Injection During FS (Vendor B M12 — Wizard of Oz Munchkinland) ──
   {
     const { analyzeRandomFeatureInjectionDuringFs, simulateRandomFeatureInjectionDuringFs } =
       await import(join(REPO_ROOT, 'dist', 'features', 'randomFeatureInjectionDuringFs.js'));
@@ -1468,10 +1468,10 @@ async function main() {
     const mc = simulateRandomFeatureInjectionDuringFs(cfg, 30_000, SEED);
     const rel = Math.abs(cf.expectedTotalFsPayout - mc.meanTotalFsPayout) / Math.max(mc.meanTotalFsPayout, 1e-9);
     const ok = rel < 0.05;
-    showcase.push({ wave: 189, solver: 'Random Feature-Injection FS (L&W Munchkinland M12)', metric: 'E[S]', cf: cf.expectedTotalFsPayout, mc: mc.meanTotalFsPayout, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 189, solver: 'Random Feature-Injection FS (Vendor B Munchkinland M12)', metric: 'E[S]', cf: cf.expectedTotalFsPayout, mc: mc.meanTotalFsPayout, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W190: Nested Mini-Slot Inside Bonus (L&W M14 — LOTR Two Towers) ──
+  // ── W190: Nested Mini-Slot Inside Bonus (Vendor B M14 — LOTR Two Towers) ──
   {
     const { analyzeNestedMiniSlotInsideBonus, simulateNestedMiniSlotInsideBonus } =
       await import(join(REPO_ROOT, 'dist', 'features', 'nestedMiniSlotInsideBonus.js'));
@@ -1491,10 +1491,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutPerParentSpin - mc.meanPayoutPerParentSpin) /
       Math.max(mc.meanPayoutPerParentSpin, 1e-9);
     const ok = rel < 0.08;
-    showcase.push({ wave: 190, solver: 'Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14)', metric: 'E[Y/parent]', cf: cf.expectedPayoutPerParentSpin, mc: mc.meanPayoutPerParentSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 190, solver: 'Nested Mini-Slot Inside Bonus (Vendor B LOTR Two Towers M14)', metric: 'E[Y/parent]', cf: cf.expectedPayoutPerParentSpin, mc: mc.meanPayoutPerParentSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W191: Bonus Bank Running-Balance Offset (L&W M10 — Rainbow Riches Megaways) ──
+  // ── W191: Bonus Bank Running-Balance Offset (Vendor B M10 — Rainbow Riches Megaways) ──
   {
     const { analyzeBonusBankRunningBalanceOffset, simulateBonusBankRunningBalanceOffset } =
       await import(join(REPO_ROOT, 'dist', 'features', 'bonusBankRunningBalanceOffset.js'));
@@ -1518,10 +1518,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutModeB - mc.meanPayoutModeB) /
       Math.max(mc.meanPayoutModeB, 1e-9);
     const ok = rel < 0.05;
-    showcase.push({ wave: 191, solver: 'Bonus Bank Running-Balance Offset (L&W RR Megaways M10)', metric: 'E[T_B]', cf: cf.expectedPayoutModeB, mc: mc.meanPayoutModeB, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 191, solver: 'Bonus Bank Running-Balance Offset (Vendor B RR Megaways M10)', metric: 'E[T_B]', cf: cf.expectedPayoutModeB, mc: mc.meanPayoutModeB, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W192: Race Competitive Pick Winner (L&W M8 — Goldfish Race + Big Bass Bucks) ──
+  // ── W192: Race Competitive Pick Winner (Vendor B M8 — Goldfish Race + Big Bass Bucks) ──
   {
     const { analyzeRaceCompetitivePickWinner, simulateRaceCompetitivePickWinner } =
       await import(join(REPO_ROOT, 'dist', 'features', 'raceCompetitivePickWinner.js'));
@@ -1539,10 +1539,10 @@ async function main() {
     const rel = Math.abs(cf.bestPickExpectedReturn - mc.meanPayoutPerRace) /
       Math.max(mc.meanPayoutPerRace, 1e-9);
     const ok = rel < 0.08;
-    showcase.push({ wave: 192, solver: 'Race Competitive Pick Winner (L&W Goldfish Race M8)', metric: 'bestRtp', cf: cf.bestPickExpectedReturn, mc: mc.meanPayoutPerRace, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 192, solver: 'Race Competitive Pick Winner (Vendor B Goldfish Race M8)', metric: 'bestRtp', cf: cf.bestPickExpectedReturn, mc: mc.meanPayoutPerRace, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W193: Multi-Pot Branched H&S Sub-Feature (L&W M15 — Rich Little Piggies) ──
+  // ── W193: Multi-Pot Branched H&S Sub-Feature (Vendor B M15 — Rich Little Piggies) ──
   {
     const { analyzeMultiPotBranchedHoldSpinSubFeature, simulateMultiPotBranchedHoldSpinSubFeature } =
       await import(join(REPO_ROOT, 'dist', 'features', 'multiPotBranchedHoldSpinSubFeature.js'));
@@ -1560,10 +1560,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
       Math.max(mc.meanPayoutPerSpin, 1e-9);
     const ok = rel < 0.10;
-    showcase.push({ wave: 193, solver: 'Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 193, solver: 'Multi-Pot Branched H&S Sub-Feature (Vendor B Rich Little Piggies M15)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W194: Arcade-Shooter Survival Level Progression (L&W M16 — Stellar Jackpots) ──
+  // ── W194: Arcade-Shooter Survival Level Progression (Vendor B M16 — Stellar Jackpots) ──
   {
     const { analyzeArcadeShooterSurvivalLevels, simulateArcadeShooterSurvivalLevels } =
       await import(join(REPO_ROOT, 'dist', 'features', 'arcadeShooterSurvivalLevels.js'));
@@ -1589,10 +1589,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutPerRun - mc.meanPayoutPerRun) /
       Math.max(mc.meanPayoutPerRun, 1e-9);
     const ok = rel < 0.12;
-    showcase.push({ wave: 194, solver: 'Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16)', metric: 'E[Y/run]', cf: cf.expectedPayoutPerRun, mc: mc.meanPayoutPerRun, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 194, solver: 'Arcade-Shooter Survival Levels (Vendor B Stellar Jackpots M16)', metric: 'E[Y/run]', cf: cf.expectedPayoutPerRun, mc: mc.meanPayoutPerRun, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W195: Mid-Spin Reel-Reshape Mixture (L&W M13 — Wizard of Oz Glinda) ──
+  // ── W195: Mid-Spin Reel-Reshape Mixture (Vendor B M13 — Wizard of Oz Glinda) ──
   {
     const { analyzeMidSpinReelReshapeMixture, simulateMidSpinReelReshapeMixture } =
       await import(join(REPO_ROOT, 'dist', 'features', 'midSpinReelReshapeMixture.js'));
@@ -1609,10 +1609,10 @@ async function main() {
     const rel = Math.abs(cf.expectedPayoutPerSpin - mc.meanPayoutPerSpin) /
       Math.max(mc.meanPayoutPerSpin, 1e-9);
     const ok = rel < 0.06;
-    showcase.push({ wave: 195, solver: 'Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 195, solver: 'Mid-Spin Reel-Reshape Mixture (Vendor B Wizard of Oz Glinda M13)', metric: 'E[Y/spin]', cf: cf.expectedPayoutPerSpin, mc: mc.meanPayoutPerSpin, ok, elapsed_ms: Date.now() - t0 });
   }
 
-  // ── W196: Stacked Multi-Wheel Composition (L&W M6 FINAL — Triple Cash Wheel, 16/16 L&W gaps) ──
+  // ── W196: Stacked Multi-Wheel Composition (Vendor B M6 FINAL — Triple Cash Wheel, 16/16 Vendor B gaps) ──
   {
     const { analyzeStackedMultiWheelComposition, simulateStackedMultiWheelComposition } =
       await import(join(REPO_ROOT, 'dist', 'features', 'stackedMultiWheelComposition.js'));
@@ -1644,7 +1644,7 @@ async function main() {
     const rel = Math.abs(cf.expectedTotalPayout - mc.meanTotalPayout) /
       Math.max(mc.meanTotalPayout, 1e-9);
     const ok = rel < 0.04;
-    showcase.push({ wave: 196, solver: '🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS)', metric: 'E[Y/spin]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayout, ok, elapsed_ms: Date.now() - t0 });
+    showcase.push({ wave: 196, solver: '🏆 Stacked Multi-Wheel Composition (Vendor B Vendor H Triple Cash Wheel M6 — 16/16 Vendor B GAPS)', metric: 'E[Y/spin]', cf: cf.expectedTotalPayout, mc: mc.meanTotalPayout, ok, elapsed_ms: Date.now() - t0 });
   }
 
   for (const r of showcase) {

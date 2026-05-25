@@ -227,7 +227,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('Microgaming Avalon style: 5-reel both-ways, k_min=3', () => {
+  it('Vendor G Avalon style: 5-reel both-ways, k_min=3', () => {
     const r = solveBiDirectionalLinePay({
       reelCount: 5,
       minMatchLength: 3,
@@ -239,7 +239,7 @@ describe('industry use-cases', () => {
     expect(r.bidirectionalUpliftRatio).toBeGreaterThan(1.5);
     expect(r.bidirectionalUpliftRatio).toBeLessThan(2.0);
   });
-  it('NetEnt Lights style: 5-reel both-ways, k_min=2 (scatter-like)', () => {
+  it('Vendor D Lights style: 5-reel both-ways, k_min=2 (scatter-like)', () => {
     const r = solveBiDirectionalLinePay({
       reelCount: 5,
       minMatchLength: 2,

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 187 — Deterministic Explosion Multiplier-Drop Aggregator acceptance
-// (68. solver, L&W M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution).
+// (68. solver, Vendor B M4 P1 GAP CLOSURE — Dancing Drums Explosion + Revolution).
 //
 // 6 industry configs × 100K MC spins = 600K total spin sims sa Bernoulli-trigger
 // + iid discrete multiplier draws MC vs exact CF.
@@ -24,7 +24,7 @@ const TOL_MULT_VALUE_REL = 0.05;
 const CONFIGS = [
   {
     name: "A_dancing_drums_explosion_classic_5pos",
-    description: "LNW Bally Dancing Drums Explosion (2020) — 5 positions, 2×/3×/5× distribution, p_trigger=3%, base value 8.",
+    description: "Vendor B Vendor H Dancing Drums Explosion (2020) — 5 positions, 2×/3×/5× distribution, p_trigger=3%, base value 8.",
     cfg: {
       probTriggerPerSpin: 0.03,
       numExplodingPositions: 5,
@@ -217,7 +217,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP — Deterministic Explosion Multiplier-Drop Aggregator Acceptance (W187, 68. solver, L&W M4 P1 GAP CLOSURE)');
+  md.push('# DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP — Deterministic Explosion Multiplier-Drop Aggregator Acceptance (W187, 68. solver, Vendor B M4 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -225,7 +225,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${SPINS} MC spins each = ${(CONFIGS.length * SPINS / 1e3).toFixed(0)}K total spin sims.`);
   md.push('');
-  md.push("Closes Faza 12 ext (post-W100): ✅ \"Deterministic Explosion Multiplier-Drop Aggregator\" (Wave 187 — 68. closed-form solver, L&W M4 P1 GAP CLOSED — Dancing Drums Explosion + Revolution).");
+  md.push("Closes Faza 12 ext (post-W100): ✅ \"Deterministic Explosion Multiplier-Drop Aggregator\" (Wave 187 — 68. closed-form solver, Vendor B M4 P1 GAP CLOSED — Dancing Drums Explosion + Revolution).");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -259,7 +259,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — deterministic-position mechanic audit.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push('Industry use: L&W M4 gap — LNW Bally Dancing Drums Explosion (2020, defining title), Dancing Drums Revolution (2025 LightWave cabinet extended 8-position).');
+  md.push('Industry use: Vendor B M4 gap — Vendor B Vendor H Dancing Drums Explosion (2020, defining title), Dancing Drums Revolution (2025 LightWave cabinet extended 8-position).');
 
   writeFileSync(join(OUT_DIR, 'DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.md'), md.join('\n'));
 

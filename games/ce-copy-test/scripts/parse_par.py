@@ -92,7 +92,7 @@ def parse_meta(rows):
             max_liabs.append(ml)
     return {
         "name": "CE COPY TEST",
-        "based_on": "Cash Eruption (exact paymodel copy)",
+        "based_on": "Pattern-CE (exact paymodel copy)",
         "swid": swid,
         "reels": 5,
         "rows": 3,
@@ -313,7 +313,7 @@ def parse_cash_eruption_pages(rows):
 
 
 def parse_one_ce_page(rows, start: int):
-    """Parse one Cash Eruption feature page (one BET MULTIPLIER)."""
+    """Parse one Pattern-CE feature page (one BET MULTIPLIER)."""
     out = {
         "fireballs_set_weights": {},  # low / med / high pool weights (out of 4294967295)
         "small_fireball_values": [],  # rows: coin_value, low, med, high
@@ -369,9 +369,9 @@ def parse_one_ce_page(rows, start: int):
     for j, r in enumerate(block):
         absrow = start + j
         cell = s(rows, absrow, 3).strip()
-        if "Cash Eruption" in cell and "from the Base Game RTP" in cell:
+        if "Pattern-CE" in cell and "from the Base Game RTP" in cell:
             out["ce_from_base_rtp"] = n(rows, absrow, 7)
-        if "Cash Eruption" in cell and "from the Free Spins Bonus RTP" in cell:
+        if "Pattern-CE" in cell and "from the Free Spins Bonus RTP" in cell:
             out["ce_from_fs_rtp"] = n(rows, absrow, 7)
     # 5) GRAND row — label at K, value at K next row, probs at L,M
     for j, r in enumerate(block):

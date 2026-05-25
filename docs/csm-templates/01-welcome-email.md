@@ -12,7 +12,7 @@
 
 Hi {{primary_contact_first_name}},
 
-On behalf of the entire team at the L&W slot-math platform, **welcome aboard.**
+On behalf of the entire team at the Vendor B slot-math platform, **welcome aboard.**
 We are thrilled to officially count {{customer_name}} as a partner.
 
 A quick overview of what happens next:
@@ -41,7 +41,7 @@ the kickoff laser-focused.
 Looking forward to a long and productive partnership.
 
 — {{csm_name}}
-Customer Success Manager, L&W slot-math platform
+Customer Success Manager, Vendor B slot-math platform
 {{csm_email}} · {{csm_phone}}
 
 ---

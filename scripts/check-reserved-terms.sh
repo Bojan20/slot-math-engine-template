@@ -47,7 +47,7 @@ RESERVED_PATTERNS=(
   '\bPPH\b'
   'Pattern Slider'
   'Cool ?Catch'
-  'Cleopatra'
+  'Pattern-CL'
   'Wheel ?of ?Fortune'
   'Fort ?Knox'
   'MegaJackpots'

@@ -42,7 +42,7 @@ const CONFIGS = [
   },
   {
     name: 'B_igt_wof_multi_tier_trail_20step',
-    description: 'IGT Wheel of Fortune Multi-Tier Trail 20-step no bust',
+    description: 'Vendor A Wheel of Fortune Multi-Tier Trail 20-step no bust',
     cfg: {
       trailLength: 20,
       maxPicks: 12,
@@ -58,7 +58,7 @@ const CONFIGS = [
   },
   {
     name: 'C_microgaming_lotr_30step_deep',
-    description: 'Microgaming Lord of the Rings 30-step deep w/ 2 bust positions',
+    description: 'Vendor G Lord of the Rings 30-step deep w/ 2 bust positions',
     cfg: {
       trailLength: 30,
       maxPicks: 20,
@@ -248,9 +248,9 @@ async function main() {
   md.push('- **UKGC RTS 14** — trail progression + bust position disclosure');
   md.push('- **MGA PPD §11.f** — bonus-game rule transparency (step + reward + bust)');
   md.push('- **eCOGRA Generic Bonus Audit** — verifies trail math matches engine');
-  md.push("- Industry use: Konami Stairway to Heaven, IGT Wheel of Fortune Multi-Tier");
-  md.push("  Trail, Microgaming Lord of the Rings, Inspired ladder climb, Bally");
-  md.push('  Quick Hit Cash trail, IGT Mystical Mermaid.');
+  md.push("- Industry use: Konami Stairway to Heaven, Vendor A Wheel of Fortune Multi-Tier");
+  md.push("  Trail, Vendor G Lord of the Rings, Inspired ladder climb, Vendor H");
+  md.push('  Quick Hit Cash trail, Vendor A Mystical Mermaid.');
 
   writeFileSync(join(OUT_DIR, 'TRAIL_BONUS_TRACKER.md'), md.join('\n'));
 

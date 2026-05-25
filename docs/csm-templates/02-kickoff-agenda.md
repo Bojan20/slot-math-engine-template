@@ -2,7 +2,7 @@
 
 > Send 48 hours before the scheduled call.
 
-**Subject:** Kickoff agenda — {{customer_name}} × L&W slot-math platform
+**Subject:** Kickoff agenda — {{customer_name}} × Vendor B slot-math platform
 
 **Audience:** Sponsor, ops lead, math lead, CSM, sales rep, solutions architect
 

@@ -3,13 +3,13 @@
 //
 // Generates two studio-side JSON data files from canonical project docs:
 //   1. web/studio/data/catalog-97.json   — all 97 industry pattern P-IDs
-//   2. web/studio/data/lw-16.json        — 16 L&W KIMI M-gap entries (M1..M16)
+//   2. web/studio/data/lw-16.json        — 16 Vendor B KIMI M-gap entries (M1..M16)
 //
 // Sources:
 //   - docs/INDUSTRY_PATTERN_CATALOG.md
 //       Markdown table rows shaped:
 //         | P-XXX | **Title** | Mechanic family | Reference fixture | Acceptance proof |
-//       Titles that close a KIMI L&W M-gap include "L&W MN GAP" or "L&W MN PN ... GAP"
+//       Titles that close a KIMI Vendor B M-gap include "Vendor B MN GAP" or "Vendor B MN PN ... GAP"
 //       within their bold-title token; we extract that mapping deterministically.
 //   - docs/research/KIMI_LW_PORTFOLIO_COVERAGE_2026-05-18.md
 //       (consulted for supplier strings via a small inline mapping table;
@@ -36,27 +36,27 @@ const OUT_LW = resolve(ROOT, 'web/studio/data/lw-16.json');
 const GENERATED = '2026-05-18';
 
 // ──────────────────────────────────────────────────────────────────────
-// Supplier + family hints per L&W M-gap (sourced from KIMI doc tables).
+// Supplier + family hints per Vendor B M-gap (sourced from KIMI doc tables).
 // Keyed by Mn -> {supplier, family-hint}. Used when the catalog row
 // indicates this P-ID is a KIMI gap closure.
 // ──────────────────────────────────────────────────────────────────────
 const LW_GAP_META = {
-  M1:  { supplier: 'L&W (in-house digital)',   fam: 'hnw',      title: 'Dragon Spin CrossLink Water' },
-  M2:  { supplier: 'L&W (SG Gaming)',          fam: 'wild',     title: "Huff N' Puff frame upgrade" },
-  M3:  { supplier: 'L&W (Bally)',              fam: 'cascade',  title: 'Ultimate Fire Link grid-expand' },
-  M4:  { supplier: 'L&W (Shuffle Master)',     fam: 'fs',       title: 'Dancing Drums Explosion' },
-  M5:  { supplier: 'L&W (Bally)',              fam: 'mystery',  title: 'Quick Hit reel-bound mystery' },
-  M6:  { supplier: 'L&W (Bally)',              fam: 'wheel',    title: 'Triple Cash Wheel' },
-  M7:  { supplier: 'L&W (WMS)',                fam: 'colossal', title: 'Spartacus Colossal Reels' },
-  M8:  { supplier: 'L&W (WMS)',                fam: 'pick',     title: 'Goldfish Race competitive pick' },
-  M9:  { supplier: 'L&W (Barcrest)',           fam: 'fs',       title: 'Big Bet UK paid-package' },
-  M10: { supplier: 'L&W (Barcrest)',           fam: 'mw',       title: 'RR Megaways Bonus Bank' },
-  M11: { supplier: 'L&W (multi-studio)',       fam: 'cascade',  title: 'Player-elects Composition' },
-  M12: { supplier: 'L&W (WMS)',                fam: 'mystery',  title: 'Munchkinland random injection' },
-  M13: { supplier: 'L&W (WMS)',                fam: 'cluster',  title: 'WOZ YBR Glinda reshape' },
-  M14: { supplier: 'L&W (WMS)',                fam: 'fs',       title: 'LOTR Two Towers nested slot' },
-  M15: { supplier: 'L&W (Bally)',              fam: 'jackpot',  title: 'Rich Little Piggies multi-pot' },
-  M16: { supplier: 'L&W (Lightning Box)',      fam: 'jackpot',  title: 'Stellar Jackpots arcade wrapper' },
+  M1:  { supplier: 'Vendor B (in-house digital)',   fam: 'hnw',      title: 'Dragon Spin CrossLink Water' },
+  M2:  { supplier: 'Vendor B (Vendor B)',          fam: 'wild',     title: "Huff N' Puff frame upgrade" },
+  M3:  { supplier: 'Vendor B (Vendor H)',              fam: 'cascade',  title: 'Ultimate Fire Link grid-expand' },
+  M4:  { supplier: 'Vendor B (Shuffle Master)',     fam: 'fs',       title: 'Dancing Drums Explosion' },
+  M5:  { supplier: 'Vendor B (Vendor H)',              fam: 'mystery',  title: 'Quick Hit reel-bound mystery' },
+  M6:  { supplier: 'Vendor B (Vendor H)',              fam: 'wheel',    title: 'Triple Cash Wheel' },
+  M7:  { supplier: 'Vendor B (WMS)',                fam: 'colossal', title: 'Spartacus Colossal Reels' },
+  M8:  { supplier: 'Vendor B (WMS)',                fam: 'pick',     title: 'Goldfish Race competitive pick' },
+  M9:  { supplier: 'Vendor B (Barcrest)',           fam: 'fs',       title: 'Big Bet UK paid-package' },
+  M10: { supplier: 'Vendor B (Barcrest)',           fam: 'mw',       title: 'RR Megaways Bonus Bank' },
+  M11: { supplier: 'Vendor B (multi-studio)',       fam: 'cascade',  title: 'Player-elects Composition' },
+  M12: { supplier: 'Vendor B (WMS)',                fam: 'mystery',  title: 'Munchkinland random injection' },
+  M13: { supplier: 'Vendor B (WMS)',                fam: 'cluster',  title: 'WOZ YBR Glinda reshape' },
+  M14: { supplier: 'Vendor B (WMS)',                fam: 'fs',       title: 'LOTR Two Towers nested slot' },
+  M15: { supplier: 'Vendor B (Vendor H)',              fam: 'jackpot',  title: 'Rich Little Piggies multi-pot' },
+  M16: { supplier: 'Vendor B (Lightning Box)',      fam: 'jackpot',  title: 'Stellar Jackpots arcade wrapper' },
 };
 
 // ──────────────────────────────────────────────────────────────────────
@@ -131,13 +131,13 @@ function rtpBandFor(variance) {
 // wave we slot them deterministically along the W049..W196 range.
 // ──────────────────────────────────────────────────────────────────────
 function inferWaveFor(pid, title) {
-  // Anchor known L&W gap waves from the KIMI doc (canonical):
+  // Anchor known Vendor B gap waves from the KIMI doc (canonical):
   const lwWave = {
     M1: 'W185', M2: 'W183', M3: 'W182', M4:  'W187', M5:  'W181', M6:  'W196',
     M7: 'W184', M8: 'W192', M9: 'W186', M10: 'W191', M11: 'W188', M12: 'W189',
     M13: 'W195', M14: 'W190', M15: 'W193', M16: 'W194',
   };
-  const m = title.match(/L&W (M\d{1,2})/);
+  const m = title.match(/Vendor B (M\d{1,2})/);
   if (m && lwWave[m[1]]) return lwWave[m[1]];
 
   // Otherwise spread linearly: P-001 ≈ W049, P-097 ≈ W196.
@@ -185,8 +185,8 @@ function parseCatalog(md) {
     // metadata display.
     const cleanTitle = titleRaw.replace(/\s*\([^)]*\)\s*$/, '').replace(/^[🎯🏆\s]+/, '').trim();
 
-    // KIMI L&W gap match: "L&W MN GAP" or "L&W MN PN ... GAP".
-    const lwMatch = titleRaw.match(/L&W (M\d{1,2})/);
+    // KIMI Vendor B gap match: "Vendor B MN GAP" or "Vendor B MN PN ... GAP".
+    const lwMatch = titleRaw.match(/Vendor B (M\d{1,2})/);
     const lwM = lwMatch ? lwMatch[1] : null;
 
     rows.push({
@@ -244,7 +244,7 @@ function buildCatalogEntry(row) {
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// Build the L&W M-gap entries from the catalog rows.
+// Build the Vendor B M-gap entries from the catalog rows.
 // One entry per M1..M16; sourced from whichever P-ID closes that gap.
 // ──────────────────────────────────────────────────────────────────────
 function buildLWEntries(catalogEntries) {
@@ -262,14 +262,14 @@ function buildLWEntries(catalogEntries) {
       // the UI strip always shows 16 chips.
       out.push({
         m: key,
-        title: meta?.title ?? `L&W ${key}`,
+        title: meta?.title ?? `Vendor B ${key}`,
         pid: null,
         wave: null,
         tier: 'aggregator',
         complexity: 'H',
         fam: meta?.fam ?? 'base',
         variance: 'HIGH',
-        supplier: meta?.supplier ?? 'L&W',
+        supplier: meta?.supplier ?? 'Vendor B',
         status: 'PENDING',
       });
       continue;
@@ -283,7 +283,7 @@ function buildLWEntries(catalogEntries) {
       complexity: e.complexity,
       fam: e.fam,
       variance: e.variance,
-      supplier: meta?.supplier ?? 'L&W',
+      supplier: meta?.supplier ?? 'Vendor B',
       rtpBand: e.rtpBand,
       rtpBandLabel: e.rtpBandLabel,
       status: 'CLOSED',

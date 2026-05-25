@@ -205,7 +205,7 @@ describe('industry parametrizations', () => {
     });
     expect(r.expectedPayoutPerSpin).toBeGreaterThan(0);
   });
-  it('NetEnt Asgardian Stones avalanche multipliers (multiplicative chain)', () => {
+  it('Vendor D Asgardian Stones avalanche multipliers (multiplicative chain)', () => {
     const r = solveSymbolMultiplierReelStop({
       positionCount: 15,
       multiplierLandingProbability: 0.10,

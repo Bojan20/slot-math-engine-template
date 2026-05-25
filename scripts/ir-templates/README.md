@@ -6,11 +6,11 @@ runtime — it carries the canonical template-builder functions inline so
 the generated output stays deterministic and idempotent.
 
 Use these files as a copy-paste starting point when you need to extend
-the L&W M-gap library beyond M16, add a new industry classic, or seed a
+the Vendor B M-gap library beyond M16, add a new industry classic, or seed a
 brand-new mechanic. The flow is:
 
 1. Copy the closest-shape template (e.g. `lw-mgap.template.json` for an
-   L&W M-gap, `classic-lines.template.json` for a Vegas-style classic).
+   Vendor B M-gap, `classic-lines.template.json` for a Vegas-style classic).
 2. Fill in the placeholder values (`{{...}}`).
 3. Either drop the result into `web/studio/ir-library/{lw-mgaps,classics}/`
    directly, or — preferred — add a builder function to the generator

@@ -180,7 +180,7 @@ describe('industry parametrizations', () => {
     });
     expect(r.expectedTotalRewardX).toBeGreaterThan(0);
   });
-  it("IGT Wheel of Fortune Multi-Tier Trail 20-step", () => {
+  it("Vendor A Wheel of Fortune Multi-Tier Trail 20-step", () => {
     const r = solveTrailBonusTracker({
       trailLength: 20,
       maxPicks: 12,
@@ -196,7 +196,7 @@ describe('industry parametrizations', () => {
     expect(r.expectedTotalRewardX).toBeGreaterThan(0);
     expect(r.probReachEnd + r.probBust + r.probTimeout).toBeCloseTo(1, 8);
   });
-  it('Microgaming Lord of the Rings Trail 30-step deep', () => {
+  it('Vendor G Lord of the Rings Trail 30-step deep', () => {
     const r = solveTrailBonusTracker({
       trailLength: 30,
       maxPicks: 20,

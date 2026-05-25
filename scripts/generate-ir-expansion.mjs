@@ -5,7 +5,7 @@
  * Emits 80+ additional starter IR templates organised across 8 new
  * categories (megaways / cluster / cascade / hold-and-win / free-spins
  * / bonus / jackpot / hybrid) plus 5 additional classic-lines variants
- * and 4 enhanced variants per L&W M-gap (16 × 4 = 64).
+ * and 4 enhanced variants per Vendor B M-gap (16 × 4 = 64).
  *
  * Outputs:
  *   - web/studio/ir-library/megaways/*.ir.json
@@ -307,7 +307,7 @@ function buildCascade(v) {
 
 // Hold & Win family (10)
 const HOLDWIN_VARIANTS = [
-  { id: 'hw-lock-it-link', name: 'Lock It Link Style',     resp: 3, cells: 15, rtp: 0.955 },
+  { id: 'hw-lock-it-link', name: 'Pattern-LIL Style',     resp: 3, cells: 15, rtp: 0.955 },
   { id: 'hw-cash-fall',    name: 'Cash Fall Style',         resp: 3, cells: 15, rtp: 0.96  },
   { id: 'hw-coin-combo',   name: 'Coin Combo Style',        resp: 3, cells: 12, rtp: 0.955 },
   { id: 'hw-megaorb',      name: 'Mega Orb 7x7',            resp: 4, cells: 49, rtp: 0.965 },
@@ -559,24 +559,24 @@ function buildHybrid(v) {
   };
 }
 
-// L&W enhanced variants — 4 variants per M-gap (64 total)
+// Vendor B enhanced variants — 4 variants per M-gap (64 total)
 const LW_M_GAPS = [
-  { num: 1,  base: 'dragon-spin',         supplier: 'L&W Bally',          year: 2025 },
-  { num: 2,  base: 'huff-puff',           supplier: 'L&W SG Gaming',      year: 2025 },
-  { num: 3,  base: 'fire-link',           supplier: 'L&W Bally',          year: 2025 },
-  { num: 4,  base: 'dancing-drums',       supplier: 'L&W Shuffle Master', year: 2025 },
-  { num: 5,  base: 'quick-hit',           supplier: 'L&W Bally',          year: 2025 },
-  { num: 6,  base: 'cash-wheel',          supplier: 'L&W Bally',          year: 2026 },
-  { num: 7,  base: 'spartacus',           supplier: 'L&W WMS',            year: 2025 },
-  { num: 8,  base: 'goldfish',            supplier: 'L&W WMS',            year: 2025 },
-  { num: 9,  base: 'big-bet',             supplier: 'L&W Barcrest',       year: 2025 },
-  { num: 10, base: 'rr-megaways',         supplier: 'L&W Barcrest',       year: 2025 },
-  { num: 11, base: 'player-elects',       supplier: 'L&W (multi-studio)', year: 2025 },
-  { num: 12, base: 'munchkinland',        supplier: 'L&W WMS',            year: 2025 },
-  { num: 13, base: 'woz-glinda',          supplier: 'L&W WMS',            year: 2026 },
-  { num: 14, base: 'lotr-nested',         supplier: 'L&W WMS',            year: 2025 },
-  { num: 15, base: 'rich-piggies',        supplier: 'L&W Bally',          year: 2025 },
-  { num: 16, base: 'stellar-jackpots',    supplier: 'L&W Lightning Box',  year: 2025 },
+  { num: 1,  base: 'dragon-spin',         supplier: 'Vendor B Vendor H',          year: 2025 },
+  { num: 2,  base: 'huff-puff',           supplier: 'Vendor B Vendor B',      year: 2025 },
+  { num: 3,  base: 'fire-link',           supplier: 'Vendor B Vendor H',          year: 2025 },
+  { num: 4,  base: 'dancing-drums',       supplier: 'Vendor B Shuffle Master', year: 2025 },
+  { num: 5,  base: 'quick-hit',           supplier: 'Vendor B Vendor H',          year: 2025 },
+  { num: 6,  base: 'cash-wheel',          supplier: 'Vendor B Vendor H',          year: 2026 },
+  { num: 7,  base: 'spartacus',           supplier: 'Vendor B WMS',            year: 2025 },
+  { num: 8,  base: 'goldfish',            supplier: 'Vendor B WMS',            year: 2025 },
+  { num: 9,  base: 'big-bet',             supplier: 'Vendor B Barcrest',       year: 2025 },
+  { num: 10, base: 'rr-megaways',         supplier: 'Vendor B Barcrest',       year: 2025 },
+  { num: 11, base: 'player-elects',       supplier: 'Vendor B (multi-studio)', year: 2025 },
+  { num: 12, base: 'munchkinland',        supplier: 'Vendor B WMS',            year: 2025 },
+  { num: 13, base: 'woz-glinda',          supplier: 'Vendor B WMS',            year: 2026 },
+  { num: 14, base: 'lotr-nested',         supplier: 'Vendor B WMS',            year: 2025 },
+  { num: 15, base: 'rich-piggies',        supplier: 'Vendor B Vendor H',          year: 2025 },
+  { num: 16, base: 'stellar-jackpots',    supplier: 'Vendor B Lightning Box',  year: 2025 },
 ];
 
 const ENHANCEMENT_PROFILES = [
@@ -680,8 +680,8 @@ const CATEGORIES = [
     items: HYBRID_VARIANTS.map((v) => ({ ...v, topology: 'rectangular', build: () => buildHybrid(v) })),
   },
   {
-    id: 'lw-enhanced', name: 'L&W Enhanced Variants (64)', dir: 'lw-enhanced',
-    description: 'Enhanced variants per L&W M-gap (16 gaps × 4 profiles = 64).',
+    id: 'lw-enhanced', name: 'Vendor B Enhanced Variants (64)', dir: 'lw-enhanced',
+    description: 'Enhanced variants per Vendor B M-gap (16 gaps × 4 profiles = 64).',
     items: LW_M_GAPS.flatMap((gap) =>
       ENHANCEMENT_PROFILES.map((profile) => ({
         id: `lw-m${gap.num}-${profile.suffix}`,

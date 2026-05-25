@@ -58,7 +58,7 @@ describe('term-sheet generator — manifest loading', () => {
 });
 
 describe('term-sheet generator — tier numeric computations', () => {
-  it('Tier A returns sensible numbers for Aristocrat', async () => {
+  it('Tier A returns sensible numbers for Vendor C', async () => {
     const m = await loadOperatorManifest('aristocrat');
     const n = computeTierNumbers(m, 'A');
     expect(n.upfrontUSD).toBeGreaterThan(100_000);
@@ -97,8 +97,8 @@ describe('term-sheet generator — markdown render', () => {
   it('includes operator display + legal name in the header', async () => {
     const m = await loadOperatorManifest('aristocrat');
     const md = renderTermSheet(m, 'B', { date: '2026-05-18' });
-    expect(md).toMatch(/Aristocrat/);
-    expect(md).toMatch(/Aristocrat Technologies, Inc\./);
+    expect(md).toMatch(/Vendor C/);
+    expect(md).toMatch(/Vendor C Technologies, Inc\./);
     expect(md).toMatch(/Tier B/);
   });
 
@@ -115,7 +115,7 @@ describe('term-sheet generator — HTML render', () => {
   it('returns a valid HTML document', async () => {
     const m = await loadOperatorManifest('lw');
     const md = renderTermSheet(m, 'A', { date: '2026-05-18' });
-    const html = renderTermSheetHtml(md, 'Term Sheet — L&W (Tier A)');
+    const html = renderTermSheetHtml(md, 'Term Sheet — Vendor B (Tier A)');
     expect(html.startsWith('<!DOCTYPE html>')).toBe(true);
     expect(html).toMatch(/<title>/);
     expect(html).toMatch(/<\/html>/);

@@ -2,7 +2,7 @@
 /**
  * CORTI W204-PILOT — end-to-end pilot cert flow demo.
  *
- * Drives a complete cert lab cycle for the Quick Hit Platinum Phoenix
+ * Drives a complete cert lab cycle for the Pattern-QHP
  * pilot game in 9 steps:
  *
  *   1. Load pilot IR
@@ -42,22 +42,22 @@ const PILOT_REGISTRY = {
   'quick-hit-platinum-phoenix': {
     ir: 'web/studio/pilots/quick-hit-platinum-phoenix.ir.json',
     reportBaseName: 'QUICK_HIT_PLATINUM_PHOENIX',
-    label: 'Quick Hit Platinum Phoenix',
+    label: 'Pattern-QHP',
   },
   'huff-n-puff-storm-cellar': {
     ir: 'web/studio/pilots/huff-n-puff-storm-cellar.ir.json',
     reportBaseName: 'HUFF_N_PUFF_STORM_CELLAR',
-    label: 'Huff N\' Puff Storm Cellar',
+    label: 'Huff N\' Puff Pattern-SC',
   },
   'spartacus-colossal-conquest': {
     ir: 'web/studio/pilots/spartacus-colossal-conquest.ir.json',
     reportBaseName: 'SPARTACUS_COLOSSAL_CONQUEST',
-    label: 'Spartacus Colossal Conquest',
+    label: 'Pattern-SCC',
   },
   'rainbow-riches-megaways-vault': {
     ir: 'web/studio/pilots/rainbow-riches-megaways-vault.ir.json',
     reportBaseName: 'RAINBOW_RICHES_MEGAWAYS_VAULT',
-    label: 'Rainbow Riches Megaways Vault',
+    label: 'Pattern-RRMV',
   },
 };
 

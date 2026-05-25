@@ -40,7 +40,7 @@ const CONFIGS = [
   },
   {
     name: 'B_netent_vikings_3_4_5_high_top',
-    description: 'NetEnt Vikings 3/4/5 sa premium 5-scatter (21 FS), q=0.10',
+    description: 'Vendor D Vikings 3/4/5 sa premium 5-scatter (21 FS), q=0.10',
     cfg: {
       reelCount: 5,
       scatterProbabilityPerReel: 0.10,
@@ -54,7 +54,7 @@ const CONFIGS = [
   },
   {
     name: 'C_microgaming_mega_moolah_4_scatter_only',
-    description: 'Microgaming Mega Moolah-style: 4-scatter trigger only, q=0.12',
+    description: 'Vendor G Mega Moolah-style: 4-scatter trigger only, q=0.12',
     cfg: {
       reelCount: 5,
       scatterProbabilityPerReel: 0.12,
@@ -253,8 +253,8 @@ async function main() {
   md.push('- **MGA PPD §11.f** — scatter mechanic + award schedule transparency');
   md.push('- **eCOGRA Generic Slots Audit** — verifies per-tier trigger rate matches engine');
   md.push("- Industry use: Pragmatic Sweet Bonanza family (3/4/5 = 10/15/20 FS),");
-  md.push('  NetEnt Vikings tier awards, Hacksaw RIP City, IGT Cleopatra,');
-  md.push('  Microgaming Mega Moolah (4-scatter only), BTG Megaways 6-reel.');
+  md.push('  Vendor D Vikings tier awards, Hacksaw RIP City, Vendor A Pattern-CL,');
+  md.push('  Vendor G Mega Moolah (4-scatter only), BTG Megaways 6-reel.');
 
   writeFileSync(join(OUT_DIR, 'BONUS_TRIGGER_AWARD_STRATIFICATION.md'), md.join('\n'));
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fort Knox Wolf Run — raw Excel dumper.
+"""Pattern-FK — raw Excel dumper.
 
 The original `PAR_Sheets_FortKnoxWolfRun.xlsx` has a malformed `textRotation`
 attribute in its stylesheet (vendor-export bug). We unzip → patch → reload

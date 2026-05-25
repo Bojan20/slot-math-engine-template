@@ -4,7 +4,7 @@
  *
  * Single-command pitch tarball export:
  *   npm run pitch:tarball [--include-binaries] [--format=tar.gz|zip|tar]
- *                         [--output=dist/pitch/] [--operator=L&W]
+ *                         [--output=dist/pitch/] [--operator=Vendor B]
  *                         [--bundle-version=YYYYMMDD] [--sign]
  *
  * Bundles ALL pitch + proof artifacts into a single distributable archive:
@@ -368,7 +368,7 @@ export async function collectSalesEntries({ root }) {
   // 1. Executive deck — self-contained HTML, sanitised.
   const deckPath = resolve(root, 'web/pitch/lw-deck.html');
   if (existsSync(deckPath)) {
-    const deckHtml = await composeDeckFile({ deckPath, title: 'Slot Math Engine — L&W Acceleration Pilot — Executive Deck' });
+    const deckHtml = await composeDeckFile({ deckPath, title: 'Slot Math Engine — Vendor B Acceleration Pilot — Executive Deck' });
     entries.push({ bundlePath: 'pitch-package/sales/01-executive-deck.html', data: Buffer.from(deckHtml, 'utf8') });
   }
   // 2. ROI calculator — wrap the TS source into a readable reference HTML.
@@ -385,10 +385,10 @@ The interactive version ships inside <code>01-executive-deck.html</code> (slide 
   }
   // 3-6. Markdown docs → standalone HTML.
   const mdToHtml = [
-    { source: 'docs/LW_TECHNICAL_DEEP_DIVE.md', name: '03-technical-deep-dive.html', title: 'L&W Technical Deep Dive' },
-    { source: 'docs/LW_VS_COMPETITORS.md', name: '04-competitive-matrix.html', title: 'L&W vs Competitors' },
-    { source: 'docs/LW_PILOT_PITCH_GUIDE.md', name: '05-pitch-guide.html', title: 'L&W Pilot Pitch Guide' },
-    { source: 'dist/pilot/L_AND_W_PILOT_DOSSIER.md', name: '06-pilot-dossier.html', title: 'L&W Pilot Evaluation Dossier' },
+    { source: 'docs/LW_TECHNICAL_DEEP_DIVE.md', name: '03-technical-deep-dive.html', title: 'Vendor B Technical Deep Dive' },
+    { source: 'docs/LW_VS_COMPETITORS.md', name: '04-competitive-matrix.html', title: 'Vendor B vs Competitors' },
+    { source: 'docs/LW_PILOT_PITCH_GUIDE.md', name: '05-pitch-guide.html', title: 'Vendor B Pilot Pitch Guide' },
+    { source: 'dist/pilot/L_AND_W_PILOT_DOSSIER.md', name: '06-pilot-dossier.html', title: 'Vendor B Pilot Evaluation Dossier' },
   ];
   for (const item of mdToHtml) {
     const src = resolve(root, item.source);
@@ -424,7 +424,7 @@ export async function collectProofEntries({ root }) {
     );
     entries.push({ bundlePath: 'pitch-package/proof/industry-pattern-catalog.json', data });
   }
-  // L&W M-gap coverage matrix — synthesised from the Kimi research doc.
+  // Vendor B M-gap coverage matrix — synthesised from the Kimi research doc.
   const lwCoverage = buildLwCoverageMatrix();
   entries.push({
     bundlePath: 'pitch-package/proof/lw-coverage-matrix.json',
@@ -466,10 +466,10 @@ export function buildLwCoverageMatrix() {
   // Engine M1..M16 → wave + P-ID + commit hash. Hardcoded from KIMI research
   // (CLAUDE.md says 16/16 closed under W181-W211).
   const rows = [
-    { gap: 'M1',  title: 'Hold-and-win tiered jackpot (Lock It Link family)', wave: 'W181', pid: 'P-082' },
+    { gap: 'M1',  title: 'Hold-and-win tiered jackpot (Pattern-LIL family)', wave: 'W181', pid: 'P-082' },
     { gap: 'M2',  title: 'Cash on Reels / sticky-cash collector',              wave: 'W182', pid: 'P-083' },
     { gap: 'M3',  title: 'Quick Hit symbol-stack jackpot',                    wave: 'W183', pid: 'P-084' },
-    { gap: 'M4',  title: 'Huff N Puff multi-pot branched hold-spin',           wave: 'W184', pid: 'P-085' },
+    { gap: 'M4',  title: 'Pattern-HP multi-pot branched hold-spin',           wave: 'W184', pid: 'P-085' },
     { gap: 'M5',  title: 'Spartacus colossal reels wild transfer',             wave: 'W185', pid: 'P-086' },
     { gap: 'M6',  title: 'Rainbow Riches Megaways variable height ways',       wave: 'W186', pid: 'P-087' },
     { gap: 'M7',  title: 'Bonus bank running balance offset',                  wave: 'W187', pid: 'P-088' },

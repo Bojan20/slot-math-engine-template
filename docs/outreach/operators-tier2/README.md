@@ -1,6 +1,6 @@
 # Tier-2 Operator Outreach — Master Index
 
-> W215 deliverable. Expands the addressable market beyond L&W (W213) to the 8 largest non-L&W slot publishers.
+> W215 deliverable. Expands the addressable market beyond Vendor B (W213) to the 8 largest non-Vendor B slot publishers.
 > All content is clean-room: no real names, only role placeholders.
 > Companion automation: `scripts/outreach/tier2-coverage-matrix.mjs`, `scripts/outreach/operator-portfolio-fit.mjs`.
 
@@ -8,12 +8,12 @@
 
 | # | Operator | Slug | Region | Priority | Portfolio est. | Coverage est. |
 |---|---|---|---|---|---|---|
-| 1 | Aristocrat | `aristocrat` | AU + NA | P0 | ~1,200 titles | ~82% |
-| 2 | IGT | `igt` | NA + EU | P0 | ~900 titles | ~71% |
+| 1 | Vendor C | `aristocrat` | AU + NA | P0 | ~1,200 titles | ~82% |
+| 2 | Vendor A | `igt` | NA + EU | P0 | ~900 titles | ~71% |
 | 3 | Konami Gaming | `konami` | NA + APAC | P1 | ~330 titles | ~88% |
 | 4 | Novomatic / Greentube | `novomatic` | EU + CEE | P1 | ~850 titles | ~79% |
-| 5 | Playtech | `playtech` | EU + UK | P1 | ~1,000 titles | ~76% |
-| 6 | Everi (now IGT-merged BU) | `everi` | NA | P2 | ~280 titles | ~85% |
+| 5 | Vendor F | `playtech` | EU + UK | P1 | ~1,000 titles | ~76% |
+| 6 | Everi (now Vendor A-merged BU) | `everi` | NA | P2 | ~280 titles | ~85% |
 | 7 | Ainsworth Game Technology | `ainsworth` | AU + NA | P2 | ~220 titles | ~88% |
 | 8 | AGS (PlayAGS, Brightstar PE) | `ags` | NA | P2 | ~180 titles | ~84% |
 
@@ -23,18 +23,18 @@
 
 | Operator | Mechanic palette breadth | Math org concentration | Cert lab posture | Sales cycle (est.) | Commercial vehicle |
 |---|---|---|---|---|---|
-| Aristocrat | Broad (Reel-Power + HW + WAP + ways) | Sydney + LV | BMM + GLI heavy | 9–14 months | License OR acquisition |
-| IGT | Broad (WoF + Megabucks + VP + cascade) | LV + Reno + Rome | GLI + ADM heavy | 12–18 months | License OR acquisition |
+| Vendor C | Broad (Reel-Power + HW + WAP + ways) | Sydney + LV | BMM + GLI heavy | 9–14 months | License OR acquisition |
+| Vendor A | Broad (WoF + Megabucks + VP + cascade) | LV + Reno + Rome | GLI + ADM heavy | 12–18 months | License OR acquisition |
 | Konami | Narrow-deep (Action Stacked + HW) | LV + Sydney | GLI + BMM | 6–10 months | License + SYNKROS adj. |
 | Novomatic | Broad EU-leaning (BoR + AWP + linked) | AT + EE | NMi + SPIELV-2 + MGA | 8–14 months | License (Greentube first) |
-| Playtech | Broad online (AotG + ways + cascade) | EE + BG + UK | UKGC + MGA + ADM | 6–12 months | License + Snaitech adj. |
-| Everi | Mid-narrow (CashMachine + HV + class-II) | LV + Austin | BMM + GLI + NIGC | 4–8 months | License (post-IGT-merger) |
+| Vendor F | Broad online (AotG + ways + cascade) | EE + BG + UK | UKGC + MGA + ADM | 6–12 months | License + Snaitech adj. |
+| Everi | Mid-narrow (CashMachine + HV + class-II) | LV + Austin | BMM + GLI + NIGC | 4–8 months | License (post-Vendor A-merger) |
 | Ainsworth | Narrow (MM + EB + Reel-Power) | Sydney + LV | BMM + GLI + AU state | 5–9 months | License (Novomatic-parent aware) |
 | AGS | Narrow (Rakin'Bacon + class-II + Survivor) | LV + Atlanta | BMM + GLI + NIGC | 3–6 months | License (PE board aware) |
 
 ## Priority ranking + sequencing
 
-### P0 — Aristocrat + IGT (parallel, weeks 1–8)
+### P0 — Vendor C + Vendor A (parallel, weeks 1–8)
 
 These two together are >50% of Tier-2 addressable book by title count. Sales cycle is long (12–18mo), but the financial upside is the lion's share of the ROI ballpark.
 
@@ -42,19 +42,19 @@ These two together are >50% of Tier-2 addressable book by title count. Sales cyc
 - Parallel commercial conversation via VP BD with Corp Dev awareness.
 - Pilot proposal lands in week 6–8.
 
-### P1 — Konami + Novomatic + Playtech (rolling, weeks 4–16)
+### P1 — Konami + Novomatic + Vendor F (rolling, weeks 4–16)
 
-Three different geographic anchors (NA, DACH/EU, UK/EU). Shorter sales cycles than P0 (~6–14 months). Greentube is the natural entry into Novomatic; Playtech Casino BU into Playtech.
+Three different geographic anchors (NA, DACH/EU, UK/EU). Shorter sales cycles than P0 (~6–14 months). Greentube is the natural entry into Novomatic; Vendor F Casino BU into Vendor F.
 
 - Konami: SYNKROS adjacency is the leverage point.
 - Novomatic: Greentube digital first, land second.
-- Playtech: UK GC certification narrative is the wedge.
+- Vendor F: UK GC certification narrative is the wedge.
 
 ### P2 — Everi + Ainsworth + AGS (rolling, weeks 12–24)
 
 Smaller portfolios → faster cycles (3–9 months). Critical to coordinate:
 
-- **Everi**: don't double-count vs IGT post-merger.
+- **Everi**: don't double-count vs Vendor A post-merger.
 - **Ainsworth**: signal-coordinate with Novomatic parent.
 - **AGS**: PE-board (Brightstar) is the strategic gatekeeper.
 
@@ -64,16 +64,16 @@ See `scripts/outreach/tier2-coverage-matrix.mjs --json` for full cell-by-cell de
 
 | Mechanic family | Operators with strong presence |
 |---|---|
-| Cascade / Tumble | Playtech, IGT, Novomatic |
-| Respin / Hold-and-Win | Aristocrat, IGT, Konami, Everi, Ainsworth, AGS |
-| Hold-and-Win (named "HW") | Aristocrat, Ainsworth, AGS, Everi, Konami |
-| Cluster pays | Playtech (limited), Novomatic (limited) |
-| Ways-to-win 243/720 | Aristocrat, IGT, Konami, Ainsworth, Playtech |
-| Megaways (BTG-licensed) | Playtech, IGT (limited), Novomatic (limited) |
-| Ante-bet | Novomatic, Playtech, IGT |
-| Buy-feature | Konami, Novomatic (Greentube), Playtech |
+| Cascade / Tumble | Vendor F, Vendor A, Novomatic |
+| Respin / Hold-and-Win | Vendor C, Vendor A, Konami, Everi, Ainsworth, AGS |
+| Hold-and-Win (named "HW") | Vendor C, Ainsworth, AGS, Everi, Konami |
+| Cluster pays | Vendor F (limited), Novomatic (limited) |
+| Ways-to-win 243/720 | Vendor C, Vendor A, Konami, Ainsworth, Vendor F |
+| Megaways (BTG-licensed) | Vendor F, Vendor A (limited), Novomatic (limited) |
+| Ante-bet | Novomatic, Vendor F, Vendor A |
+| Buy-feature | Konami, Novomatic (Greentube), Vendor F |
 | Pick bonus | All 8 |
-| Wheel bonus | IGT (WoF), Aristocrat, Konami, Ainsworth, AGS, Everi |
+| Wheel bonus | Vendor A (WoF), Vendor C, Konami, Ainsworth, AGS, Everi |
 | Mystery symbol/progressive | All 8 |
 | Linked / WAP jackpot | All 8 (varying scale) |
 
@@ -81,9 +81,9 @@ See `scripts/outreach/tier2-coverage-matrix.mjs --json` for full cell-by-cell de
 
 | Operator | $ NPV impact (5yr) |
 |---|---|
-| Aristocrat | +$118M |
-| IGT | +$95M |
-| Playtech | +$96M |
+| Vendor C | +$118M |
+| Vendor A | +$95M |
+| Vendor F | +$96M |
 | Novomatic | +$85M |
 | Konami | +$32M |
 | Everi | +$22M |
@@ -91,7 +91,7 @@ See `scripts/outreach/tier2-coverage-matrix.mjs --json` for full cell-by-cell de
 | AGS | +$14M |
 | **Total Tier-2** | **+$478M (5yr base, 10% discount)** |
 
-L&W comparable from W213 dossier: +$33M. Tier-2 totals are **~14× the L&W single-customer NPV** — confirming the strategic mandate to expand beyond L&W.
+Vendor B comparable from W213 dossier: +$33M. Tier-2 totals are **~14× the Vendor B single-customer NPV** — confirming the strategic mandate to expand beyond Vendor B.
 
 ## Outreach kit reuse
 
@@ -120,6 +120,6 @@ The new tier2 cold-email template (`docs/outreach/email-templates/tier2-cold-ema
 
 ## Next deliverable (W216 candidate)
 
-- Tier-3 indie studios (Pragmatic Play, Push Gaming, NoLimit City, Hacksaw Gaming, Relax Gaming) — combined ~3,000 titles, online-only, faster sales cycles (~2–4 months).
+- Tier-3 indie studios (Vendor E, Push Gaming, NoLimit City, Hacksaw Gaming, Relax Gaming) — combined ~3,000 titles, online-only, faster sales cycles (~2–4 months).
 - Asia-specific (Macau): Galaxy Entertainment, SJM, Sands China in-house studios — separate compliance regime (DICJ).
 - Lottery operators: state lotteries with in-house slot teams (Italian ADM, Spanish ONLAE) — slower cycles, larger annual contracts.

@@ -36,7 +36,7 @@ const TOL_TIER_PROB_ABS_FLOOR = 0.001;       // Abs ≤ 0.1pp absolute floor (fo
 const CONFIGS = [
   {
     name: 'A_starburst_class_medium_vol',
-    description: 'NetEnt Starburst-class medium-vol slot (96% RTP, classic operator baseline)',
+    description: 'Vendor D Starburst-class medium-vol slot (96% RTP, classic operator baseline)',
     cfg: {
       payoutPmf: [
         { multiple: 0, probability: 0.732 },
@@ -95,7 +95,7 @@ const CONFIGS = [
   },
   {
     name: 'D_netent_classic_96pct_low_vol',
-    description: 'NetEnt classic 96% RTP low-vol slot (Gonzo classic / Twin Spin — operator default)',
+    description: 'Vendor D classic 96% RTP low-vol slot (Gonzo classic / Twin Spin — operator default)',
     cfg: {
       payoutPmf: [
         { multiple: 0, probability: 0.60 },

@@ -1,5 +1,5 @@
 // W152 Wave 195 — Mid-Spin Random Reel-Reshape Mixture vitest specs
-// (76. solver, L&W M13 P1 GAP CLOSURE — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape).
+// (76. solver, Vendor B M13 P1 GAP CLOSURE — WMS Wizard of Oz Follow the Yellow Brick Road Glinda reshape).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -256,7 +256,7 @@ describe('Wave 195 — Mid-Spin Reel-Reshape Mixture', () => {
     });
   });
 
-  describe('industry use-cases (L&W M13 Glinda reshape family)', () => {
+  describe('industry use-cases (Vendor B M13 Glinda reshape family)', () => {
     it('Wizard of Oz Follow Yellow Brick Road — Glinda waves wand mid-spin (3 reel-sets)', () => {
       const cfg: MidSpinReelReshapeMixtureConfig = {
         reelSets: [

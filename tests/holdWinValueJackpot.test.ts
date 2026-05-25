@@ -247,7 +247,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('Aristocrat Lightning Link: 15-cell, 6-trigger, 3 respins, MMM+Grand tiers', () => {
+  it('Vendor C Pattern-LL: 15-cell, 6-trigger, 3 respins, MMM+Grand tiers', () => {
     const r = solveHoldWinValueJackpot({
       gridCells: 15,
       initialFilledCells: 6,
@@ -272,7 +272,7 @@ describe('industry use-cases', () => {
     expect(r.perTier[0].label).toBe('mini'); // sorted ascending
     expect(r.probAnyTierReached).toBeGreaterThan(0);
   });
-  it('IGT Hold & Win: smaller 12-cell grid', () => {
+  it('Vendor A Hold & Win: smaller 12-cell grid', () => {
     const r = solveHoldWinValueJackpot({
       gridCells: 12,
       initialFilledCells: 5,

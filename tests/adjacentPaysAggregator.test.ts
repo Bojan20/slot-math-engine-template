@@ -176,7 +176,7 @@ describe('corner cases', () => {
 });
 
 describe('industry parametrizations', () => {
-  it('Aristocrat Buffalo-style 5×4 adjacent (k_min=3)', () => {
+  it('Vendor C Buffalo-style 5×4 adjacent (k_min=3)', () => {
     const r = solveAdjacentPaysAggregator({
       reelCount: 5,
       paylineCount: 1024, // Buffalo 1024-ways style with adjacent flavor

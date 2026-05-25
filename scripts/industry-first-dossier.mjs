@@ -160,7 +160,7 @@ const WAVES = [
       gatesPerFixture: j.config?.gatesPerFixture,
       gates: Object.keys(j.gates || {}),
     }),
-    industry_first: 'Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable',
+    industry_first: 'Nijedan vendor (Vendor A/SG/Vendor B/Vendor C/Vendor D/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable',
   },
   {
     wave: 43,
@@ -332,7 +332,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'NetEnt Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak.',
+    industry_first: 'Vendor D Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak.',
   },
   {
     wave: 95,
@@ -392,12 +392,12 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'NetEnt / Pragmatic / IGT wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget.',
+    industry_first: 'Vendor D / Pragmatic / Vendor A wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget.',
   },
   {
     wave: 107,
     kimi: '—',
-    name: 'Pick Bonus N-Stage Tree — NetEnt classic / Microgaming "pick til pop"',
+    name: 'Pick Bonus N-Stage Tree — Vendor D classic / Vendor G "pick til pop"',
     commit: '2ec7f20',
     reportPath: 'reports/acceptance/PICK_BONUS_N_STAGE.json',
     extractHeadline: (j) => `${j.configs_passed}/${j.configs_total} configs PASS at ${j.episodes_per_config} episodes each (${(j.configs_total * j.episodes_per_config / 1e3).toFixed(0)}K MC)`,
@@ -440,7 +440,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre.',
+    industry_first: 'Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / Vendor D Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre.',
   },
   {
     wave: 116,
@@ -452,7 +452,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / NetEnt Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika.',
+    industry_first: 'Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / Vendor D Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika.',
   },
   {
     wave: 118,
@@ -488,7 +488,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'Super-symbol multi-cell expansion aggregator (NetEnt Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form.',
+    industry_first: 'Super-symbol multi-cell expansion aggregator (Vendor D Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form.',
   },
   {
     wave: 125,
@@ -500,7 +500,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'Both-ways line pay aggregator (Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based.',
+    industry_first: 'Both-ways line pay aggregator (Vendor G Avalon / Vendor D Lights / Witches Wheel / Vendor A Pattern-CL Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based.',
   },
   {
     wave: 127,
@@ -512,7 +512,7 @@ const WAVES = [
     extractDetail: (j) => ({
       configs: (j.configs ?? []).map((c) => ({ name: c.name, pass: c.pass })),
     }),
-    industry_first: 'Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / NetEnt suspense reels) — UKGC RTS 8 §3.5 "false anticipation" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation).',
+    industry_first: 'Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / Vendor D suspense reels) — UKGC RTS 8 §3.5 "false anticipation" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation).',
   },
 ];
 

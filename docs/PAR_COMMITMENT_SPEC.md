@@ -10,7 +10,7 @@
 From Kimi 2026-05-15 deep audit:
 
 > "Provably-fair via zk-SNARK exists for crash/dice games but ZERO major
-> slot vendor (IGT, SG, Aristocrat, NetEnt, Pragmatic) publishes per-round
+> slot vendor (Vendor A, SG, Vendor C, Vendor D, Pragmatic) publishes per-round
 > cryptographic proofs. The EP4046329 patent (2023) defines 'strict
 > provably fair' as on-chain state transitions — an opening no incumbent
 > has taken."

@@ -8,7 +8,7 @@
 ## Headline
 # Ship lab-cert'd slot titles in 14 days, not 14 weeks.
 
-**Tagline:** 77 closed-form solvers. 16/16 L&W mechanics. 4-lab cert paper trail.
+**Tagline:** 77 closed-form solvers. 16/16 Vendor B mechanics. 4-lab cert paper trail.
 30-day pilot, zero cost-to-walk-away.
 
 ---
@@ -19,7 +19,7 @@
 |---|---|
 | Vitest grand-total specs | 7,400+ |
 | Closed-form solvers landed | 77 |
-| L&W mechanic gaps closed | 16 / 16 |
+| Vendor B mechanic gaps closed | 16 / 16 |
 | Industry-pattern catalog | 97 P-IDs |
 | CI gates (one per acceptance) | 106 |
 | 5-year NPV impact (base case) | +$33M |
@@ -51,7 +51,7 @@ Submission format: each lab's preferred manifest schema, auto-generated from our
 
 ## Q4 — Pilot path (30 days, 3 milestones)
 
-- **Day 7** — Title ported. We take one of your existing L&W titles, port the math IR, run closed-form solver, reconcile against your internal cert dossier RTP. Side-by-side report delivered.
+- **Day 7** — Title ported. We take one of your existing Vendor B titles, port the math IR, run closed-form solver, reconcile against your internal cert dossier RTP. Side-by-side report delivered.
 - **Day 14** — Lab paper-trail dry-run. Submit to BMM or GLI (your choice) as a dry-run. Verify the dossier passes their format check end-to-end. No actual cert fee.
 - **Day 30** — Decision point. You evaluate: license / acquire / walk-away. We pre-stage all three contracts. Zero cost-to-walk-away. Tenant decommissioned same day if you walk.
 
@@ -89,7 +89,7 @@ Every number on this page traces to a reproducible artifact in the tarball.
 
 ## Why now (one paragraph)
 
-The math + cert paper-trail stage is the longest single bottleneck in slot title release cycles. Every major operator quietly acknowledges it. We did the 100+ wave grind to compress it. L&W has the catalog and the brand; we have the closed-form portfolio and the lab adapters. The math is independently verifiable; the integration is contract-bounded; the downside is zero. The asymmetry of this is the whole pitch.
+The math + cert paper-trail stage is the longest single bottleneck in slot title release cycles. Every major operator quietly acknowledges it. We did the 100+ wave grind to compress it. Vendor B has the catalog and the brand; we have the closed-form portfolio and the lab adapters. The math is independently verifiable; the integration is contract-bounded; the downside is zero. The asymmetry of this is the whole pitch.
 
 ---
 

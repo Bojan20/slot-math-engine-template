@@ -39,9 +39,9 @@ const REQUIRED_SECTIONS = [
  * violated.
  */
 const CLEAN_ROOM_BLACKLIST = [
-  // Known historical Aristocrat / IGT executives (sample only)
+  // Known historical Vendor C / Vendor A executives (sample only)
   'Trevor Croker', 'Hamish McLennan', 'Vince Sadusky', 'Marco Sala',
-  // Known Konami / Novomatic / Playtech executives (sample only)
+  // Known Konami / Novomatic / Vendor F executives (sample only)
   'Tom Jingoli', 'Harald Neumann', 'Mor Weizer',
   // Known Everi / Ainsworth / AGS executives (sample only)
   'Randy Taylor', 'Harald Friess', 'David Lopez',

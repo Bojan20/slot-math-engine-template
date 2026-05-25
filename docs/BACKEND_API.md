@@ -200,7 +200,7 @@ Both query params optional.
     {
       "id": "lw-m1",
       "title": "M1 Dragon Spin CrossLink Water",
-      "supplier": "L&W Bally",
+      "supplier": "Vendor B Vendor H",
       "year": 2024,
       "topology": "rectangular",
       "mGap": "M1",

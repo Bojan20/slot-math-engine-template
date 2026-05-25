@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — Integration test harness.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — Integration test harness.
  *
  * Exercises the full stack end-to-end:
  *

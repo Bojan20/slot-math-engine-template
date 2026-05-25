@@ -158,5 +158,5 @@ Faza 10.7 acceptance bar for production-grade hot-path coverage.
 2. **Rust modules without baseline** (`features.rs`, `cluster/*`,
    `bulk/*`, `gpu/*`, `markov.rs`, `jurisdiction/adapter.rs`,
    `ir/validate.rs`) — tracked as **W240**.
-3. **L&W portfolio plan W181-W200** (61 → 77 solvers, 90 → 106 CI
+3. **Vendor B portfolio plan W181-W200** (61 → 77 solvers, 90 → 106 CI
    gates) — strategic backlog.

@@ -1,5 +1,5 @@
 // W152 Wave 186 — Big Bet Paid-Package Multi-Spin Schedule Aggregator vitest specs
-// (67. solver, UK-CRITICAL L&W M9 P0 GAP CLOSURE — Barcrest UK family).
+// (67. solver, UK-CRITICAL Vendor B M9 P0 GAP CLOSURE — Barcrest UK family).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -285,7 +285,7 @@ describe('Wave 186 — Big Bet Paid-Package Multi-Spin Schedule Aggregator', () 
     });
   });
 
-  describe('industry use-cases (L&W M9 Barcrest UK family)', () => {
+  describe('industry use-cases (Vendor B M9 Barcrest UK family)', () => {
     it("Monopoly Big Event 5-spin progressive escalation up to 98%", () => {
       const cfg: BigBetPaidPackageConfig = {
         packageSpinCount: 5,

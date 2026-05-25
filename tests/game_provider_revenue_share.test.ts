@@ -4,7 +4,7 @@ import { solveRevenueShare, simulateRevenueShare } from '../src/features/gamePro
 const baseCfg = {
   providers: [
     { providerName: 'Pragmatic', revenueSharePct: 0.20, engagementMultiplier: 1.4, annualGgrPotential: 5_000_000, minimumMonthlyFee: 10_000, annualContentRefreshRequired: 20, isTier1Premium: true },
-    { providerName: 'NetEnt', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 3_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
+    { providerName: 'Vendor D', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 3_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
     { providerName: 'Hacksaw', revenueSharePct: 0.25, engagementMultiplier: 1.1, annualGgrPotential: 2_000_000, minimumMonthlyFee: 5_000, annualContentRefreshRequired: 10, isTier1Premium: false },
     { providerName: 'Smaller', revenueSharePct: 0.30, engagementMultiplier: 0.9, annualGgrPotential: 1_000_000, minimumMonthlyFee: 2_000, annualContentRefreshRequired: 5, isTier1Premium: false },
   ],

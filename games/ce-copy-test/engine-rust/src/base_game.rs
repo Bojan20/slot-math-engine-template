@@ -116,7 +116,7 @@ pub struct SpinWin {
     pub free_spins_triggered: bool,
     /// Count of Volcano scatters on the grid (0..15).
     pub volcano_count: u32,
-    /// Count of Fireballs on the grid (used to trigger Cash Eruption).
+    /// Count of Fireballs on the grid (used to trigger Pattern-CE).
     pub fireball_count: u32,
     /// True iff this spin is a pattern win (Red7 reel1 + 4 expanded Wilds).
     pub is_pattern_win: bool,
@@ -285,7 +285,7 @@ fn is_pattern_win(base_grid: &Grid) -> bool {
 }
 
 /// Full base-game spin evaluator. Returns `SpinWin` with all the bits
-/// needed downstream (Cash Eruption trigger, Free Spins trigger, RTP).
+/// needed downstream (Pattern-CE trigger, Free Spins trigger, RTP).
 pub fn evaluate_base_spin(base_grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
     let mut w = SpinWin::default();
     let pattern = is_pattern_win(base_grid);

@@ -1,5 +1,5 @@
 // W152 Wave 182 — Dynamic Grid-Expansion Hold-and-Spin Aggregator vitest specs
-// (63. solver, L&W M3 GAP CLOSURE — Ultimate Fire Link / Lock It Link Eureka).
+// (63. solver, Vendor B M3 GAP CLOSURE — Ultimate Fire Link / Pattern-LIL Eureka).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -312,7 +312,7 @@ describe('Wave 182 — Dynamic Grid-Expansion Hold-and-Spin Aggregator', () => {
     });
   });
 
-  describe('industry use-cases (L&W M3 representative parametrizations)', () => {
+  describe('industry use-cases (Vendor B M3 representative parametrizations)', () => {
     it('Ultimate Fire Link Olvera Street 5-row → max 9-row (4 extensions)', () => {
       const cfg: DynamicGridExpansionConfig = {
         numReels: 5,
@@ -331,7 +331,7 @@ describe('Wave 182 — Dynamic Grid-Expansion Hold-and-Spin Aggregator', () => {
       expect(r.expectedFinalRowCount).toBeGreaterThanOrEqual(cfg.initialRows);
     });
 
-    it('Lock It Link Eureka Reel Blast — dynamite-trigger row-add', () => {
+    it('Pattern-LIL Eureka Reel Blast — dynamite-trigger row-add', () => {
       const cfg: DynamicGridExpansionConfig = {
         numReels: 5,
         initialRows: 4,

@@ -123,7 +123,7 @@ export function validateKernelCode(code: string): void {
   if (code.length < 50) throw new Error('kernelCode too short (< 50 chars)');
   if (code.length > 500_000) throw new Error('kernelCode too large (> 500KB)');
   // Reserved-term check (lightweight; full check happens server-side).
-  const reserved = ['Light & Wonder', 'Scientific Games', 'IGT', 'NetEnt', 'Pragmatic Play'];
+  const reserved = ['Vendor B', 'Vendor B', 'Vendor A', 'Vendor D', 'Vendor E'];
   for (const term of reserved) {
     if (code.includes(term)) {
       throw new Error(`kernelCode contains reserved term: ${term}`);
@@ -149,7 +149,7 @@ function mockVerdict(code: string): SubmissionResult['verdict'] {
     { name: 'closed-form-vs-mc', pass: code.includes('closedForm'), message: 'within 5% tolerance' },
     { name: 'performance', pass: code.length < 100_000, message: '10k spins < 2s' },
     { name: 'boundary', pass: !code.includes('throw new Error("not implemented")'), message: 'edge cases handled' },
-    { name: 'naming', pass: !/Light\s*&\s*Wonder|IGT|NetEnt/i.test(code), message: 'no reserved terms' },
+    { name: 'naming', pass: !/Light\s*&\s*Wonder|Vendor A|Vendor D/i.test(code), message: 'no reserved terms' },
     { name: 'ts-strict', pass: !code.includes(': any'), message: 'no implicit any' },
   ];
   const all_pass = gates.every((g) => g.pass);

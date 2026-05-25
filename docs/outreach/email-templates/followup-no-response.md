@@ -22,7 +22,7 @@ Following up on my note from {{original_date}} — inbox-aware, so this is a one
 
 One new artifact since then: {{new_artifact_link}} — {{one_line_what_it_is}}. ~2 minutes.
 
-If now isn't the right cycle for L&W, no follow-up — totally understood. Tarball stands on its own at {{tarball_link}}.
+If now isn't the right cycle for Vendor B, no follow-up — totally understood. Tarball stands on its own at {{tarball_link}}.
 
 Best,
 {{sender_name}}

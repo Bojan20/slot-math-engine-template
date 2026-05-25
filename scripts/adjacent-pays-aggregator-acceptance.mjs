@@ -25,7 +25,7 @@ const TOL_HIT_ABS = 0.02;     // hit rate abs
 const CONFIGS = [
   {
     name: 'A_aristocrat_buffalo_1024_adjacent',
-    description: 'Aristocrat Buffalo style: 1024-ways adjacent k_min=3',
+    description: 'Vendor C Buffalo style: 1024-ways adjacent k_min=3',
     cfg: {
       reelCount: 5,
       paylineCount: 1024,
@@ -237,8 +237,8 @@ async function main() {
   md.push('- **UKGC RTS 14** — adjacent payline rule disclosure');
   md.push('- **MGA PPD §11.f** — run length definition transparency');
   md.push('- **eCOGRA Generic Slots Audit** — verifies adjacent payline math');
-  md.push("- Industry use: Aristocrat Buffalo (pay-adjacent classic), Konami");
-  md.push("  Roman Tribune, NextGen Foxin' Wins, IGT Cleopatra adjacent");
+  md.push("- Industry use: Vendor C Buffalo (pay-adjacent classic), Konami");
+  md.push("  Roman Tribune, NextGen Foxin' Wins, Vendor A Pattern-CL adjacent");
   md.push('  variants, Pragmatic Big Bass families.');
 
   writeFileSync(join(OUT_DIR, 'ADJACENT_PAYS_AGGREGATOR.md'), md.join('\n'));

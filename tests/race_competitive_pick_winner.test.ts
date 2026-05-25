@@ -1,5 +1,5 @@
 // W152 Wave 192 — Race Competitive Pick Winner vitest specs
-// (73. solver, L&W M8 P1 GAP CLOSURE — Goldfish Race + Big Bass Bucks fishing contest).
+// (73. solver, Vendor B M8 P1 GAP CLOSURE — Goldfish Race + Big Bass Bucks fishing contest).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -259,7 +259,7 @@ describe('Wave 192 — Race Competitive Pick Winner', () => {
     });
   });
 
-  describe('industry use-cases (L&W M8 race-pick family)', () => {
+  describe('industry use-cases (Vendor B M8 race-pick family)', () => {
     it('Goldfish Race for the Gold — 4 fish race', () => {
       const cfg: RaceCompetitivePickWinnerConfig = {
         candidates: [

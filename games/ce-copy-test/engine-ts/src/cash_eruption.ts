@@ -1,4 +1,4 @@
-// Cash Eruption hold-and-win feature — port of `cash_eruption.rs`.
+// Pattern-CE hold-and-win feature — port of `cash_eruption.rs`.
 
 import type { CashEruptionPage, FireballValue, Ir, PotEntry } from "./ir.js";
 import { Prng } from "./rng.js";

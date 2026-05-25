@@ -53,7 +53,7 @@ const CONFIGS = [
   },
   {
     name: 'C_netent_charged_5tier_deep_cumulative',
-    description: 'NetEnt Charged 5-tier deep cumulative, p=0.6',
+    description: 'Vendor D Charged 5-tier deep cumulative, p=0.6',
     cfg: {
       cascadeContinuationProbability: 0.6,
       tiers: [
@@ -243,7 +243,7 @@ async function main() {
   md.push('- **MGA PPD §11.f** — tier mechanic + reward mode transparency');
   md.push('- **eCOGRA Generic Slots Audit** — verifies per-tier hit rates match engine');
   md.push("- Industry use: Hacksaw Stack 'Em multi-tier boost levels, Push Wild Swarm");
-  md.push('  power-up tiers, NetEnt Charged XP bar 3-tier reward, Yggdrasil Vault of');
+  md.push('  power-up tiers, Vendor D Charged XP bar 3-tier reward, Yggdrasil Vault of');
   md.push('  Anubis multi-step charge, Inspired XP bar, Push Aztec Bonanza multi-tier.');
 
   writeFileSync(join(OUT_DIR, 'VOLTAGE_METER_MULTI_TIER.md'), md.join('\n'));

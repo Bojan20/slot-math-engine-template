@@ -8,7 +8,7 @@
  * `rtp_breakdown`) and merges its statistics into a canonical IR-1.0.0
  * JSON's `validated_metrics` block.  Studio's Build tab L1 row then
  * displays engine-truth Hit / σ / P99 values for ANY game (not just
- * Wrath of Olympus).
+ * Pattern-WO).
  *
  * Usage:
  *

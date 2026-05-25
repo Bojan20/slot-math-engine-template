@@ -214,7 +214,7 @@ Date: ___________________________________
 | Placeholder                  | Purpose                                            |
 | :--------------------------- | :------------------------------------------------- |
 | `{{effective_date}}`         | NDA effective date (ISO format recommended)        |
-| `{{operator_name}}`          | Operator legal name (e.g., "Light & Wonder, Inc.") |
+| `{{operator_name}}`          | Operator legal name (e.g., "Vendor B, Inc.") |
 | `{{operator_entity_type}}`   | Corp / LLC / PLC / GmbH / Ltd. etc.                |
 | `{{operator_jurisdiction}}`  | State / country of incorporation                   |
 | `{{operator_address}}`       | Principal business address                         |

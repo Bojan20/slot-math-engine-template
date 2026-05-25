@@ -23,7 +23,7 @@ const TOL_EN_REL = 0.03;
 const CONFIGS = [
   {
     name: 'A_netent_4tier_p30_respin',
-    description: 'NetEnt-style 4-tier wheel + 30% respin (mini/minor/major/grand)',
+    description: 'Vendor D-style 4-tier wheel + 30% respin (mini/minor/major/grand)',
     cfg: {
       paySegments: [
         { label: 'mini',  probability: 0.30, payoutX: 5 },
@@ -237,7 +237,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — variance disclosure for wheel features');
   md.push('- **MGA PPD §11.f** — max-payout tail-probability disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — shifted-geometric chain auditor-verifiable');
-  md.push('- Industry use: NetEnt wheel bonuses, Pragmatic Money Wheel, IGT Wheel of Fortune');
+  md.push('- Industry use: Vendor D wheel bonuses, Pragmatic Money Wheel, Vendor A Wheel of Fortune');
 
   writeFileSync(join(OUT_DIR, 'BONUS_WHEEL_RESPIN.md'), md.join('\n'));
 

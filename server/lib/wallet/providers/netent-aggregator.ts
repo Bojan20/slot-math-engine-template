@@ -1,5 +1,5 @@
 /**
- * W210 Faza 600.0 — NetEnt-Aggregator / MGS Quickfire pattern.
+ * W210 Faza 600.0 — Vendor D-Aggregator / MGS Quickfire pattern.
  *
  * Distinguishing features:
  *   - Strict idempotency keys: every mutating request carries an

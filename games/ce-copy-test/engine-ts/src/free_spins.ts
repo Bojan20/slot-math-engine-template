@@ -123,7 +123,7 @@ export function runFreeSpins(
     const totalCoins = lineUnits * betMultiplier;
     res.payoutCoins += totalCoins;
     res.lineWinsCoins += totalCoins;
-    // Cash Eruption trigger: one Big Fireball block = 9 cells of fireballs.
+    // Pattern-CE trigger: one Big Fireball block = 9 cells of fireballs.
     const bfb = linkedBlockLanded(grid, "Big Fireball");
     if (bfb > 0) {
       const ce = ceAll.byBm.get(betMultiplier);

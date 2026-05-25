@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 183 — Multi-State Frame Upgrade Markov Aggregator acceptance
-// (64. solver, L&W M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles).
+// (64. solver, Vendor B M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles).
 //
 // 6 industry-representative configs × 5K MC features each = 30K total feature
 // simulations sa per-cell K-state Markov chain MC vs exact π_0·P^T closed-form.
@@ -31,7 +31,7 @@ const TOL_CELLS_AT_TARGET_REL = 0.10; // E[cells at target] rel ≤ 10%
 const CONFIGS = [
   {
     name: "A_huff_n_puff_original_3stage_straw_wood_brick",
-    description: "SG/LNW Huff N' Puff (original, 2019) — 4-state Idle→Straw→Wood→Brick, 5×3 grid, 10 spins.",
+    description: "SG/Vendor B Huff N' Puff (original, 2019) — 4-state Idle→Straw→Wood→Brick, 5×3 grid, 10 spins.",
     cfg: {
       numReels: 5,
       numRows: 3,
@@ -262,7 +262,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# MULTI_STATE_FRAME_UPGRADE_MARKOV — Multi-State Frame Upgrade Markov Aggregator Acceptance (W183, 64. solver, L&W M2 P0 GAP CLOSURE)');
+  md.push('# MULTI_STATE_FRAME_UPGRADE_MARKOV — Multi-State Frame Upgrade Markov Aggregator Acceptance (W183, 64. solver, Vendor B M2 P0 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -270,7 +270,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${FEATURES} MC features each = ${(CONFIGS.length * FEATURES / 1e3).toFixed(0)}K total feature sims.`);
   md.push('');
-  md.push("Closes Faza 12 ext (post-W100): ✅ \"Multi-State Frame Upgrade Markov Aggregator\" (Wave 183 — 64. closed-form solver, L&W M2 GAP CLOSED).");
+  md.push("Closes Faza 12 ext (post-W100): ✅ \"Multi-State Frame Upgrade Markov Aggregator\" (Wave 183 — 64. closed-form solver, Vendor B M2 GAP CLOSED).");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -303,7 +303,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — Markov audit trail per cell.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push("Industry use: L&W M2 gap — Huff N' Puff family (original, More, Even More, Lots of, Xtra, Hard Hat Edition, Grand, Money Mansion — 8 titles).");
+  md.push("Industry use: Vendor B M2 gap — Huff N' Puff family (original, More, Even More, Lots of, Xtra, Hard Hat Edition, Grand, Money Mansion — 8 titles).");
 
   writeFileSync(join(OUT_DIR, 'MULTI_STATE_FRAME_UPGRADE_MARKOV.md'), md.join('\n'));
 

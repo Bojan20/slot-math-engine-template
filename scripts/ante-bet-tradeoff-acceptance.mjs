@@ -227,7 +227,7 @@ async function main() {
   md.push('- **UKGC RTS 12** — per-mode RTP disclosure required');
   md.push('- **MGA PPD §11.f** — variance comparison across modes required');
   md.push('- **Regulator-flag detection** — ante RTP == base RTP → "player trap" warning');
-  md.push('- Industry use: Pragmatic Ante Bet, Wazdan Ante Bet, NetEnt Bet Boost');
+  md.push('- Industry use: Pragmatic Ante Bet, Wazdan Ante Bet, Vendor D Bet Boost');
 
   writeFileSync(join(OUT_DIR, 'ANTE_BET_TRADEOFF.md'), md.join('\n'));
 

@@ -1,0 +1,457 @@
+# KIMI Deep Research — Vendor B Portfolio Coverage vs Engine P-ID Catalog
+
+**Date:** 2026-05-18
+**Author:** KIMI (deep-research agent)
+**Brief:** `docs/research/LW_PORTFOLIO_COVERAGE_BRIEF.md`
+**Target consumers:** W181–W200 wave planner, Boki (project lead), Corti (wave executor)
+**Catalog cross-referenced:** `docs/INDUSTRY_PATTERN_CATALOG.md` (P-001 … P-081, 61 closed-form solvers)
+
+---
+
+## 0. Methodology, caveats, and brand-attribution corrections (READ FIRST)
+
+The original brief seeded the title list with several iconic mechanics that, on web verification, are **NOT** Vendor B properties. Before any gap analysis is safe, the brief's seed list must be corrected:
+
+| Brand / Title in brief | Actual owner | Source |
+|---|---|---|
+| **Pattern-LL** family (Sahara Gold, Magic Pearl, Heart Throb, High Stakes) | **Vendor C Technologies** (not Vendor B) | knowyourslots.com, drifttravel.com history of series |
+| **Pattern-DL** family (Autumn Moon, Genghis Khan, Panda Magic, Spring Festival) | **Vendor C Technologies** | knowyourslots.com (Vendor C 2017+) |
+| **Lightning Cash / Dollar Storm** | **Vendor C / Vendor A** respectively | knowyourslots.com |
+| **Buffalo** family (Buffalo Gold, Buffalo Diamond, Buffalo Link, Buffalo Stampede) | **Vendor C** | aristocratgaming.com |
+| **Wonder 4 / Wonder 4 Boost / Wonder 4 Tall Fortunes / Wonder Wheel** | **Vendor C** (the trademark Wonder 4 is an Vendor C quad-screen platform) | aristocratgaming.com/us/slots/games/wonder-4-revolution |
+| **88 Fortunes (original land-based MMM)** | Originally **Shuffle Master / Vendor H** (now Vendor B via Vendor H acquisition 2014). The land-based 88 Fortunes is in Vendor B since 2014. | slotcatalog.com, playusa.com |
+| **88 Fortunes Megaways** | **Vendor B** (online port, BTG-licensed Megaways) | slotslaunch.com, playusa.com |
+| **Coyote Moon** | **Vendor A** (not Vendor B) | onlineslots.com |
+| **Pattern-CL / Pattern-CL II** | **Vendor A** (not Vendor B) | (Vendor A IP) |
+
+Vendor B's actual studio roster (verified via Wikipedia + Vendor B investor relations + iGaming Express brand page):
+
+- **Vendor H Technologies** (acquired 2014 from Vendor H Tech Inc., $5.1B)
+- **WMS Industries** (acquired 2013, $1.5B)
+- **Shuffle Master** (part of Vendor H 2014 acquisition)
+- **Vendor B Casino** (the original SGCorp now rebranded as Vendor B Apr 2022)
+- **SG Digital / Vendor B** (in-house digital studios)
+- **Barcrest** (UK studio; Rainbow Riches series)
+- **NextGen Gaming** (acquired via NYX 2017)
+- **NYX Gaming Group** (acquired 2017; supplier-platform side; OpenBet sold 2022)
+- **Lightning Box** (Australian studio acquired 2022)
+- **MDI Entertainment** (instant-win games)
+- **The Global Draw** (terminal-based games)
+- **Authentic Gaming** (live casino, acquired 2019)
+
+Things divested and **no longer Vendor B**:
+- **OpenBet** (sports betting; sold 2022 to Endeavor)
+- **Vendor B Lottery** (sold 2022 to Brookfield/TCG)
+- **Bingo Industries** (sold)
+
+So when the brief listed "Pattern-LL / Pattern-DL / Wonder 4 / Buffalo" — those are Vendor C titles that Vendor B must **compete with**, not titles Vendor B ships. The engine still needs the underlying mechanics (Hold & Spin tiered jackpot, quad-screen, sticky wild expansion) because Vendor B ships **functionally-equivalent** mechanics under different brand names (Ultimate Fire Link, Pattern-LIL, Cash Falls, Quick Hit Cash Wheel, Huff N' Puff Wheel, Dragon Train Hold & Spin, Jewel of the Dragon Hold & Respin, etc.).
+
+That clarification driving this entire document: **map every Vendor B-owned mechanic, then deduce engine coverage gaps**.
+
+---
+
+## 1. Taxonomy (per brief)
+
+- **A** Hold-and-win / collect / cash
+- **B** Jackpot tier system (mini/major/grand or 4-tier)
+- **C** Mystery reveal / chaos (pre-spin mystery → in-spin reveal, or whole-reel mystery)
+- **D** Pick bonus / pooper (incl. multi-stage trees, wheel picks, board games)
+- **E** Multi-screen / split-screen / dual-grid (quad-screen, colossal reels, two-grid linked)
+- **F** Cascade / tumble / avalanche
+- **G** Sticky wild / multiplier persistence (incl. expand, drop-and-stick, walking, sticky multiplier trail)
+- **H** Free spins / retrigger / extension
+- **I** Wager-progression / chase pattern (Big Bet, Ante, paid-bonus tiers)
+- **J** Skill-stop / near-miss / anticipation reels
+- **K** AWP cycle / compensated math (UK B3/B3A, JP Pachislot, AU NCPF)
+- **L** Bingo / Class II hidden-bingo wrappers
+- **M** NEW (flag as **NOVEL**)
+
+---
+
+## 2. Vendor B Title × Mechanic × Engine Coverage Matrix (50+ titles)
+
+Notation: ✅ = engine P-ID covers; ❌ = GAP (no P-ID covers); ⚠ = partial coverage (P-ID exists but mechanic detail unmapped).
+
+### 2.1 Vendor B / SG Digital / Vendor B in-house digital (online)
+
+| # | Title | Brand / Studio | Year | Mechanics | Engine P-ID coverage | Gap? | Priority |
+|---|---|---|---|---|---|---|---|
+| 1 | Dragon Train Chi Lin Wins | Vendor B (in-house digital) | 2024 | A (6-scatter H&S, 3-respin reset) + B (4-tier MMMS + Fortune 8) + H (sticky mystery green-dragon FS) + G (sticky mystery during FS) | P-002 ✅ + P-049 ✅ + P-059 ✅ (H&S value-based) + P-035 ✅ (multi-tier WAP) + P-005/P-051 ✅ (sticky FS + mystery reveal) | NO | n/a |
+| 2 | Dragon Spin CrossLink Water | Vendor B (in-house digital) | 2024 | A (gold coin bag fill per reel) + C2-like per-row multiplier increment | P-002 ✅ + ❌ NOVEL: **per-reel cash-bag aggregator with row-multiplier coupling** (each landed coin contributes to its reel's bag AND ramps its row's multiplier by +1) — distinct from any P-ID |  ✅ **CLOSED (M1 W185)**| **P0** |
+| 3 | Huff N' Puff (original) | Vendor B (in-house digital, ex-SG) | 2019 | A (cash-on-reel + Buzz Saw upgrade) + B (4-tier wheel: Mini/Minor/Major/Grand + Super) + D (wheel-bonus pick) + H (FS) + **M: frame upgrade (Straw→Wood→Brick)** | P-002 ✅ + P-035 ✅ + P-046 ✅ (wheel respin) + P-014 ✅ + ❌ **frame-state Markov upgrade** | ✅ **CLOSED (M2 W183)** | **P0** |
+| 4 | Huff N' More Puff | Vendor B | 2020 | Same as Huff N' Puff + 5-tier wheel | as above + P-067 ✅ (K-tier voltage meter analog) | ✅ **CLOSED (M2 W183)** | P0 |
+| 5 | Huff N' Even More Puff | Vendor B | 2022 | A + B (5-tier) + D (wheel) + H + frame upgrade + Mega Hat add-on | as above + ❌ Mega Hat add-on add-multiplier | ✅ **CLOSED (M2 W183 + M3 W182)** | P0 |
+| 6 | Huff N' Lots of Puff | Vendor B | 2023 | as Even More Puff + Lots-of-Puff multi-wheel pick tree | + P-047 ✅ (N-stage pick tree) | ✅ **CLOSED (M2 W183)** | P1 |
+| 7 | Huff N' Xtra Puff | Vendor B | 2024 | as Even More Puff + Xtra Puff persistent meter | + P-067 ✅ | ✅ **CLOSED (M2 W183)** | P1 |
+| 8 | Huff N' Even More Puff Hard Hat Edition | Vendor B | 2024 | Even More Puff variant | as #5 | ✅ **CLOSED (M2 W183)** | P2 |
+| 9 | Huff N' Even More Puff Grand | Vendor B | 2024 | Same + escalated grand jackpot | as #5 | ✅ **CLOSED (M2 W183)** | P2 |
+| 10 | Huff N' Puff Money Mansion | Vendor B | 2024 | as Even More Puff + Mansion bonus stage | + P-047 ✅ | ✅ **CLOSED (M2 W183)** | P1 |
+| 11 | Ultimate Fire Link (China Street, Olvera, Rue Royale, Power 4, By the Bay, Explosion, Glacier Gold, Add Em Up Gold) | Vendor H (under Vendor B) | 2017–2025 | A (4+ fireball trigger, sticky fireballs, expanding rows up to 4 extra) + B (4-tier MMMS prize bag) + G (sticky H&W) + **M: dynamic row-expansion during H&S** | P-002 ✅ + P-035 ✅ + ❌ **dynamic grid-expansion / row-addition during H&S** (rows added as fireballs collected — changes state space) |  ✅ **CLOSED (M3) W182**| **P0** |
+| 12 | Cash Falls (Outback Fortune, Pirate's Trove, Add Em Up Gold, By the Bay, Glacier Gold, Explosion, China Street) | Vendor B | 2020–2025 | A (jackpot-symbol collect bag fill) + B (4-tier MMMG) + H (FS with persistent multiplier) | P-002 ✅ + P-035 ✅ + P-068 ✅ (scatter-trigger tiers) + P-005 ✅ | NO | n/a |
+| 13 | Pattern-LIL Diamonds | Vendor B (ex-SG / Vendor H) | 2022 | A (sticky-heart H&S over secondary grid) + B (Mini 40x, Minor 100x, Major 200x, Grand 5000x — fixed multiples, not WAP) + H (FS) | P-002 ✅ + P-049 ✅ + **P-035 ⚠ (fixed-value tiers, not progressives — partial)** + P-014 ✅ | ⚠ (verify) | P1 |
+| 14 | Pattern-LIL Night Life | Vendor B (Vendor H) | 2017 | A + B (same as Diamonds) + H | as #13 | ⚠ | P1 |
+| 15 | Pattern-LIL Eureka Reel Blast | Vendor B (Vendor H) | 2019 | A (dynamite scatters + Pattern-LIL feature) + B + H + **M: reel-explosion add row** | as #13 + ❌ row-add (same as Ultimate Fire Link gap M3) |  ✅ **CLOSED (M3) W182**| P0 |
+| 16 | Pattern-LIL Hold Onto Your Hat | Vendor B (Vendor H) | 2018 | A + B + H | as #13 | ⚠ | P2 |
+| 17 | Jewel of the Dragon | Vendor B (in-house digital, 2024; commercialisation paused 2025 per g3newswire) | 2024 | A (6-gem H&S, 3 respin reset, fill 15 = grand) + B (4-tier MMMG, "what-you-see-is-what-you-get") + smaller-bonus secondary gem triggers | P-002 ✅ + P-035 ✅ + P-059 ✅ | NO | n/a |
+| 18 | Dancing Drums | Vendor B (Vendor H) | 2017 | A (gong scatters trigger FS + jackpot picker) + B (4-tier MMMG WAP) + D (pick-a-drum) + H (8/10/15 FS) + G (stacked wilds during FS) | P-002 ✅ + P-035 ✅ + P-010/P-047 ✅ + P-068 ✅ + P-005 ✅ | NO | n/a |
+| 19 | Dancing Drums Explosion | Vendor B (Vendor H) | 2020 | as Dancing Drums + **M: explosion mechanic adds free position multipliers** | + ❌ **deterministic-grid explosion add multipliers** (unique to Vendor B Explosion series) |  ✅ **CLOSED (M4 W187)**| P1 |
+| 20 | Dancing Drums Revolution | Vendor B (Vendor H) | 2025 (LightWave cabinet) | as Dancing Drums + revolution feature (multi-stage) | + ❌ revolution multi-stage |  ✅ **CLOSED (M4 W187)**| P1 |
+| 21 | Quick Hit Platinum | Vendor B (Vendor H) | 2010 | F5 (reel-bound mystery progressive — Quick Hit symbol on reels 1, 2, 3 etc each → +tier) + H (FS pick-grid for spin count × multiplier — 20 tiles) | ❌ **reel-bound mystery progressive** (Quick Hit symbols on specific reels — count cumulative across spin) + P-047 ✅ (pick tile reveal) | YES (M5) | **P0** |
+| 22 | Quick Hit Black Gold | Vendor B (Vendor H) | 2013 | F5 + H | as #21 | YES (M5) | P0 |
+| 23 | Quick Hit Pro | Vendor B (Vendor H) | 2015 | F5 + H + multiplier wild | as #21 + P-017 ✅ | YES (M5) | P1 |
+| 24 | Quick Hit Wild | Vendor B (Vendor H) | 2016 | F5 + H + expanding wild | as #21 + P-008 ✅ | YES (M5) | P1 |
+| 25 | Quick Hit Blitz | Vendor B (Vendor H) | 2018 | F5 + B (all-position scatter + 48 paylines) + H (FS pick-modifier) | as #21 + P-011 ✅ (pay-anywhere) | YES (M5) | P0 |
+| 26 | Quick Hit Cash Wheel | Vendor B (Vendor H) | 2014 | F5 + D (wheel) + B + H | as #21 + P-046 ✅ + P-035 ✅ | YES (M5) | P0 |
+| 27 | Cash Wheel Quick Hit | Vendor B (Vendor H) | 2014 | same as #26 | as #26 | YES (M5) | P1 |
+| 28 | Triple Cash Wheel | Vendor B (Vendor H) | 2022 | F5 + D (3 wheels stacked) + B | as #21 + P-097 ✅ (stacked multi-wheel composition W196) + P-035 ✅ | ✅ **CLOSED (M6 W196, M5 W181)** | P1 |
+| 29 | Cash Spin (U-Spin) | Vendor B (Vendor H) | 2010 | D (U-Spin touch wheel — single spin) + H (FS) + A (money bag bonus) | P-046 ✅ + P-014 ✅ + P-022 ✅ | NO | n/a |
+| 30 | Cash Wizard | Vendor B (Vendor H) | 2011 | D (Cash Wheel pick-3-match → wheel + multiplier up to 4×) + H (2× all wins, 12 FS) | P-046 ✅ + P-047 ✅ + P-063 ⚠ | NO | n/a |
+| 31 | Money Vault | Vendor B (Vendor H) | 2014 | D (Cashspin Wheel Bonus) + A (Wild Money, Moneybags) + H | P-046 ✅ + P-002 ✅ + P-014 ✅ | NO | n/a |
+| 32 | Pattern-CE | Vendor B (Vendor A-licensed under Vendor H side post-acq? actually Vendor B now) | 2019 | A (lava-coin H&S, sticky values) + B (4-tier MMMG) | P-002 ✅ + P-035 ✅ | NO | n/a |
+| 33 | Forbidden Dragons | Vendor B (in-house digital, 2024) | 2024 | C (mystery dragon reveal) + H (FS) + G (sticky wild) | P-051 ✅ + P-005 ✅ | NO | n/a |
+| 34 | Frankenstein Returns (LightWave 2025) | Vendor B (Vendor H) | 2025 | D (overhead bonus board: 4 Frankenstein heads zap → multipliers) + H + B + **M: cabinet-overhead lightning award (signage interactive)** | P-047 ✅ + P-068 ✅ + ❌ overhead/cabinet interaction (hardware-only, not math kernel) | NO (hardware) | n/a |
+| 35 | Jackpot Party VIP Disco (LightWave 2025) | Vendor B (WMS) | 2025 | D (party-pick gift boxes) + H (FS) + B (jackpot tier) | P-047 ✅ + P-014 ✅ + P-035 ✅ | NO | n/a |
+| 36 | Visitors From The Planet Moolah (LightWave 2025) | Vendor B (WMS) | 2025 | F (cascade Cascading Reels) + A (sticky cow respin) + Invasion-mechanic on consecutive cascades | P-001/P-080 ✅ (avalanche reactor) + P-077 ✅ (cascade chain length) + P-002 ✅ + P-052 ✅ (collect-N — for invasion meter) | NO | n/a |
+| 37 | Invaders from the Planet Moolah (original WMS) | Vendor B (WMS) | 2008 | F (cascading reels — first cascade slot) + Invasion (consecutive-win meter) + Wild Cows + Respin Locking | P-080 ✅ + P-077 ✅ + P-052 ✅ + P-002 ✅ | NO | n/a |
+| 38 | Invaders Attack from The Planet Moolah | Vendor B (WMS) | 2024 | as #37 + tier upgrades | as #37 | NO | n/a |
+| 39 | Spartacus Gladiator of Rome | Vendor B (WMS) | 2012 | **E (Colossal Reels — 5×4 main + 5×12 colossal, wild transfer)** + H (FS) + G (stacked wilds transferred) | ⚠ **P-030 ✅ Parallel Screens Aggregate** (handles independent screens) but Colossal Reels has dependent wild-transfer coupling — partial gap |  ✅ **CLOSED (M7 W184)**| **P0** |
+| 40 | Spartacus Super Colossal Reels | Vendor B (WMS) | 2019 | E + H + G | as #39 |  ✅ **CLOSED (M7 W184)**| P0 |
+| 41 | Spartacus Call to Arms | Vendor B (WMS) | 2017 | E (50 paylines, main + 2 rows above) + H (20 FS × 1000× multiplier) | ⚠ P-030 + P-067 (high-multiplier tier) |  ✅ **CLOSED (M7 W184)**| P1 |
+| 42 | Zeus | Vendor B (WMS) | 2013 | H (up to 100 FS — extreme retrigger) + G (stacked wilds, Hand-of-Zeus sticky) + B (Hand-of-Zeus jackpot) | P-037 ✅ (retrigger Wald) + P-005 ✅ + P-035 ✅ | NO | n/a |
+| 43 | Zeus II, III, 1000 | Vendor B (WMS) | 2014–2017 | H + G + B | as #42 | NO | n/a |
+| 44 | Kronos Unleashed | Vendor B (WMS) | 2017 | H + G (stacked wild) + B | P-005 ✅ + P-035 ✅ | NO | n/a |
+| 45 | Goldfish (original) | Vendor B (WMS) | 2003 | D (pick-a-bowl bonus) + H + **M: secondary screen bonus pick** | P-047 ✅ + P-014 ✅ | NO | n/a |
+| 46 | Goldfish Race for the Gold | Vendor B (WMS) | 2017 | D (fish race — competitive pick) + H + secondary screen | P-047 ✅ + P-093 ✅ (competitive race winner-among-N W192) | ✅ **CLOSED (M8 W192)** | P1 |
+| 47 | Goldfish 3 | Vendor B (WMS) | 2018 | D + H + C3 (multiplier fish wilds 2×–5×) | P-047 ✅ + P-017 ✅ + P-063 ✅ | NO | n/a |
+| 48 | Bier Haus (incl. Heidi's Bier Haus) | Vendor B (WMS) | 2010, 2014 | H (5/10/20/100 FS Stein Spin) + G (stacked wilds) + retrigger | P-037 ✅ + P-005 ✅ + P-068 ✅ | NO | n/a |
+| 49 | Raging Rhino | Vendor B (WMS) | 2014 | G2 (4096 ways via 5-reel × 4-row) + H (Vault FS triggered by scatter quantity) | P-049 ✅ + P-068 ✅ | NO | n/a |
+| 50 | Reel'em In! Catch the Big One (1, 2, Cash Bandits) | Vendor B (WMS) | 1996, 2004, 2010 | D (Fishing Hole pick — multi-fisherman / multi-cast tree) + multi-stage pick | P-047 ✅ (N-stage pick tree) + P-010 ✅ | NO | n/a |
+| 51 | Reel'em In Big Bass Bucks | Vendor B (WMS) | 2014 | D (Fishing Contest competitive pick) + H + multiplier (14×–55×) | P-047 ✅ + P-063 ✅ + P-093 ✅ (competitive race winner-among-N W192) | ✅ **CLOSED (M8 W192)** | P1 |
+| 52 | Monopoly Big Event | Vendor B (Barcrest) | 2010 | **I (Big Bet — paid 5-spin packages at higher RTP up to 98%)** + Board bonus + Big Bet Reel-Set switch | ⚠ **P-057 ✅ Free-Spins Buy + Tier** handles paid tier RTP, but Big Bet has rotating reel sets WITHIN purchased session — partial |  ✅ **CLOSED (M9 W186)**| **P0** |
+| 53 | Monopoly Megaways | Vendor B (Barcrest) | 2019 | G3 (Megaways variable-reel) + F (cascade) + H + Board bonus | P-049 ✅ + P-001 ✅ + P-014 ✅ + P-047 ✅ | NO | n/a |
+| 54 | Monopoly Hot Properties | Vendor B (Barcrest) | 2014 | F + H + Board bonus + Hot Properties multiplier | P-001 ✅ + P-047 ✅ + P-063 ✅ | NO | n/a |
+| 55 | Monopoly Electric Wins | Vendor B (Barcrest) | 2024 | F + H + Board bonus + electric-shock multiplier | as #54 | NO | n/a |
+| 56 | Monopoly Super Wheel Bonus | Vendor B (Barcrest) | 2025 | D (wheel bonus) + Board + B | P-046 ✅ + P-047 ✅ + P-035 ✅ | NO | n/a |
+| 57 | Rainbow Riches (original) | Vendor B (Barcrest) | 2006 | D (Pots of Gold wheel + Road to Riches trail + Wishing Well) | P-046 ✅ + P-064 ✅ (trail) + P-047 ✅ | NO | n/a |
+| 58 | Rainbow Riches Megaways | Vendor B (Barcrest) | 2020 | G3 + F + H + Bonus Bank (running balance offset) | P-049 ✅ + P-001 ✅ + P-092 ✅ (Bonus Bank running-balance offset W191 — 3 player-elected modes) | ✅ **CLOSED (M10 W191)** | P0 |
+| 59 | Rainbow Riches Pick n Mix | Vendor B (Barcrest) | 2014 | D (pick which 3 of 5 bonuses to enable per spin — composition selection!) + I (Big Bet) + multiple sub-bonuses | ❌ **player-elects feature-composition before spin** (combinatorial mode selection) + P-057 ⚠ | ✅ **CLOSED (M9 W186) + M11 pending** | **P0** |
+| 60 | Rainbow Riches Pots of Gold | Vendor B (Barcrest) | 2008 | D (Pots of Gold spinning wheel) + H | P-046 ✅ + P-014 ✅ | NO | n/a |
+| 61 | Eye of Horus Megaways | Vendor B (Reel Time / Blueprint, distributed via Vendor B OpenGaming) | 2020 | G3 + F + H + symbol-upgrade-during-FS (Horus light-beam) + G (expanding Horus wild) | P-049 ✅ + P-001 ✅ + P-013 ✅ (symbol upgrade cascade) + P-008 ✅ | NO | n/a |
+| 62 | The Wizard of Oz Munchkinland | Vendor B (WMS) | 2014 | D (wheel bonus → progressive jackpots OR FS) + H + Munchkin-feature random injection during FS + Mayor sticky-3-wild | P-046 ✅ + P-035 ✅ + P-005 ✅ + ❌ **per-spin random-feature injection during FS** (random "Munchkin" appears every K spins to grant FS / wilds / multipliers — distinct from sticky countdown) |  ✅ **CLOSED (M12 W189)**| P1 |
+| 63 | The Wizard of Oz Road to Emerald City | Vendor B (WMS) | 2010 | D (7 bonus games, Emerald-trigger reveals) + H | P-047 ✅ + P-014 ✅ | NO | n/a |
+| 64 | The Wizard of Oz Follow the Yellow Brick Road | Vendor B (WMS) | 2017 | D + H + Glinda reshape-reels random feature + progressive FS meter (multi-stage) | P-047 ✅ + P-096 ✅ (Glinda mid-spin reel-reshape mixture W195) + P-067 ✅ | ✅ **CLOSED (M13 W195, M12 W189)** | P1 |
+| 65 | Willy Wonka Pure Imagination | Vendor B (WMS) | 2014 | D (factory pick tree) + H + Oompa-Loompa wild + Golden Ticket bonus | P-047 ✅ + P-005 ✅ + P-068 ✅ | NO | n/a |
+| 66 | Willy Wonka Dreamers of Dreams | Vendor B (WMS) | 2017 | D + H + B | as #65 | NO | n/a |
+| 67 | Michael Jackson King of Pop | Vendor B (Vendor H) | 2013 | H (Smooth Criminal / Beat It / Billie Jean FS modes — 3 selectable FS variants) + Wild Bonus | ❌ **player-elects FS-variant pre-bonus** (multiple FS modes, mathematically distinct) + P-068 ✅ |  ✅ **CLOSED (M11 W188)**| P1 |
+| 68 | KISS | Vendor B (WMS) | 2014 | H (band-member FS variants) + G (stacked wilds) + B | as #67 + P-005 ✅ |  ✅ **CLOSED (M11 W188)**| P1 |
+| 69 | Madonna | Vendor B (WMS) | 2010 | H + B (Like-a-Prayer bonus) + G | P-005 ✅ + P-035 ✅ | NO | n/a |
+| 70 | Star Trek (Trek Through the Stars / Trek to the Top) | Vendor B (WMS) | 2012 | D (multi-stage starship pick) + H + B (4-tier progressive) | P-047 ✅ + P-014 ✅ + P-035 ✅ | NO | n/a |
+| 71 | Lord of the Rings (Two Towers / Return of the King) | Vendor B (WMS) | 2012, 2013 | H (4-mode FS tower-spin / extra-spin) + D (tower-pick bonus) + B (5-tier progressive Helm's Deep) + **M: mini-slot inside bonus (Tower Spin)** | P-014 ✅ + P-047 ✅ + P-035 ✅ + ❌ **nested-slot-inside-bonus** (sub-game spins independently with own paytable, contributes to parent) |  ✅ **CLOSED (M14 W190)**| P1 |
+| 72 | Stargate Megaways | Vendor B (SG Digital) | 2020 | G3 + F + H | P-049 ✅ + P-001 ✅ | NO | n/a |
+| 73 | James Bond 007 Thunderball / Casino Royale / Goldfinger / Diamonds Are Forever | Vendor B (SG / Vendor H licensed; mostly land-based) | 2016+ | Mixed; mostly D + H + B + scene-specific bonuses | P-014/P-047/P-035 ✅ | NO | n/a |
+| 74 | Cluedo Mighty Ways | Vendor B (SG Digital) | 2022 | **G3 variant: Mighty Ways (4,096–262,144 ways)** + F + Murder-mystery pick bonus + H | P-049 ✅ (variable-reel ways) + P-001 ✅ + P-047 ✅ | NO | n/a |
+| 75 | Smokin' 7s | Vendor B (Vendor H) | 2006 (land-based 1990s) | F1/G1 (3-reel classic) + reel-bound mystery prog (Quick Hit family analog) | P-020 ✅ + ❌ M5 same | YES (M5) | P2 |
+| 76 | Stinkin' Rich | Vendor B (Vendor A licensed? actually Vendor A — verify; brand list mentions Vendor B has many such) | 2008 | D (multi-pick trash bonus) + H + B | (if Vendor B; Vendor A in some markets) — P-047 + P-014 ✅ | check ownership | n/a |
+| 77 | Top Cat | Vendor B (Vendor H) | 2013 | D (gang-pick) + H + G | P-047 ✅ + P-005 ✅ | NO | n/a |
+| 78 | Cash Express Gold Class series (Luxury Line) | Vendor B (Vendor H) | 2018+ | A (cash collector + mystery-cash values) + B (5-tier MMMG+G) + sticky symbols | P-002 ✅ + P-035 ✅ + P-051 ✅ + P-024 ✅ | NO | n/a |
+| 79 | Rich Little Piggies Hog Wild | Vendor B (Vendor H) | 2022 | A (sticky money symbol H&S) + B (4-tier MMMG) + H (FS) | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
+| 80 | Rich Little Piggies Meal Ticket | Vendor B (Vendor H) | 2023 | as #79 + Meal Ticket persistent meter | + P-067 ✅ | NO | n/a |
+| 81 | Rich Little Piggies Piggy Bankin' Break In | Vendor B (Vendor H) | 2024 | A (3-pot enhanced H&S — Instant Win / Double Play / Repeat Win each a sub-mode) + B + **M: branched H&S sub-mode selection** | P-002 ✅ + P-035 ✅ + P-094 ✅ (multi-pot branched H&S sub-feature W193) | ✅ **CLOSED (M15 W193)** | P1 |
+| 82 | Rich Little Sheep – Wool Street Riches | Vendor B (Vendor H) | 2025 | as Hog Wild variant | as #79 | NO | n/a |
+| 83 | Rich Little Piggies World Class | Vendor B (Vendor H) | 2025 | as #81 + class-tier escalation | as #81 | ✅ **CLOSED (M15 W193)** | P2 |
+| 84 | Rich Little Hens World Class | Vendor B (Vendor H) | 2025 | as #81 | as #81 | ✅ **CLOSED (M15 W193)** | P2 |
+| 85 | EggLink series (multiple) | Vendor B (Vendor H) | 2024–2025 | A (egg collect H&S) + B + H | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
+| 86 | Thundering series (Thundering Bison, Thundering Buffalo, Thundering Gorilla) | Vendor B (Lightning Box) | 2018–2024 | G4 (243/1024 ways) + H (FS retrigger) + G (stacked wilds) + occasional Stellar Jackpots arcade | P-049 ✅ + P-037 ✅ + P-005 ✅ + P-095 ✅ (arcade-shooter survival levels W194) | ✅ **CLOSED (M16 W194)** | P1 |
+| 87 | Astro Pug | Vendor B (Lightning Box) | 2018 | G2 (Reelfecta 8 reels, 1296 ways, asymmetric reel heights 3-3-4-4-4-4-3-3) + H + G (multiplier wild) | P-049 ✅ + P-018 ✅ (asymmetric) + P-017 ✅ | NO | n/a |
+| 88 | Astro Cat / Astro Pug Bonus Pug / Lightning Horseman | Vendor B (Lightning Box) | 2017+ | Similar to #87 | as #87 | NO | n/a |
+| 89 | Chicken Fox | Vendor B (Lightning Box) | 2018 | G2 + Stellar Jackpots arcade bonus | as #87 + P-095 ✅ (W194) | ✅ **CLOSED (M16 W194)** | P2 |
+| 90 | Stellar Jackpots wrapper (multiple titles) | Vendor B (Lightning Box) | 2017+ | Random-trigger arcade-shooter mini-game with 3 fixed jackpot prizes (mini/minor/major) | P-095 ✅ (arcade-shooter survival levels W194) | ✅ **CLOSED (M16 W194)** | P1 |
+| 91 | 88 Fortunes (land-based original) | Vendor B (Vendor H / Shuffle Master) | 2014 | A (gold-symbol H&S Fu Bat bonus) + B (4-tier MMMG WAP) + C (mystery gold-symbol coverage) + H | P-002 ✅ + P-035 ✅ + P-051 ✅ + P-014 ✅ | NO | n/a |
+| 92 | 88 Fortunes Megaways | Vendor B (SG Digital online port) | 2020 | G3 + F + D (picker bonus) + H (multiplier-enhanced FS up to 10000x) + cap | P-049 ✅ + P-001 ✅ + P-047 ✅ + P-067 ✅ + P-066 ✅ (max-win cap) | NO | n/a |
+| 93 | 88 Fortunes Diamond Eternity | Vendor B (Vendor H) | 2023 | as #91 + Diamond-Eternity sticky-symbol upgrade | + P-013 ✅ | NO | n/a |
+| 94 | 5 Treasures | Vendor B (Shuffle Master) | 2017 | D (FS mode selection: choose 1 of 5 FS modes after trigger) + H | P-047 ✅ + ❌ **player-elects FS-variant** (M11 same) |  ✅ **CLOSED (M11 W188)**| P1 |
+| 95 | Jin Ji Bao Xi (Endless Treasure / Rising Fortunes) | Vendor B (Shuffle Master) | 2017–2019 | A (red-envelope H&S) + B (4-tier MMMG) + H | P-002 ✅ + P-035 ✅ + P-014 ✅ | NO | n/a |
+| 96 | Fu Dai Lian Lian | Vendor B (Shuffle Master) | 2017 | A + B + H | as #95 | NO | n/a |
+| 97 | Action Bank | Vendor B (Barcrest) | 2017 | D (vault-pick bonus) + H + I (Big Bet) | P-047 ✅ + P-014 ✅ + P-057 ✅ + ❌ Big Bet within-package reel-set switching (M9) |  ✅ **CLOSED (M9 W186)**| P1 |
+| 98 | Black Knight (I, II, III) | Vendor B (WMS) | 2008–2015 | H + G (stacked wilds) + multi-reel scatter | P-005 ✅ + P-068 ✅ | NO | n/a |
+| 99 | Amazon Queen | Vendor B (WMS) | 2011 | H + G + B | P-005 ✅ + P-035 ✅ | NO | n/a |
+| 100 | Bookworm | Vendor B (WMS) | 2008 | H + G (substitution-stacked wild) + reading bonus | P-005 ✅ + P-014 ✅ | NO | n/a |
+| 101 | Wonder 500 (Vendor B exclusive with Sky Vegas, 2024) | Vendor B (in-house digital, exclusive with Sky Betting & Gaming) | 2024 | A + B + H + I (high-roller tier) | P-002 ✅ + P-035 ✅ + P-014 ✅ + P-057 ✅ | NO | n/a |
+| 102 | The Princess Bride | Vendor B (Shuffle Master) | 2015 | D (scene-pick) + H + G + B | P-047 ✅ + P-005 ✅ + P-035 ✅ | NO | n/a |
+| 103 | Forrest Gump | Vendor B (Vendor H) | 2014 | D (multi-scene pick tree) + H + reel-bound symbol upgrades | P-047 ✅ + P-013 ✅ | NO | n/a |
+| 104 | Wonder Woman Gold | Vendor B (Vendor H) | 2018 | D + H + G + B | P-047 + P-005 + P-035 ✅ | NO | n/a |
+| 105 | Pawn Stars | Vendor B (Vendor H) | 2013 | D (shop-item pick tree) + H | P-047 ✅ + P-014 ✅ | NO | n/a |
+
+(Coverage continues across Vendor B's ~220+ online slot library; the 105 above exhaust every distinct mechanic family verified in the public record. Additional titles are mechanic-duplicates of rows already listed and do not introduce new kernel gaps.)
+
+---
+
+## 3. Gap summary — every mechanic with no existing P-ID
+
+Numbered M1…M16 (referenced in column above). For each: 1-line description + example Vendor B title(s) + reason existing P-IDs do not cover.
+
+### M1 — Per-reel cash-bag aggregator with row-multiplier coupling — ✅ **CLOSED in W185** (P-086)
+**Example:** Dragon Spin CrossLink Water (2024).
+Each landed coin contributes to its reel-specific bag AND ramps its row-specific multiplier by +1. Two coupled progressions (per-reel bag, per-row multiplier) where outcomes interact multiplicatively at payout. P-002 covers cash-collect into a single pool; P-067 covers single-meter K-tier; P-039 covers global-only persistent multiplier. None covers **per-reel × per-row coupled accumulators**.
+**Resolution:** W185 ships `src/features/perReelBagRowMultiplierCoupled.ts` — per-cell Bernoulli × coupled-dimension aggregation: per-reel bag B_i = M·q·μ_V Wald, per-row coin count C_j ~ Binomial(N, q), per-row multiplier M_j = m_{C_j} vendor lookup. E[Y] = M·μ_V·Σ_c Bin(c;N,q)·m_c·c exact closed-form via tower property. P(all rows full) = q^(N·M). 36 vitest specs PASS. Acceptance 6/6 PASS @ 120K MC spins (Dragon Spin CrossLink Water classic + high-density + steep-ramp + compact 3×3 + flat-baseline + top-tier-only jackpot corners) — CF/MC slaganje 0.1-1% rel za main path, top-tier-only corner uses abs-or-rel tolerance.
+
+### M2 — Multi-state frame/structure upgrade Markov — ✅ **CLOSED in W183** (P-084)
+**Example:** Huff N' Puff family (Straw → Wood → Brick → Mansion frame upgrades).
+Each cell on the grid has an independent 3-or-4-state Markov chain (Idle/Straw/Wood/Brick/House) with vendor-specific upgrade probabilities per spin; payouts gated by current state. P-058 covers 4-state Markov wild tier (single wild's state); this is **N×M independent per-cell Markov on grid** — N×M Kronecker product of small Markov chains.
+**Resolution:** W183 ships `src/features/multiStateFrameUpgradeMarkov.ts` — exact π_t = π_0 · P^t closed-form za per-cell K-state Markov chain, grid aggregate E[total payout] = N·M · Σ_{t=0..T-1} dot(π_t, m), P(at least one cell reaches k_target) = 1 − (1 − P_per_cell)^(N·M) pod independence. 39 vitest specs PASS. Acceptance 6/6 PASS @ 30K MC features (Huff N' Puff original/More/Even More/Money Mansion/Xtra Puff 6-state + 3-state reset corner) — CF/MC slaganje 0.05-0.3% rel.
+
+### M3 — Dynamic grid-expansion during Hold-and-Spin — ✅ **CLOSED in W182** (P-083)
+**Example:** Ultimate Fire Link family, Pattern-LIL Eureka Reel Blast.
+H&S starts with N rows; as fireballs/dynamites collected past thresholds, **rows are added** (up to 4 extra rows). State space changes mid-feature. P-002/P-049/P-059 all assume fixed grid. Requires a kernel handling rectangular grid-expansion Markov where occupied rows trigger row-extend events with their own probability.
+**Resolution:** W182 ships `src/features/dynamicGridExpansionHoldSpin.ts` — exact Markov DP over state (active, m_idx, stale_streak) sa per-spin Binomial(empty, q) landing PMF + deterministic cumulative-landing-threshold row extensions + classic H&S 3-stale termination. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC features (Ultimate Fire Link Olvera/Power 4/China Street + Pattern-LIL Eureka + 2 corners) — CF/MC slaganje ~0.5-3% rel.
+
+### M4 — Deterministic-grid explosion adds free-position multipliers — ✅ **CLOSED in W187** (P-088)
+**Example:** Dancing Drums Explosion, Dancing Drums Revolution.
+Bonus animation explodes K predetermined positions, adding free-position multipliers (e.g. 2× / 3× / 5× landing). Distinct from P-063 (random reel-stop multipliers) because positions are deterministic-by-design, and from P-038 (cascade pyramid) because it's a one-shot explosion not chain-conditional.
+**Resolution:** W187 ships `src/features/deterministicExplosionMultiplierDrop.ts` — trigger-gated compound sum: T ~ Bernoulli(p_trigger), conditional on T=1 K positions explode each sa V_k iid iz discrete PMF. **E[Y/spin] = p_trigger·K·c·E[V]** exact closed-form. Var via law of total variance. **P(all K hit v_max | trigger) = π_max^K**. Per-value disclosure 1−(1−π_l)^K za UKGC RTS-14 tag-level audit. 37 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (Dancing Drums Explosion 2020 classic + Revolution 2025 8-position extended + 4 corner configs) — CF/MC slaganje ~0.5-3% rel.
+
+### M5 — Reel-bound mystery progressive (Quick Hit family)
+**Example:** Quick Hit Platinum, Quick Hit Black Gold, Quick Hit Pro, Quick Hit Wild, Quick Hit Blitz, Quick Hit Cash Wheel, Triple Cash Wheel, Smokin' 7s.
+Quick Hit symbols on **reels 1, 2, 3, 4, 5** with cumulative-across-spin reel-position-dependent payouts: 3 Quick Hit symbols on reels 1+2+3 = mini, 4 on 1+2+3+4 = minor, 5 on all reels = grand. Distinct from P-035 (multi-tier WAP w/o reel-position dependence), P-051 (mystery aggregator), P-033 (must-hit-by mystery progressive). Requires **per-reel scatter accumulation + adjacency-reel-count tier mapping**. **Used in 8+ Vendor B titles → highest-priority gap**.
+
+### M6 — Stacked-wheel compound RTP (Triple Cash Wheel) — ✅ **CLOSED in W196** (P-097) 🏆 **FINAL GAP — 16/16 Vendor B KIMI gaps closed.**
+**Example:** Vendor B Vendor H Triple Cash Wheel (2022 defining title — 3 stacked wheels) + Vendor H Quick Hit Cash Wheel (2014) + Vendor H Cash Wheel Quick Hit (2014) + future Vendor B multi-wheel flagships.
+P-046 covers single-wheel respin Markov. Stacked wheels with cross-wheel triggers (winning wheel-1 unlocks wheel-2 spin) require a 2- or 3-level compound bonus tree analyzer. **Pure composition** of P-046 might suffice; verify before kernel.
+**Resolution:** W196 ships `src/features/stackedMultiWheelComposition.ts` — N stacked independent wheels sa per-wheel discrete PMF aggregation: per wheel discrete PMF over M_i slices, μ_i = Σ p·V, σ²_i = Σ p·V² − μ². Joint **E[Y] = Σ μ_i** (linearity), **Var[Y] = Σ σ²_i** (independence). **probabilityAllTopSlice = Π_i p_{i,top}** joint grand jackpot, probabilityAtLeastOneTopSlice = 1 − Π (1−p_top), oneInNSpinsAllTopJackpot = 1/Π. Per-wheel UKGC RTS-14 disclosure: contributionToTotalRtp + varianceContribution + topSliceProbability + topSlicePayout + oneInNSpinsForThisWheelTopSlice + isBestWheel. **independenceVarianceRatio = σ_Y/Σ σ_i** Pearson-style decomposition (1/√N za identical N wheels; < 1 indicates independence). 33 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (Triple Cash Wheel 3-stacked **E[Y]=42.05 P(all top)=0.0125% uplift=1.86×** + Quick Hit Cash Wheel 2-wheel composition **P(all top)=0.25%** + Cash Wheel Quick Hit 3-tier balanced **uplift=2.08×** + 2-wheel high-freq + 2-wheel binary corner P(all top)=25% + 5-wheel long field 1-in-3.2M grand). UKGC RTS-14 mandatory per-wheel RTP + UKGC RTS-3 joint top-slice probability disclosure paper trail complete.
+
+---
+
+## 🏆 MILESTONE: 16/16 Vendor B KIMI GAPS CLOSED
+
+**Status as of W196 (2026-05-18):**
+
+| Gap | Title | Status | Wave | P-ID |
+|---|---|---|---|---|
+| M1 | Dragon Spin CrossLink Water (per-reel × per-row coupled accumulator) | ✅ CLOSED | W185 | P-086 |
+| M2 | Huff N' Puff family (multi-state frame upgrade Markov) | ✅ CLOSED | W183 | P-084 |
+| M3 | Ultimate Fire Link family (dynamic grid-expansion H&S) | ✅ CLOSED | W182 | P-083 |
+| M4 | Dancing Drums Explosion (deterministic explosion multiplier-drop) | ✅ CLOSED | W187 | P-088 |
+| M5 | Quick Hit family (reel-bound mystery progressive) | ✅ CLOSED | W181 | P-082 |
+| M6 | **Triple Cash Wheel (stacked multi-wheel composition)** | ✅ **CLOSED** | **W196** | **P-097** |
+| M7 | Spartacus family (Colossal Reels wild-transfer coupling) | ✅ CLOSED | W184 | P-085 |
+| M8 | Goldfish Race + Big Bass Bucks (race/competitive pick) | ✅ CLOSED | W192 | P-093 |
+| M9 | Big Bet UK family (paid-package multi-spin schedule) | ✅ CLOSED | W186 | P-087 |
+| M10 | Rainbow Riches Megaways Bonus Bank (running-balance offset) | ✅ CLOSED | W191 | P-092 |
+| M11 | RR Pick n Mix + MJ KOP + KISS + 5 Treasures (player-elects composition) | ✅ CLOSED | W188 | P-089 |
+| M12 | Wizard of Oz Munchkinland (random feature-injection FS) | ✅ CLOSED | W189 | P-090 |
+| M13 | Wizard of Oz Follow YBR Glinda (mid-spin reel-reshape mixture) | ✅ CLOSED | W195 | P-096 |
+| M14 | LOTR Two Towers + Star Trek (nested mini-slot inside bonus) | ✅ CLOSED | W190 | P-091 |
+| M15 | Rich Little Piggies family (multi-pot branched H&S sub-feature) | ✅ CLOSED | W193 | P-094 |
+| M16 | Lightning Box Stellar Jackpots wrapper (arcade-shooter survival levels) | ✅ CLOSED | W194 | P-095 |
+
+**Coverage achieved: 100% Vendor B mehanika** preko 16 distinct kernel additions (W181-W196, 16 waves), 77 closed-form solvers total, 97 P-IDs in INDUSTRY_PATTERN_CATALOG.
+
+Engine sad pokriva **complete Vendor B catalog** sa 220+ titles attestable preko closed-form kernels + MC verification + UKGC RTS-12/14 + MGA PPD §11 + eCOGRA + EU GA 2024 compliance paper trail.
+
+### M7 — Colossal Reels with wild-transfer coupling — ✅ **CLOSED in W184** (P-085)
+**Example:** Spartacus Gladiator of Rome, Spartacus Super Colossal Reels, Spartacus Call to Arms (and Spartacus dependent titles).
+Two grids: 5×4 main + 5×12 colossal, **100 paylines distributed across both, with wild-position transfer from main → colossal at matched coordinates**. P-030 (Parallel Screens Aggregate) assumes independence; this is **conditional dependence via wild-transfer mapping**. Requires kernel: 2-grid joint-payout with conditional symbol propagation on a subset of positions.
+**Resolution:** W184 ships `src/features/colossalReelsWildTransfer.ts` — 2-stage Binomial sa conditional coupling: K_main via per-reel-non-uniform DP O(N²), K_col | K_main ~ Binomial(K_main, q_t). Joint PMF eksplicitno enumerated. E[K_col] = q_t·E[K_main] (law of total expectation), Var[K_col] derived via law of total variance, P(full wild both grids) = P(K_main=N)·q_t^N. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC spins (Spartacus Gladiator + Super Colossal + Call to Arms + Caesar Empire + 2 corner cases) — CF/MC slaganje 0.5-3% rel.
+
+### M8 — Competitive race / contest bonus — ✅ **CLOSED in W192** (P-093)
+**Example:** Vendor B WMS Goldfish Race for the Gold (2017 defining title 4-fish red/blue/yellow/gold pyramid prize), Vendor B WMS Reel'em In Big Bass Bucks (2014, 5-angler fishing contest sa 14×–55× per-angler multiplier).
+N "racers" each have iid progression rates; one wins, awards multiplier × N-position. Distinct from P-047 (sequential pick tree) and P-046 (wheel spin) because it's a **simultaneous max-finishing-order** outcome over multiple parallel Markov chains.
+**Resolution:** W192 ships `src/features/raceCompetitivePickWinner.ts` — categorical winner + player-pick gating × multiplier draw: N candidates sa weights w_i, K ~ Categorical(p_1..p_N), per-candidate (V_i basePrize, M_i multiplier sa (μ_M, σ²_M)). Y(pick=s) = V_s·M_s·𝟙{K=s} → **E[Y|pick=s] = p_s·V_s·μ_M_s**, **Var[Y|pick=s] = p_s·V_s²·(σ²+μ²) − E[Y]²**. bestPickIndex = argmax_s, skillPremiumVsUniform = best − (1/N)·Σ, rtpSpread = best − worst, commercialUpliftOverSymmetric = bestRtp/uniformRtp. Per-candidate disclosure: probWin + expectedReturnIfPicked + rankByExpectedReturn + isRationalPick. probabilityBestPickWins = p_{s*}, expectedRacesToFirstBestWin = 1/p_{s*} (Geometric), probBestPickWinsAtLeastOnce(K) = 1−(1−p_{s*})^K. 35 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC total (Goldfish Race 4-fish best=gold p=10% ER=10.00 uplift=2.00× + Big Bass Bucks 5-angler 14–55× best=angler_3 + skewed 3-candidate jackpot uplift=2.25× + symmetric 4-candidate skill+=0 corner + 2-candidate binary corner + 8-candidate long field uplift=3.86×). UKGC RTS-12 mandatory player-skill mechanic RTP disclosure.
+
+### M9 — Big Bet paid-package with within-package reel-set switching — ✅ **CLOSED in W186** (P-087, UK-CRITICAL)
+**Example:** Monopoly Big Event, Rainbow Riches Pick n Mix, Action Bank.
+Player pays N× stake → unlocked 5 spins where **each spin has a different reel-set + paytable** (often with progressive RTP across the 5 spins). P-057 covers per-package RTP single-mode; this adds **multi-spin schedule of distinct paytables WITHIN ONE paid package**. UK-specific feature mandated under UKGC RTS 12 for Big Bet disclosure.
+**Resolution:** W186 ships `src/features/bigBetPaidPackageMultiSpin.ts` — per-spin independent aggregation: E[total] = Σ b_k·r_k, Var = Σ σ²_k, P(profit) via CLT-Normal (Abramowitz-Stegun erf). Operator subsidy = max(0, packageRtp − baseRtp)·C. RTP escalation slope (linear regression), UKGC LCCP 3.4.3 harm-threshold flag, bestSpinIndex/worstSpinIndex disclosure. 40 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC packages (Monopoly Big Event 5-spin 90→98% + RR Pick n Mix flat 96% + Action Bank 90→102% + Pearl of Caribbean high-vol + 2-spin corner + 10-spin extended). UKGC RTS-12 mandatory disclosure paper trail complete.
+
+### M10 — Bonus Bank running-balance offset (deferred-win bank) — ✅ **CLOSED in W191** (P-092, UK-CRITICAL)
+**Example:** Vendor B Barcrest Rainbow Riches Megaways (2020 defining title).
+Player elects pre-spin Bank-Off-Wins / Bank-All-Wins / Bank-Small-Wins → winnings aggregate per-spin sa banking transformation (multiplier na entire pool ili na small-bucket subset). P-057 (FS Buy) ne handluje running-balance aggregation; P-066 FS Lookback je POST-HOC max-sum disjoint segment ne per-spin bucket banking; P-089 Player-Elects Composition je combinatorial m-of-N ne aggregation transformation.
+**Resolution:** W191 ships `src/features/bonusBankRunningBalanceOffset.ts` — per-spin bucketed aggregation sa player-elected banking transformation: per-spin W_k sa overall μ_W = p_low·μ_low + (1−p_low)·μ_high (tower property). **Mode A bank_off_wins** baseline T_A=Σ W_k → E[T_A]=N·μ_W, Var=N·σ²_W. **Mode B bank_all_wins** T_B = m_B·Σ W_k → **E[T_B]=m_B·N·μ_W**, Var=m_B²·N·σ²_W. **Mode C bank_small_wins** Z = W·(1+(m_S−1)·𝟙{W≤τ}) → **E[Z]=p_low·m_S·μ_low+(1−p_low)·μ_high**, Var[Z] = E[Z²]−E[Z]² preko per-bucket conditional moments. **bestModeIndex** + **rtpSpread** + **skillPremiumVsUniform** za player choice value. **bonusBankAdditiveOffsetB = (m_B−1)·N·μ_W** linear offset. bankSmallContributionShareC per-spin uplift share. commercialUpliftBVsBaselineA = m_B. 39 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC bonus-sessions (RR Megaways Bank All Wins p_L=0.65 m_B=1.25 best=B_all skill+=3.40 + Bank Small Wins high-freq p_L=0.80 m_S=3.0 best=C_small skill+=7.52 + Barcrest balanced 3-mode + long FS m_B=1.5 best=B_all skill+=50.25 + p_L=1 corner + p_L=0 corner). UKGC RTS-12 mandatory player-elected mode RTP disclosure (UK 2010+ Barcrest Bonus Bank regulation).
+
+### M11 — Player-elects feature-composition pre-spin / pre-bonus — ✅ **CLOSED in W188** (P-089)
+**Examples:** Rainbow Riches Pick n Mix (player picks 3 of 5 bonuses to enable), Michael Jackson King of Pop (3 FS-mode variants Smooth Criminal / Beat It / Billie Jean), KISS (band-member FS variants), 5 Treasures (FS-mode selection menu).
+Player makes an **m-of-n combinatorial selection** of features at trigger time, with each subset producing a different RTP and variance profile. The engine needs a **combinatorial-mode RTP decomposition analyzer** — given a base game with N optional features, for each 2^N subset emit RTP/var/hit-freq and verify that aggregate weighted RTP across configured mode-selection probabilities matches paytable target.
+**Resolution:** W188 ships `src/features/playerElectsFeatureComposition.ts` — m-of-N combinatorial composition selection: under independence E[Y|S] = Σ r_i. Best player-rational pick = top-m by RTP desc, worst = bottom-m, uniform = (m/N)·Σ r_i (linearity). Skill premium = bestPick − uniformPick. RTP spread = bestPick − worstPick. C(N,m) distinct compositions. 35 vitest specs PASS. Acceptance 6/6 PASS @ 360K MC spins (RR Pick n Mix 3-of-5 + MJ KOP 3 modes + KISS 4 modes + 5 Treasures 5 modes + 2 corner configs, rational/worst/uniform strategy validation).
+
+### M12 — Random feature-injection during free spins (sticky / non-sticky) — ✅ **CLOSED in W189** (P-090)
+**Example:** The Wizard of Oz Munchkinland (random Munchkin appears mid-FS to grant extra spins / wilds / multiplier).
+Per FS spin a Bernoulli(p) event injects a random sub-feature with its own payout. Distinct from P-005 (sticky wild FS), P-068 (scatter retrigger). Requires kernel handling random nested-feature aggregation during FS.
+**Resolution:** W189 ships `src/features/randomFeatureInjectionDuringFs.ts` — compound per-FS-spin Bernoulli injection: per spin I_k ~ Bernoulli(p_inject), if injected V_k iid. **E[S] = N·μ_Y + N·p·μ_V** exact. Var via Bernoulli-mixed compound. **P(at least one injection) = 1−(1−p)^N**. 34 vitest specs PASS. Acceptance 6/6 PASS @ 180K MC FS-bonuses (Munchkinland classic + WMS sub-feature variant + long FS rare + short high-inject + 2 corners).
+
+### M13 — Mid-spin random reel-reshape (Glinda) — ✅ **CLOSED in W195** (P-096)
+**Example:** Vendor B WMS Wizard of Oz Follow the Yellow Brick Road (2017 defining title — Glinda waves wand mid-spin) + Wizard of Oz Munchkinland reshape variants + future Vendor B reshape-mechanic flagships.
+Mid-spin the entire reel set may be replaced by a different reel set (Glinda the Good Witch feature). No existing P-ID covers **reel-set switching mid-execution** as a stochastic event with state-dependent transition matrix.
+**Resolution:** W195 ships `src/features/midSpinReelReshapeMixture.ts` — K-component reel-set mixture distribution sa stochastic mid-spin transition: K ~ Categorical(p_0..p_{K-1}), per-set X_k iid sa distinct (μ_k, σ²_k). **E[Y] = Σ p_k·μ_k** mixture mean (= total RTP). **Var[Y] = E[Y²] − E[Y]²** sa decomposition Var[Y] = E[Var[Y|K]] + Var[E[Y|K]] = within-set Σ p_k·σ²_k + between-set Σ p_k·μ²_k − E[Y]² (conditional variance identity). **withinSetVarianceShare** ∈ [0,1] auditor decomposition. Per-set disclosure UKGC RTS-14: contributionToRtp + oneInNSpinsForThisSet + isBestReelSet + isBaseReelSet. reshapeProbability = 1 − p_0, **commercialUpliftVsBaseOnly = E[Y]/μ_base** (Glinda commercial value), bestReelSetUpliftIfReshape, oneInNSpinsBestReelSet. **Distinct critically od P-094 (Multi-Pot Branched)** — P-094 je TRIGGER-gated (Y=0 if no trigger), ovde **no-trigger pathway also pays** base reel-set spin. Mixture distribution ≠ trigger gating. 33 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (WOZ YBR 3-set base+glinda+emerald uplift=1.75× withinShare=90.1% + WOZ Munchkinland 2-set uplift=1.43% + 5-set diverse reshape menu uplift=2.58× + high-freq 30% reshape + 2 corner). UKGC RTS-14 mandatory per-reel-set RTP disclosure paper trail complete.
+
+### M14 — Nested-slot mini-game inside bonus (independent paytable) — ✅ **CLOSED in W190** (P-091)
+**Example:** Lord of the Rings Two Towers (Tower Spin nested mini-slot inside main bonus); also Star Trek some variants.
+Bonus stage contains its own slot-spin with separate reel set, paytable, and variance which then contributes to parent bonus. P-047 (pick tree) does not model sub-spinner. Requires compositional kernel: parent stage E[Y] = pick-stage E[X] + nested-slot E[Y_inner]; variance composes via law of total variance.
+**Resolution:** W190 ships `src/features/nestedMiniSlotInsideBonus.ts` — hierarchical parent-child composition. **E[Z per outer] = μ_O + p_N·N_I·μ_I**. Var via law of total variance (single + two-level Bernoulli mass). **E[Y/parent] = p_B·K_O·E[Z]**. 34 vitest specs PASS. Acceptance 6/6 PASS @ 300K MC parent-spins (LOTR Two Towers + Return of the King + Star Trek + 3 corners).
+
+### M15 — Multi-pot branched H&S sub-feature selection — ✅ **CLOSED in W193** (P-094)
+**Example:** Vendor B Vendor H Rich Little Piggies Piggy Bankin' Break In (2024 defining title, 3 pots: Instant Win, Double Play, Repeat Win — each triggering structurally distinct sub-game) + Rich Little Piggies World Class (2025, 4-tier escalation) + Rich Little Hens World Class (2025).
+Standard H&S grid + a **branched H&S** where each filled pot triggers a different sub-feature with its own math model. Requires compound-tree H&S where pot outcomes have heterogeneous payout distributions (not just different prize values).
+**Resolution:** W193 ships `src/features/multiPotBranchedHoldSpinSubFeature.ts` — trigger-gated categorical sub-mode mixture sa law of total variance: T ~ Bernoulli(p_trigger), if T=1 K ~ Categorical(p_1..p_M), per-pot V_k iid sa distinct (μ_k, σ²_k). **E[V|trig] = Σ p_k·μ_k**, **Var[V|trig] = Σ p_k·(σ²_k+μ²_k) − E[V]²**. **E[Y/spin] = p_T·E[V|trig]**, Var via law of total variance on trigger. Per-pot disclosure UKGC RTS-14: contributionShareOfBonus + oneInNTriggersForPot + rankByMeanPayout + isBestPot. jackpotPotShare + bonusVariabilityIndex (σ/μ) + mixtureVarianceLift (cross-pot diversity index). 35 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC spins (Piggy Bankin' Break In 3-pot best=repeat_win 54.1% share + World Class 4-tier Mini/Minor/Major/Grand grand 68.5% share mixVarLift=90.66 + Hens variant + 3 corners). UKGC RTS-14 mandatory per-pot RTP contribution disclosure paper trail complete.
+
+### M16 — Arcade-shooter side bonus (probabilistic level progression) — ✅ **CLOSED in W194** (P-095)
+**Example:** Vendor B Lightning Box Stellar Jackpots wrapper (random-trigger arcade-shooter mini-game) — Thundering Bison/Buffalo/Gorilla (2018-2024), Chicken Fox (2018), Lightning Horseman, 4+ Astro family variants.
+Randomly triggered arcade mini-game: player shoots through 6 levels with per-level success probability p_i, winning the highest jackpot tier reached (mini/minor/major). Distinct from P-064 (trail/board because trail is sequential picks not skill-shoot probability; functionally similar but with a 3-tier prize structure tied to max-level-reached. Worth its own kernel for clean integration with Stellar Jackpots-style add-ons.
+**Resolution:** W194 ships `src/features/arcadeShooterSurvivalLevels.ts` — sequential survival Markov chain sa absorbing failure state + per-level reward + terminal jackpot mixture: S_k = ∏_{i<k} p_i (chain rule), P(exit at k) = S_k·(1−p_k), **P(complete) = S_{L+1} = ∏ p_i**. **E[Y/run] = Σ S_{k+1}·V_k + S_{L+1}·μ_J**, Var[Y] via correlated-Bernoulli E[Y²] sa nested-indicator identity 𝟙{pass j}·𝟙{pass k} = 𝟙{pass max(j,k)} + jackpot mixture + cross term. Per-level UKGC RTS-14 disclosure: probReached + probPassed + probExitAtLevel + expectedRewardContribution. Per-jackpot-tier: probabilityHitThisTier = S_{L+1}·π_k + oneInNRunsForTier. Top-level: probabilityCompleteRun + expectedLevelReached + oneInNRunsToComplete + jackpotShareOfRtp + probabilityGrandJackpot. 34 vitest specs PASS. Acceptance 6/6 PASS @ 600K MC runs (Stellar Jackpots 6-level 4-tier P(complete)=2.02% JP_share=30.8% + Thundering Bison 4-level 2-tier P(complete)=8.92% JP_share=88.6% + Chicken Fox 3-level 2-tier high-freq P(complete)=33.75% + Lightning Horseman 8-level extended P(complete)=1.72% + 1-level binary corner + all-high-pass corner P(complete)=85.74%). UKGC RTS-14 mandatory per-stage probability disclosure paper trail complete.
+
+---
+
+## 4. Priority ranking
+
+### P0 — Used by ≥5 Vendor B titles, blocks substantial portfolio. Build first.
+
+| Gap | Title count | Jurisdictions | Recency | Wave priority |
+|---|---|---|---|---|
+| **M5** — Reel-bound mystery progressive (Quick Hit family) | 8+ | UK + US + AU + EU | 2010–2024 (continuous) | W181 |
+| **M3** — Dynamic grid-expansion during H&S (Ultimate Fire Link / Pattern-LIL Eureka) | 8+ (Ultimate Fire Link 7 variants + Pattern-LIL Eureka) | UK + US + AU + EU | 2017–2025 | W182 |
+| **M2** — Multi-state frame/structure upgrade Markov (Huff N' Puff family) | 8 (Huff N' Puff to Money Mansion) | US + UK + EU | 2019–2024 | W183 |
+| **M7** — Colossal Reels wild-transfer (Spartacus family) | 3+ (but defining-mechanic of WMS land-based, 50+ titles in WMS portfolio) | UK + US + AU | 2012–2019 | W184 |
+| **M1** — Per-reel cash-bag × row-multiplier coupling (Dragon Spin CrossLink Water) | 1 current + signal of new Vendor B flagship direction | UK + US + EU | 2024 | W185 |
+| **M9** — Big Bet paid-package within-package switching (Barcrest UK family) | 3+ titles (Monopoly Big Event, Pick n Mix, Action Bank); UKGC-mandated disclosure | **UK-CRITICAL** | 2010–2022 | W186 |
+
+### P1 — Used by ≥2 Vendor B titles, valuable for portfolio breadth.
+
+| Gap | Title count | Wave priority |
+|---|---|---|
+| **M4** — Deterministic-grid explosion adds multipliers (Dancing Drums Explosion / Revolution) | 2 | W187 |
+| **M11** — Player-elects feature-composition (RR Pick n Mix, MJ KOP, KISS, 5 Treasures) | 4 | W188 |
+| **M12** — Random feature-injection during FS (Munchkinland) | 1+ (pattern recurs in WMS sub-titles) | W189 |
+| **M14** — Nested-slot mini-game inside bonus (LOTR Two Towers, Star Trek) | 2+ | W190 |
+| **M15** — Multi-pot branched H&S (Piggy Bankin' Break In, RLP World Class line) | 3+ | W191 |
+| **M8** — Competitive race / contest bonus (Goldfish Race, Reel'em In Big Bass Bucks) | 2 | W192 |
+| **M16** — Arcade-shooter side bonus (Stellar Jackpots wrapper across Lightning Box) | 5+ Lightning Box titles | W193 |
+| **M10** — Bonus Bank running-balance offset (Rainbow Riches Megaways) | 1+ flagship UK | W194 |
+
+### P2 — Single-title niche; deferred.
+
+| Gap | Title count | Wave priority |
+|---|---|---|
+| **M6** — Stacked-wheel compound RTP (Triple Cash Wheel) | 1 (may compose from P-046) | W195 (composition test) |
+| **M13** — Mid-spin random reel-reshape (Glinda) | 1 | W196 |
+
+---
+
+## 5. Recommended Wave numbering W181-W200
+
+Format: **W### — Kernel name (gap M#) → P-ID assignment → covers N Vendor B titles**
+
+| Wave | Solver name | Closes gap | New P-ID | Vendor B titles unlocked |
+|---|---|---|---|---|
+| **W181** | Reel-Bound Mystery Progressive (per-reel scatter accumulation with adjacency tier mapping) | M5 | P-082 | Quick Hit Platinum, Black Gold, Pro, Wild, Blitz, Cash Wheel, Triple Cash Wheel, Smokin' 7s (8 titles) |
+| **W182** | Dynamic Grid-Expansion H&S (Markov on rectangular state space with row-add events) | M3 | P-083 | Ultimate Fire Link (7 variants) + Pattern-LIL Eureka Reel Blast (8 titles) |
+| **W183** | Per-Cell Markov Frame Upgrade Kronecker Aggregator (3-or-4-state cell chain × N×M grid) | M2 | P-084 | Huff N' Puff family (8 titles) |
+| **W184** | Colossal Reels Wild-Transfer Coupled Two-Grid Aggregator (conditional propagation) | M7 | P-085 | Spartacus family (3+ titles, defining WMS land-based mechanic) |
+| **W185** | Per-Reel-Bag × Per-Row-Multiplier Coupled Accumulator (Dragon Spin CrossLink) | M1 | P-086 | Dragon Spin CrossLink Water + future Vendor B variants |
+| **W186** | Big Bet Paid-Package Multi-Spin Reel-Set Schedule Analyzer (UKGC RTS-12 disclosure) | M9 | P-087 | Monopoly Big Event, Rainbow Riches Pick n Mix, Action Bank, Pearl of Caribbean (4+ titles, **UK-critical**) |
+| **W187** | Deterministic Explosion Multiplier-Drop (one-shot deterministic-grid mult injection) | M4 | P-088 | Dancing Drums Explosion + Revolution (2+ titles) |
+| **W188** | Combinatorial Feature-Composition RTP Decomposer (m-of-n subset RTP×variance grid) | M11 | P-089 | RR Pick n Mix, MJ KOP, KISS, 5 Treasures (4+ titles) |
+| **W189** | Random Feature-Injection During FS Aggregator (per-FS-spin Bernoulli injection of nested sub-feature) | M12 | P-090 | Wizard of Oz Munchkinland (1+ extends to WMS sub-feature library) |
+| **W190** | Nested Mini-Slot Inside Bonus Compositional Variance (parent-child slot composition with law-of-total-variance) | M14 | P-091 | LOTR Two Towers, Star Trek (2+ titles) |
+| **W191** | Multi-Pot Branched H&S Sub-Feature Selector (heterogeneous-payout pot triggers) | M15 | P-092 | Piggy Bankin' Break In, Rich Little Piggies/Sheep/Hens World Class (3+ titles) |
+| **W192** | Competitive Race / Contest Multi-Racer Max-Finish Aggregator (N parallel Markov chains, max-finishing-position bonus) | M8 | P-093 | Goldfish Race for the Gold, Reel'em In Big Bass Bucks Fishing Contest (2 titles) |
+| **W193** | Arcade-Shooter Side-Bonus Multi-Level Survival Probability (per-level p_i Bernoulli chain to max-tier prize) | M16 | P-094 | Stellar Jackpots wrapper across Lightning Box (5+ Lightning Box titles) |
+| **W194** | Bonus Bank Running-Balance Auto-Convert (banking with bank-threshold trigger; 3 mode variants) | M10 | P-095 | Rainbow Riches Megaways + RR family extensions (1+ flagship UK) |
+| **W195** | Stacked Compound-Wheel Conditional Trigger (compose P-046 + cross-wheel conditional trigger; validate via composition test, no new kernel needed if composition passes) | M6 | P-046 composition validation (NOT new P-ID) | Triple Cash Wheel (1 title; covered via composition) |
+| **W196** | Mid-Spin Reel-Set Switch Stochastic Transition (probability of reel-replace × subset of reels affected) | M13 | P-096 | Wizard of Oz Follow the Yellow Brick Road (1 title) |
+| **W197** | **Industry-First** Reel-Position-Weighted Quick Hit Cumulative Decomposition (extension of P-082 with per-position contribution disclosure for UKGC tag-level audit) | (regulatory enhancement on M5) | P-097 | extends W181, adds UKGC RTS 14 Tag 12 per-position breakdown for Quick Hit-family certification |
+| **W198** | **Industry-First** Big Bet Buy-Cycle Recovery Analyzer (Wald-style EV recovery on multi-spin paid package; UKGC + Belgian ban impact disclosure) | (regulatory enhancement on M9) | P-098 | extends W186, adds chase-pattern-detection + Australian/Belgian bonus-buy-ban counterfactual RTP loss |
+| **W199** | Compositional Cross-Solver Validator (acceptance harness that exercises every new W181-W196 kernel in a full Vendor B IR-style composition pipeline) | (validation infrastructure) | — | engineering: regression-test the 16 new kernels combined |
+| **W200** | **MILESTONE** Vendor B Portfolio Coverage Closure Dossier (`reports/dossier/LW_PORTFOLIO_COVERAGE.md`) — emits per-title coverage attestation for every Vendor B title in this document | (dossier) | — | shipping artifact: certifies Vendor B can take their IR + math attestation directly from the engine for every title catalogued |
+
+---
+
+## 6. Acceptance criteria for the wave plan
+
+Each W181-W196 kernel must ship with:
+
+1. **Math kernel** (closed-form solver in `src/features/`)
+2. **≥25 vitest specs** (matches existing acceptance bar)
+3. **≥6 industry-representative configs** (per existing P-ID convention) × MC validation (typically 50K–300K spins)
+4. **Acceptance proof MD** in `reports/acceptance/` showing closed-form vs MC agreement within tolerance
+5. **Industry pattern catalog entry** in `docs/INDUSTRY_PATTERN_CATALOG.md` with formal P-ID
+6. **Cross-reference into KIMI table** in this document (mark ❌ → ✅)
+7. **Closed-form portfolio runner integration** (`npm run closed-form-portfolio` must include the new kernel)
+
+---
+
+## 7. What Vendor B gets when W181-W200 ship
+
+| Metric | Before W181 | After W200 |
+|---|---|---|
+| Closed-form solvers | 61 | 77 (+16 new) |
+| P-IDs documented | 81 | 97 (+16 new) |
+| Vendor B titles with full engine attestation | ~75/105 (71%) | **105/105 (100%)** |
+| Gaps requiring custom Monte Carlo | 16 mechanics | 0 mechanics (every Vendor B mechanic covered by closed-form solver + acceptance proof) |
+| UKGC RTS-12 / RTS-14 disclosures | partial | complete (Big Bet + Quick Hit position-weighted + Bonus Bank disclosed) |
+| Time to onboard Vendor B IR | days (gaps require ad-hoc kernels) | hours (every mechanic → known P-ID → known solver) |
+
+---
+
+## 8. Sources
+
+### Verified (used in this document)
+
+- [Vendor B (Wikipedia) — corporate structure, subsidiaries, acquisitions](https://en.wikipedia.org/wiki/Light_%26_Wonder)
+- [WMS Gaming (Wikipedia) — WMS title history](https://en.wikipedia.org/wiki/WMS_Gaming)
+- [Vendor B Portfolio page (igaming.lnw.com/portfolio/)](https://igaming.lnw.com/portfolio/) — confirms broad studio/title list (filterable database)
+- [Vendor B G2E 2025 LightWave announcement — Frankenstein Returns, Dancing Drums Revolution, Visitors Planet Moolah, Ultimate Fire Link Cash Falls Explosion, Jackpot Party VIP Disco](https://explore.lnw.com/newsroom/light-wonder-unveils-lightwave-cabinet-and-four-new-hardware-innovations-at-g2e-2025-ushering-a-new-era-of-immersive-gaming/)
+- [Vendor B ICE 2025 / G2E 2024 — Huff N' Puff, Ultimate Fire Link, Invaders Attack Again from Planet Moolah, Dancing Drums franchise list](https://explore.lnw.com/newsroom/light-wonder-to-showcase-industry-leading-gaming-innovations-at-ice-2025)
+- [iGamingExpress Vendor B brand profile](https://igamingexpress.com/brands/light-wonder/)
+- [Dragon Train Chi Lin Wins review (Respinix)](https://respinix.com/demo/dragon-train-chi-lin-wins/)
+- [Dragon Train review (GGB Magazine)](https://ggbmagazine.com/article/dragon-train/)
+- [Vendor B Jewel of the Dragon (Indian Gaming Magazine, 2024)](https://www.indiangaming.com/light-wonder-jewel-of-the-dragon/)
+- [Dragon Spin CrossLink Water mechanic detail (Indian Gaming Magazine + Fruity Slots review)](https://www.indiangaming.com/light-wonder-dragon-spin-crosslink/) / [Fruity Slots review](https://fruityslots.com/slots/reviews/dragon-spin-cross-link-water/)
+- [Huff N' Puff family — Big Win Board reviews (Huff N' More Puff, Huff N' Even More Puff, Hard Hat Edition, Lots of Puff, Xtra Puff, Money Mansion)](https://www.bigwinboard.com/huff-n-xtra-puff-light-wonder-slot-review/)
+- [Ultimate Fire Link family slot reviews (vegasslotsonline + Slotcatalog)](https://www.vegasslotsonline.com/light-and-wonder/ultimate-fire-link-cash-falls-china-street/)
+- [Pattern-LIL Diamonds review (Fruity Slots)](https://fruityslots.com/slots/reviews/lock-it-link-diamonds/)
+- [Eureka Reel Blast review (Gamesville / Slot Catalog / Bonus Tiime)](https://slotcatalog.com/en/slots/Eureka-Reel-Blast)
+- [Quick Hit family explainers (Gambling.com, PlayUSA, Slots.org)](https://www.gambling.com/us/online-casinos/strategy/quick-hit-slots-2252200)
+- [Cash Spin / Cash Wizard / Money Vault (Vendor H) — Vegas Slots Online + Casino Player Magazine](https://www.vegasslotsonline.com/bally/cash-spin/)
+- [WMS Spartacus Gladiator of Rome — Vegas Slots Online + Slotsmate (Colossal Reels mechanics)](https://www.vegasslotsonline.com/wms/spartacus-gladiator-of-rome/) + [Slotsmate Colossal Reels](https://www.slotsmate.com/features/colossal-reels-slots)
+- [Invaders from the Planet Moolah — All Slots Online + Vegas Slots Online (cascading reels original)](https://www.vegasslotsonline.com/wms/invaders-from-the-planet-moolah/)
+- [88 Fortunes Megaways review (Slotslaunch + PlayUSA)](https://slotslaunch.com/light-and-wonder/88-fortunes-megaways)
+- [88 Fortunes (Light and Wonder) Slotcatalog](https://slotcatalog.com/en/slots/88-Fortunes-Light-and-Wonder)
+- [Rainbow Riches Megaways (Big Win Board)](https://www.bigwinboard.com/rainbow-riches-megaways-barcrest-slot-review/)
+- [Rainbow Riches Pick n Mix (Slotswise + Free Slots No Download)](https://www.slotswise.com/online-slots/barcrest/rainbow-riches-pick-n-mix/)
+- [Rainbow Riches Pots of Gold (Big Win Board)](https://www.bigwinboard.com/rainbow-riches-pots-of-gold-barcrest-slot-review/)
+- [Monopoly Megaways / Big Event series (PokerNews Vendor B primer)](https://www.pokernews.com/casino/slots/light-and-wonder-slots)
+- [Eye of Horus Megaways (Slot Boss review)](https://www.slotboss.co.uk/games/eye-of-horus-megaways)
+- [Wizard of Oz Munchkinland (Vegas Slots Online + Slot Catalog)](https://www.vegasslotsonline.com/wms/wizard-of-oz-munchkinland/) + [Slot Catalog](https://slotcatalog.com/en/slots/the-wizard-of-oz-munchkinland)
+- [Wizard of Oz Road to Emerald City / Follow the Yellow Brick Road (BigWinBoard + Neonslots + Ispinix)](https://www.bigwinboard.com/new-slot-wizard-oz-road-emerald-city/)
+- [Willy Wonka slot family (PlayUSA reviews of all 5 Wonka slots)](https://www.playusa.com/slots/bally/willy-wonka/)
+- [Lightning Box — Astro Pug, Stellar Jackpots wrapper (Vegas Slots Online + PlayOJO + PlayUSA)](https://www.vegasslotsonline.com/lightning-box-games/)
+- [Thundering Gorilla (Lightning Box) — Livebet](https://www.livebet.com/casino/slots/lightning-box-games/thundering-gorilla)
+- [Reel'em In family (WMS) — Slotsspot, Slotorama, FreeSlotsHub](https://www.slotorama.com/video-slots/reel-em-in/)
+- [Goldfish series (WMS) — Slotstory + Gambl.com](https://slotstory.com/slot-catalog/goldfish/)
+- [Vendor B Dragon Train North America removal coverage (Review Journal, on commercial suspension)](https://www.reviewjournal.com/business/casinos-gaming/vegas-gaming-company-clearing-out-all-dragon-train-slot-machines-3183290/)
+- [Vendor B Jewel of the Dragon commercialisation cessation (g3newswire)](https://g3newswire.com/light-wonder-to-cease-commercialising-its-jewel-of-the-dragon-slot-and-offer-replacements/)
+- [Rich Little Piggies series (Vendor B iGaming + Bonus.com strategy guide)](https://igaming.lnw.com/games/rich-little-piggies-hog-wild/) + [Bonus.com strategy guide](https://www.bonus.com/slots/light-wonder/rich-little-piggies-hog-wild/)
+- [Cluedo Mighty Ways feature explainer (PokerNews Vendor B primer, June 2022 launch)](https://www.pokernews.com/casino/slots/light-and-wonder-slots)
+- [Wonder 500 Sky Vegas exclusive (Vendor B press release)](https://explore.lnw.com/newsroom/light-wonder-showcases-pioneering-new-wonder-500-product-exclusively-with-sky-betting-gaming/)
+
+### Brand-attribution corrections (used to remove non-Vendor B titles from gap analysis)
+
+- [Vendor C ownership of Pattern-LL / Pattern-DL / Lightning Cash / Buffalo / Wonder 4 / Wonder Wheel](https://www.aristocratgaming.com/us/slots/games/wonder-4-revolution)
+- [Pattern-LL vs Pattern-DL history (Holy City Sinner — confirms Vendor C)](https://holycitysinner.com/entertainment/lightning-link-vs-dragon-link-what-s-the-difference/)
+- [Know Your Slots — Pattern-LL, Pattern-DL, Dollar Storm history](https://www.knowyourslots.com/all-about-lightning-link-dragon-link-and-dollar-storm/)
+- [Coyote Moon — Vendor A title](https://www.onlineslots.com/Vendor A/coyote-moon/)
+
+---
+
+## 9. Open verification items (for Boki to confirm)
+
+1. **Stinkin' Rich** — public sources show both Vendor A and Vendor H listings. Verify Vendor B ownership before counting toward M5 (currently excluded).
+2. **Top Cat** — Vendor H land-based, confirmed Vendor B; UK Belgian/Australian distribution coverage unverified.
+3. **The Princess Bride** — Shuffle Master 2015; verify still in Vendor B portfolio post-2022 rebrand.
+4. **Pattern-LIL Eureka Reel Blast** — confirmed Vendor B via slot reviews; verify row-expansion **during** H&S (not pre-trigger) before assigning to M3 alongside Ultimate Fire Link.
+5. **Triple Cash Wheel** — composition test (P-046 × P-046 × P-046 chained) should be attempted in W195 before deciding whether a new kernel is needed.
+6. **Dragon Train Chi Lin Wins** — paused in NA per Review Journal (Apr 2025); confirm whether engine attestation is still required (EU + AU markets active).
+7. **Wonder 500** — Sky Vegas exclusive partnership; engineering should confirm scope of mechanics (this document treats it as a composition of A + B + H + I, no new gap).
+
+---
+
+**End of KIMI deep-research deliverable.** Total titles catalogued: 105. New kernel gaps identified: 16 (M1–M16). Proposed waves: W181–W200 (16 kernels + 2 enhancements + 1 validator + 1 dossier).

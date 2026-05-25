@@ -7,7 +7,7 @@ This document lists CVEs that the W213 security audit suppresses
 **by exception**, together with the rationale and the compensating
 controls. The exception list is encoded as code in
 `scripts/security/audit.mjs` (`CVE_DEV_ONLY_PACKAGES`); this file is
-the human-readable companion that the L&W security team reviews.
+the human-readable companion that the Vendor B security team reviews.
 
 Every exception MUST cite:
 
@@ -53,5 +53,5 @@ When a new CVE appears at HIGH or CRITICAL:
    `scripts/security/audit.mjs`.
 4. **Open a tracking ticket** with the re-eval date.
 
-The L&W operator-package zip ships a snapshot of this file alongside
+The Vendor B operator-package zip ships a snapshot of this file alongside
 `AUDIT_REPORT.md` so the regulator has the full provenance.

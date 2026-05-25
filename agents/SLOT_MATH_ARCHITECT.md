@@ -35,7 +35,7 @@
 4. **0 panic u hot-path.** Rust engine nikad ne unwrap-uje user inputm — Result<> svuda. TS engine nikad ne baca u sim loop.
 5. **Deterministic.** Isti seed + isti IR → isti output, do bit-a, kroz **sve** verzije engine-a.
 6. **GLI-16 fingerprint.** Svaki cert paket sadrži: PAR commitment hash, seed, mathVersion, jurisdiction profile, MC results, audit log.
-7. **Vendor mimicry.** L&W layout, IGT layout, Aristocrat layout, NetEnt layout — svi parsabilni iz `vendor_profiles/*.yaml` (W4.2 sistem).
+7. **Vendor mimicry.** Vendor B layout, Vendor A layout, Vendor C layout, Vendor D layout — svi parsabilni iz `vendor_profiles/*.yaml` (W4.2 sistem).
 8. **Truth-check gate.** `scripts/slot-truth-check.sh` mora biti zelena (10 metrika, sve OK) pre svakog commit-a.
 
 ---
@@ -123,10 +123,10 @@ Misija je gotova kad ovo sve istovremeno važi:
 
 | # | Kriterijum | Verifikacija |
 |---|---|---|
-| 1 | `slot-build <PAR.xlsx>` → 30 sec → playable Studio sim + cert paket | E2E test sa PAR-001/002/003 (CE) + PAR-IGT-001/002 (Fort Knox) |
-| 2 | `slot-build <GDD.pdf>` → 60 sec → IR draft + math placeholder + Studio scaffold | E2E test sa CE GDD + IGT GDD |
+| 1 | `slot-build <PAR.xlsx>` → 30 sec → playable Studio sim + cert paket | E2E test sa PAR-001/002/003 (CE) + PAR-Vendor A-001/002 (Pick-Bonus) |
+| 2 | `slot-build <GDD.pdf>` → 60 sec → IR draft + math placeholder + Studio scaffold | E2E test sa CE GDD + Vendor A GDD |
 | 3 | Bilo koja kombinacija primitiva (Lines/Ways/Megaways/Cluster + FS/HW/Cascade/Respin/Pick/Wheel/BuyFeature/AnteBet/Gamble/MysterySymbol/SymbolUpgrade) radi iz IR-a | Coverage matrix 12×12 — sve "✅ tested" |
-| 4 | Vendor parity: L&W, IGT, Aristocrat, NetEnt, Pragmatic — svi imaju `vendor_profiles/*.yaml` + 3+ test PAR-a bit-identical | `tools/parse_par <vendor> --all` u CI |
+| 4 | Vendor parity: Vendor B, Vendor A, Vendor C, Vendor D, Pragmatic — svi imaju `vendor_profiles/*.yaml` + 3+ test PAR-a bit-identical | `tools/parse_par <vendor> --all` u CI |
 | 5 | Jurisdikcijska compliance: UKGC, MGA, GLI-16, GLI-19, NV, NJ, PA, MI, ON, BC, AAMS, Quebec — svi imaju profile + auto-fix + cert pack | `validate()` + `auto_fix()` zelena za svaki |
 | 6 | Closed-form solver coverage: 100+ feature patterns iz `INDUSTRY_PATTERN_CATALOG.md` | trenutno 77, target 100+ |
 | 7 | 10⁹+ MC throughput @ 1B spinova / 60s na M2 Max | `cargo bench` u CI |

@@ -2,7 +2,7 @@
 /**
  * W214 Faza 600.3 — Fuzz wallet provider adapter response parsers.
  *
- * Wallet providers (Microgaming-style, NetEnt-aggregator, Playtech,
+ * Wallet providers (Vendor G-style, Vendor D-aggregator, Vendor F,
  * generic-PAM) all return JSON shaped slightly differently. Each
  * adapter normalises into our internal {@link WalletTx} shape. This
  * harness pummels the normaliser with malformed responses to ensure:

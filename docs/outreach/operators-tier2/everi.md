@@ -1,17 +1,17 @@
 # Everi — Tier-2 Operator Outreach Dossier
 
-> Priority tier: P2. Mid-tier NA studio; recently merged into IGT Group (announced 2024, completed 2025) — diligence the corporate-structure status before approach.
-> Outreach owner: VP BD (commercial); coordinate with IGT pursuit to avoid channel conflict.
+> Priority tier: P2. Mid-tier NA studio; recently merged into Vendor A Group (announced 2024, completed 2025) — diligence the corporate-structure status before approach.
+> Outreach owner: VP BD (commercial); coordinate with Vendor A pursuit to avoid channel conflict.
 > Last refresh: 2026-05-19 (W215 sprint).
 
 ## Company snapshot
 
-- **HQ**: Las Vegas NV (Everi Games legacy); now operates as a business unit within the consolidated IGT/Everi Gaming entity post-2025.
+- **HQ**: Las Vegas NV (Everi Games legacy); now operates as a business unit within the consolidated Vendor A/Everi Gaming entity post-2025.
 - **Founded**: 1998 (Multimedia Games legacy → acquired by Everi 2014); Everi went public 2013.
-- **Listing**: Was NYSE:EVRI; consolidated into IGT parent group post-merger.
+- **Listing**: Was NYSE:EVRI; consolidated into Vendor A parent group post-merger.
 - **Estimated revenue**: ~$800M FY pre-merger (Everi standalone).
 - **Slot game count**: ~220 active land-based titles + ~60 online.
-- **Top titles**: Cash Machine, High Voltage, Player's Life, Cleopatra II (legacy IGT-licensed clones), Power XStream, Smokin' Hot Stuff Wicked Wheel, Buffalo Stampede (IGT-period asset).
+- **Top titles**: Cash Machine, High Voltage, Player's Life, Pattern-CL II (legacy Vendor A-licensed clones), Power XStream, Smokin' Hot Stuff Wicked Wheel, Buffalo Stampede (Vendor A-period asset).
 - **Studios**: Las Vegas (core), Austin TX (legacy Multimedia Games class-II), Reno NV.
 - **Class-II / charitable**: Multimedia Games heritage — significant NIGC class-II bingo-coordinator presence at tribal locations.
 
@@ -47,7 +47,7 @@
 | `<Chief Math Officer at Everi Games>` | Technical gatekeeper | G2E |
 | `<Director of Class-II Math at Everi Games>` | NIGC class-II evidence specialist | Conference panels |
 | `<Chief Compliance Officer at Everi Games>` | Tribal + commercial submissions | IR filings |
-| `<VP Corporate Integration (Everi side, IGT parent)>` | Post-merger decision authority | LinkedIn |
+| `<VP Corporate Integration (Everi side, Vendor A parent)>` | Post-merger decision authority | LinkedIn |
 
 ## Outreach hook
 
@@ -59,7 +59,7 @@
 - Velocity uplift: ~22 ships/yr → ~55 ships/yr (2.5× factor).
 - **5yr horizon NPV impact: +$22M** (base case).
 - Class-II adjacency: NIGC packet automation is a meaningful operational saving at tribal locations (~$2M/yr in submission engineering).
-- Post-merger note: ROI captured at IGT-parent level; do not double-count if also pursuing IGT.
+- Post-merger note: ROI captured at Vendor A-parent level; do not double-count if also pursuing Vendor A.
 
 ## Compliance fit
 
@@ -73,7 +73,7 @@ Our engine covers BMM/GLI/eCOGRA out of the box. Everi-specific need: NIGC class
 
 ## Next-step CTA
 
-1. **NDA**: mutual, 14 days. Coordinate with IGT pursuit if running in parallel.
+1. **NDA**: mutual, 14 days. Coordinate with Vendor A pursuit if running in parallel.
 2. **Pilot proposal**: 1 Cash Machine variant + 1 High Voltage + 1 class-II bingo-cabinet title + 1 Smokin' Hot Stuff wheel. 30-day shadow-mode.
 3. **Decision gate**: ≤0.0015 absolute RTP delta + class-II coordinator parity + NIGC packet acceptance.
 4. **Commercial**: license tier; class-II packet automation as a separable upsell. Per-pathway pricing at `reports/outreach/PORTFOLIO_FIT_everi.md`.

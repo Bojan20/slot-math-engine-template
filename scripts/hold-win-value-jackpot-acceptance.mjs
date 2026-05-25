@@ -8,7 +8,7 @@
 // Operator deliverable: `reports/acceptance/HOLD_WIN_VALUE_JACKPOT.{json,md}`.
 //
 // UKGC RTS 14 + MGA PPD §11.f compliance: per-tier hit probability + value
-// disclosure za Aristocrat Lightning Link / Buffalo Link / IGT Hold & Win.
+// disclosure za Vendor C Pattern-LL / Buffalo Link / Vendor A Hold & Win.
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -28,7 +28,7 @@ const TOL_FULLGRID_ABS = 0.05;   // P(full grid) abs
 const CONFIGS = [
   {
     name: 'A_lightning_link_15cell_classic',
-    description: 'Aristocrat Lightning Link: 15-cell, 6-trigger, 3 respins, MMM+Grand',
+    description: 'Vendor C Pattern-LL: 15-cell, 6-trigger, 3 respins, MMM+Grand',
     cfg: {
       gridCells: 15,
       initialFilledCells: 6,
@@ -52,7 +52,7 @@ const CONFIGS = [
   },
   {
     name: 'B_igt_hold_win_12cell',
-    description: 'IGT Hold & Win: 12-cell, 5-trigger, 3 respins',
+    description: 'Vendor A Hold & Win: 12-cell, 5-trigger, 3 respins',
     cfg: {
       gridCells: 12,
       initialFilledCells: 5,
@@ -284,7 +284,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — per-tier hit probability + variance disclosure');
   md.push('- **MGA PPD §11.f** — operator-facing jackpot hit rate');
   md.push('- **eCOGRA Generic Slots Audit** — verifies tier probs match engine');
-  md.push('- Industry use: Aristocrat Lightning Link / Buffalo Link, IGT Hold & Win,');
+  md.push('- Industry use: Vendor C Pattern-LL / Buffalo Link, Vendor A Hold & Win,');
   md.push('  SG Money Burst, Pragmatic Big Bass Hold & Spin family.');
 
   writeFileSync(join(OUT_DIR, 'HOLD_WIN_VALUE_JACKPOT.md'), md.join('\n'));

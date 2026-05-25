@@ -153,3 +153,17 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# ─── W-SANITIZE — vendor-sensitive data stays LOCAL only ─────────────
+# Per Boki's rule "matematika ne sme da procuri nigde", raw vendor PAR
+# dumps and all derived artifacts must NEVER be tracked in git. These
+# directories are regenerated locally from non-committed source data.
+games/*/raw/
+games/*/out/
+games/*/reports/
+games/*/engine-rust/target/
+games/*/engine-ts/dist/
+games/*/engine-ts/node_modules/
+dist/pilot/
+dist/cert/
+dist/test-cert/

@@ -29,7 +29,7 @@ const BAD_NO_CLOSED_FORM = `
 export const kernel = { name: 'broken', monteCarlo: () => 0 };
 const r = ctx.rng();
 `.trim();
-const BAD_NAMING = GOOD_KERNEL.replace("'cascade'", "'Light & Wonder cascade'");
+const BAD_NAMING = GOOD_KERNEL.replace("'cascade'", "'Vendor B cascade'");
 const BAD_ANY = GOOD_KERNEL + '\nconst evil: any = 1;';
 const BAD_TODO = '// TODO implement\n';
 const BAD_NOT_IMPL = GOOD_KERNEL + '\nfunction stub() { throw new Error("not implemented"); }';

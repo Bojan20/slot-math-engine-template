@@ -42,7 +42,7 @@ const TOL_LOSS_RATE_REL = 0.01;    // |μ|·spinsPerHour self-consistency (deter
 const CONFIGS = [
   {
     name: 'A_uk_responsible_low_stake_med_vol',
-    description: 'UK LCCP 3.4.3 baseline: £100 bankroll / £1 spin / R=96% / vol-index 5 (NetEnt Starburst-class)',
+    description: 'UK LCCP 3.4.3 baseline: £100 bankroll / £1 spin / R=96% / vol-index 5 (Vendor D Starburst-class)',
     cfg: {
       bankroll: 100,
       betPerSpin: 1,
@@ -53,7 +53,7 @@ const CONFIGS = [
   },
   {
     name: 'B_au_ncpf_high_vol_fast_bust',
-    description: 'AU NCPF disclosure: £50 / £2 / R=88% / vol-index 10 (Aristocrat high-vol) — rapid bust',
+    description: 'AU NCPF disclosure: £50 / £2 / R=88% / vol-index 10 (Vendor C high-vol) — rapid bust',
     cfg: {
       bankroll: 50,
       betPerSpin: 2,
@@ -332,7 +332,7 @@ async function main() {
   md.push('');
   md.push('## Why this is industry-first');
   md.push('');
-  md.push('No vendor (Pragmatic / NetEnt / Microgaming / SG / IGT / Aristocrat) and no aggregator');
+  md.push('No vendor (Pragmatic / Vendor D / Vendor G / SG / Vendor A / Vendor C) and no aggregator');
   md.push('(Gan / Yolo / Bragg) publishes a formal closed-form Inverse Gaussian first-passage');
   md.push('time analyzer for player session bankrolls. Operators currently rely on heuristic');
   md.push('"average session length" tables that ignore variance entirely. This solver provides:');

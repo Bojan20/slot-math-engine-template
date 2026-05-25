@@ -31,7 +31,7 @@ const STD_PMF = [
 const CONFIGS = [
   {
     name: 'A_netent_vikings_2tier',
-    description: 'NetEnt Vikings Berzerk: 2-tier basic + super (no mega)',
+    description: 'Vendor D Vikings Berzerk: 2-tier basic + super (no mega)',
     cfg: {
       landProbability: 0.05,
       upgradeProbabilityBasicToSuper: 0.15,
@@ -255,7 +255,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — wild-tier variance + max-multiplier disclosure');
   md.push('- **MGA PPD §11.f** — tier-upgrade rate disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — verifies stationary E[M], E[Y] match engine');
-  md.push('- Industry use: NetEnt Vikings Berzerk (basic→super), Push Mount Magmas (3-tier),');
+  md.push('- Industry use: Vendor D Vikings Berzerk (basic→super), Push Mount Magmas (3-tier),');
   md.push("  Pragmatic Da Vinci's Mystery, Quickspin Sakura Fortune.");
 
   writeFileSync(join(OUT_DIR, 'MULTI_LEVEL_WILD_MARKOV.md'), md.join('\n'));

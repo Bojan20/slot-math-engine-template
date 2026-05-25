@@ -1,6 +1,6 @@
 # Warm CTO — Pre-meeting Email After Intro
 
-> Summary line 1: Pre-meeting note to L&W CTO after a warm intro from mutual contact.
+> Summary line 1: Pre-meeting note to Vendor B CTO after a warm intro from mutual contact.
 > Summary line 2: Tone: confident peer, concise, "looking forward to" framing.
 > Summary line 3: Goal: confirm meeting + set expectations + share one pre-read.
 

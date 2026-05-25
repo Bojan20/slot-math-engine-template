@@ -69,7 +69,7 @@ describe('pilot-dossier-v2 — operator blocks', () => {
   it('renderOperatorBlocks emits Sections 13-17 for aristocrat', async () => {
     const manifest = await loadOperatorManifest('aristocrat');
     const md = renderOperatorBlocks(manifest, { bulk: { metrics: { measuredRtp: 0.955 } } });
-    expect(md).toMatch(/## 13\. About the Operator — Aristocrat/);
+    expect(md).toMatch(/## 13\. About the Operator — Vendor C/);
     expect(md).toMatch(/## 14\. Comparative Analysis/);
     expect(md).toMatch(/## 15\. Before & After — Buffalo Diamond/);
     expect(md).toMatch(/## 16\. Commercial Pricing — Tier-1 Enterprise/);
@@ -115,10 +115,10 @@ describe('pilot-dossier-v2 — rewriteV1Header', () => {
 
   it('rewriteV1Header swaps the # heading to operator displayName', async () => {
     const manifest = await loadOperatorManifest('aristocrat');
-    const v1Sample = '# L&W Pilot Evaluation Dossier\n\n**Tenant:** Demo\n**Run ID:** `r-1`';
+    const v1Sample = '# Vendor B Pilot Evaluation Dossier\n\n**Tenant:** Demo\n**Run ID:** `r-1`';
     const out = rewriteV1Header(v1Sample, manifest);
-    expect(out.split('\n')[0]).toBe('# Aristocrat Pilot Evaluation Dossier');
-    expect(out).toContain('**Operator:** Aristocrat');
+    expect(out.split('\n')[0]).toBe('# Vendor C Pilot Evaluation Dossier');
+    expect(out).toContain('**Operator:** Vendor C');
   });
 });
 
@@ -129,20 +129,20 @@ describe('pilot-dossier-v2 — renderMarkdownV2', () => {
   it('with manifest, renders v1 + operator blocks', async () => {
     const manifest = await loadOperatorManifest('aristocrat');
     const md = renderMarkdownV2({ state: ctx.state, suite: ctx.summary, manifest });
-    expect(md).toMatch(/^# Aristocrat Pilot Evaluation Dossier/);
+    expect(md).toMatch(/^# Vendor C Pilot Evaluation Dossier/);
     expect(md).toMatch(/## 13\. About the Operator/);
   });
 
   it('without manifest, falls back to v1 byte-identical', async () => {
     const md = renderMarkdownV2({ state: ctx.state, suite: ctx.summary, manifest: null });
-    expect(md).toMatch(/^# L&W Pilot Evaluation Dossier/);
+    expect(md).toMatch(/^# Vendor B Pilot Evaluation Dossier/);
     expect(md).not.toMatch(/## 13\. About the Operator/);
   });
 
   it('with default lw manifest, still falls back to v1', async () => {
     const manifest = await loadOperatorManifest('lw');
     const md = renderMarkdownV2({ state: ctx.state, suite: ctx.summary, manifest });
-    expect(md).toMatch(/^# L&W Pilot Evaluation Dossier/);
+    expect(md).toMatch(/^# Vendor B Pilot Evaluation Dossier/);
   });
 });
 

@@ -150,7 +150,7 @@ Re-run via `npm run docs:gen`. See **REST API** for the hand-curated narrative.
 | `POST` | `/api/marketplace/webhooks/payment` |
 
 ## pilot.ts
-> W211 Faza 700.0 — Real L&W Pilot Onboard — pilot run REST routes. POST /api/pilot/runs       — admin record a new run (called by CI / the integration-suite script). GET  /api/pilot/runs       — admin list runs (filter ?tenant=&ok=) GET  /api/pilot/runs/:id   — per-run detail The store backing these routes is either the in-memory PilotRunStore or the Postgres-backed PostgresPilotRunStore. Both expose the same record() / get() / list() API, so the route layer treats them as a c
+> W211 Faza 700.0 — Real Vendor B Pilot Onboard — pilot run REST routes. POST /api/pilot/runs       — admin record a new run (called by CI / the integration-suite script). GET  /api/pilot/runs       — admin list runs (filter ?tenant=&ok=) GET  /api/pilot/runs/:id   — per-run detail The store backing these routes is either the in-memory PilotRunStore or the Postgres-backed PostgresPilotRunStore. Both expose the same record() / get() / list() API, so the route layer treats them a
 | Method | Path |
 |---|---|
 | `POST` | `/api/pilot/runs` |

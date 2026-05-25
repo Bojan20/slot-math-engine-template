@@ -15,16 +15,16 @@
 ## Subject line variants
 - A: "Acceleration of studio cadence — board-level read on math engine"
 - B: "Strategic note: 8 ships → 24 ships per year, same headcount"
-- C: "L&W acceleration thesis — one page, no follow-up commitment"
+- C: "Vendor B acceleration thesis — one page, no follow-up commitment"
 
 ## Body
 Dear {{title}} {{last_name}},
 
-I lead engineering on a math kernel platform that compresses the math + lab-cert stage of a slot title from twelve weeks to fourteen days. The platform covers all sixteen of L&W's published mechanic families closed-form, has paper-trail compatibility with BMM, GLI, eCOGRA, and NMi, and ships under three commercial pathways (acquire, license, pilot).
+I lead engineering on a math kernel platform that compresses the math + lab-cert stage of a slot title from twelve weeks to fourteen days. The platform covers all sixteen of Vendor B's published mechanic families closed-form, has paper-trail compatibility with BMM, GLI, eCOGRA, and NMi, and ships under three commercial pathways (acquire, license, pilot).
 
-I am not asking for a meeting in this note. I am asking whether this thesis is worth a board-level conversation at L&W, and if so, which member of your C-suite should own it. We have already prepared one-pager, deep-dive, and ROI artifacts for the CTO, CMO, and CFO views — I am happy to send all three to whichever person you nominate.
+I am not asking for a meeting in this note. I am asking whether this thesis is worth a board-level conversation at Vendor B, and if so, which member of your C-suite should own it. We have already prepared one-pager, deep-dive, and ROI artifacts for the CTO, CMO, and CFO views — I am happy to send all three to whichever person you nominate.
 
-If the thesis is not relevant for L&W at this point in the cycle, equally happy to hear that — your time is better spent on other items.
+If the thesis is not relevant for Vendor B at this point in the cycle, equally happy to hear that — your time is better spent on other items.
 
 Respectfully,
 {{sender_name}}

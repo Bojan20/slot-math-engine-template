@@ -23,7 +23,7 @@ const TOL_REACH_REL = 0.05;
 const CONFIGS = [
   {
     name: 'A_netent_classic_3tier',
-    description: 'NetEnt classic 3-tier silver/gold/platinum pick-til-pop',
+    description: 'Vendor D classic 3-tier silver/gold/platinum pick-til-pop',
     cfg: {
       stages: [
         { label: 'silver',   advanceProbability: 0.40, collectProbability: 0.50, collectPayoutX: 10 },
@@ -34,7 +34,7 @@ const CONFIGS = [
   },
   {
     name: 'B_microgaming_5tier_grand',
-    description: 'Microgaming 5-tier ladder with grand jackpot',
+    description: 'Vendor G 5-tier ladder with grand jackpot',
     cfg: {
       stages: [
         { label: 'tier_1', advanceProbability: 0.5,  collectProbability: 0.4,  collectPayoutX: 5 },
@@ -220,7 +220,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — variance disclosure required for pick bonus features');
   md.push('- **MGA PPD §11.f** — tail-probability disclosure (P(reach top), P(end with 0))');
   md.push('- **eCOGRA Generic Slots Audit** — recursive stage probability auditor-verifiable');
-  md.push('- Industry use: NetEnt classic pick-til-pop, Microgaming jackpot ladder, Play\'n GO pick bonuses');
+  md.push('- Industry use: Vendor D classic pick-til-pop, Vendor G jackpot ladder, Play\'n GO pick bonuses');
 
   writeFileSync(join(OUT_DIR, 'PICK_BONUS_N_STAGE.md'), md.join('\n'));
 

@@ -51,10 +51,10 @@ function cell(covered, evidence, confidence) {
 function buildMatrix() {
   const m = {};
 
-  // Aristocrat — broad Reel-Power + Hold-and-Spin lineage
+  // Vendor C — broad Reel-Power + Hold-and-Spin lineage
   m['aristocrat::cascade'] = cell(false, 'No cascade-native flagship; minor presence on licensed titles', 'high');
-  m['aristocrat::respin'] = cell(true, 'Lightning Link / Dragon Link respin trigger', 'high');
-  m['aristocrat::hold_and_win'] = cell(true, 'Lightning Link / Dragon Link / Cash Express family', 'high');
+  m['aristocrat::respin'] = cell(true, 'Pattern-LL / Pattern-DL respin trigger', 'high');
+  m['aristocrat::hold_and_win'] = cell(true, 'Pattern-LL / Pattern-DL / Cash Express family', 'high');
   m['aristocrat::cluster'] = cell(false, 'No cluster-pays flagship', 'high');
   m['aristocrat::ways'] = cell(true, 'Reel-Power 243/1024 ways (Buffalo, 5 Dragons)', 'high');
   m['aristocrat::megaways'] = cell(true, 'BTG-licensed titles in catalogue', 'med');
@@ -62,18 +62,18 @@ function buildMatrix() {
   m['aristocrat::buy_feature'] = cell(false, 'Limited; land-based regulators restrict buy-feature in many AU/US jurisdictions', 'high');
   m['aristocrat::pick_bonus'] = cell(true, 'Wonder 4 pick-an-icon', 'high');
   m['aristocrat::wheel_bonus'] = cell(true, 'Wonder 4 Boost wheel', 'high');
-  m['aristocrat::mystery'] = cell(true, 'Lightning Link mystery progressive', 'high');
+  m['aristocrat::mystery'] = cell(true, 'Pattern-LL mystery progressive', 'high');
   m['aristocrat::jackpot'] = cell(true, 'Hyperlink shared WAP progressives', 'high');
 
-  // IGT — broadest mechanic palette; Wheel of Fortune flagship + Megabucks WAP
+  // Vendor A — broadest mechanic palette; Wheel of Fortune flagship + Megabucks WAP
   m['igt::cascade'] = cell(true, 'Megacascade WoF variants', 'high');
   m['igt::respin'] = cell(true, 'Cash Link, Fortune Coin', 'high');
   m['igt::hold_and_win'] = cell(true, 'Cash Link / Fortune Coin', 'high');
   m['igt::cluster'] = cell(false, 'No cluster flagship', 'high');
   m['igt::ways'] = cell(true, 'Da Vinci Diamonds ways + many licensed', 'high');
-  m['igt::megaways'] = cell(true, 'IGT under BTG license', 'med');
-  m['igt::ante_bet'] = cell(true, 'Modern IGT online releases', 'med');
-  m['igt::buy_feature'] = cell(true, 'Online IGT buy-feature releases', 'med');
+  m['igt::megaways'] = cell(true, 'Vendor A under BTG license', 'med');
+  m['igt::ante_bet'] = cell(true, 'Modern Vendor A online releases', 'med');
+  m['igt::buy_feature'] = cell(true, 'Online Vendor A buy-feature releases', 'med');
   m['igt::pick_bonus'] = cell(true, 'Sphinx pyramid pick + many bonus rounds', 'high');
   m['igt::wheel_bonus'] = cell(true, 'Wheel of Fortune flagship', 'high');
   m['igt::mystery'] = cell(true, 'Da Vinci Diamonds tumbling mystery', 'high');
@@ -107,15 +107,15 @@ function buildMatrix() {
   m['novomatic::mystery'] = cell(true, 'Book of Ra expanding bonus symbol', 'high');
   m['novomatic::jackpot'] = cell(true, 'Novomatic Linked Progressive / Greentube Pirate Pots', 'high');
 
-  // Playtech — broad online + Live; Age of the Gods + Buffalo Blitz
+  // Vendor F — broad online + Live; Age of the Gods + Buffalo Blitz
   m['playtech::cascade'] = cell(true, 'Heart of the Frontier + many cascade titles', 'high');
-  m['playtech::respin'] = cell(true, 'Newer Asian-themed Playtech releases', 'med');
-  m['playtech::hold_and_win'] = cell(true, 'Newer Asian-themed Playtech releases', 'med');
+  m['playtech::respin'] = cell(true, 'Newer Asian-themed Vendor F releases', 'med');
+  m['playtech::hold_and_win'] = cell(true, 'Newer Asian-themed Vendor F releases', 'med');
   m['playtech::cluster'] = cell(true, 'A handful of cluster-pays titles', 'med');
   m['playtech::ways'] = cell(true, 'Buffalo Blitz 4096 ways', 'high');
-  m['playtech::megaways'] = cell(true, 'Playtech under BTG license', 'high');
+  m['playtech::megaways'] = cell(true, 'Vendor F under BTG license', 'high');
   m['playtech::ante_bet'] = cell(true, 'Beach Life option-bet + others', 'high');
-  m['playtech::buy_feature'] = cell(true, 'Modern Playtech 2024+ releases', 'high');
+  m['playtech::buy_feature'] = cell(true, 'Modern Vendor F 2024+ releases', 'high');
   m['playtech::pick_bonus'] = cell(true, 'Gladiator helmet pick + many', 'high');
   m['playtech::wheel_bonus'] = cell(true, 'Various wheel features', 'high');
   m['playtech::mystery'] = cell(true, 'Cat in Vegas mystery features', 'med');
@@ -140,7 +140,7 @@ function buildMatrix() {
   m['ainsworth::respin'] = cell(true, 'Mustang Money + Eagle Bucks hold-and-win', 'high');
   m['ainsworth::hold_and_win'] = cell(true, 'Mustang Money + Eagle Bucks', 'high');
   m['ainsworth::cluster'] = cell(false, 'No cluster flagship', 'high');
-  m['ainsworth::ways'] = cell(true, 'Quick Spin Reel-Power 243 ways (Aristocrat lineage)', 'high');
+  m['ainsworth::ways'] = cell(true, 'Quick Spin Reel-Power 243 ways (Vendor C lineage)', 'high');
   m['ainsworth::megaways'] = cell(false, 'Not Ainsworth catalogue', 'high');
   m['ainsworth::ante_bet'] = cell(false, 'Limited', 'med');
   m['ainsworth::buy_feature'] = cell(false, 'AU regulator restrictions', 'high');

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// FULL Wrath of Olympus MC against the runtime.js math, headless.
+// FULL Pattern-WO MC against the runtime.js math, headless.
 //
 // Imports the EXACT algorithm shape from web/studio/public/runner/runtime.js
 // (drawGrid, evalBase, runFreeSpinsHeadless, runHoldAndWinHeadless, lightning)
@@ -333,7 +333,7 @@ const stderrRtp = sigma / Math.sqrt(k);
 const target = IR.validated_metrics;
 const alloc = IR.rtp_allocation;
 
-console.log(`\n  Wrath of Olympus — runtime.js algorithm headless MC`);
+console.log(`\n  Pattern-WO — runtime.js algorithm headless MC`);
 console.log(`  ────────────────────────────────────────────────────────`);
 console.log(`  Spins:               ${SPINS.toLocaleString()}  (${(SPINS / dt / 1e6).toFixed(2)} M/sec, ${dt.toFixed(2)}s wall)`);
 console.log(`  Seed:                ${SEED}`);

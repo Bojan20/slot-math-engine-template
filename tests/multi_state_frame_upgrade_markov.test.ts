@@ -1,5 +1,5 @@
 // W152 Wave 183 — Multi-State Frame Upgrade Markov Aggregator vitest specs
-// (64. solver, L&W M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles).
+// (64. solver, Vendor B M2 P0 GAP CLOSURE — Huff N' Puff family 8 titles).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -369,7 +369,7 @@ describe('Wave 183 — Multi-State Frame Upgrade Markov Aggregator', () => {
     });
   });
 
-  describe('industry use-cases (L&W M2 Huff N Puff family)', () => {
+  describe('industry use-cases (Vendor B M2 Pattern-HP family)', () => {
     it("Huff N' Puff original 4-state Straw → Wood → Brick → House", () => {
       const cfg: MultiStateFrameUpgradeConfig = {
         numReels: 5,

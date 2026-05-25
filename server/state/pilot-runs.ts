@@ -1,5 +1,5 @@
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — in-memory pilot run store.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — in-memory pilot run store.
  *
  * Stores the result of every integration suite execution (one row per
  * `runId`). Used by the admin pilot dashboard, the dossier generator,

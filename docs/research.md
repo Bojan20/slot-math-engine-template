@@ -111,12 +111,12 @@ here. Updated 2026-05-15.
 - **BTG Megaways patent literature (Big Time Gaming, 2020 EP filing)** —
   cascade-with-variable-rows. Our `complex-variable-rows.json` fixture
   is the synthetic counterpart.
-- **Pragmatic Play "Gates of Olympus" mechanic analysis (2022,
+- **Vendor E "Gates of Olympus" mechanic analysis (2022,
   community)** — pay-anywhere + multiplier collect — checked against
   `pay-anywhere-multipliers.json`.
 
 ### Cluster pays
-- **NetEnt cluster-cascade family white paper (2019)** — cluster
+- **Vendor D cluster-cascade family white paper (2019)** — cluster
   detection algorithm referenced by `src/evaluators/cluster*.ts`.
 
 ### Class II (US tribal bingo)

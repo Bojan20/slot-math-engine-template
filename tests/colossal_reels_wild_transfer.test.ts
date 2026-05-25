@@ -1,5 +1,5 @@
 // W152 Wave 184 — Colossal Reels Wild-Transfer Two-Grid Aggregator vitest specs
-// (65. solver, L&W M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles).
+// (65. solver, Vendor B M7 P0 GAP CLOSURE — Spartacus family + 50+ WMS land-based titles).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -338,7 +338,7 @@ describe('Wave 184 — Colossal Reels Wild-Transfer Two-Grid Aggregator', () => 
     });
   });
 
-  describe('industry use-cases (L&W M7 Spartacus family)', () => {
+  describe('industry use-cases (Vendor B M7 Spartacus family)', () => {
     it('Spartacus Gladiator of Rome 5-reel + transfer = 0.85', () => {
       const cfg: ColossalReelsWildTransferConfig = {
         numReels: 5,

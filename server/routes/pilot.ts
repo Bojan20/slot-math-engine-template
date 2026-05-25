@@ -1,5 +1,5 @@
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — pilot run REST routes.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — pilot run REST routes.
  *
  *   POST /api/pilot/runs       — admin record a new run (called by CI /
  *                                 the integration-suite script).

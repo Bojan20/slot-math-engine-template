@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 189 — Random Feature-Injection During FS Aggregator acceptance
-// (70. solver, L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland +
+// (70. solver, Vendor B M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland +
 // WMS sub-feature library).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -22,7 +22,7 @@ const TOL_PROB_ABS = 0.03;
 const CONFIGS = [
   {
     name: "A_wizard_of_oz_munchkinland_classic",
-    description: "LNW WMS Wizard of Oz Munchkinland (2014, defining title) — 15 FS sa 18% Munchkin injection rate, sub-feature 12× avg.",
+    description: "Vendor B WMS Wizard of Oz Munchkinland (2014, defining title) — 15 FS sa 18% Munchkin injection rate, sub-feature 12× avg.",
     cfg: { numFreeSpins: 15, baseFsWinMean: 1.2, baseFsWinVar: 1, probInjectionPerFsSpin: 0.18, subFeatureMean: 12, subFeatureVar: 4, topTierSubFeatureShare: 0.05 },
   },
   {
@@ -111,13 +111,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'RANDOM_FEATURE_INJECTION_DURING_FS.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# RANDOM_FEATURE_INJECTION_DURING_FS — Random Feature-Injection During FS Aggregator Acceptance (W189, 70. solver, L&W M12 P1 GAP CLOSURE)');
+  md.push('# RANDOM_FEATURE_INJECTION_DURING_FS — Random Feature-Injection During FS Aggregator Acceptance (W189, 70. solver, Vendor B M12 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${FS_RUNS} MC FS-bonus runs each.`);
   md.push('');
-  md.push("Closes L&W M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library.");
+  md.push("Closes Vendor B M12 GAP — Wizard of Oz Munchkinland + WMS sub-feature library.");
   md.push('');
   md.push('## Method');
   md.push('');

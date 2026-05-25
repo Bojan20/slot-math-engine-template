@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * W213 Faza 900.0 — L&W Outreach CRM Export + Email Merge.
+ * W213 Faza 900.0 — Vendor B Outreach CRM Export + Email Merge.
  *
  * Reads contact data (CSV) and exports to common CRM formats:
  *   - HubSpot CSV
@@ -234,7 +234,7 @@ export function toSalesforceCsv(rows) {
       'Email': c.email,
       'Phone': c.phone,
       'Title': c.role,
-      'Company': 'L&W',
+      'Company': 'Vendor B',
       'LeadSource': 'Outbound',
       'Status': mapStatusToSalesforce(c.status),
       'OwnerId': c.owner,
@@ -268,7 +268,7 @@ export function toPipedriveJson(rows) {
       name: c.name,
       email: [{ value: c.email, primary: true }],
       phone: [{ value: c.phone, primary: true }],
-      org_id: { name: 'L&W' },
+      org_id: { name: 'Vendor B' },
       title: c.role,
       label: c.status,
       visible_to: '3',
@@ -293,7 +293,7 @@ export function toVcard(rows) {
       'VERSION:3.0',
       `FN:${c.name}`,
       `N:${c.name.split(' ').slice(1).join(' ')};${c.name.split(' ')[0] ?? ''};;;`,
-      `ORG:L&W`,
+      `ORG:Vendor B`,
       `TITLE:${c.role}`,
     ];
     if (c.email) lines.push(`EMAIL;TYPE=WORK:${c.email}`);

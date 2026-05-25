@@ -277,7 +277,7 @@ async function main() {
   md.push('- **MGA PPD §11.f** — operator-facing reveal-rate disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — verifies steady-state E[Y] / Var[Y]');
   md.push('- Industry use: Pragmatic Big Bass Bonanza family (Big Bass / Bigger Bass / Bass');
-  md.push('  Boss), Wolf Gold (3-tier MMM jackpot), NetEnt Wild-O-Tron 3000, Yggdrasil Vault');
+  md.push('  Boss), Wolf Gold (3-tier MMM jackpot), Vendor D Wild-O-Tron 3000, Yggdrasil Vault');
   md.push("  of Anubis, plus dozens of Pragmatic-licensed branded clones.");
 
   writeFileSync(join(OUT_DIR, 'MYSTERY_SYMBOL_REVEAL.md'), md.join('\n'));

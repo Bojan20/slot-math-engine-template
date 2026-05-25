@@ -11,7 +11,7 @@ From the Kimi 2026-05-15 deep audit:
 
 > "Standard fields (RTP, hit-freq, max win, VI) are table stakes. Tier-1
 > math directors want segment-level RTP (base vs free-spin), time-to-trigger
-> CDF, P99.9 tail exposure, and multi-seed CI bands. IGT internal sheets
+> CDF, P99.9 tail exposure, and multi-seed CI bands. Vendor A internal sheets
 > use configurable RTP ranges per casino/jurisdiction — a feature your IR
 > already supports but should document as a competitive differentiator."
 
@@ -65,7 +65,7 @@ USIF v1.0 is the **first published open standard** that:
 | `features[].transitionMatrix` | discrete Markov chain transition probs | SolCalc 2018, Aarhus University — no commercial vendor publishes this. |
 | `features[].timeToTriggerCdf` | array of {spinIndex, probability} | Operator player-experience modeling. |
 | `ciBands.seedCount` + `seedRtps` + bands | multi-seed CI | Auditor proof a single MC run is representative (Harrigan & Dixon 2014). |
-| `jurisdictionGated[X]` | per-jurisdiction RTP variants | IGT-style configurable RTP — enables single PAR for many markets. |
+| `jurisdictionGated[X]` | per-jurisdiction RTP variants | Vendor A-style configurable RTP — enables single PAR for many markets. |
 
 ## Validator usage
 
@@ -91,7 +91,7 @@ Output goes to `reports/usif-par/VALIDATION_REPORT.{json,md}`.
 - MGA Player Protection Directive §11.f
 - Slot Game Design — PAR Sheet Tutorial (2019)
 - Harrigan & Dixon — *PAR Sheets, Probabilities, and Slot Machine Play* (CDS Press 2014)
-- Casinomeister — IGT configurable RTP ranges discussion (2012)
+- Casinomeister — Vendor A configurable RTP ranges discussion (2012)
 - SolCalc — Casino Math: Markov Chains for Slot Features (2018)
 - Pickands — *Statistical inference using extreme order statistics* (1975)
 - Coles — *An Introduction to Statistical Modeling of Extreme Values* (Springer 2001)

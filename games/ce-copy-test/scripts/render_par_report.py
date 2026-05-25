@@ -264,7 +264,7 @@ def render_report(swid: str, project_root: Path) -> Path:
     sections = [
         f'<h1>CE COPY TEST — PAR Report · {escape(swid)}</h1>',
         '<div class="meta">'
-        f'1:1 paymodel klon Cash Eruption-a · Excel target RTP <b>{excel_rtp:.4f}</b> · '
+        f'1:1 paymodel klon Pattern-CE-a · Excel target RTP <b>{excel_rtp:.4f}</b> · '
         f'Sim avg over {len(sweep)} bms = <b>{sum(r["total_rtp_sim"] for r in sweep)/len(sweep):.6f}</b>'
         '</div>',
         section_meta(ir),

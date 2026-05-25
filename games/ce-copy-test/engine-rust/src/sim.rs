@@ -15,13 +15,13 @@ pub struct SimStats {
     pub total_payout_x: f64,
     /// Sum of base-game payout (line wins + pattern + Volcano scatter), in total-bet units.
     pub base_game_x: f64,
-    /// Sum of Cash Eruption payout triggered from base spins, in total-bet units.
+    /// Sum of Pattern-CE payout triggered from base spins, in total-bet units.
     pub ce_from_base_x: f64,
     /// Sum of FS line wins only, in total-bet units.
     pub fs_lines_x: f64,
     /// Sum of FS Big Volcano scatter pays only, in total-bet units.
     pub fs_bv_x: f64,
-    /// Sum of Cash Eruption payout triggered inside FS, in total-bet units.
+    /// Sum of Pattern-CE payout triggered inside FS, in total-bet units.
     pub ce_from_fs_x: f64,
     /// Hits = at least one paid line OR scatter OR pattern win.
     pub hits: u64,
@@ -29,9 +29,9 @@ pub struct SimStats {
     pub wins: u64,
     /// Free Spins triggers (≥3 Volcano on base spin).
     pub fs_triggers: u64,
-    /// Cash Eruption triggers from base (≥6 Fireballs).
+    /// Pattern-CE triggers from base (≥6 Fireballs).
     pub ce_from_base_triggers: u64,
-    /// Cash Eruption triggers from FS (≥6 Big Fireballs).
+    /// Pattern-CE triggers from FS (≥6 Big Fireballs).
     pub ce_from_fs_triggers: u64,
     /// GRAND hits.
     pub grand_hits: u64,
@@ -54,7 +54,7 @@ pub struct SimStats {
     /// Spins with payout ≥ 1000× total bet (Pattern Win baseline).
     pub wins_ge_1000x: u64,
 
-    // ── Average Cash Eruption feature win tracking ──
+    // ── Average Pattern-CE feature win tracking ──
     /// Sum of CE-from-base payout (in total-bet units) for averaging.
     pub ce_base_payout_sum_x: f64,
     /// Sum of CE-from-FS payout (in total-bet units).
@@ -127,7 +127,7 @@ impl<'a> Engine<'a> {
             // After base + CE + FS attribution we'll re-check the spin
             // total; for now record the base-game hit/win flags. The
             // final hit/win at the spin level is established at the end.
-            // Cash Eruption trigger from base?
+            // Pattern-CE trigger from base?
             if bw.fireball_count >= 6 {
                 s.ce_from_base_triggers += 1;
                 if let Some(ce) = ce {
@@ -166,7 +166,7 @@ impl<'a> Engine<'a> {
                 s.fs_bv_x += fs.big_volcano_coins / total_bet_coins;
                 s.ce_from_fs_x += fs.ce_from_fs_coins / total_bet_coins;
                 s.ce_fs_payout_sum_x += fs.ce_from_fs_coins / total_bet_coins;
-                // FS bonus award per L&W cert summary = lines + big_volcano
+                // FS bonus award per Vendor B cert summary = lines + big_volcano
                 // (excludes ce_from_fs which is tracked separately as Avg CE win (FS)).
                 // Old formula included ce_from_fs → double-counted, ~88% inflated.
                 s.fs_bonus_payout_sum_x +=

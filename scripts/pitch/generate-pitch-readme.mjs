@@ -3,7 +3,7 @@
  * W212 Faza 800.0 — Pitch Tarball Bundler — README generator.
  *
  * Builds the bundle's top-level README.md with:
- *   - "Hello L&W Team" intro (configurable operator name + greeting)
+ *   - "Hello Vendor B Team" intro (configurable operator name + greeting)
  *   - Quick stats block (live numbers: total specs, solvers, P-IDs, gates,
  *     waves, M-gaps closed)
  *   - Suggested reading order per role (CTO / CMO / CFO / CEO)
@@ -18,7 +18,7 @@
  * Override via the `stats` arg.
  */
 
-export const DEFAULT_OPERATOR_NAME = 'L&W';
+export const DEFAULT_OPERATOR_NAME = 'Vendor B';
 
 export const DEFAULT_STATS = Object.freeze({
   totalSpecs: 7171,
@@ -97,7 +97,7 @@ function statsTable(stats) {
     ['Industry-pattern catalog (P-IDs)', stats.industryPatternIds],
     ['Vitest grand-total specs', stats.totalSpecs.toLocaleString('en-US')],
     [
-      'L&W M-gaps closed',
+      'Vendor B M-gaps closed',
       `${stats.lwMechanicGapsClosed} / ${stats.lwMechanicGapsTotal}`,
     ],
     [
@@ -190,7 +190,7 @@ export function renderInstall({ operator = DEFAULT_OPERATOR_NAME } = {}) {
     'git clone <engine-repo-url> slot-math-engine && cd slot-math-engine',
     'npm ci',
     'npm run build',
-    'npm run pilot:seed             # seeds a fresh L&W pilot tenant',
+    'npm run pilot:seed             # seeds a fresh Vendor B pilot tenant',
     'npm run pilot:integration      # runs the 10-step pilot integration suite',
     'npm run pilot:dossier          # builds the 12-section dossier',
     '```',

@@ -61,7 +61,7 @@ export const APPS = [
   },
   {
     name: 'operator',
-    label: 'L&W Operator Dashboard',
+    label: 'Vendor B Operator Dashboard',
     url: 'http://localhost:5174',
     dir: 'web/operator',
     html: 'web/operator/index.html',

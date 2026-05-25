@@ -40,7 +40,7 @@ export interface KernelManifest {
   version?: string;
   irFile?: string;
   badges?: string[];
-  /** L&W gap id, e.g. "M14_P1". */
+  /** Vendor B gap id, e.g. "M14_P1". */
   lwGap?: string;
   /** Portfolio P-id, e.g. "P-071". */
   pId?: string;

@@ -4,7 +4,7 @@
     "id": "lw-m{{N}}-starter",
     "name": "M{{N}} {{Title}}",
     "version": "0.1.0",
-    "description": "{{One-line description of the L&W M-gap mechanic.}}",
+    "description": "{{One-line description of the Vendor B M-gap mechanic.}}",
     "theme_tags": ["lw-template", "m{{N}}", "{{family-tag}}"]
   },
   "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },

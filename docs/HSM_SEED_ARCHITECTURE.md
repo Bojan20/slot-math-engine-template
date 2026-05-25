@@ -13,7 +13,7 @@ From the Kimi audit:
 > (Rambus 2021, AWS Graviton4 2025). FIPS 140-3 IG D.K mandates
 > continuous health tests (Repetition Count + Adaptive Proportion) — a
 > bar no commercial slot engine publicly meets. The Russian 'Alex' team
-> reverse-engineered Aristocrat's LCG-based PRNG using ~24 recorded
+> reverse-engineered Vendor C's LCG-based PRNG using ~24 recorded
 > spins and timing synchronization, earning $250k/week. Schneier:
 > 'trivially easy to fix with any CSPRNG' yet legacy cabinets remain
 > exploitable."

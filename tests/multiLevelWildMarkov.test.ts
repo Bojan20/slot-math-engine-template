@@ -226,7 +226,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('NetEnt Vikings style: 2-tier (basic + super, no mega)', () => {
+  it('Vendor D Vikings style: 2-tier (basic + super, no mega)', () => {
     const r = solveMultiLevelWildMarkov({
       landProbability: 0.05,
       upgradeProbabilityBasicToSuper: 0.15,

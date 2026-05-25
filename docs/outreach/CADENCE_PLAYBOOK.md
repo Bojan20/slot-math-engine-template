@@ -1,6 +1,6 @@
 # Outreach Cadence Playbook
 
-> Single source of truth for the 4-week outreach cadence to land an L&W C-level conversation. Realistic, not aspirational.
+> Single source of truth for the 4-week outreach cadence to land an Vendor B C-level conversation. Realistic, not aspirational.
 
 ## Honest expectations
 
@@ -18,11 +18,11 @@ Two-thirds of cold outreach will go nowhere. Plan for that. Stay graceful.
 
 ### Day 1–2: Research the target
 
-For each L&W C-level target, build a one-page research note:
+For each Vendor B C-level target, build a one-page research note:
 
 | Field | Source |
 |---|---|
-| Name, role, tenure at L&W | LinkedIn |
+| Name, role, tenure at Vendor B | LinkedIn |
 | Prior companies, prior titles shipped | LinkedIn + Mobygames / SlotCatalog |
 | Public-facing posts in last 6 months | LinkedIn + Twitter/X + company blog |
 | Conferences they spoke at | YouTube + ICE / G2E / SBC archives |
@@ -39,7 +39,7 @@ This is 2 hours of work per target. Don't skip it. The 1 useful detail you find 
 For each target, identify 2nd-degree connections. Look for:
 
 - People who explicitly worked WITH them (not just at the same company)
-- People who left L&W amicably (LinkedIn endorsements visible)
+- People who left Vendor B amicably (LinkedIn endorsements visible)
 - Mutual investors / advisors
 - People you have given value to in the past 6 months (ledger of favors matters)
 
@@ -118,12 +118,12 @@ Send `followup-no-response.md` with one NEW artifact attached. Always new, never
 If direct paths failed, indirect-influence path:
 
 - Pitch industry analysts: H2 Gambling Capital, Eilers & Krejcik, Vixio Regulating
-- Story angle: "What L&W could do with closed-form math engines" (not "the company we want them to acquire")
-- Outcome: analyst publishes; L&W internal stakeholders forward your name internally
+- Story angle: "What Vendor B could do with closed-form math engines" (not "the company we want them to acquire")
+- Outcome: analyst publishes; Vendor B internal stakeholders forward your name internally
 
 ### Day 26: Sponsor a conference
 
-If budget allows: sponsor G2E or ICE booth adjacent to L&W's. Visibility = warmth multiplier.
+If budget allows: sponsor G2E or ICE booth adjacent to Vendor B's. Visibility = warmth multiplier.
 
 ### Day 28: Decide go / wait / abandon
 

@@ -26,13 +26,13 @@ import { executeKernelSandbox } from './executor.js';
 import { DEFAULT_LIMITS } from './resource-limits.js';
 
 const DEFAULT_RESERVED = [
-  'Light & Wonder',
-  'Scientific Games',
-  'IGT',
-  'NetEnt',
-  'Pragmatic Play',
-  'Aristocrat',
-  'Bally',
+  'Vendor B',
+  'Vendor B',
+  'Vendor A',
+  'Vendor D',
+  'Vendor E',
+  'Vendor C',
+  'Vendor H',
   'WMS',
   'Konami Gaming',
 ];

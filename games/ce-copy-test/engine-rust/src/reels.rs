@@ -1,7 +1,7 @@
 // Reel sampler + weighted set picker.
 //
 // PAR-001 line 21: "The above symbol counts reflect the average count for
-// 2nd row based on the reel set probabilities." → L&W probabilistic reel
+// 2nd row based on the reel set probabilities." → Vendor B probabilistic reel
 // model:
 //
 //   1. For each reel, sample ONE *stop position* proportional to its

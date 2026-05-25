@@ -1,6 +1,6 @@
 # Warm CMO — Pre-meeting Email After Intro
 
-> Summary line 1: Pre-meeting email to L&W CMO after warm intro from mutual contact.
+> Summary line 1: Pre-meeting email to Vendor B CMO after warm intro from mutual contact.
 > Summary line 2: Tone: market-narrative, ship-cadence framed, NOT technical.
 > Summary line 3: Goal: confirm meeting, share one-pager, set non-engineering expectations.
 
@@ -24,7 +24,7 @@ Quick framing for {{day}} at {{time}}: my one-page outreach summary is here — 
 
 For the call, I'll come prepared with:
 - The ROI model (5-year NPV scenarios: conservative / base / aggressive).
-- The competitive frame vs Pragmatic / NetEnt / Hacksaw / Push Gaming current cadence.
+- The competitive frame vs Pragmatic / Vendor D / Hacksaw / Push Gaming current cadence.
 - Three real customer-narrative storyboards (30-sec elevator, 5-min deep, 90-min board) you could borrow internally.
 
 What's the most useful angle to lead with from your side? Always better to calibrate before the call than to guess.
@@ -47,7 +47,7 @@ Best,
 
 ## Day-before
 - 1-line confirmation: "On for {{time}} tomorrow — looking forward."
-- Brief Agent C's branding scripts if customizing one-pager for L&W brand
+- Brief Agent C's branding scripts if customizing one-pager for Vendor B brand
 - Tarball ready as follow-up artifact post-call
 
 ## Follow-up

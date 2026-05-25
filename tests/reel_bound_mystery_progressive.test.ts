@@ -217,7 +217,7 @@ describe('analyzeReelBoundMysteryProgressive — industry iconic configs', () =>
     // E[payout] should be dominated by top tier despite rarity
     expect(r.expectedPayoutPerSpin).toBeGreaterThan(0.5);
   });
-  it('Bally Smokin 7s degenerate 1-tier (only top tier, all reels equal prob)', () => {
+  it('Vendor H Smokin 7s degenerate 1-tier (only top tier, all reels equal prob)', () => {
     const r = analyzeReelBoundMysteryProgressive({
       numReels: 5,
       perReelScatterPresenceProb: [0.20, 0.20, 0.20, 0.20, 0.20],

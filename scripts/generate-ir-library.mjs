@@ -3,7 +3,7 @@
  * generate-ir-library.mjs
  *
  * Idempotent generator for the studio IR library:
- *   - 16 L&W M-gap starter IRs   → web/studio/ir-library/lw-mgaps/
+ *   - 16 Vendor B M-gap starter IRs   → web/studio/ir-library/lw-mgaps/
  *   - 10 industry-classic IRs    → web/studio/ir-library/classics/
  *   -  1 catalog index           → web/studio/ir-library/index.json
  *
@@ -160,7 +160,7 @@ function mkRtpAllocation(target, weights) {
 }
 
 /* ============================================================
-   L&W M-gap IR builders (M1 → M16)
+   Vendor B M-gap IR builders (M1 → M16)
    ============================================================ */
 
 function buildM1() {
@@ -381,7 +381,7 @@ function buildM6() {
       id: 'lw-m6-starter',
       name: 'M6 Triple Cash Wheel',
       version: '0.1.0',
-      description: 'Stacked Multi-Wheel Composition aggregator — Bally Triple/Quick Hit Cash Wheel.',
+      description: 'Stacked Multi-Wheel Composition aggregator — Vendor H Triple/Quick Hit Cash Wheel.',
       theme_tags: ['lw-template', 'm6', 'wheel', 'composer'],
     },
     topology: { kind: 'rectangular', reels: 5, rows: 3 },
@@ -786,7 +786,7 @@ function buildM15() {
       id: 'lw-m15-starter',
       name: 'M15 Rich Little Piggies Multi-Pot',
       version: '0.1.0',
-      description: 'Multi-Pot Branched H&S Sub-Feature Selection aggregator — Bally Rich Little Piggies pots.',
+      description: 'Multi-Pot Branched H&S Sub-Feature Selection aggregator — Vendor H Rich Little Piggies pots.',
       theme_tags: ['lw-template', 'm15', 'hold-and-win', 'aggregator'],
     },
     topology: { kind: 'rectangular', reels: 5, rows: 4 },
@@ -1310,22 +1310,22 @@ function buildClassicExpandingWilds() {
    ============================================================ */
 
 const LW_GAPS = [
-  { id: 'lw-m1',  file: 'M1-dragon-spin-crosslink-water.ir.json',      title: 'M1 Dragon Spin CrossLink Water',     supplier: 'L&W Bally',         year: 2024, topology: 'rectangular',   build: buildM1  },
-  { id: 'lw-m2',  file: 'M2-huff-n-puff-frame-upgrade.ir.json',         title: "M2 Huff N' Puff Frame Upgrade",      supplier: 'L&W SG Gaming',     year: 2024, topology: 'rectangular',   build: buildM2  },
-  { id: 'lw-m3',  file: 'M3-ultimate-fire-link-grid-expansion.ir.json', title: 'M3 Ultimate Fire Link Grid-Expansion', supplier: 'L&W Bally',       year: 2024, topology: 'cluster_grid',  build: buildM3  },
-  { id: 'lw-m4',  file: 'M4-dancing-drums-explosion.ir.json',           title: 'M4 Dancing Drums Explosion',         supplier: 'L&W Shuffle Master',year: 2024, topology: 'rectangular',   build: buildM4  },
-  { id: 'lw-m5',  file: 'M5-quick-hit-reel-bound-mystery.ir.json',      title: 'M5 Quick Hit Reel-Bound Mystery',    supplier: 'L&W Bally',         year: 2024, topology: 'rectangular',   build: buildM5  },
-  { id: 'lw-m6',  file: 'M6-triple-cash-wheel.ir.json',                 title: 'M6 Triple Cash Wheel',               supplier: 'L&W Bally',         year: 2026, topology: 'rectangular',   build: buildM6  },
-  { id: 'lw-m7',  file: 'M7-spartacus-colossal-reels.ir.json',          title: 'M7 Spartacus Colossal Reels',        supplier: 'L&W WMS',           year: 2024, topology: 'rectangular',   build: buildM7  },
-  { id: 'lw-m8',  file: 'M8-goldfish-race.ir.json',                     title: 'M8 Goldfish Race Competitive Pick',  supplier: 'L&W WMS',           year: 2025, topology: 'rectangular',   build: buildM8  },
-  { id: 'lw-m9',  file: 'M9-big-bet-uk.ir.json',                        title: 'M9 Big Bet UK Paid-Package',         supplier: 'L&W Barcrest',      year: 2024, topology: 'rectangular',   build: buildM9  },
-  { id: 'lw-m10', file: 'M10-rr-megaways-bonus-bank.ir.json',           title: 'M10 RR Megaways Bonus Bank',         supplier: 'L&W Barcrest',      year: 2025, topology: 'variable_rows', build: buildM10 },
-  { id: 'lw-m11', file: 'M11-player-elects.ir.json',                    title: 'M11 Player-Elects Composition',      supplier: 'L&W (multi-studio)',year: 2025, topology: 'rectangular',   build: buildM11 },
-  { id: 'lw-m12', file: 'M12-munchkinland.ir.json',                     title: 'M12 Munchkinland Random Injection',  supplier: 'L&W WMS',           year: 2025, topology: 'rectangular',   build: buildM12 },
-  { id: 'lw-m13', file: 'M13-woz-glinda.ir.json',                       title: 'M13 WOZ YBR Glinda Reshape',         supplier: 'L&W WMS',           year: 2026, topology: 'cluster_grid',  build: buildM13 },
-  { id: 'lw-m14', file: 'M14-lotr-nested.ir.json',                      title: 'M14 LOTR Two Towers Nested Slot',    supplier: 'L&W WMS',           year: 2025, topology: 'rectangular',   build: buildM14 },
-  { id: 'lw-m15', file: 'M15-rich-piggies.ir.json',                     title: 'M15 Rich Little Piggies Multi-Pot',  supplier: 'L&W Bally',         year: 2025, topology: 'rectangular',   build: buildM15 },
-  { id: 'lw-m16', file: 'M16-stellar-jackpots.ir.json',                 title: 'M16 Stellar Jackpots Arcade',        supplier: 'L&W Lightning Box', year: 2025, topology: 'rectangular',   build: buildM16 },
+  { id: 'lw-m1',  file: 'M1-dragon-spin-crosslink-water.ir.json',      title: 'M1 Dragon Spin CrossLink Water',     supplier: 'Vendor B Vendor H',         year: 2024, topology: 'rectangular',   build: buildM1  },
+  { id: 'lw-m2',  file: 'M2-huff-n-puff-frame-upgrade.ir.json',         title: "M2 Huff N' Puff Frame Upgrade",      supplier: 'Vendor B Vendor B',     year: 2024, topology: 'rectangular',   build: buildM2  },
+  { id: 'lw-m3',  file: 'M3-ultimate-fire-link-grid-expansion.ir.json', title: 'M3 Ultimate Fire Link Grid-Expansion', supplier: 'Vendor B Vendor H',       year: 2024, topology: 'cluster_grid',  build: buildM3  },
+  { id: 'lw-m4',  file: 'M4-dancing-drums-explosion.ir.json',           title: 'M4 Dancing Drums Explosion',         supplier: 'Vendor B Shuffle Master',year: 2024, topology: 'rectangular',   build: buildM4  },
+  { id: 'lw-m5',  file: 'M5-quick-hit-reel-bound-mystery.ir.json',      title: 'M5 Quick Hit Reel-Bound Mystery',    supplier: 'Vendor B Vendor H',         year: 2024, topology: 'rectangular',   build: buildM5  },
+  { id: 'lw-m6',  file: 'M6-triple-cash-wheel.ir.json',                 title: 'M6 Triple Cash Wheel',               supplier: 'Vendor B Vendor H',         year: 2026, topology: 'rectangular',   build: buildM6  },
+  { id: 'lw-m7',  file: 'M7-spartacus-colossal-reels.ir.json',          title: 'M7 Spartacus Colossal Reels',        supplier: 'Vendor B WMS',           year: 2024, topology: 'rectangular',   build: buildM7  },
+  { id: 'lw-m8',  file: 'M8-goldfish-race.ir.json',                     title: 'M8 Goldfish Race Competitive Pick',  supplier: 'Vendor B WMS',           year: 2025, topology: 'rectangular',   build: buildM8  },
+  { id: 'lw-m9',  file: 'M9-big-bet-uk.ir.json',                        title: 'M9 Big Bet UK Paid-Package',         supplier: 'Vendor B Barcrest',      year: 2024, topology: 'rectangular',   build: buildM9  },
+  { id: 'lw-m10', file: 'M10-rr-megaways-bonus-bank.ir.json',           title: 'M10 RR Megaways Bonus Bank',         supplier: 'Vendor B Barcrest',      year: 2025, topology: 'variable_rows', build: buildM10 },
+  { id: 'lw-m11', file: 'M11-player-elects.ir.json',                    title: 'M11 Player-Elects Composition',      supplier: 'Vendor B (multi-studio)',year: 2025, topology: 'rectangular',   build: buildM11 },
+  { id: 'lw-m12', file: 'M12-munchkinland.ir.json',                     title: 'M12 Munchkinland Random Injection',  supplier: 'Vendor B WMS',           year: 2025, topology: 'rectangular',   build: buildM12 },
+  { id: 'lw-m13', file: 'M13-woz-glinda.ir.json',                       title: 'M13 WOZ YBR Glinda Reshape',         supplier: 'Vendor B WMS',           year: 2026, topology: 'cluster_grid',  build: buildM13 },
+  { id: 'lw-m14', file: 'M14-lotr-nested.ir.json',                      title: 'M14 LOTR Two Towers Nested Slot',    supplier: 'Vendor B WMS',           year: 2025, topology: 'rectangular',   build: buildM14 },
+  { id: 'lw-m15', file: 'M15-rich-piggies.ir.json',                     title: 'M15 Rich Little Piggies Multi-Pot',  supplier: 'Vendor B Vendor H',         year: 2025, topology: 'rectangular',   build: buildM15 },
+  { id: 'lw-m16', file: 'M16-stellar-jackpots.ir.json',                 title: 'M16 Stellar Jackpots Arcade',        supplier: 'Vendor B Lightning Box', year: 2025, topology: 'rectangular',   build: buildM16 },
 ];
 
 const CLASSICS = [
@@ -1374,7 +1374,7 @@ function validateAndWrite(absPath, ir, label) {
 
 function main() {
   console.log(`[ir-library] generator boot — DRY_RUN=${DRY_RUN}`);
-  // L&W M-gaps
+  // Vendor B M-gaps
   for (const entry of LW_GAPS) {
     const ir = entry.build();
     validateAndWrite(resolve(LW_DIR, entry.file), ir, entry.id);
@@ -1392,8 +1392,8 @@ function main() {
     categories: [
       {
         id: 'lw-mgaps',
-        name: 'L&W M-Gaps (16)',
-        description: 'L&W mehanika M1-M16 starter IRs — closed-form solvers under W181–W196.',
+        name: 'Vendor B M-Gaps (16)',
+        description: 'Vendor B mehanika M1-M16 starter IRs — closed-form solvers under W181–W196.',
         items: LW_GAPS.map((g, i) => ({
           id: g.id,
           file: `lw-mgaps/${g.file}`,
@@ -1434,7 +1434,7 @@ function main() {
   } else {
     console.log(`[ir-library] DRY · index.json (${LW_GAPS.length + CLASSICS.length} items)`);
   }
-  console.log(`[ir-library] done — ${LW_GAPS.length} L&W + ${CLASSICS.length} classics validated`);
+  console.log(`[ir-library] done — ${LW_GAPS.length} Vendor B + ${CLASSICS.length} classics validated`);
 }
 
 main();

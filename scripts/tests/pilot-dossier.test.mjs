@@ -66,7 +66,7 @@ describe('pilot dossier — markdown render', () => {
 
   it('renderMarkdown begins with the dossier title', () => {
     const md = renderMarkdown(ctx.state, ctx.summary);
-    expect(md.split('\n')[0]).toBe('# L&W Pilot Evaluation Dossier');
+    expect(md.split('\n')[0]).toBe('# Vendor B Pilot Evaluation Dossier');
   });
 
   it('renderMarkdown emits all 12 section headings', () => {

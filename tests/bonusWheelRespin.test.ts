@@ -171,7 +171,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('NetEnt-style wheel: 30% respin, 4-tier cash + grand', () => {
+  it('Vendor D-style wheel: 30% respin, 4-tier cash + grand', () => {
     const r = solveBonusWheelRespin({
       paySegments: [
         { label: 'mini',  probability: 0.30, payoutX: 5 },

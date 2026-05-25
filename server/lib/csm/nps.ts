@@ -235,7 +235,7 @@ export class NpsStore {
       `Hi,`,
       ``,
       `We would love to hear from you. On a scale of 0-10, how likely`,
-      `are you to recommend the L&W slot-math platform to a colleague?`,
+      `are you to recommend the Vendor B slot-math platform to a colleague?`,
       ``,
       `Click to respond (link expires ${expiresAt}):`,
       ``,

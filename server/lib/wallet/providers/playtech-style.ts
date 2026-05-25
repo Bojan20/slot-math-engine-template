@@ -1,5 +1,5 @@
 /**
- * W210 Faza 600.0 — Playtech IMS-style wallet provider.
+ * W210 Faza 600.0 — Vendor F IMS-style wallet provider.
  *
  * Identifying features:
  *   - Signature is verified server-side using a JSON-sorted body +

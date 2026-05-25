@@ -41,7 +41,7 @@ export function analyzeFoo(cfg) { return { rtp: 0.5 }; }
 `.trim();
 
 const BAD_RESERVED_TERM = `
-// Light & Wonder cascade variant
+// Vendor B cascade variant
 export function analyzeFoo(cfg) { return { rtp: 0.5 }; }
 export function simulateFoo(cfg, n) { return { observed: 0.5 }; }
 `.trim();

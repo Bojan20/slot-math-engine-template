@@ -91,7 +91,7 @@ const CONFIGS = [
   },
   {
     name: 'D_asgardian_stones_avalanche_multiplicative',
-    description: 'NetEnt Asgardian Stones avalanche multipliers: 5×3 grid, q=0.10, multiplicative (low-variance)',
+    description: 'Vendor D Asgardian Stones avalanche multipliers: 5×3 grid, q=0.10, multiplicative (low-variance)',
     cfg: {
       positionCount: 15,
       multiplierLandingProbability: 0.10,
@@ -279,7 +279,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — verifies T = Σ v_i (additive) ili Π v_i (multiplicative)');
   md.push("- Industry use: Pragmatic Sweet Bonanza (tumble mult symbols), Pragmatic");
   md.push("  Bigger Bass Bonanza (fish multipliers), Hacksaw RIP City (sum), Push Wild");
-  md.push('  Swarm (sum), NetEnt Asgardian Stones (avalanche multiplicative), Yggdrasil');
+  md.push('  Swarm (sum), Vendor D Asgardian Stones (avalanche multiplicative), Yggdrasil');
   md.push('  Reactoonz multipliers.');
 
   writeFileSync(join(OUT_DIR, 'SYMBOL_MULT_REEL_STOP.md'), md.join('\n'));

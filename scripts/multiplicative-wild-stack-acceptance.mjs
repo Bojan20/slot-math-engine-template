@@ -23,7 +23,7 @@ const TOL_W_REL = 0.05;
 const CONFIGS = [
   {
     name: 'A_netent_hotline_style',
-    description: 'NetEnt-Hotline 5x reels, rare q=0.1, fixed x2 wilds',
+    description: 'Vendor D-Hotline 5x reels, rare q=0.1, fixed x2 wilds',
     cfg: {
       reelsR: 5,
       wildLandingProbabilityPerReel: 0.10,
@@ -252,7 +252,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — variance disclosure for multiplicative-wild features');
   md.push('- **MGA PPD §11.f** — max-payout tail-probability disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — closed-form product moment auditor-verifiable');
-  md.push('- Industry use: NetEnt Hotline, Push Wanted Dead or a Wild, Hacksaw Multiplier Mayhem');
+  md.push('- Industry use: Vendor D Hotline, Push Wanted Dead or a Wild, Hacksaw Multiplier Mayhem');
 
   writeFileSync(join(OUT_DIR, 'MULTIPLICATIVE_WILD_STACK.md'), md.join('\n'));
 

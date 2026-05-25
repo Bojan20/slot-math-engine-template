@@ -1,0 +1,76 @@
+{
+  "tier": "quick",
+  "spins": 1000000,
+  "threshold": 0.05,
+  "bet_mult": 1,
+  "seed": 42,
+  "overall_ok": true,
+  "game_count": 3,
+  "pass_count": 3,
+  "fail_count": 0,
+  "results": [
+    {
+      "ir": "games/ce-copy-test/out/lw.200-1637-001.slot-sim.ir.json",
+      "ok": true,
+      "spins": 1000000,
+      "seed": 42,
+      "bet_mult": 1,
+      "threshold": 0.05,
+      "rtp": 0.955001,
+      "rtp_target": 0.96,
+      "hit_freq": 0.196343,
+      "hit_freq_target": 0.190306,
+      "win_freq": 0.096859,
+      "win_freq_target": 0.089361,
+      "drift": {
+        "rtp": 0.004998999999999976,
+        "hit_freq": 0.006036999999999987,
+        "win_freq": 0.007498000000000005
+      },
+      "failed_metrics": {},
+      "elapsed_s": 1.04
+    },
+    {
+      "ir": "games/fort-knox-wolf-run/out/igt.200-1775-001.slot-sim.ir.json",
+      "ok": true,
+      "spins": 1000000,
+      "seed": 42,
+      "bet_mult": 1,
+      "threshold": 0.05,
+      "rtp": 0.95364,
+      "rtp_target": 0.961443,
+      "hit_freq": 0.243507,
+      "hit_freq_target": 0.244332,
+      "win_freq": 0.11429,
+      "win_freq_target": 0.114905,
+      "drift": {
+        "rtp": 0.007803000000000004,
+        "hit_freq": 0.0008249999999999924,
+        "win_freq": 0.0006149999999999906
+      },
+      "failed_metrics": {},
+      "elapsed_s": 0.83
+    },
+    {
+      "ir": "games/fort-knox-wolf-run/out/igt.200-1775-002.slot-sim.ir.json",
+      "ok": true,
+      "spins": 1000000,
+      "seed": 42,
+      "bet_mult": 1,
+      "threshold": 0.05,
+      "rtp": 0.933368,
+      "rtp_target": 0.940211,
+      "hit_freq": 0.243559,
+      "hit_freq_target": 0.244304,
+      "win_freq": 0.113593,
+      "win_freq_target": 0.114143,
+      "drift": {
+        "rtp": 0.0068430000000000435,
+        "hit_freq": 0.0007449999999999957,
+        "win_freq": 0.0005499999999999949
+      },
+      "failed_metrics": {},
+      "elapsed_s": 0.78
+    }
+  ]
+}

@@ -129,8 +129,8 @@ def parse_log(path: Path) -> dict:
     # Triggers
     for k, lbl in [
         ("fs_trigger_one_in", "Free Spins trigger 1 in"),
-        ("ce_base_trigger_one_in", "Cash Eruption base 1 in"),
-        ("ce_fs_trigger_one_in", "Cash Eruption FS 1 in"),
+        ("ce_base_trigger_one_in", "Pattern-CE base 1 in"),
+        ("ce_fs_trigger_one_in", "Pattern-CE FS 1 in"),
     ]:
         m = re.search(re.escape(lbl) + r"\s*:\s+([0-9.]+)", text)
         if m:
@@ -188,7 +188,7 @@ def main():
         "# CE COPY TEST — 10B spinova verifikacioni izveštaj",
         "",
         "## Cilj",
-        "Svaki broj iz PAR_100spins cert summary taba (Cash Eruption Excel)",
+        "Svaki broj iz PAR_100spins cert summary taba (Pattern-CE Excel)",
         "validovan kroz 10 milijardi simulisanih spinova po SWID-u na bet",
         "multiplier-u 1.",
         "",

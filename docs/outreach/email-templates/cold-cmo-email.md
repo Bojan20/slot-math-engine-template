@@ -1,6 +1,6 @@
 # Cold CMO — Email
 
-> Summary line 1: Cold outbound email to L&W CMO / VP Marketing.
+> Summary line 1: Cold outbound email to Vendor B CMO / VP Marketing.
 > Summary line 2: Tone: market-narrative, ship-cadence framing, ROI bullet.
 > Summary line 3: Goal: 30-min commercial-framing call OR an internal forward to CTO/CFO.
 
@@ -10,7 +10,7 @@
 - Keep under 180 words.
 
 ## Subject line variants
-- A: "Compressing L&W's math-cert window from months to 14 days"
+- A: "Compressing Vendor B's math-cert window from months to 14 days"
 - B: "5-year NPV impact on studio cadence — model attached"
 - C: "Re: your {{quarter}} ship plan — math engine that could move the needle"
 - D: "Studio cadence: 8 ships → 24 ships, same headcount"
@@ -20,7 +20,7 @@ Hi {{first_name}},
 
 Your team announced {{lw_recent_announcement}} in {{recent_month}} — congrats on the launch. The reason I'm writing: the math + cert paper-trail step in that pipeline is what we accelerate, and the size of the gap surprised us when we benchmarked.
 
-Concrete: our math engine collapses the math kernel + lab paper trail from 12–18 weeks to ~14 days (lab adapters BMM/GLI/eCOGRA/NMi all wired). 77 closed-form solvers covering 16/16 published L&W mechanic families. Same headcount, ~3× ship rate.
+Concrete: our math engine collapses the math kernel + lab paper trail from 12–18 weeks to ~14 days (lab adapters BMM/GLI/eCOGRA/NMi all wired). 77 closed-form solvers covering 16/16 published Vendor B mechanic families. Same headcount, ~3× ship rate.
 
 Two artifacts you can verify on a phone:
 

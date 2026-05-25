@@ -6,7 +6,7 @@ over WebSocket, and author their own math kernels on top of the engine.
 
 - Production-grade Fastify server it targets ships in the same monorepo
 - 6352 specs PASS at the time of W207-DOCS
-- 77 closed-form solver kernels covering 100% of L&W mehanika
+- 77 closed-form solver kernels covering 100% of Vendor B mehanika
 - 15 jurisdiction overlay (UKGC, MGA, NV, NJ, PA, MI, ON, BC, AAMS, DGA, SGA, KSA, GBGA, SK, AGCO)
 
 ## Install

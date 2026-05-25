@@ -36,7 +36,7 @@
 
 - **Portfolio size targeted**: ~330 titles.
 - **Engine config-only coverage**: ~88% (≈290 of 330). Konami's mechanic palette is comparatively narrow (centered on stacked-symbols + ways) which makes coverage tight.
-- **Confidence**: high — Konami has historically reused mechanic templates more conservatively than IGT/Aristocrat, so each solver match cascades across many titles.
+- **Confidence**: high — Konami has historically reused mechanic templates more conservatively than Vendor A/Vendor C, so each solver match cascades across many titles.
 
 ## Decision-makers (role placeholders)
 
@@ -55,7 +55,7 @@
 
 ## ROI ballpark
 
-- Math + cert paper-trail savings: **~$185K per title** (slightly lower than Aristocrat/IGT due to simpler mechanic palette).
+- Math + cert paper-trail savings: **~$185K per title** (slightly lower than Vendor C/Vendor A due to simpler mechanic palette).
 - Velocity uplift: ~18 ships/yr → ~48 ships/yr (2.65× factor).
 - **5yr horizon NPV impact: +$32M** (base case).
 - SYNKROS adjacency: if the math kernel becomes the recommended cert pipeline across Konami's online operator partners using SYNKROS, an additional ~$8M/yr platform-fee uplift is plausible.

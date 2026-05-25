@@ -1,6 +1,6 @@
 # Tier-2 Cold Outreach — Email Template
 
-> Summary line 1: Generic cold-email template for any of the 8 Tier-2 slot operators (Aristocrat, IGT, Konami, Novomatic, Playtech, Everi, Ainsworth, AGS).
+> Summary line 1: Generic cold-email template for any of the 8 Tier-2 slot operators (Vendor C, Vendor A, Konami, Novomatic, Vendor F, Everi, Ainsworth, AGS).
 > Summary line 2: Tone: technical peer + commercial pragmatist. One number, one differentiator, one ask.
 > Summary line 3: Goal: 30-min math-team code walk OR NDA exchange to forward to Corp Dev.
 
@@ -43,7 +43,7 @@ Best,
 - Portfolio fit link: reports/outreach/PORTFOLIO_FIT_{{operator_slug}}.md
 
 ## Placeholder reference
-- {{operator_name}} — display name, e.g. "Aristocrat", "IGT", "Konami"
+- {{operator_name}} — display name, e.g. "Vendor C", "Vendor A", "Konami"
 - {{operator_slug}} — lowercase slug, e.g. "aristocrat", "igt", "konami"
 - {{flagship_title}} — operator flagship, e.g. "Buffalo", "Wheel of Fortune", "Book of Ra"
 - {{coverage_pct}} — integer percentage from coverage matrix
@@ -57,11 +57,11 @@ Best,
 
 | operator_slug | operator_name | flagship_title | coverage_pct | decision_maker_role |
 |---|---|---|---|---|
-| aristocrat | Aristocrat | Buffalo | 82 | Chief Math Officer |
-| igt | IGT | Wheel of Fortune | 71 | Chief Math Officer |
+| aristocrat | Vendor C | Buffalo | 82 | Chief Math Officer |
+| igt | Vendor A | Wheel of Fortune | 71 | Chief Math Officer |
 | konami | Konami Gaming | China Shores | 88 | SVP Engineering |
 | novomatic | Novomatic / Greentube | Book of Ra | 79 | CTO of Greentube |
-| playtech | Playtech | Age of the Gods | 76 | Chief Math Officer |
+| playtech | Vendor F | Age of the Gods | 76 | Chief Math Officer |
 | everi | Everi | Cash Machine | 85 | VP Engineering |
 | ainsworth | Ainsworth | Mustang Money | 88 | VP Game Development |
 | ags | AGS | Rakin' Bacon | 84 | Chief Math Officer |

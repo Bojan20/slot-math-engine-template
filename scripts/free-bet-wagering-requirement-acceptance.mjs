@@ -32,7 +32,7 @@ const TOL_WITHDRAWABLE_REL = 0.25;    // E[withdrawable] relative (25%, hot conf
 const CONFIGS = [
   {
     name: 'A_uk_mga_x35_standard_96pct_med_vol',
-    description: 'UK / MGA standard: bonus £10 x35 WR @ 96% RTP, vol-index 5 (medium-vol slots like NetEnt Starburst)',
+    description: 'UK / MGA standard: bonus £10 x35 WR @ 96% RTP, vol-index 5 (medium-vol slots like Vendor D Starburst)',
     cfg: {
       bonusAmount: 10,
       wagerMultiplier: 35,

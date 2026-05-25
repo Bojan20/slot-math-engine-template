@@ -369,10 +369,10 @@ engine-generic equivalent we use instead.
 | `GCM` / `GCM3` / `GCM4` | `OperatorBridge` / `RgsBridge` |
 | `TAF` | `AcceptanceHarness` |
 | `PPH` | `hitProbability` |
-| `PSD` (when used as IGT term) | `LayoutSource` (or avoid entirely) |
+| `PSD` (when used as Vendor A term) | `LayoutSource` (or avoid entirely) |
 | `Pattern Slider` | `paylineLadder` |
 | `Stepper` (when meant as brand-mechanic) | `mechanicalReel` / `discreteStop` |
-| `Cool Catch` / `Cleopatra` / `Wheel of Fortune` / `Fort Knox` / `MegaJackpots` / `Cash Eruption` | Generic — never name commercial games |
+| `Cool Catch` / `Pattern-CL` / `Wheel of Fortune` / `Pick-Bonus` / `MegaJackpots` / `Pattern-CE` | Generic — never name commercial games |
 | `Cash Link` (when used as brand) | `collectAndPersist` |
 | `Spaghetti rendering` | `bitmapPaylineRender` |
 | `MegaWin` / `Colossal` / `BigBass` (as brand labels) | `winTier1/2/3` or generic descriptors |

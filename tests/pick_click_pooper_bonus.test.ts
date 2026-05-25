@@ -170,7 +170,7 @@ describe('analyzePickClickPooperBonus — monotonicity', () => {
 });
 
 describe('analyzePickClickPooperBonus — Monte Carlo cross-validation', () => {
-  it('MC E[T] within 5% of CF (Aristocrat 5 Dragons cfg N=20 K=5)', () => {
+  it('MC E[T] within 5% of CF (Vendor C 5 Dragons cfg N=20 K=5)', () => {
     const cf = analyzePickClickPooperBonus(baseCfg);
     const mc = simulatePickClickPooperBonus(baseCfg, 20000, 0xa5a5);
     const rel = Math.abs(mc.meanReveals - cf.expectedReveals) / cf.expectedReveals;
@@ -221,7 +221,7 @@ describe('analyzePickClickPooperBonus — determinism', () => {
 });
 
 describe('analyzePickClickPooperBonus — industry iconic configs', () => {
-  it('Aristocrat 5 Dragons (N=20 K=5) — E[T]=2.5, P(T=0)=0.25, 1-in-4 first-pick pooper', () => {
+  it('Vendor C 5 Dragons (N=20 K=5) — E[T]=2.5, P(T=0)=0.25, 1-in-4 first-pick pooper', () => {
     const r = analyzePickClickPooperBonus({
       totalBoxes: 20,
       pooperBoxes: 5,
@@ -232,7 +232,7 @@ describe('analyzePickClickPooperBonus — industry iconic configs', () => {
     expect(r.probZeroReveals).toBeCloseTo(0.25, 6);
     expect(r.oneInNRoundsZeroPicks).toBeCloseTo(4, 6);
   });
-  it('Bally Quick Hit (N=12 K=2) pick-a-prize — E[T] = 10/3 ≈ 3.33', () => {
+  it('Vendor H Quick Hit (N=12 K=2) pick-a-prize — E[T] = 10/3 ≈ 3.33', () => {
     const r = analyzePickClickPooperBonus({
       totalBoxes: 12,
       pooperBoxes: 2,
@@ -242,7 +242,7 @@ describe('analyzePickClickPooperBonus — industry iconic configs', () => {
     expect(r.expectedReveals).toBeCloseTo(10 / 3, 6);
     expect(r.probZeroReveals).toBeCloseTo(2 / 12, 6);
   });
-  it('NetEnt Gonzo bonus (N=15 K=3) — E[T] = 12/4 = 3.0, P(reach ≥ 5) ≈ multi-pick rare', () => {
+  it('Vendor D Gonzo bonus (N=15 K=3) — E[T] = 12/4 = 3.0, P(reach ≥ 5) ≈ multi-pick rare', () => {
     const cfg: PickClickPooperBonusConfig = {
       totalBoxes: 15,
       pooperBoxes: 3,

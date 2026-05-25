@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 188 — Player-Elects Feature Composition Aggregator acceptance
-// (69. solver, L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures).
+// (69. solver, Vendor B M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures).
 //
 // 6 industry configs × 20K MC spins (per strategy) = 360K total spin sims sa
 // player rational/uniform/worst strategy MC vs exact CF.
@@ -23,7 +23,7 @@ const TOL_STDDEV_REL = 0.20;
 const CONFIGS = [
   {
     name: "A_rainbow_riches_pick_n_mix_3of5",
-    description: "LNW Barcrest Rainbow Riches Pick n Mix (2014) — pick 3 of 5 bonuses (Roads/Wishing/Pots/Magic/Cash).",
+    description: "Vendor B Barcrest Rainbow Riches Pick n Mix (2014) — pick 3 of 5 bonuses (Roads/Wishing/Pots/Magic/Cash).",
     cfg: {
       candidateModes: [
         { name: 'Roads_to_Riches', rtp: 0.32, variance: 8 },
@@ -37,7 +37,7 @@ const CONFIGS = [
   },
   {
     name: "B_michael_jackson_kop_3fs_modes",
-    description: "LNW Bally Michael Jackson King of Pop (2013) — 3 FS modes Smooth Criminal/Beat It/Billie Jean, pick 1.",
+    description: "Vendor B Vendor H Michael Jackson King of Pop (2013) — 3 FS modes Smooth Criminal/Beat It/Billie Jean, pick 1.",
     cfg: {
       candidateModes: [
         { name: 'Smooth_Criminal', rtp: 0.95, variance: 50 },
@@ -49,7 +49,7 @@ const CONFIGS = [
   },
   {
     name: "C_kiss_band_member_fs_variants",
-    description: "LNW Bally KISS — 4 band-member FS variants, pick 1 (Paul/Gene/Ace/Peter).",
+    description: "Vendor B Vendor H KISS — 4 band-member FS variants, pick 1 (Paul/Gene/Ace/Peter).",
     cfg: {
       candidateModes: [
         { name: 'Paul_Stanley_FS', rtp: 0.98, variance: 55 },
@@ -62,7 +62,7 @@ const CONFIGS = [
   },
   {
     name: "D_5_treasures_5fs_modes",
-    description: "LNW Shuffle Master 5 Treasures (2017) — 5 FS modes (Dragon/Phoenix/Tiger/Lion/Elephant), pick 1.",
+    description: "Vendor B Shuffle Master 5 Treasures (2017) — 5 FS modes (Dragon/Phoenix/Tiger/Lion/Elephant), pick 1.",
     cfg: {
       candidateModes: [
         { name: 'Dragon_Treasure', rtp: 1.10, variance: 90 },
@@ -210,7 +210,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# PLAYER_ELECTS_FEATURE_COMPOSITION — Player-Elects Feature Composition Aggregator Acceptance (W188, 69. solver, L&W M11 P1 GAP CLOSURE)');
+  md.push('# PLAYER_ELECTS_FEATURE_COMPOSITION — Player-Elects Feature Composition Aggregator Acceptance (W188, 69. solver, Vendor B M11 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -218,7 +218,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${SPINS} MC spins per strategy each = ${(CONFIGS.length * SPINS * 3 / 1e3).toFixed(0)}K total spin sims (rational + worst + uniform strategies).`);
   md.push('');
-  md.push("Closes Faza 12 ext (post-W100): ✅ \"Player-Elects Feature Composition Aggregator\" (Wave 188 — 69. closed-form solver, L&W M11 P1 GAP CLOSED — Rainbow Riches Pick n Mix + Michael Jackson KOP + KISS + 5 Treasures).");
+  md.push("Closes Faza 12 ext (post-W100): ✅ \"Player-Elects Feature Composition Aggregator\" (Wave 188 — 69. closed-form solver, Vendor B M11 P1 GAP CLOSED — Rainbow Riches Pick n Mix + Michael Jackson KOP + KISS + 5 Treasures).");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -254,7 +254,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — per-mode audit trail.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push('Industry use: L&W M11 gap — Rainbow Riches Pick n Mix (pick 3 of 5 bonuses), Michael Jackson King of Pop (3 FS modes Smooth Criminal/Beat It/Billie Jean), KISS (band-member FS variants), 5 Treasures (5 FS modes).');
+  md.push('Industry use: Vendor B M11 gap — Rainbow Riches Pick n Mix (pick 3 of 5 bonuses), Michael Jackson King of Pop (3 FS modes Smooth Criminal/Beat It/Billie Jean), KISS (band-member FS variants), 5 Treasures (5 FS modes).');
 
   writeFileSync(join(OUT_DIR, 'PLAYER_ELECTS_FEATURE_COMPOSITION.md'), md.join('\n'));
 

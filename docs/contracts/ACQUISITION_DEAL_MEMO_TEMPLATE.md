@@ -191,7 +191,7 @@ extending to 40%.
 ## 8. Anti-Trust Considerations
 
 The slot supply market is concentrated among a handful of Tier-1
-platforms (L&W, Aristocrat, IGT, Playtech, Evolution / NetEnt /
+platforms (Vendor B, Vendor C, Vendor A, Vendor F, Evolution / Vendor D /
 Red Tiger). An acquisition by a Tier-1 incumbent may trigger
 regulatory review (HSR in the US; EC merger review; UKGC fit-and-
 proper). The Parties shall jointly assess:

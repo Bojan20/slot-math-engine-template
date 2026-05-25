@@ -549,7 +549,7 @@ async function step8(parMod, _irSim) {
   };
   console.log('');
   dim('→ Cryptographic timelock na math: post-cert izmena reel strips / paytable je publicly detektovana.');
-  dim('→ ZERO major slot vendor (IGT/SG/Aristocrat/NetEnt/Pragmatic) ne ship-uje per-game commitment.');
+  dim('→ ZERO major slot vendor (Vendor A/SG/Vendor C/Vendor D/Pragmatic) ne ship-uje per-game commitment.');
   dim('→ Phase 2 = full Groth16 zk-SNARK (12-18 nedelja research, vredan kad regulator-i traže ZK).');
 }
 

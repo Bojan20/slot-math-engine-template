@@ -120,4 +120,4 @@ coverage, the engine's mutation surface is comprehensively pinned.
    background. Any survivors will be addressed in W241-followup.
 2. **TS Stryker `vitest-runner` allocator bug** — tracked as
    W239-followup, requires upstream patch.
-3. **L&W portfolio plan W181-W200** — strategic backlog (61→77 solvers).
+3. **Vendor B portfolio plan W181-W200** — strategic backlog (61→77 solvers).

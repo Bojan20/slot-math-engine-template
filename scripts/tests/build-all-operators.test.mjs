@@ -80,7 +80,7 @@ describe('build-all-operators', () => {
       operatorIds: ['aristocrat'],
     });
     const row = r.results[0];
-    expect(row.displayName).toBe('Aristocrat');
+    expect(row.displayName).toBe('Vendor C');
     expect(row.tier).toBe('Tier-1');
   });
 

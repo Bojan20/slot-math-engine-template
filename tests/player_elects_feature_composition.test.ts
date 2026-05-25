@@ -1,5 +1,5 @@
 // W152 Wave 188 — Player-Elects Feature Composition Aggregator vitest specs
-// (69. solver, L&W M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures).
+// (69. solver, Vendor B M11 P1 GAP CLOSURE — RR Pick n Mix + MJ KOP + KISS + 5 Treasures).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -305,7 +305,7 @@ describe('Wave 188 — Player-Elects Feature Composition Aggregator', () => {
     });
   });
 
-  describe('industry use-cases (L&W M11 player-elect family)', () => {
+  describe('industry use-cases (Vendor B M11 player-elect family)', () => {
     it("Rainbow Riches Pick n Mix — pick 3 of 5 bonuses", () => {
       const cfg: PlayerElectsFeatureCompositionConfig = {
         candidateModes: [

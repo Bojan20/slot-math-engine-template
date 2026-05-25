@@ -1,5 +1,5 @@
 /**
- * W211 Faza 700.0 — Real L&W Pilot Onboard — Postgres-backed pilot run store.
+ * W211 Faza 700.0 — Real Vendor B Pilot Onboard — Postgres-backed pilot run store.
  *
  * Mirrors {@link PilotRunStore}'s API against the `pilot_runs` table
  * defined by migration `013_pilot_runs.sql`. Hash chain consideration is

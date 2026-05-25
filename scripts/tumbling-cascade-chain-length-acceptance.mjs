@@ -33,7 +33,7 @@ const CONFIGS = [
   },
   {
     name: 'B_gonzo_quest_p020',
-    description: 'NetEnt Gonzos Quest-class p=0.20 (low-vol tumble, classic mechanic)',
+    description: 'Vendor D Gonzos Quest-class p=0.20 (low-vol tumble, classic mechanic)',
     cfg: { probCascadeWin: 0.20, expectedPayoutPerCascade: 1.5, variancePayoutPerCascade: 5 },
   },
   {
@@ -186,7 +186,7 @@ async function main() {
   md.push('- **MGA PPD §11** — tumbling mechanic transparency');
   md.push('- **eCOGRA Generic Slots Audit** — cascade-mechanic auditor verification');
   md.push('');
-  md.push('Industry use: Pragmatic Sweet Bonanza family, NetEnt Gonzo Quest, Reactoonz, Big Bass tumble FS,');
+  md.push('Industry use: Pragmatic Sweet Bonanza family, Vendor D Gonzo Quest, Reactoonz, Big Bass tumble FS,');
   md.push('Hacksaw Tombstone, Push Money Cart 4 cascade.');
 
   writeFileSync(join(OUT_DIR, 'TUMBLING_CASCADE_CHAIN_LENGTH.md'), md.join('\n'));

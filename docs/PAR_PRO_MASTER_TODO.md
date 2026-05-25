@@ -3,7 +3,7 @@
 **Date opened:** 2026-05-24
 **Source dokument:** `~/Desktop/SLOT_MATH_ENGINE_MASTER_DOCUMENT.pdf` (16 strana, Kimi.ai synthesis, 9 industry references)
 **Reference standard:** USIF v1.0 (`dist/par-sample-kit/schema/USIF_PAR_SCHEMA_v1.md`) + GLI-16 App D + GLI-19 v3.0 + UKGC RTS-7 + MGA PPD §11.f
-**Cilj:** Podići `rust-sim/src/par.rs` sa GLI-16-baseline na **Tier-1 PAR sheet** (segment-level RTP, EVT tail, Markov, time-to-trigger CDF, configHash, jurisdiction-gated RTP, multi-format export) — nivo koji IGT/Aristocrat internally drže, niko ne publikuje.
+**Cilj:** Podići `rust-sim/src/par.rs` sa GLI-16-baseline na **Tier-1 PAR sheet** (segment-level RTP, EVT tail, Markov, time-to-trigger CDF, configHash, jurisdiction-gated RTP, multi-format export) — nivo koji Vendor A/Vendor C internally drže, niko ne publikuje.
 
 ---
 
@@ -290,20 +290,20 @@
 
 PAR-001..009 daje **Tier-1 PAR sheet certifikat**, ali nije ultimativan math
 simulator. Boki je rekao "ULTIMATIVNO ZAUVEK" — ova ekstenzija pokriva svaki
-math gap koji vendor mora da ima da bi nadmašio IGT + Pragmatic + NetEnt.
+math gap koji vendor mora da ima da bi nadmašio Vendor A + Pragmatic + Vendor D.
 
 | Wave | Naziv | Atoms | ETA | Cilj | Status |
 |---|---|---|---|---|---|
 | **PAR-010** | Closed-form per-pay-rule RTP solver | 4 | 35 min | Bez ovog `pay_rule_rtp` polje ostaje 0.0 — pravi audit trail vrednosti | 🟢 Done |
 | **PAR-011** | Quasi-Monte Carlo (Halton + Sobol + Lattice) | 5 | 45 min | 100× variance reduction za P99.999 jackpot tail | 🟢 Done |
 | **PAR-012** | Bonus Buy EV calculator | 3 | 25 min | EV(buy) vs cost premium — modern slot economics (Pragmatic/Nolimit standard) | 🟢 Done |
-| **PAR-013** | Cluster Pays evaluator | 4 | 30 min | Connected-component scoring (NetEnt/Push Gaming math) | 🟢 Done |
+| **PAR-013** | Cluster Pays evaluator | 4 | 30 min | Connected-component scoring (Vendor D/Push Gaming math) | 🟢 Done |
 | **PAR-014** | Megaways / variable reel heights | 4 | 30 min | `Ways = ∏ S_i` sa per-spin varijabilnim height (BTG/Blueprint) | 🟢 Done |
 | **PAR-015** | Variance decomposition (ANOVA) | 3 | 25 min | σ²_total = σ²_base + σ²_fs + σ²_jp + 2·cov(...) — operator "koja feature truje varijans" | 🟢 Done |
 | **PAR-016** | Cumulative reach curves | 3 | 20 min | P(N spinova bez win) distribution — churn risk modeling | 🟢 Done |
 | **PAR-017** | Risk-of-Ruin formula | 2 | 15 min | RoR = ((1−edge)/(1+edge))^bankroll — bankroll modeling | 🟢 Done |
 | **PAR-018** | NIST SP 800-22 + DIEHARDER suite | 5 | 50 min | RNG cert za US tribal casinos (Nevada/NJ) | 🟢 Done |
-| **PAR-019** | Multi-tier mystery jackpot (Mini/Minor/Major/Grand) | 3 | 25 min | Aristocrat Dragon Link / IGT MegaJackpots math | 🟢 Done |
+| **PAR-019** | Multi-tier mystery jackpot (Mini/Minor/Major/Grand) | 3 | 25 min | Vendor C Pattern-DL / Vendor A MegaJackpots math | 🟢 Done |
 | **PAR-020** | Autokorelacija test (Ljung-Box + runs test) | 3 | 25 min | Regulatorni guard protiv "chasing" iluzija | 🟢 Done |
 | **PAR-021** | Exact rational arithmetic (BigRational) | 2 | 20 min | Mathematica-grade exactness — daje 7/72 umesto 0.09722... | 🟢 Done |
 | **TOTAL F-B..F-F** | | **41** | **~5 h 25 min** | | |

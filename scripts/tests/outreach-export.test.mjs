@@ -191,7 +191,7 @@ describe('outreach export · CRM format renderers', () => {
     const csv = toSalesforceCsv(rows);
     expect(csv).toMatch(/FirstName,LastName,Email/);
     expect(csv).toMatch(/Company/);
-    expect(csv).toMatch(/L&W/);
+    expect(csv).toMatch(/Vendor B/);
   });
 
   it('toPipedriveJson emits valid JSON with data array', () => {

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 191 — Bonus Bank Running-Balance Offset acceptance (72. solver, L&W M10 P0).
+// W152 Wave 191 — Bonus Bank Running-Balance Offset acceptance (72. solver, Vendor B M10 P0).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -29,7 +29,7 @@ function withVar(core) { return { ...core, perSpinVariance: consistentOverallVar
 const CONFIGS = [
   {
     name: "A_rainbow_riches_megaways_bank_all_wins",
-    description: "LNW Barcrest Rainbow Riches Megaways (2020, defining title) — 'Bank All Wins' mode boosts entire FS pool by 1.25×.",
+    description: "Vendor B Barcrest Rainbow Riches Megaways (2020, defining title) — 'Bank All Wins' mode boosts entire FS pool by 1.25×.",
     cfg: withVar({
       numFreeSpins: 15, probSmallBucket: 0.65, smallBucketMean: 0.6, smallBucketVariance: 0.2,
       highBucketMean: 5.0, highBucketVariance: 8.0, bankAllMultiplier: 1.25, bankSmallMultiplier: 2.0,
@@ -138,13 +138,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'BONUS_BANK_RUNNING_BALANCE_OFFSET.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# BONUS_BANK_RUNNING_BALANCE_OFFSET — Bonus Bank Running-Balance Offset Aggregator Acceptance (W191, 72. solver, L&W M10 P0 GAP CLOSURE)');
+  md.push('# BONUS_BANK_RUNNING_BALANCE_OFFSET — Bonus Bank Running-Balance Offset Aggregator Acceptance (W191, 72. solver, Vendor B M10 P0 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${SESSIONS} MC bonus-sessions each.`);
   md.push('');
-  md.push('Closes L&W M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank + future banking-mode flagships.');
+  md.push('Closes Vendor B M10 P0 GAP — Barcrest Rainbow Riches Megaways Bonus Bank + future banking-mode flagships.');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -166,7 +166,7 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-12 player-elected mode RTP / UKGC RTS-14 Bonus Bank transparency / MGA PPD §11 / eCOGRA / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW Barcrest Rainbow Riches Megaways Bonus Bank + Barcrest banking-mode variants + future L&W flagship.");
+  md.push("Industry: Vendor B Barcrest Rainbow Riches Megaways Bonus Bank + Barcrest banking-mode variants + future Vendor B flagship.");
   writeFileSync(join(OUT_DIR, 'BONUS_BANK_RUNNING_BALANCE_OFFSET.md'), md.join('\n'));
 
   console.log('');

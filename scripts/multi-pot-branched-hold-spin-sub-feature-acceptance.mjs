@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 193 — Multi-Pot Branched H&S Sub-Feature acceptance (74. solver, L&W M15 P1).
+// W152 Wave 193 — Multi-Pot Branched H&S Sub-Feature acceptance (74. solver, Vendor B M15 P1).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -20,7 +20,7 @@ const TOL_POT_PROB_ABS = 0.03;
 const CONFIGS = [
   {
     name: "A_piggy_bankin_break_in_3_pot",
-    description: "LNW Bally Rich Little Piggies Piggy Bankin' Break In (2024 defining title) — 3-pot branched H&S (Instant Win / Double Play / Repeat Win).",
+    description: "Vendor B Vendor H Rich Little Piggies Piggy Bankin' Break In (2024 defining title) — 3-pot branched H&S (Instant Win / Double Play / Repeat Win).",
     cfg: {
       probTrigger: 0.04,
       pots: [
@@ -32,7 +32,7 @@ const CONFIGS = [
   },
   {
     name: "B_rich_piggies_world_class_4_tier_jackpot",
-    description: "LNW Bally Rich Little Piggies World Class (2025) — class-tier escalation Mini/Minor/Major/Grand.",
+    description: "Vendor B Vendor H Rich Little Piggies World Class (2025) — class-tier escalation Mini/Minor/Major/Grand.",
     cfg: {
       probTrigger: 0.03,
       pots: [
@@ -45,7 +45,7 @@ const CONFIGS = [
   },
   {
     name: "C_rich_hens_world_class_hen_variant",
-    description: "LNW Bally Rich Little Hens World Class (2025) — hen variant sa modified prize ladder.",
+    description: "Vendor B Vendor H Rich Little Hens World Class (2025) — hen variant sa modified prize ladder.",
     cfg: {
       probTrigger: 0.035,
       pots: [
@@ -158,13 +158,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE — Multi-Pot Branched H&S Sub-Feature Selection Aggregator Acceptance (W193, 74. solver, L&W M15 P1 GAP CLOSURE)');
+  md.push('# MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE — Multi-Pot Branched H&S Sub-Feature Selection Aggregator Acceptance (W193, 74. solver, Vendor B M15 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${SPINS} MC spins each.`);
   md.push('');
-  md.push('Closes L&W M15 P1 GAP — Bally Rich Little Piggies Piggy Bankin\' Break In + World Class + Hens.');
+  md.push('Closes Vendor B M15 P1 GAP — Vendor H Rich Little Piggies Piggy Bankin\' Break In + World Class + Hens.');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -187,7 +187,7 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-14 mandatory per-pot RTP contribution / MGA PPD §11 branched-mode / eCOGRA per-mode audit / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW Bally Rich Little Piggies Piggy Bankin' Break In (2024 defining title) + World Class (2025) + Rich Little Hens World Class (2025).");
+  md.push("Industry: Vendor B Vendor H Rich Little Piggies Piggy Bankin' Break In (2024 defining title) + World Class (2025) + Rich Little Hens World Class (2025).");
   writeFileSync(join(OUT_DIR, 'MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.md'), md.join('\n'));
 
   console.log('');

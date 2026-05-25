@@ -1,6 +1,6 @@
 # Cold CFO — Email
 
-> Summary line 1: Cold outbound email to L&W CFO / VP Finance / Corp Dev lead.
+> Summary line 1: Cold outbound email to Vendor B CFO / VP Finance / Corp Dev lead.
 > Summary line 2: Tone: numerate, multi-pathway commercial framing, escrow-risk-mitigation.
 > Summary line 3: Goal: get on build-vs-buy short-list; 30-min commercial deep-dive call.
 
@@ -13,7 +13,7 @@
 ## Subject line variants
 - A: "Build-vs-buy for the math engine layer — financial model attached"
 - B: "5-year NPV +$33M on studio cadence acceleration — model link"
-- C: "Three commercial pathways for L&W (acquire / license / pilot) — 30 min?"
+- C: "Three commercial pathways for Vendor B (acquire / license / pilot) — 30 min?"
 
 ## Body
 Hi {{first_name}},
@@ -26,7 +26,7 @@ I'm reaching out on the corporate-development angle. We've built a math engine (
 | License | {{license_upfront}} | {{license_annual}} | +{{license_npv}} | Source-available + escrow trigger |
 | Pilot | $0 | 30 days only | +0 (validation) | Zero — no cost-to-walk-away |
 
-Why we think L&W is the natural fit: 16/16 published L&W mechanic families covered closed-form, paper-trail compatible with your existing BMM/GLI submission flow, MIT-licensed clean-room provenance (0 IP infringement risk verified per dossier).
+Why we think Vendor B is the natural fit: 16/16 published Vendor B mechanic families covered closed-form, paper-trail compatible with your existing BMM/GLI submission flow, MIT-licensed clean-room provenance (0 IP infringement risk verified per dossier).
 
 Two artifacts:
 
@@ -62,4 +62,4 @@ Best,
 - "Vendor risk" → escrow + MIT license tier addresses it
 - "Why not build in-house?" → 100+ waves of solver work; opportunity cost ≠ headline cost
 - "Why now?" → competitor catalog gap; first-mover advantage on 14-day cadence
-- "What if you fail?" → escrow source release; we don't hold L&W hostage
+- "What if you fail?" → escrow source release; we don't hold Vendor B hostage

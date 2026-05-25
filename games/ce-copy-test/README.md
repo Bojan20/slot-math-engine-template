@@ -1,4 +1,4 @@
-# CE COPY TEST — 1:1 paymodel klon Cash Eruption-a
+# CE COPY TEST — 1:1 paymodel klon Pattern-CE-a
 
 **Status**: **Wave 3.1 LANDED — ULTIMATIVNI 1:1 STIGNUT.** Avg total RTP
 sve 3 SWID-a unutar **0.1 % od Excel targeta** (50M spinova bet mult 1):
@@ -10,7 +10,7 @@ sve 3 SWID-a unutar **0.1 % od Excel targeta** (50M spinova bet mult 1):
 
 ## Cilj
 
-Verifikovati matematiku Cash Eruption slot-game (L&W; SWIDs `200-1637-001`,
+Verifikovati matematiku Pattern-CE slot-game (Vendor B; SWIDs `200-1637-001`,
 `200-1637-002`, `200-1637-003` — 96 / 95 / 93.10 % RTP) pomoću potpunog
 softverskog klona čiji svaki broj mora odgovarati Excel PAR sheet-u
 ćelija-za-ćeliju. Game name "CE COPY TEST" pokazuje da je ovo

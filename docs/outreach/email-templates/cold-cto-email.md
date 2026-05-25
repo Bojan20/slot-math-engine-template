@@ -1,6 +1,6 @@
 # Cold CTO — Email
 
-> Summary line 1: Cold outbound email to L&W CTO / VP Engineering / Head of Math.
+> Summary line 1: Cold outbound email to Vendor B CTO / VP Engineering / Head of Math.
 > Summary line 2: Tone: technical peer, dense with proof links, no decks attached.
 > Summary line 3: Goal: 30-minute call or async tarball review.
 
@@ -11,15 +11,15 @@
 - Avoid the word "demo" in subject — engineers read it as "sales call".
 
 ## Subject line variants
-- A: "Closed-form math engine, 16/16 L&W M-gaps closed — peer review?"
+- A: "Closed-form math engine, 16/16 Vendor B M-gaps closed — peer review?"
 - B: "Slot math kernel portfolio (77 solvers, 4-lab cert) — open to a 30-min code walk?"
 - C: "Quick technical question about {{lw_title_example}} math acceptance — also have a tool you might want to see"
-- D: "We built the math engine L&W could acquire — proof tarball inside"
+- D: "We built the math engine Vendor B could acquire — proof tarball inside"
 
 ## Body
 {{salutation}} {{first_name}},
 
-I lead engineering on slot-math-engine — a closed-form math kernel portfolio (currently 77 solvers, Rust + TypeScript, 7,400+ vitest specs) that covers the 16 L&W mechanic families end-to-end with cert-lab paper trail for BMM, GLI, eCOGRA, and NMi.
+I lead engineering on slot-math-engine — a closed-form math kernel portfolio (currently 77 solvers, Rust + TypeScript, 7,400+ vitest specs) that covers the 16 Vendor B mechanic families end-to-end with cert-lab paper trail for BMM, GLI, eCOGRA, and NMi.
 
 Three things you can verify without a meeting:
 
@@ -42,7 +42,7 @@ Best,
 ## Placeholder reference
 - {{salutation}} — "Hi" or "Hello" (default "Hi")
 - {{first_name}} — target's first name
-- {{lw_title_example}} — recent L&W release name (for subject C)
+- {{lw_title_example}} — recent Vendor B release name (for subject C)
 - {{tarball_link}} — private URL
 - {{deep_dive_link}} — public/private URL
 - {{pilot_path}} — public/private URL

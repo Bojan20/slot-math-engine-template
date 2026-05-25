@@ -60,26 +60,26 @@ export const PRICING_FIELDS = Object.freeze([
   'perSpinCostMills',
 ]);
 
-// Default operator (kept identical to W212 default — "L&W") so callers that
+// Default operator (kept identical to W212 default — "Vendor B") so callers that
 // never pass --operator keep getting the exact same output bytes.
 export const DEFAULT_OPERATOR_ID = 'lw';
 
-// L&W terminology that should be swapped to the target operator's
+// Vendor B terminology that should be swapped to the target operator's
 // equivalent. The order matters — we replace the LONGEST candidates first
-// so `Light & Wonder` doesn't get half-mangled by an earlier `L&W` swap.
+// so `Vendor B` doesn't get half-mangled by an earlier `Vendor B` swap.
 //
-// NB: the canonical L&W legalName is `Light & Wonder, Inc.` (with comma).
+// NB: the canonical Vendor B legalName is `Vendor B, Inc.` (with comma).
 // The default-operator self-check in `operatorReplacements()` filters out
 // any (from === to) identity pair so the lw operator round-trips bytewise.
 const LW_FORWARD_TOKENS = Object.freeze([
-  { from: 'Light & Wonder, Inc.', kind: 'legal' },
-  { from: 'Light & Wonder Inc.', kind: 'legal' },
-  { from: 'Light & Wonder', kind: 'shortName' },
+  { from: 'Vendor B, Inc.', kind: 'legal' },
+  { from: 'Vendor B Inc.', kind: 'legal' },
+  { from: 'Vendor B', kind: 'shortName' },
   { from: 'light & wonder', kind: 'shortNameLower' },
   { from: 'L&amp;W', kind: 'displayHtml' },
   { from: 'L_AND_W', kind: 'displayUnderscore' },
-  { from: 'L&W', kind: 'display' },
-  { from: 'LNW', kind: 'ticker' },
+  { from: 'Vendor B', kind: 'display' },
+  { from: 'Vendor B', kind: 'ticker' },
 ]);
 
 // ─── manifest IO ────────────────────────────────────────────────────────
@@ -264,7 +264,7 @@ export function splitOutCodeRegions(text) {
 function protectInlineCode(text) {
   // We don't strip — we mark backtick spans so callers can choose to
   // skip them. Current implementation just passes through; the
-  // replacement uses literal strings, so inline `L&W` in a code span
+  // replacement uses literal strings, so inline `Vendor B` in a code span
   // would be swapped too. We accept this and let manifest authors not
   // collide with critical code tokens. The fenced-block guard handles
   // 99% of risk (where multi-line schemas live).
@@ -292,7 +292,7 @@ export function applyBrandingToCss(css, manifest) {
   // --brand-primary / --brand-accent vars.
   out = out.replace(/--brand-primary:\s*#[0-9a-fA-F]+/g, `--brand-primary: ${manifest.primaryColor}`);
   out = out.replace(/--brand-accent:\s*#[0-9a-fA-F]+/g, `--brand-accent: ${manifest.accentColor}`);
-  // Default cyan (#22d3ee = L&W brand-cyan) → primary.
+  // Default cyan (#22d3ee = Vendor B brand-cyan) → primary.
   out = out.replace(/#22d3ee/gi, manifest.primaryColor);
   out = out.replace(/#0e7490/gi, manifest.accentColor);
   return out;
@@ -309,7 +309,7 @@ export function applyBrandingToHtml(html, manifest) {
   });
   // <title> → re-title.
   out = out.replace(/<title>([^<]*)<\/title>/g, (_, title) => {
-    return `<title>${title.replace(/L&amp;W|L&W|Light & Wonder/g, manifest.displayName)}</title>`;
+    return `<title>${title.replace(/L&amp;W|Vendor B|Vendor B/g, manifest.displayName)}</title>`;
   });
   return out;
 }

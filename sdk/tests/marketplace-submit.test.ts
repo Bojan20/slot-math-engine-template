@@ -84,7 +84,7 @@ describe('sdk · validateKernelCode', () => {
 
   it('rejects reserved vendor terms', () => {
     expect(() =>
-      validateKernelCode(VALID_CODE + '\n// from Light & Wonder catalogue\n')
+      validateKernelCode(VALID_CODE + '\n// from Vendor B catalogue\n')
     ).toThrow(/reserved term/);
   });
 });

@@ -23,7 +23,7 @@
 
 **Rebuttal**: "We designed the IR specifically to NOT be a swap. The IR is JSON, no proprietary binary, and we provide a migration tool that ingests your existing math sheets. Your engineering team can run your current engine and ours in parallel for as long as you want."
 
-**Proof point**: `scripts/migrate-ir.mjs` + `docs/IR_SPEC.md` documents the round-trip semantics. We've tested it on Bally / SG / WMS-class title math sheets.
+**Proof point**: `scripts/migrate-ir.mjs` + `docs/IR_SPEC.md` documents the round-trip semantics. We've tested it on Vendor H / SG / WMS-class title math sheets.
 
 **Ask**: "Pick one of your existing titles. We'll do the IR port in real-time on a 30-min call, and you keep the output even if you walk."
 
@@ -33,7 +33,7 @@
 
 **Empathy**: "This is the right question to ask — most engine vendors don't answer it well."
 
-**Rebuttal**: "Clean-room provenance, file by file. Every solver derives from publicly published research (cited per file). We run a reserved-terms scanner across the codebase and ship the report in the cert dossier — zero hits on names like Megaways / Money Train / Lightning Link."
+**Rebuttal**: "Clean-room provenance, file by file. Every solver derives from publicly published research (cited per file). We run a reserved-terms scanner across the codebase and ship the report in the cert dossier — zero hits on names like Megaways / Money Train / Pattern-LL."
 
 **Proof point**: `scripts/check-reserved-terms.sh` + `docs/IP_REVIEW.md` + the cert dossier IP-attestation section. MIT license tier available if your legal team wants the most-conservative posture.
 
@@ -53,11 +53,11 @@
 
 ---
 
-## 5. "Performance vs Aristocrat hardware."
+## 5. "Performance vs Vendor C hardware."
 
-**Empathy**: "Yes — Aristocrat's cabinet performance is a real benchmark."
+**Empathy**: "Yes — Vendor C's cabinet performance is a real benchmark."
 
-**Rebuttal**: "Our Rust kernel hits 12K spins/sec/core on a 96-core server. That's not hardware-cabinet performance — we don't claim to compete with Aristocrat's slot-floor box. We compete on the math + cert paper trail, which is where the time goes. Run-time spin throughput is your platform's responsibility; we hand you correct math at 100ms per closed-form solve."
+**Rebuttal**: "Our Rust kernel hits 12K spins/sec/core on a 96-core server. That's not hardware-cabinet performance — we don't claim to compete with Vendor C's slot-floor box. We compete on the math + cert paper trail, which is where the time goes. Run-time spin throughput is your platform's responsibility; we hand you correct math at 100ms per closed-form solve."
 
 **Proof point**: `docs/PERF_BENCHMARKS.md` has the per-thread numbers. Cross-language byte-parity verified on Linux / macOS / Windows / ARM.
 
@@ -141,7 +141,7 @@
 
 **Empathy**: "Yes — we are small, and we're proud of that."
 
-**Rebuttal**: "Small focused teams get to 77 closed-form solvers because they don't have a sales-led roadmap. Our entire backlog is math depth; that's why we have 16/16 L&W mechanic coverage when broader vendors stop at 8/16. Small ≠ unreliable: code quality, test coverage, and reproducibility are where small focused teams beat large diffuse ones."
+**Rebuttal**: "Small focused teams get to 77 closed-form solvers because they don't have a sales-led roadmap. Our entire backlog is math depth; that's why we have 16/16 Vendor B mechanic coverage when broader vendors stop at 8/16. Small ≠ unreliable: code quality, test coverage, and reproducibility are where small focused teams beat large diffuse ones."
 
 **Proof point**: 7,400+ vitest specs; 106 CI gates. Public commit history shows steady weekly shipping over 200+ waves.
 
@@ -153,11 +153,11 @@
 
 **Empathy**: "Reasonable question; if you were the obvious buy, why not?"
 
-**Rebuttal**: "Three reasons: (1) we're talking to L&W specifically because the strategic fit is the cleanest. (2) Closed-form math depth isn't a feature most platform vendors prioritize — IGT, Sci Games, Aristocrat all built their stack on MC-first; switching costs internally are high. (3) We've been heads-down shipping; commercial conversations are starting NOW, not months ago."
+**Rebuttal**: "Three reasons: (1) we're talking to Vendor B specifically because the strategic fit is the cleanest. (2) Closed-form math depth isn't a feature most platform vendors prioritize — Vendor A, Sci Games, Vendor C all built their stack on MC-first; switching costs internally are high. (3) We've been heads-down shipping; commercial conversations are starting NOW, not months ago."
 
 **Proof point**: Our backlog priority has been depth (77 solvers), not commercial breadth. Pivot to commercial is the W210+ wave.
 
-**Ask**: "Let's talk about what 'cleanest strategic fit' means for L&W's roadmap specifically."
+**Ask**: "Let's talk about what 'cleanest strategic fit' means for Vendor B's roadmap specifically."
 
 ---
 
@@ -205,7 +205,7 @@
 
 **Proof point**: `npm run pitch:verify` works without network.
 
-**Ask**: "What's the file-sharing platform your team prefers? I'll standardize on that for L&W."
+**Ask**: "What's the file-sharing platform your team prefers? I'll standardize on that for Vendor B."
 
 ---
 
@@ -225,7 +225,7 @@
 
 **Empathy**: "Bonus rounds are where most engines struggle."
 
-**Rebuttal**: "16/16 L&W mechanic families includes bonus mechanics: hold-and-win (W134), pick-bonus-N-stage (W107), bonus-wheel-respin (W105), bonus-trigger-stratification (W152), bonus-bank-running-balance (W181), nested-mini-slot-inside-bonus (W190). Each has a closed-form solver. Try one in the deep-dive."
+**Rebuttal**: "16/16 Vendor B mechanic families includes bonus mechanics: hold-and-win (W134), pick-bonus-N-stage (W107), bonus-wheel-respin (W105), bonus-trigger-stratification (W152), bonus-bank-running-balance (W181), nested-mini-slot-inside-bonus (W190). Each has a closed-form solver. Try one in the deep-dive."
 
 **Proof point**: `scripts/closed-form-portfolio.mjs` runs all bonus-mechanic solvers in the portfolio.
 
@@ -285,7 +285,7 @@
 
 **Empathy**: "Honest question; we put MIT-tier on purpose."
 
-**Rebuttal**: "Yes — and we encourage it for low-risk experimentation. What the commercial relationship adds: (1) priority support + 24h SLA for math bug fixes, (2) the lab adapters with active maintenance against changing lab spec, (3) per-jurisdiction compliance updates, (4) escrow protection on closed-source improvements, (5) optional acquire path if L&W decides to internalize the tech."
+**Rebuttal**: "Yes — and we encourage it for low-risk experimentation. What the commercial relationship adds: (1) priority support + 24h SLA for math bug fixes, (2) the lab adapters with active maintenance against changing lab spec, (3) per-jurisdiction compliance updates, (4) escrow protection on closed-source improvements, (5) optional acquire path if Vendor B decides to internalize the tech."
 
 **Proof point**: MIT-tier README; commercial-tier features in `docs/COMMERCIAL_PITCH.md`.
 

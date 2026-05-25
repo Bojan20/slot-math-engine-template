@@ -38,7 +38,7 @@ import type { HarnessOptions } from './kernel-sandbox/test-harness.js';
  *   - missing `closedForm` export          → closed-form gate fails
  *   - oversized source (> 80KB)            → performance gate fails
  *   - `throw new Error("not implemented")` → boundary gate fails
- *   - reserved L&W/IGT/NetEnt terms        → naming gate fails
+ *   - reserved Vendor B/Vendor A/Vendor D terms        → naming gate fails
  *   - `: any` annotations                  → ts-strict gate fails
  *
  * Surface is pure — the runner takes a code string + manifest and returns
@@ -82,13 +82,13 @@ export interface TestRunOptions {
 }
 
 const DEFAULT_RESERVED = [
-  'Light & Wonder',
-  'Scientific Games',
-  'IGT',
-  'NetEnt',
-  'Pragmatic Play',
-  'Aristocrat',
-  'Bally',
+  'Vendor B',
+  'Vendor B',
+  'Vendor A',
+  'Vendor D',
+  'Vendor E',
+  'Vendor C',
+  'Vendor H',
   'WMS',
   'Konami Gaming',
 ];

@@ -1,5 +1,5 @@
 // W152 Wave 189 — Random Feature-Injection During FS vitest specs
-// (70. solver, L&W M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland).
+// (70. solver, Vendor B M12 P1 GAP CLOSURE — Wizard of Oz Munchkinland).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -245,7 +245,7 @@ describe('Wave 189 — Random Feature-Injection During FS', () => {
     });
   });
 
-  describe('industry use-cases (L&W M12 Wizard of Oz Munchkinland)', () => {
+  describe('industry use-cases (Vendor B M12 Wizard of Oz Munchkinland)', () => {
     it("Wizard of Oz Munchkinland — Munchkin injection sa wilds + multiplier", () => {
       const cfg: RandomFeatureInjectionDuringFsConfig = {
         numFreeSpins: 15,

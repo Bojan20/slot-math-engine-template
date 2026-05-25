@@ -1,6 +1,6 @@
 # Warm CFO — Pre-meeting Email After Intro
 
-> Summary line 1: Pre-meeting email to L&W CFO / Corp Dev after warm intro from mutual contact.
+> Summary line 1: Pre-meeting email to Vendor B CFO / Corp Dev after warm intro from mutual contact.
 > Summary line 2: Tone: numerate, transparent on terms, NPV-anchored.
 > Summary line 3: Goal: confirm meeting, share commercial-pathway one-pager, prepare for terms discussion.
 

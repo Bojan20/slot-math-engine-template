@@ -210,7 +210,7 @@ describe('industry use-cases', () => {
     // M_10 = 1.5^9 ≈ 38.44
     expect(r.maxMultiplier).toBeCloseTo(Math.pow(1.5, 9), 4);
   });
-  it('NetEnt Vikings style: N=7, linear step=1', () => {
+  it('Vendor D Vikings style: N=7, linear step=1', () => {
     const r = solveStickyWildCountdownMultiplier(baseCfg({
       stickyDuration: 7,
       linearStep: 1,

@@ -46,7 +46,7 @@ export const cascadePyramid = defineKernel({
 - **`closedForm` is required.** It's the cert paper trail — regulators reference this exact formula.
 - **No `Math.random()`** — use `ctx.rng()` (seeded by the engine).
 - **No `: any`** annotations and no `@ts-ignore`. Strict mode wins.
-- **No reserved vendor terms** (Light & Wonder, IGT, NetEnt, Scientific Games, Aristocrat, Bally, WMS, Konami, Pragmatic Play). The kernel must stand on its own math, not borrow vendor branding.
+- **No reserved vendor terms** (Vendor B, Vendor A, Vendor D, Vendor B, Vendor C, Vendor H, WMS, Konami, Vendor E). The kernel must stand on its own math, not borrow vendor branding.
 
 ---
 

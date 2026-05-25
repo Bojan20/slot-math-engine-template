@@ -196,7 +196,7 @@ describe('corner cases', () => {
 });
 
 describe('industry parametrizations', () => {
-  it('Pragmatic Play 5000x cap typical Sweet Bonanza-like tail', () => {
+  it('Vendor E 5000x cap typical Sweet Bonanza-like tail', () => {
     const r = solveMaxWinCapTruncation({
       payoutPmf: [
         { value: 0,    probability: 0.70 },

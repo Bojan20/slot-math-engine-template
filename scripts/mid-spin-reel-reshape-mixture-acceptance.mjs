@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 195 — Mid-Spin Reel-Reshape Mixture acceptance (76. solver, L&W M13 P1).
+// W152 Wave 195 — Mid-Spin Reel-Reshape Mixture acceptance (76. solver, Vendor B M13 P1).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -19,7 +19,7 @@ const TOL_SET_PROB_ABS = 0.01;
 const CONFIGS = [
   {
     name: "A_wizard_of_oz_ybr_glinda_3_set",
-    description: "LNW WMS Wizard of Oz Follow the Yellow Brick Road (2017, defining title) — Glinda waves wand mid-spin, 3 reel-set mixture (base + Glinda bonus + Emerald jackpot).",
+    description: "Vendor B WMS Wizard of Oz Follow the Yellow Brick Road (2017, defining title) — Glinda waves wand mid-spin, 3 reel-set mixture (base + Glinda bonus + Emerald jackpot).",
     cfg: {
       reelSets: [
         { label: 'base_oz',                selectionProbability: 0.88, meanPayout: 0.92, variancePayout: 20 },
@@ -30,7 +30,7 @@ const CONFIGS = [
   },
   {
     name: "B_wizard_of_oz_munchkinland_reshape_2_set",
-    description: "LNW WMS Wizard of Oz Munchkinland reshape — 2-state base/Munchkin reel-set mixture.",
+    description: "Vendor B WMS Wizard of Oz Munchkinland reshape — 2-state base/Munchkin reel-set mixture.",
     cfg: {
       reelSets: [
         { label: 'base_oz',         selectionProbability: 0.92, meanPayout: 0.95, variancePayout: 18 },
@@ -40,7 +40,7 @@ const CONFIGS = [
   },
   {
     name: "C_lw_diverse_5_set_reshape_menu",
-    description: "L&W diverse 5-reel-set reshape menu — base + 4 alternative paytables sa geometric prize escalation.",
+    description: "Vendor B diverse 5-reel-set reshape menu — base + 4 alternative paytables sa geometric prize escalation.",
     cfg: {
       reelSets: [
         { label: 'base',     selectionProbability: 0.70, meanPayout: 1.00, variancePayout: 10 },
@@ -146,13 +146,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'MID_SPIN_REEL_RESHAPE_MIXTURE.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# MID_SPIN_REEL_RESHAPE_MIXTURE — Mid-Spin Random Reel-Reshape Mixture Aggregator Acceptance (W195, 76. solver, L&W M13 P1 GAP CLOSURE)');
+  md.push('# MID_SPIN_REEL_RESHAPE_MIXTURE — Mid-Spin Random Reel-Reshape Mixture Aggregator Acceptance (W195, 76. solver, Vendor B M13 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${SPINS} MC spins each.`);
   md.push('');
-  md.push("Closes L&W M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road (Glinda reshape, 2017 defining title) + Munchkinland reshape variants + future L&W reshape-mechanic flagships.");
+  md.push("Closes Vendor B M13 P1 GAP — WMS Wizard of Oz Follow the Yellow Brick Road (Glinda reshape, 2017 defining title) + Munchkinland reshape variants + future Vendor B reshape-mechanic flagships.");
   md.push('');
   md.push('## Method');
   md.push('');
@@ -176,7 +176,7 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-14 mandatory per-reel-set RTP disclosure / MGA PPD §11 stochastic reshape transparency / eCOGRA per-reel-set paytable audit / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW WMS Wizard of Oz Follow the Yellow Brick Road + Munchkinland reshape + future L&W reshape-mechanic flagships.");
+  md.push("Industry: Vendor B WMS Wizard of Oz Follow the Yellow Brick Road + Munchkinland reshape + future Vendor B reshape-mechanic flagships.");
   writeFileSync(join(OUT_DIR, 'MID_SPIN_REEL_RESHAPE_MIXTURE.md'), md.join('\n'));
 
   console.log('');

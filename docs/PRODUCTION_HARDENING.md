@@ -2,7 +2,7 @@
 
 **Author:** CORTI W204-AUDIT
 **Last updated:** 2026-05-18
-**Audience:** L&W operations, regulator-facing engineering, deployment SRE.
+**Audience:** Vendor B operations, regulator-facing engineering, deployment SRE.
 
 This document captures the production-hardening evidence for the
 math engine + 5 mini-apps (studio, operator, regulator, marketplace,

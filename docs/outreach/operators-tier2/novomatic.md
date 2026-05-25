@@ -69,7 +69,7 @@ Novomatic sells into:
 - CEE: Czech MFCR, Poland MF, Hungary SZF, Slovakia URSO.
 - LatAm: limited; UK-licensed brands serving regulated markets.
 
-Our engine covers BMM/GLI/eCOGRA/NMi. Novomatic-specific add: SPIELV-2 (German Spielhalle) packet generator — we have a stub at `src/compliance/spielv2-de.ts`. Italian ADM adapter shared with IGT dossier.
+Our engine covers BMM/GLI/eCOGRA/NMi. Novomatic-specific add: SPIELV-2 (German Spielhalle) packet generator — we have a stub at `src/compliance/spielv2-de.ts`. Italian ADM adapter shared with Vendor A dossier.
 
 ## Next-step CTA
 

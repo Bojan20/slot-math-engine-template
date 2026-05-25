@@ -8,7 +8,7 @@ const OUT_DIR = join(REPO_ROOT, 'reports', 'acceptance');
 const CONFIGS = [
   { name: 'A_uk_balanced_portfolio', regime: 'UK_BALANCED', cfg: { providers: [
     { providerName: 'Pragmatic', revenueSharePct: 0.20, engagementMultiplier: 1.4, annualGgrPotential: 5_000_000, minimumMonthlyFee: 10_000, annualContentRefreshRequired: 20, isTier1Premium: true },
-    { providerName: 'NetEnt', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 3_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
+    { providerName: 'Vendor D', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 3_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
     { providerName: 'Hacksaw', revenueSharePct: 0.25, engagementMultiplier: 1.1, annualGgrPotential: 2_000_000, minimumMonthlyFee: 5_000, annualContentRefreshRequired: 10, isTier1Premium: false },
     { providerName: 'Smaller', revenueSharePct: 0.30, engagementMultiplier: 0.9, annualGgrPotential: 1_000_000, minimumMonthlyFee: 2_000, annualContentRefreshRequired: 5, isTier1Premium: false },
   ], operatorTotalGgrCapacity: 20_000_000, marketingBudgetPerProvider: 50_000, tier1MinimumSharePct: 0.30 } },
@@ -25,7 +25,7 @@ const CONFIGS = [
   { name: 'D_10_provider_mega_portfolio', regime: 'MEGA_10', cfg: { providers: Array.from({ length: 10 }, (_, i) => ({ providerName: `Provider${i}`, revenueSharePct: 0.20 + i * 0.01, engagementMultiplier: 1.0 + (i % 3) * 0.2, annualGgrPotential: 2_000_000 - i * 100_000, minimumMonthlyFee: 5_000, annualContentRefreshRequired: 10, isTier1Premium: i < 3 })), operatorTotalGgrCapacity: 30_000_000, marketingBudgetPerProvider: 50_000, tier1MinimumSharePct: 0.30 } },
   { name: 'E_low_capacity_constrained', regime: 'CONSTRAINED', cfg: { providers: [
     { providerName: 'Pragmatic', revenueSharePct: 0.20, engagementMultiplier: 1.4, annualGgrPotential: 8_000_000, minimumMonthlyFee: 10_000, annualContentRefreshRequired: 20, isTier1Premium: true },
-    { providerName: 'NetEnt', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 8_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
+    { providerName: 'Vendor D', revenueSharePct: 0.22, engagementMultiplier: 1.3, annualGgrPotential: 8_000_000, minimumMonthlyFee: 8_000, annualContentRefreshRequired: 15, isTier1Premium: true },
   ], operatorTotalGgrCapacity: 5_000_000, marketingBudgetPerProvider: 50_000, tier1MinimumSharePct: 0.30 } },
   { name: 'F_high_share_extreme_corner', regime: 'CORNER_HIGH_SHARE', cfg: { providers: [
     { providerName: 'PremiumProv', revenueSharePct: 0.40, engagementMultiplier: 1.8, annualGgrPotential: 6_000_000, minimumMonthlyFee: 50_000, annualContentRefreshRequired: 30, isTier1Premium: true },

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// W152 Wave 194 — Arcade-Shooter Survival Level Progression acceptance (75. solver, L&W M16 P1).
+// W152 Wave 194 — Arcade-Shooter Survival Level Progression acceptance (75. solver, Vendor B M16 P1).
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
@@ -20,7 +20,7 @@ const TOL_TIER_PROB_ABS = 0.04;
 const CONFIGS = [
   {
     name: "A_stellar_jackpots_6_level_4_tier",
-    description: "LNW Lightning Box Stellar Jackpots wrapper (defining) — 6-level arcade-shooter sa 4-tier jackpot (mini/minor/major/grand).",
+    description: "Vendor B Lightning Box Stellar Jackpots wrapper (defining) — 6-level arcade-shooter sa 4-tier jackpot (mini/minor/major/grand).",
     cfg: {
       levels: [
         { label: 'l1', probPass: 0.80, reward: 2 },
@@ -40,7 +40,7 @@ const CONFIGS = [
   },
   {
     name: "B_thundering_bison_4_level_escalation",
-    description: "LNW Lightning Box Thundering Bison sa Stellar Jackpots — 4-level shorter survival chain.",
+    description: "Vendor B Lightning Box Thundering Bison sa Stellar Jackpots — 4-level shorter survival chain.",
     cfg: {
       levels: [
         { label: 'bison_l1', probPass: 0.85, reward: 1 },
@@ -56,7 +56,7 @@ const CONFIGS = [
   },
   {
     name: "C_chicken_fox_high_freq_short_chain",
-    description: "LNW Lightning Box Chicken Fox — 3-level high-frequency arcade-shooter.",
+    description: "Vendor B Lightning Box Chicken Fox — 3-level high-frequency arcade-shooter.",
     cfg: {
       levels: [
         { label: 'fox_l1', probPass: 0.90, reward: 5 },
@@ -71,7 +71,7 @@ const CONFIGS = [
   },
   {
     name: "D_lightning_horseman_8_level_long_chain",
-    description: "LNW Lightning Box Lightning Horseman — 8-level extended survival sa flat decay.",
+    description: "Vendor B Lightning Box Lightning Horseman — 8-level extended survival sa flat decay.",
     cfg: {
       levels: [
         { probPass: 0.85, reward: 1 },
@@ -178,13 +178,13 @@ async function main() {
   writeFileSync(join(OUT_DIR, 'ARCADE_SHOOTER_SURVIVAL_LEVELS.json'), JSON.stringify(summary, null, 2));
 
   const md = [];
-  md.push('# ARCADE_SHOOTER_SURVIVAL_LEVELS — Arcade-Shooter Survival Level Progression Aggregator Acceptance (W194, 75. solver, L&W M16 P1 GAP CLOSURE)');
+  md.push('# ARCADE_SHOOTER_SURVIVAL_LEVELS — Arcade-Shooter Survival Level Progression Aggregator Acceptance (W194, 75. solver, Vendor B M16 P1 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** @ ${RUNS} MC runs each.`);
   md.push('');
-  md.push('Closes L&W M16 P1 GAP — Lightning Box Stellar Jackpots wrapper (Thundering Bison + Chicken Fox + Lightning Horseman + 4+ Astro family).');
+  md.push('Closes Vendor B M16 P1 GAP — Lightning Box Stellar Jackpots wrapper (Thundering Bison + Chicken Fox + Lightning Horseman + 4+ Astro family).');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -207,7 +207,7 @@ async function main() {
   md.push('');
   md.push('## Compliance: UKGC RTS-14 mandatory per-stage probability / MGA PPD §11 sequential-stage / eCOGRA per-stage audit / EU GA 2024.');
   md.push('');
-  md.push("Industry: LNW Lightning Box Stellar Jackpots wrapper + Thundering Bison/Buffalo/Gorilla + Chicken Fox + Lightning Horseman + 4+ Astro family.");
+  md.push("Industry: Vendor B Lightning Box Stellar Jackpots wrapper + Thundering Bison/Buffalo/Gorilla + Chicken Fox + Lightning Horseman + 4+ Astro family.");
   writeFileSync(join(OUT_DIR, 'ARCADE_SHOOTER_SURVIVAL_LEVELS.md'), md.join('\n'));
 
   console.log('');

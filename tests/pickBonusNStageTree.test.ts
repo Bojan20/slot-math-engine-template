@@ -182,7 +182,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('NetEnt-style classic 3-tier pick-til-pop', () => {
+  it('Vendor D-style classic 3-tier pick-til-pop', () => {
     const r = solvePickBonusNStageTree({
       stages: [
         { label: 'silver', advanceProbability: 0.40, collectProbability: 0.50, collectPayoutX: 10 },
@@ -193,7 +193,7 @@ describe('industry use-cases', () => {
     expect(r.probReachTopStage).toBeCloseTo(0.08, 8); // 0.4·0.2
     expect(r.expectedPayoutX).toBeGreaterThan(0);
   });
-  it('Microgaming-style 5-tier with grand jackpot', () => {
+  it('Vendor G-style 5-tier with grand jackpot', () => {
     const r = solvePickBonusNStageTree({
       stages: [
         { label: 'tier_1', advanceProbability: 0.5,  collectProbability: 0.4,  collectPayoutX: 5 },

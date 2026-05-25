@@ -1,7 +1,7 @@
 /**
- * W210 Faza 600.0 — Microgaming-style wallet provider.
+ * W210 Faza 600.0 — Vendor G-style wallet provider.
  *
- * Legacy MGS (Microgaming Software) pattern: sessionId-based, splits
+ * Legacy MGS (Vendor G Software) pattern: sessionId-based, splits
  * the player's purse into `cashBalance` + `bonusBalance`. Modern
  * implementations sit behind a JSON gateway but the field shape and
  * the cashBalance/bonusBalance split are preserved for compatibility

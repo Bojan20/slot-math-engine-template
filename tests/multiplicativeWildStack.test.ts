@@ -192,7 +192,7 @@ describe('determinism', () => {
 });
 
 describe('industry use-cases', () => {
-  it('NetEnt-Hotline-style 5x sticky x2 wilds rare', () => {
+  it('Vendor D-Hotline-style 5x sticky x2 wilds rare', () => {
     const r = solveMultiplicativeWildStack({
       reelsR: 5,
       wildLandingProbabilityPerReel: 0.10,

@@ -31,17 +31,17 @@ Citat (Boki, 2026-05-18, 02:48): *"jebacu ti amter u picku debilu"* ako još jed
 
 ## Kontekst projekta
 
-**`slot-math-engine-template`** = math engine + IR za L&W slot game library.
+**`slot-math-engine-template`** = math engine + IR za Vendor B slot game library.
 
-L&W workflow:
+Vendor B workflow:
 1. Game designer napiše IR fajl
 2. Naš engine ga vrti (closed-form solver + MC validacija)
 3. Cert paper trail izlazi (operator-package.zip → regulator)
 
-Cilj: **100% L&W mehanika pokrivena** (W181-W200 plan u
+Cilj: **100% Vendor B mehanika pokrivena** (W181-W200 plan u
 `docs/research/KIMI_LW_PORTFOLIO_COVERAGE_2026-05-18.md`).
 
-Trenutno: **61 solver / 90 CI gates / 81 P-IDs**. Posle W200: 77/106/97 + 100% L&W.
+Trenutno: **61 solver / 90 CI gates / 81 P-IDs**. Posle W200: 77/106/97 + 100% Vendor B.
 
 ## Workflow
 

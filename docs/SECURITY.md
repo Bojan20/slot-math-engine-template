@@ -42,7 +42,7 @@ timeline. We commit to a 90-day coordinated-disclosure window.
 ## Out-of-scope
 
 - Volumetric DoS / DDoS (please report to the load-balancer provider).
-- Social engineering of L&W staff or contractors.
+- Social engineering of Vendor B staff or contractors.
 - Physical attacks against hosting infrastructure.
 - Third-party services (GitHub, Cloudflare, AWS, npm registry).
 - Findings only reachable with root access on the affected host.

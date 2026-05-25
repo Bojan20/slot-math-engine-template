@@ -1,4 +1,4 @@
-// Cash Eruption hold-and-win feature (per-bet-multiplier math).
+// Pattern-CE hold-and-win feature (per-bet-multiplier math).
 //
 // PAR-001 hold-and-win mechanic:
 //   - Trigger: ≥6 Fireballs land on the 5×3 grid (during a base spin
@@ -291,12 +291,12 @@ pub struct CeResult {
     pub final_fireballs: u32,
 }
 
-/// Run the Cash Eruption hold-and-win feature.
+/// Run the Pattern-CE hold-and-win feature.
 ///
 /// Per Excel PAR-001 row 3953..3966 (game rules for CE feature):
 ///   "C3958: E.g., the feature is triggered in the Base Game with 6
 ///    Fireballs: The feature starts with 9 independent reel spins (and 3
-///    remaining Cash Eruption spins)."
+///    remaining Pattern-CE spins)."
 ///   "C3965: If the feature is triggered from Free Spins, the starting
 ///    weight table for the Big Fireball is in table Big Fireball"
 ///   "C3966: since the feature starts with 6 independent reel spins (the

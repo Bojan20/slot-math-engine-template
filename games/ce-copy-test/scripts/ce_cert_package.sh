@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # CE COPY TEST — full cert evidence package for NMi / GLI / iTechLabs / BMM.
 #
-# Pakuje sve što treba lab-u da reprodukuje 1:1 verifikaciju Cash Eruption-a:
+# Pakuje sve što treba lab-u da reprodukuje 1:1 verifikaciju Pattern-CE-a:
 #   - reports/par-verification-10b.{md,json}    — full 30B verdict matrix
 #   - reports/10b/ce-10b.<swid>.log             — raw sim outputs (per SWID)
 #   - reports/10b/CHAIN.v2*.log                 — orchestrator audit trail
@@ -132,7 +132,7 @@ rm -f "$STAGE/manifest.txt"
 # ─── README ──────────────────────────────────────────────────────────────────
 
 cat > "$STAGE/README.md" <<EOF
-# CE COPY TEST — Cash Eruption 1:1 Verification Bundle
+# CE COPY TEST — Pattern-CE 1:1 Verification Bundle
 
 * **Git SHA**          : \`${GIT_FULL_SHA}\`
 * **Generated**        : ${TS}
@@ -148,7 +148,7 @@ Sve metrike iz \`PAR_100spins\` cert summary taba (Excel ground truth) reproduko
 kroz Monte-Carlo simulaciju sa **|Δ| < 0.05 %** za svaku objavljenu vrednost:
 
 - Total RTP, base/CE/FS RTP komponente — sva 3 SWID-a ✅
-- Free Spins / Cash Eruption trigger frequencies — sva 3 SWID-a ✅
+- Free Spins / Pattern-CE trigger frequencies — sva 3 SWID-a ✅
 - Average feature wins (CE base, CE FS, FS bonus) — sva 3 SWID-a ✅
 - Volatility tail distribution (10x..500x+) — PAR-001 ✅ (Excel objavljuje samo za 001)
 

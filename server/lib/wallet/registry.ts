@@ -41,21 +41,21 @@ const BUILTINS: ProviderMeta[] = [
   },
   {
     name: 'microgaming-style',
-    displayName: 'Microgaming-Style (MGS legacy)',
+    displayName: 'Vendor G-Style (MGS legacy)',
     factory: microgamingStyleFactory,
-    description: 'sessionId-based, cash + bonus purse split. Microgaming Quickfire compatibility.',
+    description: 'sessionId-based, cash + bonus purse split. Vendor G Quickfire compatibility.',
   },
   {
     name: 'netent-aggregator',
-    displayName: 'NetEnt-Aggregator / MGS Quickfire',
+    displayName: 'Vendor D-Aggregator / MGS Quickfire',
     factory: netentAggregatorFactory,
-    description: 'JWT identify + strict Idempotency-Key. NetEnt / MGS Quickfire compatibility.',
+    description: 'JWT identify + strict Idempotency-Key. Vendor D / MGS Quickfire compatibility.',
   },
   {
     name: 'playtech-style',
-    displayName: 'Playtech IMS',
+    displayName: 'Vendor F IMS',
     factory: playtechStyleFactory,
-    description: 'cashier_session_id-based with brand_id signature scheme. Playtech IMS protocol.',
+    description: 'cashier_session_id-based with brand_id signature scheme. Vendor F IMS protocol.',
   },
 ];
 

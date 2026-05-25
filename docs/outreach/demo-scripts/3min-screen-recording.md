@@ -9,7 +9,7 @@ Take a viewer who knows nothing about us from cold to "I want to talk to these p
 
 ## Materials needed
 - Studio app running locally (`npm run studio:dev`)
-- Pre-staged math IR file `dragon-train-port.json` (any L&W title structurally)
+- Pre-staged math IR file `dragon-train-port.json` (any Vendor B title structurally)
 - Loom or OBS at 1080p, 30 fps
 - Mic at -12 dBFS
 - Studio's window dock-able to left half of screen, terminal right half
@@ -23,7 +23,7 @@ Take a viewer who knows nothing about us from cold to "I want to talk to these p
 
 ### 0:15–0:45 (30 sec) — Drop the IR
 - **Screen**: drag `dragon-train-port.json` from Finder into Studio canvas.
-- **VO**: "First — drop the math IR. This is one of L&W's titles, ported to our IR format. It's just JSON. Reels, paytable, paylines, bonus rules. No proprietary binary."
+- **VO**: "First — drop the math IR. This is one of Vendor B's titles, ported to our IR format. It's just JSON. Reels, paytable, paylines, bonus rules. No proprietary binary."
 - **Cue**: file lands; engine compiles; pipeline graph renders in ~200 ms.
 - **Pacing note**: pause 2 seconds on the pipeline graph. Let it breathe.
 

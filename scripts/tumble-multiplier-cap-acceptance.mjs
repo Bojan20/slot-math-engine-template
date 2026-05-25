@@ -26,7 +26,7 @@ const TOL_ZERO_ABS   = 0.01;   // P(L=0) abs
 const CONFIGS = [
   {
     name: 'A_gonzos_quest_5x_cap',
-    description: "NetEnt Gonzo's Quest style: 1×→2×→3×→4×→5× cap",
+    description: "Vendor D Gonzo's Quest style: 1×→2×→3×→4×→5× cap",
     cfg: {
       winContinuationProbability: 0.4,
       baseMultiplier: 1,
@@ -258,7 +258,7 @@ async function main() {
   md.push('- **UKGC RTS 14** — multiplier ceiling disclosure (max-win cap visibility)');
   md.push('- **MGA PPD §11.f** — operator-facing cascade multiplier variance');
   md.push('- **eCOGRA Generic Slots Audit** — verifies maxM never exceeds declared M_max');
-  md.push("- Industry use: NetEnt Gonzo's Quest (5×), BTG Bonanza (10×), Pragmatic Sweet");
+  md.push("- Industry use: Vendor D Gonzo's Quest (5×), BTG Bonanza (10×), Pragmatic Sweet");
   md.push('  Bonanza Xmas (100×), Push Money Cart 4 (20×), Hacksaw Tombstone R.I.P,');
   md.push('  Yggdrasil Vault of Anubis (5×) — cascade-with-ceiling family.');
 

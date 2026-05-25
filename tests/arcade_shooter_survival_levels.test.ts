@@ -1,5 +1,5 @@
 // W152 Wave 194 — Arcade-Shooter Survival Level Progression vitest specs
-// (75. solver, L&W M16 P1 GAP CLOSURE — Stellar Jackpots wrapper iz Lightning Box).
+// (75. solver, Vendor B M16 P1 GAP CLOSURE — Stellar Jackpots wrapper iz Lightning Box).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -279,7 +279,7 @@ describe('Wave 194 — Arcade-Shooter Survival Level Progression', () => {
     });
   });
 
-  describe('industry use-cases (L&W M16 Stellar Jackpots family)', () => {
+  describe('industry use-cases (Vendor B M16 Stellar Jackpots family)', () => {
     it('Stellar Jackpots wrapper — 6-level arcade-shooter', () => {
       const r = analyzeArcadeShooterSurvivalLevels(baseCfg);
       expect(r.numLevels).toBe(6);

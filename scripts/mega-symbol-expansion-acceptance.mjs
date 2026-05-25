@@ -298,7 +298,7 @@ async function main() {
   md.push('- **MGA PPD §11.f** — operator-facing super-symbol-rate disclosure');
   md.push('- **eCOGRA Generic Slots Audit** — verifies steady-state E[Y] / Var[Y]');
   md.push('- Industry use: Pragmatic Sweet Bonanza (super-symbols), Push Razor Shark (jumbo blocks),');
-  md.push('  NetEnt Mega Joker, Slot Mountain Megaways, BTG Megaways multi-cell variants.');
+  md.push('  Vendor D Mega Joker, Slot Mountain Megaways, BTG Megaways multi-cell variants.');
 
   writeFileSync(join(OUT_DIR, 'MEGA_SYMBOL_EXPANSION.md'), md.join('\n'));
 

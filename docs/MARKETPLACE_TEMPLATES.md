@@ -3,7 +3,7 @@
 W209 Faza 500.0 — Game Template Marketplace.
 
 A **template** in the marketplace is a turnkey slot product: kernel
-(via L&W P-IDs) + theme + paytable defaults + license model + preview
+(via Vendor B P-IDs) + theme + paytable defaults + license model + preview
 asset. An operator can buy a template, run it through the re-skin wizard,
 and ship a custom game to the cabinet in 12-18 days.
 
@@ -44,7 +44,7 @@ templates/
 
 Required:
 - `id` — `tpl-*` prefix, kebab-case
-- `based_on_pids` — at least one L&W P-ID from the catalog
+- `based_on_pids` — at least one Vendor B P-ID from the catalog
 - `lw_gap_target` — one of `M1`..`M16`
 - `rtp_target` — strictly within `[90, 99.999]`
 - `preview_image` — `.svg` filename under `data/template-previews/`

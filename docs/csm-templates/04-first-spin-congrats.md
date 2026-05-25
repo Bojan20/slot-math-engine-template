@@ -4,7 +4,7 @@
 
 **Subject:** First spin landed — congratulations, {{customer_name}}!
 
-**Audience:** Sponsor + entire customer team; cc CEO of L&W platform
+**Audience:** Sponsor + entire customer team; cc CEO of Vendor B platform
 
 **Cadence:** Day of `first_spin` stage transition
 

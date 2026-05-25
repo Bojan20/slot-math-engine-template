@@ -190,7 +190,7 @@ describe('dropStickWildExpansion — determinism', () => {
 });
 
 describe('dropStickWildExpansion — industry use-case', () => {
-  it('NetEnt Witchcraft Academy-class: 5×3 grid, q=0.08, S=5 (full FS sticky)', () => {
+  it('Vendor D Witchcraft Academy-class: 5×3 grid, q=0.08, S=5 (full FS sticky)', () => {
     const r = solveDropStickWildExpansion({
       gridRows: 3, gridCols: 5,
       probWildLandPerCellPerSpin: 0.08,

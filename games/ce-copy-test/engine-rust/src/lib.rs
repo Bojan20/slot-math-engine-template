@@ -1,4 +1,4 @@
-// CE COPY TEST — 1:1 paymodel copy of Cash Eruption (200-1637-001/002/003).
+// CE COPY TEST — 1:1 paymodel copy of Pattern-CE (200-1637-001/002/003).
 //
 // Everything in this engine is driven from `ce-copy-test.<swid>.ir.json`,
 // which is bit-identical to the Excel PAR sheet. There is *no* hard-coded

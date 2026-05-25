@@ -139,8 +139,8 @@ fn main() {
         f64::INFINITY
     };
     println!("  Free Spins trigger 1 in : {:.2}   (Excel target 139.9)", fs_per);
-    println!("  Cash Eruption base 1 in : {:.2}   (Excel target 120.8)", ce_base_per);
-    println!("  Cash Eruption FS 1 in   : {:.2}   (Excel target 468.99)", ce_fs_per);
+    println!("  Pattern-CE base 1 in : {:.2}   (Excel target 120.8)", ce_base_per);
+    println!("  Pattern-CE FS 1 in   : {:.2}   (Excel target 468.99)", ce_fs_per);
     println!("  GRAND hits              : {}", s.grand_hits);
     println!("  Max single spin (x)     : {:.2}", s.max_single_x);
 

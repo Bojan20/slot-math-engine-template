@@ -55,7 +55,7 @@ Decision tree from "Operator interest" to "Signed Deal":
 ## Generator Quick Start
 
 ```sh
-# Generate Aristocrat Tier-B term sheet:
+# Generate Vendor C Tier-B term sheet:
 node scripts/contracts/generate-term-sheet.mjs --operator=aristocrat --tier=B
 
 # Pricing calculator with defaults (Tier-1, 30 games, 3 jurisdictions, standard):

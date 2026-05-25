@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 //
 // W152 Wave 185 — Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator
-// acceptance (66. solver, L&W M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water
-// + future L&W flagship).
+// acceptance (66. solver, Vendor B M1 P0 GAP CLOSURE — Dragon Spin CrossLink Water
+// + future Vendor B flagship).
 //
 // 6 industry configs × 20K MC spins each = 120K total spin sims sa per-cell
 // Bernoulli + Gaussian coin value MC vs exact 2D Binomial closed-form.
@@ -33,7 +33,7 @@ const TOL_HIGHEST_MULT_REL = 0.20; // rare-only-top-tier configs (m_c=0 except c
 const CONFIGS = [
   {
     name: "A_dragon_spin_crosslink_water_classic_5x4",
-    description: "LNW Dragon Spin CrossLink Water (2024, defining title) — 5×4 grid, q=0.12, escalating row mult [1,1,2,5,10,25].",
+    description: "Vendor B Dragon Spin CrossLink Water (2024, defining title) — 5×4 grid, q=0.12, escalating row mult [1,1,2,5,10,25].",
     cfg: {
       numReels: 5,
       numRows: 4,
@@ -232,7 +232,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# PER_REEL_BAG_ROW_MULTIPLIER_COUPLED — Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator Acceptance (W185, 66. solver, L&W M1 P0 GAP CLOSURE)');
+  md.push('# PER_REEL_BAG_ROW_MULTIPLIER_COUPLED — Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator Acceptance (W185, 66. solver, Vendor B M1 P0 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -240,7 +240,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${SPINS} MC spins each = ${(CONFIGS.length * SPINS / 1e3).toFixed(0)}K total spin sims.`);
   md.push('');
-  md.push('Closes Faza 12 ext (post-W100): ✅ "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator" (Wave 185 — 66. closed-form solver, L&W M1 GAP CLOSED — Dragon Spin CrossLink Water + future L&W flagship).');
+  md.push('Closes Faza 12 ext (post-W100): ✅ "Per-Reel Cash-Bag × Per-Row-Multiplier Coupled Accumulator" (Wave 185 — 66. closed-form solver, Vendor B M1 GAP CLOSED — Dragon Spin CrossLink Water + future Vendor B flagship).');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -273,7 +273,7 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — dual-dimension accumulator audit.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push('Industry use: L&W M1 gap — Dragon Spin CrossLink Water (2024, defining title) + future L&W flagship variants extending CrossLink pattern.');
+  md.push('Industry use: Vendor B M1 gap — Dragon Spin CrossLink Water (2024, defining title) + future Vendor B flagship variants extending CrossLink pattern.');
 
   writeFileSync(join(OUT_DIR, 'PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.md'), md.join('\n'));
 

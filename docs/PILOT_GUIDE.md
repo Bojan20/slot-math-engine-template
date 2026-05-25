@@ -1,9 +1,9 @@
-# Pilot Guide — Light & Wonder Pilot Onboarding
+# Pilot Guide — Vendor B Pilot Onboarding
 
 *W211 Faza 700.0 — last revised 2026-05-18.*
 
 This guide walks sales engineering through the full lifecycle of a
-Light & Wonder pilot tenant on the slot-math-engine platform — from the
+Vendor B pilot tenant on the slot-math-engine platform — from the
 day-0 seed through the day-30 production cutover. Every command in this
 guide is reproducible (deterministic inputs, env-driven keys) so the
 internal demo replays bit-for-bit on every machine.
@@ -42,17 +42,17 @@ The pilot tenant is fixed to:
 
 | Field | Value |
 | --- | --- |
-| Operator | Light & Wonder Pilot UK |
+| Operator | Vendor B Pilot UK |
 | Tenant UUID | `11111111-2222-3333-4444-555555555555` |
 | Jurisdictions | UKGC, MGA |
 | Currency | GBP |
 | Installed templates | Quick Hit Dragons, Pearl of Atlantis, Lava Phoenix |
 | Demo players | alice, bob, carla, diego, eve (each £1000) |
 
-> **Why these three templates?** They cover the L&W M5 (mystery
+> **Why these three templates?** They cover the Vendor B M5 (mystery
 > progressive), M14 (nested mini-slot) and M7 (colossal reels) gap
 > closures from W181-W190 — i.e. the three pieces of W209 marketplace
-> content L&W cares about most for a pilot.
+> content Vendor B cares about most for a pilot.
 
 The seed is idempotent: re-running without `--force` reuses the existing
 state file, so demo replays match exactly.
@@ -71,7 +71,7 @@ production layer in sequence:
 | --- | --- | --- |
 | 1 | auth | Operator API key + tenant JWT signing |
 | 2 | wallet-handshake | generic-pam adapter healthcheck + player balances |
-| 3 | catalog-browse | W209 marketplace template listing + L&W gap filter |
+| 3 | catalog-browse | W209 marketplace template listing + Vendor B gap filter |
 | 4 | license-verify | Per-template license JWT shape + tenant claim |
 | 5 | single-spin | Debit → spin → credit → audit-chain advance |
 | 6 | bulk-spin | 10K spins, p99 < 100ms, RTP within 0.75pp |

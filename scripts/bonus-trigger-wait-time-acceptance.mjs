@@ -253,8 +253,8 @@ async function main() {
   md.push('  match engine math (this report = artefakt koji se predaje testing house).');
   md.push('- **MGA PPD §11.f** — operator-facing trigger frequency for player protection.');
   md.push('- **eCOGRA Generic Slots Audit** — verifies disclosure matches engine math.');
-  md.push('- Industry use: any commercial slot with bonus-trigger frequency disclosure (NetEnt /');
-  md.push('  Pragmatic / Microgaming / Play\'n GO marketing claims "~1 in 100 spins" must match');
+  md.push('- Industry use: any commercial slot with bonus-trigger frequency disclosure (Vendor D /');
+  md.push('  Pragmatic / Vendor G / Play\'n GO marketing claims "~1 in 100 spins" must match');
   md.push('  median + tail percentiles printed in PAR sheet).');
 
   writeFileSync(join(OUT_DIR, 'BONUS_TRIGGER_WAIT_TIME.md'), md.join('\n'));

@@ -60,9 +60,9 @@ The orchestrator:
 | Provider name        | Style                      | Auth mode          | Notes                                          |
 | -------------------- | -------------------------- | ------------------ | ---------------------------------------------- |
 | `generic-pam`        | JSON REST + HMAC-SHA256    | `token`            | Lowest-common-denominator, ~200 aggregators    |
-| `microgaming-style`  | sessionId, cash+bonus     | `sessionId`        | Microgaming Quickfire legacy compatibility     |
-| `netent-aggregator`  | JWT + Idempotency-Key      | JWT                | NetEnt / MGS Quickfire pattern                 |
-| `playtech-style`     | cashier_session + brand    | cashier_session_id | Playtech IMS protocol                          |
+| `microgaming-style`  | sessionId, cash+bonus     | `sessionId`        | Vendor G Quickfire legacy compatibility     |
+| `netent-aggregator`  | JWT + Idempotency-Key      | JWT                | Vendor D / MGS Quickfire pattern                 |
+| `playtech-style`     | cashier_session + brand    | cashier_session_id | Vendor F IMS protocol                          |
 
 All providers conform to the same `WalletProvider` interface:
 ```ts

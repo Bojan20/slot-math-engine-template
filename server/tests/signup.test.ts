@@ -78,7 +78,7 @@ describe('POST /api/signup', () => {
     email: 'boki@example.com',
     company: 'Acme Slots LLC',
     jurisdiction: 'UKGC',
-    useCase: 'L&W cert pipeline',
+    useCase: 'Vendor B cert pipeline',
     password: 'Sup3rSecret!',
     ...override,
   });

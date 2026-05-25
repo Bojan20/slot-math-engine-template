@@ -1,4 +1,4 @@
-// Free Spins Bonus — Cash Eruption rules.
+// Free Spins Bonus — Pattern-CE rules.
 //
 // PAR rules (line 2653..2660 of PAR-001.tsv):
 //   - 3+ Volcano scatters trigger FS; 6 initial free spins awarded.
@@ -113,17 +113,17 @@ fn score_fs_lines(grid: &Grid, ir: &Ir, fs_pt: &CompiledPaytable) -> f64 {
 
 #[derive(Debug, Clone, Default)]
 pub struct FsResult {
-    /// Total FS payout in coins (line wins + Big Volcano + Cash Eruption from FS).
+    /// Total FS payout in coins (line wins + Big Volcano + Pattern-CE from FS).
     pub payout_coins: f64,
     /// Breakdown: line wins only.
     pub line_wins_coins: f64,
     /// Breakdown: Big Volcano scatter pays only.
     pub big_volcano_coins: f64,
-    /// Breakdown: Cash Eruption (from FS) payout only.
+    /// Breakdown: Pattern-CE (from FS) payout only.
     pub ce_from_fs_coins: f64,
     pub spins_played: u32,
     pub big_volcano_count: u32,
-    /// Number of Cash Eruption EVENTS triggered during this bonus
+    /// Number of Pattern-CE EVENTS triggered during this bonus
     /// (per-spin counting, matches Excel "1 in 468.99 base spins"
     /// which is event-level not bonus-level).
     pub cash_eruption_event_count: u32,
@@ -183,7 +183,7 @@ pub fn run_free_spins(
         let total_coins = line_units * (bet_multiplier as f64);
         res.payout_coins += total_coins;
         res.line_wins_coins += total_coins;
-        // Cash Eruption trigger in FS: one Big Fireball linked-stop event
+        // Pattern-CE trigger in FS: one Big Fireball linked-stop event
         // counts as 6 Fireballs for the CE feature (matches PAR respin
         // table indexing 6..14 and reproduces Excel CE-from-FS avg payout
         // of ~29× total bet per trigger).

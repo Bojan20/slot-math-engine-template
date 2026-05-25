@@ -6,8 +6,8 @@ from "I have a contract" to "first spin against my wallet succeeds".
 
 The flow assumes a technical contact who:
 - knows their company's regulatory jurisdictions
-- has a wallet provider already selected (PAM / Microgaming /
-  NetEnt-Aggregator / Playtech)
+- has a wallet provider already selected (PAM / Vendor G /
+  Vendor D-Aggregator / Vendor F)
 - can produce an HMAC-shared secret + base URL for their wallet API
 - can sign RTS/PPD attestations on behalf of the operator
 

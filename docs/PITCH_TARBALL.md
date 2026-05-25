@@ -1,6 +1,6 @@
 # Pitch Tarball Bundler (W212 Faza 800.0)
 
-Single-command export of every L&W pilot pitch + proof artifact into one
+Single-command export of every Vendor B pilot pitch + proof artifact into one
 distributable, offline-safe archive.
 
 ## What's inside the tarball
@@ -67,7 +67,7 @@ npm run pitch:tarball:dry
 node scripts/pitch/build-pitch-tarball.mjs \
   --output=dist/pitch \
   --format=zip \
-  --operator=Aristocrat \
+  --operator=Vendor C \
   --bundle-version=v20990101
 ```
 
@@ -82,7 +82,7 @@ inspection.
 |---|---|---|
 | `--output=DIR` | `dist/pitch` | Output directory |
 | `--format=tar.gz\|tar\|zip` | `tar.gz` | Archive format |
-| `--operator=NAME` | `L&W` | Operator name in README + greeting |
+| `--operator=NAME` | `Vendor B` | Operator name in README + greeting |
 | `--bundle-version=vYYYYMMDD` | today UTC | Embedded bundle version |
 | `--include-binaries` | off | Reserved for future binary attachments |
 | `--sign` | off | Ed25519-sign the manifest with W209/W210 HSM key |
@@ -117,17 +117,17 @@ Add `--verbose` for per-file FAIL details, `--json` for machine-readable output.
 
 ## Customisation (rebrand for any operator)
 
-By default the README greets "L&W"; switch operator names without rebuilding
+By default the README greets "Vendor B"; switch operator names without rebuilding
 any source artifact:
 
 ```sh
-PITCH_OPERATOR_NAME=Aristocrat npm run pitch:tarball
+PITCH_OPERATOR_NAME=Vendor C npm run pitch:tarball
 PITCH_GREETING="G'day, mate — here's your tarball." \
-  PITCH_OPERATOR_NAME=Aristocrat npm run pitch:tarball
+  PITCH_OPERATOR_NAME=Vendor C npm run pitch:tarball
 ```
 
 The same applies to the M-gap coverage matrix label (engine documents that
-L&W M1..M16 are closed; the matrix is informational and survives re-branding
+Vendor B M1..M16 are closed; the matrix is informational and survives re-branding
 since the underlying mechanic kernels are vendor-agnostic).
 
 ### Per-operator manifest mode (W213)
@@ -147,8 +147,8 @@ The MANIFEST.json gains an `operator` block:
 ```json
 "operator": {
   "operatorId": "aristocrat",
-  "displayName": "Aristocrat",
-  "legalName": "Aristocrat Technologies, Inc.",
+  "displayName": "Vendor C",
+  "legalName": "Vendor C Technologies, Inc.",
   "tier": "Tier-1",
   "hqLocation": "Sydney, Australia",
   "tickerSymbol": "ALL.AX"

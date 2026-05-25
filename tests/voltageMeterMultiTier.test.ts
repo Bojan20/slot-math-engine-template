@@ -237,7 +237,7 @@ describe('industry parametrizations', () => {
     });
     expect(r.expectedRewardPerSpin).toBeGreaterThan(0);
   });
-  it('NetEnt Charged 5-tier deep ladder', () => {
+  it('Vendor D Charged 5-tier deep ladder', () => {
     const r = solveVoltageMeterMultiTier({
       cascadeContinuationProbability: 0.6,
       tiers: [

@@ -12,10 +12,10 @@
 
 | # | Kriterijum | Status |
 |---|---|:---:|
-| 1 | `slot-build <PAR.xlsx>` → 30s → playable Studio sim + cert paket | 🟢 W5.1 CLI ✅ + IGT (1 % parity) + L&W (1 % parity); cert paket = W5.6 |
+| 1 | `slot-build <PAR.xlsx>` → 30s → playable Studio sim + cert paket | 🟢 W5.1 CLI ✅ + Vendor A (1 % parity) + Vendor B (1 % parity); cert paket = W5.6 |
 | 2 | `slot-build <GDD.pdf>` → 60s → IR draft + math placeholder + Studio scaffold | ⏳ Phase 4 |
 | 3 | 12×12 primitiv kombinacija matrice radi iz IR-a (Topology × Feature) | ⏳ Phase 1-3 |
-| 4 | Vendor parity: L&W ✅, IGT ✅, Aristocrat, NetEnt, Pragmatic — 5+ profila × 3+ test PAR-a | 🚧 2/5 |
+| 4 | Vendor parity: Vendor B ✅, Vendor A ✅, Vendor C, Vendor D, Pragmatic — 5+ profila × 3+ test PAR-a | 🚧 2/5 |
 | 5 | Jurisdikcijska compliance: 12 profila (UKGC/MGA/GLI-16/19/NV/NJ/PA/MI/ON/BC/AAMS/Quebec) | 🚧 Faza 11 |
 | 6 | Closed-form solver coverage: 100+ feature patterns iz INDUSTRY_PATTERN_CATALOG | 🚧 77/100 |
 | 7 | 10⁹ spinova / 60s na M2 Max — sustained MC throughput | ✅ landed (Wave 3) |
@@ -46,28 +46,28 @@
 ---
 
 ### **PHASE 2 — Vendor Parity** _(reverse-eng iz PAR layouts)_
-**Status:** 🟡 **30% done** (L&W + IGT base ✅, ostali otvoreni)
+**Status:** 🟡 **30% done** (Vendor B + Vendor A base ✅, ostali otvoreni)
 
 | # | Wave | Status | Evidence |
 |---|---|:---:|---|
 | P2.1 | `parse_par` engine + vendor profile YAML system | ✅ | `tools/parse_par/` (W4.2 = `612bc68`) |
-| P2.2 | **W4.3a — Per-reel IGT strip parser** ("Reel N / Weights" stripe layout) | ✅ | `tools/parse_par/core.py::_parse_reel_sets_stripe` + `igt.yaml` v2 — strip lengths bit-exact (71/109/70/101/89 base, 105/94/102/68/91 fs PAR_001; FS reel 1 = 107 for PAR_002) |
-| P2.3 | **W4.3b — IGT → slot-sim model** (FK pick bonus + linear progressive primitive mapping) | ✅ | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test. IR JSON deserializes to `slot_sim::ir::Ir`, engine runs 10k+ spins, line-eval RTP ~0.70 |
-| P2.4 | **W4.3c — IGT feature dispatch live** (FreeSpins / PickBonus Bernoulli / LinearProgressive) | ✅ | `engine/slot-sim/src/features/{free_spins,pick_bonus,linear_progressive}.rs` + `mod.rs` dispatcher + FK Trigger Table + Award Table parser + Bernoulli trigger on PickBonus + Wild-prefix MAX bug fix in `evaluate_lines`. **RTP 0.9523 vs Excel 0.9614 (gap 0.9 %)**; hit-freq 0.2444 ✅ exact match; win-freq 0.1146 ✅ within 0.0003 |
-| P2.5 | **W4.3d — Virtual-reel sampler infrastructure** (Grid::spin_virtual + sampling_mode IR meta) | ✅ | Infrastructure landed; empirical testing shows IGT Excel math IS based on physical-strip sampling (not the 1000-weight virtual reel that PAR publishes alongside) — virtual_mode kept off by default for IGT. Residual 0.91 % gap traced to base game line-eval, not reel bank — tracked as W4.3e |
-| P2.6 | **W4.3e — Base game line-eval gap audit** (close last 0.91 % RTP) | ✅ **LANDED** | Two-step fix closed the IGT gap from 1.58 % → **0.03 %**: (1) Per-feature RTP breakdown infra + LP increment 0.003; (2) **W4.3e-scatter** — paytable parser now captures `"N*"` regulator notation as `pays_marker="*"` + extends IGT row_range to 101 to include the scatter row; adapter converts `[--, Bonus, Bonus, Bonus, --]` with marker into a native `scope: scatter` combo `Bonus:3` that slot-sim's CompiledPaytable handles via the scatter-count evaluator. **PAR_001 RTP 0.961702 vs Excel 0.961443 (+0.03 %); PAR_002 0.940380 vs 0.940211 (+0.02 %)** — both within MC noise at 10M spins. CI standard tier (0.5 %) ready to enable. |
-| P2.7 | **W4.4 — L&W → slot-sim adapter** (CE COPY TEST family) | ✅ | `_lw_to_slot_sim` w/ 36 base + 16 FS reel sets, FreeSpins + HoldAndWin stub, +6 Rust integration tests; IR deserializes + engine runs (RTP 0.12 — HoldAndWin runner is W4.5) |
-| P2.8 | **W4.5 — HoldAndWin runner + RTP-only CE injection** | ✅ | `features/hold_and_win.rs` runner with Bernoulli trigger + deterministic avg pay; L&W adapter computes `trigger_prob` from physical-strip cash density + `avg_pay = ce_from_base_rtp / trigger_prob`; L&W MC RTP lifted 0.115 → 0.52 (+0.41 CE contribution) |
-| P2.8b | **W4.6 — Red7 pattern win** (PatternWin runner + adapter emit) | ✅ | `features/pattern_win.rs` runner, role recalibration (Red7/Blue7/Bell/Melon = HP), adapter emits `Feature::PatternWin` with anchor_symbol=Red7 + anchor_reel=0 + required_wild_reels=[1..4] + pays=1000; L&W RTP 0.523 → 0.569 (+0.046); +4 Rust tests |
-| P2.8c | **W4.7 — FS paytable override + linked reels + Big_X equivalence** | ✅ | New IR field `Feature::FreeSpins.fs_paytable`; engine pre-compiles FS pt; FS runner uses `Grid::spin_linked` when `linked_reels` set; adapter emits Big_X paytable equivalents (Big Red7 = Red7 pays, etc.); symbols scan now includes FS reel sets so Big_X family registered; L&W RTP 0.569 → 0.614 (+0.045) |
-| P2.8d | **W4.8 — CE-from-FS HoldAndWin trigger inside FS** | ✅ | IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger` on Feature::HoldAndWin; FS runner does Bernoulli inside FS using FS-specific calibration; adapter derives fs_trigger_rate from published rtp_breakdown headers (bypasses structural estimator drift); L&W RTP 0.614 → 0.691 (+0.077, target +0.062) |
-| P2.8e | **W4.9 — Wild expansion (L&W CE base reels 2-5)** | ✅ 🏆 | New `wild_expand.rs` runner implements PAR-001 "Wild on reels 2-5 expands to fill reel if it creates winning combo"; adapter emits `Feature::WildExpand` with on_reels=[1,2,3,4]; **L&W RTP 0.691 → 0.952** (+0.26, Excel target 0.960). |
-| P2.8f | **W4.9b — FS calibration deep-fix** (initial_spins, retrigger_symbol, fs_paytable 4OAK+, Big_X canon) | ✅ | 4-part fix: (a) `initial_spins=6` + `max_total_spins=15` matching PAR-001 (was 8/250 → avg FS 8.00 not Excel's 6.45); (b) new `retrigger_symbol: "Big Volcano"` + `retrigger_count_min: 1` on `Feature::FreeSpins` (retriggers were 0 because runner searched base "Volcano" inside FS where strip has "Big Volcano"); (c) `fs_paytable` filtered to 4OAK+5OAK only per PAR rule; (d) `canon_cell()` in evaluator strips "Big " prefix so Big_X cells canonical-match X paytable entries — replaces buggy Big_X row duplication that double-paid. Scatter eval also tier-aware (best k ≤ count). **L&W RTP 0.952 → 0.958, gap 0.80 % → 0.17 %**. avg FS spins now exact 6.45 ✓. |
-| P2.8g | **W4.9c — Pattern double-pay fix + FS WE infra** | ✅ | (a) `pattern_win.rs` runner now subtracts `base.line_coins` per L&W PAR-001 "pattern win replaces line wins" rule (was double-paying line+pattern on Red7 pattern spins); (b) new `Feature::FreeSpins.fs_wild_expand_reels` IR field + runner infrastructure for FS-spin wild expansion (disabled by default; reel-5-only enablement caused +0.5 % overshoot, requires deeper investigation in future W4.9d). **L&W RTP stable at 0.958 (gap 0.17 %)**. |
+| P2.2 | **W4.3a — Per-reel Vendor A strip parser** ("Reel N / Weights" stripe layout) | ✅ | `tools/parse_par/core.py::_parse_reel_sets_stripe` + `igt.yaml` v2 — strip lengths bit-exact (71/109/70/101/89 base, 105/94/102/68/91 fs PAR_001; FS reel 1 = 107 for PAR_002) |
+| P2.3 | **W4.3b — Vendor A → slot-sim model** (FK pick bonus + linear progressive primitive mapping) | ✅ | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test. IR JSON deserializes to `slot_sim::ir::Ir`, engine runs 10k+ spins, line-eval RTP ~0.70 |
+| P2.4 | **W4.3c — Vendor A feature dispatch live** (FreeSpins / PickBonus Bernoulli / LinearProgressive) | ✅ | `engine/slot-sim/src/features/{free_spins,pick_bonus,linear_progressive}.rs` + `mod.rs` dispatcher + FK Trigger Table + Award Table parser + Bernoulli trigger on PickBonus + Wild-prefix MAX bug fix in `evaluate_lines`. **RTP 0.9523 vs Excel 0.9614 (gap 0.9 %)**; hit-freq 0.2444 ✅ exact match; win-freq 0.1146 ✅ within 0.0003 |
+| P2.5 | **W4.3d — Virtual-reel sampler infrastructure** (Grid::spin_virtual + sampling_mode IR meta) | ✅ | Infrastructure landed; empirical testing shows Vendor A Excel math IS based on physical-strip sampling (not the 1000-weight virtual reel that PAR publishes alongside) — virtual_mode kept off by default for Vendor A. Residual 0.91 % gap traced to base game line-eval, not reel bank — tracked as W4.3e |
+| P2.6 | **W4.3e — Base game line-eval gap audit** (close last 0.91 % RTP) | ✅ **LANDED** | Two-step fix closed the Vendor A gap from 1.58 % → **0.03 %**: (1) Per-feature RTP breakdown infra + LP increment 0.003; (2) **W4.3e-scatter** — paytable parser now captures `"N*"` regulator notation as `pays_marker="*"` + extends Vendor A row_range to 101 to include the scatter row; adapter converts `[--, Bonus, Bonus, Bonus, --]` with marker into a native `scope: scatter` combo `Bonus:3` that slot-sim's CompiledPaytable handles via the scatter-count evaluator. **PAR_001 RTP 0.961702 vs Excel 0.961443 (+0.03 %); PAR_002 0.940380 vs 0.940211 (+0.02 %)** — both within MC noise at 10M spins. CI standard tier (0.5 %) ready to enable. |
+| P2.7 | **W4.4 — Vendor B → slot-sim adapter** (CE COPY TEST family) | ✅ | `_lw_to_slot_sim` w/ 36 base + 16 FS reel sets, FreeSpins + HoldAndWin stub, +6 Rust integration tests; IR deserializes + engine runs (RTP 0.12 — HoldAndWin runner is W4.5) |
+| P2.8 | **W4.5 — HoldAndWin runner + RTP-only CE injection** | ✅ | `features/hold_and_win.rs` runner with Bernoulli trigger + deterministic avg pay; Vendor B adapter computes `trigger_prob` from physical-strip cash density + `avg_pay = ce_from_base_rtp / trigger_prob`; Vendor B MC RTP lifted 0.115 → 0.52 (+0.41 CE contribution) |
+| P2.8b | **W4.6 — Red7 pattern win** (PatternWin runner + adapter emit) | ✅ | `features/pattern_win.rs` runner, role recalibration (Red7/Blue7/Bell/Melon = HP), adapter emits `Feature::PatternWin` with anchor_symbol=Red7 + anchor_reel=0 + required_wild_reels=[1..4] + pays=1000; Vendor B RTP 0.523 → 0.569 (+0.046); +4 Rust tests |
+| P2.8c | **W4.7 — FS paytable override + linked reels + Big_X equivalence** | ✅ | New IR field `Feature::FreeSpins.fs_paytable`; engine pre-compiles FS pt; FS runner uses `Grid::spin_linked` when `linked_reels` set; adapter emits Big_X paytable equivalents (Big Red7 = Red7 pays, etc.); symbols scan now includes FS reel sets so Big_X family registered; Vendor B RTP 0.569 → 0.614 (+0.045) |
+| P2.8d | **W4.8 — CE-from-FS HoldAndWin trigger inside FS** | ✅ | IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger` on Feature::HoldAndWin; FS runner does Bernoulli inside FS using FS-specific calibration; adapter derives fs_trigger_rate from published rtp_breakdown headers (bypasses structural estimator drift); Vendor B RTP 0.614 → 0.691 (+0.077, target +0.062) |
+| P2.8e | **W4.9 — Wild expansion (Vendor B CE base reels 2-5)** | ✅ 🏆 | New `wild_expand.rs` runner implements PAR-001 "Wild on reels 2-5 expands to fill reel if it creates winning combo"; adapter emits `Feature::WildExpand` with on_reels=[1,2,3,4]; **Vendor B RTP 0.691 → 0.952** (+0.26, Excel target 0.960). |
+| P2.8f | **W4.9b — FS calibration deep-fix** (initial_spins, retrigger_symbol, fs_paytable 4OAK+, Big_X canon) | ✅ | 4-part fix: (a) `initial_spins=6` + `max_total_spins=15` matching PAR-001 (was 8/250 → avg FS 8.00 not Excel's 6.45); (b) new `retrigger_symbol: "Big Volcano"` + `retrigger_count_min: 1` on `Feature::FreeSpins` (retriggers were 0 because runner searched base "Volcano" inside FS where strip has "Big Volcano"); (c) `fs_paytable` filtered to 4OAK+5OAK only per PAR rule; (d) `canon_cell()` in evaluator strips "Big " prefix so Big_X cells canonical-match X paytable entries — replaces buggy Big_X row duplication that double-paid. Scatter eval also tier-aware (best k ≤ count). **Vendor B RTP 0.952 → 0.958, gap 0.80 % → 0.17 %**. avg FS spins now exact 6.45 ✓. |
+| P2.8g | **W4.9c — Pattern double-pay fix + FS WE infra** | ✅ | (a) `pattern_win.rs` runner now subtracts `base.line_coins` per Vendor B PAR-001 "pattern win replaces line wins" rule (was double-paying line+pattern on Red7 pattern spins); (b) new `Feature::FreeSpins.fs_wild_expand_reels` IR field + runner infrastructure for FS-spin wild expansion (disabled by default; reel-5-only enablement caused +0.5 % overshoot, requires deeper investigation in future W4.9d). **Vendor B RTP stable at 0.958 (gap 0.17 %)**. |
 | P2.8h | **W4.9d — Diagnostic infra (per-feature events + WE toggles)** | ✅ | (a) `slot-sim` binary now prints **Event counts** table (per-spin firing rates for `fs_trigger:N`, `wild_expand:N`, `hold_and_win:fs_triggered`, `pattern_win:X`) alongside per-feature RTP breakdown — closes "where is the gap?" diagnostic loop. (b) New `Feature::WildExpand.expand_only_when_base_no_win: bool` + `Feature::WildExpand.subset_search: bool` IR toggles wired through `WildExpandParams` for adapter-driven A/B tuning. (c) Per-feature RTP breakdown shows: base 0.1462, HW 0.4087 (= Excel CE-base 0.4091 ✓), WE 0.2606, FS 0.1248 (= line eval 0.063 + CE-from-FS 0.062), PW 0.0163; root-cause of residual 0.26 % gap pinpointed to **FS line eval pays 0.063 vs Excel 0.070** (Big_X canonicalization works but pay distribution shifted). (d) Confirmed via Python sim + Rust debug binary that FS trigger rate **1 in 140 ≡ Excel 1 in 139.9 EXACT**. Toggles tested ON for `expand_only_when_base_no_win` (RTP collapses to 0.715 — wrong hypothesis) and `subset_search=false` (no change — current subset MAX already optimal). **Real root cause of remaining 0.26 % requires reel-set-by-reel-set FS pay distribution audit (W4.9e).** Boki acceptance gate: 0.26 % is *not* exact; sub-wave W4.9e tracked. |
-| P2.9 | **W4.6 — Aristocrat profile** (Lightning Link / Dragon Link layout) | ⏳ | new profile YAML + 3 PAR test |
-| P2.10 | **W4.7 — NetEnt profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
-| P2.11 | **W4.8 — Pragmatic Play profile** (Megaways + Sticky Bonus) | ⏳ | new |
+| P2.9 | **W4.6 — Vendor C profile** (Pattern-LL / Pattern-DL layout) | ⏳ | new profile YAML + 3 PAR test |
+| P2.10 | **W4.7 — Vendor D profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
+| P2.11 | **W4.8 — Vendor E profile** (Megaways + Sticky Bonus) | ⏳ | new |
 | P2.12 | **W4.9 — Vendor parity dashboard** (CLI `parse-par-doctor` + HTML report) | ⏳ | new |
 
 **Acceptance Phase 2:** 5 vendor profila × 3 PAR-a each = 15 round-trip bit-identical + sve u CI.
@@ -79,14 +79,14 @@
 
 | # | Wave | Status |
 |---|---|:---:|
-| P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → vendor auto-detect → parse → universal IR → optional MC) | ✅ `tools/slot_build/` + 10 unit tests; IGT auto-detected on Fort Knox + L&W on CE; MC drift comparison RTP/hit/win vs Excel target |
-| P3.2 | **W5.2 — Per-game scaffold codegen** (`--scaffold DIR` → README + RUN + CERT + IR copies) | ✅ `tools/slot_build/__main__.py::write_scaffold` + `slugify` helper; 3 new unit tests; smoke run on Fort Knox + CE COPY TEST produces self-contained game folders with auto-generated certification summary |
+| P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → vendor auto-detect → parse → universal IR → optional MC) | ✅ `tools/slot_build/` + 10 unit tests; Vendor A auto-detected on Pick-Bonus + Vendor B on CE; MC drift comparison RTP/hit/win vs Excel target |
+| P3.2 | **W5.2 — Per-game scaffold codegen** (`--scaffold DIR` → README + RUN + CERT + IR copies) | ✅ `tools/slot_build/__main__.py::write_scaffold` + `slugify` helper; 3 new unit tests; smoke run on Pick-Bonus + CE COPY TEST produces self-contained game folders with auto-generated certification summary |
 | P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
-| P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for IGT + L&W; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
-| P3.4 | **W5.4 — IR → Studio UI skeleton** (vanilla HTML/JS scaffold sa reel viz + paytable + features panel) | ✅ `tools/slot_build/__main__.py::write_studio_codegen` + `slot-build --codegen-studio DIR` flag; emits 5-file per-game `studio/` scaffold (index.html + app.js + app.css + IR JSON + README) with Mulberry32 spin engine + paytable evaluator + live RTP/hit ticker + Auto-100 + Reset; playable in any browser via `python -m http.server`; 5/5 W5.4 tests (artifacts + DOM hooks + Node app.js smoke + Zod IR validation); IGT + L&W codegen both verified |
-| P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ✅ `tools/slot_build/verify.py` (3-tier CI matrix: quick 1M/5%, standard 100M/0.5%, strict 1B/0.05%); `scripts/ci_mc_verify.sh` CI orchestrator (bash-3 portable); exit-code contract (0/1/2); JSON report w/ per-game drift + overall verdict + per-IR `mc_tolerance` override (relaxes threshold for known-residual games, e.g. L&W ships 0.01 = 1% via meta until W4.3e-fs lands). **Standard tier (100M / 0.5%) now passes 5/5 games** — IGT PAR_001 drift 0.39%, L&W PAR-001 drift 0.67% (within override). 16/16 W5.5 tests (CI tier matrix + IR discovery + verify_one shape + override loader + CLI exit codes + JSON report schema). |
+| P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for Vendor A + Vendor B; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
+| P3.4 | **W5.4 — IR → Studio UI skeleton** (vanilla HTML/JS scaffold sa reel viz + paytable + features panel) | ✅ `tools/slot_build/__main__.py::write_studio_codegen` + `slot-build --codegen-studio DIR` flag; emits 5-file per-game `studio/` scaffold (index.html + app.js + app.css + IR JSON + README) with Mulberry32 spin engine + paytable evaluator + live RTP/hit ticker + Auto-100 + Reset; playable in any browser via `python -m http.server`; 5/5 W5.4 tests (artifacts + DOM hooks + Node app.js smoke + Zod IR validation); Vendor A + Vendor B codegen both verified |
+| P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ✅ `tools/slot_build/verify.py` (3-tier CI matrix: quick 1M/5%, standard 100M/0.5%, strict 1B/0.05%); `scripts/ci_mc_verify.sh` CI orchestrator (bash-3 portable); exit-code contract (0/1/2); JSON report w/ per-game drift + overall verdict + per-IR `mc_tolerance` override (relaxes threshold for known-residual games, e.g. Vendor B ships 0.01 = 1% via meta until W4.3e-fs lands). **Standard tier (100M / 0.5%) now passes 5/5 games** — Vendor A PAR_001 drift 0.39%, Vendor B PAR-001 drift 0.67% (within override). 16/16 W5.5 tests (CI tier matrix + IR discovery + verify_one shape + override loader + CLI exit codes + JSON report schema). |
 | P3.6 | **W5.6 — Auto cert paket** (HSM seed + RNG 90B + PAR commitment hash + audit log → ZIP) | ⏳ |
-| P3.7 | **W5.7 — `slot-build` integration tests** (E2E sa CE + Fort Knox + 1 sintetički Megaways) | ⏳ |
+| P3.7 | **W5.7 — `slot-build` integration tests** (E2E sa CE + Pick-Bonus + 1 sintetički Megaways) | ⏳ |
 
 **Acceptance Phase 3:** `slot-build CE_PAR-001.xlsx` → 30 sec → folder `games/ce-par-001/` sa Rust+TS+Studio+cert ZIP, playable u Studio.
 
@@ -151,7 +151,7 @@
 | P7.1 | **W8.1 — 1000-template marketplace** (open + premium IRs, hash-pinned) | ⏳ |
 | P7.2 | **W8.2 — White-label SaaS** (multi-tenant, per-operator branding) | ⏳ (docs done) |
 | P7.3 | **W8.3 — GaaS API** (slot-build kao API endpoint) | ⏳ (docs done) |
-| P7.4 | **W8.4 — Pilot programi** (L&W, Aristocrat, NetEnt outreach) | 🚧 outreach docs landed |
+| P7.4 | **W8.4 — Pilot programi** (Vendor B, Vendor C, Vendor D outreach) | 🚧 outreach docs landed |
 | P7.5 | **W8.5 — Public benchmark** (vs commercial slot studios — RTP accuracy, build speed) | ⏳ |
 | P7.6 | **W8.6 — Open marketplace contributor flow** (community PR templates) | ⏳ |
 
@@ -163,28 +163,28 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **~~W5.5a — IGT PAR_002 FK award bug~~** | _fixed_ | ✅ root cause was stale IR (generated pre-W4.3c parser); regen via `slot-build` → 3/3 games pass quick gate |
-| 🥈 2 | ~~W4.3e — IGT base eval gap audit~~ | _done_ | ✅ **0.03 % gap** — pays_marker="*" parser + scatter combo via existing CompiledPaytable scatter path |
+| 🥇 1 | **~~W5.5a — Vendor A PAR_002 FK award bug~~** | _fixed_ | ✅ root cause was stale IR (generated pre-W4.3c parser); regen via `slot-build` → 3/3 games pass quick gate |
+| 🥈 2 | ~~W4.3e — Vendor A base eval gap audit~~ | _done_ | ✅ **0.03 % gap** — pays_marker="*" parser + scatter combo via existing CompiledPaytable scatter path |
 | 🥉 3 | ~~W5.4 — IR → Studio UI skeleton~~ | _done_ | ✅ vanilla HTML/JS scaffold (no build step); 5 tests; both vendors verified |
 
 ### ✅ Just landed
 
 | Wave | Commit | Δ |
 |---|---|---|
-| W4.3a | `d393d25` | `_parse_reel_sets_stripe()` + IGT profile v2 + 10 stripe unit tests; strip lengths bit-exact vs Excel Total row |
-| W4.3b | `269641a` | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); IGT IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
+| W4.3a | `d393d25` | `_parse_reel_sets_stripe()` + Vendor A profile v2 + 10 stripe unit tests; strip lengths bit-exact vs Excel Total row |
+| W4.3b | `269641a` | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); Vendor A IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
 | W4.3c | `19c977d` | Feature dispatch live: FreeSpins / PickBonus(Bernoulli) / LinearProgressive runners + FK Trigger&Award table parser + Wild-prefix MAX fix; RTP 0.9523 vs 0.9614 (Δ0.91 %), hit-freq EXACT, +4 Rust integration tests |
-| W4.3d | `a196a8e` | Virtual-reel infrastructure (`Grid::spin_virtual`, `Meta.sampling_mode`); empirical conclusion that IGT Excel math IS physical-strip-based — kept off by default |
-| W5.1 | `298e447` | `slot-build` CLI scaffold — vendor auto-detect (IGT/L&W), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
-| W4.4 | `4e8936e` | L&W → slot-sim adapter; 36+16 reel sets, FreeSpins + HoldAndWin stub feature, +6 Rust integration tests; CE PAR-001 IR deserializes + engine runs (RTP 0.12 base-only) |
-| W4.5 | `7a4e635` | HoldAndWin runner — Bernoulli trigger + deterministic avg-pay model, IR fields `trigger_prob` + `avg_pay_per_trigger` added to `Feature::HoldAndWin`; L&W adapter computes both from `cash_eruption_pages[BM=1]`; L&W RTP lifted 0.115 → 0.52; +3 W4.5 Rust integration tests |
-| W4.6 | `d629469` | PatternWin runner — Red7×3 on reel 0 + Wild on reels 1-4 → pays 1000; adapter symbol-role recalibration (Red7/Blue7/Bell/Melon=HP, Cherry/Lemon/Orange/Plum/Grapes=LP); L&W RTP 0.523 → 0.569 (+0.046); +4 W4.6 Rust tests |
-| W4.7 | `578a271` | FS paytable override + linked reels + Big_X equivalence; Engine pre-compiles `fs_pt` from Feature::FreeSpins.fs_paytable; FS runner uses Grid::spin_linked for [1,2,3]; adapter emits Big_X paytable rows = X pays; symbols list scans FS reels too; L&W RTP 0.569 → 0.614 (+0.045) |
-| W4.8 | `4c0cc25` | CE-from-FS HoldAndWin trigger inside FS — IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger`; adapter derives `fs_trigger_rate` from published `rtp_breakdown.free_spins` + `single_spin_payback_pct` (bypasses Volcano structural estimator drift); L&W RTP 0.614 → 0.691 (+0.077) |
-| **W4.9** | `756f2fa` | **🏆 Wild expansion runner** — L&W CE base reels 2-5 wild-expand on winning condition; **L&W RTP 0.691 → 0.952** (+0.261, single biggest single-wave RTP lift in the project); within 0.8 % of Excel 0.96 target; hit-freq 0.196 vs Excel 0.190 (1.1 σ MC noise), win-freq 0.096 vs Excel 0.089 (3 σ noise); +4 W4.9 Rust integration tests |
-| W5.2 | `0c808b0` | Per-game scaffold codegen — `slot-build --scaffold DIR` emits README/RUN/CERT.md + IR copies into a folder named after slugified game + SWID; 3 new Py unit tests; smoke on IGT + L&W games |
+| W4.3d | `a196a8e` | Virtual-reel infrastructure (`Grid::spin_virtual`, `Meta.sampling_mode`); empirical conclusion that Vendor A Excel math IS physical-strip-based — kept off by default |
+| W5.1 | `298e447` | `slot-build` CLI scaffold — vendor auto-detect (Vendor A/Vendor B), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
+| W4.4 | `4e8936e` | Vendor B → slot-sim adapter; 36+16 reel sets, FreeSpins + HoldAndWin stub feature, +6 Rust integration tests; CE PAR-001 IR deserializes + engine runs (RTP 0.12 base-only) |
+| W4.5 | `7a4e635` | HoldAndWin runner — Bernoulli trigger + deterministic avg-pay model, IR fields `trigger_prob` + `avg_pay_per_trigger` added to `Feature::HoldAndWin`; Vendor B adapter computes both from `cash_eruption_pages[BM=1]`; Vendor B RTP lifted 0.115 → 0.52; +3 W4.5 Rust integration tests |
+| W4.6 | `d629469` | PatternWin runner — Red7×3 on reel 0 + Wild on reels 1-4 → pays 1000; adapter symbol-role recalibration (Red7/Blue7/Bell/Melon=HP, Cherry/Lemon/Orange/Plum/Grapes=LP); Vendor B RTP 0.523 → 0.569 (+0.046); +4 W4.6 Rust tests |
+| W4.7 | `578a271` | FS paytable override + linked reels + Big_X equivalence; Engine pre-compiles `fs_pt` from Feature::FreeSpins.fs_paytable; FS runner uses Grid::spin_linked for [1,2,3]; adapter emits Big_X paytable rows = X pays; symbols list scans FS reels too; Vendor B RTP 0.569 → 0.614 (+0.045) |
+| W4.8 | `4c0cc25` | CE-from-FS HoldAndWin trigger inside FS — IR fields `fs_trigger_prob` + `fs_avg_pay_per_trigger`; adapter derives `fs_trigger_rate` from published `rtp_breakdown.free_spins` + `single_spin_payback_pct` (bypasses Volcano structural estimator drift); Vendor B RTP 0.614 → 0.691 (+0.077) |
+| **W4.9** | `756f2fa` | **🏆 Wild expansion runner** — Vendor B CE base reels 2-5 wild-expand on winning condition; **Vendor B RTP 0.691 → 0.952** (+0.261, single biggest single-wave RTP lift in the project); within 0.8 % of Excel 0.96 target; hit-freq 0.196 vs Excel 0.190 (1.1 σ MC noise), win-freq 0.096 vs Excel 0.089 (3 σ noise); +4 W4.9 Rust integration tests |
+| W5.2 | `0c808b0` | Per-game scaffold codegen — `slot-build --scaffold DIR` emits README/RUN/CERT.md + IR copies into a folder named after slugified game + SWID; 3 new Py unit tests; smoke on Vendor A + Vendor B games |
 | **W5.3** | `b488158` | **IR → TS engine codegen** — `tools/parse_par/to_ts_ir.py` (universal Rust IR → TS SlotGameIR; symbol-role → kind, paytable combo[] → nested map, substitutes_except expansion, vendor-aware feature filtering for `linear_progressive`); `slot-build --codegen-ts DIR` emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README) per game with portable engine root via `$SLOT_ENGINE_ROOT`; Zod schema validation gate; 8/8 W5.3 unit tests pass (3 converter shape + 3 Zod via `tsx` + 2 end-to-end with real `npx tsx runner.ts` smoke); 61/61 total Python tests green; cargo workspace clean |
-| **W5.5** | _(this commit)_ | **Auto MC verify CI gate** — `tools/slot_build/verify.py` (3-tier CI matrix: `quick` 1M/5%, `standard` 100M/0.5%, `strict` 1B/0.05% Excel parity); `scripts/ci_mc_verify.sh` orchestrator (bash-3 portable); exit-code contract (0=pass, 1=drift>thresh, 2=infra error); JSON report w/ per-game drift + verdict; 13/13 W5.5 tests (CI tier matrix · IR discovery · verify_one shape · CLI exit codes · JSON report schema); **immediate gate success** — discovered real bug: IGT PAR_002 FK award size 986.82 vs PAR_001's 26.59, causing 4.46 RTP drift (W5.5a follow-up tracked). L&W + IGT PAR_001 ✅ within 5% threshold (W4.9 achieved 0.8% gap on L&W). |
+| **W5.5** | _(this commit)_ | **Auto MC verify CI gate** — `tools/slot_build/verify.py` (3-tier CI matrix: `quick` 1M/5%, `standard` 100M/0.5%, `strict` 1B/0.05% Excel parity); `scripts/ci_mc_verify.sh` orchestrator (bash-3 portable); exit-code contract (0=pass, 1=drift>thresh, 2=infra error); JSON report w/ per-game drift + verdict; 13/13 W5.5 tests (CI tier matrix · IR discovery · verify_one shape · CLI exit codes · JSON report schema); **immediate gate success** — discovered real bug: Vendor A PAR_002 FK award size 986.82 vs PAR_001's 26.59, causing 4.46 RTP drift (W5.5a follow-up tracked). Vendor B + Vendor A PAR_001 ✅ within 5% threshold (W4.9 achieved 0.8% gap on Vendor B). |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 
@@ -193,12 +193,12 @@
 ## 📜 Closed wave summary (history pointer)
 
 Ne ponavljam ovde — sve detaljno u `SLOT_ENGINE_MASTER_TODO.md`. Highlights:
-- Wave 181-196: KIMI L&W portfolio (16 solvers landed)
+- Wave 181-196: KIMI Vendor B portfolio (16 solvers landed)
 - Wave 234-241: Rust mutation kill (197 specs, 10 modula, 100% effective)
 - Wave 239: TS Stryker scoped 91.23%
 - Wave 3.x: CE COPY TEST 30B / 3 SWID / ≤0.05% Excel parity ✅
 - Wave 4.1: Universal `slot-sim` engine (IR-driven, game-agnostic)
-- Wave 4.2: Universal `parse_par` + vendor profile YAML (L&W + IGT)
+- Wave 4.2: Universal `parse_par` + vendor profile YAML (Vendor B + Vendor A)
 - Wave 7.2: Quasi-Monte Carlo sweeper (Sobol/Halton/Lattice)
 
 ---

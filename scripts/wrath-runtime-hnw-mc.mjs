@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Standalone Monte Carlo of the Wrath of Olympus Hold & Win feature
+// Standalone Monte Carlo of the Pattern-WO Hold & Win feature
 // using the EXACT algorithm from web/studio/public/runner/runtime.js
 // (function runHoldAndWinHeadless), reading the canonical IR.
 //

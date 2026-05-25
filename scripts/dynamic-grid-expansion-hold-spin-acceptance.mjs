@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // W152 Wave 182 — Dynamic Grid-Expansion Hold-and-Spin Aggregator
-// acceptance (63. solver, L&W M3 GAP CLOSURE — Ultimate Fire Link + Lock It
+// acceptance (63. solver, Vendor B M3 GAP CLOSURE — Ultimate Fire Link + Lock It
 // Link Eureka families, 8+ titles).
 //
 // 6 industry-representative configs × 30K MC features each = 180K total feature
@@ -36,7 +36,7 @@ const CONFIGS = [
   {
     name: 'A_ultimate_fire_link_olvera_street',
     description:
-      'SG Gaming Ultimate Fire Link Olvera Street — 5 reels × 3 rows initial, +4 extension rows (max 5×7), q=0.10, thresholds [5,9,14,20], μ_V=2.5× bet.',
+      'Vendor B Ultimate Fire Link Olvera Street — 5 reels × 3 rows initial, +4 extension rows (max 5×7), q=0.10, thresholds [5,9,14,20], μ_V=2.5× bet.',
     cfg: {
       numReels: 5,
       initialRows: 3,
@@ -51,7 +51,7 @@ const CONFIGS = [
   {
     name: 'B_lock_it_link_eureka_reel_blast',
     description:
-      'Bally Lock It Link Eureka Reel Blast — 5×4 initial, +3 rows (max 5×7), q=0.12 (dynamite scatters more frequent), thresholds [6,12,18], μ_V=3× bet high-vol.',
+      'Vendor H Pattern-LIL Eureka Reel Blast — 5×4 initial, +3 rows (max 5×7), q=0.12 (dynamite scatters more frequent), thresholds [6,12,18], μ_V=3× bet high-vol.',
     cfg: {
       numReels: 5,
       initialRows: 4,
@@ -242,7 +242,7 @@ async function main() {
   );
 
   const md = [];
-  md.push('# DYNAMIC_GRID_EXPANSION_HOLD_SPIN — Dynamic Grid-Expansion Hold-and-Spin Aggregator Acceptance (W179, 63. solver, L&W M3 GAP CLOSURE)');
+  md.push('# DYNAMIC_GRID_EXPANSION_HOLD_SPIN — Dynamic Grid-Expansion Hold-and-Spin Aggregator Acceptance (W179, 63. solver, Vendor B M3 GAP CLOSURE)');
   md.push('');
   md.push(`Generated: \`${summary.generated_utc}\``);
   md.push('');
@@ -250,7 +250,7 @@ async function main() {
   md.push('');
   md.push(`**${summary.configs_passed}/${summary.configs_total} configs PASS** at ${FEATURES} MC features each = ${(CONFIGS.length * FEATURES / 1e3).toFixed(0)}K total feature simulations.`);
   md.push('');
-  md.push('Closes Faza 12 ext (post-W100): ✅ "Dynamic Grid-Expansion Hold-and-Spin Aggregator" (Wave 182 — 63. closed-form solver, L&W M3 GAP CLOSED).');
+  md.push('Closes Faza 12 ext (post-W100): ✅ "Dynamic Grid-Expansion Hold-and-Spin Aggregator" (Wave 182 — 63. closed-form solver, Vendor B M3 GAP CLOSED).');
   md.push('');
   md.push('## Method');
   md.push('');
@@ -281,8 +281,8 @@ async function main() {
   md.push('- **eCOGRA Generic Slots Audit** — grid evolution audit trail per feature.');
   md.push('- **EU GA 2024** — cross-jurisdiction baseline.');
   md.push('');
-  md.push('Industry use: L&W M3 gap — Ultimate Fire Link family (Olvera Street, China Street, Riverwalk, Boardwalk, Route 66, Power 4, Cash Falls, Explosion — 7+ variants),');
-  md.push('Lock It Link Eureka Reel Blast (Bally) sa dynamite-scatter row-add trigger.');
+  md.push('Industry use: Vendor B M3 gap — Ultimate Fire Link family (Olvera Street, China Street, Riverwalk, Boardwalk, Route 66, Power 4, Cash Falls, Explosion — 7+ variants),');
+  md.push('Pattern-LIL Eureka Reel Blast (Vendor H) sa dynamite-scatter row-add trigger.');
 
   writeFileSync(join(OUT_DIR, 'DYNAMIC_GRID_EXPANSION_HOLD_SPIN.md'), md.join('\n'));
 

@@ -4,8 +4,8 @@
 > primitive landed in `src/ir/extensions.ts`, every report module in
 > `src/report/`, every sim helper in `src/sim/`, and every feature in
 > `src/features/`. This document exists because the slot-engine industry
-> has overlapping patent estates (Aristocrat, IGT, BTG, NetEnt, Pragmatic,
-> Scientific Games) and our path to market depends on demonstrating
+> has overlapping patent estates (Vendor C, Vendor A, BTG, Vendor D, Pragmatic,
+> Vendor B) and our path to market depends on demonstrating
 > independent derivation.
 
 ## Legal precedent we anchor on
@@ -213,7 +213,7 @@ process is:
 ### 15.C.2 `respinLockEvaluator` — sticky-symbol respin
 
 * **Risk:** LOW (after differentiation).
-* **IP context:** Aristocrat US12,554,442 + US12,548,407 (Money-Train family enforcement). Patent claims target SPECIFIC implementations of:
+* **IP context:** Vendor C US12,554,442 + US12,548,407 (Money-Train family enforcement). Patent claims target SPECIFIC implementations of:
   1. Markov-chain persistent grid sa multi-class cells (cash/mult/collector/inert).
   2. Closed-form bilinear payout summation across class-typed cells.
   3. Markov absorption-state termination logic.

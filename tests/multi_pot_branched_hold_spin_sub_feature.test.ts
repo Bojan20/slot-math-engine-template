@@ -1,5 +1,5 @@
 // W152 Wave 193 — Multi-Pot Branched H&S Sub-Feature vitest specs
-// (74. solver, L&W M15 P1 GAP CLOSURE — Rich Little Piggies Piggy Bankin' Break In).
+// (74. solver, Vendor B M15 P1 GAP CLOSURE — Rich Little Piggies Piggy Bankin' Break In).
 
 import { describe, it, expect } from 'vitest';
 import {
@@ -278,7 +278,7 @@ describe('Wave 193 — Multi-Pot Branched H&S Sub-Feature', () => {
     });
   });
 
-  describe('industry use-cases (L&W M15 branched H&S family)', () => {
+  describe('industry use-cases (Vendor B M15 branched H&S family)', () => {
     it("Rich Little Piggies Piggy Bankin' Break In — 3-pot branched (Instant Win / Double Play / Repeat Win)", () => {
       const cfg: MultiPotBranchedHoldSpinSubFeatureConfig = {
         probTrigger: 0.04,

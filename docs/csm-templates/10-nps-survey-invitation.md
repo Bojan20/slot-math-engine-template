@@ -13,7 +13,7 @@
 Hi {{contact_first_name}},
 
 I'm asking you to take **60 seconds** to rate us on a scale of 0-10:
-how likely are you to recommend the L&W slot-math platform to a
+how likely are you to recommend the Vendor B slot-math platform to a
 colleague at another operator?
 
 Please click here to respond — the link expires in 14 days:

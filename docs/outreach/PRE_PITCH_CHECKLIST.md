@@ -1,6 +1,6 @@
 # Pre-Pitch Checklist
 
-> Run this before any L&W meeting (cold-room or warm). Skip a step at your own risk.
+> Run this before any Vendor B meeting (cold-room or warm). Skip a step at your own risk.
 
 ## T-72 hours (Tuesday before a Friday meeting)
 
@@ -14,7 +14,7 @@
 
 ## T-48 hours
 
-- [ ] Customize tarball README with operator name (`--operator=L&W`)
+- [ ] Customize tarball README with operator name (`--operator=Vendor B`)
 - [ ] If multi-team meeting, brand the one-pager with operator name (Agent C's per-operator scripts)
 - [ ] Print speaker notes from `docs/LW_PILOT_PITCH_GUIDE.md` Room-X section corresponding to the meeting type
 - [ ] Re-read `docs/outreach/OBJECTION_RESPONSES.md` end-to-end
