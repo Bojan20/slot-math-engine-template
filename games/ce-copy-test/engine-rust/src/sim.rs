@@ -37,6 +37,30 @@ pub struct SimStats {
     pub grand_hits: u64,
     /// Max single-spin payout (in total-bet units).
     pub max_single_x: f64,
+
+    // ── Volatility distribution (per PAR_100spins) ──
+    /// Spins with payout ≥ 10× total bet.
+    pub wins_ge_10x: u64,
+    /// Spins with payout ≥ 20× total bet.
+    pub wins_ge_20x: u64,
+    /// Spins with payout ≥ 50× total bet.
+    pub wins_ge_50x: u64,
+    /// Spins with payout ≥ 100× total bet.
+    pub wins_ge_100x: u64,
+    /// Spins with payout ≥ 200× total bet.
+    pub wins_ge_200x: u64,
+    /// Spins with payout ≥ 500× total bet.
+    pub wins_ge_500x: u64,
+    /// Spins with payout ≥ 1000× total bet (Pattern Win baseline).
+    pub wins_ge_1000x: u64,
+
+    // ── Average Cash Eruption feature win tracking ──
+    /// Sum of CE-from-base payout (in total-bet units) for averaging.
+    pub ce_base_payout_sum_x: f64,
+    /// Sum of CE-from-FS payout (in total-bet units).
+    pub ce_fs_payout_sum_x: f64,
+    /// Sum of Free Spins bonus total payout (in total-bet units).
+    pub fs_bonus_payout_sum_x: f64,
 }
 
 impl SimStats {
@@ -119,6 +143,7 @@ impl<'a> Engine<'a> {
                     );
                     let x = r.payout_coins / total_bet_coins;
                     s.ce_from_base_x += x;
+                    s.ce_base_payout_sum_x += x;
                     spin_x += x;
                     if r.grand_hit {
                         s.grand_hits += 1;
@@ -140,6 +165,8 @@ impl<'a> Engine<'a> {
                 s.fs_lines_x += fs.line_wins_coins / total_bet_coins;
                 s.fs_bv_x += fs.big_volcano_coins / total_bet_coins;
                 s.ce_from_fs_x += fs.ce_from_fs_coins / total_bet_coins;
+                s.ce_fs_payout_sum_x += fs.ce_from_fs_coins / total_bet_coins;
+                s.fs_bonus_payout_sum_x += inner_fs_x;
                 s.ce_from_fs_triggers += fs.cash_eruption_event_count as u64;
                 if fs.grand_hit {
                     s.grand_hits += 1;
@@ -159,6 +186,14 @@ impl<'a> Engine<'a> {
             if spin_x > 1.0 {
                 s.wins += 1;
             }
+            // Volatility distribution buckets (per PAR_100spins cell A36..D43)
+            if spin_x >= 10.0   { s.wins_ge_10x += 1; }
+            if spin_x >= 20.0   { s.wins_ge_20x += 1; }
+            if spin_x >= 50.0   { s.wins_ge_50x += 1; }
+            if spin_x >= 100.0  { s.wins_ge_100x += 1; }
+            if spin_x >= 200.0  { s.wins_ge_200x += 1; }
+            if spin_x >= 500.0  { s.wins_ge_500x += 1; }
+            if spin_x >= 1000.0 { s.wins_ge_1000x += 1; }
             s.spins += 1;
         }
         s

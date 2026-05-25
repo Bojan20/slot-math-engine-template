@@ -42,6 +42,16 @@ fn merge(a: SimStats, b: SimStats) -> SimStats {
         ce_from_fs_triggers: a.ce_from_fs_triggers + b.ce_from_fs_triggers,
         grand_hits: a.grand_hits + b.grand_hits,
         max_single_x: a.max_single_x.max(b.max_single_x),
+        wins_ge_10x: a.wins_ge_10x + b.wins_ge_10x,
+        wins_ge_20x: a.wins_ge_20x + b.wins_ge_20x,
+        wins_ge_50x: a.wins_ge_50x + b.wins_ge_50x,
+        wins_ge_100x: a.wins_ge_100x + b.wins_ge_100x,
+        wins_ge_200x: a.wins_ge_200x + b.wins_ge_200x,
+        wins_ge_500x: a.wins_ge_500x + b.wins_ge_500x,
+        wins_ge_1000x: a.wins_ge_1000x + b.wins_ge_1000x,
+        ce_base_payout_sum_x: a.ce_base_payout_sum_x + b.ce_base_payout_sum_x,
+        ce_fs_payout_sum_x: a.ce_fs_payout_sum_x + b.ce_fs_payout_sum_x,
+        fs_bonus_payout_sum_x: a.fs_bonus_payout_sum_x + b.fs_bonus_payout_sum_x,
     }
 }
 
@@ -133,4 +143,42 @@ fn main() {
     println!("  Cash Eruption FS 1 in   : {:.2}   (Excel target 468.99)", ce_fs_per);
     println!("  GRAND hits              : {}", s.grand_hits);
     println!("  Max single spin (x)     : {:.2}", s.max_single_x);
+
+    println!();
+    println!("=== Average feature wins (PAR_100spins) ===");
+    let avg_ce_base = if s.ce_from_base_triggers > 0 {
+        s.ce_base_payout_sum_x / s.ce_from_base_triggers as f64
+    } else {
+        0.0
+    };
+    let avg_ce_fs = if s.ce_from_fs_triggers > 0 {
+        s.ce_fs_payout_sum_x / s.ce_from_fs_triggers as f64
+    } else {
+        0.0
+    };
+    let avg_fs_bonus = if s.fs_triggers > 0 {
+        s.fs_bonus_payout_sum_x / s.fs_triggers as f64
+    } else {
+        0.0
+    };
+    println!("  Avg CE win (base)        : {:.2}×   (Excel target 49.42×)", avg_ce_base);
+    println!("  Avg CE win (FS)          : {:.2}×   (Excel target 29.03×)", avg_ce_fs);
+    println!("  Avg Free Spins bonus     : {:.2}×   (Excel target 9.79×)", avg_fs_bonus);
+
+    println!();
+    println!("=== Volatility distribution (PAR_100spins A36..D43) ===");
+    let print_bucket = |label: &str, hits: u64, target_per: f64| {
+        let per = if hits > 0 { n / hits as f64 } else { f64::INFINITY };
+        println!(
+            "  {:10}  1 in {:>10.2}  (Excel target 1 in {})  hits={}",
+            label, per, target_per, hits
+        );
+    };
+    print_bucket("10x+",  s.wins_ge_10x,  52.0);
+    print_bucket("20x+",  s.wins_ge_20x,  91.0);
+    print_bucket("50x+",  s.wins_ge_50x,  307.0);
+    print_bucket("100x+", s.wins_ge_100x, 631.0);
+    print_bucket("200x+", s.wins_ge_200x, 30048.0);
+    print_bucket("500x+", s.wins_ge_500x, 61652.0);
+    println!("  1000x+      hits={} (Pattern Win baseline)", s.wins_ge_1000x);
 }

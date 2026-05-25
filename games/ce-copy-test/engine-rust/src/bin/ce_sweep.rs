@@ -58,6 +58,16 @@ fn merge(a: SimStats, b: SimStats) -> SimStats {
         ce_from_fs_triggers: a.ce_from_fs_triggers + b.ce_from_fs_triggers,
         grand_hits: a.grand_hits + b.grand_hits,
         max_single_x: a.max_single_x.max(b.max_single_x),
+        wins_ge_10x: a.wins_ge_10x + b.wins_ge_10x,
+        wins_ge_20x: a.wins_ge_20x + b.wins_ge_20x,
+        wins_ge_50x: a.wins_ge_50x + b.wins_ge_50x,
+        wins_ge_100x: a.wins_ge_100x + b.wins_ge_100x,
+        wins_ge_200x: a.wins_ge_200x + b.wins_ge_200x,
+        wins_ge_500x: a.wins_ge_500x + b.wins_ge_500x,
+        wins_ge_1000x: a.wins_ge_1000x + b.wins_ge_1000x,
+        ce_base_payout_sum_x: a.ce_base_payout_sum_x + b.ce_base_payout_sum_x,
+        ce_fs_payout_sum_x: a.ce_fs_payout_sum_x + b.ce_fs_payout_sum_x,
+        fs_bonus_payout_sum_x: a.fs_bonus_payout_sum_x + b.fs_bonus_payout_sum_x,
     }
 }
 
