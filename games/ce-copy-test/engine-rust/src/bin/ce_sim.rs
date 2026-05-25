@@ -63,7 +63,7 @@ fn main() {
     } else {
         args.threads
     };
-    let chunk = (args.spins + n_threads as u64 - 1) / n_threads as u64;
+    let chunk = args.spins.div_ceil(n_threads as u64);
     let chunks: Vec<(u64, u64)> = (0..n_threads as u64)
         .map(|i| (i, chunk.min(args.spins.saturating_sub(i * chunk))))
         .filter(|(_, n)| *n > 0)

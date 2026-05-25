@@ -28,7 +28,7 @@ use crate::ir::Ir;
 use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
 
-//// Detect whether the linked reels 2/3/4 stop landed on the given Big
+/// Detect whether the linked reels 2/3/4 stop landed on the given Big
 /// symbol. In FS, reels 2/3/4 share ONE stop and the visible 3 rows of
 /// reel 2 come from `strip[stop-1], strip[stop], strip[stop+1]`. By
 /// reel-set design, Big symbols are encoded as three consecutive strip

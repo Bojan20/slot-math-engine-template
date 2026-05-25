@@ -166,7 +166,11 @@ impl<'a> Engine<'a> {
                 s.fs_bv_x += fs.big_volcano_coins / total_bet_coins;
                 s.ce_from_fs_x += fs.ce_from_fs_coins / total_bet_coins;
                 s.ce_fs_payout_sum_x += fs.ce_from_fs_coins / total_bet_coins;
-                s.fs_bonus_payout_sum_x += inner_fs_x;
+                // FS bonus award per L&W cert summary = lines + big_volcano
+                // (excludes ce_from_fs which is tracked separately as Avg CE win (FS)).
+                // Old formula included ce_from_fs → double-counted, ~88% inflated.
+                s.fs_bonus_payout_sum_x +=
+                    (fs.line_wins_coins + fs.big_volcano_coins) / total_bet_coins;
                 s.ce_from_fs_triggers += fs.cash_eruption_event_count as u64;
                 if fs.grand_hit {
                     s.grand_hits += 1;

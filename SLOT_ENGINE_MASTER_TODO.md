@@ -28,6 +28,7 @@ spinova. Total RTP gap 0.34 % (CE-from-FS payout 4 % off → Wave 3).
 | **CE COPY TEST Wave 2.4** (multi-bet-mult sweep, 63 RTP measurements) | ✅ Wave 2.4 LANDED | 63/63 < 2.10% off Excel; `ce-sweep` CLI + JSON/CSV exporters u `reports/sweep/` |
 | **CE COPY TEST Wave 2.7** (PAR report renderer, HTML × 3 SWIDs) | ✅ Wave 2.7 LANDED | `scripts/render_par_report.py` → `reports/par-report.{200-1637-001,002,003}.html` (18 KB each, 6 sections + sign-off) |
 | **CE COPY TEST Wave 3.1** (ULTIMATIVNI 1:1 — Excel C3958/C3965/C3966 rule discovery) | ✅ **Wave 3.1 LANDED** | Total RTP 0.959928 vs 0.96 (**-0.0075 %**), svih 11 metrika < 0.5 %; FS initial samples sad iz Big dist + grid coverage = blocks × 9 cells |
+| **CE COPY TEST Wave 3.2** (10B verification root-cause: `avg_fs_bonus` double-count fix + PAR-002/003 targets backfill) | ✅ **Code LANDED**, ⏳ 10B re-validation u toku (chain v2 PID-stack, ETA ~95 min) | `sim.rs:169` više ne uračunava CE-from-FS u `fs_bonus_payout_sum_x` (bilo +88.46 % off, sanity 100M sad +0.20 %); `aggregate_10b.py` shared-dict PAR_100spins targeti za sva 3 SWID-a (pre: 002/003 imali `None` na 8 metrika); 2× clippy fix (`////` doc + `div_ceil`) |
 
 ### 🎯 Real OPEN (multi-week scope — NOT single-wave)
 

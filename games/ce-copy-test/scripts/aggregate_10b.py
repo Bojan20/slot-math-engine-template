@@ -27,55 +27,60 @@ OUT_JSON = ROOT / "reports" / "par-verification-10b.json"
 
 SWIDS = ["200-1637-001", "200-1637-002", "200-1637-003"]
 
-# Excel targets per PAR_100spins + PAR-001 row 1..3 summary
+# Excel targets per PAR_100spins + PAR-NNN cert summary.
+#
+# Per cert summary inspection (raw/PAR-{001,002,003}.cells.json @ L68..L72, O1..O3):
+#   - CE-from-base, FS-lines and CE-from-FS RTP komponente su **identične** kroz
+#     sve 3 SWID-a (samo `base_game_rtp` varira da podesi total RTP).
+#   - Posledica: `avg_ce_win_base`, `avg_ce_win_fs`, `avg_fs_bonus`,
+#     `wins_*_one_in`, `grand_one_in`, `ce_*_trigger_one_in`, `fs_trigger_one_in`
+#     su **isti za sva 3 SWID-a** (CE pool i FS feature su shared).
+#
+# Konstante koje se ponavljaju kroz sve SWID-ove:
+_CE_FROM_BASE_RTP = 0.409104936666577      # L69
+_FS_LINES_RTP = 0.0700000107591113         # L70 (FS line wins component)
+_CE_FROM_FS_RTP = 0.0618950673666612       # L71
+_FS_TOTAL_RTP = _FS_LINES_RTP + _CE_FROM_FS_RTP
+_PAR100_SHARED = {
+    "ce_from_base_rtp": _CE_FROM_BASE_RTP,
+    "free_spins_rtp_total": _FS_TOTAL_RTP,
+    "ce_from_fs_rtp": _CE_FROM_FS_RTP,
+    "fs_trigger_one_in": 139.9,
+    "ce_base_trigger_one_in": 120.8,
+    "ce_fs_trigger_one_in": 468.99,
+    "avg_ce_win_base": 49.42,
+    "avg_ce_win_fs": 29.03,
+    "avg_fs_bonus": 9.79,
+    "wins_10x_one_in": 52,
+    "wins_20x_one_in": 91,
+    "wins_50x_one_in": 307,
+    "wins_100x_one_in": 631,
+    "wins_200x_one_in": 30048,
+    "wins_500x_one_in": 61652,
+    "grand_one_in": 4986475,
+}
+
 TARGETS = {
     "200-1637-001": {
+        **_PAR100_SHARED,
         "total_rtp": 0.960000018370437,
         "base_game_rtp": 0.419000003813447,
-        "ce_from_base_rtp": 0.409104936666577,
-        "free_spins_rtp_total": 0.0700000107591113 + 0.0618950673666612,
-        "ce_from_fs_rtp": 0.0618950673666612,
         "hit_freq": 0.19030599,
         "win_freq": 0.08936075,
-        "fs_trigger_one_in": 139.9,
-        "ce_base_trigger_one_in": 120.8,
-        "ce_fs_trigger_one_in": 468.99,
-        "avg_ce_win_base": 49.42,
-        "avg_ce_win_fs": 29.03,
-        "avg_fs_bonus": 9.79,
-        "wins_10x_one_in": 52,
-        "wins_20x_one_in": 91,
-        "wins_50x_one_in": 307,
-        "wins_100x_one_in": 631,
-        "wins_200x_one_in": 30048,
-        "wins_500x_one_in": 61652,
-        "grand_one_in": 4986475,
     },
     "200-1637-002": {
+        **_PAR100_SHARED,
         "total_rtp": 0.950000015007889,
-        "base_game_rtp": None,  # PAR-002 base game RTP from L68
-        "ce_from_base_rtp": None,
-        "free_spins_rtp_total": None,
-        "ce_from_fs_rtp": None,
+        "base_game_rtp": 0.409000000450898,
         "hit_freq": 0.1902107,
-        "win_freq": None,
-        "fs_trigger_one_in": 139.9,
-        "ce_base_trigger_one_in": 120.8,
-        "ce_fs_trigger_one_in": 468.99,
-        "grand_one_in": 4986475,
+        "win_freq": 0.0889773,
     },
     "200-1637-003": {
+        **_PAR100_SHARED,
         "total_rtp": 0.931000016534967,
-        "base_game_rtp": None,
-        "ce_from_base_rtp": None,
-        "free_spins_rtp_total": None,
-        "ce_from_fs_rtp": None,
+        "base_game_rtp": 0.390000001977976,
         "hit_freq": 0.19066094,
-        "win_freq": None,
-        "fs_trigger_one_in": 139.9,
-        "ce_base_trigger_one_in": 120.8,
-        "ce_fs_trigger_one_in": 468.99,
-        "grand_one_in": 4986475,
+        "win_freq": 0.08770657,
     },
 }
 
