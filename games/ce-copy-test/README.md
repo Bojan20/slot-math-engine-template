@@ -1,8 +1,8 @@
 # CE COPY TEST — 1:1 paymodel klon Cash Eruption-a
 
-**Status**: Wave 2 LANDED — sva 3 PAR-a (96 / 95 / 93.10 %) validovana,
-10 / 11 metrika u 1:1 sa Excel-om (< 0.5 %), CE-from-FS payout 4 % off
-(Wave 3 kalibracija). Total RTP sve 3 SWID-a unutar 0.34 % od targeta.
+**Status**: Wave 2.4 LANDED — **63/63 RTP measurements** (3 SWID-a × 21 bet
+multipliera) **unutar 2.1 % od Excel targeta**. Bet mult 1: 10/11 metrika
+< 0.5 % od Excel-a. Sweep CLI dostupan: `ce-sweep` (CSV+JSON exporter).
 
 ## Cilj
 
@@ -111,18 +111,43 @@ SimStats:
    transformiše ceo reel u Wild **ako rezultira win-om**. Sim računa raw
    + expanded grid, uzima max. Popravio FS line wins iz -10 % u +0.01 %.
 
+## Wave 2.4 fix-evi (multi-bet-mult sweep)
+
+5. **Bet-multiplier scaling** — pre fix-a, RTP za bm=200 je bio +9529 %
+   off (sim delio CE/FS coin payouts sa fiksnim 20 umesto sa total bet
+   = 20 × bm). Posle fix-a:
+   - **CE feature coin values su već bm-scaled u IR** (Excel page-per-bm
+     daje 20/40/60 coin values za bm=1, 40/80/120 za bm=2, etc.) →
+     sim koristi raw coin values, ali deli sa `total_bet = 20 × bm`.
+   - **Base i FS line wins paytable su bm-INDEPENDENT u Excel-u**
+     (paytable values su per-line-bet coin amounts). Sim multiplira FS
+     line_units sa bm pre nego doda u payout_coins. Base line wins su
+     već u total_bet units (`/ 20.0` cancels with × bm).
+   - **Big Volcano** = `pays × total_bet × block_count` = `pays × 20 × bm
+     × bv`. Pre fix-a: × 20 fiksno (× bm nedostajalo).
+6. **`ce-sweep` CLI binary** — runs 21 bet multipliers ⇒ CSV/JSON export
+   na `reports/sweep/ce-sweep.<swid>.{csv,json}` za PAR report
+   renderer downstream.
+
+## Sweep status (5M spinova × 21 bet mults × 3 SWID-a = 63 RTP measurements)
+
+| SWID | Avg total RTP | Excel target | Max \|Δ%\| | Sve unutar |
+|---|---:|---:|---:|---|
+| 200-1637-001 (96 %) | 0.953674 | 0.9600 | 2.10 % | ✅ |
+| 200-1637-002 (95 %) | 0.943092 | 0.9500 | 2.07 % | ✅ |
+| 200-1637-003 (93.1 %) | 0.925239 | 0.9310 | 2.09 % | ✅ |
+
 ## Otvoreno za Wave 3
 
-1. **CE-from-FS payout magnitude** (4 % off / -2.6 coin per trigger od
-   ~580 target). Verovatno nedostaje 1 dodatni coin sample po triggeru
-   ili respin terminator subtle diff. Treba uporediti exact Excel formula
-   za "Cash Eruption Feature from Free Spins RTP" cell (row 4086).
-2. **Bet multipliers 2..200** (svih 21 stranica CE feature). Trenutno
-   sim radi samo za bet_mult 1. Treba per-bm sweep + agreggat RTP report.
-3. **TS engine mirror sa parity gate** — bit-identical RNG output
+1. **CE-from-FS payout magnitude** (4 % off na bet mult 1; do 17 % na
+   pojedinim bet multipliers — možda MC variance + Excel formula detail).
+   Treba uporediti exact Excel formula za "Cash Eruption Feature from
+   Free Spins RTP" cell (row 4086) sa naszhin per-trigger payout
+   modelom.
+2. **TS engine mirror sa parity gate** — bit-identical RNG output
    Rust↔TS, za RGS runtime na klijent strani.
-4. **PAR report renderer** — generiše HTML/PDF sa istim layout-om kao
-   Excel, popunjen sa sim values.
+3. **PAR report renderer** — generiše HTML/PDF sa istim layout-om kao
+   Excel, popunjen sa sim values iz `reports/sweep/*.json`.
 
 ## Komande
 

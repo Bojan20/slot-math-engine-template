@@ -89,12 +89,16 @@ impl<'a> Engine<'a> {
         let mut rng = Prng::from_seed(seed);
         let mut s = SimStats::default();
         let ce = self.ce_all.by_bm.get(&bet_multiplier);
+        // Total bet in coins: 20 paylines × bet_multiplier coins per line.
+        // All raw coin payouts (CE feature, FS line/BV) divide by this to
+        // express the per-spin RTP contribution in total-bet units.
+        let total_bet_coins = 20.0 * (bet_multiplier as f64);
         for _ in 0..n_spins {
             // Base spin
             let rs = self.bg_picker.pick(&mut rng);
             let grid = Grid::spin(rs, &mut rng);
             let bw = evaluate_base_spin(&grid, self.ir, &self.base_pt);
-            let mut spin_x = bw.payout_total_bet_x();
+            let mut spin_x = bw.payout_total_bet_x(bet_multiplier);
             s.base_game_x += spin_x;
             // After base + CE + FS attribution we'll re-check the spin
             // total; for now record the base-game hit/win flags. The
@@ -111,7 +115,7 @@ impl<'a> Engine<'a> {
                         CeContext::Base,
                         &mut rng,
                     );
-                    let x = r.payout_coins / 20.0;
+                    let x = r.payout_coins / total_bet_coins;
                     s.ce_from_base_x += x;
                     spin_x += x;
                     if r.grand_hit {
@@ -130,10 +134,10 @@ impl<'a> Engine<'a> {
                     bet_multiplier,
                     &mut rng,
                 );
-                let inner_fs_x = fs.payout_coins / 20.0;
-                s.fs_lines_x += fs.line_wins_coins / 20.0;
-                s.fs_bv_x += fs.big_volcano_coins / 20.0;
-                s.ce_from_fs_x += fs.ce_from_fs_coins / 20.0;
+                let inner_fs_x = fs.payout_coins / total_bet_coins;
+                s.fs_lines_x += fs.line_wins_coins / total_bet_coins;
+                s.fs_bv_x += fs.big_volcano_coins / total_bet_coins;
+                s.ce_from_fs_x += fs.ce_from_fs_coins / total_bet_coins;
                 s.ce_from_fs_triggers += fs.cash_eruption_event_count as u64;
                 if fs.grand_hit {
                     s.grand_hits += 1;

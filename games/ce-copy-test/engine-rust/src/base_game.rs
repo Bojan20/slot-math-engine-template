@@ -128,8 +128,12 @@ pub struct SpinWin {
 
 impl SpinWin {
     /// Final payout in **total-bet multiples** (so RTP = mean(payout)).
-    /// 1 line coin = 1/20 of a total bet.
-    pub fn payout_total_bet_x(&self) -> f64 {
+    /// Line wins are per-line-bet coin amounts (paytable values); for
+    /// bet_multiplier M, actual coin payout per win = paytable × M, total
+    /// bet in coins = 20 × M, so line RTP = (paytable × M) / (20 × M) =
+    /// paytable / 20 — bet-mult independent. Volcano scatter and pattern
+    /// wins are already in total-bet units (× total_bet, bm-independent).
+    pub fn payout_total_bet_x(&self, _bet_multiplier: i64) -> f64 {
         if self.is_pattern_win {
             // Pattern win replaces line wins per PAR rule.
             self.pattern_total_bet_x + self.volcano_total_bet_x
@@ -303,7 +307,9 @@ pub fn evaluate_base_spin(base_grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> S
     w.volcano_total_bet_x = v_pay;
     w.free_spins_triggered = v_count >= 3;
     w.fireball_count = count_on_grid(base_grid, "Fireball");
-    let payout = w.payout_total_bet_x();
+    // Bet multiplier doesn't change line-RTP since payout_coins × bm and
+    // total_bet × bm cancel; pass 1 here only for hit/win flag detection.
+    let payout = w.payout_total_bet_x(1);
     // "Hit" = any paid spin (payout > 0). "Win" = net win
     // (payout > total bet, i.e. player walks away with more than wager).
     w.is_hit = payout > 0.0;

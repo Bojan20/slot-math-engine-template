@@ -149,12 +149,12 @@ pub fn run_free_spins(
         // Big Volcano pay (per block occurrence × total bet). Linked stop
         // gives 1 block max per spin. PAR fs_paytable lists Big Volcano with
         // `pays = 1` (multiplier on total bet) and PPH = 43.22 → block-level
-        // award, not per-cell. So we award `1 × total_bet` per block.
+        // award, not per-cell. Total bet in coins = 20 × bet_multiplier.
         let bv = linked_block_landed(&grid, "Big Volcano");
         if bv > 0 {
             if let Some(p) = fs_pt.volcano.get(&1) {
-                // pays × total bet × occurrences. 1 total bet = 20 coins.
-                let bv_pay = (*p) * 20.0 * (bv as f64);
+                let total_bet_coins = 20.0 * (bet_multiplier as f64);
+                let bv_pay = (*p) * total_bet_coins * (bv as f64);
                 res.payout_coins += bv_pay;
                 res.big_volcano_coins += bv_pay;
             }
@@ -168,14 +168,19 @@ pub fn run_free_spins(
         // Wild only if a win would result." We compute payouts with both
         // raw grid AND Wild-expanded-on-reel-5 grid, taking the max
         // (so the rule is honoured: expand only if it improves payout).
+        //
+        // Paytable values are per-line-bet in coins; for bet_multiplier M,
+        // actual coin payout per win = paytable × M. Sim conversion to
+        // total_bet units in caller divides by total_bet (= 20 × M coins).
         let raw_lines = score_fs_lines(&grid, ir, fs_pt);
-        let total_coins = if any_wild_on_reel5(&grid) {
+        let line_units = if any_wild_on_reel5(&grid) {
             let expanded = expand_wild_reel5(&grid);
             let exp_lines = score_fs_lines(&expanded, ir, fs_pt);
             raw_lines.max(exp_lines)
         } else {
             raw_lines
         };
+        let total_coins = line_units * (bet_multiplier as f64);
         res.payout_coins += total_coins;
         res.line_wins_coins += total_coins;
         // Cash Eruption trigger in FS: one Big Fireball linked-stop event
@@ -222,6 +227,14 @@ pub fn run_free_spins(
 
 /// Public helper for stitching base-game `SpinWin` + FS results into a
 /// per-spin total. Caller is responsible for averaging over many spins.
-pub fn total_spin_total_bet_x(base: &SpinWin, ce_coins: f64, fs_coins: f64) -> f64 {
-    base.payout_total_bet_x() + ce_coins / 20.0 + fs_coins / 20.0
+/// All coin payouts are divided by `total_bet_coins = 20 × bet_multiplier`
+/// to express the per-spin RTP contribution in total-bet units.
+pub fn total_spin_total_bet_x(
+    base: &SpinWin,
+    ce_coins: f64,
+    fs_coins: f64,
+    bet_multiplier: i64,
+) -> f64 {
+    let total_bet = 20.0 * (bet_multiplier as f64);
+    base.payout_total_bet_x(bet_multiplier) + ce_coins / total_bet + fs_coins / total_bet
 }
