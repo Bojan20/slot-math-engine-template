@@ -231,6 +231,7 @@ def build_cert_package(
     raw_dir: Path | None = None,
     mc_report_path: Path | None = None,
     hsm_key_pem: bytes | None = None,
+    include_provenance: bool = True,
 ) -> Path:
     """Build a cert package ZIP.
 
@@ -303,6 +304,60 @@ def build_cert_package(
         )
         zf.writestr("verify.sh", verify_sh)
         zf.writestr("README.md", readme)
+
+        # W7.5 — Crypto-verifiable PAR provenance. Build a Merkle tree
+        # over the universal IR's paytable + reel set entries + bet
+        # table rows, sign the root with the cert HSM key, and emit a
+        # JSON artifact + per-row inclusion proofs into the bundle.
+        if include_provenance:
+            try:
+                from tools.provenance.par_provenance import build_provenance
+                # Collect committable rows from the universal IR
+                par_rows: list[Any] = []
+                pt = universal_ir_data.get("paytable") or []
+                for row in pt:
+                    par_rows.append({"section": "paytable", "row": row})
+                bet_table = universal_ir_data.get("bet_table") or {}
+                if bet_table:
+                    par_rows.append({"section": "bet_table", "row": bet_table})
+                meta_block = universal_ir_data.get("meta") or {}
+                par_rows.append({"section": "meta", "row": meta_block})
+                if par_rows:
+                    prov_artifact, prov_tree = build_provenance(
+                        par_rows,
+                        sign_key_pem=hsm_key_pem,
+                        meta={
+                            "vendor": vendor,
+                            "swid": swid,
+                            "game_id": game_id,
+                            "universal_ir_sha256": manifest["ir_commitments"]["universal_sha256"],
+                        },
+                    )
+                    zf.writestr(
+                        "provenance/par_provenance.json",
+                        json.dumps(prov_artifact.to_dict(), indent=2),
+                    )
+                    # Embed per-row inclusion proofs (allows offline
+                    # verification of any single PAR row)
+                    proofs_doc = {
+                        "tree_size": prov_tree.size,
+                        "merkle_root": prov_artifact.merkle_root_hex,
+                        "rows": [
+                            {
+                                "leaf_index": i,
+                                "row": par_rows[i],
+                                "proof": prov_tree.proof_for(i).to_dict(),
+                            }
+                            for i in range(prov_tree.size)
+                        ],
+                    }
+                    zf.writestr(
+                        "provenance/inclusion_proofs.json",
+                        json.dumps(proofs_doc, indent=2),
+                    )
+            except ImportError:
+                # provenance module unavailable — skip silently
+                pass
 
     return zip_path
 
