@@ -66808,7 +66808,9 @@
       "respins": 3,
       "pages": {},
       "trigger_prob": 0.01665392065664702,
-      "avg_pay_per_trigger": 24.565082607337413
+      "avg_pay_per_trigger": 24.565082607337413,
+      "fs_trigger_prob": 1.0,
+      "fs_avg_pay_per_trigger": 1.3431558175475984
     }
   ],
   "bet_table": {

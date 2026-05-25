@@ -184,6 +184,14 @@ pub enum Feature {
         trigger_prob: Option<f64>,
         #[serde(default)]
         avg_pay_per_trigger: Option<f64>,
+        /// W4.8 — FS-spin trigger probability (when CE fires inside FS).
+        /// In CE the linked block dumps ~9 Big Fireball almost every FS
+        /// spin so this can be near-1.0 while the base trigger stays
+        /// ~0.7 %.
+        #[serde(default)]
+        fs_trigger_prob: Option<f64>,
+        #[serde(default)]
+        fs_avg_pay_per_trigger: Option<f64>,
     },
     /// Wolf Run-style pick-bonus.
     ///

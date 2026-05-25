@@ -62,6 +62,29 @@ pub fn run_features(
                 fs_paytable: _,
             } => {
                 let Some(picker) = fs_picker else { continue };
+                // W4.8 — look up any HoldAndWin feature in the IR to
+                // know if CE-from-FS should be triggered inside FS spins.
+                // Prefer `fs_trigger_prob` / `fs_avg_pay_per_trigger` when
+                // populated (Cash Eruption pages publish a separate
+                // `ce_from_fs_rtp` value driving these); fall back to the
+                // base trigger config otherwise.
+                let fs_hw = ir.features.iter().find_map(|f| match f {
+                    Feature::HoldAndWin {
+                        trigger_symbol,
+                        trigger_count_min,
+                        trigger_prob,
+                        avg_pay_per_trigger,
+                        fs_trigger_prob,
+                        fs_avg_pay_per_trigger,
+                        ..
+                    } => Some(free_spins::FsHoldAndWinCfg {
+                        trigger_symbol,
+                        trigger_count_min: *trigger_count_min,
+                        trigger_prob: fs_trigger_prob.or(*trigger_prob),
+                        avg_pay_per_trigger: fs_avg_pay_per_trigger.or(*avg_pay_per_trigger),
+                    }),
+                    _ => None,
+                });
                 let params = free_spins::FreeSpinsParams {
                     trigger_symbol,
                     trigger_count_min: *trigger_count_min,
@@ -70,6 +93,7 @@ pub fn run_features(
                     max_total_spins: *max_total_spins,
                     fs_pt,
                     linked_reels: linked_reels.as_deref(),
+                    fs_hold_and_win: fs_hw,
                 };
                 out.merge(free_spins::run(params, ir, picker, pt, base, rng, virtual_mode));
             }
@@ -104,6 +128,8 @@ pub fn run_features(
                 pages: _,
                 trigger_prob,
                 avg_pay_per_trigger,
+                fs_trigger_prob: _,
+                fs_avg_pay_per_trigger: _,
             } => {
                 let params = hold_and_win::HoldAndWinParams {
                     trigger_symbol,

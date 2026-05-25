@@ -786,13 +786,15 @@ def _lw_features(parsed: dict) -> list[dict]:
             "pays": pattern_pays,
         })
 
-    # Hold-and-Win (Cash Eruption) — W4.5 populates trigger_prob +
-    # avg_pay_per_trigger from cash_eruption_pages[BM=1] so the slot-sim
-    # runner contributes correct mean RTP. Full per-page sampling
-    # (low/med/high set × small/big coins × respin chain) lands in W4.6+.
+    # Hold-and-Win (Cash Eruption) — W4.5 + W4.8 populate trigger_prob +
+    # avg_pay_per_trigger from cash_eruption_pages[BM=1] (base) AND
+    # fs_trigger_prob + fs_avg_pay_per_trigger (FS spin internal trigger)
+    # so the slot-sim runner contributes correct mean RTP for both
+    # CE-from-base AND CE-from-FS. Full per-page sampling lands in W4.6+.
     ce_pages = parsed.get("cash_eruption_pages") or parsed.get("cash_eruption_feature_pages")
     if ce_pages:
         ce_from_base_rtp, trigger_prob, avg_pay = _ce_rtp_calibration(parsed, ce_pages)
+        fs_trigger_prob, fs_avg_pay = _ce_fs_rtp_calibration(parsed, ce_pages)
         features.append({
             "kind": "hold_and_win",
             "trigger_symbol": "Fireball",
@@ -801,6 +803,8 @@ def _lw_features(parsed: dict) -> list[dict]:
             "pages": {},
             "trigger_prob": trigger_prob,
             "avg_pay_per_trigger": avg_pay,
+            "fs_trigger_prob": fs_trigger_prob,
+            "fs_avg_pay_per_trigger": fs_avg_pay,
         })
 
     return features
@@ -846,6 +850,113 @@ def _ce_rtp_calibration(parsed: dict, ce_pages: list) -> tuple[float, float, flo
     # avg_pay in total-bet-× units: RTP / trigger_prob
     avg_pay = ce_rtp_base / trigger_prob if trigger_prob > 0 else 0.0
     return ce_rtp_base, trigger_prob, avg_pay
+
+
+def _ce_fs_rtp_calibration(parsed: dict, ce_pages: list) -> tuple[float, float]:
+    """W4.8 — Calibrate FS-spin CE trigger so MC matches `ce_from_fs_rtp`.
+
+    L&W CE links reels 2/3/4 in FS with ~99.8 % Big Fireball weight on
+    each linked stop. In practice the linked block dumps ≥6 Big
+    Fireball almost every FS spin → effective per-FS-spin CE trigger
+    probability ≈ 1.0. The published `ce_from_fs_rtp` (page[0]) then
+    factors directly into the per-trigger pay value.
+
+    Returns `(fs_trigger_prob, fs_avg_pay_per_trigger)` where:
+
+        ce_from_fs_rtp = fs_trigger_rate × avg_fs_spins
+                       × fs_trigger_prob × fs_avg_pay
+                       (all in total-bet-× per-spin units)
+
+    With fs_trigger_prob fixed at 1.0 (linked-block guarantee):
+
+        fs_avg_pay = ce_from_fs_rtp
+                   / (fs_trigger_rate × avg_fs_spins × 1.0)
+    """
+    page = ce_pages[0]
+    ce_rtp_fs = float(page.get("ce_from_fs_rtp") or 0.0)
+    if ce_rtp_fs <= 0.0:
+        return 0.0, 0.0
+
+    # Avg FS spins per trigger + per-FS-spin payback (published)
+    bs = (parsed.get("free_spins") or {}).get("bonus_summary") or {}
+    avg_fs_spins = float(bs.get("avg_free_spins") or 8.0)
+    per_spin_pct = float(bs.get("single_spin_payback_pct") or 0.0)
+
+    # Derive FS trigger rate from published values rather than reel
+    # structural estimation: tau = free_spins_rtp / (avg × per_spin)
+    # so any structural-estimator drift is bypassed.
+    bd = parsed["meta"].get("rtp_breakdown", {}) or {}
+    fs_rtp = float(bd.get("free_spins") or 0.0)
+    if fs_rtp > 0.0 and per_spin_pct > 0.0 and avg_fs_spins > 0.0:
+        fs_trig_rate = fs_rtp / (avg_fs_spins * per_spin_pct)
+    else:
+        # Fallback to structural estimator if published headers are
+        # incomplete (other vendors may not publish single_spin_payback).
+        base_sets = parsed.get("bg_reel_sets") or []
+        weights = (parsed.get("bg_reel_set_weights") or {}).get("weights") or []
+        fs_trig_rate = _estimate_fs_trigger_rate(parsed, base_sets, weights)
+
+    if fs_trig_rate <= 0.0:
+        return 0.0, 0.0
+
+    # Per-FS-spin CE trigger probability — linked block makes this very
+    # close to 1.0 for the CE family.
+    fs_trigger_prob = 1.0
+    fs_avg_pay = ce_rtp_fs / (fs_trig_rate * avg_fs_spins * fs_trigger_prob)
+    return fs_trigger_prob, fs_avg_pay
+
+
+def _estimate_fs_trigger_rate(parsed: dict, base_sets: list, weights: list) -> float:
+    """Estimate P(Volcano scatter ≥ 3 reels show Volcano on base spin).
+
+    Weighted across all base reel sets. **Per-set** Poisson-binomial
+    expansion (not naive averaging) preserves the WITHIN-set correlation
+    that makes high-Volcano sets contribute disproportionately to FS
+    trigger rate.
+    """
+    if not base_sets:
+        return 0.0
+    n_reels = int(parsed["meta"]["reels"])
+    rows = int(parsed["meta"]["rows"])
+    weights_by_set = {int(w["set"]): float(w["weight"]) for w in weights}
+    total_w = sum(weights_by_set.values()) or 1.0
+
+    total_trigger = 0.0
+    for s in base_sets:
+        sw = weights_by_set.get(int(s["set"]), 0.0)
+        if sw <= 0:
+            continue
+        # Per-set per-reel P(window_volc)
+        p_per_reel = []
+        for k in range(n_reels):
+            if k >= len(s["reels"]):
+                p_per_reel.append(0.0)
+                continue
+            reel = s["reels"][k]
+            tot = sum(float(x.get("weight") or 0) for x in reel) or 1.0
+            volc = sum(float(x.get("weight") or 0) for x in reel if x["symbol"] == "Volcano")
+            p_stop_volc = volc / tot
+            p_per_reel.append(1.0 - (1.0 - p_stop_volc) ** rows)
+
+        # P(≥3 reels show Volcano | this set) via Poisson-binomial
+        n = len(p_per_reel)
+        if n < 3:
+            continue
+        p_ge_3 = 0.0
+        for mask in range(1 << n):
+            bits = bin(mask).count("1")
+            if bits < 3:
+                continue
+            prob = 1.0
+            for i in range(n):
+                if (mask >> i) & 1:
+                    prob *= p_per_reel[i]
+                else:
+                    prob *= 1.0 - p_per_reel[i]
+            p_ge_3 += prob
+
+        total_trigger += (sw / total_w) * p_ge_3
+    return total_trigger
 
 
 def _avg_cash_density(base_sets: list) -> float:
