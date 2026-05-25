@@ -30,7 +30,7 @@ pub fn run(
     params: &PatternWinParams,
     ir: &Ir,
     grid: &Grid,
-    _base: &SpinWin,
+    base: &SpinWin,
     _rng: &mut Prng,
 ) -> FeatureOutcome {
     let mut out = FeatureOutcome::default();
@@ -75,12 +75,16 @@ pub fn run(
         }
     }
 
-    // Pattern fires — the engine's `payout_total_bet_x` convention adds
-    // pattern_total_bet_x for this spin. We expose the pay via `coins`
-    // so the dispatcher can add it to feat.coins and let the engine
-    // divide-back to total-bet-×.
+    // Pattern fires — L&W CE PAR-001 rule: "Pattern Win replaces line
+    // wins" (line wins NOT paid in addition to pattern win on the same
+    // spin). We pay `pattern_pays × lines` (per-line accounting) and
+    // SUBTRACT the existing `base.line_coins` so the engine's running
+    // tally sums to pattern_only.
     let lines = lines_of(ir);
-    out.coins += params.pays * (lines as f64);
+    let pattern_coins = params.pays * (lines as f64);
+    // Subtract the line wins already counted in `base.line_coins`
+    // (mirrors game-specific impl that zeroes `w.line_coins` on pattern).
+    out.coins += pattern_coins - base.line_coins;
     out.events.push(format!("pattern_win:{}", params.anchor_symbol));
     out
 }

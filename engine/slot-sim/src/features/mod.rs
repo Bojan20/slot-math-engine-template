@@ -93,6 +93,14 @@ pub fn run_features(
                     }),
                     _ => None,
                 });
+                // W4.9c — FS wild expansion currently DISABLED for
+                // safety: enabling reel-5-only expansion pushed L&W RTP
+                // from −0.17 % to +0.50 % (overshoot). Investigating
+                // exact L&W "Wild on reel 5 expands only if creates win"
+                // implementation will return here. For now the FS runner
+                // skips wild-expansion to keep total RTP from exceeding
+                // Excel target.
+                let fs_we_reels: Option<&[u32]> = None;
                 let params = free_spins::FreeSpinsParams {
                     trigger_symbol,
                     trigger_count_min: *trigger_count_min,
@@ -105,6 +113,7 @@ pub fn run_features(
                     scatter_pay_total_bet: *scatter_pay_total_bet,
                     retrigger_symbol: retrigger_symbol.as_deref(),
                     retrigger_count_min: *retrigger_count_min,
+                    fs_wild_expand_reels: fs_we_reels,
                 };
                 let r = free_spins::run(params, ir, picker, pt, base, rng, virtual_mode);
                 let c = r.coins;

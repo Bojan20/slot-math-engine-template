@@ -46,6 +46,12 @@ pub struct FreeSpinsParams<'a> {
     /// `trigger_count_min` when `None`.
     pub retrigger_symbol: Option<&'a str>,
     pub retrigger_count_min: Option<u32>,
+    /// W4.9c — Per-FS-spin wild expansion on configured reels (L&W CE
+    /// rule "Wild transforms reel 5 into Wild only if a win would
+    /// result"). Reel indices are 0-based; expansion happens AFTER the
+    /// FS spin grid is generated but BEFORE evaluate_lines. Empty / None
+    /// = no FS wild expansion.
+    pub fs_wild_expand_reels: Option<&'a [u32]>,
 }
 
 /// W4.8 — config for triggering Cash Eruption inside FS spins.
@@ -116,8 +122,52 @@ pub fn run(
         // FS paytable override (W4.7): when available, the FS spins use
         // a different pay table than the base game (L&W CE pattern).
         let effective_pt = params.fs_pt.unwrap_or(pt);
-        let w = evaluate_lines(&grid, ir, effective_pt);
-        out.coins += w.line_coins;
+        let w_base = evaluate_lines(&grid, ir, effective_pt);
+        // W4.9c — FS wild expansion (L&W CE: Wild on reel 5 expands if
+        // it creates a winning combo). Pay max(raw, expanded).
+        let line_coins = if let Some(reels) = params.fs_wild_expand_reels {
+            let mut needs_expand = false;
+            let wild_id = ir
+                .symbols
+                .iter()
+                .find(|s| s.role == crate::ir::SymbolRole::Wild)
+                .map(|s| s.id.as_str());
+            if let Some(wild) = wild_id {
+                for &r in reels {
+                    let ru = r as usize;
+                    if ru < grid.reels() {
+                        for row in 0..rows {
+                            if grid.cell(ru, row) == wild {
+                                needs_expand = true;
+                                break;
+                            }
+                        }
+                    }
+                    if needs_expand { break }
+                }
+                if needs_expand {
+                    let mut g_exp = grid.clone();
+                    for &r in reels {
+                        let ru = r as usize;
+                        if ru < g_exp.reels() {
+                            for row in 0..rows {
+                                g_exp.cells[ru][row] = wild.to_string();
+                            }
+                        }
+                    }
+                    let w_exp = evaluate_lines(&g_exp, ir, effective_pt);
+                    w_base.line_coins.max(w_exp.line_coins)
+                } else {
+                    w_base.line_coins
+                }
+            } else {
+                w_base.line_coins
+            }
+        } else {
+            w_base.line_coins
+        };
+        let w = w_base; // keep w for scatter / role_counts access
+        out.coins += line_coins;
 
         // W4.8 — CE-from-FS: trigger HoldAndWin inside FS when fireball
         // count crosses threshold. Independent dispatch — uses the same
