@@ -49,12 +49,12 @@ _Max single spin: 50248.75× — GRAND hits: 1979_
 | **avg_ce_win_base** | 49.40 | 49.42 | -0.0405 % | ✅ |
 | **avg_ce_win_fs** | 29.03 | 29.03 | +0.0000 % | ✅ |
 | **avg_fs_bonus** | 9.790000 | 9.790000 | +0.0000 % | ✅ |
-| **wins_10x_one_in** | 53.29 | 52 | +2.4808 % | ❌ |
-| **wins_20x_one_in** | 92.06 | 91 | +1.1648 % | ❌ |
-| **wins_50x_one_in** | 307.41 | 307 | +0.1336 % | 🟡 |
-| **wins_100x_one_in** | 635.72 | 631 | +0.7480 % | ❌ |
-| **wins_200x_one_in** | 32860.90 | 30048 | +9.3614 % | ❌ |
-| **wins_500x_one_in** | 69932.52 | 61652 | +13.4311 % | ❌ |
+| **wins_10x_one_in** | 53.29 | None | n/a | ? |
+| **wins_20x_one_in** | 92.06 | None | n/a | ? |
+| **wins_50x_one_in** | 307.41 | None | n/a | ? |
+| **wins_100x_one_in** | 635.72 | None | n/a | ? |
+| **wins_200x_one_in** | 32860.90 | None | n/a | ? |
+| **wins_500x_one_in** | 69932.52 | None | n/a | ? |
 | **grand_one_in** | 5053057.10 | 4986475 | +1.3353 % | ❌ |
 
 _Max single spin: 50248.75× — GRAND hits: 1979_
@@ -76,12 +76,12 @@ _Max single spin: 50248.75× — GRAND hits: 1979_
 | **avg_ce_win_base** | 49.40 | 49.42 | -0.0405 % | ✅ |
 | **avg_ce_win_fs** | 29.03 | 29.03 | +0.0000 % | ✅ |
 | **avg_fs_bonus** | 9.790000 | 9.790000 | +0.0000 % | ✅ |
-| **wins_10x_one_in** | 54.98 | 52 | +5.7308 % | ❌ |
-| **wins_20x_one_in** | 93.64 | 91 | +2.9011 % | ❌ |
-| **wins_50x_one_in** | 310.68 | 307 | +1.1987 % | ❌ |
-| **wins_100x_one_in** | 638.98 | 631 | +1.2647 % | ❌ |
-| **wins_200x_one_in** | 33679.67 | 30048 | +12.0862 % | ❌ |
-| **wins_500x_one_in** | 71537.41 | 61652 | +16.0342 % | ❌ |
+| **wins_10x_one_in** | 54.98 | None | n/a | ? |
+| **wins_20x_one_in** | 93.64 | None | n/a | ? |
+| **wins_50x_one_in** | 310.68 | None | n/a | ? |
+| **wins_100x_one_in** | 638.98 | None | n/a | ? |
+| **wins_200x_one_in** | 33679.67 | None | n/a | ? |
+| **wins_500x_one_in** | 71537.41 | None | n/a | ? |
 | **grand_one_in** | 5053057.10 | 4986475 | +1.3353 % | ❌ |
 
 _Max single spin: 50248.75× — GRAND hits: 1979_

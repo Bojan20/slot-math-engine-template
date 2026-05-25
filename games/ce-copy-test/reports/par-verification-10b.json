@@ -39,13 +39,13 @@
       "avg_ce_win_base": 49.42,
       "avg_ce_win_fs": 29.03,
       "avg_fs_bonus": 9.79,
+      "grand_one_in": 4986475,
       "wins_10x_one_in": 52,
       "wins_20x_one_in": 91,
       "wins_50x_one_in": 307,
       "wins_100x_one_in": 631,
       "wins_200x_one_in": 30048,
       "wins_500x_one_in": 61652,
-      "grand_one_in": 4986475,
       "total_rtp": 0.960000018370437,
       "base_game_rtp": 0.419000003813447,
       "hit_freq": 0.19030599,
@@ -214,12 +214,6 @@
       "avg_ce_win_base": 49.42,
       "avg_ce_win_fs": 29.03,
       "avg_fs_bonus": 9.79,
-      "wins_10x_one_in": 52,
-      "wins_20x_one_in": 91,
-      "wins_50x_one_in": 307,
-      "wins_100x_one_in": 631,
-      "wins_200x_one_in": 30048,
-      "wins_500x_one_in": 61652,
       "grand_one_in": 4986475,
       "total_rtp": 0.950000015007889,
       "base_game_rtp": 0.409000000450898,
@@ -307,39 +301,39 @@
       },
       "wins_10x_one_in": {
         "sim": 53.29,
-        "target": 52,
-        "diff_pct": 2.480769230769229,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_20x_one_in": {
         "sim": 92.06,
-        "target": 91,
-        "diff_pct": 1.1648351648351674,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_50x_one_in": {
         "sim": 307.41,
-        "target": 307,
-        "diff_pct": 0.1335504885993567,
-        "status": "🟡"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_100x_one_in": {
         "sim": 635.72,
-        "target": 631,
-        "diff_pct": 0.7480190174326509,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_200x_one_in": {
         "sim": 32860.9,
-        "target": 30048,
-        "diff_pct": 9.361355165069227,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_500x_one_in": {
         "sim": 69932.52,
-        "target": 61652,
-        "diff_pct": 13.431064685654972,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "grand_one_in": {
         "sim": 5053057.099545225,
@@ -389,12 +383,6 @@
       "avg_ce_win_base": 49.42,
       "avg_ce_win_fs": 29.03,
       "avg_fs_bonus": 9.79,
-      "wins_10x_one_in": 52,
-      "wins_20x_one_in": 91,
-      "wins_50x_one_in": 307,
-      "wins_100x_one_in": 631,
-      "wins_200x_one_in": 30048,
-      "wins_500x_one_in": 61652,
       "grand_one_in": 4986475,
       "total_rtp": 0.931000016534967,
       "base_game_rtp": 0.390000001977976,
@@ -482,39 +470,39 @@
       },
       "wins_10x_one_in": {
         "sim": 54.98,
-        "target": 52,
-        "diff_pct": 5.730769230769225,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_20x_one_in": {
         "sim": 93.64,
-        "target": 91,
-        "diff_pct": 2.9010989010989015,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_50x_one_in": {
         "sim": 310.68,
-        "target": 307,
-        "diff_pct": 1.1986970684039109,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_100x_one_in": {
         "sim": 638.98,
-        "target": 631,
-        "diff_pct": 1.2646592709984181,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_200x_one_in": {
         "sim": 33679.67,
-        "target": 30048,
-        "diff_pct": 12.086228700745467,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "wins_500x_one_in": {
         "sim": 71537.41,
-        "target": 61652,
-        "diff_pct": 16.034208135989108,
-        "status": "❌"
+        "target": null,
+        "diff_pct": null,
+        "status": "?"
       },
       "grand_one_in": {
         "sim": 5053057.099545225,

@@ -41,7 +41,8 @@ _CE_FROM_BASE_RTP = 0.409104936666577      # L69
 _FS_LINES_RTP = 0.0700000107591113         # L70 (FS line wins component)
 _CE_FROM_FS_RTP = 0.0618950673666612       # L71
 _FS_TOTAL_RTP = _FS_LINES_RTP + _CE_FROM_FS_RTP
-_PAR100_SHARED = {
+# Cross-SWID shared (CE pool + FS feature math identical):
+_SHARED_RTP = {
     "ce_from_base_rtp": _CE_FROM_BASE_RTP,
     "free_spins_rtp_total": _FS_TOTAL_RTP,
     "ce_from_fs_rtp": _CE_FROM_FS_RTP,
@@ -51,32 +52,43 @@ _PAR100_SHARED = {
     "avg_ce_win_base": 49.42,
     "avg_ce_win_fs": 29.03,
     "avg_fs_bonus": 9.79,
+    "grand_one_in": 4986475,
+}
+# PAR_100spins volatility distribution — Excel sheet ima TABELU samo za
+# PAR-001. PAR-002/003 ne objavljuju per-SWID volatility tail (BG reel
+# weights mijenjaju distribuciju koja se ne objavljuje per-SWID u cert
+# summary tabu). Pa diff-ujemo SAMO PAR-001 protiv ovih target-a.
+_PAR001_TAIL_ONLY = {
     "wins_10x_one_in": 52,
     "wins_20x_one_in": 91,
     "wins_50x_one_in": 307,
     "wins_100x_one_in": 631,
     "wins_200x_one_in": 30048,
     "wins_500x_one_in": 61652,
-    "grand_one_in": 4986475,
 }
 
 TARGETS = {
     "200-1637-001": {
-        **_PAR100_SHARED,
+        **_SHARED_RTP,
+        **_PAR001_TAIL_ONLY,
         "total_rtp": 0.960000018370437,
         "base_game_rtp": 0.419000003813447,
         "hit_freq": 0.19030599,
         "win_freq": 0.08936075,
     },
     "200-1637-002": {
-        **_PAR100_SHARED,
+        **_SHARED_RTP,
+        # No PAR_100spins volatility tail for 002 — Excel only ships it
+        # for PAR-001. Per-SWID tail differs because BG reel-set weight
+        # distribution differs; sim values are correct relative to the
+        # BG model, just not directly comparable to PAR-001's 1-in-N.
         "total_rtp": 0.950000015007889,
         "base_game_rtp": 0.409000000450898,
         "hit_freq": 0.1902107,
         "win_freq": 0.0889773,
     },
     "200-1637-003": {
-        **_PAR100_SHARED,
+        **_SHARED_RTP,
         "total_rtp": 0.931000016534967,
         "base_game_rtp": 0.390000001977976,
         "hit_freq": 0.19066094,
