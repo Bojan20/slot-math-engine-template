@@ -1,0 +1,6 @@
+# Rust build artifacts
+engine-rust/target/
+engine-rust/Cargo.lock
+
+# Local Python caches
+scripts/__pycache__/
