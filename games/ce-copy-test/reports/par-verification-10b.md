@@ -5,7 +5,7 @@ Svaki broj iz PAR_100spins cert summary taba (Cash Eruption Excel)
 validovan kroz 10 milijardi simulisanih spinova po SWID-u na bet
 multiplier-u 1.
 
-## 200-1637-001 — 10000000000 spinova @ 5653860 spins/sec, 1768.70s
+## 200-1637-001 — 10000000000 spinova @ 5631781 spins/sec, 1775.64s
 
 | Metrika | Sim (10B) | Excel target | Δ % | Status |
 |---|---:|---:|---:|:---:|
@@ -32,7 +32,7 @@ multiplier-u 1.
 
 _Max single spin: 50248.75× — GRAND hits: 1979_
 
-## 200-1637-002 — 10000000000 spinova @ 5767207 spins/sec, 1733.94s
+## 200-1637-002 — 10000000000 spinova @ 5505498 spins/sec, 1816.37s
 
 | Metrika | Sim (10B) | Excel target | Δ % | Status |
 |---|---:|---:|---:|:---:|
@@ -59,7 +59,7 @@ _Max single spin: 50248.75× — GRAND hits: 1979_
 
 _Max single spin: 50248.75× — GRAND hits: 1979_
 
-## 200-1637-003 — 10000000000 spinova @ 5756818 spins/sec, 1737.07s
+## 200-1637-003 — 10000000000 spinova @ 5579575 spins/sec, 1792.25s
 
 | Metrika | Sim (10B) | Excel target | Δ % | Status |
 |---|---:|---:|---:|:---:|

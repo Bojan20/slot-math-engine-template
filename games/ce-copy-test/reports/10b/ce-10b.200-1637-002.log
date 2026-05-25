@@ -2,8 +2,8 @@
 SWID:           200-1637-002
 Bet multiplier: 1
 Spins:          10000000000
-Elapsed:        1733.94s
-Spins/sec:      5767207
+Elapsed:        1816.37s
+Spins/sec:      5505498
 
 === RTP breakdown ===
   Base game RTP            : 0.408945   (Excel target 0.409000)

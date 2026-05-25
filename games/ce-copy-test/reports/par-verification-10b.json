@@ -2,8 +2,8 @@
   "200-1637-001": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5653860,
-      "elapsed": "1768.70s",
+      "spins_per_sec": 5631781,
+      "elapsed": "1775.64s",
       "base_game_rtp": 0.418994,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
@@ -177,8 +177,8 @@
   "200-1637-002": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5767207,
-      "elapsed": "1733.94s",
+      "spins_per_sec": 5505498,
+      "elapsed": "1816.37s",
       "base_game_rtp": 0.408945,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
@@ -352,8 +352,8 @@
   "200-1637-003": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5756818,
-      "elapsed": "1737.07s",
+      "spins_per_sec": 5579575,
+      "elapsed": "1792.25s",
       "base_game_rtp": 0.389983,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
