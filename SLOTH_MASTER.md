@@ -56,10 +56,12 @@
 | P2.4 | **W4.3c — IGT feature dispatch live** (FreeSpins / PickBonus Bernoulli / LinearProgressive) | ✅ | `engine/slot-sim/src/features/{free_spins,pick_bonus,linear_progressive}.rs` + `mod.rs` dispatcher + FK Trigger Table + Award Table parser + Bernoulli trigger on PickBonus + Wild-prefix MAX bug fix in `evaluate_lines`. **RTP 0.9523 vs Excel 0.9614 (gap 0.9 %)**; hit-freq 0.2444 ✅ exact match; win-freq 0.1146 ✅ within 0.0003 |
 | P2.5 | **W4.3d — Virtual-reel sampler infrastructure** (Grid::spin_virtual + sampling_mode IR meta) | ✅ | Infrastructure landed; empirical testing shows IGT Excel math IS based on physical-strip sampling (not the 1000-weight virtual reel that PAR publishes alongside) — virtual_mode kept off by default for IGT. Residual 0.91 % gap traced to base game line-eval, not reel bank — tracked as W4.3e |
 | P2.6 | **W4.3e — Base game line-eval gap audit** (close last 0.91 % RTP) | 🚧 NEXT | candidates: wild-expand feature on Wolf Run reels, scatter pay edge cases, per-line eval comparison vs Excel formula |
-| P2.5 | **W4.4 — Aristocrat profile** (Lightning Link / Dragon Link layout) | ⏳ | new profile YAML + 3 PAR test |
-| P2.6 | **W4.5 — NetEnt profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
-| P2.7 | **W4.6 — Pragmatic Play profile** (Megaways + Sticky Bonus) | ⏳ | new |
-| P2.8 | **W4.7 — Vendor parity dashboard** (CLI `parse-par-doctor` + HTML report) | ⏳ | new |
+| P2.7 | **W4.4 — L&W → slot-sim adapter** (CE COPY TEST family) | ✅ | `_lw_to_slot_sim` w/ 36 base + 16 FS reel sets, FreeSpins + HoldAndWin stub, +6 Rust integration tests; IR deserializes + engine runs (RTP 0.12 — HoldAndWin runner is W4.5) |
+| P2.8 | **W4.5 — HoldAndWin runner + L&W CE pages mapping** (full Cash Eruption RTP integration) | 🚧 NEXT | runner in `engine/slot-sim/src/features/hold_and_win.rs` + adapter pages dict |
+| P2.9 | **W4.6 — Aristocrat profile** (Lightning Link / Dragon Link layout) | ⏳ | new profile YAML + 3 PAR test |
+| P2.10 | **W4.7 — NetEnt profile** (Cluster Pays + Avalanche layout) | ⏳ | new |
+| P2.11 | **W4.8 — Pragmatic Play profile** (Megaways + Sticky Bonus) | ⏳ | new |
+| P2.12 | **W4.9 — Vendor parity dashboard** (CLI `parse-par-doctor` + HTML report) | ⏳ | new |
 
 **Acceptance Phase 2:** 5 vendor profila × 3 PAR-a each = 15 round-trip bit-identical + sve u CI.
 
@@ -153,8 +155,8 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W4.4 — L&W → slot-sim adapter** | 90-120 min | Mirror IGT path for CE COPY TEST: CE-specific HoldAndWin + GRAND + Cash Eruption mapping |
-| 🥈 2 | **W4.3e — Base eval gap audit** | 60-90 min | hunt the last 0.9 % RTP: wild-expand candidate / scatter pay edge / per-line vs Excel formula |
+| 🥇 1 | **W4.5 — HoldAndWin runner + L&W CE pages** | 120-180 min | Real Cash Eruption RTP integration; close L&W 0.84 RTP gap |
+| 🥈 2 | **W4.3e — Base eval gap audit** | 60-90 min | hunt the last 0.9 % IGT RTP gap |
 | 🥉 3 | **W5.2 — IR → Rust engine codegen** | 90-120 min | Tera template iz IR → `games/{slug}/src/` (Phase 3.2) |
 
 ### ✅ Just landed
@@ -165,7 +167,8 @@
 | W4.3b | `269641a` | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); IGT IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
 | W4.3c | `19c977d` | Feature dispatch live: FreeSpins / PickBonus(Bernoulli) / LinearProgressive runners + FK Trigger&Award table parser + Wild-prefix MAX fix; RTP 0.9523 vs 0.9614 (Δ0.91 %), hit-freq EXACT, +4 Rust integration tests |
 | W4.3d | `a196a8e` | Virtual-reel infrastructure (`Grid::spin_virtual`, `Meta.sampling_mode`); empirical conclusion that IGT Excel math IS physical-strip-based — kept off by default |
-| W5.1 | _(pending)_ | `slot-build` CLI scaffold — vendor auto-detect (IGT/L&W), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
+| W5.1 | `298e447` | `slot-build` CLI scaffold — vendor auto-detect (IGT/L&W), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
+| W4.4 | _(pending)_ | L&W → slot-sim adapter; 36+16 reel sets, FreeSpins + HoldAndWin stub feature, +6 Rust integration tests; CE PAR-001 IR deserializes + engine runs (RTP 0.12 base-only, HoldAndWin runner = W4.5) |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 

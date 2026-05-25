@@ -459,17 +459,279 @@ def _igt_to_slot_sim(parsed: dict) -> dict:
 # ─── L&W adapter (stub for future expansion) ────────────────────────────────
 
 
-def _lw_to_slot_sim(parsed: dict) -> dict:
-    """L&W → slot-sim adapter.
+# ─── L&W adapter (W4.4) ──────────────────────────────────────────────────────
 
-    Phase-1 stub: the CE COPY TEST family ships its own hand-rolled
-    converter elsewhere (CE-specific math: hold-and-win, GRAND prize,
-    Cash Eruption pages). When that converter is folded back into the
-    universal adapter, this function will inherit shared scaffolding from
-    `_igt_to_slot_sim` (topology + reels + paylines path) and add the
-    CE-specific feature mapping. Tracked under W4.4.
+
+# L&W canonical symbol roles for CE COPY TEST family. The Cash Eruption
+# fireball + Volcano pattern symbols are L&W-specific roles that the
+# slot-sim engine maps to `cash` (HoldAndWin trigger) and `anchor` (pattern
+# win trigger) respectively.
+_LW_SYMBOL_ROLES: dict[str, str] = {
+    "wild":     "wild",
+    "wild_big": "wild",   # FS Big_Wild variant
+    "scatter":  "scatter",
+    "fireball": "cash",   # CE trigger symbol
+    "volcano":  "scatter",
+    "red7":     "anchor", # pattern-win anchor
+    "spades":   "lp",
+    "hearts":   "lp",
+    "diamonds": "lp",
+    "clubs":    "lp",
+}
+
+
+def _lw_total_rtp(parsed: dict) -> float:
+    bd = parsed["meta"].get("rtp_breakdown", {}) or {}
+    return float(bd.get("total") or 0.0)
+
+
+def _lw_symbol_role(sym: str) -> str:
+    """Map L&W symbol name → canonical slot-sim role."""
+    s = sym.lower().replace(" ", "_")
+    # Heuristics for the CE family
+    if "wild" in s and "big" in s:
+        return "wild"  # Big_Wild is FS-only stacked wild
+    if "wild" in s:
+        return "wild"
+    if "fireball" in s or "fire_ball" in s:
+        return "cash"
+    if "volcano" in s or s == "v":
+        return "scatter"
+    if s == "red7" or s == "red_7":
+        return "anchor"
+    if s in ("spades", "hearts", "diamonds", "clubs", "j", "q", "k", "a"):
+        return "lp"
+    if "hp" in s or s.upper() in ("RED", "GREEN", "BLUE", "YELLOW"):
+        return "hp"
+    return _LW_SYMBOL_ROLES.get(s, "lp")
+
+
+def _lw_symbols(parsed: dict) -> list[dict]:
+    """Build the symbols list from parsed L&W IR.
+
+    Roles are inferred per `_lw_symbol_role`. The wild substitutes for all
+    non-special symbols (`substitutes: ["*"]`, `substitutes_except` left
+    populated with Cash/Bonus IDs so the engine respects CE feature
+    triggers exclusively to cash-symbol landings).
     """
-    raise NotImplementedError(
-        "L&W to_slot_sim adapter is a Phase-2 wave (W4.4). "
-        "Use CE-specific converter in games/ce-copy-test/ for now."
-    )
+    seen: dict[str, str] = {}
+    sc = parsed.get("symbol_counts_per_reel", {}) or {}
+    for name in sc.keys():
+        if name in seen:
+            continue
+        seen[name] = _lw_symbol_role(name)
+    for set_data in parsed.get("bg_reel_sets", []):
+        for reel in set_data.get("reels", []):
+            for stop in reel:
+                sym = stop["symbol"]
+                if sym and sym not in seen:
+                    seen[sym] = _lw_symbol_role(sym)
+
+    out = []
+    cash_or_scatter = [k for k, v in seen.items() if v in ("cash", "scatter", "bonus")]
+    for sym, role in seen.items():
+        entry: dict[str, Any] = {
+            "id": sym,
+            "name": sym,
+            "role": role,
+        }
+        if role == "wild":
+            entry["substitutes"] = ["*"]
+            entry["substitutes_except"] = cash_or_scatter
+        out.append(entry)
+    return out
+
+
+def _lw_reel_bank(parsed: dict) -> dict:
+    """L&W ships multiple reel sets per game (CE = 36 base + 16 fs).
+
+    Each set carries a `set` index that matches the reel_set_weights
+    table. We preserve the per-set structure and weights so the slot-sim
+    ReelSetPicker reproduces L&W's runtime selection logic.
+    """
+    def _sets(sets_list: list) -> list[dict]:
+        out = []
+        for s in sets_list:
+            reels = [
+                [{"symbol": stop["symbol"], "weight": int(stop["weight"])}
+                 for stop in reel if stop["symbol"]]
+                for reel in s["reels"]
+            ]
+            out.append({"set": int(s.get("set") or 1), "reels": reels})
+        return out
+
+    def _weights(w_dict: dict | None, default_total: int = 0) -> dict:
+        if not w_dict:
+            return {"weights": [], "total": default_total, "initial_set": 1}
+        ws = w_dict.get("weights", []) or []
+        weights_clean = [
+            {"set": int(w["set"]), "weight": int(w["weight"])}
+            for w in ws
+            if w.get("set") is not None and w.get("weight") is not None
+        ]
+        return {
+            "weights": weights_clean,
+            "total": int(w_dict.get("total") or sum(w["weight"] for w in weights_clean)),
+            "initial_set": int(w_dict.get("initial_set") or
+                               (weights_clean[0]["set"] if weights_clean else 1)),
+        }
+
+    base_sets = _sets(parsed.get("bg_reel_sets", []))
+    fs_sets = _sets(parsed.get("fg_reel_sets", []))
+
+    bank = {
+        "base": base_sets,
+        "base_weights": _weights(
+            parsed.get("bg_reel_set_weights"),
+            default_total=len(base_sets),
+        ),
+    }
+    if fs_sets:
+        bank["fs"] = fs_sets
+        bank["fs_weights"] = _weights(
+            parsed.get("fg_reel_set_weights"),
+            default_total=len(fs_sets),
+        )
+    return bank
+
+
+def _lw_paytable(parsed: dict) -> list[dict]:
+    """Same `--` placeholder semantics as IGT; canonicalize symbol casing
+    via _lw_symbol_role-aware passthrough (L&W is consistent in its sheet
+    so no typo guard needed here)."""
+    out = []
+    for entry in parsed.get("paytable", []):
+        combo = list(entry.get("combo", []))
+        pays = entry.get("pays")
+        if pays is None:
+            continue
+        # Detect scatter rows (only Volcano/scatter cells)
+        non_blank = [c for c in combo if c and c != "--"]
+        is_scatter = (
+            len(non_blank) >= 1
+            and all(_lw_symbol_role(c) == "scatter" for c in non_blank)
+        )
+        if is_scatter and non_blank:
+            sym = non_blank[0]
+            out.append({
+                "combo": [f"{sym}:{len(non_blank)}"],
+                "pays": float(pays),
+                "scope": "scatter",
+                "marker": entry.get("marker", "") or "",
+            })
+        else:
+            out.append({
+                "combo": combo,
+                "pays": float(pays),
+                "scope": "line",
+                "marker": entry.get("marker", "") or "",
+            })
+    return out
+
+
+def _lw_features(parsed: dict) -> list[dict]:
+    """Map L&W vendor sections to slot-sim Feature variants.
+
+    Coverage in W4.4:
+      ▸ FreeSpins — scatter-based trigger from bonus_summary
+      ▸ HoldAndWin — emitted as a STUB (`pages` empty BTreeMap) when
+        cash_eruption_pages is present; full per-BM pages mapping lives in
+        W4.5 (HoldAndWinPage struct has 21 BMs × pots × respin tables).
+
+    GrandPrize (CE GRAND jackpot inside Cash Eruption) and PatternWin
+    (Red7 5OAK pattern) are deferred to W4.5 for the same reason.
+    """
+    features: list[dict] = []
+
+    # Free Spins
+    fs = parsed.get("free_spins") or {}
+    fs_summary = fs.get("bonus_summary") or {}
+    if fs_summary or fs.get("fs_paytable"):
+        # Standard L&W CE trigger: 3 Volcano scatter → 8 FS, 2× retrigger
+        # cap depends on per-game config; we use 250 as a safe ceiling.
+        features.append({
+            "kind": "free_spins",
+            "trigger_symbol": "Volcano",
+            "trigger_count_min": 3,
+            "initial_spins": 8,
+            "retrigger_spins": 5,
+            "max_total_spins": 250,
+            "reel_bank": "fs",
+            "linked_reels": [1, 2, 3],
+        })
+
+    # Hold-and-Win (Cash Eruption) — structural emit, no runner yet
+    ce_pages = parsed.get("cash_eruption_pages") or parsed.get("cash_eruption_feature_pages")
+    if ce_pages:
+        features.append({
+            "kind": "hold_and_win",
+            "trigger_symbol": "Fireball",
+            "trigger_count_min": 6,
+            "respins": 3,
+            # W4.4 emits the pages dict empty; W4.5 will populate from
+            # cash_eruption_pages. The slot-sim runner is itself stubbed,
+            # so empty pages cause no RTP contribution today.
+            "pages": {},
+        })
+
+    return features
+
+
+def _lw_bet_table(parsed: dict) -> dict:
+    meta = parsed["meta"]
+    bms = [int(x) for x in meta.get("bet_multipliers", []) if x is not None]
+    total_bets = [float(x) for x in meta.get("total_bets", []) if x is not None]
+    if not total_bets:
+        lines = meta.get("lines") or 20
+        total_bets = [float(bm * lines) for bm in bms]
+    return {
+        "lines": int(meta.get("lines") or 20),
+        "multipliers": bms,
+        "total_bets": total_bets,
+    }
+
+
+def _lw_to_slot_sim(parsed: dict) -> dict:
+    meta = parsed["meta"]
+    reels = int(meta["reels"])
+    rows = int(meta["rows"])
+
+    paylines = parsed.get("paylines") or []
+    if not paylines:
+        raise ValueError(
+            "L&W to_slot_sim requires `paylines` (parse `Paylines.tsv` "
+            "via paylines_layout in lw.yaml first)."
+        )
+
+    return {
+        "meta": {
+            "name": meta.get("name") or "L&W Slot",
+            "vendor": meta.get("vendor") or "lw",
+            "swid": meta["swid"],
+            "family": "paylines",
+            "rtp_total": _lw_total_rtp(parsed),
+            "rtp_breakdown": {
+                k: float(v) for k, v in (meta.get("rtp_breakdown") or {}).items()
+                if v is not None
+            },
+            "hit_frequency": float(meta.get("hit_frequency_all_line") or 0.0),
+            "win_frequency": float(meta.get("win_frequency_all_line") or 0.0),
+            "notes": [
+                f"Auto-mapped from L&W parse_par IR · SWID={meta['swid']} · W4.4",
+                "HoldAndWin (Cash Eruption) emitted as structural stub; "
+                "full pages mapping lands in W4.5.",
+            ],
+            "sampling_mode": "physical_strip",
+        },
+        "topology": {"kind": "rectangular", "reels": reels, "rows": rows},
+        "evaluation": {
+            "kind": "lines",
+            "lines": _lines_to_serde(paylines, reels),
+            "min_count": 3,
+        },
+        "symbols": _lw_symbols(parsed),
+        "reels": _lw_reel_bank(parsed),
+        "paytable": _lw_paytable(parsed),
+        "features": _lw_features(parsed),
+        "bet_table": _lw_bet_table(parsed),
+    }

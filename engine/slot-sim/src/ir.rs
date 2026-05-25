@@ -77,7 +77,7 @@ pub struct Symbol {
     pub substitutes_except: Vec<String>,
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
 pub enum SymbolRole {
     #[default]
