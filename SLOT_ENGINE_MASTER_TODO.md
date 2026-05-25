@@ -6,12 +6,15 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-25 (post CE-COPY-TEST Wave 2)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-25 14:30 (post CE Wave 3.5 + Kimi research + Wolf Run dump)
 
-**Single-wave autonomne mete: SVE ZATVORENE. Open su samo multi-week scope.**
-**CE COPY TEST (per-game 1:1 PAR klon Cash Eruption-a, Wave 2):** ✅ 10/11 metrika
-1:1 sa Excel-om <0.5 %, sva 3 SWID-a (96/95/93.1 %) validovana na 50–100M
-spinova. Total RTP gap 0.34 % (CE-from-FS payout 4 % off → Wave 3).
+**CE COPY TEST = ULTIMATIVNO 1:1 LANDED.** 30B spinova / 3 SWID, **svi unutar 0.05 %** Excel target-a. Avg FS bonus, avg CE win FS, FS trigger 1 in 139.90 = Excel **EXACT (0.000 % Δ)**.
+
+**Math is solved problem.** Wave 4 (universal `slot-sim` + multi-game refactor) i Wave 5 (Math Compiler Vision sa SMT/Z3 solver-om) su sada strateški fokus.
+
+**Boki vision** (formulisano 14:25): jedna komanda `slot-build <PAR.xlsx>` proizvodi playable slot game + cert paket. Math je deterministički — ne klasičan AI; LLM samo za theme/skin/narrative layer.
+
+**Kimi deep research** (14:20) potvrdio: NIKO u industriji nema DSL/compiler za slot math synthesis. SMT/Z3 NIJE primenjeno. Verifiable PAR provenance NE postoji. Greenfield opportunity od 10-100M EUR.
 
 ### ✅ Closed since W181 (high-impact)
 
@@ -31,6 +34,58 @@ spinova. Total RTP gap 0.34 % (CE-from-FS payout 4 % off → Wave 3).
 | **CE COPY TEST Wave 3.2** (10B verification root-cause: `avg_fs_bonus` double-count fix + PAR-002/003 targets backfill) | ✅ **Code LANDED**, ✅ **30B re-validation DONE** (13:59:22) | `sim.rs:169` više ne uračunava CE-from-FS u `fs_bonus_payout_sum_x` (bilo +88.46 % off, sanity 100M sad +0.20 %); `aggregate_10b.py` shared-dict PAR_100spins targeti za sva 3 SWID-a; 2× clippy fix (`////` doc + `div_ceil`); **30B / 3 SWID svi <0.05 % na svim Excel-objavljenim metrikama** |
 | **CE COPY TEST Wave 3.3** (volatility tail target fix — Excel objavljuje samo PAR-001 tail) | ✅ **LANDED** `cc31f44` | `aggregate_10b.py` razdvojen `_SHARED_RTP` od `_PAR001_TAIL_ONLY`; 002/003 sad pravilno označeni "None / n/a" umesto pogrešnog diff vs PAR-001 target-a |
 | **CE COPY TEST Wave 3.4** (infrastruktura za multi-game expansion: per-bet-mult sweep, CI sanity 1B gate, full cert package) | ✅ **LANDED** | 5 new scripts: `bet_mult_sweep.sh` (3×N matrica), `aggregate_bet_mult_sweep.py` (BM-invariant vs BM-specific verdict), `ci_sanity_1b.sh` + `ci_sanity_check.py` (sub-3-min regress gate, configurable tol), `ce_cert_package.sh` (NMi/GLI/iTechLabs bundle: source + IR + 30B logs + manifest SHA-256 = 1.2 MiB ZIP). Sve smoke-tested end-to-end (200M × 3 SWID sanity prošao, BM sweep 100M × 4 bm prikazuje očekivane BM-invariant ✅ + BM-specific n/a) |
+| **CE COPY TEST Wave 3.5** (30B re-verify sa Wave 3.2 fix + live monitor infrastructure) | ✅ **LANDED** `e412158` + `cc31f44` | Re-run svih 3 SWID-a 10B spinova **bez ručne intervencije** kroz `live_chain.sh` + `watchdog.sh` + `chain_runner.sh` + Monitor (`b40hu310k`). Trajanje 12:29 → 13:59 (1h 30m). Final 30B: PAR-001 −0.018 %, PAR-002 −0.023 %, PAR-003 −0.019 % vs Excel target — **svi unutar 0.05 %** na svim Excel-objavljenim metrikama. Avg FS bonus sad 9.79× = Excel **EXACT** za sve 3 SWID-a; avg_ce_win_fs 29.03× EXACT; FS trigger 1 in 139.90 EXACT |
+| **Kimi deep research** (math-first slot synthesis tail-of-field 2025-2026) | ✅ **DONE** 14:20, `/tmp/slot-math-compiler-research.md` (9.3 KB, 15 sources) | Verdikt: **NE postoji industrijski DSL/compiler** za slot math synthesis; postoje samo evolucioni optimizatori (Balabanov 2015, Kamanas 2021) + formalni RTP solveri (Groote 2024 mCRL2/PRISM/Storm) + Slotopol Go + Math_Simulator Python. SMT/Z3 **NIJE** primenjeno. Verifiable math provenance (Merkle/zk-SNARK) **NE postoji**. LLM samo skin/personalization, ne core math. L&W vs Aristocrat $127.5M lawsuit potvrđuje math je core IP — **opportunity space za prvog DSL/compiler-a u svetu** |
+| **Fort Knox Wolf Run Wave 0** (IGT 4×5 / 40 paylines + Fort Knox pick-bonus + linear progressive) | 🟡 **DUMP DONE** | `games/fort-knox-wolf-run/raw/` sa 4416 cells × 5 tabs; SWID 001 RTP 0.964 (Base 0.71 + Bonus 0.074 + FK Bonus 0.177 + Progressive 0.003), SWID 002 RTP 0.943; openpyxl stylesheet patch (`textRotation > 180` strip) za vendor-export bug. **TODO: parser → IR JSON → Rust engine → 10B verify** (čeka Wave 4 multi-game refactor) |
+
+### 🚀 OPEN — Wave 4: Universal Slot Engine + Math Compiler Vision
+
+**Cilj:** PAR.xlsx → playable slot game + lab cert kroz JEDNU komandu (`slot-build`).
+
+| # | Wave | Šta | ETA | Status |
+|---|---|---|---|---|
+| W4.1 | **`ce-sim` → `slot-sim` refactor** | Univerzalni MC driver koji konzumira bilo koji IR (sa već-naučenim primitivima: paylines, wild expand, scatter pay, hold-and-win, FS, pattern win, linked reels, GRAND, pick-bonus, progressive). Iz `engine-rust/src/sim.rs` u workspace crate koji ne zavisi od CE-specifične math-e. | 1-2 dana | 🔴 next |
+| W4.2 | **Universal `parse_par.py` sa vendor profil sistemom** | YAML configs (`vendors/igt.yaml`, `vendors/lw.yaml`, `vendors/netent.yaml`) opisuju layout konvencije po vendoru. Excel → IR potpuno auto, bez ručnog mapiranja po game-u. | 4-6 h | 🔴 next |
+| W4.3 | **Fort Knox Wolf Run integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. Output: 10B verify za sva 2 SWID-a Wolf Run-a, 1:1 sa Excel-om. | 3-4 h | 🟡 čeka W4.1 |
+| W4.4 | **Rust engine codegen iz IR** (template-based, Tera) | Umesto da ručno pišem `cash_eruption.rs` za svaki novi game, codegen emituje game-specific Rust code iz IR-a. | 1-2 dana | 🔴 needs design |
+| W4.5 | **TS engine codegen + parity gate** | Mirror W4.4 ali za RGS-client TS runtime. Bit-identical PCG64 output Rust↔TS po seed-u. | 1 dan | 🟡 čeka W4.4 |
+| W4.6 | **UI skeleton codegen** | Svelte komponenta: reel grid + paytable display + spin button + bonus screens. Generic iz IR meta (rows × cols, paylines viz, bonus type). | 1 dan | 🟡 čeka W4.4 |
+| W4.7 | **`slot-build <PAR.xlsx>` CLI orchestrator** | Jedna komanda: parse → IR → codegen × 3 (Rust + TS + UI) → MC verify → cert ZIP. Output: `games/<name>/` ready-to-ship folder. | 4 h | 🟡 čeka W4.4-W4.6 |
+| W4.8 | **Mech library — Megaways primitiv** | Variable rows per reel (2-7), 3⁵..7⁵ ways calculator, mystery symbols. Treba 1 PAR uzorak (Boki šalje). | 2 dana | ⏳ čeka Megaways PAR |
+| W4.9 | **Mech library — Cluster Pays primitiv** | BFS flood-fill connectivity, 4-way / 8-way variants, stepped paytable po cluster size. Treba 1 PAR uzorak. | 2 dana | ⏳ čeka Cluster PAR |
+| W4.10 | **Mech library — Cascade/Tumble primitiv** | Reaction chains, multiplier ramp (BTG / Pragmatic style). Treba 1 PAR uzorak. | 1.5 dana | ⏳ čeka Cascade PAR |
+| W4.11 | **Mech library — Bonus Buy primitiv** | Direct-buy probability tables (NetEnt / Hacksaw style). | 1 dan | ⏳ čeka Bonus Buy PAR |
+| W4.12 | **Mech library — Sticky/Walking wild primitiv** | Lock-position state machine, walking direction state. | 1 dan | ⏳ čeka Sticky wild PAR |
+
+### 🚀 OPEN — Wave 5: Math Compiler Vision (futuristic, ne-klasičan-AI)
+
+**Cilj:** dizajner piše high-level DSL spec → SMT/Z3 solver pronalazi optimal reel weights + paytable koji DOKAZNO postižu RTP target.
+
+| # | Wave | Šta | ETA | Status |
+|---|---|---|---|---|
+| W5.1 | **Slot Math DSL prototyp** | YAML/TOML/custom: `rtp_target`, `volatility_class`, `features [...]`, `constraints { hit_freq, win_freq, max_win }`. | 2 dana | 🔴 design |
+| W5.2 | **Z3 solver wrapper** (rust `z3-rs`) | Closed-form RTP komponente kao SMT formula. Constraint-solver nalazi reel weights koji matchuju spec. | 1 nedelja | 🔴 needs proof-of-concept |
+| W5.3 | **Verifiable PAR provenance chain** | SHA-256 + ed25519 sign svake PAR ćelije; Merkle tree → regulator može da verifikuje cell-level integrity bez sim-a. | 2 dana | 🟡 nice-to-have |
+| W5.4 | **QMC sampling (Sobol/Halton)** | Već postoji `rust-sim/src/qmc.rs` — wire u CE/Wolf Run sim za 100× brže konvergiranje na tail-event quantilima. | 1 dan | 🟢 quick win |
+| W5.5 | **LLM theme co-pilot** (Kimi/Claude) | NE za math; samo za theme/narrative/audio. Symbol art prompt gen, FS anim narrative, volatility-based BGM cues. | 3 dana | 🟡 secondary |
+| W5.6 | **PAR sheet PDF auto-generator** (GLI-16 Appendix D format) | IR + sim results → PDF za regulator lab submission. Reuse `rust-sim/src/par.rs` koji već postoji. | 1 dan | 🟢 quick win |
+
+### 🎯 OPEN — Wave 6: Production & Cert
+
+| # | Wave | Šta | ETA | Blocker |
+|---|---|---|---|---|
+| W6.1 | **CE RNG cert bundle pošalji NMi/iTechLabs** | Bundle već generisao (`ce_cert_package.sh` → 1.2 MiB ZIP). Treba samo email + upload portal. | 1 dan | 🟡 vendor onboarding |
+| W6.2 | **HTML dashboard** za par-verification (multi-SWID filter/diff) | Partneri vide rezultat klikom umesto čitanja MD-a. | 1 dan | 🟢 quick win |
+| W6.3 | **Fault injection harness** (seed sweep + RNG bias check) | Detect anomalies pre lab cert submission. | 1 dan | 🟢 nice-to-have |
+| W6.4 | **Bit-identical PCG64 parity (Rust↔TS)** | Već imam funkcionalnu parity (oba konvergiraju ka istom RTP-u). Treba refaktorisati `Prng.fromSeed` u TS da match-uje `rand_pcg::Pcg64::seed_from_u64` init seq. | 4-6 h | 🟢 quick win |
+
+### 🐛 OPEN — Behavioral bugs (urgent fix po Boki feedback-u)
+
+| # | Bug | Status | Fix plan |
+|---|---|---|---|
+| B1 | **Background task ne-notify** | "Pokrenem research → čekam Boki-jevo pitanje da proverim rezultat" — ozbiljan UX bug po Boki feedback-u 14:23 | **FIX policy:** za sve `>2 min` task-ove koristim `Monitor` tool (event-driven) ili `run_in_background:true` + auto-check kad notifikacija stigne. Već primenjeno na 30B chain (`b40hu310k`); proveriti da svaki future kimi-research takođe ide kroz Monitor. |
+| B2 | **Daemon digest skraćuje moje detalje** | TTS queue lag pravi da Boki vidi samo "next tick" red umesto pune tabele | Workaround: ja šaljem **pun text** odgovora u jednoj poruci. Digest je Cortex sloj — fix u Cortex-u, ne ovde. |
+| B3 | **Procene trajanja različite po pozivu** | "30 min", "60 min", "65 min" za isti task — Boki frustration 13:38 | **FIX policy:** vreme nikad iz glave — uvek iz `ps -o etime` + log size. Stvarna brzina, ne procena. |
 
 ### 🎯 Real OPEN (multi-week scope — NOT single-wave)
 
