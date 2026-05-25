@@ -39,7 +39,7 @@ impl FeatureOutcome {
 /// top-level fire decisions.
 pub fn run_features(
     ir: &Ir,
-    _grid: &Grid,
+    grid: &Grid,
     base: &SpinWin,
     bet_multiplier: i64,
     rng: &mut Prng,
@@ -109,9 +109,23 @@ pub fn run_features(
                 };
                 out.merge(hold_and_win::run(params, ir, base, rng));
             }
-            // Other variants (WildExpand / PatternWin / GrandPrize) remain
-            // future-wave work — full Cash Eruption pages sampling tracked
-            // as W4.6.
+            Feature::PatternWin {
+                anchor_symbol,
+                anchor_count,
+                anchor_reel,
+                required_wild_reels,
+                pays,
+            } => {
+                let params = pattern_win::PatternWinParams {
+                    anchor_symbol,
+                    anchor_count: *anchor_count,
+                    anchor_reel: *anchor_reel,
+                    required_wild_reels,
+                    pays: *pays,
+                };
+                out.merge(pattern_win::run(&params, ir, grid, base, rng));
+            }
+            // WildExpand / GrandPrize remain future waves.
             _ => {}
         }
     }

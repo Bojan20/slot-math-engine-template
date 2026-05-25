@@ -486,19 +486,34 @@ def _lw_total_rtp(parsed: dict) -> float:
 
 
 def _lw_symbol_role(sym: str) -> str:
-    """Map L&W symbol name → canonical slot-sim role."""
+    """Map L&W symbol name → canonical slot-sim role.
+
+    W4.6 calibration on CE COPY TEST family:
+      ▸ Red7, Blue7        → HP (top fruit pays)
+      ▸ Bell, Melon        → HP (next tier)
+      ▸ Cherry/Lemon/Orange/Plum/Grapes → LP
+      ▸ Volcano            → scatter
+      ▸ Fireball           → cash (CE trigger)
+      ▸ Wild / Big_Wild    → wild
+      ▸ Pattern Win        → synthetic paytable row, NOT a real symbol
+    """
     s = sym.lower().replace(" ", "_")
-    # Heuristics for the CE family
+    if "pattern" in s and "win" in s:
+        return "lp"  # filtered out by `_lw_symbols` paytable filter
     if "wild" in s and "big" in s:
-        return "wild"  # Big_Wild is FS-only stacked wild
+        return "wild"
     if "wild" in s:
         return "wild"
     if "fireball" in s or "fire_ball" in s:
         return "cash"
     if "volcano" in s or s == "v":
         return "scatter"
-    if s == "red7" or s == "red_7":
-        return "anchor"
+    # Top-tier fruit + 7s are HP (high pays in paytable)
+    if s in ("red7", "blue7", "red_7", "blue_7", "bell", "melon"):
+        return "hp"
+    # Lower-tier fruit
+    if s in ("cherry", "lemon", "orange", "plum", "grapes"):
+        return "lp"
     if s in ("spades", "hearts", "diamonds", "clubs", "j", "q", "k", "a"):
         return "lp"
     if "hp" in s or s.upper() in ("RED", "GREEN", "BLUE", "YELLOW"):
@@ -596,17 +611,46 @@ def _lw_reel_bank(parsed: dict) -> dict:
 
 
 def _lw_paytable(parsed: dict) -> list[dict]:
-    """Same `--` placeholder semantics as IGT; canonicalize symbol casing
-    via _lw_symbol_role-aware passthrough (L&W is consistent in its sheet
-    so no typo guard needed here)."""
+    """Translate L&W paytable rows with three special cases:
+
+      ▸ `[Volcano, --, --, --, --]` / `Any N Volcano` → scatter scope,
+        rewritten as `Volcano:N` for the CompiledPaytable.
+      ▸ `[Pattern Win, ...]` → scope="pattern", combo = [anchor_symbol]
+        (Red7 by convention on the CE family); pays passes through.
+      ▸ Standard L→R rows → scope="line" with `--` placeholder passthrough.
+    """
     out = []
     for entry in parsed.get("paytable", []):
         combo = list(entry.get("combo", []))
         pays = entry.get("pays")
         if pays is None:
             continue
-        # Detect scatter rows (only Volcano/scatter cells)
+        first_cell = combo[0] if combo else ""
         non_blank = [c for c in combo if c and c != "--"]
+
+        # Pattern Win row → scope="pattern"
+        if first_cell.lower().replace(" ", "") in ("patternwin", "pattern_win"):
+            out.append({
+                "combo": ["Red7"],
+                "pays": float(pays),
+                "scope": "pattern",
+                "marker": entry.get("marker", "") or "",
+            })
+            continue
+
+        # "Any N Volcano" → scatter
+        any_n = _parse_lw_any_n(first_cell)
+        if any_n is not None:
+            n, sym = any_n
+            out.append({
+                "combo": [f"{sym}:{n}"],
+                "pays": float(pays),
+                "scope": "scatter",
+                "marker": entry.get("marker", "") or "",
+            })
+            continue
+
+        # Plain scatter combo (all non-blank cells are scatter role)
         is_scatter = (
             len(non_blank) >= 1
             and all(_lw_symbol_role(c) == "scatter" for c in non_blank)
@@ -627,6 +671,22 @@ def _lw_paytable(parsed: dict) -> list[dict]:
                 "marker": entry.get("marker", "") or "",
             })
     return out
+
+
+def _parse_lw_any_n(cell: str) -> tuple[int, str] | None:
+    """Parse `Any 3 Volcano` / `Any 5 Volcano` → (N, sym). Returns None if
+    the cell doesn't match the pattern."""
+    if not cell:
+        return None
+    parts = cell.split()
+    if len(parts) < 3 or parts[0].lower() != "any":
+        return None
+    try:
+        n = int(parts[1])
+    except (ValueError, IndexError):
+        return None
+    sym = " ".join(parts[2:])
+    return (n, sym)
 
 
 def _lw_features(parsed: dict) -> list[dict]:
@@ -660,10 +720,34 @@ def _lw_features(parsed: dict) -> list[dict]:
             "linked_reels": [1, 2, 3],
         })
 
+    # Pattern Win (W4.6 — Red7 5OAK pattern)
+    # Standard CE family: 3 Red7 visible on reel 0 + Wild on reels 1-4 →
+    # pays 1000 × total bet. Detect by presence of "Pattern Win" row in
+    # parsed paytable; pays comes straight from there.
+    pattern_pays = 0.0
+    for entry in parsed.get("paytable", []):
+        combo = entry.get("combo") or []
+        if combo and isinstance(combo[0], str):
+            first = combo[0].lower().replace(" ", "")
+            if first in ("patternwin", "pattern_win"):
+                p = entry.get("pays")
+                if p is not None:
+                    pattern_pays = float(p)
+                    break
+    if pattern_pays > 0:
+        features.append({
+            "kind": "pattern_win",
+            "anchor_symbol": "Red7",
+            "anchor_count": 3,
+            "anchor_reel": 0,
+            "required_wild_reels": [1, 2, 3, 4],
+            "pays": pattern_pays,
+        })
+
     # Hold-and-Win (Cash Eruption) — W4.5 populates trigger_prob +
     # avg_pay_per_trigger from cash_eruption_pages[BM=1] so the slot-sim
     # runner contributes correct mean RTP. Full per-page sampling
-    # (low/med/high set × small/big coins × respin chain) lands in W4.6.
+    # (low/med/high set × small/big coins × respin chain) lands in W4.6+.
     ce_pages = parsed.get("cash_eruption_pages") or parsed.get("cash_eruption_feature_pages")
     if ce_pages:
         ce_from_base_rtp, trigger_prob, avg_pay = _ce_rtp_calibration(parsed, ce_pages)

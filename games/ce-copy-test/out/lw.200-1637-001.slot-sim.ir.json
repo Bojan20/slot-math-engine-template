@@ -187,22 +187,22 @@
     {
       "id": "Red7",
       "name": "Red7",
-      "role": "anchor"
+      "role": "hp"
     },
     {
       "id": "Blue7",
       "name": "Blue7",
-      "role": "lp"
+      "role": "hp"
     },
     {
       "id": "Bell",
       "name": "Bell",
-      "role": "lp"
+      "role": "hp"
     },
     {
       "id": "Melon",
       "name": "Melon",
-      "role": "lp"
+      "role": "hp"
     },
     {
       "id": "Grapes",
@@ -66229,7 +66229,7 @@
     },
     {
       "combo": [
-        "Any 5 Volcano:1"
+        "Volcano:5"
       ],
       "pays": 100.0,
       "scope": "scatter",
@@ -66237,7 +66237,7 @@
     },
     {
       "combo": [
-        "Any 4 Volcano:1"
+        "Volcano:4"
       ],
       "pays": 15.0,
       "scope": "scatter",
@@ -66245,7 +66245,7 @@
     },
     {
       "combo": [
-        "Any 3 Volcano:1"
+        "Volcano:3"
       ],
       "pays": 2.0,
       "scope": "scatter",
@@ -66253,14 +66253,10 @@
     },
     {
       "combo": [
-        "Pattern Win",
-        "",
-        "",
-        "",
-        ""
+        "Red7"
       ],
       "pays": 1000.0,
-      "scope": "line",
+      "scope": "pattern",
       "marker": "**"
     }
   ],
@@ -66278,6 +66274,19 @@
         2,
         3
       ]
+    },
+    {
+      "kind": "pattern_win",
+      "anchor_symbol": "Red7",
+      "anchor_count": 3,
+      "anchor_reel": 0,
+      "required_wild_reels": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "pays": 1000.0
     },
     {
       "kind": "hold_and_win",
