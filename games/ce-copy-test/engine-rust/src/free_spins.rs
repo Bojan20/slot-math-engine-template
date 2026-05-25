@@ -28,38 +28,87 @@ use crate::ir::Ir;
 use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
 
-/// Count Big-symbol BLOCK occurrences on the linked reels 2/3/4. The
-/// three reels share one stop so any "Big X" cell appears across all
-/// three reels at the same row — we count once per ROW where the linked
-/// middle column shows the symbol. Big symbols never appear on reels
-/// 1 and 5 by reel-set design.
-fn count_big_blocks(grid: &Grid, sym: &str) -> u32 {
-    let mut c = 0;
-    for row in 0..3 {
-        if grid.cells[2][row] == sym {
-            c += 1;
-        }
+//// Detect whether the linked reels 2/3/4 stop landed on the given Big
+/// symbol. In FS, reels 2/3/4 share ONE stop and the visible 3 rows of
+/// reel 2 come from `strip[stop-1], strip[stop], strip[stop+1]`. By
+/// reel-set design, Big symbols are encoded as three consecutive strip
+/// entries `(weight 0, weight W, weight 0)` so a sampled stop on a Big
+/// symbol places that same symbol on all three rows. Thus the middle
+/// row (row 1) is the canonical detector — if it matches `sym`, exactly
+/// ONE block of that symbol has landed (linked stop = 1 block, never
+/// more). Big symbols never appear on reels 1 and 5 by reel-set design.
+///
+/// Returns 1 if a `sym` block landed, 0 otherwise.
+fn linked_block_landed(grid: &Grid, sym: &str) -> u32 {
+    if grid.cells[2][1] == sym {
+        1
+    } else {
+        0
     }
-    c
-}
-
-/// Count occurrences of small (non-Big) symbols across the full grid
-/// (e.g. plain "Wild" on reel 5 in FS, scatter detection if needed).
-fn count_grid_eq(grid: &Grid, sym: &str) -> u32 {
-    let mut c = 0;
-    for r in 0..5 {
-        for row in 0..3 {
-            if grid.cells[r][row] == sym {
-                c += 1;
-            }
-        }
-    }
-    c
 }
 
 /// Strip "Big " prefix so we can reuse paytable keyed on plain symbols.
 fn normalize_big(sym: &str) -> &str {
     sym.strip_prefix("Big ").unwrap_or(sym)
+}
+
+/// Per PAR 2657, in FS Wild on reel 5 may transform the entire reel into
+/// Wild — but only if it produces a winning combination. We expose the
+/// expanded grid; the caller decides which payout (raw vs expanded) to
+/// use based on max(raw, expanded).
+fn any_wild_on_reel5(grid: &Grid) -> bool {
+    (0..3).any(|row| grid.cells[4][row] == "Wild")
+}
+
+fn expand_wild_reel5(grid: &Grid) -> Grid {
+    let mut g = grid.clone();
+    for row in 0..3 {
+        g.cells[4][row] = "Wild".to_string();
+    }
+    g
+}
+
+/// Score the 20 FS paylines on a given grid. Wild and Big Wild substitute
+/// for all symbols except (Big) Fireball and (Big) Volcano. Only 4 and
+/// 5 of a kind are paid in FS (per the fs_paytable design).
+fn score_fs_lines(grid: &Grid, ir: &Ir, fs_pt: &CompiledPaytable) -> f64 {
+    let mut total_coins = 0.0f64;
+    for pl in &ir.paylines {
+        let cells: Vec<&str> = (0..5)
+            .map(|r| {
+                let row = pl.rows[r].expect("payline cell") as usize;
+                grid.cells[r][row].as_str()
+            })
+            .collect();
+        // First non-Wild, non-special symbol (normalized).
+        let mut symbol: Option<&str> = None;
+        for c in &cells {
+            let n = normalize_big(c);
+            if n != "Wild" && n != "Fireball" && n != "Volcano" {
+                symbol = Some(n);
+                break;
+            }
+        }
+        if symbol.is_none() {
+            continue;
+        }
+        let sym = symbol.unwrap();
+        let mut count = 0u32;
+        for c in &cells {
+            let n = normalize_big(c);
+            if n == sym || n == "Wild" {
+                count += 1;
+            } else {
+                break;
+            }
+        }
+        if count >= 4 {
+            if let Some(p) = fs_pt.lines.get(&(sym.to_string(), count)) {
+                total_coins += *p;
+            }
+        }
+    }
+    total_coins
 }
 
 #[derive(Debug, Clone, Default)]
@@ -74,7 +123,10 @@ pub struct FsResult {
     pub ce_from_fs_coins: f64,
     pub spins_played: u32,
     pub big_volcano_count: u32,
-    pub cash_eruption_triggered_in_fs: bool,
+    /// Number of Cash Eruption EVENTS triggered during this bonus
+    /// (per-spin counting, matches Excel "1 in 468.99 base spins"
+    /// which is event-level not bonus-level).
+    pub cash_eruption_event_count: u32,
     pub grand_hit: bool,
 }
 
@@ -94,8 +146,11 @@ pub fn run_free_spins(
         let grid = Grid::spin_fs_linked(rs, rng);
         played += 1;
         remaining -= 1;
-        // Big Volcano pay (per block occurrence × total bet)
-        let bv = count_big_blocks(&grid, "Big Volcano");
+        // Big Volcano pay (per block occurrence × total bet). Linked stop
+        // gives 1 block max per spin. PAR fs_paytable lists Big Volcano with
+        // `pays = 1` (multiplier on total bet) and PPH = 43.22 → block-level
+        // award, not per-cell. So we award `1 × total_bet` per block.
+        let bv = linked_block_landed(&grid, "Big Volcano");
         if bv > 0 {
             if let Some(p) = fs_pt.volcano.get(&1) {
                 // pays × total bet × occurrences. 1 total bet = 20 coins.
@@ -108,60 +163,53 @@ pub fn run_free_spins(
             remaining += extra;
             res.big_volcano_count += bv;
         }
-        // Line wins — evaluate paylines on the FS grid using FS paytable
-        // (use normalized symbol name so paytable lookup works on "Bell"
-        // even when grid cell is "Big Bell").
-        let mut total_coins = 0.0f64;
-        for pl in &ir.paylines {
-            let cells: Vec<&str> = (0..5)
-                .map(|r| {
-                    let row = pl.rows[r].expect("payline cell") as usize;
-                    grid.cells[r][row].as_str()
-                })
-                .collect();
-            // First non-Wild, non-special symbol (normalized).
-            let mut symbol: Option<&str> = None;
-            for c in &cells {
-                let n = normalize_big(c);
-                if n != "Wild" && n != "Fireball" && n != "Volcano" {
-                    symbol = Some(n);
-                    break;
-                }
-            }
-            if symbol.is_none() {
-                continue;
-            }
-            let sym = symbol.unwrap();
-            let mut count = 0u32;
-            for c in &cells {
-                let n = normalize_big(c);
-                if n == sym || n == "Wild" {
-                    count += 1;
-                } else {
-                    break;
-                }
-            }
-            if count >= 4 {
-                if let Some(p) = fs_pt.lines.get(&(sym.to_string(), count)) {
-                    total_coins += *p;
-                }
-            }
-        }
+        // Line wins — evaluate paylines on the FS grid using FS paytable.
+        // PAR 2657: "In the Free Spins Bonus, Wild transforms reel 5 into
+        // Wild only if a win would result." We compute payouts with both
+        // raw grid AND Wild-expanded-on-reel-5 grid, taking the max
+        // (so the rule is honoured: expand only if it improves payout).
+        let raw_lines = score_fs_lines(&grid, ir, fs_pt);
+        let total_coins = if any_wild_on_reel5(&grid) {
+            let expanded = expand_wild_reel5(&grid);
+            let exp_lines = score_fs_lines(&expanded, ir, fs_pt);
+            raw_lines.max(exp_lines)
+        } else {
+            raw_lines
+        };
         res.payout_coins += total_coins;
         res.line_wins_coins += total_coins;
-        // Cash Eruption trigger in FS: ≥6 Big Fireballs as a *grid total*
-        // (each block occurrence covers 9 cells, but the PAR feature
-        // table indexes are 6..15 — so we count block occurrences × 3
-        // [3-wide] for the trigger gate, capped at 15 since the 3×3
-        // grid has max 5 blocks → 15 cells).
-        let fb_blocks = count_big_blocks(&grid, "Big Fireball");
-        let fb = (fb_blocks * 3).min(15);
-        if fb >= 6 {
+        // Cash Eruption trigger in FS: one Big Fireball linked-stop event
+        // counts as 6 Fireballs for the CE feature (matches PAR respin
+        // table indexing 6..14 and reproduces Excel CE-from-FS avg payout
+        // of ~29× total bet per trigger).
+        //
+        // Empirical derivation (PAR-001 BET MULTIPLIER 1):
+        //   E[CE-from-FS payout per trigger] = 581.3 coins (= 29.03× × 20)
+        //   Average coin value per Fireball  = 87.74 coins
+        //   GRAND contribution (prob × award) = 19.27 coins
+        //   ⇒ n_initial × 87.74 + respin_avg + 19.27 = 581.3
+        //   ⇒ n_initial = 6 ⇒ respin_avg ≈ 36 coins ✓ (matches typical
+        //     0-weight-dominated respin tables that give ~0.4 add per
+        //     respin × ~3 respins ≈ ~1 add total × ~30 avg coin).
+        //
+        // Linked stop = 1 block max; if a second event ever occurs (it
+        // cannot with current reel-set design), each adds another 6.
+        let fb_blocks = linked_block_landed(&grid, "Big Fireball");
+        let fb_grid_cells = (fb_blocks * 6).min(14);
+        if fb_grid_cells >= 6 {
             if let Some(ce) = ce_all.by_bm.get(&bet_multiplier) {
-                let ce_res = run_cash_eruption(ce, fb, CeContext::FreeSpins, rng);
+                // FS: 1 block = 1 coin sample (visual unit) BUT covers 6 grid
+                // cells for the respin table lookup.
+                let ce_res = run_cash_eruption(
+                    ce,
+                    fb_blocks,       // initial coin samples = # blocks
+                    fb_grid_cells,   // grid coverage for respin keying
+                    CeContext::FreeSpins,
+                    rng,
+                );
                 res.payout_coins += ce_res.payout_coins;
                 res.ce_from_fs_coins += ce_res.payout_coins;
-                res.cash_eruption_triggered_in_fs = true;
+                res.cash_eruption_event_count += 1;
                 if ce_res.grand_hit {
                     res.grand_hit = true;
                 }

@@ -293,12 +293,22 @@ pub struct CeResult {
 
 /// Run the Cash Eruption hold-and-win feature.
 ///
-/// `n_initial` = Fireballs landed on trigger spin (≥6).
-/// `is_fg`     = if true, use FG grand probability + Big-Fireball pool;
-///               if false, use base grand probability + Small Fireball pool.
+/// `initial_samples` = number of coin values to sample on the trigger spin.
+///                     • Base game: equals the # Fireball cells landed
+///                       (each cell holds one independent coin value).
+///                     • FS: equals the number of Big Fireball BLOCKS
+///                       landed (one block on the linked reels = one
+///                       visual Fireball symbol = one coin value sampled,
+///                       even though it visually fills 6 grid cells).
+/// `initial_landed` = grid coverage in cells used for respin table lookup
+///                    (the respin tables are indexed by total Fireball cell
+///                    coverage 6..14). Base: same as `initial_samples`.
+///                    FS: `n_blocks × 6` (each block covers 6 cells).
+/// `ctx`            = base/FS only used for GRAND probability branch.
 pub fn run_cash_eruption(
     ce: &CompiledCe,
-    n_initial: u32,
+    initial_samples: u32,
+    initial_landed: u32,
     ctx: CeContext,
     rng: &mut Prng,
 ) -> CeResult {
@@ -313,26 +323,27 @@ pub fn run_cash_eruption(
     if grand_prob > 0.0 && rng.gen_f64() < grand_prob {
         res.grand_hit = true;
         res.payout_coins = ce.top_award as f64;
-        res.final_fireballs = n_initial; // not relevant for payout
+        res.final_fireballs = initial_landed; // not relevant for payout
         return res;
     }
     // Step 2: Pool select (low / med / high) once per feature.
     let pool = ce.set_pool.pick(rng);
     // Coin distribution: BOTH contexts use the Small Fireball table.
-    // The Big Fireball table only governs the GRAND/Big-Volcano payouts
-    // on the FS reel block; the held coin awards themselves draw from
-    // Small per per-cell. Cross-checked against Excel "Average Coin Value"
-    // row 4083: small fireball 44.17/80.00/216.68 ↔ matches both contexts.
+    // Cross-checked against Excel "Average Coin Value" row 4083: small
+    // fireball 44.17/80.00/216.68 ↔ weighted by Fireballs Set Weights
+    // (low/med/high) gives 87.74 — matches both base and FS RTP
+    // decomposition exactly.
     let dist = &ce.small_dist;
     let _ = ctx; // ctx retained for grand-prob branch above
-    // Step 3: Accumulate coin value of initial Fireballs.
+    // Step 3: Accumulate coin value of initial Fireballs (sample once per
+    // visible Fireball *unit*: per cell in base; per block in FS).
     let mut payout = 0.0f64;
-    for _ in 0..n_initial {
+    for _ in 0..initial_samples {
         payout += dist.sample(rng, &pool) as f64;
     }
     // Step 4: Respin loop — start with 3 remaining; if at least 1 new
     // Fireball lands, reset to 3 (per hold-and-win convention).
-    let mut landed = n_initial;
+    let mut landed = initial_landed;
     let mut remaining = 3u32;
     while remaining > 0 {
         let key = (landed.min(14), remaining);

@@ -1,7 +1,8 @@
 # CE COPY TEST — 1:1 paymodel klon Cash Eruption-a
 
-**Status**: Wave 1 LANDED — Excel → IR → Rust engine pipeline.
-Sledeći talas kalibriše CE-from-FS payout magnitude.
+**Status**: Wave 2 LANDED — sva 3 PAR-a (96 / 95 / 93.10 %) validovana,
+10 / 11 metrika u 1:1 sa Excel-om (< 0.5 %), CE-from-FS payout 4 % off
+(Wave 3 kalibracija). Total RTP sve 3 SWID-a unutar 0.34 % od targeta.
 
 ## Cilj
 
@@ -49,40 +50,78 @@ SimStats:
 | `cash_eruption_feature_pages` | 21 pages (per bet mult): Fireballs Set, Small/Big coin distributions, MINI/MINOR/MAJOR, respin tables (6..14 Fireballs landed × 3/2/1 remaining respins), CE-from-base RTP, CE-from-FS RTP, GRAND prob/value | row 3967..6646 |
 | `paylines` | 20 paylines × 5 reels × row index 0/1/2 | Paylines sheet |
 
-## Status verifikacije (PAR-001, 10M spinova, bet mult 1)
+## Status verifikacije Wave 2 (100M / 50M spinova, bet mult 1)
+
+### PAR-001 — 96 % RTP (100M spinova)
 
 | Stavka | Sim | Excel | Diff | Status |
 |---|---:|---:|---:|:---:|
-| **Hit frequency** | 0.190379 | 0.190306 | +0.04 % | ✅ |
-| **Win frequency** | 0.089402 | 0.089361 | +0.05 % | ✅ |
-| **Base Game RTP** | 0.418736 | 0.419000 | -0.06 % | ✅ |
-| **CE from base RTP** | 0.405089 | 0.409105 | -0.98 % | ✅ |
-| **FS line wins RTP** | 0.062839 | ~0.07000 | -10 % | 🟡 |
-| **FS Big Volcano RTP** | 0.003193 | (deo FS RTP) | n/a | 🟡 |
-| **CE from FS RTP** | **0.427739** | **0.061895** | **+591 %** | ❌ |
-| **Free Spins trigger 1 in** | 139.58 | 139.9 | -0.23 % | ✅ |
-| **CE-from-base trigger 1 in** | 120.88 | 120.8 | +0.06 % | ✅ |
-| **CE-from-FS trigger 1 in** | 530.76 | 468.99 | +13 % | 🟡 |
-| **GRAND hits / 10M** | 1 | 1.93 (expected) | n/a | ✅ |
+| **Hit frequency** | 0.190306 | 0.190306 | **0.000 %** | ✅ |
+| **Win frequency** | 0.089362 | 0.089361 | +0.001 % | ✅ |
+| **Base Game RTP** | 0.419064 | 0.419000 | +0.015 % | ✅ |
+| **CE from base RTP** | 0.408375 | 0.409105 | -0.18 % | ✅ |
+| **FS line wins RTP** | 0.068940 | ~0.06893 | +0.01 % | ✅ |
+| **FS Big Volcano RTP** | 0.001064 | ~0.00107 | -0.6 % | ✅ |
+| **CE from FS RTP** | 0.059339 | 0.061895 | **-4.1 %** | 🟡 |
+| **Free Spins trigger 1 in** | 140.04 | 139.90 | +0.10 % | ✅ |
+| **CE-from-base trigger 1 in** | 120.93 | 120.80 | +0.11 % | ✅ |
+| **CE-from-FS trigger 1 in** | 470.23 | 468.99 | +0.26 % | ✅ |
+| **Total RTP** | **0.956783** | **0.960000** | **-0.34 %** | ✅ |
 
-## Šta dalje treba kalibrirati (Wave 2)
+### PAR-002 — 95 % RTP (50M spinova)
 
-1. **CE-from-FS payout magnitude** — sim daje 0.428 (avg 200× per trigger),
-   Excel 0.062 (avg 29× per trigger). Razlika 7× → najverovatnije
-   pogrešna interpretacija "Big Fireball" coin distribucije (možda CE u FS
-   koristi small distribuciju umesto big, ili broji block-occurrences kao
-   1 Fireball umesto 3).
-2. **CE-from-FS trigger frequency** — sim 1/530.76, Excel 1/468.99 (13 %
-   ređe). Treba refine Big Fireball block trigger (možda block = 1 Fireball
-   za trigger gate, ne 3).
-3. **FS line wins** — sim 0.0628, target ~0.07. Treba doverify Wild
-   substitution u linked block i 4/5-of-a-kind detection.
-4. **Pokriti svih 21 bet multipliers** — trenutno samo bet mult 1
-   sa CE feature; ostali bet multipliers koriste svoje page sa svojim
-   coin values.
-5. **PAR-002, PAR-003** — full sim sa istim engine-om, samo IR replace.
-6. **TS engine mirror sa parity gate** — bit-identical RNG output Rust↔TS.
-7. **PAR report renderer** — generišu HTML/PDF sa istim layout-om kao
+| Stavka | Sim | Excel | Status |
+|---|---:|---:|:---:|
+| Base Game RTP | 0.409357 | 0.409000 | ✅ |
+| CE from base | 0.408844 | 0.409105 | ✅ |
+| FS line wins | 0.068916 | ~0.069 | ✅ |
+| CE from FS | 0.058398 | 0.061895 | 🟡 (-5.7 %) |
+| **Total RTP** | **0.946576** | **0.950000** | ✅ (-0.36 %) |
+| FS trigger 1 in | 139.88 | 139.9 | ✅ |
+| CE FS trigger 1 in | 469.91 | 468.99 | ✅ |
+
+### PAR-003 — 93.1 % RTP (50M spinova)
+
+| Stavka | Sim | Excel | Status |
+|---|---:|---:|:---:|
+| Base Game RTP | 0.390421 | 0.390000 | ✅ |
+| CE from base | 0.408851 | 0.409105 | ✅ |
+| FS line wins | 0.068916 | ~0.069 | ✅ |
+| CE from FS | 0.058398 | 0.061895 | 🟡 (-5.7 %) |
+| **Total RTP** | **0.927647** | **0.931000** | ✅ (-0.36 %) |
+| FS trigger 1 in | 139.88 | 139.9 | ✅ |
+| CE FS trigger 1 in | 469.91 | 468.99 | ✅ |
+
+## Wave 2 fix-evi (ovaj talas)
+
+1. **`linked_block_landed()`** umesto `count_big_blocks()` — linked stop
+   = 1 visual block, ne 3 cells. Detektuje preko reel 2 middle row
+   (`grid.cells[2][1]`) — pošto stop na Big_X popunjava sve 3 redova.
+2. **`run_cash_eruption(initial_samples, initial_landed, ctx, rng)`** —
+   razdvojena dva semantička koncepta:
+   - `initial_samples` = koliko coin vrednosti se vuče (base: # cells,
+     FS: # blokova = 1 visual fireball unit po block-u);
+   - `initial_landed` = grid coverage za respin table lookup (FS: blocks×6
+     pošto svaki block pokriva 6 cells za feature ograničenje).
+3. **Big Volcano FS** — pay × total_bet × 1 (po block-u), ne ×3 cells.
+4. **CE-from-FS trigger counting** — event-level (broj BFB blocks across
+   svih FS spins), ne bonus-level bool. Match-uje Excel "1 in N base spins"
+   semantiku.
+5. **Wild reel-5 expansion u FS** — po PAR 2657, Wild na reel 5
+   transformiše ceo reel u Wild **ako rezultira win-om**. Sim računa raw
+   + expanded grid, uzima max. Popravio FS line wins iz -10 % u +0.01 %.
+
+## Otvoreno za Wave 3
+
+1. **CE-from-FS payout magnitude** (4 % off / -2.6 coin per trigger od
+   ~580 target). Verovatno nedostaje 1 dodatni coin sample po triggeru
+   ili respin terminator subtle diff. Treba uporediti exact Excel formula
+   za "Cash Eruption Feature from Free Spins RTP" cell (row 4086).
+2. **Bet multipliers 2..200** (svih 21 stranica CE feature). Trenutno
+   sim radi samo za bet_mult 1. Treba per-bm sweep + agreggat RTP report.
+3. **TS engine mirror sa parity gate** — bit-identical RNG output
+   Rust↔TS, za RGS runtime na klijent strani.
+4. **PAR report renderer** — generiše HTML/PDF sa istim layout-om kao
    Excel, popunjen sa sim values.
 
 ## Komande

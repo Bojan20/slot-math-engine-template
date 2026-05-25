@@ -103,7 +103,14 @@ impl<'a> Engine<'a> {
             if bw.fireball_count >= 6 {
                 s.ce_from_base_triggers += 1;
                 if let Some(ce) = ce {
-                    let r = run_cash_eruption(ce, bw.fireball_count, CeContext::Base, &mut rng);
+                    // Base: each cell = 1 sample = 1 grid coverage unit.
+                    let r = run_cash_eruption(
+                        ce,
+                        bw.fireball_count,
+                        bw.fireball_count,
+                        CeContext::Base,
+                        &mut rng,
+                    );
                     let x = r.payout_coins / 20.0;
                     s.ce_from_base_x += x;
                     spin_x += x;
@@ -127,9 +134,7 @@ impl<'a> Engine<'a> {
                 s.fs_lines_x += fs.line_wins_coins / 20.0;
                 s.fs_bv_x += fs.big_volcano_coins / 20.0;
                 s.ce_from_fs_x += fs.ce_from_fs_coins / 20.0;
-                if fs.cash_eruption_triggered_in_fs {
-                    s.ce_from_fs_triggers += 1;
-                }
+                s.ce_from_fs_triggers += fs.cash_eruption_event_count as u64;
                 if fs.grand_hit {
                     s.grand_hits += 1;
                 }

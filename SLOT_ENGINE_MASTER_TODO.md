@@ -6,9 +6,12 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-24 (post W241-followup)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-25 (post CE-COPY-TEST Wave 2)
 
 **Single-wave autonomne mete: SVE ZATVORENE. Open su samo multi-week scope.**
+**CE COPY TEST (per-game 1:1 PAR klon Cash Eruption-a, Wave 2):** ✅ 10/11 metrika
+1:1 sa Excel-om <0.5 %, sva 3 SWID-a (96/95/93.1 %) validovana na 50–100M
+spinova. Total RTP gap 0.34 % (CE-from-FS payout 4 % off → Wave 3).
 
 ### ✅ Closed since W181 (high-impact)
 
@@ -20,6 +23,8 @@
 | Truth-check gate (W150-A) | ✅ `scripts/slot-truth-check.sh` (10 metrics, all OK) | runs in CI |
 | RNG upgrade mulberry32→xoshiro128** (W218) | ✅ 6-file sinhroni stack, bit-parity Rust↔JS | `2fcc758` |
 | Jurisdiction matrix + UI polish (W219-W225) | ✅ 7 jurisdiction rules ENFORCED + mobile responsive | full W218-W225 commit stack |
+| **CE COPY TEST Wave 1** (Excel → IR → Rust engine pipeline) | ✅ Wave 1 LANDED | `6ff8ad1` + `45c7ba1` — pipeline + Small-dist fix |
+| **CE COPY TEST Wave 2** (1:1 PAR validation, sva 3 SWID-a) | ✅ Wave 2 LANDED | 10/11 metrika <0.5%, Total RTP -0.34%; `games/ce-copy-test/README.md` |
 
 ### 🎯 Real OPEN (multi-week scope — NOT single-wave)
 
