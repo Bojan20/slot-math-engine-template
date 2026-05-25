@@ -165,12 +165,25 @@ fn default_scope() -> String {
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Feature {
     /// CE-style hold-and-win: 6+ cash symbols → 3 respins, coin distribution per BM page.
+    ///
+    /// W4.5 added two convenience fields for RTP-only integration that
+    /// sidesteps the full per-page Cash Eruption math:
+    ///   * `trigger_prob` — Bernoulli per-spin trigger override (like
+    ///     PickBonus). When `None`, falls back to cash-count threshold.
+    ///   * `avg_pay_per_trigger` — total-bet-× average pay when fired.
+    ///     When `Some`, runner pays the deterministic average instead of
+    ///     sampling pages; gives correct mean RTP at the cost of
+    ///     volatility fidelity until full pages mapping lands in W4.6.
     HoldAndWin {
         trigger_symbol: String,
         trigger_count_min: u32,
         respins: u32,
         // Per-bet-multiplier coin-value distributions (CE 21 pages).
         pages: BTreeMap<String, HoldAndWinPage>,
+        #[serde(default)]
+        trigger_prob: Option<f64>,
+        #[serde(default)]
+        avg_pay_per_trigger: Option<f64>,
     },
     /// Wolf Run-style pick-bonus.
     ///

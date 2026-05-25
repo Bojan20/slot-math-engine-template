@@ -66284,7 +66284,9 @@
       "trigger_symbol": "Fireball",
       "trigger_count_min": 6,
       "respins": 3,
-      "pages": {}
+      "pages": {},
+      "trigger_prob": 0.01665392065664702,
+      "avg_pay_per_trigger": 24.565082607337413
     }
   ],
   "bet_table": {

@@ -93,9 +93,25 @@ pub fn run_features(
                 };
                 out.merge(linear_progressive::run(params, ir, bet_multiplier, base, rng));
             }
-            // Other variants (HoldAndWin / WildExpand / PatternWin /
-            // GrandPrize) remain to be implemented when those vendor paths
-            // arrive (CE COPY TEST / L&W route in W4.4).
+            Feature::HoldAndWin {
+                trigger_symbol,
+                trigger_count_min,
+                respins: _,
+                pages: _,
+                trigger_prob,
+                avg_pay_per_trigger,
+            } => {
+                let params = hold_and_win::HoldAndWinParams {
+                    trigger_symbol,
+                    trigger_count_min: *trigger_count_min,
+                    trigger_prob: *trigger_prob,
+                    avg_pay_per_trigger: *avg_pay_per_trigger,
+                };
+                out.merge(hold_and_win::run(params, ir, base, rng));
+            }
+            // Other variants (WildExpand / PatternWin / GrandPrize) remain
+            // future-wave work — full Cash Eruption pages sampling tracked
+            // as W4.6.
             _ => {}
         }
     }

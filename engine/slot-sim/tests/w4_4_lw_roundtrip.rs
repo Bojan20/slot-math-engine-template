@@ -82,11 +82,12 @@ fn lw_engine_runs_without_panic() {
     let engine = Engine::new(&ir);
     let stats = engine.run(10_000, 1, 0xC0FFEE);
     assert_eq!(stats.spins, 10_000);
-    // Base-only (no HoldAndWin runner yet) sits ~0.11 — band 0.05..0.50
-    // catches major regressions while accepting the W4.5 gap.
+    // W4.5 added the HoldAndWin runner so CE contribution (~0.41) now
+    // lands. RTP sits around 0.52-0.57; band 0.40..0.80 catches major
+    // regressions while accepting the Red7 pattern-win gap (W4.6 future).
     let rtp = stats.rtp();
     assert!(
-        (0.05..0.50).contains(&rtp),
-        "L&W base RTP {rtp:.3} outside expected [0.05,0.50] range",
+        (0.40..0.80).contains(&rtp),
+        "L&W RTP {rtp:.3} outside expected [0.40,0.80] range",
     );
 }

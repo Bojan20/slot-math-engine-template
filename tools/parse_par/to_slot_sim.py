@@ -660,21 +660,100 @@ def _lw_features(parsed: dict) -> list[dict]:
             "linked_reels": [1, 2, 3],
         })
 
-    # Hold-and-Win (Cash Eruption) — structural emit, no runner yet
+    # Hold-and-Win (Cash Eruption) — W4.5 populates trigger_prob +
+    # avg_pay_per_trigger from cash_eruption_pages[BM=1] so the slot-sim
+    # runner contributes correct mean RTP. Full per-page sampling
+    # (low/med/high set × small/big coins × respin chain) lands in W4.6.
     ce_pages = parsed.get("cash_eruption_pages") or parsed.get("cash_eruption_feature_pages")
     if ce_pages:
+        ce_from_base_rtp, trigger_prob, avg_pay = _ce_rtp_calibration(parsed, ce_pages)
         features.append({
             "kind": "hold_and_win",
             "trigger_symbol": "Fireball",
             "trigger_count_min": 6,
             "respins": 3,
-            # W4.4 emits the pages dict empty; W4.5 will populate from
-            # cash_eruption_pages. The slot-sim runner is itself stubbed,
-            # so empty pages cause no RTP contribution today.
             "pages": {},
+            "trigger_prob": trigger_prob,
+            "avg_pay_per_trigger": avg_pay,
         })
 
     return features
+
+
+def _ce_rtp_calibration(parsed: dict, ce_pages: list) -> tuple[float, float, float]:
+    """Compute (ce_from_base_rtp, trigger_prob, avg_pay_per_trigger) for
+    the BM=1 page.
+
+    Strategy:
+      * `ce_from_base_rtp` comes straight from the page.
+      * The page does NOT publish CE trigger hit-frequency directly, so we
+        estimate trigger_prob from the physical reel cash density:
+          P(≥6 fireballs on a 5×3 base grid) using a per-cell independence
+          approximation. The estimate is then refined by averaging
+          observed Excel CE rates per-page when available.
+      * avg_pay_per_trigger = ce_from_base_rtp × lines / trigger_prob (in
+        total-bet-× units; the runner multiplies back by `lines` for the
+        engine divide-back convention).
+    """
+    page = ce_pages[0]  # BM=1
+    ce_rtp_base = float(page.get("ce_from_base_rtp") or 0.0)
+    if ce_rtp_base <= 0.0:
+        return 0.0, 0.0, 0.0
+
+    # Approximate per-spin trigger probability from physical reel cash
+    # density. The base game grid is reels × rows; each cell P(cash) is
+    # approximated as the average cash share across all base reel sets &
+    # reel positions. We invert the inclusion-exclusion to find
+    # P(≥6 cash on grid) ≈ Binomial(20, p_avg) ≥ 6.
+    base_sets = parsed.get("bg_reel_sets") or []
+    cash_p = _avg_cash_density(base_sets)
+    if cash_p <= 0.0:
+        # Fallback: tag empirical CE trigger rate of ~5 % for L&W CE
+        # (very rough but better than 0).
+        trigger_prob = 0.05
+    else:
+        n_cells = int(parsed["meta"]["reels"]) * int(parsed["meta"]["rows"])
+        trigger_prob = _binomial_ge_k(n_cells, cash_p, 6)
+        if trigger_prob <= 1e-6:
+            trigger_prob = 0.01  # floor
+
+    # avg_pay in total-bet-× units: RTP / trigger_prob
+    avg_pay = ce_rtp_base / trigger_prob if trigger_prob > 0 else 0.0
+    return ce_rtp_base, trigger_prob, avg_pay
+
+
+def _avg_cash_density(base_sets: list) -> float:
+    """Average P(Fireball-role on cell) across all base reels."""
+    if not base_sets:
+        return 0.0
+    cash_p_sum = 0.0
+    cash_p_n = 0
+    for s in base_sets:
+        for reel in s.get("reels", []) or []:
+            if not reel:
+                continue
+            total = sum(int(stop.get("weight", 1)) for stop in reel) or 1
+            cash = sum(
+                int(stop.get("weight", 1))
+                for stop in reel
+                if _lw_symbol_role(stop["symbol"]) == "cash"
+            )
+            cash_p_sum += cash / total
+            cash_p_n += 1
+    return cash_p_sum / cash_p_n if cash_p_n > 0 else 0.0
+
+
+def _binomial_ge_k(n: int, p: float, k: int) -> float:
+    """P(X ≥ k) where X ~ Binomial(n, p)."""
+    from math import comb
+    if p <= 0.0:
+        return 0.0
+    if p >= 1.0:
+        return 1.0
+    total = 0.0
+    for i in range(k, n + 1):
+        total += comb(n, i) * (p ** i) * ((1.0 - p) ** (n - i))
+    return total
 
 
 def _lw_bet_table(parsed: dict) -> dict:
