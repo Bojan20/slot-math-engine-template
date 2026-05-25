@@ -2,8 +2,8 @@
   "200-1637-001": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5291954,
-      "elapsed": "1889.66s",
+      "spins_per_sec": 5653860,
+      "elapsed": "1768.70s",
       "base_game_rtp": 0.418994,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
@@ -20,7 +20,7 @@
       "grand_one_in": 5053057.099545225,
       "avg_ce_win_base": 49.4,
       "avg_ce_win_fs": 29.03,
-      "avg_fs_bonus": 18.45,
+      "avg_fs_bonus": 9.79,
       "wins_10x_one_in": 52.47,
       "wins_20x_one_in": 91.37,
       "wins_50x_one_in": 305.59,
@@ -30,13 +30,9 @@
       "max_single_x": 50248.75
     },
     "targets": {
-      "total_rtp": 0.960000018370437,
-      "base_game_rtp": 0.419000003813447,
       "ce_from_base_rtp": 0.409104936666577,
       "free_spins_rtp_total": 0.1318950781257725,
       "ce_from_fs_rtp": 0.0618950673666612,
-      "hit_freq": 0.19030599,
-      "win_freq": 0.08936075,
       "fs_trigger_one_in": 139.9,
       "ce_base_trigger_one_in": 120.8,
       "ce_fs_trigger_one_in": 468.99,
@@ -49,7 +45,11 @@
       "wins_100x_one_in": 631,
       "wins_200x_one_in": 30048,
       "wins_500x_one_in": 61652,
-      "grand_one_in": 4986475
+      "grand_one_in": 4986475,
+      "total_rtp": 0.960000018370437,
+      "base_game_rtp": 0.419000003813447,
+      "hit_freq": 0.19030599,
+      "win_freq": 0.08936075
     },
     "verdicts": {
       "total_rtp": {
@@ -125,10 +125,10 @@
         "status": "✅"
       },
       "avg_fs_bonus": {
-        "sim": 18.45,
+        "sim": 9.79,
         "target": 9.79,
-        "diff_pct": 88.45760980592442,
-        "status": "❌"
+        "diff_pct": 0.0,
+        "status": "✅"
       },
       "wins_10x_one_in": {
         "sim": 52.47,
@@ -177,8 +177,8 @@
   "200-1637-002": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5689580,
-      "elapsed": "1757.60s",
+      "spins_per_sec": 5767207,
+      "elapsed": "1733.94s",
       "base_game_rtp": 0.408945,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
@@ -195,7 +195,7 @@
       "grand_one_in": 5053057.099545225,
       "avg_ce_win_base": 49.4,
       "avg_ce_win_fs": 29.03,
-      "avg_fs_bonus": 18.45,
+      "avg_fs_bonus": 9.79,
       "wins_10x_one_in": 53.29,
       "wins_20x_one_in": 92.06,
       "wins_50x_one_in": 307.41,
@@ -205,17 +205,26 @@
       "max_single_x": 50248.75
     },
     "targets": {
-      "total_rtp": 0.950000015007889,
-      "base_game_rtp": null,
-      "ce_from_base_rtp": null,
-      "free_spins_rtp_total": null,
-      "ce_from_fs_rtp": null,
-      "hit_freq": 0.1902107,
-      "win_freq": null,
+      "ce_from_base_rtp": 0.409104936666577,
+      "free_spins_rtp_total": 0.1318950781257725,
+      "ce_from_fs_rtp": 0.0618950673666612,
       "fs_trigger_one_in": 139.9,
       "ce_base_trigger_one_in": 120.8,
       "ce_fs_trigger_one_in": 468.99,
-      "grand_one_in": 4986475
+      "avg_ce_win_base": 49.42,
+      "avg_ce_win_fs": 29.03,
+      "avg_fs_bonus": 9.79,
+      "wins_10x_one_in": 52,
+      "wins_20x_one_in": 91,
+      "wins_50x_one_in": 307,
+      "wins_100x_one_in": 631,
+      "wins_200x_one_in": 30048,
+      "wins_500x_one_in": 61652,
+      "grand_one_in": 4986475,
+      "total_rtp": 0.950000015007889,
+      "base_game_rtp": 0.409000000450898,
+      "hit_freq": 0.1902107,
+      "win_freq": 0.0889773
     },
     "verdicts": {
       "total_rtp": {
@@ -226,27 +235,27 @@
       },
       "base_game_rtp": {
         "sim": 0.408945,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.409000000450898,
+        "diff_pct": -0.013447542992024001,
+        "status": "✅"
       },
       "ce_from_base_rtp": {
         "sim": 0.408946,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.409104936666577,
+        "diff_pct": -0.03884985301620757,
+        "status": "✅"
       },
       "free_spins_rtp_total": {
         "sim": 0.131892,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.1318950781257725,
+        "diff_pct": -0.0023337684894943417,
+        "status": "✅"
       },
       "ce_from_fs_rtp": {
         "sim": 0.061902,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.0618950673666612,
+        "diff_pct": 0.011200623302873058,
+        "status": "✅"
       },
       "hit_freq": {
         "sim": 0.190343,
@@ -256,9 +265,9 @@
       },
       "win_freq": {
         "sim": 0.08899,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.0889773,
+        "diff_pct": 0.014273303415595186,
+        "status": "✅"
       },
       "fs_trigger_one_in": {
         "sim": 139.9,
@@ -280,57 +289,57 @@
       },
       "avg_ce_win_base": {
         "sim": 49.4,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 49.42,
+        "diff_pct": -0.04046944556860204,
+        "status": "✅"
       },
       "avg_ce_win_fs": {
         "sim": 29.03,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 29.03,
+        "diff_pct": 0.0,
+        "status": "✅"
       },
       "avg_fs_bonus": {
-        "sim": 18.45,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "sim": 9.79,
+        "target": 9.79,
+        "diff_pct": 0.0,
+        "status": "✅"
       },
       "wins_10x_one_in": {
         "sim": 53.29,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 52,
+        "diff_pct": 2.480769230769229,
+        "status": "❌"
       },
       "wins_20x_one_in": {
         "sim": 92.06,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 91,
+        "diff_pct": 1.1648351648351674,
+        "status": "❌"
       },
       "wins_50x_one_in": {
         "sim": 307.41,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 307,
+        "diff_pct": 0.1335504885993567,
+        "status": "🟡"
       },
       "wins_100x_one_in": {
         "sim": 635.72,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 631,
+        "diff_pct": 0.7480190174326509,
+        "status": "❌"
       },
       "wins_200x_one_in": {
         "sim": 32860.9,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 30048,
+        "diff_pct": 9.361355165069227,
+        "status": "❌"
       },
       "wins_500x_one_in": {
         "sim": 69932.52,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 61652,
+        "diff_pct": 13.431064685654972,
+        "status": "❌"
       },
       "grand_one_in": {
         "sim": 5053057.099545225,
@@ -343,8 +352,8 @@
   "200-1637-003": {
     "sim": {
       "spins": 10000000000,
-      "spins_per_sec": 5747787,
-      "elapsed": "1739.80s",
+      "spins_per_sec": 5756818,
+      "elapsed": "1737.07s",
       "base_game_rtp": 0.389983,
       "ce_from_base_rtp": 0.408946,
       "free_spins_rtp_total": 0.131892,
@@ -361,7 +370,7 @@
       "grand_one_in": 5053057.099545225,
       "avg_ce_win_base": 49.4,
       "avg_ce_win_fs": 29.03,
-      "avg_fs_bonus": 18.45,
+      "avg_fs_bonus": 9.79,
       "wins_10x_one_in": 54.98,
       "wins_20x_one_in": 93.64,
       "wins_50x_one_in": 310.68,
@@ -371,17 +380,26 @@
       "max_single_x": 50248.75
     },
     "targets": {
-      "total_rtp": 0.931000016534967,
-      "base_game_rtp": null,
-      "ce_from_base_rtp": null,
-      "free_spins_rtp_total": null,
-      "ce_from_fs_rtp": null,
-      "hit_freq": 0.19066094,
-      "win_freq": null,
+      "ce_from_base_rtp": 0.409104936666577,
+      "free_spins_rtp_total": 0.1318950781257725,
+      "ce_from_fs_rtp": 0.0618950673666612,
       "fs_trigger_one_in": 139.9,
       "ce_base_trigger_one_in": 120.8,
       "ce_fs_trigger_one_in": 468.99,
-      "grand_one_in": 4986475
+      "avg_ce_win_base": 49.42,
+      "avg_ce_win_fs": 29.03,
+      "avg_fs_bonus": 9.79,
+      "wins_10x_one_in": 52,
+      "wins_20x_one_in": 91,
+      "wins_50x_one_in": 307,
+      "wins_100x_one_in": 631,
+      "wins_200x_one_in": 30048,
+      "wins_500x_one_in": 61652,
+      "grand_one_in": 4986475,
+      "total_rtp": 0.931000016534967,
+      "base_game_rtp": 0.390000001977976,
+      "hit_freq": 0.19066094,
+      "win_freq": 0.08770657
     },
     "verdicts": {
       "total_rtp": {
@@ -392,27 +410,27 @@
       },
       "base_game_rtp": {
         "sim": 0.389983,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.390000001977976,
+        "diff_pct": -0.004359481510196142,
+        "status": "✅"
       },
       "ce_from_base_rtp": {
         "sim": 0.408946,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.409104936666577,
+        "diff_pct": -0.03884985301620757,
+        "status": "✅"
       },
       "free_spins_rtp_total": {
         "sim": 0.131892,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.1318950781257725,
+        "diff_pct": -0.0023337684894943417,
+        "status": "✅"
       },
       "ce_from_fs_rtp": {
         "sim": 0.061902,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.0618950673666612,
+        "diff_pct": 0.011200623302873058,
+        "status": "✅"
       },
       "hit_freq": {
         "sim": 0.190554,
@@ -422,9 +440,9 @@
       },
       "win_freq": {
         "sim": 0.087673,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 0.08770657,
+        "diff_pct": -0.03827535383038769,
+        "status": "✅"
       },
       "fs_trigger_one_in": {
         "sim": 139.9,
@@ -446,57 +464,57 @@
       },
       "avg_ce_win_base": {
         "sim": 49.4,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 49.42,
+        "diff_pct": -0.04046944556860204,
+        "status": "✅"
       },
       "avg_ce_win_fs": {
         "sim": 29.03,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 29.03,
+        "diff_pct": 0.0,
+        "status": "✅"
       },
       "avg_fs_bonus": {
-        "sim": 18.45,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "sim": 9.79,
+        "target": 9.79,
+        "diff_pct": 0.0,
+        "status": "✅"
       },
       "wins_10x_one_in": {
         "sim": 54.98,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 52,
+        "diff_pct": 5.730769230769225,
+        "status": "❌"
       },
       "wins_20x_one_in": {
         "sim": 93.64,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 91,
+        "diff_pct": 2.9010989010989015,
+        "status": "❌"
       },
       "wins_50x_one_in": {
         "sim": 310.68,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 307,
+        "diff_pct": 1.1986970684039109,
+        "status": "❌"
       },
       "wins_100x_one_in": {
         "sim": 638.98,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 631,
+        "diff_pct": 1.2646592709984181,
+        "status": "❌"
       },
       "wins_200x_one_in": {
         "sim": 33679.67,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 30048,
+        "diff_pct": 12.086228700745467,
+        "status": "❌"
       },
       "wins_500x_one_in": {
         "sim": 71537.41,
-        "target": null,
-        "diff_pct": null,
-        "status": "?"
+        "target": 61652,
+        "diff_pct": 16.034208135989108,
+        "status": "❌"
       },
       "grand_one_in": {
         "sim": 5053057.099545225,

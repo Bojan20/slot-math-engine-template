@@ -2,8 +2,8 @@
 SWID:           200-1637-001
 Bet multiplier: 1
 Spins:          10000000000
-Elapsed:        1889.66s
-Spins/sec:      5291954
+Elapsed:        1768.70s
+Spins/sec:      5653860
 
 === RTP breakdown ===
   Base game RTP            : 0.418994   (Excel target 0.419000)
@@ -28,7 +28,7 @@ Spins/sec:      5291954
 === Average feature wins (PAR_100spins) ===
   Avg CE win (base)        : 49.40×   (Excel target 49.42×)
   Avg CE win (FS)          : 29.03×   (Excel target 29.03×)
-  Avg Free Spins bonus     : 18.45×   (Excel target 9.79×)
+  Avg Free Spins bonus     : 9.79×   (Excel target 9.79×)
 
 === Volatility distribution (PAR_100spins A36..D43) ===
   10x+        1 in      52.47  (Excel target 1 in 52)  hits=190596949
