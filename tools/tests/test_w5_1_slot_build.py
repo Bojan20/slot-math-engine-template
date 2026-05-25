@@ -116,6 +116,68 @@ class TestSlotBuildPipeline(unittest.TestCase):
         self.assertEqual(rc, 0)
 
 
+class TestScaffoldOutput(unittest.TestCase):
+    """W5.2 — `--scaffold` emits a self-contained per-game folder with
+    README + RUN + CERT + both IR copies."""
+
+    def test_igt_scaffold(self):
+        import tempfile
+        from tools.slot_build.__main__ import slugify
+        with tempfile.TemporaryDirectory() as td:
+            rc = main([
+                str(ROOT / "games/fort-knox-wolf-run/raw"),
+                "--vendor", "igt",
+                "--sheet", "PAR_001",
+                "--no-mc",
+                "--scaffold", td,
+                "--quiet",
+            ])
+            self.assertEqual(rc, 0)
+            game_root = Path(td) / "fort-knox-wolf-run-200-1775-001"
+            self.assertTrue(game_root.is_dir(), "scaffold dir missing")
+            for f in ("README.md", "RUN.md", "CERT.md",
+                      "ir.vendor.json", "ir.slot-sim.json"):
+                self.assertTrue(
+                    (game_root / f).is_file(),
+                    f"scaffold missing {f}",
+                )
+            # README has the SWID + vendor
+            readme = (game_root / "README.md").read_text()
+            self.assertIn("200-1775-001", readme)
+            self.assertIn("igt", readme)
+            # IR files parse as JSON
+            json.loads((game_root / "ir.vendor.json").read_text())
+            json.loads((game_root / "ir.slot-sim.json").read_text())
+
+    def test_lw_scaffold_without_mc(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            rc = main([
+                str(ROOT / "games/ce-copy-test/raw"),
+                "--vendor", "lw",
+                "--sheet", "PAR-001",
+                "--no-mc",
+                "--scaffold", td,
+                "--quiet",
+            ])
+            self.assertEqual(rc, 0)
+            # Find the game dir (slugified)
+            entries = list(Path(td).iterdir())
+            self.assertGreater(len(entries), 0, "no scaffold dir created")
+            game_root = entries[0]
+            self.assertTrue((game_root / "CERT.md").is_file())
+            cert = (game_root / "CERT.md").read_text()
+            # Without MC, CERT.md indicates skipped sim
+            self.assertIn("verification skipped", cert)
+
+    def test_slugify(self):
+        from tools.slot_build.__main__ import slugify
+        self.assertEqual(slugify("Cash Eruption Test"), "cash-eruption-test")
+        self.assertEqual(slugify("Fort_Knox-Wolf_Run"), "fort-knox-wolf-run")
+        self.assertEqual(slugify("100% RTP???"), "100-rtp")
+        self.assertEqual(slugify(""), "game")
+
+
 class TestSlotSimBinaryDiscovery(unittest.TestCase):
 
     def test_finds_release_binary_if_built(self):
