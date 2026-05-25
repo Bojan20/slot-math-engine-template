@@ -253,6 +253,13 @@ pub enum Feature {
         odds_at_bm1: f64,
         /// Top award (in coins or as "Progressive" marker).
         top_award_coins: Option<i64>,
+        /// W4.3e — per-spin deterministic increment contribution
+        /// (fraction of total bet that funds the jackpot pool, e.g. 0.003
+        /// for Wolf Run). Excel publishes this in the bet-table
+        /// "Increment" column. Engine adds this contribution every spin
+        /// so universal IR ↔ Excel RTP convergence is preserved.
+        #[serde(default)]
+        increment: f64,
     },
     /// Probabilistic GRAND prize (CE style).
     GrandPrize {

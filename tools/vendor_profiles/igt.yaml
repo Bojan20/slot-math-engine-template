@@ -57,7 +57,7 @@ bet_table:
   progressive_odds_col: 7
 
 paytable:
-  row_range: [66, 99]
+  row_range: [66, 101]    # W4.3e: extend to include scatter row 100 (`--,Bonus,Bonus,Bonus,--` pays 2× total bet, RTP +0.997%)
   combo_cols: [1, 6]            # cols 1..5 (5 reels)
   pays_col: 8
   pph_col: 7

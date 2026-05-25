@@ -81,7 +81,36 @@ impl<'a> Engine<'a> {
             for ev in &feat.events {
                 *s.event_count.entry(ev.clone()).or_insert(0) += 1;
             }
-            s.record(spin_x);
+            // W4.3e — per-feature contribution accumulation (total-bet units)
+            // Also extract the LP increment (deterministic, NOT a hit event)
+            // so it doesn't pollute hits/wins counters.
+            let mut increment_x = 0.0;
+            for (kind, coins) in &feat.per_feature {
+                let x = coins / (self.lines as f64);
+                *s.feature_x.entry(kind.clone()).or_insert(0.0) += x;
+                if kind == "linear_progressive" {
+                    // The increment is a deterministic per-spin contribution.
+                    // We treat any amount below the smallest meaningful win
+                    // (1 line × 0.005) as the increment baseline so player-
+                    // facing hit/win metrics aren't inflated.
+                    increment_x += x.min(0.01);
+                }
+            }
+            // `spin_x_for_metrics` excludes the LP increment so hit_freq
+            // and win_freq match Excel's player-facing definitions.
+            let spin_x_for_metrics = spin_x - increment_x;
+            s.total_payout_x += spin_x;  // full RTP (includes increment)
+            if spin_x > s.max_single_x { s.max_single_x = spin_x; }
+            if spin_x_for_metrics > 0.0 { s.hits += 1; }
+            if spin_x_for_metrics > 1.0 { s.wins += 1; }
+            if spin_x >= 10.0 { s.wins_ge_10x += 1; }
+            if spin_x >= 20.0 { s.wins_ge_20x += 1; }
+            if spin_x >= 50.0 { s.wins_ge_50x += 1; }
+            if spin_x >= 100.0 { s.wins_ge_100x += 1; }
+            if spin_x >= 200.0 { s.wins_ge_200x += 1; }
+            if spin_x >= 500.0 { s.wins_ge_500x += 1; }
+            if spin_x >= 1000.0 { s.wins_ge_1000x += 1; }
+            s.spins += 1;
         }
         s
     }

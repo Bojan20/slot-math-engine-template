@@ -22,12 +22,17 @@ pub struct FeatureOutcome {
     pub coins: f64,
     /// Triggered events (e.g. CE-from-base, FS triggered, GRAND hit).
     pub events: Vec<String>,
+    /// W4.3e — per-feature contribution breakdown
+    /// (kind-name → coins). Set by `run_features` after each feature
+    /// runner so sim.rs can build a per-feature RTP table.
+    pub per_feature: Vec<(String, f64)>,
 }
 
 impl FeatureOutcome {
     fn merge(&mut self, other: FeatureOutcome) {
         self.coins += other.coins;
         self.events.extend(other.events);
+        self.per_feature.extend(other.per_feature);
     }
 }
 
@@ -95,7 +100,10 @@ pub fn run_features(
                     linked_reels: linked_reels.as_deref(),
                     fs_hold_and_win: fs_hw,
                 };
-                out.merge(free_spins::run(params, ir, picker, pt, base, rng, virtual_mode));
+                let r = free_spins::run(params, ir, picker, pt, base, rng, virtual_mode);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("free_spins".into(), c));
             }
             Feature::PickBonus {
                 trigger_symbol,
@@ -109,17 +117,25 @@ pub fn run_features(
                     awards,
                     trigger_prob: *trigger_prob,
                 };
-                out.merge(pick_bonus::run(params, ir, base, rng));
+                let r = pick_bonus::run(params, ir, base, rng);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("pick_bonus".into(), c));
             }
             Feature::LinearProgressive {
                 odds_at_bm1,
                 top_award_coins,
+                increment,
             } => {
                 let params = linear_progressive::LinearProgressiveParams {
                     odds_at_bm1: *odds_at_bm1,
                     top_award_coins: *top_award_coins,
+                    increment: *increment,
                 };
-                out.merge(linear_progressive::run(params, ir, bet_multiplier, base, rng));
+                let r = linear_progressive::run(params, ir, bet_multiplier, base, rng);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("linear_progressive".into(), c));
             }
             Feature::HoldAndWin {
                 trigger_symbol,
@@ -137,7 +153,10 @@ pub fn run_features(
                     trigger_prob: *trigger_prob,
                     avg_pay_per_trigger: *avg_pay_per_trigger,
                 };
-                out.merge(hold_and_win::run(params, ir, base, rng));
+                let r = hold_and_win::run(params, ir, base, rng);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("hold_and_win".into(), c));
             }
             Feature::PatternWin {
                 anchor_symbol,
@@ -153,7 +172,10 @@ pub fn run_features(
                     required_wild_reels,
                     pays: *pays,
                 };
-                out.merge(pattern_win::run(&params, ir, grid, base, rng));
+                let r = pattern_win::run(&params, ir, grid, base, rng);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("pattern_win".into(), c));
             }
             Feature::WildExpand {
                 wild_symbol,
@@ -165,7 +187,10 @@ pub fn run_features(
                     on_reels,
                     only_if_winning: *only_if_winning,
                 };
-                out.merge(wild_expand::run(&params, ir, grid, base, pt, rng));
+                let r = wild_expand::run(&params, ir, grid, base, pt, rng);
+                let c = r.coins;
+                out.merge(r);
+                out.per_feature.push(("wild_expand".into(), c));
             }
             // GrandPrize remains future wave.
             _ => {}

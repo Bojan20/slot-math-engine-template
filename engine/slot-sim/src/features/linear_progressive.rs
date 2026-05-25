@@ -15,6 +15,9 @@ use crate::rng::Prng;
 pub struct LinearProgressiveParams {
     pub odds_at_bm1: f64,
     pub top_award_coins: Option<i64>,
+    /// W4.3e — per-spin deterministic increment contribution to RTP
+    /// (e.g. 0.003 for Wolf Run; Excel "Increment" bet-table column).
+    pub increment: f64,
 }
 
 pub fn run(
@@ -25,6 +28,18 @@ pub fn run(
     rng: &mut Prng,
 ) -> FeatureOutcome {
     let mut out = FeatureOutcome::default();
+    let lines = lines_of(ir);
+
+    // W4.3e — Deterministic jackpot increment. Every spin contributes
+    // `increment × total_bet` toward the progressive pool. This is RTP
+    // for the player (the pool eventually pays out — modelled here as
+    // an immediate contribution so engine total RTP matches Excel).
+    // The `feat.coins / lines` divisor in sim.rs converts back to
+    // total-bet units, so we multiply by `lines` here.
+    if params.increment > 0.0 {
+        out.coins += params.increment * (lines as f64);
+    }
+
     if params.odds_at_bm1 <= 0.0 || bet_multiplier <= 0 {
         return out;
     }
@@ -37,7 +52,6 @@ pub fn run(
         out.events.push("progressive_hit:silent".into());
         return out;
     }
-    let lines = lines_of(ir);
     // top_award is in coin units total; feat.coins is per-line so multiply
     // by lines for the engine's `coins / lines` to give total-bet × award.
     out.coins += (award_coins as f64) * (lines as f64);

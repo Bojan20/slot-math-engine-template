@@ -4456,7 +4456,8 @@
     {
       "kind": "linear_progressive",
       "odds_at_bm1": 7499999.999999999,
-      "top_award_coins": null
+      "top_award_coins": null,
+      "increment": 0.003
     }
   ],
   "bet_table": {

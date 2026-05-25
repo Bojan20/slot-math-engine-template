@@ -329,19 +329,23 @@ def _igt_features(parsed: dict) -> list[dict]:
     # Linear Progressive
     lp = parsed.get("linear_progressive") or {}
     lp_arr = lp.get("per_bet_multiplier") or {}
-    # IGT shape: {"bet_multipliers": [...], "progressive_odds": [...]}
+    # IGT shape: {"bet_multipliers": [...], "progressive_odds": [...], "increments": [...]}
     bms = lp_arr.get("bet_multipliers") or []
     odds_list = lp_arr.get("progressive_odds") or []
+    inc_list = lp_arr.get("increments") or []
     if bms and odds_list:
         try:
             idx = bms.index(1)
             odds_at_bm1 = float(odds_list[idx])
+            increment = float(inc_list[idx]) if inc_list and idx < len(inc_list) else 0.0
         except (ValueError, IndexError):
             odds_at_bm1 = float(odds_list[0])
+            increment = float(inc_list[0]) if inc_list else 0.0
         features.append({
             "kind": "linear_progressive",
             "odds_at_bm1": odds_at_bm1,
             "top_award_coins": None,
+            "increment": increment,
         })
 
     return features

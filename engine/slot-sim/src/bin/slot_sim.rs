@@ -54,6 +54,24 @@ fn main() {
     println!("Win freq:  {:.6}  (Excel {:.6})", stats.win_freq(), ir.meta.win_frequency);
     println!("Max spin:  {:.2}×", stats.max_single_x);
     println!();
+    // W4.3e — per-feature RTP breakdown (helps audit where the engine ↔
+    // Excel gap lies). `base_x` is line/pattern wins; `feature_x[k]` is
+    // each named feature's contribution in total-bet units.
+    if !stats.feature_x.is_empty() {
+        let base_rtp = stats.base_x / n;
+        println!("Per-feature RTP breakdown:");
+        println!("  {:24}  {:.6}", "base (lines + scatter)", base_rtp);
+        let mut feats: Vec<(&String, &f64)> = stats.feature_x.iter().collect();
+        feats.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap_or(std::cmp::Ordering::Equal));
+        let mut feat_sum = 0.0;
+        for (k, v) in &feats {
+            let r = **v / n;
+            feat_sum += r;
+            println!("  {:24}  {:.6}", k, r);
+        }
+        println!("  {:24}  {:.6}", "TOTAL", base_rtp + feat_sum);
+        println!();
+    }
     println!("Volatility distribution:");
     let print = |label: &str, hits: u64| {
         let per = if hits > 0 { n / hits as f64 } else { f64::INFINITY };

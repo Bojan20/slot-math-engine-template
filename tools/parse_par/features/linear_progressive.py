@@ -27,13 +27,25 @@ def parse(rows: list[list[str]], cfg: dict, profile) -> dict:
         oc = cfg["progressive_odds_col"]
         bms = []
         odds = []
+        increments: list[Any] = []
+        # W4.3e — pull deterministic per-spin increment if profile provides
+        # `bet_table.increment_col` (IGT publishes this in the "Increment"
+        # column of the bet table; e.g. 0.003 for Wolf Run).
+        inc_col = bet_cfg.get("increment_col")
         for r in range(r0, r1):
             bm = n(rows, r, bet_cfg["mult_col"])
             if bm is None:
                 continue
             bms.append(bm)
             odds.append(n(rows, r, oc))
-        out["per_bet_multiplier"] = {"bet_multipliers": bms, "progressive_odds": odds}
+            if inc_col is not None:
+                increments.append(n(rows, r, inc_col))
+        out["per_bet_multiplier"] = {
+            "bet_multipliers": bms,
+            "progressive_odds": odds,
+        }
+        if increments:
+            out["per_bet_multiplier"]["increments"] = increments
 
     # Optional summary sheet pull
     if "summary_sheet" in cfg and "summary_label" in cfg:
