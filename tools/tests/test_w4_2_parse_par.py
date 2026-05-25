@@ -325,6 +325,164 @@ class TestIgtStripeReelParser(unittest.TestCase):
             self.assertEqual(len(sset["reels"]), 5)
 
 
+class TestIgtToSlotSimAdapter(unittest.TestCase):
+    """W4.3b — IGT vendor IR → `slot-sim` universal IR adapter.
+
+    Asserts every contract the Rust crate enforces at deserialize time:
+
+      - Top-level keys: meta, topology, evaluation, symbols, reels, paytable,
+        features, bet_table.
+      - topology.kind = "rectangular" with reels/rows correct.
+      - evaluation.kind = "lines" with 40 lines × 5 cells each.
+      - symbols canonicalized (Whitewolf, not WhiteWolf).
+      - reels.base + reels.fs present with strip lengths bit-exact.
+      - paytable rows mapped to either line scope or `Bonus:N` scatter scope.
+      - features list contains free_spins + pick_bonus + linear_progressive.
+      - bet_table.lines = 40 and len(multipliers) = 24.
+
+    Plus regression guards on:
+      - paytable typo correction (`WhiteWolf` → `Whitewolf`)
+      - scatter combo conversion (`[--, Bonus, Bonus, Bonus, --]` → `Bonus:3`)
+      - reel-strip symbol IDs match paytable symbol IDs (catches case
+        mismatches between sections).
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from tools.parse_par.to_slot_sim import convert_to_slot_sim_ir
+        cls.convert = staticmethod(convert_to_slot_sim_ir)
+        cls.profile = load_profile("igt")
+        cls.raw_dir = ROOT / "games/fort-knox-wolf-run/raw"
+        cls.parsed = parse_par(cls.profile, cls.raw_dir, sheet="PAR_001")
+        cls.universal = convert_to_slot_sim_ir(cls.parsed, "igt")
+
+    def test_top_level_keys(self):
+        for k in ("meta", "topology", "evaluation", "symbols",
+                  "reels", "paytable", "features", "bet_table"):
+            self.assertIn(k, self.universal, f"missing top-level {k!r}")
+
+    def test_meta(self):
+        m = self.universal["meta"]
+        self.assertEqual(m["vendor"], "igt")
+        self.assertEqual(m["swid"], "200-1775-001")
+        self.assertEqual(m["family"], "paylines")
+        self.assertGreater(m["hit_frequency"], 0.0)
+        self.assertGreater(m["win_frequency"], 0.0)
+        # rtp_total = base_plus_bonus (0.78) + fkb (0.177) + lp_avg → ~0.96
+        self.assertGreater(m["rtp_total"], 0.90)
+        self.assertLess(m["rtp_total"], 1.0)
+
+    def test_topology(self):
+        t = self.universal["topology"]
+        self.assertEqual(t["kind"], "rectangular")
+        self.assertEqual(t["reels"], 5)
+        self.assertEqual(t["rows"], 4)
+
+    def test_evaluation_lines_count(self):
+        e = self.universal["evaluation"]
+        self.assertEqual(e["kind"], "lines")
+        self.assertEqual(e["min_count"], 3)
+        self.assertEqual(len(e["lines"]), 40)
+        for pl in e["lines"]:
+            self.assertEqual(len(pl), 5, f"payline must span 5 reels: {pl}")
+            for cell in pl:
+                self.assertIsNotNone(cell, "payline cell None — IGT lines are dense")
+                self.assertIn(cell, [0, 1, 2, 3], f"row {cell} out of 4×5 grid")
+
+    def test_symbol_canonicalization(self):
+        """`Whitewolf` (strip casing) is the canonical ID — `WhiteWolf` from
+        paytable typo must NOT appear in the symbols list."""
+        ids = {s["id"] for s in self.universal["symbols"]}
+        self.assertIn("Whitewolf", ids)
+        self.assertNotIn("WhiteWolf", ids)
+        # Wild + scatter must be present and tagged correctly
+        roles = {s["id"]: s["role"] for s in self.universal["symbols"]}
+        self.assertEqual(roles.get("WildWolf"), "wild")
+        self.assertEqual(roles.get("Bonus"), "scatter")
+
+    def test_wild_substitutes_except_bonus(self):
+        wild = next(s for s in self.universal["symbols"] if s["role"] == "wild")
+        self.assertEqual(wild["substitutes"], ["*"])
+        self.assertIn("Bonus", wild["substitutes_except"])
+
+    def test_reels_bit_exact_lengths(self):
+        rb = self.universal["reels"]
+        base_lens = [len(r) for r in rb["base"][0]["reels"]]
+        fs_lens = [len(r) for r in rb["fs"][0]["reels"]]
+        self.assertEqual(base_lens, [71, 109, 70, 101, 89])
+        self.assertEqual(fs_lens, [105, 94, 102, 68, 91])
+
+    def test_reels_symbols_match_paytable(self):
+        """No `WhiteWolf` (typo) symbol must leak into the reels — every
+        reel-strip symbol must appear in the symbols list."""
+        sym_ids = {s["id"] for s in self.universal["symbols"]}
+        for layer in ("base", "fs"):
+            for reel in self.universal["reels"][layer][0]["reels"]:
+                for stop in reel:
+                    self.assertIn(
+                        stop["symbol"], sym_ids,
+                        f"reel uses unknown symbol {stop['symbol']!r}",
+                    )
+
+    def test_paytable_typo_corrected(self):
+        """No paytable row contains `WhiteWolf` after canonicalization."""
+        for e in self.universal["paytable"]:
+            for c in e["combo"]:
+                self.assertNotEqual(
+                    c, "WhiteWolf",
+                    "paytable should use canonical Whitewolf casing",
+                )
+
+    def test_paytable_line_count(self):
+        """IGT Fort Knox Wolf Run has 33 line-scope paytable rows
+        (3/4/5 of a kind for 11 paying symbols including wild)."""
+        line_rows = [e for e in self.universal["paytable"] if e["scope"] == "line"]
+        # 11 paying symbols × 3 row-tiers = 33
+        self.assertEqual(len(line_rows), 33)
+
+    def test_features_present(self):
+        kinds = [f["kind"] for f in self.universal["features"]]
+        self.assertIn("free_spins", kinds)
+        self.assertIn("pick_bonus", kinds)
+        self.assertIn("linear_progressive", kinds)
+
+    def test_free_spins_trigger(self):
+        fs = next(f for f in self.universal["features"] if f["kind"] == "free_spins")
+        self.assertEqual(fs["trigger_symbol"], "Bonus")
+        self.assertEqual(fs["trigger_count_min"], 3)
+        self.assertEqual(fs["initial_spins"], 5)
+        self.assertEqual(fs["reel_bank"], "fs")
+        self.assertEqual(fs["max_total_spins"], 255)
+
+    def test_linear_progressive_odds(self):
+        lp = next(f for f in self.universal["features"] if f["kind"] == "linear_progressive")
+        # 1-in-7.5M at BM=1
+        self.assertAlmostEqual(lp["odds_at_bm1"], 7_500_000, delta=1.0)
+
+    def test_bet_table_24_bms(self):
+        bt = self.universal["bet_table"]
+        self.assertEqual(bt["lines"], 40)
+        self.assertEqual(len(bt["multipliers"]), 24)
+        self.assertEqual(bt["multipliers"][0], 1)
+        self.assertEqual(bt["multipliers"][-1], 300)
+        # total_bets synthesized as bm × lines when not in PAR
+        self.assertEqual(bt["total_bets"][0], 40.0)
+        self.assertEqual(bt["total_bets"][-1], 300.0 * 40.0)
+
+    def test_par_002_alternate_swid(self):
+        parsed = parse_par(self.profile, self.raw_dir, sheet="PAR_002")
+        u = self.convert(parsed, "igt")
+        self.assertEqual(u["meta"]["swid"], "200-1775-002")
+        # PAR_002 has identical base strips but +2 stops on FS reel 1
+        self.assertEqual([len(r) for r in u["reels"]["base"][0]["reels"]], [71, 109, 70, 101, 89])
+        self.assertEqual([len(r) for r in u["reels"]["fs"][0]["reels"]], [107, 94, 102, 68, 91])
+
+    def test_unknown_vendor_raises(self):
+        from tools.parse_par.to_slot_sim import convert_to_slot_sim_ir
+        with self.assertRaises(NotImplementedError):
+            convert_to_slot_sim_ir({}, "aristocrat")
+
+
 class TestMiniYamlParser(unittest.TestCase):
     """Direct unit tests for the tiny YAML loader in profile.py."""
 

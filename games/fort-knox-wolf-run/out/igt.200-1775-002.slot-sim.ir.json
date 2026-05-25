@@ -1,0 +1,4523 @@
+{
+  "meta": {
+    "name": "Fort Knox Wolf Run",
+    "vendor": "igt",
+    "swid": "200-1775-002",
+    "family": "paylines",
+    "rtp_total": 0.9402110100299161,
+    "rtp_breakdown": {
+      "base_game": 0.6920810791174967,
+      "bonus": 0.07085079559120683,
+      "base_plus_bonus": 0.7629318747087035
+    },
+    "hit_frequency": 0.24430426,
+    "win_frequency": 0.114143134,
+    "notes": [
+      "Auto-mapped from IGT parse_par IR · SWID=200-1775-002 · W4.3b"
+    ]
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 4
+  },
+  "evaluation": {
+    "kind": "lines",
+    "lines": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        2,
+        1
+      ],
+      [
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        3,
+        2,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        2,
+        3,
+        3,
+        3,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        3,
+        3
+      ],
+      [
+        3,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        2,
+        1
+      ],
+      [
+        2,
+        3,
+        2,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        3,
+        2,
+        3,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        1,
+        0,
+        1
+      ],
+      [
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        3,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        1,
+        1,
+        2,
+        3,
+        3
+      ],
+      [
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        2,
+        2,
+        3,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        2,
+        3,
+        3
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        3,
+        3,
+        2,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        1,
+        2
+      ],
+      [
+        2,
+        3,
+        3,
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        2,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        3,
+        2
+      ],
+      [
+        3,
+        2,
+        1,
+        0,
+        1
+      ]
+    ],
+    "min_count": 3
+  },
+  "symbols": [
+    {
+      "id": "WildWolf",
+      "name": "WildWolf",
+      "role": "wild",
+      "substitutes": [
+        "*"
+      ],
+      "substitutes_except": [
+        "Bonus"
+      ]
+    },
+    {
+      "id": "DarkWolf",
+      "name": "DarkWolf",
+      "role": "hp"
+    },
+    {
+      "id": "Whitewolf",
+      "name": "Whitewolf",
+      "role": "hp"
+    },
+    {
+      "id": "BirdTotem",
+      "name": "BirdTotem",
+      "role": "hp"
+    },
+    {
+      "id": "BearTotem",
+      "name": "BearTotem",
+      "role": "hp"
+    },
+    {
+      "id": "Ace",
+      "name": "Ace",
+      "role": "lp"
+    },
+    {
+      "id": "King",
+      "name": "King",
+      "role": "lp"
+    },
+    {
+      "id": "Queen",
+      "name": "Queen",
+      "role": "lp"
+    },
+    {
+      "id": "Jack",
+      "name": "Jack",
+      "role": "lp"
+    },
+    {
+      "id": "Ten",
+      "name": "Ten",
+      "role": "lp"
+    },
+    {
+      "id": "Nine",
+      "name": "Nine",
+      "role": "lp"
+    },
+    {
+      "id": "Bonus",
+      "name": "Bonus",
+      "role": "scatter"
+    }
+  ],
+  "reels": {
+    "base": [
+      {
+        "set": 1,
+        "reels": [
+          [
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            }
+          ]
+        ]
+      }
+    ],
+    "base_weights": {
+      "weights": [
+        {
+          "set": 1,
+          "weight": 1
+        }
+      ],
+      "total": 1,
+      "initial_set": 1
+    },
+    "fs": [
+      {
+        "set": 1,
+        "reels": [
+          [
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Bonus",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            }
+          ],
+          [
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "WildWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "DarkWolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Whitewolf",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "BirdTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "King",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Queen",
+              "weight": 1
+            },
+            {
+              "symbol": "Jack",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "BearTotem",
+              "weight": 1
+            },
+            {
+              "symbol": "Ten",
+              "weight": 1
+            },
+            {
+              "symbol": "Nine",
+              "weight": 1
+            },
+            {
+              "symbol": "Ace",
+              "weight": 1
+            }
+          ]
+        ]
+      }
+    ],
+    "fs_weights": {
+      "weights": [
+        {
+          "set": 1,
+          "weight": 1
+        }
+      ],
+      "total": 1,
+      "initial_set": 1
+    }
+  },
+  "paytable": [
+    {
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf"
+      ],
+      "pays": 1000.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "--"
+      ],
+      "pays": 200.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "WildWolf",
+        "WildWolf",
+        "WildWolf",
+        "--",
+        "--"
+      ],
+      "pays": 50.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf"
+      ],
+      "pays": 400.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "--"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "DarkWolf",
+        "DarkWolf",
+        "DarkWolf",
+        "--",
+        "--"
+      ],
+      "pays": 25.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf"
+      ],
+      "pays": 400.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf",
+        "--"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Whitewolf",
+        "Whitewolf",
+        "Whitewolf",
+        "--",
+        "--"
+      ],
+      "pays": 25.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem"
+      ],
+      "pays": 250.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "--"
+      ],
+      "pays": 75.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BirdTotem",
+        "BirdTotem",
+        "BirdTotem",
+        "--",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem"
+      ],
+      "pays": 250.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "--"
+      ],
+      "pays": 75.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "BearTotem",
+        "BearTotem",
+        "BearTotem",
+        "--",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace"
+      ],
+      "pays": 150.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "Ace",
+        "--"
+      ],
+      "pays": 50.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ace",
+        "Ace",
+        "Ace",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "King",
+        "King"
+      ],
+      "pays": 150.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "King",
+        "--"
+      ],
+      "pays": 50.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "King",
+        "King",
+        "King",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "Queen",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Queen",
+        "Queen",
+        "Queen",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "Jack",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Jack",
+        "Jack",
+        "Jack",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "Ten",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Ten",
+        "Ten",
+        "Ten",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine"
+      ],
+      "pays": 100.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "Nine",
+        "--"
+      ],
+      "pays": 20.0,
+      "scope": "line",
+      "marker": ""
+    },
+    {
+      "combo": [
+        "Nine",
+        "Nine",
+        "Nine",
+        "--",
+        "--"
+      ],
+      "pays": 5.0,
+      "scope": "line",
+      "marker": ""
+    }
+  ],
+  "features": [
+    {
+      "kind": "free_spins",
+      "trigger_symbol": "Bonus",
+      "trigger_count_min": 3,
+      "initial_spins": 5,
+      "retrigger_spins": 5,
+      "max_total_spins": 255,
+      "reel_bank": "fs"
+    },
+    {
+      "kind": "pick_bonus",
+      "trigger_symbol": "Bonus",
+      "trigger_count_min": 3,
+      "awards": [
+        {
+          "label": "FortKnox_avg",
+          "weight": 1,
+          "pays_coins": 986.8205582356183
+        }
+      ]
+    },
+    {
+      "kind": "linear_progressive",
+      "odds_at_bm1": 7499999.999999999,
+      "top_award_coins": null
+    }
+  ],
+  "bet_table": {
+    "lines": 40,
+    "multipliers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      15,
+      20,
+      25,
+      30,
+      40,
+      50,
+      70,
+      80,
+      100,
+      120,
+      150,
+      160,
+      200,
+      300
+    ],
+    "total_bets": [
+      40.0,
+      80.0,
+      120.0,
+      160.0,
+      200.0,
+      240.0,
+      280.0,
+      320.0,
+      360.0,
+      400.0,
+      600.0,
+      800.0,
+      1000.0,
+      1200.0,
+      1600.0,
+      2000.0,
+      2800.0,
+      3200.0,
+      4000.0,
+      4800.0,
+      6000.0,
+      6400.0,
+      8000.0,
+      12000.0
+    ]
+  }
+}

@@ -20,6 +20,7 @@ from pathlib import Path
 
 from .profile import load_profile, list_profiles, PROFILE_DIR
 from .core import parse_par
+from .to_slot_sim import convert_to_slot_sim_ir
 
 
 def _iter_sheets(profile, raw_dir: Path, explicit: list[str] | None):
@@ -49,6 +50,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--profile-dir", help="extra vendor-profile search dir")
     ap.add_argument("--quiet", action="store_true", help="suppress progress logs")
     ap.add_argument("--list-profiles", action="store_true", help="list known vendor profiles and exit")
+    ap.add_argument(
+        "--emit-slot-sim",
+        action="store_true",
+        help="ALSO emit <game_id>.<swid>.slot-sim.ir.json (W4.3b adapter)",
+    )
     args = ap.parse_args(argv)
 
     if args.list_profiles:
@@ -97,6 +103,17 @@ def main(argv: list[str] | None = None) -> int:
         written += 1
         if not args.quiet:
             print(f"[{profile.vendor}] {sheet} → {path.name} ({len(text):,} bytes, SWID={swid})")
+
+        if args.emit_slot_sim:
+            universal = convert_to_slot_sim_ir(ir, profile.vendor)
+            ss_path = out_dir / f"{game_id}.{swid}.slot-sim.ir.json"
+            ss_text = json.dumps(universal, indent=2, ensure_ascii=False, default=str)
+            ss_path.write_text(ss_text)
+            if not args.quiet:
+                print(
+                    f"[{profile.vendor}] {sheet} → {ss_path.name} "
+                    f"({len(ss_text):,} bytes, slot-sim universal IR)"
+                )
     if not args.quiet:
         print(f"Wrote {written} IR file(s) to {out_dir}")
     return 0
