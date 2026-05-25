@@ -80,7 +80,7 @@
 | P3.2 | **W5.2 — Per-game scaffold codegen** (`--scaffold DIR` → README + RUN + CERT + IR copies) | ✅ `tools/slot_build/__main__.py::write_scaffold` + `slugify` helper; 3 new unit tests; smoke run on Fort Knox + CE COPY TEST produces self-contained game folders with auto-generated certification summary |
 | P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
 | P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for IGT + L&W; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
-| P3.4 | **W5.4 — IR → Studio UI skeleton** (Svelte/Phaser scaffold sa reel viz + paytable + features panel) | ⏳ |
+| P3.4 | **W5.4 — IR → Studio UI skeleton** (vanilla HTML/JS scaffold sa reel viz + paytable + features panel) | ✅ `tools/slot_build/__main__.py::write_studio_codegen` + `slot-build --codegen-studio DIR` flag; emits 5-file per-game `studio/` scaffold (index.html + app.js + app.css + IR JSON + README) with Mulberry32 spin engine + paytable evaluator + live RTP/hit ticker + Auto-100 + Reset; playable in any browser via `python -m http.server`; 5/5 W5.4 tests (artifacts + DOM hooks + Node app.js smoke + Zod IR validation); IGT + L&W codegen both verified |
 | P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ✅ `tools/slot_build/verify.py` (3-tier CI matrix: quick 1M/5%, standard 100M/0.5%, strict 1B/0.05%); `scripts/ci_mc_verify.sh` CI orchestrator (bash-3 portable); exit-code contract (0/1/2); JSON report w/ per-game drift + overall verdict; 13/13 W5.5 tests; **discovered real bug** — IGT PAR_002 FK award size 986.82 vs PAR_001's 26.59 (W5.5a follow-up). Quick tier on shipped 3 games: L&W ✅, IGT PAR_001 ✅, IGT PAR_002 ❌ (caught by gate as designed). |
 | P3.6 | **W5.6 — Auto cert paket** (HSM seed + RNG 90B + PAR commitment hash + audit log → ZIP) | ⏳ |
 | P3.7 | **W5.7 — `slot-build` integration tests** (E2E sa CE + Fort Knox + 1 sintetički Megaways) | ⏳ |
@@ -162,7 +162,7 @@
 |:---:|---|---|---|
 | 🥇 1 | **~~W5.5a — IGT PAR_002 FK award bug~~** | _fixed_ | ✅ root cause was stale IR (generated pre-W4.3c parser); regen via `slot-build` → 3/3 games pass quick gate |
 | 🥈 2 | ~~W4.3e — IGT base eval gap audit~~ | _done_ | ✅ **0.03 % gap** — pays_marker="*" parser + scatter combo via existing CompiledPaytable scatter path |
-| 🥉 3 | **W5.4 — IR → Studio UI skeleton** | 120-180 min | Svelte scaffold sa reel viz + paytable; mirror W5.3 codegen pattern |
+| 🥉 3 | ~~W5.4 — IR → Studio UI skeleton~~ | _done_ | ✅ vanilla HTML/JS scaffold (no build step); 5 tests; both vendors verified |
 
 ### ✅ Just landed
 
