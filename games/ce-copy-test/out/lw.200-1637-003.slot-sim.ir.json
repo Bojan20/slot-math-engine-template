@@ -2,20 +2,20 @@
   "meta": {
     "name": "CE COPY TEST",
     "vendor": "lw",
-    "swid": "200-1637-001",
+    "swid": "200-1637-003",
     "family": "paylines",
-    "rtp_total": 0.960000018370437,
+    "rtp_total": 0.931000016534967,
     "rtp_breakdown": {
-      "base_game": 0.419000003813447,
+      "base_game": 0.390000001977976,
       "cash_eruption_from_base": 0.409104936666577,
       "free_spins": 0.0700000107591113,
       "cash_eruption_from_fs": 0.0618950673666612,
-      "total": 0.960000018370437
+      "total": 0.931000016534967
     },
-    "hit_frequency": 0.19030599,
-    "win_frequency": 0.08936075,
+    "hit_frequency": 0.19066094,
+    "win_frequency": 0.08770657,
     "notes": [
-      "Auto-mapped from L&W parse_par IR · SWID=200-1637-001 · W4.4",
+      "Auto-mapped from L&W parse_par IR · SWID=200-1637-003 · W4.4",
       "HoldAndWin (Cash Eruption) emitted as structural stub; full pages mapping lands in W4.5."
     ],
     "sampling_mode": "physical_strip",
@@ -44779,35 +44779,35 @@
       "weights": [
         {
           "set": 1,
-          "weight": 2333
+          "weight": 1757
         },
         {
           "set": 2,
-          "weight": 7
+          "weight": 6
         },
         {
           "set": 3,
-          "weight": 12060
+          "weight": 13162
         },
         {
           "set": 4,
-          "weight": 2100
+          "weight": 1575
         },
         {
           "set": 5,
-          "weight": 33695
+          "weight": 40152
         },
         {
           "set": 6,
-          "weight": 4347
+          "weight": 2840
         },
         {
           "set": 7,
-          "weight": 35595
+          "weight": 38562
         },
         {
           "set": 8,
-          "weight": 33663
+          "weight": 25746
         },
         {
           "set": 9,
@@ -44899,19 +44899,19 @@
         },
         {
           "set": 31,
-          "weight": 34491
+          "weight": 34506
         },
         {
           "set": 32,
-          "weight": 34509
+          "weight": 34494
         },
         {
           "set": 33,
-          "weight": 34507
+          "weight": 34510
         },
         {
           "set": 34,
-          "weight": 34493
+          "weight": 34490
         },
         {
           "set": 35,

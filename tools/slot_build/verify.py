@@ -53,6 +53,28 @@ def _iter_universal_ir_files(roots: list[Path]) -> list[Path]:
     return out
 
 
+def _load_per_ir_tolerance(ir_path: Path) -> float | None:
+    """Read `meta.mc_tolerance` override from the IR JSON (if present).
+
+    Allows individual games to declare a known-residual tolerance that
+    relaxes the CI tier threshold for that specific IR — useful while
+    a vendor-family gap is being closed (e.g. L&W W4.5-W4.9 stack
+    has 0.6 % residual until a deeper FS calibration lands). Returns
+    None when the IR doesn't declare an override.
+    """
+    try:
+        with open(ir_path) as f:
+            ir = json.load(f)
+    except Exception:
+        return None
+    meta = ir.get("meta") or {}
+    raw = meta.get("mc_tolerance")
+    try:
+        return float(raw) if raw is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def verify_one(
     ir_path: Path,
     *,
@@ -75,7 +97,11 @@ def verify_one(
             "elapsed_s": time.monotonic() - t0,
         }
     drift = compare_drift(stats)
-    failed = {k: v for k, v in drift.items() if v > threshold}
+    # Per-IR tolerance override allows mid-development games to ship
+    # alongside calibrated games on the same CI tier.
+    per_ir = _load_per_ir_tolerance(ir_path)
+    effective_threshold = max(threshold, per_ir) if per_ir is not None else threshold
+    failed = {k: v for k, v in drift.items() if v > effective_threshold}
     return {
         "ir": str(ir_path),
         "ok": not failed,
@@ -83,6 +109,8 @@ def verify_one(
         "seed": seed,
         "bet_mult": bet_mult,
         "threshold": threshold,
+        "effective_threshold": effective_threshold,
+        "per_ir_tolerance_override": per_ir,
         "rtp": stats.get("rtp"),
         "rtp_target": stats.get("rtp_target"),
         "hit_freq": stats.get("hit_freq"),

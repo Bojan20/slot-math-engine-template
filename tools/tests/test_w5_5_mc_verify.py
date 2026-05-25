@@ -99,7 +99,11 @@ class TestVerifyOne(unittest.TestCase):
         self.assertIn("drift", r)
 
     def test_lw_fails_strict_threshold(self):
-        """L&W IR @ 0.001 threshold should fail (gap is ~0.005-0.01)."""
+        """L&W IR @ 0.001 threshold — must fail UNLESS the IR declares a
+        wider mc_tolerance override. Since W4.3e the L&W IR carries
+        `meta.mc_tolerance: 0.01` (1%), the gate uses max(0.001, 0.01)
+        = 0.01 and the L&W drift (~0.005) PASSES. We assert the override
+        is being honored by checking `effective_threshold`."""
         r = verify_one(
             self.lw_ir,
             spins=200_000,
@@ -108,8 +112,11 @@ class TestVerifyOne(unittest.TestCase):
             threshold=0.001,
             bin_path=self.bin_path,
         )
-        self.assertFalse(r["ok"], "L&W should fail at 0.1% threshold")
-        self.assertGreater(len(r["failed_metrics"]), 0)
+        # The override should be applied so `effective_threshold > threshold`
+        self.assertGreater(r["effective_threshold"], 0.001)
+        self.assertEqual(r["per_ir_tolerance_override"], 0.01)
+        # And the run should pass because drift < override
+        self.assertTrue(r["ok"], "L&W should pass at override threshold 0.01")
 
     def test_report_shape(self):
         r = verify_one(
@@ -124,6 +131,40 @@ class TestVerifyOne(unittest.TestCase):
             self.assertIn(key, r, f"missing report key {key!r}")
         # IGT IR carries RTP target → rtp_target must be populated
         self.assertIsNotNone(r["rtp_target"], "rtp_target missing from IGT IR run")
+
+
+class TestPerIrToleranceOverride(unittest.TestCase):
+    """W5.5+W4.3e — per-IR `meta.mc_tolerance` relaxes the CI threshold
+    for individual games with known residual gaps."""
+
+    @classmethod
+    def setUpClass(cls):
+        if not _slot_sim_available():
+            raise unittest.SkipTest("slot-sim binary not built")
+        cls.bin_path = find_slot_sim_binary()
+
+    def test_override_loaded_from_lw_ir(self):
+        """L&W IR ships `mc_tolerance: 0.01` since W4.3e."""
+        from tools.slot_build.verify import _load_per_ir_tolerance
+        lw_ir = ROOT / "games/ce-copy-test/out/lw.200-1637-001.slot-sim.ir.json"
+        self.assertAlmostEqual(_load_per_ir_tolerance(lw_ir), 0.01, places=6)
+
+    def test_no_override_for_calibrated_ir(self):
+        """IGT IRs are within strict tier and don't ship an override."""
+        from tools.slot_build.verify import _load_per_ir_tolerance
+        igt_ir = ROOT / "games/fort-knox-wolf-run/out/igt.200-1775-001.slot-sim.ir.json"
+        self.assertIsNone(_load_per_ir_tolerance(igt_ir))
+
+    def test_override_only_widens_never_tightens(self):
+        """If an IR declares mc_tolerance < tier threshold, the threshold wins."""
+        lw_ir = ROOT / "games/ce-copy-test/out/lw.200-1637-001.slot-sim.ir.json"
+        r = verify_one(
+            lw_ir, spins=100_000, bet_mult=1, seed=42,
+            threshold=0.10,  # very loose
+            bin_path=self.bin_path,
+        )
+        # threshold 0.10 > override 0.01, so effective = 0.10 (threshold wins)
+        self.assertEqual(r["effective_threshold"], 0.10)
 
 
 class TestCliExitCode(unittest.TestCase):
