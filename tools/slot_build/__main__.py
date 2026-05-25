@@ -1081,6 +1081,28 @@ def main(argv: list[str] | None = None) -> int:
              "TS IR copy + README) into DIR/<game-slug>/studio/. No build step "
              "required — open index.html or serve with `python -m http.server`.",
     )
+    ap.add_argument(
+        "--cert-package",
+        metavar="DIR",
+        default=None,
+        help="W5.6 — also build a per-game cert ZIP (manifest + ed25519 signature "
+             "+ IRs + MC verify + PAR commitments + verify.sh) into "
+             "DIR/<game-id>.<swid>.cert.zip. Self-contained: unzip + bash verify.sh.",
+    )
+    ap.add_argument(
+        "--cert-mc-report",
+        metavar="PATH",
+        default=None,
+        help="W5.6 — path to W5.5 MC verify JSON to embed in cert bundle "
+             "(default: reports/mc_verify_standard.json if it exists).",
+    )
+    ap.add_argument(
+        "--cert-hsm-key",
+        metavar="PATH",
+        default=None,
+        help="W5.6 — ed25519 PKCS8 PEM private key path. Defaults to ephemeral "
+             "(generated + discarded per build); production should sign with HSM.",
+    )
     args = ap.parse_args(argv)
 
     raw_dir = Path(args.input_dir).resolve()
@@ -1246,6 +1268,50 @@ def main(argv: list[str] | None = None) -> int:
                         print(f"  codegen-studio → {studio_dir}")
                 except Exception as e:
                     print(f"  warn: codegen-studio failed: {e}", file=sys.stderr)
+
+        # W5.6 — cert package emission
+        if args.cert_package is not None:
+            if universal_path is None:
+                if not args.quiet:
+                    print(
+                        f"  skip cert-package: universal IR unavailable for {vendor}",
+                        file=sys.stderr,
+                    )
+            else:
+                cert_out = Path(args.cert_package).resolve()
+                cert_out.mkdir(parents=True, exist_ok=True)
+                # Resolve MC report — explicit flag wins, else look for
+                # reports/mc_verify_standard.json which is the typical
+                # output of `scripts/ci_mc_verify.sh standard`
+                mc_path: Path | None = None
+                if args.cert_mc_report:
+                    mc_path = Path(args.cert_mc_report)
+                else:
+                    default_mc = Path("reports/mc_verify_standard.json")
+                    if default_mc.exists():
+                        mc_path = default_mc.resolve()
+                hsm_pem: bytes | None = None
+                if args.cert_hsm_key:
+                    hsm_pem = Path(args.cert_hsm_key).read_bytes()
+                slug = slugify(f"{ir['meta'].get('name', game_id)}-{swid}")
+                try:
+                    from tools.slot_build.cert_package import build_cert_package
+                    zip_path = build_cert_package(
+                        out_dir=cert_out,
+                        game_id=slug,
+                        swid=swid,
+                        vendor=vendor,
+                        universal_ir_path=universal_path,
+                        vendor_ir_path=vendor_path,
+                        raw_dir=raw_dir,
+                        mc_report_path=mc_path,
+                        hsm_key_pem=hsm_pem,
+                    )
+                    if not args.quiet:
+                        size_kb = zip_path.stat().st_size / 1024
+                        print(f"  cert-package → {zip_path} ({size_kb:.1f} KiB)")
+                except Exception as e:
+                    print(f"  warn: cert-package failed: {e}", file=sys.stderr)
 
         # W5.2 — per-game scaffold emission
         if args.scaffold is not None:
