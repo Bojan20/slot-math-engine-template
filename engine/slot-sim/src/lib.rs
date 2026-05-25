@@ -31,3 +31,7 @@ pub mod evaluate;
 pub mod features;
 pub mod sim;
 pub mod stats;
+
+// W7.2 — Quasi-Monte Carlo (Halton/Sobol/Lattice) for tail variance reduction
+// + bonus-buy EV convergence acceleration. See module docs for rationale.
+pub mod qmc;

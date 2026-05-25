@@ -3,7 +3,7 @@
 // Lines: classic L→R paylines with Wild substitution + scope=line/scatter/pattern.
 // Ways/Megaways/Cluster scaffolded — to be filled when first PAR arrives.
 
-use crate::ir::{Evaluation, Ir, PaytableEntry, SymbolRole};
+use crate::ir::{Evaluation, Ir, SymbolRole};
 use crate::reels::Grid;
 use std::collections::HashMap;
 
@@ -140,8 +140,8 @@ pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
     let mut total_coins = 0.0f64;
     for pl in lines_ref {
         let mut cells: Vec<&str> = Vec::with_capacity(pl.len());
-        for r in 0..pl.len() {
-            let row = pl[r].expect("payline row");
+        for (r, cell) in pl.iter().enumerate() {
+            let row = cell.expect("payline row");
             cells.push(grid.cell(r, row as usize));
         }
         // First non-Wild, non-special symbol = anchor
