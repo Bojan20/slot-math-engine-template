@@ -196,11 +196,15 @@ pub fn run_features(
                 wild_symbol,
                 on_reels,
                 only_if_winning,
+                expand_only_when_base_no_win,
+                subset_search,
             } => {
                 let params = wild_expand::WildExpandParams {
                     wild_symbol,
                     on_reels,
                     only_if_winning: *only_if_winning,
+                    expand_only_when_base_no_win: *expand_only_when_base_no_win,
+                    subset_search: *subset_search,
                 };
                 let r = wild_expand::run(&params, ir, grid, base, pt, rng);
                 let c = r.coins;

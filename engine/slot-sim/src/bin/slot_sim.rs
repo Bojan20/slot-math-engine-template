@@ -72,6 +72,19 @@ fn main() {
         println!("  {:24}  {:.6}", "TOTAL", base_rtp + feat_sum);
         println!();
     }
+    // W4.9d — Event-count breakdown helps audit per-feature firing rates
+    // against Excel hit frequencies. Each event tag emitted by a feature
+    // runner is counted; the 1-in-N column shows the rate.
+    if !stats.event_count.is_empty() {
+        println!("Event counts (per-spin firing rates):");
+        let mut events: Vec<(&String, &u64)> = stats.event_count.iter().collect();
+        events.sort_by(|a, b| b.1.cmp(a.1));
+        for (k, v) in &events {
+            let per = if **v > 0 { n / **v as f64 } else { f64::INFINITY };
+            println!("  {:32}  count={:>10}  1 in {:>10.2}", k, v, per);
+        }
+        println!();
+    }
     println!("Volatility distribution:");
     let print = |label: &str, hits: u64| {
         let per = if hits > 0 { n / hits as f64 } else { f64::INFINITY };

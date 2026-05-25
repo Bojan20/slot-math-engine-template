@@ -21,6 +21,7 @@ fn wild_expand_feature_emitted() {
                 wild_symbol,
                 on_reels,
                 only_if_winning,
+                ..
             } => Some((wild_symbol.clone(), on_reels.clone(), *only_if_winning)),
             _ => None,
         })

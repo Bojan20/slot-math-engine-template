@@ -159,6 +159,12 @@ fn default_scope() -> String {
     "line".to_string()
 }
 
+/// W4.9d — `Feature::WildExpand.subset_search` defaults to true so legacy
+/// IRs (pre-W4.9d) keep the W4.9b subset-MAX behavior.
+fn default_true() -> bool {
+    true
+}
+
 // ───────────────────────────── FEATURES ─────────────────────────────
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -255,6 +261,18 @@ pub enum Feature {
         on_reels: Vec<u32>,
         /// Only expand if it produces a winning combination.
         only_if_winning: bool,
+        /// W4.9d — Restrict expansion to spins where base grid has NO
+        /// line wins (closer interpretation of L&W CE "expansion fires
+        /// only when it results in a winning combo" rule). Default
+        /// false to preserve W4.9b.
+        #[serde(default)]
+        expand_only_when_base_no_win: bool,
+        /// W4.9d — true (default): subset-MAX search over all 2^n−1
+        /// expansion subsets and keep the delta-maximizing one.
+        /// false: deterministic "expand ALL eligible reels" (L&W
+        /// canonical behavior — every Wild expands when fired).
+        #[serde(default = "default_true")]
+        subset_search: bool,
     },
     /// Pattern win: 3 anchor symbols on reel 0 + wild expansion on reels 1..4.
     PatternWin {
