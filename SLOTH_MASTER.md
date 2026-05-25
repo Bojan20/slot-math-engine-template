@@ -39,7 +39,7 @@
 | P1.5 | Jurisdiction profiles: UKGC, MGA, GLI-16, GLI-19, NV, NJ + auto-fix | ✅ | `rust-sim/src/jurisdiction/` (Faza 11.9) |
 | P1.6 | **P1.6 — Closed-form solver expansion** to 100+ patterns | 🚧 | gap analysis u `docs/INDUSTRY_PATTERN_CATALOG.md` |
 | P1.7 | **P1.7 — Jurisdiction profiles expansion** (PA, MI, ON, BC, AAMS, Quebec, SE, IT, DE GlüStV) | 🚧 | 6 nedostaje |
-| P1.8 | **P1.8 — Math invariant continuous fuzzer** (random IR → must-pass invariants) | ⏳ | new |
+| P1.8 | **P1.8 — Math invariant continuous fuzzer** (random IR → must-pass invariants) | ✅ | `tools/diagnostics/ir_invariant_fuzzer.py` — perturbs shipped baseline IRs via 3 strategies (identity / shuffle_reel_stop_weights / disable_one_feature) and asserts I1-I7: engine never panics (I1), RTP/hit/win finite no-NaN no-inf (I2), all in sane ranges hit≥win (I3), determinism same-seed bit-identical (I4), per-feature breakdown sums (I5), hit_freq≤1 (I6), paytable×2 → RTP×~2 within [1.3, 2.7] tolerance (I7). 13/13 P1.8 tests pass (invariant checkers + perturbation strategies + E2E on IGT + L&W IRs). CLI: `python -m tools.diagnostics.ir_invariant_fuzzer <ir.json> --runs N --spins M`. Both shipped vendors pass all invariants (9 perturbed runs × 2 cross-cutting = 11 checks each). |
 
 **Acceptance Phase 1:** 100+ solvers + 12+ jurisdikcija + 0 invariant violations na 10M random IR fuzz.
 
