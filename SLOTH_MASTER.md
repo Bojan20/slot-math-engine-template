@@ -66,11 +66,11 @@
 ---
 
 ### **PHASE 3 — Auto-Build Pipeline** _(`slot-build` end-to-end)_
-**Status:** 🔴 **0% done** — sledeća glavna inicijativa posle Phase 2
+**Status:** 🟢 **15% done** (W5.1 CLI scaffold landed)
 
 | # | Wave | Status |
 |---|---|:---:|
-| P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → detect format → dispatch parser → IR) | ⏳ |
+| P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → vendor auto-detect → parse → universal IR → optional MC) | ✅ `tools/slot_build/` + 10 unit tests; IGT auto-detected on Fort Knox + L&W on CE; MC drift comparison RTP/hit/win vs Excel target |
 | P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
 | P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ⏳ |
 | P3.4 | **W5.4 — IR → Studio UI skeleton** (Svelte/Phaser scaffold sa reel viz + paytable + features panel) | ⏳ |
@@ -153,9 +153,9 @@
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W5.1 — `slot-build` CLI scaffold** | 60-90 min | `<input>` → detect format → dispatch parser → IR; entry point |
-| 🥈 2 | **W4.4 — L&W → slot-sim adapter** | 90-120 min | Mirror IGT path for CE COPY TEST: CE-specific HoldAndWin + GRAND + Cash Eruption mapping |
-| 🥉 3 | **W4.3e — Base eval gap audit** | 60-90 min | hunt the last 0.9 % RTP: wild-expand candidate / scatter pay edge / per-line vs Excel formula |
+| 🥇 1 | **W4.4 — L&W → slot-sim adapter** | 90-120 min | Mirror IGT path for CE COPY TEST: CE-specific HoldAndWin + GRAND + Cash Eruption mapping |
+| 🥈 2 | **W4.3e — Base eval gap audit** | 60-90 min | hunt the last 0.9 % RTP: wild-expand candidate / scatter pay edge / per-line vs Excel formula |
+| 🥉 3 | **W5.2 — IR → Rust engine codegen** | 90-120 min | Tera template iz IR → `games/{slug}/src/` (Phase 3.2) |
 
 ### ✅ Just landed
 
@@ -164,7 +164,8 @@
 | W4.3a | `d393d25` | `_parse_reel_sets_stripe()` + IGT profile v2 + 10 stripe unit tests; strip lengths bit-exact vs Excel Total row |
 | W4.3b | `269641a` | `tools/parse_par/to_slot_sim.py` + paylines_layout in `igt.yaml` + Rust roundtrip test (6/6); IGT IR deserializes to `slot_sim::ir::Ir` and engine runs without panic |
 | W4.3c | `19c977d` | Feature dispatch live: FreeSpins / PickBonus(Bernoulli) / LinearProgressive runners + FK Trigger&Award table parser + Wild-prefix MAX fix; RTP 0.9523 vs 0.9614 (Δ0.91 %), hit-freq EXACT, +4 Rust integration tests |
-| W4.3d | _(pending)_ | Virtual-reel infrastructure (`Grid::spin_virtual`, `Meta.sampling_mode`); empirical conclusion that IGT Excel math IS physical-strip-based — kept off by default |
+| W4.3d | `a196a8e` | Virtual-reel infrastructure (`Grid::spin_virtual`, `Meta.sampling_mode`); empirical conclusion that IGT Excel math IS physical-strip-based — kept off by default |
+| W5.1 | _(pending)_ | `slot-build` CLI scaffold — vendor auto-detect (IGT/L&W), parse_par → universal IR → optional MC drift gate; 10/10 unit tests |
 
 **Posle W4.3c**: ulazimo u **Phase 3 — Auto-Build Pipeline** (W5.1 `slot-build` CLI scaffold).
 
