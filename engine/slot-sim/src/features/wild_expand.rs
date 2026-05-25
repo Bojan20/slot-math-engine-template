@@ -70,22 +70,44 @@ pub fn run(
         return out;
     }
 
-    let mut expanded = grid.clone();
-    for r in &to_expand {
-        for row in 0..rows {
-            expanded.cells[*r][row] = wild_id.to_string();
+    // W4.9b — L&W "results in a winning combo" rule: expansion fires
+    // only when it would create a new ≥3-of-a-kind line where the base
+    // grid wasn't already paying. If the base line already wins,
+    // expansion that simply upgrades 3OAK→4OAK→5OAK is allowed because
+    // it preserves the winning combo (the combo IS a winning one) —
+    // L&W pays the higher count.
+    //
+    // Subset MAX preserves the canonical optimal expansion across the
+    // <=4 candidate reels.
+    let base_line_coins = base.line_coins;
+    let mut best_extra = 0.0_f64;
+    let mut expansions_used: Vec<usize> = Vec::new();
+    let n = to_expand.len();
+    for mask in 1..(1u32 << n) {
+        let mut g = grid.clone();
+        let mut chosen: Vec<usize> = Vec::new();
+        for (i, &reel) in to_expand.iter().enumerate() {
+            if (mask >> i) & 1 == 1 {
+                for row in 0..rows {
+                    g.cells[reel][row] = wild_id.to_string();
+                }
+                chosen.push(reel);
+            }
+        }
+        let exp_win = evaluate_lines(&g, ir, pt);
+        let delta = exp_win.line_coins - base_line_coins;
+        if delta > best_extra {
+            best_extra = delta;
+            expansions_used = chosen;
         }
     }
 
-    let expanded_win = evaluate_lines(&expanded, ir, pt);
-    let delta = expanded_win.line_coins - base.line_coins;
-
-    if params.only_if_winning && delta <= 0.0 {
+    if params.only_if_winning && best_extra <= 0.0 {
         return out;
     }
-    if delta > 0.0 {
-        out.coins += delta;
-        out.events.push(format!("wild_expand:{}", to_expand.len()));
+    if best_extra > 0.0 {
+        out.coins += best_extra;
+        out.events.push(format!("wild_expand:{}", expansions_used.len()));
     }
     out
 }

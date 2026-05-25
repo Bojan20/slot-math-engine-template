@@ -101,12 +101,14 @@ class TestVerifyOne(unittest.TestCase):
     def test_lw_fails_strict_threshold(self):
         """L&W IR @ 0.001 threshold — must fail UNLESS the IR declares a
         wider mc_tolerance override. Since W4.3e the L&W IR carries
-        `meta.mc_tolerance: 0.01` (1%), the gate uses max(0.001, 0.01)
-        = 0.01 and the L&W drift (~0.005) PASSES. We assert the override
-        is being honored by checking `effective_threshold`."""
+        `meta.mc_tolerance: 0.01` (1%); W4.9b closed the math gap to
+        ~0.002 RTP at 100M spins, but with only 2M spins MC noise can
+        push drift above 0.005. The override is bumped to 0.01 to cover
+        that variance band reliably at this test size.
+        """
         r = verify_one(
             self.lw_ir,
-            spins=200_000,
+            spins=2_000_000,
             bet_mult=1,
             seed=42,
             threshold=0.001,
@@ -116,7 +118,7 @@ class TestVerifyOne(unittest.TestCase):
         self.assertGreater(r["effective_threshold"], 0.001)
         self.assertEqual(r["per_ir_tolerance_override"], 0.01)
         # And the run should pass because drift < override
-        self.assertTrue(r["ok"], "L&W should pass at override threshold 0.01")
+        self.assertTrue(r["ok"], f"L&W should pass at override threshold 0.01, got drift={r['drift']}")
 
     def test_report_shape(self):
         r = verify_one(
@@ -186,10 +188,12 @@ class TestCliExitCode(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, f"expected exit 0; stderr={proc.stderr}")
 
     def test_exit_one_on_fail(self):
-        # Use ultra-tight threshold guaranteed to fail
+        # Use ultra-tight threshold guaranteed to fail. The IGT IR has no
+        # mc_tolerance override (unlike L&W), so the strict 0.0001
+        # threshold survives override application and the gate fails.
         proc = subprocess.run(
             [sys.executable, "-m", "tools.slot_build.verify",
-             str(ROOT / "games/ce-copy-test/out/lw.200-1637-001.slot-sim.ir.json"),
+             str(ROOT / "games/fort-knox-wolf-run/out/igt.200-1775-001.slot-sim.ir.json"),
              "--spins", "100000", "--threshold", "0.0001",
              "--quiet"],
             capture_output=True, text=True, cwd=str(ROOT), timeout=60,

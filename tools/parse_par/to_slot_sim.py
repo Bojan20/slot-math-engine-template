@@ -716,34 +716,38 @@ def _lw_paytable(parsed: dict) -> list[dict]:
     return out
 
 
+def _filter_fs_paytable_4plus(rows: list[dict]) -> list[dict]:
+    """Keep only 4-of-a-kind and 5-of-a-kind line rows for L&W FS.
+
+    L&W CE PAR-001: "In the Free Spins Bonus, only 4 and 5 of a kind are
+    paid." Filter line-scope entries whose combo has fewer than 4
+    non-blank cells matching the anchor. Scatter / pattern entries pass
+    through unchanged.
+    """
+    out = []
+    for entry in rows:
+        if entry.get("scope") != "line":
+            out.append(entry)
+            continue
+        combo = entry.get("combo") or []
+        first = combo[0] if combo else ""
+        count = sum(1 for c in combo if c == first)
+        if count >= 4:
+            out.append(entry)
+    return out
+
+
 def _lw_paytable_rows(rows: list[dict]) -> list[dict]:
     """Translate a raw paytable row list (FS or base) through the same
     pattern/scatter/line dispatch as `_lw_paytable`.
 
-    W4.7 — for each base-symbol combo (Red7×N etc.) also emit the
-    equivalent Big_X combo with the same pays so FS internal eval matches
-    when the linked reels show stacked Big symbols.
+    W4.9b — Big_X equivalence is handled by the slot-sim evaluator
+    (`canon_cell` strips the `Big ` prefix when matching). The adapter
+    no longer duplicates rows with Big_X combos — that was overpaying
+    because both base and duplicate-Big rows could fire on the same
+    canonical match.
     """
-    base_rows = _lw_paytable({"paytable": rows})
-    out = list(base_rows)
-    # Big_X equivalence: clone every line-scope entry, replacing each non-`--`
-    # cell with its Big counterpart.
-    for entry in base_rows:
-        if entry.get("scope") != "line":
-            continue
-        combo = entry.get("combo", [])
-        big_combo = [
-            f"Big {c}" if (c and c != "--" and not c.startswith("Big ")) else c
-            for c in combo
-        ]
-        if big_combo != combo:
-            out.append({
-                "combo": big_combo,
-                "pays": float(entry["pays"]),
-                "scope": "line",
-                "marker": entry.get("marker", "") or "",
-            })
-    return out
+    return _lw_paytable({"paytable": rows})
 
 
 def _parse_lw_any_n(cell: str) -> tuple[int, str] | None:
@@ -781,21 +785,31 @@ def _lw_features(parsed: dict) -> list[dict]:
     fs_summary = fs.get("bonus_summary") or {}
     fs_pt_raw = fs.get("fs_paytable") or []
     if fs_summary or fs_pt_raw:
-        # Standard L&W CE trigger: 3 Volcano scatter → 8 FS, 2× retrigger
-        # cap depends on per-game config; we use 250 as a safe ceiling.
+        # W4.9b — L&W CE COPY TEST FS rules from PAR-001:
+        #   - 3 Volcano scatter → 6 initial FS
+        #   - Big Volcano retriggers +3 FS (max 15 total per bonus)
+        #   - reels 2/3/4 linked
+        #   - FS pays only 4-of-a-kind and 5-of-a-kind
         feature = {
             "kind": "free_spins",
             "trigger_symbol": "Volcano",
             "trigger_count_min": 3,
-            "initial_spins": 8,
-            "retrigger_spins": 5,
-            "max_total_spins": 250,
+            "initial_spins": 6,
+            "retrigger_spins": 3,
+            "max_total_spins": 15,
             "reel_bank": "fs",
             "linked_reels": [1, 2, 3],
+            "retrigger_symbol": "Big Volcano",
+            "retrigger_count_min": 1,
         }
-        # W4.7 — FS-specific paytable override
+        # W4.7 — FS-specific paytable override.
+        # W4.9b — FS pays only 4OAK + 5OAK; filter 3OAK rows from the
+        # paytable so the slot-sim line evaluator doesn't pay 3-of-a-kind
+        # wins inside FS.
         if fs_pt_raw:
-            feature["fs_paytable"] = _lw_paytable_rows(fs_pt_raw)
+            fs_rows_all = _lw_paytable_rows(fs_pt_raw)
+            fs_rows = _filter_fs_paytable_4plus(fs_rows_all)
+            feature["fs_paytable"] = fs_rows
         features.append(feature)
 
     # Wild Expansion (W4.9 — L&W CE base-game wild expand on reels 2-5)

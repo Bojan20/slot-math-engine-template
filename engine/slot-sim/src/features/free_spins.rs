@@ -40,6 +40,12 @@ pub struct FreeSpinsParams<'a> {
     /// (multiplier of TOTAL BET). IGT Fort Knox Wolf Run pays 2× total
     /// bet AND awards FS on a "Bonus×3 middle reels" trigger.
     pub scatter_pay_total_bet: f64,
+    /// W4.9b — FS retrigger uses a separate symbol/count when the FS
+    /// reel strip swaps to Big_X variants (L&W CE: Big Volcano retriggers
+    /// instead of Volcano scatter). Falls back to `trigger_symbol` /
+    /// `trigger_count_min` when `None`.
+    pub retrigger_symbol: Option<&'a str>,
+    pub retrigger_count_min: Option<u32>,
 }
 
 /// W4.8 — config for triggering Cash Eruption inside FS spins.
@@ -139,9 +145,12 @@ pub fn run(
         // proper total-bet-× contribution.
         out.coins += w.scatter_total_bet_x * (lines as f64);
 
-        // Retrigger check on this FS spin
-        let rc = *w.role_counts.get(params.trigger_symbol).unwrap_or(&0);
-        if rc >= params.trigger_count_min && params.retrigger_spins > 0 {
+        // Retrigger check on this FS spin (W4.9b — uses separate symbol/
+        // count when the FS reel strip swaps to Big_X variants).
+        let retrig_sym = params.retrigger_symbol.unwrap_or(params.trigger_symbol);
+        let retrig_min = params.retrigger_count_min.unwrap_or(params.trigger_count_min);
+        let rc = *w.role_counts.get(retrig_sym).unwrap_or(&0);
+        if rc >= retrig_min && params.retrigger_spins > 0 {
             let cap_left = cap.saturating_sub(total_executed + remaining);
             let add = params.retrigger_spins.min(cap_left);
             if add > 0 {

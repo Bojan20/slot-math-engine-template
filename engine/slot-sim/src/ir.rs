@@ -223,6 +223,14 @@ pub enum Feature {
         // Linked-block configuration (CE has reels 2/3/4 linked).
         #[serde(default)]
         linked_reels: Option<Vec<u32>>,
+        /// W4.9b — retrigger detection uses a separate symbol when the FS
+        /// reel strip swaps to Big_X family (L&W CE: base trigger Volcano,
+        /// FS retrigger Big Volcano). Falls back to `trigger_symbol` when
+        /// `None`.
+        #[serde(default)]
+        retrigger_symbol: Option<String>,
+        #[serde(default)]
+        retrigger_count_min: Option<u32>,
         /// W4.7 — Optional FS-specific paytable override. When `Some`,
         /// the runner compiles a separate `CompiledPaytable` and uses
         /// it for line/scatter eval inside FS spins instead of falling

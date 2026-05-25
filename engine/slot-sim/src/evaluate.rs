@@ -117,6 +117,17 @@ fn count_on_grid(grid: &Grid, sym: &str) -> u32 {
     c
 }
 
+/// W4.9b — Canonical symbol name for line eval matching.
+/// L&W CE FS spins use "Big X" stacked symbols on the linked block; the
+/// FS paytable keys on "X". Stripping the "Big " prefix lets a single
+/// paytable row pay both Red7×5 (base) and (Big Red7 + Red7 + Red7 +
+/// Red7 + Red7)-style FS wins where the linked block fills three middle
+/// reels with Big Red7.
+#[inline]
+fn canon_cell(cell: &str) -> &str {
+    cell.strip_prefix("Big ").unwrap_or(cell)
+}
+
 /// Universal line evaluator. Wild substitution per symbol-role definitions.
 pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
     let mut w = SpinWin::default();
@@ -144,12 +155,20 @@ pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
             let row = cell.expect("payline row");
             cells.push(grid.cell(r, row as usize));
         }
+        // W4.9b — canonicalize Big_X → X for matching purposes so the
+        // FS linked block (which lands "Big Red7" etc.) lines up with
+        // base paytable rows keyed on "Red7".
+        let canon: Vec<&str> = cells.iter().map(|c| canon_cell(c)).collect();
         // First non-Wild, non-special symbol = anchor
         let mut anchor: Option<&str> = None;
-        for c in &cells {
-            let r = role.get(c).copied().unwrap_or_default();
+        for (i, _c) in cells.iter().enumerate() {
+            let r = role
+                .get(canon[i])
+                .or_else(|| role.get(cells[i]))
+                .copied()
+                .unwrap_or_default();
             if r != SymbolRole::Wild && r != SymbolRole::Scatter && r != SymbolRole::Bonus && r != SymbolRole::Cash {
-                anchor = Some(*c);
+                anchor = Some(canon[i]);
                 break;
             }
         }
@@ -171,13 +190,22 @@ pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
             continue;
         }
         let sym = anchor.unwrap();
-        let sym_role = role.get(sym).copied().unwrap_or_default();
+        let sym_role = role
+            .get(sym)
+            .copied()
+            .unwrap_or_default();
         let wild_subs = sym_role != SymbolRole::Cash && sym_role != SymbolRole::Bonus;
-        // Anchor-led count (allows wild substitutions in the run).
+        // Anchor-led count (allows wild substitutions in the run; W4.9b
+        // also accepts canonicalized cells so "Big Red7" matches anchor
+        // "Red7").
         let mut anchor_count = 0u32;
-        for c in &cells {
-            let r = role.get(c).copied().unwrap_or_default();
-            if *c == sym || (wild_subs && r == SymbolRole::Wild) {
+        for (i, c) in cells.iter().enumerate() {
+            let r = role
+                .get(canon[i])
+                .or_else(|| role.get(*c))
+                .copied()
+                .unwrap_or_default();
+            if canon[i] == sym || *c == sym || (wild_subs && r == SymbolRole::Wild) {
                 anchor_count += 1;
             } else {
                 break;
@@ -216,13 +244,27 @@ pub fn evaluate_lines(grid: &Grid, ir: &Ir, pt: &CompiledPaytable) -> SpinWin {
         }
     }
     w.line_coins = total_coins;
-    // Scatter pays: count each scatter-role symbol on grid; look up pay
+    // Scatter pays: count each scatter-role symbol on grid; look up
+    // best matching entry from the paytable. A scatter entry with
+    // `(sym, k)` pays when `c >= k`; we take the HIGHEST `k <= c` that
+    // has an entry (matches industry standard "tiered scatter pays" —
+    // e.g. 3 scatters pays 2×, 4 pays 5×, 5 pays 25×; landing 5 always
+    // takes the 5-tier pay). Drops the previous hard floor of c >= 3 so
+    // L&W FS "Big Volcano:1" entries pay when even one block lands.
     for s in ir.symbols.iter().filter(|s| s.role == SymbolRole::Scatter) {
         let c = count_on_grid(grid, &s.id);
-        if c >= 3 {
-            if let Some(p) = pt.scatter.get(&(s.id.clone(), c)) {
-                w.scatter_total_bet_x += p;
+        if c == 0 {
+            continue;
+        }
+        let mut best_pay: f64 = 0.0;
+        for k in (1..=c).rev() {
+            if let Some(&p) = pt.scatter.get(&(s.id.clone(), k)) {
+                best_pay = p;
+                break;
             }
+        }
+        if best_pay > 0.0 {
+            w.scatter_total_bet_x += best_pay;
         }
     }
     // Role counts for feature pass

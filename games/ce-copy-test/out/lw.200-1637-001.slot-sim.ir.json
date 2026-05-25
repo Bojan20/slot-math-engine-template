@@ -66337,15 +66337,17 @@
       "kind": "free_spins",
       "trigger_symbol": "Volcano",
       "trigger_count_min": 3,
-      "initial_spins": 8,
-      "retrigger_spins": 5,
-      "max_total_spins": 250,
+      "initial_spins": 6,
+      "retrigger_spins": 3,
+      "max_total_spins": 15,
       "reel_bank": "fs",
       "linked_reels": [
         1,
         2,
         3
       ],
+      "retrigger_symbol": "Big Volcano",
+      "retrigger_count_min": 1,
       "fs_paytable": [
         {
           "combo": [
@@ -66570,222 +66572,6 @@
           "pays": 1.0,
           "scope": "scatter",
           "marker": "*"
-        },
-        {
-          "combo": [
-            "Big Red7",
-            "Big Red7",
-            "Big Red7",
-            "Big Red7",
-            "Big Red7"
-          ],
-          "pays": 200.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Red7",
-            "Big Red7",
-            "Big Red7",
-            "Big Red7",
-            "--"
-          ],
-          "pays": 10.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Blue7",
-            "Big Blue7",
-            "Big Blue7",
-            "Big Blue7",
-            "Big Blue7"
-          ],
-          "pays": 100.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Blue7",
-            "Big Blue7",
-            "Big Blue7",
-            "Big Blue7",
-            "--"
-          ],
-          "pays": 10.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Bell",
-            "Big Bell",
-            "Big Bell",
-            "Big Bell",
-            "Big Bell"
-          ],
-          "pays": 25.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Bell",
-            "Big Bell",
-            "Big Bell",
-            "Big Bell",
-            "--"
-          ],
-          "pays": 10.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Melon",
-            "Big Melon",
-            "Big Melon",
-            "Big Melon",
-            "Big Melon"
-          ],
-          "pays": 25.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Melon",
-            "Big Melon",
-            "Big Melon",
-            "Big Melon",
-            "--"
-          ],
-          "pays": 10.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Grapes",
-            "Big Grapes",
-            "Big Grapes",
-            "Big Grapes",
-            "Big Grapes"
-          ],
-          "pays": 20.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Grapes",
-            "Big Grapes",
-            "Big Grapes",
-            "Big Grapes",
-            "--"
-          ],
-          "pays": 5.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Plum",
-            "Big Plum",
-            "Big Plum",
-            "Big Plum",
-            "Big Plum"
-          ],
-          "pays": 15.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Plum",
-            "Big Plum",
-            "Big Plum",
-            "Big Plum",
-            "--"
-          ],
-          "pays": 5.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Orange",
-            "Big Orange",
-            "Big Orange",
-            "Big Orange",
-            "Big Orange"
-          ],
-          "pays": 15.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Orange",
-            "Big Orange",
-            "Big Orange",
-            "Big Orange",
-            "--"
-          ],
-          "pays": 5.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Lemon",
-            "Big Lemon",
-            "Big Lemon",
-            "Big Lemon",
-            "Big Lemon"
-          ],
-          "pays": 15.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Lemon",
-            "Big Lemon",
-            "Big Lemon",
-            "Big Lemon",
-            "--"
-          ],
-          "pays": 5.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Cherry",
-            "Big Cherry",
-            "Big Cherry",
-            "Big Cherry",
-            "Big Cherry"
-          ],
-          "pays": 15.0,
-          "scope": "line",
-          "marker": ""
-        },
-        {
-          "combo": [
-            "Big Cherry",
-            "Big Cherry",
-            "Big Cherry",
-            "Big Cherry",
-            "--"
-          ],
-          "pays": 5.0,
-          "scope": "line",
-          "marker": ""
         }
       ]
     },
