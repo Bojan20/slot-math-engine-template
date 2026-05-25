@@ -21,7 +21,7 @@
 | 7 | 10⁹ spinova / 60s na M2 Max — sustained MC throughput | ✅ landed (Wave 3) |
 | 8 | Studio UI: A/B compare, real-time MC, IR editor, vendor + jurisdiction switcher | 🚧 Phase 5 |
 | 9 | GLI-16 auto cert paket (HSM seed, RNG 90B, PAR commitment, audit log) | ✅ **DONE** — W5.6 (ed25519 sig + IRs + MC + PAR commitments + verify.sh) |
-| 10 | Genetic optimizer: target RTP+vol → 1000 varijanti za 24h sa Pareto fitness | ⏳ Phase 6 (W7.1) |
+| 10 | Genetic optimizer: target RTP+vol → 1000 varijanti za 24h sa Pareto fitness | 🟡 W7.1 evolution kernel ✅; Pareto multi-objective + 1000-variant batch = W7.4 |
 
 ---
 
@@ -135,7 +135,7 @@
 | # | Wave | Status |
 |---|---|:---:|
 | P6.1 | **W7.2 — Quasi-Monte Carlo sweeper** (Sobol/Halton/Lattice, 10× brže za tail) | ✅ (`05ef411`) |
-| P6.2 | **W7.1 — Self-Evolving Math Genome** (DEAP/evolution-rs, reels=DNK, paytable=enzimi, features=traits) | ⏳ industry-first |
+| P6.2 | **W7.1 — Self-Evolving Math Genome** (μ+λ evolution, paytable/reel/feature genome) | ✅ industry-first | `tools/evolution/genetic_solver.py` — Genome dataclass (paytable_scale + reel_weight_jitter + feature_trigger_scale + feature_avg_pay_scale, each bounded); `evolve_to_target(baseline, target_rtp, population, generations, spins_per_eval)` runs μ+λ greedy ES with annealing noise. Engine MC integration via slot-sim binary. CLI: `python -m tools.evolution.genetic_solver <ir> --target-rtp 0.95 --population 10 --generations 20`. 12/12 tests (genome apply semantics, mutation bounds × 500 iter, E2E evolution, IR JSON round-trip). E2E smoke: Vendor B baseline 0.96 RTP → target 0.70 → evolved genome paytable_scale=0.92 + trigger_scale=0.43 → measured 0.714 (gap 0.014 in 8 generations × 8 pop × 10K spins, ~10 s wall). |
 | P6.3 | **W7.3 — SMT/Z3 solver** za egzaktan RTP-target IR sinteza (paytable + reel weights) | ⏳ industry-first |
 | P6.4 | **W7.4 — Multi-objective Pareto** (RTP × volatility × hit-rate × max-win → frontier) | ⏳ |
 | P6.5 | **W7.5 — Verifiable PAR provenance** (Merkle commitment + signature chain + reproducible build) | ⏳ industry-first |
