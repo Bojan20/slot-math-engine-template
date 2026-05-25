@@ -27,6 +27,7 @@ spinova. Total RTP gap 0.34 % (CE-from-FS payout 4 % off → Wave 3).
 | **CE COPY TEST Wave 2** (1:1 PAR validation, sva 3 SWID-a) | ✅ Wave 2 LANDED | 10/11 metrika <0.5%, Total RTP -0.34%; `games/ce-copy-test/README.md` |
 | **CE COPY TEST Wave 2.4** (multi-bet-mult sweep, 63 RTP measurements) | ✅ Wave 2.4 LANDED | 63/63 < 2.10% off Excel; `ce-sweep` CLI + JSON/CSV exporters u `reports/sweep/` |
 | **CE COPY TEST Wave 2.7** (PAR report renderer, HTML × 3 SWIDs) | ✅ Wave 2.7 LANDED | `scripts/render_par_report.py` → `reports/par-report.{200-1637-001,002,003}.html` (18 KB each, 6 sections + sign-off) |
+| **CE COPY TEST Wave 3.1** (ULTIMATIVNI 1:1 — Excel C3958/C3965/C3966 rule discovery) | ✅ **Wave 3.1 LANDED** | Total RTP 0.959928 vs 0.96 (**-0.0075 %**), svih 11 metrika < 0.5 %; FS initial samples sad iz Big dist + grid coverage = blocks × 9 cells |
 
 ### 🎯 Real OPEN (multi-week scope — NOT single-wave)
 

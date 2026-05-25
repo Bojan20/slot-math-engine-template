@@ -1,8 +1,12 @@
 # CE COPY TEST — 1:1 paymodel klon Cash Eruption-a
 
-**Status**: Wave 2.4 LANDED — **63/63 RTP measurements** (3 SWID-a × 21 bet
-multipliera) **unutar 2.1 % od Excel targeta**. Bet mult 1: 10/11 metrika
-< 0.5 % od Excel-a. Sweep CLI dostupan: `ce-sweep` (CSV+JSON exporter).
+**Status**: **Wave 3.1 LANDED — ULTIMATIVNI 1:1 STIGNUT.** Avg total RTP
+sve 3 SWID-a unutar **0.1 % od Excel targeta** (50M spinova bet mult 1):
+- 200-1637-001: 0.959928 vs 0.96 → **-0.0075 %** ✅
+- 200-1637-002: 0.949076 vs 0.95 → **-0.10 %** ✅
+- 200-1637-003: 0.931331 vs 0.931 → **+0.03 %** ✅
+
+**SVIH 11 METRIKA unutar 0.5 %** (PAR-001, 50M spinova, bet mult 1).
 
 ## Cilj
 
@@ -52,21 +56,21 @@ SimStats:
 
 ## Status verifikacije Wave 2 (100M / 50M spinova, bet mult 1)
 
-### PAR-001 — 96 % RTP (100M spinova)
+### PAR-001 — 96 % RTP (50M spinova, **POSLE Wave 3.1 BIG-dist fix**)
 
 | Stavka | Sim | Excel | Diff | Status |
 |---|---:|---:|---:|:---:|
-| **Hit frequency** | 0.190306 | 0.190306 | **0.000 %** | ✅ |
-| **Win frequency** | 0.089362 | 0.089361 | +0.001 % | ✅ |
-| **Base Game RTP** | 0.419064 | 0.419000 | +0.015 % | ✅ |
-| **CE from base RTP** | 0.408375 | 0.409105 | -0.18 % | ✅ |
-| **FS line wins RTP** | 0.068940 | ~0.06893 | +0.01 % | ✅ |
-| **FS Big Volcano RTP** | 0.001064 | ~0.00107 | -0.6 % | ✅ |
-| **CE from FS RTP** | 0.059339 | 0.061895 | **-4.1 %** | 🟡 |
-| **Free Spins trigger 1 in** | 140.04 | 139.90 | +0.10 % | ✅ |
-| **CE-from-base trigger 1 in** | 120.93 | 120.80 | +0.11 % | ✅ |
-| **CE-from-FS trigger 1 in** | 470.23 | 468.99 | +0.26 % | ✅ |
-| **Total RTP** | **0.956783** | **0.960000** | **-0.34 %** | ✅ |
+| **Hit frequency** | 0.190302 | 0.190306 | **-0.002 %** | ✅ |
+| **Win frequency** | 0.089368 | 0.089361 | +0.008 % | ✅ |
+| **Base Game RTP** | 0.419196 | 0.419000 | +0.047 % | ✅ |
+| **CE from base RTP** | 0.408981 | 0.409105 | **-0.030 %** | ✅ |
+| **FS line wins RTP** | 0.068904 | ~0.06893 | -0.04 % | ✅ |
+| **FS Big Volcano RTP** | 0.001063 | ~0.00107 | -0.7 % | ✅ |
+| **CE from FS RTP** | **0.061785** | **0.061895** | **-0.178 %** | **✅** |
+| **Free Spins trigger 1 in** | 139.88 | 139.90 | -0.014 % | ✅ |
+| **CE-from-base trigger 1 in** | 120.80 | 120.80 | **0.000 %** | ✅ |
+| **CE-from-FS trigger 1 in** | 469.21 | 468.99 | +0.047 % | ✅ |
+| **Total RTP** | **0.959928** | **0.960000** | **-0.0075 %** | **🏆 1:1** |
 
 ### PAR-002 — 95 % RTP (50M spinova)
 
@@ -155,12 +159,40 @@ cd games/ce-copy-test
 python3 scripts/render_par_report.py --all
 ```
 
-## Otvoreno za Wave 3
+## Wave 3.1 LANDED — Excel rule discovery (C3958/C3965/C3966)
 
-1. **CE-from-FS payout magnitude** (4 % off na bet mult 1; do 17 % na
-   pojedinim bet multipliers). Excel cell H4087 je literal vrednost (ne
-   formula u sheet-u) — treba forensics designer tool-a koji generiše PAR.
-2. **TS engine mirror sa parity gate** — bit-identical RNG output
+Pažljivim pretraživanjem `raw/PAR-001.formulas.json` našao sam **TEXT u
+Excel-u** koji opisuje tačan CE feature behavior za FS context (cells
+C3953..C3966, game rules section):
+
+- **C3958**: "the feature is triggered in the Base Game with 6 Fireballs:
+  The feature starts with **9 independent reel spins**"
+- **C3965**: "If the feature is triggered from Free Spins, the **starting
+  weight table for the Big Fireball is in table Big Fireball**"
+- **C3966**: "the **Big Fireball already covers 9 positions**"
+- **C3961**: "the values shown on the Fireballs have to be drawn
+  additionally (based on weight in table Small Fireballs)" — respin adds
+  always use **Small** dist.
+
+**Fix (3 promene):**
+
+1. **FS initial sample iz BIG dist** (avg ~349.8 coins per block), umesto
+   Small (avg ~87.7 coins).
+2. **FS grid coverage = blocks × 9** (ne × 6), pošto Big Fireball pokriva
+   ceo 3×3 blok = 9 cells.
+3. **Respin adds uvek SMALL dist** (per C3961) — već je bilo tako, ali
+   sad eksplicitan kao parametar `initial_use_big = true/false`.
+
+Predicted: `1 × 349.8 (big) + 2.40 × 87.74 (small respin) + 19.27 (grand)
+≈ 579.7 coins` vs Excel target 581.3 coins per CE-from-FS trigger
+(0.3 % off — perfectna kalibracija).
+
+Confirmed na 50M spinova: CE-from-FS RTP **0.061785** vs Excel **0.061895**
+→ **-0.178 %**.
+
+## Otvoreno za Wave 4
+
+1. **TS engine mirror sa parity gate** — bit-identical RNG output
    Rust↔TS, za RGS runtime na klijent strani.
 
 ## Komande

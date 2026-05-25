@@ -200,15 +200,20 @@ pub fn run_free_spins(
         // Linked stop = 1 block max; if a second event ever occurs (it
         // cannot with current reel-set design), each adds another 6.
         let fb_blocks = linked_block_landed(&grid, "Big Fireball");
-        let fb_grid_cells = (fb_blocks * 6).min(14);
+        // Per Excel C3966: "Big Fireball already covers 9 positions" — 1
+        // block = 9 grid cells for respin table lookup. Trigger gate is
+        // ≥6 (per C3944), which 1 block (9 cells) trivially satisfies.
+        let fb_grid_cells = (fb_blocks * 9).min(14);
         if fb_grid_cells >= 6 {
             if let Some(ce) = ce_all.by_bm.get(&bet_multiplier) {
-                // FS: 1 block = 1 coin sample (visual unit) BUT covers 6 grid
-                // cells for the respin table lookup.
+                // FS: 1 block = 1 coin sample drawn from BIG dist (per
+                // Excel C3965), grid coverage = 9 cells per block. Respin
+                // adds always sample from SMALL dist (per C3961).
                 let ce_res = run_cash_eruption(
                     ce,
                     fb_blocks,       // initial coin samples = # blocks
-                    fb_grid_cells,   // grid coverage for respin keying
+                    fb_grid_cells,   // grid coverage = blocks × 9
+                    true,            // initial_use_big = true (FS uses Big)
                     CeContext::FreeSpins,
                     rng,
                 );

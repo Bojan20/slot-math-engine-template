@@ -107,11 +107,13 @@ impl<'a> Engine<'a> {
             if bw.fireball_count >= 6 {
                 s.ce_from_base_triggers += 1;
                 if let Some(ce) = ce {
-                    // Base: each cell = 1 sample = 1 grid coverage unit.
+                    // Base: each cell = 1 sample = 1 grid coverage unit;
+                    // initial samples from SMALL dist (per Excel C3961).
                     let r = run_cash_eruption(
                         ce,
                         bw.fireball_count,
                         bw.fireball_count,
+                        false, // initial_use_big = false (Base uses Small)
                         CeContext::Base,
                         &mut rng,
                     );

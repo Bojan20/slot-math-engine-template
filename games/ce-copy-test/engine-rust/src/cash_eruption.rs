@@ -293,22 +293,36 @@ pub struct CeResult {
 
 /// Run the Cash Eruption hold-and-win feature.
 ///
-/// `initial_samples` = number of coin values to sample on the trigger spin.
-///                     • Base game: equals the # Fireball cells landed
-///                       (each cell holds one independent coin value).
-///                     • FS: equals the number of Big Fireball BLOCKS
-///                       landed (one block on the linked reels = one
-///                       visual Fireball symbol = one coin value sampled,
-///                       even though it visually fills 6 grid cells).
-/// `initial_landed` = grid coverage in cells used for respin table lookup
-///                    (the respin tables are indexed by total Fireball cell
-///                    coverage 6..14). Base: same as `initial_samples`.
-///                    FS: `n_blocks × 6` (each block covers 6 cells).
-/// `ctx`            = base/FS only used for GRAND probability branch.
+/// Per Excel PAR-001 row 3953..3966 (game rules for CE feature):
+///   "C3958: E.g., the feature is triggered in the Base Game with 6
+///    Fireballs: The feature starts with 9 independent reel spins (and 3
+///    remaining Cash Eruption spins)."
+///   "C3965: If the feature is triggered from Free Spins, the starting
+///    weight table for the Big Fireball is in table Big Fireball"
+///   "C3966: since the feature starts with 6 independent reel spins (the
+///    Big Fireball already covers 9 positions)."
+///   "C3961: If one or more Fireballs land in view, the values (coin
+///    values or prizes) shown on the Fireballs have to be drawn
+///    additionally (based on weight in table Small Fireballs)."
+///
+/// Concretely:
+///   • Base: 6+ Fireballs landed (1 cell each); each cell draws a coin
+///     value from the SMALL distribution. Grid coverage = # cells.
+///   • FS: 1 Big Fireball BLOCK landed; covers **9** grid cells (3×3);
+///     draws **1 coin value from the BIG distribution** for the entire
+///     block; respin adds always draw from SMALL distribution.
+///
+/// `initial_samples` = # coin draws on trigger (base=cells; FS=blocks).
+/// `initial_landed`  = grid coverage for respin table lookup
+///                     (base=cells; FS=blocks × 9).
+/// `initial_use_big` = if true, sample from BIG dist for INITIAL draws
+///                     (FS only); respin adds always use SMALL.
+/// `ctx`             = base/FS only used for GRAND probability branch.
 pub fn run_cash_eruption(
     ce: &CompiledCe,
     initial_samples: u32,
     initial_landed: u32,
+    initial_use_big: bool,
     ctx: CeContext,
     rng: &mut Prng,
 ) -> CeResult {
@@ -328,18 +342,21 @@ pub fn run_cash_eruption(
     }
     // Step 2: Pool select (low / med / high) once per feature.
     let pool = ce.set_pool.pick(rng);
-    // Coin distribution: BOTH contexts use the Small Fireball table.
-    // Cross-checked against Excel "Average Coin Value" row 4083: small
-    // fireball 44.17/80.00/216.68 ↔ weighted by Fireballs Set Weights
-    // (low/med/high) gives 87.74 — matches both base and FS RTP
-    // decomposition exactly.
-    let dist = &ce.small_dist;
+    // Step 3: Accumulate coin value of initial Fireballs. Sample dist
+    // depends on context: base uses SMALL (per cell), FS uses BIG (per
+    // block, since 1 Big Fireball covers 9 cells with a single shared
+    // coin value per PAR rule C3965).
+    let initial_dist = if initial_use_big {
+        &ce.big_dist
+    } else {
+        &ce.small_dist
+    };
+    // Respin adds ALWAYS use SMALL distribution per PAR rule C3961.
+    let respin_dist = &ce.small_dist;
     let _ = ctx; // ctx retained for grand-prob branch above
-    // Step 3: Accumulate coin value of initial Fireballs (sample once per
-    // visible Fireball *unit*: per cell in base; per block in FS).
     let mut payout = 0.0f64;
     for _ in 0..initial_samples {
-        payout += dist.sample(rng, &pool) as f64;
+        payout += initial_dist.sample(rng, &pool) as f64;
     }
     // Step 4: Respin loop — start with 3 remaining; if at least 1 new
     // Fireball lands, reset to 3 (per hold-and-win convention).
@@ -371,9 +388,9 @@ pub fn run_cash_eruption(
             remaining -= 1;
             continue;
         }
-        // Award coin value for each newly landed Fireball.
+        // Award coin value for each newly landed Fireball (small dist).
         for _ in 0..n_add {
-            payout += dist.sample(rng, &pool) as f64;
+            payout += respin_dist.sample(rng, &pool) as f64;
         }
         landed = (landed + n_add).min(15); // 5×3 grid cap
         remaining = 3; // reset
