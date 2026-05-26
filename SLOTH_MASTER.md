@@ -249,10 +249,18 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W50 — Live RGS Connector** | ~45 min | TCP/WebSocket gateway that streams W19 telemetry from a running engine instance into W29 rtp-monitor in real time |
-| 🥈 2 | **W51 — Cert XML Schema v2 (Jurisdiction-Tagged Provenance)** | ~30 min | extends `urn:slotmath:cert:v1` to per-jurisdiction provenance branches (UKGC, MGA, GLI) within a single XML — single ZIP for multi-territory release |
-| 🥉 3 | **W52 — Plugin Marketplace Verifier** | ~30 min | end-to-end harness: `slot-plugin-bundle build` → registry round-trip → `slot-bundle-verify` w/ sig + manifest re-check on download |
+| 🥇 1 | **W53 — Multi-territory Cert Builder** | ~30 min | end-to-end `slot-multi-territory` CLI chains `slot-cert-xml-v2` + `slot-jurisdiction-check` per profile + `slot-marketplace-verify` into one ZIP for cross-jurisdiction release |
+| 🥈 2 | **W54 — Real-time Drift Alert Hub** | ~45 min | W50 connector → threshold-based alerts → email/webhook hook + Slack-shape JSON payload (no actual outbound — sink interface only) |
+| 🥉 3 | **W55 — Plugin Marketplace Listing UI** | ~45 min | HTML/JS browser dashboard (no build step) for `FilesystemMarketplace` registry; lists handles + per-plugin manifest preview + verify-now button |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
+
+### ✅ Most-recent landings
+
+| Wave | Commit | Δ |
+|---|---|---|
+| **W50** | `4aeeb78` | Live RGS Connector — NDJSON tail + TCP gateway → rtp_monitor (16 tests) |
+| **W51** | `88bc421` | Cert XML v2 (urn:slotmath:cert:v2) — Multi-Jurisdiction provenance branches (11 tests) |
+| **W52** | `88bc421` | Plugin Marketplace Verifier — publish/download/verify round-trip (7 tests) |
 
 ### ✅ Just landed (2026-05-26 marathon session, **906 → 1008 tests, 67 → 100 kernels, 28 new wave-ove**)
 
