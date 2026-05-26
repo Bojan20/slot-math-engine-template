@@ -81,6 +81,8 @@ slot-studio-extend = "tools.studio_ext.__main__:main"
 # ─── W6.3 / W6.6 — LLM-assisted GDD synthesis + review UI ──────────────
 slot-gdd-llm = "tools.gdd_extract.llm_assist:main"
 slot-gdd-review-ui = "tools.gdd_extract.review_ui:main"
+# ─── W4.9 — Vendor parity doctor (HTML/JSON/MD dashboard)
+slot-par-doctor = "tools.diagnostics.par_doctor:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

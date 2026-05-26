@@ -189,7 +189,6 @@ class TestRoundtripMeta(unittest.TestCase):
 
 class TestDeterminism(unittest.TestCase):
     def test_same_seed_same_bytes(self):
-        profile = load_profile("vendor_c")
         with tempfile.TemporaryDirectory() as d1, \
                 tempfile.TemporaryDirectory() as d2:
             p1 = _gen_par("vendor_c", 42, 0.95, Path(d1))
