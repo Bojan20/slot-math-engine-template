@@ -249,18 +249,21 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W62 — Telemetry → Drift Hub Bridge** | ~30 min | `slot-telemetry-bridge` consumes a live RGS NDJSON (W50) feed, runs each spin through `rtp_monitor.update_from_spin`, fans every emitted snapshot to W54 drift hub — closes the live-monitoring loop. |
-| 🥈 2 | **W63 — Catalog Diff Reporter** | ~30 min | `slot-catalog-diff` compares two `INDEX.json` snapshots (W61); emits added/removed kernels + field-schema migrations + per-kernel docstring drift. Drop-in CI gate for marketplace consumers. |
-| 🥉 3 | **W64 — Pilot Sign-off Report** | ~45 min | `slot-pilot-signoff` consumes `ONBOARD_REPORT.md` (W59) + `cert.v2.xml` (W51) + compliance JSON (W53) and emits a regulator-ready ANSI-formatted text report. |
+| 🥇 1 | **W65 — Marketplace Plugin Signing CLI** | ~30 min | `slot-plugin-sign` produces ed25519 signatures over a published plugin ZIP, drops a `.sig` sidecar that the marketplace verifier already understands. Closes the publisher-side signing gap so W52 verifier exercises full sig roundtrip. |
+| 🥈 2 | **W66 — Drift Replay Theatre** | ~30 min | `slot-drift-replay` replays a historical NDJSON spin feed at configurable speed-up factor against the W62 bridge — lets ops debug a past incident step-by-step with throttled timestamps. |
+| 🥉 3 | **W67 — Cert Bundle SBOM** | ~45 min | `slot-cert-sbom` emits a CycloneDX-shape JSON listing every `tools.*` module + version + SHA-256 hashed against the running checkout — supply-chain audit artifact for regulator submission. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W59** | _this commit_ | Vendor Onboarding Wizard — scaffold + synth IR + cert in one shot (6 tests) |
-| **W60** | _this commit_ | Operator Dashboard Live-stream — atomic refresh, ledger, KeyboardInterrupt-aware (5 tests) |
-| **W61** | _this commit_ | Cross-vendor Math Catalog Sync — SemVer registry of 100 kernels (11 tests) |
+| **W62** | _this commit_ | Telemetry → Drift Hub Bridge — NDJSON feed → rtp_monitor → drift alert hub (6 tests, e2e smoke 450 alerts) |
+| **W63** | _this commit_ | Catalog Diff Reporter — INDEX.json diff with breaking/compatible classification (9 tests) |
+| **W64** | _this commit_ | Pilot Sign-off Report — regulator-ready ANSI text + JSON, aggregates onboard + cert + jurisdictions (6 tests) |
+| **W59** | `dd91a87` | Vendor Onboarding Wizard — scaffold + synth IR + cert in one shot (6 tests; updated this commit to embed Provenance/ir_sha256 so W64 cross-check passes) |
+| **W60** | `dd91a87` | Operator Dashboard Live-stream — atomic refresh, ledger, KeyboardInterrupt-aware (5 tests) |
+| **W61** | `dd91a87` | Cross-vendor Math Catalog Sync — SemVer registry of 100 kernels (11 tests) |
 | **W56** | `bc2a43f` | Cert XML standalone verifier — v1+v2 namespaces + IR digest cross-check + ed25519 batch verify (12 tests) |
 | **W57** | `bc2a43f` | Operator Dashboard Aggregator — per-game traffic light HTML + JSON (8 tests) |
 | **W58** | _this commit_ | IR Diff CI Gate — configurable rules ladder over slot-ir-diff (12 tests) |

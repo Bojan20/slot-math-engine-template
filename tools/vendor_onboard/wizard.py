@@ -190,7 +190,14 @@ def run_onboarding(
     if emit_cert and ir is not None:
         try:
             cert_path = pilot_dir / "cert.v2.xml"
-            emit_cert_xml_v2(ir, cert_path, mc_report=None)
+            emit_cert_xml_v2(
+                ir, cert_path, mc_report=None,
+                provenance={
+                    "ir_sha256": ir_digest(ir),
+                    "par_merkle_root": "",
+                    "signature": "",
+                },
+            )
             report.steps.append(OnboardStep(
                 name="emit_cert_xml_v2", ok=cert_path.exists()
                                           and cert_path.stat().st_size > 0,

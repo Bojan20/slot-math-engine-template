@@ -187,6 +187,12 @@ slot-vendor-onboard = "tools.vendor_onboard.__main__:main"
 slot-dashboard-livestream = "tools.dashboard_livestream.__main__:main"
 # ─── W61 — Cross-vendor Math Catalog Sync (SemVer-tagged solver registry)
 slot-catalog-sync = "tools.catalog_sync.__main__:main"
+# ─── W62 — Telemetry → Drift Hub Bridge (NDJSON feed → monitor → alerts)
+slot-telemetry-bridge = "tools.telemetry_bridge.__main__:main"
+# ─── W63 — Catalog Diff Reporter (compare two INDEX.json snapshots)
+slot-catalog-diff = "tools.catalog_diff.__main__:main"
+# ─── W64 — Pilot Sign-off Report (regulator-ready ANSI text)
+slot-pilot-signoff = "tools.pilot_signoff.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
