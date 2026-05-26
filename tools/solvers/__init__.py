@@ -423,6 +423,149 @@ from .bonus_buy_dynamic_pricing import (
     ev_per_buy,
     is_positive_ev as bb_dynamic_is_positive_ev,
 )
+# Batch 16
+from .negative_binomial_attempts import (
+    NegBinomialAttemptsParams,
+    analytical_rtp as negbin_attempts_rtp,
+    mc_simulate as negbin_attempts_mc,
+    expected_spins_to_fire,
+    prob_fire_within,
+)
+from .hypergeometric_pick import (
+    HypergeometricPickParams,
+    analytical_rtp as hyper_pick_rtp,
+    mc_simulate as hyper_pick_mc,
+    prob_match,
+)
+from .martingale_double_bet import (
+    MartingaleParams,
+    analytical_rtp as martingale_rtp,
+    mc_simulate as martingale_mc,
+    prob_session_win,
+    expected_net_per_session,
+)
+from .gumbel_extreme_win import (
+    GumbelExtremeParams,
+    analytical_rtp as gumbel_rtp,
+    mc_simulate as gumbel_mc,
+    expected_max_uncapped,
+    prob_cap_hit,
+)
+# Batch 17
+from .compound_poisson_bonus import (
+    CompoundPoissonParams,
+    analytical_rtp as compound_poisson_rtp,
+    mc_simulate as compound_poisson_mc,
+    expected_total_pay as cp_expected_total,
+    variance_total_pay as cp_variance,
+)
+from .galton_watson_avalanche import (
+    GaltonWatsonAvalancheParams,
+    analytical_rtp as gw_avalanche_rtp,
+    mc_simulate as gw_avalanche_mc,
+    offspring_mean,
+    expected_total_clusters,
+)
+from .markov_absorption_freespins import (
+    MarkovAbsorptionFreespinsParams,
+    analytical_rtp as markov_abs_fs_rtp,
+    mc_simulate as markov_abs_fs_mc,
+    expected_total_spins as markov_abs_fs_spins,
+)
+from .bayesian_skill_adaptation import (
+    BayesianSkillAdaptParams,
+    analytical_rtp as bayes_skill_rtp,
+    mc_simulate as bayes_skill_mc,
+    posterior_alpha_beta,
+    posterior_mean,
+)
+# Batch 18
+from .renewal_process_features import (
+    RenewalProcessParams,
+    analytical_rtp as renewal_rtp,
+    mc_simulate as renewal_mc,
+    long_run_rate,
+    expected_features as renewal_expected_features,
+    variance_features as renewal_variance_features,
+)
+from .multinomial_symbol_draws import (
+    MultinomialSymbolDrawsParams,
+    analytical_rtp as multinomial_rtp,
+    mc_simulate as multinomial_mc,
+    expected_pay_per_cell,
+)
+from .first_passage_time_meter import (
+    FirstPassageMeterParams,
+    analytical_rtp as first_passage_rtp,
+    mc_simulate as first_passage_mc,
+    expected_first_passage_time,
+    prob_fill_within,
+)
+from .tail_dependence_jackpot import (
+    TailDependenceJackpotParams,
+    analytical_rtp as tail_dep_rtp,
+    mc_simulate as tail_dep_mc,
+    independence_rtp,
+    tail_augmented_rtp,
+)
+# Batch 19
+from .expected_shortfall_bigwin import (
+    ExpectedShortfallParams,
+    analytical_rtp as es_rtp,
+    mc_simulate as es_mc,
+    var_at_level,
+    cvar,
+)
+from .conditional_expectation_session import (
+    ConditionalSessionParams,
+    analytical_rtp as cond_session_rtp,
+    mc_simulate as cond_session_mc,
+    conditional_expectation,
+    conditional_variance,
+    ci95_halfwidth,
+)
+from .exponential_decay_multiplier import (
+    ExpDecayMultParams,
+    analytical_rtp as exp_decay_mult_rtp,
+    mc_simulate as exp_decay_mult_mc,
+    expected_total_multiplier as exp_decay_total_mult,
+)
+from .logistic_growth_meter import (
+    LogisticMeterParams,
+    analytical_rtp as logistic_meter_rtp,
+    mc_simulate as logistic_meter_mc,
+    meter_level,
+)
+# Batch 20
+from .weibull_session_length import (
+    WeibullSessionParams,
+    analytical_rtp as weibull_session_rtp,
+    mc_simulate as weibull_session_mc,
+    expected_session_length as weibull_session_length,
+)
+from .pareto_jackpot_size import (
+    ParetoJackpotParams,
+    analytical_rtp as pareto_jackpot_rtp,
+    mc_simulate as pareto_jackpot_mc,
+    expected_jackpot,
+    variance_jackpot,
+    prob_exceeds_factor,
+)
+from .beta_binomial_overdispersion import (
+    BetaBinomialParams,
+    analytical_rtp as beta_binom_rtp,
+    mc_simulate as beta_binom_mc,
+    expected_successes,
+    variance_successes,
+    overdispersion_ratio,
+)
+from .poisson_mixture_features import (
+    PoissonMixtureParams,
+    analytical_rtp as poisson_mix_rtp,
+    mc_simulate as poisson_mix_mc,
+    expected_features as poisson_mix_expected,
+    variance_features as poisson_mix_variance,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -660,4 +803,102 @@ __all__ = [
     "effective_cost",
     "ev_per_buy",
     "bb_dynamic_is_positive_ev",
+    "NegBinomialAttemptsParams",
+    "negbin_attempts_rtp",
+    "negbin_attempts_mc",
+    "expected_spins_to_fire",
+    "prob_fire_within",
+    "HypergeometricPickParams",
+    "hyper_pick_rtp",
+    "hyper_pick_mc",
+    "prob_match",
+    "MartingaleParams",
+    "martingale_rtp",
+    "martingale_mc",
+    "prob_session_win",
+    "expected_net_per_session",
+    "GumbelExtremeParams",
+    "gumbel_rtp",
+    "gumbel_mc",
+    "expected_max_uncapped",
+    "prob_cap_hit",
+    "CompoundPoissonParams",
+    "compound_poisson_rtp",
+    "compound_poisson_mc",
+    "cp_expected_total",
+    "cp_variance",
+    "GaltonWatsonAvalancheParams",
+    "gw_avalanche_rtp",
+    "gw_avalanche_mc",
+    "offspring_mean",
+    "expected_total_clusters",
+    "MarkovAbsorptionFreespinsParams",
+    "markov_abs_fs_rtp",
+    "markov_abs_fs_mc",
+    "markov_abs_fs_spins",
+    "BayesianSkillAdaptParams",
+    "bayes_skill_rtp",
+    "bayes_skill_mc",
+    "posterior_alpha_beta",
+    "posterior_mean",
+    "RenewalProcessParams",
+    "renewal_rtp",
+    "renewal_mc",
+    "long_run_rate",
+    "renewal_expected_features",
+    "renewal_variance_features",
+    "MultinomialSymbolDrawsParams",
+    "multinomial_rtp",
+    "multinomial_mc",
+    "expected_pay_per_cell",
+    "FirstPassageMeterParams",
+    "first_passage_rtp",
+    "first_passage_mc",
+    "expected_first_passage_time",
+    "prob_fill_within",
+    "TailDependenceJackpotParams",
+    "tail_dep_rtp",
+    "tail_dep_mc",
+    "independence_rtp",
+    "tail_augmented_rtp",
+    "ExpectedShortfallParams",
+    "es_rtp",
+    "es_mc",
+    "var_at_level",
+    "cvar",
+    "ConditionalSessionParams",
+    "cond_session_rtp",
+    "cond_session_mc",
+    "conditional_expectation",
+    "conditional_variance",
+    "ci95_halfwidth",
+    "ExpDecayMultParams",
+    "exp_decay_mult_rtp",
+    "exp_decay_mult_mc",
+    "exp_decay_total_mult",
+    "LogisticMeterParams",
+    "logistic_meter_rtp",
+    "logistic_meter_mc",
+    "meter_level",
+    "WeibullSessionParams",
+    "weibull_session_rtp",
+    "weibull_session_mc",
+    "weibull_session_length",
+    "ParetoJackpotParams",
+    "pareto_jackpot_rtp",
+    "pareto_jackpot_mc",
+    "expected_jackpot",
+    "variance_jackpot",
+    "prob_exceeds_factor",
+    "BetaBinomialParams",
+    "beta_binom_rtp",
+    "beta_binom_mc",
+    "expected_successes",
+    "variance_successes",
+    "overdispersion_ratio",
+    "PoissonMixtureParams",
+    "poisson_mix_rtp",
+    "poisson_mix_mc",
+    "poisson_mix_expected",
+    "poisson_mix_variance",
 ]
