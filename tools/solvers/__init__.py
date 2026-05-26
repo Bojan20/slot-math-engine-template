@@ -104,6 +104,46 @@ from .scatter_total_bet_pay import (
     analytical_rtp as scatter_totalbet_rtp,
     mc_simulate as scatter_totalbet_mc,
 )
+from .diagonal_payline_pattern import (
+    DiagonalPaylineParams,
+    analytical_rtp as diagonal_rtp,
+    mc_simulate as diagonal_mc,
+    per_line_rtp as diagonal_per_line_rtp,
+)
+from .avalanche_consecutive import (
+    AvalancheConsecutiveParams,
+    analytical_rtp as avalanche_rtp,
+    mc_simulate as avalanche_mc,
+    expected_chain_payout,
+)
+from .jackpot_share_ladder import (
+    JackpotShareLadderParams,
+    analytical_rtp as jp_share_rtp,
+    mc_simulate as jp_share_mc,
+    normalized_probs,
+    expected_pay_per_trigger,
+    variance_per_spin as jp_share_var,
+)
+from .reel_mutate_wild import (
+    ReelMutateWildParams,
+    analytical_rtp as reel_mutate_rtp,
+    mc_simulate as reel_mutate_mc,
+    effective_prob as reel_mutate_p_eff,
+)
+from .morphing_symbol_markov import (
+    MorphingSymbolMarkovParams,
+    analytical_rtp as morph_rtp,
+    mc_simulate as morph_mc,
+    level_distribution,
+    expected_pay_per_trigger as morph_expected_pay,
+)
+from .multiplier_grid_matrix import (
+    MultiplierGridParams,
+    analytical_rtp as mult_grid_rtp,
+    mc_simulate as mult_grid_mc,
+    expected_cell_multiplier,
+    expected_total_multiplier,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -164,4 +204,32 @@ __all__ = [
     "ScatterTotalBetParams",
     "scatter_totalbet_rtp",
     "scatter_totalbet_mc",
+    "DiagonalPaylineParams",
+    "diagonal_rtp",
+    "diagonal_mc",
+    "diagonal_per_line_rtp",
+    "AvalancheConsecutiveParams",
+    "avalanche_rtp",
+    "avalanche_mc",
+    "expected_chain_payout",
+    "JackpotShareLadderParams",
+    "jp_share_rtp",
+    "jp_share_mc",
+    "normalized_probs",
+    "expected_pay_per_trigger",
+    "jp_share_var",
+    "ReelMutateWildParams",
+    "reel_mutate_rtp",
+    "reel_mutate_mc",
+    "reel_mutate_p_eff",
+    "MorphingSymbolMarkovParams",
+    "morph_rtp",
+    "morph_mc",
+    "level_distribution",
+    "morph_expected_pay",
+    "MultiplierGridParams",
+    "mult_grid_rtp",
+    "mult_grid_mc",
+    "expected_cell_multiplier",
+    "expected_total_multiplier",
 ]
