@@ -6,6 +6,23 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-26 15:30 (post W19-W34 + P1.6 batch 6-10 LANDED, all green)
+
+| Wave / batch | Status | Tests | Entry points |
+| --- | --- | --- | --- |
+| W19-W21 + batch 6 (telemetry / plugin / replay / 4 kernels) | ✅ landed `1dcd3ec` | +18 | +3 |
+| W22 + W24 + batch 7 (IR schema / audit trail / 4 kernels) | ✅ landed `2677023` | +14 | +2 |
+| W23 + W25 + W27 (localization / coverage / math doc) | ✅ landed `ba29ad2` | +12 | +3 |
+| W26 + W28 + batch 8 (config validator / changelog / 4 kernels) | ✅ landed `61b6398` | +13 | +2 |
+| W29 + W30 + W31 + batch 9 (RTP monitor / A/B / audit pin / 4 kernels) | ✅ landed `9e1a082` | +20 | +3 |
+| **W32 + W33 + W34 + batch 10 (IR fuzzer / vendor adapter SDK / spec compliance / 4 kernels)** | ✅ **landed this commit** | **+33** | **+3** |
+
+**Closed-form kernels:** 47 (was 43)
+**Entry points:** 37 (was 34)
+**Python tests:** 767 PASS, 0 fail, 47 skipped
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-25 15:30 (post Wave 4.1 LANDED + Wave 4.2 LANDED + Wave 7.2 LANDED)
 
 **CE COPY TEST = ULTIMATIVNO 1:1 LANDED.** 30B spinova / 3 SWID, **svi unutar 0.05 %** Excel target-a. Avg FS bonus, avg CE win FS, FS trigger 1 in 139.90 = Excel **EXACT (0.000 % Δ)**.

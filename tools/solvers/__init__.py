@@ -287,6 +287,26 @@ from .bonus_buy_tier_choice import (
     analytical_rtp as bonus_buy_tier_rtp,
     mc_simulate as bonus_buy_tier_mc,
 )
+from .replicating_wild_random_walk import (
+    ReplicatingWildParams,
+    analytical_rtp as replicating_wild_rtp,
+    mc_simulate as replicating_wild_mc,
+)
+from .gamble_double_or_nothing import (
+    GambleParams,
+    analytical_rtp as gamble_rtp,
+    mc_simulate as gamble_mc,
+)
+from .super_symbol_megablock import (
+    MegablockParams,
+    analytical_rtp as megablock_rtp,
+    mc_simulate as megablock_mc,
+)
+from .mystery_box_award_table import (
+    MysteryBoxParams,
+    analytical_rtp as mystery_box_rtp,
+    mc_simulate as mystery_box_mc,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -436,4 +456,16 @@ __all__ = [
     "reel_lock_mc",
     "reel_lock_session_length",
     "expected_locked_reels",
+    "ReplicatingWildParams",
+    "replicating_wild_rtp",
+    "replicating_wild_mc",
+    "GambleParams",
+    "gamble_rtp",
+    "gamble_mc",
+    "MegablockParams",
+    "megablock_rtp",
+    "megablock_mc",
+    "MysteryBoxParams",
+    "mystery_box_rtp",
+    "mystery_box_mc",
 ]

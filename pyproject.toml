@@ -127,6 +127,12 @@ slot-rtp-monitor = "tools.rtp_monitor.__main__:main"
 slot-ab-test = "tools.ab_test.__main__:main"
 # ─── W31 — Audit hash pinner (lock_root_hash freshness gate)
 slot-audit-pin = "tools.audit_pin.__main__:main"
+# ─── W32 — IR mutation fuzzer (false-negative invariant gate)
+slot-ir-fuzzer = "tools.ir_fuzzer.__main__:main"
+# ─── W33 — Vendor adapter SDK (plugin registry + sniff + convert)
+slot-vendor-adapter = "tools.vendor_adapter.__main__:main"
+# ─── W34 — Spec compliance gate (math doc ↔ IR ↔ kernel)
+slot-spec-compliance = "tools.spec_compliance.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
