@@ -85,6 +85,8 @@ slot-gdd-review-ui = "tools.gdd_extract.review_ui:main"
 slot-par-doctor = "tools.diagnostics.par_doctor:main"
 # ─── W5.6+ — Regulator XML cert emitter (GLI-16 Appendix D shape)
 slot-cert-xml = "tools.slot_build.cert_xml:main"
+# ─── W4.9b — Cross-IR diff tool (HTML + JSON A/B comparator)
+slot-ir-diff = "tools.diagnostics.ir_diff:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
