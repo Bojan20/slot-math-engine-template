@@ -11,7 +11,8 @@
 
 .PHONY: help run unittest test lint build par-sheet par-diff par-stress \
         cert-bundle rng-cert rng-quality rng-submission parity parity-bin \
-        mutate mutate-rust mutate-scoped clean ci
+        mutate mutate-rust mutate-scoped clean ci \
+        agents-check agents-corpus agents-rag agents-eval agents-routing
 
 # ─── Default target ────────────────────────────────────────────────────────
 
@@ -102,8 +103,39 @@ clean: ## Remove build artifacts (dist/, target/, reports/.tmp/)
 
 # ─── CI aggregate ──────────────────────────────────────────────────────────
 
-ci: ## Full CI gate: lint + test + build + parity
+ci: ## Full CI gate: lint + test + build + parity + agents-check
 	$(MAKE) lint
 	$(MAKE) test
 	$(MAKE) build
 	$(MAKE) parity
+	$(MAKE) agents-check
+
+# ─── PHASE 8 agent fleet (P8.1–P8.6) ──────────────────────────────────────
+
+agents-corpus: ## Rebuild + expand + stats traces.jsonl for all 3 PHASE 8 agents
+	python3 -m tools.agent_corpus refresh all
+	python3 -m tools.agent_corpus.expand all --seeds 6
+	python3 -m tools.agent_corpus stats all
+
+agents-rag: ## Re-ingest mock + (when reachable) Qdrant RAG indexes
+	python3 -m tools.agent_rag ingest all
+
+agents-eval: ## Structural check of all 3 agent eval fixtures
+	python3 -m tools.agent_eval par-parser --self-test
+	python3 -m tools.agent_eval reg-oracle --self-test
+	python3 -m tools.agent_eval math-debug --self-test
+
+agents-routing: ## Dispatcher routing accuracy gate (≥95%, currently 100%)
+	python3 $$HOME/Projects/cortex/scripts/cortex-slot-agent eval | \
+		python3 -c "import sys,json; d=json.loads(sys.stdin.read()); \
+		print('routing accuracy', d['accuracy']); \
+		sys.exit(0 if d['pass'] else 1)"
+
+agents-check: ## PHASE 8 CI gate — corpus + RAG + eval + routing + scrape + qlora
+	$(MAKE) agents-corpus
+	$(MAKE) agents-rag
+	$(MAKE) agents-eval
+	$(MAKE) agents-routing
+	python3 $$HOME/Projects/cortex/agents/reg-oracle/nightly_scrape.py --self-test
+	python3 $$HOME/Projects/cortex/scripts/cortex-qlora-train --self-test
+	@echo "✅ agents-check OK"
