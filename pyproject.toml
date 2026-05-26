@@ -83,6 +83,8 @@ slot-gdd-llm = "tools.gdd_extract.llm_assist:main"
 slot-gdd-review-ui = "tools.gdd_extract.review_ui:main"
 # ─── W4.9 — Vendor parity doctor (HTML/JSON/MD dashboard)
 slot-par-doctor = "tools.diagnostics.par_doctor:main"
+# ─── W5.6+ — Regulator XML cert emitter (GLI-16 Appendix D shape)
+slot-cert-xml = "tools.slot_build.cert_xml:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
