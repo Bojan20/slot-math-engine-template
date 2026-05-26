@@ -163,6 +163,28 @@ from .nudge_respin_deterministic import (
     expected_value_per_trigger,
     is_positive_ev as nudge_is_positive_ev,
 )
+from .bonus_pick_geometric import (
+    BonusPickParams,
+    expected_total_pay as bonus_pick_rtp,
+    variance_total_pay as bonus_pick_var,
+    mc_simulate as bonus_pick_mc,
+)
+from .big_symbol_frame import (
+    BigSymbolFrameParams,
+    analytical_rtp as big_symbol_rtp,
+    mc_simulate as big_symbol_mc,
+)
+from .wild_trail_persistence import (
+    WildTrailParams,
+    analytical_rtp as wild_trail_rtp,
+    mc_simulate as wild_trail_mc,
+    expected_session_length as wild_trail_session_length,
+)
+from .anywhere_pays_binomial import (
+    AnywherePaysParams,
+    analytical_rtp as anywhere_pays_rtp,
+    mc_simulate as anywhere_pays_mc,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -264,4 +286,18 @@ __all__ = [
     "nudge_mc",
     "expected_value_per_trigger",
     "nudge_is_positive_ev",
+    "BonusPickParams",
+    "bonus_pick_rtp",
+    "bonus_pick_var",
+    "bonus_pick_mc",
+    "BigSymbolFrameParams",
+    "big_symbol_rtp",
+    "big_symbol_mc",
+    "WildTrailParams",
+    "wild_trail_rtp",
+    "wild_trail_mc",
+    "wild_trail_session_length",
+    "AnywherePaysParams",
+    "anywhere_pays_rtp",
+    "anywhere_pays_mc",
 ]

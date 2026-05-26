@@ -1,0 +1,138 @@
+# slot-math-engine-template — full Python toolkit CI.
+#
+# Runs the in-repo Python tooling test suite + the W14 ci-gate
+# aggregator across the games/ directory. Designed to gate any PR
+# that touches tools/* or games/*.
+#
+# Three jobs:
+#   1. py-tests         — full unittest suite (538+ tests, ~20s)
+#   2. py-ruff          — ruff lint (E/F/W) on tools/*
+#   3. ci-gate          — W14 repo-wide aggregator → ci-gate.json/md
+#                          uploaded as workflow artifact for review.
+
+name: slot-math-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/**"
+      - "games/**"
+      - "pyproject.toml"
+      - ".github/workflows/slot-math-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tools/**"
+      - "games/**"
+      - "pyproject.toml"
+      - ".github/workflows/slot-math-ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  py-tests:
+    name: python · unittest suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package (dev mode)
+        run: pip install -e .
+      - name: Run full test suite
+        run: python -m unittest discover -s tools/tests -v 2>&1 | tail -100
+
+  py-ruff:
+    name: python · ruff lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install ruff
+        run: pip install "ruff>=0.4"
+      - name: Lint tools/
+        run: ruff check tools/
+
+  ci-gate:
+    name: slot-ci-gate · repo-wide aggregator
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: py-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package (dev mode)
+        run: pip install -e .
+      - name: Seed drift baselines if absent
+        # Initial run on a clean repo needs --update-baselines so the
+        # NEW-IR signal does not produce a false negative. Subsequent
+        # runs use the committed baseline.
+        run: |
+          if [ ! -f games/.drift-baselines.json ]; then
+            slot-drift-sentinel games/ --update --quiet || true
+          fi
+      - name: Run slot-ci-gate
+        id: gate
+        run: |
+          set +e
+          slot-ci-gate games/ \
+              --jurisdiction ukgc --jurisdiction mga --jurisdiction gli16 \
+              --out reports/ci-gate/
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          set -e
+      - name: Upload CI gate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slot-ci-gate-report
+          path: reports/ci-gate/
+          if-no-files-found: warn
+      - name: Fail job on red gate
+        if: steps.gate.outputs.exit_code != '0'
+        run: |
+          echo "slot-ci-gate exit code = ${{ steps.gate.outputs.exit_code }}"
+          exit 1
+
+  portfolio:
+    name: slot-portfolio · dashboard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: py-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Emit portfolio dashboard
+        run: |
+          slot-portfolio games/ \
+              --json reports/portfolio.json \
+              --markdown reports/portfolio.md \
+              --html reports/portfolio.html \
+              --quiet || true
+      - name: Upload portfolio report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slot-portfolio-report
+          path: reports/
+          if-no-files-found: warn
