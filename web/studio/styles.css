@@ -1727,6 +1727,22 @@ input[type="range"]::-moz-range-thumb {
   border-radius: var(--r) var(--r) 0 0;
   z-index: 20;
   display: flex; flex-direction: column;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(0);
+  transition: transform 180ms var(--ease, ease), opacity 180ms var(--ease, ease);
+  opacity: 1;
+}
+/* CRITICAL — without this rule the `[hidden]` attribute is overridden by the
+   `display: flex` above (author CSS beats the UA-stylesheet `[hidden]{display:none}`),
+   so clicking the X / pressing ⌘J / Esc would set the attribute but the
+   drawer would visually stay open. This is the bug Boki reported as
+   "Nista ne mogu da uradim s njim". */
+.bottom-panel[hidden] {
+  display: none !important;
+  /* keep transform fallback for browsers that animate `display` (future-safe) */
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
 }
 .bp-h {
   display: flex; align-items: center; justify-content: space-between;

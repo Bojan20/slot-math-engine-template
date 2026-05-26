@@ -31,7 +31,12 @@ test.describe('Bottom drawer X close — bulletproof', () => {
     await page.locator('#bp-close').click();
     await page.waitForTimeout(200);
     await expect(panel).toHaveAttribute('hidden', '');
-    console.log('✓ First-click after open: drawer closes');
+    // CRITICAL: also verify pixel-level invisibility — the previous bug was
+    // that `display:flex` on `.bottom-panel` clobbered the UA `[hidden]`
+    // rule, so `hidden` attribute was set but the drawer stayed visually
+    // on top of the page content. Attribute-only assertions missed it.
+    await expect(panel).toBeHidden();
+    console.log('✓ First-click after open: drawer closes (attr + display)');
   });
 
   test('2) X works after switching tabs (Activity → MC → CI → X)', async ({ page }) => {
