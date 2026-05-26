@@ -169,6 +169,12 @@ slot-rgs-connector = "tools.rgs_connector.__main__:main"
 slot-cert-xml-v2 = "tools.slot_build.cert_xml_v2:main"
 # ─── W52 — Plugin Marketplace Verifier (publish → download → re-verify round-trip)
 slot-marketplace-verify = "tools.plugin_marketplace.__main__:main"
+# ─── W53 — Multi-Territory Cert Builder (chain lint + cert v2 + marketplace verify)
+slot-multi-territory = "tools.multi_territory.__main__:main"
+# ─── W54 — Real-time Drift Alert Hub (RTP snapshots → rule ladder → sinks)
+slot-drift-alert-hub = "tools.drift_alert_hub.__main__:main"
+# ─── W55 — Plugin Marketplace Listing UI (zero-build static dashboard)
+slot-marketplace-ui = "tools.marketplace_ui.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

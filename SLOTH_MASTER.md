@@ -249,15 +249,18 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W53 — Multi-territory Cert Builder** | ~30 min | end-to-end `slot-multi-territory` CLI chains `slot-cert-xml-v2` + `slot-jurisdiction-check` per profile + `slot-marketplace-verify` into one ZIP for cross-jurisdiction release |
-| 🥈 2 | **W54 — Real-time Drift Alert Hub** | ~45 min | W50 connector → threshold-based alerts → email/webhook hook + Slack-shape JSON payload (no actual outbound — sink interface only) |
-| 🥉 3 | **W55 — Plugin Marketplace Listing UI** | ~45 min | HTML/JS browser dashboard (no build step) for `FilesystemMarketplace` registry; lists handles + per-plugin manifest preview + verify-now button |
+| 🥇 1 | **W56 — Cert XML Verification Tool** | ~30 min | `slot-cert-xml-verify` reads a v2 cert XML, re-hashes the referenced IR + MC report, validates every JurisdictionProvenance branch signature; exit 1 on tampering. |
+| 🥈 2 | **W57 — Operator Dashboard Aggregator** | ~45 min | combine W37 cohort segment + W29 RTP monitor + W54 drift hub into single `slot-operator-dashboard` HTML view per game (extends W55 dashboard pattern). |
+| 🥉 3 | **W58 — IR Diff CI Gate** | ~30 min | `slot-ir-diff-gate` runs W35 diff_heatmap + W34 spec_compliance between two IR versions; exit 1 if HIGH-impact differences exist OR target_rtp drifts > tolerance — drop-in pre-merge guard. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
+| **W53** | _this commit_ | Multi-Territory Cert Builder — chains lint + cert v2 + marketplace verify into one ZIP (4 tests) |
+| **W54** | _this commit_ | Real-time Drift Alert Hub — rules ladder + 4 sink types + dedup + crash-tolerant fan-out (9 tests) |
+| **W55** | _this commit_ | Plugin Marketplace Listing UI — zero-build static dashboard + manifest/verify pre-compute (5 tests) |
 | **W50** | `4aeeb78` | Live RGS Connector — NDJSON tail + TCP gateway → rtp_monitor (16 tests) |
 | **W51** | `88bc421` | Cert XML v2 (urn:slotmath:cert:v2) — Multi-Jurisdiction provenance branches (11 tests) |
 | **W52** | `88bc421` | Plugin Marketplace Verifier — publish/download/verify round-trip (7 tests) |
