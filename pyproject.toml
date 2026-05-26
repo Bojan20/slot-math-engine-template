@@ -72,6 +72,8 @@ slot-player-sim = "tools.player_sim.session_simulator:main"
 slot-jurisdiction-check = "tools.jurisdiction.linter:main"
 # ─── Mission #3 — 12×12 Topology × Feature cert lab matrix ─────────────
 slot-cert-matrix = "tools.cert_lab.matrix_runner:main"
+# ─── Mission #8 — Studio UI extensions (WebWorker MC + heatmap + editor)
+slot-studio-extend = "tools.studio_ext.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
