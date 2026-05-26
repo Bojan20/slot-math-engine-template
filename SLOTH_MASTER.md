@@ -249,18 +249,21 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W65 — Marketplace Plugin Signing CLI** | ~30 min | `slot-plugin-sign` produces ed25519 signatures over a published plugin ZIP, drops a `.sig` sidecar that the marketplace verifier already understands. Closes the publisher-side signing gap so W52 verifier exercises full sig roundtrip. |
-| 🥈 2 | **W66 — Drift Replay Theatre** | ~30 min | `slot-drift-replay` replays a historical NDJSON spin feed at configurable speed-up factor against the W62 bridge — lets ops debug a past incident step-by-step with throttled timestamps. |
-| 🥉 3 | **W67 — Cert Bundle SBOM** | ~45 min | `slot-cert-sbom` emits a CycloneDX-shape JSON listing every `tools.*` module + version + SHA-256 hashed against the running checkout — supply-chain audit artifact for regulator submission. |
+| 🥇 1 | **W68 — Marketplace Pub-key Bundle** | ~30 min | `slot-pubkey-bundle` produces a signed registry of `(plugin_id, version, pubkey_pem_sha256)` so a marketplace consumer can pin which publishers' keys it trusts. Drop-in for cert v2 multi-jurisdiction provenance. |
+| 🥈 2 | **W69 — SBOM Diff Reporter** | ~30 min | `slot-sbom-diff` compares two W67 CycloneDX snapshots; emits added/removed components + per-module SHA-256 drift. Drop-in CI gate for supply-chain integrity. |
+| 🥉 3 | **W70 — Pilot Sign-off PDF (real)** | ~45 min | Upgrade W64 from ANSI text to true PDF via stdlib (pure `struct`-built minimal PDF 1.4 — no external lib), so the regulator can drop the file straight into their archive system. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W62** | _this commit_ | Telemetry → Drift Hub Bridge — NDJSON feed → rtp_monitor → drift alert hub (6 tests, e2e smoke 450 alerts) |
-| **W63** | _this commit_ | Catalog Diff Reporter — INDEX.json diff with breaking/compatible classification (9 tests) |
-| **W64** | _this commit_ | Pilot Sign-off Report — regulator-ready ANSI text + JSON, aggregates onboard + cert + jurisdictions (6 tests) |
+| **W65** | _this commit_ | Marketplace Plugin Signing CLI — ed25519 keygen/sign/verify + `.sig` + `.sig.b64` sidecars (6 tests + e2e roundtrip ok) |
+| **W66** | _this commit_ | Drift Replay Theatre — throttled NDJSON re-feeder, configurable speedup, per-tick NDJSON log, KeyboardInterrupt-safe (6 tests + 200-tick smoke 600 alerts) |
+| **W67** | _this commit_ | Cert Bundle SBOM — CycloneDX 1.4 over tools.* + entry points + deterministic / random serialNumber switch (7 tests + e2e 319 comps + 73 entry points) |
+| **W62** | `acdfc1c` | Telemetry → Drift Hub Bridge — NDJSON feed → rtp_monitor → drift alert hub (6 tests, e2e smoke 450 alerts) |
+| **W63** | `acdfc1c` | Catalog Diff Reporter — INDEX.json diff with breaking/compatible classification (9 tests) |
+| **W64** | `acdfc1c` | Pilot Sign-off Report — regulator-ready ANSI text + JSON, aggregates onboard + cert + jurisdictions (6 tests) |
 | **W59** | `dd91a87` | Vendor Onboarding Wizard — scaffold + synth IR + cert in one shot (6 tests; updated this commit to embed Provenance/ir_sha256 so W64 cross-check passes) |
 | **W60** | `dd91a87` | Operator Dashboard Live-stream — atomic refresh, ledger, KeyboardInterrupt-aware (5 tests) |
 | **W61** | `dd91a87` | Cross-vendor Math Catalog Sync — SemVer registry of 100 kernels (11 tests) |

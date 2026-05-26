@@ -193,6 +193,12 @@ slot-telemetry-bridge = "tools.telemetry_bridge.__main__:main"
 slot-catalog-diff = "tools.catalog_diff.__main__:main"
 # ─── W64 — Pilot Sign-off Report (regulator-ready ANSI text)
 slot-pilot-signoff = "tools.pilot_signoff.__main__:main"
+# ─── W65 — Marketplace Plugin Signing CLI (ed25519 sidecar .sig + .sig.b64)
+slot-plugin-sign = "tools.plugin_sign.__main__:main"
+# ─── W66 — Drift Replay Theatre (throttled historical NDJSON re-feeder)
+slot-drift-replay = "tools.drift_replay.__main__:main"
+# ─── W67 — Cert Bundle SBOM (CycloneDX 1.4 over tools.* + entry points)
+slot-cert-sbom = "tools.cert_sbom.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
