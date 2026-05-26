@@ -235,6 +235,30 @@ from .reel_lock_persistence import (
     expected_session_length as reel_lock_session_length,
     expected_locked_reels,
 )
+from .cluster_expand_chain import (
+    ClusterExpandParams,
+    analytical_rtp as cluster_expand_rtp,
+    mc_simulate as cluster_expand_mc,
+    expected_final_cluster_size,
+)
+from .level_up_bonus import (
+    LevelUpParams,
+    analytical_rtp as level_up_rtp,
+    mc_simulate as level_up_mc,
+    expected_levels,
+)
+from .mystery_multiplier_symbol import (
+    MysteryMultParams,
+    analytical_rtp as mystery_mult_rtp,
+    mc_simulate as mystery_mult_mc,
+    expected_multiplier as mystery_mult_em,
+)
+from .scatter_pay_bonus_chain import (
+    ScatterChainParams,
+    analytical_rtp as scatter_chain_rtp,
+    mc_simulate as scatter_chain_mc,
+    expected_scatter_pay,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",

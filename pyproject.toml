@@ -117,6 +117,10 @@ slot-localize = "tools.localization.translator:main"
 slot-coverage = "tools.coverage_report.__main__:main"
 # ─── W27 — Per-game math specification doc generator
 slot-math-doc = "tools.math_doc.generator:main"
+# ─── W26 — Runtime config cross-reference validator
+slot-config-validate = "tools.config_validator.__main__:main"
+# ─── W28 — Auto changelog generator (git log → grouped CHANGELOG.md)
+slot-changelog = "tools.changelog.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
