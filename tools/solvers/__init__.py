@@ -625,6 +625,44 @@ from .brownian_bankroll_absorption import (
     prob_reach_target,
     expected_time_to_absorption,
 )
+# Batch 23 — Final 5 to reach 100 kernels
+from .coupon_collector_complete import (
+    CouponCollectorParams,
+    analytical_rtp as coupon_collector_rtp,
+    mc_simulate as coupon_collector_mc,
+    expected_spins_to_complete,
+    variance_spins_to_complete,
+    harmonic_number,
+)
+from .birthday_collision import (
+    BirthdayCollisionParams,
+    analytical_rtp as birthday_rtp,
+    mc_simulate as birthday_mc,
+    prob_no_collision,
+    prob_collision,
+)
+from .inverse_gaussian_fpt import (
+    InverseGaussianFPTParams,
+    analytical_rtp as ig_fpt_rtp,
+    mc_simulate as ig_fpt_mc,
+    expected_fpt,
+    variance_fpt,
+)
+from .chinese_restaurant_partition import (
+    CRPPartitionParams,
+    analytical_rtp as crp_rtp,
+    mc_simulate as crp_mc,
+    expected_n_clusters,
+    expected_n_clusters_asymptotic,
+)
+from .levy_stable_jackpot import (
+    LevyStableJackpotParams,
+    analytical_rtp as levy_stable_rtp,
+    mc_simulate as levy_stable_mc,
+    tail_constant,
+    prob_exceeds as levy_prob_exceeds,
+    expected_jackpot_finite,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -1001,4 +1039,31 @@ __all__ = [
     "brownian_bankroll_mc",
     "prob_reach_target",
     "expected_time_to_absorption",
+    "CouponCollectorParams",
+    "coupon_collector_rtp",
+    "coupon_collector_mc",
+    "expected_spins_to_complete",
+    "variance_spins_to_complete",
+    "harmonic_number",
+    "BirthdayCollisionParams",
+    "birthday_rtp",
+    "birthday_mc",
+    "prob_no_collision",
+    "prob_collision",
+    "InverseGaussianFPTParams",
+    "ig_fpt_rtp",
+    "ig_fpt_mc",
+    "expected_fpt",
+    "variance_fpt",
+    "CRPPartitionParams",
+    "crp_rtp",
+    "crp_mc",
+    "expected_n_clusters",
+    "expected_n_clusters_asymptotic",
+    "LevyStableJackpotParams",
+    "levy_stable_rtp",
+    "levy_stable_mc",
+    "tail_constant",
+    "levy_prob_exceeds",
+    "expected_jackpot_finite",
 ]

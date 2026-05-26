@@ -22,11 +22,14 @@
 | W44 + W45 + W46 + batch 14 (backtest runner / designer lint / bundle verify / 4 kernels) | ✅ landed `a5986f3` | +29 | +3 |
 | W47 + W48 + W49 + batch 15 (IR sanitizer / kernel compare / synthetic log gen / 4 kernels) | ✅ landed `aedcf15` | +25 | +3 |
 | P1.6 batches 16-20 — 20 math-distinct kernels (NegBin, Hyper, Martingale, Gumbel EVT, CompPois, Galton-Watson, Markov absorption, Bayes, Renewal, Multinomial, FPT, Tail-dep, CVaR, CondExp, ExpDecay, Logistic, Weibull, Pareto, BetaBin, PoisMix) | ✅ landed `957002a` | +55 | 0 |
-| **P1.6 batches 21-22 — 8 advanced kernels (NegHyper, Zipf, Fréchet EVT, Dirichlet, Ornstein-Uhlenbeck, Hidden Markov, Branching+Immigration, Brownian bankroll)** | ✅ **landed this commit** | **+26** | 0 |
+| P1.6 batches 21-22 — 8 advanced kernels (NegHyper, Zipf, Fréchet EVT, Dirichlet, Ornstein-Uhlenbeck, Hidden Markov, Branching+Immigration, Brownian bankroll) | ✅ landed `81bab01` | +26 | 0 |
+| **P1.6 batch 23 — final 5 to reach 100 (Coupon Collector, Birthday Collision, Inverse Gaussian FPT, Chinese Restaurant Process, Lévy α-Stable)** | ✅ **landed this commit** | **+21** | 0 |
 
-**Closed-form kernels:** 95 (was 87) — **+8 advanced math families**
-**Entry points:** 52 (unchanged)
-**Python tests:** 987 PASS, 0 fail, 47 skipped
+## 🎯 CENTURY MILESTONE — 100 closed-form kernels
+
+**Closed-form kernels:** **100** (was 95) — full century landed.
+**Entry points:** 52
+**Python tests:** **1008** PASS, 0 fail, 47 skipped
 
 ---
 
