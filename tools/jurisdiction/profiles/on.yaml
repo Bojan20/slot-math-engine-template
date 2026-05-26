@@ -1,0 +1,18 @@
+id: on
+name: Alcohol and Gaming Commission of Ontario (iGaming Ontario)
+rtp_range: [0.85, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2500
+max_stake_default: 100.0
+prohibited_features:
+  - autoplay_unlimited
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "Registrar's Standards for Internet Gaming"
+  - "Reality-check pop-ups every 60 min mandatory"
+  - "Autoplay session caps + loss limits + cool-off periods"
+  - "iGO operator agreement: monthly compliance certification"

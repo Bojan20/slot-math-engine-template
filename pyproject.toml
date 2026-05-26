@@ -68,6 +68,8 @@ slot-pareto = "tools.evolution.pareto_solver:main"
 slot-batch = "tools.evolution.batch_runner:main"
 # ─── Player behavior ───────────────────────────────────────────────────
 slot-player-sim = "tools.player_sim.session_simulator:main"
+# ─── Jurisdiction compliance ───────────────────────────────────────────
+slot-jurisdiction-check = "tools.jurisdiction.linter:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
@@ -80,6 +82,7 @@ exclude = ["tools.tests*", "**/__pycache__"]
 
 [tool.setuptools.package-data]
 "tools.vendor_profiles" = ["*.yaml", "*.yml"]
+"tools.jurisdiction.profiles" = ["*.yaml", "*.yml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tools/tests"]

@@ -1,0 +1,12 @@
+id: gli16
+name: Gaming Laboratories International Standard 16
+rtp_range: [0.75, 0.99]
+max_win_x: 1000000
+prohibited_features: []
+require_ldw_disclosure: false
+require_session_time_display: false
+near_miss_rule: must_be_random
+informational_notes:
+  - "GLI-16: Class III gaming devices, North American base standard"
+  - "Math integrity + RNG entropy requirements (90 GB submission)"
+  - "Appendix D — PAR sheet format"

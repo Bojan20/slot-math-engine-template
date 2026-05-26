@@ -1,0 +1,17 @@
+id: mi
+name: Michigan Gaming Control Board
+rtp_range: [0.80, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2000
+max_stake_default: 100.0
+prohibited_features: []
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "Lawful Internet Gaming Act (2019) + Michigan Internet Gaming Rules"
+  - "Min 80% RTP; responsible gaming statement required"
+  - "Tribal compact crossover (PokerStars MI + BetMGM tribes)"
+  - "Self-exclusion via MGCB Responsible Gaming database"

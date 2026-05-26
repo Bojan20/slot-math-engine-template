@@ -1,0 +1,17 @@
+id: mga
+name: Malta Gaming Authority
+rtp_range: [0.85, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2500
+max_stake_default: 100.0
+age_tiered_stakes: []
+prohibited_features: []
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: false
+near_miss_rule: must_be_random
+informational_notes:
+  - "Player Protection Directive 2018"
+  - "Session-time display + loss limits required"
+  - "Class 1 license: 5 EUR max default stake per spin cycle"

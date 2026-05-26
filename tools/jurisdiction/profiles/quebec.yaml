@@ -1,0 +1,18 @@
+id: quebec
+name: Loto-Québec (Société des établissements de jeux du Québec)
+rtp_range: [0.85, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2500
+max_stake_default: 100.0
+prohibited_features:
+  - autoplay_unlimited
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "Crown corporation — Loto-Québec operates Espacejeux.com as sole provincial operator"
+  - "Jeu Responsable framework — gaming awareness messaging mandatory"
+  - "Pre-commitment limits required at registration"
+  - "French + English UI required (Charter of the French Language)"

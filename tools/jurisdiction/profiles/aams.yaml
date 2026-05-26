@@ -1,0 +1,18 @@
+id: aams
+name: Agenzia delle Dogane e dei Monopoli (Italy, formerly AAMS)
+rtp_range: [0.90, 0.99]
+max_win_x: 50000
+min_spin_duration_ms: 4000
+max_stake_default: 1.0
+prohibited_features:
+  - autoplay_unlimited
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: false
+near_miss_rule: must_be_random
+informational_notes:
+  - "Decreto Direttoriale ADM — Regolamento Apparecchi VLT/AWP"
+  - "Min 90% RTP, max €1 stake per spin, €100 max win per spin, 4s min cycle"
+  - "GAD (gambling addiction disorder) hotline display mandatory"
+  - "RTP tier system: Skill games higher RTP, slots min 90%"

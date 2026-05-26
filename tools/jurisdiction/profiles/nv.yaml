@@ -1,0 +1,14 @@
+id: nv
+name: Nevada Gaming Control Board
+rtp_range: [0.75, 0.99]
+max_win_x: 1000000
+max_stake_default: 1000.0
+prohibited_features:
+  - skill_based_payout_without_compensating_math
+require_ldw_disclosure: false
+require_session_time_display: false
+near_miss_rule: must_be_random
+informational_notes:
+  - "Regulation 14 — minimum 75% RTP"
+  - "Technical Standard 2 — RNG entropy"
+  - "Brick-and-mortar primary; online via Regulation 5A"

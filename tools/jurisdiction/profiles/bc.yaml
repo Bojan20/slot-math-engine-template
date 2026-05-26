@@ -1,0 +1,18 @@
+id: bc
+name: British Columbia Lottery Corporation
+rtp_range: [0.85, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2500
+max_stake_default: 100.0
+prohibited_features:
+  - autoplay_unlimited
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "Crown corporation — BCLC operates PlayNow.com as sole legal operator"
+  - "GameSense responsible-gambling framework (gold-standard reference)"
+  - "Mandatory pre-commitment limits + cool-off periods"
+  - "Source verification + AML monitoring at $10K+ thresholds"

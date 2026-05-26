@@ -1,0 +1,14 @@
+id: gli19
+name: Gaming Laboratories International Standard 19
+rtp_range: [0.80, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2000
+max_stake_default: 100.0
+prohibited_features: []
+require_ldw_disclosure: true
+require_session_time_display: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "GLI-19: Interactive (online) gaming systems standard"
+  - "Geolocation + AML + session-tracking required"
+  - "Network-level RNG verification (vs GLI-16 device-level)"

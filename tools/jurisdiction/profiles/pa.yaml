@@ -1,0 +1,17 @@
+id: pa
+name: Pennsylvania Gaming Control Board
+rtp_range: [0.85, 0.99]
+max_win_x: 500000
+min_spin_duration_ms: 2000
+max_stake_default: 100.0
+prohibited_features: []
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "58 Pa. Code Chapter 809 — Interactive Gaming"
+  - "Min 85% theoretical RTP per game type"
+  - "Self-exclusion via Office of Compulsive and Problem Gambling"
+  - "GeoComply + KYC required for player verification"

@@ -1,0 +1,25 @@
+id: ukgc
+name: UK Gambling Commission
+rtp_range: [0.85, 0.97]
+max_win_x: 250000
+min_spin_duration_ms: 2500
+max_stake_default: 5.0
+age_tiered_stakes:
+  - min_age: 18
+    max_age: 24
+    max_stake: 2.0
+  - min_age: 25
+    max_age: 200
+    max_stake: 5.0
+prohibited_features:
+  - autoplay_unlimited
+  - reverse_withdrawal
+require_ldw_disclosure: true
+require_session_time_display: true
+require_loss_limits: true
+require_reality_checks: true
+near_miss_rule: must_be_random
+informational_notes:
+  - "RTS 14D — min 2.5s spin cycle"
+  - "RTS 7.4 — addiction-risk pre-launch detection required"
+  - "Bet limit £5 (£2 for 18-24)"
