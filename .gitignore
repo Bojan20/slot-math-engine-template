@@ -167,3 +167,4 @@ games/*/engine-ts/node_modules/
 dist/pilot/
 dist/cert/
 dist/test-cert/
+.venv-w73/
