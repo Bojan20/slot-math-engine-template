@@ -91,6 +91,8 @@ slot-ir-diff = "tools.diagnostics.ir_diff:main"
 slot-operator-pilot = "tools.operator_pilot.__main__:main"
 # ─── W11 — Drift Sentinel (CI gate for silent IR math drift)
 slot-drift-sentinel = "tools.drift_sentinel.__main__:main"
+# ─── W14 — CI Gate Aggregator (repo-wide gate of all gates)
+slot-ci-gate = "tools.ci_gate.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
