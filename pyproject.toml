@@ -165,6 +165,10 @@ slot-kernel-compare = "tools.kernel_compare.__main__:main"
 slot-synthetic-log = "tools.synthetic_log_gen.__main__:main"
 # ─── W50 — Live RGS connector (NDJSON tail + TCP → rtp_monitor)
 slot-rgs-connector = "tools.rgs_connector.__main__:main"
+# ─── W51 — Cert XML v2 (Jurisdiction-Tagged Provenance, urn:slotmath:cert:v2)
+slot-cert-xml-v2 = "tools.slot_build.cert_xml_v2:main"
+# ─── W52 — Plugin Marketplace Verifier (publish → download → re-verify round-trip)
+slot-marketplace-verify = "tools.plugin_marketplace.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
