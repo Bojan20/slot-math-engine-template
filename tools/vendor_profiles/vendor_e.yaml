@@ -1,0 +1,125 @@
+# Vendor E — generic Megaways + Sticky Wild layout profile.
+#
+# Topology: 6 reels with variable row counts (2-7 rows per reel,
+# determined per spin). Ways evaluation = product of visible symbol
+# heights per reel. Distinguishing feature: Sticky Wild Markov
+# (wilds land in FS and persist across remaining FS spins). Used
+# as scaffold for any real-world variable-row "ways" vendor.
+# All coordinates are placeholders; this profile is intentionally
+# generic and contains NO proprietary vendor math.
+
+vendor: vendor_e
+display_name: "Vendor E — Megaways + Sticky Wild (generic)"
+profile_version: 1
+
+sheets:
+  main_par: PAR-001
+  paylines: ~
+
+dimensions:
+  reels: 6
+  rows: [2, 7]
+  paylines: ways
+  left_to_right_only: true
+  ways_min_height: 2
+  ways_max_height: 7
+
+meta:
+  swid:     { row: 2, col: 4 }
+  hold:     { row: 0, col: 14 }
+  hit_freq: { row: 1, col: 14 }
+  win_freq: { row: 2, col: 14 }
+
+rtp_breakdown:
+  base_game:              { row: 60, col: 11 }
+  ways_multiplier_bonus:  { row: 61, col: 11 }
+  free_spins:             { row: 62, col: 11 }
+  sticky_wild_in_fs:      { row: 63, col: 11 }
+  total:                  { row: 64, col: 11 }
+
+bet_table:
+  row_range: [24, 45]
+  mult_col: 11
+  total_col: 12
+  max_liab_col: 13
+
+paytable:
+  row_range: [24, 55]
+  combo_cols: [2, 7]
+  pays_col: 7
+  pph_col: 8
+  rtp_pct_col: 9
+  marker_col: 1
+
+symbol_counts:
+  row_range: [7, 20]
+  name_col: 2
+  reel_col_range: [3, 9]
+
+reel_sets:
+  base:
+    header_label: "Base Game Reel Set:"
+    header_col: 1
+    set_num_col: 3
+    data_offset: 4
+    reel_count: 6
+    symbol_col_start: 2
+    stride: 2
+    index_col: 1
+    total_label: Total
+    max_stops: 200
+    row_height_col: 9
+  fs:
+    header_label: "Free Spins Reel Set:"
+    header_col: 1
+    set_num_col: 3
+    data_offset: 4
+    reel_count: 6
+    symbol_col_start: 2
+    stride: 2
+    index_col: 1
+    total_label: Total
+    max_stops: 200
+    row_height_col: 9
+
+reel_set_weights:
+  base:
+    row_range: [68, 104]
+    set_col: 2
+    weight_col: 3
+    total_row: 104
+    total_col: 3
+
+features:
+  - type: ways_evaluation
+    config:
+      header_label: "Ways Pays"
+      header_col: 1
+      min_match: 3
+      ways_distribution_row_range: [80, 130]
+      ways_count_col: 2
+      probability_col: 3
+  - type: sticky_wild
+    config:
+      header_label: "Sticky Wild"
+      header_col: 1
+      landing_prob_col: 2
+      pay_rate_col: 3
+      active_in_fs: true
+      max_simultaneous_wilds: 12
+  - type: free_spins
+    config:
+      paytable_header_label: "Free Spins Bonus"
+      paytable_header_col: 2
+      combo_cols: [2, 7]
+      pays_col: 7
+      pph_col: 8
+      rtp_pct_col: 9
+      marker_col: 1
+      max_rows: 40
+      summary_header_substr: "Bonus Summary"
+      summary_data_offset: 3
+      summary_cols:
+        avg_free_spins: 2
+        single_spin_payback_pct: 3
+        total_payback_pct: 4

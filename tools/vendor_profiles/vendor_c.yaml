@@ -1,0 +1,140 @@
+# Vendor C — generic Pattern-Lines layout profile.
+#
+# Topology: 5×3 reel, line-evaluated, single-direction (left-to-right).
+# Distinguishing feature: PatternWin (named patterns spanning specific
+# reel positions, e.g. "Diamond Pattern" = anchor on reel 0 + matching
+# tail on reels 2-4). Used as a scaffold for any real-world vendor
+# whose PAR sheet exposes a "Pattern Pays" section alongside the
+# canonical paytable.
+#
+# All field coordinates are placeholders — real-vendor calibration
+# overrides them via inheritance once a calibration PAR is supplied.
+# This profile is intentionally generic and contains NO proprietary
+# vendor math or layout data.
+
+vendor: vendor_c
+display_name: "Vendor C — Pattern-Lines (generic)"
+profile_version: 1
+
+sheets:
+  main_par: PAR-001
+  paylines: Paylines
+
+dimensions:
+  reels: 5
+  rows: 3
+  paylines: 20
+  left_to_right_only: true
+
+meta:
+  swid:     { row: 2, col: 4 }
+  hold:     { row: 0, col: 14 }
+  hit_freq: { row: 1, col: 14 }
+  win_freq: { row: 2, col: 14 }
+
+rtp_breakdown:
+  base_game:               { row: 60, col: 11 }
+  pattern_pays_from_base:  { row: 61, col: 11 }
+  free_spins:              { row: 62, col: 11 }
+  pattern_pays_from_fs:    { row: 63, col: 11 }
+  total:                   { row: 64, col: 11 }
+
+bet_table:
+  row_range: [24, 45]
+  mult_col: 11
+  total_col: 12
+  max_liab_col: 13
+
+paytable:
+  row_range: [24, 55]
+  combo_cols: [2, 7]
+  pays_col: 7
+  pph_col: 8
+  rtp_pct_col: 9
+  marker_col: 1
+
+symbol_counts:
+  row_range: [7, 20]
+  name_col: 2
+  reel_col_range: [3, 8]
+
+reel_sets:
+  base:
+    header_label: "Base Game Reel Set:"
+    header_col: 1
+    set_num_col: 3
+    data_offset: 4
+    reel_count: 5
+    symbol_col_start: 2
+    stride: 2
+    index_col: 1
+    total_label: Total
+    max_stops: 200
+  fs:
+    header_label: "Free Spins Reel Set:"
+    header_col: 1
+    set_num_col: 3
+    data_offset: 4
+    reel_count: 5
+    symbol_col_start: 2
+    stride: 2
+    index_col: 1
+    total_label: Total
+    max_stops: 200
+
+reel_set_weights:
+  base:
+    row_range: [68, 104]
+    set_col: 2
+    weight_col: 3
+    total_row: 104
+    total_col: 3
+
+paylines_layout:
+  sheet: Paylines
+  reels: 5
+  marker: "X"
+  blocks:
+    - line_numbers: [1, 2, 3, 4, 5]
+      data_row_range: [2, 5]
+      col_start: 2
+      cols_per_line: 5
+    - line_numbers: [6, 7, 8, 9, 10]
+      data_row_range: [6, 9]
+      col_start: 2
+      cols_per_line: 5
+    - line_numbers: [11, 12, 13, 14, 15]
+      data_row_range: [10, 13]
+      col_start: 2
+      cols_per_line: 5
+    - line_numbers: [16, 17, 18, 19, 20]
+      data_row_range: [14, 17]
+      col_start: 2
+      cols_per_line: 5
+
+features:
+  - type: pattern_win
+    config:
+      header_label: "Pattern Pays"
+      header_col: 1
+      anchor_symbol_col: 2
+      anchor_reel_col: 3
+      tail_reels_col: 4
+      pay_col: 5
+      max_rows: 30
+  - type: free_spins
+    config:
+      paytable_header_label: "Free Spins Bonus"
+      paytable_header_col: 2
+      combo_cols: [2, 7]
+      pays_col: 7
+      pph_col: 8
+      rtp_pct_col: 9
+      marker_col: 1
+      max_rows: 40
+      summary_header_substr: "Bonus Summary"
+      summary_data_offset: 3
+      summary_cols:
+        avg_free_spins: 2
+        single_spin_payback_pct: 3
+        total_payback_pct: 4
