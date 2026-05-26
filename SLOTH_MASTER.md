@@ -114,7 +114,7 @@ Library covers every major probability family used in commercial slot math liter
 |---|---|:---:|
 | P3.1 | **W5.1 — `slot-build` CLI scaffold** (`<input>` → vendor auto-detect → parse → universal IR → optional MC) | ✅ `tools/slot_build/` + 10 unit tests; Vendor A auto-detected on Pick-Bonus + Vendor B on CE; MC drift comparison RTP/hit/win vs Excel target |
 | P3.2 | **W5.2 — Per-game scaffold codegen** (`--scaffold DIR` → README + RUN + CERT + IR copies) | ✅ `tools/slot_build/__main__.py::write_scaffold` + `slugify` helper; 3 new unit tests; smoke run on Pick-Bonus + CE COPY TEST produces self-contained game folders with auto-generated certification summary |
-| P3.2 | **W5.2 — IR → Rust engine codegen** (Tera template iz IR → `games/{slug}/src/`) | ⏳ |
+| P3.2 | **W5.2 — IR → Rust engine codegen** (Tera-equivalent template iz IR → `games/{slug}/src/`) | 🚧 in-progress (this commit) |
 | P3.3 | **W5.3 — IR → TS engine codegen** (mirror za RGS klijent) | ✅ `tools/parse_par/to_ts_ir.py` (universal → SlotGameIR adapter) + `slot-build --codegen-ts DIR` flag + emits 5-file scaffold (ir.json + runner.ts + package.json + tsconfig.json + README.md) per game; Zod-validated; `npx tsx runner.ts` smoke runs without panic for Vendor A + Vendor B; 8/8 W5.3 unit tests pass (3 converter + 3 Zod + 2 end-to-end) |
 | P3.4 | **W5.4 — IR → Studio UI skeleton** (vanilla HTML/JS scaffold sa reel viz + paytable + features panel) | ✅ `tools/slot_build/__main__.py::write_studio_codegen` + `slot-build --codegen-studio DIR` flag; emits 5-file per-game `studio/` scaffold (index.html + app.js + app.css + IR JSON + README) with Mulberry32 spin engine + paytable evaluator + live RTP/hit ticker + Auto-100 + Reset; playable in any browser via `python -m http.server`; 5/5 W5.4 tests (artifacts + DOM hooks + Node app.js smoke + Zod IR validation); Vendor A + Vendor B codegen both verified |
 | P3.5 | **W5.5 — Auto MC verify** (1B spinova post-build, gate sa Excel target ≤0.05%) | ✅ `tools/slot_build/verify.py` (3-tier CI matrix: quick 1M/5%, standard 100M/0.5%, strict 1B/0.05%); `scripts/ci_mc_verify.sh` CI orchestrator (bash-3 portable); exit-code contract (0/1/2); JSON report w/ per-game drift + overall verdict + per-IR `mc_tolerance` override (relaxes threshold for known-residual games, e.g. Vendor B ships 0.01 = 1% via meta until W4.3e-fs lands). **Standard tier (100M / 0.5%) now passes 5/5 games** — Vendor A PAR_001 drift 0.39%, Vendor B PAR-001 drift 0.67% (within override). 16/16 W5.5 tests (CI tier matrix + IR discovery + verify_one shape + override loader + CLI exit codes + JSON report schema). |
@@ -206,7 +206,7 @@ Library covers every major probability family used in commercial slot math liter
 | P5.6 | **Vendor + Jurisdiction switcher** (dropdowns sa diff preview) | ✅ | `emit_vendor_switcher` → `vendor_switcher.html` + `vendor_switcher.js`. Auto-discovers sibling `*.ir.json` (manifest.json ili scrape iz DOM), A/B dropdowns, diff panel sa RTP / max-win / volatility deltama. |
 | P5.7 | **Reel strip visualizer** (RTP contribution per simbol, per reel position) | ✅ | `emit_reel_viz` → `reel_viz.html` + `reel_viz.js`. Per-reel bar chart (rows = simboli sortirani po frequency, bar fill = count / max). Bez D3 dep — čist SVG/DOM. |
 | P5.8 | **Paytable heatmap** (RTP contribution per row) | ✅ | `emit_paytable_heatmap` → `paytable_heatmap.html` + `heatmap.js`. Grid sa rows = symbols, cols = k-of-a-kind, cell color = `pay × P(k-of-X)` (log-scaled red-yellow ramp). |
-| P5.9 | **Studio E2E Playwright suite** (regression za sve feature panels) | ⏳ |
+| P5.9 | **Studio E2E Playwright suite** (regression za sve feature panels) | 🚧 in-progress (this commit) |
 
 **Acceptance Phase 5:** Import IR → instant gauge + viz → user edit → re-MC u 5s → A/B compare → export cert paket.
 
@@ -245,24 +245,24 @@ Library covers every major probability family used in commercial slot math liter
 
 ---
 
-## 🎯 IMMEDIATE NEXT (Phase 7 follow-ups)
+## 🎯 IMMEDIATE NEXT (Phase 3.2 + Phase 5.9 — product-vision wave)
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| ↪ | **P3.2** IR→Rust engine codegen via Tera | — | per-game `src/` emit from universal IR |
-| ↪ | **P5.9** Studio E2E Playwright | — | regression coverage of every studio panel |
-| ↪ | **P7.x** Commercialization | — | pilot sign + marketplace listings + benchmark suite |
+| 🥇 1 | **P3.2 — IR→Rust engine codegen** | ~4-6 h | per-game `games/<slug>/src/sim.rs` generator from universal IR (Tera-equivalent Python templater + Cargo.toml + main.rs); slot-build `--codegen-rust DIR` flag wires it into existing scaffold pipeline. |
+| 🥈 2 | **P5.9 — Studio E2E Playwright** | ~3-4 h (codegen) | playwright `*.spec.ts` + `playwright.config.ts` + `package.json` template emitter per studio; CI smoke harness verifies generator output parses + Playwright dry-runs without browser launch (real browser run = separate CI step). |
+| ↪ | **P7.x** Commercialization | — | pilot sign + marketplace listings + benchmark suite (post-codegen) |
 
-**The W11–W74 operator superstructure is now closed.** Every operational gate (drift, cert, dashboard, gate aggregator, sign, marketplace, e2e verify, trust anchor, master gate) is shipped and integration-tested. Outstanding work is product-vision, not infrastructure.
+**The W11–W74 operator superstructure is closed.** Every operational gate is shipped + integration-tested.
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W71** | _this commit_ | Cert Bundle E2E Verifier — chains bundle_verify + cert_verify + plugin_sign + pubkey_bundle + sbom into one verdict (6 tests, e2e ZIP unpack + multi-step rollup) |
-| **W72** | _this commit_ | Trust Anchor Rotation — graceful ed25519 master-key rotation with transition signature + revocation log (7 tests, rotate→verify ok, wrong-old-key fails) |
-| **W73** | _this commit_ | Studio→Marketplace Pipeline — end-to-end bundle/sign/publish/round-trip-verify/SBOM/e2e gate in one CLI (4 tests, publish-report.json artifact) |
-| **W74** | _this commit_ | Master Pipeline Gate — repo-wide one-command aggregator across drift + dashboard + sbom + catalog + ir-diff (5 tests + 5 internal gate adapters) |
+| **W71** | `2e71f18` | Cert Bundle E2E Verifier — chains bundle_verify + cert_verify + plugin_sign + pubkey_bundle + sbom into one verdict (6 tests, e2e ZIP unpack + multi-step rollup) |
+| **W72** | `2e71f18` | Trust Anchor Rotation — graceful ed25519 master-key rotation with transition signature + revocation log (7 tests, rotate→verify ok, wrong-old-key fails) |
+| **W73** | `2e71f18` | Studio→Marketplace Pipeline — end-to-end bundle/sign/publish/round-trip-verify/SBOM/e2e gate in one CLI (4 tests, publish-report.json artifact) |
+| **W74** | `2e71f18` | Master Pipeline Gate — repo-wide one-command aggregator across drift + dashboard + sbom + catalog + ir-diff (5 tests + 5 internal gate adapters) |
 | **W68** | `f931b1b` | Marketplace Pub-key Bundle — signed publisher key registry, master-key-rotation-ready (7 tests + e2e build/verify ok) |
 | **W69** | _this commit_ | SBOM Diff Reporter — CycloneDX delta + breaking-change CI gate (9 tests + self-diff smoke) |
 | **W70** | _this commit_ | Pilot Sign-off PDF — pure-stdlib PDF 1.4 emitter (no external lib), zlib/FlateDecode + xref + trailer (7 tests + e2e 1.3 KB pdf) |
