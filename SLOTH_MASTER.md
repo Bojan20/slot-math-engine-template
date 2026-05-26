@@ -249,17 +249,20 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W59 — Vendor Onboarding Wizard** | ~45 min | `slot-vendor-onboard` CLI walks new vendor through `slot-vendor-scaffold` + `slot-synth-par` + `slot-build` + `slot-cert-verify` in one chain, emits a ready-to-ship pilot folder. |
-| 🥈 2 | **W60 — Operator Dashboard Live-stream** | ~45 min | extends W57 with W50-style streaming refresh: a `--watch` mode that re-aggregates every N seconds and re-emits the HTML — keeps a regulator/ops monitor warm. |
-| 🥉 3 | **W61 — Cross-vendor Math Catalog Sync** | ~30 min | `slot-catalog-sync` produces a single SemVer-tagged registry merging every closed-form solver doc (W27) + kernel comparator (W48) + feature coverage (W41) into one downloadable index for marketplace consumers. |
+| 🥇 1 | **W62 — Telemetry → Drift Hub Bridge** | ~30 min | `slot-telemetry-bridge` consumes a live RGS NDJSON (W50) feed, runs each spin through `rtp_monitor.update_from_spin`, fans every emitted snapshot to W54 drift hub — closes the live-monitoring loop. |
+| 🥈 2 | **W63 — Catalog Diff Reporter** | ~30 min | `slot-catalog-diff` compares two `INDEX.json` snapshots (W61); emits added/removed kernels + field-schema migrations + per-kernel docstring drift. Drop-in CI gate for marketplace consumers. |
+| 🥉 3 | **W64 — Pilot Sign-off Report** | ~45 min | `slot-pilot-signoff` consumes `ONBOARD_REPORT.md` (W59) + `cert.v2.xml` (W51) + compliance JSON (W53) and emits a regulator-ready ANSI-formatted text report. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W56** | _this commit_ | Cert XML standalone verifier — v1+v2 namespaces + IR digest cross-check + ed25519 batch verify (12 tests) |
-| **W57** | _this commit_ | Operator Dashboard Aggregator — per-game traffic light HTML + JSON (8 tests) |
+| **W59** | _this commit_ | Vendor Onboarding Wizard — scaffold + synth IR + cert in one shot (6 tests) |
+| **W60** | _this commit_ | Operator Dashboard Live-stream — atomic refresh, ledger, KeyboardInterrupt-aware (5 tests) |
+| **W61** | _this commit_ | Cross-vendor Math Catalog Sync — SemVer registry of 100 kernels (11 tests) |
+| **W56** | `bc2a43f` | Cert XML standalone verifier — v1+v2 namespaces + IR digest cross-check + ed25519 batch verify (12 tests) |
+| **W57** | `bc2a43f` | Operator Dashboard Aggregator — per-game traffic light HTML + JSON (8 tests) |
 | **W58** | _this commit_ | IR Diff CI Gate — configurable rules ladder over slot-ir-diff (12 tests) |
 | **W53** | `39a8184` | Multi-Territory Cert Builder — chains lint + cert v2 + marketplace verify into one ZIP (4 tests) |
 | **W54** | `39a8184` | Real-time Drift Alert Hub — rules ladder + 4 sink types + dedup + crash-tolerant fan-out (9 tests) |

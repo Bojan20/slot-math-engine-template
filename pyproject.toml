@@ -181,6 +181,12 @@ slot-cert-verify = "tools.cert_verify.__main__:main"
 slot-operator-dashboard = "tools.operator_dashboard.__main__:main"
 # ─── W58 — IR Diff CI Gate (configurable rules ladder over slot-ir-diff)
 slot-ir-diff-gate = "tools.ir_diff_gate.__main__:main"
+# ─── W59 — Vendor Onboarding Wizard (scaffold → IR → cert in one shot)
+slot-vendor-onboard = "tools.vendor_onboard.__main__:main"
+# ─── W60 — Operator Dashboard Live-stream (watch-mode atomic refresh)
+slot-dashboard-livestream = "tools.dashboard_livestream.__main__:main"
+# ─── W61 — Cross-vendor Math Catalog Sync (SemVer-tagged solver registry)
+slot-catalog-sync = "tools.catalog_sync.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
