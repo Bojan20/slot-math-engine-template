@@ -6,7 +6,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from tools.studio_ext.extend import EXT_COMPONENTS, extend_studio
+from tools.studio_ext import EXT_COMPONENTS, extend_studio
 
 
 def main(argv: list[str] | None = None) -> int:

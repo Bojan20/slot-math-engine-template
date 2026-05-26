@@ -19,7 +19,7 @@
 | 5 | Jurisdikcijska compliance: 12 profila (UKGC/MGA/GLI-16/19/NV/NJ/PA/MI/ON/BC/AAMS/Quebec) | ✅ **DONE** — P1.7 12/12 profila + Python linter + `slot-jurisdiction-check` CLI |
 | 6 | Closed-form solver coverage: 100+ feature patterns iz INDUSTRY_PATTERN_CATALOG | ✅ **100/100 DONE** |
 | 7 | 10⁹ spinova / 60s na M2 Max — sustained MC throughput | ✅ landed (Wave 3) |
-| 8 | Studio UI: A/B compare, real-time MC, IR editor, vendor + jurisdiction switcher | 🚧 Phase 5 — P5.1+P5.2 ✅, P5.3+P5.5+P5.8 ✅ (Mission #8 extensions landed via `slot-studio-extend`) |
+| 8 | Studio UI: A/B compare, real-time MC, IR editor, vendor + jurisdiction switcher | ✅ **DONE** — P5.1+P5.2 ✅ (core), P5.3+P5.4+P5.5+P5.6+P5.7+P5.8 ✅ (6 extensions via `slot-studio-extend`) |
 | 9 | GLI-16 auto cert paket (HSM seed, RNG 90B, PAR commitment, audit log) | ✅ **DONE** — W5.6 (ed25519 sig + IRs + MC + PAR commitments + verify.sh) |
 | 10 | Genetic optimizer: target RTP+vol → 1000 varijanti za 24h sa Pareto fitness | ✅ **DONE** — W7.1 kernel + W7.4 NSGA-II + W7.4-batch parallel runner (27 variants/s @ 4 workers × 20K spins; 1000 variants in ~37s; 1M variants ≈ 10 h on 8-core M-series) |
 
@@ -119,10 +119,10 @@
 | P5.1 | Studio v5-final-studio scaffold | ✅ |
 | P5.2 | Workspaces × Variants (Compare A/B) | ✅ |
 | P5.3 | **WebWorker auto-MC** (Mulberry32 + line-eval off-main-thread) | ✅ | `tools/studio_ext/extend.py::emit_mc_worker` → `mc_worker.js`. Postuje `{type: progress, spins, hits, rtp}` updates svake batch. CLI: `slot-studio-extend <studio_dir>`. |
-| P5.4 | **Real-time RTP/volatility/hit-rate gauge** (10M streaming MC) | ⏳ |
+| P5.4 | **Real-time RTP/volatility/hit-rate gauge** (10M streaming MC) | ✅ | `emit_rtp_gauge` → `rtp_gauge.html` + `rtp_gauge.js`. Drives `mc_worker.js`, renders live RTP/hit/spin counters + 600-pt SVG sparkline. Start/Stop controls + spins/batch/seed inputs. |
 | P5.5 | **IR JSON editor** (sa schema validation + live error highlight) | ✅ | `emit_ir_editor` → `ir_editor.html` + `ir_editor.js`. Side-by-side textarea + closed-form line RTP recompute (port of `closed_form_line_rtp` na JS). Debounced 250 ms. |
-| P5.6 | **Vendor + Jurisdiction switcher** (dropdowns sa diff preview) | ⏳ |
-| P5.7 | **Reel strip visualizer** (D3.js — RTP contribution per simbol, per reel position) | ⏳ |
+| P5.6 | **Vendor + Jurisdiction switcher** (dropdowns sa diff preview) | ✅ | `emit_vendor_switcher` → `vendor_switcher.html` + `vendor_switcher.js`. Auto-discovers sibling `*.ir.json` (manifest.json ili scrape iz DOM), A/B dropdowns, diff panel sa RTP / max-win / volatility deltama. |
+| P5.7 | **Reel strip visualizer** (RTP contribution per simbol, per reel position) | ✅ | `emit_reel_viz` → `reel_viz.html` + `reel_viz.js`. Per-reel bar chart (rows = simboli sortirani po frequency, bar fill = count / max). Bez D3 dep — čist SVG/DOM. |
 | P5.8 | **Paytable heatmap** (RTP contribution per row) | ✅ | `emit_paytable_heatmap` → `paytable_heatmap.html` + `heatmap.js`. Grid sa rows = symbols, cols = k-of-a-kind, cell color = `pay × P(k-of-X)` (log-scaled red-yellow ramp). |
 | P5.9 | **Studio E2E Playwright suite** (regression za sve feature panels) | ⏳ |
 
