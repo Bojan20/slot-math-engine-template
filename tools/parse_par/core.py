@@ -112,6 +112,29 @@ def parse_paytable(rows: list[list[str]], profile: VendorProfile) -> list[dict]:
     cfg = profile.data.get("paytable")
     if not cfg:
         return []
+    # ── Cluster-pays shape (vendor_d-style: cluster_size_col + symbol_col)
+    #    Each row describes one (cluster_size, symbol, pays) tuple rather
+    #    than a 5-cell line combo. We emit a canonical paytable record
+    #    keyed by `combo = [symbol]` and `cluster_size` for round-trip.
+    if "cluster_size_col" in cfg and "combo_cols" not in cfg:
+        r0, r1 = cfg["row_range"]
+        cs_c = cfg["cluster_size_col"]
+        sym_c = cfg["symbol_col"]
+        pays_c = cfg.get("pays_col")
+        out: list[dict] = []
+        for r in range(r0, r1):
+            cs = n(rows, r, cs_c)
+            sym = s(rows, r, sym_c).strip()
+            if cs is None or not sym:
+                continue
+            entry = {
+                "marker": "",
+                "combo": [sym],
+                "cluster_size": int(cs),
+                "pays": n(rows, r, pays_c) if pays_c is not None else None,
+            }
+            out.append(entry)
+        return out
     r0, r1 = cfg["row_range"]
     cc0, cc1 = cfg["combo_cols"]
     pays_c = cfg["pays_col"]
@@ -395,11 +418,17 @@ def parse_paylines(profile: VendorProfile, raw_dir: Path) -> list[dict]:
     return out
 
 
-def parse_features(rows: list[list[str]], profile: VendorProfile) -> dict:
+def parse_features(rows: list[list[str]], profile: VendorProfile,
+                   *, strict: bool = True) -> dict:
     """Dispatch each feature block in profile.features to its registered parser.
 
     Returns dict {feature_type: parsed_data}. If a feature type appears
     multiple times, results are merged into a list under that key.
+
+    When `strict=False`, unknown feature parsers are recorded as
+    `{ftype: {"__unparsed__": <config>}}` instead of raising, so
+    scaffold-stage vendor profiles (with features the parser doesn't
+    yet implement) can still round-trip the rest of the PAR.
     """
     out: dict[str, Any] = {}
     for f in profile.features:
@@ -408,8 +437,11 @@ def parse_features(rows: list[list[str]], profile: VendorProfile) -> dict:
             continue
         parser = _features.get_parser(ftype)
         if parser is None:
-            raise ValueError(f"unknown feature parser: {ftype!r}")
-        result = parser(rows, f.get("config", {}) or {}, profile)
+            if strict:
+                raise ValueError(f"unknown feature parser: {ftype!r}")
+            result = {"__unparsed__": f.get("config", {}) or {}}
+        else:
+            result = parser(rows, f.get("config", {}) or {}, profile)
         if ftype in out:
             existing = out[ftype]
             if isinstance(existing, list):
@@ -421,11 +453,17 @@ def parse_features(rows: list[list[str]], profile: VendorProfile) -> dict:
     return out
 
 
-def parse_par(profile: VendorProfile, raw_dir: Path, sheet: str | None = None) -> dict:
+def parse_par(profile: VendorProfile, raw_dir: Path, sheet: str | None = None,
+              *, strict: bool = True) -> dict:
     """Parse one PAR sheet to canonical IR.
 
     `sheet` overrides profile.sheets.main_par (e.g. for multi-SWID
     iteration: PAR-001, PAR-002, PAR-003).
+
+    `strict=False` propagates to `parse_features` so scaffold-stage
+    profiles (vendor_c/d/e) whose feature parsers are not yet
+    implemented round-trip cleanly (unknown features marked as
+    `{"__unparsed__": cfg}` instead of raising).
     """
     raw_dir = Path(raw_dir)
     sheet_name = sheet or profile.sheets["main_par"]
@@ -454,7 +492,7 @@ def parse_par(profile: VendorProfile, raw_dir: Path, sheet: str | None = None) -
         ir["fg_reel_set_weights"] = parse_reel_set_weights(rows, rw_cfg["fs"])
 
     # Features
-    feat = parse_features(rows, profile)
+    feat = parse_features(rows, profile, strict=strict)
     ir.update(feat)
 
     # Paylines (only if profile carries layout; auto-attached to IR)

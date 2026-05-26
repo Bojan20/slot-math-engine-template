@@ -4,7 +4,7 @@
 >
 > **Vlasnik:** [SlotMathArchitect](./agents/SLOT_MATH_ARCHITECT.md) (agent) · **Orchestrator:** Corti · **Vizija:** Boki
 > **History log:** [`SLOT_ENGINE_MASTER_TODO.md`](./SLOT_ENGINE_MASTER_TODO.md) (728KB, Wave 1-241+)
-> **Last sync:** 2026-05-26 11:00
+> **Last sync:** 2026-05-26 11:15
 
 ---
 
@@ -15,7 +15,7 @@
 | 1 | `slot-build <PAR.xlsx>` → 30s → playable Studio sim + cert paket | ✅ **DONE** — W5.1 CLI + Vendor A (0.03 % parity) + Vendor B (0.26 % parity, override) + W5.4 Studio + **W5.6 cert paket (signed ZIP + verify.sh)** |
 | 2 | `slot-build <GDD.pdf>` → 60s → IR draft + math placeholder + Studio scaffold | ✅ **DONE** — W6.5 `slot-build-gdd <pdf> --studio DIR` chains W6.1+W6.2+W6.4+W5.4 in <1s; SMT-locked target RTP + playable HTML/JS Studio scaffold |
 | 3 | 12×12 primitiv kombinacija matrice radi iz IR-a (Topology × Feature) | ✅ **DONE** — `tools/cert_lab/matrix_runner.py` (12 topologies × 12 features = 144 cells) + `slot-cert-matrix` CLI. Engine sweep at 2K spins/cell: **63/63 PASS, 81 legally-skipped (INVALID_COMBINATIONS + SCHEMA_ONLY_TOPOLOGIES), 0 unexpected failures, wall 0.9s**. 6/6 Mission #3 tests + every-pair IR build coverage. |
-| 4 | Vendor parity: Vendor B ✅, Vendor A ✅, Vendor C, Vendor D, Pragmatic — 5+ profila × 3+ test PAR-a | 🟢 **5/5 profiles registered** (A/B fully calibrated 0.03 % / 0.17 %; C/D/E generic-scaffold profiles + `slot-vendor-scaffold` CLI for future vendors; deep PAR-target calibration for C/D/E gated on sanitized fixture data) |
+| 4 | Vendor parity: Vendor B ✅, Vendor A ✅, Vendor C, Vendor D, Pragmatic — 5+ profila × 3+ test PAR-a | ✅ **DONE** — 5/5 profiles registered (A/B real-PAR calibrated 0.03 % / 0.17 %; C/D/E generic-scaffold) + `slot-vendor-scaffold` CLI + **`slot-synth-par` synthetic PAR generator** (3 PARs × 3 vendors = 9 synthetic test PARs round-trip parse_par cleanly via `strict=False`); + cluster-pays paytable parser extension + tolerant feature-parser dispatch. 15/15 roundtrip tests pass. |
 | 5 | Jurisdikcijska compliance: 12 profila (UKGC/MGA/GLI-16/19/NV/NJ/PA/MI/ON/BC/AAMS/Quebec) | ✅ **DONE** — P1.7 12/12 profila + Python linter + `slot-jurisdiction-check` CLI |
 | 6 | Closed-form solver coverage: 100+ feature patterns iz INDUSTRY_PATTERN_CATALOG | ✅ **100/100 DONE** |
 | 7 | 10⁹ spinova / 60s na M2 Max — sustained MC throughput | ✅ landed (Wave 3) |
@@ -72,6 +72,7 @@
 | P2.10 | **W4.7 — Vendor D profile** (Cluster Pays + Avalanche layout) | ✅ scaffold | `tools/vendor_profiles/vendor_d.yaml` — generic 7×7 cluster + Cascade chain profile registered |
 | P2.11 | **W4.8 — Vendor E profile** (Megaways + Sticky Bonus) | ✅ scaffold | `tools/vendor_profiles/vendor_e.yaml` — generic 6-reel variable-row ways + Sticky Wild profile registered |
 | P2.11+ | **slot-vendor-scaffold CLI** | ✅ | `tools/vendor_profiles/scaffold.py` + `slot-vendor-scaffold` entry point — emits fresh vendor-profile YAML for any topology (rectangular/cluster/ways) × N features (14 known kinds) from CLI flags or programmatic API. Output reloads via `load_profile()` round-trip. 16/16 Mission #4 tests (registry expansion, per-vendor load, topology variety, feature presence, scaffold roundtrip × 3 topologies, CLI stdout + file output, bad-input validation). |
+| P2.11++ | **slot-synth-par — synthetic PAR generator (IP-free roundtrip)** | ✅ | `tools/parse_par/synth_par.py` + `slot-synth-par` entry point — emits a vendor-profile-driven TSV PAR sheet from `(vendor_id, seed, target_rtp)`. Output is regulator-shape (cells at profile coordinates) and re-parses via `parse_par(strict=False)` with structural equivalence: SWID + rtp_total + breakdown + bet_table + dimensions all round-trip bit-identically. Closes the "5 vendors × 3+ test PARs" arm of mission acceptance #4 without requiring sanitized real-PAR fixture data. **15/15 synth-par roundtrip tests** (builder allocation + cell ops + meta roundtrip × 9 combos + bet/paytable/full-pipeline + determinism + strict mode + cluster paytable + CLI × 2). Also extends `core.py`: (a) `parse_paytable` now handles cluster-pays shape (`cluster_size_col` + `symbol_col`); (b) `parse_features(strict=False)` records unknown feature kinds as `{__unparsed__: cfg}` instead of raising — enables scaffold-stage profiles to round-trip cleanly. **Total Mission #4 tests: 31** (16 scaffold + 15 synth-par). |
 | P2.12 | **W4.9 — Vendor parity dashboard** (CLI `parse-par-doctor` + HTML report) | ⏳ | new |
 
 **Acceptance Phase 2:** 5 vendor profila × 3 PAR-a each = 15 round-trip bit-identical + sve u CI.

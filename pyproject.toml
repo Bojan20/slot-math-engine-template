@@ -74,6 +74,8 @@ slot-jurisdiction-check = "tools.jurisdiction.linter:main"
 slot-cert-matrix = "tools.cert_lab.matrix_runner:main"
 # ─── Mission #4 — vendor profile scaffolder (Vendor C/D/E + future) ────
 slot-vendor-scaffold = "tools.vendor_profiles.scaffold:main"
+# ─── Mission #4 — synthetic PAR generator (IR-free roundtrip) ──────────
+slot-synth-par = "tools.parse_par.synth_par:main"
 # ─── Mission #8 — Studio UI extensions (WebWorker MC + heatmap + editor)
 slot-studio-extend = "tools.studio_ext.__main__:main"
 # ─── W6.3 / W6.6 — LLM-assisted GDD synthesis + review UI ──────────────
