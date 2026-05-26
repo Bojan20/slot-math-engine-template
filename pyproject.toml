@@ -111,6 +111,12 @@ slot-replay-gate = "tools.replay_gate.__main__:main"
 slot-ir-migrate = "tools.ir_schema.__main__:main"
 # ─── W24 — Audit trail aggregator (per-game timeline)
 slot-audit-trail = "tools.audit_trail.__main__:main"
+# ─── W23 — IR multi-language localization
+slot-localize = "tools.localization.translator:main"
+# ─── W25 — Repo-wide coverage report (kernels + jurisdictions + …)
+slot-coverage = "tools.coverage_report.__main__:main"
+# ─── W27 — Per-game math specification doc generator
+slot-math-doc = "tools.math_doc.generator:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
