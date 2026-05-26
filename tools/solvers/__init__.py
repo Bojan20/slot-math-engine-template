@@ -66,6 +66,44 @@ from .fs_retrigger_compound import (
     expected_total_spins,
     variance_total_spins,
 )
+from .megaways_ways_count import (
+    MegawaysParams,
+    analytical_rtp as megaways_rtp,
+    mc_simulate as megaways_mc,
+    expected_height,
+    expected_total_ways,
+)
+from .cascade_reaction_chain import (
+    CascadeChainParams,
+    analytical_rtp as cascade_chain_rtp,
+    mc_simulate as cascade_chain_mc,
+    expected_chain_length,
+    variance_total_pay as cascade_chain_var,
+)
+from .hold_and_spin_jackpot import (
+    HoldAndSpinJackpotParams,
+    analytical_rtp as hns_jackpot_rtp,
+    mc_simulate as hns_jackpot_mc,
+    expected_total_orbs,
+)
+from .wild_multiplier_stack import (
+    WildMultiplierStackParams,
+    analytical_rtp as wild_mult_rtp,
+    mc_simulate as wild_mult_mc,
+    expected_multiplier,
+    expected_pi_T,
+)
+from .collect_feature_progressive import (
+    CollectProgressiveParams,
+    analytical_rtp as collect_rtp,
+    mc_simulate as collect_mc,
+    expected_value_coins,
+)
+from .scatter_total_bet_pay import (
+    ScatterTotalBetParams,
+    analytical_rtp as scatter_totalbet_rtp,
+    mc_simulate as scatter_totalbet_mc,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -100,4 +138,30 @@ __all__ = [
     "fs_retrigger_mc",
     "expected_total_spins",
     "variance_total_spins",
+    "MegawaysParams",
+    "megaways_rtp",
+    "megaways_mc",
+    "expected_height",
+    "expected_total_ways",
+    "CascadeChainParams",
+    "cascade_chain_rtp",
+    "cascade_chain_mc",
+    "expected_chain_length",
+    "cascade_chain_var",
+    "HoldAndSpinJackpotParams",
+    "hns_jackpot_rtp",
+    "hns_jackpot_mc",
+    "expected_total_orbs",
+    "WildMultiplierStackParams",
+    "wild_mult_rtp",
+    "wild_mult_mc",
+    "expected_multiplier",
+    "expected_pi_T",
+    "CollectProgressiveParams",
+    "collect_rtp",
+    "collect_mc",
+    "expected_value_coins",
+    "ScatterTotalBetParams",
+    "scatter_totalbet_rtp",
+    "scatter_totalbet_mc",
 ]
