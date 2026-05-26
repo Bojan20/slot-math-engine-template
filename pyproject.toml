@@ -205,6 +205,14 @@ slot-pubkey-bundle = "tools.pubkey_bundle.__main__:main"
 slot-sbom-diff = "tools.sbom_diff.__main__:main"
 # ─── W70 — Pilot Sign-off PDF (pure-stdlib PDF 1.4 emitter)
 slot-pilot-signoff-pdf = "tools.pilot_signoff_pdf.__main__:main"
+# ─── W71 — Cert Bundle E2E Verifier (chain bundle + cert + sign + pubkey + sbom)
+slot-cert-e2e-verify = "tools.cert_e2e_verify.__main__:main"
+# ─── W72 — Trust Anchor Rotation (rotate / revoke / verify master key)
+slot-trust-anchor = "tools.trust_anchor.__main__:main"
+# ─── W73 — Studio → Marketplace Publish Pipeline (one-shot bundle/sign/publish/verify)
+slot-studio-publish = "tools.studio_publish.__main__:main"
+# ─── W74 — Master Pipeline Gate (repo-wide gate of every gate)
+slot-master-gate = "tools.master_gate.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

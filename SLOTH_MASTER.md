@@ -245,20 +245,25 @@ Library covers every major probability family used in commercial slot math liter
 
 ---
 
-## 🎯 IMMEDIATE NEXT (sledeća 3 wave-a)
+## 🎯 IMMEDIATE NEXT (Phase 7 follow-ups)
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W71 — Cert Bundle End-to-End Verifier** | ~45 min | `slot-cert-bundle-verify` chains W56 cert XML verify + W64 sign-off + W67 SBOM cross-check into one CLI that re-verifies an entire regulator ZIP atomically. |
-| 🥈 2 | **W72 — Marketplace Trust Anchor Rotation** | ~30 min | `slot-trust-anchor-rotate` performs a graceful ed25519 master-key rotation: re-signs every W68 pubkey bundle under a new master while keeping the old signature side-by-side for hand-off. |
-| 🥉 3 | **W73 — Studio Build → Marketplace Pipeline CLI** | ~45 min | `slot-pipeline` orchestrates: lint → cert v2 → sign (W65) → publish (W52) → bundle key (W68) → SBOM (W67) → PDF (W70) in one command from a single IR. The "ship a pilot" button. |
-| ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
+| ↪ | **P3.2** IR→Rust engine codegen via Tera | — | per-game `src/` emit from universal IR |
+| ↪ | **P5.9** Studio E2E Playwright | — | regression coverage of every studio panel |
+| ↪ | **P7.x** Commercialization | — | pilot sign + marketplace listings + benchmark suite |
+
+**The W11–W74 operator superstructure is now closed.** Every operational gate (drift, cert, dashboard, gate aggregator, sign, marketplace, e2e verify, trust anchor, master gate) is shipped and integration-tested. Outstanding work is product-vision, not infrastructure.
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W68** | _this commit_ | Marketplace Pub-key Bundle — signed publisher key registry, master-key-rotation-ready (7 tests + e2e build/verify ok) |
+| **W71** | _this commit_ | Cert Bundle E2E Verifier — chains bundle_verify + cert_verify + plugin_sign + pubkey_bundle + sbom into one verdict (6 tests, e2e ZIP unpack + multi-step rollup) |
+| **W72** | _this commit_ | Trust Anchor Rotation — graceful ed25519 master-key rotation with transition signature + revocation log (7 tests, rotate→verify ok, wrong-old-key fails) |
+| **W73** | _this commit_ | Studio→Marketplace Pipeline — end-to-end bundle/sign/publish/round-trip-verify/SBOM/e2e gate in one CLI (4 tests, publish-report.json artifact) |
+| **W74** | _this commit_ | Master Pipeline Gate — repo-wide one-command aggregator across drift + dashboard + sbom + catalog + ir-diff (5 tests + 5 internal gate adapters) |
+| **W68** | `f931b1b` | Marketplace Pub-key Bundle — signed publisher key registry, master-key-rotation-ready (7 tests + e2e build/verify ok) |
 | **W69** | _this commit_ | SBOM Diff Reporter — CycloneDX delta + breaking-change CI gate (9 tests + self-diff smoke) |
 | **W70** | _this commit_ | Pilot Sign-off PDF — pure-stdlib PDF 1.4 emitter (no external lib), zlib/FlateDecode + xref + trailer (7 tests + e2e 1.3 KB pdf) |
 | **W65** | `5dcac5c` | Marketplace Plugin Signing CLI — ed25519 keygen/sign/verify + `.sig` + `.sig.b64` sidecars (6 tests + e2e roundtrip ok) |

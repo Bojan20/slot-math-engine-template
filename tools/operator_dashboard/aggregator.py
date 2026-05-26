@@ -278,6 +278,14 @@ def _light_color(state: str) -> str:
 
 def _emit_html(report: DashboardReport) -> str:
     rows = []
+    def _fmt(v, spec=".4f"):
+        if v is None:
+            return "—"
+        try:
+            return format(v, spec)
+        except (TypeError, ValueError):
+            return str(v)
+
     for g in report.games:
         color = _light_color(g.traffic_light)
         issues = "<br/>".join(g.issues) or "—"
@@ -287,13 +295,13 @@ def _emit_html(report: DashboardReport) -> str:
             f"<td>{g.name}</td>"
             f"<td>{g.vendor}</td>"
             f"<td>{g.swid}</td>"
-            f"<td>{g.target_rtp if g.target_rtp is not None else '—'}</td>"
-            f"<td>{g.rtp_estimate:.4f}</td>"
-            f"<td>{g.rtp_delta if g.rtp_delta is not None else '—'}</td>"
+            f"<td>{_fmt(g.target_rtp, '.4f')}</td>"
+            f"<td>{_fmt(g.rtp_estimate, '.4f')}</td>"
+            f"<td>{_fmt(g.rtp_delta, '.4f')}</td>"
             f"<td>{g.rtp_severity}</td>"
             f"<td>{g.paytable_depth}</td>"
-            f"<td>{g.reel_diversity:.3f}</td>"
-            f"<td>{g.volatility_proxy:.3f}</td>"
+            f"<td>{_fmt(g.reel_diversity, '.3f')}</td>"
+            f"<td>{_fmt(g.volatility_proxy, '.3f')}</td>"
             f"<td>{', '.join(g.feature_kinds)}</td>"
             f"<td>{issues}</td>"
             "</tr>"
