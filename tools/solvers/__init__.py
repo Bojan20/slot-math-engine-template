@@ -353,6 +353,29 @@ from .expanding_symbol_reel import (
     mc_simulate as expanding_symbol_mc,
     prob_line as expanding_symbol_prob_line,
 )
+from .jackpot_seed_growth import (
+    JackpotSeedGrowthParams,
+    analytical_rtp as jp_seed_growth_rtp,
+    mc_simulate as jp_seed_growth_mc,
+    expected_award as jp_seed_expected_award,
+)
+from .sticky_respin_meter import (
+    StickyRespinMeterParams,
+    analytical_rtp as sticky_respin_meter_rtp,
+    mc_simulate as sticky_respin_meter_mc,
+)
+from .walking_wild_persistence import (
+    WalkingWildParams,
+    analytical_rtp as walking_wild_rtp,
+    mc_simulate as walking_wild_mc,
+    expected_lifetime as walking_wild_lifetime,
+)
+from .chain_combo_progressive import (
+    ChainComboParams,
+    analytical_rtp as chain_combo_rtp,
+    mc_simulate as chain_combo_mc,
+    expected_combo_sum,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -544,4 +567,19 @@ __all__ = [
     "expanding_symbol_rtp",
     "expanding_symbol_mc",
     "expanding_symbol_prob_line",
+    "JackpotSeedGrowthParams",
+    "jp_seed_growth_rtp",
+    "jp_seed_growth_mc",
+    "jp_seed_expected_award",
+    "StickyRespinMeterParams",
+    "sticky_respin_meter_rtp",
+    "sticky_respin_meter_mc",
+    "WalkingWildParams",
+    "walking_wild_rtp",
+    "walking_wild_mc",
+    "walking_wild_lifetime",
+    "ChainComboParams",
+    "chain_combo_rtp",
+    "chain_combo_mc",
+    "expected_combo_sum",
 ]

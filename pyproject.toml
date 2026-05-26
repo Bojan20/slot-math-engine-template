@@ -145,6 +145,12 @@ slot-regulator-export = "tools.regulator_export.__main__:main"
 slot-portfolio-compare = "tools.portfolio_compare.__main__:main"
 # ─── W40 — Volatility classifier (CV → LOW/MEDIUM/HIGH/EXTREME)
 slot-volatility-classify = "tools.volatility_classifier.__main__:main"
+# ─── W41 — Feature coverage audit (IR features ↔ kernel catalog)
+slot-feature-coverage = "tools.feature_coverage.__main__:main"
+# ─── W42 — Release notes synthesizer (Conventional Commits → MD)
+slot-release-notes = "tools.release_notes.__main__:main"
+# ─── W43 — Performance budget gate (kernel timing CI guard)
+slot-perf-budget = "tools.perf_budget.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
