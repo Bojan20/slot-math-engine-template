@@ -1092,6 +1092,32 @@ def main(argv: list[str] | None = None) -> int:
              "closed-form RTP estimate from the universal IR.",
     )
     ap.add_argument(
+        "--codegen-ts-engine",
+        metavar="DIR",
+        default=None,
+        help="W4.5 — also emit a per-game TypeScript engine package "
+             "(package.json + tsconfig + src/sim.ts + main.ts + ir/<slug>.ir.json + "
+             "tests/<slug>.spec.ts) into DIR/<slug>-ts/. PCG64 bit-identical to "
+             "the Rust slot-sim engine for parity testing.",
+    )
+    ap.add_argument(
+        "--codegen-svelte",
+        metavar="DIR",
+        default=None,
+        help="W4.6 — also emit a per-game Svelte UI package "
+             "(package.json + svelte.config + vite.config + routes/+page.svelte + "
+             "static/ir.json) into DIR/<slug>-ui/. Self-contained reel grid + "
+             "paytable list + spin button + RTP ticker.",
+    )
+    ap.add_argument(
+        "--codegen-all-runtimes",
+        metavar="DIR",
+        default=None,
+        help="W4.7 — shorthand for --codegen-rust DIR + --codegen-ts-engine DIR + "
+             "--codegen-svelte DIR. Produces all three runtimes (Rust + TS + UI) "
+             "rooted at DIR. Closes Wave 4 (universal slot engine codegen).",
+    )
+    ap.add_argument(
         "--cert-package",
         metavar="DIR",
         default=None,
@@ -1279,6 +1305,16 @@ def main(argv: list[str] | None = None) -> int:
                 except Exception as e:
                     print(f"  warn: codegen-studio failed: {e}", file=sys.stderr)
 
+        # W4.7 — fan out --codegen-all-runtimes into the three sub-flags
+        # so each branch below sees its target dir set.
+        if args.codegen_all_runtimes is not None:
+            if args.codegen_rust is None:
+                args.codegen_rust = args.codegen_all_runtimes
+            if args.codegen_ts_engine is None:
+                args.codegen_ts_engine = args.codegen_all_runtimes
+            if args.codegen_svelte is None:
+                args.codegen_svelte = args.codegen_all_runtimes
+
         # P3.2 — Rust runner crate emission
         if args.codegen_rust is not None:
             if universal is None:
@@ -1304,6 +1340,63 @@ def main(argv: list[str] | None = None) -> int:
                         print(f"  codegen-rust → {crate_dir}")
                 except Exception as e:
                     print(f"  warn: codegen-rust failed: {e}", file=sys.stderr)
+
+        # W4.5 — TypeScript engine package emission
+        if args.codegen_ts_engine is not None:
+            if universal is None:
+                if not args.quiet:
+                    print(
+                        f"  skip codegen-ts-engine: universal IR unavailable "
+                        f"for {vendor}",
+                        file=sys.stderr,
+                    )
+            else:
+                from tools.codegen_ts.codegen import (
+                    write_ts_codegen as write_ts_engine_w45,
+                    slugify as ts_slugify,
+                )
+                ts_root = Path(args.codegen_ts_engine).resolve()
+                ts_root.mkdir(parents=True, exist_ok=True)
+                slug = ts_slugify(f"{ir['meta'].get('name', game_id)}-{swid}")
+                try:
+                    ts_paths = write_ts_engine_w45(
+                        ir=universal, out_dir=ts_root, slug=slug,
+                    )
+                    if not args.quiet:
+                        print(f"  codegen-ts-engine → {ts_paths['crate_dir']}")
+                except Exception as e:
+                    print(
+                        f"  warn: codegen-ts-engine failed: {e}",
+                        file=sys.stderr,
+                    )
+
+        # W4.6 — Svelte UI package emission
+        if args.codegen_svelte is not None:
+            if universal is None:
+                if not args.quiet:
+                    print(
+                        f"  skip codegen-svelte: universal IR unavailable "
+                        f"for {vendor}",
+                        file=sys.stderr,
+                    )
+            else:
+                from tools.codegen_svelte.codegen import (
+                    write_svelte_codegen, slugify as ui_slugify,
+                )
+                ui_root = Path(args.codegen_svelte).resolve()
+                ui_root.mkdir(parents=True, exist_ok=True)
+                slug = ui_slugify(f"{ir['meta'].get('name', game_id)}-{swid}")
+                try:
+                    ui_paths = write_svelte_codegen(
+                        ir=universal, out_dir=ui_root, slug=slug,
+                    )
+                    if not args.quiet:
+                        print(f"  codegen-svelte → {ui_paths['crate_dir']}")
+                except Exception as e:
+                    print(
+                        f"  warn: codegen-svelte failed: {e}",
+                        file=sys.stderr,
+                    )
 
         # W5.6 — cert package emission
         if args.cert_package is not None:
