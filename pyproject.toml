@@ -1,0 +1,88 @@
+# ─── slot-math-engine-template — Python tooling package ────────────────────
+# Universal slot math toolkit: PAR parsing, IR codegen, MC verification,
+# cert bundling, evolutionary solvers, provenance, player-behavior
+# simulation, and 5 closed-form RTP solver kernels.
+#
+# Installs the `tools.*` Python packages plus a set of console entry
+# points so an operator can run the full slot-math pipeline without
+# cloning the entire monorepo.
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slot-math-engine-template"
+version = "0.1.0"
+description = "Universal slot math engine — PAR → IR → MC → cert bundle. Includes evolutionary solvers, crypto-verifiable provenance, player-behavior cohort sim, and 5 closed-form RTP kernels."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary — Vendor-redacted per W-SANITIZE" }
+authors = [
+    { name = "Boki" },
+]
+keywords = [
+    "slot", "gambling", "math", "rtp", "monte-carlo", "regulator",
+    "cert", "merkle", "ed25519", "nsga-ii", "pareto", "genetic",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    # Sign / verify cert bundles (W5.6 + W7.5)
+    "cryptography>=41.0",
+]
+
+[project.optional-dependencies]
+# TS engine validation gate uses tsx + zod; install via npm not pip
+# (see tools/parse_par/_validate_ts_ir.mjs).
+smt = [
+    "z3-solver>=4.12; python_version>='3.10'",
+]
+gdd = [
+    # PDF extractor for W6.1
+    "PyMuPDF>=1.23; python_version>='3.10'",
+]
+all = [
+    "z3-solver>=4.12",
+    "PyMuPDF>=1.23",
+]
+
+[project.scripts]
+# ─── Core pipeline ─────────────────────────────────────────────────────
+slot-parse = "tools.parse_par.__main__:main"
+slot-build = "tools.slot_build.__main__:main"
+slot-build-verify = "tools.slot_build.verify:main"
+slot-build-cert = "tools.slot_build.cert_package:main"
+# ─── Diagnostics ───────────────────────────────────────────────────────
+slot-fs-audit = "tools.diagnostics.fs_rtp_audit:main"
+slot-ir-fuzz = "tools.diagnostics.ir_invariant_fuzzer:main"
+# ─── Evolution & optimization ──────────────────────────────────────────
+slot-evolve = "tools.evolution.genetic_solver:main"
+slot-pareto = "tools.evolution.pareto_solver:main"
+slot-batch = "tools.evolution.batch_runner:main"
+# ─── Player behavior ───────────────────────────────────────────────────
+slot-player-sim = "tools.player_sim.session_simulator:main"
+
+[project.urls]
+Homepage = "https://github.com/Bojan20/slot-math-engine-template"
+Repository = "https://github.com/Bojan20/slot-math-engine-template"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tools*"]
+exclude = ["tools.tests*", "**/__pycache__"]
+
+[tool.setuptools.package-data]
+"tools.vendor_profiles" = ["*.yaml", "*.yml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tools/tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

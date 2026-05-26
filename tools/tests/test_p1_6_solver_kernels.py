@@ -208,5 +208,124 @@ class TestMysteryReveal(unittest.TestCase):
         self.assertAlmostEqual(out["mean_mystery_count"], 0.75, delta=0.05)
 
 
+from tools.solvers.cluster_pays_variance import (
+    ClusterPaysParams,
+    analytical_rtp as cp_rtp,
+    mc_simulate as cp_mc,
+    ACCEPTANCE_TOLERANCE_MC as CP_TOL_MC,
+)
+from tools.solvers.bonus_wheel_markov import (
+    BonusWheelParams,
+    WheelSegment,
+    analytical_rtp as bw_rtp,
+    mc_simulate as bw_mc,
+    expected_chain_length,
+    ACCEPTANCE_TOLERANCE_MC as BW_TOL_MC,
+)
+
+
+# ─── Cluster Pays ───────────────────────────────────────────────────────────
+
+
+class TestClusterPays(unittest.TestCase):
+    REF = ClusterPaysParams(
+        n_cells=49,
+        symbol_probs={"A": 0.15, "B": 0.12, "C": 0.10, "D": 0.20, "E": 0.18},
+        cluster_pay_table={
+            "A": {"5": 5, "7": 10, "10+": 50},
+            "B": {"5": 5, "7": 12, "10+": 60},
+            "C": {"5": 3, "7": 8, "10+": 40},
+            "D": {"5": 2, "7": 5, "10+": 20},
+            "E": {"5": 1, "7": 3, "10+": 10},
+        },
+        min_cluster_size=5,
+    )
+
+    def test_analytical_finite_positive(self):
+        r = cp_rtp(self.REF)
+        self.assertTrue(math.isfinite(r))
+        self.assertGreater(r, 0)
+
+    def test_zero_cells_returns_zero(self):
+        p = ClusterPaysParams(
+            n_cells=0, symbol_probs={"A": 0.1},
+            cluster_pay_table={"A": {"5": 10}}, min_cluster_size=5,
+        )
+        self.assertEqual(cp_rtp(p), 0.0)
+
+    def test_empty_symbol_probs_returns_zero(self):
+        p = ClusterPaysParams(
+            n_cells=49, symbol_probs={}, cluster_pay_table={}, min_cluster_size=5,
+        )
+        self.assertEqual(cp_rtp(p), 0.0)
+
+    def test_mc_convergence_under_5pct(self):
+        a = cp_rtp(self.REF)
+        mc = cp_mc(self.REF, spins=20_000, seed=42)["rtp_mc"]
+        # Binomial PMF closed-form is EXACT under independence — MC
+        # noise only. ±5 % relative tolerance.
+        ratio = mc / a if a else 1.0
+        self.assertGreater(ratio, 0.95)
+        self.assertLess(ratio, 1.05)
+
+    def test_cascade_multiplies_rtp(self):
+        """Cascade continuation should multiply RTP by chain factor."""
+        no_cascade = cp_rtp(self.REF)
+        with_cascade = cp_rtp(ClusterPaysParams(
+            n_cells=self.REF.n_cells,
+            symbol_probs=self.REF.symbol_probs,
+            cluster_pay_table=self.REF.cluster_pay_table,
+            min_cluster_size=5,
+            cascade_continue_prob=0.5,  # 1/(1-0.5) = 2× chain factor
+        ))
+        self.assertAlmostEqual(with_cascade / no_cascade, 2.0, places=3)
+
+
+# ─── Bonus Wheel Markov ─────────────────────────────────────────────────────
+
+
+class TestBonusWheel(unittest.TestCase):
+    REF = BonusWheelParams(segments=[
+        WheelSegment(weight=30, pay=2, respin=False),
+        WheelSegment(weight=20, pay=5, respin=False),
+        WheelSegment(weight=15, pay=10, respin=False),
+        WheelSegment(weight=10, pay=25, respin=False),
+        WheelSegment(weight=5, pay=100, respin=False),
+        WheelSegment(weight=15, pay=0, respin=True),
+        WheelSegment(weight=5, pay=0, respin=True),
+    ])
+
+    def test_analytical_finite_positive(self):
+        r = bw_rtp(self.REF)
+        self.assertTrue(math.isfinite(r))
+        self.assertGreater(r, 0)
+
+    def test_empty_segments_returns_zero(self):
+        self.assertEqual(bw_rtp(BonusWheelParams(segments=[])), 0.0)
+
+    def test_all_respin_returns_zero(self):
+        """Pathological wheel with no absorbing state."""
+        p = BonusWheelParams(segments=[
+            WheelSegment(weight=10, pay=5, respin=True),
+            WheelSegment(weight=10, pay=10, respin=True),
+        ])
+        self.assertEqual(bw_rtp(p), 0.0)
+
+    def test_chain_length_infinite_when_all_respin(self):
+        p = BonusWheelParams(segments=[
+            WheelSegment(weight=10, pay=5, respin=True),
+        ])
+        self.assertEqual(expected_chain_length(p), float("inf"))
+
+    def test_mc_convergence_tight(self):
+        a = bw_rtp(self.REF)
+        mc = bw_mc(self.REF, triggers=20_000, seed=42)
+        # ±2 % relative (analytical is exact for absorbing Markov)
+        self.assertAlmostEqual(mc["rtp_mc"], a, delta=a * 0.02)
+        # Chain length closed form should match MC tightly
+        e_chain = expected_chain_length(self.REF)
+        self.assertAlmostEqual(mc["mean_chain_length"], e_chain, delta=0.02)
+
+
 if __name__ == "__main__":
     unittest.main()

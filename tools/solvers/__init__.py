@@ -33,6 +33,18 @@ from .mystery_reveal_aggregator import (
     analytical_rtp as mystery_reveal_rtp,
     mc_simulate as mystery_reveal_mc,
 )
+from .cluster_pays_variance import (
+    ClusterPaysParams,
+    analytical_rtp as cluster_pays_rtp,
+    mc_simulate as cluster_pays_mc,
+)
+from .bonus_wheel_markov import (
+    BonusWheelParams,
+    WheelSegment,
+    analytical_rtp as bonus_wheel_rtp,
+    mc_simulate as bonus_wheel_mc,
+    expected_chain_length as bonus_wheel_chain,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -44,4 +56,12 @@ __all__ = [
     "MysteryRevealParams",
     "mystery_reveal_rtp",
     "mystery_reveal_mc",
+    "ClusterPaysParams",
+    "cluster_pays_rtp",
+    "cluster_pays_mc",
+    "BonusWheelParams",
+    "WheelSegment",
+    "bonus_wheel_rtp",
+    "bonus_wheel_mc",
+    "bonus_wheel_chain",
 ]
