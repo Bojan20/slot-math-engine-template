@@ -74,6 +74,9 @@ slot-jurisdiction-check = "tools.jurisdiction.linter:main"
 slot-cert-matrix = "tools.cert_lab.matrix_runner:main"
 # ─── Mission #8 — Studio UI extensions (WebWorker MC + heatmap + editor)
 slot-studio-extend = "tools.studio_ext.__main__:main"
+# ─── W6.3 / W6.6 — LLM-assisted GDD synthesis + review UI ──────────────
+slot-gdd-llm = "tools.gdd_extract.llm_assist:main"
+slot-gdd-review-ui = "tools.gdd_extract.review_ui:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
