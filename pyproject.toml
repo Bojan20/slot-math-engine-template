@@ -139,6 +139,12 @@ slot-ir-diff-heatmap = "tools.ir_diff_heatmap.__main__:main"
 slot-rtp-sweep = "tools.rtp_sweep.__main__:main"
 # ─── W37 — Cohort segment analyzer (low/mid/high roller RTP)
 slot-cohort-segment = "tools.cohort_segment.__main__:main"
+# ─── W38 — Regulator export package (IR + math doc + manifest SHA-256)
+slot-regulator-export = "tools.regulator_export.__main__:main"
+# ─── W39 — Portfolio comparator (multi-IR side-by-side table)
+slot-portfolio-compare = "tools.portfolio_compare.__main__:main"
+# ─── W40 — Volatility classifier (CV → LOW/MEDIUM/HIGH/EXTREME)
+slot-volatility-classify = "tools.volatility_classifier.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

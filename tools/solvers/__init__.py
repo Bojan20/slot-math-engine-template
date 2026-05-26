@@ -329,6 +329,30 @@ from .respin_charge_meter import (
     mc_simulate as respin_charge_mc,
     prob_fill as respin_charge_prob_fill,
 )
+from .megaways_cascade_compound import (
+    MegawaysCascadeParams,
+    analytical_rtp as megaways_cascade_rtp,
+    mc_simulate as megaways_cascade_mc,
+    expected_cascades,
+)
+from .wheel_segments_weighted_pick import (
+    WheelSegmentsParams,
+    analytical_rtp as wheel_segments_rtp,
+    mc_simulate as wheel_segments_mc,
+    expected_per_spin as wheel_segments_expected_per_spin,
+)
+from .skill_bonus_completion import (
+    SkillBonusParams,
+    analytical_rtp as skill_bonus_rtp,
+    mc_simulate as skill_bonus_mc,
+    expected_payout_per_trigger as skill_bonus_per_trigger,
+)
+from .expanding_symbol_reel import (
+    ExpandingSymbolParams,
+    analytical_rtp as expanding_symbol_rtp,
+    mc_simulate as expanding_symbol_mc,
+    prob_line as expanding_symbol_prob_line,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -504,4 +528,20 @@ __all__ = [
     "respin_charge_rtp",
     "respin_charge_mc",
     "respin_charge_prob_fill",
+    "MegawaysCascadeParams",
+    "megaways_cascade_rtp",
+    "megaways_cascade_mc",
+    "expected_cascades",
+    "WheelSegmentsParams",
+    "wheel_segments_rtp",
+    "wheel_segments_mc",
+    "wheel_segments_expected_per_spin",
+    "SkillBonusParams",
+    "skill_bonus_rtp",
+    "skill_bonus_mc",
+    "skill_bonus_per_trigger",
+    "ExpandingSymbolParams",
+    "expanding_symbol_rtp",
+    "expanding_symbol_mc",
+    "expanding_symbol_prob_line",
 ]
