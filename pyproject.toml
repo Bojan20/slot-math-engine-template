@@ -163,6 +163,8 @@ slot-ir-sanitize = "tools.ir_sanitizer.__main__:main"
 slot-kernel-compare = "tools.kernel_compare.__main__:main"
 # ─── W49 — Synthetic spin log generator (calibrated JSONL for tests)
 slot-synthetic-log = "tools.synthetic_log_gen.__main__:main"
+# ─── W50 — Live RGS connector (NDJSON tail + TCP → rtp_monitor)
+slot-rgs-connector = "tools.rgs_connector.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
