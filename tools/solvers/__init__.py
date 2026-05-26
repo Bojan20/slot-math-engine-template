@@ -566,6 +566,65 @@ from .poisson_mixture_features import (
     expected_features as poisson_mix_expected,
     variance_features as poisson_mix_variance,
 )
+# Batch 21
+from .negative_hypergeometric_first_k import (
+    NegHyperFirstKParams,
+    analytical_rtp as nhg_rtp,
+    mc_simulate as nhg_mc,
+    expected_draws,
+    variance_draws,
+)
+from .zipf_paytable_rank import (
+    ZipfPaytableParams,
+    analytical_rtp as zipf_rtp,
+    mc_simulate as zipf_mc,
+    expected_pay as zipf_expected_pay,
+)
+from .frechet_heavy_tail_max import (
+    FrechetMaxParams,
+    analytical_rtp as frechet_rtp,
+    mc_simulate as frechet_mc,
+    expected_max as frechet_expected_max,
+    variance_max as frechet_variance_max,
+)
+from .dirichlet_segment_weights import (
+    DirichletSegmentParams,
+    analytical_rtp as dirichlet_rtp,
+    mc_simulate as dirichlet_mc,
+    expected_pay as dirichlet_expected_pay,
+    variance_pay as dirichlet_variance_pay,
+)
+# Batch 22
+from .ornstein_uhlenbeck_meter import (
+    OrnsteinUhlenbeckParams,
+    analytical_rtp as ou_rtp,
+    mc_simulate as ou_mc,
+    expected_level,
+    variance_level,
+    stationary_mean as ou_stationary_mean,
+    stationary_variance as ou_stationary_variance,
+)
+from .hidden_markov_mode import (
+    HiddenMarkovModeParams,
+    analytical_rtp as hmm_rtp,
+    mc_simulate as hmm_mc,
+    stationary_distribution,
+    long_run_trigger_rate,
+)
+from .branching_with_immigration import (
+    BranchingImmigrationParams,
+    analytical_rtp as branching_imm_rtp,
+    mc_simulate as branching_imm_mc,
+    stationary_population,
+    expected_total_clusters as branching_imm_total,
+)
+from .brownian_bankroll_absorption import (
+    BrownianBankrollParams,
+    analytical_rtp as brownian_bankroll_rtp,
+    mc_simulate as brownian_bankroll_mc,
+    prob_reach_target,
+    expected_time_to_absorption,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -901,4 +960,45 @@ __all__ = [
     "poisson_mix_mc",
     "poisson_mix_expected",
     "poisson_mix_variance",
+    "NegHyperFirstKParams",
+    "nhg_rtp",
+    "nhg_mc",
+    "expected_draws",
+    "variance_draws",
+    "ZipfPaytableParams",
+    "zipf_rtp",
+    "zipf_mc",
+    "zipf_expected_pay",
+    "FrechetMaxParams",
+    "frechet_rtp",
+    "frechet_mc",
+    "frechet_expected_max",
+    "frechet_variance_max",
+    "DirichletSegmentParams",
+    "dirichlet_rtp",
+    "dirichlet_mc",
+    "dirichlet_expected_pay",
+    "dirichlet_variance_pay",
+    "OrnsteinUhlenbeckParams",
+    "ou_rtp",
+    "ou_mc",
+    "expected_level",
+    "variance_level",
+    "ou_stationary_mean",
+    "ou_stationary_variance",
+    "HiddenMarkovModeParams",
+    "hmm_rtp",
+    "hmm_mc",
+    "stationary_distribution",
+    "long_run_trigger_rate",
+    "BranchingImmigrationParams",
+    "branching_imm_rtp",
+    "branching_imm_mc",
+    "stationary_population",
+    "branching_imm_total",
+    "BrownianBankrollParams",
+    "brownian_bankroll_rtp",
+    "brownian_bankroll_mc",
+    "prob_reach_target",
+    "expected_time_to_absorption",
 ]

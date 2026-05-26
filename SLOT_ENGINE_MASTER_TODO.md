@@ -21,11 +21,12 @@
 | W41 + W42 + W43 + batch 13 (feature coverage / release notes / perf budget / 4 kernels) | ✅ landed `b557039` | +26 | +3 |
 | W44 + W45 + W46 + batch 14 (backtest runner / designer lint / bundle verify / 4 kernels) | ✅ landed `a5986f3` | +29 | +3 |
 | W47 + W48 + W49 + batch 15 (IR sanitizer / kernel compare / synthetic log gen / 4 kernels) | ✅ landed `aedcf15` | +25 | +3 |
-| **P1.6 batches 16-20 — 20 math-distinct kernels (NegBin, Hyper, Martingale, Gumbel EVT, CompPois, Galton-Watson, Markov absorption, Bayes, Renewal, Multinomial, FPT, Tail-dep, CVaR, CondExp, ExpDecay, Logistic, Weibull, Pareto, BetaBin, PoisMix)** | ✅ **landed this commit** | **+55** | 0 |
+| P1.6 batches 16-20 — 20 math-distinct kernels (NegBin, Hyper, Martingale, Gumbel EVT, CompPois, Galton-Watson, Markov absorption, Bayes, Renewal, Multinomial, FPT, Tail-dep, CVaR, CondExp, ExpDecay, Logistic, Weibull, Pareto, BetaBin, PoisMix) | ✅ landed `957002a` | +55 | 0 |
+| **P1.6 batches 21-22 — 8 advanced kernels (NegHyper, Zipf, Fréchet EVT, Dirichlet, Ornstein-Uhlenbeck, Hidden Markov, Branching+Immigration, Brownian bankroll)** | ✅ **landed this commit** | **+26** | 0 |
 
-**Closed-form kernels:** 87 (was 67) — **20 new math families**
+**Closed-form kernels:** 95 (was 87) — **+8 advanced math families**
 **Entry points:** 52 (unchanged)
-**Python tests:** 961 PASS, 0 fail, 47 skipped
+**Python tests:** 987 PASS, 0 fail, 47 skipped
 
 ---
 
