@@ -93,6 +93,8 @@ slot-operator-pilot = "tools.operator_pilot.__main__:main"
 slot-drift-sentinel = "tools.drift_sentinel.__main__:main"
 # ─── W14 — CI Gate Aggregator (repo-wide gate of all gates)
 slot-ci-gate = "tools.ci_gate.__main__:main"
+# ─── W12 — Multi-IR Portfolio Analyzer (RTP/vol/feature matrix)
+slot-portfolio = "tools.portfolio.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
