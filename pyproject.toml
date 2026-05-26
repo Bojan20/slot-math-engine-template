@@ -151,6 +151,12 @@ slot-feature-coverage = "tools.feature_coverage.__main__:main"
 slot-release-notes = "tools.release_notes.__main__:main"
 # ─── W43 — Performance budget gate (kernel timing CI guard)
 slot-perf-budget = "tools.perf_budget.__main__:main"
+# ─── W44 — Historical jurisdiction backtest runner
+slot-backtest-runner = "tools.backtest_runner.__main__:main"
+# ─── W45 — Designer sanity linter (pre-MC IR mistake catcher)
+slot-designer-lint = "tools.designer_lint.__main__:main"
+# ─── W46 — Compliance bundle verifier (re-hash manifest)
+slot-bundle-verify = "tools.bundle_verify.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

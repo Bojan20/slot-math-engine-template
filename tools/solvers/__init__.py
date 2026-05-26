@@ -376,6 +376,29 @@ from .chain_combo_progressive import (
     mc_simulate as chain_combo_mc,
     expected_combo_sum,
 )
+from .tumble_streak_freezer import (
+    TumbleFreezerParams,
+    analytical_rtp as tumble_freezer_rtp,
+    mc_simulate as tumble_freezer_mc,
+    expected_wins as tumble_expected_wins,
+)
+from .multi_screen_sync_bonus import (
+    MultiScreenSyncParams,
+    analytical_rtp as multi_screen_sync_rtp,
+    mc_simulate as multi_screen_sync_mc,
+)
+from .instant_win_scratch_pattern import (
+    InstantWinScratchParams,
+    analytical_rtp as instant_win_rtp,
+    mc_simulate as instant_win_mc,
+    prob_win as instant_win_prob,
+)
+from .wild_morph_chain import (
+    WildMorphChainParams,
+    analytical_rtp as wild_morph_chain_rtp,
+    mc_simulate as wild_morph_chain_mc,
+    expected_per_respin as wild_morph_per_respin,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -582,4 +605,19 @@ __all__ = [
     "chain_combo_rtp",
     "chain_combo_mc",
     "expected_combo_sum",
+    "TumbleFreezerParams",
+    "tumble_freezer_rtp",
+    "tumble_freezer_mc",
+    "tumble_expected_wins",
+    "MultiScreenSyncParams",
+    "multi_screen_sync_rtp",
+    "multi_screen_sync_mc",
+    "InstantWinScratchParams",
+    "instant_win_rtp",
+    "instant_win_mc",
+    "instant_win_prob",
+    "WildMorphChainParams",
+    "wild_morph_chain_rtp",
+    "wild_morph_chain_mc",
+    "wild_morph_per_respin",
 ]

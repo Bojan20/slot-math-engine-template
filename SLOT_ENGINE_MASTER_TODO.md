@@ -18,11 +18,12 @@
 | W32 + W33 + W34 + batch 10 (IR fuzzer / vendor adapter SDK / spec compliance / 4 kernels) | ✅ landed `d96bf09` | +33 | +3 |
 | W35 + W36 + W37 + batch 11 (IR diff heatmap / RTP sweep / cohort segment / 4 kernels) | ✅ landed `2b63859` | +27 | +3 |
 | W38 + W39 + W40 + batch 12 (regulator export / portfolio compare / volatility classifier / 4 kernels) | ✅ landed `b39c892` | +32 | +3 |
-| **W41 + W42 + W43 + batch 13 (feature coverage / release notes / perf budget / 4 kernels)** | ✅ **landed this commit** | **+26** | **+3** |
+| W41 + W42 + W43 + batch 13 (feature coverage / release notes / perf budget / 4 kernels) | ✅ landed `b557039` | +26 | +3 |
+| **W44 + W45 + W46 + batch 14 (backtest runner / designer lint / bundle verify / 4 kernels)** | ✅ **landed this commit** | **+29** | **+3** |
 
-**Closed-form kernels:** 59 (was 55)
-**Entry points:** 46 (was 43)
-**Python tests:** 852 PASS, 0 fail, 47 skipped
+**Closed-form kernels:** 63 (was 59)
+**Entry points:** 49 (was 46)
+**Python tests:** 881 PASS, 0 fail, 47 skipped
 
 ---
 
