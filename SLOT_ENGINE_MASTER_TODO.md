@@ -15,11 +15,12 @@
 | W23 + W25 + W27 (localization / coverage / math doc) | ✅ landed `ba29ad2` | +12 | +3 |
 | W26 + W28 + batch 8 (config validator / changelog / 4 kernels) | ✅ landed `61b6398` | +13 | +2 |
 | W29 + W30 + W31 + batch 9 (RTP monitor / A/B / audit pin / 4 kernels) | ✅ landed `9e1a082` | +20 | +3 |
-| **W32 + W33 + W34 + batch 10 (IR fuzzer / vendor adapter SDK / spec compliance / 4 kernels)** | ✅ **landed this commit** | **+33** | **+3** |
+| W32 + W33 + W34 + batch 10 (IR fuzzer / vendor adapter SDK / spec compliance / 4 kernels) | ✅ landed `d96bf09` | +33 | +3 |
+| **W35 + W36 + W37 + batch 11 (IR diff heatmap / RTP sweep / cohort segment / 4 kernels)** | ✅ **landed this commit** | **+27** | **+3** |
 
-**Closed-form kernels:** 47 (was 43)
-**Entry points:** 37 (was 34)
-**Python tests:** 767 PASS, 0 fail, 47 skipped
+**Closed-form kernels:** 51 (was 47)
+**Entry points:** 40 (was 37)
+**Python tests:** 794 PASS, 0 fail, 47 skipped
 
 ---
 

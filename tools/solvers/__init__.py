@@ -307,6 +307,28 @@ from .mystery_box_award_table import (
     analytical_rtp as mystery_box_rtp,
     mc_simulate as mystery_box_mc,
 )
+from .pyramid_multiplier_stack import (
+    PyramidMultiplierParams,
+    analytical_rtp as pyramid_mult_rtp,
+    mc_simulate as pyramid_mult_mc,
+    expected_average_multiplier,
+)
+from .random_wild_reel_drop import (
+    WildReelDropParams,
+    analytical_rtp as wild_reel_drop_rtp,
+    mc_simulate as wild_reel_drop_mc,
+)
+from .cluster_consolidation_bonus import (
+    ClusterConsolidationParams,
+    analytical_rtp as cluster_consolidation_rtp,
+    mc_simulate as cluster_consolidation_mc,
+)
+from .respin_charge_meter import (
+    RespinChargeMeterParams,
+    analytical_rtp as respin_charge_rtp,
+    mc_simulate as respin_charge_mc,
+    prob_fill as respin_charge_prob_fill,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -468,4 +490,18 @@ __all__ = [
     "MysteryBoxParams",
     "mystery_box_rtp",
     "mystery_box_mc",
+    "PyramidMultiplierParams",
+    "pyramid_mult_rtp",
+    "pyramid_mult_mc",
+    "expected_average_multiplier",
+    "WildReelDropParams",
+    "wild_reel_drop_rtp",
+    "wild_reel_drop_mc",
+    "ClusterConsolidationParams",
+    "cluster_consolidation_rtp",
+    "cluster_consolidation_mc",
+    "RespinChargeMeterParams",
+    "respin_charge_rtp",
+    "respin_charge_mc",
+    "respin_charge_prob_fill",
 ]
