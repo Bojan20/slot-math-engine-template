@@ -223,6 +223,12 @@ slot-pilot-outreach = "tools.pilot_outreach.__main__:main"
 slot-public-benchmark = "tools.public_benchmark.__main__:main"
 # ─── W78 / P7.6 — Community Contributor Bootstrap Flow
 slot-contribute = "tools.community_contribute.__main__:main"
+# ─── W79 — Multi-Constraint SMT IR Synthesis (RTP+var+max-win+hit-freq simultaneous)
+slot-smt-multi = "tools.smt_multi.__main__:main"
+# ─── W80 — Verifiable Provenance Chain (PAR→Merkle→IR→cert with selective proof)
+slot-provenance-chain = "tools.provenance_chain.__main__:main"
+# ─── W81 — Exact Enumeration Engine v3 (exhaustive ground-truth RTP)
+slot-exact-enum = "tools.exact_enum.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
