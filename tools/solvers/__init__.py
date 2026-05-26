@@ -185,6 +185,30 @@ from .anywhere_pays_binomial import (
     analytical_rtp as anywhere_pays_rtp,
     mc_simulate as anywhere_pays_mc,
 )
+from .lightning_bomb_multiplier import (
+    LightningBombParams,
+    analytical_rtp as lightning_bomb_rtp,
+    mc_simulate as lightning_bomb_mc,
+    expected_multiplier as lightning_bomb_em,
+)
+from .coin_storm_collect import (
+    CoinStormParams,
+    analytical_rtp as coin_storm_rtp,
+    mc_simulate as coin_storm_mc,
+    expected_pay_per_trigger as coin_storm_expected,
+    variance_pay_per_trigger as coin_storm_var,
+)
+from .respin_lock_geometric import (
+    RespinLockParams,
+    analytical_rtp as respin_lock_rtp,
+    mc_simulate as respin_lock_mc,
+)
+from .wild_path_clear import (
+    WildPathClearParams,
+    analytical_rtp as wild_path_rtp,
+    mc_simulate as wild_path_mc,
+    expected_path_length,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -300,4 +324,20 @@ __all__ = [
     "AnywherePaysParams",
     "anywhere_pays_rtp",
     "anywhere_pays_mc",
+    "LightningBombParams",
+    "lightning_bomb_rtp",
+    "lightning_bomb_mc",
+    "lightning_bomb_em",
+    "CoinStormParams",
+    "coin_storm_rtp",
+    "coin_storm_mc",
+    "coin_storm_expected",
+    "coin_storm_var",
+    "RespinLockParams",
+    "respin_lock_rtp",
+    "respin_lock_mc",
+    "WildPathClearParams",
+    "wild_path_rtp",
+    "wild_path_mc",
+    "expected_path_length",
 ]

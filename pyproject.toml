@@ -101,6 +101,12 @@ slot-ir-lock = "tools.ir_lock.__main__:main"
 slot-cohort-sim = "tools.cohort_runner.__main__:main"
 # ─── W18 — RNG Quality Mini-Suite (NIST-STS subset)
 slot-rng-quality = "tools.rng_quality.__main__:main"
+# ─── W19 — Telemetry event schema validator (RGS event stream)
+slot-telemetry-validate = "tools.telemetry.__main__:main"
+# ─── W20 — Plugin marketplace bundler (versioned ZIP for upload)
+slot-plugin-bundle = "tools.plugin_bundle.__main__:main"
+# ─── W21 — Replay determinism gate (IR + seed → deterministic stream)
+slot-replay-gate = "tools.replay_gate.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
