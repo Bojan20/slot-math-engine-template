@@ -89,6 +89,8 @@ slot-cert-xml = "tools.slot_build.cert_xml:main"
 slot-ir-diff = "tools.diagnostics.ir_diff:main"
 # ─── W8 — Operator Pilot Suite (chain every cert + lint into one ZIP)
 slot-operator-pilot = "tools.operator_pilot.__main__:main"
+# ─── W11 — Drift Sentinel (CI gate for silent IR math drift)
+slot-drift-sentinel = "tools.drift_sentinel.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
