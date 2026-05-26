@@ -17,7 +17,6 @@ Run:
 from __future__ import annotations
 import hashlib
 import json
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -38,9 +37,6 @@ except ImportError:
 
 from tools.slot_build.cert_package import (
     build_cert_package,
-    compute_par_commitments,
-    build_manifest,
-    _sha256_file,
 )
 
 

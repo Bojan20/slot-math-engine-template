@@ -32,7 +32,7 @@ from __future__ import annotations
 from typing import Any
 
 from . import register
-from ..tsv import s, n, find_label_row, find_substr_row
+from ..tsv import s, n, find_label_row
 
 
 def _parse_trigger_table(rows: list[list[str]], start: int, max_search: int) -> dict | None:

@@ -118,7 +118,7 @@ impl Mulberry32 {
     fn next_f64(&mut self) -> f64 {
         // result = rotl(s1 * 5, 7) * 9
         let m: u32 = self.s1.wrapping_mul(5);
-        let r: u32 = (m << 7) | (m >> 25);
+        let r: u32 = m.rotate_left(7);
         let result: u32 = r.wrapping_mul(9);
         // state update
         let t: u32 = self.s1 << 9;
@@ -127,7 +127,7 @@ impl Mulberry32 {
         self.s1 ^= self.s2;
         self.s0 ^= self.s3;
         self.s2 ^= t;
-        self.s3 = (self.s3 << 11) | (self.s3 >> 21);
+        self.s3 = self.s3.rotate_left(11);
         result as f64 / 4_294_967_296.0_f64
     }
 }
@@ -151,9 +151,14 @@ struct Topology {
 struct Symbol {
     id: String,
     kind: String,
+    // Forward-compat fields parsed but not consumed by oracle math.
+    // Marked dead-code-allow because removing them would break serde
+    // round-trip with IRs that include richer symbol metadata.
     #[serde(default)]
+    #[allow(dead_code)]
     name: Option<String>,
     #[serde(default)]
+    #[allow(dead_code)]
     paytable_key: Option<String>,
 }
 
@@ -365,11 +370,11 @@ fn apply_scatter_prevention(grid: &mut [Vec<String>], ir: &IR, reel_count: u32, 
     let max_per = sp.max_scatters_per_reel.unwrap_or(1) as usize;
     let replace = match sp.replacement_symbol.as_ref() { Some(s) => s.clone(), None => return };
     let sc_id = match find_by_kind(ir, "scatter") { Some(s) => s.to_string(), None => return };
-    for r in 0..(reel_count as usize) {
+    for reel in grid.iter_mut().take(reel_count as usize) {
         let mut seen = 0usize;
-        for y in 0..(row_count as usize) {
-            if grid[r][y] == sc_id {
-                if seen >= max_per { grid[r][y] = replace.clone(); }
+        for cell in reel.iter_mut().take(row_count as usize) {
+            if *cell == sc_id {
+                if seen >= max_per { *cell = replace.clone(); }
                 else { seen += 1; }
             }
         }
@@ -412,21 +417,21 @@ fn eval_base(grid: &[Vec<String>], ir: &IR) -> EvalResult {
     for line in paylines {
         // Collect symbols on this line (length = reels)
         let mut seq: Vec<&str> = Vec::with_capacity(reels as usize);
-        for c in 0..(reels as usize) {
+        for (c, col) in grid.iter().enumerate().take(reels as usize) {
             let row_idx = *line.get(c).unwrap_or(&0) as usize;
-            seq.push(grid[c][row_idx].as_str());
+            seq.push(col[row_idx].as_str());
         }
         // Resolve target: first non-wild (or all-wilds → first)
         let mut target: &str = seq[0];
         if wild_sub_enabled && is_wild(ir, target) {
-            for c in 1..seq.len() {
-                if !is_wild(ir, seq[c]) { target = seq[c]; break; }
+            for s in seq.iter().skip(1) {
+                if !is_wild(ir, s) { target = s; break; }
             }
         }
         // Run length from left
         let mut run = 0usize;
-        for c in 0..seq.len() {
-            if seq[c] == target || (wild_sub_enabled && is_wild(ir, seq[c])) { run += 1; }
+        for s in &seq {
+            if *s == target || (wild_sub_enabled && is_wild(ir, s)) { run += 1; }
             else { break; }
         }
         if run >= min_match {
@@ -439,9 +444,9 @@ fn eval_base(grid: &[Vec<String>], ir: &IR) -> EvalResult {
     let mut sc_count = 0u32;
     let mut scatter_pay = 0.0_f64;
     if let Some(sc) = &sc_id {
-        for r in 0..(reels as usize) {
-            for y in 0..(rows as usize) {
-                if grid[r][y] == *sc { sc_count += 1; }
+        for col in grid.iter().take(reels as usize) {
+            for cell in col.iter().take(rows as usize) {
+                if cell == sc { sc_count += 1; }
             }
         }
         if sc_count >= 3 { scatter_pay = pay_at(ir, sc, sc_count.min(5)); }
@@ -450,9 +455,9 @@ fn eval_base(grid: &[Vec<String>], ir: &IR) -> EvalResult {
     // Bonus count
     let mut bonus_count = 0u32;
     if let Some(bn) = &bn_id {
-        for r in 0..(reels as usize) {
-            for y in 0..(rows as usize) {
-                if grid[r][y] == *bn { bonus_count += 1; }
+        for col in grid.iter().take(reels as usize) {
+            for cell in col.iter().take(rows as usize) {
+                if cell == bn { bonus_count += 1; }
             }
         }
     }
@@ -609,11 +614,9 @@ pub fn spin_wasm(ir_json: &str, seed: u32, bet: f64) -> Result<JsValue, JsError>
     }
 
     let mut fs_win = 0.0_f64;
-    if r.sc_count >= 3 {
-        if find_feature(&ir, "free_spins").is_some() {
-            fs_win = run_free_spins(&mut rng, &ir, r.sc_count, &base_reels, &fs_reels);
-            win += fs_win * bet;
-        }
+    if r.sc_count >= 3 && find_feature(&ir, "free_spins").is_some() {
+        fs_win = run_free_spins(&mut rng, &ir, r.sc_count, &base_reels, &fs_reels);
+        win += fs_win * bet;
     }
 
     let mut hnw_win = 0.0_f64;
@@ -675,10 +678,10 @@ mod tests {
         let v4 = r.next_f64();
         // Print so JS reference can be cross-checked manually if these change.
         eprintln!("mulberry32(1) head = [{}, {}, {}, {}]", v1, v2, v3, v4);
-        assert!(v1 >= 0.0 && v1 < 1.0);
-        assert!(v2 >= 0.0 && v2 < 1.0);
-        assert!(v3 >= 0.0 && v3 < 1.0);
-        assert!(v4 >= 0.0 && v4 < 1.0);
+        assert!((0.0..1.0).contains(&v1));
+        assert!((0.0..1.0).contains(&v2));
+        assert!((0.0..1.0).contains(&v3));
+        assert!((0.0..1.0).contains(&v4));
         // The Rust↔JS parity is enforced by Playwright (qa-mtl-wasm.spec.ts)
         // calling both engines on the same seed and asserting equality —
         // this in-crate test is a sanity check only.

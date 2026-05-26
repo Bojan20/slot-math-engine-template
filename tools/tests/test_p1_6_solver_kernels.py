@@ -31,7 +31,6 @@ from tools.solvers.symbol_upgrade_random import (
     SymbolUpgradeParams,
     analytical_rtp as su_rtp,
     mc_simulate as su_mc,
-    ACCEPTANCE_TOLERANCE_MC as SU_TOL_MC,
 )
 from tools.solvers.mystery_reveal_aggregator import (
     MysteryRevealParams,
@@ -212,7 +211,6 @@ from tools.solvers.cluster_pays_variance import (
     ClusterPaysParams,
     analytical_rtp as cp_rtp,
     mc_simulate as cp_mc,
-    ACCEPTANCE_TOLERANCE_MC as CP_TOL_MC,
 )
 from tools.solvers.bonus_wheel_markov import (
     BonusWheelParams,
@@ -220,7 +218,6 @@ from tools.solvers.bonus_wheel_markov import (
     analytical_rtp as bw_rtp,
     mc_simulate as bw_mc,
     expected_chain_length,
-    ACCEPTANCE_TOLERANCE_MC as BW_TOL_MC,
 )
 
 

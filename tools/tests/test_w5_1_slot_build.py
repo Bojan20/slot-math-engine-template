@@ -122,7 +122,6 @@ class TestScaffoldOutput(unittest.TestCase):
 
     def test_igt_scaffold(self):
         import tempfile
-        from tools.slot_build.__main__ import slugify
         with tempfile.TemporaryDirectory() as td:
             rc = main([
                 str(ROOT / "games/fort-knox-wolf-run/raw"),

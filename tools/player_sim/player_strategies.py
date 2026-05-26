@@ -16,9 +16,7 @@ The strategy ends when `continue_playing()` returns False (bankroll
 exhausted, stop-loss hit, win-target hit, or session-length cap).
 """
 from __future__ import annotations
-import math
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
 
 
 class Strategy(ABC):

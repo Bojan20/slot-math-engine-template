@@ -8,11 +8,10 @@ hand-written game scripts.
 """
 from __future__ import annotations
 from pathlib import Path
-from typing import Any, Optional
-import re
+from typing import Any
 
 from .profile import VendorProfile
-from .tsv import load_tsv, num, s, n, find_label_row, find_substr_row
+from .tsv import load_tsv, s, n, find_substr_row
 from . import features as _features
 
 

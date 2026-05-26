@@ -70,6 +70,8 @@ slot-batch = "tools.evolution.batch_runner:main"
 slot-player-sim = "tools.player_sim.session_simulator:main"
 # ─── Jurisdiction compliance ───────────────────────────────────────────
 slot-jurisdiction-check = "tools.jurisdiction.linter:main"
+# ─── Mission #3 — 12×12 Topology × Feature cert lab matrix ─────────────
+slot-cert-matrix = "tools.cert_lab.matrix_runner:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
@@ -89,3 +91,21 @@ testpaths = ["tools/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = [
+    "E501",  # line-length handled separately
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests insert sys.path before importing tools/*, so E402 is by design.
+"tools/tests/**" = ["E402"]
+# Optional-import shims in CLI modules: try/except sets _HAS_X flag,
+# then conditionally imports the heavy module after the guard.
+"tools/slot_build/gdd_mode.py" = ["E402"]
+"tools/gdd_extract/__main__.py" = ["E402"]

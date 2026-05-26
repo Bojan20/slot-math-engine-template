@@ -22,7 +22,6 @@ from __future__ import annotations
 from typing import Any
 
 from tools.gdd_extract.dsl import (
-    DslValidationError,
     dsl_to_slot_sim_ir,
     dsl_validate,
 )

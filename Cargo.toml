@@ -36,6 +36,12 @@ codegen-units = 1
 panic         = "abort"
 strip         = true
 
+# wasm-oracle ships as .wasm — optimize for size, not throughput.
+# Mirrors the values previously in `wasm-oracle/Cargo.toml` (now removed
+# to silence cargo's "non-root profile ignored" warning).
+[profile.release.package.mtl-wasm-oracle]
+opt-level = "z"
+
 [profile.dev]
 opt-level = 1
 

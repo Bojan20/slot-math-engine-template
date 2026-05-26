@@ -168,3 +168,4 @@ dist/pilot/
 dist/cert/
 dist/test-cert/
 .venv-w73/
+slot_math_engine_template.egg-info/

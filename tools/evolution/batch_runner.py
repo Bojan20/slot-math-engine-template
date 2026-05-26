@@ -245,7 +245,7 @@ def main(argv: list[str] | None = None) -> int:
           f"({report['throughput_variants_per_sec']:.1f} variants/s, "
           f"{report['workers']} workers)")
     print(f"  Pareto front: {report['pareto_front_size']} non-dominated")
-    print(f"  Best 3 objectives:")
+    print("  Best 3 objectives:")
     for i, pg in enumerate(report["pareto_front"][:3]):
         rtp = pg.get("rtp") or 0
         hit = pg.get("hit_freq") or 0

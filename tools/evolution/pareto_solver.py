@@ -34,7 +34,6 @@ CLI:
 """
 from __future__ import annotations
 import argparse
-import copy
 import json
 import math
 import random
@@ -46,7 +45,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from tools.evolution.genetic_solver import Genome, _measure_rtp, _find_slot_sim_bin
+from tools.evolution.genetic_solver import Genome, _find_slot_sim_bin
 
 
 # Target volatility class → numeric stddev / mean ratio target

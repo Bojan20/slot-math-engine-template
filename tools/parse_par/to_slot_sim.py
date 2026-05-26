@@ -115,8 +115,6 @@ def _igt_total_rtp(parsed: dict) -> float:
         # FKB RTP is BM-invariant in IGT layout → take first row.
         fkb = float(per_bm[0].get("fkb_rtp") or 0.0)
     lp = 0.0
-    lin = parsed.get("linear_progressive") or {}
-    per_bm_lp = lin.get("per_bet_multiplier") or {}
     # IGT publishes per-BM as parallel arrays (`bet_multipliers` + `progressive_odds`)
     # rather than row-of-dicts. Linear progressive RTP = 1/odds × top_award_coins,
     # but without a published top_award_coins we contribute 0 here — the linear

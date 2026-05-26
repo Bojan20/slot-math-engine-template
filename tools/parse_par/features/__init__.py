@@ -8,7 +8,7 @@ Register via `register("type_name", parser_fn)`. The vendor profile
 references parsers by `type_name` in its `features:` list.
 """
 from __future__ import annotations
-from typing import Callable, Any
+from typing import Callable
 
 _REGISTRY: dict[str, Callable] = {}
 

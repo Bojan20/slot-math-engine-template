@@ -60,7 +60,6 @@ Output IR JSON follows the universal `slot-sim` IR schema (see
 from __future__ import annotations
 
 import json
-import re
 import tomllib
 from typing import Any
 
@@ -260,7 +259,7 @@ def dsl_to_slot_sim_ir(dsl: dict[str, Any]) -> dict[str, Any]:
             "hit_frequency": meta.get("hit_frequency", 0.20),
             "win_frequency": meta.get("win_frequency", 0.10),
             "notes": [
-                f"Synthesized from DSL by tools.gdd_extract.dsl (W6.2)",
+                "Synthesized from DSL by tools.gdd_extract.dsl (W6.2)",
             ],
             "sampling_mode": meta.get("sampling_mode", "physical_strip"),
         },

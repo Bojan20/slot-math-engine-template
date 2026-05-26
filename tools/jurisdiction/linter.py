@@ -8,7 +8,6 @@ Re-uses the zero-dep mini-YAML loader from `tools/parse_par/profile.py`
 to avoid PyYAML dependency (regulator-lab Python envs often pinned).
 """
 from __future__ import annotations
-import os
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -321,7 +320,6 @@ def lint_ir(ir: dict, profile: JurisdictionProfile) -> ComplianceReport:
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import json
-    import sys
 
     ap = argparse.ArgumentParser(
         prog="slot-jurisdiction-check",

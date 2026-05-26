@@ -20,7 +20,6 @@ Run:
 """
 from __future__ import annotations
 import random
-import statistics
 import sys
 import unittest
 from pathlib import Path
@@ -37,7 +36,6 @@ from tools.player_sim.player_strategies import (
 )
 from tools.player_sim.session_simulator import (
     SessionResult,
-    StrategyReport,
     build_payout_sampler,
     simulate_session,
     simulate_cohort,

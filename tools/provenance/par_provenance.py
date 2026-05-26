@@ -18,8 +18,7 @@ Verification is offline + stand-alone — only stdlib `hashlib`,
 from __future__ import annotations
 import hashlib
 import json
-from dataclasses import dataclass, field
-from pathlib import Path
+from dataclasses import dataclass
 from typing import Any
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import (
@@ -35,7 +34,6 @@ from .merkle_tree import (
     build_merkle_tree,
     canonicalize_par_row,
     hash_leaf,
-    hash_inner,
 )
 
 

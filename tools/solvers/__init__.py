@@ -45,6 +45,27 @@ from .bonus_wheel_markov import (
     mc_simulate as bonus_wheel_mc,
     expected_chain_length as bonus_wheel_chain,
 )
+from .buy_feature_ev import (
+    BuyFeatureParams,
+    buy_mode_rtp,
+    natural_mode_loss_rate,
+    crossover_n_spins,
+    buy_is_positive_ev,
+    mc_simulate as buy_feature_mc,
+)
+from .sticky_wild_markov import (
+    StickyWildParams,
+    analytical_rtp as sticky_wild_rtp,
+    mc_simulate as sticky_wild_mc,
+    expected_total_wilds,
+)
+from .fs_retrigger_compound import (
+    FsRetriggerParams,
+    analytical_rtp as fs_retrigger_rtp,
+    mc_simulate as fs_retrigger_mc,
+    expected_total_spins,
+    variance_total_spins,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -64,4 +85,19 @@ __all__ = [
     "bonus_wheel_rtp",
     "bonus_wheel_mc",
     "bonus_wheel_chain",
+    "BuyFeatureParams",
+    "buy_mode_rtp",
+    "natural_mode_loss_rate",
+    "crossover_n_spins",
+    "buy_is_positive_ev",
+    "buy_feature_mc",
+    "StickyWildParams",
+    "sticky_wild_rtp",
+    "sticky_wild_mc",
+    "expected_total_wilds",
+    "FsRetriggerParams",
+    "fs_retrigger_rtp",
+    "fs_retrigger_mc",
+    "expected_total_spins",
+    "variance_total_spins",
 ]

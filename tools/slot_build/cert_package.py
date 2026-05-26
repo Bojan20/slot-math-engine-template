@@ -38,7 +38,6 @@ import json
 import os
 import subprocess
 import sys
-import tempfile
 import time
 import zipfile
 from pathlib import Path
@@ -47,7 +46,6 @@ from typing import Any
 try:
     from cryptography.hazmat.primitives.asymmetric.ed25519 import (
         Ed25519PrivateKey,
-        Ed25519PublicKey,
     )
     from cryptography.hazmat.primitives import serialization
     _CRYPTO_OK = True

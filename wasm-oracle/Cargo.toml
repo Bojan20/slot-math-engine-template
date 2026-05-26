@@ -33,13 +33,9 @@ wee_alloc = { version = "0.4", optional = true }
 default = []
 wee_alloc = ["dep:wee_alloc"]
 
-# Smaller, faster release builds for the WASM artifact.
-[profile.release]
-opt-level = "z"        # optimize for size
-lto = true             # link-time optimization
-codegen-units = 1      # single unit for max inlining
-panic = "abort"        # smaller panic handler
-strip = true           # remove debug symbols
+# NOTE: Release-profile overrides for this crate live in the workspace
+# root `Cargo.toml` under `[profile.release.package.mtl-wasm-oracle]`
+# (cargo ignores `[profile.*]` blocks in non-root members).
 
 [lints.clippy]
 # Idiomatic warnings tolerated for now; can be tightened in CI later.

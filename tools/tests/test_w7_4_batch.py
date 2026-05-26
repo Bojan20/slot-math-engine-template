@@ -14,9 +14,7 @@ Run:
     python -m unittest tools.tests.test_w7_4_batch
 """
 from __future__ import annotations
-import json
 import sys
-import tempfile
 import unittest
 from pathlib import Path
 

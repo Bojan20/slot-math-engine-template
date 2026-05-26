@@ -49,8 +49,6 @@ Limitations
 from __future__ import annotations
 
 import json
-from pathlib import Path
-from typing import Any
 
 import z3
 
@@ -146,8 +144,6 @@ def closed_form_line_rtp(ir: dict, paytable_override: dict | None = None) -> flo
 
         Σ_(sym, k) num_lines × pays[sym,k] × P(line k-of-a-kind sym) / total_bet
     """
-    n_reels = int(ir["topology"]["reels"])
-    n_rows = int(ir["topology"]["rows"])
     paylines = ir["evaluation"]["lines"]
     num_lines = len(paylines)
     bet_lines = int(ir["bet_table"]["lines"])
@@ -272,7 +268,6 @@ def synth_per_symbol_pays(
     `{(sym, count): solved_pay}` ready to splice back into the IR.
     """
     n_reels = int(ir["topology"]["reels"])
-    n_rows = int(ir["topology"]["rows"])
     paylines = ir["evaluation"]["lines"]
     num_lines = len(paylines)
     bet_lines = int(ir["bet_table"]["lines"])

@@ -19,7 +19,6 @@ Run:
     python -m unittest tools.tests.test_w7_5_provenance
 """
 from __future__ import annotations
-import hashlib
 import json
 import subprocess
 import sys
@@ -39,7 +38,6 @@ except ImportError:
 
 
 from tools.provenance.merkle_tree import (
-    MerkleTree,
     InclusionProof,
     canonicalize_par_row,
     build_merkle_tree,

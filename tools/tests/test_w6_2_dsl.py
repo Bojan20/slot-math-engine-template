@@ -12,7 +12,6 @@ Pure-Python — no external libs required (tomllib is std-lib since 3.11).
 """
 from __future__ import annotations
 
-import json
 import sys
 import unittest
 from pathlib import Path

@@ -122,7 +122,6 @@ def mc_simulate(
     rng = random.Random(seed)
     symbols = list(p.symbol_probs.keys())
     sym_probs = [p.symbol_probs[s] for s in symbols]
-    sym_pays = [p.symbol_pays_5oak.get(s, 0.0) for s in symbols]
 
     triggers = 0
     total_pay = 0.0

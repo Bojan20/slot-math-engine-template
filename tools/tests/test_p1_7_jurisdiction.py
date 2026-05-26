@@ -21,9 +21,6 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.jurisdiction import (
-    JurisdictionProfile,
-    ComplianceViolation,
-    ComplianceReport,
     ViolationSeverity,
     load_profile,
     list_profiles,

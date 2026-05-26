@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Any
 
 from . import register
-from ..tsv import s, n, load_tsv
+from ..tsv import n
 
 
 def parse(rows: list[list[str]], cfg: dict, profile) -> dict:
@@ -47,13 +47,11 @@ def parse(rows: list[list[str]], cfg: dict, profile) -> dict:
         if increments:
             out["per_bet_multiplier"]["increments"] = increments
 
-    # Optional summary sheet pull
+    # Optional summary sheet pull — hook reserved for future raw_dir plumbing.
+    # The CLI currently passes profile + raw_dir; raw_dir is plumbed through core
+    # for paylines but not for features in this iteration.
     if "summary_sheet" in cfg and "summary_label" in cfg:
-        raw_dir = cfg.get("__raw_dir__")  # caller can stash via profile.data; fallback below
-        # We can't load arbitrary files here unless we know raw_dir. Skip if not provided.
-        # The CLI passes profile + raw_dir; raw_dir is plumbed through core for paylines but
-        # not for features in this iteration. Leaving extensible hook.
-        pass
+        _ = cfg.get("__raw_dir__")  # reserved for follow-up wave
 
     return out
 

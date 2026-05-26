@@ -44,7 +44,6 @@ Approximation drift grows with p_mystery; band tightens to 0.5 % when
 p_mystery ≤ 0.03.
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 from typing import Mapping
