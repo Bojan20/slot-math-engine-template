@@ -157,6 +157,12 @@ slot-backtest-runner = "tools.backtest_runner.__main__:main"
 slot-designer-lint = "tools.designer_lint.__main__:main"
 # ─── W46 — Compliance bundle verifier (re-hash manifest)
 slot-bundle-verify = "tools.bundle_verify.__main__:main"
+# ─── W47 — IR sanitizer (redact vendor identifiers for public share)
+slot-ir-sanitize = "tools.ir_sanitizer.__main__:main"
+# ─── W48 — Kernel comparator (equivalence / proportionality between two kernels)
+slot-kernel-compare = "tools.kernel_compare.__main__:main"
+# ─── W49 — Synthetic spin log generator (calibrated JSONL for tests)
+slot-synthetic-log = "tools.synthetic_log_gen.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

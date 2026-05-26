@@ -399,6 +399,30 @@ from .wild_morph_chain import (
     mc_simulate as wild_morph_chain_mc,
     expected_per_respin as wild_morph_per_respin,
 )
+from .scatter_progressive_unlock import (
+    ScatterProgressiveUnlockParams,
+    analytical_rtp as scatter_progressive_rtp,
+    mc_simulate as scatter_progressive_mc,
+)
+from .lock_and_reload_jackpot import (
+    LockAndReloadParams,
+    analytical_rtp as lock_reload_rtp,
+    mc_simulate as lock_reload_mc,
+)
+from .symbol_collection_unlock import (
+    SymbolCollectionUnlockParams,
+    analytical_rtp as collection_unlock_rtp,
+    mc_simulate as collection_unlock_mc,
+    prob_unlock,
+)
+from .bonus_buy_dynamic_pricing import (
+    BonusBuyDynamicPricingParams,
+    analytical_rtp as bb_dynamic_rtp,
+    mc_simulate as bb_dynamic_mc,
+    effective_cost,
+    ev_per_buy,
+    is_positive_ev as bb_dynamic_is_positive_ev,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -620,4 +644,20 @@ __all__ = [
     "wild_morph_chain_rtp",
     "wild_morph_chain_mc",
     "wild_morph_per_respin",
+    "ScatterProgressiveUnlockParams",
+    "scatter_progressive_rtp",
+    "scatter_progressive_mc",
+    "LockAndReloadParams",
+    "lock_reload_rtp",
+    "lock_reload_mc",
+    "SymbolCollectionUnlockParams",
+    "collection_unlock_rtp",
+    "collection_unlock_mc",
+    "prob_unlock",
+    "BonusBuyDynamicPricingParams",
+    "bb_dynamic_rtp",
+    "bb_dynamic_mc",
+    "effective_cost",
+    "ev_per_buy",
+    "bb_dynamic_is_positive_ev",
 ]

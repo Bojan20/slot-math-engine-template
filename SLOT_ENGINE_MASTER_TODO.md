@@ -19,11 +19,12 @@
 | W35 + W36 + W37 + batch 11 (IR diff heatmap / RTP sweep / cohort segment / 4 kernels) | ✅ landed `2b63859` | +27 | +3 |
 | W38 + W39 + W40 + batch 12 (regulator export / portfolio compare / volatility classifier / 4 kernels) | ✅ landed `b39c892` | +32 | +3 |
 | W41 + W42 + W43 + batch 13 (feature coverage / release notes / perf budget / 4 kernels) | ✅ landed `b557039` | +26 | +3 |
-| **W44 + W45 + W46 + batch 14 (backtest runner / designer lint / bundle verify / 4 kernels)** | ✅ **landed this commit** | **+29** | **+3** |
+| W44 + W45 + W46 + batch 14 (backtest runner / designer lint / bundle verify / 4 kernels) | ✅ landed `a5986f3` | +29 | +3 |
+| **W47 + W48 + W49 + batch 15 (IR sanitizer / kernel compare / synthetic log gen / 4 kernels)** | ✅ **landed this commit** | **+25** | **+3** |
 
-**Closed-form kernels:** 63 (was 59)
-**Entry points:** 49 (was 46)
-**Python tests:** 881 PASS, 0 fail, 47 skipped
+**Closed-form kernels:** 67 (was 63)
+**Entry points:** 52 (was 49)
+**Python tests:** 906 PASS, 0 fail, 47 skipped
 
 ---
 
