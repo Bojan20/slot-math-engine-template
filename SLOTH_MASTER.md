@@ -100,7 +100,7 @@
 | # | Wave | Status |
 |---|---|:---:|
 | P4.1 | **W6.1 — GDD PDF extractor** (pypdf + heuristic section detection → semi-structured JSON) | ✅ | `tools/gdd_extract/{extract,__main__}.py` — pure-Python pypdf reader + regex-based 11-section heading classifier (`meta`, `topology`, `rtp`, `volatility`, `paylines`, `paytable`, `free_spins`, `hold_and_win`, `pick_bonus`, `bet_range`, `max_win`) + per-section parsers. Synthetic GDD round-trip test recovers reels×rows + RTP + paylines + 9 paytable entries + FS trigger + bet range + max win cap. 17/17 tests pass. CLI: `python -m tools.gdd_extract <gdd.pdf>`. |
-| P4.2 | **W6.2 — Spec language (DSL)** — `gdd.toml`: theme, reels, features, paytable hints, volatility target | ⏳ |
+| P4.2 | **W6.2 — Spec language (DSL) + DSL → IR synthesizer** | ✅ | `tools/gdd_extract/dsl.py` — TOML-shaped schema (`[meta]`, `[topology]`, `[bet_table]`, `[[symbols]]`, `[[paytable]]`, `[[features]]`) with `dsl_validate()` schema check + `dsl_to_slot_sim_ir()` synthesizer (fills holes with industry-standard defaults: symbol mix, weighted reels, payline geometry, paytable ladder) + `gdd_json_to_dsl()` bridge from W6.1 extractor output. TOML round-trip via std-lib `tomllib`. 21/21 tests pass (validation + synthesis + GDD→DSL→IR end-to-end + TOML round-trip). Synthesized IRs are valid slot-sim universal IR — deserializable, runnable. |
 | P4.3 | **W6.3 — LLM-assisted GDD→DSL** (Kimi/Claude orchestration, no creative LLM in math path) | ⏳ |
 | P4.4 | **W6.4 — DSL → IR synthesizer** (math hole-filling sa SMT/Z3 ili genetic solver) | ⏳ |
 | P4.5 | **W6.5 — `slot-build GDD.pdf`** (full pipeline: PDF → DSL → IR → engine + Studio) | ⏳ |
