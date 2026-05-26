@@ -144,6 +144,25 @@ from .multiplier_grid_matrix import (
     expected_cell_multiplier,
     expected_total_multiplier,
 )
+from .symbol_streak_bonus import (
+    SymbolStreakBonusParams,
+    analytical_rtp as streak_rtp,
+    mc_simulate as streak_mc,
+    prob_streak_at_least,
+)
+from .bet_multiplier_payline_stack import (
+    BetMultiplierStackParams,
+    rtp_at_bm,
+    ev_delta as bm_stack_ev_delta,
+    is_positive_ev_at_bm,
+)
+from .nudge_respin_deterministic import (
+    NudgeRespinParams,
+    analytical_rtp as nudge_rtp,
+    mc_simulate as nudge_mc,
+    expected_value_per_trigger,
+    is_positive_ev as nudge_is_positive_ev,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -232,4 +251,17 @@ __all__ = [
     "mult_grid_mc",
     "expected_cell_multiplier",
     "expected_total_multiplier",
+    "SymbolStreakBonusParams",
+    "streak_rtp",
+    "streak_mc",
+    "prob_streak_at_least",
+    "BetMultiplierStackParams",
+    "rtp_at_bm",
+    "bm_stack_ev_delta",
+    "is_positive_ev_at_bm",
+    "NudgeRespinParams",
+    "nudge_rtp",
+    "nudge_mc",
+    "expected_value_per_trigger",
+    "nudge_is_positive_ev",
 ]
