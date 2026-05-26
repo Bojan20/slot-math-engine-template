@@ -95,6 +95,12 @@ slot-drift-sentinel = "tools.drift_sentinel.__main__:main"
 slot-ci-gate = "tools.ci_gate.__main__:main"
 # ─── W12 — Multi-IR Portfolio Analyzer (RTP/vol/feature matrix)
 slot-portfolio = "tools.portfolio.__main__:main"
+# ─── W16 — IR Lock & Sign (Merkle + ed25519 on IR sidecar)
+slot-ir-lock = "tools.ir_lock.__main__:main"
+# ─── W17 — Multi-IR engine-free cohort simulation runner
+slot-cohort-sim = "tools.cohort_runner.__main__:main"
+# ─── W18 — RNG Quality Mini-Suite (NIST-STS subset)
+slot-rng-quality = "tools.rng_quality.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
