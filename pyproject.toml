@@ -121,6 +121,12 @@ slot-math-doc = "tools.math_doc.generator:main"
 slot-config-validate = "tools.config_validator.__main__:main"
 # ─── W28 — Auto changelog generator (git log → grouped CHANGELOG.md)
 slot-changelog = "tools.changelog.__main__:main"
+# ─── W29 — Live RTP monitor (JSONL spin log → rolling/EWMA/drift)
+slot-rtp-monitor = "tools.rtp_monitor.__main__:main"
+# ─── W30 — A/B test framework (2 IRs × cohort sim → verdict)
+slot-ab-test = "tools.ab_test.__main__:main"
+# ─── W31 — Audit hash pinner (lock_root_hash freshness gate)
+slot-audit-pin = "tools.audit_pin.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

@@ -259,6 +259,34 @@ from .scatter_pay_bonus_chain import (
     mc_simulate as scatter_chain_mc,
     expected_scatter_pay,
 )
+from .free_spin_pop_count import (
+    FreeSpinPopParams,
+    analytical_rtp as fs_pop_rtp,
+    mc_simulate as fs_pop_mc,
+    expected_award as fs_pop_expected_award,
+)
+from .wild_substitution_uplift import (
+    WildSubUpliftParams,
+    analytical_rtp as wild_sub_rtp,
+    mc_simulate as wild_sub_mc,
+    uplift_vs_baseline,
+    baseline_per_line_rtp,
+    with_wild_per_line_rtp,
+)
+from .symbol_swap_respin import (
+    SymbolSwapParams,
+    analytical_rtp as symbol_swap_rtp,
+    mc_simulate as symbol_swap_mc,
+)
+from .bonus_buy_tier_choice import (
+    BonusBuyTier,
+    BonusBuyTierChoiceParams,
+    ev_per_tier,
+    best_tier_index,
+    dominance_table,
+    analytical_rtp as bonus_buy_tier_rtp,
+    mc_simulate as bonus_buy_tier_mc,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
