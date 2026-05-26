@@ -13,7 +13,7 @@
 | # | Kriterijum | Status |
 |---|---|:---:|
 | 1 | `slot-build <PAR.xlsx>` → 30s → playable Studio sim + cert paket | ✅ **DONE** — W5.1 CLI + Vendor A (0.03 % parity) + Vendor B (0.26 % parity, override) + W5.4 Studio + **W5.6 cert paket (signed ZIP + verify.sh)** |
-| 2 | `slot-build <GDD.pdf>` → 60s → IR draft + math placeholder + Studio scaffold | ⏳ Phase 4 |
+| 2 | `slot-build <GDD.pdf>` → 60s → IR draft + math placeholder + Studio scaffold | ✅ **DONE** — W6.5 `slot-build-gdd <pdf> --studio DIR` chains W6.1+W6.2+W6.4+W5.4 in <1s; SMT-locked target RTP + playable HTML/JS Studio scaffold |
 | 3 | 12×12 primitiv kombinacija matrice radi iz IR-a (Topology × Feature) | ⏳ Phase 1-3 |
 | 4 | Vendor parity: Vendor B ✅, Vendor A ✅, Vendor C, Vendor D, Pragmatic — 5+ profila × 3+ test PAR-a | 🚧 2/5 |
 | 5 | Jurisdikcijska compliance: 12 profila (UKGC/MGA/GLI-16/19/NV/NJ/PA/MI/ON/BC/AAMS/Quebec) | 🚧 Faza 11 |

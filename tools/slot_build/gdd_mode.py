@@ -118,6 +118,9 @@ def main(argv: list[str] | None = None) -> int:
                          "(W6.1 output)")
     ap.add_argument("--no-smt-lock", action="store_true",
                     help="skip W7.3 SMT RTP lock; use default paytable")
+    ap.add_argument("--studio", default=None,
+                    help="also emit a W5.4 Studio HTML/JS scaffold "
+                         "into this DIR/<game-slug>/")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args(argv)
 
@@ -158,6 +161,36 @@ def main(argv: list[str] | None = None) -> int:
         )
         if not args.quiet:
             print(f"wrote GDD   → {args.summary}")
+
+    if args.studio:
+        # W5.4 Studio scaffold emission. We compose the same writer
+        # `slot_build.__main__::write_studio_codegen` indirectly via a
+        # minimal in-process call — passing IR + DSL → TS IR adapter
+        # + scaffold writer.
+        try:
+            from tools.parse_par.to_ts_ir import convert_to_ts_ir
+            from tools.slot_build.__main__ import (
+                write_studio_codegen,
+                slugify,
+            )
+        except ImportError as e:
+            print(f"warn: Studio scaffold skipped — {e}",
+                  file=sys.stderr)
+        else:
+            ts_ir = convert_to_ts_ir(ir)
+            studio_dir = Path(args.studio).resolve()
+            studio_dir.mkdir(parents=True, exist_ok=True)
+            slug = slugify(ir["meta"].get("name", "gdd-game"))
+            game_dir = write_studio_codegen(
+                studio_dir,
+                slug=slug,
+                universal_ir=ir,
+                ts_ir=ts_ir,
+                vendor=ir["meta"].get("vendor", "synth"),
+                swid=ir["meta"].get("swid", "SYNTH-000"),
+            )
+            if not args.quiet:
+                print(f"Studio      → {game_dir}")
 
     return 0
 

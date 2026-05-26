@@ -121,6 +121,34 @@ class TestGddPipeline(unittest.TestCase):
         rc = main(["/nonexistent/missing.pdf", "--quiet", "--no-smt-lock"])
         self.assertEqual(rc, 2)
 
+    def test_studio_scaffold_emitted(self):
+        """W6.5 + W5.4 wire-up: --studio DIR emits playable HTML/JS."""
+        with tempfile.TemporaryDirectory() as td:
+            pdf = Path(td) / "studio.gdd.pdf"
+            _make_gdd_pdf(pdf)
+            out_ir = Path(td) / "studio.ir.json"
+            studio_root = Path(td) / "studio"
+            rc = main([str(pdf), "--out", str(out_ir),
+                       "--studio", str(studio_root),
+                       "--no-smt-lock", "--quiet"])
+            self.assertEqual(rc, 0)
+            # Studio dir created + has at least one game subfolder
+            self.assertTrue(studio_root.is_dir())
+            game_dirs = [p for p in studio_root.iterdir() if p.is_dir()]
+            self.assertGreater(len(game_dirs), 0,
+                                "no game scaffold dir created")
+            # Game dir has expected Studio files
+            game_root = game_dirs[0]
+            for stem in ("index.html", "app.js", "app.css"):
+                # Studio scaffold root has its own subdir layout; just
+                # check that SOME file with this name exists anywhere
+                # under game_root.
+                found = list(game_root.rglob(stem))
+                self.assertGreater(
+                    len(found), 0,
+                    f"expected {stem} somewhere under {game_root}",
+                )
+
 
 @unittest.skipUnless(_HAS_PDF, "pypdf / reportlab missing")
 class TestGddPipelineSmtLocked(unittest.TestCase):
