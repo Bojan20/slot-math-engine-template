@@ -249,18 +249,21 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W56 — Cert XML Verification Tool** | ~30 min | `slot-cert-xml-verify` reads a v2 cert XML, re-hashes the referenced IR + MC report, validates every JurisdictionProvenance branch signature; exit 1 on tampering. |
-| 🥈 2 | **W57 — Operator Dashboard Aggregator** | ~45 min | combine W37 cohort segment + W29 RTP monitor + W54 drift hub into single `slot-operator-dashboard` HTML view per game (extends W55 dashboard pattern). |
-| 🥉 3 | **W58 — IR Diff CI Gate** | ~30 min | `slot-ir-diff-gate` runs W35 diff_heatmap + W34 spec_compliance between two IR versions; exit 1 if HIGH-impact differences exist OR target_rtp drifts > tolerance — drop-in pre-merge guard. |
+| 🥇 1 | **W59 — Vendor Onboarding Wizard** | ~45 min | `slot-vendor-onboard` CLI walks new vendor through `slot-vendor-scaffold` + `slot-synth-par` + `slot-build` + `slot-cert-verify` in one chain, emits a ready-to-ship pilot folder. |
+| 🥈 2 | **W60 — Operator Dashboard Live-stream** | ~45 min | extends W57 with W50-style streaming refresh: a `--watch` mode that re-aggregates every N seconds and re-emits the HTML — keeps a regulator/ops monitor warm. |
+| 🥉 3 | **W61 — Cross-vendor Math Catalog Sync** | ~30 min | `slot-catalog-sync` produces a single SemVer-tagged registry merging every closed-form solver doc (W27) + kernel comparator (W48) + feature coverage (W41) into one downloadable index for marketplace consumers. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W53** | _this commit_ | Multi-Territory Cert Builder — chains lint + cert v2 + marketplace verify into one ZIP (4 tests) |
-| **W54** | _this commit_ | Real-time Drift Alert Hub — rules ladder + 4 sink types + dedup + crash-tolerant fan-out (9 tests) |
-| **W55** | _this commit_ | Plugin Marketplace Listing UI — zero-build static dashboard + manifest/verify pre-compute (5 tests) |
+| **W56** | _this commit_ | Cert XML standalone verifier — v1+v2 namespaces + IR digest cross-check + ed25519 batch verify (12 tests) |
+| **W57** | _this commit_ | Operator Dashboard Aggregator — per-game traffic light HTML + JSON (8 tests) |
+| **W58** | _this commit_ | IR Diff CI Gate — configurable rules ladder over slot-ir-diff (12 tests) |
+| **W53** | `39a8184` | Multi-Territory Cert Builder — chains lint + cert v2 + marketplace verify into one ZIP (4 tests) |
+| **W54** | `39a8184` | Real-time Drift Alert Hub — rules ladder + 4 sink types + dedup + crash-tolerant fan-out (9 tests) |
+| **W55** | `39a8184` | Plugin Marketplace Listing UI — zero-build static dashboard + manifest/verify pre-compute (5 tests) |
 | **W50** | `4aeeb78` | Live RGS Connector — NDJSON tail + TCP gateway → rtp_monitor (16 tests) |
 | **W51** | `88bc421` | Cert XML v2 (urn:slotmath:cert:v2) — Multi-Jurisdiction provenance branches (11 tests) |
 | **W52** | `88bc421` | Plugin Marketplace Verifier — publish/download/verify round-trip (7 tests) |

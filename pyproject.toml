@@ -175,6 +175,12 @@ slot-multi-territory = "tools.multi_territory.__main__:main"
 slot-drift-alert-hub = "tools.drift_alert_hub.__main__:main"
 # ─── W55 — Plugin Marketplace Listing UI (zero-build static dashboard)
 slot-marketplace-ui = "tools.marketplace_ui.__main__:main"
+# ─── W56 — Cert XML standalone verifier (v1 + v2, IR digest, signature batch)
+slot-cert-verify = "tools.cert_verify.__main__:main"
+# ─── W57 — Operator Dashboard Aggregator (per-game traffic light HTML + JSON)
+slot-operator-dashboard = "tools.operator_dashboard.__main__:main"
+# ─── W58 — IR Diff CI Gate (configurable rules ladder over slot-ir-diff)
+slot-ir-diff-gate = "tools.ir_diff_gate.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
