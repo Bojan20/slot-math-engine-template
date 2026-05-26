@@ -71,7 +71,10 @@ def mc_simulate(p: BigSymbolFrameParams, spins: int = 200_000,
                 seed: int = 42) -> dict[str, float]:
     rng = random.Random(seed)
     n_top_cols = p.reels - p.stack_size + 1
-    n_top_rows = p.rows - p.stack_size + 1
+    # Vertical placement (rows) is uniform but doesn't affect MC math
+    # under the current per-payline gating; column placement drives the
+    # win/no-win partition. `n_top_rows` is reserved for a future
+    # 2-D placement extension.
     triggers = 0
     total_pay = 0.0
     for _ in range(spins):

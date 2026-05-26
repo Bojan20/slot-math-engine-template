@@ -209,6 +209,32 @@ from .wild_path_clear import (
     mc_simulate as wild_path_mc,
     expected_path_length,
 )
+from .free_spin_buy_compound import (
+    FsBuyCompoundParams,
+    buy_mode_rtp as fs_buy_compound_rtp,
+    mc_simulate as fs_buy_compound_mc,
+    expected_session_spins as fs_buy_compound_spins,
+    variance_session_pay as fs_buy_compound_var,
+)
+from .symbol_collection_meter import (
+    CollectionMeterParams,
+    analytical_rtp as collection_meter_rtp,
+    mc_simulate as collection_meter_mc,
+    prob_filled_within_window,
+)
+from .multiplier_progressive_chain import (
+    ProgressiveMultiplierParams,
+    analytical_rtp as prog_mult_rtp,
+    mc_simulate as prog_mult_mc,
+    expected_session_payout,
+)
+from .reel_lock_persistence import (
+    ReelLockParams,
+    analytical_rtp as reel_lock_rtp,
+    mc_simulate as reel_lock_mc,
+    expected_session_length as reel_lock_session_length,
+    expected_locked_reels,
+)
 
 __all__ = [
     "StackedWildRandomReelParams",
@@ -340,4 +366,22 @@ __all__ = [
     "wild_path_rtp",
     "wild_path_mc",
     "expected_path_length",
+    "FsBuyCompoundParams",
+    "fs_buy_compound_rtp",
+    "fs_buy_compound_mc",
+    "fs_buy_compound_spins",
+    "fs_buy_compound_var",
+    "CollectionMeterParams",
+    "collection_meter_rtp",
+    "collection_meter_mc",
+    "prob_filled_within_window",
+    "ProgressiveMultiplierParams",
+    "prog_mult_rtp",
+    "prog_mult_mc",
+    "expected_session_payout",
+    "ReelLockParams",
+    "reel_lock_rtp",
+    "reel_lock_mc",
+    "reel_lock_session_length",
+    "expected_locked_reels",
 ]

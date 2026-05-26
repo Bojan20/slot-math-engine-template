@@ -107,6 +107,10 @@ slot-telemetry-validate = "tools.telemetry.__main__:main"
 slot-plugin-bundle = "tools.plugin_bundle.__main__:main"
 # ─── W21 — Replay determinism gate (IR + seed → deterministic stream)
 slot-replay-gate = "tools.replay_gate.__main__:main"
+# ─── W22 — IR schema versioning + migration framework
+slot-ir-migrate = "tools.ir_schema.__main__:main"
+# ─── W24 — Audit trail aggregator (per-game timeline)
+slot-audit-trail = "tools.audit_trail.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

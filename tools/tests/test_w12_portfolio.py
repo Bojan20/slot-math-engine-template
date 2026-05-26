@@ -12,8 +12,6 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.portfolio import (
-    IRMetrics,
-    PortfolioReport,
     analyze_portfolio,
     metrics_for_ir,
 )

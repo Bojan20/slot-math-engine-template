@@ -23,8 +23,6 @@ sys.path.insert(0, str(ROOT))
 
 from tools.operator_pilot import (
     PilotConfig,
-    PilotReport,
-    PilotStep,
     run_pilot,
 )
 from tools.operator_pilot.__main__ import main as pilot_main

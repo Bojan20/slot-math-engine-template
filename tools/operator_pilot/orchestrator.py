@@ -165,9 +165,13 @@ def _derive_id(ir: dict[str, Any], cfg: PilotConfig) -> tuple[str, str, str]:
     swid = cfg.swid or meta.get("swid") or "swid-0001"
     vendor = cfg.vendor or meta.get("vendor") or "unknown"
     # normalize for file names: ASCII-safe slug
-    safe = lambda s: "".join(c if c.isalnum() or c in "-_." else "_"
-                              for c in str(s)).strip("_") or "x"
-    return safe(game_id), safe(swid), safe(vendor)
+    def _safe(s: Any) -> str:
+        out = "".join(
+            c if c.isalnum() or c in "-_." else "_" for c in str(s)
+        ).strip("_")
+        return out or "x"
+
+    return _safe(game_id), _safe(swid), _safe(vendor)
 
 
 # ─── individual steps ───────────────────────────────────────────────
