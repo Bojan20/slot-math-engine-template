@@ -6,6 +6,35 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-26 18:00 (post W50-W78 + P3.2 + P5.9 + Phase 7 commercialization CLOSED, all green)
+
+**Status:** Operativna infrastruktura kompletno zatvorena. **Sve faze P0-P6 + P7 commercialization su shipped.** Preostaje samo product/sales rad (potpis prvog vendora, marketplace contributor submissions).
+
+| Wave / batch | Status | Tests | Entry points | Commit |
+| --- | --- | --- | --- | --- |
+| W50 — Live RGS Connector (NDJSON tail + TCP) | ✅ landed | +16 | +1 | `4aeeb78` |
+| W51 + W52 — Cert XML v2 + Marketplace Verifier | ✅ landed | +18 | +2 | `88bc421` |
+| W53 + W54 + W55 — multi-territory / drift hub / marketplace UI | ✅ landed | +18 | +3 | `39a8184` |
+| W56 + W57 + W58 — cert XML verifier / operator dashboard / IR diff CI gate | ✅ landed | +32 | +3 | `bc2a43f` |
+| W59 + W60 + W61 — vendor onboarding / dashboard live-stream / catalog sync | ✅ landed | +22 | +3 | `dd91a87` |
+| W62 + W63 + W64 — telemetry bridge / catalog diff / pilot signoff | ✅ landed | +21 | +3 | `acdfc1c` |
+| W65 + W66 + W67 — plugin signing / drift replay / cert SBOM | ✅ landed | +19 | +3 | `5dcac5c` |
+| W68 + W69 + W70 — pubkey bundle / SBOM diff / sign-off PDF | ✅ landed | +23 | +3 | `f931b1b` |
+| W71 + W72 + W73 + W74 — cert E2E verifier / trust anchor rotation / studio publish / master gate | ✅ landed | +22 | +4 | `2e71f18` |
+| **P3.2 (closes W4.4) — IR → Rust engine codegen via Tera-equivalent** | ✅ **landed** | **+8** | **+0 (flag on slot-build)** | `0fa56ec` |
+| **P5.9 — Studio E2E Playwright codegen** | ✅ **landed** | **+14** | **+1** | `0fa56ec` |
+| **W75 + W76 + W77 + W78 (Phase 7 commercialization)** — marketplace catalog / pilot outreach / public benchmark / community contributor flow | ✅ **landed** | **+21** | **+4** | `de35d94` |
+
+### Roll-up (2026-05-26 end of day)
+
+**Python tests:** **1244+/1244+** PASS, 0 fail, 47 skipped (was 1008 at 100-kernel century)
+**Closed-form kernels:** **100/100** — Mission #6 ✅ closed
+**Entry points (console scripts):** **~84** (was 52 at century; +32 across waves W50-W78 + P5.9)
+**Wave-tools delivered today:** **30** (W50 → W78 + P3.2 + P5.9)
+**Infrastructure phases closed:** P0, P1, P2, P3 (incl. W4.4), P4, P5, P6, **P7.1-P7.6**
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-26 15:30 (post W19-W34 + P1.6 batch 6-10 LANDED, all green)
 
 | Wave / batch | Status | Tests | Entry points |
@@ -77,10 +106,10 @@
 | W4.1 | **`ce-sim` → `slot-sim` refactor** | Univerzalni MC driver koji konzumira bilo koji IR. Iz `engine-rust/src/sim.rs` u workspace crate `engine/slot-sim/` koji ne zavisi od CE-specifične math-e. | 1-2 dana → 1 sesija | ✅ **LANDED** `dc65435` |
 | W4.2 | **Universal `parse_par.py` sa vendor profil sistemom** | `tools/parse_par/` paket sa vendor-agnostic engine + pluggable feature parserima (free_spins, cash_eruption_pages, linear_progressive, fort_knox_pick_bonus) + 0-dep mini-YAML loader. `tools/vendor_profiles/{lw,igt}.yaml` opisuju layout konvencije; profile schema validation. CLI: `python -m tools.parse_par <vendor> <raw_dir>`. **Vendor B round-trip bit-identičan** (3/3 SWID, modulo `vendor:` enrichment). **Vendor A Pick-Bonus parse-out** SWID+RTP+bet table (24 bm)+paytable+FS+linear progressive (odds*bm ≡ 7.5M)+FK bonus per-BM (24/24 rows). 15/15 unit tests pass. | 4-6 h → 1 sesija | ✅ **LANDED** |
 | W4.3 | **Pattern-FK integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. **W4.2 deo:** meta/paytable/FS/progressive radi clean za PAR_001+PAR_002. **Preostalo:** Vendor A-style per-reel reel strip parser (rows 197+: "Reel N / Weights" stripe layout, ne Vendor B "Reel Set: K" header blokovi) → onda 10B verify za sva 2 SWID-a Pattern-FK-a, 1:1 sa Excel-om. | 3-4 h | 🟡 čeka per-reel strip parser |
-| W4.4 | **Rust engine codegen iz IR** (template-based, Tera) | Umesto da ručno pišem `cash_eruption.rs` za svaki novi game, codegen emituje game-specific Rust code iz IR-a. | 1-2 dana | 🔴 needs design |
-| W4.5 | **TS engine codegen + parity gate** | Mirror W4.4 ali za RGS-client TS runtime. Bit-identical PCG64 output Rust↔TS po seed-u. | 1 dan | 🟡 čeka W4.4 |
-| W4.6 | **UI skeleton codegen** | Svelte komponenta: reel grid + paytable display + spin button + bonus screens. Generic iz IR meta (rows × cols, paylines viz, bonus type). | 1 dan | 🟡 čeka W4.4 |
-| W4.7 | **`slot-build <PAR.xlsx>` CLI orchestrator** | Jedna komanda: parse → IR → codegen × 3 (Rust + TS + UI) → MC verify → cert ZIP. Output: `games/<name>/` ready-to-ship folder. | 4 h | 🟡 čeka W4.4-W4.6 |
+| W4.4 | **Rust engine codegen iz IR** (template-based, Tera) | Umesto da ručno pišem `cash_eruption.rs` za svaki novi game, codegen emituje game-specific Rust code iz IR-a. | 1-2 dana → **1 sesija (P3.2)** | ✅ **LANDED `0fa56ec`** kao P3.2 — `tools/slot_build/codegen_rust.py` + `slot-build --codegen-rust DIR` flag emituje per-game Rust crate (Cargo.toml + main.rs + sim.rs + IR snapshot + README). Auto-discover `engine/slot-sim` / `rust-sim` path. E2E: cargo check + cargo run --release oba exit 0; 8/8 P3.2 tests. |
+| W4.5 | **TS engine codegen + parity gate** | Mirror W4.4 ali za RGS-client TS runtime. Bit-identical PCG64 output Rust↔TS po seed-u. | 1 dan | 🟡 čeka W4.4 — P3.2 je W4.4 zatvorio; W4.5 može da krene |
+| W4.6 | **UI skeleton codegen** | Svelte komponenta: reel grid + paytable display + spin button + bonus screens. Generic iz IR meta (rows × cols, paylines viz, bonus type). | 1 dan | 🟡 čeka W4.4 — P3.2 je W4.4 zatvorio; W4.6 može da krene |
+| W4.7 | **`slot-build <PAR.xlsx>` CLI orchestrator** | Jedna komanda: parse → IR → codegen × 3 (Rust + TS + UI) → MC verify → cert ZIP. Output: `games/<name>/` ready-to-ship folder. | 4 h | 🟢 **delimično landed**: Rust ruka kroz P3.2 + cert ZIP kroz W73 `slot-studio-publish`. Pun 3-way codegen čeka W4.5+W4.6. |
 | W4.8 | **Mech library — Megaways primitiv** | Variable rows per reel (2-7), 3⁵..7⁵ ways calculator, mystery symbols. Treba 1 PAR uzorak (Boki šalje). | 2 dana | ⏳ čeka Megaways PAR |
 | W4.9 | **Mech library — Cluster Pays primitiv** | BFS flood-fill connectivity, 4-way / 8-way variants, stepped paytable po cluster size. Treba 1 PAR uzorak. | 2 dana | ⏳ čeka Cluster PAR |
 | W4.10 | **Mech library — Cascade/Tumble primitiv** | Reaction chains, multiplier ramp (BTG / Pragmatic style). Treba 1 PAR uzorak. | 1.5 dana | ⏳ čeka Cascade PAR |
