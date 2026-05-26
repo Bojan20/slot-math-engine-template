@@ -3429,6 +3429,41 @@ QA gates:
 
 ---
 
+## ✅ W196.TRUTH-V2 LANDED — slot-truth-check oracle bump + real CI wire-up (2026-05-26)
+
+**Status:** ✅ **LANDED** 2026-05-26 — `scripts/slot-truth-check.sh` baselines bumped to post-Phase 7 reality and **truly** wired into `slot-math-ci.yml`. Line 82 of this document had claimed "runs in CI" since W152 P0-8 (`100d4a6`); audit posle Cortex W23.EVO-V2 sesije otkrio da to nije bila istina — script je postojao, ali ga **nijedan workflow nije pozivao**. Ovo je tihi rupica iste klase kao Cortex W150 (37× CLAUDE.md drift) — gate je deklarisan ali nije enforced. Sada je.
+
+### Šta sletilo
+
+| Artifact | Δ LOC | Šta |
+|---|---:|---|
+| `scripts/slot-truth-check.sh` oracle bump | +6 / -5 | `rust_lib_tests ge 290 ↑ 259` / `rust_total_tests ge 1100 ↑ 783` / `ts_test_count ge 7000 ↑ 2688` / `ts_test_files ge 230 ↑ 114` / `master_todo_lines ge 3000 ↑ 1000`. Threshold ostaje 10 % drift window — honest wave-by-wave growth se silently tolerira, samo regresije > 10 % ispod floor-a ili over-claim u master TODO bring gate red. |
+| `.github/workflows/slot-math-ci.yml` truth-check job | +33 | Nov `truth-check` job: `ubuntu-latest`, Node 20 + Rust stable, `npm ci --no-audit --no-fund`, pa `scripts/slot-truth-check.sh --ci`. Dodaje `scripts/slot-truth-check.sh` + `SLOT_ENGINE_MASTER_TODO.md` na `paths:` filter (push + PR) tako da svaki master-TODO refresh ili oracle bump aktivira gate. Failure cache (`target/slot-truth-cache.json`) uploaded kao artifact za debug. |
+
+### Numerička evidencija (lokalno pre commit-a)
+
+| Metric | Actual | Expected | Status |
+|---|---:|---:|:---:|
+| `rust_lib_tests` | 307 | ≥ 290 | ✅ |
+| `rust_total_tests` | 1168 | ≥ 1100 | ✅ |
+| `ts_test_count` | 7248 | ≥ 7000 | ✅ |
+| `ts_test_files` | 240 | ≥ 230 | ✅ |
+| `ir_feature_stubs_closed` | 20 | = 20 | ✅ |
+| `chacha20_kat_test` | 1 | = 1 | ✅ |
+| `rng_submission_bin` | 1 | = 1 | ✅ |
+| `report_adapters_count` | 4 | = 4 | ✅ |
+| `holdandwin_solver` | 1 | = 1 | ✅ |
+| `master_todo_lines` | 3467 | ≥ 3000 | ✅ |
+
+**Summary: total=10 ok=10 warn=0 fail=0** — `slot-truth-check OK`.
+
+### Šta NIJE u skopu W196.TRUTH-V2
+
+1. **Auto-bump on landed wave** — operator policy ostaje manual: bumping oracle ide na isti commit koji landa nove dokaze. Auto-update bot dodaje "trust without verify" rupu — eksplicitno odbačeno.
+2. **Truth-check coverage proširenje** (audit/cert metrics, jurisdiction adapter parity counts) — backlog za naredne wave-ove; trenutnih 10 metrika pokriva najveće drift-targete (test counts + master TODO line count).
+
+---
+
 ## ✅ W237 LANDED — `adapter.rs` mutation kill, effective 100% (2026-05-24)
 
 **Status:** ✅ **LANDED** 2026-05-24 — 11 new tests in `rust-sim/src/ir/adapter.rs::w237_kill_tests` kill every viable mutant in the IR → GameConfig adapter. Final state: **0 missed, 16/16 caught on surgical re-run** over the previously-missed lines (regex `adapter\.rs:(266|334|335|598|637|651):`).

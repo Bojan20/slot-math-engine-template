@@ -67,18 +67,23 @@ fi
 
 read_oracle() {
   cat <<'EOF'
-rust_lib_tests           ge   259
-rust_total_tests         ge   783
-ts_test_count            ge   2688
-ts_test_files            ge   114
+rust_lib_tests           ge   290
+rust_total_tests         ge   1100
+ts_test_count            ge   7000
+ts_test_files            ge   230
 ir_feature_stubs_closed  eq   20
 chacha20_kat_test        eq   1
 rng_submission_bin       eq   1
 report_adapters_count    eq   4
 holdandwin_solver        eq   1
-master_todo_lines        ge   1000
+master_todo_lines        ge   3000
 EOF
 }
+# W196.TRUTH-V2 — baselines bumped 2026-05-26 from initial floors (259/783/
+# 2688/114/1000) to reflect post-Phase 7 closure reality (307/1168/7248/
+# 240/3467 actuals). Threshold remains 10% drift window so honest
+# wave-by-wave growth is silently tolerated; only **regressions** > 10%
+# below floor or **>10% over-claim** in MASTER_TODO bring the gate red.
 
 # ── Measurement functions (each prints a single integer) ───────────────────
 
