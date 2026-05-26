@@ -199,6 +199,12 @@ slot-plugin-sign = "tools.plugin_sign.__main__:main"
 slot-drift-replay = "tools.drift_replay.__main__:main"
 # ─── W67 — Cert Bundle SBOM (CycloneDX 1.4 over tools.* + entry points)
 slot-cert-sbom = "tools.cert_sbom.__main__:main"
+# ─── W68 — Marketplace Pub-key Bundle (signed publisher key registry)
+slot-pubkey-bundle = "tools.pubkey_bundle.__main__:main"
+# ─── W69 — SBOM Diff Reporter (CycloneDX delta + breaking-change CI gate)
+slot-sbom-diff = "tools.sbom_diff.__main__:main"
+# ─── W70 — Pilot Sign-off PDF (pure-stdlib PDF 1.4 emitter)
+slot-pilot-signoff-pdf = "tools.pilot_signoff_pdf.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"

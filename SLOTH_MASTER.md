@@ -249,18 +249,21 @@ Library covers every major probability family used in commercial slot math liter
 
 | Prio | Wave | Trajanje | Output |
 |:---:|---|---|---|
-| 🥇 1 | **W68 — Marketplace Pub-key Bundle** | ~30 min | `slot-pubkey-bundle` produces a signed registry of `(plugin_id, version, pubkey_pem_sha256)` so a marketplace consumer can pin which publishers' keys it trusts. Drop-in for cert v2 multi-jurisdiction provenance. |
-| 🥈 2 | **W69 — SBOM Diff Reporter** | ~30 min | `slot-sbom-diff` compares two W67 CycloneDX snapshots; emits added/removed components + per-module SHA-256 drift. Drop-in CI gate for supply-chain integrity. |
-| 🥉 3 | **W70 — Pilot Sign-off PDF (real)** | ~45 min | Upgrade W64 from ANSI text to true PDF via stdlib (pure `struct`-built minimal PDF 1.4 — no external lib), so the regulator can drop the file straight into their archive system. |
+| 🥇 1 | **W71 — Cert Bundle End-to-End Verifier** | ~45 min | `slot-cert-bundle-verify` chains W56 cert XML verify + W64 sign-off + W67 SBOM cross-check into one CLI that re-verifies an entire regulator ZIP atomically. |
+| 🥈 2 | **W72 — Marketplace Trust Anchor Rotation** | ~30 min | `slot-trust-anchor-rotate` performs a graceful ed25519 master-key rotation: re-signs every W68 pubkey bundle under a new master while keeping the old signature side-by-side for hand-off. |
+| 🥉 3 | **W73 — Studio Build → Marketplace Pipeline CLI** | ~45 min | `slot-pipeline` orchestrates: lint → cert v2 → sign (W65) → publish (W52) → bundle key (W68) → SBOM (W67) → PDF (W70) in one command from a single IR. The "ship a pilot" button. |
 | ↪ followups | **P3.2** (IR→Rust engine codegen — Tera) · **P5.9** (Studio E2E Playwright) · **P7.x** (commercialization) | — | Phase 7 commercialization unlocks after we sign one pilot |
 
 ### ✅ Most-recent landings
 
 | Wave | Commit | Δ |
 |---|---|---|
-| **W65** | _this commit_ | Marketplace Plugin Signing CLI — ed25519 keygen/sign/verify + `.sig` + `.sig.b64` sidecars (6 tests + e2e roundtrip ok) |
-| **W66** | _this commit_ | Drift Replay Theatre — throttled NDJSON re-feeder, configurable speedup, per-tick NDJSON log, KeyboardInterrupt-safe (6 tests + 200-tick smoke 600 alerts) |
-| **W67** | _this commit_ | Cert Bundle SBOM — CycloneDX 1.4 over tools.* + entry points + deterministic / random serialNumber switch (7 tests + e2e 319 comps + 73 entry points) |
+| **W68** | _this commit_ | Marketplace Pub-key Bundle — signed publisher key registry, master-key-rotation-ready (7 tests + e2e build/verify ok) |
+| **W69** | _this commit_ | SBOM Diff Reporter — CycloneDX delta + breaking-change CI gate (9 tests + self-diff smoke) |
+| **W70** | _this commit_ | Pilot Sign-off PDF — pure-stdlib PDF 1.4 emitter (no external lib), zlib/FlateDecode + xref + trailer (7 tests + e2e 1.3 KB pdf) |
+| **W65** | `5dcac5c` | Marketplace Plugin Signing CLI — ed25519 keygen/sign/verify + `.sig` + `.sig.b64` sidecars (6 tests + e2e roundtrip ok) |
+| **W66** | `5dcac5c` | Drift Replay Theatre — throttled NDJSON re-feeder, configurable speedup, per-tick NDJSON log, KeyboardInterrupt-safe (6 tests + 200-tick smoke 600 alerts) |
+| **W67** | `5dcac5c` | Cert Bundle SBOM — CycloneDX 1.4 over tools.* + entry points + deterministic / random serialNumber switch (7 tests + e2e 319 comps + 73 entry points) |
 | **W62** | `acdfc1c` | Telemetry → Drift Hub Bridge — NDJSON feed → rtp_monitor → drift alert hub (6 tests, e2e smoke 450 alerts) |
 | **W63** | `acdfc1c` | Catalog Diff Reporter — INDEX.json diff with breaking/compatible classification (9 tests) |
 | **W64** | `acdfc1c` | Pilot Sign-off Report — regulator-ready ANSI text + JSON, aggregates onboard + cert + jurisdictions (6 tests) |
