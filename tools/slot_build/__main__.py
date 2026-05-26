@@ -1082,6 +1082,16 @@ def main(argv: list[str] | None = None) -> int:
              "required — open index.html or serve with `python -m http.server`.",
     )
     ap.add_argument(
+        "--codegen-rust",
+        metavar="DIR",
+        default=None,
+        help="P3.2 — also emit a per-game Rust runner crate (Cargo.toml + "
+             "src/main.rs + src/sim.rs + embedded IR copy + README) into "
+             "DIR/<game-slug>/. The crate compiles standalone against the "
+             "workspace slot-sim engine and produces an engine-free "
+             "closed-form RTP estimate from the universal IR.",
+    )
+    ap.add_argument(
         "--cert-package",
         metavar="DIR",
         default=None,
@@ -1268,6 +1278,32 @@ def main(argv: list[str] | None = None) -> int:
                         print(f"  codegen-studio → {studio_dir}")
                 except Exception as e:
                     print(f"  warn: codegen-studio failed: {e}", file=sys.stderr)
+
+        # P3.2 — Rust runner crate emission
+        if args.codegen_rust is not None:
+            if universal is None:
+                if not args.quiet:
+                    print(
+                        f"  skip codegen-rust: universal IR unavailable for {vendor}",
+                        file=sys.stderr,
+                    )
+            else:
+                from tools.slot_build.codegen_rust import write_rust_codegen
+                rust_root = Path(args.codegen_rust).resolve()
+                rust_root.mkdir(parents=True, exist_ok=True)
+                slug = slugify(f"{ir['meta'].get('name', game_id)}-{swid}")
+                try:
+                    crate_dir = write_rust_codegen(
+                        codegen_dir=rust_root,
+                        slug=slug,
+                        universal_ir=universal,
+                        swid=swid,
+                        vendor=vendor,
+                    )
+                    if not args.quiet:
+                        print(f"  codegen-rust → {crate_dir}")
+                except Exception as e:
+                    print(f"  warn: codegen-rust failed: {e}", file=sys.stderr)
 
         # W5.6 — cert package emission
         if args.cert_package is not None:

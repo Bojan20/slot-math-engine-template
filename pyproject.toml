@@ -213,6 +213,8 @@ slot-trust-anchor = "tools.trust_anchor.__main__:main"
 slot-studio-publish = "tools.studio_publish.__main__:main"
 # ─── W74 — Master Pipeline Gate (repo-wide gate of every gate)
 slot-master-gate = "tools.master_gate.__main__:main"
+# ─── P5.9 — Studio E2E Playwright codegen (config + spec emitter)
+slot-studio-e2e = "tools.studio_e2e.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
