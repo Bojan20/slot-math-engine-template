@@ -53,6 +53,14 @@ def _stub_convert(raw: bytes, profile: dict[str, Any]) -> dict[str, Any]:
 
 
 def register_builtin(registry) -> None:
+    """Idempotent registration of the bundled stub adapters.
+
+    Idempotent because Python's unittest discovery imports the
+    `tools/vendor_adapter` package twice when run from the repo
+    root (once as `tools.vendor_adapter`, once as the bare
+    `vendor_adapter` top-level package), and we do not want the
+    second import to raise a duplicate-registration error.
+    """
     from tools.vendor_adapter.registry import VendorAdapter
 
     registry.register(VendorAdapter(
@@ -61,18 +69,18 @@ def register_builtin(registry) -> None:
         detect=_vendor_a_detect,
         convert=_stub_convert,
         version="0.1.0",
-    ))
+    ), override=True)
     registry.register(VendorAdapter(
         vendor_id="vendor_b",
         description="Vendor B (SWID-keyed text PAR) — stub adapter",
         detect=_vendor_b_detect,
         convert=_stub_convert,
         version="0.1.0",
-    ))
+    ), override=True)
     registry.register(VendorAdapter(
         vendor_id="vendor_c",
         description="Vendor C (universal native) — stub adapter",
         detect=_vendor_c_detect,
         convert=_stub_convert,
         version="0.1.0",
-    ))
+    ), override=True)
