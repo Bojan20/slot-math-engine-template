@@ -550,6 +550,12 @@ fn convert_features(ir: &SlotGameIR, cfg: &mut GameConfig) {
             } => {
                 cfg.symbol_upgrade = Some(convert_symbol_upgrade(from, to, *probability));
             }
+            // W4.7 — LinearProgressive is IR-only metadata; runtime contribution
+            // math lives in `crate::jackpot::progressive`. Adapter intentionally
+            // skips conversion here so the existing `GameConfig` shape remains
+            // unchanged for downstream consumers; engine reads progressive_link
+            // from the IR root directly.
+            Feature::LinearProgressive { .. } => {}
         }
     }
 }
@@ -1091,6 +1097,11 @@ mod w237_kill_tests {
                 jackpot: 0.0,
                 tolerance: 1.0,
             },
+            // W4.7 — additive optionals (all None for kill-test skeleton).
+            progressive_link: None,
+            jurisdiction_overrides: None,
+            persistent_state: None,
+            provenance: None,
         }
     }
 

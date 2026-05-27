@@ -1,4 +1,4 @@
-"""W5.3 — slot-sim universal IR → TS `SlotGameIR` adapter.
+"""W5.3 + W4.7 — slot-sim universal IR → TS `SlotGameIR` adapter.
 
 The TS engine in `src/engine/irSimulator.ts` consumes a canonical
 `SlotGameIR` JSON tree (see `src/ir/types.ts`). Our universal IR
@@ -26,15 +26,20 @@ Coverage:
   ▸ reels: first set + per-stop strip extraction
   ▸ paytable: combo[]→symbol+count flattening (handles wildcard '--'
     placeholders and wild-symbol-prefix patterns)
-  ▸ features: free_spins, pick_bonus, linear_progressive (slot-sim) →
-    TS free_spins / pick / (custom payload as buy_feature stub for
-    linear_progressive since TS lacks a native progressive enum)
+  ▸ features: free_spins, pick_bonus, linear_progressive (W4.7 native
+    `linear_progressive` Feature + root `progressive_link` mirror)
+  ▸ W4.7: provenance (vendor / par_source / par_sha256 / build_hash /
+    built_at_utc) auto-populated from universal IR meta + SHA-256 of
+    canonical JSON input
   ▸ defaults for rng / bet / limits / compliance / rtp_allocation when
     universal IR doesn't carry them (TS expects them all present)
 """
 from __future__ import annotations
 from typing import Any
+import hashlib
+import json
 import re
+from datetime import datetime, timezone
 
 
 _SCHEMA_VERSION = "1.0.0"
@@ -343,14 +348,40 @@ def _features(universal: dict) -> list[dict]:
             ]
             feats.append({"kind": "pick", "prize_pool": pool})
         elif kind == "linear_progressive":
-            # TS engine has no native progressive primitive and `pick`
-            # triggers every spin (no probability gate), so injecting a
-            # 1_000_000x prize would explode RTP. We deliberately OMIT this
-            # feature from the TS IR. Downstream consumers that need
-            # progressive semantics must read the universal IR copy
-            # (preserved by codegen alongside the TS IR) which keeps the
-            # full `linear_progressive` data block intact.
-            continue
+            # W4.7 — IR now has a native `linear_progressive` Feature variant
+            # AND a top-level `progressive_link` field. We emit BOTH so the
+            # engine can pick whichever it prefers:
+            #   • `progressive_link` (root) — read by jackpot subsystem
+            #   • `features[linear_progressive]` — discoverable via feature scan
+            # The TS engine still skips it during per-spin trigger evaluation
+            # (see `irEvaluator.ts`), so RTP is unaffected; jackpot
+            # contribution math is closed-form via the root descriptor.
+            pool_id = str(f.get("pool_id") or f.get("name") or "default_progressive")
+            contrib = float(f.get("contribution_x") or f.get("contribution_per_spin_x") or 0.0)
+            seed = float(f.get("seed_x") or f.get("base_value_x") or 0.0)
+            feat: dict[str, Any] = {
+                "kind": "linear_progressive",
+                "pool_id": pool_id,
+                "contribution_per_spin_x": contrib,
+                "seed_x": seed,
+            }
+            mhb = f.get("must_hit_by_x")
+            if mhb is not None:
+                feat["must_hit_by_x"] = float(mhb)
+            ladder = f.get("tier_ladder") or f.get("tiers")
+            if isinstance(ladder, list) and ladder:
+                feat["tier_ladder"] = [
+                    {
+                        "id": str(t.get("id") or t.get("name") or f"tier_{i}"),
+                        "multiplier": float(t.get("multiplier") or t.get("pays_x") or 0.0),
+                    }
+                    for i, t in enumerate(ladder)
+                    if isinstance(t, dict)
+                ]
+            ext = f.get("external_pool_ref") or f.get("wap_pool")
+            if ext:
+                feat["external_pool_ref"] = str(ext)
+            feats.append(feat)
         elif kind in ("hold_and_win", "wild_expand", "pattern_win"):
             # These slot-sim features have closed-form RTP injection in the
             # Rust engine that's hard to mirror in TS without porting the
@@ -381,21 +412,33 @@ def _defaults_bet(universal: dict) -> dict:
 
 
 def _defaults_limits(universal: dict) -> dict:
+    """W4.7 — pull max_win_x / volatility_class / hit_frequency from PAR meta
+    if `parse_meta` extracted them; otherwise fall back to safe defaults.
+    """
     m = universal.get("meta", {}) or {}
     rtp = m.get("rtp_total")
+    max_win = m.get("max_win_x")
+    volatility = m.get("volatility_class")
     return {
         "target_rtp": float(rtp) if rtp is not None else 0.96,
         "rtp_tolerance": 0.002,
-        "max_win_x": 5000.0,
+        "max_win_x": float(max_win) if max_win is not None else 5000.0,
         "win_cap_apply": "per_spin",
-        "target_volatility": "medium",
-        "hit_freq_target": float(m.get("hit_frequency") or 0.25),
+        "target_volatility": str(volatility) if volatility else "medium",
+        "hit_freq_target": float(m.get("hit_frequency_all_line") or m.get("hit_frequency") or 0.25),
     }
 
 
-def _defaults_compliance() -> dict:
+def _defaults_compliance(universal: dict | None = None) -> dict:
+    """W4.7 — emit PAR-extracted jurisdictions if available (parse_meta now
+    populates `meta.jurisdictions`). Falls back to UKGC+MGA default.
+    """
+    juris: list[str] = []
+    if universal:
+        m = universal.get("meta", {}) or {}
+        juris = list(m.get("jurisdictions") or [])
     return {
-        "jurisdictions": ["UKGC", "MGA"],
+        "jurisdictions": juris if juris else ["UKGC", "MGA"],
         "rtp_range_required": [0.85, 0.98],
         "max_win_cap_required": 250000.0,
         "near_miss_rule": "must_be_random",
@@ -423,9 +466,78 @@ def _defaults_rtp_alloc(universal: dict) -> dict:
     }
 
 
-def convert_to_ts_ir(universal: dict) -> dict:
-    """Top-level converter — universal slot-sim IR → TS SlotGameIR dict."""
-    return {
+def _progressive_link(universal: dict) -> dict | None:
+    """W4.7 — extract root-level `progressive_link` from the first linear
+    progressive feature, if any. Mirrors the per-feature record but lives at
+    IR root so the engine's jackpot subsystem can read it without scanning
+    `features[]`. Returns `None` if no linear progressive declared.
+    """
+    for f in universal.get("features", []) or []:
+        if f.get("kind") != "linear_progressive":
+            continue
+        link: dict[str, Any] = {
+            "contribution_per_spin_x": float(
+                f.get("contribution_x") or f.get("contribution_per_spin_x") or 0.0
+            ),
+            "seed_x": float(f.get("seed_x") or f.get("base_value_x") or 0.0),
+        }
+        pool_id = f.get("pool_id") or f.get("name")
+        if pool_id:
+            link["pool_id"] = str(pool_id)
+        mhb = f.get("must_hit_by_x")
+        if mhb is not None:
+            link["must_hit_by_x"] = float(mhb)
+        ladder = f.get("tier_ladder") or f.get("tiers")
+        if isinstance(ladder, list) and ladder:
+            link["tier_ladder"] = [
+                {
+                    "id": str(t.get("id") or t.get("name") or f"tier_{i}"),
+                    "multiplier": float(t.get("multiplier") or t.get("pays_x") or 0.0),
+                }
+                for i, t in enumerate(ladder)
+                if isinstance(t, dict)
+            ]
+        reset = f.get("reset_rule")
+        if reset:
+            link["reset_rule"] = str(reset)
+        return link
+    return None
+
+
+def _provenance(universal: dict, *, par_source: str | None = None) -> dict | None:
+    """W4.7 — compute SHA-256 of canonical universal IR JSON and emit a
+    provenance record. Returns `None` if there is no vendor metadata to anchor
+    the record (caller can still inject one externally).
+    """
+    meta = universal.get("meta", {}) or {}
+    vendor = meta.get("vendor")
+    if not vendor:
+        return None
+    canonical = json.dumps(universal, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    par_sha = hashlib.sha256(canonical).hexdigest()
+    rec: dict[str, Any] = {
+        "vendor": str(vendor),
+        "par_source": str(par_source or meta.get("par_source") or meta.get("source") or vendor),
+        "par_sha256": par_sha,
+        "built_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    swid = meta.get("swid")
+    if swid:
+        rec["swid"] = str(swid)
+    build_hash = meta.get("build_hash") or meta.get("git_sha")
+    if build_hash:
+        rec["build_hash"] = str(build_hash)
+    return rec
+
+
+def convert_to_ts_ir(universal: dict, *, par_source: str | None = None) -> dict:
+    """Top-level converter — universal slot-sim IR → TS SlotGameIR dict.
+
+    W4.7: emits optional `progressive_link` and `provenance` at root when the
+    universal IR carries the relevant signals. Pass `par_source` to anchor
+    provenance to a concrete file path (otherwise inferred from meta).
+    """
+    out: dict[str, Any] = {
         "schema_version": _SCHEMA_VERSION,
         "meta": _meta(universal),
         "topology": _topology(universal),
@@ -437,6 +549,13 @@ def convert_to_ts_ir(universal: dict) -> dict:
         "rng": _defaults_rng(),
         "bet": _defaults_bet(universal),
         "limits": _defaults_limits(universal),
-        "compliance": _defaults_compliance(),
+        "compliance": _defaults_compliance(universal),
         "rtp_allocation": _defaults_rtp_alloc(universal),
     }
+    link = _progressive_link(universal)
+    if link is not None:
+        out["progressive_link"] = link
+    prov = _provenance(universal, par_source=par_source)
+    if prov is not None:
+        out["provenance"] = prov
+    return out

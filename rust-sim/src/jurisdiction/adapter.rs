@@ -25,6 +25,7 @@ fn feature_kind(f: &Feature) -> &'static str {
         Feature::Gamble { .. } => "gamble",
         Feature::MysterySymbol { .. } => "mystery_symbol",
         Feature::SymbolUpgrade { .. } => "symbol_upgrade",
+        Feature::LinearProgressive { .. } => "linear_progressive",
     }
 }
 

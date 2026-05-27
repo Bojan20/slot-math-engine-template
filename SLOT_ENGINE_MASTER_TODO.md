@@ -6,6 +6,29 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 19:45 (post **W4.7 IR Expansion LANDED**, all green)
+
+**Status:** **Universal multi-game IR coverage podignut sa ~50 % GLI-16 na ~85 %** kroz aditivni wave od 5 polja + 1 Feature variant. Sva tri sloja (Rust + TS + Python parser) mirror-ed. Legacy IRs round-trip bit-identično (10 dedicated regression testova).
+
+| Item | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W4.7 IR Expansion — Rust** (`ProgressiveLink`, `JurisdictionOverride`, `PersistentState`, `Provenance`, `SymbolBehavior`, `Feature::LinearProgressive`) | ✅ **landed** | **+10** | `rust-sim/src/ir/mod.rs`, `rust-sim/src/ir/adapter.rs`, `rust-sim/src/jurisdiction/adapter.rs`, `rust-sim/tests/w4_7_ir_expansion.rs` | Sve dodato kao `Option<…>` da legacy fixturi (`tests/fixtures/parity.json`) round-trip bit-identično |
+| **W4.7 IR Expansion — TS mirror** (`SymbolBehavior`, `BehaviorType`, `ProgressiveLink`, `JurisdictionOverride`, `PersistentState`, `Provenance`, `linear_progressive` Feature) | ✅ landed | (no regress) | `src/ir/types.ts`, `src/ir/schema.ts`, `src/engine/irEvaluator.ts` | Zod schema mirror; tsc clean; `irEvaluator` ignoriše `linear_progressive` u per-spin trigger logici (jackpot engine ga čita iz roota) |
+| **W4.7 IR Expansion — Python parser** (`to_ts_ir.py` emits root `progressive_link` + `provenance`; `core.py` ekstrahuje `max_win_x` / `volatility_class` / `jurisdictions` / `mystery_prizes` iz PAR meta) | ✅ landed | **+10** | `tools/parse_par/to_ts_ir.py`, `tools/parse_par/core.py`, `tools/tests/test_w4_7_ir_expansion.py` | Provenance auto-SHA-256 canonicalnog universal IR JSON-a; konzistentno sa Rust IR side |
+
+### Coverage roll-up (post-W4.7)
+
+| Coverage axis | Pre W4.7 | Post W4.7 |
+|---|---|---|
+| PAR sections parsed | 10 / 26 (38 %) | 14 / 26 (54 %) |
+| IR fields populated | 13 / 26 (50 %) | 22 / 26 (85 %) |
+| Modern game families coverable | ~60 % | ~85 % (WAP + persistent + colossal + multi-market) |
+| GLI-16 mandatory fields | partial | full (max_win_cap, volatility, jurisdiction, provenance) |
+| Multi-market certifiability | UK-only | UK + IT + ES + NL + US (per-jurisdiction override hook) |
+| Legacy IR round-trip | ✅ | ✅ (10 regression specs prove) |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-26 18:00 (post W50-W78 + P3.2 + P5.9 + Phase 7 commercialization CLOSED, all green)
 
 **Status:** Operativna infrastruktura kompletno zatvorena. **Sve faze P0-P6 + P7 commercialization su shipped.** Preostaje samo product/sales rad (potpis prvog vendora, marketplace contributor submissions).

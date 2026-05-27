@@ -79,6 +79,27 @@ export const SymbolKindZ = z.enum([
   'chain_wild',
 ]);
 
+// ─── W4.7 symbol behavior ─────────────────────────────────────────────
+export const BehaviorTypeZ = z.enum([
+  'expanding_full_reel',
+  'walking',
+  'transforming',
+  'collecting',
+  'mystery_reveal',
+  'colossal',
+  'sticky',
+]);
+
+export const SymbolBehaviorZ = z
+  .object({
+    colossal_size: z.tuple([z.number().int().positive(), z.number().int().positive()]).optional(),
+    behavior_type: BehaviorTypeZ.optional(),
+    transform_target: SymbolKey.optional(),
+    collection_priority: z.number().int().optional(),
+    sticky_duration_spins: z.number().int().positive().optional(),
+  })
+  .strict();
+
 export const SymbolZ = z
   .object({
     id: SymbolKey,
@@ -87,6 +108,7 @@ export const SymbolZ = z
     substitutes: z.union([z.array(SymbolKey), z.literal('*')]).optional(),
     weight_hint: z.number().nonnegative().optional(),
     appears_on: z.array(z.number().int().nonnegative()).optional(),
+    behavior: SymbolBehaviorZ.optional(),
   })
   .strict();
 
@@ -293,6 +315,19 @@ export const FeatureZ = z.discriminatedUnion('kind', [
       probability: z.number().min(0).max(1),
     })
     .strict(),
+  z
+    .object({
+      kind: z.literal('linear_progressive'),
+      pool_id: z.string().min(1),
+      contribution_per_spin_x: z.number().nonnegative(),
+      seed_x: z.number().nonnegative(),
+      must_hit_by_x: z.number().nonnegative().optional(),
+      tier_ladder: z
+        .array(z.object({ id: z.string().min(1), multiplier: z.number().nonnegative() }).strict())
+        .optional(),
+      external_pool_ref: z.string().optional(),
+    })
+    .strict(),
 ]);
 
 // ─── rng / bet / limits / compliance / rtp_allocation ──────────────────
@@ -348,6 +383,93 @@ export const RtpAllocationZ = z
   })
   .strict();
 
+// ─── W4.7 progressive link ─────────────────────────────────────────────
+export const ProgressiveLinkZ = z
+  .object({
+    pool_id: z.string().min(1).optional(),
+    contribution_per_spin_x: z.number().nonnegative(),
+    seed_x: z.number().nonnegative(),
+    must_hit_by_x: z.number().nonnegative().optional(),
+    tier_ladder: z
+      .array(z.object({ id: z.string().min(1), multiplier: z.number().nonnegative() }).strict())
+      .optional(),
+    reset_rule: z.string().optional(),
+  })
+  .strict();
+
+// ─── W4.7 jurisdiction overrides ───────────────────────────────────────
+export const JurisdictionOverrideZ = z
+  .object({
+    target_rtp: z.number().min(0.5).max(1.0).optional(),
+    max_win_x: z.number().positive().optional(),
+    min_spin_time_ms: z.number().int().nonnegative().optional(),
+    max_bet_x: z.number().positive().optional(),
+    feature_toggles: z.record(z.string(), z.boolean()).optional(),
+    compensated_mode: z.boolean().optional(),
+    force_ldw_disclosure: z.boolean().optional(),
+    autoplay_forbidden: z.boolean().optional(),
+  })
+  .strict();
+
+// ─── W4.7 persistent state ─────────────────────────────────────────────
+export const PersistentFieldKindZ = z.enum([
+  'counter',
+  'accumulator',
+  'multiplier',
+  'boolean',
+  'symbol',
+]);
+
+export const PersistenceScopeZ = z.enum(['spin', 'session', 'account']);
+
+export const PersistentFieldZ = z
+  .object({
+    name: z.string().min(1),
+    kind: PersistentFieldKindZ,
+    default: z.number().optional(),
+    reset_rule: z.string().min(1),
+    max_value: z.number().optional(),
+  })
+  .strict();
+
+export const StateTransitionZ = z
+  .object({ from: z.string().min(1), to: z.string().min(1), condition: z.string().min(1) })
+  .strict();
+
+export const StateMachineZ = z
+  .object({
+    states: z.array(z.string().min(1)).min(1),
+    initial_state: z.string().min(1),
+    transitions: z.array(StateTransitionZ),
+  })
+  .strict();
+
+export const PersistentStateZ = z
+  .object({
+    fields: z.array(PersistentFieldZ).min(1),
+    state_machine: StateMachineZ.optional(),
+    scope: PersistenceScopeZ,
+  })
+  .strict();
+
+// ─── W4.7 provenance ───────────────────────────────────────────────────
+export const ProvenanceZ = z
+  .object({
+    vendor: z.string().min(1),
+    par_source: z.string().min(1),
+    swid: z.string().optional(),
+    par_sha256: z.string().regex(/^[0-9a-f]{64}$/i, 'par_sha256 must be 64-hex SHA-256'),
+    ir_sha256: z
+      .string()
+      .regex(/^[0-9a-f]{64}$/i, 'ir_sha256 must be 64-hex SHA-256')
+      .optional(),
+    build_hash: z.string().optional(),
+    built_at_utc: z.string().optional(),
+    signed_by: z.string().optional(),
+    signature: z.string().optional(),
+  })
+  .strict();
+
 // ─── root ──────────────────────────────────────────────────────────────
 export const SlotGameIRZ = z
   .object({
@@ -364,6 +486,11 @@ export const SlotGameIRZ = z
     limits: LimitsZ,
     compliance: ComplianceZ,
     rtp_allocation: RtpAllocationZ,
+    // W4.7 expansion — additive optionals
+    progressive_link: ProgressiveLinkZ.optional(),
+    jurisdiction_overrides: z.record(z.string(), JurisdictionOverrideZ).optional(),
+    persistent_state: PersistentStateZ.optional(),
+    provenance: ProvenanceZ.optional(),
   })
   // unknown top-level keys are allowed and surfaced separately (see
   // index.ts::parseGameIR) — operators frequently add ops metadata.

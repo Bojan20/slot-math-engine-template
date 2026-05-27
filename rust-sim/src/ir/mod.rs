@@ -106,6 +106,45 @@ pub struct SymbolDef {
     pub weight_hint: Option<f64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub appears_on: Option<Vec<u32>>,
+    /// W4.7 — Advanced symbol behavior (colossal, expanding rule, transforming,
+    /// collecting). Optional so legacy IRs stay round-trip valid.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub behavior: Option<SymbolBehavior>,
+}
+
+// ─── W4.7 symbol behavior (colossal / expanding / transforming / collecting) ─
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct SymbolBehavior {
+    /// Colossal block dimensions `[rows, cols]` if symbol occupies more than 1×1.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub colossal_size: Option<[u32; 2]>,
+    /// What happens to the symbol on landing: full-reel expand, walk, transform,
+    /// collect, mystery reveal. `None` = static drop.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub behavior_type: Option<BehaviorType>,
+    /// For `Transform`: which symbol it becomes after the trigger event.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub transform_target: Option<SymbolKey>,
+    /// For `Collect`: relative resolution order when multiple collectors land
+    /// in the same spin. Higher = earlier.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub collection_priority: Option<i32>,
+    /// How many spins the symbol persists after landing (sticky). `None` = 1 spin.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sticky_duration_spins: Option<u32>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum BehaviorType {
+    ExpandingFullReel,
+    Walking,
+    Transforming,
+    Collecting,
+    MysteryReveal,
+    Colossal,
+    Sticky,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -338,6 +377,23 @@ pub enum Feature {
         to: SymbolKey,
         probability: f64,
     },
+    /// W4.7 — Linear / WAP progressive. Mirrors slot-sim universal IR variant.
+    /// IR-only descriptor: actual contribution math handled by `crate::jackpot`.
+    LinearProgressive {
+        pool_id: String,
+        contribution_per_spin_x: f64,
+        seed_x: f64,
+        /// Optional must-hit-by spin counter (mystery progressive style).
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        must_hit_by_x: Option<f64>,
+        /// Optional ladder of jackpot tiers (e.g. Mini / Minor / Major / Grand).
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        tier_ladder: Option<Vec<JackpotTier>>,
+        /// External pool link (WAP) — if set, contribution funnels into an
+        /// off-game shared pot. None = standalone (linear) progressive.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        external_pool_ref: Option<String>,
+    },
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -442,6 +498,156 @@ pub struct RtpAllocation {
     pub tolerance: f64,
 }
 
+// ─── W4.7 progressive link (WAP / multi-tier) ─────────────────────────────
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ProgressiveLink {
+    /// External pool identifier (WAP). Shared across multiple SKUs in the same
+    /// jurisdiction. `None` ⇒ standalone linear progressive (per-machine seed).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pool_id: Option<String>,
+    /// Fraction of every wager funneled into the pot (e.g. 0.005 = 0.5 %).
+    pub contribution_per_spin_x: f64,
+    /// Seed (top-up value) the pot resets to after a hit, expressed as bet × X.
+    pub seed_x: f64,
+    /// Optional reset cadence — `Some(spins)` ⇒ "must hit by N spins" mystery
+    /// style. `None` ⇒ unconditional / Markov hit logic.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub must_hit_by_x: Option<f64>,
+    /// Tier ladder for multi-level progressives (e.g. Mini / Minor / Major /
+    /// Grand). Empty / `None` ⇒ single-tier linear.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tier_ladder: Option<Vec<JackpotTier>>,
+    /// Reset rule for the pot post-hit: "seed_only" (default) | "rollover" |
+    /// "cap_reset". Free-form string so jurisdiction-specific words are
+    /// preserved verbatim from the PAR sheet.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reset_rule: Option<String>,
+}
+
+// ─── W4.7 jurisdiction overrides (multi-market) ──────────────────────────
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct JurisdictionOverride {
+    /// RTP target for THIS jurisdiction (overrides global `limits.target_rtp`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub target_rtp: Option<f64>,
+    /// Max win cap override (e.g. UK £250k, Italy €30k).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub max_win_x: Option<f64>,
+    /// Minimum spin time enforced (e.g. UKGC 2.5 s).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub min_spin_time_ms: Option<u32>,
+    /// Maximum bet cap (e.g. UK B3 £2 since 2019).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub max_bet_x: Option<f64>,
+    /// Feature toggles — `Some(false)` disables the feature in this market
+    /// (e.g. "buy_feature" forbidden in UK as of 2025).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub feature_toggles: Option<BTreeMap<String, bool>>,
+    /// Switch into compensated (Class II / VLT) mode where outcomes are drawn
+    /// from a central pool rather than RNG. `None` ⇒ Class III true RNG.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub compensated_mode: Option<bool>,
+    /// Mandatory loss-disclosure / session-time overlay required.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub force_ldw_disclosure: Option<bool>,
+    /// Mandatory autoplay disable (e.g. UKGC since Oct 2018).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub autoplay_forbidden: Option<bool>,
+}
+
+// ─── W4.7 persistent state (cross-spin / cross-session) ──────────────────
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PersistentState {
+    /// Named state fields the engine must serialize between spins.
+    pub fields: Vec<PersistentField>,
+    /// Optional finite state machine modelling supermeter / mode transitions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub state_machine: Option<StateMachine>,
+    /// Survival scope — does state cross sessions, or reset on session end?
+    pub scope: PersistenceScope,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PersistentField {
+    pub name: String,
+    pub kind: PersistentFieldKind,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub default: Option<f64>,
+    /// Reset rule: "never" | "on_session_end" | "on_feature_trigger" | string.
+    pub reset_rule: String,
+    /// Optional max cap on accumulator-style fields.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub max_value: Option<f64>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum PersistentFieldKind {
+    Counter,
+    Accumulator,
+    Multiplier,
+    Boolean,
+    Symbol,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum PersistenceScope {
+    Spin,
+    Session,
+    Account,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct StateMachine {
+    pub states: Vec<String>,
+    pub initial_state: String,
+    /// `[from, to, condition_expr]` triples — condition is free-form DSL parsed
+    /// by `crate::evaluator`.
+    pub transitions: Vec<StateTransition>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct StateTransition {
+    pub from: String,
+    pub to: String,
+    pub condition: String,
+}
+
+// ─── W4.7 provenance (cert / audit chain) ─────────────────────────────────
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Provenance {
+    /// Vendor of the source PAR sheet (e.g. "vendor_b", "vendor_a", "igt").
+    pub vendor: String,
+    /// Path / identifier of the original PAR file.
+    pub par_source: String,
+    /// SWID (Game ID) of the publishing math sheet.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub swid: Option<String>,
+    /// SHA-256 of the canonical PAR JSON dump (Merkle-root style).
+    pub par_sha256: String,
+    /// SHA-256 of the rendered `SlotGameIR` JSON (this very IR after
+    /// canonicalization). Reproducible build proof.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ir_sha256: Option<String>,
+    /// Build hash of the slot-build tool that produced this IR.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub build_hash: Option<String>,
+    /// ISO-8601 UTC timestamp of build.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub built_at_utc: Option<String>,
+    /// Optional ed25519 signature over `par_sha256||ir_sha256`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub signed_by: Option<String>,
+    /// Optional signature hex.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub signature: Option<String>,
+}
+
 // ─── root ───────────────────────────────────────────────────────────────
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -459,6 +665,21 @@ pub struct SlotGameIR {
     pub limits: Limits,
     pub compliance: Compliance,
     pub rtp_allocation: RtpAllocation,
+    // ─── W4.7 expansion — all optional, additive only ─────────────────────
+    /// Linear / WAP progressive descriptor. Closes 30 % of modern games.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub progressive_link: Option<ProgressiveLink>,
+    /// Per-jurisdiction overrides (UK, Italy, Spain, NL, US, ...). Closes
+    /// 100 % of multi-market certification.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub jurisdiction_overrides: Option<BTreeMap<String, JurisdictionOverride>>,
+    /// Cross-spin / cross-session persistent state (supermeter, bonus bank,
+    /// frame upgrade). Closes 20–25 % of modern games.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub persistent_state: Option<PersistentState>,
+    /// Reproducible-build provenance / cert audit trail.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub provenance: Option<Provenance>,
 }
 
 impl SlotGameIR {

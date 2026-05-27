@@ -7,6 +7,7 @@ weights) flows through unchanged so the IR is bit-identical to the
 hand-written game scripts.
 """
 from __future__ import annotations
+import re
 from pathlib import Path
 from typing import Any
 
@@ -69,6 +70,40 @@ def parse_meta(rows: list[list[str]], profile: VendorProfile) -> dict:
             if ml_c is not None:
                 max_liabs.append(n(rows, r, ml_c))
 
+    # W4.7 — GLI-16 compliance extras. All optional; only emitted when the
+    # vendor profile declares the coordinates so legacy profiles are
+    # unaffected. Single source of truth for max_win_cap, volatility class,
+    # target jurisdiction and mystery prizes.
+    max_win_x = fetch_num("max_win_x")
+    volatility = (fetch_str("volatility") or "").strip().lower() or None
+    if volatility in {"low", "medium", "high", "ultra"}:
+        volatility_class = volatility
+    else:
+        volatility_class = None
+    jurisdiction = fetch_str("jurisdiction") or ""
+    if jurisdiction:
+        # Normalize to comma-separated upper-case codes (UKGC, MGA, ...)
+        jurisdictions: list[str] = [
+            j.strip().upper() for j in re.split(r"[,;/|]", jurisdiction) if j.strip()
+        ]
+    else:
+        jurisdictions = []
+    # Mystery prizes: optional row range that lists `(label, weight, pays_x)`
+    mystery_prizes: list[dict[str, Any]] = []
+    mp_cfg = profile.data.get("mystery_prizes")
+    if mp_cfg:
+        r0m, r1m = mp_cfg["row_range"]
+        lbl_c = mp_cfg.get("label_col")
+        w_c = mp_cfg.get("weight_col")
+        pays_c = mp_cfg.get("pays_col")
+        for r in range(r0m, r1m):
+            lbl = s(rows, r, lbl_c).strip() if lbl_c is not None else ""
+            w = n(rows, r, w_c) if w_c is not None else None
+            pays = n(rows, r, pays_c) if pays_c is not None else None
+            if (not lbl) or w is None:
+                continue
+            mystery_prizes.append({"label": lbl, "weight": w, "pays_x": pays})
+
     dims = profile.dimensions
     out = {
         "name": profile.data.get("game_name") or profile.display_name,
@@ -87,6 +122,14 @@ def parse_meta(rows: list[list[str]], profile: VendorProfile) -> dict:
         "total_bets": total_bets,
         "max_liabilities": max_liabs,
     }
+    if max_win_x is not None:
+        out["max_win_x"] = max_win_x
+    if volatility_class is not None:
+        out["volatility_class"] = volatility_class
+    if jurisdictions:
+        out["jurisdictions"] = jurisdictions
+    if mystery_prizes:
+        out["mystery_prizes"] = mystery_prizes
     if "based_on" in profile.data:
         out["based_on"] = profile.data["based_on"]
     return out

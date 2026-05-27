@@ -337,6 +337,12 @@ function isFeatureTriggered(
     return false;
   }
 
+  // W4.7 — linear_progressive has no per-spin trigger; runtime is handled by
+  // the jackpot subsystem reading SlotGameIR.progressive_link directly.
+  if (feat.kind === 'linear_progressive') {
+    return false;
+  }
+
   const trig = feat.trigger;
   let value = 0;
   switch (trig.by) {

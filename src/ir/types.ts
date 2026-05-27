@@ -71,6 +71,30 @@ export interface Symbol {
   weight_hint?: number;
   /** Optional reel-eligibility list for positional symbol constraints. */
   appears_on?: ReelIndex[];
+  /** W4.7 — advanced behavior (colossal, expanding rule, transforming, collecting). */
+  behavior?: SymbolBehavior;
+}
+
+// ─── W4.7 symbol behavior ──────────────────────────────────────────────
+export type BehaviorType =
+  | 'expanding_full_reel'
+  | 'walking'
+  | 'transforming'
+  | 'collecting'
+  | 'mystery_reveal'
+  | 'colossal'
+  | 'sticky';
+
+export interface SymbolBehavior {
+  /** `[rows, cols]` for colossal blocks > 1×1. */
+  colossal_size?: [number, number];
+  behavior_type?: BehaviorType;
+  /** For `transforming`: which symbol it becomes. */
+  transform_target?: SymbolKey;
+  /** For `collecting`: higher = resolved earlier when multiple land. */
+  collection_priority?: number;
+  /** `undefined` = 1 spin. Otherwise number of spins it persists. */
+  sticky_duration_spins?: number;
 }
 
 // ─── reels ─────────────────────────────────────────────────────────────
@@ -175,7 +199,18 @@ export type Feature =
   | { kind: 'ante_bet'; extra_multiplier: number; enabled_by_default: boolean }
   | { kind: 'gamble'; type: 'red_black' | 'suit'; max_steps: number; tie_resolution: 'house' | 'push' }
   | { kind: 'mystery_symbol'; symbol_id: SymbolKey; reveal_distribution: Record<SymbolKey, number> }
-  | { kind: 'symbol_upgrade'; from: SymbolKey; to: SymbolKey; probability: number };
+  | { kind: 'symbol_upgrade'; from: SymbolKey; to: SymbolKey; probability: number }
+  | {
+      /** W4.7 — Linear / WAP progressive. Math handled at engine level; this
+       * Feature variant is the IR-only declaration so codegen / validators see it. */
+      kind: 'linear_progressive';
+      pool_id: string;
+      contribution_per_spin_x: number;
+      seed_x: number;
+      must_hit_by_x?: number;
+      tier_ladder?: Array<{ id: string; multiplier: number }>;
+      external_pool_ref?: string;
+    };
 
 // ─── rng ───────────────────────────────────────────────────────────────
 export interface Rng {
@@ -222,6 +257,72 @@ export interface RtpAllocation {
   tolerance: number;
 }
 
+// ─── W4.7 progressive link (WAP / multi-tier) ──────────────────────────
+export interface ProgressiveLink {
+  /** External WAP pool. `undefined` ⇒ standalone linear progressive. */
+  pool_id?: string;
+  contribution_per_spin_x: number;
+  seed_x: number;
+  must_hit_by_x?: number;
+  tier_ladder?: Array<{ id: string; multiplier: number }>;
+  reset_rule?: string;
+}
+
+// ─── W4.7 jurisdiction overrides ───────────────────────────────────────
+export interface JurisdictionOverride {
+  target_rtp?: number;
+  max_win_x?: number;
+  min_spin_time_ms?: number;
+  max_bet_x?: number;
+  feature_toggles?: Record<string, boolean>;
+  compensated_mode?: boolean;
+  force_ldw_disclosure?: boolean;
+  autoplay_forbidden?: boolean;
+}
+
+// ─── W4.7 persistent state ─────────────────────────────────────────────
+export type PersistentFieldKind = 'counter' | 'accumulator' | 'multiplier' | 'boolean' | 'symbol';
+export type PersistenceScope = 'spin' | 'session' | 'account';
+
+export interface PersistentField {
+  name: string;
+  kind: PersistentFieldKind;
+  default?: number;
+  reset_rule: string;
+  max_value?: number;
+}
+
+export interface StateTransition {
+  from: string;
+  to: string;
+  condition: string;
+}
+
+export interface StateMachine {
+  states: string[];
+  initial_state: string;
+  transitions: StateTransition[];
+}
+
+export interface PersistentState {
+  fields: PersistentField[];
+  state_machine?: StateMachine;
+  scope: PersistenceScope;
+}
+
+// ─── W4.7 provenance ───────────────────────────────────────────────────
+export interface Provenance {
+  vendor: string;
+  par_source: string;
+  swid?: string;
+  par_sha256: string;
+  ir_sha256?: string;
+  build_hash?: string;
+  built_at_utc?: string;
+  signed_by?: string;
+  signature?: string;
+}
+
 // ─── root ──────────────────────────────────────────────────────────────
 export interface SlotGameIR {
   schema_version: SchemaVersion;
@@ -237,4 +338,13 @@ export interface SlotGameIR {
   limits: Limits;
   compliance: Compliance;
   rtp_allocation: RtpAllocation;
+  // ─── W4.7 expansion — all optional, additive only ─────────────────────
+  /** WAP / linear progressive descriptor. */
+  progressive_link?: ProgressiveLink;
+  /** Per-jurisdiction overrides (UKGC, MGA, ADM, DGOJ, KSA, ...). */
+  jurisdiction_overrides?: Record<string, JurisdictionOverride>;
+  /** Cross-spin / cross-session persistent state. */
+  persistent_state?: PersistentState;
+  /** Reproducible-build provenance / cert audit trail. */
+  provenance?: Provenance;
 }

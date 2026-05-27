@@ -115,6 +115,7 @@ fn ir_hnw_simulator_runs_and_terminates() {
         substitutes: None,
         weight_hint: None,
         appears_on: None,
+        behavior: None,
     });
 
     // Add bonus to each reel's weight map.
