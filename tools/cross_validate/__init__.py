@@ -42,10 +42,20 @@ from tools.cross_validate.harness import (
     run_cross_validate,
     list_available_engines,
 )
+from tools.cross_validate.fuzz import (
+    FuzzReport,
+    FuzzIteration,
+    run_fuzz_cross_validate,
+    fuzz_report_to_dict,
+)
 
 __all__ = [
     "ValidationResult",
     "EngineResult",
     "run_cross_validate",
     "list_available_engines",
+    "FuzzReport",
+    "FuzzIteration",
+    "run_fuzz_cross_validate",
+    "fuzz_report_to_dict",
 ]

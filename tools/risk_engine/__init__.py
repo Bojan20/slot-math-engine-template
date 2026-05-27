@@ -42,6 +42,11 @@ from tools.risk_engine.assessor import (
     RiskPolicy,
     SessionMetrics,
 )
+from tools.risk_engine.strategy_detector import (
+    StrategyFingerprint,
+    detect_strategy,
+    fingerprint_to_dict,
+)
 
 __all__ = [
     "RiskAssessor",
@@ -50,4 +55,7 @@ __all__ = [
     "InterventionLevel",
     "RiskPolicy",
     "SessionMetrics",
+    "StrategyFingerprint",
+    "detect_strategy",
+    "fingerprint_to_dict",
 ]
