@@ -187,3 +187,102 @@ describe('IR — JSON roundtrip stability', () => {
     }
   });
 });
+
+// ─── PHASE 50 — Ultimate Build-Section QA closeout ──────────────────────
+// Three holes that survived through W213:
+//   (1) duplicate symbol ids silently collapsed in crossValidate's Set,
+//       so the evaluator picked the first occurrence and downstream RTP
+//       drifted with no surfaced error.
+//   (2) Zod `z.number()` accepts NaN/Infinity by default; `.min()/.max()`
+//       chained comparisons return false for NaN, so every numeric
+//       constraint silently passes a NaN value.
+//   (3) The roundtrip parity test caught neither because the canonical
+//       fixture has unique ids and finite numbers.
+// Regression coverage below pins all three.
+
+describe('IR — duplicate symbol id detection (PHASE 50)', () => {
+  it('rejects an IR with two symbols sharing an id', () => {
+    const ir = (parseGameIR(loadFixture()) as { ir: SlotGameIR }).ir;
+    // Clone the first symbol but keep the existing id — duplicate by design.
+    const dup = { ...ir.symbols[0], name: ir.symbols[0].name + ' (dup)' };
+    ir.symbols.push(dup);
+    const result = parseGameIR(ir);
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      const dupErrors = result.issues.filter((i) => /duplicate symbol id/.test(i.message));
+      expect(dupErrors.length).toBeGreaterThanOrEqual(1);
+      // Path points to the SECOND occurrence (the dup we appended).
+      expect(dupErrors[0].path).toMatch(/\/symbols\/\d+\/id/);
+    }
+  });
+
+  it('crossValidate surfaces the duplicate id message verbatim', () => {
+    const ir = (parseGameIR(loadFixture()) as { ir: SlotGameIR }).ir;
+    ir.symbols.push({ ...ir.symbols[0] });
+    const { errors } = crossValidate(ir);
+    expect(errors.some((e) => /duplicate symbol id/.test(e.message))).toBe(true);
+  });
+
+  it('accepts the unmodified canonical fixture (no duplicate-id false positives)', () => {
+    const result = parseGameIR(loadFixture());
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.warnings.filter((w) => /duplicate/.test(w.message))).toHaveLength(0);
+    }
+  });
+});
+
+describe('IR — non-finite number rejection (PHASE 50)', () => {
+  // Zod 4 (`z.number()`) already rejects NaN/Infinity at the type level
+  // by emitting "Invalid input: expected number, received NaN/Infinity".
+  // These tests pin that contract so an accidental downgrade to Zod 3 —
+  // where `z.number()` accepted NaN and `.min()/.max()` comparisons
+  // returned false for NaN, silently corrupting RTP math — fails loudly.
+
+  // Zod 4's wording for non-finite varies by context (direct number =
+  // "received NaN/Infinity"; record value = "received number"), so we
+  // pin only the ok=false signal + the path of the offending field
+  // rather than the exact message string.
+
+  it('rejects NaN in a paytable payout multiplier', () => {
+    const raw = loadFixture() as { paytable: Record<string, Record<string, number>>; symbols: { id: string }[] };
+    const firstSym = raw.symbols[0].id;
+    raw.paytable[firstSym] = { ...raw.paytable[firstSym], '3': Number.NaN };
+    const result = parseGameIR(raw);
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.issues.some((i) => i.path.startsWith(`/paytable/${firstSym}`))).toBe(true);
+    }
+  });
+
+  it('rejects +Infinity in a reel weight', () => {
+    const raw = loadFixture() as { reels: { mode: string; base: Array<Record<string, number>> } };
+    if (raw.reels.mode !== 'weighted') return; // fixture should be weighted
+    const firstKey = Object.keys(raw.reels.base[0])[0];
+    raw.reels.base[0][firstKey] = Number.POSITIVE_INFINITY;
+    const result = parseGameIR(raw);
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.issues.some((i) => i.path.startsWith('/reels/base/0/'))).toBe(true);
+    }
+  });
+
+  it('rejects -Infinity in rtp_allocation.base_game', () => {
+    const raw = loadFixture() as { rtp_allocation: Record<string, number> };
+    raw.rtp_allocation = { ...raw.rtp_allocation, base_game: Number.NEGATIVE_INFINITY };
+    const result = parseGameIR(raw);
+    expect(result.ok).toBe(false);
+  });
+
+  it('rejects NaN in limits.target_rtp', () => {
+    const raw = loadFixture() as { limits: Record<string, unknown> };
+    raw.limits = { ...raw.limits, target_rtp: Number.NaN };
+    const result = parseGameIR(raw);
+    expect(result.ok).toBe(false);
+  });
+
+  it('accepts the canonical fixture (no false-positive finite checks)', () => {
+    const result = parseGameIR(loadFixture());
+    expect(result.ok).toBe(true);
+  });
+});

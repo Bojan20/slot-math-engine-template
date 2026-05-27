@@ -471,6 +471,11 @@ export const ProvenanceZ = z
   .strict();
 
 // ─── root ──────────────────────────────────────────────────────────────
+// PHASE 50 note: Zod 4 (`z.number()`) already rejects NaN/Infinity at
+// the type level — verified in `tests/ir.test.ts` "non-finite number
+// rejection" describe block. No extra root refinement needed; the
+// regression tests pin the contract so an accidental Zod downgrade
+// (back to 3.x where `z.number()` accepted NaN) fails the suite.
 export const SlotGameIRZ = z
   .object({
     schema_version: SchemaVersion,

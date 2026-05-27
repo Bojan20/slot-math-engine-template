@@ -35,6 +35,25 @@ pub fn cross_validate(ir: &SlotGameIR) -> ValidationReport {
     use std::collections::HashSet;
     let sym_ids: HashSet<&str> = ir.symbols.iter().map(|s| s.id.as_str()).collect();
 
+    // ── Symbol uniqueness ──────────────────────────────────────────────
+    // Mirrors `src/ir/index.ts::crossValidate` — duplicate ids silently
+    // collapse in the symbol map and cause shadowed-symbol RTP drift.
+    if sym_ids.len() != ir.symbols.len() {
+        let mut seen = HashSet::<&str>::new();
+        for (i, sym) in ir.symbols.iter().enumerate() {
+            if seen.contains(sym.id.as_str()) {
+                errors.push(issue(
+                    &format!("/symbols/{i}/id"),
+                    &format!(
+                        "duplicate symbol id '{}' — symbol ids must be unique",
+                        sym.id
+                    ),
+                ));
+            }
+            seen.insert(sym.id.as_str());
+        }
+    }
+
     // ── Symbol referential integrity ────────────────────────────────────
     for sym in ir.paytable.keys() {
         if !sym_ids.contains(sym.as_str()) {

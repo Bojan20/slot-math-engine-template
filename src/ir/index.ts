@@ -101,6 +101,25 @@ export function crossValidate(ir: SlotGameIR): {
   const warnings: IRValidationIssue[] = [];
   const symIds = new Set<SymbolKey>(ir.symbols.map((s) => s.id));
 
+  // ── Symbol uniqueness ──────────────────────────────────────────────
+  // Duplicate symbol IDs silently collapse to a single Set entry,
+  // making downstream paytable / reel references ambiguous and causing
+  // very-hard-to-diagnose RTP drift (the evaluator picks the *first*
+  // occurrence). Surface duplicates here so the cert / simulator never
+  // see an IR with shadowed symbols.
+  if (symIds.size !== ir.symbols.length) {
+    const seen = new Set<SymbolKey>();
+    for (const [i, sym] of ir.symbols.entries()) {
+      if (seen.has(sym.id)) {
+        errors.push({
+          path: `/symbols/${i}/id`,
+          message: `duplicate symbol id '${sym.id}' — symbol ids must be unique`,
+        });
+      }
+      seen.add(sym.id);
+    }
+  }
+
   // ── Symbol referential integrity ────────────────────────────────────
   // paytable keys
   for (const sym of Object.keys(ir.paytable)) {

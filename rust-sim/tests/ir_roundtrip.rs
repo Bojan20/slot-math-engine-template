@@ -113,6 +113,30 @@ fn rtp_outside_compliance_band_is_warning() {
         .any(|w| w.path.contains("target_rtp")));
 }
 
+// ── PHASE 50 — duplicate symbol id detection (TS↔Rust parity) ──────────
+#[test]
+fn duplicate_symbol_id_is_error() {
+    let mut ir = load();
+    let dup = ir.symbols[0].clone();
+    ir.symbols.push(dup);
+    let report = cross_validate(&ir);
+    let dup_errors: Vec<_> = report
+        .errors
+        .iter()
+        .filter(|e| e.message.contains("duplicate symbol id"))
+        .collect();
+    assert!(
+        !dup_errors.is_empty(),
+        "expected at least one duplicate-id error, got: {:#?}",
+        report.errors
+    );
+    assert!(
+        dup_errors[0].path.starts_with("/symbols/"),
+        "expected /symbols/N/id path, got: {}",
+        dup_errors[0].path
+    );
+}
+
 #[test]
 fn hold_and_win_without_bonus_symbol_is_error() {
     let mut ir = load();

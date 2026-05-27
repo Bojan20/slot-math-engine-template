@@ -649,13 +649,18 @@
   /* ============================================================
      REELS + PAYTABLE render
      ============================================================ */
+  // PHASE 50 — respect variant.topologyChoice if set (driven by #topology
+  // selector). Falls back to the historical 5-reels × 6-positions default
+  // for blank variants and back-compat with pre-PHASE-50 state.
   function autoBuildReelsFor(variant) {
     if (!variant.symbols.length) buildSymbolPoolFor(variant);
     const ids = variant.symbols.map(s => s.id);
+    const reelCount = (variant.topologyChoice && variant.topologyChoice.reels) || 5;
+    const posCount  = (variant.topologyChoice && variant.topologyChoice.positions) || 6;
     const reels = [];
-    for (let r = 0; r < 5; r++) {
+    for (let r = 0; r < reelCount; r++) {
       const col = [];
-      for (let p = 0; p < 6; p++) col.push(ids[(r * 3 + p * 2) % ids.length]);
+      for (let p = 0; p < posCount; p++) col.push(ids[(r * 3 + p * 2) % ids.length]);
       reels.push(col);
     }
     variant.reels = reels;
@@ -742,6 +747,69 @@
     if (open) { cust.removeAttribute("hidden"); $("#preset-custom-toggle").setAttribute("aria-expanded", "true"); }
     else      { cust.setAttribute("hidden", "");  $("#preset-custom-toggle").setAttribute("aria-expanded", "false"); }
   });
+
+  // PHASE 50 — topology selector: pre-PHASE-50 the <select id="topology">
+  // had ZERO event listeners — selecting "6×4 · 4 096 ways" or "7×7 cluster"
+  // did absolutely nothing (reels stayed 5×6 forever). We now parse the
+  // option label into { reels, positions, kind, label }, store it on the
+  // active variant, rebuild the reels grid + paytable, refresh metadata,
+  // recompute closed-form RTP, and log the action.
+  //
+  // Topology kinds map to the engine IR:
+  //   "5×3 · 20 lines"     → { reels:5, positions:3, kind:"lines" }
+  //   "6×4 · 4 096 ways"   → { reels:6, positions:4, kind:"ways"  }
+  //   "7×7 cluster"        → { reels:7, positions:7, kind:"cluster" }
+  // (positions = rows on a rectangular grid; reels still drives column count
+  // and `autoBuildReelsFor` reads both from `variant.topologyChoice`.)
+  function parseTopologyLabel(label) {
+    const lab = (label || "").trim();
+    if (/cluster/i.test(lab)) {
+      const m = lab.match(/(\d+)\s*[×x]\s*(\d+)/i);
+      const sz = m ? parseInt(m[1], 10) : 7;
+      return { reels: sz, positions: sz, kind: "cluster", label: lab };
+    }
+    if (/ways/i.test(lab)) {
+      const m = lab.match(/(\d+)\s*[×x]\s*(\d+)/i);
+      const r = m ? parseInt(m[1], 10) : 6;
+      const p = m ? parseInt(m[2], 10) : 4;
+      return { reels: r, positions: p, kind: "ways", label: lab };
+    }
+    // default: lines (incl. "5×3 · 20 lines")
+    const m = lab.match(/(\d+)\s*[×x]\s*(\d+)/i);
+    const r = m ? parseInt(m[1], 10) : 5;
+    const p = m ? parseInt(m[2], 10) : 3;
+    return { reels: r, positions: p, kind: "lines", label: lab };
+  }
+
+  const topologySel = document.querySelector("#topology");
+  if (topologySel) {
+    topologySel.addEventListener("change", () => {
+      const variant = getActiveVariant();
+      if (!variant) return;
+      const choice = parseTopologyLabel(topologySel.value || topologySel.options[topologySel.selectedIndex]?.textContent);
+      variant.topologyChoice = choice;
+      // PHASE 49 parity — slider/structure edits invalidate cached MC
+      // truth; topology change is a structural edit, so mark stale.
+      if (variant.validatedMetrics) {
+        variant._metricsStale = true;
+        variant._metricsStaleSince = variant._metricsStaleSince || Date.now();
+      }
+      // Rebuild reels grid against the new dimensions and re-render.
+      autoBuildReelsFor(variant);
+      rerenderActive();
+      recomputeFor(variant);
+      refreshL1();
+      refreshRail();
+      refreshVariantTabs();
+      // Update the small meta-line under the card heading.
+      const metaEl = document.querySelector("#reels-topology-meta");
+      if (metaEl) metaEl.textContent = choice.label;
+      const lastActionEl = document.querySelector("#reels-last-action");
+      if (lastActionEl) lastActionEl.textContent = `topology → ${choice.label}`;
+      toast({ kind: "ok", msg: `Topology → <b>${choice.label}</b> · ${choice.reels}×${choice.positions} grid rebuilt` });
+      logActivityFor(variant, `topology → ${choice.kind} ${choice.reels}×${choice.positions}`);
+    });
+  }
 
   // PHASE 48 — show-grid: toggle the reel-grid overlay on the build
   // canvas. Pre-PHASE-48 the button had no handler at all — clicking it
@@ -1377,11 +1445,40 @@
     }
     const changed = [];
     const adj = drift > 0 ? -0.15 : +0.15;
-    variant.symbols.filter(s => s.tier === "HP").slice(0, 3).forEach(s => {
-      const before = s.weight;
-      s.weight = Math.max(0.5, Math.min(12, +(s.weight + adj).toFixed(2)));
-      changed.push(`${s.id}: ${before.toFixed(2)} → ${s.weight.toFixed(2)}`);
-    });
+    // PHASE 50 — pre-PHASE-50 only the first 3 HP symbols were nudged,
+    // which means: (a) if HP already saturated against the [0.5,12] clamp
+    // the rebalance silently no-ops, and (b) variants with zero HP (rare
+    // but possible — compact pool can be all-LP) get no rebalance at all.
+    // We now cascade through HP → MP → LP, only spilling into the next
+    // tier when the previous tier saturated for THIS adjustment step.
+    const tierOrder = ["HP", "MP", "LP"];
+    let remainingSteps = 3;
+    for (const tier of tierOrder) {
+      if (remainingSteps <= 0) break;
+      const candidates = variant.symbols
+        .filter(s => s.tier === tier)
+        // Only pick symbols that can actually move in the desired direction.
+        .filter(s => (adj > 0 ? s.weight < 12 : s.weight > 0.5));
+      if (candidates.length === 0) continue;
+      for (const s of candidates.slice(0, remainingSteps)) {
+        const before = s.weight;
+        const next = Math.max(0.5, Math.min(12, +(s.weight + adj).toFixed(2)));
+        if (next === before) continue; // hit clamp — skip
+        s.weight = next;
+        changed.push(`${s.id}: ${before.toFixed(2)} → ${s.weight.toFixed(2)}`);
+        remainingSteps--;
+        if (remainingSteps <= 0) break;
+      }
+    }
+    if (changed.length === 0) {
+      if (!silent) toast({
+        kind: "warn",
+        msg: `Auto-balance no-op · all HP/MP/LP weights saturated at clamp [0.5, 12]`,
+      });
+      logActivityFor(variant, `auto-balance no-op (clamped)`);
+      refreshL1(); refreshRail(); refreshVariantTabs();
+      return;
+    }
     recomputeFor(variant);
     rerenderActive();
     refreshL1(); refreshRail(); refreshVariantTabs();
@@ -3682,6 +3779,12 @@
      embeds the IR as JSON, opens the blob URL in a new tab.  The new
      tab runs the runner independently (no Studio shell required).
      ============================================================ */
+  // PHASE 50 — track the most recent Play-Template blob URL so we can
+  // revoke it before minting a new one. Previously each click leaked a
+  // ~1-2 MB blob (template + runtime + features) for the lifetime of the
+  // page; Boki spinning the button 20× = 40 MB resident garbage.
+  let lastPlayTemplateBlobUrl = null;
+
   const playTemplateBtn = document.querySelector("#btn-play-template");
   if (playTemplateBtn) {
     playTemplateBtn.addEventListener("click", async () => {
@@ -3756,7 +3859,16 @@
           }
         }
 
+        // Revoke the previous Play-Template blob (if any) before allocating
+        // the next one. The popup the user opened still holds its own
+        // navigation reference, so revoking the parent URL is safe — the
+        // child tab keeps running on its already-resolved Blob.
+        if (lastPlayTemplateBlobUrl) {
+          try { URL.revokeObjectURL(lastPlayTemplateBlobUrl); } catch (_) { /* noop */ }
+          lastPlayTemplateBlobUrl = null;
+        }
         const blobUrl = await buildPlayTemplateBlob(ir);
+        lastPlayTemplateBlobUrl = blobUrl;
         const win = window.open(blobUrl, "_blank", "noopener,noreferrer");
         if (!win) {
           toast({

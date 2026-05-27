@@ -6,6 +6,45 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-28 00:50 (post **PHASE 50 LANDED** — ultimate Build-section QA closeout)
+
+**Status:** **Pet konkretnih bugova zatvoreno u jednom prolazu** — ultimate QA Build sekcije Studio-a (svaki parametar, svako dugme, do najdublje linije koda). Dva 🔴 P0 + dva 🟠 P1 + jedan 🟡 P2.
+
+| # | Bug | Severity | File:Line (before) | Fix |
+|---|---|---|---|---|
+| 1 | `#topology` `<select>` nema event listener — biranje "6×4 ways" / "7×7 cluster" je bilo no-op | 🔴 P0 | `web/studio/index.html:423` + nigde u `web/studio/app.js` | `parseTopologyLabel()` + change handler koji updates `variant.topologyChoice`, rebuild reels (`autoBuildReelsFor`), refresh meta, recompute, toast + log |
+| 2 | Duplicate symbol IDs u `crossValidate()` ćutke kolapsiraju u Set — evaluator pick-uje first, shadowed-symbol RTP drift | 🔴 P0 | `src/ir/index.ts:102` + `rust-sim/src/ir/validate.rs:36` | Set-size check pre referential integrity loop; emituje `/symbols/N/id` JSON-Pointer (TS + Rust parity) |
+| 3 | NaN/Infinity u Zod schema — agent je tvrdio da `z.number()` prima ih, ali Zod 4.2.1 ih VEĆ odbija | 🟠 P1 (false alarm) | `src/ir/schema.ts` numeric polja | Dodatni walker uklonjen (dead code); regression testovi pin-uju Zod 4 ponašanje da downgrade na Zod 3 fail-uje suite |
+| 4 | Play Template blob URL leak — svaki klik ~1-2 MB resident garbage do reload-a | 🟠 P1 | `web/studio/app.js:3759` (`URL.createObjectURL` bez revoke) | `lastPlayTemplateBlobUrl` tracker, revoke pre svake nove alokacije |
+| 5 | Auto-balance pin-uje samo prva 3 HP simbola — kad HP saturira [0.5, 12] clamp, drift se ne smiruje, MP/LP nikad ne dobijaju nudge | 🟡 P2 | `web/studio/app.js:1380` (HP-only filter + slice(0,3)) | Cascade HP → MP → LP, samo spillover ako prethodni tier saturirao za TAJ smer adjustment-a; explicit "no-op" toast kad su sve tri tier-e clamp-ovane |
+
+### Test tally
+
+| Suite | Pass | Notes |
+|---|---|---|
+| `tests/ir.test.ts` (PHASE 50 dodaci) | **23 / 23** ✅ | +9 novih testova: duplicate-id (3) + non-finite (5) + back-compat (1) |
+| `web/studio/tests/phase50-build-section-fixes.test.ts` (NEW) | **16 / 16** ✅ | Mirror-helpers za `parseTopologyLabel` (5) + `autoBuildReelsFor` (4) + blob URL revoke (2) + auto-balance cascade (5) |
+| `rust-sim/tests/ir_roundtrip.rs` | **10 / 10** ✅ | +1 novi: `duplicate_symbol_id_is_error` (TS↔Rust parity gate) |
+| Full main vitest | **7582 PASS** · 3 skipped (295 files) ✅ | Bez regresija |
+| Full Rust `cargo test` | **307 / 307** ✅ | Bez regresija |
+| `tsc --noEmit` | ✅ clean | — |
+
+### Što je QA agent OTKRIO ali nije BUG (false positives)
+
+- `_metricsStale` ima clear path na `app.js:2464` (agent je tvrdio da ne briše)
+- Reel/paytable cell click "samo selectuje" — by-design, drives right rail context
+- W4.7 features `persistent_state`/`progressive_link` "ignored u Rust" — by-design (W4.7 = optional additive expansion, adapter coverage tracked u separate roadmap, ne build-section bug)
+
+### Studio test failures koje OSTAJU (out-of-scope za PHASE 50)
+
+| File | Why | Action |
+|---|---|---|
+| `catalog.test.ts`, `mobile.test.ts`, `template-expansion.test.ts` | Test fajl load fail (pre-existing) | Separate cleanup wave |
+| `ir-library.test.ts > every pilot IR parses` | Pilot fixture stale | Separate fixture refresh |
+| `pilot-quick-hit.test.ts`, `pilot-portfolio.test.ts` | Marketing one-pager docs nedostaju | Sales content backlog |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-28 00:00 (post **W9.1 + W9.2 + W9.3 + W9.4 LANDED** — multi-jurisdiction generator + spec compare matrix + schema migration + perf bench)
 
 **Status:** **Portfolio / fleet management surface complete.** Four atomic waves that turn the math compiler from per-game tool into a fleet-of-games platform:
