@@ -53,6 +53,9 @@ from .audit import append_audit, verify_audit_chain, read_audit
 from .mc_validate import mc_validate, McValidationReport
 from .lint import lint_spec, render_lint, filter_by_severity, LintFinding
 from .docs import render_docs
+from .health import health_check, HealthReport, HealthCheck
+from .stress import stress_synth, StressReport, StressRow
+from .prompt import parse_prompt, list_prompt_grammar, PromptLog, PromptOp
 
 __all__ = [
     "MathDslSpec",

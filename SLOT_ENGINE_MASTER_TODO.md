@@ -6,6 +6,62 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 23:10 (post **W8.4 + W8.5 + W8.6 LANDED** — health check + cross-volatility stress + natural-language prompt parser)
+
+**Status:** **Designer ergonomics layer complete.** Three CLI commands that close the loop:
+- **`health`** — pre-commit sanity (lint + compile + Z3 dry-run in 1 command)
+- **`stress`** — Mode C-4 across all 4 volatility buckets, prove reachability
+- **`prompt`** — natural-language one-liner → full DSL YAML, deterministic regex (no LLM)
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W8.4 — Health check** | ✅ **landed** | 4 of 21 | `tools/math_dsl/health.py` + CLI `health` | Combined lint + compile + dry-run Z3 (C-1) in single call. `HealthReport.summary()` markdown table. CLI exits 1 if any error-severity check fails. `--no-synth` flag for ultra-fast lint-only mode |
+| **W8.5 — Stress synth** | ✅ **landed** | 3 of 21 | `tools/math_dsl/stress.py` + CLI `stress` | Runs Mode C-4 against every volatility class (low/medium/high/ultra) for the same spec. Reports per-class measured RTP + CV + reachability. Today's run: Classic 5×3 RTP 0.96 → at least 1 class reachable ✅ |
+| **W8.6 — NL prompt parser** | ✅ **landed** | 14 of 21 | `tools/math_dsl/prompt.py` + CLI `prompt` | One-line natural language → full `MathDslSpec`. Recognizes: topology (`5x3` / `megaways` / `cluster`), RTP, volatility class, paylines, max_win, hit_freq, name (quoted), vendor, jurisdictions, 11 feature kinds. Deterministic regex, **no LLM**. Live: `"5x3 lines, RTP 96, medium volatility, free spins, 20 paylines, for UKGC"` → compilable spec |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w8_4_w8_5_w8_6_health_stress_prompt.py` | **21 / 21** ✅ | 210 s (stress × 4 vol classes is heavy) |
+
+### Grand total — W4.* + W5.* + W6.* + W7.* + W8.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | 12 / 12 |
+| `test_w7_1_w7_2_w7_3_pipeline_audit.py` | 11 / 11 |
+| `test_w8_1_w8_2_w8_3_mc_lint_docs.py` | 23 / 23 |
+| `test_w8_4_w8_5_w8_6_health_stress_prompt.py` | 21 / 21 |
+| **Math DSL + cert + UI + pipeline + QA + designer cumulative** | **213 / 213** ✅ |
+
+### Live samples
+
+```
+$ python3 -m tools.math_dsl prompt "5x3 lines, RTP 96, free spins, 20 paylines, name 'Crimson Tiger', for UKGC"
+# YAML output: complete MathDslSpec with all fields populated
+
+$ python3 -m tools.math_dsl health tools/math_dsl/specs/example_classic_5x3.yaml
+# Health check — Crimson Tiger
+Overall: PASS ✓
+
+| Check | Result | Severity | Detail | Elapsed |
+|---|---|---|---|---|
+| lint | ✓ | info | 0 findings | 0 ms |
+| compile | ✓ | info | emitted SlotGameIR with 8 symbols | 0 ms |
+| z3_dry_run_C-1 | ✓ | info | target 0.9600, solved RTP 0.9517, Δ 0.0083 | 8 ms |
+```
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 22:40 (post **W8.1 + W8.2 + W8.3 LANDED** — MC validator + spec linter (15 rules) + auto-docs generator)
 
 **Status:** **Quality + ergonomics layer is live.** Three orthogonal artifacts: (1) MC sanity that empirically confirms closed-form RTP, (2) static linter sa 15 rule-ova that catches designer mistakes pre Z3 synth-a, (3) auto-generated markdown design doc with embedded Mermaid + lint findings.

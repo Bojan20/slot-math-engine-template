@@ -115,6 +115,16 @@ def main(argv: list[str] | None = None) -> int:
     pmcv.add_argument("--spins", type=int, default=100_000)
     pmcv.add_argument("--seed", type=int, default=0xC0DE_F00D)
 
+    phealth = sub.add_parser("health", help="Combined lint + compile + dry-run Z3 synth check")
+    phealth.add_argument("spec", type=Path)
+    phealth.add_argument("--no-synth", action="store_true")
+
+    pstress = sub.add_parser("stress", help="Try Mode C-4 against every volatility class for a spec")
+    pstress.add_argument("spec", type=Path)
+
+    pprompt = sub.add_parser("prompt", help="Natural-language prompt → fresh DSL YAML")
+    pprompt.add_argument("text", type=str, help='e.g. "5x3 lines, RTP 96, free spins, 20 paylines"')
+
     args = p.parse_args(argv)
 
     # diff and cert have their own loading logic
@@ -217,6 +227,37 @@ def main(argv: list[str] | None = None) -> int:
         report = mc_validate(ir, spins=args.spins, seed=args.seed)
         sys.stdout.write(report.summary())
         return 0 if report.verdict == "PASS" else 1
+
+    if args.cmd == "health":
+        from .health import health_check
+        try:
+            health_spec = parse_spec(args.spec.read_text(encoding="utf-8"))
+        except DslParseError as e:
+            print(f"DSL parse error: {e}", file=sys.stderr)
+            return 2
+        report = health_check(health_spec, dry_run_synth=not args.no_synth)
+        sys.stdout.write(report.summary())
+        return 0 if report.ok else 1
+
+    if args.cmd == "stress":
+        from .stress import stress_synth
+        try:
+            stress_spec = parse_spec(args.spec.read_text(encoding="utf-8"))
+        except DslParseError as e:
+            print(f"DSL parse error: {e}", file=sys.stderr)
+            return 2
+        report = stress_synth(stress_spec)
+        sys.stdout.write(report.summary())
+        return 0
+
+    if args.cmd == "prompt":
+        from .prompt import parse_prompt
+        new_spec, log = parse_prompt(args.text)
+        sys.stderr.write(f"# Prompt parsed: {len(log.ops)} ops, {len(log.errors)} errors\n")
+        for op in log.ops:
+            sys.stderr.write(f"#   [✓] {op.kind}: {op.description}\n")
+        sys.stdout.write(serialize_to_yaml(new_spec))
+        return 0
 
     # Branches that don't take a DSL spec
     if args.cmd == "extract":
