@@ -297,7 +297,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 ---
 
 ### **PHASE 9 — Tournament & Multi-Player Math** _(new vertical: session-aggregated leaderboard math beyond single-player engine)_
-**Status:** 🟡 **W201 LANDED (1/N waves)** — first kernel of new Phase. Engineering for Phase 1-8 is terminal; Phase 9 opens the multi-player vertical where vendor revenue is now growing fastest (IGT TournXpress, Pragmatic Drops & Wins, BTG Megaways Race, SG/L&W WinPower).
+**Status:** 🟢 **100 % done — W201 → W205 sva 5 wave-a LANDED u 1 Corti sesiji** (2026-05-27). Multi-player vertikalan otvoren i zatvoren: tournament prize allocation + cross-title network pool + bet-size-fair z-score ranking + tri-format regulator-grade audit report + bonus-tournament hybrid mechanic. **5 industry-first contributions**; 285+ novih vitest specova; 0 FAIL across all acceptance scenarios. Mission #11 (multi-player tournament math) → DONE.
 
 | # | Wave | Status | Plan |
 |---|---|:---:|---|
