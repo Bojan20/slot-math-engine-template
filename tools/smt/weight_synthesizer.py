@@ -472,6 +472,225 @@ VOLATILITY_CV_BUCKETS: dict[str, tuple[float, float]] = {
 }
 
 
+# ─── Mode C-4: volatility CV bucket constraint ──────────────────────────
+
+
+def _payout_moments(
+    ir: dict, reels: list[dict[str, float]], paytable: dict[tuple[str, int], float],
+    num_lines: int, total_bet: float,
+) -> tuple[float, float]:
+    """Closed-form first + second moment of per-spin payout (in bet units).
+
+    Mean    E[X]   = Σ_(sym,k) num_lines × pays × P(line k-of-anchor) / total_bet
+    Mean E[X^2] ≈ Σ_(sym,k) num_lines × pays^2 × P(line k-of-anchor) / total_bet
+                  (treats line wins as independent — industry approximation)
+
+    Returns (mean_x, mean_x_sq). Variance = mean_x_sq - mean_x**2.
+    """
+    syms = ir.get("symbols") or []
+    wild_id = _wild_symbol_id(ir)
+    excluded = _wild_excluded(ir)
+    scatter_ids = {s["id"] for s in syms if s.get("kind") == "scatter"}
+    bonus_ids = {s["id"] for s in syms if s.get("kind") == "bonus"}
+    n_reels = len(reels)
+    mean_x = 0.0
+    mean_x_sq = 0.0
+    for (sym, count), pays in paytable.items():
+        if pays <= 0 or count <= 0 or count > n_reels:
+            continue
+        if sym in scatter_ids or sym in bonus_ids:
+            continue
+        wild_substitutes = wild_id is not None and sym not in excluded
+        p = 1.0
+        for i in range(count):
+            total = sum(reels[i].values()) or 1.0
+            p_a = reels[i].get(sym, 0.0) / total
+            p_w = (reels[i].get(wild_id, 0.0) / total) if wild_substitutes else 0.0
+            p *= p_a + p_w
+        if count < n_reels:
+            total = sum(reels[count].values()) or 1.0
+            p_a = reels[count].get(sym, 0.0) / total
+            p_w = (reels[count].get(wild_id, 0.0) / total) if wild_substitutes else 0.0
+            p *= max(0.0, 1.0 - p_a - p_w)
+        contrib_mean = num_lines * pays * p / total_bet
+        contrib_var = num_lines * (pays ** 2) * p / (total_bet ** 2)
+        mean_x += contrib_mean
+        mean_x_sq += contrib_var
+    return mean_x, mean_x_sq
+
+
+def coefficient_of_variation(ir: dict) -> float:
+    """CV = stddev / mean of per-spin payout, closed-form.
+
+    Designer-facing volatility classifier — same formula the W5.2 Mode C-4
+    solver uses internally so the post-solve CV matches the constraint.
+    """
+    paytable = _extract_ir_paytable(ir)
+    num_lines, total_bet = _resolve_paylines(ir)
+    reels, _shape = _reels_as_dict_list(ir)
+    if not reels:
+        return 0.0
+    mean_x, mean_x_sq = _payout_moments(ir, reels, paytable, num_lines, total_bet)
+    if mean_x <= 0:
+        return 0.0
+    var = max(0.0, mean_x_sq - mean_x ** 2)
+    return math.sqrt(var) / mean_x
+
+
+def volatility_class_of(ir: dict) -> str:
+    """Classify the IR's measured CV into low / medium / high / ultra."""
+    cv = coefficient_of_variation(ir)
+    for name, (lo, hi) in VOLATILITY_CV_BUCKETS.items():
+        if lo <= cv < hi:
+            return name
+    return "ultra"
+
+
+def synth_with_volatility(
+    ir: dict,
+    target_rtp: float,
+    volatility_class: str,
+    *,
+    reel_length: float = 60.0,
+    tolerance: float = 1e-4,
+    timeout_ms: int = 120_000,
+) -> dict:
+    """Mode C-4 — solve per-reel kind-weights subject to BOTH:
+        • closed-form RTP == target_rtp (± tolerance)
+        • per-spin CV ∈ VOLATILITY_CV_BUCKETS[volatility_class]
+
+    Variance is encoded as E[X²] - E[X]², where both moments are linear
+    in payout and quadratic in per-symbol probabilities. CV bucket
+    constraint becomes:
+        cv_lo² × mean_x² ≤ var ≤ cv_hi² × mean_x²
+
+    Linearizes by introducing a `mean_aux` Real var so the solver works
+    in QF_NRA polynomial reals. Z3 has a fast nlsat for this shape.
+    """
+    if volatility_class not in VOLATILITY_CV_BUCKETS:
+        raise RtpSynthesisError(
+            f"unknown volatility class {volatility_class!r}; "
+            f"valid: {sorted(VOLATILITY_CV_BUCKETS)}"
+        )
+    cv_lo, cv_hi = VOLATILITY_CV_BUCKETS[volatility_class]
+
+    paytable = _extract_ir_paytable(ir)
+    if not paytable:
+        raise RtpSynthesisError("IR has no paytable")
+    num_lines, total_bet = _resolve_paylines(ir)
+    reels_d, _shape = _reels_as_dict_list(ir)
+    if not reels_d:
+        raise RtpSynthesisError("IR has no reel-set")
+    n_reels = len(reels_d)
+
+    syms = ir.get("symbols") or []
+    hp_ids = [s["id"] for s in syms if s.get("kind") == "hp"]
+    lp_ids = [s["id"] for s in syms if s.get("kind") == "lp"]
+    wild_id = _wild_symbol_id(ir)
+    scatter_ids = [s["id"] for s in syms if s.get("kind") == "scatter"]
+    bonus_ids = [s["id"] for s in syms if s.get("kind") == "bonus"]
+    special_ids = ([wild_id] if wild_id else []) + scatter_ids + bonus_ids
+
+    solver = z3.Solver()
+    solver.set("timeout", timeout_ms)
+
+    hp_w = [z3.Real(f"hp_w_{r}") for r in range(n_reels)]
+    lp_w = [z3.Real(f"lp_w_{r}") for r in range(n_reels)]
+    sp_w = [z3.Real(f"sp_w_{r}") for r in range(n_reels)]
+    for r in range(n_reels):
+        for var in (hp_w[r], lp_w[r], sp_w[r]):
+            solver.add(var >= z3.RealVal(1))
+            solver.add(var <= z3.RealVal(reel_length))
+
+    reel_vars: list[dict[str, z3.RealRef]] = []
+    reel_totals: list[z3.RealRef] = []
+    for r in range(n_reels):
+        m: dict[str, z3.RealRef] = {}
+        for sym in hp_ids:
+            m[sym] = hp_w[r]
+        for sym in lp_ids:
+            m[sym] = lp_w[r]
+        for sym in special_ids:
+            m[sym] = sp_w[r]
+        reel_vars.append(m)
+        total = (
+            hp_w[r] * z3.RealVal(len(hp_ids))
+            + lp_w[r] * z3.RealVal(len(lp_ids))
+            + sp_w[r] * z3.RealVal(len(special_ids))
+        )
+        reel_totals.append(total)
+
+    # Closed-form mean (RTP) + closed-form E[X²]
+    mean_expr = z3.RealVal(0)
+    mean_sq_expr = z3.RealVal(0)
+    for (sym, count), pays in paytable.items():
+        if pays <= 0 or count <= 0 or count > n_reels:
+            continue
+        if sym in scatter_ids or sym in bonus_ids:
+            continue
+        p_line = _line_prob_z3(ir, reel_vars, reel_totals, sym, count)
+        contrib_mean = z3.RealVal(num_lines) * z3.RealVal(pays) * p_line / z3.RealVal(total_bet)
+        contrib_sq = z3.RealVal(num_lines) * z3.RealVal(pays ** 2) * p_line / z3.RealVal(total_bet ** 2)
+        mean_expr = mean_expr + contrib_mean
+        mean_sq_expr = mean_sq_expr + contrib_sq
+
+    target = z3.RealVal(target_rtp)
+    delta = z3.RealVal(tolerance)
+    solver.add(mean_expr >= target - delta)
+    solver.add(mean_expr <= target + delta)
+
+    # Variance bound: cv² × mean² ≤ var ≤ cv² × mean² (with cv_lo, cv_hi)
+    # var = mean_sq - mean²
+    var_expr = mean_sq_expr - mean_expr * mean_expr
+    cv_lo_sq = z3.RealVal(cv_lo * cv_lo)
+    cv_hi_sq = z3.RealVal(cv_hi * cv_hi)
+    mean_sq_constraint = mean_expr * mean_expr
+    solver.add(var_expr >= cv_lo_sq * mean_sq_constraint)
+    # cv_hi can be huge for 'ultra' → cap to avoid Z3 numeric blow-up
+    if cv_hi < 1_000:
+        solver.add(var_expr <= cv_hi_sq * mean_sq_constraint)
+
+    if solver.check() != z3.sat:
+        raise RtpSynthesisError(
+            f"Z3 unsat for RTP={target_rtp} vol={volatility_class!r} "
+            f"(cv∈[{cv_lo},{cv_hi}])"
+        )
+    model = solver.model()
+
+    def to_f(v: z3.RealRef) -> float:
+        m = model[v]
+        if m is None:
+            raise RtpSynthesisError("Z3 model missing var")
+        return float(m.as_decimal(20).rstrip("?"))
+
+    hp_vals = [to_f(v) for v in hp_w]
+    lp_vals = [to_f(v) for v in lp_w]
+    sp_vals = [to_f(v) for v in sp_w]
+
+    new_ir = copy.deepcopy(ir)
+    new_base: list[dict[str, float]] = []
+    for r in range(n_reels):
+        m: dict[str, float] = {}
+        for sym in hp_ids:
+            m[sym] = hp_vals[r]
+        for sym in lp_ids:
+            m[sym] = lp_vals[r]
+        for sym in special_ids:
+            m[sym] = sp_vals[r]
+        new_base.append(m)
+    new_ir["reels"] = {"mode": "weighted", "base": new_base}
+    new_ir.setdefault("_synth_log", {}).update({
+        "mode": "C-4_volatility",
+        "hp_w": hp_vals,
+        "lp_w": lp_vals,
+        "sp_w": sp_vals,
+        "target_rtp": target_rtp,
+        "volatility_class": volatility_class,
+        "cv_range": [cv_lo, cv_hi],
+    })
+    return new_ir
+
+
 def measured_rtp(ir: dict) -> float:
     """Return the closed-form line RTP of the IR (post-synthesis sanity).
 

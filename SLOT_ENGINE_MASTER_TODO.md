@@ -6,6 +6,39 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:10 (post **W5.2-C4 + W5.3 LANDED** — bi-directional DSL ↔ IR round-trip + volatility CV solver)
+
+**Status:** **Math compiler is now bi-directional.** Forward (DSL → IR + Z3 weights) was W5.1+W5.2; today closes the inverse (IR → DSL YAML) so designers can refactor existing PARs / IRs into spec form, edit, re-compile. Plus W5.2 gets a 3rd Z3 mode — volatility CV constraint via QF_NRA polynomial reals.
+
+| Item | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W5.2 Mode C-4 — volatility CV constraint** (per-reel kind weights + variance bucket low/medium/high/ultra) | ✅ **landed** | +7 | `tools/smt/weight_synthesizer.py` (`synth_with_volatility` + `coefficient_of_variation` + `volatility_class_of` + `_payout_moments`) | Closed-form E[X²] − E[X]² as Z3 expression; CV bucket constraint cv_lo² × μ² ≤ var ≤ cv_hi² × μ². Classic 5×3 medium bucket: target 0.96 → measured 0.955, **CV = 4.39** (in [4,8] ✅) |
+| **W5.3 — IR → DSL inverse extractor** (`extract_from_ir`) | ✅ **landed** | +5 | `tools/math_dsl/extract.py` | Reconstructs `MathDslSpec` from any SlotGameIR (legacy parse, vendor import, hand-tuned); lifts vendor from `provenance` when meta misses it; derives hints (reel_length, wild_share, scatter_share) from seeded weights |
+| **W5.3 — DSL YAML serializer** (`serialize_to_yaml`) | ✅ landed | +2 | same file | Mirrors the parser's YAML subset exactly; output round-trips losslessly through `parse_spec`. Megaways `variable_rows` + `row_range_per_reel` `ways_cap` preserved |
+| **Full pipeline idempotency** (DSL → IR → DSL → IR equal on structural fields) | ✅ **proven** | +1 | (integration test) | `topology`, `target_rtp`, `target_volatility`, `jurisdictions`, sorted `symbols[]` all preserved bit-equal across the round-trip |
+| **CLI: `extract` + `roundtrip` subcommands + `--mode c-4`** | ✅ landed | (smoke) | `tools/math_dsl/__main__.py` | `python -m tools.math_dsl extract game.ir.json > game.yaml`; `python -m tools.math_dsl roundtrip design.yaml` ; `python -m tools.math_dsl synth --mode c-4 design.yaml` |
+
+### Combined W5.1 + W5.2 + W5.3 test tally
+
+- `test_w5_1_w5_2_math_dsl.py`: **18 / 18** ✅ (0.076 s)
+- `test_w5_2c4_w5_3_extract.py`: **14 / 14** ✅ (28.7 s — C-4 Z3 NLSAT is heavier than C-1 LRA)
+- Total: **32 / 32** ✅
+
+### Forward + inverse pipeline coverage
+
+| Direction | Status |
+|---|---|
+| Designer YAML → MathDslSpec | ✅ W5.1 parser |
+| MathDslSpec → SlotGameIR skeleton | ✅ W5.1 compile |
+| Skeleton IR + RTP target → Z3-balanced IR (Mode C-1) | ✅ W5.2 uniform |
+| Skeleton IR + RTP + hit_freq → Z3 IR (Mode C-3) | ✅ W5.2 hit_freq |
+| Skeleton IR + RTP + volatility class → Z3 IR (Mode C-4) | ✅ **W5.2-C4 today** |
+| Any IR → MathDslSpec (refactor) | ✅ **W5.3 today** |
+| MathDslSpec → YAML (designer-edit) | ✅ **W5.3 today** |
+| Round-trip idempotency proven | ✅ **W5.3 today** |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 19:55 (post **W5.1 + W5.2 + W4.8 Math DSL + Z3 Compiler LANDED**, industry-first)
 
 **Status:** **Industry's first declarative slot math DSL + Z3-backed weight synthesizer is functional.** Kimi research (2026-05-25) confirmed nobody in the industry has automated this — Balabanov 2015 and Kamanas 2021 evolved weights via GA / NSGA-II but neither uses SMT. We now have a working end-to-end pipeline: **YAML spec → SlotGameIR → Z3-balanced weights**, validated on 2 game families (classic 5×3 lines + 6-reel Megaways variable_rows).

@@ -28,6 +28,7 @@ from .spec import (
     DslParseError,
 )
 from .compile import compile_to_ir, CompileError
+from .extract import extract_from_ir, serialize_to_yaml, ExtractError
 
 __all__ = [
     "MathDslSpec",
@@ -37,6 +38,9 @@ __all__ = [
     "TopologySpec",
     "parse_spec",
     "compile_to_ir",
+    "extract_from_ir",
+    "serialize_to_yaml",
     "DslParseError",
     "CompileError",
+    "ExtractError",
 ]
