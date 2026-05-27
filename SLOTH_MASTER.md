@@ -438,7 +438,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1578 PASS + 47 skipped** ⬆ +314 total (PHASE 10 + 11 + 12 + 15 + 17 + 23) |
+| **Python test count** | **1601 PASS + 47 skipped** ⬆ +337 total (PHASE 10 + 11 + 12 + 15 + 17 + 18 + 23) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -453,6 +453,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Phase 17 AI Math Designer Copilot** | ✅ LANDED — `apply_mutation(ir, prompt)` w/ 9 mutation kinds + relock signal |
 | **Phase 12 Real-Time RGS Live Engine** | ✅ PROTOTYPE LANDED — 32,184 spins/sec @ P99 29µs · `slot-rgs-live` CLI |
 | **Phase 23 Real-Time Player Risk Engine** | ✅ LANDED — `slot-risk-engine` CLI · UKGC RTS 7.4 / MGA PPD §11 · 6-dimension composite score · E2E pipe from Phase 12 verified |
+| **Phase 18 Multi-Engine Cross-Validation Harness** | ✅ LANDED — `slot-cross-validate` CLI · 3 engines (python_synthetic + python_bernoulli + rust_slot_sim auto-detect) · drift detection vs cohort consensus · 23/23 specs |
 | **P10 end-to-end single-command pipeline** | ✅ (`slot-design "..." --cert-pack` → spec.json + game.dsl.toml + IR + REVIEW.md + review.html + cert ZIP in one invocation; pinned by `test_p10_end_to_end_one_command_all_artefacts`) |
 | **P10.2 composition pair detection** | ✅ 16 industry pairings codified (Sweet Bonanza, Razor Shark, Lock It Link, Megaways, Aloha, Jammin Jars, Lightning Link, Wonka, Hacksaw bonus-buy, Sweet Bonanza Ante, Mega Moolah, Reel Rush, Reactoonz, Walking Wild Respin) + canonical/stacking/novel classification + low-RTP stacking warn |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
