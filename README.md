@@ -452,6 +452,44 @@ This simulator makes the following assumptions:
 
 ---
 
+## Contributing
+
+We accept community PRs for:
+
+- **New closed-form solver kernels** (`src/features/`)
+- **Compliance rules** (UKGC / MGA / eCOGRA / EU GA 2024)
+- **Public benchmark references** (published RTP catalogue)
+- **Bug fixes** (regression test required)
+
+Start by reading [`docs/DEVELOPER_GUIDE.md`](docs/DEVELOPER_GUIDE.md) —
+it covers local setup, common workflows, the Vitest OOM workaround,
+project layout, the PR review checklist, and the release process.
+
+Quick contributor flow:
+
+```bash
+git clone https://github.com/Bojan20/slot-math-engine-template.git
+cd slot-math-engine-template
+npm install && npm run build
+npm test              # 294 spec files, 7554 tests
+git checkout -b feat/W206-my-solver
+# … edit src/features/myNewSolver.ts + tests/my_new_solver.test.ts …
+git commit -m "feat(W206): my new solver"
+git push origin HEAD
+# open a PR; CI gate enforces tests + lint + master TODO sync.
+```
+
+If you're adding a kernel, the acceptance bar is **MC ratio
+measured/expected ∈ [0.9, 1.1]** at ≥ 1500 tournaments + **≥ 30 specs**
++ a row in `SLOTH_MASTER.md`. The closed-form portfolio
+(`src/portfolio/closedForms.ts`) registers your kernel with the
+operator package builder so downstream consumers see it.
+
+For questions or design discussion, open an issue with the relevant
+label (`[design]`, `[compliance]`, `[devex]`).
+
+---
+
 ## License
 
 MIT License - Use this template freely for your slot game projects.

@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Production-grade Slot Math Simulator Template - Reusable for any slot game",
   "main": "dist/index.js",
+  "bin": {
+    "slot-tournament-audit": "./bin/slot-tournament-audit.mjs"
+  },
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",

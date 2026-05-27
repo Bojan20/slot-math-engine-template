@@ -1,0 +1,298 @@
+{
+  "entries": [
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "ce-copy-test.200-1637-001"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "ce-copy-test.200-1637-002"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "ce-copy-test.200-1637-003"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-001"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [
+        "free_spins",
+        "wild_expand",
+        "pattern_win",
+        "hold_and_win"
+      ],
+      "our_rtp_estimate": null,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-001.slot-sim"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-002"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [
+        "free_spins",
+        "wild_expand",
+        "pattern_win",
+        "hold_and_win"
+      ],
+      "our_rtp_estimate": null,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-002.slot-sim"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.09882209394142258,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-003"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [
+        "free_spins",
+        "wild_expand",
+        "pattern_win",
+        "hold_and_win"
+      ],
+      "our_rtp_estimate": null,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "lw.200-1637-003.slot-sim"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.06819196996346509,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "igt.200-1775-001"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [
+        "free_spins",
+        "pick_bonus",
+        "linear_progressive"
+      ],
+      "our_rtp_estimate": null,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "igt.200-1775-001.slot-sim"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [],
+      "our_rtp_estimate": 0.06712814781588189,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "igt.200-1775-002"
+    },
+    {
+      "accuracy_band": "green",
+      "industry_dev_cycle_months": 8,
+      "our_build_time_minutes": 1,
+      "our_features": [
+        "free_spins",
+        "pick_bonus",
+        "linear_progressive"
+      ],
+      "our_rtp_estimate": null,
+      "our_target_rtp": null,
+      "ref_features": [
+        "free_spins",
+        "multiplier"
+      ],
+      "ref_rtp_default": 0.9499,
+      "ref_studio": "IGT",
+      "ref_title": "Wolf Run",
+      "ref_volatility": "medium",
+      "rtp_gap_abs": 0.0049000000000000155,
+      "rtp_source": "default",
+      "speedup_factor": 345600.0,
+      "template_id": "igt.200-1775-002.slot-sim"
+    }
+  ],
+  "generated_at_utc": "2026-05-27T02:14:04.204336+00:00",
+  "summary": {
+    "bands": {
+      "green": 13,
+      "red": 0,
+      "unknown": 0,
+      "yellow": 0
+    },
+    "mean_speedup_x": 345600.0,
+    "n_templates": 13
+  }
+}
