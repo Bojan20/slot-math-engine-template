@@ -339,7 +339,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 |---|---|---|---|---|
 | **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟢 **7/7 sub-waves LANDED** (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 + P10.7) ✅ ZATVOREN |
 | **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | 🟢 **LANDED** — `tools/slot_bench/` + `slot-math-bench` CLI; 4 benchmarks (rtp_recovery / time_to_ir / cert_completeness / tournament_completeness); A+ grade on internal games/ dir; reproducible artifact `BENCHMARK.json` + `BENCHMARK.md` |
-| **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | čeka pilot operator |
+| **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | 🟢 **PROTOTYPE LANDED** — `tools/rgs_live/` + `slot-rgs-live` CLI (serve/load-test); JSON-line over asyncio TCP, PHASE-15-bound per-spin RNG, hot-reloadable IR, sub-100ms P99 target met (**29µs P99 @ 32,184 spins/sec** in-process); 33/33 specs pass incl. live TCP round-trip |
 | **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
 | **PHASE 14** | **L3 LoRA fine-tune** — 8B base model fine-tune na 1800 P8.6 RAG corpus | 8-16h GPU rent ILI M4 Ultra | math-debug agent first-shot accuracy >70% → >90% | čeka M4 Ultra Q1 2027 ili A100 rent |
 | **PHASE 15** | **Crypto-native provably-fair extension** — ed25519 + Merkle inclusion proof live on-chain commit per spin | 4-6h | crypto-casino market segment | 🟢 **LANDED** — `tools/crypto_fair/` + `slot-crypto-fair` CLI (commit/verify/derive); SHA-256 server-seed commit-reveal + HMAC-SHA256 per-spin seed derivation + RFC-6962 Merkle chain over spin receipts + ed25519 signature with `slotmath-crypto-fair-v1` domain tag; 30/30 specs pass |
@@ -437,7 +437,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1476 PASS + 47 skipped** ⬆ +212 total (P10.1-P10.7 + PHASE 11 + PHASE 15 Crypto-Native + PHASE 17 Copilot) |
+| **Python test count** | **1509 PASS + 47 skipped** ⬆ +245 total (P10.1-P10.7 + PHASE 11 SWE-Bench + PHASE 15 Crypto-Native + PHASE 17 Copilot + PHASE 12 RGS Live) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -450,6 +450,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Phase 11 SWE-Math-Bench** | ✅ LANDED — `slot-math-bench` CLI, 4 benchmarks, A+ grade artifact |
 | **Phase 15 Crypto-Native Provably-Fair** | ✅ LANDED — `slot-crypto-fair` CLI (commit/verify/derive), SHA-256 + HMAC + Merkle + ed25519 |
 | **Phase 17 AI Math Designer Copilot** | ✅ LANDED — `apply_mutation(ir, prompt)` w/ 9 mutation kinds + relock signal |
+| **Phase 12 Real-Time RGS Live Engine** | ✅ PROTOTYPE LANDED — 32,184 spins/sec @ P99 29µs · `slot-rgs-live` CLI |
 | **P10 end-to-end single-command pipeline** | ✅ (`slot-design "..." --cert-pack` → spec.json + game.dsl.toml + IR + REVIEW.md + review.html + cert ZIP in one invocation; pinned by `test_p10_end_to_end_one_command_all_artefacts`) |
 | **P10.2 composition pair detection** | ✅ 16 industry pairings codified (Sweet Bonanza, Razor Shark, Lock It Link, Megaways, Aloha, Jammin Jars, Lightning Link, Wonka, Hacksaw bonus-buy, Sweet Bonanza Ante, Mega Moolah, Reel Rush, Reactoonz, Walking Wild Respin) + canonical/stacking/novel classification + low-RTP stacking warn |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
