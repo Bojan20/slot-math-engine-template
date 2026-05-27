@@ -6,6 +6,55 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:55 (post **W6.9 + W6.10 + W6.11 LANDED** — sign/verify CLI + ed25519 upgrade path + acceptance runner)
+
+**Status:** **CI gate je live.** `python -m tools.math_dsl acceptance tools/math_dsl/specs` prolazi za sve 4 sample specs pod Mode C-1, oblikuje markdown summary za PR comment. Provenance ima dual-track (HMAC default + ed25519 kad je `cryptography` instaliran + env key postavljen). CLI: `compile` / `sign` / `verify` round-trip end-to-end u 3 koraka.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W6.9 — sign / verify CLI** | ✅ **landed** | 1 of 12 | `tools/math_dsl/__main__.py` (sign + verify subcommands) | End-to-end smoke: `compile spec.yaml > x.ir.json && sign x.ir.json --vendor X --swid Y && verify x.ir.json`. Sign mutates IR in-place, verify exits 0 on OK / 1 on fail |
+| **W6.10 — ed25519 upgrade path** | ✅ **landed** | 6 of 12 | `tools/math_dsl/provenance.py` | Dual-track: `algo="auto"` picks ed25519 if `cryptography` installed AND `CORTEX_PROVENANCE_ED25519_PRIVATE_KEY` env var set, else HMAC. `signature_algo` field in provenance records which track was used. `verify_provenance` auto-detects algo from the block. Test generates ephemeral keypair and proves ed25519 sign+verify round-trip |
+| **W6.11 — Acceptance runner** | ✅ **landed** | 5 of 12 | `tools/math_dsl/acceptance.py` | `run_acceptance(specs_dir, mode=...)` → AcceptanceReport with per-spec rtp_measured / rtp_delta / volatility_ok / hit_freq_ok / synth_ms. Markdown `.summary()` table. Today's run: **4/4 PASS** under Mode C-1 (all RTPs within Δ 0.0083 of target). `tools.math_dsl.__main__ acceptance` CLI exits 0 on green |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | **12 / 12** ✅ | 0.486 s |
+
+### Grand total — W4.* + W5.* + W6.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | 12 / 12 |
+| **Math DSL + cert + UI + acceptance cumulative** | **158 / 158** ✅ |
+
+### Live acceptance snapshot
+
+```
+# Acceptance suite — 4/4 pass
+
+| Spec | RTP (target → measured, Δ) | Volatility | Hit Freq | Synth | Result |
+|---|---|---|---|---|---|
+| Cascade Quest | 0.9600 → 0.9570 (Δ 0.0030) | high ✗ | 0.300 → 0.901 ✗ | 20 ms | ✓ PASS |
+| Crimson Tiger | 0.9600 → 0.9517 (Δ 0.0083) | medium ✗ | 0.240 → 0.333 ✓ | 5 ms | ✓ PASS |
+| Coral Cluster | 0.9600 → 0.9530 (Δ 0.0070) | high ✗ | 0.200 → 0.020 ✗ | 48 ms | ✓ PASS |
+| Lion Megaways | 0.9600 → 0.9625 (Δ 0.0025) | high ✗ | 0.220 → 0.019 ✗ | 20 ms | ✓ PASS |
+```
+
+(Volatility/hit_freq columns are informational under Mode C-1 — they're
+strictly enforced only under Mode C-4 / C-5.)
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:35 (post **W6.4 + W6.7 + W6.8 LANDED** — Studio HTML stub + Mermaid visualizer + Catalog HTML)
 
 **Status:** **End-to-end presentation layer is live.** Designer Studio HTML, semantic Mermaid topology diagrams, filterable catalog HTML — three artifacts that turn the math compiler from a CLI into a sales-ready demo.

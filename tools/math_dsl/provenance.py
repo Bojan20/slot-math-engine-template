@@ -1,26 +1,16 @@
-"""W6.3 — Provenance auto-sign + verify utilities.
+"""W6.3 + W6.10 — Provenance auto-sign + verify utilities.
 
-Uses Python stdlib `hashlib` + a tiny pure-Python HMAC-SHA-256 keyed
-signer so the cert bundle has cryptographic-grade integrity without
-pulling cryptography / pynacl / ecdsa as a dependency.
+Two algorithm tracks:
 
-For full ed25519 (regulator-grade asymmetric signatures), if the
-optional `cryptography` package is installed, we use it. Otherwise
-we fall back to HMAC-SHA-256 with a configurable key (sufficient for
-internal Vendor B → Vendor C handoff; regulator can require ed25519
-upgrade later via env override).
+  • **HMAC-SHA-256** (default, stdlib-only): symmetric, signer and
+    verifier share a key. Env-overridable via `CORTEX_PROVENANCE_HMAC_KEY`.
 
-API
-===
-    sign_ir(ir, key=None) → signature_hex
-    verify_ir(ir, signature_hex, key=None) → bool
+  • **ed25519** (W6.10, optional asymmetric): private key on build
+    machine, public key embedded in provenance. Activated if
+    `cryptography` package is installed AND
+    `CORTEX_PROVENANCE_ED25519_PRIVATE_KEY` env var (PEM text) is set.
 
-    sign_and_inject_provenance(ir, vendor, par_source, swid=None,
-                                build_hash=None, key=None) → new_ir
-
-The `_synth_log` and `_cache_meta` keys are excluded from the SHA-256
-input so the same solved IR signs the same way regardless of cache
-hit/miss runtime metadata.
+`algo="auto"` (default) picks ed25519 when available, else HMAC.
 """
 
 from __future__ import annotations
@@ -35,6 +25,22 @@ from typing import Optional
 
 
 _DEFAULT_HMAC_KEY_ENV = "CORTEX_PROVENANCE_HMAC_KEY"
+_ED25519_PRIVATE_ENV = "CORTEX_PROVENANCE_ED25519_PRIVATE_KEY"
+_ED25519_PUBLIC_ENV = "CORTEX_PROVENANCE_ED25519_PUBLIC_KEY"
+
+
+def _ed25519_available() -> bool:
+    try:
+        from cryptography.hazmat.primitives.asymmetric import ed25519  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
+def _ed25519_active() -> bool:
+    """ed25519 is active if both `cryptography` is installed AND a
+    private key is in the env."""
+    return _ed25519_available() and bool(os.environ.get(_ED25519_PRIVATE_ENV))
 
 
 def _canonical_ir_bytes(ir: dict) -> bytes:
@@ -49,16 +55,7 @@ def ir_sha256(ir: dict) -> str:
     return hashlib.sha256(_canonical_ir_bytes(ir)).hexdigest()
 
 
-def sign_ir(ir: dict, key: Optional[bytes] = None) -> str:
-    """Sign canonical IR bytes. Returns hex signature.
-
-    Uses HMAC-SHA-256 with `key` (or env CORTEX_PROVENANCE_HMAC_KEY,
-    or hardcoded fallback "cortex-default-key" if neither set).
-
-    NOTE: HMAC alone is symmetric — both signer and verifier must
-    share the key. For regulator-grade signatures, install
-    `cryptography` and call `sign_ir_ed25519` instead.
-    """
+def _sign_hmac(ir: dict, key: Optional[bytes] = None) -> str:
     if key is None:
         env = os.environ.get(_DEFAULT_HMAC_KEY_ENV, "cortex-default-key")
         key = env.encode("utf-8") if isinstance(env, str) else env
@@ -66,10 +63,93 @@ def sign_ir(ir: dict, key: Optional[bytes] = None) -> str:
     return hmac.new(key, msg, hashlib.sha256).hexdigest()
 
 
-def verify_ir(ir: dict, signature_hex: str, key: Optional[bytes] = None) -> bool:
-    """Constant-time verify of HMAC signature over canonical IR."""
-    expected = sign_ir(ir, key=key)
-    return hmac.compare_digest(expected, signature_hex.lower())
+def _verify_hmac(ir: dict, sig: str, key: Optional[bytes] = None) -> bool:
+    expected = _sign_hmac(ir, key=key)
+    return hmac.compare_digest(expected, sig.lower())
+
+
+def _sign_ed25519(ir: dict) -> str:
+    """Sign canonical IR bytes using ed25519. Returns hex signature.
+    Requires `cryptography` + `CORTEX_PROVENANCE_ED25519_PRIVATE_KEY`
+    env var (PEM text). Raises if either is missing.
+    """
+    from cryptography.hazmat.primitives import serialization
+    pem = os.environ.get(_ED25519_PRIVATE_ENV)
+    if not pem:
+        raise RuntimeError(
+            f"ed25519 signing requested but {_ED25519_PRIVATE_ENV} is not set"
+        )
+    private_key = serialization.load_pem_private_key(
+        pem.encode("utf-8"), password=None,
+    )
+    sig_bytes = private_key.sign(_canonical_ir_bytes(ir))
+    return sig_bytes.hex()
+
+
+def _verify_ed25519(ir: dict, sig_hex: str, public_pem: Optional[str] = None) -> bool:
+    """Verify ed25519 signature. `public_pem` falls back to env
+    `CORTEX_PROVENANCE_ED25519_PUBLIC_KEY` if not given.
+    """
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.exceptions import InvalidSignature
+
+    pem = public_pem or os.environ.get(_ED25519_PUBLIC_ENV)
+    if not pem:
+        # Auto-derive public from private if available
+        priv = os.environ.get(_ED25519_PRIVATE_ENV)
+        if not priv:
+            return False
+        priv_obj = serialization.load_pem_private_key(
+            priv.encode("utf-8"), password=None,
+        )
+        public_key = priv_obj.public_key()
+    else:
+        public_key = serialization.load_pem_public_key(pem.encode("utf-8"))
+    try:
+        public_key.verify(bytes.fromhex(sig_hex), _canonical_ir_bytes(ir))
+        return True
+    except (InvalidSignature, ValueError):
+        return False
+
+
+def sign_ir(
+    ir: dict,
+    key: Optional[bytes] = None,
+    *,
+    algo: str = "auto",
+) -> str:
+    """Sign canonical IR bytes. Returns hex signature.
+
+    algo:
+      • "auto"    — ed25519 if available + env key set, else hmac
+      • "hmac"    — force HMAC-SHA-256 (key arg / env var)
+      • "ed25519" — force ed25519 (env-set private PEM required)
+    """
+    if algo == "auto":
+        algo = "ed25519" if _ed25519_active() else "hmac"
+    if algo == "ed25519":
+        return _sign_ed25519(ir)
+    return _sign_hmac(ir, key=key)
+
+
+def verify_ir(
+    ir: dict,
+    signature_hex: str,
+    key: Optional[bytes] = None,
+    *,
+    algo: str = "auto",
+    public_pem: Optional[str] = None,
+) -> bool:
+    """Constant-time / asymmetric verify of signature over canonical IR.
+
+    `algo` mirrors `sign_ir`. For ed25519 verify-only contexts, set
+    `CORTEX_PROVENANCE_ED25519_PUBLIC_KEY` env var or pass `public_pem`.
+    """
+    if algo == "auto":
+        algo = "ed25519" if _ed25519_active() else "hmac"
+    if algo == "ed25519":
+        return _verify_ed25519(ir, signature_hex, public_pem=public_pem)
+    return _verify_hmac(ir, signature_hex, key=key)
 
 
 def sign_and_inject_provenance(
@@ -81,22 +161,29 @@ def sign_and_inject_provenance(
     build_hash: Optional[str] = None,
     signed_by: Optional[str] = None,
     key: Optional[bytes] = None,
+    algo: str = "auto",
 ) -> dict:
-    """Compute SHA-256 + HMAC signature of the IR, inject a `provenance`
-    block matching the W4.7 schema, return a new IR (deep-copy).
+    """Compute SHA-256 + signature of the IR (HMAC or ed25519), inject a
+    `provenance` block matching the W4.7 schema, return a new IR
+    (deep-copy).
     """
     new_ir = copy.deepcopy(ir)
-    new_ir.pop("provenance", None)  # remove any stale provenance first
+    new_ir.pop("provenance", None)
     ir_hash = ir_sha256(new_ir)
-    sig = sign_ir(new_ir, key=key)
+    sig = sign_ir(new_ir, key=key, algo=algo)
+    if algo == "auto":
+        effective_algo = "ed25519" if _ed25519_active() else "hmac"
+    else:
+        effective_algo = algo
     prov: dict = {
         "vendor": vendor,
         "par_source": par_source,
-        "par_sha256": ir_hash,   # for synthesized IR, par_sha256 == ir_sha256
+        "par_sha256": ir_hash,
         "ir_sha256": ir_hash,
         "built_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "signed_by": signed_by or "cortex-slot-math-engine-v1.0.0",
         "signature": sig,
+        "signature_algo": effective_algo,
     }
     if swid:
         prov["swid"] = swid
@@ -106,11 +193,15 @@ def sign_and_inject_provenance(
     return new_ir
 
 
-def verify_provenance(ir: dict, key: Optional[bytes] = None) -> tuple[bool, str]:
-    """Verify an IR's embedded provenance block:
-      • re-compute `ir_sha256` (transient keys excluded) — must equal
-        `provenance.ir_sha256` (if present);
-      • re-compute HMAC signature — must equal `provenance.signature`.
+def verify_provenance(
+    ir: dict,
+    key: Optional[bytes] = None,
+    *,
+    public_pem: Optional[str] = None,
+) -> tuple[bool, str]:
+    """Verify an IR's embedded provenance block. Algorithm is auto-detected
+    from `provenance.signature_algo` (defaults to "hmac" for legacy
+    provenance blocks).
 
     Returns (ok, reason).
     """
@@ -126,10 +217,11 @@ def verify_provenance(ir: dict, key: Optional[bytes] = None) -> tuple[bool, str]
     sig = prov.get("signature")
     if not sig:
         return False, "no signature in provenance"
+    algo = prov.get("signature_algo", "hmac")
     ok = verify_ir(
         {k: v for k, v in ir.items() if k != "provenance"},
-        sig, key=key,
+        sig, key=key, algo=algo, public_pem=public_pem,
     )
     if not ok:
-        return False, "HMAC signature mismatch"
-    return True, "provenance valid"
+        return False, f"{algo} signature mismatch"
+    return True, f"provenance valid ({algo})"

@@ -47,6 +47,7 @@ from .catalog import build_catalog, filter_catalog
 from .visualize import render_mermaid, render_mermaid_fenced
 from .catalog_html import render_catalog_html
 from .studio_html import render_studio_html
+from .acceptance import run_acceptance, AcceptanceReport, AcceptanceEntry
 
 __all__ = [
     "MathDslSpec",

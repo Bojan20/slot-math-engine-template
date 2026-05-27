@@ -73,6 +73,23 @@ def main(argv: list[str] | None = None) -> int:
     pcert.add_argument("--mode", choices=["c-1", "c-3", "c-4", "c-5"], default="c-1")
     pcert.add_argument("--notes", type=str, default=None)
 
+    psign = sub.add_parser("sign", help="Sign an IR JSON in-place (injects provenance block)")
+    psign.add_argument("ir_json", type=Path)
+    psign.add_argument("--vendor", type=str, required=True)
+    psign.add_argument("--par-source", type=str, default="dsl-synth")
+    psign.add_argument("--swid", type=str, default=None)
+    psign.add_argument("--build-hash", type=str, default=None)
+    psign.add_argument("--algo", choices=["auto", "hmac", "ed25519"], default="auto")
+
+    pverify = sub.add_parser("verify", help="Verify an IR JSON's provenance block")
+    pverify.add_argument("ir_json", type=Path)
+    pverify.add_argument("--public-pem", type=Path, default=None)
+
+    paccept = sub.add_parser("acceptance", help="Run acceptance suite over a specs directory")
+    paccept.add_argument("specs_dir", type=Path)
+    paccept.add_argument("--mode", choices=["c-1", "c-3", "c-4", "c-5"], default="c-1")
+    paccept.add_argument("--out-json", type=Path, default=None)
+
     args = p.parse_args(argv)
 
     # diff and cert have their own loading logic
@@ -83,6 +100,45 @@ def main(argv: list[str] | None = None) -> int:
         entries = diff_specs(a_spec, b_spec)
         sys.stdout.write(render_diff(entries))
         return 0
+
+    if args.cmd == "sign":
+        from .provenance import sign_and_inject_provenance
+        ir = json.loads(args.ir_json.read_text(encoding="utf-8"))
+        signed = sign_and_inject_provenance(
+            ir, vendor=args.vendor, par_source=args.par_source,
+            swid=args.swid, build_hash=args.build_hash, algo=args.algo,
+        )
+        args.ir_json.write_text(
+            json.dumps(signed, indent=2, sort_keys=False), encoding="utf-8"
+        )
+        sys.stderr.write(f"signed in place: {args.ir_json}\n")
+        return 0
+
+    if args.cmd == "verify":
+        from .provenance import verify_provenance
+        ir = json.loads(args.ir_json.read_text(encoding="utf-8"))
+        pem = args.public_pem.read_text(encoding="utf-8") if args.public_pem else None
+        ok, reason = verify_provenance(ir, public_pem=pem)
+        sys.stdout.write(f"{'OK' if ok else 'FAIL'} — {reason}\n")
+        return 0 if ok else 1
+
+    if args.cmd == "acceptance":
+        from .acceptance import run_acceptance
+        report = run_acceptance(args.specs_dir, mode=args.mode)
+        sys.stdout.write(report.summary())
+        if args.out_json:
+            import dataclasses
+            args.out_json.write_text(
+                json.dumps(
+                    {"ok": report.ok,
+                     "pass": report.pass_count,
+                     "fail": report.fail_count,
+                     "entries": [dataclasses.asdict(e) for e in report.entries]},
+                    indent=2, sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+        return 0 if report.ok else 1
 
     # Branches that don't take a DSL spec
     if args.cmd == "extract":
