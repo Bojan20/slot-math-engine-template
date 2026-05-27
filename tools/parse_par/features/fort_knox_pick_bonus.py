@@ -169,10 +169,22 @@ def _parse_award_table(rows: list[list[str]], start: int, max_search: int) -> di
                 weight = n(rows, ar, col_start + 1)
                 if avg_pay is None or weight is None:
                     continue
+                # PHASE W-C2 fix: retain numerator/denominator separation
+                # via Fraction so W4.5 Hold-and-Win avg_pay × weight / Σ
+                # remains bit-reproducible. Float kept for downstream
+                # back-compat consumers under canonical key; rational
+                # preserved under _exact prefix for cert pipeline.
+                from fractions import Fraction as _F
+                avg_pay_exact = _F(avg_pay).limit_denominator(10**12)
+                weight_exact = _F(weight).limit_denominator(10**12)
                 block.append({
                     "label": label,
                     "avg_pay": float(avg_pay),
                     "weight": float(weight),
+                    "_avg_pay_exact_num": avg_pay_exact.numerator,
+                    "_avg_pay_exact_den": avg_pay_exact.denominator,
+                    "_weight_exact_num": weight_exact.numerator,
+                    "_weight_exact_den": weight_exact.denominator,
                 })
             awards[bm] = block
 

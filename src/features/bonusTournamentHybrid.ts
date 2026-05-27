@@ -497,8 +497,27 @@ function computePrizeVector(
         weights[r] = Math.exp(-structure.decay * r);
         totalW += weights[r];
       }
+      // PHASE W-C3 fix: ε guard — exp(-decay·r) for large decay·r
+      // approaches 0 + accumulates rounding error. Refuse to allocate
+      // when totalW is below numerical-precision floor.
+      if (totalW <= 1e-300) {
+        throw new RangeError(
+          `bonusTournamentHybrid exp-decay: totalW=${totalW} ≤ 1e-300; ` +
+            `decay=${structure.decay} too aggressive for topN=${top}`,
+        );
+      }
+      // Sanity assertion: Σ (w_r / totalW) must equal 1.0 ± 1e-9
+      let allocSum = 0;
       for (let r = 0; r < top; r++) {
-        prizes[r] = (weights[r] / totalW) * poolTotal;
+        const share = weights[r] / totalW;
+        prizes[r] = share * poolTotal;
+        allocSum += share;
+      }
+      if (Math.abs(allocSum - 1.0) > 1e-9) {
+        throw new RangeError(
+          `bonusTournamentHybrid exp-decay: Σ share = ${allocSum} ` +
+            `(expected 1.0 ± 1e-9)`,
+        );
       }
       break;
     }
