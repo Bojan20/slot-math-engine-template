@@ -294,20 +294,38 @@ Library covers every major probability family used in commercial slot math liter
 **Kimi-validated sources** (deep research fingerprint `d3e8934d0b403e6c`, 2026-05-26):
 Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 · CoreWeave Pretrain/FT/RAG 2025 · Nimbalyst Claude Code Subagents Guide 2026 · SitePoint Fine-Tune Local LLMs 2026 · Track360 jurisdiction comparison 2026 · Ballard Spahr Nevada NGCB 2026-04 · UKGC LCCP previous-changes feed · AGCO Registrar's Standards 2026 · Altenar Italy/Sweden 2026 · ICLG Denmark 2025 · CallSphere FT-vs-Prompt-vs-RAG May 2026 · GamingLabs RTP analysis 2025 · CreateIT slot debug framework 2025 · UKGC RTP-calculation guide 2021.
 
-### Pre-flight summary (final — Phase 1-8 closed · 2026-05-27 audit)
+---
+
+### **PHASE 9 — Tournament & Multi-Player Math** _(new vertical: session-aggregated leaderboard math beyond single-player engine)_
+**Status:** 🟡 **W201 LANDED (1/N waves)** — first kernel of new Phase. Engineering for Phase 1-8 is terminal; Phase 9 opens the multi-player vertical where vendor revenue is now growing fastest (IGT TournXpress, Pragmatic Drops & Wins, BTG Megaways Race, SG/L&W WinPower).
+
+| # | Wave | Status | Plan |
+|---|---|:---:|---|
+| P9.1 | **W201 — Tournament Prize Allocation Solver** (104. solver) | ✅ **LANDED** | `src/features/tournamentPrizeAllocation.ts` — first closed-form solver for multi-spin session-aggregated leaderboard tournaments. 4 prize structures (WTA / Top-N flat / Exponential-decay / Percentile-bracket); per-rank disclosure (UKGC RTS-12 mandatory); Gumbel-approx skill premium for top-rank player vs average (boost ∝ σ·√(S·ln N)); per-spin RTP composition (`baseRtp + c·poolPayoutShare`); 6 industry-config acceptance suite (IGT TournXpress / Pragmatic D&W 1000-player / L&W WinPower / Hacksaw Race / BTG Megaways Race / Bally Drum Roll). **63/63 vitest specs pass + 6/6 industry-config MC convergence (ratio ∈ [0.9, 1.1] @ 10K tournaments)**. |
+| P9.2 | **W202 — Multi-Pool Cross-Tournament Network Solver** | 🟡 prep | Networked tournament where prize pools span multiple titles + multi-day cumulative leaderboard. Closed-form for cross-pool contribution flow + per-title participation skew. |
+| P9.3 | **W203 — Skill-Based Variance-Adjusted Ranking** | 🟡 prep | Heterogeneous player handicap (e.g. bet-size weighting, prior session ROI) → adjusted-rank distribution; covers UKGC bet-size-fair tournament regulation. |
+| P9.4 | **W204 — Tournament-Aware RTP Audit Pipeline** | 🟡 prep | `slot-tournament-audit` CLI: takes IR + tournament config → emits per-rank prize table + combined RTP + UKGC RTS-12 disclosure doc + MGA PPD §11 typical-skill expected-return table. |
+| P9.5 | **W205 — Bonus-Tournament Hybrid Mechanic** | 🟡 prep | Closed-form for tournaments where session-best **bonus round** (not session total) is the ranked metric; covers Hacksaw Bonus Buy Race + Push Big Win Race + Vendor B Mega Win promo. |
+
+**Acceptance Phase 9:** 5 closed-form kernels covering tournament-mode math across all 2025-2026 vendor formats; CLI audit tool emitting regulator-grade disclosure docs; head-to-head benchmark against published prize-pool data from 3 vendor tournaments.
+
+---
+
+### Pre-flight summary (Phase 1-8 closed + W201 landed · 2026-05-27 03:08 audit)
 
 | Metric | Vrednost |
 |---|---|
-| **Distinct solver funkcija (`solve*`)** | **103** |
-| **Vitest spec files** | **289** |
-| **Vitest tests** | **7266 PASS + 3 skipped + 0 failed** |
+| **Distinct solver funkcija (`solve*`)** | **104** ⬆ +1 |
+| **Vitest spec files** | **290** ⬆ +1 |
+| **Vitest tests** | **7329 PASS + 3 skipped + 0 failed** ⬆ +63 |
 | **Rust test count** | **307 / 307 PASS** |
-| **Closed-form portfolio entries** | **121** |
+| **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** |
 | Closed-form kernels (mission #6) | **100 / 100** ✅ |
 | Mission acceptance | **10 / 10** ✅ |
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
+| **Phase 9 tournament kernels** | **1 / 5** (W201 landed; W202-W205 prep) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |
 | Commercialization | marketplace catalog (tier-based) · pilot outreach package · public benchmark vs 8 studios · community contributor flow |
