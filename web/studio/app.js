@@ -213,6 +213,16 @@
   function getVariant(wsId, varId) {
     return workspaces[wsId]?.variants[varId];
   }
+  // PHASE 49 — expose accessors so the Playwright audit harness can read
+  // variant state directly (e.g. `_metricsStale` after a slider edit).
+  // No setter is exposed; tests only INSPECT, the real state still lives
+  // in this IIFE.
+  if (typeof window !== "undefined") {
+    window.__slotmath_getActiveWorkspace =
+      window.__slotmath_getActiveWorkspace || getActiveWorkspace;
+    window.__slotmath_getActiveVariant =
+      window.__slotmath_getActiveVariant || getActiveVariant;
+  }
 
   /* ============================================================
      PERSONA · real per-persona layout (math / design / producer)
@@ -548,8 +558,12 @@
         // change. Without this, the studio shows one number while the
         // cert pipeline emits another.
         propagateSliderWeightToReels(variant, variant.symbols[i].id, v);
-        // PHASE 47 — write the live exact RTP into the cert snapshot so
-        // downstream cert/XML emit reads the up-to-date number.
+        // PHASE 49 — recompute RTP immediately so the L1 row reflects the
+        // new weight even if the user clicks COMPUTE before the 350 ms
+        // debounce on scheduleAutoBalanceFor fires. The auto-balance still
+        // schedules afterward to correct any drift against rtpTarget.
+        recomputeFor(variant);
+        refreshL1();
         scheduleAutoBalanceFor(variant, paneKey, i);
       });
     });
@@ -761,9 +775,21 @@
       const variant = getActiveVariant();
       const tier = s.dataset.tier;
       const v = parseInt(s.value, 10);
+      if (variant.tierCounts[tier] === v) return;
       variant.tierCounts[tier] = v;
       $(`[data-tier-v="${tier}"]`).textContent = v;
       $$(".preset[data-preset]", $("#panel-build")).forEach(x => x.classList.remove("is-active"));
+      // PHASE 49 — symbol-pool topology change invalidates the cached MC
+      // truth (hit_rate, σ, P99) the same way a weight edit does. Mark
+      // stale so recomputeFor() falls back to heuristic until a new MC
+      // run lands and refreshL1 surfaces the stale indicator.
+      if (variant.validatedMetrics) {
+        variant._metricsStale = true;
+        variant._metricsStaleSince = variant._metricsStaleSince || Date.now();
+      }
+      // Also mark IR weights dirty so the canonical-IR closed-form path
+      // re-runs the Π_reels walker on the next recomputeFor() pass.
+      if (variant.ir) variant._weightsDirtySinceImport = true;
       buildSymbolPoolFor(variant); autoBuildReelsFor(variant);
       rerenderActive();
       recomputeFor(variant);
@@ -803,7 +829,12 @@
       // L1 row reflects engine truth (e.g. Wrath of Olympus: hit 20.69%,
       // σ 4.51, P99 53.82×).  Fall back to a coarse heuristic only when no
       // validated_metrics block is present in the IR.
-      const vm = variant.validatedMetrics;
+      // PHASE 49 — `_metricsStale` (set by propagateSliderWeightToReels /
+      // tier-slider input) treats the cached vm as obsolete, so we fall
+      // back to heuristic until autoMcTrigger lands a fresh block. This
+      // prevents the L1 row from showing pre-edit MC truth alongside a
+      // post-edit closed-form RTP.
+      const vm = variant._metricsStale ? null : variant.validatedMetrics;
       if (vm && typeof vm.hit_rate === "number") {
         variant.hit = vm.hit_rate;
       } else {
@@ -885,14 +916,21 @@
     // Math headline · 4dp precision so columns align in copy-paste.  On a
     // blank variant we render an em-dash instead of computed zeros / 15σ
     // / 500× heuristic placeholders.
+    // PHASE 49 — when validated MC metrics have been invalidated by a
+    // slider edit (`_metricsStale`), the cached hit/σ/P99 numbers no
+    // longer match the live reels; tag the affected fields with a small
+    // amber "·stale" suffix and a CSS hook so the user sees that the
+    // engine truth is pending refresh.
+    const stale = !!v._metricsStale;
+    const staleTag = stale ? ` <span class="l1-stale" title="MC truth obsolete — slider edit invalidated cached metrics; re-run validation">·stale</span>` : "";
     const l1rtp = $("#l1-rtp");
     if (l1rtp) l1rtp.innerHTML = blank ? `${DASH}<span class="pct">%</span>` : `${v.rtp.toFixed(4)}<span class="pct">%</span>`;
     const l1hit = $("#l1-hit");
-    if (l1hit) l1hit.innerHTML = blank ? `${DASH}<span class="pct">%</span>` : `${v.hit.toFixed(2)}<span class="pct">%</span>`;
+    if (l1hit) l1hit.innerHTML = blank ? `${DASH}<span class="pct">%</span>` : `${v.hit.toFixed(2)}<span class="pct">%</span>${staleTag}`;
     const l1vol = $("#l1-vola");
     if (l1vol) l1vol.textContent = blank ? DASH : v.vola;
     const l1sig = $("#l1-sigma");
-    if (l1sig) l1sig.textContent = blank ? DASH : v.sigma.toFixed(2);
+    if (l1sig) l1sig.innerHTML = blank ? DASH : `${v.sigma.toFixed(2)}${staleTag}`;
     // P99 from validated MC win-distribution when available, else fall back
     // to the legacy `maxWin / 10` heuristic.  Wrath's validated P99 is 53.82×,
     // not 500× (which is the cap-divided-by-10 placeholder).
@@ -902,7 +940,7 @@
         l1p99.textContent = DASH + "×";
       } else {
         const p99Val = (typeof v.p99 === "number" && v.p99 > 0) ? v.p99 : (v.maxWin / 10);
-        l1p99.textContent = p99Val.toFixed(p99Val < 100 ? 2 : 1) + "×";
+        l1p99.innerHTML = `${p99Val.toFixed(p99Val < 100 ? 2 : 1)}×${staleTag}`;
       }
     }
 
@@ -1224,6 +1262,16 @@
     }
     if (touched) {
       variant._weightsDirtySinceImport = true;
+      // PHASE 49 — any slider edit makes the cached MC truth (hit_rate,
+      // volatility_index, P99) numerically obsolete. Mark the block stale
+      // so recomputeFor() falls back to the heuristic estimator and the
+      // L1 row picks up a "stale" indicator until a fresh MC run lands.
+      // We do NOT zero out validatedMetrics here so a user can compare
+      // pre/post-edit truth in the activity log if needed.
+      if (variant.validatedMetrics) {
+        variant._metricsStale = true;
+        variant._metricsStaleSince = variant._metricsStaleSince || Date.now();
+      }
     }
   }
 
@@ -2410,6 +2458,11 @@
       // (user may have switched workspaces mid-run).
       const vmBlock = res.validatedMetrics;
       targetVariant.validatedMetrics = vmBlock;
+      // PHASE 49 — fresh MC block clears the stale-metric flag. Any future
+      // slider edit on this variant will re-arm the flag via
+      // propagateSliderWeightToReels(); the cycle is symmetric.
+      targetVariant._metricsStale = false;
+      delete targetVariant._metricsStaleSince;
       if (typeof vmBlock.hit_rate === "number")          targetVariant.hit = vmBlock.hit_rate;
       if (typeof vmBlock.volatility_index === "number")  targetVariant.sigma = vmBlock.volatility_index;
       if (typeof vmBlock.max_win_observed_x === "number") targetVariant.maxWinObserved = vmBlock.max_win_observed_x;
@@ -2727,11 +2780,32 @@
     const name = edited.meta.name.value || "Imported Game";
     const id = "ws-" + Date.now().toString(36);
     const irName = name.toLowerCase().replace(/\s+/g, "-") + "-v0.1.00";
-    const ws = newWorkspace({ id, name, theme: "cyan", layout: "5x3", irName });
+    // PHASE 49 — derive workspace layout from the parsed GDD topology
+    // rather than hardcoding "5x3". A user importing a 6×4 MegaWays or
+    // 7×7 cluster GDD now lands in a correctly-sized workspace; payline
+    // generation, reel layout, and the closed-form walker all read this
+    // layout to lay out symbol cells.
+    const topoReels = +(edited.topology?.reels?.value) || 5;
+    const topoRows  = +(edited.topology?.rows?.value)  || 3;
+    const topoKind  = (edited.topology?.kind?.value || "rectangular").toString().toLowerCase();
+    let layout;
+    if (topoKind === "cluster") {
+      // Cluster boards are square (Wrath / Sweet Bonanza). Snap to a
+      // square layout, default 7×7 if dimensions disagree.
+      const side = Math.max(topoReels, topoRows, 6);
+      layout = `${side}x${side}`;
+    } else if (topoReels === 6 && topoRows >= 4) {
+      layout = "6x4";
+    } else if (topoReels === 5 && topoRows === 3) {
+      layout = "5x3";
+    } else {
+      layout = `${topoReels}x${topoRows}`;
+    }
+    const ws = newWorkspace({ id, name, theme: "cyan", layout, irName });
     const v = ws.variants[ws.activeVariantId];
     v.rtpTarget = +(edited.targetRTP.value * 100).toFixed(2);
     v.maxWin = edited.maxWin.value;
-    v.vola = edited.volatility.value;
+    v.vola = (edited.volatility.value || "MID").toString().toUpperCase();
     v.tierCounts = {
       HP: edited.symbolPool.HP.value | 0,
       MP: edited.symbolPool.MP.value | 0,
@@ -2740,10 +2814,57 @@
       SCATTER: edited.symbolPool.SCATTER.value | 0,
       MULT: edited.symbolPool.MULT.value | 0,
     };
+    // PHASE 49 — hydrate the paytable extracted by the GDD parser. Prior
+    // to this, gdd.paytable.value was rendered as a read-only preview in
+    // the modal and then discarded; v.paytable stayed as the default
+    // placeholder pays (0/0/0) so the heuristic RTP estimator was always
+    // wrong by the magnitude of the missing HP pays. Now the parsed rows
+    // land on the variant under the same shape (x3/x4/x5) the cert
+    // pipeline already consumes.
+    if (Array.isArray(edited.paytable?.value) && edited.paytable.value.length > 0) {
+      const ptMap = {};
+      for (const row of edited.paytable.value) {
+        if (!row || !row.symbol) continue;
+        ptMap[row.symbol] = {
+          x3: +row.x3 || 0,
+          x4: +row.x4 || 0,
+          x5: +row.x5 || 0,
+        };
+      }
+      v.paytable = ptMap;
+      v.gddPaytableHydrated = true;
+    }
+    // PHASE 49 — preserve the feature list so Play Template + cert XML
+    // know which features are active (Free Spins, Hold & Win, etc.).
+    // Schema mirrors the canonical-IR `features[]` array (`id` + `name`).
+    if (Array.isArray(edited.features?.value)) {
+      v.features = edited.features.value
+        .filter(name => typeof name === "string" && name.trim().length > 0)
+        .map(name => ({
+          id: name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, ""),
+          name,
+        }));
+    }
+    // PHASE 49 — preserve jurisdiction list for compliance auto-validation.
+    if (Array.isArray(edited.jurisdictions?.value)) {
+      v.jurisdictions = edited.jurisdictions.value.slice();
+    }
     workspaces[id] = ws;
     wsOrder.push(id);
     switchWorkspace(id);
     if (window.__studio__.scheduleRTPRecompute) window.__studio__.scheduleRTPRecompute();
+    // PHASE 49 — schedule a background MC run so the heuristic
+    // hit/σ/P99 placeholders are replaced by validated engine truth.
+    // Matches the canonical-IR import path (line ~2335 above) which
+    // calls autoMcTrigger() when validated_metrics is missing.
+    try {
+      if (typeof variantToFullIR === "function" && typeof autoMcTrigger === "function") {
+        const seedIR = variantToFullIR(v);
+        setTimeout(() => autoMcTrigger(v, seedIR, "gdd-import").catch(() => {}), 200);
+      }
+    } catch (_) {
+      /* never block GDD generate on MC scheduling */
+    }
     const computedRtp = result.computedRtp != null ? (result.computedRtp * 100).toFixed(2) : "—";
     const statedRtp = (edited.targetRTP.value * 100).toFixed(2);
     const delta = result.computedRtp != null
@@ -3514,12 +3635,44 @@
 
   /* ============================================================
      COMPUTE / VALIDATE / AUTO-BAL BUTTONS
+     ============================================================
+     PHASE 49 — flushPendingAutoBalance() drains every debounced
+     auto-balance timer for the active variant BEFORE we recompute.
+     Without this, a user who moves a weight slider and immediately
+     clicks COMPUTE would see RTP for the pre-edit weights (the 350 ms
+     scheduleAutoBalanceFor() debounce had not fired yet). The COMPUTE
+     button now guarantees the closed-form walk reads the very latest
+     state, never a stale snapshot.
      ============================================================ */
+  function flushPendingAutoBalance() {
+    const v = getActiveVariant();
+    if (!v) return;
+    const ids = [v.id + ":", v.id + ":left", v.id + ":right"];
+    for (const key of ids) {
+      const t = _autoBalanceTimers.get(key);
+      if (!t) continue;
+      clearTimeout(t);
+      _autoBalanceTimers.delete(key);
+      const paneKey = key.endsWith(":left") ? "left"
+                    : key.endsWith(":right") ? "right"
+                    : null;
+      try { doAutoBalanceFor(v, paneKey, "compute-flush", true); } catch (_) {}
+    }
+  }
+  if (typeof window !== "undefined") {
+    window.__slotmath_flushPendingAutoBalance =
+      window.__slotmath_flushPendingAutoBalance || flushPendingAutoBalance;
+  }
+
   $("#btn-compute").addEventListener("click", () => {
+    flushPendingAutoBalance();
     recompute(); refreshL1(); refreshRail(); refreshVariantTabs();
     const v = getActiveVariant();
-    toast({ kind: "ok", msg: `Closed-form RTP recomputed · <b>${v.rtp.toFixed(4)}%</b> · 1.4 ms` });
-    logActivity(`compute RTP ${v.rtp.toFixed(2)}%`);
+    const staleTail = v._metricsStale
+      ? ` · <span style="color:#ffb84c">metrics stale — run MC to refresh hit/σ/P99</span>`
+      : "";
+    toast({ kind: "ok", msg: `Closed-form RTP recomputed · <b>${v.rtp.toFixed(4)}%</b> · 1.4 ms${staleTail}` });
+    logActivity(`compute RTP ${v.rtp.toFixed(2)}%${v._metricsStale ? " (metrics stale)" : ""}`);
   });
 
   /* ============================================================

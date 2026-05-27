@@ -328,6 +328,19 @@ button:focus-visible, input:focus-visible, select:focus-visible,
 .l1-m b { font-size: 13px; font-weight: 600; color: var(--text-0); }
 .l1-m b .pct { font-size: 10px; color: var(--text-2); font-weight: 400; margin-left: 1px; }
 .l1-vola { color: var(--cyan) !important; font-family: var(--font-mono); font-size: 11px !important; letter-spacing: 0.06em; }
+/* PHASE 49 — "·stale" tag on L1 hit/σ/P99 fields when slider edits have
+   invalidated the cached MC truth. Amber so it reads as "warn", not "error". */
+.l1-stale {
+  font-size: 9px;
+  color: #ffb84c;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  margin-left: 4px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  vertical-align: top;
+  cursor: help;
+}
 
 /* ---------- ROW 2b · AUTO-MC PROGRESS STRIP ---------- */
 .row-automc {
