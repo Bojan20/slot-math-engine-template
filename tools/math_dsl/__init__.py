@@ -48,6 +48,8 @@ from .visualize import render_mermaid, render_mermaid_fenced
 from .catalog_html import render_catalog_html
 from .studio_html import render_studio_html
 from .acceptance import run_acceptance, AcceptanceReport, AcceptanceEntry
+from .pipeline import run_pipeline, PipelineError
+from .audit import append_audit, verify_audit_chain, read_audit
 
 __all__ = [
     "MathDslSpec",

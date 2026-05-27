@@ -90,6 +90,19 @@ def main(argv: list[str] | None = None) -> int:
     paccept.add_argument("--mode", choices=["c-1", "c-3", "c-4", "c-5"], default="c-1")
     paccept.add_argument("--out-json", type=Path, default=None)
 
+    ppipe = sub.add_parser("pipeline", help="One-shot DSL → solved → signed → cert ZIP")
+    ppipe.add_argument("spec", type=Path)
+    ppipe.add_argument("--out-dir", type=Path, default=Path("./out/cert"))
+    ppipe.add_argument("--mode", choices=["c-1", "c-3", "c-4", "c-5"], default="c-1")
+    ppipe.add_argument("--vendor", type=str, default="studio-internal")
+    ppipe.add_argument("--swid", type=str, default=None)
+    ppipe.add_argument("--build-hash", type=str, default=None)
+    ppipe.add_argument("--notes", type=str, default=None)
+    ppipe.add_argument("--algo", choices=["auto", "hmac", "ed25519"], default="auto")
+
+    paudit = sub.add_parser("audit-verify", help="Verify SHA-256 chain of an audit log JSONL")
+    paudit.add_argument("audit_path", type=Path)
+
     args = p.parse_args(argv)
 
     # diff and cert have their own loading logic
@@ -139,6 +152,29 @@ def main(argv: list[str] | None = None) -> int:
                 encoding="utf-8",
             )
         return 0 if report.ok else 1
+
+    if args.cmd == "pipeline":
+        from .pipeline import run_pipeline, PipelineError
+        try:
+            res = run_pipeline(
+                args.spec, args.out_dir,
+                mode=args.mode, vendor=args.vendor, swid=args.swid,
+                build_hash=args.build_hash, notes=args.notes, algo=args.algo,
+            )
+        except PipelineError as e:
+            print(f"pipeline failed: {e}", file=sys.stderr)
+            return 6
+        sys.stdout.write(json.dumps(res, indent=2, sort_keys=False) + "\n")
+        return 0
+
+    if args.cmd == "audit-verify":
+        from .audit import verify_audit_chain
+        ok, bad = verify_audit_chain(args.audit_path)
+        if ok:
+            sys.stdout.write(f"OK — audit chain valid ({args.audit_path})\n")
+            return 0
+        sys.stdout.write(f"FAIL — broken at line(s) {bad}\n")
+        return 1
 
     # Branches that don't take a DSL spec
     if args.cmd == "extract":

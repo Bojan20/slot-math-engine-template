@@ -6,6 +6,59 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 22:15 (post **W7.1 + W7.2 + W7.3 LANDED** — GH Actions + one-shot pipeline + tamper-evident audit trail)
+
+**Status:** **CI gate + production pipeline + tamper-evident audit log are live.** GitHub Actions workflow runs the full Math DSL acceptance suite + unit tests on every PR touching the DSL surface. One CLI invocation now does: parse → compile → Z3 synth → sign → cert bundle → audit JSONL. Audit trail has SHA-256 hash chain — any tamper breaks the chain at the modified entry and every subsequent one.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W7.1 — GitHub Actions workflow** | ✅ **landed** | 1 of 11 | `.github/workflows/math-dsl-acceptance.yml` | Runs on PR / push to main touching `tools/math_dsl/**`, `tools/smt/**`, or any `test_w*.py`. Installs `z3-solver`, runs full test suite + acceptance under Mode C-1. Uploads `acceptance.json` as artifact (30-day retention) |
+| **W7.2 — One-shot pipeline** | ✅ **landed** | 4 of 11 | `tools/math_dsl/pipeline.py` + CLI `pipeline` subcommand | `run_pipeline(spec, out_dir, mode=…, vendor=…, swid=…)` → JSON with cert_zip + ir_sha256 + signature + RTP measured + audit_path. Live: tools/math_dsl/specs/example_classic_5x3.yaml → cert ZIP in **~10 ms** including HMAC sign |
+| **W7.3 — Tamper-evident audit trail** | ✅ **landed** | 6 of 11 | `tools/math_dsl/audit.py` + CLI `audit-verify` subcommand | Append-only `.jsonl`; each entry carries `prev_sha256` + `sha256_chain = SHA256(prev || canonical_json)`. `verify_audit_chain(path) → (ok, bad_line_numbers)` walks forward, flagging any tamper. Tested: mutating one entry breaks that line's chain + every subsequent one |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w7_1_w7_2_w7_3_pipeline_audit.py` | **11 / 11** ✅ | 0.037 s |
+
+### Grand total — W4.* + W5.* + W6.* + W7.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | 12 / 12 |
+| `test_w7_1_w7_2_w7_3_pipeline_audit.py` | 11 / 11 |
+| **Math DSL + cert + UI + acceptance + pipeline cumulative** | **169 / 169** ✅ |
+
+### Live one-shot pipeline output
+
+```json
+{
+  "spec_path": "tools/math_dsl/specs/example_classic_5x3.yaml",
+  "cert_zip": "/tmp/pipeline_test/cert_crimson-tiger_20260527T203222Z.zip",
+  "ir_sha256": "152af68826725df65097c1a4d0e6d24ef09c4f4c6133970003ee20b5118134e4",
+  "signature": "bbd0bb07e17e373aab00e86f7060e400de06aec93dc17bb6fad1bf53e222da31",
+  "signature_algo": "hmac",
+  "rtp_target": 0.96,
+  "rtp_measured": 0.9517,
+  "rtp_delta": 0.0083,
+  "synth_ms": 7.46,
+  "audit_path": "/tmp/pipeline_test/audit.log.jsonl",
+  "audit_sha256_chain": "88e8721344976e227f06ad629560556ceb57a9dd0eede1d8297b6872fa597e28",
+  "ok": true
+}
+```
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:55 (post **W6.9 + W6.10 + W6.11 LANDED** — sign/verify CLI + ed25519 upgrade path + acceptance runner)
 
 **Status:** **CI gate je live.** `python -m tools.math_dsl acceptance tools/math_dsl/specs` prolazi za sve 4 sample specs pod Mode C-1, oblikuje markdown summary za PR comment. Provenance ima dual-track (HMAC default + ed25519 kad je `cryptography` instaliran + env key postavljen). CLI: `compile` / `sign` / `verify` round-trip end-to-end u 3 koraka.

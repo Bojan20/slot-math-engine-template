@@ -1,0 +1,57 @@
+name: math-dsl-acceptance
+
+# W7.1 — runs the Math DSL acceptance suite + all Math DSL Python tests
+# on every PR touching the DSL surface area. Light, fast (< 30 s).
+
+on:
+  pull_request:
+    paths:
+      - "tools/math_dsl/**"
+      - "tools/smt/**"
+      - "tools/tests/test_w*_math_dsl*.py"
+      - "tools/tests/test_w*_extract.py"
+      - "tools/tests/test_w*_mutate_cache.py"
+      - "tools/tests/test_w*_cert_diff.py"
+      - "tools/tests/test_w*_prov_verify_catalog.py"
+      - "tools/tests/test_w*_html_mermaid.py"
+      - "tools/tests/test_w*_cli_ed25519_acceptance.py"
+      - ".github/workflows/math-dsl-acceptance.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/math_dsl/**"
+      - "tools/smt/**"
+  workflow_dispatch:
+
+jobs:
+  acceptance:
+    name: DSL acceptance + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install z3-solver
+        run: python -m pip install --upgrade pip z3-solver
+
+      - name: Run Math DSL Python test suite
+        run: |
+          python -m unittest discover -s tools/tests -p "test_w*.py" -v
+
+      - name: Run acceptance suite (Mode C-1)
+        run: |
+          python -m tools.math_dsl acceptance tools/math_dsl/specs \
+            --mode c-1 \
+            --out-json /tmp/acceptance.json
+
+      - name: Upload acceptance JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acceptance-report
+          path: /tmp/acceptance.json
+          retention-days: 30
