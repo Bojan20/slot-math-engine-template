@@ -63,7 +63,26 @@ def main(argv: list[str] | None = None) -> int:
     pm.add_argument("prompt", type=str, help='e.g. "raise RTP to 97; set volatility to high"')
     pm.add_argument("--show-log", action="store_true")
 
+    pd = sub.add_parser("diff", help="Semantic diff between two DSL spec YAMLs")
+    pd.add_argument("a", type=Path)
+    pd.add_argument("b", type=Path)
+
+    pcert = sub.add_parser("cert", help="Build a cert bundle ZIP from a DSL spec (synthesizes via Z3 first)")
+    pcert.add_argument("spec", type=Path)
+    pcert.add_argument("--out-dir", type=Path, default=Path("./out/cert"))
+    pcert.add_argument("--mode", choices=["c-1", "c-3", "c-4", "c-5"], default="c-1")
+    pcert.add_argument("--notes", type=str, default=None)
+
     args = p.parse_args(argv)
+
+    # diff and cert have their own loading logic
+    if args.cmd == "diff":
+        a_spec = parse_spec(args.a.read_text(encoding="utf-8"))
+        b_spec = parse_spec(args.b.read_text(encoding="utf-8"))
+        from .diff import diff_specs, render_diff
+        entries = diff_specs(a_spec, b_spec)
+        sys.stdout.write(render_diff(entries))
+        return 0
 
     # Branches that don't take a DSL spec
     if args.cmd == "extract":
@@ -111,6 +130,47 @@ def main(argv: list[str] | None = None) -> int:
             for e in log.errors:
                 sys.stderr.write(f"#   ERR: {e}\n")
         sys.stdout.write(serialize_to_yaml(mutated))
+        return 0
+
+    if args.cmd == "cert":
+        from tools.smt.weight_synthesizer import (
+            synth_uniform_weights, synth_with_hit_freq,
+            synth_with_volatility, synth_multi_objective,
+            RtpSynthesisError,
+        )
+        from .cert_bundle import build_cert_bundle
+        try:
+            if args.mode == "c-1":
+                solved = synth_uniform_weights(
+                    ir, spec.constraints.target_rtp,
+                    reel_length=float(spec.hints.get("reel_length") or 60),
+                    tolerance=spec.constraints.rtp_tolerance,
+                )
+            elif args.mode == "c-3":
+                solved = synth_with_hit_freq(
+                    ir, spec.constraints.target_rtp, spec.constraints.hit_freq_target,
+                    reel_length=float(spec.hints.get("reel_length") or 60),
+                    tolerance=spec.constraints.rtp_tolerance,
+                )
+            elif args.mode == "c-4":
+                solved = synth_with_volatility(
+                    ir, spec.constraints.target_rtp, spec.constraints.volatility_class,
+                    reel_length=float(spec.hints.get("reel_length") or 60),
+                    tolerance=spec.constraints.rtp_tolerance,
+                )
+            else:  # c-5
+                solved = synth_multi_objective(
+                    ir, target_rtp=spec.constraints.target_rtp,
+                    target_hit_freq=spec.constraints.hit_freq_target,
+                    volatility_class=spec.constraints.volatility_class,
+                    reel_length=float(spec.hints.get("reel_length") or 60),
+                    rtp_tolerance=spec.constraints.rtp_tolerance,
+                )
+        except RtpSynthesisError as e:
+            print(f"Z3 synthesis failed: {e}", file=sys.stderr)
+            return 4
+        zip_path = build_cert_bundle(spec, solved, args.out_dir, notes=args.notes)
+        sys.stdout.write(str(zip_path) + "\n")
         return 0
 
     # synth

@@ -33,6 +33,8 @@ from .mutate import (
     apply_mutation, list_supported_mutations,
     MutationLog, MutationOp, MutationError,
 )
+from .diff import diff_specs, render_diff, DiffEntry
+from .cert_bundle import build_cert_bundle
 
 __all__ = [
     "MathDslSpec",

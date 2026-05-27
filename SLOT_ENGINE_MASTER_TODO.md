@@ -6,6 +6,35 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:55 (post **W6.1 + W6.2 LANDED** — cert bundle generator + semantic DSL diff)
+
+**Status:** **Sales pipeline pieces shipped.** Lab can now receive a single ZIP (≤12 KB) that contains the DSL source, solved IR, provenance SHA-chain, and a `verify.sh` script the lab runs to re-derive RTP closed-form. Designer-facing diff CLI shows semantic spec changes (not text noise) for compliance / sales / git review.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W6.1 — Cert bundle generator** | ✅ **landed** | 8 of 17 | `tools/math_dsl/cert_bundle.py` | ZIP w/ README.md + design.yaml + game.ir.json + synth_log.json + provenance.json + verify.sh + manifest.json. Deterministic mtime, file-level SHA-256 + bundle-digest SHA-256. Crimson Tiger sample: **11.8 KB**. CLI: `python -m tools.math_dsl cert spec.yaml --mode c-1 --out-dir ./out/cert` |
+| **W6.2 — DSL semantic diff** | ✅ **landed** | 9 of 17 | `tools/math_dsl/diff.py` | Compares two `MathDslSpec` instances at meta / topology / symbols / features / paylines / constraints / hints level. Returns `DiffEntry[]` with kind ∈ added / removed / changed. `render_diff()` emits a 4-column markdown table. CLI: `python -m tools.math_dsl diff a.yaml b.yaml` |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w6_1_w6_2_cert_diff.py` | **17 / 17** ✅ | 0.056 s |
+
+### Grand total — W4.* + W5.* + W6.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` (Rust IR — Python equivalent) | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` (DSL parser + compile + Z3 C-1) | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` (Z3 C-4 + IR→DSL extract) | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` (mutation engine + Z3 cache) | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` (cluster + cascade + Mode C-5) | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` (cert bundle + diff) | 17 / 17 |
+| **Math DSL cumulative** | **103 / 103** ✅ |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:35 (post **W5.4 + W5.5 + W4.9 + W4.10 + W5.6 LANDED** — declarative mutation engine + Z3 cache + 2 new topologies + multi-objective synth)
 
 **Status:** **Math compiler is feature-complete for daily designer workflow.** Five atomic waves shipped in a single sequence:
