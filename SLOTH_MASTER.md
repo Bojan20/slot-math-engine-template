@@ -437,7 +437,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1387 PASS + 47 skipped** ⬆ +123 (P10 full sub-wave coverage: 72 P10.1+P10.4+P10.5 + 51 P10.2+P10.3+P10.6) |
+| **Python test count** | **1392 PASS + 47 skipped** ⬆ +128 (P10 full sub-wave coverage: 72 P10.1/4/5 + 14 P10.2 composition pairs + 5 P10.3 review UI + 5 P10.6 cert glue + 1 e2e single-command) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -446,7 +446,9 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
 | **Phase 9 tournament kernels** | **5 / 5** ✅ (W201 + W202 + W203 + W204 + W205 all LANDED) |
 | **W205+1 tech-debt closeout** | **3 / 3** ✅ (CLI shim + benchmark fix + dev docs) |
-| **Phase 10 AI Math Compiler v2** | **6 / 7** 🟢 (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 LANDED; P10.7 Z3 coupling prep) |
+| **Phase 10 AI Math Compiler v2** | **6 / 7** 🟢 (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 LANDED with FULL test coverage; P10.7 Z3 coupling prep) |
+| **P10 end-to-end single-command pipeline** | ✅ (`slot-design "..." --cert-pack` → spec.json + game.dsl.toml + IR + REVIEW.md + review.html + cert ZIP in one invocation; pinned by `test_p10_end_to_end_one_command_all_artefacts`) |
+| **P10.2 composition pair detection** | ✅ 16 industry pairings codified (Sweet Bonanza, Razor Shark, Lock It Link, Megaways, Aloha, Jammin Jars, Lightning Link, Wonka, Hacksaw bonus-buy, Sweet Bonanza Ante, Mega Moolah, Reel Rush, Reactoonz, Walking Wild Respin) + canonical/stacking/novel classification + low-RTP stacking warn |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |
