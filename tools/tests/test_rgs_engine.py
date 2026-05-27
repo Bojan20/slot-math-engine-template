@@ -381,11 +381,11 @@ async def _async_test_server_chain_merkle_grows_per_spin():
         assert sess is not None
         assert len(sess.receipts) == 4
         merkle = srv.chain_merkle(sid)
-        assert merkle["leaves"] == 4
-        assert merkle["root"]  # non-empty
+        assert merkle["tree_size"] == 4
+        assert merkle["root_hex"]  # non-empty
         # Same root if we rebuild externally from the same receipts.
         rebuilt = build_spin_chain_merkle(sess.receipts)
-        assert rebuilt["root"] == merkle["root"]
+        assert rebuilt["root_hex"] == merkle["root_hex"]
     finally:
         server.close()
         await server.wait_closed()

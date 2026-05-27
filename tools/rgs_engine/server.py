@@ -102,7 +102,7 @@ class RgsServer:
     def chain_merkle(self, session_id: str) -> dict[str, Any]:
         s = self._sessions.get(session_id)
         if not s:
-            return {"root": "", "leaves": 0, "tree_depth": 0}
+            return {"root_hex": "", "tree_size": 0, "leaf_hashes_hex": []}
         return build_spin_chain_merkle(s.receipts)
 
     async def serve(

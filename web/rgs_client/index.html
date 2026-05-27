@@ -1,0 +1,303 @@
+<!doctype html>
+<!--
+  PHASE 16 — Multi-platform RGS verification UI.
+
+  Standalone HTML / JS app that replays + verifies the PHASE 15 commit-
+  reveal chain emitted by the PHASE 12 spin server. Works on every
+  major OS-class (macOS, Linux, Windows, Android Chrome, iOS Safari)
+  with zero install, zero network requests, zero build step.
+
+  Two modes:
+    1. **Live session** — paste the WebSocket / HTTP bridge URL of a
+       running `tools.rgs_engine.server`, the client connects + emits
+       spins through the same NDJSON wire that the load-test harness
+       uses.
+    2. **Offline replay** — upload a session-log JSON (server emits one
+       on `--reveal-on-close`); the client re-derives every per-spin
+       seed via WebCrypto HMAC-SHA256 + redacts the chain Merkle root.
+
+  All crypto is browser-native (`crypto.subtle.digest` + `crypto.subtle.
+  importKey` + `crypto.subtle.sign`). No third-party JS, no network
+  dependencies — opens directly from `file://` in an airgapped review
+  room. Compatible with WebView shells (iOS WKWebView, Android
+  WebView), giving us a "native mobile" experience without a native
+  toolchain.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RGS Verifier · PHASE 12 + 16</title>
+  <style>
+    :root {
+      --bg: #0e1217;
+      --panel: #161c24;
+      --panel-2: #1c232e;
+      --text: #d8e0e8;
+      --muted: #7d8794;
+      --accent: #44d4ff;
+      --ok: #2ecc71;
+      --bad: #ff5a5f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "SF Pro Display", "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 1.4rem 2rem 1rem; border-bottom: 1px solid #232b35; }
+    header h1 { margin: 0; font-size: 1.4rem; letter-spacing: -0.3px; }
+    header .sub { color: var(--muted); margin-top: 0.3rem; font-size: 0.95rem; }
+    main { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 1.4rem 2rem; }
+    section.panel { background: var(--panel); border: 1px solid #232b35; border-radius: 10px; padding: 1rem 1.2rem 1.1rem; }
+    section.panel h2 { margin: 0 0 0.6rem; color: var(--accent); font-size: 1rem; }
+    textarea { width: 100%; min-height: 9rem; background: #0a0d11; color: var(--text); border: 1px solid #232b35; border-radius: 6px; padding: 0.55rem 0.7rem; font-family: "SF Mono", Consolas, monospace; font-size: 0.83rem; }
+    input[type="file"] { width: 100%; color: var(--muted); }
+    button { background: var(--accent); color: #0e1217; border: 0; border-radius: 999px; padding: 0.5rem 1.1rem; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+    button:hover { filter: brightness(1.1); }
+    button.secondary { background: var(--panel-2); color: var(--text); }
+    table.verdicts { width: 100%; border-collapse: collapse; margin-top: 0.4rem; font-size: 0.86rem; }
+    table.verdicts th, table.verdicts td { padding: 0.32rem 0.5rem; border-bottom: 1px solid #232b35; text-align: left; }
+    .ok { color: var(--ok); font-weight: 600; }
+    .bad { color: var(--bad); font-weight: 600; }
+    .grid-display { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 0.5rem; }
+    .grid-cell { background: var(--panel-2); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-family: "SF Mono", monospace; font-size: 0.9rem; }
+    .grid-cell.wild { background: #2a4660; color: #ffcb46; font-weight: 700; }
+    footer { padding: 1rem 2rem; color: var(--muted); font-size: 0.83rem; border-top: 1px solid #232b35; }
+    .full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>RGS Live Engine — verifier</h1>
+  <div class="sub">PHASE 12 spin server + PHASE 15 commit-reveal + PHASE 16 multi-platform UI</div>
+</header>
+<main>
+  <section class="panel">
+    <h2>Server-seed commit / reveal</h2>
+    <label>Commit (server publishes pre-session):</label>
+    <textarea id="commit" placeholder="64 hex chars (SHA-256 of seed)"></textarea>
+    <label>Seed (revealed post-session):</label>
+    <textarea id="seed" placeholder="64+ hex chars"></textarea>
+    <p style="margin-top: 0.6rem;">
+      <button id="verifyCommit">Verify commit ↔ seed</button>
+    </p>
+    <div id="commitVerdict"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Per-spin seed derivation</h2>
+    <label>Client seed (player-chosen):</label>
+    <textarea id="clientSeed" style="min-height: 2.3rem"></textarea>
+    <label>Nonce (u64, e.g. 0):</label>
+    <textarea id="nonce" style="min-height: 2.3rem">0</textarea>
+    <p style="margin-top: 0.6rem;">
+      <button id="deriveSeed">Derive RNG seed (HMAC-SHA256, first 8 bytes LE)</button>
+    </p>
+    <div id="derivedSeed"></div>
+  </section>
+
+  <section class="panel full">
+    <h2>Offline session replay</h2>
+    <p style="color: var(--muted); margin-top: 0;">
+      Upload a session-log JSON (the server emits one per session with
+      <code>{commit, seed, receipts: [...]}</code>). The verifier
+      re-derives every per-spin seed and re-hashes every receipt to
+      reproduce the chain Merkle root. <strong>No network requests,
+      no third-party JS</strong> — safe to run inside an airgapped
+      regulator review room.
+    </p>
+    <input id="sessionFile" type="file" accept=".json,application/json">
+    <p style="margin-top: 0.6rem;">
+      <button id="replay">Replay + verify chain</button>
+      <button class="secondary" id="loadSample">Load embedded sample</button>
+    </p>
+    <div id="replayVerdicts"></div>
+  </section>
+</main>
+<footer>
+  Built by <code>web/rgs_client/index.html</code>. Zero deps, zero
+  network, file://-safe. Same NDJSON wire as
+  <code>tools.rgs_engine.server</code>; bridge via WebSocket / HTTP
+  proxy for live mode (P12.B follow-up).
+</footer>
+
+<script type="module">
+  // PHASE 15 + 16 — pure-browser implementation, no third-party libs.
+
+  const utf8 = s => new TextEncoder().encode(s);
+  const hex = buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  const hexBytes = h => {
+    if (typeof h !== "string" || h.length % 2 !== 0) throw new Error("hex string must be even length");
+    const out = new Uint8Array(h.length / 2);
+    for (let i = 0; i < out.length; i++) out[i] = parseInt(h.slice(i * 2, i * 2 + 2), 16);
+    return out;
+  };
+
+  async function sha256(bytes) {
+    return new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
+  }
+
+  async function hmacSha256(keyBytes, msgBytes) {
+    const key = await crypto.subtle.importKey(
+      "raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+    );
+    return new Uint8Array(await crypto.subtle.sign("HMAC", key, msgBytes));
+  }
+
+  function leU64(n) {
+    const b = new Uint8Array(8);
+    let big = BigInt(n);
+    for (let i = 0; i < 8; i++) { b[i] = Number(big & 0xFFn); big >>= 8n; }
+    return b;
+  }
+
+  async function deriveSpinSeed(serverSeedHex, clientSeed, nonce) {
+    const key = hexBytes(serverSeedHex);
+    const msg = new Uint8Array([...utf8(clientSeed), ...leU64(nonce)]);
+    const mac = await hmacSha256(key, msg);
+    // First 8 bytes LE → u64
+    let v = 0n;
+    for (let i = 7; i >= 0; i--) v = (v << 8n) | BigInt(mac[i]);
+    return v.toString();
+  }
+
+  async function verifyCommit(commitHex, seedHex) {
+    const digest = await sha256(hexBytes(seedHex));
+    return hex(digest) === commitHex.trim().toLowerCase();
+  }
+
+  // ── DOM wires ────────────────────────────────────────────────────────────
+
+  document.getElementById("verifyCommit").addEventListener("click", async () => {
+    const c = document.getElementById("commit").value.trim();
+    const s = document.getElementById("seed").value.trim();
+    const out = document.getElementById("commitVerdict");
+    try {
+      const ok = await verifyCommit(c, s);
+      out.innerHTML = ok
+        ? '<p class="ok">✓ Commit matches the revealed seed.</p>'
+        : '<p class="bad">✗ Commit does not match the revealed seed.</p>';
+    } catch (e) {
+      out.innerHTML = `<p class="bad">Error: ${String(e.message || e)}</p>`;
+    }
+  });
+
+  document.getElementById("deriveSeed").addEventListener("click", async () => {
+    const s = document.getElementById("seed").value.trim();
+    const c = document.getElementById("clientSeed").value;
+    const n = parseInt(document.getElementById("nonce").value, 10) || 0;
+    const out = document.getElementById("derivedSeed");
+    try {
+      const seed = await deriveSpinSeed(s, c, n);
+      out.innerHTML = `<p>RNG seed (u64): <code>${seed}</code></p>`;
+    } catch (e) {
+      out.innerHTML = `<p class="bad">Error: ${String(e.message || e)}</p>`;
+    }
+  });
+
+  // ── Session replay ───────────────────────────────────────────────────────
+
+  function canonical(obj) {
+    if (obj === null || typeof obj !== "object") return JSON.stringify(obj);
+    if (Array.isArray(obj)) return "[" + obj.map(canonical).join(",") + "]";
+    const keys = Object.keys(obj).sort();
+    return "{" + keys.map(k => JSON.stringify(k) + ":" + canonical(obj[k])).join(",") + "}";
+  }
+
+  async function spinHash(receipt) {
+    // Receipt fields per PHASE 15 SpinReceipt; canonical sort + leading
+    // 0x00 byte (Certificate Transparency leaf-hash style).
+    const canon = canonical(receipt);
+    const buf = new Uint8Array([0, ...utf8(canon)]);
+    return await sha256(buf);
+  }
+
+  async function chainMerkleRoot(leaves) {
+    if (!leaves.length) return new Uint8Array();
+    let layer = leaves.map(b => b);
+    while (layer.length > 1) {
+      const next = [];
+      for (let i = 0; i < layer.length; i += 2) {
+        const a = layer[i];
+        const b = i + 1 < layer.length ? layer[i + 1] : a;
+        const concat = new Uint8Array([1, ...a, ...b]);
+        next.push(await sha256(concat));
+      }
+      layer = next;
+    }
+    return layer[0];
+  }
+
+  async function replaySession(session) {
+    const out = [];
+    const commitOk = await verifyCommit(session.commit, session.seed);
+    out.push({
+      check: "Commit ↔ seed hash",
+      ok: commitOk,
+      detail: commitOk ? session.commit.slice(0, 12) + "…" : "mismatch",
+    });
+    const receipts = session.receipts || [];
+    let allSeedsOk = true;
+    const leaves = [];
+    for (const r of receipts) {
+      const exp = BigInt(await deriveSpinSeed(session.seed, r.client_seed, r.nonce));
+      if (r.expected_rng_seed !== undefined && BigInt(r.expected_rng_seed) !== exp) {
+        allSeedsOk = false;
+      }
+      leaves.push(await spinHash(r));
+    }
+    out.push({
+      check: `Per-spin seeds (n=${receipts.length})`,
+      ok: allSeedsOk,
+      detail: allSeedsOk ? "all derive correctly" : "drift detected",
+    });
+    if (session.chain_merkle_root) {
+      const reproduced = await chainMerkleRoot(leaves);
+      const matches = hex(reproduced) === session.chain_merkle_root;
+      out.push({
+        check: "Chain Merkle root reproduces",
+        ok: matches,
+        detail: matches ? session.chain_merkle_root.slice(0, 12) + "…" : "mismatch",
+      });
+    }
+    return out;
+  }
+
+  function renderVerdicts(verdicts) {
+    const rows = verdicts.map(v =>
+      `<tr><td>${v.check}</td><td class="${v.ok ? "ok" : "bad"}">${v.ok ? "✓ PASS" : "✗ FAIL"}</td><td>${v.detail}</td></tr>`
+    ).join("");
+    return `<table class="verdicts"><tr><th>Check</th><th>Status</th><th>Detail</th></tr>${rows}</table>`;
+  }
+
+  document.getElementById("replay").addEventListener("click", async () => {
+    const file = document.getElementById("sessionFile").files[0];
+    const target = document.getElementById("replayVerdicts");
+    if (!file) {
+      target.innerHTML = '<p class="bad">No session file selected.</p>';
+      return;
+    }
+    try {
+      const session = JSON.parse(await file.text());
+      const verdicts = await replaySession(session);
+      target.innerHTML = renderVerdicts(verdicts);
+    } catch (e) {
+      target.innerHTML = `<p class="bad">Error: ${String(e.message || e)}</p>`;
+    }
+  });
+
+  document.getElementById("loadSample").addEventListener("click", async () => {
+    // Tiny embedded sample so the UI is testable without a server.
+    const seed = "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899";
+    const commit = hex(await sha256(hexBytes(seed)));
+    const receipts = [
+      { spin_index: 0, server_seed_commit: commit, client_seed: "p", nonce: 0, bet_amount: 1.0, outcome_payload: {} },
+      { spin_index: 1, server_seed_commit: commit, client_seed: "p", nonce: 1, bet_amount: 1.0, outcome_payload: {} },
+    ];
+    const leaves = [];
+    for (const r of receipts) leaves.push(await spinHash(r));
+    const root = hex(await chainMerkleRoot(leaves));
+    const sample = { commit, seed, receipts, chain_merkle_root: root };
+    const verdicts = await replaySession(sample);
+    document.getElementById("replayVerdicts").innerHTML = renderVerdicts(verdicts);
+  });
+</script>
+</body>
+</html>

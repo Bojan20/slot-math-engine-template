@@ -1,0 +1,17 @@
+{
+  "spins_attempted": 3200,
+  "spins_completed": 3200,
+  "spins_failed": 0,
+  "duration_s": 0.269722,
+  "throughput_per_s": 11864.07,
+  "latency_us": {
+    "p50": 42,
+    "p95": 46,
+    "p99": 51,
+    "max": 1791
+  },
+  "bytes_in": 1677943,
+  "bytes_out": 293080,
+  "server_seed_commits_unique": 32,
+  "grade": "A+"
+}

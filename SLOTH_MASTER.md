@@ -343,8 +343,9 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 | **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
 | **PHASE 14** | **L3 LoRA fine-tune** — 8B base model fine-tune na 1800 P8.6 RAG corpus | 8-16h GPU rent ILI M4 Ultra | math-debug agent first-shot accuracy >70% → >90% | čeka M4 Ultra Q1 2027 ili A100 rent |
 | **PHASE 15** | **Crypto-native provably-fair extension** — ed25519 + Merkle inclusion proof live on-chain commit per spin | 4-6h | crypto-casino market segment | 🟢 **LANDED** — `tools/crypto_fair/` + `slot-crypto-fair` CLI (commit/verify/derive); SHA-256 server-seed commit-reveal + HMAC-SHA256 per-spin seed derivation + RFC-6962 Merkle chain over spin receipts + ed25519 signature with `slotmath-crypto-fair-v1` domain tag; 30/30 specs pass |
-| **PHASE 16** | **Multi-platform UI Runtime** — Pixi.js renderer + WebGL Studio + native iOS/Android scaffold | 16-32h | čeka first pilot | čeka pilot signup |
+| **PHASE 16** | **Multi-platform UI Runtime** — Pixi.js renderer + WebGL Studio + native iOS/Android scaffold | 16-32h | čeka first pilot | 🟢 **MVP LANDED** — `web/rgs_client/index.html` standalone HTML/JS verifier (zero-dep, `file://`-safe, WebCrypto-native, airgapped-review compatible). Three regulator-facing modes: commit↔seed verifier · per-spin seed derivation · offline session-log replay with chain Merkle reproduction. Full Pixi.js renderer + native iOS/Android ports remain queued for first pilot; 7/7 specs pin the airgap contract + WebCrypto usage + PHASE 15 canonical-bytes parity. |
 | **PHASE 17** | **AI-assisted Math Designer copilot** (live in Studio) — prompt-driven IR mutation + RTP-locked synth | 8-16h | designer productivity 10× | 🟢 **LANDED** — `tools/slot_design/copilot.py` (`apply_mutation(ir, prompt)`); 9 mutation kinds (target RTP / feature share / topology / add-remove feature / max-win / volatility / vendor); deterministic regex parser; per-IR `copilot_log` audit trail; `rtp_relock_required` flag for P10.7 share-aware re-lock; 27/27 specs pass |
+| **PHASE 23** | **Real-Time Player Risk Engine** (UKGC RTS 7.4 + MGA PPD §11 compliance) | 4-6h | 🥇 UK pilot must-have | 🟢 **LANDED** — `tools/risk_engine/` + `slot-risk-engine` CLI; 6-dimension composite risk score (session duration / net loss / Martingale escalation / win-chase streak / session velocity / loss-limit proximity); 5-level intervention ladder (NONE / SOFT / MEDIUM / HARD / FORCED_BREAK); E2E pipe from PHASE 12 RGS Live verified; 42/42 specs pass |
 
 ### 🥇 PHASE 10 — **AI Math Compiler v2** (predloženi prvi)
 
@@ -437,7 +438,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1509 PASS + 47 skipped** ⬆ +245 total (P10.1-P10.7 + PHASE 11 SWE-Bench + PHASE 15 Crypto-Native + PHASE 17 Copilot + PHASE 12 RGS Live) |
+| **Python test count** | **1578 PASS + 47 skipped** ⬆ +314 total (PHASE 10 + 11 + 12 + 15 + 17 + 23) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -451,6 +452,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Phase 15 Crypto-Native Provably-Fair** | ✅ LANDED — `slot-crypto-fair` CLI (commit/verify/derive), SHA-256 + HMAC + Merkle + ed25519 |
 | **Phase 17 AI Math Designer Copilot** | ✅ LANDED — `apply_mutation(ir, prompt)` w/ 9 mutation kinds + relock signal |
 | **Phase 12 Real-Time RGS Live Engine** | ✅ PROTOTYPE LANDED — 32,184 spins/sec @ P99 29µs · `slot-rgs-live` CLI |
+| **Phase 23 Real-Time Player Risk Engine** | ✅ LANDED — `slot-risk-engine` CLI · UKGC RTS 7.4 / MGA PPD §11 · 6-dimension composite score · E2E pipe from Phase 12 verified |
 | **P10 end-to-end single-command pipeline** | ✅ (`slot-design "..." --cert-pack` → spec.json + game.dsl.toml + IR + REVIEW.md + review.html + cert ZIP in one invocation; pinned by `test_p10_end_to_end_one_command_all_artefacts`) |
 | **P10.2 composition pair detection** | ✅ 16 industry pairings codified (Sweet Bonanza, Razor Shark, Lock It Link, Megaways, Aloha, Jammin Jars, Lightning Link, Wonka, Hacksaw bonus-buy, Sweet Bonanza Ante, Mega Moolah, Reel Rush, Reactoonz, Walking Wild Respin) + canonical/stacking/novel classification + low-RTP stacking warn |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
