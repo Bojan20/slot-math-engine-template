@@ -6,6 +6,48 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-28 00:00 (post **W9.1 + W9.2 + W9.3 + W9.4 LANDED** — multi-jurisdiction generator + spec compare matrix + schema migration + perf bench)
+
+**Status:** **Portfolio / fleet management surface complete.** Four atomic waves that turn the math compiler from per-game tool into a fleet-of-games platform:
+- **`jurisdictions`** — one spec, six regulator-compliant IRs in one call
+- **`compare`** — N specs side-by-side market positioning matrix
+- **`migrate`** — auto-upgrade legacy YAML when DSL schema bumps
+- **`bench`** — per-stage latency regression gate
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W9.1 — Multi-jurisdiction IR generator** | ✅ **landed** | 8 of 23 | `tools/math_dsl/jurisdictions.py` | Registry sa 6 jurisdikcija (UKGC, MGA, ADM, DGOJ, KSA, NMI). `adapt_spec_for_jurisdiction(spec, code)` mutates RTP / max_win / features to honor regulator rules + injects `jurisdiction_overrides` block u IR root (W4.7 shape). Live: spec sa RTP=0.92 + max_win=100k →   ADM variant ima max_win=30k (Italy cap) ✓ |
+| **W9.2 — Spec compare matrix** | ✅ **landed** | 5 of 23 | `tools/math_dsl/compare.py` | `compare_specs([a, b, c, ...]) → CompareMatrix` sa 13 redova (vendor, topology, paylines, symbols, HP/LP/Wild/Scatter count, features, RTP, volatility, hit_freq, max_win, RTP alloc, jurisdictions). `shared_jurisdictions()` returns intersection. `feature_overlap()` matrix po kindu. Sales-deck ready markdown |
+| **W9.3 — Schema migration helper** | ✅ **landed** | 7 of 23 | `tools/math_dsl/migrate.py` | `migrate(spec_dict, target_version)` applies ordered migrations (0.0.0 → 1.0.0 → 1.1.0). Registered: vendor_id legacy → meta.vendor, jurisdiction uppercase normalize. Refuses downgrade. Idempotent at current_schema_version |
+| **W9.4 — Performance benchmark** | ✅ **landed** | 3 of 23 | `tools/math_dsl/bench.py` | `bench_corpus(specs_dir, repeats=N)` measures parse_ms / compile_ms / synth_c1_ms / sign_ms / mc_100k_ms per spec + aggregate median. Markdown summary for PR comments + CI regression alerts |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w9_1_2_3_4_jurisdictions_compare_migrate_bench.py` | **23 / 23** ✅ | 0.314 s |
+
+### Grand total — W4.* + W5.* + W6.* + W7.* + W8.* + W9.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | 12 / 12 |
+| `test_w7_1_w7_2_w7_3_pipeline_audit.py` | 11 / 11 |
+| `test_w8_1_w8_2_w8_3_mc_lint_docs.py` | 23 / 23 |
+| `test_w8_4_w8_5_w8_6_health_stress_prompt.py` | 21 / 21 |
+| `test_w9_1_2_3_4_jurisdictions_compare_migrate_bench.py` | 23 / 23 |
+| **Math DSL fleet + cert + UI + pipeline + QA + portfolio cumulative** | **236 / 236** ✅ |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 23:10 (post **W8.4 + W8.5 + W8.6 LANDED** — health check + cross-volatility stress + natural-language prompt parser)
 
 **Status:** **Designer ergonomics layer complete.** Three CLI commands that close the loop:

@@ -56,6 +56,17 @@ from .docs import render_docs
 from .health import health_check, HealthReport, HealthCheck
 from .stress import stress_synth, StressReport, StressRow
 from .prompt import parse_prompt, list_prompt_grammar, PromptLog, PromptOp
+from .jurisdictions import (
+    adapt_spec_for_jurisdiction, adapt_for_all,
+    list_jurisdictions, render_variants_summary,
+    JurisdictionVariant, JurisdictionRules, REGISTRY as JURISDICTION_REGISTRY,
+)
+from .compare import compare_specs, shared_jurisdictions, feature_overlap, CompareMatrix
+from .migrate import (
+    migrate, current_schema_version, list_migrations,
+    MigrationError, MIGRATIONS,
+)
+from .bench import bench_corpus, BenchReport, BenchEntry
 
 __all__ = [
     "MathDslSpec",
