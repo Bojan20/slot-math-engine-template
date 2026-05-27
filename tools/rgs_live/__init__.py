@@ -35,6 +35,18 @@ from tools.rgs_live.protocol import (
 from tools.rgs_live.engine import engine_spin, default_synthetic_ir
 from tools.rgs_live.server import SpinServer
 from tools.rgs_live.load_test import LoadTestResult, run_load_test
+from tools.rgs_live.websocket_gateway import (
+    WebSocketGateway,
+    compute_accept_key,
+    parse_http_request,
+    build_handshake_response,
+    encode_text_frame,
+    encode_close_frame,
+    encode_pong_frame,
+    decode_frame,
+    FrameDecodeError,
+    serve_pool,
+)
 
 __all__ = [
     "SpinRequest",
@@ -47,4 +59,14 @@ __all__ = [
     "SpinServer",
     "LoadTestResult",
     "run_load_test",
+    "WebSocketGateway",
+    "compute_accept_key",
+    "parse_http_request",
+    "build_handshake_response",
+    "encode_text_frame",
+    "encode_close_frame",
+    "encode_pong_frame",
+    "decode_frame",
+    "FrameDecodeError",
+    "serve_pool",
 ]

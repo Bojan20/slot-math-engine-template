@@ -438,7 +438,10 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1640 PASS + 47 skipped** ⬆ +376 total (PHASE 10 + 11 + 12 + 15 + 17 + 18 + 18.B + 23 + 23.B) |
+| **Python test count** | **1730 PASS + 47 skipped** ⬆ +466 total (PHASE 10 + 11 + 12 + 15 + 15.B + 17 + 17.B + 18 + 18.B + 19 + 23 + 23.B) |
+| **PHASE 15.B** Signed session log + replay verifier | ✅ LANDED — `tools/crypto_fair/session_log.py` (227 LOC) + 13/13 specs · 5-check `SessionVerification` (commit↔seed · per-spin re-derive · chain Merkle reproduce · ed25519 signature · timestamp monotone) · deterministic JSON emit (sorted-keys hash-stable) · regulator-replayable via PHASE 16 browser client |
+| **PHASE 17.B** Multi-mutation chain + rollback | ✅ LANDED — `tools/slot_design/mutation_chain.py` (220 LOC) + 21/21 specs · `start_chain` / `apply_step` / `apply_chain` / `rollback` / `replay_snapshot` · hash-pinned `pre_ir_digest` ↔ `post_ir_digest` per step · rollback skips dropped no-op steps · snapshot round-trip rejects drifted seed IR |
+| **PHASE 19** Slot Math Theorem Prover | ✅ LANDED — `tools/theorem_prover/` (560 LOC) + 38/38 specs · 6 claim kinds (`rtp_upper_bound` / `rtp_lower_bound` / `rtp_in_band` / `paytable_consistency` / `reel_weight_positive` / `max_win_cap_compliance`) · Z3-backed when available + pure-Python rational fallback · machine-checkable `ProofCertificate` schema · NaN/Inf operand rejection · regulator-replayable cert |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
