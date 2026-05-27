@@ -3654,9 +3654,40 @@
     // Refresh CI pane immediately if it's open
     try {
       if (typeof refreshBpCiPane === "function") refreshBpCiPane();
-    } catch (_) {}
+    } catch (e) {
+      // PHASE 44 — surface non-fatal CI-pane refresh error so a regulator-
+      // grade audit catches silent failure modes.
+      console.warn("[btn-validate] CI pane refresh skipped:", e);
+    }
   });
   $("#btn-autobalance").addEventListener("click", () => doAutoBalance("manual", false));
+
+  // PHASE 44 — btn-build-more: opens the More-actions overflow menu.
+  // Surfaces the rarely-used Build commands (Export DSL, Bench Reels,
+  // Snapshot RTP history) that don't fit in the inline button row.
+  // Falls back to the command palette when no native dropdown exists.
+  const buildMoreBtn = document.querySelector("#btn-build-more");
+  if (buildMoreBtn) {
+    buildMoreBtn.addEventListener("click", () => {
+      try {
+        // Prefer a native dropdown if the studio exposes one.
+        if (typeof openBuildMoreMenu === "function") {
+          openBuildMoreMenu(buildMoreBtn);
+          return;
+        }
+        // Fallback: surface the command palette so the user has an
+        // explicit, discoverable action set.
+        if (typeof openCommandPalette === "function") {
+          openCommandPalette("build");
+          return;
+        }
+        toast({ kind: "cyan", msg: "More actions menu — command palette unavailable" });
+      } catch (e) {
+        console.warn("[btn-build-more]", e);
+        toast({ kind: "red", msg: "More actions failed: " + (e && e.message || e) });
+      }
+    });
+  }
 
   /* ============================================================
      PLAY (Spin)

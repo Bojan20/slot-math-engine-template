@@ -979,6 +979,18 @@ def _estimate_fs_trigger_rate(parsed: dict, base_sets: list, weights: list) -> f
     rows = int(parsed["meta"]["rows"])
     weights_by_set = {int(w["set"]): float(w["weight"]) for w in weights}
     total_w = sum(weights_by_set.values()) or 1.0
+    # PHASE W-C1 fix: ε-tolerance audit — flag silent drift in multi-set
+    # weight maps. Default 1e-9 (rule 3 of weight precision audit).
+    import math as _math
+    if total_w > 0:
+        normalised_sum = sum(w / total_w for w in weights_by_set.values())
+        if not _math.isclose(normalised_sum, 1.0, abs_tol=1e-9):
+            import warnings as _warnings
+            _warnings.warn(
+                f"reel-set weight map drift: Σ normalised = {normalised_sum!r} "
+                f"(expected 1.0 ± 1e-9); raw weights={weights_by_set}",
+                RuntimeWarning, stacklevel=2,
+            )
 
     total_trigger = 0.0
     for s in base_sets:

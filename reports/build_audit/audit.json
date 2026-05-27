@@ -1,0 +1,234 @@
+{
+  "schema": "urn:slotmath:build-audit:v1",
+  "audited_at": "2026-05-27T15:42:05.624246+00:00",
+  "repo_root": ".",
+  "buttons": [
+    {
+      "button_id": "btn-quickstart",
+      "label": "Quickstart wizard",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": "raph\" }\n      ]\n    };\n  }\n\n  $(\"#btn-quickstart\").addEventListener(\"click\", e => {\n    e.stopPropagation();\n    const m = $(\"#qui"
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-secondary\" id=\"btn-quickstart\" title=\"Open the Quickstart wizard to scaffold a fresh slot from a prompt or template\" aria-label=\"Quickstart wizard\">\n                <svg class=\"i\" w"
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "button_id": "btn-validate",
+      "label": "Validate IR",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": ".createObjectURL(blob);\n  }\n  $(\"#btn-validate\").addEventListener(\"click\", () => {\n    const v = getActiveVariant();\n    // Buil"
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-ghost\" id=\"btn-validate\" title=\"Validate IR (auto runs on save)\">\n              <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-wi"
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "button_id": "btn-autobalance",
+      "label": "Auto-balance reel weights",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": " skipped:\", e);\n    }\n  });\n  $(\"#btn-autobalance\").addEventListener(\"click\", () => doAutoBalance(\"manual\", false));\n\n  // PHASE 44"
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-ghost\" id=\"btn-autobalance\" title=\"Auto-balance reel weights to target RTP (B)\">\n              <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentC"
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "button_id": "btn-compute",
+      "label": "Compute RTP (closed-form)",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": "======================== */\n  $(\"#btn-compute\").addEventListener(\"click\", () => {\n    recompute(); refreshL1(); refreshRail(); "
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-primary\" id=\"btn-compute\" title=\"Compute RTP (closed-form)\">\n              <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\""
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "button_id": "btn-play-template",
+      "label": "Build playable template",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": "st playTemplateBtn = document.querySelector(\"#btn-play-template\");\n  if (playTemplateBtn) {\n    playTemplateBtn.addEventListener(\"click\", async ("
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-primary\" id=\"btn-play-template\" title=\"Build playable slot template from current IR and open in a new tab\">\n              <svg class=\"i\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" f"
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "button_id": "btn-build-more",
+      "label": "More actions menu",
+      "verdict": "PASS",
+      "element_found": true,
+      "in_build_panel": true,
+      "accessibility_ok": true,
+      "has_title_or_aria": true,
+      "handler_reachable": true,
+      "handler_silent_catch": false,
+      "evidence": [
+        {
+          "file": "web/studio/app.js",
+          "snippet": "const buildMoreBtn = document.querySelector(\"#btn-build-more\");\n  if (buildMoreBtn) {\n    buildMoreBtn.addEventListener(\"click\", () => {\n     "
+        },
+        {
+          "file": "web/studio/index.html",
+          "snippet": "<button class=\"btn-more\" id=\"btn-build-more\" title=\"More actions\u2026\">\u22ef</button>"
+        }
+      ],
+      "fixes": []
+    }
+  ],
+  "weight_checks": [
+    {
+      "check_id": "reel-weight-positive",
+      "verdict": "PASS",
+      "detail": "5 reels, 0 with \u03a3w\u22640, 0 with individual w_i\u22640",
+      "measured": 0.0,
+      "reference": 0.0,
+      "drift": null,
+      "tolerance": 0.0,
+      "evidence": []
+    },
+    {
+      "check_id": "reel-prob-sum-equals-one",
+      "verdict": "PASS",
+      "detail": "max |\u03a3p - 1| = 0.00e+00",
+      "measured": 0.0,
+      "reference": 0.0,
+      "drift": 0.0,
+      "tolerance": 1e-12,
+      "evidence": []
+    },
+    {
+      "check_id": "closed-form-rtp-parity",
+      "verdict": "PASS",
+      "detail": "|Fraction RTP - float RTP| = 1.11e-16",
+      "measured": 0.5670019649999999,
+      "reference": 0.567001965,
+      "drift": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "evidence": []
+    },
+    {
+      "check_id": "kahan-vs-naive-summation",
+      "verdict": "PASS",
+      "detail": "|naive - Kahan| over 100 entries = 2.22e-16",
+      "measured": 0.9999999999999998,
+      "reference": 1.0,
+      "drift": 2.220446049250313e-16,
+      "tolerance": 1e-09,
+      "evidence": []
+    }
+  ],
+  "math_checks": [
+    {
+      "algorithm": "rtp_closed_form",
+      "verdict": "PASS",
+      "engine_value": 0.5670019649999999,
+      "reference_value": 0.567001965,
+      "drift": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "formula_source": "Eadington & Schwartz 1992 \u00a73.1 (linear paylines)"
+    },
+    {
+      "algorithm": "hit_frequency",
+      "verdict": "PASS",
+      "engine_value": 0.32854038348138437,
+      "reference_value": 0.32854038348138437,
+      "drift": 0.0,
+      "tolerance": 1e-09,
+      "formula_source": "GLI-19 \u00a73.4 (hit-frequency formal definition)"
+    },
+    {
+      "algorithm": "max_win",
+      "verdict": "PASS",
+      "engine_value": 250.0,
+      "reference_value": 250.0,
+      "drift": 0.0,
+      "tolerance": 1e-09,
+      "formula_source": "GLI-19 \u00a7A.6 max-win cap definition"
+    },
+    {
+      "algorithm": "rtp_sanity_bounds",
+      "verdict": "PASS",
+      "engine_value": 0.567001965,
+      "reference_value": null,
+      "drift": null,
+      "tolerance": 0.0,
+      "formula_source": "UKGC RTS-12 \u00a75 RTP advisory band"
+    }
+  ],
+  "summary": {
+    "buttons_pass": 6,
+    "buttons_warn": 0,
+    "buttons_fail": 0,
+    "buttons_verdict": "PASS",
+    "weight_pass": 4,
+    "weight_warn": 0,
+    "weight_fail": 0,
+    "weight_verdict": "PASS",
+    "math_pass": 4,
+    "math_warn": 0,
+    "math_fail": 0,
+    "math_verdict": "PASS",
+    "overall_verdict": "PASS"
+  }
+}

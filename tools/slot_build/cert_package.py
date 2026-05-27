@@ -144,7 +144,12 @@ def build_manifest(
 ) -> dict[str, Any]:
     """Build the cert manifest dict (pre-signing)."""
     meta = universal_ir_data.get("meta", {})
-    target_rtp = meta.get("rtp_total")
+    # PHASE B-C3 fix: canonical RTP key is `target_rtp` (matches W6.2
+    # DSL synth + cert_xml.py + theorem_prover). Accept legacy `rtp_total`
+    # alias for back-compat but prefer canonical key.
+    target_rtp = meta.get("target_rtp")
+    if target_rtp is None:
+        target_rtp = meta.get("rtp_total")
     rtp_breakdown = meta.get("rtp_breakdown", {})
     sampling_mode = meta.get("sampling_mode", "physical_strip")
 

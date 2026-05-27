@@ -150,39 +150,75 @@ pub fn run(spins: u64, seed: u64) -> RunStats {
 }
 
 fn closed_form_estimate(ir: &serde_json::Value) -> (f64, f64) {
+    // PHASE B-C1+C2 fix: positional product per reel, not flattened multi-set.
+    // Path: ir.reels.base[0].reels = [[cell, …]_reel0, [cell, …]_reel1, …]
+    // Each cell may be {"symbol": "A", "weight": 1} or a bare string "A".
     let paytable = ir
         .get("paytable")
         .and_then(|v| v.as_array())
         .cloned()
         .unwrap_or_default();
-    let reels = ir
+    let base = ir
         .get("reels")
         .and_then(|v| v.get("base"))
         .and_then(|v| v.as_array())
         .cloned()
         .unwrap_or_default();
+    // First set's per-reel strip array (universal IR convention).
+    let reels: Vec<serde_json::Value> = base
+        .get(0)
+        .and_then(|set_obj| set_obj.get("reels"))
+        .and_then(|v| v.as_array())
+        .cloned()
+        .unwrap_or_default();
 
-    // symbol → count over flattened strips
-    let mut sym_counts: std::collections::HashMap<String, u64> =
-        std::collections::HashMap::new();
-    let mut total_cells: u64 = 0;
-    for strip in &reels {
-        if let Some(cells) = strip.as_array() {
-            for s in cells {
-                if let Some(sym) = s.as_str() {
-                    *sym_counts.entry(sym.to_string()).or_insert(0) += 1;
-                    total_cells += 1;
+    if reels.is_empty() {
+        return (0.0, 0.0);
+    }
+
+    // Per-reel symbol-frequency map: freq_per_reel[r][sym] = weight / total_weight.
+    let mut freq_per_reel: Vec<std::collections::HashMap<String, f64>> = Vec::new();
+    for reel in &reels {
+        let cells = match reel.as_array() {
+            Some(v) => v,
+            None => {
+                freq_per_reel.push(std::collections::HashMap::new());
+                continue;
+            }
+        };
+        let mut weights: std::collections::HashMap<String, f64> =
+            std::collections::HashMap::new();
+        let mut total: f64 = 0.0;
+        for cell in cells {
+            let (sym, w): (Option<String>, f64) = if let Some(s) = cell.as_str() {
+                (Some(s.to_string()), 1.0)
+            } else if let Some(obj) = cell.as_object() {
+                let s = obj.get("symbol").and_then(|v| v.as_str()).map(String::from);
+                let w = obj
+                    .get("weight")
+                    .and_then(|v| v.as_f64())
+                    .unwrap_or(1.0);
+                (s, w)
+            } else {
+                (None, 0.0)
+            };
+            if let Some(sym) = sym {
+                if w > 0.0 {
+                    *weights.entry(sym).or_insert(0.0) += w;
+                    total += w;
                 }
             }
         }
+        let probs: std::collections::HashMap<String, f64> = if total > 0.0 {
+            weights.into_iter().map(|(k, v)| (k, v / total)).collect()
+        } else {
+            std::collections::HashMap::new()
+        };
+        freq_per_reel.push(probs);
     }
-    if total_cells == 0 {
-        return (0.0, 0.0);
-    }
-    let n_reels = reels.len().max(1) as f64;
-    let cells_per_reel = (total_cells as f64) / n_reels;
-    let mut rtp = 0.0;
-    let mut hit_p = 0.0;
+
+    let mut rtp = 0.0_f64;
+    let mut hit_p = 0.0_f64;
     for row in &paytable {
         let pays = row
             .get("pays")
@@ -197,14 +233,22 @@ fn closed_form_estimate(ir: &serde_json::Value) -> (f64, f64) {
             continue;
         }
         let mut p = 1.0_f64;
-        for s in &combo {
-            if let Some(name) = s.as_str() {
-                let c = *sym_counts.get(name).unwrap_or(&0) as f64;
-                if c == 0.0 {
+        for (reel_idx, s) in combo.iter().enumerate() {
+            // Wildcard / blank slots contribute factor 1.0
+            let raw = s.as_str().unwrap_or("");
+            if raw == "--" || raw == "*" || raw.is_empty() {
+                continue;
+            }
+            if reel_idx >= freq_per_reel.len() {
+                p = 0.0;
+                break;
+            }
+            match freq_per_reel[reel_idx].get(raw) {
+                Some(&prob) if prob > 0.0 => p *= prob,
+                _ => {
                     p = 0.0;
                     break;
                 }
-                p *= c / cells_per_reel;
             }
         }
         rtp += p * pays;

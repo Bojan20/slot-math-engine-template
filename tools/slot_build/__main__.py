@@ -99,42 +99,94 @@ def run_mc(
     bet_mult: int,
     seed: int,
     bin_path: Path,
+    *,
+    timeout_seconds: float = 600.0,
+    prefer_json: bool = True,
 ) -> dict[str, Any]:
-    """Run slot-sim binary and parse its output into a stats dict."""
-    cmd = [
+    """Run slot-sim binary and parse its output into a stats dict.
+
+    PHASE B-C4 fix:
+      - `timeout_seconds` is now caller-configurable (was hard-coded 600s
+        that killed strict-tier 1B-spin runs)
+      - JSON negotiation: if `prefer_json=True`, try `--json` flag first
+        and use json.loads on stdout; fall back to legacy positional
+        regex parse if the binary doesn't support `--json` or output
+        isn't valid JSON. Regex pinning replaces fragile `line.split()[1]`.
+    """
+    import re as _re
+
+    cmd_base = [
         str(bin_path),
         "--ir", str(ir_path),
         "--spins", str(spins),
         "--bet-mult", str(bet_mult),
         "--seed", str(seed),
     ]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+
+    # First attempt: JSON negotiation
+    if prefer_json:
+        json_cmd = cmd_base + ["--json"]
+        try:
+            proc = subprocess.run(
+                json_cmd, capture_output=True, text=True,
+                timeout=timeout_seconds,
+            )
+            if proc.returncode == 0:
+                try:
+                    obj = json.loads(proc.stdout)
+                    if isinstance(obj, dict):
+                        return obj
+                except json.JSONDecodeError:
+                    pass  # fall through to legacy parse
+        except subprocess.TimeoutExpired as exc:
+            raise RuntimeError(
+                f"slot-sim --json timed out after {timeout_seconds}s"
+            ) from exc
+
+    # Legacy parse — pinned regex instead of fragile positional split
+    proc = subprocess.run(
+        cmd_base, capture_output=True, text=True, timeout=timeout_seconds,
+    )
     if proc.returncode != 0:
         raise RuntimeError(
             f"slot-sim failed (exit {proc.returncode}):\n{proc.stderr[:500]}"
         )
+
     stats: dict[str, Any] = {}
+    # Regex captures: name, current value, optional Excel target
+    rtp_re = _re.compile(r"^RTP:\s*([0-9.eE+-]+)\s*(?:\(Excel\s*([0-9.eE+-]+)\))?")
+    hit_re = _re.compile(r"^Hit freq:\s*\S+\s+([0-9.eE+-]+)\s*(?:\(Excel\s*([0-9.eE+-]+)\))?")
+    win_re = _re.compile(r"^Win freq:\s*\S+\s+([0-9.eE+-]+)\s*(?:\(Excel\s*([0-9.eE+-]+)\))?")
+    spins_re = _re.compile(r"^Spins:\s*(\d+)")
+    elapsed_re = _re.compile(r"^Elapsed:\s*(.+)")
+
     for line in proc.stdout.splitlines():
         line = line.strip()
-        if line.startswith("RTP:"):
-            parts = line.replace("(Excel", "").replace(")", "").split()
-            stats["rtp"] = float(parts[1])
-            if len(parts) >= 3:
-                stats["rtp_target"] = float(parts[2])
-        elif line.startswith("Hit freq:"):
-            parts = line.replace("(Excel", "").replace(")", "").split()
-            stats["hit_freq"] = float(parts[2])
-            if len(parts) >= 4:
-                stats["hit_freq_target"] = float(parts[3])
-        elif line.startswith("Win freq:"):
-            parts = line.replace("(Excel", "").replace(")", "").split()
-            stats["win_freq"] = float(parts[2])
-            if len(parts) >= 4:
-                stats["win_freq_target"] = float(parts[3])
-        elif line.startswith("Spins:"):
-            stats["spins"] = int(line.split()[1])
-        elif line.startswith("Elapsed:"):
-            stats["elapsed"] = line.split(":", 1)[1].strip()
+        m = rtp_re.match(line)
+        if m:
+            stats["rtp"] = float(m.group(1))
+            if m.group(2):
+                stats["rtp_target"] = float(m.group(2))
+            continue
+        m = hit_re.match(line)
+        if m:
+            stats["hit_freq"] = float(m.group(1))
+            if m.group(2):
+                stats["hit_freq_target"] = float(m.group(2))
+            continue
+        m = win_re.match(line)
+        if m:
+            stats["win_freq"] = float(m.group(1))
+            if m.group(2):
+                stats["win_freq_target"] = float(m.group(2))
+            continue
+        m = spins_re.match(line)
+        if m:
+            stats["spins"] = int(m.group(1))
+            continue
+        m = elapsed_re.match(line)
+        if m:
+            stats["elapsed"] = m.group(1).strip()
     return stats
 
 
