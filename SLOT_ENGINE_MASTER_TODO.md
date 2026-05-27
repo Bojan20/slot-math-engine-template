@@ -6,6 +6,37 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:15 (post **W6.3 + W6.5 + W6.6 LANDED** — provenance auto-sign + closed-form verifier + spec catalog index)
+
+**Status:** **Cert pipeline is now fully cryptographically anchored.** Every solved IR can be signed (HMAC-SHA-256, stdlib-only — no extra deps; env-overridable key for regulator HMAC, optional ed25519 upgrade path) and the cert bundle's `verify.sh` can independently re-derive RTP + hit_freq + volatility class without running MC. Catalog index turns the specs/ dir into a queryable JSON the studio UI can mount.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W6.3 — Provenance auto-sign** | ✅ **landed** | 8 of 24 | `tools/math_dsl/provenance.py` | `sign_ir` / `verify_ir` (HMAC-SHA-256, stdlib-only); `sign_and_inject_provenance` injects W4.7-shaped `provenance` block; `verify_provenance` re-derives both `ir_sha256` + signature. Transient `_synth_log` / `_cache_meta` excluded from hash — sig stable across cache hits. Env-overridable key via `CORTEX_PROVENANCE_HMAC_KEY` |
+| **W6.5 — Closed-form verifier** | ✅ **landed** | 6 of 24 | `tools/math_dsl/verify.py` | `verify_rtp` / `verify_hit_freq` / `verify_volatility` / `verify_all` → `VerifyReport.summary()` markdown. Closed-form formulas mirror Z3 encoding exactly so re-verification needs only `tools.smt.weight_synthesizer` + the solved IR, no MC. Boundary tolerance handles bucket-edge discretization |
+| **W6.6 — Spec catalog index** | ✅ **landed** | 10 of 24 | `tools/math_dsl/catalog.py` | `build_catalog(specs_dir)` scans `*.yaml`/`*.yml`, returns JSON sa `specs[]` + `by_topology` + `by_volatility` + `by_jurisdiction` reverse indexes. `filter_catalog(cat, ...)` supports compound filters. Today's run: 4 specs indexed (Crimson Tiger, Lion Megaways, Coral Cluster, Cascade Quest) |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | **24 / 24** ✅ | 0.041 s |
+
+### Grand total — W4.* + W5.* + W6.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| **Math DSL + cert cumulative** | **127 / 127** ✅ |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:55 (post **W6.1 + W6.2 LANDED** — cert bundle generator + semantic DSL diff)
 
 **Status:** **Sales pipeline pieces shipped.** Lab can now receive a single ZIP (≤12 KB) that contains the DSL source, solved IR, provenance SHA-chain, and a `verify.sh` script the lab runs to re-derive RTP closed-form. Designer-facing diff CLI shows semantic spec changes (not text noise) for compliance / sales / git review.

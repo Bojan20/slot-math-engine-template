@@ -35,6 +35,15 @@ from .mutate import (
 )
 from .diff import diff_specs, render_diff, DiffEntry
 from .cert_bundle import build_cert_bundle
+from .provenance import (
+    sign_ir, verify_ir, sign_and_inject_provenance,
+    verify_provenance, ir_sha256,
+)
+from .verify import (
+    verify_rtp, verify_hit_freq, verify_volatility, verify_all,
+    VerifyReport, CheckResult, hit_freq_closed_form,
+)
+from .catalog import build_catalog, filter_catalog
 
 __all__ = [
     "MathDslSpec",
