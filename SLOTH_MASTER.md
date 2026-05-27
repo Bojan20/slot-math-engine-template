@@ -444,7 +444,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
 | **Phase 9 tournament kernels** | **5 / 5** ✅ (W201 + W202 + W203 + W204 + W205 all LANDED) |
 | **W205+1 tech-debt closeout** | **3 / 3** ✅ (CLI shim + benchmark fix + dev docs) |
-| **W205+2 host-orchestrator decoupling** | ✅ (zero `cortex` / `Cortex` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
+| **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |
 | Commercialization | marketplace catalog (tier-based) · pilot outreach package · public benchmark vs 8 studios · community contributor flow |
@@ -476,23 +476,23 @@ is now **terminal** across both core kernels (Phase 1–8) and PHASE 9
 
 ### W205+2 — Host-orchestrator decoupling (2026-05-27 post-W205+1)
 
-Boki directive: `nista ne smre u slot math-u da bude vezano za cortex`.
+Boki directive: `nista ne smre u slot math-u da bude vezano za bilo koji konkretan host orchestrator`.
 Slot-math repo must be a standalone artefact; no hard reference to any
 specific host orchestrator name. This wave is the *full sweep*: every
-file scanned and every `cortex` / `Cortex` mention either removed,
+file scanned and every `<external-host>` / `<external-host>` mention either removed,
 neutralised, or env-driven.
 
 | # | Surface | Change |
 |---|---|---|
 | 1 | `tools/agent_paths.py` (new shared helper) | Centralised env resolution: `SLOT_MATH_AGENTS_ROOT` → `${SLOT_MATH_HOME:-.}/agents` → in-repo `./agents`; `SLOT_MATH_ANTIBODY_DB` → `${SLOT_MATH_HOME:-.}/data/antibodies.db`. Tools degrade gracefully when paths don't exist (no crash on stock checkout). |
-| 2 | `tools/agent_corpus/{cli,expand,antibodies}.py`, `tools/agent_rag/cli.py`, `tools/agent_eval/cli.py` | All five tools migrated from `Path.home() / "Projects/cortex/agents"` to `agent_paths.agents_root()`. Antibodies DB resolution moved to `agent_paths.antibody_db_path()`. |
-| 3 | `tools/drift_alert_hub/hub.py` | `drift-bot@cortex.local` / `ops@cortex.local` → `drift-bot@slotmath.local` / `ops@slotmath.local`. |
-| 4 | `web/studio/e2e/qa-cortex-eyes-100-spins.spec.ts` → `qa-headless-eyes-100-spins.spec.ts` | File renamed; test name + screenshot dir scrubbed of `cortex-eyes` → `headless-eyes`. |
-| 5 | `agents/*.md` (4 specialist + architect docs) | All `~/Projects/cortex/agents/<name>/` paths → `${SLOT_MATH_AGENTS_ROOT:-./agents}/<name>/`. Dispatcher `cortex-slot-agent` → `slot-agent`. Helpers `cortex-kimi-research` → `deep-research`. `cortex schedule add` → "host scheduler (cron / systemd timer)". `CortexEye` → "host orchestrator's screen-capture tool". `Cortex DB alert` → "host orchestrator alert sink". |
-| 6 | `SLOTH_MASTER.md` + `SLOT_ENGINE_MASTER_TODO.md` | All cortex path / binary / registry references rewritten to env-driven or neutral wording. `cortex-truth-check` → `truth-check`; `cortex-qlora-train` → `slot-qlora-train`; `Cortex registry entries` → `persistent registry entries`; `Claude sessions` → `host-orchestrator sessions`. |
-| 7 | `docs/{IP_REVIEW,glossary,PARALLEL_TASK_LOG}.md` | Path `~/.cortex/research/*.md` → `~/.<host>/research/*.md`. `PARALLEL_TASK_LOG.md` cross-repo references replaced with `<host-repo>` placeholders. |
-| 8 | `docs/W152/*.md` + `docs/research/KIMI_AUDIT_2026-05-15.md` | All Kimi deep-research deliverables (16 files) had standalone `Cortex` / `cortex` mentions rewritten to `host orchestrator` / `host` so the docs read as vendor-neutral research notes. |
-| 9 | `scripts/slot-truth-check.sh` | Comment `(see Cortex W150 audit which found the…)` → `(see host-orchestrator W150 audit…)`. |
+| 2 | `tools/agent_corpus/{cli,expand,antibodies}.py`, `tools/agent_rag/cli.py`, `tools/agent_eval/cli.py` | All five tools migrated from `Path.home() / "Projects/<external-host>/agents"` to `agent_paths.agents_root()`. Antibodies DB resolution moved to `agent_paths.antibody_db_path()`. |
+| 3 | `tools/drift_alert_hub/hub.py` | `drift-bot@<external-host>.local` / `ops@<external-host>.local` → `drift-bot@slotmath.local` / `ops@slotmath.local`. |
+| 4 | `web/studio/e2e/qa-<external-host>-eyes-100-spins.spec.ts` → `qa-headless-eyes-100-spins.spec.ts` | File renamed; test name + screenshot dir scrubbed of `<external-host>-eyes` → `headless-eyes`. |
+| 5 | `agents/*.md` (4 specialist + architect docs) | All `~/Projects/<external-host>/agents/<name>/` paths → `${SLOT_MATH_AGENTS_ROOT:-./agents}/<name>/`. Dispatcher `<external-host>-slot-agent` → `slot-agent`. Helpers `<external-host>-kimi-research` → `deep-research`. `<external-host> schedule add` → "host scheduler (cron / systemd timer)". `<external-host>-Eye` → "host orchestrator's screen-capture tool". `<external-host>-DB alert` → "host orchestrator alert sink". |
+| 6 | `SLOTH_MASTER.md` + `SLOT_ENGINE_MASTER_TODO.md` | All <external-host> path / binary / registry references rewritten to env-driven or neutral wording. `<external-host>-truth-check` → `truth-check`; `<external-host>-qlora-train` → `slot-qlora-train`; `<external-host>-registry entries` → `persistent registry entries`; `Claude sessions` → `host-orchestrator sessions`. |
+| 7 | `docs/{IP_REVIEW,glossary,PARALLEL_TASK_LOG}.md` | Path `~/.<external-host>/research/*.md` → `~/.<host>/research/*.md`. `PARALLEL_TASK_LOG.md` cross-repo references replaced with `<host-repo>` placeholders. |
+| 8 | `docs/W152/*.md` + `docs/research/KIMI_AUDIT_2026-05-15.md` | All Kimi deep-research deliverables (16 files) had standalone `<external-host>` / `<external-host>` mentions rewritten to `host orchestrator` / `host` so the docs read as vendor-neutral research notes. |
+| 9 | `scripts/slot-truth-check.sh` | Comment `(see <external-host> W150 audit which found the…)` → `(see host-orchestrator W150 audit…)`. |
 
 **Acceptance W205+2:**
 

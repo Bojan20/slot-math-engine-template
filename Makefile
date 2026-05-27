@@ -126,16 +126,34 @@ agents-eval: ## Structural check of all 3 agent eval fixtures
 	python3 -m tools.agent_eval math-debug --self-test
 
 agents-routing: ## Dispatcher routing accuracy gate (≥95%, currently 100%)
-	python3 $$HOME/Projects/cortex/scripts/cortex-slot-agent eval | \
+	@# W205+2: host-orchestrator-agnostic. The dispatcher binary path is
+	@# resolved from $$SLOT_AGENT_BIN (defaults to `slot-agent` on $$PATH).
+	@# If the binary isn't installed (fresh checkout, CI without external
+	@# orchestrator), the gate is a no-op so `make agents-check` stays
+	@# green for users who don't ship the optional agent fleet.
+	@if command -v "$${SLOT_AGENT_BIN:-slot-agent}" >/dev/null 2>&1; then \
+		"$${SLOT_AGENT_BIN:-slot-agent}" eval | \
 		python3 -c "import sys,json; d=json.loads(sys.stdin.read()); \
 		print('routing accuracy', d['accuracy']); \
-		sys.exit(0 if d['pass'] else 1)"
+		sys.exit(0 if d['pass'] else 1)"; \
+	else \
+		echo "slot-agent binary not on PATH — skipping routing gate (set SLOT_AGENT_BIN=/path to enable)"; \
+	fi
 
 agents-check: ## PHASE 8 CI gate — corpus + RAG + eval + routing + scrape + qlora
 	$(MAKE) agents-corpus
 	$(MAKE) agents-rag
 	$(MAKE) agents-eval
 	$(MAKE) agents-routing
-	python3 $$HOME/Projects/cortex/agents/reg-oracle/nightly_scrape.py --self-test
-	python3 $$HOME/Projects/cortex/scripts/cortex-qlora-train --self-test
+	@# Optional nightly-scrape + qlora self-tests; resolved from
+	@# $${SLOT_MATH_AGENTS_ROOT:-./agents}. Skipped when artefacts are not
+	@# present on this checkout.
+	@SCRAPE="$${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/nightly_scrape.py"; \
+	if [ -f "$$SCRAPE" ]; then python3 "$$SCRAPE" --self-test; \
+	else echo "nightly_scrape.py not present at $$SCRAPE — skipping"; fi
+	@if command -v "$${SLOT_QLORA_BIN:-slot-qlora-train}" >/dev/null 2>&1; then \
+		"$${SLOT_QLORA_BIN:-slot-qlora-train}" --self-test; \
+	else \
+		echo "slot-qlora-train not on PATH — skipping qlora gate (set SLOT_QLORA_BIN=/path to enable)"; \
+	fi
 	@echo "✅ agents-check OK"
