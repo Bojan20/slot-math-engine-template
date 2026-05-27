@@ -664,11 +664,11 @@ mod tests {
         };
         let low = solve_hold_and_win(&HoldAndWinConfig {
             init_locked_cells: 4,
-            ..base.clone()
+            ..base
         });
         let high = solve_hold_and_win(&HoldAndWinConfig {
             init_locked_cells: 10,
-            ..base.clone()
+            ..base
         });
         assert!(
             high.expected_payout > low.expected_payout,
@@ -689,11 +689,11 @@ mod tests {
         };
         let low = solve_hold_and_win(&HoldAndWinConfig {
             initial_respins: 1,
-            ..base.clone()
+            ..base
         });
         let high = solve_hold_and_win(&HoldAndWinConfig {
             initial_respins: 5,
-            ..base.clone()
+            ..base
         });
         assert!(
             high.expected_payout > low.expected_payout,

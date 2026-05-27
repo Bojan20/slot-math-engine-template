@@ -75,7 +75,7 @@ fn w240_snapshot_markov_hnw_seed_table() {
     // Configuration set 2: same fixture, respin_reset_on_new=false.
     let cfg2 = HoldAndWinConfig {
         respin_reset_on_new: false,
-        ..cfg.clone()
+        ..cfg
     };
     let res2 = solve_hold_and_win(&cfg2);
     println!("SNAPSHOT_HNW_RESET_FALSE_v1:");

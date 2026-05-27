@@ -907,7 +907,7 @@ mod tests {
 
         let mut counts = [0u32; 3];
         for _ in 0..10000 {
-            let pick: &str = &rng.pick_weighted(&items);
+            let pick: &str = rng.pick_weighted(&items);
             match pick {
                 "a" => counts[0] += 1,
                 "b" => counts[1] += 1,

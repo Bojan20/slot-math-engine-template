@@ -148,11 +148,11 @@ fn w240_markov_hnw_grid_full_award_delta_isolation() {
     let r0 = solve_hold_and_win(&base);
     let r1 = solve_hold_and_win(&HoldAndWinConfig {
         grid_full_award: 100.0,
-        ..base.clone()
+        ..base
     });
     let r2 = solve_hold_and_win(&HoldAndWinConfig {
         grid_full_award: 250.0,
-        ..base.clone()
+        ..base
     });
     // Linearity: r1 - r0 = 100 × P(fill); r2 - r0 = 250 × P(fill).
     let p_fill = r0.grid_full_probability;
@@ -199,7 +199,7 @@ fn w240_markov_hnw_monotone_in_initial_respins() {
     let r1 = solve_hold_and_win(&base);
     let r3 = solve_hold_and_win(&HoldAndWinConfig {
         initial_respins: 3,
-        ..base.clone()
+        ..base
     });
     let r5 = solve_hold_and_win(&HoldAndWinConfig {
         initial_respins: 5,
@@ -233,7 +233,7 @@ fn w240_markov_hnw_monotone_in_base_chance() {
     let lo = solve_hold_and_win(&base);
     let hi = solve_hold_and_win(&HoldAndWinConfig {
         base_chance: 0.3,
-        ..base.clone()
+        ..base
     });
     assert!(
         lo.expected_payout < hi.expected_payout,

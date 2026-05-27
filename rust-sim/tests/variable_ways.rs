@@ -207,7 +207,7 @@ fn test_variable_ways_win_calculation() {
     }
 
     let eval_mode = EvalMode::VariableWays {
-        row_counts: row_counts.clone(),
+        row_counts,
     };
     let evaluator = Evaluator::with_mode(&cfg, &grid_gen, eval_mode);
 

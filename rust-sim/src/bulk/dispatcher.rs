@@ -567,7 +567,7 @@ mod tests {
         second.spins_per_worker = 5_000;
         second.threads_per_chunk = 2;
         second.resume_path = Some(path.clone());
-        second.checkpoint_path = Some(path.clone());
+        second.checkpoint_path = Some(path);
         second.run_id = "rt-1".into();
         second.config_hash = "abc".into();
         let r2 = BulkDispatcher::new(&cfg, second, Arc::new(NoOpProgress))
@@ -604,7 +604,7 @@ mod tests {
         bad.chunk_spins = 10_000;
         bad.spins_per_worker = 5_000;
         bad.threads_per_chunk = 1;
-        bad.resume_path = Some(path.clone());
+        bad.resume_path = Some(path);
         bad.config_hash = "B".into();
         let r = BulkDispatcher::new(&cfg, bad, Arc::new(NoOpProgress)).run();
         assert!(

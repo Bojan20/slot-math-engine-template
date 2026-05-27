@@ -210,7 +210,7 @@ fn file_journal_persists_and_recovers() {
         j.append(ds[1].clone()).unwrap();
         // drop closes file
     }
-    let j2 = NdjsonFileJournal::new(t.path.clone()).unwrap();
+    let j2 = NdjsonFileJournal::new(t.path).unwrap();
     assert_eq!(j2.size(), 2);
     let all = j2.read_all();
     let v = verify_chain(&all);
@@ -234,12 +234,12 @@ fn file_journal_refuses_corrupt_tail() {
         .map(String::from)
         .collect();
     let last: SpinJournalEntry = serde_json::from_str(&lines[1]).unwrap();
-    let mut tampered = last.clone();
+    let mut tampered = last;
     tampered.prev_hash = "f".repeat(64);
     lines[1] = serde_json::to_string(&tampered).unwrap();
     std::fs::write(&t.path, lines.join("\n") + "\n").unwrap();
 
-    let res = NdjsonFileJournal::new(t.path.clone());
+    let res = NdjsonFileJournal::new(t.path);
     assert!(res.is_err(), "expected chain-break error, got Ok");
     assert!(res.err().unwrap().contains("chain break"));
 }

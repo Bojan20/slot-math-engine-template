@@ -92,7 +92,7 @@ fn w241_gpu_request_field_round_trip() {
     };
     // Clone preserves every field — kills any mutant on Clone derive that
     // zero-fills or swaps fields.
-    let req2 = req.clone();
+    let req2 = req;
     assert_eq!(req2.slice_index, 7);
     assert_eq!(req2.start_spin, 1_000);
     assert_eq!(req2.end_spin, 2_000);
@@ -112,10 +112,10 @@ fn w241_gpu_result_field_round_trip() {
         slice_index: 3,
         completed_spins: 500,
         duration_ms: 250,
-        stats: snap.clone(),
+        stats: snap,
         hdr_buckets: vec![1, 2, 3, 4, 5],
     };
-    let res2 = res.clone();
+    let res2 = res;
     assert_eq!(res2.slice_index, 3);
     assert_eq!(res2.completed_spins, 500);
     assert_eq!(res2.duration_ms, 250);

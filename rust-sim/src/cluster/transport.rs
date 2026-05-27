@@ -117,7 +117,7 @@ mod tests {
         });
         a.send(&hello).unwrap();
         // Side a → b inbound, b → a inbound.
-        assert_eq!(b.recv().unwrap(), Some(hello.clone()));
+        assert_eq!(b.recv().unwrap(), Some(hello));
         // No data: returns None, not an error.
         assert_eq!(b.recv().unwrap(), None);
 
