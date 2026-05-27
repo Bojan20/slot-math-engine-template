@@ -84,12 +84,14 @@ class TestTsIrConverter(unittest.TestCase):
         self.assertEqual(ts_ir["paytable"]["WildWolf"]["4"], 200.0)
         self.assertEqual(ts_ir["paytable"]["WildWolf"]["3"], 50.0)
 
-        # Linear progressive is intentionally OMITTED from TS features
+        # W4.7 IR Expansion (commit `43f8cc8`) added `Feature::LinearProgressive`
+        # to the TS mirror; the converter now emits all three Fort Knox features.
         feat_kinds = [f["kind"] for f in ts_ir["features"]]
         self.assertIn("free_spins", feat_kinds)
-        self.assertIn("pick", feat_kinds)  # Fort Knox bonus
-        # Exactly 2 features expected (FS + FK pick) — no progressive
-        self.assertEqual(len(ts_ir["features"]), 2)
+        self.assertIn("pick", feat_kinds)              # Fort Knox bonus
+        self.assertIn("linear_progressive", feat_kinds) # WAP pool (W4.7)
+        # Exactly 3 features expected (FS + FK pick + linear progressive).
+        self.assertEqual(len(ts_ir["features"]), 3)
 
         # Evaluation: 40 paylines preserved
         self.assertEqual(ts_ir["evaluation"]["kind"], "lines")

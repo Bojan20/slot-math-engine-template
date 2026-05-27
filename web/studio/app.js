@@ -3656,7 +3656,8 @@
       const paneKey = key.endsWith(":left") ? "left"
                     : key.endsWith(":right") ? "right"
                     : null;
-      try { doAutoBalanceFor(v, paneKey, "compute-flush", true); } catch (_) {}
+      try { doAutoBalanceFor(v, paneKey, "compute-flush", true); }
+      catch (e) { console.warn("[flushPendingAutoBalance]", e); }
     }
   }
   if (typeof window !== "undefined") {
