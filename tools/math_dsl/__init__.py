@@ -44,6 +44,9 @@ from .verify import (
     VerifyReport, CheckResult, hit_freq_closed_form,
 )
 from .catalog import build_catalog, filter_catalog
+from .visualize import render_mermaid, render_mermaid_fenced
+from .catalog_html import render_catalog_html
+from .studio_html import render_studio_html
 
 __all__ = [
     "MathDslSpec",

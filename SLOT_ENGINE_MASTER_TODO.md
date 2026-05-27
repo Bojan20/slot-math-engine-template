@@ -6,6 +6,38 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:35 (post **W6.4 + W6.7 + W6.8 LANDED** — Studio HTML stub + Mermaid visualizer + Catalog HTML)
+
+**Status:** **End-to-end presentation layer is live.** Designer Studio HTML, semantic Mermaid topology diagrams, filterable catalog HTML — three artifacts that turn the math compiler from a CLI into a sales-ready demo.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W6.4 — Studio HTML stub** | ✅ **landed** | 6 of 19 | `tools/math_dsl/studio_html.py` | Single-file HTML (~7 KB) with split-pane: YAML editor (left) + Mermaid preview (right). Buttons: Render Diagram / Reset / Download YAML. Mermaid.js loaded via CDN; YAML safely escaped against backtick / `${` injection |
+| **W6.7 — Mermaid visualizer** | ✅ **landed** | 8 of 19 | `tools/math_dsl/visualize.py` | `render_mermaid(spec) → str` emits `flowchart TD` with Topology → Symbols → Features → Constraints + Jurisdictions panel. Custom node styling (title/topology/symbols/feature/constraints/juris classes). Variable_rows / cluster_grid / rectangular all distinguished |
+| **W6.8 — Catalog HTML report** | ✅ **landed** | 5 of 19 | `tools/math_dsl/catalog_html.py` | Single-file HTML (~7 KB) sa client-side vanilla JS filtering po topology/volatility/jurisdiction/feature. Color-coded volatility classes (low=green, ultra=red bold). Real-time count updates. No build step, no React |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | **19 / 19** ✅ | 0.006 s |
+
+### Grand total — W4.* + W5.* + W6.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| **Math DSL + cert + UI cumulative** | **146 / 146** ✅ |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 21:15 (post **W6.3 + W6.5 + W6.6 LANDED** — provenance auto-sign + closed-form verifier + spec catalog index)
 
 **Status:** **Cert pipeline is now fully cryptographically anchored.** Every solved IR can be signed (HMAC-SHA-256, stdlib-only — no extra deps; env-overridable key for regulator HMAC, optional ed25519 upgrade path) and the cert bundle's `verify.sh` can independently re-derive RTP + hit_freq + volatility class without running MC. Catalog index turns the specs/ dir into a queryable JSON the studio UI can mount.
