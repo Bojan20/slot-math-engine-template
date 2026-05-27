@@ -337,8 +337,8 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 
 | Phase | Tema | Trud | Strategic value | Kad da krenemo |
 |---|---|---|---|---|
-| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟢 **6/7 sub-waves landed** (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6) — P10.7 Z3 coupling = prep |
-| **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | posle Phase 10 |
+| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟢 **7/7 sub-waves LANDED** (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 + P10.7) ✅ ZATVOREN |
+| **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | 🟢 **LANDED** — `tools/slot_bench/` + `slot-math-bench` CLI; 4 benchmarks (rtp_recovery / time_to_ir / cert_completeness / tournament_completeness); A+ grade on internal games/ dir; reproducible artifact `BENCHMARK.json` + `BENCHMARK.md` |
 | **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | čeka pilot operator |
 | **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
 | **PHASE 14** | **L3 LoRA fine-tune** — 8B base model fine-tune na 1800 P8.6 RAG corpus | 8-16h GPU rent ILI M4 Ultra | math-debug agent first-shot accuracy >70% → >90% | čeka M4 Ultra Q1 2027 ili A100 rent |
@@ -375,7 +375,7 @@ Acceptance:
 | **P10.2 Composition planner** — feature-share balancer + 12 new NL keywords (ante_bet, gamble, mystery_symbol, symbol_upgrade, walking/stacked/rainbow wilds, money collect, jackpot wheel, charge/super meter) + FEATURE_COMPATIBILITY matrix | 2-3h | ✅ **LANDED** (`tools/slot_design/composition_planner.py`, 9 unit specs + 12 new-keyword parametrized matches + per-feature `_rtp_share_alloc` audit) |
 | **P10.3 Studio iterative refinement UI** | 1-2h | ✅ **LANDED** (`tools/slot_design/review_ui.py` → `review.html` + `review.js` self-contained; DSL editor + composition table + download/copy/reset actions; 4 unit specs + 2 CLI-integration specs) |
 | **P10.6 Cert-pipeline glue** (`slot-design --cert-xml` / `--cert-pack`) | 30-60 min | ✅ **LANDED** (CLI flags `--cert-xml`, `--cert-pack`, `--swid`; lazy-import `tools.slot_build.cert_xml` + `cert_package`; graceful WARN fallback when crypto/lib missing; 2 CLI specs verify XML namespace + ZIP manifest shape) |
-| **P10.7** (was P10.2 partial) **Z3 closed-form RTP coupling** | 1-2h | prep — extends `dsl_to_ir_via_smt` so it consumes the composition planner's `_feature_share_alloc` hints |
+| **P10.7 Z3 share-aware RTP locker** | 1-2h | ✅ **LANDED** (`tools/slot_design/share_aware_lock.py` — wraps W6.4 SMT; consumes `_rtp_share_alloc` hints; splits target across base+features; clamps to dsl_validator min 0.5; `--no-share-aware` CLI flag; 10 unit + CLI specs pass) |
 
 ### 🥈 PHASE 11 — **SWE-Math-Bench**
 
@@ -437,7 +437,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vitest spec files** | **295** |
 | **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1392 PASS + 47 skipped** ⬆ +128 (P10 full sub-wave coverage: 72 P10.1/4/5 + 14 P10.2 composition pairs + 5 P10.3 review UI + 5 P10.6 cert glue + 1 e2e single-command) |
+| **Python test count** | **1419 PASS + 47 skipped** ⬆ +155 (P10.1-P10.7 full + PHASE 11 SWE-Math-Bench: 10 share-aware lock + 17 slot_bench unit/CLI/E2E) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -446,7 +446,8 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
 | **Phase 9 tournament kernels** | **5 / 5** ✅ (W201 + W202 + W203 + W204 + W205 all LANDED) |
 | **W205+1 tech-debt closeout** | **3 / 3** ✅ (CLI shim + benchmark fix + dev docs) |
-| **Phase 10 AI Math Compiler v2** | **6 / 7** 🟢 (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 LANDED with FULL test coverage; P10.7 Z3 coupling prep) |
+| **Phase 10 AI Math Compiler v2** | **7 / 7** ✅ ZATVOREN (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 + P10.7 LANDED) |
+| **Phase 11 SWE-Math-Bench** | ✅ LANDED — `slot-math-bench` CLI, 4 benchmarks, A+ grade artifact |
 | **P10 end-to-end single-command pipeline** | ✅ (`slot-design "..." --cert-pack` → spec.json + game.dsl.toml + IR + REVIEW.md + review.html + cert ZIP in one invocation; pinned by `test_p10_end_to_end_one_command_all_artefacts`) |
 | **P10.2 composition pair detection** | ✅ 16 industry pairings codified (Sweet Bonanza, Razor Shark, Lock It Link, Megaways, Aloha, Jammin Jars, Lightning Link, Wonka, Hacksaw bonus-buy, Sweet Bonanza Ante, Mega Moolah, Reel Rush, Reactoonz, Walking Wild Respin) + canonical/stacking/novel classification + low-RTP stacking warn |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |

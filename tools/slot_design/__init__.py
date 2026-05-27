@@ -38,12 +38,14 @@ from tools.slot_design.composition_planner import (
     plan_composition,
     feature_dictionary,
 )
+from tools.slot_design.share_aware_lock import share_aware_lock
 
 __all__ = [
     "parse_prompt",
     "prompt_to_dsl",
     "plan_composition",
     "feature_dictionary",
+    "share_aware_lock",
     "DetectedFeature",
     "PromptSpec",
 ]

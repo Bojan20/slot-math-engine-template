@@ -37,6 +37,7 @@ from tools.slot_design.prompt_parser import (
 )
 from tools.slot_design.composition_planner import plan_composition
 from tools.slot_design.review_ui import emit_review_ui
+from tools.slot_design.share_aware_lock import share_aware_lock
 
 
 def _slugify(name: str) -> str:
@@ -44,12 +45,20 @@ def _slugify(name: str) -> str:
     return s or "untitled-slot"
 
 
-def _try_smt_lock(dsl: dict, no_smt: bool) -> dict:
+def _try_smt_lock(dsl: dict, no_smt: bool, share_aware: bool = True) -> dict:
     """Run the W6.4 SMT-locked synthesizer if available; fallback to W6.2
-    direct DSL→IR synthesizer when z3 missing or --no-smt-lock."""
+    direct DSL→IR synthesizer when z3 missing or --no-smt-lock.
+
+    When `share_aware=True` and the DSL features carry `_rtp_share_alloc`
+    hints from the composition planner (P10.2), the P10.7 share-aware
+    wrapper splits the target RTP across base game + feature contributions
+    so the solver doesn't over-allocate.
+    """
     if no_smt:
         from tools.gdd_extract.dsl import dsl_to_slot_sim_ir
         return dsl_to_slot_sim_ir(dsl)
+    if share_aware:
+        return share_aware_lock(dsl)
     try:
         from tools.gdd_extract.smt_synth import dsl_to_ir_via_smt
         return dsl_to_ir_via_smt(dsl)
@@ -190,8 +199,12 @@ def run(args: argparse.Namespace) -> int:
     dsl_toml_path = out_dir / "game.dsl.toml"
     dsl_toml_path.write_text(_dump_dsl_toml(dsl))
 
-    # Build IR (SMT-locked or fallback)
-    ir = _try_smt_lock(dsl, args.no_smt_lock)
+    # Build IR (SMT-locked or fallback; share-aware by default)
+    ir = _try_smt_lock(
+        dsl,
+        args.no_smt_lock,
+        share_aware=not args.no_share_aware,
+    )
     slug = _slugify(dsl["meta"]["name"])
     ir_path = out_dir / f"{slug}.slot-sim.ir.json"
     with ir_path.open("w") as fp:
@@ -268,6 +281,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="Skip NL parser; load DSL TOML directly.")
     parser.add_argument("--no-smt-lock", action="store_true",
                         help="Skip SMT-locked RTP synthesis (deterministic fallback).")
+    parser.add_argument("--no-share-aware", action="store_true",
+                        help="Skip P10.7 share-aware lock (use plain W6.4).")
     parser.add_argument("--no-plan-composition", action="store_true",
                         help="Skip P10.2 composition planner (raw template DSL).")
     parser.add_argument("--no-review-ui", action="store_true",
