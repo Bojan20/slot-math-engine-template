@@ -39,6 +39,12 @@ from tools.slot_design.composition_planner import (
     feature_dictionary,
 )
 from tools.slot_design.share_aware_lock import share_aware_lock
+from tools.slot_design.copilot import (
+    apply_mutation,
+    list_supported_mutations,
+    MutationOp,
+    MutationReport,
+)
 
 __all__ = [
     "parse_prompt",
@@ -46,6 +52,10 @@ __all__ = [
     "plan_composition",
     "feature_dictionary",
     "share_aware_lock",
+    "apply_mutation",
+    "list_supported_mutations",
+    "MutationOp",
+    "MutationReport",
     "DetectedFeature",
     "PromptSpec",
 ]
