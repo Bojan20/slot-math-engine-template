@@ -17,7 +17,7 @@
 | **Repo home** | `~/Projects/slot-math-engine-template` (GitHub: `Bojan20/slot-math-engine-template`) |
 | **Master roadmap** | `SLOTH_MASTER.md` (root) — 7 faza, hash-pinovan |
 | **Detaljni wave log** | `SLOT_ENGINE_MASTER_TODO.md` (root) — istorija svih Wave 1-241+ |
-| **Saradnici** | Kimi research (preko `cortex-kimi-research`), CortexEye/Hands za Studio UI verifikaciju, sub-agents (DSPMath, VendorParity, JurisdictionGuard, TemplateBuilder) |
+| **Saradnici** | Deep-research adapter (LLM-research provider via the host orchestrator), Studio UI verifier (headless Playwright), sub-agents (DSPMath, VendorParity, JurisdictionGuard, TemplateBuilder) |
 
 ---
 
@@ -62,7 +62,7 @@
 - `bash scripts/ci_sanity_1b.sh`
 - `bash scripts/bet_mult_sweep.sh`
 - `python scripts/aggregate_*.py`
-- `cortex-kimi-research "<query>"` — za vendor doc, regulator updates, najnoviju literaturu
+- `deep-research <query>` — za vendor doc, regulator updates, najnoviju literaturu (resolved by the host orchestrator's LLM-research adapter)
 
 ### Decide
 - Wave prioritetization u `SLOTH_MASTER.md`
@@ -110,7 +110,7 @@
 | Situacija | Akcija |
 |---|---|
 | Wave završen, sledeći ima dependency koja nije gotova | Eskaliraj — predloži paralelni alt wave |
-| Boki feedback potreban za acceptance (npr. "Studio UI ima dva moguća layouts") | Pripremi screenshot kroz CortexEye, predloži opcije, pitaj |
+| Boki feedback potreban za acceptance (npr. "Studio UI ima dva moguća layouts") | Pripremi screenshot kroz the host orchestrator's screen-capture tool, predloži opcije, pitaj |
 | Build/test failure koji nije moja regression | Stop, dijagnostika, root cause, popravi pre dalje |
 | Physical hardware blocker (BEČ mašina za Windows AWP cert) | Mark wave kao 🚧 hardware-blocked, nastavi sa softver-only fazama |
 | Pronađen industry-first opportunity | Loguj u `docs/research/` kao future-wave, ne ulazi u trenutni |

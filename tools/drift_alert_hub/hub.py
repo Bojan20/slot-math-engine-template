@@ -157,8 +157,8 @@ class WebhookPayloadSink:
 class EmailPayloadSink:
     """Writes an RFC-822-ish .eml payload per alert."""
     out_dir: Path
-    sender: str = "drift-bot@cortex.local"
-    recipient: str = "ops@cortex.local"
+    sender: str = "drift-bot@slotmath.local"
+    recipient: str = "ops@slotmath.local"
     name: str = "email"
 
     def send(self, alert: DriftAlert) -> None:

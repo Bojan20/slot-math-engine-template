@@ -29,7 +29,7 @@ Our standard: every reserved-term-free implementation cites either:
 
 We **never** cite a vendor's source as derivation. Internal research
 notes that REVIEW vendor implementations live in
-`~/.cortex/research/*.md` and are explicitly **not** in version
+`~/.<host>/research/*.md` and are explicitly **not** in version
 control.
 
 ---
@@ -184,7 +184,7 @@ control.
    section is the canonical list. Updates require an IP_REVIEW.md
    entry justification.
 4. **Private research isolation:** Internal vendor-source notes live
-   in `~/.cortex/research/*.md` outside the git repo. They never
+   in `~/.<host>/research/*.md` outside the git repo. They never
    appear in commit history.
 5. **Audit trail:** Every Wave 18+ commit includes a section in this
    file. Future Wave 19 / 20 features inherit the same template:

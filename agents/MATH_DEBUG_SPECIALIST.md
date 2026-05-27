@@ -9,7 +9,7 @@ tools: Read, Grep, Glob, Bash
 > Narrow-domain triage agent. Given a failing MC report or an `slot-ir-diff`
 > dashboard, emits a root-cause hypothesis with a fix outline.
 > Lives in `slot-math-engine-template/agents/`; persistent registry twin at
-> `~/Projects/cortex/agents/math-debug/`.
+> `${SLOT_MATH_AGENTS_ROOT:-./agents}/math-debug/`.
 >
 > _Created: 2026-05-26 — PHASE 8 P8.3._
 
@@ -24,7 +24,7 @@ tools: Read, Grep, Glob, Bash
 | **Inputs** | One of: `slot-ir-diff` HTML/JSON, failing MC report, `cargo mutants` survivor, `slot-par-doctor` dashboard, `tools/diagnostics/fs_rtp_audit.py` output |
 | **Output** | Root-cause hypothesis + ranked fix candidates + impact analysis + minimal-safe-fix plan |
 | **Tools (repo)** | `tools/diagnostics/`, `rust-sim/src/`, `engine/slot-sim/`, `slot-ir-diff`, `slot-par-doctor` |
-| **Registry twin** | `~/Projects/cortex/agents/math-debug/` |
+| **Registry twin** | `${SLOT_MATH_AGENTS_ROOT:-./agents}/math-debug/` |
 
 ---
 
@@ -138,7 +138,7 @@ Pulled from existing history (no synthesis needed):
 | **Total accessible** | **≈ 580 traces** initially; grows on every CI run |
 
 Corpus loader (P8.5 deliverable) consolidates these into
-`~/Projects/cortex/agents/math-debug/corpus/traces.jsonl`.
+`${SLOT_MATH_AGENTS_ROOT:-./agents}/math-debug/corpus/traces.jsonl`.
 
 ---
 
@@ -165,7 +165,7 @@ ingested_at: iso-8601
 
 ## Acceptance eval
 
-Held-out eval at `~/Projects/cortex/agents/math-debug/eval/cases.yaml` —
+Held-out eval at `${SLOT_MATH_AGENTS_ROOT:-./agents}/math-debug/eval/cases.yaml` —
 20 failure cases drawn from Vendor C/D/E PARs (when they land) plus
 mutants-history.
 
@@ -182,7 +182,7 @@ mutants-history.
 ## Escalation
 
 - **Confidence < 0.5 after diagnostic pass** → escalate to
-  `cortex-kimi-research` with full trace context.
+  `deep-research` with full trace context.
 - **Multi-class ambiguous** → emit isolating-diagnostic recipe and refuse
   to commit to a hypothesis.
 - **Pattern matches an existing antibody** → cite antibody id and recommend

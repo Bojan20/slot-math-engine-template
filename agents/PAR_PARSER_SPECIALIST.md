@@ -7,8 +7,8 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 # 🎰 PAR Parser Specialist — Subagent Definition
 
 > Narrow-domain specialist that turns a *vendor's PAR.xlsx* into a *validated, vendor-neutral IR*.
-> Lives inside `slot-math-engine-template/agents/`; persistent registry twin lives at `~/Projects/cortex/agents/par-parser/`.
-> Activated by Corti via the `Agent` tool, or by the dispatcher `cortex-slot-agent` when input is an `.xlsx` / `.tsv` PAR.
+> Lives inside `slot-math-engine-template/agents/`. The persistent registry twin (manifest, examples, eval, corpus) lives at `${SLOT_MATH_AGENTS_ROOT:-./agents}/par-parser/`.
+> Activated by the host orchestrator's agent tool, or by the dispatcher `slot-agent` when input is an `.xlsx` / `.tsv` PAR.
 >
 > _Created: 2026-05-26 — PHASE 8 P8.1._
 
@@ -24,7 +24,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 | **Inputs** | `.xlsx`, `.tsv`, `.csv` PAR sheets · vendor hint (optional) |
 | **Output** | `IR` JSON (matching `schemas/ir.schema.json`) + `vendor_profile.yaml` if a new vendor |
 | **Tools (repo)** | `tools/parse_par/`, `tools/vendor_profiles/*.yaml`, `tools/parse_par/scaffold.py` |
-| **Registry twin** | `~/Projects/cortex/agents/par-parser/` (manifest + system_prompt + examples + eval) |
+| **Registry twin** | `${SLOT_MATH_AGENTS_ROOT:-./agents}/par-parser/` (manifest + system_prompt + examples + eval) |
 
 ---
 
@@ -37,7 +37,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 ## Hard rules (never violate)
 
 1. **Cite the cell.** Every extracted IR field must record its source `(sheet, row, col)` in `provenance.cells[]`.
-2. **No proprietary corpus.** Never train on or ingest a vendor-confidential PAR unless an NDA flag is set in `~/Projects/cortex/agents/par-parser/manifest.yaml` (`nda_corpus.<vendor>: true`).
+2. **No proprietary corpus.** Never train on or ingest a vendor-confidential PAR unless an NDA flag is set in `${SLOT_MATH_AGENTS_ROOT:-./agents}/par-parser/manifest.yaml` (`nda_corpus.<vendor>: true`).
 3. **Closed-form first.** Reels → strip frequencies → exact line/way RTP before any MC validation.
 4. **Confidence required.** Output `confidence: { vendor: float, layout: float, ir_completeness: float }`; if any < 0.85 emit a `needs_review.md` block instead of silently completing.
 5. **Roundtrip gate.** Generated IR must pass `tools/parse_par/_validate_ts_ir.mjs` and survive a `slot-ir-diff` round-trip against the original `.xlsx`.
@@ -84,13 +84,13 @@ license: str ("public" | "nda")
 ingested_at: iso-8601
 ```
 
-Refresh policy: only public chunks are re-ingested on `cortex-slot-agent rag refresh par-parser`. NDA chunks are pinned and never re-ingested.
+Refresh policy: only public chunks are re-ingested on `slot-agent rag refresh par-parser`. NDA chunks are pinned and never re-ingested.
 
 ---
 
 ## Few-shot examples
 
-Held under `~/Projects/cortex/agents/par-parser/examples/`:
+Held under `${SLOT_MATH_AGENTS_ROOT:-./agents}/par-parser/examples/`:
 
 | File | Vendor | Scenario |
 |---|---|---|
@@ -106,7 +106,7 @@ Each example shows: snippet of source PAR (anonymised), vendor decision rational
 
 ## Acceptance eval
 
-Held-out set at `~/Projects/cortex/agents/par-parser/eval/held_out.yaml` — 5 PARs from 3 vendors the agent has not seen.
+Held-out set at `${SLOT_MATH_AGENTS_ROOT:-./agents}/par-parser/eval/held_out.yaml` — 5 PARs from 3 vendors the agent has not seen.
 
 **Pass criteria:**
 
@@ -124,6 +124,6 @@ Run with: `python -m tools.agent_eval par-parser` (lands in P8.5).
 
 ## Escalation
 
-- **Layout never seen + no jurisdiction hint** → escalate to `cortex-kimi-research` (vendor reverse-eng questions).
+- **Layout never seen + no jurisdiction hint** → escalate to `deep-research` (vendor reverse-eng questions).
 - **Profile draft accepted** → commit to `tools/vendor_profiles/`, add eval row, update `SLOT_ENGINE_MASTER_TODO.md`.
 - **NDA-licensed PAR detected** → refuse to ingest unless `nda_corpus.<vendor>` flag is true; emit blocker note.

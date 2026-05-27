@@ -6,7 +6,7 @@
 #
 # Why: SLOT_ENGINE_MASTER_TODO.md is the single source of truth for what
 # is implemented vs claimed. Without an enforced gate, that document
-# tends to drift optimistically (see Cortex W150 audit which found the
+# tends to drift optimistically (see host-orchestrator W150 audit which found the
 # 37× test-count gap in CLAUDE.md). This script prevents the same class
 # of bug here.
 #

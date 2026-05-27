@@ -21,12 +21,12 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DESKTOP_IR = `${process.env.HOME}/Desktop/wrath-of-olympus.ir.json`;
-const SHOT_DIR = resolve(__dirname, '../../../reports/playwright/qa-cortex-eyes-100');
+const SHOT_DIR = resolve(__dirname, '../../../reports/playwright/qa-headless-eyes-100');
 mkdirSync(SHOT_DIR, { recursive: true });
 
 const SPINS = 100_000;  // σ_RTP at 100k ≈ 0.45pp — tight enough to spot any systematic drift
 
-test('cortex eyes · 100 headless spins · per-spin diagnostics', async ({ page, context }) => {
+test('headless eyes · 100 spins · per-spin diagnostics', async ({ page, context }) => {
   test.setTimeout(240_000);
   expect(existsSync(DESKTOP_IR)).toBe(true);
   const ir = JSON.parse(readFileSync(DESKTOP_IR, 'utf8'));

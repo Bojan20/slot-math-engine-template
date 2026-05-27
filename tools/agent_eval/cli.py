@@ -31,7 +31,9 @@ except ImportError:
     print("ERR: pyyaml required", file=sys.stderr)
     sys.exit(2)
 
-AGENTS_ROOT = Path.home() / "Projects/cortex/agents"
+from tools.agent_paths import agents_root as _agents_root
+
+AGENTS_ROOT = _agents_root()
 KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug"}
 
 

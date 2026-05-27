@@ -1,8 +1,10 @@
 """tools.agent_corpus.cli — corpus normaliser CLI (PHASE 8 P8.5).
 
 Refreshes a unified `traces.jsonl` for any P8.x agent by walking the
-agent's `corpus_root` (defined in its manifest.yaml under
-`~/Projects/cortex/agents/<name>/`).
+agent's `corpus_root` (defined in its `manifest.yaml`). The agents
+root is resolved via `tools.agent_paths.agents_root()` — env-driven,
+defaults to `./agents` in-repo. Override with
+`SLOT_MATH_AGENTS_ROOT=/path` for an external fleet.
 
 Trace schema (one JSON object per line):
 
@@ -35,7 +37,9 @@ except ImportError:
     print("ERR: pyyaml required", file=sys.stderr)
     sys.exit(2)
 
-AGENTS_ROOT = Path.home() / "Projects/cortex/agents"
+from tools.agent_paths import agents_root as _agents_root
+
+AGENTS_ROOT = _agents_root()
 
 KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug"}
 

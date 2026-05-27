@@ -7,7 +7,7 @@ instruction that fans out into N agents working concurrently on disjoint
 file lanes. The orchestrator (main Corti) launches them, merges their
 branches, and reconciles TODOs once the whole wave lands.
 
-See `/Users/vanvinklstudio/Projects/cortex/docs/PARALLEL_TASK_LOG.md` for
+See `<host-repo>/docs/PARALLEL_TASK_LOG.md` for
 the canonical schema definition and the cross-repo conflict map.
 
 ---
@@ -42,7 +42,7 @@ the canonical schema definition and the cross-repo conflict map.
 | 3     | `agent/par-nonlinear-tuner` (B2)| `5c43725` | `3701af7` | one TODO-line conflict, resolved keep-both  |
 
 **Final slot-math/main HEAD:** `3701af7`  
-**Final cortex/main HEAD:** `4ac1f09` (A1 `b70c2dc` + A2 `4ac1f09`)
+**Final <host-repo>/main HEAD:** `4ac1f09` (A1 `b70c2dc` + A2 `4ac1f09`)
 
 **Acceptance after merge (slot-math):**
 
@@ -52,7 +52,7 @@ the canonical schema definition and the cross-repo conflict map.
 - `npm run par-samples` → **20 / 20** fixtures within ±0.5 % of target RTP 0.96
 - `npm run rng-quality` → **4 / 4** backends pass 5 / 5 NIST baseline tests
 
-**Acceptance after merge (cortex):**
+**Acceptance after merge (<host-repo>):**
 
 - `npm run check` → 0 errors / 0 warnings
 - `npm run build` → clean (Vite, 1.92 s)

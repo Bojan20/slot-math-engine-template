@@ -394,6 +394,6 @@ Acceptable use (whitelist in `scripts/check-reserved-terms.sh`):
   context).
 * Inside `SLOT_ENGINE_MASTER_TODO.md` planning entries that document
   rebrand history.
-* Inside private memory (`~/.cortex/research/*.md`) — never committed.
+* Inside private memory (`~/.<host>/research/*.md`) — never committed.
 * Inside this glossary's reserved-terms table itself (for reference).
 * Inside legacy `docs/W152/` research bundle and `docs/research.md`.

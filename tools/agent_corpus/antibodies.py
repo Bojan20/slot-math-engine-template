@@ -1,20 +1,27 @@
 """tools.agent_corpus.antibodies — match an incoming math-debug symptom
-against the CORTEX antibody DB so the Math Debug Specialist can surface
+against an antibody DB so the Math Debug Specialist can surface
 "this exact bug class is already codified" as the first recommendation.
 
-The cortex daemon stores discovered failure patterns in an `antibodies`
-table inside `~/Library/Application Support/cortex/cortex.db`. Each row
-is roughly:
+An antibody DB is any SQLite file with an `antibodies` table of the shape:
 
     (id, pattern, severity, recommended_fix, family, created_at, last_seen)
 
-We don't depend on the daemon being running — the DB file is just
-SQLite. If it doesn't exist, the helper returns an empty list silently
-so the eval harness still passes on a fresh machine.
+This module is **provider-agnostic** — the DB can come from a local
+corpus, a published bug-class catalogue, or an external orchestration
+host. The default path is resolved in this order:
+
+    1. `--db PATH`             — explicit CLI flag (highest priority)
+    2. `$SLOT_MATH_ANTIBODY_DB` — environment override
+    3. `${SLOT_MATH_HOME:-.}/data/antibodies.db` — in-repo default
+
+If the resolved DB doesn't exist, every lookup returns an empty list
+silently so the eval harness still passes on a fresh machine.
 
 CLI:
     python -m tools.agent_corpus.antibodies "wild prefix max double count"
     python -m tools.agent_corpus.antibodies --severity HIGH "rtp drift"
+    SLOT_MATH_ANTIBODY_DB=/path/to/custom.db \
+        python -m tools.agent_corpus.antibodies "..."
 """
 from __future__ import annotations
 
@@ -27,7 +34,22 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
-DEFAULT_DB = Path.home() / "Library/Application Support/cortex/cortex.db"
+
+def _resolve_default_db() -> Path:
+    """Resolve the antibody DB path from environment with sensible defaults.
+
+    Highest-priority: `SLOT_MATH_ANTIBODY_DB`. Falls back to
+    `${SLOT_MATH_HOME:-.}/data/antibodies.db`. Returns a Path regardless
+    of whether the file exists — caller treats missing as empty.
+    """
+    env = os.environ.get("SLOT_MATH_ANTIBODY_DB")
+    if env:
+        return Path(env).expanduser()
+    home = Path(os.environ.get("SLOT_MATH_HOME") or ".")
+    return home / "data" / "antibodies.db"
+
+
+DEFAULT_DB = _resolve_default_db()
 
 SEVERITIES = ("CRITICAL", "HIGH", "MEDIUM", "LOW")
 

@@ -40,8 +40,10 @@ except ImportError:
     print("ERR: pyyaml required", file=sys.stderr)
     sys.exit(2)
 
+from tools.agent_paths import agents_root as _agents_root
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AGENTS_ROOT = Path.home() / "Projects/cortex/agents"
+AGENTS_ROOT = _agents_root()
 PROFILES_DIR = REPO_ROOT / "tools" / "vendor_profiles"
 MUTANTS_TARGET_DIR = REPO_ROOT / "target"
 MUTATION_REPORTS_DIR = REPO_ROOT / "reports" / "mutation"

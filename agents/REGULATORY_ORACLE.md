@@ -9,7 +9,7 @@ tools: Read, Grep, Glob, Bash, WebFetch
 > Living knowledge base over 11+ slot jurisdictions. Returns cited answers with
 > source URL + effective date.
 > Lives in `slot-math-engine-template/agents/`; persistent registry twin at
-> `~/Projects/cortex/agents/reg-oracle/`.
+> `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/`.
 > Registry twin runs a **monthly cron** that diffs regulator pages against the
 > cached KB.
 >
@@ -27,7 +27,7 @@ tools: Read, Grep, Glob, Bash, WebFetch
 | **Inputs** | Free-form question + optional jurisdiction list + optional aspect tag |
 | **Output** | Cited answer (markdown) + `(jurisdiction, category, effective_from, source_url)` tuple per claim |
 | **Tools (repo)** | `rust-sim/src/jurisdiction/profiles.rs`, `tools/jurisdiction/`, `docs/research/` |
-| **Registry twin** | `~/Projects/cortex/agents/reg-oracle/` |
+| **Registry twin** | `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/` |
 
 ---
 
@@ -82,7 +82,7 @@ language: str             # en|fr|it|sv|da|nl|de
 
 ## Per-jurisdiction stubs
 
-Each lives at `~/Projects/cortex/agents/reg-oracle/jurisdictions/<code>.yaml`:
+Each lives at `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/jurisdictions/<code>.yaml`:
 
 | Code | Regulator | Primary feeds |
 |---|---|---|
@@ -131,25 +131,25 @@ Cross-reference: Track360, Altenar, ICLG comparative summaries.
 
 ## Nightly cron (registry twin)
 
-Lives at `~/Projects/cortex/agents/reg-oracle/nightly_scrape.py`.
+Lives at `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/nightly_scrape.py`.
 
 Pipeline:
 1. For each jurisdiction stub, fetch the published feed (RSS / HTML index).
 2. Compute SHA-256 of each document body.
 3. Diff vs cached hashes in Qdrant metadata.
 4. New / changed docs → re-extract chunks → upsert into Qdrant.
-5. Emit `~/Projects/cortex/agents/reg-oracle/diffs/regulator-delta-<YYYY-MM-DD>.md`.
+5. Emit `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/diffs/regulator-delta-<YYYY-MM-DD>.md`.
 6. If a diff touches a category that maps to one of our profile YAMLs, alert
-   via Cortex DB `agent_alert` table + open a master TODO row.
+   via the host orchestrator's alert sink (`agent_alert` table or webhook) + open a master TODO row.
 
-Cron schedule (registered by `cortex schedule add` on first agent run):
+Cron schedule (registered by `host scheduler (e.g. cron / systemd timer)` on first agent run):
 `30 3 * * *` (03:30 local, daily).
 
 ---
 
 ## Acceptance eval
 
-Held-out questions at `~/Projects/cortex/agents/reg-oracle/eval/qa_set.yaml` —
+Held-out questions at `${SLOT_MATH_AGENTS_ROOT:-./agents}/reg-oracle/eval/qa_set.yaml` —
 30 questions across 11 jurisdictions.
 
 | Metric | Threshold |
@@ -164,6 +164,6 @@ Held-out questions at `~/Projects/cortex/agents/reg-oracle/eval/qa_set.yaml` —
 
 ## Escalation
 
-- **Question outside the 11 jurisdictions** → refuse and route to `cortex-kimi-research` with explicit jurisdiction.
+- **Question outside the 11 jurisdictions** → refuse and route to `deep-research` with explicit jurisdiction.
 - **Clause older than 24 months without re-verify** → emit `stale: true` and queue refresh job.
-- **PROFILE_DRIFT detected** → open master TODO row + ping Corti via Cortex DB alert.
+- **PROFILE_DRIFT detected** → open master TODO row + ping Corti via host orchestrator alert sink.
