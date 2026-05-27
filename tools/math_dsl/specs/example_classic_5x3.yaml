@@ -1,0 +1,64 @@
+# W5.1 Math DSL example — classic 5×3 / 20 paylines lines slot.
+# Designer fills this in, runs `python -m tools.math_dsl synth` and gets
+# a fully-balanced SlotGameIR with reel weights solved by Z3.
+
+schema_version: "1.0.0"
+
+meta:
+  name: "Crimson Tiger"
+  vendor: "studio-internal"
+  author: "designer@studio"
+  description: "Classic 5x3 with 20 paylines, free spins + multiplier."
+  theme_tags: ["jungle", "tiger", "asian"]
+
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_tiger
+    kind: hp
+  - id: hp_lotus
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 10
+    global_multiplier: 2.0
+    retrigger_spins: 5
+    max_total_spins: 50
+
+paylines: 20
+
+constraints:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  volatility_class: medium
+  hit_freq_target: 0.24
+  max_win_x: 5000
+  jurisdictions: [UKGC, MGA, ADM]
+  pay_ladder_monotonic: true
+  pay_min: 1.0
+  pay_max: 1000.0
+  rtp_alloc_base: 0.76
+  rtp_alloc_free_spins: 0.20
+
+hints:
+  reel_length: 50
+  wild_share: 0.04
+  scatter_share: 0.02

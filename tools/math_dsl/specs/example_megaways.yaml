@@ -1,0 +1,82 @@
+# W4.8 Megaways DSL example — 6-reel variable rows, 117,649 ways max,
+# mystery-symbol feature, linear progressive pool.
+
+schema_version: "1.0.0"
+
+meta:
+  name: "Lion Megaways"
+  vendor: "studio-internal"
+  author: "designer@studio"
+  description: "Megaways 6-reel 2-7 rows, 117k ways, FS + mystery + WAP jackpot."
+  theme_tags: ["jungle", "lion", "megaways"]
+
+topology:
+  kind: variable_rows
+  reels: 6
+  rows: 7
+  row_range_per_reel:
+    - [2, 7]
+    - [2, 7]
+    - [2, 7]
+    - [2, 7]
+    - [2, 7]
+    - [2, 7]
+  ways_cap: 117649
+
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: mystery
+    kind: mystery
+  - id: hp_lion
+    kind: hp
+  - id: hp_zebra
+    kind: hp
+  - id: hp_elephant
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+features:
+  - kind: free_spins
+    trigger_count_min: 4
+    initial_spins: 12
+    global_multiplier: 3.0
+    retrigger_spins: 5
+    max_total_spins: 60
+  - kind: mystery_symbol
+  - kind: linear_progressive
+    pool_id: "wap-megaways-grand-2026"
+    contribution_x: 0.0075
+    seed_x: 250.0
+    must_hit_by_x: 1000000.0
+
+paylines: 1   # ignored for ways evaluation
+
+constraints:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  volatility_class: high
+  hit_freq_target: 0.22
+  max_win_x: 25000
+  jurisdictions: [UKGC, MGA, ADM, DGOJ]
+  pay_ladder_monotonic: true
+  pay_min: 0.5
+  pay_max: 5000.0
+  rtp_alloc_base: 0.65
+  rtp_alloc_free_spins: 0.27
+  rtp_alloc_jackpot: 0.04
+
+hints:
+  reel_length: 80
+  wild_share: 0.03
+  scatter_share: 0.02
