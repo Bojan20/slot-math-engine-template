@@ -303,7 +303,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 |---|---|:---:|---|
 | P9.1 | **W201 — Tournament Prize Allocation Solver** (104. solver) | ✅ **LANDED** | `src/features/tournamentPrizeAllocation.ts` — first closed-form solver for multi-spin session-aggregated leaderboard tournaments. 4 prize structures (WTA / Top-N flat / Exponential-decay / Percentile-bracket); per-rank disclosure (UKGC RTS-12 mandatory); Gumbel-approx skill premium for top-rank player vs average (boost ∝ σ·√(S·ln N)); per-spin RTP composition (`baseRtp + c·poolPayoutShare`); 6 industry-config acceptance suite (IGT TournXpress / Pragmatic D&W 1000-player / L&W WinPower / Hacksaw Race / BTG Megaways Race / Bally Drum Roll). **63/63 vitest specs pass + 6/6 industry-config MC convergence (ratio ∈ [0.9, 1.1] @ 10K tournaments)**. |
 | P9.2 | **W202 — Multi-Pool Cross-Tournament Network Solver** (105. solver) | ✅ **LANDED** | `src/features/multiPoolCrossTournament.ts` — first closed-form solver for **M titles × D days networked tournament** (Pragmatic Drops & Wins / BTG Megaways Race / IGT TournXpress Network / L&W WinPower NTS / Hacksaw Race). **Novel math:** per-title contribution-share decomposition (UKGC RTS-12 mandatory per-title disclosure); additive cumulative session variance `Var[T_p] = Σ_{t,d} S_{t,d}·σ²_t·bet²`; multi-day carry-over policy (`cumulative` vs `per-day-reset`); title-skew skill premium (top-μ-title elect boost ∝ μ-spread · √(2·ln N), independent of σ at first order); per-title disclosure rows + best/worst-title identification. **57/57 vitest specs pass + 6/6 industry-config acceptance (50-title D&W 1000-player percentile-bracket / 20-title BTG Megaways Race cumulative / 5-title IGT TournXpress WTA / 15-title L&W WinPower per-day-reset / 12-title Hacksaw Top-10 flat / 25-title Vendor B percentile-bracket)**. |
-| P9.3 | **W203 — Skill-Based Variance-Adjusted Ranking** | 🟡 prep | Heterogeneous player handicap (e.g. bet-size weighting, prior session ROI) → adjusted-rank distribution; covers UKGC bet-size-fair tournament regulation. |
+| P9.3 | **W203 — Skill-Based Variance-Adjusted Ranking** (106. solver) | ✅ **LANDED** | `src/features/skillVarianceAdjustedRanking.ts` — UKGC RTS-12 (2024) bet-size-fair tournament solver. **Z-score ranking** `Z_p = (T_raw_p − S·μ_p·bet_p) / (bet_p·σ_p·√S)` neutralises stake-size variance asymmetry (under raw, σ_T scales as bet, giving high-bet player structural max-tail advantage). **Bet-Size Handicap Factor (BSHF)** `h_p = bet_p / max(bet)` discloses player-level disadvantage. **Prior-ROI handicap** (per-player z-score shift). **Fairness gain delta** = `rawRankingMaxBetAdvantage − 0` quantifies structural advantage erased. **58/58 vitest specs pass** + 6 industry-config acceptance (UKGC 50p flat / Pragmatic D&W bet ∈ {0.5,1,2,5,10} / IGT VIP escalating 1..40 / Hacksaw log-uniform / BTG flat 200p / L&W VIP 10p). **MC empirical proof**: under raw ranking, high-bet 25× player wins ~40 %; under z-score ranking, frequency converges to 1/N = 33 %. |
 | P9.4 | **W204 — Tournament-Aware RTP Audit Pipeline** | 🟡 prep | `slot-tournament-audit` CLI: takes IR + tournament config → emits per-rank prize table + combined RTP + UKGC RTS-12 disclosure doc + MGA PPD §11 typical-skill expected-return table. |
 | P9.5 | **W205 — Bonus-Tournament Hybrid Mechanic** | 🟡 prep | Closed-form for tournaments where session-best **bonus round** (not session total) is the ranked metric; covers Hacksaw Bonus Buy Race + Push Big Win Race + Vendor B Mega Win promo. |
 
@@ -315,9 +315,9 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 
 | Metric | Vrednost |
 |---|---|
-| **Distinct solver funkcija (`solve*`)** | **105** ⬆ +2 |
-| **Vitest spec files** | **291** ⬆ +2 |
-| **Vitest tests** | **7386 PASS + 3 skipped + 0 failed** ⬆ +120 |
+| **Distinct solver funkcija (`solve*`)** | **106** ⬆ +3 |
+| **Vitest spec files** | **292** ⬆ +3 |
+| **Vitest tests** | **7444 PASS + 3 skipped + 0 failed** ⬆ +178 |
 | **Rust test count** | **307 / 307 PASS** |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
@@ -325,7 +325,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 | Closed-form kernels (mission #6) | **100 / 100** ✅ |
 | Mission acceptance | **10 / 10** ✅ |
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
-| **Phase 9 tournament kernels** | **2 / 5** (W201 + W202 landed; W203-W205 prep) |
+| **Phase 9 tournament kernels** | **3 / 5** (W201 + W202 + W203 landed; W204-W205 prep) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |
 | Commercialization | marketplace catalog (tier-based) · pilot outreach package · public benchmark vs 8 studios · community contributor flow |
