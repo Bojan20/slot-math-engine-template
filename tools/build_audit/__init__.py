@@ -33,6 +33,11 @@ from tools.build_audit.math_auditor import (
     MathAlgorithmFinding,
     audit_math_algorithms,
 )
+from tools.build_audit.slider_recompute_auditor import (
+    SliderRecomputeFinding,
+    audit_slider_recompute,
+    reference_recompute,
+)
 from tools.build_audit.weight_auditor import (
     WeightCheckFinding,
     audit_weight_precision,
@@ -43,9 +48,12 @@ __all__ = [
     "BuildAuditReport",
     "ButtonFinding",
     "MathAlgorithmFinding",
+    "SliderRecomputeFinding",
     "WeightCheckFinding",
     "audit_build_buttons",
     "audit_math_algorithms",
+    "audit_slider_recompute",
     "audit_weight_precision",
+    "reference_recompute",
     "run_full_audit",
 ]

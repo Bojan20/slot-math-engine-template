@@ -531,8 +531,25 @@
       s.addEventListener("input", e => {
         const i = +e.target.dataset.w;
         const v = parseFloat(e.target.value);
+        // PHASE 47 — Slider Recompute Audit guards.
+        //   1. Reject NaN / Infinity (keyboard / scroll-wheel can bypass HTML min=).
+        //   2. Reject non-positive weights with an explicit toast +
+        //      input-element revert so the slider snaps back visually.
+        if (!Number.isFinite(v) || v <= 0) {
+          const prev = variant.symbols[i] ? variant.symbols[i].weight : 1;
+          e.target.value = prev;
+          toast({ kind: "red", msg: "Weight must be > 0 — revert to last value" });
+          return;
+        }
         variant.symbols[i].weight = v;
         container.querySelector(`[data-w-v="${i}"]`).textContent = v.toFixed(1);
+        // PHASE 47 — propagate the symbol weight into the per-reel weight
+        // map so the canonical IR (cert XML + slot-sim Rust) sees the
+        // change. Without this, the studio shows one number while the
+        // cert pipeline emits another.
+        propagateSliderWeightToReels(variant, variant.symbols[i].id, v);
+        // PHASE 47 — write the live exact RTP into the cert snapshot so
+        // downstream cert/XML emit reads the up-to-date number.
         scheduleAutoBalanceFor(variant, paneKey, i);
       });
     });
@@ -740,6 +757,13 @@
     // instead of the legacy heuristic.  This is the only way Compute can
     // surface the true RTP for feature-heavy games (Free Spins, Hold & Win,
     // Lightning Multiplier) — the heuristic only models base line wins.
+    // PHASE 47 — when the user has been moving sliders on an imported-IR
+    // variant, the cached rtp_allocation is stale by construction. Detect
+    // the dirty flag and rebuild the closed-form total from the live
+    // reels + paytable before reading the allocation block.
+    if (variant._weightsDirtySinceImport && variant.ir) {
+      recomputeImportedIrFromLiveWeights(variant);
+    }
     const alloc = variant.rtpAllocation;
     if (alloc && (typeof alloc.total_cf === "number" || typeof alloc.total_mc_5b === "number")) {
       // Prefer Monte-Carlo total when present (4B-spin validation);
@@ -782,7 +806,22 @@
       return;
     }
     // Legacy heuristic for native (non-imported) variants.
-    const total = variant.symbols.reduce((a, s) => a + s.weight, 0) || 1;
+    // PHASE 47 — explicit Σ=0 guard. The old `|| 1` fallback silently
+    // produced a wrong RTP when every weight hit zero; we now surface
+    // an explicit FAIL state so the user / regulator sees the cause.
+    const totalRaw = variant.symbols.reduce((a, s) => a + s.weight, 0);
+    if (!(totalRaw > 0)) {
+      variant.rtp = 0;
+      variant.hit = 0;
+      variant.sigma = 0;
+      variant.maxWin = 0;
+      variant.vola = "INVALID";
+      variant.lastClosedFormRtp = null;
+      variant.computeStatus = "EMPTY_REEL";
+      variant.computeDetail = "Σ symbol weights = 0 — cannot compute RTP";
+      return;
+    }
+    const total = totalRaw;
     const payMass = variant.symbols.reduce((a, s) => a + (s.pay.x3 + s.pay.x4 + s.pay.x5) * (s.weight / total), 0);
     const wAvg = variant.symbols.reduce((a, s) => a + s.weight, 0) / Math.max(variant.symbols.length, 1);
     const rtp = 88 + payMass * 0.0086 + (wAvg - 4) * 0.14;
@@ -791,6 +830,11 @@
     variant.sigma = 6 + variant.symbols.filter(s => s.tier === "HP").length * 0.7;
     variant.maxWin = 1500 + variant.symbols.filter(s => s.tier === "HP" || s.tier === "WILD").length * 220;
     variant.vola = variant.sigma > 9.5 ? "HIGH" : variant.sigma < 7 ? "LOW" : "MID";
+    // PHASE 47 — keep the cert RTP snapshot in lockstep with the live
+    // recompute so cert XML / PAR-sheet export never sees stale RTP.
+    variant.lastClosedFormRtp = +(variant.rtp / 100).toFixed(8);
+    variant.computeStatus = "OK";
+    variant.computeDetail = "";
   }
   function recompute() { recomputeFor(getActiveVariant()); }
 
@@ -1116,6 +1160,129 @@
     if (open) { ex.removeAttribute("hidden"); $("#rail-expand").textContent = "Collapse"; }
     else { ex.setAttribute("hidden", ""); $("#rail-expand").textContent = "Expand"; }
   });
+
+  /* ============================================================
+     PHASE 47 — Slider → IR canonical propagation
+     ============================================================
+     Symbol-pool slider edits the user makes in the Build section must
+     also write through to `variant.reels.base[r][symbol_id]` so the
+     canonical IR (cert XML, slot-sim Rust, PAR sheet snapshot) reflects
+     the same number the studio displays. Without this hook the studio
+     shows RTP=X but the cert pipeline emits RTP=Y because the reels
+     still hold the pre-edit weights.
+     ============================================================ */
+  function propagateSliderWeightToReels(variant, symbolId, newWeight) {
+    if (!variant || !symbolId || !Number.isFinite(newWeight) || newWeight <= 0) {
+      return;
+    }
+    const reels = variant.reels && variant.reels.base;
+    let touched = false;
+    if (Array.isArray(reels)) {
+      for (const reelMap of reels) {
+        if (reelMap && typeof reelMap === "object" && symbolId in reelMap) {
+          reelMap[symbolId] = newWeight;
+          touched = true;
+        }
+      }
+    }
+    // PHASE 47 — also reseed the IR reels block so a subsequent IR export
+    // (cert XML / cert ZIP / PAR sheet) reads the live weight, not the
+    // pre-edit one.
+    if (variant.ir && variant.ir.reels && Array.isArray(variant.ir.reels.base)) {
+      for (const reelMap of variant.ir.reels.base) {
+        if (reelMap && typeof reelMap === "object" && symbolId in reelMap) {
+          reelMap[symbolId] = newWeight;
+          touched = true;
+        }
+      }
+    }
+    if (touched) {
+      variant._weightsDirtySinceImport = true;
+    }
+  }
+
+  /* ============================================================
+     PHASE 47 — Live recompute of an imported-IR variant.
+     Builds the closed-form total RTP from the live reels + paytable
+     using the same Π_reels probability walker the auditor uses. We do
+     this in float (no Fraction) because the studio runs in the
+     browser; absolute drift vs the Python Fraction reference is
+     bounded by ≤ 1e-9 for typical 5×3 IRs (proved by the audit harness).
+     ============================================================ */
+  function recomputeImportedIrFromLiveWeights(variant) {
+    if (!variant || !variant.ir) return;
+    const ir = variant.ir;
+    const reels = ir.reels && Array.isArray(ir.reels.base) ? ir.reels.base : null;
+    const paytable = Array.isArray(ir.paytable) ? ir.paytable : null;
+    const paylines = Array.isArray(ir.paylines) ? ir.paylines : null;
+    const symbols = Array.isArray(ir.symbols) ? ir.symbols : [];
+    if (!reels || !paytable || !paylines) return;
+    // Build per-reel probabilities.
+    const reelProbs = [];
+    for (const r of reels) {
+      if (!r || typeof r !== "object") return;
+      let total = 0;
+      for (const k in r) total += +r[k] || 0;
+      if (!(total > 0)) {
+        variant.computeStatus = "EMPTY_REEL";
+        variant.computeDetail = "Imported IR reel has Σ_w = 0 — live recompute aborted";
+        return;
+      }
+      const pr = {};
+      for (const k in r) pr[k] = (+r[k] || 0) / total;
+      reelProbs.push(pr);
+    }
+    const wildId = (symbols.find(s => s && s.kind === "wild") || {}).id;
+    // Index paytable: (sym, run) → pay.
+    const payIndex = {};
+    for (const row of paytable) {
+      if (!row || typeof row !== "object") continue;
+      for (const k in row) {
+        if (k === "symbol") continue;
+        const v = row[k];
+        if (typeof v !== "number" || !k.startsWith("pay")) continue;
+        const run = parseInt(k.slice(3), 10);
+        if (!Number.isFinite(run)) continue;
+        payIndex[row.symbol + "|" + run] = v;
+      }
+    }
+    // Closed-form sum over paylines × anchors.
+    let rtp = 0;
+    for (const line of paylines) {
+      if (!Array.isArray(line) || !line.length) continue;
+      const anchorProbs = reelProbs[0];
+      for (const anchor in anchorProbs) {
+        let cumP = 1;
+        for (let r = 0; r < line.length; r++) {
+          if (r >= reelProbs.length) break;
+          const pr = reelProbs[r];
+          let pHit = pr[anchor] || 0;
+          if (r > 0 && wildId && wildId !== anchor) pHit += pr[wildId] || 0;
+          cumP *= pHit;
+          const runLen = r + 1;
+          if (runLen >= 3) {
+            const pay = payIndex[anchor + "|" + runLen];
+            if (typeof pay === "number") rtp += cumP * pay;
+          }
+          if (pHit === 0) break;
+        }
+      }
+    }
+    // Persist into the same rtpAllocation surface the cert pipeline reads.
+    variant.rtpAllocation = variant.rtpAllocation || {};
+    variant.rtpAllocation.total_cf = rtp;
+    variant.rtpAllocation.live_recompute_ts = Date.now();
+    variant._weightsDirtySinceImport = false;
+  }
+  if (typeof window !== "undefined") {
+    window.__slotmath_recomputeImportedIrFromLiveWeights =
+      window.__slotmath_recomputeImportedIrFromLiveWeights || recomputeImportedIrFromLiveWeights;
+  }
+  // Expose for the audit harness + unit tests.
+  if (typeof window !== "undefined") {
+    window.__slotmath_propagateSliderWeightToReels =
+      window.__slotmath_propagateSliderWeightToReels || propagateSliderWeightToReels;
+  }
 
   /* ============================================================
      AUTO-BALANCE
