@@ -62,6 +62,59 @@ _FEATURE_KEYWORDS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"\brespin\b", re.I), "respin"),
     (re.compile(r"\bbuy\s*(feature|bonus)\b", re.I), "buy_feature"),
     (re.compile(r"\bbonus\s*buy\b", re.I), "buy_feature"),
+    # P10.2 — composition planner extension: deeper coverage of features
+    # the W22-W205 kernels actually solve. Each new keyword maps to a DSL
+    # feature kind the W6.2 validator accepts (verified via the
+    # `test_prompt_to_dsl_validates_via_w62` regression).
+    (re.compile(r"\banti(\s|-)?bet\b", re.I), "ante_bet"),
+    (re.compile(r"\bante\s+bet\b", re.I), "ante_bet"),
+    (re.compile(r"\bgamble\b", re.I), "gamble"),
+    (re.compile(r"\bdouble[\s-]+up\b", re.I), "gamble"),
+    (re.compile(r"\bmystery\s+symbol(s)?\b", re.I), "mystery_symbol"),
+    (re.compile(r"\bmystery\s+stack(s)?\b", re.I), "mystery_symbol"),
+    (re.compile(r"\bsymbol\s+upgrade\b", re.I), "symbol_upgrade"),
+    (re.compile(r"\bsymbol\s+evolution\b", re.I), "symbol_upgrade"),
+    (re.compile(r"\bcollect\s*[-]?\s*N\b", re.I), "hold_and_win"),
+    (re.compile(r"\bmoney\s+collect\b", re.I), "hold_and_win"),
+    (re.compile(r"\bjackpot\s+wheel\b", re.I), "wheel_bonus"),
+    (re.compile(r"\bbonus\s+game\b", re.I), "pick_bonus"),
+    (re.compile(r"\bwalking\s+wild(s)?\b", re.I), "sticky_wild"),
+    (re.compile(r"\bstacked\s+wild(s)?\b", re.I), "sticky_wild"),
+    (re.compile(r"\brainbow\s+wild(s)?\b", re.I), "wild_expand"),
+    (re.compile(r"\bx[\s-]*ways\b", re.I), "megaways_ways"),
+    (re.compile(r"\bcharge\s*meter\b", re.I), "respin"),
+    (re.compile(r"\bsuper\s*meter\b", re.I), "respin"),
+    (re.compile(r"\bbonus\s+ladder\b", re.I), "pick_bonus"),
+    (re.compile(r"\bpath\s+ladder\b", re.I), "pick_bonus"),
+]
+
+# P10.2 — composition planner: feature compatibility hints. When two
+# features cohabit a single design, some pairings are industry-canonical
+# (e.g. tumble + multiplier_stack = Pragmatic / Hacksaw signature) while
+# others are mathematically problematic (e.g. cluster_pays + paylines
+# topology). The planner annotates the audit log with the cohabitation
+# decision so the regulator (and the future-Corti) can see WHY a feature
+# combination ended up in the DSL.
+#
+# Format: (feature_a, feature_b, kind) where kind ∈ {"canonical",
+# "stacking-bonus", "incompatible"}.
+FEATURE_COMPATIBILITY: list[tuple[str, str, str]] = [
+    ("tumble", "multiplier_stack", "canonical"),       # Sweet Bonanza
+    ("free_spins", "multiplier_stack", "canonical"),   # Razor Shark
+    ("free_spins", "sticky_wild", "canonical"),        # Bonanza Megaways
+    ("free_spins", "hold_and_win", "canonical"),       # Lock It Link
+    ("megaways_ways", "tumble", "canonical"),          # Bonanza
+    ("megaways_ways", "free_spins", "canonical"),      # Big Bass Megaways
+    ("cluster_pays", "tumble", "canonical"),           # Aloha! Cluster Pays
+    ("cluster_pays", "multiplier_stack", "canonical"), # Jammin Jars
+    ("hold_and_win", "wheel_bonus", "stacking-bonus"), # Lightning Link
+    ("pick_bonus", "wheel_bonus", "stacking-bonus"),   # Wonka pick-then-wheel
+    ("free_spins", "buy_feature", "canonical"),        # Hacksaw bonus-buy slots
+    ("ante_bet", "free_spins", "canonical"),           # Sweet Bonanza ante
+    ("progressive_jackpot", "free_spins", "canonical"),# Mega Moolah
+    ("symbol_upgrade", "free_spins", "canonical"),     # NetEnt Reel Rush
+    ("mystery_symbol", "free_spins", "canonical"),     # Reactoonz mystery
+    ("respin", "sticky_wild", "canonical"),            # Walking Wild Respin
 ]
 
 # Vendor-style keyword → vendor_id.
@@ -309,7 +362,48 @@ def parse_prompt(prompt: str, *, target_rtp: Optional[float] = None) -> PromptSp
     _detect_volatility(prompt, spec)
     _detect_vendor_style(prompt, spec)
     _detect_max_win(prompt, spec)
+    _analyse_composition(spec)
     return spec
+
+
+def _analyse_composition(spec: PromptSpec) -> None:
+    """P10.2 composition planner: annotate the audit log with feature
+    cohabitation analysis. Identifies canonical pairings (industry-known
+    combos) and stacking-bonus structures — useful for the future Studio
+    refinement UI (P10.3) and the regulator audit trail.
+
+    Pure annotation step; never mutates `spec.features`.
+    """
+    kinds = spec.feature_kinds
+    if len(kinds) < 2:
+        return
+    detected_pairs: list[tuple[str, str, str]] = []
+    seen_pairs: set[tuple[str, str]] = set()
+    for a, b, kind in FEATURE_COMPATIBILITY:
+        if (a, b) in seen_pairs or (b, a) in seen_pairs:
+            continue
+        if a in kinds and b in kinds:
+            seen_pairs.add((a, b))
+            detected_pairs.append((a, b, kind))
+    if not detected_pairs:
+        spec.audit_log.append(
+            f"composition: no canonical cohabitation matches for features "
+            f"{kinds} — design is a novel combination"
+        )
+        return
+    for a, b, kind in detected_pairs:
+        spec.audit_log.append(f"composition: {a} + {b} = {kind}")
+    # P10.2 RTP-coupling guidance: when ≥ 1 stacking-bonus pair is present
+    # and the target RTP is below 96 %, warn that the math budget may be
+    # too tight to honour both bonuses. Pure annotation — the W6.4 SMT
+    # lock handles the hard constraint downstream.
+    stacking_pairs = [p for p in detected_pairs if p[2] == "stacking-bonus"]
+    if stacking_pairs and spec.target_rtp < 0.96:
+        spec.audit_log.append(
+            f"composition-warn: {len(stacking_pairs)} stacking-bonus pair(s) "
+            f"detected but target_rtp={spec.target_rtp:.4f} < 0.96; SMT lock "
+            "may need a higher RTP budget"
+        )
 
 
 # ─── DSL builder ───────────────────────────────────────────────────────────
@@ -388,6 +482,27 @@ _FEATURE_TEMPLATES: dict[str, dict[str, Any]] = {
         "kind": "buy_feature",
         "cost_x": 100,
         "feature_kind": "free_spins",
+    },
+    "ante_bet": {
+        "kind": "ante_bet",
+        "stake_uplift": 1.25,
+        "scatter_uplift": 2.0,
+    },
+    "gamble": {
+        "kind": "gamble",
+        "win_prob": 0.5,
+        "multiplier": 2.0,
+        "max_doubles": 5,
+    },
+    "mystery_symbol": {
+        "kind": "mystery_symbol",
+        "trigger_prob": 0.07,
+        "reveal_distribution": "uniform-hp",
+    },
+    "symbol_upgrade": {
+        "kind": "symbol_upgrade",
+        "tiers": ["Bronze", "Silver", "Gold"],
+        "upgrade_prob": 0.12,
     },
 }
 

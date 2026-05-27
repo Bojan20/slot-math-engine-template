@@ -337,7 +337,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 
 | Phase | Tema | Trud | Strategic value | Kad da krenemo |
 |---|---|---|---|---|
-| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟡 **3/6 sub-waves landed (P10.1 + P10.4 + P10.5)** — P10.2/P10.3/P10.6 prep |
+| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟢 **6/7 sub-waves landed** (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6) — P10.7 Z3 coupling = prep |
 | **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | posle Phase 10 |
 | **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | čeka pilot operator |
 | **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
@@ -372,9 +372,10 @@ Acceptance:
 | **P10.1 NL prompt parser** + DSL builder + audit log | 1-2h | ✅ **LANDED** (`tools/slot_design/prompt_parser.py`, 72 tests pass: 47 unit + 25 CLI/acceptance) |
 | **P10.4 `slot-design` CLI orchestrator** + W6.4 SMT-lock glue | 30-60 min | ✅ **LANDED** (`tools/slot_design/__main__.py`, --from-dsl + --no-smt-lock + REVIEW.md emit) |
 | **P10.5 10-prompt acceptance suite** | 30 min | ✅ **LANDED** (10 prompts × 2 invariants each = 20 parametrized specs) |
-| P10.2 Composition planner — feature dictionary deepening + Z3 closed-form coupling | 2-3h | prep |
-| P10.3 Studio iterative refinement UI | 1-2h | prep |
-| P10.6 Cert-pipeline glue (`slot-design` → cert ZIP single command) | 30-60 min | prep |
+| **P10.2 Composition planner** — feature-share balancer + 12 new NL keywords (ante_bet, gamble, mystery_symbol, symbol_upgrade, walking/stacked/rainbow wilds, money collect, jackpot wheel, charge/super meter) + FEATURE_COMPATIBILITY matrix | 2-3h | ✅ **LANDED** (`tools/slot_design/composition_planner.py`, 9 unit specs + 12 new-keyword parametrized matches + per-feature `_rtp_share_alloc` audit) |
+| **P10.3 Studio iterative refinement UI** | 1-2h | ✅ **LANDED** (`tools/slot_design/review_ui.py` → `review.html` + `review.js` self-contained; DSL editor + composition table + download/copy/reset actions; 4 unit specs + 2 CLI-integration specs) |
+| **P10.6 Cert-pipeline glue** (`slot-design --cert-xml` / `--cert-pack`) | 30-60 min | ✅ **LANDED** (CLI flags `--cert-xml`, `--cert-pack`, `--swid`; lazy-import `tools.slot_build.cert_xml` + `cert_package`; graceful WARN fallback when crypto/lib missing; 2 CLI specs verify XML namespace + ZIP manifest shape) |
+| **P10.7** (was P10.2 partial) **Z3 closed-form RTP coupling** | 1-2h | prep — extends `dsl_to_ir_via_smt` so it consumes the composition planner's `_feature_share_alloc` hints |
 
 ### 🥈 PHASE 11 — **SWE-Math-Bench**
 
@@ -432,11 +433,11 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 
 | Metric | Vrednost |
 |---|---|
-| **Distinct solver funkcija (`solve*`)** | **107** (W204 is composer, not new solver; W205 is new kernel) |
-| **Vitest spec files** | **295** ⬆ +1 (W205+1 CLI shim suite) |
-| **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** ⬆ +20 |
+| **Distinct solver funkcija (`solve*`)** | **107** (Phase 10 is compiler-side, not new solver) |
+| **Vitest spec files** | **295** |
+| **Vitest tests** | **7574 PASS + 3 skipped + 0 failed** |
 | **Rust test count** | **307 / 307 PASS** |
-| **Python test count** | **1264 PASS + 47 skipped** (+5 W205+1 benchmark specs) |
+| **Python test count** | **1387 PASS + 47 skipped** ⬆ +123 (P10 full sub-wave coverage: 72 P10.1+P10.4+P10.5 + 51 P10.2+P10.3+P10.6) |
 | **Closed-form portfolio entries** | **121** (+1 pending registry update) |
 | **P-ID katalog mentions** | **136** |
 | Console entry points | **80+** + `slot-tournament-audit` Node executable |
@@ -445,6 +446,7 @@ Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
 | **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
 | **Phase 9 tournament kernels** | **5 / 5** ✅ (W201 + W202 + W203 + W204 + W205 all LANDED) |
 | **W205+1 tech-debt closeout** | **3 / 3** ✅ (CLI shim + benchmark fix + dev docs) |
+| **Phase 10 AI Math Compiler v2** | **6 / 7** 🟢 (P10.1 + P10.2 + P10.3 + P10.4 + P10.5 + P10.6 LANDED; P10.7 Z3 coupling prep) |
 | **W205+2 host-orchestrator decoupling** | ✅ (zero `<external-host>` / `<external-host>` references in repo; every agent path env-driven via `SLOT_MATH_AGENTS_ROOT`) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |

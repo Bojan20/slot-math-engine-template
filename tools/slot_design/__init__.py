@@ -34,10 +34,16 @@ from tools.slot_design.prompt_parser import (
     DetectedFeature,
     PromptSpec,
 )
+from tools.slot_design.composition_planner import (
+    plan_composition,
+    feature_dictionary,
+)
 
 __all__ = [
     "parse_prompt",
     "prompt_to_dsl",
+    "plan_composition",
+    "feature_dictionary",
     "DetectedFeature",
     "PromptSpec",
 ]

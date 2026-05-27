@@ -35,6 +35,8 @@ from tools.slot_design.prompt_parser import (
     parse_prompt,
     prompt_to_dsl,
 )
+from tools.slot_design.composition_planner import plan_composition
+from tools.slot_design.review_ui import emit_review_ui
 
 
 def _slugify(name: str) -> str:
@@ -170,6 +172,14 @@ def run(args: argparse.Namespace) -> int:
     if args.max_win_x:
         dsl["meta"]["max_win_x"] = args.max_win_x
 
+    # ── P10.2 — composition planner balances feature RTP shares ──────
+    if not args.no_plan_composition:
+        audit_log = dsl.setdefault("meta", {}).setdefault("design_audit", [])
+        if not isinstance(audit_log, list):
+            audit_log = []
+            dsl["meta"]["design_audit"] = audit_log
+        plan_composition(dsl, audit=audit_log)
+
     # Persist spec audit dump
     if spec is not None:
         spec_dict = asdict(spec)
@@ -192,6 +202,38 @@ def run(args: argparse.Namespace) -> int:
         review_md = _build_review_md(spec, dsl, ir, out_dir)
         (out_dir / "REVIEW.md").write_text(review_md)
 
+    # P10.3 — Studio review UI (always emit; no host dep)
+    if not args.no_review_ui:
+        emit_review_ui(out_dir)
+
+    # ── P10.6 — optional cert-pack glue ────────────────────────────────
+    cert_xml_path: Path | None = None
+    cert_zip_path: Path | None = None
+    if args.cert_xml or args.cert_pack:
+        try:
+            from tools.slot_build.cert_xml import emit_cert_xml
+            cert_xml_path = out_dir / f"{slug}.cert.xml"
+            emit_cert_xml(ir, cert_xml_path)
+        except Exception as exc:  # noqa: BLE001
+            if not args.quiet:
+                print(f"[slot-design] WARN cert-xml emit failed: {exc}", file=sys.stderr)
+            cert_xml_path = None
+
+    if args.cert_pack:
+        try:
+            from tools.slot_build.cert_package import build_cert_package
+            cert_zip_path = build_cert_package(
+                out_dir=out_dir,
+                game_id=slug,
+                swid=str(args.swid or "001"),
+                vendor=str(dsl["meta"].get("vendor_style", "generic")),
+                universal_ir_path=ir_path,
+            )
+        except Exception as exc:  # noqa: BLE001
+            if not args.quiet:
+                print(f"[slot-design] WARN cert-pack emit failed: {exc}", file=sys.stderr)
+            cert_zip_path = None
+
     if not args.quiet:
         print(f"[slot-design] OK · prompt → IR · out={out_dir}")
         if spec is not None:
@@ -199,6 +241,10 @@ def run(args: argparse.Namespace) -> int:
             print(f"  target_rtp: {spec.target_rtp:.4f}")
         print(f"  ir: {ir_path}")
         print(f"  dsl: {dsl_toml_path}")
+        if cert_xml_path:
+            print(f"  cert-xml: {cert_xml_path}")
+        if cert_zip_path:
+            print(f"  cert-pack: {cert_zip_path}")
     return 0
 
 
@@ -222,6 +268,16 @@ def main(argv: list[str] | None = None) -> int:
                         help="Skip NL parser; load DSL TOML directly.")
     parser.add_argument("--no-smt-lock", action="store_true",
                         help="Skip SMT-locked RTP synthesis (deterministic fallback).")
+    parser.add_argument("--no-plan-composition", action="store_true",
+                        help="Skip P10.2 composition planner (raw template DSL).")
+    parser.add_argument("--no-review-ui", action="store_true",
+                        help="Skip P10.3 review.html + review.js emit.")
+    parser.add_argument("--cert-xml", action="store_true",
+                        help="Emit regulator-shape cert XML alongside IR.")
+    parser.add_argument("--cert-pack", action="store_true",
+                        help="Emit signed cert ZIP (implies --cert-xml).")
+    parser.add_argument("--swid", default=None,
+                        help="SWID for cert manifest (default: 001).")
     parser.add_argument("--quiet", action="store_true",
                         help="Suppress non-error output.")
     args = parser.parse_args(argv)

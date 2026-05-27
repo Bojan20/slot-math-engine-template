@@ -458,3 +458,320 @@ def test_acceptance_prompt_emits_valid_ir(prompt: str, tmp_path: Path):
     assert "meta" in ir
     assert "paytable" in ir
     assert len(ir["paytable"]) > 0
+
+
+# ─── P10.6 — Cert-pipeline glue tests ─────────────────────────────────────
+
+
+def test_p10_6_default_no_cert_artefacts(tmp_path: Path):
+    """Default invocation (no --cert-xml / --cert-pack) must NOT emit cert
+    artefacts. Pins the regression that adding the glue must not break
+    the lean IR-only mode the rest of the suite relies on."""
+    out_dir = tmp_path / "no-cert"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    assert not list(out_dir.glob("*.cert.xml")), "cert XML must not be emitted by default"
+    assert not list(out_dir.glob("*.cert.zip")), "cert ZIP must not be emitted by default"
+
+
+def test_p10_6_cert_xml_emits_alongside_ir(tmp_path: Path):
+    """--cert-xml emits a regulator-shape XML next to the IR."""
+    out_dir = tmp_path / "with-cert-xml"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--cert-xml",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    xmls = list(out_dir.glob("*.cert.xml"))
+    assert len(xmls) == 1, f"expected one .cert.xml, got {xmls}"
+    body = xmls[0].read_text()
+    # XML must contain the regulator-shape root element and the game-id.
+    assert body.startswith("<?xml"), "must start with XML prolog"
+    # Root element is `<SlotMathCert xmlns="urn:slotmath:cert:v1">` per W5.6 schema.
+    assert "<SlotMathCert" in body, f"missing SlotMathCert root in {body[:200]}"
+    assert "urn:slotmath:cert:v1" in body, "missing cert namespace"
+
+
+def test_p10_6_cert_pack_emits_signed_zip(tmp_path: Path):
+    """--cert-pack emits a signed ZIP that contains manifest + IR mirror."""
+    import zipfile
+    out_dir = tmp_path / "with-cert-pack"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--cert-pack",
+        "--swid", "P10-6-001",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    zips = list(out_dir.glob("**/*.zip"))
+    assert len(zips) >= 1, f"expected a cert ZIP, got {zips}"
+    with zipfile.ZipFile(zips[0]) as zf:
+        names = zf.namelist()
+    # Cert bundle must hold manifest + IR + signature so the regulator
+    # can replay the chain-of-custody.
+    assert any(n.endswith("manifest.json") for n in names), names
+    assert any(n.startswith("ir/") and n.endswith(".ir.json") for n in names), names
+    assert any("signature" in n.lower() or n.endswith(".sig") for n in names), names
+
+
+def test_p10_6_cert_pack_implies_xml_emit(tmp_path: Path):
+    """`--cert-pack` should also surface the regulator XML alongside the
+    ZIP — the XML is the human-readable counterpart of the signed bundle."""
+    out_dir = tmp_path / "with-cert-both"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS RTP 0.945",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--cert-pack",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    xmls = list(out_dir.glob("*.cert.xml"))
+    assert len(xmls) == 1, f"expected XML alongside cert-pack, got {xmls}"
+
+
+# ─── P10.3 — Studio review UI tests ───────────────────────────────────────
+
+
+def test_p10_3_review_ui_emits_by_default(tmp_path: Path):
+    """`slot-design` must emit review.html unless --no-review-ui is set."""
+    out_dir = tmp_path / "with-ui"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    html_files = list(out_dir.glob("*.html"))
+    assert html_files, f"expected at least one .html, got {list(out_dir.iterdir())}"
+
+
+def test_p10_3_review_ui_can_be_disabled(tmp_path: Path):
+    """`--no-review-ui` suppresses the HTML viewer."""
+    out_dir = tmp_path / "no-ui"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--no-review-ui",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    html_files = list(out_dir.glob("*.html"))
+    assert not html_files, f"expected no HTML emit, got {html_files}"
+
+
+def test_p10_3_review_html_self_contained(tmp_path: Path):
+    """The emitted HTML must not depend on external network assets so it
+    works in airgapped regulator-review environments."""
+    out_dir = tmp_path / "airgap"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    html_files = list(out_dir.glob("*.html"))
+    assert html_files
+    body = html_files[0].read_text(encoding="utf-8")
+    # Sanity: no remote stylesheet/script URL that would fail offline.
+    for forbidden in ("https://", "http://"):
+        # CDNs would surface as `<link rel="stylesheet" href="https://...`
+        assert f'href="{forbidden}' not in body, \
+            f"remote stylesheet found in HTML — breaks airgapped review"
+        assert f'src="{forbidden}' not in body, \
+            f"remote script found in HTML — breaks airgapped review"
+
+
+def test_p10_3_review_html_references_artifacts(tmp_path: Path):
+    """HTML viewer must reference the sibling spec/dsl/ir files so the
+    designer sees full provenance from the page itself."""
+    out_dir = tmp_path / "refs"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin RTP 96.5%",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    html_files = list(out_dir.glob("*.html"))
+    body = html_files[0].read_text(encoding="utf-8")
+    # Either inline the spec / dsl content or hyperlink to it.
+    has_spec_ref = "spec.json" in body or "PromptSpec" in body or "prompt" in body.lower()
+    assert has_spec_ref, "HTML must reference the parsed spec"
+
+
+# ─── P10 end-to-end integration ───────────────────────────────────────────
+
+
+def test_p10_end_to_end_one_command_all_artefacts(tmp_path: Path):
+    """The full `slot-design --cert-pack --review-ui` pipeline must
+    produce the canonical 6-artefact bundle:
+
+        spec.json + game.dsl.toml + <slug>.slot-sim.ir.json +
+        REVIEW.md + review.html + cert.zip (+ optional cert.xml)
+
+    Pins the P10 closeout contract: a single NL prompt yields the entire
+    regulator-grade deliverable in one command.
+    """
+    import zipfile
+    out_dir = tmp_path / "e2e"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS + HoldAndWin + Bonus Wheel RTP 0.965",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--cert-pack",
+        "--swid", "P10-E2E-001",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    assert (out_dir / "spec.json").exists()
+    assert (out_dir / "game.dsl.toml").exists()
+    assert (out_dir / "REVIEW.md").exists()
+    assert list(out_dir.glob("*.slot-sim.ir.json")), "no IR JSON"
+    assert list(out_dir.glob("*.html")), "no review HTML"
+    zips = list(out_dir.glob("**/*.zip"))
+    assert zips, "no cert ZIP"
+    with zipfile.ZipFile(zips[0]) as zf:
+        names = zf.namelist()
+        assert any(n.endswith("manifest.json") for n in names)
+
+
+# ─── P10.2 — Composition planner extension tests ─────────────────────────
+
+
+def test_p10_2_detects_ante_bet():
+    s = parse_prompt("5x3 with Ante bet and Free Spins")
+    assert "ante_bet" in s.feature_kinds
+
+
+def test_p10_2_detects_gamble_double_up():
+    s = parse_prompt("5x3 with Free Spins and Double-up gamble")
+    assert "gamble" in s.feature_kinds
+
+
+def test_p10_2_detects_mystery_symbol():
+    s = parse_prompt("Razor Shark-style 5x5 with Mystery stacks and Free Spins")
+    assert "mystery_symbol" in s.feature_kinds
+
+
+def test_p10_2_detects_symbol_upgrade():
+    s = parse_prompt("Reel Rush-style with Symbol upgrade and Free Spins")
+    assert "symbol_upgrade" in s.feature_kinds
+
+
+def test_p10_2_detects_money_collect():
+    s = parse_prompt("5x3 Big Bass-style with Money Collect Hold")
+    assert "hold_and_win" in s.feature_kinds
+
+
+def test_p10_2_detects_walking_wild():
+    s = parse_prompt("5x3 with Walking Wilds and Respin")
+    assert "sticky_wild" in s.feature_kinds
+    assert "respin" in s.feature_kinds
+
+
+def test_p10_2_detects_xways():
+    s = parse_prompt("NoLimit-style 6-reel with xWays and Free Spins")
+    assert "megaways_ways" in s.feature_kinds
+
+
+def test_p10_2_detects_charge_meter_as_respin():
+    s = parse_prompt("5x3 with Charge Meter and Free Spins")
+    assert "respin" in s.feature_kinds
+
+
+def test_p10_2_composition_canonical_logged():
+    """Tumble + multiplier pair must surface in audit log as 'canonical'."""
+    s = parse_prompt("6x5 Sweet Bonanza-style with Tumble and Multiplier")
+    composition_lines = [ln for ln in s.audit_log if ln.startswith("composition:")]
+    assert composition_lines, "no composition annotation in audit log"
+    canonical_lines = [ln for ln in composition_lines if "canonical" in ln]
+    assert canonical_lines, f"no canonical pair detected in {composition_lines}"
+
+
+def test_p10_2_composition_novel_combo_logged():
+    """A no-canonical feature pair must log as 'novel combination'."""
+    s = parse_prompt("5x3 with Gamble and Symbol upgrade")
+    novel_lines = [ln for ln in s.audit_log if "novel combination" in ln]
+    assert novel_lines, f"expected novel-combo annotation, got {s.audit_log}"
+
+
+def test_p10_2_composition_no_warn_when_features_too_few():
+    """Single-feature spec must not emit a composition note."""
+    s = parse_prompt("5x3 slot with Free Spins")
+    assert not any(ln.startswith("composition") for ln in s.audit_log)
+
+
+def test_p10_2_composition_low_rtp_stacking_warn():
+    """Stacking-bonus pair + low RTP must surface composition-warn."""
+    s = parse_prompt(
+        "5x3 with Hold and Win plus Bonus Wheel RTP 0.90",
+    )
+    # First confirm both features detected
+    assert "hold_and_win" in s.feature_kinds
+    assert "wheel_bonus" in s.feature_kinds
+    warns = [ln for ln in s.audit_log if ln.startswith("composition-warn")]
+    assert warns, f"expected composition-warn for low-RTP stacking, got {s.audit_log}"
+
+
+def test_p10_2_composition_high_rtp_no_warn():
+    """Same stacking pair at high RTP must NOT trigger composition-warn."""
+    s = parse_prompt(
+        "5x3 with Hold and Win plus Bonus Wheel RTP 0.97",
+    )
+    warns = [ln for ln in s.audit_log if ln.startswith("composition-warn")]
+    assert not warns, f"unexpected warn at high RTP: {warns}"
+
+
+def test_p10_2_extended_features_validate_via_w62():
+    """Every newly-added P10.2 feature kind must still pass W6.2 DSL validation."""
+    from tools.gdd_extract.dsl import dsl_validate
+    extended_prompts = [
+        "5x3 with Ante bet and Free Spins",
+        "5x3 with Double-up gamble and Free Spins",
+        "5x3 with Mystery stacks and Free Spins",
+        "5x3 with Symbol upgrade and Free Spins",
+        "5x3 with Walking Wilds and Respin",
+        "5x3 with Money Collect",
+        "5x3 with Charge Meter and Free Spins",
+    ]
+    for prompt in extended_prompts:
+        s = parse_prompt(prompt)
+        dsl = prompt_to_dsl(s)
+        dsl_validate(dsl)  # raises on invalid DSL
+
+
+def test_p10_6_cert_pack_swid_propagated_into_manifest(tmp_path: Path):
+    """--swid must land in the cert manifest (regulator audit field)."""
+    import zipfile
+    out_dir = tmp_path / "with-cert-swid"
+    rc = _run_cli([
+        "5×3 Vendor B-style FS RTP 0.965",
+        "--out", str(out_dir),
+        "--no-smt-lock",
+        "--cert-pack",
+        "--swid", "SLOT-W205-TEST-42",
+        "--quiet",
+    ])
+    assert rc.returncode == 0, rc.stderr
+    zips = list(out_dir.glob("**/*.zip"))
+    assert zips
+    with zipfile.ZipFile(zips[0]) as zf:
+        manifest_name = next(n for n in zf.namelist() if n.endswith("manifest.json"))
+        manifest = json.loads(zf.read(manifest_name))
+    # SWID lives at `game.swid` per the W5.6 manifest schema.
+    swid = manifest.get("game", {}).get("swid") or manifest.get("swid")
+    assert swid == "SLOT-W205-TEST-42", f"swid not propagated: {manifest!r}"
