@@ -311,7 +311,123 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 
 ---
 
-### Pre-flight summary (Phase 1-8 closed + W201 landed · 2026-05-27 03:08 audit)
+## 🔭 PHASE 10+ VISION — 2026 H2 → 2028 ROADMAP
+
+> **State of play (post-Phase-9, 2026-05-27):** every Phase 1-9 engineering wave
+> is ✅ LANDED. 107 closed-form kernels + 121 portfolio entries + 7500+ vitest
+> tests + 307/307 Rust tests. Phase 9 sletelo **u jednoj Corti-sesiji** posle
+> Phase 1-8 (predviđeni za Q3 2026 ali sletelo) — pokazuje AI-realan tempo.
+>
+> **Strateški izbor pred nama:** sledeći engineering vector. Phase 1-9 su
+> pokrivale **single-player math + cert pipeline + tournament math**. Sledeće
+> 3 ambicije imaju ozbiljnu novost u različitim vektorima.
+
+### 📊 Tržišni kontekst (2026-2028)
+
+| Trend | Implikacija za slot-math |
+|---|---|
+| **AI-driven game design** (Pragmatic + Hacksaw najavili AI-assisted math 2026 H2) | Naš moat = closed-form + cert paper trail; AI-coded math bez audit grade gubi |
+| **Crypto-native casinos rastu 2026** (Stake.com 8B+ GGV) | Provable-fair RNG + Merkle PAR commit = native fit; W7.5 Merkle provenance već postoji |
+| **EU GA 2024 Art. 7 full enforcement 2027** | Cross-jurisdiction baseline RTP; naš jurisdiction-12 + cert XML v2 + bundle SBOM su pre-positioned |
+| **L&W ↔ IGT M&A consolidation** | Big-vendor inhouse math teams shrinking → outsourcing window opens 2027 |
+| **SWE-bench-style benchmarks** standard za AI tools 2026+ | Bez published score, vendor due-diligence usporen — gap |
+| **L3 LoRA on consumer GPUs** mogućnost na Apple M4 Ultra Q1 2027 | Phase 8 QLoRA training ready; čeka hardware |
+
+### 🎯 PHASE 10+ kandidati (po prioritetu)
+
+| Phase | Tema | Trud | Strategic value | Kad da krenemo |
+|---|---|---|---|---|
+| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | sad |
+| **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | posle Phase 10 |
+| **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | čeka pilot operator |
+| **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
+| **PHASE 14** | **L3 LoRA fine-tune** — 8B base model fine-tune na 1800 P8.6 RAG corpus | 8-16h GPU rent ILI M4 Ultra | math-debug agent first-shot accuracy >70% → >90% | čeka M4 Ultra Q1 2027 ili A100 rent |
+| **PHASE 15** | **Crypto-native provably-fair extension** — ed25519 + Merkle inclusion proof live on-chain commit per spin | 4-6h | crypto-casino market segment | speculative |
+| **PHASE 16** | **Multi-platform UI Runtime** — Pixi.js renderer + WebGL Studio + native iOS/Android scaffold | 16-32h | čeka first pilot | čeka pilot signup |
+| **PHASE 17** | **AI-assisted Math Designer copilot** (live in Studio) — prompt-driven IR mutation + RTP-locked synth | 8-16h | designer productivity 10× | post-Phase-10 logical extension |
+
+### 🥇 PHASE 10 — **AI Math Compiler v2** (predloženi prvi)
+
+**Vision:** *"Game designer ukucava `slot-design "5×3 Vendor B-style FS + HoldAndWin + Cash Bag" --target-rtp 0.965` → 60s kasnije dobija ready-to-cert IR + Studio scaffold + MC verify."*
+
+Već imamo komponente:
+- **Phase 4** GDD PDF → IR pipeline (W6.1-W6.6) ✅
+- **Phase 8** local domain agent fleet (PAR Parser + Reg Oracle + Math Debug) ✅
+- **Phase 6** Z3 SMT-locked RTP synthesis ✅
+- **Phase 8.6** RAG corpus 1820 traces ready ✅
+
+Šta nedostaje:
+- **Natural-language → DSL** prompt parser (LLM-assisted, ne creative-in-math-path)
+- **Composition planner** — kako iz NL spec ekstraktovati feature combinator
+- **Iterative refinement loop** sa Studio review UI
+
+Acceptance:
+- 10 natural-language prompts → 10 IR-locked igara
+- Per-game RTP within 0.5 % target
+- Cert XML emit za sve 10 PASS
+- E2E pipeline `slot-design "..."` → cert ZIP <2 min
+
+| Sub-wave | Estimate | Status |
+|---|---|---|
+| P10.1 NL prompt parser (LLM-call via cortex-slot-agent dispatcher) | 1-2h | prep |
+| P10.2 Composition planner (feature dictionary + Z3-guided synth) | 2-3h | prep |
+| P10.3 Studio iterative refinement UI | 1-2h | prep |
+| P10.4 `slot-design` CLI orchestrator + cert pipeline glue | 30-60 min | prep |
+| P10.5 10-prompt acceptance suite + master TODO row | 30 min | prep |
+
+### 🥈 PHASE 11 — **SWE-Math-Bench**
+
+Cilj: jedan number koji govori potencijalnim vendor partnerima šta su dobili.
+
+| Benchmark | Mera |
+|---|---|
+| RTP recovery from PAR | mean absolute |Δ| across 50 PAR fixtures |
+| Time-to-IR | wall-clock vs human-mean from interview |
+| Cert-emit completeness | UKGC + MGA + GLI + EU GA 2024 rules covered |
+| Tournament audit completeness | UKGC RTS-12 §a/§b/§c rules covered |
+
+Output: `slot-math-bench` CLI + `BENCHMARK.md` landing artifact + GitHub Action.
+
+### 🥉 PHASE 12 — **Real-Time RGS Live Engine**
+
+Cilj: pretvoriti audit-grade engine u **production** engine za live deploy.
+
+Komponente:
+- WebSocket spin protocol
+- 10k+ spins/sec/cabinet load test
+- Sub-100ms latency P99
+- Hot-reload IR bez restart
+- Live RTP gauge stream → dashboard
+- ed25519 spin commit chain (W7.5 extension)
+
+**Zavisi od:** Phase 13 (vendor C/D/E real-PAR) ili first pilot NDA.
+
+### 📅 Predloženi raspored 2026 H2
+
+| Mesec | Plan |
+|---|---|
+| 2026-06 | PHASE 10 (AI Math Compiler v2) |
+| 2026-07 | PHASE 11 (SWE-Math-Bench) + Phase 7 pilot outreach batch |
+| 2026-08 | Phase 12 prep + first pilot demo materials |
+| 2026-09 | First vendor pilot NDA target |
+| 2026-10 | Phase 13 (real-PAR calibration) per first signed vendor |
+| 2026-11 | Phase 16 (multi-platform UI) ako prvi pilot zahteva |
+| 2026-12 | Phase 15 (crypto-native) ako market signal land-uje |
+| 2027 Q1 | Phase 14 (L3 LoRA) kad M4 Ultra slegne |
+
+### 🎲 Moja preporuka
+
+**Kreni sa PHASE 10 odmah.** Razlog:
+1. Sve komponente su tu (Phase 4 + Phase 6 + Phase 8 + Phase 9)
+2. Naredna velika strateška jedinica — pretvaranje iz "math engine" u "math compiler"
+3. AI-driven game design je MAJOR 2026-2028 trend; bez Phase 10 izgubićemo prednost
+4. 4-8h u single Corti-sesiji = realan single-day rad
+
+Druga opcija: **Phase 11 (SWE-Math-Bench)** ako želiš marketing-asset prvo.
+
+---
+
+### Pre-flight summary (Phase 1-9 closed · 2026-05-27 04:20 audit)
 
 | Metric | Vrednost |
 |---|---|
