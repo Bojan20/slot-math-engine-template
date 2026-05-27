@@ -103,6 +103,18 @@ def main(argv: list[str] | None = None) -> int:
     paudit = sub.add_parser("audit-verify", help="Verify SHA-256 chain of an audit log JSONL")
     paudit.add_argument("audit_path", type=Path)
 
+    plint = sub.add_parser("lint", help="Static lint of a DSL spec (rule LINT001..LINT015)")
+    plint.add_argument("spec", type=Path)
+    plint.add_argument("--include-info", action="store_true")
+
+    pdocs = sub.add_parser("docs", help="Render full markdown design doc from spec")
+    pdocs.add_argument("spec", type=Path)
+
+    pmcv = sub.add_parser("mc-validate", help="Run N-spin MC against solved IR JSON; compare to closed-form RTP")
+    pmcv.add_argument("ir_json", type=Path)
+    pmcv.add_argument("--spins", type=int, default=100_000)
+    pmcv.add_argument("--seed", type=int, default=0xC0DE_F00D)
+
     args = p.parse_args(argv)
 
     # diff and cert have their own loading logic
@@ -175,6 +187,36 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         sys.stdout.write(f"FAIL — broken at line(s) {bad}\n")
         return 1
+
+    if args.cmd == "lint":
+        from .lint import lint_spec, render_lint
+        try:
+            lint_spec_obj = parse_spec(args.spec.read_text(encoding="utf-8"))
+        except DslParseError as e:
+            print(f"DSL parse error: {e}", file=sys.stderr)
+            return 2
+        findings = lint_spec(lint_spec_obj)
+        if not args.include_info:
+            findings = [f for f in findings if f.severity != "info"]
+        sys.stdout.write(render_lint(findings))
+        return 1 if any(f.severity == "error" for f in findings) else 0
+
+    if args.cmd == "docs":
+        from .docs import render_docs
+        try:
+            docs_spec_obj = parse_spec(args.spec.read_text(encoding="utf-8"))
+        except DslParseError as e:
+            print(f"DSL parse error: {e}", file=sys.stderr)
+            return 2
+        sys.stdout.write(render_docs(docs_spec_obj))
+        return 0
+
+    if args.cmd == "mc-validate":
+        from .mc_validate import mc_validate
+        ir = json.loads(args.ir_json.read_text(encoding="utf-8"))
+        report = mc_validate(ir, spins=args.spins, seed=args.seed)
+        sys.stdout.write(report.summary())
+        return 0 if report.verdict == "PASS" else 1
 
     # Branches that don't take a DSL spec
     if args.cmd == "extract":

@@ -50,6 +50,9 @@ from .studio_html import render_studio_html
 from .acceptance import run_acceptance, AcceptanceReport, AcceptanceEntry
 from .pipeline import run_pipeline, PipelineError
 from .audit import append_audit, verify_audit_chain, read_audit
+from .mc_validate import mc_validate, McValidationReport
+from .lint import lint_spec, render_lint, filter_by_severity, LintFinding
+from .docs import render_docs
 
 __all__ = [
     "MathDslSpec",

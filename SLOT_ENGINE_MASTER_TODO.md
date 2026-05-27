@@ -6,6 +6,59 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 22:40 (post **W8.1 + W8.2 + W8.3 LANDED** — MC validator + spec linter (15 rules) + auto-docs generator)
+
+**Status:** **Quality + ergonomics layer is live.** Three orthogonal artifacts: (1) MC sanity that empirically confirms closed-form RTP, (2) static linter sa 15 rule-ova that catches designer mistakes pre Z3 synth-a, (3) auto-generated markdown design doc with embedded Mermaid + lint findings.
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W8.1 — Python MC validator** | ✅ **landed** | 5 of 23 | `tools/math_dsl/mc_validate.py` + CLI `mc-validate` | Stdlib `random.choices` weighted-reel draw + line-pay evaluator + wild substitution. 3σ verdict envelope: PASS / MARGINAL / FAIL. Seed-deterministic |
+| **W8.2 — Spec linter** | ✅ **landed** | 9 of 23 | `tools/math_dsl/lint.py` + CLI `lint` | 15 rule-ova (LINT001 — LINT015): paying-sym count, wild/scatter presence, RTP range, monotonicity, Megaways→mystery_symbol expectation, progressive pool_id hint, paylines, features empty, max_win sanity, jurisdictions empty/duplicate, hints reel_length. CLI exits 1 on any `error`-severity finding (CI gate) |
+| **W8.3 — Auto-docs generator** | ✅ **landed** | 8 of 23 | `tools/math_dsl/docs.py` + CLI `docs` | Single markdown sa: header (name, vendor, author, theme), topology table, symbols table (id/name/kind/substitutes), features sa params, constraints (RTP, volatility, hit_freq, max_win, ladder), RTP allocation, jurisdictions, designer hints, Mermaid diagram, lint findings (warning+error by default; info opt-in) |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w8_1_w8_2_w8_3_mc_lint_docs.py` | **23 / 23** ✅ | 0.555 s |
+
+### Grand total — W4.* + W5.* + W6.* + W7.* + W8.* test suite
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` | 13 / 13 |
+| `test_w6_1_w6_2_cert_diff.py` | 17 / 17 |
+| `test_w6_3_w6_5_w6_6_prov_verify_catalog.py` | 24 / 24 |
+| `test_w6_4_w6_7_w6_8_html_mermaid.py` | 19 / 19 |
+| `test_w6_9_w6_10_w6_11_cli_ed25519_acceptance.py` | 12 / 12 |
+| `test_w7_1_w7_2_w7_3_pipeline_audit.py` | 11 / 11 |
+| `test_w8_1_w8_2_w8_3_mc_lint_docs.py` | 23 / 23 |
+| **Math DSL + cert + UI + pipeline + QA cumulative** | **192 / 192** ✅ |
+
+### Live samples
+
+```
+$ python3 -m tools.math_dsl lint tools/math_dsl/specs/example_classic_5x3.yaml
+(no lint findings — spec is clean)
+
+$ python3 -m tools.math_dsl docs tools/math_dsl/specs/example_classic_5x3.yaml | head
+# Crimson Tiger
+
+_Classic 5x3 with 20 paylines, free spins + multiplier._
+
+| Field | Value |
+|---|---|
+| Vendor | studio-internal |
+| Author | designer@studio |
+| Theme tags | `jungle`, `tiger`, `asian` |
+```
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 22:15 (post **W7.1 + W7.2 + W7.3 LANDED** — GH Actions + one-shot pipeline + tamper-evident audit trail)
 
 **Status:** **CI gate + production pipeline + tamper-evident audit log are live.** GitHub Actions workflow runs the full Math DSL acceptance suite + unit tests on every PR touching the DSL surface. One CLI invocation now does: parse → compile → Z3 synth → sign → cert bundle → audit JSONL. Audit trail has SHA-256 hash chain — any tamper breaks the chain at the modified entry and every subsequent one.
