@@ -729,6 +729,32 @@
     else      { cust.setAttribute("hidden", "");  $("#preset-custom-toggle").setAttribute("aria-expanded", "false"); }
   });
 
+  // PHASE 48 — show-grid: toggle the reel-grid overlay on the build
+  // canvas. Pre-PHASE-48 the button had no handler at all — clicking it
+  // did nothing. We now flip a CSS class on the reels container so the
+  // designer can switch between "compact" and "grid" reel rendering,
+  // plus log the action so the activity log shows the toggle.
+  const showGridBtn = document.querySelector("#show-grid");
+  if (showGridBtn) {
+    showGridBtn.addEventListener("click", () => {
+      try {
+        const reelsSec = document.querySelector(".reels-section");
+        if (!reelsSec) {
+          toast({ kind: "cyan", msg: "Reels canvas not mounted yet" });
+          return;
+        }
+        const next = !reelsSec.classList.contains("is-grid");
+        reelsSec.classList.toggle("is-grid", next);
+        showGridBtn.setAttribute("aria-pressed", String(next));
+        showGridBtn.classList.toggle("is-active", next);
+        logActivity(next ? "grid overlay ON" : "grid overlay OFF");
+      } catch (e) {
+        console.warn("[show-grid]", e);
+        toast({ kind: "red", msg: "Grid toggle failed: " + (e && e.message || e) });
+      }
+    });
+  }
+
   /* CUSTOM tier sliders */
   $$("#pool-custom input[type='range']").forEach(s => {
     s.addEventListener("input", () => {
