@@ -337,7 +337,7 @@ Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 �
 
 | Phase | Tema | Trud | Strategic value | Kad da krenemo |
 |---|---|---|---|---|
-| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | sad |
+| **PHASE 10** | **AI Math Compiler v2** — natural-language → IR (Phase 4 GDD + Phase 8 agent fleet + Phase 6 Z3 mash-up) | 4-8h | 🥇 najveća — pretvara nas u "Slot Math Copilot" | 🟡 **3/6 sub-waves landed (P10.1 + P10.4 + P10.5)** — P10.2/P10.3/P10.6 prep |
 | **PHASE 11** | **SWE-Math-Bench** — published benchmark harness (RTP-recovery + parity-time vs human + cert-emit completeness) | 2-4h | 🥈 marketing asset; due-diligence shortcut | posle Phase 10 |
 | **PHASE 12** | **Real-Time RGS Live Engine** — prod-grade deploy (W19 telemetry + W49 synth log + load-tested 10k spins/sec/cabinet) | 8-16h | 🥉 transitions iz audit-tool u **production engine** | čeka pilot operator |
 | **PHASE 13** | **Vendor C/D/E real-PAR calibration** — kad NDA pipeline land-uje | 2-4h per vendor | konkretno commercial unblock | NDA-blocked |
@@ -369,11 +369,12 @@ Acceptance:
 
 | Sub-wave | Estimate | Status |
 |---|---|---|
-| P10.1 NL prompt parser (LLM-call via slot-agent dispatcher) | 1-2h | prep |
-| P10.2 Composition planner (feature dictionary + Z3-guided synth) | 2-3h | prep |
+| **P10.1 NL prompt parser** + DSL builder + audit log | 1-2h | ✅ **LANDED** (`tools/slot_design/prompt_parser.py`, 72 tests pass: 47 unit + 25 CLI/acceptance) |
+| **P10.4 `slot-design` CLI orchestrator** + W6.4 SMT-lock glue | 30-60 min | ✅ **LANDED** (`tools/slot_design/__main__.py`, --from-dsl + --no-smt-lock + REVIEW.md emit) |
+| **P10.5 10-prompt acceptance suite** | 30 min | ✅ **LANDED** (10 prompts × 2 invariants each = 20 parametrized specs) |
+| P10.2 Composition planner — feature dictionary deepening + Z3 closed-form coupling | 2-3h | prep |
 | P10.3 Studio iterative refinement UI | 1-2h | prep |
-| P10.4 `slot-design` CLI orchestrator + cert pipeline glue | 30-60 min | prep |
-| P10.5 10-prompt acceptance suite + master TODO row | 30 min | prep |
+| P10.6 Cert-pipeline glue (`slot-design` → cert ZIP single command) | 30-60 min | prep |
 
 ### 🥈 PHASE 11 — **SWE-Math-Bench**
 
