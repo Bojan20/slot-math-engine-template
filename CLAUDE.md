@@ -38,10 +38,28 @@ Vendor B workflow:
 2. Naš engine ga vrti (closed-form solver + MC validacija)
 3. Cert paper trail izlazi (operator-package.zip → regulator)
 
-Cilj: **100% Vendor B mehanika pokrivena** (W181-W200 plan u
-`docs/research/KIMI_LW_PORTFOLIO_COVERAGE_2026-05-18.md`).
+Cilj: ✅ **100% Vendor B mehanika pokrivena — POSTIGNUTO @ W196**
+(`docs/research/KIMI_VENDOR_B_PORTFOLIO_COVERAGE_2026-05-18.md`,
+16/16 KIMI gaps closed).
 
-Trenutno: **61 solver / 90 CI gates / 81 P-IDs**. Posle W200: 77/106/97 + 100% Vendor B.
+**Trenutno (2026-05-27, post-W200 + sanitization cleanup):**
+
+| Metric | Vrednost |
+|---|---|
+| Distinct solver funkcija (`solve*`) | **103** |
+| Vitest spec files | **289** |
+| Vitest tests | **7266 PASS + 3 skipped** |
+| Rust test count | **307 / 307 PASS** |
+| Closed-form portfolio entries | **121** |
+| P-ID katalog mentions | **136** |
+| Mission acceptance | **10 / 10 ✅** |
+| Vendor B mehanika coverage | **16 / 16 ✅** (W181-W196) |
+| Phase 1-7 statusi | **ALL ✅ CLOSED** |
+| Phase 8 (local domain agents) | **✅ SHIPPED** (P8.1-P8.6) |
+
+Engineering je terminalan. Preostali rad = **product/sales** + opcioni **Phase 4
+(multi-platform UI)** + **W5.1-W5.2 (Math DSL + Z3 solver POC)** za futuristic AI
+math compiler vision.
 
 ## Workflow
 

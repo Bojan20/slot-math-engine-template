@@ -4,7 +4,7 @@
 >
 > **Vlasnik:** [SlotMathArchitect](./agents/SLOT_MATH_ARCHITECT.md) (agent) · **Orchestrator:** Corti · **Vizija:** Boki
 > **History log:** [`SLOT_ENGINE_MASTER_TODO.md`](./SLOT_ENGINE_MASTER_TODO.md) (728KB, Wave 1-241+)
-> **Last sync:** 2026-05-26 16:05 — **Century kernel milestone landed (100/100), 28 operational tooling waves (W11-W49), 1008/1008 tests PASS**
+> **Last sync:** 2026-05-27 02:40 — **Vendor B 16/16 KIMI gaps closed (W196), W197-W200 polish landed (`7c98a50`), Phase 8 local-agents shipped, sanitization-driven test suite 7266/7266 PASS post-cleanup**
 
 ---
 
@@ -294,19 +294,30 @@ Library covers every major probability family used in commercial slot math liter
 **Kimi-validated sources** (deep research fingerprint `d3e8934d0b403e6c`, 2026-05-26):
 Easy Vegas PAR Sheets · Slot Designer 2nd ed · Heavybit RAG-vs-Finetune 2025 · CoreWeave Pretrain/FT/RAG 2025 · Nimbalyst Claude Code Subagents Guide 2026 · SitePoint Fine-Tune Local LLMs 2026 · Track360 jurisdiction comparison 2026 · Ballard Spahr Nevada NGCB 2026-04 · UKGC LCCP previous-changes feed · AGCO Registrar's Standards 2026 · Altenar Italy/Sweden 2026 · ICLG Denmark 2025 · CallSphere FT-vs-Prompt-vs-RAG May 2026 · GamingLabs RTP analysis 2025 · CreateIT slot debug framework 2025 · UKGC RTP-calculation guide 2021.
 
-### Pre-flight summary (final — Phase 7 closed)
+### Pre-flight summary (final — Phase 1-8 closed · 2026-05-27 audit)
 
 | Metric | Vrednost |
 |---|---|
-| Total tests | **1244 / 1244 PASS** (47 skips) |
-| Console entry points | **80** |
-| Closed-form kernels | **100 / 100** ✅ |
+| **Distinct solver funkcija (`solve*`)** | **103** |
+| **Vitest spec files** | **289** |
+| **Vitest tests** | **7266 PASS + 3 skipped + 0 failed** |
+| **Rust test count** | **307 / 307 PASS** |
+| **Closed-form portfolio entries** | **121** |
+| **P-ID katalog mentions** | **136** |
+| Console entry points | **80+** |
+| Closed-form kernels (mission #6) | **100 / 100** ✅ |
 | Mission acceptance | **10 / 10** ✅ |
+| **Vendor B mehanika (KIMI gaps)** | **16 / 16 ✅** (W181-W196) |
 | Operational gates | drift · cert XML v1+v2 · operator dashboard · ci-gate · plugin sign · marketplace · pubkey bundle · trust anchor · cert e2e verify · master pipeline gate · ir-diff gate · sbom + sbom-diff |
 | Product codegen | Rust crate · TS Studio · Playwright E2E · cert XML · GLI-16 PAR JSON · operator-package ZIP · pubkey bundle · SBOM · sign-off PDF |
 | Commercialization | marketplace catalog (tier-based) · pilot outreach package · public benchmark vs 8 studios · community contributor flow |
+| Phase 8 local-domain agents | ✅ shipped (P8.1-P8.6), routing acc 100 % on 49-query eval |
 
-**Project status: every phase 1-7 wave is ✅ shipped.** Math + cert + ops + product + commercialization layers are all closed. What remains is sales + community management — not engineering.
+**Project status: every Phase 1-8 wave is ✅ shipped.** Math + cert + ops +
+product + commercialization + local-agents layers are all closed. What remains
+is **sales / community management** + opcionalno **Phase 4 (multi-platform UI
+runtime)** + opcionalno **W5.1-W5.2 (Math DSL + Z3 solver POC)** za futuristic
+math-compiler vision — none of these are engineering blockers.
 
 ### ✅ Most-recent landings
 

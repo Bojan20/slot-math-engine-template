@@ -147,7 +147,10 @@ describe('operator-branding — replacements', () => {
 
   it('applyBranding swaps Vendor B ticker → ALL.AX for aristocrat', async () => {
     const m = await loadOperatorManifest('aristocrat');
-    const out = applyBranding('Ticker: Vendor B.', m);
+    // NASDAQ ticker LNW is the public stock symbol; kept un-sanitized
+    // so per-operator ticker swap can run without colliding with the
+    // display-name `Vendor B` token.
+    const out = applyBranding('Ticker: LNW.', m);
     expect(out).toBe('Ticker: ALL.AX.');
   });
 

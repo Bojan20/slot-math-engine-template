@@ -109,7 +109,7 @@ describe('pilot dossier — html render', () => {
 
   it('html includes a <h1> heading + tables', () => {
     const html = markdownToHtml(renderMarkdown(ctx.state, ctx.summary));
-    expect(html).toMatch(/<h1>L&amp;W Pilot Evaluation Dossier<\/h1>/);
+    expect(html).toMatch(/<h1>Vendor B Pilot Evaluation Dossier<\/h1>/);
     expect(html).toMatch(/<table>/);
   });
 

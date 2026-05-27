@@ -79,7 +79,10 @@ const LW_FORWARD_TOKENS = Object.freeze([
   { from: 'L&amp;W', kind: 'displayHtml' },
   { from: 'L_AND_W', kind: 'displayUnderscore' },
   { from: 'Vendor B', kind: 'display' },
-  { from: 'Vendor B', kind: 'ticker' },
+  // NASDAQ stock ticker — public information, not vendor IP, kept as the real
+  // `LNW` symbol so per-operator ticker swap (e.g. → ALL.AX for aristocrat)
+  // can be applied without colliding with the display-name `Vendor B` token.
+  { from: 'LNW', kind: 'ticker' },
 ]);
 
 // ─── manifest IO ────────────────────────────────────────────────────────

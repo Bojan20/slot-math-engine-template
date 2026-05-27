@@ -1,6 +1,6 @@
 {
-  "startedAt": "2026-05-26T21:57:53.096Z",
-  "totalMs": 86,
+  "startedAt": "2026-05-27T00:40:42.414Z",
+  "totalMs": 112,
   "totalScripts": 1,
   "okCount": 1,
   "failCount": 0,
@@ -8,7 +8,7 @@
     {
       "name": "smoke-rng-determinism",
       "ok": true,
-      "durationMs": 86,
+      "durationMs": 112,
       "message": "bit-identical replay"
     }
   ]
