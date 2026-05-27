@@ -6,6 +6,42 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:35 (post **W5.4 + W5.5 + W4.9 + W4.10 + W5.6 LANDED** — declarative mutation engine + Z3 cache + 2 new topologies + multi-objective synth)
+
+**Status:** **Math compiler is feature-complete for daily designer workflow.** Five atomic waves shipped in a single sequence:
+- declarative mutation phrases (`raise RTP to 97; set volatility to high`),
+- content-addressed Z3 cache (re-solves identical specs in microseconds),
+- cluster-pays + cascade DSL specs (2 new game families),
+- multi-objective Z3 solver (RTP + hit_freq + volatility in one joint solve).
+
+| Wave | Status | Tests | Files | Notes |
+|---|---|---|---|---|
+| **W5.4 — DSL mutation engine** | ✅ **landed** | 21 of 31 | `tools/math_dsl/mutate.py` + `__init__.py` + `__main__.py` (mutate subcmd) | 10 mutation kinds (rtp, volatility, hit_freq, max_win, topology, add/remove jurisdiction, add/remove feature, reel_length); regex-driven, deterministic (no LLM dep); chained mutations via `;` `,` `and`. Live: `python -m tools.math_dsl mutate spec.yaml "raise RTP to 97.5; set volatility to high"` |
+| **W5.5 — Z3 solver result cache** | ✅ **landed** | 10 of 31 | `tools/smt/cache.py` | SHA-256 content-addressed JSON store at `~/.cache/cortex/slot-math-engine/z3_synth/<key>.json`. Cache key invariant to seeded reel.base values (only IR *shape* matters); hit_count auto-incremented; `bypass=True` flag forces re-solve. `cached_synth()` wrapper around `synth_*` |
+| **W4.9 — Cluster Pays DSL spec** | ✅ **landed** | 4 of 13 | `tools/math_dsl/specs/example_cluster_pays.yaml` | 7×7 cluster_grid, orthogonal adjacency, cascade replacement, free-spins trigger; round-trips through extract correctly |
+| **W4.10 — Cascade DSL spec** | ✅ **landed** | 5 of 13 | `tools/math_dsl/specs/example_cascade.yaml` | 6×5 lines with cascade + multiplier + FS retrigger; round-trips with `replacement` and `max_chain` preserved |
+| **W5.6 — Multi-objective synth (Mode C-5)** | ✅ **landed** | 4 of 13 | `tools/smt/weight_synthesizer.py::synth_multi_objective` | RTP + hit_freq + volatility constraints solved as ONE Z3 NRA call (joint feasible region exploration). Classic 5×3 RTP 0.96 + medium volatility: 0.96 ± 0.01, CV in [4,8] ✅ |
+
+### Test tally for this batch
+
+| File | Pass | Time |
+|---|---|---|
+| `test_w5_4_w5_5_mutate_cache.py` | **31 / 31** ✅ | 0.027 s |
+| `test_w4_9_w4_10_w5_6_extras.py` | **13 / 13** ✅ | 28.9 s |
+
+### Grand total — W4.* + W5.* test suite (post this batch)
+
+| Suite | Pass |
+|---|---|
+| `test_w4_7_ir_expansion.py` (W4.7 — Rust IR mirror) | 10 / 10 |
+| `test_w5_1_w5_2_math_dsl.py` (W5.1 + W5.2) | 18 / 18 |
+| `test_w5_2c4_w5_3_extract.py` (W5.2-C4 + W5.3) | 14 / 14 |
+| `test_w5_4_w5_5_mutate_cache.py` (W5.4 + W5.5) | 31 / 31 |
+| `test_w4_9_w4_10_w5_6_extras.py` (W4.9 + W4.10 + W5.6) | 13 / 13 |
+| **Math DSL + Z3 cumulative** | **86 / 86** ✅ |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-27 20:10 (post **W5.2-C4 + W5.3 LANDED** — bi-directional DSL ↔ IR round-trip + volatility CV solver)
 
 **Status:** **Math compiler is now bi-directional.** Forward (DSL → IR + Z3 weights) was W5.1+W5.2; today closes the inverse (IR → DSL YAML) so designers can refactor existing PARs / IRs into spec form, edit, re-compile. Plus W5.2 gets a 3rd Z3 mode — volatility CV constraint via QF_NRA polynomial reals.

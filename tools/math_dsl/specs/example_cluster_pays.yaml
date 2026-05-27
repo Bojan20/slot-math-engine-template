@@ -1,0 +1,64 @@
+# W4.9 Cluster Pays DSL example — 7×7 grid, orthogonal adjacency,
+# 5-symbol min cluster, cascade replacement, free-spins trigger.
+
+schema_version: "1.0.0"
+
+meta:
+  name: "Coral Cluster"
+  vendor: "studio-internal"
+  author: "designer@studio"
+  description: "7x7 cluster-pays with cascade + free spins."
+  theme_tags: ["ocean", "cluster"]
+
+topology:
+  kind: cluster_grid
+  reels: 7
+  rows: 7
+  columns: 7
+  adjacency: orthogonal
+
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_coral
+    kind: hp
+  - id: hp_fish
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+features:
+  - kind: cascade
+    replacement: drop
+    max_chain: 20
+  - kind: free_spins
+    trigger_count_min: 4
+    initial_spins: 8
+    global_multiplier: 2.0
+
+paylines: 1   # cluster eval ignores
+
+constraints:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  volatility_class: high
+  hit_freq_target: 0.20
+  max_win_x: 10000
+  jurisdictions: [UKGC, MGA]
+  pay_ladder_monotonic: true
+  pay_min: 0.5
+  pay_max: 2000.0
+
+hints:
+  reel_length: 49
+  wild_share: 0.03
+  scatter_share: 0.02

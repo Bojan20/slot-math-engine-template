@@ -1,0 +1,64 @@
+# W4.10 Cascade/Tumble DSL example — 6×5 grid with cascade reactions,
+# multiplier progression, drop replacement, free-spins trigger.
+
+schema_version: "1.0.0"
+
+meta:
+  name: "Cascade Quest"
+  vendor: "studio-internal"
+  author: "designer@studio"
+  description: "6x5 lines slot with cascading multipliers + free spins."
+  theme_tags: ["adventure", "cascade", "tumble"]
+
+topology:
+  kind: rectangular
+  reels: 6
+  rows: 5
+
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_dragon
+    kind: hp
+  - id: hp_phoenix
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+features:
+  - kind: cascade
+    replacement: drop
+    max_chain: 25
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 12
+    global_multiplier: 3.0
+    retrigger_spins: 5
+    max_total_spins: 50
+
+paylines: 30
+
+constraints:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  volatility_class: high
+  hit_freq_target: 0.30
+  max_win_x: 15000
+  jurisdictions: [UKGC, MGA, ADM]
+  pay_ladder_monotonic: true
+  pay_min: 0.25
+  pay_max: 1500.0
+
+hints:
+  reel_length: 60
+  wild_share: 0.035
+  scatter_share: 0.015

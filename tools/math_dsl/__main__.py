@@ -58,6 +58,11 @@ def main(argv: list[str] | None = None) -> int:
     pr = sub.add_parser("roundtrip", help="DSL → IR → DSL (refactor)")
     pr.add_argument("spec", type=Path)
 
+    pm = sub.add_parser("mutate", help="Apply natural-language mutation to a DSL spec")
+    pm.add_argument("spec", type=Path)
+    pm.add_argument("prompt", type=str, help='e.g. "raise RTP to 97; set volatility to high"')
+    pm.add_argument("--show-log", action="store_true")
+
     args = p.parse_args(argv)
 
     # Branches that don't take a DSL spec
@@ -94,6 +99,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "roundtrip":
         recovered = extract_from_ir(ir)
         sys.stdout.write(serialize_to_yaml(recovered))
+        return 0
+
+    if args.cmd == "mutate":
+        from .mutate import apply_mutation
+        mutated, log = apply_mutation(spec, args.prompt)
+        if args.show_log:
+            sys.stderr.write(f"# Mutation log: {log.applied_count} applied, {len(log.errors)} errors\n")
+            for o in log.ops:
+                sys.stderr.write(f"#   [{'✓' if o.applied else '✗'}] {o.description}\n")
+            for e in log.errors:
+                sys.stderr.write(f"#   ERR: {e}\n")
+        sys.stdout.write(serialize_to_yaml(mutated))
         return 0
 
     # synth

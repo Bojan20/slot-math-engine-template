@@ -29,6 +29,10 @@ from .spec import (
 )
 from .compile import compile_to_ir, CompileError
 from .extract import extract_from_ir, serialize_to_yaml, ExtractError
+from .mutate import (
+    apply_mutation, list_supported_mutations,
+    MutationLog, MutationOp, MutationError,
+)
 
 __all__ = [
     "MathDslSpec",
@@ -40,7 +44,12 @@ __all__ = [
     "compile_to_ir",
     "extract_from_ir",
     "serialize_to_yaml",
+    "apply_mutation",
+    "list_supported_mutations",
+    "MutationLog",
+    "MutationOp",
     "DslParseError",
     "CompileError",
     "ExtractError",
+    "MutationError",
 ]
