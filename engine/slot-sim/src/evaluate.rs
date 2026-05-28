@@ -66,11 +66,21 @@ impl CompiledPaytable {
                     // Convention: combo[0] = "Any N <Symbol>" or just symbol name + count column.
                     // Universal parser stores `(symbol, count)` explicitly via combo[0] = "<sym>:<count>" OR
                     // legacy "Any N <sym>" string. We support both.
+                    //
+                    // W4.8c / W4.10c — also accept literal-form combos where the
+                    // paytable entry repeats the symbol N times (e.g. IGT
+                    // Skeleton Key and Fortune Coin emit `['Bonus','Bonus','Bonus']`
+                    // for a 3-Bonus scatter pay rather than the "Any 3 Bonus"
+                    // string). When all combo cells share the same value, treat
+                    // count = combo.len() and symbol = combo[0].
                     let first = &e.combo[0];
                     if let Some((n, sym)) = parse_any_n(first) {
                         scatter.insert((sym, n), e.pays);
                     } else if let Some((sym, n)) = parse_sym_count(first) {
                         scatter.insert((sym, n), e.pays);
+                    } else if e.combo.iter().all(|c| c == first) {
+                        let n = e.combo.len() as u32;
+                        scatter.insert((first.clone(), n), e.pays);
                     }
                 }
                 "pattern" => {

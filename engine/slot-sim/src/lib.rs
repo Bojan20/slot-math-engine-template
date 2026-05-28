@@ -32,6 +32,11 @@ pub mod features;
 pub mod sim;
 pub mod stats;
 
+// W4.8c — Megaways evaluator (Skeleton Key family).
+pub mod megaways_eval;
+// W4.10c — Ways + cascade evaluator (Fortune Coin family).
+pub mod ways_eval;
+
 // W7.2 — Quasi-Monte Carlo (Halton/Sobol/Lattice) for tail variance reduction
 // + bonus-buy EV convergence acceleration. See module docs for rationale.
 pub mod qmc;
