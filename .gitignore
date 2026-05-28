@@ -184,6 +184,15 @@ games/*/engine-ts/node_modules/
 agents/math-agent/corpus/*/ultimate_extract/
 agents/math-agent/corpus/*/raw/
 agents/math-agent/corpus/*/ultimate_extract.pointer.json
+
+# W4.8f/W4.10f — residual gap probe + LP solver outputs.
+# Reports contain vendor `rtp_breakdown` shares used as LP target_b vectors.
+# Tools themselves (par_probe_residual_gap.py + par_solver_picker_weights.py)
+# ARE committed — they're trajni alati for future SWID-ove. Only the per-run
+# JSON outputs (which read vendor cells.json) stay local.
+reports/residual_gap_probe.json
+reports/picker_solver.json
+
 dist/pilot/
 dist/cert/
 dist/test-cert/
