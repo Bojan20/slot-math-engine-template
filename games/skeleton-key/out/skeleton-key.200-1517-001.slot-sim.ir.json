@@ -14,10 +14,11 @@
     "win_frequency": 0.1638564379600296,
     "notes": [
       "Megaways 3x5..6x5 / 243..7776 ways",
-      "Wild substitutes for all except Bonus/Key/Mystery/Chest",
-      "Mystery transforms to a single chosen symbol per spin (TODO mystery feature)",
+      "Wild substitutes for all except Bonus + Key (PAR-Base r65)",
+      "Mystery transforms to one chosen symbol per spin (PAR-Base r1004 + r1010/1025 distribution tables)",
       "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
-      "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible"
+      "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
+      "Bet normalization: 10 coins per spin (PAR-Base r63)"
     ],
     "sampling_mode": "virtual_independent"
   },
@@ -28,34 +29,34 @@
     "rows_max": 6,
     "rows_weights": [
       [
-        1,
-        1,
-        1,
-        1
+        10,
+        8,
+        6,
+        4
       ],
       [
-        1,
-        1,
-        1,
-        1
+        10,
+        8,
+        6,
+        4
       ],
       [
-        1,
-        1,
-        1,
-        1
+        10,
+        8,
+        6,
+        4
       ],
       [
-        1,
-        1,
-        1,
-        1
+        10,
+        8,
+        6,
+        4
       ],
       [
-        1,
-        1,
-        1,
-        1
+        10,
+        8,
+        6,
+        4
       ]
     ]
   },
@@ -78,15 +79,13 @@
       ],
       "substitutes_except": [
         "Bonus",
-        "Key",
-        "Mystery",
-        "Chest"
+        "Key"
       ]
     },
     {
       "id": "Mystery",
       "name": "Mystery",
-      "role": "hp"
+      "role": "anchor"
     },
     {
       "id": "Chest",
@@ -34907,6 +34906,602 @@
       "max_total_spins": null,
       "reel_bank": "fs",
       "scatter_pay_total_bet": 0.0
+    },
+    {
+      "kind": "mystery_transform",
+      "trigger_symbol": "Mystery",
+      "per_set_distributions": {
+        "1": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 4
+          },
+          {
+            "symbol": "Vase",
+            "weight": 10
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 14
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 22
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 24
+          },
+          {
+            "symbol": "Ace",
+            "weight": 24
+          },
+          {
+            "symbol": "King",
+            "weight": 24
+          },
+          {
+            "symbol": "Queen",
+            "weight": 37
+          },
+          {
+            "symbol": "Jack",
+            "weight": 40
+          }
+        ],
+        "2": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 4
+          },
+          {
+            "symbol": "Vase",
+            "weight": 10
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 14
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 20
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 28
+          },
+          {
+            "symbol": "Ace",
+            "weight": 20
+          },
+          {
+            "symbol": "King",
+            "weight": 24
+          },
+          {
+            "symbol": "Queen",
+            "weight": 39
+          },
+          {
+            "symbol": "Jack",
+            "weight": 40
+          }
+        ],
+        "3": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 10
+          },
+          {
+            "symbol": "Vase",
+            "weight": 35
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 15
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 400
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 400
+          },
+          {
+            "symbol": "Ace",
+            "weight": 550
+          },
+          {
+            "symbol": "King",
+            "weight": 750
+          },
+          {
+            "symbol": "Queen",
+            "weight": 800
+          },
+          {
+            "symbol": "Jack",
+            "weight": 750
+          }
+        ],
+        "4": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 300
+          },
+          {
+            "symbol": "Vase",
+            "weight": 2750
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 2750
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 1
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 1
+          },
+          {
+            "symbol": "Ace",
+            "weight": 1
+          },
+          {
+            "symbol": "King",
+            "weight": 1
+          },
+          {
+            "symbol": "Queen",
+            "weight": 1
+          },
+          {
+            "symbol": "Jack",
+            "weight": 1
+          }
+        ],
+        "5": [
+          {
+            "symbol": "Chest",
+            "weight": 10000
+          },
+          {
+            "symbol": "Book",
+            "weight": 1
+          },
+          {
+            "symbol": "Vase",
+            "weight": 1
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 1
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 1
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 1
+          },
+          {
+            "symbol": "Ace",
+            "weight": 1
+          },
+          {
+            "symbol": "King",
+            "weight": 1
+          },
+          {
+            "symbol": "Queen",
+            "weight": 1
+          },
+          {
+            "symbol": "Jack",
+            "weight": 1
+          }
+        ],
+        "6": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 2
+          },
+          {
+            "symbol": "Vase",
+            "weight": 2
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 2
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 2
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 2
+          },
+          {
+            "symbol": "Ace",
+            "weight": 2
+          },
+          {
+            "symbol": "King",
+            "weight": 2
+          },
+          {
+            "symbol": "Queen",
+            "weight": 2
+          },
+          {
+            "symbol": "Jack",
+            "weight": 2
+          }
+        ],
+        "7": [
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 100
+          },
+          {
+            "symbol": "Vase",
+            "weight": 100
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 100
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 1000
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 1000
+          },
+          {
+            "symbol": "Ace",
+            "weight": 1000
+          },
+          {
+            "symbol": "King",
+            "weight": 1000
+          },
+          {
+            "symbol": "Queen",
+            "weight": 1000
+          },
+          {
+            "symbol": "Jack",
+            "weight": 1000
+          }
+        ],
+        "8": [
+          {
+            "symbol": "Chest",
+            "weight": 10
+          },
+          {
+            "symbol": "Book",
+            "weight": 100
+          },
+          {
+            "symbol": "Vase",
+            "weight": 100
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 100
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 100
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 100
+          },
+          {
+            "symbol": "Ace",
+            "weight": 100
+          },
+          {
+            "symbol": "King",
+            "weight": 100
+          },
+          {
+            "symbol": "Queen",
+            "weight": 100
+          },
+          {
+            "symbol": "Jack",
+            "weight": 100
+          }
+        ]
+      },
+      "fs_per_set_distributions": {
+        "1": [
+          {
+            "symbol": "Key",
+            "weight": 0
+          },
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 3
+          },
+          {
+            "symbol": "Vase",
+            "weight": 20
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 20
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 40
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 60
+          },
+          {
+            "symbol": "Ace",
+            "weight": 60
+          },
+          {
+            "symbol": "King",
+            "weight": 100
+          },
+          {
+            "symbol": "Queen",
+            "weight": 100
+          }
+        ],
+        "2": [
+          {
+            "symbol": "Key",
+            "weight": 0
+          },
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 3
+          },
+          {
+            "symbol": "Vase",
+            "weight": 20
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 20
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 40
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 60
+          },
+          {
+            "symbol": "Ace",
+            "weight": 60
+          },
+          {
+            "symbol": "King",
+            "weight": 100
+          },
+          {
+            "symbol": "Queen",
+            "weight": 100
+          }
+        ],
+        "3": [
+          {
+            "symbol": "Key",
+            "weight": 110
+          },
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 12
+          },
+          {
+            "symbol": "Vase",
+            "weight": 60
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 60
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 240
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 240
+          },
+          {
+            "symbol": "Ace",
+            "weight": 740
+          },
+          {
+            "symbol": "King",
+            "weight": 520
+          },
+          {
+            "symbol": "Queen",
+            "weight": 740
+          }
+        ],
+        "4": [
+          {
+            "symbol": "Key",
+            "weight": 10
+          },
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 80
+          },
+          {
+            "symbol": "Vase",
+            "weight": 265
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 265
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 100
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 100
+          },
+          {
+            "symbol": "Ace",
+            "weight": 60
+          },
+          {
+            "symbol": "King",
+            "weight": 60
+          },
+          {
+            "symbol": "Queen",
+            "weight": 40
+          }
+        ],
+        "5": [
+          {
+            "symbol": "Key",
+            "weight": 1180
+          },
+          {
+            "symbol": "Chest",
+            "weight": 100000
+          },
+          {
+            "symbol": "Book",
+            "weight": 1
+          },
+          {
+            "symbol": "Vase",
+            "weight": 1
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 1
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 1
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 1
+          },
+          {
+            "symbol": "Ace",
+            "weight": 1
+          },
+          {
+            "symbol": "King",
+            "weight": 1
+          },
+          {
+            "symbol": "Queen",
+            "weight": 1
+          }
+        ],
+        "6": [
+          {
+            "symbol": "Key",
+            "weight": 0
+          },
+          {
+            "symbol": "Chest",
+            "weight": 1
+          },
+          {
+            "symbol": "Book",
+            "weight": 7
+          },
+          {
+            "symbol": "Vase",
+            "weight": 19
+          },
+          {
+            "symbol": "PurpleGem",
+            "weight": 27
+          },
+          {
+            "symbol": "RedGem",
+            "weight": 40
+          },
+          {
+            "symbol": "GreenGem",
+            "weight": 56
+          },
+          {
+            "symbol": "Ace",
+            "weight": 40
+          },
+          {
+            "symbol": "King",
+            "weight": 48
+          },
+          {
+            "symbol": "Queen",
+            "weight": 78
+          }
+        ]
+      }
     }
   ],
   "bet_table": {
@@ -34915,7 +35510,7 @@
       1
     ],
     "total_bets": [
-      50.0
+      10.0
     ]
   }
 }

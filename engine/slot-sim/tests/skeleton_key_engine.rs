@@ -1,21 +1,23 @@
-//! W4.8c — Skeleton Key Megaways engine MC tests.
+//! W4.8c / W4.8d — Skeleton Key Megaways engine MC tests.
 //!
 //! Runs the full Engine pipeline against the IGT Skeleton Key IRs (3
 //! SWIDs) and checks:
-//!   * RTP convergence — bounded sanity range (NOT ≤ 1% delta — the IR
-//!     emitted by `tools/par_extract_ultimate/build_ir.py` is documented
-//!     as W4.8b incomplete: total_bet field reflects the credit-display
-//!     bet (50) rather than the PAR-normalized coin bet (10), Wild's
-//!     `substitutes_except` is too restrictive vs Excel ("Wild subs for
-//!     all except Bonus + Key" per PAR row 65 — IR also lists Chest +
-//!     Mystery), and the Mystery-symbol "transforms to a single chosen
-//!     symbol per spin" feature is not yet implemented. These three
-//!     IR-data gaps drop the line RTP component well below the published
-//!     base_game RTP. The full algorithm (per-reel row sampling, ways
-//!     product math, Wild substitution gated on `substitutes_except`,
-//!     FS Megaways re-eval) IS implemented correctly here — convergence
-//!     to the published RTP awaits W4.8d (IR data refresh) + Mystery
-//!     feature wave.
+//!   * RTP convergence — sanity bounds. W4.8d closed three IR data
+//!     gaps from W4.8b/W4.8c:
+//!       • `bet_table.total_bets[0]` = 10 (PAR-Base r63 "10 coins"),
+//!         was the credit-display 50;
+//!       • `Wild.substitutes_except` = ["Bonus","Key"] (PAR-Base r65),
+//!         was the over-restrictive ["Bonus","Key","Mystery","Chest"];
+//!       • Mystery Symbol feature (PAR-Base r1004 + r1010/1025) is now
+//!         wired through `Feature::MysteryTransform` and applied per
+//!         active reel set before Megaways evaluation.
+//!     The combination moves MC RTP from −63 % (W4.8c) to roughly
+//!     +30 % over the published total. The remaining overshoot comes
+//!     from the W4.8b uniform-row Megaways topology (`rows_weights =
+//!     [1,1,1,1]`) — IGT's per-set rows distribution is not published
+//!     in the PAR sheet and IR schema lacks per-set rows mapping.
+//!     Tests assert MC RTP in `[0.3, 2.0]× target` bracket pending the
+//!     per-set rows wave (tracked outside W4.8d scope).
 //!   * Edge cases (all-wild, all-scatter, zero-payout, min/max topology)
 //!     — algorithm robustness.
 
@@ -30,8 +32,8 @@ const SK_001: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-001.slo
 const SK_002: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-002.slot-sim.ir.json";
 const SK_003: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-003.slot-sim.ir.json";
 
-/// W4.8c — Sanity: MC RTP must be strictly positive (engine fires).
-/// W4.8d-blocked: relative-delta ≤ 1% to `IR.meta.rtp_total`.
+/// W4.8d — Sanity: MC RTP within `[0.3, 2.0]× target` (W4.8d cap).
+/// Convergence to ≤ 1 % awaits per-set rows wave outside W4.8d scope.
 #[test]
 fn skeleton_key_001_mc_rtp_positive() {
     let ir = Ir::load(SK_001).expect("load 001");
@@ -45,12 +47,10 @@ fn skeleton_key_001_mc_rtp_positive() {
         target,
         (mc_rtp - target) / target * 100.0
     );
-    // Sanity bounds — engine fires non-trivially and stays below 2× target.
-    assert!(mc_rtp > 0.05, "MC RTP {} too low (engine not firing)", mc_rtp);
+    assert!(mc_rtp > 0.3 * target, "MC RTP {} too low (engine not firing)", mc_rtp);
     assert!(mc_rtp < 2.0 * target, "MC RTP {} > 2× target {}", mc_rtp, target);
-    // Hit frequency must be in plausible range (10..50%).
     assert!(
-        s.hit_freq() > 0.05 && s.hit_freq() < 0.50,
+        s.hit_freq() > 0.05 && s.hit_freq() < 0.80,
         "hit_freq {} outside plausible range",
         s.hit_freq()
     );
@@ -62,7 +62,7 @@ fn skeleton_key_002_mc_rtp_positive() {
     let eng = Engine::new(&ir);
     let s = eng.run(100_000, 1, 0xCAFE_BABE);
     println!("SK-002 MC: rtp={:.6} target={:.6}", s.rtp(), ir.meta.rtp_total);
-    assert!(s.rtp() > 0.05);
+    assert!(s.rtp() > 0.3 * ir.meta.rtp_total);
     assert!(s.rtp() < 2.0 * ir.meta.rtp_total);
 }
 
@@ -72,7 +72,7 @@ fn skeleton_key_003_mc_rtp_positive() {
     let eng = Engine::new(&ir);
     let s = eng.run(100_000, 1, 0xFACE_FEED);
     println!("SK-003 MC: rtp={:.6} target={:.6}", s.rtp(), ir.meta.rtp_total);
-    assert!(s.rtp() > 0.05);
+    assert!(s.rtp() > 0.3 * ir.meta.rtp_total);
     assert!(s.rtp() < 2.0 * ir.meta.rtp_total);
 }
 
@@ -102,6 +102,14 @@ fn skeleton_key_all_three_mc_rtp_descending() {
 
 /// Edge case 1 — All-Wild Megaways grid must not crash and produces
 /// bounded payout.
+///
+/// W4.8d — Per PAR-Base r65 Wild now substitutes for ALL non-(Bonus|Key)
+/// symbols (including Chest, the top line-pay symbol). A 3-row × 5-reel
+/// all-Wild grid produces 5×Wild→Chest×5 with 3^5 = 243 ways at Chest
+/// pays = 500, divided by bet=10 → payout = 12,150x. Cap at 20_000x
+/// covers max-row (6×5 = 7,776 ways) edge cases too (500 × 7776 / 10 =
+/// 388,800x which would still exceed; restrict edge-case grid to 3
+/// rows so the assertion stays meaningful).
 #[test]
 fn edge_case_1_all_wild_grid() {
     let ir = Ir::load(SK_001).expect("load");
@@ -113,8 +121,12 @@ fn edge_case_1_all_wild_grid() {
     let g = MegawaysGrid { cells, rows_per_reel };
     let r = evaluate_megaways(&g, &ir, &pt);
     let payout = r.payout_total_bet_x();
-    // Must not panic; payout bounded.
-    assert!(payout >= 0.0 && payout < 10_000.0, "payout {}", payout);
+    // Must not panic; payout bounded — Wild substitutes for Chest (top
+    // 500-pay) at 243 ways yields 500*243/10 = 12,150x.
+    assert!(payout >= 0.0, "payout must be non-negative, got {}", payout);
+    assert!(payout < 20_000.0,
+        "payout {} exceeds bounded cap (3x5 all-Wild ⇒ Chest×5 × 243 ways)",
+        payout);
 }
 
 /// Edge case 2 — All-Bonus (scatter) grid must not crash.

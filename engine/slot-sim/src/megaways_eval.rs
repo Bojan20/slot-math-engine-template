@@ -22,7 +22,7 @@
 //! have a different `row_count` per spin.
 
 use crate::evaluate::CompiledPaytable;
-use crate::ir::{Ir, SymbolRole, Topology};
+use crate::ir::{Feature, Ir, MysteryTarget, SymbolRole, Topology};
 use crate::reels::CompiledReelSet;
 use crate::rng::Prng;
 use std::collections::HashMap;
@@ -142,6 +142,85 @@ impl MegawaysGrid {
             .iter()
             .map(|reel| reel.iter().filter(|c| *c == sym).count() as u32)
             .sum()
+    }
+
+    /// W4.8d — IGT Skeleton Key Mystery Symbol transform.
+    ///
+    /// Walks every `Feature::MysteryTransform` in the IR. For each
+    /// trigger symbol (typically "Mystery") that appears at least once
+    /// on the grid, samples ONE target symbol from the active reel set's
+    /// distribution and replaces every Mystery cell with that target.
+    ///
+    /// `active_set` is the reel-set ID picked for this spin (matches
+    /// `CompiledReelSet::set`). When the distribution is missing for the
+    /// active set we fall back to set "1" (defensive — should not happen
+    /// for IGT Skeleton Key which publishes 8 BG + 6 FS Mystery sets).
+    ///
+    /// `in_fs` chooses between `per_set_distributions` (false → BG) and
+    /// `fs_per_set_distributions` (true → FS); the FS table falls back
+    /// to BG when empty.
+    pub fn apply_mystery_transform(
+        &mut self,
+        ir: &Ir,
+        active_set: i64,
+        in_fs: bool,
+        rng: &mut Prng,
+    ) {
+        for f in &ir.features {
+            let Feature::MysteryTransform {
+                trigger_symbol,
+                per_set_distributions,
+                fs_per_set_distributions,
+            } = f
+            else {
+                continue;
+            };
+            if self.count_on_grid(trigger_symbol) == 0 {
+                continue;
+            }
+            // Pick FS or BG table; fall back BG when FS empty.
+            let table = if in_fs && !fs_per_set_distributions.is_empty() {
+                fs_per_set_distributions
+            } else {
+                per_set_distributions
+            };
+            let key = active_set.to_string();
+            let dist: &Vec<MysteryTarget> = match table.get(&key) {
+                Some(v) if !v.is_empty() => v,
+                _ => {
+                    // Defensive: fall back to set "1" or first available.
+                    match table.get("1") {
+                        Some(v) if !v.is_empty() => v,
+                        _ => match table.values().next() {
+                            Some(v) if !v.is_empty() => v,
+                            _ => continue,
+                        },
+                    }
+                }
+            };
+            let total: i64 = dist.iter().map(|t| t.weight).sum();
+            if total <= 0 {
+                continue;
+            }
+            let pick = rng.gen_range_i64(total);
+            let mut acc: i64 = 0;
+            let mut target: &str = &dist[0].symbol;
+            for t in dist {
+                acc += t.weight;
+                if pick < acc {
+                    target = &t.symbol;
+                    break;
+                }
+            }
+            // Replace ALL trigger cells with the chosen target.
+            for reel in self.cells.iter_mut() {
+                for cell in reel.iter_mut() {
+                    if cell == trigger_symbol {
+                        *cell = target.to_string();
+                    }
+                }
+            }
+        }
     }
 }
 

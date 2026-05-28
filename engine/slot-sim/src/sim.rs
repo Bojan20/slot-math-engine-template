@@ -138,7 +138,11 @@ impl<'a> Engine<'a> {
         let mut cap_logged = false;
         for _ in 0..n_spins {
             let rs = self.base_picker.pick(rng);
-            let grid = MegawaysGrid::spin(self.ir, rs, rng);
+            let mut grid = MegawaysGrid::spin(self.ir, rs, rng);
+            // W4.8d — Apply Mystery Symbol transform BEFORE payout
+            // evaluation (PAR-Base r1004: Mystery → single chosen
+            // symbol per spin for the active reel set).
+            grid.apply_mystery_transform(self.ir, rs.set, false, rng);
             let spin = evaluate_megaways(&grid, self.ir, &self.pt);
             let mut spin_x = spin.payout_total_bet_x();
             s.base_x += spin_x;
@@ -206,7 +210,9 @@ impl<'a> Engine<'a> {
             remaining -= 1;
             total_executed += 1;
             let rs = picker.pick(rng);
-            let grid = MegawaysGrid::spin(self.ir, rs, rng);
+            let mut grid = MegawaysGrid::spin(self.ir, rs, rng);
+            // W4.8d — Mystery transform inside FS spins as well.
+            grid.apply_mystery_transform(self.ir, rs.set, true, rng);
             let spin = evaluate_megaways(&grid, self.ir, fs_pt);
             fs_total_x += spin.payout_total_bet_x();
             // Retrigger: ≥ trig_min Bonus on FS grid.

@@ -303,6 +303,27 @@ pub enum Feature {
         prob_fs: f64,
         award_coins: i64,
     },
+    /// W4.8d — IGT Skeleton Key Mystery Symbol: when a Mystery cell
+    /// lands on the grid, ONE target symbol is sampled from the active
+    /// reel set's distribution and ALL Mystery cells on the grid are
+    /// replaced with that target (PAR-Base row 1004 + 1010/1025
+    /// distribution blocks).
+    MysteryTransform {
+        trigger_symbol: String,
+        /// Per-base-reel-set target distribution keyed by stringified
+        /// set id (matches `ReelSetWeight.set`).
+        per_set_distributions: BTreeMap<String, Vec<MysteryTarget>>,
+        /// Per-FS-reel-set target distribution (optional; falls back to
+        /// `per_set_distributions` when missing).
+        #[serde(default)]
+        fs_per_set_distributions: BTreeMap<String, Vec<MysteryTarget>>,
+    },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct MysteryTarget {
+    pub symbol: String,
+    pub weight: i64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

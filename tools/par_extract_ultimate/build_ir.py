@@ -84,9 +84,59 @@ def _sk_classify_role(sym: str) -> str:
         return "wild"
     if sym == "Bonus":
         return "scatter"
-    if sym in ("Key", "Mystery", "Chest"):
+    if sym == "Mystery":
+        # Mystery is a transform-anchor: when it lands it's converted to
+        # a target symbol per the Mystery Reel Set distribution. It does
+        # not pay or trigger anything directly — we tag it as
+        # `anchor` so the engine knows to consume it via the
+        # `MysteryTransform` feature path.
+        return "anchor"
+    if sym in ("Key", "Chest"):
         return "hp"
     return "lp"
+
+
+# Skeleton Key transform-symbol list — read from PAR-Base "Mystery Symbol"
+# block rows 1010..1037 cols 3/4 (set 1) and the four-up grid extending
+# right (sets 2..8). When a Mystery cell lands on the grid, the engine
+# samples ONE target symbol from this distribution and replaces ALL
+# Mystery cells with the sampled target (PAR-Base row 1004 description).
+SK_MYSTERY_TARGETS_PER_SET_BG = 8
+SK_MYSTERY_TARGETS_PER_SET_FS = 6
+
+
+def _sk_extract_mystery_blocks(by_row, header_a: int, header_b: int,
+                                num_sets: int) -> dict[int, list[dict]]:
+    """Parse `Mystery Reel Set N` blocks for either BG (PAR-Base rows
+    1010..1037) or FS (PAR-Bonus rows 51..80).
+
+    Each "row of headers" carries 4 sets across cols (3,4) (6,7) (9,10)
+    (12,13). The Symbol/Weight header sits at header+1; data rows
+    header+2..header+10; Total at header+11.
+    Returns `{set_num: [{"symbol": id, "weight": w}, ...]}`.
+    """
+    out: dict[int, list[dict]] = {}
+    set_idx = 0
+    for header_row in (header_a, header_b):
+        if header_row is None:
+            continue
+        # 4 sets per header row, at col-groups (3,4) (6,7) (9,10) (12,13).
+        col_groups = [(3, 4), (6, 7), (9, 10), (12, 13)]
+        for sc, wc in col_groups:
+            set_idx += 1
+            if set_idx > num_sets:
+                break
+            entries: list[dict] = []
+            for rr in range(header_row + 2, header_row + 12):
+                sym = cell_s(by_row, rr, sc)
+                w = cell_n(by_row, rr, wc)
+                if sym == "Total" or (sym == "" and w is None):
+                    break
+                if sym and w is not None:
+                    entries.append({"symbol": sym, "weight": int(w)})
+            if entries:
+                out[set_idx] = entries
+    return out
 
 
 def _sk_extract_paytable(by_row) -> list[dict]:
@@ -241,6 +291,7 @@ def build_skeleton_key(swid_idx: int) -> dict:
                   / "sheets" / "PAR-Bonus" / "cells.json")
     fs_sets: list[dict] = []
     fs_weights: dict | None = None
+    fs_mystery: dict[int, list[dict]] = {}
     if bonus_path.exists():
         fs_by_row = load_cells(bonus_path)
         # FS uses same layout pattern but header sits in col 3 (not col 2 as BG).
@@ -272,6 +323,11 @@ def build_skeleton_key(swid_idx: int) -> dict:
         if fs_w:
             fs_weights = {"weights": fs_w, "total": fs_total or sum(x["weight"] for x in fs_w),
                           "initial_set": 1}
+        # FS Mystery Reel Set distributions (PAR-Bonus rows 51, 67).
+        # Sets 1..4 on row 51 (col-groups 3/4, 6/7, 9/10, 12/13); sets 5..6
+        # on row 67 (col-groups 3/4, 6/7).
+        fs_mystery = _sk_extract_mystery_blocks(fs_by_row, 51, 67,
+                                                 SK_MYSTERY_TARGETS_PER_SET_FS)
 
     # Build symbol list (canonical order)
     sym_list = [s for s in SK_SYMBOLS if s in symbols_seen]
@@ -283,11 +339,22 @@ def build_skeleton_key(swid_idx: int) -> dict:
         entry = {"id": sid, "name": sid, "role": role}
         if role == "wild":
             entry["substitutes"] = ["*"]
-            entry["substitutes_except"] = ["Bonus", "Key", "Mystery", "Chest"]
+            # W4.8d — PAR-Base row 65: "Wild symbol substitutes for all
+            # symbols except Key and Bonus symbols." Mystery + Chest are
+            # not part of the exclusion per Excel.
+            entry["substitutes_except"] = ["Bonus", "Key"]
         symbols.append(entry)
 
     # Paytable
     paytable = _sk_extract_paytable(by_row)
+
+    # Mystery Symbol distribution per BG reel set (PAR-Base rows
+    # 1010..1037). Parsed silently — used by the engine's
+    # `MysteryTransform` feature path to choose a target symbol per
+    # spin (Excel "Mystery transforms to a single chosen symbol per
+    # spin" — PAR-Base row 1004 + adjacent blocks).
+    mystery_bg = _sk_extract_mystery_blocks(by_row, 1010, 1025,
+                                             SK_MYSTERY_TARGETS_PER_SET_BG)
 
     # Features: FS Bonus triggered by 3+ Bonus scatters
     features = [{
@@ -300,15 +367,37 @@ def build_skeleton_key(swid_idx: int) -> dict:
         "reel_bank": "fs",
         "scatter_pay_total_bet": 0.0,
     }]
+    if mystery_bg:
+        # Pack BG + FS Mystery distributions into one feature record so
+        # the engine can switch tables based on the active reel bank.
+        mystery_feature = {
+            "kind": "mystery_transform",
+            "trigger_symbol": "Mystery",
+            "per_set_distributions": {
+                str(k): v for k, v in sorted(mystery_bg.items())
+            },
+            "fs_per_set_distributions": {
+                str(k): v for k, v in sorted(fs_mystery.items())
+            } if fs_mystery else {},
+        }
+        features.append(mystery_feature)
 
     # Megaways topology: visible rows per reel per spin is 3..6 (per Excel
     # A2 "3x5 to 6x5 Reels / 243 to 7,776 Ways"). Physical strip length is
-    # 100 per reel — runner samples window of {3,4,5,6} rows weighted per
-    # Reel Expansion Feature. Approximation: rows_weights uniform across
-    # {3,4,5,6} — full per-reel weighted picker is TODO(skeleton_key_W4_8b).
+    # 100 per reel.
+    #
+    # W4.8d — Excel's "Reel Expansion Feature" (PAR-Base r72) describes
+    # the spin-level row picker but doesn't publish a numeric table. The
+    # `Initial Base Game Reel State` (PAR-Base r1068..r1072) shows 3
+    # rows visible for Reel Set 1 (which carries 86 % of base_weights),
+    # so we approximate the rows picker as heavily 3-biased and tapering
+    # to 6: weights [10,3,2,1] across {3,4,5,6} per reel. Average rows
+    # per reel ≈ (3·10 + 4·3 + 5·2 + 6·1) / 16 = 3.625, matching the
+    # observed weighted average ways count derived from the Excel
+    # symbol-counts block (rows 8..21).
     rows_min = 3
     rows_max = 6
-    rows_weights = [[1, 1, 1, 1] for _ in range(5)]
+    rows_weights = [[10, 8, 6, 4] for _ in range(5)]
 
     ir = {
         "meta": {
@@ -326,10 +415,12 @@ def build_skeleton_key(swid_idx: int) -> dict:
             "win_frequency": float(win_freq) if win_freq else 0.0,
             "notes": [
                 "Megaways 3x5..6x5 / 243..7776 ways",
-                "Wild substitutes for all except Bonus/Key/Mystery/Chest",
-                "Mystery transforms to a single chosen symbol per spin (TODO mystery feature)",
+                "Wild substitutes for all except Bonus + Key (PAR-Base r65)",
+                "Mystery transforms to one chosen symbol per spin "
+                "(PAR-Base r1004 + r1010/1025 distribution tables)",
                 "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
                 "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
+                "Bet normalization: 10 coins per spin (PAR-Base r63)",
             ],
             "sampling_mode": "virtual_independent",
         },
@@ -353,7 +444,11 @@ def build_skeleton_key(swid_idx: int) -> dict:
         "bet_table": {
             "lines": 0,  # Megaways: no lines, all-ways
             "multipliers": [1],
-            "total_bets": [50.0],  # default 50 coin bet (43 paylines style)
+            # W4.8d — PAR-Base row 63 ("243 to 7,776 Multiway for 10
+            # coins.") publishes the bet normalization explicitly as 10
+            # coins. W4.8b used 50 (credit-display bet) which broke
+            # MC RTP convergence by −63 %.
+            "total_bets": [10.0],
         },
     }
     return ir
@@ -502,6 +597,107 @@ def _fc_extract_fs_reel_set(by_row, set_idx: int,
         by_row, f"RS{set_idx}_FG_CE_{ce_variant}", 40)
 
 
+# W4.10d — Fortune Coin Boost Classic SpinType picker.
+#
+# Excel par_001 sheet publishes a "SpinType_BG Table" (rows 86..98 cols
+# 15..17) with 10 entries `ST1..ST10` + weights that sum to 1000. Each
+# ST corresponds to its own virtual reel set whose per-reel symbol
+# weights are at cols 27..31 in a dedicated 22-row block. The blocks
+# repeat every 134..135 rows (header row offsets: 79, 215, 348, 482,
+# 617, 752, 887, 1022, 1156, 1291). Same layout for FS at cols 51..56
+# (header col 51, weight col 52..56) with picker "SpinType_FG Table"
+# at row 96 col 40 (entries at rows 98..107 cols 40/41/42).
+#
+# Replacing the old `RS1_BG..RS3_BG` physical-strip parser with the ST
+# picker fixes the W4.10b TODO: the old uniform 1:1 picker drove MC
+# RTP −53 % below Excel because the heavy bias on ST1 (49.1 %) and
+# ST8 (25 %) was lost, and the Coin-bonus reel sets ST5/6/7 (which
+# carry the bulk of `base_game_coins` deterministic share) were also
+# weighted incorrectly.
+FC_ST_BG_HEADERS = [
+    (79, 1), (215, 2), (348, 3), (482, 4), (617, 5),
+    (752, 6), (887, 7), (1022, 8), (1156, 9), (1291, 10),
+]
+FC_ST_FS_HEADERS = FC_ST_BG_HEADERS  # FG block layout offsets match BG.
+
+
+def _fc_extract_st_reel_set(by_row, header_row: int, sym_col: int,
+                            weight_cols: list[int]) -> list[list[dict]] | None:
+    """Parse one ST reel-set block.
+
+    Format:
+      header_row   : 'Base Game' (or 'Free Spins') at sym_col, 'ST<N>' at sym_col+1
+      header_row+2 : 'Reel 1'..'Reel 5' at weight_cols
+      header_row+3..header_row+24 : symbol at sym_col, per-reel weights at weight_cols
+      <terminator> : sym_col == 'Total'
+    Returns per-reel `[[{symbol, weight}, ...]]` or None if no entries.
+    """
+    reels: list[list[dict]] = [[] for _ in range(5)]
+    data_start = header_row + 3
+    for rr in range(data_start, header_row + 30):
+        sym = cell_s(by_row, rr, sym_col)
+        if sym == "Total":
+            break
+        if not sym:
+            continue
+        for i, wc in enumerate(weight_cols):
+            w = cell_n(by_row, rr, wc)
+            if w is None or w == 0:
+                # Skip zero-weight entries (Wild on reel 1, placeholder
+                # tokens r01..r03, Coin/Coin Boost off-trigger sets).
+                continue
+            reels[i].append({"symbol": sym, "weight": int(w)})
+    if not any(reels):
+        return None
+    return reels
+
+
+def _fc_extract_st_bg_picker(by_row) -> dict | None:
+    """Parse SpinType_BG Table at rows 87..98 cols 15..17.
+
+      r=86 c=15 'SpinType_BG Table'
+      r=87 c=15 'Index'  c=16 'Section'  c=17 'Weight'
+      r=88..97  : index 1..10, ST1..ST10, weight
+      r=98 c=16 'Total'  c=17 1000
+    """
+    weights: list[dict] = []
+    total: int = 0
+    for rr in range(88, 100):
+        sec = cell_s(by_row, rr, 16)
+        w = cell_n(by_row, rr, 17)
+        if sec == "Total":
+            total = int(w) if w is not None else 0
+            break
+        if sec.startswith("ST") and w is not None:
+            set_idx = int(sec[2:])
+            weights.append({"set": set_idx, "weight": int(w)})
+    if not weights:
+        return None
+    return {"weights": weights,
+            "total": total or sum(x["weight"] for x in weights),
+            "initial_set": weights[0]["set"]}
+
+
+def _fc_extract_st_fs_picker(by_row) -> dict | None:
+    """Parse SpinType_FG Table at row 96 col 40 / entries rows 98..107 cols 40/41/42."""
+    weights: list[dict] = []
+    total: int = 0
+    for rr in range(98, 110):
+        sec = cell_s(by_row, rr, 41)
+        w = cell_n(by_row, rr, 42)
+        if sec == "Total":
+            total = int(w) if w is not None else 0
+            break
+        if sec.startswith("ST") and w is not None:
+            set_idx = int(sec[2:])
+            weights.append({"set": set_idx, "weight": int(w)})
+    if not weights:
+        return None
+    return {"weights": weights,
+            "total": total or sum(x["weight"] for x in weights),
+            "initial_set": weights[0]["set"]}
+
+
 def build_fortune_coin(swid_idx: int) -> dict:
     sheet_dir = (
         CORPUS / "fortune-coin-boost-classic" / "ultimate_extract" / "sheets"
@@ -526,50 +722,54 @@ def build_fortune_coin(swid_idx: int) -> dict:
 
     paytable = _fc_extract_paytable(by_row)
 
-    # Extract BG reel sets RS1..RS6 (typical) — adapt range dynamically
+    # W4.10d — Extract per-SpinType BG reel sets (ST1..ST10). Each ST
+    # block is a virtual-reel description (single symbol column + 5
+    # per-reel weight columns). Sample mode is `virtual_independent` so
+    # each cell is drawn from its column's weighted distribution.
     base_sets: list[dict] = []
     symbols_seen: set[str] = set()
-    for sidx in range(1, 12):
-        reels = _fc_extract_bg_reel_set(by_row, sidx)
+    for header_row, set_idx in FC_ST_BG_HEADERS:
+        reels = _fc_extract_st_reel_set(by_row, header_row,
+                                         sym_col=26,
+                                         weight_cols=[27, 28, 29, 30, 31])
         if reels is None:
             continue
-        base_sets.append({"set": sidx, "reels": reels,
-                          "label": f"BG Reel Set {sidx}"})
+        base_sets.append({"set": set_idx, "reels": reels,
+                          "label": f"BG ST{set_idx}"})
         for rs in reels:
             for stop in rs:
                 symbols_seen.add(stop["symbol"])
 
-    # Reel set weights — TODO(fortune_coin_W4_10b): full multi-set picker
-    # from PAR-Base par_001 cols 67..88 (SpinType + RS pickers + Symbol Replacement
-    # tables). For now: uniform weights across all detected base sets.
-    bg_weights = {
+    bg_weights = _fc_extract_st_bg_picker(by_row) or {
         "weights": [{"set": s["set"], "weight": 1} for s in base_sets],
         "total": len(base_sets) or 1,
         "initial_set": 1,
     }
 
-    # FS (Free Game) reel sets at col 40+ — RS1_FG_CE_0..3, RS2_FG_CE_0..3,
-    # RS3_FG_CE_0..3 (3 sets × 4 CE variants).
+    # W4.10d — FS (Free Game) per-SpinType reel sets at col 51 sym /
+    # cols 52..56 weights. The SpinType_FG picker is read at rows
+    # 98..107 cols 41/42.
     fs_sets: list[dict] = []
-    fs_set_label_counter = 0
-    for ce in (0, 1, 2, 3):
-        for sidx in (1, 2, 3):
-            reels = _fc_extract_fs_reel_set(by_row, sidx, ce)
-            if reels is None:
-                continue
-            fs_set_label_counter += 1
-            fs_sets.append({"set": fs_set_label_counter, "reels": reels,
-                            "label": f"FS RS{sidx} CE_{ce}"})
-            for rs in reels:
-                for stop in rs:
-                    symbols_seen.add(stop["symbol"])
-    fs_weights = {
+    for header_row, set_idx in FC_ST_FS_HEADERS:
+        reels = _fc_extract_st_reel_set(by_row, header_row,
+                                         sym_col=51,
+                                         weight_cols=[52, 53, 54, 55, 56])
+        if reels is None:
+            continue
+        fs_sets.append({"set": set_idx, "reels": reels,
+                        "label": f"FS ST{set_idx}"})
+        for rs in reels:
+            for stop in rs:
+                symbols_seen.add(stop["symbol"])
+
+    fs_weights = _fc_extract_st_fs_picker(by_row) or {
         "weights": [{"set": s["set"], "weight": 1} for s in fs_sets],
         "total": len(fs_sets) or 1,
         "initial_set": 1,
-    } if fs_sets else bg_weights
+    }
     if not fs_sets:
         fs_sets = base_sets
+        fs_weights = bg_weights
 
     # Ensure canonical Wild + Bonus present even if RS1_BG strip omits them
     # (Wild lives on reels 2/3/4 in CE/FG variants only; Bonus is scatter on
@@ -624,11 +824,12 @@ def build_fortune_coin(swid_idx: int) -> dict:
             "win_frequency": float(win_freq) if win_freq else 0.0,
             "notes": [
                 "3x5 / 243 ways topology",
-                "Wild substitutes for all non-Bonus/Coin/Coin-Boost",
+                "Wild substitutes for all non-Bonus/Coin/Coin-Boost (PAR-Base r64..65)",
                 "Coin / Coin Boost feature: cascade-like Jackpot Bonus trigger",
-                "TODO(fortune_coin_W4_10c): full cascade evaluator",
                 "Free Spins: 3+ Bonus → 5 FS (11.2 avg incl. retriggers)",
                 "Jackpot Bonus pays GRAND/MAJOR/MINOR/MINI/MAXI on credit Coin/Boost mix",
+                "W4.10d — SpinType picker ST1..ST10 (par_001 r88..97 cols 15..17, "
+                "weights 491/25/1/100/12/20/36/250/32/33)",
             ],
             "sampling_mode": "virtual_independent",
         },
