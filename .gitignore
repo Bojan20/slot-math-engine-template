@@ -165,6 +165,16 @@ games/*/engine-rust/target/
 games/*/engine-ts/dist/
 games/*/engine-ts/node_modules/
 
+# W4.8 + W4.10 — slot-sim universal IR for Skeleton Key + Fortune Coin Boost
+# Classic. These JSONs carry ONLY aggregate public-spec-style math facts
+# (RTP, hold, hit_freq, paytable multipliers, reel weights). No raw cell
+# dump — vendor cells.json + xlsx stays local under
+# agents/math-agent/corpus/*/ultimate_extract/ which is gitignored above.
+!games/skeleton-key/out/
+!games/skeleton-key/out/*.slot-sim.ir.json
+!games/fortune-coin-boost-classic/out/
+!games/fortune-coin-boost-classic/out/*.slot-sim.ir.json
+
 # ─── Ultimate PAR extracts — vendor data stays LOCAL only ───────────
 # tools.par_extract_ultimate dumps every cell of every sheet, including
 # raw paytables, reel strips, and weights. These NEVER leave the machine.

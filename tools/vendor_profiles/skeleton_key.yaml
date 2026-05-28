@@ -1,0 +1,151 @@
+# Skeleton Key (IGT 200-1517-001/002/003) — Megaways multiway profile.
+#
+# Calibrated on:
+#   agents/math-agent/corpus/skeleton-key/ultimate_extract/sheets/
+#     PAR-Base-001/002/003 + PAR-Bonus
+#
+# Topology: 3x5 to 6x5 Reels / 243 to 7,776 Ways (Megaways family).
+# Reel sets: 8 base game sets + 6 FS / Special sets in PAR-Bonus tab.
+# Features: Free Spins (3/4/5 Bonus → 10/20/30 FS), Mystery transform,
+# Reel Expansion (per-spin row count via virtual sampling).
+#
+# This profile drives `tools/par_extract_ultimate/build_ir.py` for the
+# Megaways → universal slot-sim IR conversion. The legacy
+# `tools/parse_par` TSV pipeline does NOT cover this game (cells.json
+# native + variable rows per reel + multi-reel-set picker).
+
+vendor: igt
+display_name: International Game Technology (Skeleton Key)
+profile_version: 1
+game_name: Skeleton Key
+game_id: skeleton-key
+
+topology_kind: megaways
+family: multiways
+
+sheets:
+  main_par: PAR-Base-001
+  bonus: PAR-Bonus
+
+dimensions:
+  reels: 5
+  rows_min: 3
+  rows_max: 6
+  paylines: ways  # variable 243..7776
+
+# 1-indexed cell coordinates (cells.json native). All values stay local —
+# only RTP / hit_freq / hold publish in the universal IR JSON.
+meta:
+  swid:     { row: 3, col: 5 }
+  hold:     { row: 1, col: 15 }
+  hit_freq: { row: 2, col: 15 }
+  win_freq: { row: 3, col: 15 }
+
+rtp_breakdown:
+  base_game:  { row: 64, col: 13 }
+  free_spins: { row: 65, col: 13 }
+  total:      { row: 66, col: 13 }
+
+paytable:
+  row_range: [27, 61]      # 27..57 line wins, 58..60 scattered Bonus
+  combo_cols: [3, 8]       # cols 3..7 = 5 reel symbols
+  pays_col: 8
+  pph_col: 9
+  rtp_pct_col: 10
+  marker_col: 2            # '*' marks scatter row
+
+symbol_counts:
+  row_range: [8, 22]
+  name_col: 3
+  reel_col_range: [4, 9]
+
+reel_sets:
+  base:
+    layout: multi_block_megaways
+    header_label: "Base Game Reel Set:"
+    header_col: 2
+    set_num_col: 5
+    data_offset: 4
+    reel_count: 5
+    # Cols [3,4] [5,6] [7,8] [9,10] [11,12] = (sym, weight) per reel.
+    symbol_col_start: 3
+    stride: 2
+    index_col: 2
+    total_label: "Total"
+    max_stops: 200
+    # Megaways-specific: each set has different per-reel lengths (3..6 stops
+    # window per spin from a 100-stop physical strip).
+    sets_count: 8
+
+  fs:
+    sheet: PAR-Bonus
+    layout: multi_block_megaways
+    header_label: "Free Spins Reel Set:"
+    header_col: 2
+    set_num_col: 5
+    data_offset: 4
+    reel_count: 5
+    symbol_col_start: 3
+    stride: 2
+    index_col: 2
+    total_label: "Total"
+    max_stops: 200
+
+reel_set_weights:
+  base:
+    row_range: [83, 92]
+    set_col: 3
+    weight_col: 4
+    total_row: 91
+    total_col: 4
+    initial_set: { row: 83, col: 3 }
+  fs:
+    sheet: PAR-Bonus
+    row_range: [34, 41]
+    set_col: 3
+    weight_col: 4
+    total_row: 40
+    total_col: 4
+
+features:
+  - type: free_spins
+    config:
+      trigger_symbol: Bonus
+      trigger_count_min: 3
+      bonus_sheet: PAR-Bonus
+      payouts_header_row: 26
+      # PAR-Bonus rows 27..29 → "10 Free Spins" / "20" / "30" Avg Pay col 4
+      initial_spins_by_count:
+        3: 10
+        4: 20
+        5: 30
+  - type: mystery_transform
+    config:
+      symbol: Mystery
+      transform_pool: [Vase, PurpleGem, RedGem, GreenGem, Ace, King, Queen, Jack, Wild]
+      # Per-reel mystery weight tables in PAR-Bonus rows 51..73 (FS Mystery Reel Set 1..6)
+      mystery_tables_sheet: PAR-Bonus
+      mystery_tables_row_range: [52, 75]
+  - type: reel_expansion
+    config:
+      # 6 reel-row counts (3..6) chosen per reel per spin to determine ways.
+      per_reel_rows_min: 3
+      per_reel_rows_max: 6
+
+symbol_roles:
+  Wild: wild
+  Bonus: scatter
+  Key: hp
+  Mystery: hp
+  Chest: hp
+  Book: lp
+  Vase: lp
+  PurpleGem: lp
+  RedGem: lp
+  GreenGem: lp
+  Ace: lp
+  King: lp
+  Queen: lp
+  Jack: lp
+
+wild_substitutes_except: [Bonus, Key, Mystery, Chest]

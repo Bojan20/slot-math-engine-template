@@ -1,0 +1,159 @@
+# Fortune Coin Boost Classic (IGT 200-1581-001..004) — 3x5 / 243 ways +
+# Coin / Coin Boost Jackpot Bonus feature (cascade-like trigger).
+#
+# Calibrated on:
+#   agents/math-agent/corpus/fortune-coin-boost-classic/ultimate_extract/
+#     sheets/par_001/002/003/004
+#   workbook defined_names: 92 (BGREEL[1..5], FGREEL[1..5], MoneyTable, ...)
+#   total formulas: 8,958 (data_only=True cached values used)
+#
+# Topology: 3x5 Reel / 243 Ways. Wild reels 2/3/4 (per Excel notes R64).
+# Features:
+#   - Free Spins: 3+ Bonus → 5 FS (avg 11.2 incl retriggers)
+#   - Coin / Coin Boost Jackpot Bonus (GRAND/MAXI/MAJOR/MINOR/MINI tiers)
+#   - Symbol Replacement (per-row reels: r02→Lucky Kirin, r03→Coin/Boost mix)
+#
+# Drives `tools/par_extract_ultimate/build_ir.py` (cells.json → universal IR).
+# Legacy `tools/parse_par` TSV pipeline does NOT cover this game (8K formula
+# graph + 92 named ranges + cascade-style Jackpot Bonus need dedicated code).
+
+vendor: igt
+display_name: International Game Technology (Fortune Coin Boost)
+profile_version: 1
+game_name: Fortune Coin Boost Classic
+game_id: fortune-coin-boost-classic
+
+topology_kind: rectangular
+family: ways
+
+sheets:
+  main_par: par_001
+  # All 4 SWIDs follow identical layout (par_001..par_004).
+
+dimensions:
+  reels: 5
+  rows: 3
+  paylines: ways           # 243 ways
+  ways: 243
+
+meta:
+  swid:     { row: 3, col: 4 }
+  hold:     { row: 1, col: 11 }
+  hit_freq: { row: 2, col: 11 }
+  win_freq: { row: 3, col: 11 }
+
+rtp_breakdown:
+  base_game_multiway: { row: 54, col: 11 }
+  base_game_scatter:  { row: 55, col: 11 }
+  base_game_coins:    { row: 56, col: 11 }
+  base_game_jackpot:  { row: 57, col: 11 }
+  free_spins_multiway: { row: 58, col: 11 }
+  free_spins_scatter:  { row: 59, col: 11 }
+  free_spins_coins:    { row: 60, col: 11 }
+  free_spins_jackpot:  { row: 61, col: 11 }
+  total:              { row: 62, col: 11 }
+
+paytable:
+  row_range: [9, 50]       # rows 9..45 line wins, 47..49 scatter Bonus
+  combo_cols: [3, 8]       # cols 3..7 = 5 reels
+  pays_col: 8
+  pph_col: 10
+  rtp_pct_col: 11
+  marker_col: 0            # no marker col; scatter detected via "Any N" prefix
+
+reel_sets:
+  base:
+    layout: multi_block_ce_variant
+    # Headers 'RS1_BG' / 'RS2_BG' / 'RS3_BG' in col 15.
+    header_prefix: "RS"
+    header_suffix: "_BG"
+    header_col: 15
+    data_offset: 3
+    reel_count: 5
+    # Cols 16..20 = Reel 1..5 symbol, col 21 = shared weight.
+    symbol_col_start: 16
+    weight_col: 21
+    index_col: 15
+    total_label: "Total"
+    max_stops: 150
+    sets_count: 3
+
+  fs:
+    layout: multi_block_ce_variant
+    # Headers 'RS1_FG_CE_0' .. 'RS3_FG_CE_3' (3 sets × 4 CE variants = 12)
+    header_prefix: "RS"
+    header_suffix_pattern: "_FG_CE_"
+    header_col: 40
+    data_offset: 3
+    reel_count: 5
+    symbol_col_start: 41
+    weight_col: 46
+    index_col: 40
+    total_label: "Total"
+    max_stops: 150
+    sets_count: 12  # 3 × 4 CE variants
+    ce_variants: 4
+
+# Multi-reel-set picker: cols 67..88 carry SpinType_BG / RS picker / Jackpot
+# index / coin denominations tables. TODO(fortune_coin_W4_10b): formal extractor.
+multi_set_picker:
+  spintype_bg_label: "SpinType_BG Table"
+  spintype_bg_col: 15
+  # First weight column in the picker block is implementation-specific (varies
+  # per SWID); skipped by current build_ir.py (uniform weights used).
+
+features:
+  - type: free_spins
+    config:
+      trigger_symbol: Bonus
+      trigger_count_min: 3
+      initial_spins_by_count:
+        3: 5
+        4: 5    # 4 Bonus on FS retrigger gives same 5 FS per spec
+        5: 5
+      avg_total_spins: 11.2  # Ave # Free Spins per par_001 row 130 col 8
+
+  - type: coin_boost_jackpot_bonus
+    config:
+      # Coin / Coin Boost = "cash" symbols that fill the grid in 3-cell
+      # group (cascade-like). When grid contains all 15 cells = GRAND.
+      coin_symbol: Coin
+      boost_symbol: Coin Boost
+      jackpot_tiers:
+        GRAND: 100000
+        MAXI:  10000
+        MAJOR: 2500
+        MINOR: 1000
+        MINI:  500
+      # TODO(fortune_coin_W4_10c): full cascade evaluator with per-cell
+      # Boost multiplier resolution + initial RS3_BG seed grid + remove-level
+      # advancement (RL / N / E states per row 41+ cols 86+).
+
+  - type: symbol_replacement
+    config:
+      # Symbol Replacement tables in par_001 cols 96..102 row 42+
+      # r02 → 'Lucky Kirin' (col 98 row 45)
+      # r03 → mixed Coin/Coin Boost on reels 1..5 (col 98..102 row 48)
+      replacement_table_row_range: [42, 60]
+      replacement_table_col_range: [96, 102]
+
+symbol_roles:
+  Wild: wild
+  Bonus: scatter
+  Coin: cash
+  "Coin Boost": cash
+  Emperor: hp
+  "Lucky Kirin": hp
+  "Lucky Turtle": hp
+  "Lucky Fish": hp
+  "Dog Urn": hp
+  "Dragon Bell": hp
+  Ace: lp
+  King: lp
+  Queen: lp
+  Jack: lp
+  Ten: lp
+  Nine: lp
+
+wild_substitutes_except: [Bonus, Coin, "Coin Boost"]
+wild_reels: [2, 3, 4]    # per par_001 R64 "Wild appears on reels 2/3/4"
