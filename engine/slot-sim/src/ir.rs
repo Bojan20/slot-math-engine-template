@@ -401,6 +401,29 @@ pub struct Meta {
     ///   * `None` — defaults to `physical_strip`.
     #[serde(default)]
     pub sampling_mode: Option<String>,
+    /// W4.8e / W4.10e — RTP source override.
+    ///
+    /// Some IGT PAR sheets (Skeleton Key Megaways, Fortune Coin Boost
+    /// Classic) publish the per-spin RTP contribution of cascade /
+    /// Reel-Expansion features as fixed breakdown shares
+    /// (`base_game_multiway`, `base_game`, `free_spins_multiway`, …)
+    /// without exposing the underlying step-by-step generative mechanic
+    /// in the sheet itself. The breakdown values are the regulator
+    /// ground truth.
+    ///
+    /// When this field is `Some("breakdown")` the engine treats those
+    /// breakdown shares as the deterministic per-spin / per-FS-trigger
+    /// payout, suppressing the live MC multiway pay-out (which would
+    /// otherwise undershoot or overshoot the published RTP because
+    /// cascade / symbol-replacement detail is missing from the PAR
+    /// sheet). The grid is still spun stochastically so hit / win
+    /// frequencies stay realistic.
+    ///
+    /// When `None` (default) the engine continues to use the live MC
+    /// multiway pay-out plus any deterministic adders wired in
+    /// `run_ways_cascade` (Coin / Boost jackpot share).
+    #[serde(default)]
+    pub rtp_source: Option<String>,
 }
 
 // ───────────────────────────── ROOT IR ─────────────────────────────

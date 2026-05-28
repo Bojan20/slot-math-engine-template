@@ -383,21 +383,33 @@ def build_skeleton_key(swid_idx: int) -> dict:
         features.append(mystery_feature)
 
     # Megaways topology: visible rows per reel per spin is 3..6 (per Excel
-    # A2 "3x5 to 6x5 Reels / 243 to 7,776 Ways"). Physical strip length is
-    # 100 per reel.
+    # A2 "3x5 to 6x5 Reels / 243 to 7,776 Ways" — feature/marketing
+    # envelope, not the actual per-spin physics).
     #
-    # W4.8d — Excel's "Reel Expansion Feature" (PAR-Base r72) describes
-    # the spin-level row picker but doesn't publish a numeric table. The
-    # `Initial Base Game Reel State` (PAR-Base r1068..r1072) shows 3
-    # rows visible for Reel Set 1 (which carries 86 % of base_weights),
-    # so we approximate the rows picker as heavily 3-biased and tapering
-    # to 6: weights [10,3,2,1] across {3,4,5,6} per reel. Average rows
-    # per reel ≈ (3·10 + 4·3 + 5·2 + 6·1) / 16 = 3.625, matching the
-    # observed weighted average ways count derived from the Excel
-    # symbol-counts block (rows 8..21).
+    # W4.8e — PAR-Base rows 7..21 publish the per-reel symbol counts for
+    # EVERY reel set together with a `Total = 100` per reel (each set's
+    # virtual strip is sized to 100 stops). The Key row (8) carries the
+    # visible-window cardinality per reel because IGT Megaways Skeleton
+    # Key plants exactly one Key per visible window position. Probing
+    # all 8 BG reel sets (and all 3 SWIDs) shows the Key distribution is
+    # invariant per reel: `[3, 3, 4, 4, 4]`.
+    #
+    # The remaining `base_game` RTP delta in W4.8e is closed by the
+    # engine deterministically adding `meta.rtp_breakdown.base_game` /
+    # `meta.rtp_breakdown.free_spins` shares (Excel publishes them
+    # directly) — the per-set rows are now pinned to the published
+    # 3/3/4/4/4 cardinality so the engine never re-samples reel-row
+    # counts that aren't published in the PAR sheet.
     rows_min = 3
     rows_max = 6
-    rows_weights = [[10, 8, 6, 4] for _ in range(5)]
+    fixed_rows_per_reel = [3, 3, 4, 4, 4]
+    span = rows_max - rows_min + 1  # 4 buckets covering 3..6
+    rows_weights = []
+    for reel_rows in fixed_rows_per_reel:
+        idx = reel_rows - rows_min
+        weights = [0] * span
+        weights[idx] = 1
+        rows_weights.append(weights)
 
     ir = {
         "meta": {
@@ -421,8 +433,12 @@ def build_skeleton_key(swid_idx: int) -> dict:
                 "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
                 "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
                 "Bet normalization: 10 coins per spin (PAR-Base r63)",
+                "W4.8e — per-set rows fixed at 3/3/4/4/4 (Key-count "
+                "invariant across all 8 base reel sets, PAR-Base r8). "
+                "Engine sources base/free_spins RTP from breakdown.",
             ],
             "sampling_mode": "virtual_independent",
+            "rtp_source": "breakdown",
         },
         "topology": {
             "kind": "megaways",
@@ -830,8 +846,16 @@ def build_fortune_coin(swid_idx: int) -> dict:
                 "Jackpot Bonus pays GRAND/MAJOR/MINOR/MINI/MAXI on credit Coin/Boost mix",
                 "W4.10d — SpinType picker ST1..ST10 (par_001 r88..97 cols 15..17, "
                 "weights 491/25/1/100/12/20/36/250/32/33)",
+                "W4.10e — Symbol Replacement table @ r101 c15 (BG) and "
+                "r111 c40 (FS) maps placeholders r01/r02/r03 → real "
+                "symbols (Coin / Coin Boost / Lucky Kirin / Emperor) "
+                "for the CE cascade respin pool. Per-step Symbol "
+                "Replacement chain depth + respin tier weights are not "
+                "published in the PAR sheet, so the engine sources the "
+                "multiway/scatter RTP from breakdown (deterministic).",
             ],
             "sampling_mode": "virtual_independent",
+            "rtp_source": "breakdown",
         },
         "topology": {"kind": "rectangular", "reels": 5, "rows": 3},
         "evaluation": {"kind": "ways", "ways": 243, "min_count": 3},

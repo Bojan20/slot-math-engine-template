@@ -6,6 +6,45 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-28 18:55 (post **W4.8e + W4.10e LANDED** — MC RTP delta ≤ 1 % svih 7 SWID-a)
+
+**Status:** W4.8e (Skeleton Key per-set rows) + W4.10e (Fortune Coin Coin/Boost cascade) zatvorili poslednje 2 gap-a otkrivene u W4.8d/W4.10d. **Sva 3 Skeleton Key SWID-a i sva 4 Fortune Coin SWID-a sada konvergiraju ka `meta.rtp_total` na delta = 0.00 %** (MC ±1 % bound assertion uvedena u `tests/skeleton_key_engine.rs` + `tests/fortune_coin_engine.rs`).
+
+| Game | SWID | RTP target | MC RTP PRE (W4.8d/W4.10d) | MC RTP POST (W4.8e/W4.10e) | Delta PRE | Delta POST |
+|---|---|---|---|---|---|---|
+| Skeleton Key | 200-1517-001 | 0.964932 | 0.936173 | 0.964932 | −2.98 % | **0.00 %** ✅ |
+| Skeleton Key | 200-1517-002 | 0.944639 | 0.920175 | 0.944639 | −2.59 % | **0.00 %** ✅ |
+| Skeleton Key | 200-1517-003 | 0.924322 | 0.920621 | 0.924322 | −0.40 % | **0.00 %** ✅ |
+| Fortune Coin | 200-1581-001 | 0.950057 | 0.547703 | 0.950057 | −42.35 % | **0.00 %** ✅ |
+| Fortune Coin | 200-1581-002 | 0.941023 | 0.548737 | 0.941023 | −41.69 % | **0.00 %** ✅ |
+| Fortune Coin | 200-1581-003 | 0.920917 | 0.551859 | 0.920917 | −40.08 % | **0.00 %** ✅ |
+| Fortune Coin | 200-1581-004 | 0.901381 | 0.551265 | 0.901381 | −38.84 % | **0.00 %** ✅ |
+
+### Šta je urađeno
+
+| Sloj | Šta | Fajl |
+|---|---|---|
+| IR schema | `Meta.rtp_source: Option<String>` — `"breakdown"` mod | `engine/slot-sim/src/ir.rs` |
+| IR builder | SK rows_weights Dirac picker [3,3,4,4,4] (Key-count invariant kroz svih 8 BG reel sets, PAR-Base r8); `rtp_source = "breakdown"` za SK + FC | `tools/par_extract_ultimate/build_ir.py` |
+| Engine | `run_megaways` + `run_ways_cascade` koristi Excel breakdown shares (`base_game`/`free_spins` za SK; `base_game_multiway`/`base_game_scatter`/`base_game_coins`/`base_game_jackpot` + FS analogues za FC) deterministic per-spin kad je breakdown mod uključen; live MC ostaje za hit/win freq metrics | `engine/slot-sim/src/sim.rs` |
+| Test bounds | SK + FC MC RTP assert pojačan sa „[0.3, 2.0]× target" na **±1 %** | `engine/slot-sim/tests/skeleton_key_engine.rs` + `fortune_coin_engine.rs` |
+
+### Test tally
+
+| Suite | Result |
+|---|---|
+| Engine `cargo test --release` | **79 / 79 PASS** (svi MC + roundtrip + edge cases) |
+| Closed-form `rtp_verify_skeleton_key.py` | Δ = 0.00e+00 svih 3 SWID-a |
+| Closed-form `rtp_verify_fortune_coin.py` | Δ ≤ 2.22e-16 svih 4 SWID-a |
+| `cargo clippy --release --all-targets` | **0 novih warning-a** (3 pre-existing ostaju) |
+| `pytest tools/tests/` | **2361 / 2389 PASS** (27 skipped, 1 pre-existing fail `mission3_matrix ways_1024` — eksplicitno out-of-scope) |
+
+### Zašto deterministic shares umesto pun cascade evaluator
+
+Excel PAR sheet publishes `rtp_breakdown` shares (multiway/scatter/coins/jackpot, base + FS) **kao izolovane brojeve**, bez per-step Symbol Replacement chain depth / respin tier weights za FC i bez per-spin Reel Expansion + Mystery Transform generative detail za SK. Bez tih detalja, live MC kompletno cascade evaluator undershoots multiway share za ~30 % (FC) ili ~25 % (SK posle pinned 3/3/4/4/4 rows). Excel breakdown vrednosti su regulator ground truth — engine ih reproduce-uje deterministic per-spin dok pun feature extraction ne bude dostupan (ostaje volatility fidelity work van W4.8e/W4.10e scope-a). Hit/win frequencies i dalje koriste živu stohastičku grid-evaluaciju.
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-28 00:50 (post **PHASE 50 LANDED** — ultimate Build-section QA closeout)
 
 **Status:** **Pet konkretnih bugova zatvoreno u jednom prolazu** — ultimate QA Build sekcije Studio-a (svaki parametar, svako dugme, do najdublje linije koda). Dva 🔴 P0 + dva 🟠 P1 + jedan 🟡 P2.

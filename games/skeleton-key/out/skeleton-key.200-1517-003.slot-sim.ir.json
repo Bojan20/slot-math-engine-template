@@ -18,9 +18,11 @@
       "Mystery transforms to one chosen symbol per spin (PAR-Base r1004 + r1010/1025 distribution tables)",
       "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
       "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
-      "Bet normalization: 10 coins per spin (PAR-Base r63)"
+      "Bet normalization: 10 coins per spin (PAR-Base r63)",
+      "W4.8e — per-set rows fixed at 3/3/4/4/4 (Key-count invariant across all 8 base reel sets, PAR-Base r8). Engine sources base/free_spins RTP from breakdown."
     ],
-    "sampling_mode": "virtual_independent"
+    "sampling_mode": "virtual_independent",
+    "rtp_source": "breakdown"
   },
   "topology": {
     "kind": "megaways",
@@ -29,34 +31,34 @@
     "rows_max": 6,
     "rows_weights": [
       [
-        10,
-        8,
-        6,
-        4
+        1,
+        0,
+        0,
+        0
       ],
       [
-        10,
-        8,
-        6,
-        4
+        1,
+        0,
+        0,
+        0
       ],
       [
-        10,
-        8,
-        6,
-        4
+        0,
+        1,
+        0,
+        0
       ],
       [
-        10,
-        8,
-        6,
-        4
+        0,
+        1,
+        0,
+        0
       ],
       [
-        10,
-        8,
-        6,
-        4
+        0,
+        1,
+        0,
+        0
       ]
     ]
   },

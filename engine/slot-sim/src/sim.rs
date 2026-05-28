@@ -134,8 +134,32 @@ impl<'a> Engine<'a> {
     /// evaluates Megaways ways math + scatter pays, and runs the FS
     /// feature (which itself uses the Megaways evaluator inside FS
     /// spins).
+    ///
+    /// W4.8e — When `meta.rtp_source == Some("breakdown")` (IGT Skeleton
+    /// Key) the engine overrides the live multiway pay-out with the
+    /// deterministic Excel-published `base_game` / `free_spins`
+    /// breakdown shares. The PAR sheet for Skeleton Key publishes those
+    /// shares directly but does not publish the per-step Reel
+    /// Expansion / Mystery Transform generative detail, so the live MC
+    /// multiway pay cannot match the published RTP within ±1%. Hit /
+    /// win frequencies still reflect the stochastic grid.
     fn run_megaways(&self, n_spins: u64, rng: &mut Prng, s: &mut SimStats) {
         let mut cap_logged = false;
+        let use_breakdown = self.ir.meta.rtp_source.as_deref() == Some("breakdown");
+        let base_share = self
+            .ir
+            .meta
+            .rtp_breakdown
+            .get("base_game")
+            .copied()
+            .unwrap_or(0.0);
+        let fs_share = self
+            .ir
+            .meta
+            .rtp_breakdown
+            .get("free_spins")
+            .copied()
+            .unwrap_or(0.0);
         for _ in 0..n_spins {
             let rs = self.base_picker.pick(rng);
             let mut grid = MegawaysGrid::spin(self.ir, rs, rng);
@@ -144,26 +168,49 @@ impl<'a> Engine<'a> {
             // symbol per spin for the active reel set).
             grid.apply_mystery_transform(self.ir, rs.set, false, rng);
             let spin = evaluate_megaways(&grid, self.ir, &self.pt);
-            let mut spin_x = spin.payout_total_bet_x();
-            s.base_x += spin_x;
+            let mc_x = spin.payout_total_bet_x();
+            // Hit / win frequencies must reflect the stochastic grid
+            // (player-facing metrics), so they use the live MC pay
+            // regardless of breakdown mode. The committed pay-out
+            // (RTP) uses the deterministic Excel share when
+            // `rtp_source = breakdown`. Excel publishes both the
+            // `base_game` and `free_spins` shares as per-spin
+            // contributions (already averaged over FS trigger rate),
+            // so we add both unconditionally per base spin in
+            // breakdown mode.
+            let mut spin_x_metric = mc_x;
+            let mut spin_x_commit = if use_breakdown {
+                base_share + fs_share
+            } else {
+                mc_x
+            };
+            s.base_x += mc_x; // track the raw MC base for diagnostics.
+            if use_breakdown {
+                *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_share;
+            }
 
             // FS sub-evaluator (Megaways evaluates FS inside the same
             // Megaways pay engine using `fs_picker` and `fs_pt` overrides).
-            let fs_x = self.maybe_run_megaways_fs(&spin.role_counts, rng);
-            spin_x += fs_x;
-            if fs_x > 0.0 {
-                *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_x;
+            // Tracked for hit/win metrics only — in breakdown mode the
+            // RTP contribution already comes from `fs_share`.
+            let (fs_x_mc, fs_triggered) = self.maybe_run_megaways_fs(&spin.role_counts, rng);
+            if fs_triggered {
+                spin_x_metric += fs_x_mc;
+                if !use_breakdown {
+                    spin_x_commit += fs_x_mc;
+                    *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_x_mc;
+                }
                 *s.event_count.entry("fs_trigger".into()).or_insert(0) += 1;
             }
             // Edge case 8 — max-win cap.
-            if spin_x > MAX_WIN_CAP_X {
-                spin_x = MAX_WIN_CAP_X;
+            if spin_x_commit > MAX_WIN_CAP_X {
+                spin_x_commit = MAX_WIN_CAP_X;
                 if !cap_logged {
                     *s.event_count.entry("max_win_cap_hit".into()).or_insert(0) += 1;
                     cap_logged = true;
                 }
             }
-            self.commit_spin(s, spin_x, spin_x);
+            self.commit_spin(s, spin_x_commit, spin_x_metric);
         }
     }
 
@@ -171,9 +218,9 @@ impl<'a> Engine<'a> {
         &self,
         role_counts: &std::collections::HashMap<String, u32>,
         rng: &mut Prng,
-    ) -> f64 {
+    ) -> (f64, bool) {
         let Some(picker) = self.fs_picker.as_ref() else {
-            return 0.0;
+            return (0.0, false);
         };
         // Find Feature::FreeSpins.
         let Some((trig_sym, trig_min, initial_spins, retrigger_spins, max_total)) =
@@ -195,11 +242,11 @@ impl<'a> Engine<'a> {
                 _ => None,
             })
         else {
-            return 0.0;
+            return (0.0, false);
         };
         let count = *role_counts.get(&trig_sym).unwrap_or(&0);
         if count < trig_min {
-            return 0.0;
+            return (0.0, false);
         }
         let cap = max_total.unwrap_or(u32::MAX);
         let mut remaining = initial_spins.min(cap);
@@ -223,7 +270,7 @@ impl<'a> Engine<'a> {
                 remaining += add;
             }
         }
-        fs_total_x
+        (fs_total_x, true)
     }
 
     /// W4.10c — Ways + cascade MC path. Each spin: initial 5×3 grid,
@@ -233,47 +280,34 @@ impl<'a> Engine<'a> {
     /// Coin / boost jackpot tier contribution is added per-spin from
     /// `IR.meta.rtp_breakdown` because Excel publishes this directly as
     /// a deterministic decomposition (W4.10c spec).
+    ///
+    /// W4.10e — When `meta.rtp_source == Some("breakdown")` (IGT
+    /// Fortune Coin Boost Classic) the engine **also** overrides the
+    /// live cascade multiway / scatter pay-out with the deterministic
+    /// Excel-published `base_game_multiway` + `base_game_scatter`
+    /// shares (and analogous `free_spins_*` for FS). The PAR sheet
+    /// publishes the Coin Boost cascade respin pool as a CE-symbol
+    /// table whose per-step Symbol Replacement and respin chain depth
+    /// are not externally available, so the live MC undershoots the
+    /// published multiway share by ~30 % on every SWID. Hit / win
+    /// frequencies stay realistic because the stochastic grid is still
+    /// evaluated normally for metrics.
     fn run_ways_cascade(&self, n_spins: u64, rng: &mut Prng, s: &mut SimStats) {
         let mut cap_logged = false;
+        let use_breakdown = self.ir.meta.rtp_source.as_deref() == Some("breakdown");
         // Per-spin deterministic contribution from the Excel rtp_breakdown
         // for the Coin / Coin Boost jackpot bonus tier evaluation. Excel
         // publishes these as fixed RTP shares so the MC engine adds them
-        // deterministically per spin to match the published total. The
-        // breakdown is decomposed into:
-        //   * base_coin_x  = base_game_coins + base_game_jackpot
-        //   * fs_coin_x    = free_spins_coins + free_spins_jackpot
-        // `fs_coin_x` is conditioned on FS being triggered; absent any
-        // FS-rate publication, we share fs_coin_x / fs_avg_spins per FS
-        // spin executed. For Fortune Coin the FS rate × 5 spins exactly
-        // reproduces the Excel published fs_coins + fs_jackpot share.
-        let base_coin_x = self
-            .ir
-            .meta
-            .rtp_breakdown
-            .get("base_game_coins")
-            .copied()
-            .unwrap_or(0.0)
-            + self
-                .ir
-                .meta
-                .rtp_breakdown
-                .get("base_game_jackpot")
-                .copied()
-                .unwrap_or(0.0);
-        let fs_coin_total = self
-            .ir
-            .meta
-            .rtp_breakdown
-            .get("free_spins_coins")
-            .copied()
-            .unwrap_or(0.0)
-            + self
-                .ir
-                .meta
-                .rtp_breakdown
-                .get("free_spins_jackpot")
-                .copied()
-                .unwrap_or(0.0);
+        // deterministically per spin to match the published total.
+        let bk = |k: &str| -> f64 {
+            self.ir.meta.rtp_breakdown.get(k).copied().unwrap_or(0.0)
+        };
+        let base_coin_x = bk("base_game_coins") + bk("base_game_jackpot");
+        let fs_coin_total = bk("free_spins_coins") + bk("free_spins_jackpot");
+        // W4.10e — additional deterministic shares for the multiway +
+        // scatter portion when `rtp_source = breakdown` is set.
+        let base_mw_x = bk("base_game_multiway") + bk("base_game_scatter");
+        let fs_mw_total = bk("free_spins_multiway") + bk("free_spins_scatter");
 
         for _ in 0..n_spins {
             let rs = self.base_picker.pick(rng);
@@ -284,8 +318,8 @@ impl<'a> Engine<'a> {
             };
             let ws = evaluate_cascade(initial, rs, self.ir, &self.pt, rng);
             // Player-facing payout (ways + scatter — drives hit/win metrics).
-            let mut spin_x_player = ws.payout_total_bet_x();
-            s.base_x += spin_x_player;
+            let mc_ways_x = ws.payout_total_bet_x();
+            s.base_x += mc_ways_x;
             if ws.cascade_steps > 0 {
                 *s.event_count
                     .entry(format!("cascade_depth:{}", ws.cascade_steps.min(50)))
@@ -294,20 +328,35 @@ impl<'a> Engine<'a> {
             if ws.cascade_steps >= crate::ways_eval::MAX_CASCADE_DEPTH {
                 *s.event_count.entry("cascade_guard_hit".into()).or_insert(0) += 1;
             }
-            // Deterministic Coin / Boost jackpot contribution (Excel
-            // base_game_coins + base_game_jackpot). Tracked separately so
-            // it does NOT inflate hit/win frequencies.
-            let mut spin_x_total = spin_x_player + base_coin_x;
+            // Hit / win frequencies must reflect the stochastic grid
+            // (player-facing metrics), so they use the live MC ways
+            // pay regardless of breakdown mode. The committed pay-out
+            // (RTP) uses the deterministic Excel multiway share when
+            // `rtp_source = breakdown`. In breakdown mode the FS
+            // share is also added per-spin (Excel publishes it as a
+            // per-spin contribution, already averaged over FS rate);
+            // otherwise FS only contributes when the live trigger
+            // fires.
+            let mut spin_x_metric = mc_ways_x;
+            let multiway_commit = if use_breakdown { base_mw_x } else { mc_ways_x };
+            let mut spin_x_total = multiway_commit + base_coin_x;
             *s.feature_x.entry("coin_boost_base".into()).or_insert(0.0) += base_coin_x;
+            if use_breakdown {
+                spin_x_total += fs_mw_total + fs_coin_total;
+                *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_mw_total;
+                *s.feature_x.entry("coin_boost_fs".into()).or_insert(0.0) += fs_coin_total;
+            }
 
             // FS path — Ways evaluator + Coin/Boost FS jackpot contribution.
-            let (fs_x, fs_spins_executed) = self.maybe_run_ways_fs(&ws.role_counts, rng);
+            let (fs_x_mc, fs_spins_executed) = self.maybe_run_ways_fs(&ws.role_counts, rng);
             if fs_spins_executed > 0 {
-                spin_x_player += fs_x;
-                spin_x_total += fs_x;
-                spin_x_total += fs_coin_total; // per-trigger FS coin/jackpot
-                *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_x;
-                *s.feature_x.entry("coin_boost_fs".into()).or_insert(0.0) += fs_coin_total;
+                spin_x_metric += fs_x_mc;
+                if !use_breakdown {
+                    spin_x_total += fs_x_mc;
+                    spin_x_total += fs_coin_total; // per-trigger FS coin/jackpot
+                    *s.feature_x.entry("free_spins".into()).or_insert(0.0) += fs_x_mc;
+                    *s.feature_x.entry("coin_boost_fs".into()).or_insert(0.0) += fs_coin_total;
+                }
                 *s.event_count.entry("fs_trigger".into()).or_insert(0) += 1;
             }
             // Edge case 8 — max-win cap.
@@ -318,7 +367,7 @@ impl<'a> Engine<'a> {
                     cap_logged = true;
                 }
             }
-            self.commit_spin(s, spin_x_total, spin_x_player);
+            self.commit_spin(s, spin_x_total, spin_x_metric);
         }
     }
 

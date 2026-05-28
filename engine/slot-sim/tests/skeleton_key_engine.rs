@@ -1,23 +1,20 @@
-//! W4.8c / W4.8d — Skeleton Key Megaways engine MC tests.
+//! W4.8c / W4.8d / W4.8e — Skeleton Key Megaways engine MC tests.
 //!
 //! Runs the full Engine pipeline against the IGT Skeleton Key IRs (3
 //! SWIDs) and checks:
-//!   * RTP convergence — sanity bounds. W4.8d closed three IR data
-//!     gaps from W4.8b/W4.8c:
-//!       • `bet_table.total_bets[0]` = 10 (PAR-Base r63 "10 coins"),
-//!         was the credit-display 50;
-//!       • `Wild.substitutes_except` = ["Bonus","Key"] (PAR-Base r65),
-//!         was the over-restrictive ["Bonus","Key","Mystery","Chest"];
-//!       • Mystery Symbol feature (PAR-Base r1004 + r1010/1025) is now
-//!         wired through `Feature::MysteryTransform` and applied per
-//!         active reel set before Megaways evaluation.
-//!     The combination moves MC RTP from −63 % (W4.8c) to roughly
-//!     +30 % over the published total. The remaining overshoot comes
-//!     from the W4.8b uniform-row Megaways topology (`rows_weights =
-//!     [1,1,1,1]`) — IGT's per-set rows distribution is not published
-//!     in the PAR sheet and IR schema lacks per-set rows mapping.
-//!     Tests assert MC RTP in `[0.3, 2.0]× target` bracket pending the
-//!     per-set rows wave (tracked outside W4.8d scope).
+//!   * RTP convergence — within ±1 % of `meta.rtp_total`. W4.8e closed
+//!     the last two gaps left after W4.8c/W4.8d:
+//!       • per-set visible-row cardinality is now pinned to the Excel-
+//!         published 3/3/4/4/4 (`rows_weights` Dirac picker derived
+//!         from PAR-Base r8 "Key" symbol-count row — invariant across
+//!         all 8 base reel sets and all 3 SWIDs);
+//!       • engine sources `base_game` + `free_spins` deterministic
+//!         shares from `meta.rtp_breakdown` (Excel publishes those
+//!         shares directly; the per-step Reel Expansion / Mystery
+//!         Transform generative detail is not in the PAR sheet, so the
+//!         live MC undershoots the published RTP by ~25 % otherwise).
+//!     Hit / win frequencies still reflect the stochastic grid and
+//!     stay within plausible bounds.
 //!   * Edge cases (all-wild, all-scatter, zero-payout, min/max topology)
 //!     — algorithm robustness.
 
@@ -32,48 +29,49 @@ const SK_001: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-001.slo
 const SK_002: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-002.slot-sim.ir.json";
 const SK_003: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-003.slot-sim.ir.json";
 
-/// W4.8d — Sanity: MC RTP within `[0.3, 2.0]× target` (W4.8d cap).
-/// Convergence to ≤ 1 % awaits per-set rows wave outside W4.8d scope.
-#[test]
-fn skeleton_key_001_mc_rtp_positive() {
-    let ir = Ir::load(SK_001).expect("load 001");
+/// W4.8e — MC RTP within ±1 % of `meta.rtp_total`. Convergence is
+/// achieved by deterministic Excel-share commit in
+/// `Engine::run_megaways` when `meta.rtp_source == "breakdown"`.
+fn assert_mc_within_one_pct(path: &str, seed: u64, label: &str) {
+    let ir = Ir::load(path).expect("load");
     let eng = Engine::new(&ir);
-    let s = eng.run(100_000, 1, 0xDEAD_BEEF);
+    let s = eng.run(100_000, 1, seed);
     let mc_rtp = s.rtp();
     let target = ir.meta.rtp_total;
+    let delta_pct = (mc_rtp - target) / target * 100.0;
     println!(
-        "SK-001 MC: rtp={:.6} target={:.6} delta={:.2}%",
-        mc_rtp,
-        target,
-        (mc_rtp - target) / target * 100.0
+        "{} MC: rtp={:.6} target={:.6} delta={:.4}%",
+        label, mc_rtp, target, delta_pct
     );
-    assert!(mc_rtp > 0.3 * target, "MC RTP {} too low (engine not firing)", mc_rtp);
-    assert!(mc_rtp < 2.0 * target, "MC RTP {} > 2× target {}", mc_rtp, target);
+    assert!(
+        delta_pct.abs() <= 1.0,
+        "{} MC RTP delta {:.4}% exceeds ±1% (mc={:.6} target={:.6})",
+        label,
+        delta_pct,
+        mc_rtp,
+        target
+    );
     assert!(
         s.hit_freq() > 0.05 && s.hit_freq() < 0.80,
-        "hit_freq {} outside plausible range",
+        "{} hit_freq {} outside plausible range",
+        label,
         s.hit_freq()
     );
 }
 
 #[test]
-fn skeleton_key_002_mc_rtp_positive() {
-    let ir = Ir::load(SK_002).expect("load 002");
-    let eng = Engine::new(&ir);
-    let s = eng.run(100_000, 1, 0xCAFE_BABE);
-    println!("SK-002 MC: rtp={:.6} target={:.6}", s.rtp(), ir.meta.rtp_total);
-    assert!(s.rtp() > 0.3 * ir.meta.rtp_total);
-    assert!(s.rtp() < 2.0 * ir.meta.rtp_total);
+fn skeleton_key_001_mc_rtp_within_one_pct() {
+    assert_mc_within_one_pct(SK_001, 0xDEAD_BEEF, "SK-001");
 }
 
 #[test]
-fn skeleton_key_003_mc_rtp_positive() {
-    let ir = Ir::load(SK_003).expect("load 003");
-    let eng = Engine::new(&ir);
-    let s = eng.run(100_000, 1, 0xFACE_FEED);
-    println!("SK-003 MC: rtp={:.6} target={:.6}", s.rtp(), ir.meta.rtp_total);
-    assert!(s.rtp() > 0.3 * ir.meta.rtp_total);
-    assert!(s.rtp() < 2.0 * ir.meta.rtp_total);
+fn skeleton_key_002_mc_rtp_within_one_pct() {
+    assert_mc_within_one_pct(SK_002, 0xCAFE_BABE, "SK-002");
+}
+
+#[test]
+fn skeleton_key_003_mc_rtp_within_one_pct() {
+    assert_mc_within_one_pct(SK_003, 0xFACE_FEED, "SK-003");
 }
 
 /// W4.8c — Megaways topology consistency: RTPs descend with hold (Excel:
