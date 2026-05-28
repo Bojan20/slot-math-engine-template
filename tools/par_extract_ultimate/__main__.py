@@ -57,6 +57,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Also copy the source XLSX into <game>/raw/ (gitignored)",
     )
+    p.add_argument(
+        "--no-xml-raw",
+        action="store_true",
+        help="Skip xml_raw/ part dump (default: ON — dumps every internal XML)",
+    )
     args = p.parse_args(argv)
 
     xlsx_path: Path = args.xlsx_path.expanduser().resolve()
@@ -110,6 +115,17 @@ def main(argv: list[str] | None = None) -> int:
         shutil.copy2(xlsx_path, target)
         print(f"[extract] ✓ raw copy:        {target}  (gitignored)")
 
+    # ── XML container dump ── extract every internal XML from the XLSX zip.
+    # XLSX is a ZIP archive of XML parts. openpyxl reads only what its
+    # schema knows; raw XML may include vendor-specific extensions, drawing
+    # XML, calculation chains, theme XML, custom property streams. Dump
+    # every part verbatim under xml_raw/ so absolutely nothing is lost.
+    if _should_dump_xml(args):
+        xml_dir = out_dir / "xml_raw"
+        xml_dir.mkdir(parents=True, exist_ok=True)
+        count, total_bytes = _dump_xlsx_xml(xlsx_path, xml_dir)
+        print(f"[extract] ✓ xml raw parts:   {count} parts ({total_bytes / 1024:.1f} KB) → {xml_dir}")
+
     # Write a per-game pointer manifest noting which workbook was extracted.
     pointer = {
         "game_key": args.game,
@@ -131,6 +147,43 @@ def _sha256_first_64k(path: Path) -> str:
     with open(path, "rb") as f:
         h.update(f.read(64 * 1024))
     return h.hexdigest()
+
+
+def _should_dump_xml(args) -> bool:
+    """XML dump enabled by default — opt-out via --no-xml-raw."""
+    return not getattr(args, "no_xml_raw", False)
+
+
+def _dump_xlsx_xml(xlsx_path: Path, xml_dir: Path) -> tuple[int, int]:
+    """Extract every internal XML/binary part from the XLSX zip.
+
+    Returns (part_count, total_bytes_extracted).
+    """
+    import zipfile
+    count = 0
+    total = 0
+    with zipfile.ZipFile(xlsx_path) as zf:
+        # Manifest of all parts.
+        manifest = []
+        for info in zf.infolist():
+            target = xml_dir / info.filename
+            target.parent.mkdir(parents=True, exist_ok=True)
+            data = zf.read(info.filename)
+            target.write_bytes(data)
+            count += 1
+            total += len(data)
+            manifest.append({
+                "name": info.filename,
+                "size": info.file_size,
+                "compressed_size": info.compress_size,
+                "crc": info.CRC,
+                "date_time": list(info.date_time),
+            })
+        # Write manifest summary.
+        import json as _json
+        with open(xml_dir / "_manifest.json", "w", encoding="utf-8") as f:
+            _json.dump({"parts": manifest, "total_parts": count, "total_bytes": total}, f, indent=2)
+    return count, total
 
 
 if __name__ == "__main__":
