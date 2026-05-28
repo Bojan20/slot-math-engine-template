@@ -198,3 +198,13 @@ dist/cert/
 dist/test-cert/
 .venv-w73/
 slot_math_engine_template.egg-info/
+
+# W4.15 — per-SWID regulator cert bundle outputs.
+# The ZIPs are large (one per SWID × 12 SWIDs) and contain derivatives of
+# vendor IRs. The CLI itself (tools/cert_bundle_swid/) and the tests
+# (tools/tests/test_cert_bundle_swid.py) ARE committed — they're the
+# reproducible tool, not the artefact. Local runs land under:
+#   reports/cert-bundle-swid/*.zip                  — emitted bundles
+#   reports/cert-bundle-swid/keys/{private,public}.pem — repro signing key
+#   reports/cert-bundle-swid/mc-cache/*.json        — MC result cache
+reports/cert-bundle-swid/
