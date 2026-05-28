@@ -84,12 +84,16 @@ pub fn run_features(
                         avg_pay_per_trigger,
                         fs_trigger_prob,
                         fs_avg_pay_per_trigger,
+                        pages,
+                        units,
                         ..
                     } => Some(free_spins::FsHoldAndWinCfg {
                         trigger_symbol,
                         trigger_count_min: *trigger_count_min,
                         trigger_prob: fs_trigger_prob.or(*trigger_prob),
                         avg_pay_per_trigger: fs_avg_pay_per_trigger.or(*avg_pay_per_trigger),
+                        pages: if pages.is_empty() { None } else { Some(pages) },
+                        units: units.as_deref(),
                     }),
                     _ => None,
                 });
@@ -156,17 +160,21 @@ pub fn run_features(
                 trigger_symbol,
                 trigger_count_min,
                 respins: _,
-                pages: _,
+                pages,
                 trigger_prob,
                 avg_pay_per_trigger,
                 fs_trigger_prob: _,
                 fs_avg_pay_per_trigger: _,
+                units,
             } => {
                 let params = hold_and_win::HoldAndWinParams {
                     trigger_symbol,
                     trigger_count_min: *trigger_count_min,
                     trigger_prob: *trigger_prob,
                     avg_pay_per_trigger: *avg_pay_per_trigger,
+                    pages: if pages.is_empty() { None } else { Some(pages) },
+                    units: units.as_deref(),
+                    fs_context: false,
                 };
                 let r = hold_and_win::run(params, ir, base, rng);
                 let c = r.coins;

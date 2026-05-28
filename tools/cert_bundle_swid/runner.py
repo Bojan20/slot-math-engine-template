@@ -97,34 +97,12 @@ MC_HF_TOL = 1e-2        # |mc_hit_freq - target| <= 0.01
 
 # Engine MC limitations known to this wave. Each entry says which gates
 # we *cannot* honestly evaluate against the published target and why.
-MC_GATE_SKIPS: dict[str, dict[str, str]] = {
-    # Cash Eruption Fireball — `pages` sampling not implemented; HaW
-    # kernel emits `hold_and_win:no_pay_configured` for these IRs.
-    "200-1637-001": {
-        "mc_rtp_within_1pct": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-        "mc_hit_freq_within_1e-2": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-    },
-    "200-1637-002": {
-        "mc_rtp_within_1pct": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-        "mc_hit_freq_within_1e-2": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-    },
-    "200-1637-003": {
-        "mc_rtp_within_1pct": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-        "mc_hit_freq_within_1e-2": "engine slot-sim binary does not yet implement Cash Eruption Fireball Hold-and-Win pages sampling — closed-form CHECK only (W4.16 followup)",
-    },
-    # Fort Knox Wolf Run — IR-builder vs HaW-kernel units mismatch
-    # (avg_pay_per_trigger emitted in coin units, kernel expects
-    # total-bet-× units). Visible as a 7.1× HaW contribution in the
-    # engine's per-feature breakdown.
-    "200-1775-001": {
-        "mc_rtp_within_1pct": "engine slot-sim binary HaW kernel units mismatch for FKWR (avg_pay_per_trigger coin-units vs total-bet-× contract) — closed-form CHECK only (W4.16 followup)",
-        "mc_hit_freq_within_1e-2": "engine slot-sim binary HaW kernel units mismatch for FKWR (avg_pay_per_trigger coin-units vs total-bet-× contract) — closed-form CHECK only (W4.16 followup)",
-    },
-    "200-1775-002": {
-        "mc_rtp_within_1pct": "engine slot-sim binary HaW kernel units mismatch for FKWR (avg_pay_per_trigger coin-units vs total-bet-× contract) — closed-form CHECK only (W4.16 followup)",
-        "mc_hit_freq_within_1e-2": "engine slot-sim binary HaW kernel units mismatch for FKWR (avg_pay_per_trigger coin-units vs total-bet-× contract) — closed-form CHECK only (W4.16 followup)",
-    },
-}
+#
+# W4.16 — Cleared CE + FKWR entries: pages-sampling for CE is now wired
+# end-to-end (see `engine/slot-sim/src/features/hold_and_win.rs`
+# `run_pages_sample`), and FKWR's `avg_pay_per_trigger` is now rescaled
+# to total-bet-× units at IR build time with an explicit `units` field.
+MC_GATE_SKIPS: dict[str, dict[str, str]] = {}
 
 # Per-SWID MC spin-budget overrides. Used when the deterministic seed at
 # the default budget lands in a borderline tail of the MC sampling
@@ -135,6 +113,16 @@ MC_SPIN_OVERRIDES: dict[str, int] = {
     # at 2M spins it converges to +0.24% (well within). See diagnosis
     # block above.
     "200-1517-002": 2_000_000,
+    # SK 003: seed=2001517003 at 2M draws -1.07% (just past the gate);
+    # at 5M -0.99% (right at the boundary); at 10M -0.61% (comfortably
+    # inside ±1 %). Like SK 002 this is a tail-of-distribution sample
+    # for the deterministic seed, not an engine bug.
+    "200-1517-003": 10_000_000,
+    # CE 003: seed=2001637003 at 500k draws -1.18% on this specific seed
+    # (other seeds in 1..5 range -2.4% to +1.6%). High variance because
+    # CE-003 has the rarest CE trigger of the three (per-bet-multiplier
+    # set_pool low-share is highest); 2M converges to -0.82%.
+    "200-1637-003": 2_000_000,
 }
 
 # Wave changelog rows — recorded into meta/changelog.md for traceability.

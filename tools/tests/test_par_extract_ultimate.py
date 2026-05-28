@@ -409,8 +409,15 @@ def test_cash_eruption_acceptance(swid_idx: int, swid: str):
     assert ir["topology"]["rows"] == 3
     assert ir["evaluation"]["kind"] == "lines"
     assert len(ir["evaluation"]["lines"]) == 20
+    # W4.16 — CE now emits wild_expand + pattern_win features too
+    # (previously these L&W mechanics were missing from the IR, dropping
+    # ~0.27 RTP of base-game wins). The hold_and_win + free_spins core
+    # remains; extra features only ever pump the IR closer to Excel.
     feature_kinds = sorted(f["kind"] for f in ir["features"])
-    assert feature_kinds == ["free_spins", "hold_and_win"], feature_kinds
+    assert "free_spins" in feature_kinds
+    assert "hold_and_win" in feature_kinds
+    assert "wild_expand" in feature_kinds
+    assert "pattern_win" in feature_kinds
     # Wild substitution rules
     wild = next(s for s in ir["symbols"] if s["id"] == "Wild")
     assert wild["role"] == "wild"
@@ -765,4 +772,111 @@ class TestW414HitFreqCloseout:
         assert delta <= 1e-2, (
             f"{swid} MC hit_freq {mc_hf:.6f} vs target {target_hf:.6f} "
             f"(Δ {delta:.6f}) exceeds 1e-2 W4.14 tolerance"
+        )
+
+
+# ─── W4.16 ENGINE HaW FIX ──────────────────────────────────────────────────
+
+
+class TestW416HaWFix:
+    """W4.16 — Closes the two engine Hold-and-Win gaps documented as
+    SKIP in the W4.15 cert bundle:
+
+      • CE Fireball pages-sampling evaluator (per-page coin
+        distribution + respin chain) wired end-to-end; the published
+        `ce_from_base_rtp` is now produced organically by Monte-Carlo
+        rather than fed via a flat `avg_pay_per_trigger` mean.
+
+      • FKWR `avg_pay_per_trigger` units rescaled to total-bet-× at
+        IR build time and pinned via an explicit `units` field on the
+        HaW Feature so the engine kernel knows whether to multiply by
+        `lines` (default = total_bet_x) or treat as raw coin units.
+
+    Asserts the new IR schema fields are present + structurally
+    correct + non-empty for the 5 affected SWIDs (3 CE + 2 FKWR).
+    """
+
+    CE_SWIDS = [(1, "200-1637-001"), (2, "200-1637-002"), (3, "200-1637-003")]
+    FKWR_SWIDS = [(1, "200-1775-001"), (2, "200-1775-002")]
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_pages_populated(self, swid_idx: int, swid: str):
+        """CE IR's HaW feature must carry a non-empty `pages` map
+        keyed by stringified bet-multiplier (BM=1 at minimum) so the
+        engine's `run_pages_sample` path activates.
+        """
+        ir = build_cash_eruption(swid_idx)
+        assert ir["meta"]["swid"] == swid
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        pages = haw.get("pages", {})
+        assert isinstance(pages, dict), f"pages must be a dict, got {type(pages)}"
+        assert "1" in pages, f"pages must contain BM=1 page, got keys {list(pages.keys())}"
+        page = pages["1"]
+        # Schema sanity
+        assert page["bet_multiplier"] == 1
+        assert "set_pool_weights" in page
+        spw = page["set_pool_weights"]
+        assert spw["low"] > 0 and spw["med"] > 0 and spw["high"] > 0
+        assert spw["total"] > 0
+        # Coin distributions
+        assert len(page["small_coin_dist"]) > 0, "small coin dist empty"
+        assert len(page["big_coin_dist"]) > 0, "big coin dist empty"
+        # Pots split per-side (W4.16)
+        assert "pots_small" in page and "pots_big" in page
+        for tier in ("MINI", "MINOR", "MAJOR"):
+            assert tier in page["pots_small"], f"missing {tier} in pots_small"
+            assert tier in page["pots_big"], f"missing {tier} in pots_big"
+        # Respin tables for N=6..14
+        respin_keys = sorted(page["respin_tables"].keys(), key=int)
+        assert respin_keys == ["6", "7", "8", "9", "10", "11", "12", "13", "14"]
+        # GRAND probability + top award
+        assert page["grand_prob_base"] is not None
+        assert page["grand_prob_base"] > 0
+        assert page["top_award"] == 1_000_000
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_units_field_total_bet_x(self, swid_idx: int, swid: str):
+        """CE HaW feature must declare `units = "total_bet_x"` so the
+        flat-path fallback (if ever exercised) uses the canonical
+        contract."""
+        ir = build_cash_eruption(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        assert haw.get("units") == "total_bet_x"
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_fs_avg_pay_calibrated(self, swid_idx: int, swid: str):
+        """CE FS-CE flat path must have a positive `fs_avg_pay_per_trigger`
+        derived from the published `cash_eruption_from_fs` share."""
+        ir = build_cash_eruption(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        assert haw.get("fs_trigger_prob") == 1.0
+        fs_avg = haw.get("fs_avg_pay_per_trigger")
+        assert fs_avg is not None and fs_avg > 0.0, (
+            f"CE {swid} fs_avg_pay_per_trigger should be positive, got {fs_avg!r}"
+        )
+
+    @pytest.mark.parametrize("swid_idx,swid", FKWR_SWIDS)
+    def test_fkwr_units_field_total_bet_x(self, swid_idx: int, swid: str):
+        """FKWR HaW must declare `units = "total_bet_x"` post-rescale."""
+        ir = build_fort_knox_wolf_run(swid_idx)
+        assert ir["meta"]["swid"] == swid
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        assert haw.get("units") == "total_bet_x"
+
+    @pytest.mark.parametrize("swid_idx,swid", FKWR_SWIDS)
+    def test_fkwr_avg_pay_in_total_bet_x_range(self, swid_idx: int, swid: str):
+        """FKWR `avg_pay_per_trigger` must be in total-bet-× units (small
+        number ~10-30), not raw coin units (~1000+). Pre-W4.16 the
+        builder wrote ~1063 coin units which the engine kernel then
+        multiplied by `lines` → ~7× over-pay in MC.
+        """
+        ir = build_fort_knox_wolf_run(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        avg_pay = haw.get("avg_pay_per_trigger")
+        assert avg_pay is not None and avg_pay > 0.0
+        # Total-bet-× range: 0..50 (FKWR Fort Knox pays ~0.18 RTP at
+        # ~0.67% trigger rate ⇒ ~26.6× pre-adjustment, ~24.3× post).
+        assert avg_pay < 100.0, (
+            f"FKWR {swid} avg_pay {avg_pay} looks like coin units "
+            f"(expected total-bet-×, < 100)"
         )

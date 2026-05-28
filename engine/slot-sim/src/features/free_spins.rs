@@ -13,9 +13,10 @@
 
 use crate::evaluate::{evaluate_lines, CompiledPaytable, SpinWin};
 use crate::features::FeatureOutcome;
-use crate::ir::{Evaluation, Ir, Topology};
+use crate::ir::{Evaluation, HoldAndWinPage, Ir, Topology};
 use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
+use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Copy)]
 pub struct FreeSpinsParams<'a> {
@@ -61,6 +62,18 @@ pub struct FsHoldAndWinCfg<'a> {
     pub trigger_count_min: u32,
     pub trigger_prob: Option<f64>,
     pub avg_pay_per_trigger: Option<f64>,
+    /// W4.16 — pages distribution for FS-CE sampling path. When `Some`,
+    /// the FS runner uses the per-page Big Fireball + respin model
+    /// instead of the flat `avg_pay_per_trigger` (which still serves as
+    /// fallback when pages are empty).
+    pub pages: Option<&'a BTreeMap<String, HoldAndWinPage>>,
+    /// W4.16 — units contract for flat-path payouts. See
+    /// `Feature::HoldAndWin::units` for semantics. Affects only the
+    /// flat `avg_pay_per_trigger` fallback path inside FS; the pages
+    /// path always pays in coin units (CE published Fireball values
+    /// are already coin-denominated and the runner divides by total
+    /// bet at the call site).
+    pub units: Option<&'a str>,
 }
 
 /// Runs the FS sequence for one base-game spin if the trigger fires.
@@ -180,10 +193,45 @@ pub fn run(
                 count >= cfg.trigger_count_min
             };
             if triggered {
+                // W4.16 — precedence rules for FS-CE pay path:
+                //   1. If the IR populated `fs_avg_pay_per_trigger`
+                //      (flat path), USE IT. CE uses this because the
+                //      page-driven Big Fireball block sampling needs a
+                //      separate per-FS-spin landing probability that
+                //      the IR doesn't yet expose; the flat path
+                //      delivers the published `ce_from_fs` RTP
+                //      deterministically.
+                //   2. Else, if `pages` is populated, use the pages
+                //      Big-block sampler (future-ready path).
+                //   3. Else, no FS-CE pay.
                 if let Some(avg_pay) = cfg.avg_pay_per_trigger {
                     if avg_pay > 0.0 {
-                        let lines_n = lines_of(ir);
-                        out.coins += avg_pay * (lines_n as f64);
+                        // W4.16 — units contract: when `units == "coin"`,
+                        // the payout is in raw coin units and the engine
+                        // does NOT multiply by `lines` (FKWR contract).
+                        // Default (`None` or `"total_bet_x"`) preserves
+                        // pre-W4.16 behavior: × lines so the engine's
+                        // post-divide-back yields total-bet-×.
+                        let multiplier = match cfg.units {
+                            Some("coin") => 1.0,
+                            _ => lines_of(ir) as f64,
+                        };
+                        out.coins += avg_pay * multiplier;
+                        out.events.push("hold_and_win:fs_triggered".into());
+                    }
+                } else if let Some(pages) = cfg.pages {
+                    if let Some(page) = crate::features::hold_and_win::pick_page(pages) {
+                        let init_samples = page.fs_initial_samples.unwrap_or(1);
+                        let init_landed = page.fs_initial_landed.unwrap_or(9);
+                        let coins_paid = crate::features::hold_and_win::run_pages_sample(
+                            page,
+                            init_samples,
+                            init_landed,
+                            true, // initial_use_big
+                            true, // fs_context
+                            rng,
+                        );
+                        out.coins += coins_paid;
                         out.events.push("hold_and_win:fs_triggered".into());
                     }
                 }

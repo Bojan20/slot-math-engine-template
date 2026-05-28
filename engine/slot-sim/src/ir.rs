@@ -198,6 +198,24 @@ pub enum Feature {
         fs_trigger_prob: Option<f64>,
         #[serde(default)]
         fs_avg_pay_per_trigger: Option<f64>,
+        /// W4.16 — units contract for `avg_pay_per_trigger` (flat path):
+        ///   * `"total_bet_x"` (default) — payout is in total-bet-×
+        ///     units; the engine multiplies by `lines` so the
+        ///     subsequent `feat.coins / lines` divide-back yields the
+        ///     correct total-bet-× contribution.
+        ///   * `"coin"` — payout is in raw coin units; the engine does
+        ///     NOT multiply by `lines` (one coin = one credit). This
+        ///     keeps Fort Knox Wolf Run's coin-units `avg_pay_per_trigger`
+        ///     from over-paying 5–7× when the engine accidentally
+        ///     applied the `lines` factor.
+        ///
+        /// When `None`, defaults to `"total_bet_x"` so legacy IRs that
+        /// already encoded their `avg_pay_per_trigger` in total-bet-×
+        /// keep their semantics. The FKWR builder explicitly sets
+        /// `"total_bet_x"` after rescaling, and any future game that
+        /// wants coin-unit payouts can flip the field.
+        #[serde(default)]
+        units: Option<String>,
     },
     /// Wolf Run-style pick-bonus.
     ///
@@ -332,7 +350,42 @@ pub struct HoldAndWinPage {
     pub set_pool_weights: SetPoolWeights,
     pub small_coin_dist: Vec<CoinValue>,
     pub big_coin_dist: Vec<CoinValue>,
-    pub pots: BTreeMap<String, Pot>, // MINI/MINOR/MAJOR
+    /// Legacy single-side pots map (pre-W4.16). When `pots_small` and
+    /// `pots_big` are absent the engine uses `pots` for both sides.
+    #[serde(default)]
+    pub pots: BTreeMap<String, Pot>,
+    /// W4.16 — small-side MINI/MINOR/MAJOR pot weights (CE's Small
+    /// Fireballs distribution puts MINI/MINOR/MAJOR alongside the coin
+    /// values; weights are pool-specific).
+    #[serde(default)]
+    pub pots_small: BTreeMap<String, Pot>,
+    /// W4.16 — big-side MINI/MINOR/MAJOR pot weights (CE's Big Fireball
+    /// distribution carries a different MINI/MINOR/MAJOR weight set;
+    /// FS-only path uses this side).
+    #[serde(default)]
+    pub pots_big: BTreeMap<String, Pot>,
+    /// W4.16 — GRAND top-award probability when feature triggers from
+    /// base game (Bernoulli draw before the respin loop; on hit the
+    /// feature pays `top_award` coins). When absent / 0.0, no GRAND
+    /// gate is applied. Lives at the page level because CE published
+    /// it per-bet-multiplier in the PAR sheet.
+    #[serde(default)]
+    pub grand_prob_base: Option<f64>,
+    /// W4.16 — GRAND probability for FS-triggered CE.
+    #[serde(default)]
+    pub grand_prob_fs: Option<f64>,
+    /// W4.16 — Top award (coins) paid when GRAND fires.
+    #[serde(default)]
+    pub top_award: Option<i64>,
+    /// W4.16 — FS-only initial samples (block-trigger model). When set,
+    /// the FS path samples this many initial Fireballs from the BIG
+    /// distribution on FS-CE trigger (CE COPY TEST encodes this as
+    /// 1 block ⇒ 1 BIG sample, with `initial_landed` set to 9 for
+    /// respin-table lookup since one Big Fireball covers a 3×3 sub-grid).
+    #[serde(default)]
+    pub fs_initial_samples: Option<u32>,
+    #[serde(default)]
+    pub fs_initial_landed: Option<u32>,
     // (n_landed_str) → (remaining_str) → (n_additional_str) → weight
     pub respin_tables: BTreeMap<String, BTreeMap<String, BTreeMap<String, i64>>>,
 }
