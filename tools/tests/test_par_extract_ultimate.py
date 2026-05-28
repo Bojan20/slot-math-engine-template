@@ -3,6 +3,10 @@
 Covers all 17 attribute kinds the extractor pulls out, on a workbook built
 from scratch in-test. If any of these regress, the extraction guarantees on
 real vendor PAR sheets are broken too.
+
+Also extends the suite with W4.11 + W4.12 acceptance tests for
+`tools.par_extract_ultimate.build_ir` against real (offline) corpus
+cells.json extracts for Cash Eruption and Fort Knox Wolf Run.
 """
 from __future__ import annotations
 
@@ -27,6 +31,15 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.workbook.defined_name import DefinedName
 
 from tools.par_extract_ultimate import extract_workbook
+from tools.par_extract_ultimate.build_ir import (
+    build_cash_eruption,
+    build_fort_knox_wolf_run,
+    load_cells,
+    cell,
+)
+
+REPO = Path(__file__).resolve().parents[2]
+CORPUS = REPO / "agents" / "math-agent" / "corpus"
 
 
 # ─── Synthetic XLSX builder ───────────────────────────────────────────────
@@ -343,3 +356,153 @@ def test_cli_rejects_existing_without_force(synth_workbook: Path, tmp_path: Path
     assert rc2 == 3  # refuse to overwrite
     rc3 = main([str(synth_workbook), "--game", "g1", "--corpus", str(corpus), "--force"])
     assert rc3 == 0
+
+
+# ─── W4.11 — Cash Eruption acceptance ──────────────────────────────────────
+
+
+def _ce_published_rtp_and_hf(swid_idx: int) -> tuple[float, float]:
+    """Read Excel-published RTP_total (L72) and Hit Frequency (O2)."""
+    cells_path = (
+        CORPUS / "cash-eruption" / "ultimate_extract" / "sheets"
+        / f"PAR-00{swid_idx}" / "cells.json"
+    )
+    if not cells_path.exists():
+        pytest.skip(f"CE corpus not present: {cells_path}")
+    by_row = load_cells(cells_path)
+    rtp_total = float(cell(by_row, 72, 12))
+    hit_freq = float(cell(by_row, 2, 15))
+    return rtp_total, hit_freq
+
+
+@pytest.mark.parametrize("swid_idx,swid", [
+    (1, "200-1637-001"),
+    (2, "200-1637-002"),
+    (3, "200-1637-003"),
+])
+def test_cash_eruption_acceptance(swid_idx: int, swid: str):
+    """W4.11 acceptance: emitted RTP_total + hit_freq exact match (delta < 1e-6).
+
+    Also asserts structural integrity: 36 BG reel sets, 16 FS reel sets,
+    ≥ 28 paytable rows, exactly 2 features (free_spins + hold_and_win).
+    """
+    excel_rtp, excel_hf = _ce_published_rtp_and_hf(swid_idx)
+    ir = build_cash_eruption(swid_idx)
+
+    assert ir["meta"]["swid"] == swid
+    assert ir["meta"]["vendor"] == "igt"
+    assert ir["meta"]["family"] == "lines"
+
+    delta_rtp = abs(ir["meta"]["rtp_total"] - excel_rtp)
+    delta_hf = abs(ir["meta"]["hit_frequency"] - excel_hf)
+    assert delta_rtp < 1e-6, (
+        f"CE {swid} rtp_total delta={delta_rtp:.3e} vs Excel {excel_rtp}")
+    assert delta_hf < 1e-6, (
+        f"CE {swid} hit_freq delta={delta_hf:.3e} vs Excel {excel_hf}")
+
+    # Structural assertions
+    assert len(ir["reels"]["base"]) == 36, "expected 36 BG reel sets"
+    assert len(ir["reels"]["fs"]) == 16, "expected 16 FS reel sets"
+    assert len(ir["paytable"]) >= 28, "expected ≥28 paytable rows"
+    assert ir["topology"]["kind"] == "rectangular"
+    assert ir["topology"]["reels"] == 5
+    assert ir["topology"]["rows"] == 3
+    assert ir["evaluation"]["kind"] == "lines"
+    assert len(ir["evaluation"]["lines"]) == 20
+    feature_kinds = sorted(f["kind"] for f in ir["features"])
+    assert feature_kinds == ["free_spins", "hold_and_win"], feature_kinds
+    # Wild substitution rules
+    wild = next(s for s in ir["symbols"] if s["id"] == "Wild")
+    assert wild["role"] == "wild"
+    assert "Fireball" in wild["substitutes_except"]
+    assert "Volcano" in wild["substitutes_except"]
+    # Base reel set 1 has perfect-100k weight totals (Excel-validated invariant)
+    set1 = ir["reels"]["base"][0]
+    for reel in set1["reels"]:
+        assert sum(stop["weight"] for stop in reel) == 100000
+
+
+def test_cash_eruption_bg_weights_sum_to_excel_total():
+    """CE PAR-001 BG reel set weights must total 500,000 (Excel D105)."""
+    ir = build_cash_eruption(1)
+    bg_w = ir["reels"]["base_weights"]
+    assert bg_w["total"] == 500000
+    assert sum(w["weight"] for w in bg_w["weights"]) == 500000
+
+
+def test_cash_eruption_fs_weights_sum_to_excel_total():
+    """CE PAR-001 FS reel set weights must total 39,752 (Excel D2713)."""
+    ir = build_cash_eruption(1)
+    fs_w = ir["reels"]["fs_weights"]
+    assert fs_w["total"] == 39752
+    assert sum(w["weight"] for w in fs_w["weights"]) == 39752
+
+
+# ─── W4.12 — Fort Knox Wolf Run acceptance ─────────────────────────────────
+
+
+def _fkwr_published_rtp_and_hf(swid_idx: int) -> tuple[float, float]:
+    """Read Excel-published RTP_total (G13 @ BM=1) and Hit Frequency (M2)."""
+    cells_path = (
+        CORPUS / "fort-knox-wolf-run" / "ultimate_extract" / "sheets"
+        / f"PAR_00{swid_idx}" / "cells.json"
+    )
+    if not cells_path.exists():
+        pytest.skip(f"FKWR corpus not present: {cells_path}")
+    by_row = load_cells(cells_path)
+    rtp_total = float(cell(by_row, 13, 7))
+    hit_freq = float(cell(by_row, 2, 13))
+    return rtp_total, hit_freq
+
+
+@pytest.mark.parametrize("swid_idx,swid", [
+    (1, "200-1775-001"),
+    (2, "200-1775-002"),
+])
+def test_fort_knox_wolf_run_acceptance(swid_idx: int, swid: str):
+    """W4.12 acceptance: emitted RTP_total + hit_freq exact match (delta < 1e-6)."""
+    excel_rtp, excel_hf = _fkwr_published_rtp_and_hf(swid_idx)
+    ir = build_fort_knox_wolf_run(swid_idx)
+
+    assert ir["meta"]["swid"] == swid
+    assert ir["meta"]["vendor"] == "igt"
+    assert ir["meta"]["family"] == "lines"
+
+    delta_rtp = abs(ir["meta"]["rtp_total"] - excel_rtp)
+    delta_hf = abs(ir["meta"]["hit_frequency"] - excel_hf)
+    assert delta_rtp < 1e-6, (
+        f"FKWR {swid} rtp_total delta={delta_rtp:.3e} vs Excel {excel_rtp}")
+    assert delta_hf < 1e-6, (
+        f"FKWR {swid} hit_freq delta={delta_hf:.3e} vs Excel {excel_hf}")
+
+    # Structural
+    assert ir["topology"] == {"kind": "rectangular", "reels": 5, "rows": 4}
+    assert ir["evaluation"]["kind"] == "lines"
+    assert len(ir["evaluation"]["lines"]) == 40
+    assert len(ir["reels"]["base"]) == 1
+    assert len(ir["reels"]["fs"]) == 1
+    # Base strip sizes (PAR_001 and PAR_002 share identical strip layout).
+    base_reel_sizes = [len(r) for r in ir["reels"]["base"][0]["reels"]]
+    assert base_reel_sizes == [71, 109, 70, 101, 89]
+    # Paytable: 33 line wins + 1 scatter = 34
+    assert len(ir["paytable"]) == 34
+    feature_kinds = sorted(f["kind"] for f in ir["features"])
+    assert feature_kinds == ["free_spins", "hold_and_win",
+                              "linear_progressive"], feature_kinds
+    # Bet table
+    assert ir["bet_table"]["lines"] == 40
+    assert ir["bet_table"]["total_bets"][0] == 40.0
+    # WildWolf wild rules
+    wild = next(s for s in ir["symbols"] if s["id"] == "WildWolf")
+    assert wild["role"] == "wild"
+    assert "Bonus" in wild["substitutes_except"]
+
+
+def test_fort_knox_wolf_run_rtp_breakdown_sums_to_total():
+    """FKWR base + FS bonus + Fort Knox + increment = G13 total RTP at BM=1."""
+    ir = build_fort_knox_wolf_run(1)
+    bd = ir["meta"]["rtp_breakdown"]
+    summed = bd["base_game"] + bd["free_spins_bonus"] + bd["fort_knox_bonus"] + bd["increment"]
+    assert abs(summed - bd["total"]) < 1e-9, (
+        f"breakdown sum {summed} != total {bd['total']}")
+    assert abs(bd["total"] - ir["meta"]["rtp_total"]) < 1e-12

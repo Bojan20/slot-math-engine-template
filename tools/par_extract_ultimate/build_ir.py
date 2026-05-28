@@ -1,12 +1,16 @@
-"""W4.8 + W4.10 — Build slot-sim universal IR from cells.json extracts.
+"""W4.8 + W4.10 + W4.11 + W4.12 — Build slot-sim universal IR from cells.json extracts.
 
 Converts vendor PAR cells.json (produced by `tools/par_extract_ultimate/extract.py`)
 into the universal slot-sim IR format (`engine/slot-sim/src/ir.rs`) for the
-two new W4.8/W4.10 games:
+four W4.8/W4.10/W4.11/W4.12 games:
 
   ▸ Skeleton Key (IGT 200-1517-001/002/003) — Megaways 3x5..6x5, 243..7776 ways
   ▸ Fortune Coin Boost Classic (IGT 200-1581-001..004) — 3x5 / 243 ways +
     Coin Boost cascade-like feature (W4.10 TODO: full cascade evaluator)
+  ▸ Cash Eruption (IGT 200-1637-001/002/003) — 3x5 / 20 lines + Hold-and-Win
+    Fireball link-and-spin (W4.11)
+  ▸ Fort Knox Wolf Run (IGT 200-1775-001/002) — 4x5 / 40 lines Wolf Run base +
+    Fort Knox Hold-and-Win bonus + Free Spins retrigger (W4.12)
 
 The script keeps RAW VENDOR VALUES local (never to stdout): only coordinates,
 counts, RTP / hit_freq deltas + hashes are logged. IR JSONs land on disk in
@@ -15,6 +19,8 @@ counts, RTP / hit_freq deltas + hashes are logged. IR JSONs land on disk in
 Usage:
     python3 -m tools.par_extract_ultimate.build_ir skeleton-key
     python3 -m tools.par_extract_ultimate.build_ir fortune-coin-boost-classic
+    python3 -m tools.par_extract_ultimate.build_ir cash-eruption
+    python3 -m tools.par_extract_ultimate.build_ir fort-knox-wolf-run
     python3 -m tools.par_extract_ultimate.build_ir all
 """
 from __future__ import annotations
@@ -646,6 +652,704 @@ def build_fortune_coin(swid_idx: int) -> dict:
     return ir
 
 
+# ──────────────────────── Cash Eruption extractor (W4.11) ────────────────────────
+
+
+# Canonical CE 20 paylines (3x5 grid, rows 0=top..2=bottom).
+# Source: games/ce-copy-test/out/paylines.json (parsed from vendor Paylines sheet).
+CE_PAYLINES = [
+    [1, 1, 1, 1, 1], [0, 0, 0, 0, 0], [2, 2, 2, 2, 2],
+    [0, 1, 2, 1, 0], [2, 1, 0, 1, 2], [1, 0, 0, 0, 1],
+    [1, 2, 2, 2, 1], [2, 2, 1, 0, 0], [0, 0, 1, 2, 2],
+    [2, 1, 1, 1, 0], [0, 1, 1, 1, 2], [1, 2, 1, 0, 1],
+    [1, 0, 1, 2, 1], [0, 1, 0, 1, 0], [2, 1, 2, 1, 2],
+    [1, 1, 0, 1, 1], [1, 1, 2, 1, 1], [0, 2, 0, 2, 0],
+    [2, 0, 2, 0, 2], [2, 0, 1, 0, 2],
+]
+
+
+CE_SYMBOLS = [
+    "Wild", "Bonus", "Fireball", "Volcano",
+    "Red7", "Blue7", "Bell", "Melon", "Grapes",
+    "Plum", "Orange", "Lemon", "Cherry",
+    "Big Wild", "Big Red7", "Big Blue7", "Big Bell",
+    "Big Melon", "Big Grapes", "Big Plum",
+    "Big Orange", "Big Lemon", "Big Cherry",
+    "Big Volcano", "Big Fireball",
+]
+
+
+def _ce_classify_role(sym: str) -> str:
+    if sym == "Wild" or sym == "Big Wild":
+        return "wild"
+    if sym == "Bonus":
+        return "scatter"
+    if sym == "Fireball" or sym == "Big Fireball":
+        return "cash"
+    if sym == "Volcano" or sym == "Big Volcano":
+        return "hp"
+    if sym in ("Red7", "Blue7", "Bell", "Big Red7", "Big Blue7", "Big Bell"):
+        return "hp"
+    return "lp"
+
+
+def _ce_extract_paytable(by_row) -> list[dict]:
+    """Cash Eruption paytable rows 25..55.
+
+    Layout:
+      cols 3..7 = combo (5 reels), col 8 = pays, col 10 = RTP%.
+      Marker '*' / '**' at col 2 for scatter / pattern rows.
+      Row 52..54 carry 'Any N Volcano' scatter labels.
+      Row 55 carries 'Pattern Win' (1000x total bet pattern combo).
+    """
+    out: list[dict] = []
+    for r in range(25, 56):
+        pays = cell_n(by_row, r, 8)
+        if pays is None:
+            continue
+        marker = cell_s(by_row, r, 2)
+        label = cell_s(by_row, r, 3)
+        # 'Any N Volcano' scatter rows
+        if label.startswith("Any ") and "Volcano" in label:
+            count = None
+            for tok in label.split():
+                if tok.isdigit():
+                    count = int(tok)
+                    break
+            if count is None:
+                continue
+            out.append({
+                "combo": ["Volcano"] * count,
+                "pays": float(pays),
+                "scope": "scatter",
+                "marker": marker or "*",
+            })
+            continue
+        # 'Pattern Win' row: encoded as a special pattern combo
+        if label == "Pattern Win":
+            out.append({
+                "combo": ["Red7", "Wild", "Wild", "Wild", "Wild"],
+                "pays": float(pays),
+                "scope": "pattern",
+                "marker": marker or "**",
+            })
+            continue
+        combo = [cell_s(by_row, r, c) for c in range(3, 8)]
+        if all(x == "" for x in combo):
+            continue
+        if combo[0] == "Combination":
+            continue
+        out.append({
+            "combo": combo,
+            "pays": float(pays),
+            "scope": "line",
+            "marker": marker,
+        })
+    return out
+
+
+def _ce_find_reel_set_headers(by_row, label: str) -> list[tuple[int, int]]:
+    """Find all '<label>' headers → (row, set_num).
+    Header sits at col 2 (B), set number at col 4 (D).
+    """
+    out: list[tuple[int, int]] = []
+    for r in sorted(by_row.keys()):
+        if cell_s(by_row, r, 2) == label:
+            n = cell_n(by_row, r, 4)
+            if n is not None:
+                out.append((r, int(n)))
+    return out
+
+
+def _ce_extract_reel_set(by_row, header_row: int) -> list[list[dict]]:
+    """Each CE reel set header is followed by:
+      header+1  : blank
+      header+2  : 'Reel 1' .. 'Reel 5'  at cols 3,5,7,9,11
+      header+3  : 'Symbol' / 'Weight' headers at cols 3..12
+      header+4+ : index col 2; reel data cols [3,4][5,6][7,8][9,10][11,12]
+      <end>     : 'Total' at col 3 (and cols 5,7,9,11)
+    Variable rows per reel — scan until 'Total' marker.
+    """
+    data_start = header_row + 4
+    reel_cols = [(3, 4), (5, 6), (7, 8), (9, 10), (11, 12)]
+    reels: list[list[dict]] = [[] for _ in range(5)]
+    r = data_start
+    max_iter = 400
+    while max_iter > 0:
+        max_iter -= 1
+        if cell_s(by_row, r, 3) == "Total":
+            break
+        # If no index in col B and all reel sym cols are blank, end
+        idx_val = cell(by_row, r, 2)
+        if idx_val is None or idx_val == "":
+            if all(cell_s(by_row, r, sc) == "" for sc, _wc in reel_cols):
+                # blank row — could be padding; advance a few then bail
+                r += 1
+                if cell_s(by_row, r, 3) == "Total" or cell_s(by_row, r, 2) == "":
+                    if all(cell_s(by_row, r, sc) == "" for sc, _wc in reel_cols):
+                        break
+                continue
+        for i, (sc, wc) in enumerate(reel_cols):
+            sym = cell_s(by_row, r, sc)
+            w = cell_n(by_row, r, wc)
+            if sym:
+                reels[i].append({"symbol": sym, "weight": int(w) if w is not None else 0})
+        r += 1
+    return reels
+
+
+def _ce_extract_bg_weights(by_row) -> dict:
+    """CE base reel set weights: rows 69..104 cols C,D; 'Total' at row 105."""
+    weights: list[dict] = []
+    total = 0
+    for r in range(69, 110):
+        label = cell_s(by_row, r, 3)
+        wval = cell_n(by_row, r, 4)
+        if label == "Total":
+            total = int(wval) if wval is not None else 0
+            break
+        snum = cell_n(by_row, r, 3)
+        if snum is not None and wval is not None:
+            weights.append({"set": int(snum), "weight": int(wval)})
+    return {"weights": weights, "total": total or sum(w["weight"] for w in weights),
+            "initial_set": weights[0]["set"] if weights else 1}
+
+
+def _ce_extract_fs_weights(by_row) -> dict | None:
+    """CE FS reel set weights — find 'Free Spins Reel Set Weights' header in col C,
+    then walk col C/D until 'Total'.
+    """
+    header_r = None
+    for r in sorted(by_row.keys()):
+        if cell_s(by_row, r, 3) == "Free Spins Reel Set Weights":
+            header_r = r
+            break
+    if header_r is None:
+        return None
+    weights: list[dict] = []
+    total = 0
+    # Sub-header row at header+2; data starts header+3
+    r = header_r + 3
+    safety = 0
+    while safety < 80:
+        safety += 1
+        label = cell_s(by_row, r, 3)
+        wval = cell_n(by_row, r, 4)
+        if label == "Total":
+            total = int(wval) if wval is not None else 0
+            break
+        snum = cell_n(by_row, r, 3)
+        if snum is not None and wval is not None:
+            weights.append({"set": int(snum), "weight": int(wval)})
+        r += 1
+    if not weights:
+        return None
+    return {"weights": weights, "total": total or sum(w["weight"] for w in weights),
+            "initial_set": weights[0]["set"]}
+
+
+def _ce_extract_bonus_summary(by_row) -> dict:
+    """CE Bonus Summary block: 'Bonus Summary' header in col C, header_row+1 column
+    titles, header_row+2 numeric data (C=Ave free spins, D=Single Spin Pay%, E=Total Pay%).
+    """
+    header_r = None
+    for r in sorted(by_row.keys()):
+        if cell_s(by_row, r, 3) == "Bonus Summary":
+            header_r = r
+            break
+    if header_r is None:
+        return {}
+    data_r = header_r + 3
+    return {
+        "avg_free_spins": cell_n(by_row, data_r, 3),
+        "single_spin_payback_pct": cell_n(by_row, data_r, 4),
+        "total_payback_pct": cell_n(by_row, data_r, 5),
+    }
+
+
+def build_cash_eruption(swid_idx: int) -> dict:
+    sheet_dir = (
+        CORPUS / "cash-eruption" / "ultimate_extract" / "sheets"
+        / f"PAR-00{swid_idx}"
+    )
+    by_row = load_cells(sheet_dir / "cells.json")
+
+    # Meta — see corpus PAR-001/002/003 cells.json layout:
+    #   A1  = game name      (col 1, row 1)
+    #   E3  = SWID           (col 5, row 3)
+    #   N1/O1 = Hold label/value
+    #   N2/O2 = All-line Hit Freq
+    #   N3/O3 = All-line Win Freq
+    #   K68/L68 = Base Game RTP*
+    #   K69/L69 = Cash Eruption Feature From Base Game RTP
+    #   K70/L70 = Free Spins RTP
+    #   K71/L71 = Cash Eruption Feature From Free Spin RTP
+    #   L72     = total (sum of L68..L71)
+    name = cell_s(by_row, 1, 1).strip() or "Cash Eruption"
+    swid = cell_s(by_row, 3, 5)
+    hold = cell_n(by_row, 1, 15)
+    hit_freq = cell_n(by_row, 2, 15)
+    win_freq = cell_n(by_row, 3, 15)
+    rtp_base = cell_n(by_row, 68, 12)
+    rtp_ce_base = cell_n(by_row, 69, 12)
+    rtp_fs = cell_n(by_row, 70, 12)
+    rtp_ce_fs = cell_n(by_row, 71, 12)
+    rtp_total_excel = cell_n(by_row, 72, 12)
+    rtp_total = float(rtp_total_excel) if rtp_total_excel is not None else (
+        (rtp_base or 0.0) + (rtp_ce_base or 0.0) + (rtp_fs or 0.0) + (rtp_ce_fs or 0.0)
+    )
+
+    # Paytable
+    paytable = _ce_extract_paytable(by_row)
+
+    # Reel sets — BG (label 'Base Game Reel Set:' in col B/2) + FS (col B/2)
+    symbols_seen: set[str] = set()
+    bg_headers = _ce_find_reel_set_headers(by_row, "Base Game Reel Set:")
+    base_sets: list[dict] = []
+    for hr, set_num in bg_headers:
+        reels = _ce_extract_reel_set(by_row, hr)
+        base_sets.append({"set": set_num, "reels": reels,
+                          "label": f"BG Reel Set {set_num}"})
+        for rs in reels:
+            for stop in rs:
+                symbols_seen.add(stop["symbol"])
+
+    fs_headers = _ce_find_reel_set_headers(by_row, "Free Spins Reel Set:")
+    fs_sets: list[dict] = []
+    for hr, set_num in fs_headers:
+        reels = _ce_extract_reel_set(by_row, hr)
+        fs_sets.append({"set": set_num, "reels": reels,
+                        "label": f"FS Reel Set {set_num}"})
+        for rs in reels:
+            for stop in rs:
+                symbols_seen.add(stop["symbol"])
+
+    bg_weights = _ce_extract_bg_weights(by_row)
+    fs_weights = _ce_extract_fs_weights(by_row)
+    bonus_summary = _ce_extract_bonus_summary(by_row)
+
+    # Ensure canonical symbols present
+    symbols_seen.add("Wild")
+    symbols_seen.add("Bonus")
+    sym_list = [s for s in CE_SYMBOLS if s in symbols_seen]
+    for s in sorted(symbols_seen - set(CE_SYMBOLS)):
+        sym_list.append(s)
+    symbols: list[dict] = []
+    for sid in sym_list:
+        role = _ce_classify_role(sid)
+        entry: dict = {"id": sid, "name": sid, "role": role}
+        if role == "wild":
+            entry["substitutes"] = ["*"]
+            entry["substitutes_except"] = ["Bonus", "Fireball", "Volcano",
+                                            "Big Fireball", "Big Volcano"]
+        symbols.append(entry)
+
+    # Features
+    #  ▸ Free Spins: 3/4/5 Volcano scatter → variable bonus spins (see PAR-Bonus
+    #    summary row at C2691..E2691). Avg spins ~6.45 per Bonus Summary block.
+    #  ▸ Hold-and-Win Fireball link-and-spin: triggered by 6+ Fireball symbols.
+    #    Encoded with kind="hold_and_win"; trigger_count_min is bespoke per CE
+    #    paymodel and the precise per-bet-multiplier payoff tables sit in the
+    #    BET MULTIPLIER pages (rows ~3900..6692). We capture the high-level
+    #    feature record only — full per-BM evaluator lives in the reference
+    #    CE COPY TEST `parse_par.py` / `engine-rust` pipeline.
+    features = [
+        {
+            "kind": "free_spins",
+            "trigger_symbol": "Volcano",
+            "trigger_count_min": 3,
+            "initial_spins": 5,  # CE base FS award; 3 Volcano → 5 FS
+            "retrigger_spins": 5,
+            "max_total_spins": None,
+            "reel_bank": "fs",
+            "scatter_pay_total_bet": 1.0,
+        },
+        {
+            "kind": "hold_and_win",
+            "trigger_symbol": "Fireball",
+            "trigger_count_min": 6,
+            "respins": 3,
+            "pages": {},  # Per-BM Fireball coin tables — populated downstream
+                          # by games/ce-copy-test/engine-rust pipeline.
+            "trigger_prob": None,
+            "avg_pay_per_trigger": None,
+            "fs_trigger_prob": None,
+            "fs_avg_pay_per_trigger": None,
+        },
+    ]
+    # Stash bonus summary as meta annotation (does not affect Rust deserialize).
+    ce_extra_meta_notes = []
+    if bonus_summary.get("avg_free_spins") is not None:
+        ce_extra_meta_notes.append(
+            f"FS avg_spins={bonus_summary['avg_free_spins']}, "
+            f"single_spin_pct={bonus_summary['single_spin_payback_pct']}, "
+            f"total_pct={bonus_summary['total_payback_pct']}"
+        )
+
+    ir = {
+        "meta": {
+            "name": name,
+            "vendor": "igt",
+            "swid": swid,
+            "family": "lines",
+            "rtp_total": float(rtp_total),
+            "rtp_breakdown": {
+                "base_game": float(rtp_base or 0.0),
+                "cash_eruption_from_base": float(rtp_ce_base or 0.0),
+                "free_spins": float(rtp_fs or 0.0),
+                "cash_eruption_from_fs": float(rtp_ce_fs or 0.0),
+                "total": float(rtp_total),
+            },
+            "hit_frequency": float(hit_freq or 0.0),
+            "win_frequency": float(win_freq or 0.0),
+            "hold": float(hold or 0.0),
+            "notes": [
+                "3x5 / 20 lines fixed bet for 20 coins",
+                "Wild substitutes for all symbols except Fireball + Volcano",
+                "Wild appears on reels 2..5 in base game and expands to fill reel",
+                "Volcano scatter (3/4/5) triggers Free Spins Bonus",
+                "Fireball Hold-and-Win link-and-spin (6+ Fireballs trigger)",
+                "Pattern Win: Red7 on reel 1 + 4 expanding Wilds = 1000x total bet",
+                f"BG reel sets: {len(base_sets)}; FS reel sets: {len(fs_sets)}",
+                *ce_extra_meta_notes,
+            ],
+            "sampling_mode": "virtual_independent",
+        },
+        "topology": {"kind": "rectangular", "reels": 5, "rows": 3},
+        "evaluation": {"kind": "lines", "lines": CE_PAYLINES, "min_count": 3},
+        "symbols": symbols,
+        "reels": {
+            "base": base_sets,
+            "base_weights": bg_weights,
+            "fs": fs_sets,
+            "fs_weights": fs_weights or bg_weights,
+        },
+        "paytable": paytable,
+        "features": features,
+        "bet_table": {
+            "lines": 20,
+            "multipliers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30,
+                            40, 50, 70, 90, 120, 160, 200],
+            "total_bets": [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0,
+                           3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 14.0, 18.0, 24.0,
+                           32.0, 40.0],
+        },
+    }
+    return ir
+
+
+# ──────────────────────── Fort Knox Wolf Run extractor (W4.12) ────────────────────────
+
+
+FKWR_SYMBOLS = [
+    "WildWolf", "DarkWolf", "Whitewolf", "BirdTotem", "BearTotem",
+    "Ace", "King", "Queen", "Jack", "Ten", "Nine",
+    "Bonus",
+]
+
+# Canonical 40 Wolf Run paylines (4x5 grid; rows are 0..3 top-to-bottom).
+# Pulled from existing IR at games/fort-knox-wolf-run/out/igt.200-1775-001.slot-sim.ir.json
+# (W4.3 baseline, validated against vendor paylines sheet).
+FKWR_PAYLINES = [
+    [1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [0, 0, 0, 0, 0], [3, 3, 3, 3, 3],
+    [1, 2, 3, 2, 1], [2, 1, 0, 1, 2], [0, 0, 1, 2, 3], [3, 3, 2, 1, 0],
+    [1, 0, 0, 0, 1], [2, 3, 3, 3, 2], [0, 1, 2, 3, 3], [3, 2, 1, 0, 0],
+    [1, 0, 1, 2, 1], [2, 3, 2, 1, 2], [0, 1, 0, 1, 0], [3, 2, 3, 2, 3],
+    [1, 2, 1, 0, 1], [2, 1, 2, 3, 2], [0, 1, 1, 1, 0], [3, 2, 2, 2, 3],
+    [1, 1, 2, 3, 3], [2, 2, 1, 0, 0], [1, 1, 0, 1, 1], [2, 2, 3, 2, 2],
+    [1, 2, 2, 2, 3], [2, 1, 1, 1, 0], [0, 0, 1, 0, 0], [3, 3, 2, 3, 3],
+    [0, 1, 2, 2, 3], [3, 2, 1, 1, 0], [0, 0, 0, 1, 2], [3, 3, 3, 2, 1],
+    [1, 0, 0, 1, 2], [2, 3, 3, 2, 1], [0, 1, 1, 2, 3], [3, 2, 2, 1, 0],
+    [1, 0, 1, 2, 3], [2, 3, 2, 1, 0], [0, 1, 2, 3, 2], [3, 2, 1, 0, 1],
+]
+
+
+def _fkwr_classify_role(sym: str) -> str:
+    if sym == "WildWolf":
+        return "wild"
+    if sym == "Bonus":
+        return "scatter"
+    if sym in ("DarkWolf", "Whitewolf", "WhiteWolf",
+               "BirdTotem", "BearTotem"):
+        return "hp"
+    return "lp"
+
+
+def _fkwr_extract_paytable(by_row, base_start: int, base_end: int,
+                            scatter_row: int | None) -> list[dict]:
+    """FKWR paytable rows.
+
+    Base game block: rows base_start..base_end (typically 67..99).
+      cols 2..6 = combo (5 reels), col 7 = Hits, col 8 = PPH,
+      col 9 = Pays, col 10 = RTP%.
+    Scatter row at `scatter_row` (typically 101):
+      col 1 = marker '*', col 2 = '--', cols 3..5 = 'Bonus', col 9 = '2*'.
+    """
+    out: list[dict] = []
+    for r in range(base_start, base_end + 1):
+        combo = [cell_s(by_row, r, c) for c in range(2, 7)]
+        pays = cell_n(by_row, r, 9)
+        if pays is None or all(x == "" for x in combo):
+            continue
+        if combo[0] == "Combination":
+            continue
+        out.append({
+            "combo": combo,
+            "pays": float(pays),
+            "scope": "line",
+            "marker": "",
+        })
+    if scatter_row is not None:
+        # Scatter row uses string '2*' for pays — coerce to numeric 2.0.
+        raw = cell(by_row, scatter_row, 9)
+        if raw is not None:
+            try:
+                # '2*' → 2
+                cleaned = str(raw).replace("*", "").strip()
+                scat_pays = float(cleaned) if cleaned else None
+            except ValueError:
+                scat_pays = None
+            if scat_pays is not None:
+                # 3 Bonus on middle reels (2,3,4) — encoded as scatter combo
+                out.append({
+                    "combo": ["Bonus", "Bonus", "Bonus"],
+                    "pays": float(scat_pays),
+                    "scope": "scatter",
+                    "marker": "*",
+                })
+    return out
+
+
+def _fkwr_extract_reel_strip(by_row, header_row: int) -> list[list[dict]]:
+    """FKWR reel strip layout (one set, variable per-reel row count):
+
+      header_row+2  : 'Reel 1' .. 'Reel 5' at cols 2,4,6,8,10 (B,D,F,H,J)
+                      'Weights'                at cols 3,5,7,9,11 (C,E,G,I,K)
+      header_row+3+ : index in col A; symbol col 2,4,6,8,10; weight col 3,5,7,9,11
+      <end>         : 'Total' marker in col 2 with per-reel counts at 3,5,7,9,11
+    """
+    data_start = header_row + 3
+    reel_sym_cols = [2, 4, 6, 8, 10]
+    reel_w_cols = [3, 5, 7, 9, 11]
+    reels: list[list[dict]] = [[] for _ in range(5)]
+    r = data_start
+    max_iter = 500
+    while max_iter > 0:
+        max_iter -= 1
+        if cell_s(by_row, r, 2) == "Total":
+            break
+        any_sym = False
+        for i, sc in enumerate(reel_sym_cols):
+            sym = cell_s(by_row, r, sc)
+            w = cell_n(by_row, r, reel_w_cols[i])
+            if sym:
+                reels[i].append({"symbol": sym,
+                                 "weight": int(w) if w is not None else 1})
+                any_sym = True
+        if not any_sym:
+            # Blank padding row — check ahead for Total
+            r2 = r + 1
+            if cell_s(by_row, r2, 2) == "Total":
+                break
+        r += 1
+    return reels
+
+
+def _fkwr_extract_fort_knox_average(by_row, bm: int = 1) -> tuple[float | None, float | None]:
+    """Extract Fort Knox bonus avg pay + trigger probability for a given BM.
+
+    Trigger Table at row 462..465: B/C cols. Yes weight / Total weight = trigger prob.
+    Award Table at rows 471..485 (BM 1..5) and 490..504 (BM 6..10) etc.
+    Average Pay row for BM=1 sits at row 486 col C.
+    """
+    trigger_prob = None
+    yes_w = cell_n(by_row, 463, 3)
+    total_w = cell_n(by_row, 465, 3)
+    if yes_w and total_w:
+        trigger_prob = yes_w / total_w
+    # BM=1 avg pay at row 486 col C (3)
+    avg_pay = None
+    if bm == 1:
+        avg_pay = cell_n(by_row, 486, 3)
+    return avg_pay, trigger_prob
+
+
+def build_fort_knox_wolf_run(swid_idx: int) -> dict:
+    sheet_dir = (
+        CORPUS / "fort-knox-wolf-run" / "ultimate_extract" / "sheets"
+        / f"PAR_00{swid_idx}"
+    )
+    by_row = load_cells(sheet_dir / "cells.json")
+
+    # Meta — see corpus PAR_001/002 cells.json layout:
+    #   A1   = game name
+    #   C3   = SWID
+    #   L1/M1 = Hold label/value           (col 12/13, row 1)
+    #   L2/M2 = All-line Hit Freq
+    #   L3/M3 = All-line Win Freq
+    #   row 13: BM=1 RTP breakdown (C..G), G = total RTP
+    #   row 12 has the headers.
+    name = cell_s(by_row, 1, 1).strip() or "Fort Knox Wolf Run"
+    swid = cell_s(by_row, 3, 3)
+    hold = cell_n(by_row, 1, 13)
+    hit_freq = cell_n(by_row, 2, 13)
+    win_freq = cell_n(by_row, 3, 13)
+    # BM=1 row 13: B=BM, C=Base RTP, D=Bonus RTP, E=Fort Knox RTP, F=Increment, G=Total
+    rtp_base = cell_n(by_row, 13, 3)
+    rtp_fs_bonus = cell_n(by_row, 13, 4)
+    rtp_fort_knox = cell_n(by_row, 13, 5)
+    increment = cell_n(by_row, 13, 6)
+    rtp_total = cell_n(by_row, 13, 7)
+    progressive_odds_bm1 = cell_n(by_row, 13, 8)
+
+    # Paytable: base game block rows 67..99 (line wins); scatter at row 101
+    base_paytable = _fkwr_extract_paytable(by_row, 67, 99, scatter_row=101)
+    base_paytable_total_rtp = cell_n(by_row, 102, 10)
+    # FS paytable (rows 145..177 line wins, scatter at row 179)
+    fs_paytable = _fkwr_extract_paytable(by_row, 145, 177, scatter_row=179)
+
+    # Reel strips
+    # Base Game Reel Strips header at row 198 col 2; reel strips start at row ~200.
+    base_strip = _fkwr_extract_reel_strip(by_row, 198)
+    # Bonus Reel Strips header at row 323; strips start ~325.
+    fs_strip = _fkwr_extract_reel_strip(by_row, 323)
+
+    # Symbols
+    symbols_seen: set[str] = set()
+    for rs in base_strip:
+        for stop in rs:
+            symbols_seen.add(stop["symbol"])
+    for rs in fs_strip:
+        for stop in rs:
+            symbols_seen.add(stop["symbol"])
+    # Vendor uses both 'Whitewolf' and 'WhiteWolf' (paytable rows 73..75) — alias.
+    # Keep both as distinct symbol entries so the IR doesn't lose paytable rows.
+    symbols_seen.add("WildWolf")
+    symbols_seen.add("Bonus")
+    sym_list = [s for s in FKWR_SYMBOLS if s in symbols_seen]
+    for s in sorted(symbols_seen - set(FKWR_SYMBOLS)):
+        sym_list.append(s)
+    symbols: list[dict] = []
+    for sid in sym_list:
+        role = _fkwr_classify_role(sid)
+        entry: dict = {"id": sid, "name": sid, "role": role}
+        if role == "wild":
+            entry["substitutes"] = ["*"]
+            entry["substitutes_except"] = ["Bonus"]
+        symbols.append(entry)
+
+    # Fort Knox bonus stats
+    fk_avg_pay, fk_trigger_prob = _fkwr_extract_fort_knox_average(by_row, bm=1)
+
+    # Features
+    #   ▸ Free Spins: 3 Bonus on middle reels (2,3,4) pay 2x total bet
+    #     and trigger 5 free spins; retrigger 5 spins up to 255 max.
+    #   ▸ Hold-and-Win (Fort Knox Bonus): randomly triggered on non-Bonus spins.
+    #     Awards: Progressive / Platinum / Gold / Silver / Copper with No Boost,
+    #     Boost A, Boost B variants. Progressive odds 1 in 7.5M at BM=1.
+    features = [
+        {
+            "kind": "free_spins",
+            "trigger_symbol": "Bonus",
+            "trigger_count_min": 3,
+            "initial_spins": 5,
+            "retrigger_spins": 5,
+            "max_total_spins": 255,
+            "reel_bank": "fs",
+            "scatter_pay_total_bet": 2.0,
+            "fs_paytable": fs_paytable,
+        },
+        {
+            # Encode the Fort Knox Bonus as hold_and_win per W4.12 spec.
+            # The vendor mechanic is a Bernoulli-triggered Hold-and-Win pick
+            # bonus (no actual respin loop — single award per trigger), so
+            # `respins = 0` and `pages = {}` (full per-BM award tables live
+            # in PAR_001 rows 471..485 etc and are evaluator-side data, not
+            # IR-side). Excel BM=1 Average Pay is exposed via
+            # `avg_pay_per_trigger` for closed-form RTP verification.
+            "kind": "hold_and_win",
+            "trigger_symbol": "Bonus",
+            "trigger_count_min": 0,
+            "respins": 0,
+            "pages": {},
+            "trigger_prob": float(fk_trigger_prob) if fk_trigger_prob else None,
+            "avg_pay_per_trigger": float(fk_avg_pay) if fk_avg_pay else None,
+            "fs_trigger_prob": None,
+            "fs_avg_pay_per_trigger": None,
+        },
+        {
+            "kind": "linear_progressive",
+            "odds_at_bm1": float(progressive_odds_bm1) if progressive_odds_bm1 else 7500000.0,
+            "top_award_coins": None,
+            "increment": float(increment) if increment else 0.0,
+        },
+    ]
+
+    ir = {
+        "meta": {
+            "name": name,
+            "vendor": "igt",
+            "swid": swid,
+            "family": "lines",
+            "rtp_total": float(rtp_total) if rtp_total else 0.0,
+            "rtp_breakdown": {
+                "base_game": float(rtp_base or 0.0),
+                "free_spins_bonus": float(rtp_fs_bonus or 0.0),
+                "fort_knox_bonus": float(rtp_fort_knox or 0.0),
+                "increment": float(increment or 0.0),
+                "total": float(rtp_total or 0.0),
+            },
+            "hit_frequency": float(hit_freq or 0.0),
+            "win_frequency": float(win_freq or 0.0),
+            "hold": float(hold or 0.0),
+            "notes": [
+                "4x5 / 40 lines fixed bet for 40 coins times bet multiplier",
+                "Wild Wolf substitutes for all symbols except Bonus",
+                "Bonus on middle reels (2,3,4) triggers 5 free spins (2x total bet)",
+                "Fort Knox Hold-and-Win bonus randomly triggered on non-Bonus spins",
+                "Progressive Top Award at 1 in 7,500,000 at minimum bet",
+            ],
+            "sampling_mode": "physical_strip",
+        },
+        "topology": {"kind": "rectangular", "reels": 5, "rows": 4},
+        "evaluation": {
+            "kind": "lines",
+            "lines": FKWR_PAYLINES,
+            "min_count": 3,
+        },
+        "symbols": symbols,
+        "reels": {
+            "base": [{"set": 1, "reels": base_strip, "label": "BG"}],
+            "base_weights": {
+                "weights": [{"set": 1, "weight": 1}],
+                "total": 1,
+                "initial_set": 1,
+            },
+            "fs": [{"set": 1, "reels": fs_strip, "label": "FS"}],
+            "fs_weights": {
+                "weights": [{"set": 1, "weight": 1}],
+                "total": 1,
+                "initial_set": 1,
+            },
+        },
+        "paytable": base_paytable,
+        "features": features,
+        "bet_table": {
+            "lines": 40,
+            "multipliers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30,
+                            40, 50, 70, 80, 100, 120, 150, 160, 200, 300],
+            "total_bets": [40.0, 80.0, 120.0, 160.0, 200.0, 240.0, 280.0,
+                           320.0, 360.0, 400.0, 600.0, 800.0, 1000.0, 1200.0,
+                           1600.0, 2000.0, 2800.0, 3200.0, 4000.0, 4800.0,
+                           6000.0, 6400.0, 8000.0, 12000.0],
+        },
+    }
+    # Stash the base paytable RTP total for cross-checks (independent of meta).
+    if base_paytable_total_rtp is not None:
+        ir["meta"]["base_paytable_total_rtp"] = float(base_paytable_total_rtp)
+    return ir
+
+
 # ──────────────────────── orchestrator ────────────────────────
 
 
@@ -693,16 +1397,63 @@ def build_all(game: str) -> list[dict]:
             results.append({"game": "fortune-coin-boost-classic", "swid": swid,
                             "path": str(path), "fp": fp,
                             "rtp": ir["meta"]["rtp_total"]})
+    if game in ("cash-eruption", "all"):
+        out_dir = GAMES / "cash-eruption" / "out"
+        for swid_idx in (1, 2, 3):
+            ir = build_cash_eruption(swid_idx)
+            swid = ir["meta"]["swid"].replace(" ", "_")
+            path = out_dir / f"cash-eruption.{swid}.slot-sim.ir.json"
+            size, fp = write_ir(ir, path)
+            n_reels_sets = len(ir["reels"]["base"])
+            n_fs_sets = len(ir["reels"]["fs"])
+            n_paytable = len(ir["paytable"])
+            n_symbols = len(ir["symbols"])
+            n_features = len(ir["features"])
+            print(f"[cash-eruption] {swid} -> {path.name} "
+                  f"({size:,}B, fp={fp}, "
+                  f"reel_sets={n_reels_sets}, fs_sets={n_fs_sets}, "
+                  f"paytable={n_paytable}, symbols={n_symbols}, "
+                  f"features={n_features}, "
+                  f"rtp={ir['meta']['rtp_total']:.6f})")
+            results.append({"game": "cash-eruption", "swid": swid,
+                            "path": str(path), "fp": fp,
+                            "rtp": ir["meta"]["rtp_total"]})
+    if game in ("fort-knox-wolf-run", "all"):
+        out_dir = GAMES / "fort-knox-wolf-run" / "out"
+        # Enumerate SWIDs dynamically from corpus.
+        corpus_root = CORPUS / "fort-knox-wolf-run" / "ultimate_extract" / "sheets"
+        sheets = sorted(p.name for p in corpus_root.iterdir()
+                        if p.is_dir() and p.name.startswith("PAR_0"))
+        swid_indices = [int(name.split("_")[-1]) for name in sheets]
+        for swid_idx in swid_indices:
+            ir = build_fort_knox_wolf_run(swid_idx)
+            swid = ir["meta"]["swid"].replace(" ", "_")
+            path = out_dir / f"fort-knox-wolf-run.{swid}.slot-sim.ir.json"
+            size, fp = write_ir(ir, path)
+            n_reels_sets = len(ir["reels"]["base"])
+            n_paytable = len(ir["paytable"])
+            n_features = len(ir["features"])
+            print(f"[fkwr] {swid} -> {path.name} "
+                  f"({size:,}B, fp={fp}, "
+                  f"reel_sets={n_reels_sets}, paytable={n_paytable}, "
+                  f"features={n_features}, "
+                  f"rtp={ir['meta']['rtp_total']:.6f})")
+            results.append({"game": "fort-knox-wolf-run", "swid": swid,
+                            "path": str(path), "fp": fp,
+                            "rtp": ir["meta"]["rtp_total"]})
     return results
 
 
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
-        print("usage: build_ir.py <skeleton-key|fortune-coin-boost-classic|all>",
+        print("usage: build_ir.py "
+              "<skeleton-key|fortune-coin-boost-classic|"
+              "cash-eruption|fort-knox-wolf-run|all>",
               file=sys.stderr)
         return 2
     target = argv[1]
-    if target not in ("skeleton-key", "fortune-coin-boost-classic", "all"):
+    if target not in ("skeleton-key", "fortune-coin-boost-classic",
+                      "cash-eruption", "fort-knox-wolf-run", "all"):
         print(f"unknown target: {target}", file=sys.stderr)
         return 2
     build_all(target)
