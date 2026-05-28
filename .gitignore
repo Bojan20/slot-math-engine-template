@@ -164,6 +164,16 @@ games/*/reports/
 games/*/engine-rust/target/
 games/*/engine-ts/dist/
 games/*/engine-ts/node_modules/
+
+# ─── Ultimate PAR extracts — vendor data stays LOCAL only ───────────
+# tools.par_extract_ultimate dumps every cell of every sheet, including
+# raw paytables, reel strips, and weights. These NEVER leave the machine.
+# The lightweight `essentials.json` / `summary.json` / `full_corpus.json`
+# (already in tree) ARE fine to commit — they're derived aggregate
+# fingerprints, not the raw vendor matrix.
+agents/math-agent/corpus/*/ultimate_extract/
+agents/math-agent/corpus/*/raw/
+agents/math-agent/corpus/*/ultimate_extract.pointer.json
 dist/pilot/
 dist/cert/
 dist/test-cert/
