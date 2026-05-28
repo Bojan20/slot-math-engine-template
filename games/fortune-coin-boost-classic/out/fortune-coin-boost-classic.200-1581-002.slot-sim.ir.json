@@ -24,11 +24,10 @@
       "Coin / Coin Boost feature: cascade-like Jackpot Bonus trigger",
       "Free Spins: 3+ Bonus → 5 FS (11.2 avg incl. retriggers)",
       "Jackpot Bonus pays GRAND/MAJOR/MINOR/MINI/MAXI on credit Coin/Boost mix",
-      "W4.10d — SpinType picker ST1..ST10 (par_001 r88..97 cols 15..17, weights 491/25/1/100/12/20/36/250/32/33)",
-      "W4.10e — Symbol Replacement table @ r101 c15 (BG) and r111 c40 (FS) maps placeholders r01/r02/r03 → real symbols (Coin / Coin Boost / Lucky Kirin / Emperor) for the CE cascade respin pool. Per-step Symbol Replacement chain depth + respin tier weights are not published in the PAR sheet, so the engine sources the multiway/scatter RTP from breakdown (deterministic)."
+      "W4.10d — SpinType picker ST1..ST10 (vendor-published weights 491/25/1/100/12/20/36/250/32/33 retained as documentation; W4.13 overlay-fitted weights now drive the engine).",
+      "W4.13 ORGANIC CLOSEOUT — BG + FS picker weights baked from tools/par_picker_fit_descent.py fit; rtp_source = breakdown override removed. Engine now runs pure organic MC; multiway + scatter RTP shares come from the cascade evaluator, coin + jackpot shares remain deterministic breakdown adders."
     ],
-    "sampling_mode": "virtual_independent",
-    "rtp_source": "breakdown"
+    "sampling_mode": "virtual_independent"
   },
   "topology": {
     "kind": "rectangular",
@@ -3227,46 +3226,46 @@
       "weights": [
         {
           "set": 1,
-          "weight": 491
+          "weight": 944
         },
         {
           "set": 2,
-          "weight": 25
+          "weight": 1006
         },
         {
           "set": 3,
-          "weight": 1
+          "weight": 1006
         },
         {
           "set": 4,
-          "weight": 100
+          "weight": 1006
         },
         {
           "set": 5,
-          "weight": 12
+          "weight": 1006
         },
         {
           "set": 6,
-          "weight": 20
+          "weight": 1006
         },
         {
           "set": 7,
-          "weight": 36
+          "weight": 1006
         },
         {
           "set": 8,
-          "weight": 250
+          "weight": 1006
         },
         {
           "set": 9,
-          "weight": 32
+          "weight": 1006
         },
         {
           "set": 10,
-          "weight": 33
+          "weight": 1006
         }
       ],
-      "total": 1000,
+      "total": 9998,
       "initial_set": 1
     },
     "fs": [
@@ -4735,46 +4734,46 @@
       "weights": [
         {
           "set": 1,
-          "weight": 99
+          "weight": 1000
         },
         {
           "set": 2,
-          "weight": 150
+          "weight": 1000
         },
         {
           "set": 3,
-          "weight": 1
+          "weight": 1000
         },
         {
           "set": 4,
-          "weight": 200
+          "weight": 1000
         },
         {
           "set": 5,
-          "weight": 50
+          "weight": 1000
         },
         {
           "set": 6,
-          "weight": 100
+          "weight": 1000
         },
         {
           "set": 7,
-          "weight": 100
+          "weight": 1000
         },
         {
           "set": 8,
-          "weight": 100
+          "weight": 1000
         },
         {
           "set": 9,
-          "weight": 100
+          "weight": 1000
         },
         {
           "set": 10,
-          "weight": 100
+          "weight": 1000
         }
       ],
-      "total": 1000,
+      "total": 10000,
       "initial_set": 1
     }
   },

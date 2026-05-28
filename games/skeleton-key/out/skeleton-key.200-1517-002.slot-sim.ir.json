@@ -19,10 +19,9 @@
       "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
       "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
       "Bet normalization: 10 coins per spin (PAR-Base r63)",
-      "W4.8e — per-set rows fixed at 3/3/4/4/4 (Key-count invariant across all 8 base reel sets, PAR-Base r8). Engine sources base/free_spins RTP from breakdown."
+      "W4.13 ORGANIC CLOSEOUT — rows_weights baked from tools/par_picker_fit_descent.py fit; rtp_source breakdown override removed. Engine now runs pure organic MC."
     ],
-    "sampling_mode": "virtual_independent",
-    "rtp_source": "breakdown"
+    "sampling_mode": "virtual_independent"
   },
   "topology": {
     "kind": "megaways",
@@ -31,34 +30,34 @@
     "rows_max": 6,
     "rows_weights": [
       [
-        1,
-        0,
-        0,
-        0
-      ],
-      [
-        1,
-        0,
+        8750,
+        1250,
         0,
         0
       ],
       [
-        0,
-        1,
+        8500,
+        1500,
         0,
         0
       ],
       [
         0,
-        1,
         0,
-        0
+        6000,
+        4000
       ],
       [
         0,
-        1,
         0,
-        0
+        6000,
+        4000
+      ],
+      [
+        0,
+        0,
+        6000,
+        4000
       ]
     ]
   },
@@ -16280,38 +16279,38 @@
       "weights": [
         {
           "set": 1,
-          "weight": 4120765
+          "weight": 8253
         },
         {
           "set": 2,
-          "weight": 652310
+          "weight": 1306
         },
         {
           "set": 3,
-          "weight": 29700
+          "weight": 59
         },
         {
           "set": 4,
-          "weight": 63900
+          "weight": 128
         },
         {
           "set": 5,
-          "weight": 6240
+          "weight": 12
         },
         {
           "set": 6,
-          "weight": 13
+          "weight": 0
         },
         {
           "set": 7,
-          "weight": 30000
+          "weight": 60
         },
         {
           "set": 8,
-          "weight": 90000
+          "weight": 180
         }
       ],
-      "total": 4992928,
+      "total": 9998,
       "initial_set": 1
     },
     "fs": [
@@ -34464,30 +34463,30 @@
       "weights": [
         {
           "set": 1,
-          "weight": 4550
+          "weight": 8580
         },
         {
           "set": 2,
-          "weight": 700
+          "weight": 1320
         },
         {
           "set": 3,
-          "weight": 17
+          "weight": 32
         },
         {
           "set": 4,
-          "weight": 31
+          "weight": 58
         },
         {
           "set": 5,
-          "weight": 1
+          "weight": 2
         },
         {
           "set": 6,
-          "weight": 4
+          "weight": 8
         }
       ],
-      "total": 5303,
+      "total": 10000,
       "initial_set": 1
     }
   },

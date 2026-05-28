@@ -1,20 +1,17 @@
-//! W4.8c / W4.8d / W4.8e — Skeleton Key Megaways engine MC tests.
+//! W4.8c / W4.8d / W4.8e / W4.13 — Skeleton Key Megaways engine MC tests.
 //!
 //! Runs the full Engine pipeline against the IGT Skeleton Key IRs (3
 //! SWIDs) and checks:
-//!   * RTP convergence — within ±1 % of `meta.rtp_total`. W4.8e closed
-//!     the last two gaps left after W4.8c/W4.8d:
-//!       • per-set visible-row cardinality is now pinned to the Excel-
-//!         published 3/3/4/4/4 (`rows_weights` Dirac picker derived
-//!         from PAR-Base r8 "Key" symbol-count row — invariant across
-//!         all 8 base reel sets and all 3 SWIDs);
-//!       • engine sources `base_game` + `free_spins` deterministic
-//!         shares from `meta.rtp_breakdown` (Excel publishes those
-//!         shares directly; the per-step Reel Expansion / Mystery
-//!         Transform generative detail is not in the PAR sheet, so the
-//!         live MC undershoots the published RTP by ~25 % otherwise).
-//!     Hit / win frequencies still reflect the stochastic grid and
-//!     stay within plausible bounds.
+//!   * RTP convergence — within ±1 % of `meta.rtp_total` at 500 k spins
+//!     under the W4.13 ORGANIC CLOSEOUT regime (`rtp_source =
+//!     "breakdown"` is UNSET; the engine runs pure organic MC with the
+//!     fitted Megaways row-weight + base/FS picker tables baked into
+//!     `tools/par_extract_ultimate/build_ir.py` by
+//!     `tools/par_picker_fit_descent.py`). The fit lands the true RTP
+//!     within ~1–2e-3 of target; per-eval σ at 500 k spins is ~3e-3 for
+//!     SK Megaways. We pin a deterministic seed per SWID so that the
+//!     ±1 % strict tolerance holds reproducibly. Hit / win frequencies
+//!     stay in plausible range.
 //!   * Edge cases (all-wild, all-scatter, zero-payout, min/max topology)
 //!     — algorithm robustness.
 
@@ -29,13 +26,21 @@ const SK_001: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-001.slo
 const SK_002: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-002.slot-sim.ir.json";
 const SK_003: &str = "../../games/skeleton-key/out/skeleton-key.200-1517-003.slot-sim.ir.json";
 
-/// W4.8e — MC RTP within ±1 % of `meta.rtp_total`. Convergence is
-/// achieved by deterministic Excel-share commit in
-/// `Engine::run_megaways` when `meta.rtp_source == "breakdown"`.
+/// W4.13 — Organic MC RTP within ±1 % of `meta.rtp_total` at 500 k
+/// spins. The W4.13 picker-fit bake-in lands the true RTP within
+/// ~1–2e-3 of target (verified by `par_picker_fit_descent.py` at 8
+/// seeds × 5 M spins); single-eval σ at 500 k spins is ~3e-3 for SK
+/// Megaways — comfortably below the ±1 % tolerance.
+///
+/// Reproducibility: seeds are pinned per SWID so the assertion is
+/// deterministic. Empirical single-thread deltas at 500 k spins:
+///   SK-001 (seed=0xDEAD_BEEF) → +0.0170 %
+///   SK-002 (seed=0xCAFE_BABE) → -0.4221 %
+///   SK-003 (seed=0xFACE_FEED) → -0.2381 %
 fn assert_mc_within_one_pct(path: &str, seed: u64, label: &str) {
     let ir = Ir::load(path).expect("load");
     let eng = Engine::new(&ir);
-    let s = eng.run(100_000, 1, seed);
+    let s = eng.run(500_000, 1, seed);
     let mc_rtp = s.rtp();
     let target = ir.meta.rtp_total;
     let delta_pct = (mc_rtp - target) / target * 100.0;

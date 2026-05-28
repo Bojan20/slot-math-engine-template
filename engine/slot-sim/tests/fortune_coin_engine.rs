@@ -1,16 +1,22 @@
-//! W4.10c / W4.10d / W4.10e — Fortune Coin Boost Classic engine MC tests.
+//! W4.10c / W4.10d / W4.10e / W4.13 — Fortune Coin Boost Classic
+//! engine MC tests.
 //!
 //! Runs the full Engine pipeline (Ways + cascade + Coin/Boost jackpot
 //! contribution) against the IGT Fortune Coin IRs (4 SWIDs) and checks:
-//!   * RTP convergence — within ±1 % of `meta.rtp_total`. W4.10e closed
-//!     the last gap by sourcing the multiway + scatter + coin + jackpot
-//!     shares deterministically from `meta.rtp_breakdown` when
-//!     `meta.rtp_source == "breakdown"`. The Coin Boost Symbol-
-//!     Replacement cascade (par_001 r101 c15 + r111 c40) is a CE-pool
-//!     respin chain whose per-step weights are not externally available
-//!     in the PAR sheet, so the live MC undershoots the published
-//!     multiway share by ~30 % otherwise. Hit/win frequencies still
-//!     reflect the stochastic grid.
+//!   * RTP convergence — within ±1 % of `meta.rtp_total` at 500 k spins
+//!     under the W4.13 ORGANIC CLOSEOUT regime (`rtp_source` UNSET,
+//!     multiway + scatter shares now sourced from the cascade MC with
+//!     fitted SpinType_BG / SpinType_FG picker weights baked into
+//!     `tools/par_extract_ultimate/build_ir.py` via
+//!     `tools/par_picker_fit_descent.py`). The coin + jackpot
+//!     deterministic shares remain in `meta.rtp_breakdown` and are
+//!     added by the engine per-spin (those values were never
+//!     stochastic). Seeds are pinned per SWID so the ±1 % strict
+//!     tolerance is reproducible. Hit/win frequencies reflect the
+//!     stochastic grid and have a structural ~9 % deficit vs Excel
+//!     because the engine does not count Coin landings as hits
+//!     (Excel's accounting does); that's a known residual deferred to
+//!     a future Rust pass.
 //!   * Edge cases 1-5, 8 — algorithm robustness.
 
 use slot_sim::ir::{Evaluation, Ir, Topology};
@@ -25,10 +31,21 @@ const FC_002: &str = "../../games/fortune-coin-boost-classic/out/fortune-coin-bo
 const FC_003: &str = "../../games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-003.slot-sim.ir.json";
 const FC_004: &str = "../../games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-004.slot-sim.ir.json";
 
+/// W4.13 — Organic MC RTP within ±1 % of `meta.rtp_total` at 500 k
+/// spins. The fitted SpinType picker weights baked into `build_ir.py`
+/// land the true RTP within ~5e-4 of target; 500 k single-eval σ is
+/// ~2e-3 for the FC ways-cascade family — comfortably below ±1 %.
+///
+/// Reproducibility: seeds are pinned per SWID. Empirical single-thread
+/// deltas at 500 k spins:
+///   FC-001 (seed=0xF001) → -0.0483 %
+///   FC-002 (seed=0xF002) → -0.1168 %
+///   FC-003 (seed=0xF003) → +0.6019 %
+///   FC-004 (seed=0xF004) → -0.1259 %
 fn assert_mc_within_one_pct(path: &str, seed: u64) {
     let ir = Ir::load(path).expect("load");
     let eng = Engine::new(&ir);
-    let s = eng.run(100_000, 1, seed);
+    let s = eng.run(500_000, 1, seed);
     let mc_rtp = s.rtp();
     let target = ir.meta.rtp_total;
     let delta_pct = (mc_rtp - target) / target * 100.0;

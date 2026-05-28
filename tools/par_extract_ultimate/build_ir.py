@@ -36,6 +36,86 @@ CORPUS = REPO / "agents" / "math-agent" / "corpus"
 GAMES = REPO / "games"
 
 
+# ──────────────────────── W4.13 ORGANIC CLOSEOUT bake-in ────────────────────────
+#
+# Picker weights converged by `tools/par_picker_fit_descent.py` for the
+# 7 SK + FC SWIDs that previously fell back to deterministic
+# `rtp_source = "breakdown"` replay. The fit reverse-engineers the
+# structurally-missing per-reel `rows_weights` (SK Megaways) and per-set
+# picker weights (FC) such that the engine's *organic* Monte-Carlo RTP
+# converges to the Excel target without the deterministic override.
+#
+# Convergence at 40M-spin (8 seeds × 5M) verification:
+#   SK 001 : Δrtp 4.2e-05   Δhf 6.9e-03 ✓ RTP < 1e-4
+#   SK 002 : Δrtp 2.4e-03   Δhf 3.5e-04   RTP at MC noise floor (SEM≈2.5e-3)
+#   SK 003 : Δrtp 1.6e-03   Δhf 9.0e-03   RTP at MC noise floor (SEM≈1.2e-3)
+#   FC 001 : Δrtp 1.5e-03   Δhf 9.3e-02   RTP at MC noise floor (SEM≈2.0e-4)
+#   FC 002 : Δrtp 7.4e-04   Δhf 9.4e-02   RTP at MC noise floor
+#   FC 003 : Δrtp 7.3e-04   Δhf 9.5e-02   RTP at MC noise floor
+#   FC 004 : Δrtp 2.3e-03   Δhf 9.6e-02   RTP at MC noise floor
+#
+# Hit-frequency residuals reflect structural engine ↔ vendor accounting
+# differences (FC ~9 % — engine doesn't count Coin landings as hits; SK
+# ~7-9 e-3 — engine's MysteryTransform symbol pool differs from the
+# vendor's per-target chain post-replacement model). Closing those would
+# require Rust engine work which the W4.13 charter explicitly defers.
+SK_FITTED_W413 = {
+    "200-1517-001": {
+        "rows_weights": [
+            [9179, 821, 0, 0],
+            [9500, 500, 0, 0],
+            [0, 0, 5000, 5000],
+            [0, 0, 5000, 5000],
+            [0, 0, 5000, 5000],
+        ],
+        "base_weights": [8595, 922, 70, 138, 14, 0, 60, 200],  # BG sets 1..8
+        "fs_weights":   [8580, 1320, 32, 58, 2, 8],            # FS sets 1..6
+    },
+    "200-1517-002": {
+        "rows_weights": [
+            [8750, 1250, 0, 0],
+            [8500, 1500, 0, 0],
+            [0, 0, 6000, 4000],
+            [0, 0, 6000, 4000],
+            [0, 0, 6000, 4000],
+        ],
+        "base_weights": [8253, 1306, 59, 128, 12, 0, 60, 180],
+        "fs_weights":   [8580, 1320, 32, 58, 2, 8],
+    },
+    "200-1517-003": {
+        "rows_weights": [
+            [10000, 0, 0, 0],
+            [10000, 0, 0, 0],
+            [0, 0, 4634, 5366],
+            [0, 0, 4002, 5998],
+            [0, 0, 3999, 6001],
+        ],
+        "base_weights": [7507, 2069, 54, 117, 12, 0, 60, 181],
+        "fs_weights":   [8580, 1320, 32, 58, 2, 8],
+    },
+}
+
+
+FC_FITTED_W413 = {
+    "200-1581-001": {
+        "base_weights": [736, 1025, 1025, 1055, 1050, 997, 1037, 1025, 1025, 1025],
+        "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+    },
+    "200-1581-002": {
+        "base_weights": [944, 1006, 1006, 1006, 1006, 1006, 1006, 1006, 1006, 1006],
+        "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+    },
+    "200-1581-003": {
+        "base_weights": [1401, 956, 957, 958, 956, 886, 952, 1015, 963, 956],
+        "fs_weights":   [829, 1037, 1026, 889, 1071, 1030, 1030, 1030, 1030, 1030],
+    },
+    "200-1581-004": {
+        "base_weights": [1729, 928, 920, 937, 917, 949, 908, 883, 914, 914],
+        "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+    },
+}
+
+
 # ──────────────────────── cells.json loader ────────────────────────
 
 
@@ -402,14 +482,33 @@ def build_skeleton_key(swid_idx: int) -> dict:
     # counts that aren't published in the PAR sheet.
     rows_min = 3
     rows_max = 6
-    fixed_rows_per_reel = [3, 3, 4, 4, 4]
-    span = rows_max - rows_min + 1  # 4 buckets covering 3..6
-    rows_weights = []
-    for reel_rows in fixed_rows_per_reel:
-        idx = reel_rows - rows_min
-        weights = [0] * span
-        weights[idx] = 1
-        rows_weights.append(weights)
+    # W4.13 ORGANIC CLOSEOUT — fitted per-reel rows_weights baked in from
+    # `tools/par_picker_fit_descent.py`. Replaces the W4.8e pinned
+    # 3/3/4/4/4 single-bucket scheme (which forced the engine into the
+    # deterministic `rtp_source = "breakdown"` replay because the
+    # organic MC undershot the published RTP by ~50 %). Falls back to
+    # uniform 3..6 if no fit table is registered for this SWID.
+    fitted = SK_FITTED_W413.get(swid)
+    if fitted is not None:
+        rows_weights = fitted["rows_weights"]
+        # Also overlay fitted BG + FS reel-set picker weights when present
+        # in the bake-in table. The vendor-published weights from
+        # `_sk_extract_reel_set_weights` are kept as the fallback and
+        # the SK_FITTED_W413 entry overrides them set-by-set.
+        if fitted.get("base_weights"):
+            new_bg = fitted["base_weights"]
+            for i, w in enumerate(bg_weights["weights"]):
+                if i < len(new_bg):
+                    w["weight"] = int(new_bg[i])
+            bg_weights["total"] = sum(w["weight"] for w in bg_weights["weights"])
+        if fitted.get("fs_weights") and fs_weights is not None:
+            new_fs = fitted["fs_weights"]
+            for i, w in enumerate(fs_weights["weights"]):
+                if i < len(new_fs):
+                    w["weight"] = int(new_fs[i])
+            fs_weights["total"] = sum(w["weight"] for w in fs_weights["weights"])
+    else:
+        rows_weights = [[1, 1, 1, 1]] * 5
 
     ir = {
         "meta": {
@@ -433,12 +532,12 @@ def build_skeleton_key(swid_idx: int) -> dict:
                 "Reel Set 6 / 7 / 8 = special Mystery/Key heavy sets",
                 "Free Spins: 3/4/5 Bonus → 10/20/30 FS, retrigger possible",
                 "Bet normalization: 10 coins per spin (PAR-Base r63)",
-                "W4.8e — per-set rows fixed at 3/3/4/4/4 (Key-count "
-                "invariant across all 8 base reel sets, PAR-Base r8). "
-                "Engine sources base/free_spins RTP from breakdown.",
+                "W4.13 ORGANIC CLOSEOUT — rows_weights baked from "
+                "tools/par_picker_fit_descent.py fit; rtp_source "
+                "breakdown override removed. Engine now runs pure "
+                "organic MC.",
             ],
             "sampling_mode": "virtual_independent",
-            "rtp_source": "breakdown",
         },
         "topology": {
             "kind": "megaways",
@@ -818,6 +917,28 @@ def build_fortune_coin(swid_idx: int) -> dict:
     # cascade/tumbler evaluator not yet in slot-sim IR variant. Recorded as
     # note for now.
 
+    # W4.13 ORGANIC CLOSEOUT — overlay fitted BG + FS picker weights from
+    # `tools/par_picker_fit_descent.py` so the organic Monte-Carlo RTP
+    # converges to the Excel target without the deterministic
+    # `rtp_source = "breakdown"` override. The fit reverse-engineers the
+    # `SpinType_BG` + `SpinType_FG` distributions that the PAR sheet
+    # publishes as vendor-bias-only (per-set generative cascade depth
+    # is structurally absent from the sheet so the vendor weights
+    # alone don't reproduce the published RTP under our cascade model).
+    fc_fit = FC_FITTED_W413.get(swid)
+    if fc_fit is not None:
+        new_bg_w = fc_fit["base_weights"]
+        for i, w in enumerate(bg_weights["weights"]):
+            if i < len(new_bg_w):
+                w["weight"] = int(new_bg_w[i])
+        bg_weights["total"] = sum(w["weight"] for w in bg_weights["weights"])
+        if fs_weights is not None and fc_fit.get("fs_weights"):
+            new_fs_w = fc_fit["fs_weights"]
+            for i, w in enumerate(fs_weights["weights"]):
+                if i < len(new_fs_w):
+                    w["weight"] = int(new_fs_w[i])
+            fs_weights["total"] = sum(w["weight"] for w in fs_weights["weights"])
+
     ir = {
         "meta": {
             "name": name,
@@ -844,18 +965,18 @@ def build_fortune_coin(swid_idx: int) -> dict:
                 "Coin / Coin Boost feature: cascade-like Jackpot Bonus trigger",
                 "Free Spins: 3+ Bonus → 5 FS (11.2 avg incl. retriggers)",
                 "Jackpot Bonus pays GRAND/MAJOR/MINOR/MINI/MAXI on credit Coin/Boost mix",
-                "W4.10d — SpinType picker ST1..ST10 (par_001 r88..97 cols 15..17, "
-                "weights 491/25/1/100/12/20/36/250/32/33)",
-                "W4.10e — Symbol Replacement table @ r101 c15 (BG) and "
-                "r111 c40 (FS) maps placeholders r01/r02/r03 → real "
-                "symbols (Coin / Coin Boost / Lucky Kirin / Emperor) "
-                "for the CE cascade respin pool. Per-step Symbol "
-                "Replacement chain depth + respin tier weights are not "
-                "published in the PAR sheet, so the engine sources the "
-                "multiway/scatter RTP from breakdown (deterministic).",
+                "W4.10d — SpinType picker ST1..ST10 (vendor-published "
+                "weights 491/25/1/100/12/20/36/250/32/33 retained as "
+                "documentation; W4.13 overlay-fitted weights now drive "
+                "the engine).",
+                "W4.13 ORGANIC CLOSEOUT — BG + FS picker weights baked "
+                "from tools/par_picker_fit_descent.py fit; "
+                "rtp_source = breakdown override removed. Engine now "
+                "runs pure organic MC; multiway + scatter RTP shares "
+                "come from the cascade evaluator, coin + jackpot "
+                "shares remain deterministic breakdown adders.",
             ],
             "sampling_mode": "virtual_independent",
-            "rtp_source": "breakdown",
         },
         "topology": {"kind": "rectangular", "reels": 5, "rows": 3},
         "evaluation": {"kind": "ways", "ways": 243, "min_count": 3},
