@@ -424,6 +424,15 @@ pub struct Meta {
     /// `run_ways_cascade` (Coin / Boost jackpot share).
     #[serde(default)]
     pub rtp_source: Option<String>,
+    /// W4.14 — When `true`, the engine counts any spin whose grid
+    /// contains ≥ 1 symbol with `role == "cash"` as a HIT for hit-
+    /// frequency accounting (without altering RTP). IGT Fortune Coin
+    /// Boost Classic publishes hit_frequency including Coin / Coin
+    /// Boost landings (because every Coin pays a credit-bonus), so
+    /// the engine must mirror that to converge to vendor hit_freq.
+    /// Default `false` so CE / FKWR / SK behavior is unchanged.
+    #[serde(default)]
+    pub cash_counts_as_hit: bool,
 }
 
 // ───────────────────────────── ROOT IR ─────────────────────────────

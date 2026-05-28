@@ -1,4 +1,4 @@
-//! W4.10c / W4.10d / W4.10e / W4.13 — Fortune Coin Boost Classic
+//! W4.10c / W4.10d / W4.10e / W4.13 / W4.14 — Fortune Coin Boost Classic
 //! engine MC tests.
 //!
 //! Runs the full Engine pipeline (Ways + cascade + Coin/Boost jackpot
@@ -12,11 +12,14 @@
 //!     deterministic shares remain in `meta.rtp_breakdown` and are
 //!     added by the engine per-spin (those values were never
 //!     stochastic). Seeds are pinned per SWID so the ±1 % strict
-//!     tolerance is reproducible. Hit/win frequencies reflect the
-//!     stochastic grid and have a structural ~9 % deficit vs Excel
-//!     because the engine does not count Coin landings as hits
-//!     (Excel's accounting does); that's a known residual deferred to
-//!     a future Rust pass.
+//!     tolerance is reproducible.
+//!   * Hit-frequency convergence (W4.14 EVALUATOR CLOSEOUT) — within
+//!     ±1e-2 of `meta.hit_frequency` after the engine learned to count
+//!     ≥ 1 Coin / Coin Boost landings as hits (the vendor's bonus-
+//!     trigger accounting). Toggled via `meta.cash_counts_as_hit`
+//!     written by `build_ir.py`'s FC builder; LP-refitted picker
+//!     weights make both RTP and hit_freq deltas converge to zero
+//!     simultaneously per SWID.
 //!   * Edge cases 1-5, 8 — algorithm robustness.
 
 use slot_sim::ir::{Evaluation, Ir, Topology};
@@ -70,6 +73,55 @@ fn fortune_coin_002_mc_within_one_pct() { assert_mc_within_one_pct(FC_002, 0xF00
 fn fortune_coin_003_mc_within_one_pct() { assert_mc_within_one_pct(FC_003, 0xF003); }
 #[test]
 fn fortune_coin_004_mc_within_one_pct() { assert_mc_within_one_pct(FC_004, 0xF004); }
+
+/// W4.14 — Hit-frequency strict tolerance. The W4.14 evaluator
+/// closeout wired `meta.cash_counts_as_hit = true` for IGT Fortune
+/// Coin Boost Classic and re-fitted picker weights so that the
+/// engine's cash-on-grid hit rate converges to the vendor target.
+/// The pre-W4.14 engine undershot vendor hit_freq by ~9.3 e-2 (it
+/// only counted line / scatter / FS pays as hits).
+fn assert_mc_hit_freq_within_1e_2(path: &str, seed: u64) {
+    let ir = Ir::load(path).expect("load");
+    let eng = Engine::new(&ir);
+    let s = eng.run(500_000, 1, seed);
+    let mc_hf = s.hit_freq();
+    let target = ir.meta.hit_frequency;
+    let delta = (mc_hf - target).abs();
+    println!(
+        "{}: mc_hit_freq={:.6} target={:.6} delta={:.6}",
+        path, mc_hf, target, delta
+    );
+    assert!(
+        delta <= 1e-2,
+        "MC hit_freq delta {:.6} exceeds 1e-2 (mc={:.6} target={:.6})",
+        delta, mc_hf, target
+    );
+}
+
+#[test]
+fn fortune_coin_001_hit_freq_w414_within_1e_2() { assert_mc_hit_freq_within_1e_2(FC_001, 0xF001); }
+#[test]
+fn fortune_coin_002_hit_freq_w414_within_1e_2() { assert_mc_hit_freq_within_1e_2(FC_002, 0xF002); }
+#[test]
+fn fortune_coin_003_hit_freq_w414_within_1e_2() { assert_mc_hit_freq_within_1e_2(FC_003, 0xF003); }
+#[test]
+fn fortune_coin_004_hit_freq_w414_within_1e_2() { assert_mc_hit_freq_within_1e_2(FC_004, 0xF004); }
+
+/// W4.14 — `meta.cash_counts_as_hit` flag must round-trip from the
+/// IR JSON so the engine's auxiliary cash-on-grid hit rule fires for
+/// the FC family.
+#[test]
+fn fortune_coin_cash_counts_as_hit_flag_set() {
+    for path in &[FC_001, FC_002, FC_003, FC_004] {
+        let ir = Ir::load(path).expect("load");
+        assert!(
+            ir.meta.cash_counts_as_hit,
+            "{}: meta.cash_counts_as_hit must be true for the W4.14 \
+             vendor hit_freq rule to fire",
+            path
+        );
+    }
+}
 
 #[test]
 fn fortune_coin_jackpot_baseline_recovered() {

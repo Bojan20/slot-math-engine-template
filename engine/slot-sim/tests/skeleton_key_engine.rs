@@ -79,6 +79,46 @@ fn skeleton_key_003_mc_rtp_within_one_pct() {
     assert_mc_within_one_pct(SK_003, 0xFACE_FEED, "SK-003");
 }
 
+/// W4.14 — Hit-frequency strict tolerance. The Mystery transform
+/// path (`MegawaysGrid::apply_mystery_transform`) replaces every
+/// Mystery cell with a single target sampled from the active
+/// reel-set's per-set distribution. The transform fires on every
+/// spin that lands ≥ 1 Mystery so the post-transform grid already
+/// gives the vendor hit_freq within ±1e-2 across all 3 SK SWIDs
+/// (verified at 500 k spins per seed below).
+fn assert_mc_hit_freq_within_1e_2(path: &str, seed: u64, label: &str) {
+    let ir = Ir::load(path).expect("load");
+    let eng = Engine::new(&ir);
+    let s = eng.run(500_000, 1, seed);
+    let mc_hf = s.hit_freq();
+    let target = ir.meta.hit_frequency;
+    let delta = (mc_hf - target).abs();
+    println!(
+        "{} MC: hit_freq={:.6} target={:.6} delta={:.6}",
+        label, mc_hf, target, delta
+    );
+    assert!(
+        delta <= 1e-2,
+        "{} MC hit_freq delta {:.6} exceeds 1e-2 (mc={:.6} target={:.6})",
+        label, delta, mc_hf, target
+    );
+}
+
+#[test]
+fn skeleton_key_001_hit_freq_w414_within_1e_2() {
+    assert_mc_hit_freq_within_1e_2(SK_001, 0xDEAD_BEEF, "SK-001");
+}
+
+#[test]
+fn skeleton_key_002_hit_freq_w414_within_1e_2() {
+    assert_mc_hit_freq_within_1e_2(SK_002, 0xCAFE_BABE, "SK-002");
+}
+
+#[test]
+fn skeleton_key_003_hit_freq_w414_within_1e_2() {
+    assert_mc_hit_freq_within_1e_2(SK_003, 0xFACE_FEED, "SK-003");
+}
+
 /// W4.8c — Megaways topology consistency: RTPs descend with hold (Excel:
 /// SWID-001 highest payout, SWID-003 lowest).
 #[test]

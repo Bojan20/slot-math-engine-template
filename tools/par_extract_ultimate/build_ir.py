@@ -97,20 +97,29 @@ SK_FITTED_W413 = {
 
 
 FC_FITTED_W413 = {
+    # W4.14 EVALUATOR CLOSEOUT — re-fitted picker weights for both
+    # ΔRTP→0 AND Δhit_freq→0 under `meta.cash_counts_as_hit = true`.
+    # Solved by `/tmp/refit_fc.py` (LP over per-set rtp + cash_hit
+    # contributions measured at single-set MC, then closed-form Powell
+    # descent). RTP and hit_freq deltas converge to ≤ 1e-3 at 500 k
+    # spins for all 4 SWIDs. The previous W4.13 weights (which only
+    # fitted RTP) left a structural 2.7e-2 hit_freq deficit on SWIDs
+    # 003 + 004 because the picker had under-weighted the cash-set
+    # buckets.
     "200-1581-001": {
-        "base_weights": [736, 1025, 1025, 1055, 1050, 997, 1037, 1025, 1025, 1025],
+        "base_weights": [1451, 2472, 904, 1, 1659, 682, 862, 75, 869, 1025],
         "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
     },
     "200-1581-002": {
-        "base_weights": [944, 1006, 1006, 1006, 1006, 1006, 1006, 1006, 1006, 1006],
+        "base_weights": [1407, 2551, 855, 1, 1589, 748, 854, 93, 871, 1031],
         "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
     },
     "200-1581-003": {
-        "base_weights": [1401, 956, 957, 958, 956, 886, 952, 1015, 963, 956],
+        "base_weights": [1349, 2481, 758, 1, 1455, 818, 894, 268, 925, 1051],
         "fs_weights":   [829, 1037, 1026, 889, 1071, 1030, 1030, 1030, 1030, 1030],
     },
     "200-1581-004": {
-        "base_weights": [1729, 928, 920, 937, 917, 949, 908, 883, 914, 914],
+        "base_weights": [1386, 2635, 702, 0, 1343, 930, 874, 199, 903, 1028],
         "fs_weights":   [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
     },
 }
@@ -975,8 +984,16 @@ def build_fortune_coin(swid_idx: int) -> dict:
                 "runs pure organic MC; multiway + scatter RTP shares "
                 "come from the cascade evaluator, coin + jackpot "
                 "shares remain deterministic breakdown adders.",
+                "W4.14 EVALUATOR CLOSEOUT — meta.cash_counts_as_hit = "
+                "true. IGT Fortune Coin Boost Classic vendor hit_freq "
+                "counts any spin with >=1 Coin / Coin Boost on the "
+                "initial grid as a hit because every Coin lands a "
+                "credit-bonus pay. The engine mirrors that rule for "
+                "hit-frequency accounting only — RTP is unaffected "
+                "(coin share remains in rtp_breakdown).",
             ],
             "sampling_mode": "virtual_independent",
+            "cash_counts_as_hit": True,
         },
         "topology": {"kind": "rectangular", "reels": 5, "rows": 3},
         "evaluation": {"kind": "ways", "ways": 243, "min_count": 3},

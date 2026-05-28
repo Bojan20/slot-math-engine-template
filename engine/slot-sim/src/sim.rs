@@ -2,12 +2,13 @@
 
 use crate::evaluate::{evaluate_lines, CompiledPaytable};
 use crate::features::run_features;
-use crate::ir::{Evaluation, Feature, Ir, PaytableEntry, Topology};
+use crate::ir::{Evaluation, Feature, Ir, PaytableEntry, SymbolRole, Topology};
 use crate::megaways_eval::{evaluate_megaways, MegawaysGrid};
 use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
 use crate::stats::SimStats;
 use crate::ways_eval::evaluate_cascade;
+use std::collections::HashSet;
 
 /// W4.8c / W4.10c — max single payout × total bet. Beyond this the
 /// engine clamps the spin contribution and logs a `max_win_cap_hit` event
@@ -27,6 +28,15 @@ pub struct Engine<'a> {
     pub lines: u32,
     /// W4.3d — true when `meta.sampling_mode == "virtual_independent"`.
     pub virtual_mode: bool,
+    /// W4.14 — true when `meta.cash_counts_as_hit == true`; controls the
+    /// auxiliary "any-cash-symbol-on-grid counts as a hit" rule that
+    /// mirrors IGT Fortune Coin Boost Classic's vendor hit_frequency
+    /// accounting. Pre-baked here so the inner spin loop only pays a
+    /// `HashSet::contains` lookup per cell.
+    pub cash_counts_as_hit: bool,
+    /// W4.14 — set of symbol IDs with `role == "cash"`. Empty when the
+    /// IR carries no cash-role symbol, regardless of the flag.
+    pub cash_symbol_ids: HashSet<String>,
 }
 
 impl<'a> Engine<'a> {
@@ -55,7 +65,49 @@ impl<'a> Engine<'a> {
         // scatter dispatch works identically against FS pays.
         let fs_pt = compile_fs_paytable(ir);
 
-        Engine { ir, base_picker, fs_picker, pt, fs_pt, rows, lines, virtual_mode }
+        // W4.14 — bake `meta.cash_counts_as_hit` + the set of cash-role
+        // symbol IDs once per engine. The inner loop then does a single
+        // `HashSet::contains` per grid cell to decide whether to flip
+        // the spin's hit flag.
+        let cash_counts_as_hit = ir.meta.cash_counts_as_hit;
+        let cash_symbol_ids: HashSet<String> = ir
+            .symbols
+            .iter()
+            .filter(|s| s.role == SymbolRole::Cash)
+            .map(|s| s.id.clone())
+            .collect();
+
+        Engine {
+            ir,
+            base_picker,
+            fs_picker,
+            pt,
+            fs_pt,
+            rows,
+            lines,
+            virtual_mode,
+            cash_counts_as_hit,
+            cash_symbol_ids,
+        }
+    }
+
+    /// W4.14 — returns true iff any cell in the rectangular grid carries
+    /// a cash-role symbol. Used by `run_ways_cascade` to apply the
+    /// "cash-on-grid counts as a hit" rule when
+    /// `meta.cash_counts_as_hit` is true.
+    #[inline]
+    fn grid_has_cash(&self, grid: &Grid) -> bool {
+        if !self.cash_counts_as_hit || self.cash_symbol_ids.is_empty() {
+            return false;
+        }
+        for r in 0..grid.reels() {
+            for row in 0..grid.rows() {
+                if self.cash_symbol_ids.contains(grid.cell(r, row)) {
+                    return true;
+                }
+            }
+        }
+        false
     }
 
     pub fn run(&self, n_spins: u64, bet_multiplier: i64, seed: u64) -> SimStats {
@@ -316,6 +368,13 @@ impl<'a> Engine<'a> {
             } else {
                 Grid::spin(rs, self.rows, rng)
             };
+            // W4.14 — Fortune Coin family: vendor hit_freq accounting
+            // counts any spin with ≥ 1 cash-role symbol (Coin / Coin
+            // Boost) on the INITIAL grid as a hit, because every Coin
+            // lands a credit-bonus pay. RTP is unaffected (the coin
+            // share is already in `rtp_breakdown.base_game_coins`).
+            // Snapshot before `evaluate_cascade` consumes the grid.
+            let cash_hit = self.grid_has_cash(&initial);
             let ws = evaluate_cascade(initial, rs, self.ir, &self.pt, rng);
             // Player-facing payout (ways + scatter — drives hit/win metrics).
             let mc_ways_x = ws.payout_total_bet_x();
@@ -367,7 +426,7 @@ impl<'a> Engine<'a> {
                     cap_logged = true;
                 }
             }
-            self.commit_spin(s, spin_x_total, spin_x_metric);
+            self.commit_spin_force_hit(s, spin_x_total, spin_x_metric, cash_hit);
         }
     }
 
@@ -431,9 +490,46 @@ impl<'a> Engine<'a> {
     }
 
     fn commit_spin(&self, s: &mut SimStats, spin_x: f64, spin_x_for_metrics: f64) {
+        self.commit_spin_force_hit(s, spin_x, spin_x_for_metrics, false);
+    }
+
+    /// W4.14 — `force_hit` variant. Used by `run_ways_cascade` when the
+    /// IR opts into `meta.cash_counts_as_hit` (IGT Fortune Coin Boost
+    /// Classic vendor accounting). `force_hit = true` means the spin
+    /// landed ≥ 1 cash-role symbol on the initial grid; that ALONE
+    /// counts as a hit (the vendor's published hit_freq is the
+    /// Coin / Coin Boost trigger rate, which overlaps with most base
+    /// line wins because Coin-bearing reel sets dominate the base
+    /// game's paying combos too). Volatility tier buckets +
+    /// `wins` counter stay keyed on the raw committed payout so RTP
+    /// remains unaffected.
+    ///
+    /// When the IR has `cash_counts_as_hit = false` (CE / SK / FKWR /
+    /// any non-Coin family), this path is unreachable — callers use
+    /// the plain `commit_spin` wrapper which falls through to the
+    /// pre-W4.14 "hit iff `spin_x_for_metrics > 0`" semantics.
+    fn commit_spin_force_hit(
+        &self,
+        s: &mut SimStats,
+        spin_x: f64,
+        spin_x_for_metrics: f64,
+        force_hit: bool,
+    ) {
         s.total_payout_x += spin_x;
         if spin_x > s.max_single_x { s.max_single_x = spin_x; }
-        if spin_x_for_metrics > 0.0 { s.hits += 1; }
+        // W4.14 — under `cash_counts_as_hit`, vendor hit_freq is the
+        // ≥1-cash-on-grid rate (the cash bonus trigger rate); base
+        // line wins overlap with cash spins because Coin-bearing reel
+        // sets dominate the paytable too. So the cash flag REPLACES
+        // (not augments) the standard `spin_x_for_metrics > 0` rule.
+        // Without the flag, behavior is identical to plain
+        // `commit_spin`.
+        let counts_as_hit = if self.cash_counts_as_hit {
+            force_hit
+        } else {
+            spin_x_for_metrics > 0.0
+        };
+        if counts_as_hit { s.hits += 1; }
         if spin_x_for_metrics > 1.0 { s.wins += 1; }
         if spin_x >= 10.0 { s.wins_ge_10x += 1; }
         if spin_x >= 20.0 { s.wins_ge_20x += 1; }

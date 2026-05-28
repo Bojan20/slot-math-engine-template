@@ -653,3 +653,116 @@ class TestW413OrganicCloseout:
             f"(Δ {delta:.4f}) exceeds 3e-2 smoke tolerance — possible "
             f"regression on W4.13 bake-in."
         )
+
+
+# ─── W4.14 EVALUATOR CLOSEOUT ──────────────────────────────────────────────
+
+
+class TestW414HitFreqCloseout:
+    """W4.14 — Tightens the hit-frequency residual to ≤ 1e-2 for all 7
+    SK + FC SWIDs.
+
+    Two closeout edits land here:
+
+      1. **FC Coin-counts-as-hit** — `meta.cash_counts_as_hit = true`
+         in every Fortune Coin Boost Classic IR. The engine
+         (`Engine::run_ways_cascade`) reads the flag and forces a HIT
+         on any spin with ≥ 1 cash-role symbol (Coin / Coin Boost) on
+         the initial grid, mirroring the vendor's bonus-trigger
+         accounting. RTP is unaffected because the cash payouts are
+         already baked into `rtp_breakdown.base_game_coins`.
+
+      2. **SK Mystery transform** — already wired (W4.8d) but the
+         W4.14 charter re-asserts the contract: the engine's
+         post-transform grid must converge to vendor hit_freq within
+         ≤ 1e-2. No new code path needed — the existing
+         `apply_mystery_transform` already meets the bar with the
+         W4.13 fitted weights baked in.
+
+    The hit_freq smoke runs use 500 k spins per SWID (≈ 1.5 s on
+    single thread) to keep per-eval σ ≤ 1e-3.
+    """
+
+    SK_SWIDS = ["200-1517-001", "200-1517-002", "200-1517-003"]
+    FC_SWIDS = ["200-1581-001", "200-1581-002", "200-1581-003", "200-1581-004"]
+
+    SMOKE_SPINS = 500_000
+    SMOKE_SEED = 0xC0DE_BABE
+
+    ENGINE_BIN = REPO / "engine" / "slot-sim" / "target" / "release" / "slot-sim"
+
+    @pytest.mark.parametrize("swid", FC_SWIDS)
+    def test_fc_cash_counts_as_hit_flag_set(self, swid: str):
+        """Every FC IR carries `meta.cash_counts_as_hit = true`."""
+        ir_path = (REPO / "games" / "fortune-coin-boost-classic" / "out"
+                   / f"fortune-coin-boost-classic.{swid}.slot-sim.ir.json")
+        if not ir_path.exists():
+            pytest.skip(f"IR not present: {ir_path}")
+        ir = json.loads(ir_path.read_text())
+        assert ir["meta"].get("cash_counts_as_hit") is True, (
+            f"{swid}: meta.cash_counts_as_hit must be true per W4.14 "
+            f"evaluator closeout"
+        )
+
+    @pytest.mark.parametrize("swid", SK_SWIDS)
+    def test_sk_cash_counts_as_hit_flag_unset(self, swid: str):
+        """Every SK IR keeps the cash-hit flag UNSET (SK has no cash
+        symbols; flipping it on for SK would be a no-op but signals
+        intent)."""
+        ir_path = (REPO / "games" / "skeleton-key" / "out"
+                   / f"skeleton-key.{swid}.slot-sim.ir.json")
+        if not ir_path.exists():
+            pytest.skip(f"IR not present: {ir_path}")
+        ir = json.loads(ir_path.read_text())
+        # Either missing OR explicitly false — both are acceptable.
+        flag = ir["meta"].get("cash_counts_as_hit", False)
+        assert flag is False, (
+            f"{swid}: cash_counts_as_hit should stay false for SK "
+            f"(no cash-role symbols in the IR)"
+        )
+
+    @pytest.mark.parametrize(
+        "game,swid",
+        [("skeleton-key", s) for s in SK_SWIDS]
+        + [("fortune-coin-boost-classic", s) for s in FC_SWIDS],
+    )
+    def test_engine_hit_freq_within_1e_2(self, game: str, swid: str):
+        """Run the engine at 500 k spins; assert |Δ hit_freq| ≤ 1e-2
+        vs the IR's `meta.hit_frequency` target.
+
+        For FC the rule is `cash on grid → hit`; for SK the rule is
+        the standard `payout > 0 → hit` after the Mystery transform
+        replaces all Mystery cells with sampled targets.
+        """
+        import subprocess
+
+        ir_path = (REPO / "games" / game / "out"
+                   / f"{game}.{swid}.slot-sim.ir.json")
+        if not ir_path.exists():
+            pytest.skip(f"IR not present: {ir_path}")
+        if not self.ENGINE_BIN.exists():
+            pytest.skip(
+                f"slot-sim release binary not built: {self.ENGINE_BIN}"
+            )
+        ir = json.loads(ir_path.read_text())
+        target_hf = float(ir["meta"]["hit_frequency"])
+
+        r = subprocess.run(
+            [str(self.ENGINE_BIN), "--ir", str(ir_path),
+             "--spins", str(self.SMOKE_SPINS),
+             "--seed", str(self.SMOKE_SEED)],
+            capture_output=True, text=True, timeout=120,
+        )
+        assert r.returncode == 0, f"slot-sim crashed: {r.stderr[:400]}"
+        mc_hf = None
+        for line in r.stdout.splitlines():
+            if line.startswith("Hit freq:"):
+                mc_hf = float(line.split()[2])
+                break
+        assert mc_hf is not None, "slot-sim hit_freq line missing"
+
+        delta = abs(mc_hf - target_hf)
+        assert delta <= 1e-2, (
+            f"{swid} MC hit_freq {mc_hf:.6f} vs target {target_hf:.6f} "
+            f"(Δ {delta:.6f}) exceeds 1e-2 W4.14 tolerance"
+        )

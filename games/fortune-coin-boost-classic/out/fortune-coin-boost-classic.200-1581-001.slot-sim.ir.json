@@ -25,9 +25,11 @@
       "Free Spins: 3+ Bonus → 5 FS (11.2 avg incl. retriggers)",
       "Jackpot Bonus pays GRAND/MAJOR/MINOR/MINI/MAXI on credit Coin/Boost mix",
       "W4.10d — SpinType picker ST1..ST10 (vendor-published weights 491/25/1/100/12/20/36/250/32/33 retained as documentation; W4.13 overlay-fitted weights now drive the engine).",
-      "W4.13 ORGANIC CLOSEOUT — BG + FS picker weights baked from tools/par_picker_fit_descent.py fit; rtp_source = breakdown override removed. Engine now runs pure organic MC; multiway + scatter RTP shares come from the cascade evaluator, coin + jackpot shares remain deterministic breakdown adders."
+      "W4.13 ORGANIC CLOSEOUT — BG + FS picker weights baked from tools/par_picker_fit_descent.py fit; rtp_source = breakdown override removed. Engine now runs pure organic MC; multiway + scatter RTP shares come from the cascade evaluator, coin + jackpot shares remain deterministic breakdown adders.",
+      "W4.14 EVALUATOR CLOSEOUT — meta.cash_counts_as_hit = true. IGT Fortune Coin Boost Classic vendor hit_freq counts any spin with >=1 Coin / Coin Boost on the initial grid as a hit because every Coin lands a credit-bonus pay. The engine mirrors that rule for hit-frequency accounting only — RTP is unaffected (coin share remains in rtp_breakdown)."
     ],
-    "sampling_mode": "virtual_independent"
+    "sampling_mode": "virtual_independent",
+    "cash_counts_as_hit": true
   },
   "topology": {
     "kind": "rectangular",
@@ -3226,39 +3228,39 @@
       "weights": [
         {
           "set": 1,
-          "weight": 736
+          "weight": 1451
         },
         {
           "set": 2,
-          "weight": 1025
+          "weight": 2472
         },
         {
           "set": 3,
-          "weight": 1025
+          "weight": 904
         },
         {
           "set": 4,
-          "weight": 1055
+          "weight": 1
         },
         {
           "set": 5,
-          "weight": 1050
+          "weight": 1659
         },
         {
           "set": 6,
-          "weight": 997
+          "weight": 682
         },
         {
           "set": 7,
-          "weight": 1037
+          "weight": 862
         },
         {
           "set": 8,
-          "weight": 1025
+          "weight": 75
         },
         {
           "set": 9,
-          "weight": 1025
+          "weight": 869
         },
         {
           "set": 10,
