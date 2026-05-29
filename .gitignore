@@ -229,3 +229,12 @@ reports/greenfield-demo/
 # the tests ARE committed — they are the reproducible source-of-truth.
 reports/pitch-report/
 reports/llm-demo/
+
+# W7 — Public math-compiler benchmark.
+# `tools/benchmark` regenerates results.json + results.md + benchmark.svg +
+# benchmark.sha256.txt deterministically from any checkout (same engine
+# binary + same generator tag → byte-identical timing-invariant hash).
+# Tracking the artefacts would noise every CI run. The package and the
+# acceptance tests ARE committed — they are the reproducible
+# source-of-truth.
+reports/benchmark/
