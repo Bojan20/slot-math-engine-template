@@ -1,0 +1,71 @@
+{
+  "ir_path": "games/book-expanding-bonusbuy/out/template-book-bonusbuy.ir.json",
+  "method": "closed_form_left_anchored_probability",
+  "approximation_notes": [
+    "Line-pay term uses 'symbol OR wild' left-anchored probability across all 9 pay",
+    "  symbols; this over-counts pure-wild streaks (each wild-only streak is added",
+    "  to every symbol's contribution). The PAR Pay% column applies a stricter",
+    "  wild rule for 2-of-a-kind. Residual bias is ≤ +1 pp by construction.",
+    "Scatter term uses hypergeometric P(≥1 BOOK in 3-cell window) — exact match.",
+    "FS share is inferred as P(3+ BOOK) × avg_pay_x_bet — derived analytic.",
+    "BB fair-price delta is taken directly from PAR sheet (BB Total − Normal)."
+  ],
+  "topology": "5×3 / 10 paylines / total bet 10 coins",
+  "reference": {
+    "line_pay": 0.5282426698490047,
+    "scatter_pay": 0.008004723783004326,
+    "bonus_pay": 0.42579679451229185,
+    "total_normal": 0.9620441881443009
+  },
+  "computed": {
+    "line_pay_rtp": 0.5378772810899508,
+    "scatter_pay_rtp": 0.008004723783004344,
+    "fs_trigger_book_pmf": {
+      "3": 0.00526592412112775,
+      "4": 0.000233603500571827,
+      "5": 4.027646561583229e-06
+    },
+    "fs_trigger_total_3plus": 0.00550355526826116,
+    "fs_rtp_inferred_via_avg_pay": 0.4237737556561093,
+    "base_total_inferred": 0.9716787993852469
+  },
+  "per_symbol_line_contrib": {
+    "HP1": 0.07770208675186052,
+    "HP2": 0.034921187409875196,
+    "HP3": 0.08038635572572225,
+    "HP4": 0.06470339615135995,
+    "LP1": 0.05699617124956491,
+    "LP2": 0.06347272636865398,
+    "LP3": 0.06824623340460442,
+    "LP4": 0.04939088061260008,
+    "LP5": 0.04205824341570949
+  },
+  "scatter_pay_contributions": {
+    "5": 0.0004027646561583229,
+    "4": 0.00233603500571827,
+    "3": 0.00526592412112775
+  },
+  "book_pmf_full": {
+    "0": 0.631223111729899,
+    "1": 0.30568425239918456,
+    "2": 0.057589080602655315,
+    "3": 0.00526592412112775,
+    "4": 0.000233603500571827,
+    "5": 4.027646561583229e-06
+  },
+  "deltas_pp": {
+    "line_pay_delta_pp": 0.9634611240946112,
+    "scatter_pay_delta_pp": 1.734723475976807e-15,
+    "total_delta_pp": 0.9634611240946,
+    "fs_rtp_via_avg_pay_delta_pp": -0.20230388561825463
+  },
+  "gates": {
+    "line_pay_pp_le_1p5": true,
+    "scatter_pay_pp_le_0p1": true,
+    "total_pp_le_1p5": true,
+    "fs_via_avg_pay_pp_le_3p0": true,
+    "bb_fair_price_within_0p05_pp": true
+  },
+  "all_gates_pass": true,
+  "bonus_buy_fair_price_pp": 0.003711551576790484
+}

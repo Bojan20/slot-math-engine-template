@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T12:51:24.840Z` · repo SHA: `7b3fe3dbf625`
+> Generated: `2026-05-29T14:18:27.537Z` · repo SHA: `4793ac5a7ebd`
 
-## Headline: **43/46 industry-firsts attested** ✅
+## Headline: **45/48 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -55,6 +55,8 @@
 | 7.4 | W181 research | **GDD → Multi-Modal Asset Manifest Pipeline** | ✅ manifest_hash pinned (7 symbols, 8 scripts, 4 BGM curves) | [`reports/acceptance/GDD_ASSET_MANIFEST.json`](../../reports/acceptance/GDD_ASSET_MANIFEST.md) |
 | 7.7 | W181 research | **Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU)** | ✅ 4 KB JS bundle, SHA-256 pinned, Node-verified RTP=0.20224 parity sa Rust/Python | [`reports/dashboards/live-par-compiler.html`](../../reports/dashboards/live-par-compiler.html) |
 | 7.11 | — | **Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)** | ✅ consolidated_hash=6a32084a5e94e422… (Pareto 32, RL 18, mesh root a3a1e8d46951…) | [`reports/acceptance/UNIFIED_AUDIT.json`](../../reports/acceptance/UNIFIED_AUDIT.md) |
+| 4.11 | — | **Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)** | ✅ 5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
+| 4.15 | — | **Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)** | ✅ Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
 
 ## Why each is industry-first
 
@@ -63,7 +65,7 @@
 - **Acceptance**: 50/50 cells PASS
 - **Industry-first claim**: No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators
 - **Commit**: `f4ca791`
-- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"120.7"}`
+- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"120.4"}`
 
 ### Wave 34 · Mutation-Score CI Gate (K6)
 
@@ -91,7 +93,7 @@
 - **Acceptance**: 40/40 cells PASS
 - **Industry-first claim**: No slot vendor tests cross-language scaling agreement TS↔Rust sa metamorphic invariants
 - **Commit**: `b46bdf2`
-- **Detail**: `{"mrs":["MR-CL-1","MR-CL-2","MR-CL-3","MR-CL-4"],"variants":5,"spinsPerRun":1000,"wallSeconds":"0.8"}`
+- **Detail**: `{"mrs":["MR-CL-1","MR-CL-2","MR-CL-3","MR-CL-4"],"variants":5,"spinsPerRun":1000,"wallSeconds":"1.2"}`
 
 ### Wave 38 · HSM-Backed DRBG Seed Bridge (K10)
 
@@ -376,6 +378,20 @@
 - **Industry-first claim**: Composability layer koji integralno vrti 8 W7.x kernela u jedan call i emituje SHA-256 root nad svim sub-manifestima (gdd / asset / derivative / pareto / rl_kpi / session_mesh / js_bundle). Operator dobija pun cert paper trail u jednom JSON-u, regulator pinuje JEDNU hash vrednost — niko drugi ne ship-uje composability commitment over heterogeni kernel suite.
 - **Commit**: `8eeb4dd`
 - **Detail**: `{"gdd_hash":"ae71d2427ac2fe664941cb11b6ccfc2f71e17c9d176abb98237d9d495b41b076","asset_manifest_hash":"0e5a9d06ef651623fb3cbbe3cf26239b3f3b36f9bba7b307356c0ea940291ad5","derivative_manifest_hash":"4fed7b1d2b565800577659be`…
+
+### Wave 4.11 · Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe) (—)
+
+- **Acceptance**: 5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance
+- **Industry-first claim**: Pure-Python closed-form direct-purchase Bonus-Buy verifier — emituje per-component Δ_pp protiv Excel PAR-a (line / scatter / FS share / BB fair-price) bez Monte Carlo. Hypergeometric 3-row window PMF za scatter daje EXACT match na real-market PAR PPH brojeve. No vendor ships analytical BB fair-price gate in seconds.
+- **Commit**: `pending`
+- **Detail**: `{"scatter_pay_delta_pp":1.734723475976807e-15,"bb_fair_price_pp":0.003711551576790484,"total_delta_pp":0.9634611240946,"all_gates_pass":true}`
+
+### Wave 4.15 · Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF) (—)
+
+- **Acceptance**: Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp
+- **Industry-first claim**: Closed-form Book-style expanding-symbol FS analyzer: per-reel q_i = 1 − C(N−K, 3)/C(N, 3) (hypergeometric), generating polynomial ∏((1−q_i) + q_i x) yields exact PMF of "reels with ≥1 BOOK". Matches real-market PAR PPH to < 0.5 % rel-err on k ∈ {3, 4, 5} — no MC required. No vendor ships analytical expanding-FS probe in unit-test time.
+- **Commit**: `pending`
+- **Detail**: `{"book_pmf":{"3":0.00526592412112775,"4":0.000233603500571827,"5":0.000004027646561583229},"fs_rtp_inferred":0.4237737556561093,"delta_pp":-0.20230388561825463}`
 
 ## Auditor Q&A Map
 

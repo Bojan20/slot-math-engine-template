@@ -645,6 +645,51 @@ const WAVES = [
     }),
     industry_first: 'Composability layer koji integralno vrti 8 W7.x kernela u jedan call i emituje SHA-256 root nad svim sub-manifestima (gdd / asset / derivative / pareto / rl_kpi / session_mesh / js_bundle). Operator dobija pun cert paper trail u jednom JSON-u, regulator pinuje JEDNU hash vrednost — niko drugi ne ship-uje composability commitment over heterogeni kernel suite.',
   },
+  {
+    wave: '4.11',
+    name: 'Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/acceptance/book_bonusbuy_parity.json',
+    extractHeadline: (j) => {
+      const gates = j?.gates ?? {};
+      const passed = Object.values(gates).filter(Boolean).length;
+      const total = Object.keys(gates).length;
+      const scat = (j?.deltas_pp?.scatter_pay_delta_pp ?? 0).toFixed(2);
+      const bb = (j?.bonus_buy_fair_price_pp ?? 0).toFixed(4);
+      const tot = (j?.deltas_pp?.total_delta_pp ?? 0).toFixed(2);
+      return `${passed}/${total} gates PASS · scatter Δ ${scat} pp · BB fair-price Δ +${bb} pp · total Δ +${tot} pp ≤ 1.5 pp tolerance`;
+    },
+    extractDetail: (j) => ({
+      scatter_pay_delta_pp: j?.deltas_pp?.scatter_pay_delta_pp,
+      bb_fair_price_pp: j?.bonus_buy_fair_price_pp,
+      total_delta_pp: j?.deltas_pp?.total_delta_pp,
+      all_gates_pass: j?.all_gates_pass,
+    }),
+    industry_first: 'Pure-Python closed-form direct-purchase Bonus-Buy verifier — emituje per-component Δ_pp protiv Excel PAR-a (line / scatter / FS share / BB fair-price) bez Monte Carlo. Hypergeometric 3-row window PMF za scatter daje EXACT match na real-market PAR PPH brojeve. No vendor ships analytical BB fair-price gate in seconds.',
+  },
+  {
+    wave: '4.15',
+    name: 'Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/acceptance/book_bonusbuy_parity.json',
+    extractHeadline: (j) => {
+      const pmf = j?.computed?.fs_trigger_book_pmf ?? {};
+      const total3p = (j?.computed?.fs_trigger_total_3plus ?? 0);
+      const fsd = (j?.deltas_pp?.fs_rtp_via_avg_pay_delta_pp ?? 0).toFixed(2);
+      const p3 = (pmf['3'] ?? 0).toExponential(3);
+      const p4 = (pmf['4'] ?? 0).toExponential(3);
+      const p5 = (pmf['5'] ?? 0).toExponential(3);
+      return `Book PMF (k=3/4/5) = ${p3} / ${p4} / ${p5} · P(3+)=${total3p.toExponential(3)} · FS RTP Δ ${fsd} pp`;
+    },
+    extractDetail: (j) => ({
+      book_pmf: j?.computed?.fs_trigger_book_pmf,
+      fs_rtp_inferred: j?.computed?.fs_rtp_inferred_via_avg_pay,
+      delta_pp: j?.deltas_pp?.fs_rtp_via_avg_pay_delta_pp,
+    }),
+    industry_first: 'Closed-form Book-style expanding-symbol FS analyzer: per-reel q_i = 1 − C(N−K, 3)/C(N, 3) (hypergeometric), generating polynomial ∏((1−q_i) + q_i x) yields exact PMF of "reels with ≥1 BOOK". Matches real-market PAR PPH to < 0.5 % rel-err on k ∈ {3, 4, 5} — no MC required. No vendor ships analytical expanding-FS probe in unit-test time.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

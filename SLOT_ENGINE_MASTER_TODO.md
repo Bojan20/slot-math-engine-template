@@ -925,8 +925,9 @@ strictly enforced only under Mode C-4 / C-5.)
 | W4.8 | **Mech library — Megaways primitiv** | Variable rows per reel (2-7), 3⁵..7⁵ ways calculator, mystery symbols. Treba 1 PAR uzorak (Boki šalje). | 2 dana | ⏳ čeka Megaways PAR |
 | W4.9 | **Mech library — Cluster Pays primitiv** | BFS flood-fill connectivity, 4-way / 8-way variants, stepped paytable po cluster size. Treba 1 PAR uzorak. | 2 dana | ⏳ čeka Cluster PAR |
 | W4.10 | **Mech library — Cascade/Tumble primitiv** | Reaction chains, multiplier ramp (BTG / Pragmatic style). Treba 1 PAR uzorak. | 1.5 dana | ⏳ čeka Cascade PAR |
-| W4.11 | **Mech library — Bonus Buy primitiv** | Direct-buy probability tables (Vendor D / Hacksaw style). | 1 dan | ⏳ čeka Bonus Buy PAR |
+| W4.11 | **Mech library — Bonus Buy primitiv** | Direct-buy probability tables (Vendor D / Hacksaw style). | 1 dan | ✅ **LANDED** (2026-05-29, commit `4793ac5` Boki + integration test) — `games/book-expanding-bonusbuy/` template iz real-market Book slota: direct-buy stops table (160 weighted rows, guarantees 3/4/5 BOOK), cost 100× total bet, fair-price delta +0.0000037, BB Total RTP 0.9621 vs Normal 0.9620. 28/28 pytest specs pin shape. |
 | W4.12 | **Mech library — Sticky/Walking wild primitiv** | Lock-position state machine, walking direction state. | 1 dan | ⏳ čeka Sticky wild PAR |
+| W4.15 | **Mech library — Expanding Symbol primitiv** | Book-style FS: weighted single-symbol draw → expands to full reel column after each pay. | 1 dan | ✅ **LANDED** (2026-05-29, commit `4793ac5` Boki + integration test) — `games/book-expanding-bonusbuy/`: expansion_cap 99, limit-by-book-count 3→4 / 4→6 / 5→10, retrigger=true, avg ~13.69 FS / 4.40 expansions, FS RTP share 42.58 %. Same IR ko za W4.11. |
 
 ### 🚀 OPEN — Wave 5: Math Compiler Vision (futuristic, ne-klasičan-AI)
 
