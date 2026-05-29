@@ -6,6 +6,40 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 14:42 (post **W7.11 UNIFIED PIPELINE LANDED** — composability layer nad svih 8 W7.x kernela)
+
+**Status:** Posle 8/8 W7.x roadmap-a, dodajem **composability layer** koji integralno vrti sve kernele u jedan call i emituje **consolidated_hash** za cert paper trail. Operator dobija svu W7.x intel u jednom pozivu, regulator pinuje **jednu SHA-256 vrednost** koja committuje na sve sub-manifeste byte-for-byte.
+
+| Wave | Šta | Files | Tests |
+|---|---|---|---|
+| **W7.11 — Unified Audit Pipeline** | `UnifiedAuditConfig(gdd, rtp_model, ...)` → `run_unified_pipeline` u sequence-u vrti: W7.4 asset manifest, W7.6 derivative manifest, W7.1 genome evolve, W7.3 RL cohort, W7.5 synthetic session mesh (deterministic spins iz `SHA-256(idx, session_id)`), W7.7 JS bundle. **`consolidated_hash`** = SHA-256 over `{gdd_hash, asset_manifest_hash, derivative_manifest_hash, pareto_hash, rl_kpi_hash, session_mesh_root, js_bundle_sha256}` sorted canonical-JSON. CLI: `python -m tools.unified_pipeline --gdd-id X --out ...`. Live: "CRIMSON-TIGER" (jungle/epic/high vol/7 symbols/3 features/32 pop/12 gen/6×3 RL/64-spin mesh) → consolidated_hash `6a32084a5e94e422…` | `tools/unified_pipeline/*` + `tools/tests/test_unified_pipeline.py` | **15 / 15 PASS** (synthesize 3 + pipeline 9 + write 1 + CLI 1 + hash-sensitivity 1) |
+
+### Test tally for this batch
+
+| Suite | Pass |
+|---|---|
+| `tools/tests/test_unified_pipeline.py` | 15 / 15 ✅ |
+
+### Ultimate QA pass (all W7.x + W7.11 cumulative)
+
+| Sloj | Rezultat |
+|---|---|
+| Sve 8 W7.x + W7.11 pytest suite-a combined | **142 / 142 PASS** |
+
+### Operator/regulator deliverables — UNIFIED AUDIT
+
+| Artefakt | Putanja | Sub-hash |
+|---|---|---|
+| Unified audit consolidated JSON | `reports/acceptance/UNIFIED_AUDIT.json` | `consolidated_hash: 6a32084a5e94e422…` |
+| Pareto frontier candidates | embedded | 32 members |
+| RL retention KPI | embedded | 18 sessions |
+| Session Merkle root | embedded | `a3a1e8d46951b51d…` |
+| JS bundle SHA-256 | embedded | `fbf2f6ef34612e79…` |
+
+**Sve W7.x kernel-e u jednom callu, jedna hash vrednost za audit pin.** Industry-first composability layer.
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 14:25 (post **W7.4 + W7.7 LANDED — 8/8 W7.x FUTURISTIC KOMPLETNO** 🏆)
 
 **Status:** **KOMPLETAN W7.x ROADMAP** sa zatvoreni preostali "frozen" wave-ovi kroz pragmatic pure-Python implementacije. Svih 8 W7.x stavki sad LANDED — niko drugi vendor nema ovaj set kernela u jednom repo-u.
