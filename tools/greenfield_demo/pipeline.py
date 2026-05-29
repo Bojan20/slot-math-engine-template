@@ -39,7 +39,6 @@ from tools.cert_bundle_swid import paytable_csv, reels_summary, sign
 from tools.cert_bundle_swid.manifest import (
     build_manifest,
     canon_json_bytes,
-    sha256_bytes,
 )
 from tools.cert_bundle_swid.zip_bundle import write_bundle
 from tools.math_dsl.compile import compile_to_ir
@@ -611,7 +610,7 @@ def run_pipeline(
     files["SIGNATURE.sig"] = signature
 
     cert_zip_path = out_dir / f"{DEMO_SLUG}.{SWID}.cert.zip"
-    zip_bytes = write_bundle(cert_zip_path, files, epoch=epoch)
+    write_bundle(cert_zip_path, files, epoch=epoch)
 
     # Also write each artefact to the reports dir (mirrors the W5.7
     # mission's "produces … per-stage JSON" contract).  These are

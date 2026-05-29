@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import sys
 import unittest
-from copy import deepcopy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -12,10 +11,9 @@ sys.path.insert(0, str(ROOT))
 from tools.math_dsl import (
     parse_spec, compile_to_ir,
     mc_validate, McValidationReport,
-    lint_spec, render_lint, filter_by_severity, LintFinding,
-    render_docs,
+    lint_spec, render_lint, filter_by_severity, render_docs,
 )
-from tools.math_dsl.spec import FeatureSpec, SymbolSpec
+from tools.math_dsl.spec import SymbolSpec
 from tools.smt.weight_synthesizer import synth_uniform_weights
 
 

@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import base64
-import hashlib
 import json
 import struct
 
@@ -161,12 +159,12 @@ def test_websocket_handshake_and_one_spin():
         try:
             reader, writer = await asyncio.open_connection("127.0.0.1", port)
             handshake = (
-                f"GET /ws HTTP/1.1\r\n"
-                f"Host: 127.0.0.1\r\n"
-                f"Upgrade: websocket\r\n"
-                f"Connection: Upgrade\r\n"
-                f"Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n"
-                f"\r\n"
+                "GET /ws HTTP/1.1\r\n"
+                "Host: 127.0.0.1\r\n"
+                "Upgrade: websocket\r\n"
+                "Connection: Upgrade\r\n"
+                "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n"
+                "\r\n"
             ).encode("iso-8859-1")
             writer.write(handshake)
             await writer.drain()

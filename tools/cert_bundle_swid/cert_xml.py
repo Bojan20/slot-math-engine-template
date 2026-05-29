@@ -6,7 +6,6 @@ W4.15 we feed it the SWID-level numbers and pass through.
 """
 from __future__ import annotations
 
-from typing import Any
 
 from tools.cert_xml_v3.emitter import (  # type: ignore
     CertV3Input,

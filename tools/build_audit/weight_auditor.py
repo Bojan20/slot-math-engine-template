@@ -17,8 +17,6 @@ the comparison is genuinely independent.
 
 from __future__ import annotations
 
-import json
-import math
 from dataclasses import asdict, dataclass, field
 from fractions import Fraction
 from pathlib import Path

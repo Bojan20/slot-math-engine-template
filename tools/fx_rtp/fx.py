@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
 
 
 # Jurisdictional currency restrictions (illustrative 2024 baseline).

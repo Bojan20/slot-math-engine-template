@@ -10,10 +10,11 @@ Responses-file schema (JSONL, one per case):
 
 For par-parser the agent_output is the parser JSON. For reg-oracle it is
 the markdown answer string. For math-debug it is the diagnosis markdown.
+For qa-agent it is the report.md markdown (verdict + layer table + findings).
 
 In the absence of a real responses file we still verify the eval fixture
 itself for structural integrity — the `--self-test` mode runs this
-check across all three agents.
+check across all four agents.
 """
 from __future__ import annotations
 
@@ -34,7 +35,7 @@ except ImportError:
 from tools.agent_paths import agents_root as _agents_root
 
 AGENTS_ROOT = _agents_root()
-KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug"}
+KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug", "qa-agent"}
 
 
 def _load_yaml(p: Path) -> Dict[str, Any]:
@@ -86,6 +87,14 @@ def _structural_check(agent: str, ev: Dict[str, Any]) -> List[str]:
         elif agent == "math-debug":
             if "symptom" not in c:
                 errors.append(f"math-debug case missing symptom: {c.get('id')}")
+        elif agent == "qa-agent":
+            for k in ("scope", "expected_verdict", "expected_exit_code"):
+                if k not in c:
+                    errors.append(f"qa-agent case missing {k}: {c.get('id')}")
+            if "must_layer" in c and not isinstance(c["must_layer"], list):
+                errors.append(f"qa-agent case must_layer not a list: {c.get('id')}")
+            if "must_finding" in c and not isinstance(c["must_finding"], list):
+                errors.append(f"qa-agent case must_finding not a list: {c.get('id')}")
     if "thresholds" not in ev:
         errors.append("missing 'thresholds' block")
     return errors
@@ -246,10 +255,92 @@ def _eval_math_debug(ev: Dict[str, Any], responses: Dict[str, Dict[str, Any]]) -
     return {"agent": "math-debug", "metrics": metrics, "thresholds": thr, "rows": rows, "total": total}
 
 
+def _eval_qa_agent(ev: Dict[str, Any], responses: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+    """Score qa-agent runs against the held-out fixture.
+
+    Each case in the fixture pins (expected_verdict, expected_exit_code,
+    must_layer[], must_finding[], antibody_blocked). The responder is
+    expected to emit the qa-agent `report.md` text as `agent_output`.
+    """
+    thr = ev["thresholds"]
+    rows: List[Dict[str, Any]] = []
+    total = len(ev["cases"])
+    verdict_correct = 0
+    exit_code_correct = 0
+    layer_hit = 0
+    layer_total = 0
+    finding_hit = 0
+    finding_total = 0
+    repro_required = 0
+    repro_present = 0
+    antibody_required = 0
+    antibody_correct = 0
+    lat_total = 0
+    for case in ev["cases"]:
+        cid = case["id"]
+        resp = responses.get(cid)
+        if resp is None:
+            rows.append({"id": cid, "ok": False, "reason": "no response"})
+            continue
+        out = resp.get("agent_output", "")
+        if isinstance(out, dict):
+            out = out.get("markdown", json.dumps(out))
+        lo = out.lower()
+        expected_verdict = str(case.get("expected_verdict", "")).strip()
+        verdict_ok = expected_verdict.lower() in lo and (
+            f"verdict: {expected_verdict.lower()}" in lo
+            or f"verdict.** {expected_verdict.lower()}" in lo
+            or f"verdict.** {expected_verdict}" in out
+        )
+        verdict_correct += int(verdict_ok)
+        # Exit code is mentioned in compact summary and markdown table.
+        exit_ok = f"exit_code: {case.get('expected_exit_code')}" in out or \
+                  f"exit code.** {case.get('expected_exit_code')}" in out
+        exit_code_correct += int(exit_ok)
+        # Layer rows: every must_layer must appear as a `L<n>` token in the report.
+        for lid in case.get("must_layer", []) or []:
+            layer_total += 1
+            # Match either bare "L3" or "L3 unit" or "| L3 ".
+            if re.search(rf"\b{re.escape(lid)}\b", out):
+                layer_hit += 1
+        # Findings substring recall.
+        for needle in case.get("must_finding", []) or []:
+            finding_total += 1
+            if needle.lower() in lo:
+                finding_hit += 1
+        # Reproducer block required when verdict != ALL_PASS.
+        if expected_verdict.upper() not in ("ALL_PASS", "PASS"):
+            repro_required += 1
+            if "```bash" in out or "```sh" in out or "repro_cmd" in lo:
+                repro_present += 1
+        # Antibody precision.
+        if case.get("antibody_blocked"):
+            antibody_required += 1
+            if "blocked_antibody" in lo or "antibody" in lo and "block" in lo:
+                antibody_correct += 1
+        lat_total += int(resp.get("elapsed_ms", 0))
+        rows.append({
+            "id": cid,
+            "verdict_ok": verdict_ok,
+            "exit_ok": exit_ok,
+        })
+    metrics = {
+        "verdict_accuracy": verdict_correct / total if total else 0,
+        "exit_code_accuracy": exit_code_correct / total if total else 0,
+        "layer_coverage": layer_hit / layer_total if layer_total else 1.0,
+        "finding_recall": finding_hit / finding_total if finding_total else 1.0,
+        "reproducer_present": (repro_present / repro_required) if repro_required else 1.0,
+        "antibody_precision": (antibody_correct / antibody_required) if antibody_required else 1.0,
+        "mean_latency_s": (lat_total / 1000.0 / total) if total else 0,
+    }
+    return {"agent": "qa-agent", "metrics": metrics, "thresholds": thr, "rows": rows, "total": total}
+
+
 EVALUATORS = {
     "par-parser": _eval_par_parser,
     "reg-oracle": _eval_reg_oracle,
     "math-debug": _eval_math_debug,
+    "qa-agent": _eval_qa_agent,
 }
 
 
@@ -271,11 +362,27 @@ def verdict(result: Dict[str, Any]) -> bool:
 
 
 def self_test() -> int:
-    """Run structural check on all three eval fixtures."""
+    """Structural check on every eval fixture present under AGENTS_ROOT.
+
+    Missing manifests degrade to SKIP (per the agents-root graceful-degradation
+    contract documented in `tools.agent_paths`). A run is FAIL iff a fixture
+    that *is* present fails its structural check, or zero fixtures are present.
+    """
     bad = 0
+    ok_count = 0
+    skipped = 0
     for agent in sorted(KNOWN_AGENTS):
+        manifest_path = AGENTS_ROOT / agent / "manifest.yaml"
+        if not manifest_path.exists():
+            print(f"  {agent}: SKIP — manifest not in {AGENTS_ROOT} (external registry)")
+            skipped += 1
+            continue
         try:
             ev = _load_eval(agent)
+        except FileNotFoundError as exc:
+            print(f"  {agent}: SKIP — eval fixture missing ({exc})")
+            skipped += 1
+            continue
         except Exception as exc:
             print(f"  {agent}: FAIL load → {exc!r}")
             bad += 1
@@ -286,10 +393,14 @@ def self_test() -> int:
             bad += 1
         else:
             print(f"  {agent}: OK ({len(ev['cases'])} cases, thresholds present)")
+            ok_count += 1
     if bad:
-        print(f"self-test FAIL: {bad} agent(s) bad")
+        print(f"self-test FAIL: {bad} agent(s) bad ({ok_count} ok, {skipped} skipped)")
         return 1
-    print("self-test PASS — 3 eval fixtures valid")
+    if ok_count == 0:
+        print("self-test FAIL: 0 fixtures found under AGENTS_ROOT")
+        return 1
+    print(f"self-test PASS — {ok_count} eval fixture(s) valid, {skipped} skipped")
     return 0
 
 

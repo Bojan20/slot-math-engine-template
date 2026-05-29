@@ -28,7 +28,6 @@ from typing import Any, Optional
 
 from tools.rgs_live.engine import engine_spin, default_synthetic_ir
 from tools.rgs_live.protocol import (
-    SpinRequest,
     SpinResponse,
     parse_request,
     serialize_response,

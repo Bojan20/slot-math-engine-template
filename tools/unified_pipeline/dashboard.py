@@ -15,7 +15,6 @@ Zero CDN, zero fetch — inline JSON + vanilla JS.
 
 from __future__ import annotations
 
-import dataclasses
 import html
 import json
 from pathlib import Path

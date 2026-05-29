@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import copy
 import json
 
 import pytest
 
 from tools.slot_design.mutation_chain import (
     ChainState,
-    ChainStep,
     apply_chain,
     apply_step,
     replay_snapshot,

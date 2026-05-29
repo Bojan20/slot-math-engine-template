@@ -21,14 +21,11 @@ from tools.drift_alert_hub.hub import (
 from tools.telemetry_bridge import (
     bridge_iterable,
     bridge_file,
-    BridgeReport,
 )
 from tools.telemetry_bridge.__main__ import main as tb_main
 
 # W63
 from tools.catalog_diff import (
-    CatalogDiffReport,
-    KernelDelta,
     diff_indices,
     render_markdown,
 )
@@ -37,7 +34,6 @@ from tools.catalog_sync.syncer import build_catalog
 
 # W64
 from tools.pilot_signoff import (
-    PilotSignoffReport,
     build_signoff,
     render_ansi,
 )

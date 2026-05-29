@@ -11,7 +11,6 @@ import pytest
 
 from tools.theorem_prover import (
     ProofCertificate,
-    ClaimSpec,
     prove,
     parse_claim,
     verify_certificate,

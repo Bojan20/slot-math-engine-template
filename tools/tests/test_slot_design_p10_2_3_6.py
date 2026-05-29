@@ -8,7 +8,6 @@ Pytest specs covering the second-wave slot-design landing:
 
 from __future__ import annotations
 
-import json
 import subprocess
 import sys
 import zipfile

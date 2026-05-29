@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-import math
 import pytest
 
 
 # ─── PHASE 40 — FX-Normalised RTP ────────────────────────────────────────
 
 from tools.fx_rtp import (
-    FXTable, CurrencyRTPInputs, NormalisedRTPResult,
-    compute_normalised_rtp, list_jurisdiction_allowed_currencies,
+    FXTable, CurrencyRTPInputs, compute_normalised_rtp, list_jurisdiction_allowed_currencies,
 )
 
 
@@ -200,7 +198,7 @@ def test_p41_battery_summary_pass_flag():
 # ─── PHASE 42 — Semantic IR Diff ─────────────────────────────────────────
 
 from tools.ir_diff_semantic import (
-    semantic_diff, render_patch_md, DiffEntry, DiffReport,
+    semantic_diff, render_patch_md,
 )
 
 
@@ -305,7 +303,7 @@ def test_p42_schema_pin():
 # ─── PHASE 43 — Cohort Builder ───────────────────────────────────────────
 
 from tools.cohort_builder import (
-    SegmentSpec, CohortSpec, PlayerProfile, generate_cohort_events,
+    SegmentSpec, CohortSpec, generate_cohort_events,
 )
 
 

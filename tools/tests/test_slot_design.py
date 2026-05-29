@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -14,7 +13,7 @@ from tools.slot_design import (
     parse_prompt,
     prompt_to_dsl,
 )
-from tools.slot_design.prompt_parser import PromptSpec, DetectedFeature
+from tools.slot_design.prompt_parser import DetectedFeature
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -590,9 +589,9 @@ def test_p10_3_review_html_self_contained(tmp_path: Path):
     for forbidden in ("https://", "http://"):
         # CDNs would surface as `<link rel="stylesheet" href="https://...`
         assert f'href="{forbidden}' not in body, \
-            f"remote stylesheet found in HTML — breaks airgapped review"
+            "remote stylesheet found in HTML — breaks airgapped review"
         assert f'src="{forbidden}' not in body, \
-            f"remote script found in HTML — breaks airgapped review"
+            "remote script found in HTML — breaks airgapped review"
 
 
 def test_p10_3_review_html_references_artifacts(tmp_path: Path):

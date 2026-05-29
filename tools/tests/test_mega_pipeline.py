@@ -7,7 +7,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
 
 from tools.mega_pipeline import (
     MegaPipelineReport,

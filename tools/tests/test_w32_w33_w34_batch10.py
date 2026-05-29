@@ -14,20 +14,17 @@ sys.path.insert(0, str(ROOT))
 # W32
 from tools.ir_fuzzer import (
     DEFAULT_MUTATIONS,
-    FuzzReport,
     run_fuzz,
 )
 from tools.ir_fuzzer.__main__ import main as fuzz_main
 
 # W33
 from tools.vendor_adapter import (
-    DEFAULT_REGISTRY,
     AdapterRegistry,
     VendorAdapter,
     detect_vendor,
     get,
     list_adapters,
-    register,
 )
 from tools.vendor_adapter.__main__ import main as adapter_main
 
@@ -35,7 +32,6 @@ from tools.vendor_adapter.__main__ import main as adapter_main
 from tools.spec_compliance import (
     extract_doc_facts,
     extract_ir_facts,
-    diff_facts,
     run_gate,
 )
 from tools.spec_compliance.__main__ import main as compliance_main

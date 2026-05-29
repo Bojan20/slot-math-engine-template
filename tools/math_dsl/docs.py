@@ -20,7 +20,7 @@ from __future__ import annotations
 
 from .spec import MathDslSpec
 from .visualize import render_mermaid_fenced
-from .lint import lint_spec, render_lint, filter_by_severity
+from .lint import lint_spec, render_lint
 
 
 _KIND_NAMES = {

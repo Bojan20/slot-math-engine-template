@@ -229,6 +229,8 @@ slot-smt-multi = "tools.smt_multi.__main__:main"
 slot-provenance-chain = "tools.provenance_chain.__main__:main"
 # ─── W81 — Exact Enumeration Engine v3 (exhaustive ground-truth RTP)
 slot-exact-enum = "tools.exact_enum.__main__:main"
+# ─── PHASE 8 P8.7 — QA Agent ultimate orchestrator (auto + manual + 10-layer)
+slot-qa-agent = "tools.qa_agent.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/Bojan20/slot-math-engine-template"
@@ -257,6 +259,15 @@ target-version = "py310"
 select = ["E", "F", "W"]
 ignore = [
     "E501",  # line-length handled separately
+    # E741 — single-letter variable names like `l`, `I`. Pragmatic
+    # exception for math code (Markov state `l`, jackpot count `I`,
+    # cluster id, etc.). Style preference, not a correctness bug.
+    "E741",
+    # E702 — multiple statements on one line via semicolon. Used in
+    # tests for compact dataclass mutation chains:
+    #   `g2 = _classic_gdd(); g2.theme = "noir"`
+    # which is intentional brevity, not a real style violation.
+    "E702",
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -266,3 +277,9 @@ ignore = [
 # then conditionally imports the heavy module after the guard.
 "tools/slot_build/gdd_mode.py" = ["E402"]
 "tools/gdd_extract/__main__.py" = ["E402"]
+# Package facades: __init__.py re-exports the public API for the
+# package; the names are imported solely so star-import users (and
+# IDE auto-complete) can resolve them. They appear "unused" to ruff
+# but removing them BREAKS the public API. Listed by package so the
+# blanket F401 ignore doesn't leak into implementation files.
+"tools/*/__init__.py" = ["F401"]

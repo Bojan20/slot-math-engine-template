@@ -16,7 +16,6 @@ Per-spin uplift:
   uplift = P(collision) · pay_on_collision
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 

@@ -20,7 +20,7 @@ from tools.backtest_runner import (
 from tools.backtest_runner.__main__ import main as bt_main
 
 # W45
-from tools.designer_lint import lint_ir, DEFAULT_RULES
+from tools.designer_lint import lint_ir
 from tools.designer_lint.__main__ import main as lint_main
 
 # W46
@@ -32,7 +32,6 @@ from tools.regulator_export import export_game
 from tools.solvers.tumble_streak_freezer import (
     TumbleFreezerParams,
     analytical_rtp as tf_rtp,
-    mc_simulate as tf_mc,
     expected_wins,
 )
 from tools.solvers.multi_screen_sync_bonus import (

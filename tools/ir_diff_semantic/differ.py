@@ -139,12 +139,12 @@ def semantic_diff(ir_a: dict[str, Any], ir_b: dict[str, Any]) -> DiffReport:
 
 def render_patch_md(report: DiffReport) -> str:
     out: list[str] = []
-    out.append(f"# Semantic IR Diff")
+    out.append("# Semantic IR Diff")
     out.append("")
     out.append(f"> Schema: `{report.schema_version}`")
     out.append(f"> Verdict: **{report.verdict}**")
     out.append("")
-    out.append(f"## Summary")
+    out.append("## Summary")
     out.append("")
     out.append(f"- MATH changes:     **{len(report.math_entries)}**")
     out.append(f"- COSMETIC changes: **{len(report.cosmetic_entries)}**")

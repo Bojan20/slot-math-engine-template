@@ -14,13 +14,10 @@ Pins the regulator-grade contract:
 
 from __future__ import annotations
 
-import hashlib
 import json
-import tempfile
 from dataclasses import asdict
 from pathlib import Path
 
-import pytest
 
 from tools.crypto_fair.fair_chain import (
     SpinReceipt,

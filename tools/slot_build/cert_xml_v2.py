@@ -59,7 +59,6 @@ from tools.slot_build.cert_xml import (
     _build_rtp_report,
     _build_feature_breakdown,
     _build_jurisdictions,
-    _fmt,
 )
 
 

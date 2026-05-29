@@ -23,17 +23,14 @@ from tools.vendor_onboard.__main__ import main as onboard_main
 # W60
 from tools.dashboard_livestream import (
     LivestreamConfig,
-    LivestreamReport,
     run_livestream,
 )
 from tools.dashboard_livestream.__main__ import main as ls_main
 
 # W61
 from tools.catalog_sync import (
-    CatalogReport,
     build_catalog,
     next_semver,
-    render_index_md,
 )
 from tools.catalog_sync.__main__ import main as cs_main
 
@@ -187,7 +184,7 @@ class TestDashboardLivestream(unittest.TestCase):
                 interval_seconds=0.0,
                 max_iterations=3,
             )
-            report = run_livestream(cfg, sleep_fn=lambda s: None)
+            run_livestream(cfg, sleep_fn=lambda s: None)
             ledger_path = d / "dash" / "livestream_ledger.json"
             self.assertTrue(ledger_path.exists())
             ledger = json.loads(ledger_path.read_text())

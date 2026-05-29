@@ -23,17 +23,15 @@ near-instant).
 """
 from __future__ import annotations
 
-import io
 import json
 import shutil
 import tempfile
-import zipfile
 from pathlib import Path
 
 import pytest
 
 from tools.cert_bundle_swid import sign
-from tools.cert_bundle_swid.manifest import canon_json_bytes, sha256_bytes
+from tools.cert_bundle_swid.manifest import sha256_bytes
 from tools.cert_bundle_swid.runner import (
     DEFAULT_EPOCH,
     GAME_SWIDS,

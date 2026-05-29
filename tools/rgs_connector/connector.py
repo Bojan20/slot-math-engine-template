@@ -16,7 +16,6 @@ The connector ignores non-spin events (`slot.session_started`,
 """
 from __future__ import annotations
 import json
-import os
 import socket
 import socketserver
 import threading

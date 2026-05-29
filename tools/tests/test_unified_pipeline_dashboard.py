@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
 
 from tools.gdd_asset_pipeline.pipeline import GddSpec
 from tools.symbolic_slot_math.model import RtpModel
@@ -70,7 +69,7 @@ def test_dashboard_pareto_table_includes_every_member() -> None:
     # data array. We do a substring count check on the rounded RTP
     # values for at least a sample.
     assert "id=\"pareto-body\"" in html
-    assert f"PARETO" in html
+    assert "PARETO" in html
     # At least one numeric token from each member's fitness appears in
     # the embedded data (we look for "rtp": which appears N times if N
     # members are serialized).

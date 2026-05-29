@@ -101,7 +101,7 @@ def hybrid_optimize(
         # Sort population by cost
         order = sorted(range(len(population)), key=lambda i: costs[i])
         elites = [population[i] for i in order[: cfg.elite_count]]
-        elite_costs = [costs[i] for i in order[: cfg.elite_count]]
+        [costs[i] for i in order[: cfg.elite_count]]
 
         # Anneal each elite (local refinement)
         refined_elites: list[tuple[list[float], float]] = []

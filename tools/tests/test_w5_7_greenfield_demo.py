@@ -29,7 +29,7 @@ from pathlib import Path
 import pytest
 
 from tools.cert_bundle_swid import sign
-from tools.cert_bundle_swid.manifest import canon_json_bytes, sha256_bytes
+from tools.cert_bundle_swid.manifest import sha256_bytes
 from tools.greenfield_demo.pipeline import (
     DEMO_SLUG,
     ENGINE_BIN,
@@ -40,9 +40,6 @@ from tools.greenfield_demo.pipeline import (
     SMT_RTP_TOLERANCE,
     SWID,
     run_pipeline,
-)
-from tools.greenfield_demo.ts_to_universal import (
-    ts_ir_to_universal,
 )
 from tools.math_dsl.spec import parse_spec
 

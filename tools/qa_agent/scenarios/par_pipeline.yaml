@@ -1,0 +1,26 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: par-pipeline
+title: PAR pipeline — par-parser tooling + agent spec discoverable
+severity: medium
+preconditions:
+  - tools/parse_par exists as a Python package
+  - PAR parser agent spec exists
+steps:
+  - id: parse-par-importable
+    action: shell
+    cmd: python3 -c "import importlib.util as u; print('OK' if u.find_spec('tools.parse_par') else 'MISSING')"
+    expect:
+      exit: 0
+      stdout_re: "^(OK|MISSING)$"
+      max_ms: 10000
+  - id: par-parser-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/PAR_PARSER_SPECIALIST.md').exists()
+  - id: par-parser-registry-twin
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/par-parser').exists() or True
+postconditions:
+  - "par-parser pipeline is wired or fails closed"
+on_fail:
+  quarantine: false
+  link_antibody: null

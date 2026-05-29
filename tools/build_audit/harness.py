@@ -13,16 +13,12 @@ from pathlib import Path
 from typing import Any
 
 from tools.build_audit.button_auditor import (
-    BUILD_BUTTON_IDS,
-    ButtonFinding,
     audit_build_buttons,
 )
 from tools.build_audit.math_auditor import (
-    MathAlgorithmFinding,
     audit_math_algorithms,
 )
 from tools.build_audit.weight_auditor import (
-    WeightCheckFinding,
     audit_weight_precision,
 )
 

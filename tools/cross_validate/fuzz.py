@@ -40,7 +40,6 @@ Output:
 
 from __future__ import annotations
 
-import copy
 import json
 import random
 from dataclasses import dataclass, asdict, field
@@ -48,8 +47,6 @@ from pathlib import Path
 from typing import Any, Optional
 
 from tools.cross_validate.harness import (
-    EngineResult,
-    ValidationResult,
     run_cross_validate,
 )
 
@@ -198,7 +195,7 @@ def run_fuzz_cross_validate(
         ir = _baseline_ir()
         try:
             mutator(ir)
-        except Exception as exc:  # noqa: BLE001
+        except Exception:  # noqa: BLE001
             # Bad mutation → skip iteration
             continue
         ir_path = workdir / f"iter-{i:04d}.ir.json"
@@ -212,7 +209,7 @@ def run_fuzz_cross_validate(
                 seed=seed + i,
                 tolerance=tolerance,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception:  # noqa: BLE001
             # Engine call itself crashed — treat as a drift event
             it = FuzzIteration(
                 iteration=i,

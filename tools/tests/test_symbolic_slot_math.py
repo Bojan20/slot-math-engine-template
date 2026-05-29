@@ -171,7 +171,7 @@ def test_solver_records_history() -> None:
 def test_volatility_optimizer_moves_in_correct_direction() -> None:
     m = _classic_model()
     starting_cv = m.volatility_cv()
-    report = optimize_for_volatility(
+    optimize_for_volatility(
         m, target_cv=starting_cv * 2.0, reel=0, symbol=0, max_iter=64
     )
     # Should either converge OR get closer to the target.

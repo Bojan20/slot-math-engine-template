@@ -1,7 +1,6 @@
 """Studio E2E codegen emitter (P5.9)."""
 from __future__ import annotations
-import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from string import Template
 from typing import Any

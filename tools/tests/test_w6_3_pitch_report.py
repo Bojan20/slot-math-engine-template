@@ -23,7 +23,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.cert_bundle_swid.runner import GAME_SWIDS, SWID_TO_GAME
+from tools.cert_bundle_swid.runner import SWID_TO_GAME
 from tools.pitch_report.__main__ import main as pitch_main
 
 

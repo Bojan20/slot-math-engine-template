@@ -1,7 +1,6 @@
 """W5.4 (mutation engine) + W5.5 (Z3 solver cache) tests."""
 from __future__ import annotations
 
-import json
 import sys
 import tempfile
 import unittest
@@ -12,13 +11,13 @@ sys.path.insert(0, str(ROOT))
 
 from tools.math_dsl import (
     parse_spec, compile_to_ir, apply_mutation,
-    list_supported_mutations, MutationLog,
+    list_supported_mutations,
 )
 from tools.smt.weight_synthesizer import (
-    synth_uniform_weights, synth_with_volatility, synth_with_hit_freq,
+    synth_uniform_weights,
 )
 from tools.smt.cache import (
-    cache_key, cached_synth, load_cached, store_cached, _canonical_ir_shape,
+    cache_key, cached_synth, load_cached, store_cached,
 )
 
 

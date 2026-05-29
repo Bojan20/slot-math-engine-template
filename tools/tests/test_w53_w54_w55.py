@@ -13,7 +13,6 @@ sys.path.insert(0, str(ROOT))
 
 # W53
 from tools.multi_territory import (
-    MultiTerritoryReport,
     build_multi_territory_release,
 )
 from tools.multi_territory.__main__ import main as mt_main
@@ -23,7 +22,6 @@ from tools.drift_alert_hub import (
     AlertHub,
     AlertRule,
     DEFAULT_RULES,
-    DriftAlert,
     InMemoryAlertSink,
     LogfileAlertSink,
     WebhookPayloadSink,
@@ -87,7 +85,7 @@ class TestMultiTerritory(unittest.TestCase):
         import zipfile
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
-            report = build_multi_territory_release(
+            build_multi_territory_release(
                 _ir(), profile_ids=["gli19"], out_dir=d,
             )
             with zipfile.ZipFile(d / "release.zip") as zf:

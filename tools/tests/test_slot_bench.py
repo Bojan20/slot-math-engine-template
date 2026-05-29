@@ -10,7 +10,6 @@ from pathlib import Path
 import pytest
 
 from tools.slot_bench import (
-    BenchmarkResult,
     run_benchmark,
     emit_benchmark_json,
     emit_benchmark_md,

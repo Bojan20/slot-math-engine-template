@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 import random
 
 import pytest
@@ -261,7 +260,7 @@ def test_p29_drift_signal_threshold_pair():
 
 # ─── PHASE 32 — Type System ───────────────────────────────────────────────
 
-from tools.type_system import type_check_ir, TypeIssue, TypeReport
+from tools.type_system import type_check_ir, TypeIssue
 
 
 def _valid_ir() -> dict:

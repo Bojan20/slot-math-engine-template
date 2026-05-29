@@ -192,7 +192,6 @@ class TestSlotBuildWAllRuntimes(unittest.TestCase):
                 slot_build_main(["--help"])
 
     def test_slot_build_help_lists_new_flags(self):
-        import argparse
         # Build the parser by importing and calling __main__'s arg-builder
         # indirectly through --help.
         import io

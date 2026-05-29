@@ -1,7 +1,6 @@
 """P5.9 — Studio E2E Playwright codegen tests."""
 from __future__ import annotations
 import json
-import re
 import tempfile
 import unittest
 from pathlib import Path

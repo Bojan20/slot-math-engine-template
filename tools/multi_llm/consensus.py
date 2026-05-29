@@ -17,9 +17,8 @@ with thin wrappers around Claude / GPT / Gemini / Kimi.
 
 from __future__ import annotations
 
-from collections import Counter
-from dataclasses import dataclass, asdict, field
-from typing import Any, Callable, Protocol
+from dataclasses import dataclass, field
+from typing import Protocol
 
 
 class LLMProvider(Protocol):
@@ -70,7 +69,7 @@ def run_consensus(
     for prov in providers:
         try:
             r = prov(prompt)
-        except Exception as exc:  # noqa: BLE001
+        except Exception:  # noqa: BLE001
             if on_provider_error == "raise":
                 raise
             continue

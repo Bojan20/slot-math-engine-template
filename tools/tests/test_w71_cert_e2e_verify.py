@@ -29,7 +29,6 @@ class DiscoverTest(unittest.TestCase):
     def test_discover_finds_typical_artifacts(self):
         with tempfile.TemporaryDirectory() as td:
             td = Path(td)
-            data = b"some bytes"
             (td / "manifest.json").write_text("{}")
             (td / "cert.xml").write_text("<x/>")
             (td / "ir.json").write_text("{}")

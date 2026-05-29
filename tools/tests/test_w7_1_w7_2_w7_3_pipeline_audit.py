@@ -12,8 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.math_dsl import (
-    run_pipeline, PipelineError,
-    append_audit, verify_audit_chain, read_audit,
+    run_pipeline, append_audit, verify_audit_chain, read_audit,
     verify_provenance,
 )
 

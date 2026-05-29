@@ -15,7 +15,6 @@ import time
 from dataclasses import dataclass, asdict, field
 from typing import Any
 
-from tools.rgs_live.engine import default_synthetic_ir
 from tools.rgs_live.server import SpinServer
 
 

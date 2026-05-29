@@ -43,15 +43,13 @@ spliced back into `reels.base`. Round-trips through `from_json` clean.
 from __future__ import annotations
 
 import copy
-import json
 import math
-from typing import Any, Optional
+from typing import Optional
 
 import z3
 
 from .rtp_synthesizer import (
     RtpSynthesisError,
-    _per_reel_symbol_prob,
     _wild_symbol_id,
     _wild_excluded,
 )
@@ -372,7 +370,7 @@ def synth_with_hit_freq(
         for sym in special_ids:
             m[sym] = sp_w[r]
         reel_vars.append(m)
-        n_kinds = len(hp_ids) + len(lp_ids) + len(special_ids)
+        len(hp_ids) + len(lp_ids) + len(special_ids)
         # Total = sum over symbols of their assigned kind-weight
         total = (
             hp_w[r] * z3.RealVal(len(hp_ids))

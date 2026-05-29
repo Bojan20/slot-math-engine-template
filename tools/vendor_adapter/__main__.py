@@ -6,7 +6,6 @@ import sys
 from pathlib import Path
 
 from tools.vendor_adapter import (
-    DEFAULT_REGISTRY,
     detect_vendor,
     get as get_adapter,
     list_adapters,

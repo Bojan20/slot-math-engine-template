@@ -1,7 +1,6 @@
 """W6.9 (sign/verify CLI) + W6.10 (ed25519 path) + W6.11 (acceptance runner)."""
 from __future__ import annotations
 
-import json
 import os
 import sys
 import unittest
@@ -13,8 +12,8 @@ sys.path.insert(0, str(ROOT))
 
 from tools.math_dsl import (
     parse_spec, compile_to_ir,
-    sign_ir, verify_ir, verify_provenance, sign_and_inject_provenance,
-    run_acceptance, AcceptanceReport,
+    sign_ir, verify_ir, sign_and_inject_provenance,
+    run_acceptance,
 )
 from tools.math_dsl.provenance import (
     _ed25519_available, _ed25519_active,
@@ -83,7 +82,8 @@ class TestEd25519Detection(unittest.TestCase):
 class TestAcceptanceRunner(unittest.TestCase):
     def test_acceptance_classic_only(self):
         """Test against a tempdir with just one spec."""
-        import tempfile, shutil
+        import tempfile
+        import shutil
         with tempfile.TemporaryDirectory() as td:
             d = Path(td)
             src = ROOT / "tools" / "math_dsl" / "specs" / "example_classic_5x3.yaml"
@@ -132,7 +132,8 @@ class TestAcceptanceRunner(unittest.TestCase):
 
 class TestCliSignVerify(unittest.TestCase):
     def test_sign_then_verify_cli_roundtrip(self):
-        import tempfile, subprocess
+        import tempfile
+        import subprocess
         spec_path = ROOT / "tools" / "math_dsl" / "specs" / "example_classic_5x3.yaml"
         with tempfile.TemporaryDirectory() as td:
             ir_json = Path(td) / "x.ir.json"

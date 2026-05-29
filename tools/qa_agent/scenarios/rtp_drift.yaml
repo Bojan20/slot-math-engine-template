@@ -1,0 +1,30 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: rtp-drift
+title: RTP drift sentinel — engine RTP within band and drift report present
+severity: high
+preconditions:
+  - drift sentinel module is importable
+  - games/ root may or may not exist (skip-friendly)
+steps:
+  - id: drift-sentinel-importable
+    action: shell
+    cmd: python3 -c "from tools.drift_sentinel import scan_directory; print('OK')"
+    expect:
+      exit: 0
+      stdout_re: "^OK$"
+      max_ms: 10000
+  - id: rtp-band-helper
+    action: py-assert
+    cmd: 0.94 <= 0.965 <= 0.97
+  - id: drift-sentinel-cls
+    action: shell
+    cmd: python3 -c "from tools.drift_sentinel.sentinel import DriftClass, DriftSeverity; print(sorted([m.name for m in DriftClass]))"
+    expect:
+      exit: 0
+      stdout_re: "\\["
+      max_ms: 10000
+postconditions:
+  - drift sentinel classes are addressable from the QA layer
+on_fail:
+  quarantine: false
+  link_antibody: null

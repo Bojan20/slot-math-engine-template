@@ -31,7 +31,7 @@ Findings ship as `PanelElementFinding` dataclasses.
 from __future__ import annotations
 
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -105,9 +105,9 @@ def _id_reachable(js: str, ident: str) -> bool:
         sel = ident
         # `$$("selector"` / `$("selector"` / `querySelector(All)?("selector"`.
         return bool(
-            re.search(rf'\$\$?\(\s*["\']' + re.escape(sel) + r'["\']', js)
+            re.search(r'\$\$?\(\s*["\']' + re.escape(sel) + r'["\']', js)
             or re.search(
-                rf'querySelectorAll?\(\s*["\']' + re.escape(sel) + r'["\']', js
+                r'querySelectorAll?\(\s*["\']' + re.escape(sel) + r'["\']', js
             )
         )
     return bool(
@@ -127,25 +127,25 @@ def _handler_reachable(js: str, ident: str, event: str) -> tuple[bool, str | Non
         sel = ident
         # Loose: any `addEventListener('event'` within 500 chars after the selector use.
         for sel_m in re.finditer(
-            rf'\$\$?\(\s*["\']' + re.escape(sel) + r'["\']', js
+            r'\$\$?\(\s*["\']' + re.escape(sel) + r'["\']', js
         ):
             lo = sel_m.start()
             hi = min(len(js), sel_m.end() + 800)
             window = js[lo:hi]
             if re.search(
-                rf'addEventListener\(\s*["\']' + re.escape(event) + r'["\']',
+                r'addEventListener\(\s*["\']' + re.escape(event) + r'["\']',
                 window,
             ):
                 return True, window[:300]
         # Fallback: any querySelector(All) hit + addEventListener nearby.
         for sel_m in re.finditer(
-            rf'querySelectorAll?\(\s*["\']' + re.escape(sel) + r'["\']', js
+            r'querySelectorAll?\(\s*["\']' + re.escape(sel) + r'["\']', js
         ):
             lo = sel_m.start()
             hi = min(len(js), sel_m.end() + 800)
             window = js[lo:hi]
             if re.search(
-                rf'addEventListener\(\s*["\']' + re.escape(event) + r'["\']',
+                r'addEventListener\(\s*["\']' + re.escape(event) + r'["\']',
                 window,
             ):
                 return True, window[:300]
@@ -165,7 +165,7 @@ def _handler_reachable(js: str, ident: str, event: str) -> tuple[bool, str | Non
         lo = max(0, id_m.start() - 400)
         hi = min(len(js), id_m.end() + 600)
         window = js[lo:hi]
-        if re.search(rf'addEventListener\(\s*["\']' + re.escape(event) + r'["\']', window):
+        if re.search(r'addEventListener\(\s*["\']' + re.escape(event) + r'["\']', window):
             return True, window[:200]
     return False, None
 
@@ -245,7 +245,7 @@ def audit_full_panel(repo_root: Path | str) -> list[PanelElementFinding]:
                 re.search(rf'\bid="{re.escape(ident)}"', panel_body)
             )
 
-        reachable = _id_reachable(js, ident)
+        _id_reachable(js, ident)
         handler_ok, _evidence = _handler_reachable(js, ident, event)
         non_stub = _handler_non_stub(js, ident, event) if handler_ok else False
 

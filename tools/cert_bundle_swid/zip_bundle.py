@@ -17,7 +17,6 @@ import io
 import time
 import zipfile
 from pathlib import Path
-from typing import Iterable
 
 
 def _epoch_to_zip_dt(epoch: int) -> tuple[int, int, int, int, int, int]:

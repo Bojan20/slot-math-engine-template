@@ -17,7 +17,6 @@ are written to `reports/build_audit/<button_id>.audit.json`.
 
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -76,7 +75,6 @@ def _extract_build_panel(html: str) -> str:
     start = m.start()
     # Naive depth tracker — the studio panel has nested <section> too.
     depth = 0
-    pos = start
     for tag in re.finditer(r'<section[^>]*>|</section>', html[start:], re.I):
         token = tag.group(0)
         if token.startswith("<section"):

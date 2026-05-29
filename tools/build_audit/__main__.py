@@ -19,7 +19,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from pathlib import Path
 
 from tools.build_audit.harness import run_full_audit
 

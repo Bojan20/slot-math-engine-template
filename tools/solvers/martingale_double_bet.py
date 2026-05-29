@@ -23,7 +23,6 @@ exposes the *variance + ruin profile* designers need when running
 "big bet ladder" sales demos.
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 
@@ -61,7 +60,7 @@ def expected_net_per_session(p: MartingaleParams) -> float:
 def analytical_rtp(p: MartingaleParams) -> float:
     """Per-unit-bet RTP across the strategy: total expected payout /
     total expected bet."""
-    p_win = prob_session_win(p)
+    prob_session_win(p)
     # Total bet under strategy = sum of bets across ladder (truncated by win)
     # E[total bet | win at step k] = 2^k - 1 (sum of geometric series)
     # E[total bet] = Σ_{k=1..N} p_k · (2^k - 1) + (1 - sum) · (2^N - 1)

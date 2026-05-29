@@ -46,11 +46,9 @@ from pathlib import Path
 import pytest
 
 from tools.build_audit import (
-    SliderRecomputeFinding,
     audit_slider_recompute,
     reference_recompute,
 )
-from tools.build_audit.slider_recompute_auditor import _closed_form_rtp
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -167,7 +165,7 @@ def test_increasing_wild_weight_changes_rtp():
         _symbols(), _reels({"S_WILD": 8}), _paytable(), _paylines()
     )
     assert bumped["rtp_exact"] != base["rtp_exact"], (
-        f"raising WILD weight 1→8 did not move RTP"
+        "raising WILD weight 1→8 did not move RTP"
     )
 
 

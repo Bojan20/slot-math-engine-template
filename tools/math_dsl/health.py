@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
-from typing import Optional
 
 from .spec import MathDslSpec
 from .compile import compile_to_ir, CompileError

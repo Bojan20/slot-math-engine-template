@@ -30,7 +30,6 @@ Each archetype reuses the same six-stage shape as W5.7, but stages
 
 from __future__ import annotations
 
-import io
 import json
 import os
 import re
@@ -608,7 +607,7 @@ def _closed_form_rtp_lines(spec: dict[str, Any], ir: dict[str, Any]) -> float:
     dist = spec["reels"]["per_reel_distribution"]
     n_reels = len(dist)
     pay_dict = spec.get("paytable") or {}
-    n_lines = int(spec.get("paylines") or 20)
+    int(spec.get("paylines") or 20)
     wild_p = [float(d.get("wild", 0.0)) for d in dist]
 
     rtp = 0.0
@@ -691,7 +690,7 @@ def _closed_form_rtp_megaways(spec: dict[str, Any]) -> float:
     topo = spec.get("topology") or {}
     rows_weights = topo.get("rows_weights") or []
     rows_min = int(topo.get("rows_min") or 2)
-    rows_max = int(topo.get("rows_max") or 6)
+    int(topo.get("rows_max") or 6)
     if not rows_weights:
         return 0.0
 

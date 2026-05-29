@@ -86,7 +86,7 @@ class PublishTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             td = Path(td)
             games = _make_studio(td)
-            rep = publish_studio(
+            publish_studio(
                 games,
                 out_dir=td / "out",
                 plugin_id="demo",

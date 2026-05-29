@@ -4,7 +4,7 @@ import json
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Iterable
+from typing import Any, Callable
 
 from tools.rtp_monitor.monitor import MonitorState
 from tools.drift_alert_hub.hub import AlertHub

@@ -9,7 +9,6 @@ import dataclasses
 import hashlib
 import json
 import math
-from typing import Sequence
 
 
 @dataclasses.dataclass

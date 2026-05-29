@@ -106,7 +106,7 @@ def emit_compliance_doc(inputs: ComplianceInputs) -> str:
     out.append(f"# Compliance Disclosure — {inputs.jurisdiction}")
     out.append("")
     out.append(f"> Game: `{inputs.game_id}` · SWID: `{inputs.swid}`")
-    out.append(f"> Schema: `urn:slotmath:auto-compliance:v1`")
+    out.append("> Schema: `urn:slotmath:auto-compliance:v1`")
     out.append("")
     out.append("## Summary")
     out.append("")

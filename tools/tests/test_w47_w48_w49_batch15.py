@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 # W47
-from tools.ir_sanitizer import sanitize_ir, DEFAULT_REDACTIONS
+from tools.ir_sanitizer import sanitize_ir
 from tools.ir_sanitizer.__main__ import main as san_main
 
 # W48
@@ -46,7 +46,6 @@ from tools.solvers.symbol_collection_unlock import (
 from tools.solvers.bonus_buy_dynamic_pricing import (
     BonusBuyDynamicPricingParams,
     analytical_rtp as bd_rtp,
-    mc_simulate as bd_mc,
     effective_cost,
     ev_per_buy,
     is_positive_ev,
@@ -108,21 +107,26 @@ class TestIRSanitizer(unittest.TestCase):
 
 class TestKernelCompare(unittest.TestCase):
     def test_identical_kernels_equivalent(self):
-        f = lambda x: 2 * x + 3
+        def f(x):
+            return 2 * x + 3
         r = compare_kernels(f, f, xs=[0, 1, 2, 3, 4])
         self.assertTrue(r.equivalent)
         self.assertEqual(r.max_abs_diff, 0.0)
 
     def test_proportional_kernels(self):
-        f1 = lambda x: 2 * x
-        f2 = lambda x: 6 * x
+        def f1(x):
+            return 2 * x
+        def f2(x):
+            return 6 * x
         r = proportionality_test(f1, f2, xs=[1, 2, 3, 4, 5])
         self.assertTrue(r.proportional)
         self.assertAlmostEqual(r.proportionality_ratio, 1.0 / 3.0, places=6)
 
     def test_divergent_kernels(self):
-        f1 = lambda x: x * x
-        f2 = lambda x: x + 1
+        def f1(x):
+            return x * x
+        def f2(x):
+            return x + 1
         r = proportionality_test(f1, f2, xs=[1, 2, 3, 4, 5])
         self.assertFalse(r.proportional)
 

@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import json
 import math
-from pathlib import Path
 
 import pytest
 
@@ -175,7 +173,7 @@ def test_p38_html_features_section_with_features():
 
 # ─── PHASE 39 — RTP Decomposition ────────────────────────────────────────
 
-from tools.rtp_decompose import decompose, DecompositionResult
+from tools.rtp_decompose import decompose
 
 
 def test_p39_empty_series():

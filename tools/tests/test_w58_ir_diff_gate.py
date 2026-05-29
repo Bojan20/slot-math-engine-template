@@ -1,6 +1,5 @@
 """W58 — IR Diff CI Gate tests."""
 from __future__ import annotations
-import copy
 import json
 import tempfile
 import unittest

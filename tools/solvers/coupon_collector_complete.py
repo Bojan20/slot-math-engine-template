@@ -16,7 +16,6 @@ Variance:
 Tail bound: P(T > c · N ln N) <= N^(-c + 1)
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 

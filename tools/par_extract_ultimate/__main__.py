@@ -22,10 +22,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import shutil
 import sys
-from dataclasses import asdict
 from pathlib import Path
 
 from .extract import extract_workbook
@@ -68,7 +66,7 @@ def main(argv: list[str] | None = None) -> int:
     if not xlsx_path.exists():
         print(f"error: file not found: {xlsx_path}", file=sys.stderr)
         return 2
-    if not xlsx_path.suffix.lower() in (".xlsx", ".xlsm"):
+    if xlsx_path.suffix.lower() not in (".xlsx", ".xlsm"):
         print(f"error: not an xlsx file: {xlsx_path}", file=sys.stderr)
         return 2
 
@@ -87,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"[extract] source: {xlsx_path}")
     print(f"[extract] output: {out_dir}")
-    print(f"[extract] starting two-pass parse (formula + value)...", flush=True)
+    print("[extract] starting two-pass parse (formula + value)...", flush=True)
 
     stats = extract_workbook(xlsx_path, out_dir)
 

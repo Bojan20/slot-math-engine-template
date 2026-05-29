@@ -11,7 +11,6 @@ Covers:
 """
 from __future__ import annotations
 
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -20,11 +19,11 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.math_dsl import (
-    parse_spec, compile_to_ir, DslParseError, CompileError,
+    parse_spec, compile_to_ir, DslParseError,
 )
-from tools.math_dsl.spec import MathDslSpec, FeatureSpec, SymbolSpec
+from tools.math_dsl.spec import MathDslSpec
 from tools.smt.weight_synthesizer import (
-    synth_uniform_weights, synth_with_hit_freq, measured_rtp,
+    synth_uniform_weights, measured_rtp,
     RtpSynthesisError,
 )
 

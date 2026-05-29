@@ -18,7 +18,6 @@ import json
 import textwrap
 from pathlib import Path
 
-import pytest
 
 from tools.build_audit import (
     BUILD_BUTTON_IDS,

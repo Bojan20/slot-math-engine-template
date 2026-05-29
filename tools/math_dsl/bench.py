@@ -25,7 +25,6 @@ import statistics
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 from .spec import parse_spec
 

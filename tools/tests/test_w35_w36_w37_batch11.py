@@ -15,7 +15,6 @@ sys.path.insert(0, str(ROOT))
 from tools.ir_diff_heatmap import (
     diff_irs,
     render_markdown,
-    HIGH_IMPACT_PREFIXES,
 )
 from tools.ir_diff_heatmap.__main__ import main as diff_main
 
@@ -41,7 +40,6 @@ from tools.solvers.pyramid_multiplier_stack import (
 from tools.solvers.random_wild_reel_drop import (
     WildReelDropParams,
     analytical_rtp as wd_rtp,
-    mc_simulate as wd_mc,
 )
 from tools.solvers.cluster_consolidation_bonus import (
     ClusterConsolidationParams,
@@ -170,7 +168,6 @@ class TestRTPSweep(unittest.TestCase):
 def _spin_events():
     """Create synthetic spin events with 3 player tiers."""
     events = []
-    rng_seed = 0
     # Low-rollers (10 players, bet=1, RTP 0.95)
     for pi in range(10):
         for _ in range(100):

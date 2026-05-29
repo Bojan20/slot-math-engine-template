@@ -27,7 +27,6 @@ from __future__ import annotations
 import dataclasses
 import html
 import json
-import re
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path

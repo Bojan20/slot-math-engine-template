@@ -38,10 +38,8 @@ _PAY_ROW = re.compile(
 
 def _parse_paytable_rows(text: str) -> list[tuple[str, int]]:
     rows: list[tuple[str, int]] = []
-    in_table = False
     for line in text.splitlines():
         if "|" not in line:
-            in_table = False
             continue
         # Heuristic: looks like a markdown table row
         m = _PAY_ROW.match(line)
@@ -49,7 +47,6 @@ def _parse_paytable_rows(text: str) -> list[tuple[str, int]]:
             continue
         combo = m.group(1).strip()
         if combo.lower() in ("combo", "symbol", "row", "----"):
-            in_table = True
             continue
         try:
             pays = int(m.group(2))

@@ -17,8 +17,6 @@ from typing import Any
 from .spec import (
     MathDslSpec,
     SymbolSpec,
-    FeatureSpec,
-    ConstraintsSpec,
     TopologySpec,
 )
 

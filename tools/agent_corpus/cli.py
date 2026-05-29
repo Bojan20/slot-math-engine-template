@@ -41,7 +41,7 @@ from tools.agent_paths import agents_root as _agents_root
 
 AGENTS_ROOT = _agents_root()
 
-KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug"}
+KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug", "qa-agent"}
 
 
 def load_manifest(agent: str) -> Dict[str, Any]:
@@ -285,10 +285,76 @@ def _corpus_math_debug(manifest: Dict[str, Any]) -> List[Dict[str, Any]]:
     return out
 
 
+# ── qa-agent ──────────────────────────────────────────────────────────────
+
+
+def _corpus_qa_agent(manifest: Dict[str, Any]) -> List[Dict[str, Any]]:
+    agent = manifest["name"]
+    targets = manifest.get("corpus_targets", {}) or {}
+    out: List[Dict[str, Any]] = []
+    now = dt.datetime.now(dt.timezone.utc).isoformat()
+
+    # Examples (few-shot markdown under <agents-root>/qa-agent/examples/)
+    examples_dir = AGENTS_ROOT / agent / "examples"
+    if examples_dir.is_dir():
+        for p in sorted(examples_dir.glob("*.md")):
+            out.append({
+                "trace_id": _stable_uuid(agent, "example", p.name),
+                "agent": agent,
+                "source": "few_shot_example",
+                "path": str(p),
+                "kind": "example",
+                "text": p.read_text(),
+                "metadata": {"taxonomy_hint": p.stem},
+                "license": "internal",
+                "ingested_at": now,
+            })
+
+    # Scenarios — YAML manual-scenario set; one trace per scenario.
+    scn_root = _expand(str(targets.get("scenarios_root", "")))
+    if scn_root and scn_root.is_dir():
+        for p in sorted(scn_root.glob("*.yaml")):
+            out.append({
+                "trace_id": _stable_uuid(agent, "scenario", p.name),
+                "agent": agent,
+                "source": "scenario",
+                "path": str(p),
+                "kind": "example",
+                "text": p.read_text(),
+                "metadata": {"scenario_file": p.name},
+                "license": "internal",
+                "ingested_at": now,
+            })
+
+    # QA runs — recent report.json files (capped, latest 50)
+    runs_root = _expand(str(targets.get("qa_runs_root", "")))
+    if runs_root and runs_root.is_dir():
+        runs = sorted(runs_root.glob("*/report.json"), key=lambda p: p.parent.name)[-50:]
+        for p in runs:
+            try:
+                text = p.read_text()
+            except Exception:
+                continue
+            out.append({
+                "trace_id": _stable_uuid(agent, "run", p.parent.name),
+                "agent": agent,
+                "source": "qa_run",
+                "path": str(p),
+                "kind": "audit",
+                "text": text[:200_000],
+                "metadata": {"run_dir": p.parent.name},
+                "license": "internal",
+                "ingested_at": now,
+            })
+
+    return out
+
+
 CORPUS_BUILDERS = {
     "par-parser": _corpus_par_parser,
     "reg-oracle": _corpus_reg_oracle,
     "math-debug": _corpus_math_debug,
+    "qa-agent": _corpus_qa_agent,
 }
 
 
@@ -332,9 +398,21 @@ def stats(agent: str) -> Dict[str, Any]:
 
 
 def self_test() -> int:
-    """Smoke: build all 3 corpora and ensure at least 1 trace each."""
-    failures = []
+    """Smoke: build every agent corpus whose manifest is present.
+
+    Missing manifests degrade to SKIP (the agents-root contract documented in
+    `tools.agent_paths`). A run is FAIL iff a present corpus builds empty
+    or raises.
+    """
+    failures: List[str] = []
+    ok = 0
+    skipped = 0
     for agent in sorted(KNOWN_AGENTS):
+        mpath = AGENTS_ROOT / agent / "manifest.yaml"
+        if not mpath.exists():
+            print(f"  {agent}: SKIP — manifest not in {AGENTS_ROOT}")
+            skipped += 1
+            continue
         try:
             out = build_corpus(agent)
             n = sum(1 for _ in out.open()) if out.exists() else 0
@@ -342,6 +420,7 @@ def self_test() -> int:
                 failures.append(f"{agent}: 0 traces")
             else:
                 print(f"  {agent}: {n} traces ok")
+                ok += 1
         except Exception as exc:
             failures.append(f"{agent}: exception {exc!r}")
     if failures:
@@ -349,7 +428,10 @@ def self_test() -> int:
         for f in failures:
             print(" -", f)
         return 1
-    print("self-test PASS — all 3 agent corpora built non-empty")
+    if ok == 0:
+        print("self-test FAIL: 0 corpora built")
+        return 1
+    print(f"self-test PASS — {ok} agent corpora built non-empty, {skipped} skipped")
     return 0
 
 
@@ -370,6 +452,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.cmd == "refresh":
         if args.agent == "all":
             for a in sorted(KNOWN_AGENTS):
+                mpath = AGENTS_ROOT / a / "manifest.yaml"
+                if not mpath.exists():
+                    print(f"✗ {a}: SKIP — manifest not in {AGENTS_ROOT}")
+                    continue
                 build_corpus(a)
         else:
             build_corpus(args.agent)

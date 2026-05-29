@@ -22,11 +22,9 @@ Why an in-process harness rather than a separate process:
 from __future__ import annotations
 
 import asyncio
-import json
-import statistics
 import time
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from tools.rgs_engine.protocol import (
     SpinRequestFrame,

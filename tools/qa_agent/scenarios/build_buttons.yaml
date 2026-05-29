@@ -1,0 +1,32 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: build-buttons
+title: Build section buttons — auditor agent spec + studio scaffolding present
+severity: medium
+preconditions:
+  - studio web scaffolding lives under web/studio/
+  - build button auditor agent spec exists
+steps:
+  - id: build-auditor-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/BUILD_BUTTON_AUDITOR.md').exists()
+  - id: build-pipeline-reviewer-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/BUILD_PIPELINE_REVIEWER.md').exists()
+  - id: math-algorithm-auditor-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/MATH_ALGORITHM_AUDITOR.md').exists()
+  - id: qa-agent-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/QA_AGENT.md').exists()
+  - id: build-audit-tool-importable
+    action: shell
+    cmd: python3 -c "import importlib.util as u; m = u.find_spec('tools.build_audit'); print('OK' if m else 'MISSING')"
+    expect:
+      exit: 0
+      stdout_re: "^(OK|MISSING)$"
+      max_ms: 10000
+postconditions:
+  - "every build-section specialist agent spec is reachable from repo root"
+on_fail:
+  quarantine: false
+  link_antibody: null

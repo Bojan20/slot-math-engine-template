@@ -1,0 +1,42 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: determinism
+title: Determinism contract — SLOT_QA_SEED propagation + stable canonical_hash
+severity: high
+preconditions:
+  - SLOT_QA_SEED is exported (default 42)
+steps:
+  - id: seed-env-set
+    action: env-check
+    cmd: SLOT_QA_SEED
+  - id: scenario-validate-stable
+    action: shell
+    cmd: python3 -c "from tools.qa_agent.scenarios import load_scenario, SCENARIOS_DIR; [load_scenario(p) for p in sorted(SCENARIOS_DIR.glob('*.yaml'))]; print('OK')"
+    expect:
+      exit: 0
+      stdout_re: "^OK$"
+      max_ms: 10000
+  - id: canonical-hash-stable
+    action: shell
+    cmd: |
+      python3 -c "
+      from tools.qa_agent.report import QaReport, LayerResult, LayerStatus
+      def mk():
+          r = QaReport(scope='det', baseline='', seed=42, repo_sha='x', started_at='S', finished_at='F')
+          r.layers = [LayerResult(layer='L0', name='selftest', status=LayerStatus.PASS, elapsed_ms=1.0, counts={}, detail='ok')]
+          r.verdict, r.exit_code = r.compute_verdict()
+          return r
+      r1, r2 = mk(), mk()
+      r2.started_at = 'OTHER'
+      r2.finished_at = 'OTHER'
+      r2.layers[0].elapsed_ms = 999.9
+      print('OK' if r1.canonical_hash() == r2.canonical_hash() else 'FAIL')
+      "
+    expect:
+      exit: 0
+      stdout_re: "^OK$"
+      max_ms: 10000
+postconditions:
+  - "canonical_hash stable across timestamp + elapsed_ms drift"
+on_fail:
+  quarantine: false
+  link_antibody: null

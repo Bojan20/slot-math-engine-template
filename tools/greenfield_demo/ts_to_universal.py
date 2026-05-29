@@ -38,7 +38,6 @@ math_dsl / smt modules — those stay untouched per the W5.7 mission rules.
 
 from __future__ import annotations
 
-import copy
 import json
 from typing import Any
 

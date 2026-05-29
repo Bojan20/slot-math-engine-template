@@ -26,9 +26,8 @@ from __future__ import annotations
 import asyncio
 import base64
 import hashlib
-import os
 import struct
-from typing import Any, Optional
+from typing import Any
 
 from tools.rgs_live.server import SpinServer
 
@@ -196,7 +195,7 @@ class WebSocketGateway:
             )
             try:
                 headers = parse_http_request(handshake_raw)
-            except ValueError as exc:
+            except ValueError:
                 writer.write(b"HTTP/1.1 400 Bad Request\r\n\r\n")
                 await writer.drain()
                 return

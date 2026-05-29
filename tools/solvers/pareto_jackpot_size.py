@@ -12,7 +12,6 @@ Per-spin RTP:
   uplift = p_hit · E[jackpot]
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 

@@ -24,7 +24,6 @@ import re
 import sys
 from pathlib import Path
 from typing import Any
-from xml.etree import ElementTree as ET
 
 
 REPO = Path(__file__).resolve().parents[1]

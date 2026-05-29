@@ -7,7 +7,6 @@ input list. No external font, no script tags — works in headless render.
 
 from __future__ import annotations
 
-from typing import Iterable
 
 
 def _fmt(x: float) -> str:

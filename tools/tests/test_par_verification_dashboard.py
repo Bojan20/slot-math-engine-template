@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import io
 import json
 import zipfile
 from pathlib import Path
@@ -10,7 +9,6 @@ from pathlib import Path
 import pytest
 
 from tools.par_verification_dashboard.build import (
-    SwidEntry,
     build_dataset,
     render_dashboard,
     write_dashboard,

@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 # W38
-from tools.regulator_export import export_game, ExportManifest
+from tools.regulator_export import export_game
 from tools.regulator_export.__main__ import main as export_main
 
 # W39

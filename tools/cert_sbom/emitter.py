@@ -177,7 +177,7 @@ def build_sbom(
     timestamp = datetime.now(timezone.utc).isoformat()
     serial = (
         f"urn:uuid:{uuid.uuid4()}" if bump_serial
-        else f"urn:uuid:00000000-0000-0000-0000-000000000000"
+        else "urn:uuid:00000000-0000-0000-0000-000000000000"
     )
     entry_points = extract_entry_points(pyproject_path)
 

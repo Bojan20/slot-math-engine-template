@@ -22,7 +22,7 @@ from tools.solvers.coupon_collector_complete import (
 )
 from tools.solvers.birthday_collision import (
     BirthdayCollisionParams, analytical_rtp as bday_rtp,
-    mc_simulate as bday_mc, prob_no_collision, prob_collision,
+    mc_simulate as bday_mc, prob_collision,
 )
 from tools.solvers.inverse_gaussian_fpt import (
     InverseGaussianFPTParams, analytical_rtp as ig_rtp,
@@ -34,8 +34,7 @@ from tools.solvers.chinese_restaurant_partition import (
     expected_n_clusters_asymptotic,
 )
 from tools.solvers.levy_stable_jackpot import (
-    LevyStableJackpotParams, analytical_rtp as ls_rtp,
-    mc_simulate as ls_mc, tail_constant,
+    LevyStableJackpotParams, mc_simulate as ls_mc, tail_constant,
     prob_exceeds, expected_jackpot_finite,
 )
 

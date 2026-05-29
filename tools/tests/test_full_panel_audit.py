@@ -18,7 +18,6 @@ import pytest
 
 from tools.build_audit.full_panel_auditor import (
     PANEL_BUILD_INVENTORY,
-    PanelElementFinding,
     TIER_DATA_VALUES,
     audit_full_panel,
 )

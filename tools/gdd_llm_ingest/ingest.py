@@ -32,7 +32,6 @@ from tools.gdd_llm_ingest.cache import (
 from tools.gdd_llm_ingest.client import LLMClientProtocol, LLMResponse
 from tools.gdd_llm_ingest.compile import (
     GddCompileError,
-    canonical_payload_json,
     compile_to_gdd_yaml,
     validate_llm_payload,
 )

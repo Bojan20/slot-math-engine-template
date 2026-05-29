@@ -24,13 +24,11 @@ Plus aggregate:
 from __future__ import annotations
 
 import json
-import os
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any
 
 from openpyxl import load_workbook
-from openpyxl.cell.cell import Cell
 from openpyxl.worksheet.worksheet import Worksheet
 from openpyxl.utils import get_column_letter
 
@@ -45,7 +43,6 @@ def _patch_openpyxl_for_vendor_sheets() -> None:
     'vertical stack' instead of 0..180). Calling this once before load
     makes the descriptors clamp instead of raise.
     """
-    import openpyxl.descriptors.base as _b
     from openpyxl.descriptors.base import MinMax, Set
 
     # text_rotation: clamp to 0..180.
@@ -593,7 +590,7 @@ def extract_workbook(xlsx_path: str | Path, out_dir: str | Path) -> ExtractionSt
     for sheet_name in wb_f.sheetnames:
         ws_f = wb_f[sheet_name]
         ws_v = wb_v[sheet_name] if sheet_name in wb_v.sheetnames else None
-        sheet_dir = out_dir / f"sheets" / sheet_name
+        sheet_dir = out_dir / "sheets" / sheet_name
         sheet_dir.mkdir(parents=True, exist_ok=True)
         stats = SheetStats(
             name=sheet_name,

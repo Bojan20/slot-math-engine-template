@@ -232,7 +232,6 @@ def test_report_dataclass_isinstance():
 def test_copilot_output_compatible_with_share_aware_lock():
     """After applying a copilot mutation, the resulting IR should still be
     valid input for the P10.7 share-aware locker."""
-    from tools.slot_design import share_aware_lock
     new_ir, report = apply_mutation(_base_ir(), "set target RTP to 95.5%")
     if report.rtp_relock_required:
         # Wrap in DSL-like shape (copilot edits IR directly; lock expects DSL)

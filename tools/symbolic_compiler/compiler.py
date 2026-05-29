@@ -10,7 +10,7 @@ Regulator-friendly output:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any
 

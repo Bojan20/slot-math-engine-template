@@ -32,7 +32,7 @@ import copy
 import hashlib
 import json
 from dataclasses import asdict, dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from tools.slot_design.copilot import MutationReport, apply_mutation
 

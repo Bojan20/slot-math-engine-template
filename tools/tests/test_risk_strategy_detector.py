@@ -5,7 +5,6 @@ from __future__ import annotations
 import pytest
 
 from tools.risk_engine import (
-    StrategyFingerprint,
     detect_strategy,
     fingerprint_to_dict,
 )

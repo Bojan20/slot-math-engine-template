@@ -372,7 +372,7 @@ def _remove_feature(
     features = ir.get("features")
     if not isinstance(features, list):
         report.warnings.append(
-            f"remove_feature: no features list in IR"
+            "remove_feature: no features list in IR"
         )
         return None
     for i, feat in enumerate(features):

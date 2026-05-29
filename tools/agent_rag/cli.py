@@ -5,14 +5,13 @@ import argparse
 import datetime as dt
 import json
 import math
-import os
 import re
 import sys
 import urllib.error
 import urllib.request
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 try:
     import yaml  # type: ignore
@@ -23,7 +22,7 @@ except ImportError:
 from tools.agent_paths import agents_root as _agents_root
 
 AGENTS_ROOT = _agents_root()
-KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug"}
+KNOWN_AGENTS = {"par-parser", "reg-oracle", "math-debug", "qa-agent"}
 
 # ── tokeniser ───────────────────────────────────────────────────────────
 
@@ -224,17 +223,42 @@ def search(agent: str, query: str, k: int = 5) -> List[Dict[str, Any]]:
     return out
 
 
+_SELF_TEST_QUERIES = {
+    "par-parser": "vendor par sheet",
+    "reg-oracle": "ukgc autoplay",
+    "math-debug": "rtp drift",
+    "qa-agent": "antibody scenario layer",
+}
+
+
 def self_test() -> int:
+    """Ingest every agent whose corpus is present; missing → SKIP.
+
+    Per the agents-root contract (`tools.agent_paths`) we degrade gracefully
+    when the registry isn't on disk — typically because the persistent
+    registry lives in an external orchestration host.
+    """
     failures: List[str] = []
+    ok = 0
+    skipped = 0
     for agent in sorted(KNOWN_AGENTS):
+        manifest_path = AGENTS_ROOT / agent / "manifest.yaml"
+        if not manifest_path.exists():
+            print(f"  {agent}: SKIP — manifest not in {AGENTS_ROOT}")
+            skipped += 1
+            continue
         try:
             res = ingest(agent)
             if not res.get("ok"):
                 failures.append(f"{agent}: ingest not ok — {res.get('reason')}")
                 continue
-            hits = search(agent, "rtp drift" if agent == "math-debug" else "vendor par sheet" if agent == "par-parser" else "ukgc autoplay")
+            query = _SELF_TEST_QUERIES.get(agent, "smoke")
+            hits = search(agent, query)
             if not hits:
-                failures.append(f"{agent}: search returned 0 hits")
+                failures.append(f"{agent}: search {query!r} returned 0 hits")
+                continue
+            print(f"  {agent}: ingest ok ({res['n_traces']} traces), search {query!r} → {len(hits)} hits")
+            ok += 1
         except Exception as exc:
             failures.append(f"{agent}: exception {exc!r}")
     if failures:
@@ -242,7 +266,10 @@ def self_test() -> int:
             print(" -", f)
         print("self-test FAIL")
         return 1
-    print(f"self-test PASS — 3 agent indexes built, search returns hits")
+    if ok == 0:
+        print("self-test FAIL: 0 agent indexes built")
+        return 1
+    print(f"self-test PASS — {ok} agent index(es) built, search returns hits, {skipped} skipped")
     return 0
 
 
@@ -258,7 +285,13 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if args.cmd == "ingest":
         if args.agent == "all":
-            results = [ingest(a) for a in sorted(KNOWN_AGENTS)]
+            results = []
+            for a in sorted(KNOWN_AGENTS):
+                mpath = AGENTS_ROOT / a / "manifest.yaml"
+                if not mpath.exists():
+                    results.append({"agent": a, "ok": False, "reason": f"manifest not in {AGENTS_ROOT}"})
+                    continue
+                results.append(ingest(a))
             print(json.dumps(results, indent=2))
         else:
             print(json.dumps(ingest(args.agent), indent=2))

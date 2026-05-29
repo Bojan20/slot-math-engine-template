@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
-from typing import Any
 
 import pytest
 
@@ -130,7 +129,8 @@ def test_p21_anneal_validates_beta_range():
 
 
 def test_p21_anneal_seed_deterministic():
-    o = lambda x: x[0] ** 2
+    def o(x):
+        return x[0] ** 2
     r1 = anneal(o, x0=[1.0], bounds=[(-1, 1)], iterations=500, seed=99)
     r2 = anneal(o, x0=[1.0], bounds=[(-1, 1)], iterations=500, seed=99)
     assert r1.best_x == r2.best_x
@@ -147,8 +147,6 @@ def test_p21_cost_trace_length():
 # ─── PHASE 22 — Federated Audit Protocol ──────────────────────────────────
 
 from tools.federated_audit import (
-    PartyCommit,
-    AuditTranscript,
     party_commit,
     verify_party_commit,
     build_audit_transcript,
@@ -245,7 +243,6 @@ def test_p22_audit_consensus_idempotent():
 
 from tools.symbolic_compiler import (
     compile_symbolic,
-    SymbolicCertificate,
     emit_derivation_markdown,
 )
 
@@ -322,7 +319,6 @@ def test_p24_empty_paytable_zero_rtp():
 
 from tools.stress_model import (
     HawkesParams,
-    StressReport,
     simulate_hawkes,
     capacity_report,
 )
@@ -387,9 +383,7 @@ def test_p25_capacity_report_bad_window_raises():
 # ─── PHASE 26 — Multi-LLM Consensus ───────────────────────────────────────
 
 from tools.multi_llm import (
-    LLMProvider,
     LLMReview,
-    ConsensusResult,
     run_consensus,
 )
 

@@ -2,7 +2,6 @@
 from __future__ import annotations
 import io
 import json
-import os
 import sys
 import tempfile
 import unittest
@@ -15,7 +14,6 @@ sys.path.insert(0, str(ROOT))
 
 # W65
 from tools.plugin_sign import (
-    SigningUnavailable,
     generate_keypair,
     sign_zip,
     verify_zip,
@@ -27,12 +25,10 @@ from tools.rtp_monitor.monitor import MonitorState
 from tools.drift_alert_hub.hub import (
     AlertHub,
     DEFAULT_RULES,
-    InMemoryAlertSink,
 )
 from tools.drift_replay.theatre import (
     replay,
     replay_file,
-    DriftReplayReport,
 )
 from tools.drift_replay.__main__ import main as dr_main
 
@@ -40,7 +36,6 @@ from tools.drift_replay.__main__ import main as dr_main
 from tools.cert_sbom.emitter import (
     build_sbom,
     extract_entry_points,
-    SBOMReport,
 )
 from tools.cert_sbom.__main__ import main as sbom_main
 

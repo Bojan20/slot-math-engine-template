@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import struct
 from typing import Any
 
 from tools.crypto_fair.fair_chain import derive_spin_seed

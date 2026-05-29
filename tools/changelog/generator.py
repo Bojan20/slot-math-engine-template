@@ -136,7 +136,7 @@ def _run_git(repo_root: Path, *, paths: Iterable[str] = ("tools/",),
               max_commits: int = 1000) -> str:
     cmd = [
         "git", "log", f"--pretty=format:{GIT_PRETTY}",
-        f"-n", str(max_commits), "--",
+        "-n", str(max_commits), "--",
     ] + list(paths)
     try:
         out = subprocess.run(

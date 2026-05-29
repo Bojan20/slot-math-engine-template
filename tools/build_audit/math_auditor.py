@@ -11,9 +11,8 @@ comparison is genuinely independent of the engine's TS / Rust math.
 from __future__ import annotations
 
 import math
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from fractions import Fraction
-from pathlib import Path
 from typing import Any
 
 from tools.build_audit.weight_auditor import _fraction_rtp_from_ir, _naive_float_rtp

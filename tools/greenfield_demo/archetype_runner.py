@@ -33,7 +33,6 @@ from pathlib import Path
 
 from .archetype_pipeline import (
     DEFAULT_OUT_DIR,
-    DEMO_EPOCH,
     DEMO_SPINS,
     ENGINE_BIN,
     run_pipeline,

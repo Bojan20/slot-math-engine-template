@@ -47,7 +47,7 @@ def expected_pay(p: DirichletSegmentParams) -> float:
 def variance_pay(p: DirichletSegmentParams) -> float:
     """Var of E[pay] = Σ_i w_i · pay_i where w ~ Dir(α)."""
     a0 = _alpha_sum(p.alphas)
-    a0_sq = a0 * (a0 + 1)
+    a0 * (a0 + 1)
     # Var(Σ w_i v_i) = Σ_i Var(w_i) v_i^2 + 2 Σ_{i<j} Cov(w_i, w_j) v_i v_j
     # Var(w_i) = α_i(α_0 - α_i) / (α_0^2 (α_0 + 1))
     # Cov(w_i, w_j) = -α_i α_j / (α_0^2 (α_0 + 1))

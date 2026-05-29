@@ -28,7 +28,6 @@ from tools.provenance_chain import (
     verify_chain,
     merkle_proof,
     verify_merkle_proof,
-    ChainCommitment,
 )
 from tools.provenance_chain.__main__ import main as pc_main
 

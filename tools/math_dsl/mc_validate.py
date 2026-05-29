@@ -54,7 +54,7 @@ class McValidationReport:
 
     def summary(self) -> str:
         lines = [
-            f"# MC validation report",
+            "# MC validation report",
             f"spins:                     {self.spins:,}",
             f"empirical RTP:             {self.empirical_rtp:.6f}",
             f"empirical std err:         {self.std_err:.6f}",
@@ -134,7 +134,7 @@ def mc_validate(
         # Default: 1 horizontal line per row
         rows = ir.get("topology", {}).get("rows") or 3
         paylines = [[r] * n_reels for r in range(rows)]
-    syms_list = ir.get("symbols") or []
+    ir.get("symbols") or []
     wild_id = _wild_symbol_id(ir)
     excluded = _wild_excluded(ir)
 

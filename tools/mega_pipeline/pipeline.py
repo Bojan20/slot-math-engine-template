@@ -95,7 +95,7 @@ def run_mega_pipeline(
         p.write_text(json.dumps(_asdict(spec), indent=2))
         return {"artefact_path": str(p), "feature_kinds": spec.feature_kinds,
                 "target_rtp": spec.target_rtp}
-    s1 = _stage("P10 parse_prompt", _s1, report)
+    _stage("P10 parse_prompt", _s1, report)
 
     # ── stage 2: prompt_to_dsl + plan_composition ─────────────────────
     def _s2():
@@ -108,7 +108,7 @@ def run_mega_pipeline(
         p = out_path / "game.dsl.json"
         p.write_text(json.dumps(dsl, indent=2))
         return {"artefact_path": str(p), "n_features": len(dsl.get("features", []))}
-    s2 = _stage("P10.2 prompt_to_dsl+plan_composition", _s2, report)
+    _stage("P10.2 prompt_to_dsl+plan_composition", _s2, report)
 
     # ── stage 3: share_aware_lock → IR ────────────────────────────────
     def _s3():
@@ -123,7 +123,7 @@ def run_mega_pipeline(
         p.write_text(json.dumps(ir, indent=2))
         return {"artefact_path": str(p),
                 "target_rtp": ir.get("meta", {}).get("target_rtp")}
-    s3 = _stage("P10.7 share_aware_lock", _s3, report)
+    _stage("P10.7 share_aware_lock", _s3, report)
 
     # Load IR for downstream stages
     ir_path = out_path / "ir.json"

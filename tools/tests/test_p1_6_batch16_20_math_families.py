@@ -25,8 +25,7 @@ from tools.solvers.hypergeometric_pick import (
     mc_simulate as hp_mc, prob_match,
 )
 from tools.solvers.martingale_double_bet import (
-    MartingaleParams, analytical_rtp as mg_rtp,
-    mc_simulate as mg_mc, prob_session_win, expected_net_per_session,
+    MartingaleParams, prob_session_win, expected_net_per_session,
 )
 from tools.solvers.gumbel_extreme_win import (
     GumbelExtremeParams, analytical_rtp as gx_rtp,
@@ -47,37 +46,32 @@ from tools.solvers.markov_absorption_freespins import (
     mc_simulate as mar_mc, expected_total_spins,
 )
 from tools.solvers.bayesian_skill_adaptation import (
-    BayesianSkillAdaptParams, analytical_rtp as bsa_rtp,
-    mc_simulate as bsa_mc, posterior_alpha_beta, posterior_mean,
+    BayesianSkillAdaptParams, posterior_alpha_beta, posterior_mean,
 )
 
 # Batch 18
 from tools.solvers.renewal_process_features import (
     RenewalProcessParams, analytical_rtp as rpf_rtp,
     mc_simulate as rpf_mc, long_run_rate,
-    expected_features, variance_features,
+    expected_features,
 )
 from tools.solvers.multinomial_symbol_draws import (
     MultinomialSymbolDrawsParams, analytical_rtp as msd_rtp,
     mc_simulate as msd_mc, expected_pay_per_cell,
 )
 from tools.solvers.first_passage_time_meter import (
-    FirstPassageMeterParams, analytical_rtp as fpt_rtp,
-    mc_simulate as fpt_mc, expected_first_passage_time, prob_fill_within,
+    FirstPassageMeterParams, expected_first_passage_time, prob_fill_within,
 )
 from tools.solvers.tail_dependence_jackpot import (
-    TailDependenceJackpotParams, analytical_rtp as tdj_rtp,
-    mc_simulate as tdj_mc, independence_rtp, tail_augmented_rtp,
+    TailDependenceJackpotParams, independence_rtp, tail_augmented_rtp,
 )
 
 # Batch 19
 from tools.solvers.expected_shortfall_bigwin import (
-    ExpectedShortfallParams, analytical_rtp as esb_rtp,
-    mc_simulate as esb_mc, var_at_level, cvar,
+    ExpectedShortfallParams, var_at_level, cvar,
 )
 from tools.solvers.conditional_expectation_session import (
-    ConditionalSessionParams, analytical_rtp as ces_rtp,
-    mc_simulate as ces_mc, conditional_expectation,
+    ConditionalSessionParams, conditional_expectation,
     conditional_variance, ci95_halfwidth,
 )
 from tools.solvers.exponential_decay_multiplier import (
@@ -85,8 +79,7 @@ from tools.solvers.exponential_decay_multiplier import (
     mc_simulate as edm_mc, expected_total_multiplier,
 )
 from tools.solvers.logistic_growth_meter import (
-    LogisticMeterParams, analytical_rtp as lgm_rtp,
-    mc_simulate as lgm_mc, meter_level,
+    LogisticMeterParams, meter_level,
 )
 
 # Batch 20
@@ -95,8 +88,7 @@ from tools.solvers.weibull_session_length import (
     mc_simulate as wsl_mc, expected_session_length,
 )
 from tools.solvers.pareto_jackpot_size import (
-    ParetoJackpotParams, analytical_rtp as pjs_rtp,
-    mc_simulate as pjs_mc, expected_jackpot, variance_jackpot,
+    ParetoJackpotParams, expected_jackpot, variance_jackpot,
     prob_exceeds_factor,
 )
 from tools.solvers.beta_binomial_overdispersion import (
@@ -478,7 +470,6 @@ class TestParetoJackpot(unittest.TestCase):
 
     def test_alpha_below_1_infinite_mean(self):
         p = ParetoJackpotParams(p_hit_per_spin=0.001, alpha=0.5, x_min=1000.0)
-        import math
         self.assertEqual(expected_jackpot(p), float("inf"))
 
     def test_prob_exceeds_factor(self):

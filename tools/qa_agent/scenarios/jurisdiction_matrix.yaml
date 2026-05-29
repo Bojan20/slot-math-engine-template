@@ -1,0 +1,25 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: jurisdiction-matrix
+title: Jurisdiction matrix — reg-oracle stubs + reg agent spec present
+severity: medium
+preconditions:
+  - agents directory exists
+  - reg-oracle subagent spec lives in agents/REGULATORY_ORACLE.md
+steps:
+  - id: reg-oracle-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/REGULATORY_ORACLE.md').exists()
+  - id: par-parser-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/PAR_PARSER_SPECIALIST.md').exists()
+  - id: math-debug-spec
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/MATH_DEBUG_SPECIALIST.md').exists()
+  - id: qa-agent-registry-manifest
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/qa-agent/manifest.yaml').exists()
+postconditions:
+  - "all 4 phase-8 agent specs reachable from repo root"
+on_fail:
+  quarantine: false
+  link_antibody: null

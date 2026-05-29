@@ -1,0 +1,33 @@
+schema: urn:slotmath:qa-agent:scenario:v1
+id: base-smoke
+title: Base smoke — repo + Python + agent registry are reachable
+severity: critical
+preconditions:
+  - repository working tree exists
+  - python3 available
+steps:
+  - id: python-version
+    action: shell
+    cmd: python3 --version
+    expect:
+      exit: 0
+      stdout_re: "Python 3\\.(1[0-9]|[2-9][0-9])\\."
+      max_ms: 5000
+  - id: agent-registry-dir
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents').exists()
+  - id: qa-agent-spec-present
+    action: py-assert
+    cmd: __import__('pathlib').Path('agents/QA_AGENT.md').exists()
+  - id: agent-paths-importable
+    action: shell
+    cmd: python3 -c "from tools.agent_paths import agents_root; print(agents_root())"
+    expect:
+      exit: 0
+      stdout_re: "agents$"
+      max_ms: 10000
+postconditions:
+  - "all four smoke gates pass"
+on_fail:
+  quarantine: false
+  link_antibody: null

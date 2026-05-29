@@ -25,7 +25,6 @@ from typing import Optional
 
 from .spec import parse_spec, DslParseError
 from .compile import compile_to_ir
-from .verify import verify_all, VerifyReport
 
 
 @dataclass

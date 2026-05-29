@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import math
-import random
 
 import pytest
 
@@ -80,7 +78,7 @@ def test_p30_seed_deterministic():
 # ─── PHASE 31 — LTV Forecaster ───────────────────────────────────────────
 
 from tools.ltv_forecast import (
-    LTVInputs, LTVResult, forecast_closed_form, simulate_ltv_cohort,
+    LTVInputs, forecast_closed_form, simulate_ltv_cohort,
 )
 
 
@@ -141,7 +139,7 @@ def test_p31_result_schema():
 # ─── PHASE 33 — Vendor Translator ────────────────────────────────────────
 
 from tools.vendor_translator import (
-    translate_ir, list_supported_vendors, TranslationReport,
+    translate_ir, list_supported_vendors,
 )
 
 
@@ -281,7 +279,7 @@ def test_p34_theorem_cert_hashes_emitted():
 
 # ─── PHASE 35 — Volatility Classifier ────────────────────────────────────
 
-from tools.vol_class_auto import classify_volatility, VolReport
+from tools.vol_class_auto import classify_volatility
 
 
 def test_p35_empty_input_low():

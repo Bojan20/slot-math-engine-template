@@ -12,7 +12,7 @@ from tools.math_dsl import (
     parse_spec, compile_to_ir,
     sign_ir, verify_ir, sign_and_inject_provenance, verify_provenance,
     ir_sha256,
-    verify_rtp, verify_hit_freq, verify_volatility, verify_all,
+    verify_rtp, verify_volatility, verify_all,
     VerifyReport, hit_freq_closed_form,
     build_catalog, filter_catalog,
 )

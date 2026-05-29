@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from tools.math_dsl import parse_spec, compile_to_ir, extract_from_ir
 from tools.smt.weight_synthesizer import (
-    synth_uniform_weights, synth_multi_objective, measured_rtp,
+    synth_multi_objective, measured_rtp,
     coefficient_of_variation, RtpSynthesisError,
 )
 

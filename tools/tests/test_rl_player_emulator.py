@@ -6,7 +6,6 @@ import pytest
 
 from tools.rl_player_emulator.player import (
     ACTIONS,
-    PlayerArchetype,
     QLearningPolicy,
     SessionSimulator,
     _quantile,

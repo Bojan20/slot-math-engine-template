@@ -15,7 +15,6 @@ from tools.risk_engine import (
     RiskScore,
     InterventionLevel,
     RiskPolicy,
-    SessionMetrics,
 )
 from tools.risk_engine.assessor import _count_doublings, _ramp, _spins_per_minute
 
@@ -371,7 +370,7 @@ def test_reset_session():
 def test_new_session_id_starts_fresh():
     a = RiskAssessor()
     a.observe(_spin(session_id="s1", ts=0))
-    score = a.observe(_spin(session_id="s2", ts=100))
+    a.observe(_spin(session_id="s2", ts=100))
     m_s2 = a.session_metrics("p1", "s2")
     assert m_s2.spins == 1
 

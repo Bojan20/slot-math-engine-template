@@ -21,8 +21,7 @@ from tools.solvers.zipf_paytable_rank import (
     mc_simulate as zipf_mc, expected_pay as zipf_expected_pay,
 )
 from tools.solvers.frechet_heavy_tail_max import (
-    FrechetMaxParams, analytical_rtp as frechet_rtp,
-    mc_simulate as frechet_mc, expected_max, variance_max,
+    FrechetMaxParams, mc_simulate as frechet_mc, expected_max, variance_max,
 )
 from tools.solvers.dirichlet_segment_weights import (
     DirichletSegmentParams, analytical_rtp as dirichlet_rtp,
@@ -30,8 +29,7 @@ from tools.solvers.dirichlet_segment_weights import (
     variance_pay as dirichlet_variance_pay,
 )
 from tools.solvers.ornstein_uhlenbeck_meter import (
-    OrnsteinUhlenbeckParams, analytical_rtp as ou_rtp,
-    mc_simulate as ou_mc, expected_level, variance_level,
+    OrnsteinUhlenbeckParams, expected_level, variance_level,
     stationary_mean, stationary_variance,
 )
 from tools.solvers.hidden_markov_mode import (
@@ -46,8 +44,7 @@ from tools.solvers.branching_with_immigration import (
 )
 from tools.solvers.brownian_bankroll_absorption import (
     BrownianBankrollParams, analytical_rtp as bba_rtp,
-    mc_simulate as bba_mc, prob_reach_target,
-    expected_time_to_absorption,
+    prob_reach_target,
 )
 
 

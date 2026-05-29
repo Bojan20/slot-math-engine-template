@@ -21,7 +21,6 @@ import base64
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 from tools.plugin_sign.signer import (  # type: ignore
     SigningUnavailable,

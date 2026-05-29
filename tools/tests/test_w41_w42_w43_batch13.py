@@ -14,7 +14,6 @@ sys.path.insert(0, str(ROOT))
 # W41
 from tools.feature_coverage import (
     FEATURE_KIND_TO_KERNEL,
-    audit,
     audit_irs,
 )
 from tools.feature_coverage.__main__ import main as cov_main
@@ -29,7 +28,6 @@ from tools.release_notes.__main__ import main as rn_main
 
 # W43
 from tools.perf_budget import (
-    BudgetEntry,
     measure,
     run_budget,
 )

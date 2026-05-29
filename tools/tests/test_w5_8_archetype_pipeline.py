@@ -13,19 +13,13 @@ acceptance verdict is PASS plus the IR is valid for the engine.
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
 
 from tools.greenfield_demo.archetype_pipeline import (
-    DEFAULT_OUT_DIR,
     ENGINE_BIN,
     _parse_yaml_subset,
-    build_lines_ir,
-    build_ways_ir,
-    build_megaways_ir,
-    build_cascade_ir,
     load_gdd,
     run_pipeline,
 )

@@ -15,7 +15,6 @@ The kernel exposes E[k] · pay_per_success as analytical RTP and the
 overdispersion variance ratio vs pure Binomial.
 """
 from __future__ import annotations
-import math
 import random
 from dataclasses import dataclass
 

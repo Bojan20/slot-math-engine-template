@@ -242,7 +242,7 @@ def _emit_markdown(cat: MarketplaceCatalog) -> str:
         )
     lines.extend([
         "",
-        f"## Tier totals",
+        "## Tier totals",
         "",
         f"- FREE    : {cat.counts.get('free', 0)}",
         f"- BASIC   : {cat.counts.get('basic', 0)}",
