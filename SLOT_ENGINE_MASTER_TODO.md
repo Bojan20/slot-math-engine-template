@@ -6,6 +6,49 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 22:10 (post **QA-QUICK L3 GREEN — portfolio count refresh + matrix paytable scaling + Makefile qa-\* targets**, commit `b905319`)
+
+**Status:** Posle W4.8 + W4.12 (megaways + walking-wild clean-room template) batch-a, QA Agent `qa-quick` skenirao 5 pytest fajlova koji su brojali 13 IRs / 5 igara / 20 evidence file-a, plus 1 cert-lab matrix cell-a sa RTP=147 %. Zatvoreno kroz topology-aware paytable down-scaling + count refresh. Boki je već pripremio QA Agent fleet (P8.7) — Makefile patch sa `qa-selftest` / `qa-quick` / `qa-manual` / `qa-full` / `qa-status` targets sad surfsuje kao official CLI.
+
+| Fix | Šta | File |
+|---|---|---|
+| Portfolio validator count | total_irs **13 → 15**; per_game += megaways + walking-wild | `tools/tests/test_portfolio_validator.py` |
+| Validator dashboard count | SWIDs **13 → 15**; 5 → 7 igara | `tools/tests/test_portfolio_validator_dashboard.py` |
+| Real-market portfolio count | total_swids **13 → 15**; 5 → 7 igara; anchors 5 → 7; TEMPLATE badges **1 → 3** | `tools/tests/test_real_market_portfolio.py` |
+| Evidence manifest count | file_count **20 → 27** (post-W4.8/W4.12 manifest refresh u `290b842`) | `tools/tests/test_evidence_manifest.py` |
+| Builder game registry | `GAME_DESCRIPTIONS += megaways-clean-room-template + walking-wild-clean-room-template`; `TEMPLATE_FOLDERS` frozenset zamenjuje hard-coded book-only check | `tools/build_real_market_portfolio.py` |
+| Matrix paytable calibration | `_paytable_scale(topology, feature)` topology-aware down-scaling — WAYS_1024 × FREE_SPINS više ne probija RTP sane band [0, 100] (bilo 147 %, sad fits) | `tools/cert_lab/matrix_runner.py` |
+| Makefile QA targets | `qa-selftest` / `qa-quick` / `qa-manual` / `qa-full` / `qa-status` + `agents-eval` reduced na qa-agent self-test | `Makefile` |
+| Cleanup | uklonjen unused `import math` u 2 fajla | `tools/parity/book_bonusbuy_closed_form.py` + `tools/tests/test_verify_evidence_manifest.py` |
+| Gitignore | `reports/qa_agent/` (per-run artefact churn) | `.gitignore` |
+
+### QA-quick verdict
+
+| Layer | Status | Detail |
+|---|---|---|
+| L0 selftest | ✅ PASS | SCN=PASS; CLI=PASS; AB=PASS; RPT=PASS; SUB=PASS |
+| L1 antibody | ⏭ SKIP | db missing: `data/antibodies.db` (next wave: bootstrap antibody db) |
+| L2 syntax | ✅ PASS | ruff=0; cargo-check=0; npm-lint=0 |
+| L3 unit | ✅ PASS | pytest=0; cargo-test=0; npm-test=0 (sa `SLOT_QA_SEED=42`) |
+| L9 manual | ✅ PASS | 6 run · 0 fail · 0 error |
+| **verdict** | **ALL_PASS** | exit_code=0 |
+
+### Regenerated downstream artefacts (side-effect)
+
+`reports/acceptance/*` · `reports/dashboards/*` · `reports/dossier/CLOSED_FORM_PORTFOLIO.{json,md}` · `reports/fuzz/*` · `reports/rng/SP_800_90B_ASSESSMENT.*` · `reports/mutation/SUMMARY.*` · `reports/smoke/summary.json` · `reports/usif-par/VALIDATION_REPORT.*`
+
+### Šta NIJE u skopu ovog commit-a (sledeći wave)
+
+| Item | Razlog |
+|---|---|
+| `agents/QA_AGENT.md` + `agents/qa-agent/` + `agents/par-parser/` + `agents/math-debug/` + `agents/math-agent/{manifest.json, system_prompt.md}` + `agents/reg-oracle/` | Boki fleet decision (96 MB corpus podataka mixed sa specs) — odvojen commit po njegovom planu |
+| `tools/qa_agent/` Python modul | Mounted, radi (`make qa-selftest` pass) ali untracked dok agent fleet ne dobije svoj commit |
+| L1 antibody DB bootstrap (`data/antibodies.db`) | Sledeći wave: seed-fail pattern catalog za SP1+ regressions |
+| TS Stryker 95 % threshold (85.38 % → 95 %) | Tech debt, neblokirajuće |
+| W4.9 Cluster Pays + W4.10 Cascade primitivi | Čekaju 1 PAR uzorak svaki |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 15:00 (post **A+B+C+D+E SALES & HARDENING BATCH LANDED** — 5 paralelnih wave-ova)
 
 **Status:** Boki rekao "Sve, ultimativno" — krenuo na 5 paralelnih wave-ova: industry-first dossier refresh, operator package v4, W7.11 dashboard, perf benchmark suite, CI fix-evi. Sve LANDED u jednom batch-u sa 0 regresija.
