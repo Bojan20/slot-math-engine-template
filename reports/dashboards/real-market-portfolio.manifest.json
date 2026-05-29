@@ -1,0 +1,28 @@
+{
+  "bundle_url": "reports/dashboards/real-market-portfolio.html",
+  "size_bytes": 9317,
+  "size_kb": 9.1,
+  "offline_safe": true,
+  "games": [
+    "book-expanding-bonusbuy",
+    "cash-eruption",
+    "fort-knox-wolf-run",
+    "fortune-coin-boost-classic",
+    "skeleton-key"
+  ],
+  "total_swids": 13,
+  "industry_anchors": [
+    "W4.11 / W4.15 (copyright-safe template)",
+    "W4.8 Megaways",
+    "W4.x 243-Ways + Cash Respin",
+    "W4.x H&W (link-and-spin)",
+    "W4.x Lines + Pick + Progressive"
+  ],
+  "per_game_counts": {
+    "book-expanding-bonusbuy": 1,
+    "cash-eruption": 3,
+    "fort-knox-wolf-run": 2,
+    "fortune-coin-boost-classic": 4,
+    "skeleton-key": 3
+  }
+}

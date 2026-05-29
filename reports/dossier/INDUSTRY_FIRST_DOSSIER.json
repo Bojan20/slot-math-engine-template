@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-29T14:41:45.630Z",
-  "repo_sha": "492bc71b61d478d9ffbe65d2ba0ea37356f49bf6",
+  "generatedAtUtc": "2026-05-29T14:53:06.170Z",
+  "repo_sha": "1aee9e32f23cead7373d2f3ad2e8618ae1da4002",
   "headline": {
-    "waves": 50,
-    "industry_firsts": 47,
+    "waves": 51,
+    "industry_firsts": 48,
     "all_present": true
   },
   "waves": [
@@ -15,7 +15,7 @@
       "name": "Metamorphic RTP Invariant Suite",
       "reportPath": "reports/acceptance/METAMORPHIC_RTP.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:08.973Z",
+      "reportMtime": "2026-05-29T14:52:53.240Z",
       "headline": "50/50 cells PASS",
       "detail": {
         "mrs": [
@@ -28,7 +28,7 @@
         "fixtures": 10,
         "seeds": 4,
         "spinsPerSeed": 20000,
-        "wallSeconds": "120.4"
+        "wallSeconds": "122.6"
       },
       "industry_first": "No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators"
     },
@@ -39,7 +39,7 @@
       "name": "Mutation-Score CI Gate",
       "reportPath": "reports/mutation/SUMMARY.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:15:08.379Z",
+      "reportMtime": "2026-05-29T14:50:50.469Z",
       "headline": "TS 91.2% + Rust adapter=100.0% / behavior_impls=100.0% / behavior_pipeline=100.0% / behavior_registry=100.0% / bulk=51.5% / cluster=92.9% / evaluator=100.0% / features=43.8% / jurisdiction_adapter=76.0% / markov=78.5% / rng=92.6% / rng_w236_final3=71.0% / validate=100.0%",
       "detail": {
         "ts_total": 342,
@@ -135,7 +135,7 @@
       "name": "USIF PAR Sheet Schema v1.0",
       "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:15:08.441Z",
+      "reportMtime": "2026-05-29T14:50:50.530Z",
       "headline": "20/20 samples valid",
       "detail": {
         "mode": "baseline",
@@ -151,7 +151,7 @@
       "name": "Jurisdiction Auto-Gate Matrix",
       "reportPath": "reports/acceptance/JURISDICTION_AUTO_GATE.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:15:08.505Z",
+      "reportMtime": "2026-05-29T14:50:50.594Z",
       "headline": "450 verdicts (PASS=203 / WARN=175 / FAIL=72)",
       "detail": {
         "jurisdictions": 15,
@@ -167,7 +167,7 @@
       "name": "Differential Fuzz Cross-Language",
       "reportPath": "reports/acceptance/DIFF_FUZZ_CROSS_LANG.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:10.285Z",
+      "reportMtime": "2026-05-29T14:52:54.138Z",
       "headline": "40/40 cells PASS",
       "detail": {
         "mrs": [
@@ -178,7 +178,7 @@
         ],
         "variants": 5,
         "spinsPerRun": 1000,
-        "wallSeconds": "1.2"
+        "wallSeconds": "0.8"
       },
       "industry_first": "No slot vendor tests cross-language scaling agreement TS↔Rust sa metamorphic invariants"
     },
@@ -209,7 +209,7 @@
       "name": "SP 800-90B Entropy Assessment",
       "reportPath": "reports/rng/SP_800_90B_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:11.015Z",
+      "reportMtime": "2026-05-29T14:52:54.863Z",
       "headline": "6 sources, all Low-bar (≥0.5 bits) ✅",
       "detail": {
         "sources": [
@@ -255,7 +255,7 @@
       "name": "PAR Sheet Commitment v1.0",
       "reportPath": "reports/acceptance/PAR_COMMITMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:15.092Z",
+      "reportMtime": "2026-05-29T14:52:58.943Z",
       "headline": "180/180 gates PASS",
       "detail": {
         "fixtures": 30,
@@ -278,7 +278,7 @@
       "name": "ENT Entropy Battery (in-process)",
       "reportPath": "reports/rng/ENT_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:15.905Z",
+      "reportMtime": "2026-05-29T14:52:59.755Z",
       "headline": "6/6 sources PASS all 5 ENT stats",
       "detail": {
         "sampleBytes": 100000,
@@ -397,7 +397,7 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:17:22.251Z",
+      "reportMtime": "2026-05-29T14:53:06.077Z",
       "headline": "77/77 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
@@ -1951,7 +1951,7 @@
       "name": "Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:22:48.110Z",
+      "reportMtime": "2026-05-29T14:42:30.196Z",
       "headline": "5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance",
       "detail": {
         "scatter_pay_delta_pp": 1.734723475976807e-15,
@@ -1968,7 +1968,7 @@
       "name": "Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:22:48.110Z",
+      "reportMtime": "2026-05-29T14:42:30.196Z",
       "headline": "Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp",
       "detail": {
         "book_pmf": {
@@ -1988,8 +1988,8 @@
       "name": "Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)",
       "reportPath": "reports/acceptance/book_bonusbuy_mc.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:35:47.776Z",
-      "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s",
+      "reportMtime": "2026-05-29T14:42:32.778Z",
+      "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.54 s",
       "detail": {
         "spins": 200000,
         "seed": 20260529,
@@ -1997,8 +1997,8 @@
         "scatter_pay_delta_pp": -0.00797237830043266,
         "hit_freq_delta_pp": -2.9060911999999997,
         "fs_trigger_rel_err": 0.05886627906976753,
-        "elapsed_seconds": 2.526228833012283,
-        "spins_per_second": 79169.3916981857
+        "elapsed_seconds": 2.5417993330047466,
+        "spins_per_second": 78684.4175317228
       },
       "industry_first": "Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time."
     },
@@ -2009,8 +2009,8 @@
       "name": "MC Parity Dashboard (offline single-file HTML, sales/regulator surface)",
       "reportPath": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:41:45.538Z",
-      "headline": "offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.53 s",
+      "reportMtime": "2026-05-29T14:42:32.814Z",
+      "headline": "offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.54 s",
       "detail": {
         "bundle_url": "reports/dashboards/mc-parity-dashboard.html",
         "size_bytes": 9483,
@@ -2031,13 +2031,52 @@
         "mc_summary": {
           "all_gates_pass": true,
           "spins": 200000,
-          "elapsed_seconds": 2.526228833012283,
+          "elapsed_seconds": 2.5417993330047466,
           "line_pay_delta_pp": -0.18851698490046642,
           "scatter_pay_delta_pp": -0.00797237830043266,
           "fs_trigger_rel_err": 0.05886627906976753
         }
       },
       "industry_first": "Offline single-file HTML dashboard that visualises closed-form + MC parity against a real-market released-game PAR in one page (no JS deps, no remote URLs, ≤ 25 KB). Drops directly into the operator-package ZIP. KPI strip foregrounds the engine-side line + scatter Δ pp (≤ 0.5 pp / ≤ 0.1 pp) plus BB fair-price Δ and MC runtime. No vendor ships a regulator-facing visual parity dashboard whose source is reproducible and copyright-safe."
+    },
+    {
+      "wave": "4.11d",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)",
+      "reportPath": "reports/dashboards/real-market-portfolio.manifest.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T14:49:50.197Z",
+      "headline": "5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB",
+      "detail": {
+        "bundle_url": "reports/dashboards/real-market-portfolio.html",
+        "size_bytes": 9317,
+        "size_kb": 9.1,
+        "offline_safe": true,
+        "games": [
+          "book-expanding-bonusbuy",
+          "cash-eruption",
+          "fort-knox-wolf-run",
+          "fortune-coin-boost-classic",
+          "skeleton-key"
+        ],
+        "total_swids": 13,
+        "industry_anchors": [
+          "W4.11 / W4.15 (copyright-safe template)",
+          "W4.8 Megaways",
+          "W4.x 243-Ways + Cash Respin",
+          "W4.x H&W (link-and-spin)",
+          "W4.x Lines + Pick + Progressive"
+        ],
+        "per_game_counts": {
+          "book-expanding-bonusbuy": 1,
+          "cash-eruption": 3,
+          "fort-knox-wolf-run": 2,
+          "fortune-coin-boost-classic": 4,
+          "skeleton-key": 3
+        }
+      },
+      "industry_first": "Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio."
     }
   ],
   "auditor_qa": [

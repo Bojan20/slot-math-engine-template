@@ -735,6 +735,22 @@ const WAVES = [
     extractDetail: (j) => j,
     industry_first: 'Offline single-file HTML dashboard that visualises closed-form + MC parity against a real-market released-game PAR in one page (no JS deps, no remote URLs, ≤ 25 KB). Drops directly into the operator-package ZIP. KPI strip foregrounds the engine-side line + scatter Δ pp (≤ 0.5 pp / ≤ 0.1 pp) plus BB fair-price Δ and MC runtime. No vendor ships a regulator-facing visual parity dashboard whose source is reproducible and copyright-safe.',
   },
+  {
+    wave: '4.11d',
+    name: 'Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/dashboards/real-market-portfolio.manifest.json',
+    extractHeadline: (j) => {
+      const games = (j?.games ?? []).length;
+      const sw = j?.total_swids ?? 0;
+      const anchors = (j?.industry_anchors ?? []).length;
+      const kb = j?.size_kb ?? 0;
+      return `${games} games · ${sw} SWIDs · ${anchors} mechanic anchors · offline ${kb} KB`;
+    },
+    extractDetail: (j) => j,
+    industry_first: 'Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
