@@ -1,0 +1,39 @@
+{
+  "all_gates_pass": true,
+  "bet_per_spin": 20.0,
+  "e_steps_reference": 2.75,
+  "e_ttl_reference": 2.4,
+  "fs_trigger_rate": 0.04,
+  "fs_triggers": 60,
+  "gates": {
+    "fs_trigger_rate_positive": true,
+    "rtp_base_finite": true,
+    "rtp_base_non_negative": true,
+    "sticky_ttl_mean_in_pmf_support": true,
+    "walking_dir_balanced": true,
+    "wild_landing_rate_positive": true
+  },
+  "gates_passed": 6,
+  "gates_total": 6,
+  "n_spins": 1500,
+  "n_wild_landings": 688,
+  "reels": 5,
+  "rows": 3,
+  "rtp_base": 0.1298033333333333,
+  "rtp_breakdown_reference": {
+    "base_game": 0.61,
+    "free_spins": 0.22,
+    "sticky_walking_bonus": 0.13,
+    "total": 0.96
+  },
+  "rtp_scatter": 0.005333333333333333,
+  "rtp_total_base_observed": 0.13513666666666663,
+  "seed": 7,
+  "sticky_ttl_count": 349,
+  "sticky_ttl_mean_observed": 2.4183381088825215,
+  "total_fs_awarded": 625,
+  "walking_dir_left_share": 0.5575221238938053,
+  "walking_distance_count": 339,
+  "walking_distance_mean_observed": 1.6017699115044248,
+  "wild_landing_rate": 0.45866666666666667
+}

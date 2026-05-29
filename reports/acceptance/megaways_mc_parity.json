@@ -1,0 +1,26 @@
+{
+  "all_gates_pass": true,
+  "bet_per_spin": 117649.0,
+  "delta_pp": 457.5873065644416,
+  "fs_trigger_rate": 0.0474,
+  "gates": {
+    "fs_trigger_rate_in_open_unit": true,
+    "n_triggers_positive": true,
+    "rtp_total_finite": true,
+    "rtp_total_non_negative": true,
+    "total_fs_awarded_positive": true
+  },
+  "gates_passed": 5,
+  "gates_total": 5,
+  "n_spins": 5000,
+  "n_triggers": 237,
+  "reference_total": 0.96,
+  "rtp_base": 0.3190557643498875,
+  "rtp_fs": 5.216767449617081,
+  "rtp_scatter": 4.985167744732212e-05,
+  "rtp_total": 5.535873065644416,
+  "seed": 42,
+  "tolerance_pp": 20.0,
+  "total_fs_awarded": 2934,
+  "total_wager": 588245000.0
+}
