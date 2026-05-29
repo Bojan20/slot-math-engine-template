@@ -1,0 +1,743 @@
+{
+  "evaluation": {
+    "kind": "lines",
+    "lines": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        1,
+        2,
+        2
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        2,
+        1,
+        2
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        2,
+        0,
+        2,
+        0
+      ]
+    ],
+    "min_count": 3
+  },
+  "features": {
+    "free_spins": {
+      "award_schedule": {
+        "3": 10,
+        "4": 15,
+        "5": 20
+      },
+      "feature": "auto_walking_wild_left_steps_4",
+      "rtp_reference": 0.22,
+      "scatter_symbol": "BOOK",
+      "trigger_min_scatters": 3
+    },
+    "sticky_wild": {
+      "kind": "lock_position_with_ttl",
+      "rtp_share_reference": 0.07,
+      "state_per_cell": [
+        "empty",
+        "freshly_landed",
+        "sticky",
+        "expired"
+      ],
+      "transitions": {
+        "empty_to_freshly_landed_on": "wild_draw",
+        "freshly_landed_to_sticky_on": "next_spin",
+        "sticky_decay": "ttl-based"
+      },
+      "trigger": "wild_lands_on_reel",
+      "ttl_pmf": {
+        "1": 20,
+        "2": 40,
+        "3": 25,
+        "4": 10,
+        "5": 5
+      }
+    },
+    "walking_wild": {
+      "direction_pmf": {
+        "left": 50,
+        "right": 50
+      },
+      "edge_behaviour": "evaporate_after_completing_in_progress_chain",
+      "kind": "lock_position_plus_direction",
+      "respin_bonus_per_walk_step": true,
+      "rtp_share_reference": 0.06,
+      "steps_pmf": {
+        "1": 15,
+        "2": 30,
+        "3": 30,
+        "4": 15,
+        "5": 10
+      },
+      "trigger": "wild_lands_on_reel"
+    }
+  },
+  "industry_first_anchors": [
+    "W4.12a \u2014 sticky wild state machine",
+    "W4.12b \u2014 walking wild state machine"
+  ],
+  "meta": {
+    "family": "lines",
+    "hit_frequency_reference": 0.3,
+    "id": "template-walking-wild-cleanroom",
+    "name": "Sticky + Walking Wild (clean-room template)",
+    "notes": [
+      "Synthetic clean-room template. Not lifted from any vendor XLSX.",
+      "Sticky Wild = lock-position state machine with TTL.",
+      "Walking Wild = lock-position + direction state machine; evaporates at grid edge.",
+      "FS feature: every fresh wild becomes Walking Wild left-direction steps_left=4."
+    ],
+    "rtp_breakdown_reference": {
+      "base_game": 0.61,
+      "free_spins": 0.22,
+      "sticky_walking_bonus": 0.13,
+      "total": 0.96
+    },
+    "theme_tags": [
+      "template",
+      "walking-wild",
+      "sticky-wild",
+      "state-machine"
+    ],
+    "vendor": "<<synthetic>>",
+    "version": "1.0.0",
+    "win_frequency_reference": 0.13
+  },
+  "paytable": {
+    "line_wins": {
+      "HP1": {
+        "3": 4,
+        "4": 20,
+        "5": 150
+      },
+      "HP2": {
+        "3": 3,
+        "4": 15,
+        "5": 100
+      },
+      "HP3": {
+        "3": 2,
+        "4": 10,
+        "5": 75
+      },
+      "LP1": {
+        "3": 1.5,
+        "4": 7,
+        "5": 50
+      },
+      "LP2": {
+        "3": 1.2,
+        "4": 5,
+        "5": 40
+      },
+      "LP3": {
+        "3": 1.0,
+        "4": 4,
+        "5": 30
+      },
+      "LP4": {
+        "3": 0.8,
+        "4": 3,
+        "5": 20
+      },
+      "LP5": {
+        "3": 0.6,
+        "4": 2.5,
+        "5": 15
+      },
+      "WILD": {
+        "3": 5,
+        "4": 25,
+        "5": 200
+      }
+    },
+    "scatter": {
+      "3": 2,
+      "4": 10,
+      "5": 100
+    }
+  },
+  "reels": {
+    "base": [
+      {
+        "reels": [
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 6
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 3
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 2
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 4
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 5
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 3
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 6
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ]
+        ],
+        "set": 1
+      }
+    ],
+    "free_spins": [
+      {
+        "reels": [
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 6
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 3
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 2
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 4
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 5
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 3
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 5
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 2
+            },
+            {
+              "symbol": "WILD",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 6
+            },
+            {
+              "symbol": "HP2",
+              "weight": 5
+            },
+            {
+              "symbol": "HP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 5
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ]
+        ],
+        "set": 1
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "symbols": [
+    "BOOK",
+    "WILD",
+    "HP1",
+    "HP2",
+    "HP3",
+    "LP1",
+    "LP2",
+    "LP3",
+    "LP4",
+    "LP5"
+  ],
+  "topology": {
+    "kind": "lines",
+    "pay_direction": "left_to_right",
+    "paylines": 20,
+    "reels": 5,
+    "rows": 3
+  }
+}
