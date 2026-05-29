@@ -28,6 +28,13 @@ function run(
   const result = spawnSync('node', [CLI, ...args], {
     input: stdin,
     encoding: 'utf-8',
+    // Some macOS-14 CI runners (Node 20.x) appear to truncate
+    // spawnSync stdout at the default 1024 KiB-ish boundary which
+    // surfaces here as "SyntaxError: Expected ',' or '}' after
+    // property value in JSON at position 8192" on the JSON-format
+    // happy-path specs. Raising maxBuffer to 16 MiB makes the test
+    // immune to that and is harmless when the actual output is small.
+    maxBuffer: 16 * 1024 * 1024,
   });
   return {
     stdout: result.stdout ?? '',
