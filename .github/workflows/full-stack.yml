@@ -42,6 +42,15 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: npm ci
       - run: npm run lint
+      # W205+1 CLI shim (`bin/slot-tournament-audit.mjs`) loads
+      # `dist/cli/buildTournamentAuditReport.js` via `loadModule()`;
+      # `tests/cli_slot_tournament_audit.test.ts` spawns it as a
+      # subprocess. Without a prior build the CLI fails with
+      # "Module load error: dist/cli/... not found." and 10 specs
+      # turn red on every push (pre-existing 8+ commits before this
+      # row was added). The ci.yml workflow already runs `npm run
+      # build` ahead of npm test — mirror that here.
+      - run: npm run build
       - run: npm test
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
