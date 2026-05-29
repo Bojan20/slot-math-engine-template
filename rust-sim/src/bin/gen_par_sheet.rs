@@ -20,6 +20,7 @@ use clap::Parser;
 use slot_sim::ir::{ir_to_game_config, SlotGameIR};
 use slot_sim::par::{PARBuildContext, PARGenerator, SignOffSection};
 use slot_sim::par_export::{to_csv, to_markdown_report, to_usif_v1};
+use slot_sim::par_pdf::render_par_pdf;
 use slot_sim::simulator::{run_simulation_detailed, SimConfig};
 use slot_sim::stats::PARMetrics;
 use std::fs;
@@ -233,6 +234,16 @@ fn main() -> ExitCode {
     if formats.contains(&"md") {
         let p = out_dir.join("par.md");
         if let Err(e) = fs::write(&p, to_markdown_report(&par)) {
+            eprintln!("Failed to write `{}`: {e}", p.display());
+            return ExitCode::from(3);
+        }
+        written.push(p);
+    }
+    if formats.contains(&"pdf") {
+        // W5.6 — native PDF 1.4 emitter, zero-dep. Bytes are deterministic
+        // so the file SHA-256 can be pinned in the signed cert bundle.
+        let p = out_dir.join("par.pdf");
+        if let Err(e) = fs::write(&p, render_par_pdf(&par)) {
             eprintln!("Failed to write `{}`: {e}", p.display());
             return ExitCode::from(3);
         }

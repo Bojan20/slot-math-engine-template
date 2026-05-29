@@ -6,6 +6,49 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 12:50 (post **W6.4 + W5.4 + W5.6 + W6.2 QUAD-WAVE LANDED** — polish layer closeout)
+
+**Status:** Četiri paralelne quick-win wave-e zatvorene u jednom QA prolazu. Zadnji "polish" red iz roadmap-a sad je live: TS↔Rust PCG-64 bit-parity, QMC convergence wire, native PDF emitter za PAR sheet, multi-SWID HTML verification dashboard.
+
+| Wave | Šta | Files | Tests |
+|---|---|---|---|
+| **W6.4 — TS PCG-64 bit-parity** | `Pcg64` + `Pcg64Rng` u TS (BigInt 128-bit state, isti Steele-Vigna 2021 multiplier + Hull-Dobell guard), KAT vector fixture (5 seedova × 32 outputs hex + f64 unit) generisan iz Rust `pcg64_kat_dump` bin-a, parity test pinuje constants + sve sequences | `src/utils/pcg64.ts` + `rust-sim/src/bin/pcg64_kat_dump.rs` + `tests/fixtures/pcg64_kat.json` + `tests/pcg64_parity.test.ts` | **29 / 29 PASS** (5 KAT seed × (u64 + f64) parity + 12 Pcg64 invariants + 7 Pcg64Rng facade specs) |
+| **W5.4 — QMC convergence wire** | `LinesEvalSpec` + `estimate_rtp_mc` + `estimate_rtp_qmc` (Halton / Sobol-base2+Halton-tail / Korobov lattice) + `compare_mc_vs_qmc` report, CLI `qmc_convergence` emituje JSON + markdown table. Live W6.4: 1M spins, classic 5×3 / 20-line / RTP target 0.20224, **QMC rel_err 1.68e-4 vs MC 1.08e-2 → 64× tighter** (log10 speedup +1.81) | `rust-sim/src/qmc_estimator.rs` + `rust-sim/src/bin/qmc_convergence.rs` + `rust-sim/src/qmc.rs` (Lattice skip API) + `reports/acceptance/QMC_CONVERGENCE.json` | **7 / 7 PASS** (closed-form hand check + MC 50k convergence + Halton speedup + Sobol uncorrelated + Lattice finite + report shape + determinism) |
+| **W5.6 — Native PDF emitter (GLI-16 App D)** | Pure-Rust PDF 1.4 emitter, **zero new deps** (workspace lint pravilo blokira `printpdf` zbog edition2024). Helvetica Type-1 base font + WinAnsi encoding + multi-page splitting (60 lines/page A4 612×792) + escape PDF strings + word-boundary wrapping + **deterministic byte output** (no timestamp, no RNG → SHA-256 može u signed cert bundle). `gen_par_sheet --formats pdf` wire-ovan | `rust-sim/src/par_pdf.rs` + `rust-sim/src/bin/gen_par_sheet.rs` | **9 / 9 PASS** (PDF header / EOF / required keywords / determinism / escape / multi-page / wrap / non-ASCII / xref offsets) |
+| **W6.2 — Multi-SWID HTML dashboard** | `tools.par_verification_dashboard` parsira operator-package.zip MANIFEST + cert XML (CertV3 namespace) + meta/version.json, render-uje **offline-first** HTML (zero CDN, zero fetch, inline JSON + vanilla JS) sa filter (game / jurisdiction / verdict) + diff (any 2 SWIDs side-by-side sa diff-changed highlight) + KPI ribbon. Verdict logic: pass / warn (\|Δpp\|>0.5) / fail (TypeCheck false). Live: 12 SWID bundle-ova parsiran iz `reports/cert-bundle-swid/` | `tools/par_verification_dashboard/{__init__,__main__,build}.py` + `tools/tests/test_par_verification_dashboard.py` + `reports/dashboards/par-verification.html` | **13 / 13 PASS** (parse / pass-warn-fail verdict / sort deterministic / missing manifest skip / no-cert skip / required chunks / NO CDN refs / determinism / write_dashboard / CLI ok / CLI fail / multi-jurisdiction / JSON roundtrip) |
+
+### Test tally for this batch
+
+| Suite | Pass |
+|---|---|
+| W6.4 `tests/pcg64_parity.test.ts` | 29 / 29 ✅ |
+| W5.4 `cargo test --lib qmc_estimator` | 7 / 7 ✅ |
+| W5.6 `cargo test --lib par_pdf` | 9 / 9 ✅ |
+| W6.2 `pytest tools/tests/test_par_verification_dashboard.py` | 13 / 13 ✅ |
+
+### Ultimate QA pass (post `f59b71e` baseline)
+
+| Sloj | Rezultat |
+|---|---|
+| TS lint + `tsc --noEmit` | ✅ clean |
+| Vitest full (296 files) | **7611 PASS · 0 fail · 3 skipped** |
+| Cargo `clippy --release -- -D warnings` (lib+bins) | ✅ clean |
+| Cargo `test --release --lib` (`slot_sim`) | **323 / 323 PASS** |
+| Cargo workspace test (integration + doc) | **+11 PASS / 0 fail** |
+| Pytest `tools/tests/` (sans pre-existing mission3 + WIP qa_agent) | **2484 / 2484 PASS · 27 skipped** |
+
+**Combined TS + Rust + Python = 10 416 testova / 0 fail / 0 regresija.**
+
+### Operator/regulator deliverables emitovani uz wave
+
+| Artefakt | Putanja |
+|---|---|
+| QMC convergence report (4 budgets × MC+QMC, target 0.20224) | `reports/acceptance/QMC_CONVERGENCE.json` |
+| Multi-SWID verification dashboard (12 live bundle-ova) | `reports/dashboards/par-verification.html` |
+| PCG-64 KAT fixture (5 seeds × 32 outputs) | `tests/fixtures/pcg64_kat.json` |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-28 18:55 (post **W4.8e + W4.10e LANDED** — MC RTP delta ≤ 1 % svih 7 SWID-a)
 
 **Status:** W4.8e (Skeleton Key per-set rows) + W4.10e (Fortune Coin Coin/Boost cascade) zatvorili poslednje 2 gap-a otkrivene u W4.8d/W4.10d. **Sva 3 Skeleton Key SWID-a i sva 4 Fortune Coin SWID-a sada konvergiraju ka `meta.rtp_total` na delta = 0.00 %** (MC ±1 % bound assertion uvedena u `tests/skeleton_key_engine.rs` + `tests/fortune_coin_engine.rs`).
@@ -665,18 +708,18 @@ strictly enforced only under Mode C-4 / C-5.)
 | W5.1 | **Slot Math DSL prototyp** | YAML/TOML/custom: `rtp_target`, `volatility_class`, `features [...]`, `constraints { hit_freq, win_freq, max_win }`. | 2 dana | 🔴 design |
 | W5.2 | **Z3 solver wrapper** (rust `z3-rs`) | Closed-form RTP komponente kao SMT formula. Constraint-solver nalazi reel weights koji matchuju spec. | 1 nedelja | 🔴 needs proof-of-concept |
 | W5.3 | **Verifiable PAR provenance chain** | SHA-256 + ed25519 sign svake PAR ćelije; Merkle tree → regulator može da verifikuje cell-level integrity bez sim-a. | 2 dana | 🟡 nice-to-have |
-| W5.4 | **QMC sampling (Sobol/Halton)** | Već postoji `rust-sim/src/qmc.rs` — wire u CE/Pattern-FK sim za 100× brže konvergiranje na tail-event quantilima. | 1 dan | 🟢 quick win |
+| W5.4 | **QMC sampling (Sobol/Halton)** | Već postoji `rust-sim/src/qmc.rs` — wire u CE/Pattern-FK sim za 100× brže konvergiranje na tail-event quantilima. | 1 dan | ✅ **LANDED** (2026-05-29) — `qmc_estimator.rs` + `qmc_convergence` bin emituje MC vs QMC report. Live: 1M spins → QMC rel_err 64× tighter (log10 +1.81). |
 | W5.5 | **LLM theme co-pilot** (Kimi/Claude) | NE za math; samo za theme/narrative/audio. Symbol art prompt gen, FS anim narrative, volatility-based BGM cues. | 3 dana | 🟡 secondary |
-| W5.6 | **PAR sheet PDF auto-generator** (GLI-16 Appendix D format) | IR + sim results → PDF za regulator lab submission. Reuse `rust-sim/src/par.rs` koji već postoji. | 1 dan | 🟢 quick win |
+| W5.6 | **PAR sheet PDF auto-generator** (GLI-16 Appendix D format) | IR + sim results → PDF za regulator lab submission. Reuse `rust-sim/src/par.rs` koji već postoji. | 1 dan | ✅ **LANDED** (2026-05-29) — `par_pdf.rs` pure-Rust PDF 1.4 emitter (zero deps, deterministic), wire-ovan kroz `gen_par_sheet --formats pdf`. |
 
 ### 🎯 OPEN — Wave 6: Production & Cert
 
 | # | Wave | Šta | ETA | Blocker |
 |---|---|---|---|---|
 | W6.1 | **CE RNG cert bundle pošalji NMi/iTechLabs** | Bundle već generisao (`ce_cert_package.sh` → 1.2 MiB ZIP). Treba samo email + upload portal. | 1 dan | 🟡 vendor onboarding |
-| W6.2 | **HTML dashboard** za par-verification (multi-SWID filter/diff) | Partneri vide rezultat klikom umesto čitanja MD-a. | 1 dan | 🟢 quick win |
+| W6.2 | **HTML dashboard** za par-verification (multi-SWID filter/diff) | Partneri vide rezultat klikom umesto čitanja MD-a. | 1 dan | ✅ **LANDED** (2026-05-29) — `tools.par_verification_dashboard` offline-first HTML (zero CDN), filter+diff+KPI ribbon, 12 live SWID bundle-ova već renderovano. |
 | W6.3 | **Fault injection harness** (seed sweep + RNG bias check) | Detect anomalies pre lab cert submission. | 1 dan | 🟢 nice-to-have |
-| W6.4 | **Bit-identical PCG64 parity (Rust↔TS)** | Već imam funkcionalnu parity (oba konvergiraju ka istom RTP-u). Treba refaktorisati `Prng.fromSeed` u TS da match-uje `rand_pcg::Pcg64::seed_from_u64` init seq. | 4-6 h | 🟢 quick win |
+| W6.4 | **Bit-identical PCG64 parity (Rust↔TS)** | Već imam funkcionalnu parity (oba konvergiraju ka istom RTP-u). Treba refaktorisati `Prng.fromSeed` u TS da match-uje `rand_pcg::Pcg64::seed_from_u64` init seq. | 4-6 h | ✅ **LANDED** (2026-05-29) — `src/utils/pcg64.ts` BigInt-128 PCG-64 XSL-RR-64 + KAT fixture (5 seeds × 32 outputs, byte-identical sa `Pcg64Backend`). 29/29 parity specs. |
 
 ### 🌟 Wave 7: MOONSHOT IDEAS (radikalno futuristic — ne klasičan AI)
 

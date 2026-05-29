@@ -54,6 +54,8 @@ pub mod tail_fit;
 pub mod par;
 /// PAR-011 — Quasi-Monte Carlo low-discrepancy sequences (Halton/Sobol/Lattice).
 pub mod qmc;
+/// W5.4 — QMC RTP estimator + MC convergence report (regulator deliverable).
+pub mod qmc_estimator;
 /// PAR-012 — Bonus Buy EV calculator + regulatory ban audit.
 pub mod bonus_buy;
 /// PAR-013 — Cluster Pays evaluator (connected-component scoring).
@@ -68,6 +70,8 @@ pub mod mystery_jackpot;
 pub mod autocorrelation;
 /// PAR-007 + PAR-008 — USIF v1.0 JSON + CSV exporters for the PAR sheet.
 pub mod par_export;
+/// W5.6 — Native PDF 1.4 emitter (zero deps, deterministic byte output).
+pub mod par_pdf;
 /// PAR-021 — Exact rational arithmetic (BigRational) for regulator pre-cert.
 pub mod rational_solver;
 /// FAZA 8.5 — Spin Recall & Replay.

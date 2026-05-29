@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SLOT-MATH-ENGINE — PAR Verification Dashboard</title>
+<style>
+:root {
+  --bg: #0e1116;
+  --panel: #161b22;
+  --panel-2: #1b2129;
+  --text: #e6e6e6;
+  --muted: #9aa4b2;
+  --accent: #3fb950;
+  --warn: #d29922;
+  --fail: #f85149;
+  --grid: #2d333b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 13px; line-height: 1.5;
+}
+header {
+  padding: 20px 28px; border-bottom: 1px solid var(--grid);
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+header h1 {
+  margin: 0; font-size: 18px; font-weight: 600;
+}
+header .meta {
+  color: var(--muted); font-size: 12px;
+}
+main { padding: 20px 28px; }
+.controls {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+  padding: 12px; background: var(--panel); border-radius: 6px;
+}
+.controls label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--muted); }
+.controls input, .controls select {
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--grid); border-radius: 4px;
+  padding: 6px 8px; font-family: inherit; font-size: 12px;
+}
+table {
+  width: 100%; border-collapse: collapse; background: var(--panel);
+  border-radius: 6px; overflow: hidden; font-size: 12px;
+}
+th, td {
+  padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--grid);
+  vertical-align: top;
+}
+th {
+  background: var(--panel-2); font-weight: 600; cursor: pointer;
+  user-select: none; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--muted);
+}
+tr.row { cursor: pointer; }
+tr.row:hover { background: var(--panel-2); }
+tr.row.selected { background: rgba(63, 185, 80, 0.08); }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.verdict {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-weight: 600; font-size: 11px; letter-spacing: 0.04em;
+}
+.verdict.pass { background: rgba(63, 185, 80, 0.15); color: var(--accent); }
+.verdict.warn { background: rgba(210, 153, 34, 0.15); color: var(--warn); }
+.verdict.fail { background: rgba(248, 81, 73, 0.15); color: var(--fail); }
+.verdict.unknown { background: rgba(154, 164, 178, 0.15); color: var(--muted); }
+.detail { margin-top: 18px; padding: 16px; background: var(--panel); border-radius: 6px; }
+.detail h2 { margin: 0 0 12px 0; font-size: 14px; }
+.detail pre {
+  background: var(--bg); padding: 12px; border-radius: 4px;
+  border: 1px solid var(--grid); overflow-x: auto;
+  font-size: 11px; line-height: 1.45; margin: 0;
+}
+.diff-row { display: flex; gap: 16px; align-items: stretch; }
+.diff-col { flex: 1; background: var(--panel-2); padding: 12px; border-radius: 4px; }
+.diff-col h3 { margin: 0 0 8px 0; font-size: 12px; color: var(--muted); }
+.diff-table { width: 100%; }
+.diff-table td { padding: 4px 8px; border-bottom: 1px solid var(--grid); font-size: 11px; }
+.diff-table td.label { color: var(--muted); width: 35%; }
+.diff-changed { color: var(--warn); font-weight: 600; }
+.footer {
+  padding: 16px 28px; color: var(--muted); font-size: 11px;
+  border-top: 1px solid var(--grid);
+}
+.kpi-row { display: flex; gap: 20px; margin-bottom: 16px; }
+.kpi {
+  flex: 1; padding: 12px 16px; background: var(--panel);
+  border-radius: 6px; border-left: 3px solid var(--grid);
+}
+.kpi .label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.kpi .value { font-size: 22px; font-weight: 600; margin-top: 4px; }
+.kpi.pass { border-left-color: var(--accent); }
+.kpi.warn { border-left-color: var(--warn); }
+.kpi.fail { border-left-color: var(--fail); }
+</style>
+</head>
+<body>
+<header>
+  <h1>SLOT-MATH-ENGINE — PAR Verification Dashboard</h1>
+  <div class="meta">12 bundle(s) · 3 jurisdiction(s)</div>
+</header>
+<main>
+  <div class="kpi-row">
+    <div class="kpi pass"><div class="label">Pass</div><div class="value" id="kpi-pass">0</div></div>
+    <div class="kpi warn"><div class="label">Warn (Δ&gt;0.5pp)</div><div class="value" id="kpi-warn">0</div></div>
+    <div class="kpi fail"><div class="label">Fail</div><div class="value" id="kpi-fail">0</div></div>
+    <div class="kpi"><div class="label">Total SWIDs</div><div class="value" id="kpi-total">0</div></div>
+  </div>
+  <div class="controls">
+    <label>Game contains
+      <input id="filter-game" type="text" placeholder="e.g. fortune">
+    </label>
+    <label>Jurisdiction
+      <select id="filter-juris"><option value="">— any —</option><option value="MGA">MGA</option><option value="NJ-DGE">NJ-DGE</option><option value="UKGC">UKGC</option></select>
+    </label>
+    <label>Verdict
+      <select id="filter-verdict">
+        <option value="">— any —</option>
+        <option value="pass">pass</option>
+        <option value="warn">warn</option>
+        <option value="fail">fail</option>
+        <option value="unknown">unknown</option>
+      </select>
+    </label>
+    <label>Sort by
+      <select id="sort-by">
+        <option value="game_id">game_id</option>
+        <option value="swid">swid</option>
+        <option value="delta_pp">Δ pp</option>
+        <option value="target_rtp">target RTP</option>
+        <option value="verdict">verdict</option>
+      </select>
+    </label>
+    <label>Diff column A
+      <select id="diff-a"><option value="">— pick row —</option></select>
+    </label>
+    <label>Diff column B
+      <select id="diff-b"><option value="">— pick row —</option></select>
+    </label>
+  </div>
+  <table id="swid-table">
+    <thead>
+      <tr>
+        <th>Game</th><th>SWID</th><th>Topology</th>
+        <th class="num">Target RTP</th><th class="num">Measured RTP</th><th class="num">Δ pp</th>
+        <th>Jurisdictions</th><th>Verdict</th>
+      </tr>
+    </thead>
+    <tbody id="swid-body"></tbody>
+  </table>
+  <div class="detail" id="detail-panel" hidden>
+    <h2 id="detail-title">SWID detail</h2>
+    <div id="detail-body"></div>
+  </div>
+  <div class="detail" id="diff-panel" hidden>
+    <h2>Side-by-side diff</h2>
+    <div class="diff-row">
+      <div class="diff-col"><h3 id="diff-a-title">A</h3><table class="diff-table" id="diff-a-table"></table></div>
+      <div class="diff-col"><h3 id="diff-b-title">B</h3><table class="diff-table" id="diff-b-table"></table></div>
+    </div>
+  </div>
+</main>
+<div class="footer">
+  Generated from <strong>12</strong> SWID bundle(s). Embed-only — works offline. No CDN, no network.
+</div>
+<script>
+const DATA = [
+  {
+    "bundle_path": "reports/cert-bundle-swid/cash-eruption.200-1637-001.operator-package.zip",
+    "delta_pp": -0.8566018370437023,
+    "epoch": 1700000000,
+    "game_id": "cash-eruption",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "13cd0c024fe86c456f531b4b6cc43a957adb7f29e554b50f0e6611c67f9c3a8f",
+        "size_bytes": 2071
+      },
+      {
+        "path": "cert/cash-eruption.200-1637-001.cert.xml",
+        "sha256": "18c183faa1c8f4321d8d48d33401f690b81d9456f93ab24f86f00f3ef8b250c6",
+        "size_bytes": 902
+      },
+      {
+        "path": "ir/cash-eruption.200-1637-001.slot-sim.ir.json",
+        "sha256": "22ef3ac2766911571976b2b2ddc8e536d795a3c9be4f37f129f4393606185524",
+        "size_bytes": 1517780
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/cash-eruption.200-1637-001.paytable.csv",
+        "sha256": "5eec30d349764ab4623f689a7cc74098d4b5b806f09ec6c8fe4177924d33121a",
+        "size_bytes": 1326
+      },
+      {
+        "path": "reels/cash-eruption.200-1637-001.reels_summary.json",
+        "sha256": "1b70e1ded7743834ee6b14710260dde3868dd84efa49482310fac16596bd9ec9",
+        "size_bytes": 149033
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-001.acceptance.json",
+        "sha256": "e69d7f63f591defa36a7eaa99a6903523fc36961fe2134756c494a41c51bc0f3",
+        "size_bytes": 1315
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-001.closed_form.json",
+        "sha256": "84169587eeb8e24b79e6d43f3a324d3d3475a6606ac7ad82708eb6d361ef20ad",
+        "size_bytes": 601
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-001.mc_verdict.json",
+        "sha256": "58a91eed3ff250193df020324c9ae216925a5d8b3c977f9876ec8bdfc6df2962",
+        "size_bytes": 442
+      }
+    ],
+    "measured_rtp": 0.951434,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1637-001",
+    "target_rtp": 0.960000018370437,
+    "type_check_passed": true,
+    "verdict": "warn"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/cash-eruption.200-1637-002.operator-package.zip",
+    "delta_pp": -0.8859015007888993,
+    "epoch": 1700000000,
+    "game_id": "cash-eruption",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "c918fa7e56e0d0f8994117d81bc4b93970bcabf490c4e0faf38db8d4366bf717",
+        "size_bytes": 2071
+      },
+      {
+        "path": "cert/cash-eruption.200-1637-002.cert.xml",
+        "sha256": "dfee1d4d299da72a361b0bcd9307905fd566039eebf80f5841fe8931c9a7f0a1",
+        "size_bytes": 902
+      },
+      {
+        "path": "ir/cash-eruption.200-1637-002.slot-sim.ir.json",
+        "sha256": "c20a905c408a7bfa516c8bf888352542cb6b89dce2de1f0986e733c255267e1a",
+        "size_bytes": 1517775
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/cash-eruption.200-1637-002.paytable.csv",
+        "sha256": "5eec30d349764ab4623f689a7cc74098d4b5b806f09ec6c8fe4177924d33121a",
+        "size_bytes": 1326
+      },
+      {
+        "path": "reels/cash-eruption.200-1637-002.reels_summary.json",
+        "sha256": "895ae3a3b8b2c94ee835c58036e86b99e443cc3b435826955a38675c8213f31d",
+        "size_bytes": 149033
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-002.acceptance.json",
+        "sha256": "74f75f3b0447e7d1a763b8007b9f8e9bb0d32f9f6454b1f047e62213f77dd0ae",
+        "size_bytes": 1317
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-002.closed_form.json",
+        "sha256": "bccbf1a1e694c20b3b536a16b61aaf58939e619e9b22b8a2cd6f9511801f88a1",
+        "size_bytes": 599
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-002.mc_verdict.json",
+        "sha256": "697c4590e5167937055aa6bc8f57407825bb5121607c4e1473483f9a51a35697",
+        "size_bytes": 441
+      }
+    ],
+    "measured_rtp": 0.941141,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1637-002",
+    "target_rtp": 0.950000015007889,
+    "type_check_passed": true,
+    "verdict": "warn"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/cash-eruption.200-1637-003.operator-package.zip",
+    "delta_pp": 0.18239834650329856,
+    "epoch": 1700000000,
+    "game_id": "cash-eruption",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "1f9ceb2a276574992ff277d54b09bf7f8982bf491599de1ebe691cdf1956b5be",
+        "size_bytes": 2071
+      },
+      {
+        "path": "cert/cash-eruption.200-1637-003.cert.xml",
+        "sha256": "b297cf8873150fc71ad6ce39e2438b1a64c013f946ee6a9501ed39c87793b079",
+        "size_bytes": 902
+      },
+      {
+        "path": "ir/cash-eruption.200-1637-003.slot-sim.ir.json",
+        "sha256": "6d11dd26e18c2128aede8847963c1d8b2c49173145eb8f7f9fd9faa1d7652c9c",
+        "size_bytes": 1517777
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/cash-eruption.200-1637-003.paytable.csv",
+        "sha256": "5eec30d349764ab4623f689a7cc74098d4b5b806f09ec6c8fe4177924d33121a",
+        "size_bytes": 1326
+      },
+      {
+        "path": "reels/cash-eruption.200-1637-003.reels_summary.json",
+        "sha256": "f29ee8175cc452487dd70f0b6ae475bd30cc299dde2ca76f960011c886611ae8",
+        "size_bytes": 149033
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-003.acceptance.json",
+        "sha256": "0c5b8f56b27ba19200e2ef1ed254f174071b7b8f371167fc71a95c6d8f76cb12",
+        "size_bytes": 1315
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-003.closed_form.json",
+        "sha256": "7449881b4b84452447a8207d37397569cf08409fbae9fa3063f080d4383f5f89",
+        "size_bytes": 601
+      },
+      {
+        "path": "verdict/cash-eruption.200-1637-003.mc_verdict.json",
+        "sha256": "6160aa35b4d62546f0f978eb99e00d1ee790931525b3c446ec9a2dad5ec4e342",
+        "size_bytes": 442
+      }
+    ],
+    "measured_rtp": 0.932824,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1637-003",
+    "target_rtp": 0.931000016534967,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fort-knox-wolf-run.200-1775-001.operator-package.zip",
+    "delta_pp": -0.1789695231276034,
+    "epoch": 1700000000,
+    "game_id": "fort-knox-wolf-run",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "8a061e6cdadef8ef229254afd1005f23c1bd76581c22996c8af28cec6054ea62",
+        "size_bytes": 2111
+      },
+      {
+        "path": "cert/fort-knox-wolf-run.200-1775-001.cert.xml",
+        "sha256": "2e73b788776e333b3b51774220281a1e6e28fcf85833fdc0523f3e9c03829031",
+        "size_bytes": 907
+      },
+      {
+        "path": "ir/fort-knox-wolf-run.200-1775-001.slot-sim.ir.json",
+        "sha256": "1e2f1060129243f07e5da36f93aee9f45705cbb3ec1086c8ab90b489765d6aa7",
+        "size_bytes": 102300
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fort-knox-wolf-run.200-1775-001.paytable.csv",
+        "sha256": "f4366b67fb5cb4aedee1bb7e5e31a48a905548fb06267564dc3e2e4cfa4d1d7d",
+        "size_bytes": 1553
+      },
+      {
+        "path": "reels/fort-knox-wolf-run.200-1775-001.reels_summary.json",
+        "sha256": "5aeb6d70b2109353e5ad01f33a324729fd873e8e5812c9895b56da8140af1544",
+        "size_bytes": 6040
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-001.acceptance.json",
+        "sha256": "e205363a3344cea9874ff793c69b2215ae572c19f780571020225156df5bb81c",
+        "size_bytes": 1315
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-001.closed_form.json",
+        "sha256": "a84ea1ac02082c63fc3347b3a95ce5dd06bbf3c20af40c3862c153f2db33f8b5",
+        "size_bytes": 577
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-001.mc_verdict.json",
+        "sha256": "9eb3fbbbc18222da738cdc719a9af6116731d474d6f0d684892313b8e426125a",
+        "size_bytes": 443
+      }
+    ],
+    "measured_rtp": 0.962653,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 4,
+    "swid": "200-1775-001",
+    "target_rtp": 0.964442695231276,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fort-knox-wolf-run.200-1775-002.operator-package.zip",
+    "delta_pp": 0.13229899700838432,
+    "epoch": 1700000000,
+    "game_id": "fort-knox-wolf-run",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "faa8eee48d496a6ece1be87e7839f136e1972bbac689ecf6e1d0492768b0a4fa",
+        "size_bytes": 2111
+      },
+      {
+        "path": "cert/fort-knox-wolf-run.200-1775-002.cert.xml",
+        "sha256": "bdc0b1432c4ffda09a90e17f574b1441ab1be70e832670003c5ef172bc0339cc",
+        "size_bytes": 908
+      },
+      {
+        "path": "ir/fort-knox-wolf-run.200-1775-002.slot-sim.ir.json",
+        "sha256": "596eeaf69fb81fc3a9cd774c61095d703e73704627fa37462e7213850b88d82f",
+        "size_bytes": 102484
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fort-knox-wolf-run.200-1775-002.paytable.csv",
+        "sha256": "f4366b67fb5cb4aedee1bb7e5e31a48a905548fb06267564dc3e2e4cfa4d1d7d",
+        "size_bytes": 1553
+      },
+      {
+        "path": "reels/fort-knox-wolf-run.200-1775-002.reels_summary.json",
+        "sha256": "34ebd3beefdcf5d524840b964c33a72e987e55e1be10c3ddc226cb53a21362df",
+        "size_bytes": 6038
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-002.acceptance.json",
+        "sha256": "8052ebc47993adfc92c86731340e3fbf18e399a597815f088d3c6bffa6d58f36",
+        "size_bytes": 1313
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-002.closed_form.json",
+        "sha256": "fce7bd14e2f5eca117ce2d756fc365c3f7e1e8b5b207046b03f065be03c7db74",
+        "size_bytes": 582
+      },
+      {
+        "path": "verdict/fort-knox-wolf-run.200-1775-002.mc_verdict.json",
+        "sha256": "e74efb488ff2f2ea6238db4f36626bc0c4b76baf508c7996f1463205cbc86cfa",
+        "size_bytes": 441
+      }
+    ],
+    "measured_rtp": 0.944534,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 4,
+    "swid": "200-1775-002",
+    "target_rtp": 0.9432110100299161,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fortune-coin-boost-classic.200-1581-001.operator-package.zip",
+    "delta_pp": 0.03718018600000761,
+    "epoch": 1700000000,
+    "game_id": "fortune-coin-boost-classic",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "544c84973580b6246de08812436bb1e915b84f9635a419032b9990aaadf22c79",
+        "size_bytes": 2175
+      },
+      {
+        "path": "cert/fortune-coin-boost-classic.200-1581-001.cert.xml",
+        "sha256": "4b96ebf34091c2e6bbc1295391f19e69ae439c0786262892f27173c3f8666ddb",
+        "size_bytes": 916
+      },
+      {
+        "path": "ir/fortune-coin-boost-classic.200-1581-001.slot-sim.ir.json",
+        "sha256": "e5395966d651803bfce80c988cffba5d600584258cc12acbdbfb656dae44d7d7",
+        "size_bytes": 113867
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fortune-coin-boost-classic.200-1581-001.paytable.csv",
+        "sha256": "c90f7deb37862f3b765830b791a77581ede78ac93b12889a60eb4f26341c4414",
+        "size_bytes": 1907
+      },
+      {
+        "path": "reels/fortune-coin-boost-classic.200-1581-001.reels_summary.json",
+        "sha256": "f59571c0d9003c79014ea60a46ce7763b8c2c78be4aa59f126cd3d9ffd5b0b23",
+        "size_bytes": 54744
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-001.acceptance.json",
+        "sha256": "366abbbfb47b6c59883223920bad6e74513ed13239819758a071dd8d808c4d51",
+        "size_bytes": 1315
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-001.closed_form.json",
+        "sha256": "3753ba2b0d5e04b7ad96a8e1af41c0036cd1685081fcde2207d9699a85188b51",
+        "size_bytes": 721
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-001.mc_verdict.json",
+        "sha256": "6324b3c31b370f2973344fb2eccc5a91d18d13555ea56034fcd855a640220d49",
+        "size_bytes": 437
+      }
+    ],
+    "measured_rtp": 0.950429,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1581-001",
+    "target_rtp": 0.9500571981399999,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fortune-coin-boost-classic.200-1581-002.operator-package.zip",
+    "delta_pp": 0.12398910066666602,
+    "epoch": 1700000000,
+    "game_id": "fortune-coin-boost-classic",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "41e28d5bf72f3d2a58e262a916adf38acbc1263682c3e8f281a301a1021c31cf",
+        "size_bytes": 2175
+      },
+      {
+        "path": "cert/fortune-coin-boost-classic.200-1581-002.cert.xml",
+        "sha256": "7cfa5e2216ec2ad63e1875130f8152b2c2cda7c1ae38c7d145230e4e73c018b4",
+        "size_bytes": 916
+      },
+      {
+        "path": "ir/fortune-coin-boost-classic.200-1581-002.slot-sim.ir.json",
+        "sha256": "6a7ed89c2514b266cffe8bab259cff6034842fba9f8860cac998757df9675b77",
+        "size_bytes": 113868
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fortune-coin-boost-classic.200-1581-002.paytable.csv",
+        "sha256": "c90f7deb37862f3b765830b791a77581ede78ac93b12889a60eb4f26341c4414",
+        "size_bytes": 1907
+      },
+      {
+        "path": "reels/fortune-coin-boost-classic.200-1581-002.reels_summary.json",
+        "sha256": "0bd9953f94186f8e8e11d0e1c12ecdc9963f1e7c8ff5d66bad6f899c4fe31be8",
+        "size_bytes": 54744
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-002.acceptance.json",
+        "sha256": "33a4383bbbcf1415b84357176519ac692966e544ed46ea78f07d0cf6745cd2b4",
+        "size_bytes": 1313
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-002.closed_form.json",
+        "sha256": "69cb49bd71a6dc5e91c6b4e2e063839854a7ffcc767c48241fd5a4bf9561b9f5",
+        "size_bytes": 722
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-002.mc_verdict.json",
+        "sha256": "e6f61d4a38362e3171da5bc01628d0f441e233b3d99ea540ec5c0a793b373849",
+        "size_bytes": 439
+      }
+    ],
+    "measured_rtp": 0.942263,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1581-002",
+    "target_rtp": 0.9410231089933333,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fortune-coin-boost-classic.200-1581-003.operator-package.zip",
+    "delta_pp": -0.019418705999996178,
+    "epoch": 1700000000,
+    "game_id": "fortune-coin-boost-classic",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "1739e69a96ba0b11780b567450790ca0397a5c8a8bbb32cab90c20a565514c07",
+        "size_bytes": 2175
+      },
+      {
+        "path": "cert/fortune-coin-boost-classic.200-1581-003.cert.xml",
+        "sha256": "fa98396eb20a36882cf58c9dca422ae5719f8683c54e538c0e916766c7ac1a71",
+        "size_bytes": 916
+      },
+      {
+        "path": "ir/fortune-coin-boost-classic.200-1581-003.slot-sim.ir.json",
+        "sha256": "4b468c0986e3486bc3afa3705ad71de51a78faefef097aea941f9114b3c1bca0",
+        "size_bytes": 113875
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fortune-coin-boost-classic.200-1581-003.paytable.csv",
+        "sha256": "c90f7deb37862f3b765830b791a77581ede78ac93b12889a60eb4f26341c4414",
+        "size_bytes": 1907
+      },
+      {
+        "path": "reels/fortune-coin-boost-classic.200-1581-003.reels_summary.json",
+        "sha256": "1fbffe601c6d2a68e019ee7cfb81082867e6bad7eb97042b4d1b326fab75d219",
+        "size_bytes": 54743
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-003.acceptance.json",
+        "sha256": "de2b06feabe8d95360734f1fb0d657d911024c7fdfdd8f2e18c573c0f5f28990",
+        "size_bytes": 1317
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-003.closed_form.json",
+        "sha256": "406fa96dd3abc86c0611d1f55692971ece6c03f69d1836d88f7562f4275eae2c",
+        "size_bytes": 730
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-003.mc_verdict.json",
+        "sha256": "bc4387b59a5894da50b34ee6338c22d63dab9454fbb9a02ad96e4676a9ea7efe",
+        "size_bytes": 457
+      }
+    ],
+    "measured_rtp": 0.920723,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1581-003",
+    "target_rtp": 0.9209171870599999,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/fortune-coin-boost-classic.200-1581-004.operator-package.zip",
+    "delta_pp": 0.26393566666667034,
+    "epoch": 1700000000,
+    "game_id": "fortune-coin-boost-classic",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "a70af224a0755040b697ed12af30bb9ce901ad577089fc4f0cfd3b4129de302d",
+        "size_bytes": 2175
+      },
+      {
+        "path": "cert/fortune-coin-boost-classic.200-1581-004.cert.xml",
+        "sha256": "02db245f7c53489be7d65a7f684c76206948672ee31b0395b5ccc11d04fd801c",
+        "size_bytes": 915
+      },
+      {
+        "path": "ir/fortune-coin-boost-classic.200-1581-004.slot-sim.ir.json",
+        "sha256": "ad58b4a0afec3896dc4507d87ac0b696bd6ae7a7c110d312f4ae1cbf279bd2df",
+        "size_bytes": 113886
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/fortune-coin-boost-classic.200-1581-004.paytable.csv",
+        "sha256": "c90f7deb37862f3b765830b791a77581ede78ac93b12889a60eb4f26341c4414",
+        "size_bytes": 1907
+      },
+      {
+        "path": "reels/fortune-coin-boost-classic.200-1581-004.reels_summary.json",
+        "sha256": "1ca809b6064ac585c6285ef6dbe9b09341dbf8df6001796d5bb5936687525663",
+        "size_bytes": 54745
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-004.acceptance.json",
+        "sha256": "7fd1a2010b2f31f4a0d629ad2ef4f0f49addac9e251552e3125f81c6bd8dddb8",
+        "size_bytes": 1315
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-004.closed_form.json",
+        "sha256": "3f193e0985ac7e74bded9b53fff67a99e08b97afe90bbfd62dc16da4c03cc285",
+        "size_bytes": 739
+      },
+      {
+        "path": "verdict/fortune-coin-boost-classic.200-1581-004.mc_verdict.json",
+        "sha256": "182d084e1738d95864705c36011adab6c4acff55c0f3a06258b6a1cd2014ee52",
+        "size_bytes": 457
+      }
+    ],
+    "measured_rtp": 0.90402,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 3,
+    "swid": "200-1581-004",
+    "target_rtp": 0.9013806433333333,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/skeleton-key.200-1517-001.operator-package.zip",
+    "delta_pp": 0.37469971430729165,
+    "epoch": 1700000000,
+    "game_id": "skeleton-key",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "046501de6960edd3c593fb268cf09812f92e8aa13b3bc1a54c9773f948ef6f6c",
+        "size_bytes": 2063
+      },
+      {
+        "path": "cert/skeleton-key.200-1517-001.cert.xml",
+        "sha256": "e7969f8d062276e471a3c017beeae14faaaed070bec4f14ea84ff2dd20e2a59c",
+        "size_bytes": 901
+      },
+      {
+        "path": "ir/skeleton-key.200-1517-001.slot-sim.ir.json",
+        "sha256": "6ea22f10dade2adfff2e6a2ba4f85dc75f42779470757196cd2cd0eee332f1a8",
+        "size_bytes": 777315
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/skeleton-key.200-1517-001.paytable.csv",
+        "sha256": "b6d7410492df1dfa9f737e255f0de2065c9ebd29b9a22807419884e0658da0f1",
+        "size_bytes": 1450
+      },
+      {
+        "path": "reels/skeleton-key.200-1517-001.reels_summary.json",
+        "sha256": "40d1f9f91d524f3f94b9365e6cf5bb9ff08ebd9e2c1fb7de1065154f6c905b0c",
+        "size_bytes": 52877
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-001.acceptance.json",
+        "sha256": "0c60d4a93e39413c7205bf4c3bd3cd9679bc7132aa1eb8b0837997aa88393fb7",
+        "size_bytes": 1313
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-001.closed_form.json",
+        "sha256": "dda091f66b26893f43a6bf7ffbf41160b93830fd0eabfd9fd7efdbdd2b1dbf7b",
+        "size_bytes": 520
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-001.mc_verdict.json",
+        "sha256": "55d0f90c79a1cc57be5c22390386b339d67deeea9dabfa97ab779755a3c3fc89",
+        "size_bytes": 456
+      }
+    ],
+    "measured_rtp": 0.968679,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 6,
+    "swid": "200-1517-001",
+    "target_rtp": 0.964932002856927,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/skeleton-key.200-1517-002.operator-package.zip",
+    "delta_pp": 0.23506199177660836,
+    "epoch": 1700000000,
+    "game_id": "skeleton-key",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "cae5c18e22f904f482eac912a707a869b55b4dbf4c04a7a14c0b87a8cee37970",
+        "size_bytes": 2063
+      },
+      {
+        "path": "cert/skeleton-key.200-1517-002.cert.xml",
+        "sha256": "8adef54f46df9334d17695048a90da7bc154987818c64eca8d05d86d96713566",
+        "size_bytes": 901
+      },
+      {
+        "path": "ir/skeleton-key.200-1517-002.slot-sim.ir.json",
+        "sha256": "391491521b5d6954e60ae9b529a73baa3cbdf316f328c12fc33b1be81f0fe323",
+        "size_bytes": 777321
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/skeleton-key.200-1517-002.paytable.csv",
+        "sha256": "b6d7410492df1dfa9f737e255f0de2065c9ebd29b9a22807419884e0658da0f1",
+        "size_bytes": 1450
+      },
+      {
+        "path": "reels/skeleton-key.200-1517-002.reels_summary.json",
+        "sha256": "58fd03a4713a68f7340ca15ed2c83b712e208967855b532c9a7dc33a48555ba0",
+        "size_bytes": 52878
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-002.acceptance.json",
+        "sha256": "a4a84a7f450155da6370a769f46b8d366d09f7da2df1f22dfc9796cfc49fc47c",
+        "size_bytes": 1317
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-002.closed_form.json",
+        "sha256": "419ff17d6b67ceb5516f31252f293129a996c2bbcb2ca610130a2fc42ae1f482",
+        "size_bytes": 524
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-002.mc_verdict.json",
+        "sha256": "9c9856af211048cd479fb25c9a32f283edb3bb134ce7b1570a728a6b2d7e3bbb",
+        "size_bytes": 457
+      }
+    ],
+    "measured_rtp": 0.94699,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 6,
+    "swid": "200-1517-002",
+    "target_rtp": 0.9446393800822339,
+    "type_check_passed": true,
+    "verdict": "pass"
+  },
+  {
+    "bundle_path": "reports/cert-bundle-swid/skeleton-key.200-1517-003.operator-package.zip",
+    "delta_pp": -0.5653284580067197,
+    "epoch": 1700000000,
+    "game_id": "skeleton-key",
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ-DGE"
+    ],
+    "manifest_files": [
+      {
+        "path": "README.md",
+        "sha256": "12043e287303770353e97508a2da98f6002bd46333efabcd5d1ad89e0716127b",
+        "size_bytes": 2064
+      },
+      {
+        "path": "cert/skeleton-key.200-1517-003.cert.xml",
+        "sha256": "088211a81d8eaa77e969dc64466376fbd8ea51776853613215c37e35736a2b67",
+        "size_bytes": 903
+      },
+      {
+        "path": "ir/skeleton-key.200-1517-003.slot-sim.ir.json",
+        "sha256": "6a76d0febc31a47c9f96d7745ce4b989688d76a3eeb92d103f12c98d6e4dce67",
+        "size_bytes": 777318
+      },
+      {
+        "path": "meta/changelog.md",
+        "sha256": "b4625edd2eaeac5da0f967aadef8d0d8e9d4587a8d1a8d8979dd0f03948d8a9a",
+        "size_bytes": 620
+      },
+      {
+        "path": "meta/version.json",
+        "sha256": "6c2ac74ef748148024cdcafd5b3ab4323d5a0cd40e3cfd40f99036d9f8e5d1b2",
+        "size_bytes": 248
+      },
+      {
+        "path": "paytable/skeleton-key.200-1517-003.paytable.csv",
+        "sha256": "b6d7410492df1dfa9f737e255f0de2065c9ebd29b9a22807419884e0658da0f1",
+        "size_bytes": 1450
+      },
+      {
+        "path": "reels/skeleton-key.200-1517-003.reels_summary.json",
+        "sha256": "a63b5faaf84b63b1921735d70c1e35afe9344aec7ec12e39e7afe01c19665ec8",
+        "size_bytes": 52879
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-003.acceptance.json",
+        "sha256": "8b1a9ae1b858ff5c5ac7263958804c8fa290284f425899641aeb3e0818229d7d",
+        "size_bytes": 1311
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-003.closed_form.json",
+        "sha256": "6c9b7d5832cb3bfb21be04859a90620025f68a6f2ca1b26426157dbdd82499e4",
+        "size_bytes": 524
+      },
+      {
+        "path": "verdict/skeleton-key.200-1517-003.mc_verdict.json",
+        "sha256": "7d8d41d662364e7bdd395358c3471c265c735652e96ac0678161093cc104ebbc",
+        "size_bytes": 457
+      }
+    ],
+    "measured_rtp": 0.918669,
+    "pubkey_fingerprint": "e68162dfaec7f503",
+    "raw_meta": {
+      "ed25519_pubkey_fingerprint": "e68162dfaec7f503",
+      "generated_at_epoch": 1700000000,
+      "repo_sha": "fabd5ffa9a236cd0caaaf3846c1f7df23201d51a",
+      "schema": "slotmath.bundle-version/v1",
+      "tool_version": "tools.cert_bundle_swid/v1.0 (W4.15)"
+    },
+    "reels": 5,
+    "rows": 6,
+    "swid": "200-1517-003",
+    "target_rtp": 0.9243222845800672,
+    "type_check_passed": true,
+    "verdict": "warn"
+  }
+];
+
+function fmtNum(v, digits) {
+  if (v == null) return "—";
+  return Number(v).toFixed(digits);
+}
+function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+function renderRow(e, idx) {
+  const tr = document.createElement("tr");
+  tr.className = "row";
+  tr.dataset.idx = String(idx);
+  tr.innerHTML = `
+    <td>${e.game_id}</td>
+    <td>${e.swid}</td>
+    <td>${e.reels != null ? e.reels + "×" + e.rows : "—"}</td>
+    <td class="num">${fmtNum(e.target_rtp, 4)}</td>
+    <td class="num">${fmtNum(e.measured_rtp, 4)}</td>
+    <td class="num">${fmtNum(e.delta_pp, 4)}</td>
+    <td>${(e.jurisdictions || []).join(", ")}</td>
+    <td><span class="verdict ${e.verdict}">${e.verdict}</span></td>`;
+  tr.addEventListener("click", () => showDetail(idx, tr));
+  return tr;
+}
+function showDetail(idx, tr) {
+  const e = DATA[idx];
+  const panel = document.getElementById("detail-panel");
+  const title = document.getElementById("detail-title");
+  const body = document.getElementById("detail-body");
+  document.querySelectorAll("tr.row.selected").forEach(r => r.classList.remove("selected"));
+  if (tr) tr.classList.add("selected");
+  title.textContent = `${e.game_id} · ${e.swid}`;
+  body.innerHTML = `
+    <p><strong>Bundle:</strong> ${e.bundle_path}</p>
+    <p><strong>ed25519 fp:</strong> ${e.pubkey_fingerprint} · <strong>epoch:</strong> ${e.epoch ?? "—"}</p>
+    <p><strong>Manifest files (${e.manifest_files.length}):</strong></p>
+    <pre>${(e.manifest_files || []).map(f => `${f.path.padEnd(60)} ${(f.sha256 || "").slice(0,12)}… (${f.size_bytes} B)`).join("\n")}</pre>`;
+  panel.hidden = false;
+}
+function applyFilters() {
+  const g = document.getElementById("filter-game").value.toLowerCase();
+  const j = document.getElementById("filter-juris").value;
+  const v = document.getElementById("filter-verdict").value;
+  const s = document.getElementById("sort-by").value;
+  const filtered = DATA.filter(e =>
+    (!g || e.game_id.toLowerCase().includes(g)) &&
+    (!j || (e.jurisdictions || []).includes(j)) &&
+    (!v || e.verdict === v));
+  filtered.sort((a, b) => {
+    const va = a[s], vb = b[s];
+    if (va == null && vb == null) return 0;
+    if (va == null) return 1;
+    if (vb == null) return -1;
+    if (typeof va === "number" && typeof vb === "number") return va - vb;
+    return String(va).localeCompare(String(vb));
+  });
+  const tbody = document.getElementById("swid-body");
+  clear(tbody);
+  for (const e of filtered) {
+    const idx = DATA.indexOf(e);
+    tbody.appendChild(renderRow(e, idx));
+  }
+  let pass = 0, warn = 0, fail = 0;
+  for (const e of filtered) {
+    if (e.verdict === "pass") pass++;
+    else if (e.verdict === "warn") warn++;
+    else if (e.verdict === "fail") fail++;
+  }
+  document.getElementById("kpi-pass").textContent = pass;
+  document.getElementById("kpi-warn").textContent = warn;
+  document.getElementById("kpi-fail").textContent = fail;
+  document.getElementById("kpi-total").textContent = filtered.length;
+}
+function fillDiffSelects() {
+  for (const id of ["diff-a", "diff-b"]) {
+    const sel = document.getElementById(id);
+    DATA.forEach((e, i) => {
+      const o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = `${e.game_id} / ${e.swid}`;
+      sel.appendChild(o);
+    });
+  }
+}
+function renderDiff() {
+  const ai = document.getElementById("diff-a").value;
+  const bi = document.getElementById("diff-b").value;
+  if (ai === "" || bi === "") {
+    document.getElementById("diff-panel").hidden = true;
+    return;
+  }
+  const a = DATA[Number(ai)], b = DATA[Number(bi)];
+  document.getElementById("diff-a-title").textContent = `${a.game_id} / ${a.swid}`;
+  document.getElementById("diff-b-title").textContent = `${b.game_id} / ${b.swid}`;
+  const keys = ["game_id", "swid", "reels", "rows", "target_rtp", "measured_rtp",
+                "delta_pp", "jurisdictions", "type_check_passed",
+                "pubkey_fingerprint", "epoch", "verdict"];
+  const ta = document.getElementById("diff-a-table");
+  const tb = document.getElementById("diff-b-table");
+  clear(ta); clear(tb);
+  for (const k of keys) {
+    const av = JSON.stringify(a[k]);
+    const bv = JSON.stringify(b[k]);
+    const ch = av !== bv ? " diff-changed" : "";
+    ta.innerHTML += `<tr><td class="label">${k}</td><td class="${ch}">${av}</td></tr>`;
+    tb.innerHTML += `<tr><td class="label">${k}</td><td class="${ch}">${bv}</td></tr>`;
+  }
+  document.getElementById("diff-panel").hidden = false;
+}
+for (const id of ["filter-game", "filter-juris", "filter-verdict", "sort-by"]) {
+  document.getElementById(id).addEventListener("input", applyFilters);
+}
+for (const id of ["diff-a", "diff-b"]) {
+  document.getElementById(id).addEventListener("input", renderDiff);
+}
+fillDiffSelects();
+applyFilters();
+</script>
+</body>
+</html>

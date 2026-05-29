@@ -138,6 +138,13 @@ impl LatticeSequence {
         Self::new(vec![17797], (1u64 << 31) - 1)
     }
 
+    /// Advance the internal index by `n` without emitting points. Mirrors
+    /// `HaltonSequence::skip` / `SobolSequence::skip` API.
+    pub fn skip(mut self, n: u64) -> Self {
+        self.index = n % self.n_max;
+        self
+    }
+
     pub fn next_point(&mut self) -> Vec<f64> {
         self.index = (self.index + 1) % self.n_max;
         let n_f = self.n_max as f64;
