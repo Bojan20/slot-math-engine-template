@@ -109,7 +109,11 @@ describe('kernel-test-runner · naming gate', () => {
     const v = runKernelTestBattery(BAD_NAMING);
     const g = v.gates.find((x) => x.name === 'naming')!;
     expect(g.pass).toBe(false);
-    expect(g.message).toMatch(/Light/i);
+    // Post-sanitization (2026-05) the upstream `Light` brand was renamed
+    // to `Vendor B` throughout the repo, including DEFAULT_RESERVED and
+    // the BAD_NAMING fixture above. The expectation lagged behind — the
+    // gate now reports the canonical sanitized term `"Vendor B"`.
+    expect(g.message).toMatch(/Vendor B/i);
   });
 
   it('reservedTerms override honored', () => {
