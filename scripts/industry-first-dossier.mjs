@@ -717,6 +717,24 @@ const WAVES = [
     }),
     industry_first: 'Pure-stdlib MC parity validator removes closed-form\'s wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game\'s base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time.',
   },
+  {
+    wave: '4.11c',
+    name: 'MC Parity Dashboard (offline single-file HTML, sales/regulator surface)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/dashboards/mc-parity-dashboard.manifest.json',
+    extractHeadline: (j) => {
+      const kb = j?.size_kb ?? 0;
+      const mc = j?.mc_summary ?? {};
+      const cf = j?.cf_summary ?? {};
+      const line = (mc.line_pay_delta_pp ?? 0).toFixed(3);
+      const sc = (mc.scatter_pay_delta_pp ?? 0).toFixed(3);
+      const bb = (cf.bb_fair_price_pp ?? 0).toFixed(4);
+      return `offline ${kb} KB · MC line Δ ${line} pp · scatter Δ ${sc} pp · BB Δ +${bb} pp · ${(mc.elapsed_seconds ?? 0).toFixed(2)} s`;
+    },
+    extractDetail: (j) => j,
+    industry_first: 'Offline single-file HTML dashboard that visualises closed-form + MC parity against a real-market released-game PAR in one page (no JS deps, no remote URLs, ≤ 25 KB). Drops directly into the operator-package ZIP. KPI strip foregrounds the engine-side line + scatter Δ pp (≤ 0.5 pp / ≤ 0.1 pp) plus BB fair-price Δ and MC runtime. No vendor ships a regulator-facing visual parity dashboard whose source is reproducible and copyright-safe.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

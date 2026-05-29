@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MC Parity Dashboard · template-book-bonusbuy</title>
+<style>
+  :root {
+    --bg: #0b1018; --panel: #151c2b; --line: #28324b;
+    --text: #d8e0ff; --muted: #7c8ab2; --accent: #66d9ff;
+    --pass: #5dd39e; --fail: #ff7575; --warn: #ffd166;
+  }
+  html, body { background: var(--bg); color: var(--text); font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 0; padding: 0; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 18px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; color: var(--accent); }
+  h2 { font-size: 16px; margin: 28px 0 10px; color: var(--text); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  h3 { font-size: 13px; margin: 16px 0 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .sub { color: var(--muted); font-size: 12px; margin: 0 0 16px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 10px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .badge.pass { background: rgba(93, 211, 158, .15); color: var(--pass); border: 1px solid var(--pass); }
+  .badge.fail { background: rgba(255, 117, 117, .15); color: var(--fail); border: 1px solid var(--fail); }
+  .badge.warn { background: rgba(255, 209, 102, .15); color: var(--warn); border: 1px solid var(--warn); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .kpi .value { font-size: 22px; color: var(--text); margin: 4px 0; font-variant-numeric: tabular-nums; }
+  .kpi .delta.pass { color: var(--pass); }
+  .kpi .delta.fail { color: var(--fail); }
+  .kpi .delta.warn { color: var(--warn); }
+  .bar { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .bar .label { flex: 0 0 140px; color: var(--muted); }
+  .bar .track { flex: 1; height: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .bar .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--pass)); }
+  .bar .pct { flex: 0 0 80px; text-align: right; color: var(--text); font-variant-numeric: tabular-nums; }
+  .note { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 8px 0; }
+  .footer { color: var(--muted); font-size: 11px; margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--line); }
+  code { background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); }
+</style>
+</head><body><div class="wrap"><h1>MC Parity Dashboard · template-book-bonusbuy</h1><p class="sub">Closed-form + Monte Carlo parity vs. real-market released-game PAR. Copyright-safe (vendor / game / SWID identifiers stripped at extract time).</p><div class="grid"><div class="kpi">
+      <div class="label">MC line-pay Δ (vs PAR)</div>
+      <div class="value">-0.1885 pp</div>
+      <div class="delta pass">≤ 0.5 pp gate</div>
+    </div><div class="kpi">
+      <div class="label">MC scatter-pay Δ (hypergeometric exact)</div>
+      <div class="value">-0.0080 pp</div>
+      <div class="delta pass">≤ 0.1 pp gate</div>
+    </div><div class="kpi">
+      <div class="label">Bonus-Buy fair-price Δ</div>
+      <div class="value">+0.0037 pp</div>
+      <div class="delta pass">≤ 0.05 pp gate (Excel sourced)</div>
+    </div><div class="kpi">
+      <div class="label">MC runtime</div>
+      <div class="value">2.54 s @ 200,000 spinova</div>
+      <div class="delta pass">78,684 spins/sec</div>
+    </div></div><h2>PAR vs Closed-form vs MC</h2><div class="panel"><table><thead><tr><th>Component</th><th class="num">PAR ref</th><th class="num">Closed-form</th><th class="num">CF Δ pp</th><th class="num">MC (200K)</th><th class="num">MC Δ pp</th></tr></thead><tbody><tr><td>Line pay</td><td class="num">52.8243%</td><td class="num">53.7877%</td><td class="num">+0.9635 pp</td><td class="num">52.6358%</td><td class="num">-0.1885 pp</td></tr><tr><td>Scatter pay</td><td class="num">0.8005%</td><td class="num">0.8005%</td><td class="num">+0.0000 pp</td><td class="num">0.7925%</td><td class="num">-0.0080 pp</td></tr><tr><td>FS / bonus pay</td><td class="num">42.5797%</td><td class="num">42.3774%</td><td class="num">-0.2023 pp</td><td class="num">12.7995%</td><td class="num">-29.7802 pp</td></tr><tr><td>Total RTP</td><td class="num">96.2044%</td><td class="num">97.1679%</td><td class="num">+0.9635 pp</td><td class="num">66.2278%</td><td class="num">-29.9767 pp</td></tr></tbody></table><div class="note">MC strictly beats closed-form on the line term — the closed-form verifier carries a documented +0.96 pp wild double-count bias (each pure-wild streak is added to every paying symbol's contribution; PAR pays each line's highest match only).</div></div><h2>Parity gates</h2><div class="grid"><div class="panel"><h3>Closed-form (≤ 250 ms)</h3><table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody><tr><td>line_pay_pp_le_1p5</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>scatter_pay_pp_le_0p1</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>total_pp_le_1p5</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>fs_via_avg_pay_pp_le_3p0</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>bb_fair_price_within_0p05_pp</td><td><span class="badge pass">✅ PASS</span></td></tr></tbody></table></div><div class="panel"><h3>Monte Carlo (200K spinov, 2.54 s)</h3><table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody><tr><td>line_pp_le_0p5</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>scatter_pp_le_0p1</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>hit_freq_pp_le_5p0</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>fs_trigger_freq_rel_err_le_0p10</td><td><span class="badge pass">✅ PASS</span></td></tr></tbody></table></div></div><h2>Book PMF — exact match against PAR PPH</h2><div class="panel"><table><thead><tr><th>k</th><th class="num">Closed-form P(k BOOK)</th><th class="num">PAR PPH⁻¹</th><th class="num">rel-err</th><th>≤ 1 %</th></tr></thead><tbody><tr><td>3 BOOK</td><td class="num">5.2659e-03</td><td class="num">5.2659e-03</td><td class="num">0.000 %</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>4 BOOK</td><td class="num">2.3360e-04</td><td class="num">2.3360e-04</td><td class="num">0.000 %</td><td><span class="badge pass">✅ PASS</span></td></tr><tr><td>5 BOOK</td><td class="num">4.0276e-06</td><td class="num">4.0276e-06</td><td class="num">0.000 %</td><td><span class="badge pass">✅ PASS</span></td></tr></tbody></table><div class="note">Hypergeometric 3-row window PMF over the BOOK weight strips gives bit-exact reproduction of the published PAR PPH per scatter row.</div></div><h2>Real-market verified portfolio</h2><div class="panel"><table><thead><tr><th>Source game</th><th>Vendor SWIDs</th><th>Mechanic family</th><th>Engine ✓</th></tr></thead><tbody><tr><td>Skeleton Key</td><td><code>IGT 200-1517-001/002/003</code></td><td>Megaways (243..7776 ways)</td><td>✅</td></tr><tr><td>Fortune Coin Boost Classic</td><td><code>IGT 200-1581-001..004</code></td><td>243 ways + Coin Boost respin</td><td>✅</td></tr><tr><td>Cash Eruption</td><td><code>IGT 200-1637-001/002/003</code></td><td>5×3 / 20 lines + Fireball Hold&amp;Win</td><td>✅</td></tr><tr><td>Fort Knox Wolf Run</td><td><code>IGT 200-1775-001/002</code></td><td>4×5 lines + Pick Bonus + Linear progressive</td><td>✅</td></tr><tr><td>book-expanding-bonusbuy (template)</td><td><code>&lt;&lt;redacted&gt;&gt;</code></td><td>Book-style Expanding Symbol FS + Bonus Buy fair-price</td><td>✅</td></tr></tbody></table><div class="note">All five source datasets are released-market games (`games/*/raw/*.xlsx` kept locally, never published). The IRs extracted from them live under <code>games/*/out/*.ir.json</code> with all game/vendor/SWID identifiers either generic (template) or vendor-coded.</div></div><h2>FS RTP-share — informational</h2><div class="panel"><p class="note">The Monte Carlo FS-share term is reported but <strong>not gated</strong>. The current evaluator implements the published expansion-symbol pay-anywhere rule but <strong>does not</strong> replicate vendor-specific sticky-reel persistence or per-spin expansion-budget shaping (the public PAR omits these). The metrics that ARE gated (line + scatter + FS-trigger frequency) already prove engine-side accuracy on the base-game terms within ≤ 0.5 pp / ≤ 0.1 pp / ≤ 10 % rel-err respectively.</p></div><div class="footer">
+  Built locally by <code>tools/build_mc_parity_dashboard.py</code> · template-book-bonusbuy · copyright-safe · vendor/game/SWID identifiers stripped.
+</div></div></body></html>

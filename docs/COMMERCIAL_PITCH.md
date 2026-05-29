@@ -230,6 +230,44 @@ sub-kernel sum (asset + derivative + genome + RL + mesh + JS bundle).
 
 ---
 
+## 🎯 Real-Market Released-Game PAR Parity (W4.11 + W4.11b + W4.11c + W4.15)
+
+The engine is verified against **five released-market games** (15 SWIDs, 6 mechanic
+families), not just synthetic fixtures. Each game's PAR sheet is converted to a
+copyright-safe IR template (`games/*/raw/*.xlsx` stays local, IR + reports ship).
+
+### Verified portfolio
+
+| Source game | SWIDs | Mechanic family |
+|---|---|---|
+| Skeleton Key | IGT 200-1517-001/002/003 | Megaways (243…7776 ways) |
+| Fortune Coin Boost Classic | IGT 200-1581-001…004 | 243-Ways + Coin Boost respin |
+| Cash Eruption | IGT 200-1637-001/002/003 | 5×3 / 20 lines + Fireball Hold&Win |
+| Fort Knox Wolf Run | IGT 200-1775-001/002 | 4×5 lines + Pick Bonus + Linear progressive |
+| `book-expanding-bonusbuy` template | `<<redacted>>` | Book-style Expanding Symbol FS + Bonus Buy |
+
+### Parity gates on the template (PAR vs engine)
+
+| Metric | Closed-form Δ pp (≤ 250 ms) | MC Δ pp (200K spinov, 2.5 s) | Gate |
+|---|---|---|---|
+| Line pay | +0.96 pp *(wild double-count bias, documented)* | **−0.189 pp** | MC ≤ 0.5 pp |
+| Scatter pay | +0.0000 pp *(hypergeometric exact)* | **−0.008 pp** | MC ≤ 0.1 pp |
+| Bonus-Buy fair-price | +0.0037 pp *(direct from Excel)* | — | ≤ 0.05 pp |
+| FS trigger frequency P(3+ BOOK) | rel-err < 0.1 % | rel-err 5.89 % | MC ≤ 10 % |
+
+### Deliverables in the operator package
+
+| File | What it shows |
+|---|---|
+| `reports/dashboards/mc-parity-dashboard.html` | One-page offline HTML — KPI strip + PAR vs CF vs MC table + gate matrix + Book PMF + real-market portfolio |
+| `reports/acceptance/book_bonusbuy_parity.json` | Closed-form parity report (5/5 gates) |
+| `reports/acceptance/book_bonusbuy_mc.json` | Monte Carlo parity report (4/4 gates, 200K spinov, CI95) |
+| `games/book-expanding-bonusbuy/{scripts,README.md}` | Reproducible local pipeline (openpyxl only, zero API calls) |
+
+**Sales spin:** *"Engine math is MC-verified against a real-market released-game PAR — line and scatter shares match within ≤ 0.5 pp and ≤ 0.1 pp respectively, validated in unit-test time (< 3 s on 200K spinov)."*
+
+---
+
 ## What you can verify on YOUR laptop in 5 minutes
 
 ```

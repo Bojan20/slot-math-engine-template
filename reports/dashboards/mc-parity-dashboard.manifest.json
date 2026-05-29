@@ -1,0 +1,26 @@
+{
+  "bundle_url": "reports/dashboards/mc-parity-dashboard.html",
+  "size_bytes": 9483,
+  "size_kb": 9.26,
+  "offline_safe": true,
+  "kpi_strip": [
+    "MC line-pay Δ",
+    "MC scatter-pay Δ",
+    "BB fair-price Δ",
+    "MC runtime"
+  ],
+  "cf_summary": {
+    "all_gates_pass": true,
+    "line_pay_delta_pp": 0.9634611240946112,
+    "scatter_pay_delta_pp": 1.734723475976807e-15,
+    "bb_fair_price_pp": 0.003711551576790484
+  },
+  "mc_summary": {
+    "all_gates_pass": true,
+    "spins": 200000,
+    "elapsed_seconds": 2.5417993330047466,
+    "line_pay_delta_pp": -0.18851698490046642,
+    "scatter_pay_delta_pp": -0.00797237830043266,
+    "fs_trigger_rel_err": 0.05886627906976753
+  }
+}
