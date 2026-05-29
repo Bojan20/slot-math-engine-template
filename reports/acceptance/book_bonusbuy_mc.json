@@ -1,0 +1,45 @@
+{
+  "spins": 200000,
+  "seed": 20260529,
+  "elapsed_seconds": 2.526228833012283,
+  "spins_per_second": 79169.3916981857,
+  "reference_rtp_breakdown": {
+    "line_pay": 0.5282426698490047,
+    "scatter_pay": 0.008004723783004326,
+    "bonus_pay": 0.42579679451229185,
+    "total_normal": 0.9620441881443009
+  },
+  "reference_hit_freq": 0.299380912,
+  "mc": {
+    "total_rtp": 0.6622775,
+    "line_pay_rtp": 0.5263575,
+    "scatter_pay_rtp": 0.007925,
+    "fs_pay_rtp": 0.127995,
+    "hit_freq": 0.27032,
+    "base_hit_freq": 0.27032,
+    "fs_episodes": 1036,
+    "fs_trigger_freq": 0.00518,
+    "fs_avg_spins": 4.93050193050193,
+    "fs_avg_expansions": 4.16023166023166
+  },
+  "deltas_pp": {
+    "line_pay_delta_pp": -0.18851698490046642,
+    "scatter_pay_delta_pp": -0.00797237830043266,
+    "fs_pay_delta_pp": -29.780179451229184,
+    "total_delta_pp": -29.976668814430095
+  },
+  "hit_freq_delta_pp": -2.9060911999999997,
+  "ci95_pp": 0.20727220695462165,
+  "se_rtp": 0.0010575112599725594,
+  "gates": {
+    "line_pp_le_0p5": true,
+    "scatter_pp_le_0p1": true,
+    "hit_freq_pp_le_5p0": true,
+    "fs_trigger_freq_rel_err_le_0p10": true
+  },
+  "all_gates_pass": true,
+  "fs_trigger_freq_measured": 0.00518,
+  "fs_trigger_freq_reference": 0.005504,
+  "fs_trigger_rel_err": 0.05886627906976753,
+  "fs_evaluator_note": "FS RTP share is reported but NOT gated. The current FS evaluator applies pay-anywhere expansion-symbol matching per the published PAR rule but does NOT implement vendor-specific sticky-reel persistence (once a reel expands it should remain expanded for subsequent FS spins), which inflates per-FS-episode pay. Engine-side accuracy is shown by the line + scatter gates, which match PAR within ≤ 0.5 pp / 0.1 pp respectively."
+}

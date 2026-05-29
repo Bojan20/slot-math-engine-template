@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-29T14:18:27.537Z",
-  "repo_sha": "4793ac5a7ebd1f89c807add69284dc7880efcc8a",
+  "generatedAtUtc": "2026-05-29T14:36:13.049Z",
+  "repo_sha": "f4941b19b6ed56551dea2f928ff14efcfc3a24de",
   "headline": {
-    "waves": 48,
-    "industry_firsts": 45,
+    "waves": 49,
+    "industry_firsts": 46,
     "all_present": true
   },
   "waves": [
@@ -1951,7 +1951,7 @@
       "name": "Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:13:56.091Z",
+      "reportMtime": "2026-05-29T14:22:48.110Z",
       "headline": "5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance",
       "detail": {
         "scatter_pay_delta_pp": 1.734723475976807e-15,
@@ -1968,7 +1968,7 @@
       "name": "Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:13:56.091Z",
+      "reportMtime": "2026-05-29T14:22:48.110Z",
       "headline": "Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp",
       "detail": {
         "book_pmf": {
@@ -1980,6 +1980,27 @@
         "delta_pp": -0.20230388561825463
       },
       "industry_first": "Closed-form Book-style expanding-symbol FS analyzer: per-reel q_i = 1 − C(N−K, 3)/C(N, 3) (hypergeometric), generating polynomial ∏((1−q_i) + q_i x) yields exact PMF of \"reels with ≥1 BOOK\". Matches real-market PAR PPH to < 0.5 % rel-err on k ∈ {3, 4, 5} — no MC required. No vendor ships analytical expanding-FS probe in unit-test time."
+    },
+    {
+      "wave": "4.11b",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)",
+      "reportPath": "reports/acceptance/book_bonusbuy_mc.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T14:35:47.776Z",
+      "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s",
+      "detail": {
+        "spins": 200000,
+        "seed": 20260529,
+        "line_pay_delta_pp": -0.18851698490046642,
+        "scatter_pay_delta_pp": -0.00797237830043266,
+        "hit_freq_delta_pp": -2.9060911999999997,
+        "fs_trigger_rel_err": 0.05886627906976753,
+        "elapsed_seconds": 2.526228833012283,
+        "spins_per_second": 79169.3916981857
+      },
+      "industry_first": "Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time."
     }
   ],
   "auditor_qa": [

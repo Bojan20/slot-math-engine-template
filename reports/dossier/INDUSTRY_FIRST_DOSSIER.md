@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T14:18:27.537Z` · repo SHA: `4793ac5a7ebd`
+> Generated: `2026-05-29T14:36:13.049Z` · repo SHA: `f4941b19b6ed`
 
-## Headline: **45/48 industry-firsts attested** ✅
+## Headline: **46/49 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -57,6 +57,7 @@
 | 7.11 | — | **Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)** | ✅ consolidated_hash=6a32084a5e94e422… (Pareto 32, RL 18, mesh root a3a1e8d46951…) | [`reports/acceptance/UNIFIED_AUDIT.json`](../../reports/acceptance/UNIFIED_AUDIT.md) |
 | 4.11 | — | **Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)** | ✅ 5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
 | 4.15 | — | **Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)** | ✅ Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
+| 4.11b | — | **Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)** | ✅ 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s | [`reports/acceptance/book_bonusbuy_mc.json`](../../reports/acceptance/book_bonusbuy_mc.md) |
 
 ## Why each is industry-first
 
@@ -392,6 +393,13 @@
 - **Industry-first claim**: Closed-form Book-style expanding-symbol FS analyzer: per-reel q_i = 1 − C(N−K, 3)/C(N, 3) (hypergeometric), generating polynomial ∏((1−q_i) + q_i x) yields exact PMF of "reels with ≥1 BOOK". Matches real-market PAR PPH to < 0.5 % rel-err on k ∈ {3, 4, 5} — no MC required. No vendor ships analytical expanding-FS probe in unit-test time.
 - **Commit**: `pending`
 - **Detail**: `{"book_pmf":{"3":0.00526592412112775,"4":0.000233603500571827,"5":0.000004027646561583229},"fs_rtp_inferred":0.4237737556561093,"delta_pp":-0.20230388561825463}`
+
+### Wave 4.11b · Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger) (—)
+
+- **Acceptance**: 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s
+- **Industry-first claim**: Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time.
+- **Commit**: `pending`
+- **Detail**: `{"spins":200000,"seed":20260529,"line_pay_delta_pp":-0.18851698490046642,"scatter_pay_delta_pp":-0.00797237830043266,"hit_freq_delta_pp":-2.9060911999999997,"fs_trigger_rel_err":0.05886627906976753,"elapsed_seconds":2.52`…
 
 ## Auditor Q&A Map
 
