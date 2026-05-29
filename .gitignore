@@ -34,6 +34,12 @@
 .env.local
 .env.*.local
 
+# ─── W6.2 LLM ingest cache ────────────────────────────────────────────
+# Anthropic Claude responses cached by sha256(prompt + model + schema).
+# Regenerated on demand; the offline `--demo-corpus` flow re-creates
+# the canonical archetype set without an API key.
+reports/gdd-llm-cache/
+
 # ─── Logs / temp ──────────────────────────────────────────────────────
 *.log
 npm-debug.log*
