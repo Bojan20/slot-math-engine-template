@@ -63,6 +63,14 @@ FILES_RELATIVE = [
     "docs/COMMERCIAL_PITCH.md",
     "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
     "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
+    # W4.8 + W4.12 clean-room templates + parity layer (2026-05-29)
+    "games/megaways-clean-room-template/out/template-megaways-cleanroom.ir.json",
+    "games/walking-wild-clean-room-template/out/template-walking-wild-cleanroom.ir.json",
+    "reports/acceptance/megaways_parity.json",
+    "reports/acceptance/walking_wild_parity.json",
+    "reports/acceptance/megaways_mc_parity.json",
+    "reports/acceptance/walking_wild_mc_parity.json",
+    "reports/dashboards/clean-room-parity-portfolio.html",
 ]
 
 

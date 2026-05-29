@@ -1,9 +1,9 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "2026-05-29T15:18:24.657046Z",
-  "merkle_root_sha256": "7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000",
-  "file_count": 20,
-  "total_bytes": 292475,
+  "generated_at_utc": "2026-05-29T20:48:35.220213Z",
+  "merkle_root_sha256": "b89f2e0ea64b2c856da03d1f8aaf5418d984428d0302a01f6cd10853766aa2ac",
+  "file_count": 27,
+  "total_bytes": 340649,
   "missing_files": [],
   "records": [
     {
@@ -22,6 +22,16 @@
       "sha256": "230a663052cf6d78cb985b0a99e84c182536b74f6d5e968d737f273aeda752d3"
     },
     {
+      "path": "games/megaways-clean-room-template/out/template-megaways-cleanroom.ir.json",
+      "size_bytes": 15343,
+      "sha256": "9608353a46dfc250de6069ea9be6cbe00fd268e042d75408e917e70fe7831913"
+    },
+    {
+      "path": "games/walking-wild-clean-room-template/out/template-walking-wild-cleanroom.ir.json",
+      "size_bytes": 13879,
+      "sha256": "359bff28b0fd862ee8b9f68f337acc032890f996ab9da1c695da5f61095c24d3"
+    },
+    {
       "path": "reports/acceptance/book_bonusbuy_mc.json",
       "size_bytes": 1751,
       "sha256": "744ee6c2e107a3f524ca16830cf598724650d1a7e50f7e6dfe4e41def52de7a4"
@@ -32,9 +42,34 @@
       "sha256": "6ea7e9c43641fefbd0e1e2321d0c8850766eb9cee7ae1ebea8bd5acd6ca4316e"
     },
     {
+      "path": "reports/acceptance/megaways_mc_parity.json",
+      "size_bytes": 658,
+      "sha256": "0796d87661705850be1f762f60af4c90ab4b156be06f503fcee47183e91e0ad3"
+    },
+    {
+      "path": "reports/acceptance/megaways_parity.json",
+      "size_bytes": 1219,
+      "sha256": "6c17ec8cda19a512cf3588f3c20a91a99045cecae1408aba47ce69807ab5fa07"
+    },
+    {
       "path": "reports/acceptance/portfolio_validator.json",
       "size_bytes": 13726,
       "sha256": "7664ed64e621bfd218cbfdbed30c7a231ea3d0912764d6b0922e4f9f2534fc55"
+    },
+    {
+      "path": "reports/acceptance/walking_wild_mc_parity.json",
+      "size_bytes": 1061,
+      "sha256": "3b49c93af2d093ad48e4073dfbf74a55b8e5f5043257227b8c9d851344b606f6"
+    },
+    {
+      "path": "reports/acceptance/walking_wild_parity.json",
+      "size_bytes": 2208,
+      "sha256": "ba58285f7c11a7ea44f760ba0324e0e2d7adec05f11a2d417e258085999486df"
+    },
+    {
+      "path": "reports/dashboards/clean-room-parity-portfolio.html",
+      "size_bytes": 7421,
+      "sha256": "d841a7baa877aeadd944cfb975c9c0fcc8769b1ac298a395bb9b4bb4b39c3fa5"
     },
     {
       "path": "reports/dashboards/index.html",
@@ -98,13 +133,13 @@
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
-      "size_bytes": 87759,
-      "sha256": "a97acdaedbb056a09a615654b88402ca3f482d55e488f678720bf50eb990601a"
+      "size_bytes": 91281,
+      "sha256": "966d2fffcc7e2b06dcdba4a359bcfd298e8646f88a000a32b1d8ea7654d1281f"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
-      "size_bytes": 61961,
-      "sha256": "e6e458d673d1ca395e83425a2a76c48e9804b7a5d285a03a3c3ab402b64927eb"
+      "size_bytes": 64824,
+      "sha256": "d535c537baaaed1c56e63a328f8b7c74a3926dca72a9f58b66117985dbe12390"
     }
   ],
   "verification": "To verify: hash each file with SHA-256, concatenate lines of the form `<path>|<size_bytes>|<sha256>\\n` sorted lexicographically by path, then SHA-256 that concatenation. The result must equal `merkle_root_sha256`."
