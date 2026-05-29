@@ -6,7 +6,42 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:50 (post **W244 STRYKER 91.23 → 93.57 % PUSH + L1 ANTIBODY DB CONFIRM**, commit pending)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:57 (post **W244 STRYKER PASS 2 → 95.91 % ✅ 95 % GATE OBOREN**, commit pending)
+
+**Status:** "cepaj dalje redom ultimativno" wave 2 — spy-based pristup za sensitivity LogicalOperator (`??` → `&&`) i Object/Block (→ {}) mutante koji su preživeli pass 1.
+
+| Wave | Šta | Rezultat |
+|---|---|---|
+| **#1 Stryker pass 2** | `tests/w244_stryker_95_killers_pass2.test.ts` — 7 spy-based testova sa `vi.mock('../src/engine/irSimulator.js')` da prati `runIRSimulation` call args. Pokriva L68/L133/L217 (evalSpins propagation), L207 (autoTune non-weighted shape), L206:37 (non-weighted no-sim-call), L241 (finalResult call shape), L177:41 (bisection lo=mid direction). `vitest.stryker.config.ts` proširen sa pass 2 fajlom. `stryker.scoped.config.mjs` `ignorePatterns` rastao na 6 stavki (dodato `target`, `rust-sim/target`, `.stryker-tmp/**`) — rust incremental lock race-condition fix. | ✅ landed |
+
+### Stryker scoped result (post pass 2)
+
+| Metric | Pre W244 | Pass 1 | **Pass 2** | Δ ukupno |
+|---|---:|---:|---:|---:|
+| **Overall** | 91.23 % | 93.57 % | **95.91 %** ✅ | **+4.68 pp** |
+| `src/rg/session.ts` | 93.93 % | 95.33 % | 95.33 % | +1.40 pp |
+| `src/sensitivity/analyzer.ts` | 86.72 % | 90.62 % | **96.88 %** | **+10.16 pp** |
+| Killed | 310 | 318 | **326** | +16 |
+| Survived | 30 | 22 | **14** | −16 |
+| Timeout | 2 | 2 | 2 | 0 |
+
+Preostalih 14 surviving je death-equivalent klasa (duplicate ConditionalExpression instrumentation na rg/session, EqualityOperator `<` vs `<=` boundary na float comparison u sensitivity bisection). Više killovih bi tražilo invazivni source refactor — out-of-scope kad je 95 % gate prošao.
+
+Stryker config thresholds: `high: 95, low: 80, break: 70`. **High band reached** — full pipeline svetlo.
+
+### Sledeći wave queue (ažuriran)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | Boki fleet decision — `agents/*` + `tools/qa_agent/` commit (96 MB corpora) | pending odluka |
+| **2** | W4.9 Cluster Pays + W4.10 Cascade primitivi | čekaju 1 PAR uzorak svaki |
+| **3** | Pattern-FK Wave 0 followup — Fort Knox parser closure | čeka Wave 4 multi-game refactor |
+| **4** | Industry-First Dossier 43/46 → 46/46 (3 ⚠️ optional samples) | 20-40 min, neblokirajuće |
+| **5** | Stryker death-equivalent eliminatori (14 → 0 — rg/session duplicate kontrolni klasifikator + sensitivity float-equality refactor) | tech debt, out-of-scope |
+
+---
+
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:50 (post **W244 STRYKER 91.23 → 93.57 % PUSH + L1 ANTIBODY DB CONFIRM**, commit `3362316`)
 
 **Status:** "cepaj dalje redom ultimativno" wave — dve stavke iz prethodnog queue-a istovremeno:
 

@@ -19,5 +19,12 @@ export default {
   jsonReporter: { fileName: 'reports/mutation/scoped-2026-05-24.json' },
   disableTypeChecks: true,
   // Exclude live QA-agent symlinks/run artefacts that break Stryker's sandbox copy
-  ignorePatterns: ['reports/qa_agent', '.stryker-tmp', 'node_modules'],
+  ignorePatterns: [
+    'reports/qa_agent',
+    '.stryker-tmp',
+    'node_modules',
+    'target',
+    'rust-sim/target',
+    '.stryker-tmp/**',
+  ],
 };
