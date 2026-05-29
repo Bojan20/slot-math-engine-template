@@ -6,6 +6,36 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 13:50 (post **W7.1 + W7.10 + W7.6 + W7.9 FUTURISTIC QUAD LANDED** — 4/8 W7.x stavki zatvorene u 2 batch-a)
+
+**Status:** Polovina W7.x futuristic roadmap-a sad LANDED. Svi 4 kernel-a su industry-first (Kimi W181 research potvrdio da niko ne ship-uje multi-objective genetic reel tuner / spec-side anomaly self-play / gradient-aware reel tuner sa auditable derivative manifests / federated cross-vendor knowledge graph). Sve pure-Python (stdlib + sqlite) ili pure-Rust (reuse postojeće infrastrukture) — zero novih heavy deps.
+
+| Wave | Šta | Files | Tests |
+|---|---|---|---|
+| **W7.1 — Self-Evolving Math Genome** | NSGA-II multi-objective GA. Geni = per-reel symbol weights, fitness = (rtp_err, cv_err, hit_freq_err, fairness HHI penalty). Fast non-dominated sort + crowding distance + binary tournament + uniform crossover + Gaussian mutation. Deterministic for fixed seed. Live: 32-member Pareto frontier on classic 5×3/20-line | `tools/math_genome/*` + `tools/tests/test_math_genome.py` | **23 / 23 PASS** |
+| **W7.10 — Anomaly Self-Play Detector** | Cartesian product over knob axes (anchor_weight, paylines, bet), 5-seed RTP fan per probe via `fault_injection::seed_sweep_rtp_fan`, z-score delta distribution za anomalije. "Suspect knob" heuristic sa auto-fix suggestion. Distinct od W6.3 (RNG-side) — ovo je SPEC-SIDE detector | `rust-sim/src/anomaly_self_play.rs` + `rust-sim/src/bin/anomaly_self_play.rs` | **10 / 10 PASS** |
+| **W7.6 — Symbolic Differentiation Slot Math** | `RtpModel` sa closed-form RTP + CV, central-difference 4th-order stencil za ∂metric/∂weight, Newton-Raphson solver za target RTP, gradient descent za target CV. **DerivativeManifest** — SHA-256-pinned per-weight ∂RTP/∂w + ∂CV/∂w za auditor verifikaciju bez re-running optimizer-a. Pure Python stdlib (no SymPy dep) | `tools/symbolic_slot_math/*` + `tools/tests/test_symbolic_slot_math.py` | **21 / 21 PASS** |
+| **W7.9 — Federated Multi-Vendor Math Knowledge Graph** | SQLite-backed graph nad `tools/vendor_profiles/*.yaml` + `games/*/out/*.ir.json`. Schema: vendor / game / feature / jurisdiction / game_jurisdiction. Cross-vendor queries: `cross_vendor_feature_query` (igre koje imaju SVE feature kinds), `games_by_jurisdiction`, `similar_games`. CLI: `build / features / jurisdiction / similar` subcommands. Live: ingested 5 vendor-a + 5 game-ova + 45 feature rows; live query "free_spins + linear_progressive" → 2 FK Wolf Run SWID-a | `tools/vendor_graph/*` + `tools/tests/test_vendor_graph.py` | **16 / 16 PASS** |
+
+### Test tally for this batch (W7.1 + W7.10 + W7.6 + W7.9)
+
+| Suite | Pass |
+|---|---|
+| `tools/tests/test_math_genome.py` | 23 / 23 ✅ |
+| `cargo test --lib anomaly_self_play` | 10 / 10 ✅ |
+| `tools/tests/test_symbolic_slot_math.py` | 21 / 21 ✅ |
+| `tools/tests/test_vendor_graph.py` | 16 / 16 ✅ |
+
+### Operator/regulator deliverables emitovani uz wave
+
+| Artefakt | Putanja |
+|---|---|
+| Pareto frontier JSON (32 candidates) | `reports/acceptance/MATH_GENOME.json` |
+| Anomaly sweep report (36 probes, 0 false alarms) | `reports/acceptance/ANOMALY_SELF_PLAY.json` |
+| Live vendor knowledge graph SQLite | `reports/vendor-graph/vendor.sqlite` |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 13:15 (post **W4.3 + W5.3 + W6.3 TRIPLE-WAVE LANDED** — Vendor A pipeline closeout + cell-level provenance + RNG fault gate)
 
 **Status:** Drugi paralelni batch posle quad-wave-a. Ono što su nezavisno otvorene stavke iz P0/P1 sekcija — sve su zatvorene u jednom QA prolazu.
