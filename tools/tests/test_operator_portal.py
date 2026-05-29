@@ -37,13 +37,14 @@ def test_portal_under_15_kb(html_doc: str):
     assert len(html_doc) <= 15_000
 
 
-def test_portal_lists_five_dashboards(manifest: dict):
-    assert len(manifest["dashboards"]) == 5
+def test_portal_lists_six_dashboards(manifest: dict):
+    assert len(manifest["dashboards"]) == 6
 
 
 def test_portal_links_to_each_dashboard(html_doc: str):
     for href in (
         "mc-parity-dashboard.html",
+        "portfolio-validator-dashboard.html",
         "real-market-portfolio.html",
         "unified-audit.html",
         "live-par-compiler.html",
@@ -53,12 +54,12 @@ def test_portal_links_to_each_dashboard(html_doc: str):
 
 
 def test_portal_includes_wave_labels(html_doc: str):
-    for wave in ("W4.11c", "W4.11d", "W7.11", "W7.7", "PAR-001"):
+    for wave in ("W4.11c", "W4.11d", "W4.11f", "W7.11", "W7.7", "PAR-001"):
         assert wave in html_doc, f"missing wave label: {wave}"
 
 
-def test_portal_reports_index_has_7_items(manifest: dict):
-    assert manifest["report_count"] == 7
+def test_portal_reports_index_has_9_items(manifest: dict):
+    assert manifest["report_count"] == 9
 
 
 def test_portal_links_to_dossier_and_perf_bench(html_doc: str):
@@ -77,6 +78,7 @@ def test_portal_pinned_dashboards_exist_on_disk():
     dash_dir = REPO / "reports" / "dashboards"
     for fname in (
         "mc-parity-dashboard.html",
+        "portfolio-validator-dashboard.html",
         "real-market-portfolio.html",
         "unified-audit.html",
         "live-par-compiler.html",

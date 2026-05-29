@@ -1,0 +1,101 @@
+{
+  "schema": "w4-11-evidence-manifest/v1",
+  "generated_at_utc": "2026-05-29T15:07:23.881028Z",
+  "merkle_root_sha256": "fe27401ee7c2aaf86a117b429a86fedee03e3d1ac6b61ad01204147deb764b3e",
+  "file_count": 18,
+  "total_bytes": 276754,
+  "missing_files": [],
+  "records": [
+    {
+      "path": ".github/workflows/template-parity.yml",
+      "size_bytes": 4126,
+      "sha256": "236e9873db3af6cb61a4361378b334564c00e032ccbeb1310340c4136623ab85"
+    },
+    {
+      "path": "docs/COMMERCIAL_PITCH.md",
+      "size_bytes": 33527,
+      "sha256": "9fc340ca5b1f07f771d59afd36f8aa3d005520e99250898bcc5d9769056c7787"
+    },
+    {
+      "path": "games/book-expanding-bonusbuy/out/template-book-bonusbuy.ir.json",
+      "size_bytes": 14623,
+      "sha256": "230a663052cf6d78cb985b0a99e84c182536b74f6d5e968d737f273aeda752d3"
+    },
+    {
+      "path": "reports/acceptance/book_bonusbuy_mc.json",
+      "size_bytes": 1751,
+      "sha256": "7a0e85062aebb018614531b6bc1a64221732b9df800a7922420fa768a9ecfdb1"
+    },
+    {
+      "path": "reports/acceptance/book_bonusbuy_parity.json",
+      "size_bytes": 2518,
+      "sha256": "6ea7e9c43641fefbd0e1e2321d0c8850766eb9cee7ae1ebea8bd5acd6ca4316e"
+    },
+    {
+      "path": "reports/acceptance/portfolio_validator.json",
+      "size_bytes": 13726,
+      "sha256": "7664ed64e621bfd218cbfdbed30c7a231ea3d0912764d6b0922e4f9f2534fc55"
+    },
+    {
+      "path": "reports/dashboards/index.html",
+      "size_bytes": 5768,
+      "sha256": "5a1e456174d6a11bedda949fc95a60bb9f021cff6ef5830a4f8d890f3e07ed1f"
+    },
+    {
+      "path": "reports/dashboards/index.manifest.json",
+      "size_bytes": 1069,
+      "sha256": "297a12a87437a6dd0186c10def6442f04e08f2759c93153ad73f7ceeac3a3f9c"
+    },
+    {
+      "path": "reports/dashboards/live-par-compiler.html",
+      "size_bytes": 8024,
+      "sha256": "b55a9541f2abc9677215c006db0877b3217e0becb930b8bb150f4e218ab22d5a"
+    },
+    {
+      "path": "reports/dashboards/mc-parity-dashboard.html",
+      "size_bytes": 9483,
+      "sha256": "34c4c46519ead9ab29759b3c429f9671e54970d8af6678f76197b86f4a73784f"
+    },
+    {
+      "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
+      "size_bytes": 690,
+      "sha256": "d7ada3a3fbf20882a8a57bea961c92af6a243cddf41b4d7611fa9f91517d15fb"
+    },
+    {
+      "path": "reports/dashboards/portfolio-validator-dashboard.html",
+      "size_bytes": 13432,
+      "sha256": "6cc7b3fbe52d858d1d8eeeb60e778eedb32be538fe66ac4f2f912edf6055bb05"
+    },
+    {
+      "path": "reports/dashboards/portfolio-validator-dashboard.manifest.json",
+      "size_bytes": 745,
+      "sha256": "32074bc41238badc466ce64aed04955af18dbc63cb6cc306d9a7bdabd6cfc0ed"
+    },
+    {
+      "path": "reports/dashboards/real-market-portfolio.html",
+      "size_bytes": 9317,
+      "sha256": "8050f8fc0c08378d2d37e313e15372441128d1acb20dbccb3e671a4c976896e0"
+    },
+    {
+      "path": "reports/dashboards/real-market-portfolio.manifest.json",
+      "size_bytes": 677,
+      "sha256": "990e458a0d724a5bae79c3b59ead5eacdd836919d11c8337f1054508d454c17c"
+    },
+    {
+      "path": "reports/dashboards/unified-audit.html",
+      "size_bytes": 13551,
+      "sha256": "e554c06098889a2f7ec166076c20f8a1915af7aaf773f67d332d0ea124751647"
+    },
+    {
+      "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
+      "size_bytes": 84478,
+      "sha256": "4384bd4795eea94aab400c011c2a9c0b403ee88c3fe608dc1090f91e57f518e1"
+    },
+    {
+      "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
+      "size_bytes": 59249,
+      "sha256": "5891127c9ebf86ababf7d2cd542bdfba103a7af7a8040e486ed29e42b5808c5f"
+    }
+  ],
+  "verification": "To verify: hash each file with SHA-256, concatenate lines of the form `<path>|<size_bytes>|<sha256>\\n` sorted lexicographically by path, then SHA-256 that concatenation. The result must equal `merkle_root_sha256`."
+}

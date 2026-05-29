@@ -782,6 +782,27 @@ const WAVES = [
     extractDetail: (j) => j?.summary ?? {},
     industry_first: 'Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass.',
   },
+  {
+    wave: '4.11g',
+    name: 'Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/acceptance/W4_11_EVIDENCE_MANIFEST.json',
+    extractHeadline: (j) => {
+      const files = j?.file_count ?? 0;
+      const root = (j?.merkle_root_sha256 ?? '').slice(0, 16);
+      const bytes = j?.total_bytes ?? 0;
+      return `${files} files committed · ${(bytes / 1024).toFixed(1)} KB · merkle_root=${root}…`;
+    },
+    extractDetail: (j) => ({
+      schema: j?.schema,
+      file_count: j?.file_count,
+      total_bytes: j?.total_bytes,
+      merkle_root_sha256: j?.merkle_root_sha256,
+      missing_files: j?.missing_files,
+    }),
+    industry_first: 'Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

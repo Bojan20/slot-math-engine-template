@@ -84,7 +84,13 @@ jobs:
       - name: Run portfolio IR validator
         run: python tools/parity/portfolio_validator.py
 
-      - name: Run pytest (book-bonusbuy + dashboards + portal + portfolio)
+      - name: Build portfolio validator dashboard
+        run: python tools/build_portfolio_validator_dashboard.py
+
+      - name: Build W4.11 evidence manifest (SHA-256 Merkle root)
+        run: python tools/build_evidence_manifest.py
+
+      - name: Run pytest (full W4.11* + W4.15 sweep)
         run: |
           python -m pytest -v \
             tools/tests/test_book_expanding_bonusbuy_pipeline.py \
@@ -93,7 +99,9 @@ jobs:
             tools/tests/test_mc_parity_dashboard.py \
             tools/tests/test_real_market_portfolio.py \
             tools/tests/test_operator_portal.py \
-            tools/tests/test_portfolio_validator.py
+            tools/tests/test_portfolio_validator.py \
+            tools/tests/test_portfolio_validator_dashboard.py \
+            tools/tests/test_evidence_manifest.py
 
       - name: Upload dashboard artifacts
         if: always()
@@ -102,9 +110,11 @@ jobs:
           name: template-parity-dashboards
           path: |
             reports/dashboards/mc-parity-dashboard.html
+            reports/dashboards/portfolio-validator-dashboard.html
             reports/dashboards/real-market-portfolio.html
             reports/dashboards/index.html
             reports/acceptance/book_bonusbuy_parity.json
             reports/acceptance/book_bonusbuy_mc.json
             reports/acceptance/portfolio_validator.json
+            reports/acceptance/W4_11_EVIDENCE_MANIFEST.json
           retention-days: 30

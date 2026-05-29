@@ -41,6 +41,17 @@ ENTRIES = [
         "category": "parity",
     },
     {
+        "id": "portfolio-validator",
+        "name": "Portfolio Validator Dashboard",
+        "href": "portfolio-validator-dashboard.html",
+        "summary": (
+            "Six-gate cross-IR consistency check. 13 IRs × 6 gates = 78/78 PASS in < 30 ms. "
+            "Per-IR matrix with PASS/FAIL chips, by-gate + by-game aggregates."
+        ),
+        "wave": "W4.11f",
+        "category": "validator",
+    },
+    {
         "id": "real-market-portfolio",
         "name": "Real-Market Portfolio",
         "href": "real-market-portfolio.html",
@@ -115,6 +126,14 @@ REPORTS_INDEX = [
     {
         "label": "Unified Audit (consolidated SHA-256)",
         "href": "../../reports/acceptance/UNIFIED_AUDIT.json",
+    },
+    {
+        "label": "W4.11 Evidence Manifest (SHA-256 Merkle root over 18 deliverables)",
+        "href": "../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
+    },
+    {
+        "label": "Portfolio IR Validator (78/78 gates)",
+        "href": "../../reports/acceptance/portfolio_validator.json",
     },
 ]
 

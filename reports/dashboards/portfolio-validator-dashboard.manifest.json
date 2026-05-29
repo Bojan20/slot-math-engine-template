@@ -1,0 +1,39 @@
+{
+  "bundle_url": "reports/dashboards/portfolio-validator-dashboard.html",
+  "size_bytes": 13432,
+  "size_kb": 13.12,
+  "offline_safe": true,
+  "total_irs": 13,
+  "passed": 13,
+  "failed": 0,
+  "by_gate": {
+    "rtp_total_in_range": 13,
+    "hit_freq_sane": 13,
+    "win_freq_sane": 13,
+    "breakdown_sums": 13,
+    "reels_sane": 13,
+    "paytable_monotonic": 13
+  },
+  "by_game": {
+    "book-expanding-bonusbuy": {
+      "swids": 1,
+      "passed": 1
+    },
+    "cash-eruption": {
+      "swids": 3,
+      "passed": 3
+    },
+    "fort-knox-wolf-run": {
+      "swids": 2,
+      "passed": 2
+    },
+    "fortune-coin-boost-classic": {
+      "swids": 4,
+      "passed": 4
+    },
+    "skeleton-key": {
+      "swids": 3,
+      "passed": 3
+    }
+  }
+}

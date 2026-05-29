@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-29T15:01:27.316Z",
-  "repo_sha": "9f9500b58dd27543d0debfbf523a44ed624ad03b",
+  "generatedAtUtc": "2026-05-29T15:06:37.289Z",
+  "repo_sha": "cd1f9a1638841ca5e15fb40bfcc62acc793f2bf9",
   "headline": {
-    "waves": 53,
-    "industry_firsts": 50,
+    "waves": 54,
+    "industry_firsts": 51,
     "all_present": true
   },
   "waves": [
@@ -1951,7 +1951,7 @@
       "name": "Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:56.706Z",
+      "reportMtime": "2026-05-29T15:02:00.747Z",
       "headline": "5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance",
       "detail": {
         "scatter_pay_delta_pp": 1.734723475976807e-15,
@@ -1968,7 +1968,7 @@
       "name": "Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:56.706Z",
+      "reportMtime": "2026-05-29T15:02:00.747Z",
       "headline": "Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp",
       "detail": {
         "book_pmf": {
@@ -1988,8 +1988,8 @@
       "name": "Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)",
       "reportPath": "reports/acceptance/book_bonusbuy_mc.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:59.308Z",
-      "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.56 s",
+      "reportMtime": "2026-05-29T15:02:03.300Z",
+      "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.51 s",
       "detail": {
         "spins": 200000,
         "seed": 20260529,
@@ -1997,8 +1997,8 @@
         "scatter_pay_delta_pp": -0.00797237830043266,
         "hit_freq_delta_pp": -2.9060911999999997,
         "fs_trigger_rel_err": 0.05886627906976753,
-        "elapsed_seconds": 2.559326540969778,
-        "spins_per_second": 78145.55774669386
+        "elapsed_seconds": 2.5148977079661563,
+        "spins_per_second": 79526.0973702758
       },
       "industry_first": "Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time."
     },
@@ -2009,8 +2009,8 @@
       "name": "MC Parity Dashboard (offline single-file HTML, sales/regulator surface)",
       "reportPath": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:59.345Z",
-      "headline": "offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.56 s",
+      "reportMtime": "2026-05-29T15:02:03.338Z",
+      "headline": "offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.51 s",
       "detail": {
         "bundle_url": "reports/dashboards/mc-parity-dashboard.html",
         "size_bytes": 9483,
@@ -2031,7 +2031,7 @@
         "mc_summary": {
           "all_gates_pass": true,
           "spins": 200000,
-          "elapsed_seconds": 2.559326540969778,
+          "elapsed_seconds": 2.5148977079661563,
           "line_pay_delta_pp": -0.18851698490046642,
           "scatter_pay_delta_pp": -0.00797237830043266,
           "fs_trigger_rel_err": 0.05886627906976753
@@ -2046,7 +2046,7 @@
       "name": "Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)",
       "reportPath": "reports/dashboards/real-market-portfolio.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:59.404Z",
+      "reportMtime": "2026-05-29T15:02:03.397Z",
       "headline": "5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB",
       "detail": {
         "bundle_url": "reports/dashboards/real-market-portfolio.html",
@@ -2085,12 +2085,12 @@
       "name": "Operator Portal + CI parity gate (69-spec offline gate, GH Actions)",
       "reportPath": "reports/dashboards/index.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T14:56:59.432Z",
-      "headline": "5 dashboards + 7 top reports · offline 5.09 KB · 69-spec CI gate (template-parity.yml) wired",
+      "reportMtime": "2026-05-29T15:06:13.845Z",
+      "headline": "6 dashboards + 9 top reports · offline 5.63 KB · 69-spec CI gate (template-parity.yml) wired",
       "detail": {
         "bundle_url": "reports/dashboards/index.html",
-        "size_bytes": 5215,
-        "size_kb": 5.09,
+        "size_bytes": 5768,
+        "size_kb": 5.63,
         "offline_safe": true,
         "dashboards": [
           {
@@ -2098,6 +2098,12 @@
             "name": "MC Parity Dashboard",
             "wave": "W4.11c",
             "href": "mc-parity-dashboard.html"
+          },
+          {
+            "id": "portfolio-validator",
+            "name": "Portfolio Validator Dashboard",
+            "wave": "W4.11f",
+            "href": "portfolio-validator-dashboard.html"
           },
           {
             "id": "real-market-portfolio",
@@ -2124,7 +2130,7 @@
             "href": "par-verification.html"
           }
         ],
-        "report_count": 7
+        "report_count": 9
       },
       "industry_first": "Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report — MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification — plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR."
     },
@@ -2135,7 +2141,7 @@
       "name": "Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)",
       "reportPath": "reports/acceptance/portfolio_validator.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:01:04.308Z",
+      "reportMtime": "2026-05-29T15:02:03.489Z",
       "headline": "13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered",
       "detail": {
         "total_irs": 13,
@@ -2173,6 +2179,24 @@
         }
       },
       "industry_first": "Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass."
+    },
+    {
+      "wave": "4.11g",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)",
+      "reportPath": "reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T15:05:24.364Z",
+      "headline": "18 files committed · 266.3 KB · merkle_root=0dd3b9f95783d853…",
+      "detail": {
+        "schema": "w4-11-evidence-manifest/v1",
+        "file_count": 18,
+        "total_bytes": 272655,
+        "merkle_root_sha256": "0dd3b9f95783d853d345fa41433921fe0811d2961add92eb542ef30ce94c621b",
+        "missing_files": []
+      },
+      "industry_first": "Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time."
     }
   ],
   "auditor_qa": [

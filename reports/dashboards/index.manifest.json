@@ -1,7 +1,7 @@
 {
   "bundle_url": "reports/dashboards/index.html",
-  "size_bytes": 5215,
-  "size_kb": 5.09,
+  "size_bytes": 5768,
+  "size_kb": 5.63,
   "offline_safe": true,
   "dashboards": [
     {
@@ -9,6 +9,12 @@
       "name": "MC Parity Dashboard",
       "wave": "W4.11c",
       "href": "mc-parity-dashboard.html"
+    },
+    {
+      "id": "portfolio-validator",
+      "name": "Portfolio Validator Dashboard",
+      "wave": "W4.11f",
+      "href": "portfolio-validator-dashboard.html"
     },
     {
       "id": "real-market-portfolio",
@@ -35,5 +41,5 @@
       "href": "par-verification.html"
     }
   ],
-  "report_count": 7
+  "report_count": 9
 }
