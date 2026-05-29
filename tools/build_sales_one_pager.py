@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import html
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -93,11 +92,17 @@ def fmt_pct(x) -> str:
 
 
 def render_kpi(label: str, value: str, delta: str = "") -> str:
+    # Avoid backslash inside f-string interpolation expression (Py 3.10
+    # rejects it; only Py 3.12+ allows). Materialize the delta block
+    # before the f-string and interpolate the plain string.
+    delta_block = (
+        '<div class="delta">' + html.escape(delta) + '</div>' if delta else ""
+    )
     return (
         f'<div class="kpi">'
         f'<div class="label">{html.escape(label)}</div>'
         f'<div class="value">{html.escape(value)}</div>'
-        f'{("<div class=\"delta\">" + html.escape(delta) + "</div>") if delta else ""}'
+        f'{delta_block}'
         f'</div>'
     )
 

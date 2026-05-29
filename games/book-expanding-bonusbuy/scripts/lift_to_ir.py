@@ -412,7 +412,7 @@ def main() -> None:
     OUT.write_text(json.dumps(ir, ensure_ascii=False, indent=2))
     print(f"[lift-to-ir] wrote {OUT}")
     print(f"[lift-to-ir] paylines={len(ir['evaluation']['lines'])}")
-    print(f"[lift-to-ir] reel-symbol coverage:")
+    print("[lift-to-ir] reel-symbol coverage:")
     for i, strip in enumerate(ir["reels"]["base"][0]["reels"]):
         total = sum(e["weight"] for e in strip)
         syms = ",".join(e["symbol"] for e in strip)
