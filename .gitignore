@@ -221,3 +221,11 @@ reports/cert-bundle-swid/
 # (reproducible from any checkout); only the per-run artefacts are
 # local. Drop the demo directory wholesale from git.
 reports/greenfield-demo/
+
+# W6.3 — Pitch HTML + LLM demo recorder outputs.
+# Both tools regenerate deterministically from any checkout (same repo
+# state → bit-identical artefacts). Tracking them would noise every CI
+# run. The packages (tools/pitch_report/, tools/llm_demo_recorder/) and
+# the tests ARE committed — they are the reproducible source-of-truth.
+reports/pitch-report/
+reports/llm-demo/
