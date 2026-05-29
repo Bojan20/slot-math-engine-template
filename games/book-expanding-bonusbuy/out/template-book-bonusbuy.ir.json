@@ -1,0 +1,725 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "template-book-bonusbuy",
+    "name": "Book-Style Expanding Symbol + Bonus Buy (template)",
+    "vendor": "<<redacted>>",
+    "version": "1.0.0",
+    "family": "lines",
+    "theme_tags": [
+      "template",
+      "book-of-x",
+      "bonus-buy",
+      "expanding-symbol"
+    ],
+    "rtp_breakdown_reference": {
+      "line_pay": 0.5282426698490047,
+      "scatter_pay": 0.008004723783004326,
+      "bonus_pay": 0.42579679451229185,
+      "total_normal": 0.9620441881443009
+    },
+    "hit_frequency_reference": 0.299380912,
+    "win_frequency_reference": 0.079729474,
+    "rtp_tiers_reference": {
+      "tier_001": 0.9620441881443009,
+      "tier_002": 0.9420319725805693,
+      "tier_003": 0.9250643113665171
+    },
+    "notes": [
+      "Copyright-safe template — vendor/game/SWID identifiers stripped.",
+      "10 paylines fixed bet for 10 coins (1 coin per line).",
+      "BOOK is both scatter AND wild substitute for all other symbols.",
+      "Free Spins trigger: 3+ BOOK on initial reel window.",
+      "Pre-FS: draw 1 Expansion Symbol (weighted, with replacement).",
+      "During FS: drawn Expansion Symbol expands to all rows on its reel.",
+      "Expansions counter ≤ Expansion Limit table (3/4/5 books → 4/6/10).",
+      "Bonus Buy: pay 100× total bet → triggering spin sampled from BB stops table",
+      "  (always lands 3/4/5 Book → bonus always triggers).",
+      "Fair-price model: BB Total RTP − Normal RTP ≈ +0.00004 (BB Base on trigger)."
+    ]
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 3
+  },
+  "evaluation": {
+    "kind": "lines",
+    "lines": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        2,
+        1
+      ]
+    ],
+    "min_count": 3
+  },
+  "symbols": [
+    {
+      "id": "BOOK",
+      "name": "BOOK",
+      "role": "scatter_wild",
+      "substitutes": [
+        "*"
+      ],
+      "substitutes_except": []
+    },
+    {
+      "id": "HP1",
+      "name": "HP1",
+      "role": "hp"
+    },
+    {
+      "id": "HP2",
+      "name": "HP2",
+      "role": "hp"
+    },
+    {
+      "id": "HP3",
+      "name": "HP3",
+      "role": "hp"
+    },
+    {
+      "id": "HP4",
+      "name": "HP4",
+      "role": "hp"
+    },
+    {
+      "id": "LP1",
+      "name": "LP1",
+      "role": "lp"
+    },
+    {
+      "id": "LP2",
+      "name": "LP2",
+      "role": "lp"
+    },
+    {
+      "id": "LP3",
+      "name": "LP3",
+      "role": "lp"
+    },
+    {
+      "id": "LP4",
+      "name": "LP4",
+      "role": "lp"
+    },
+    {
+      "id": "LP5",
+      "name": "LP5",
+      "role": "lp"
+    }
+  ],
+  "reels": {
+    "base": [
+      {
+        "set": 1,
+        "reels": [
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 3
+            },
+            {
+              "symbol": "HP2",
+              "weight": 2
+            },
+            {
+              "symbol": "HP3",
+              "weight": 6
+            },
+            {
+              "symbol": "HP4",
+              "weight": 2
+            },
+            {
+              "symbol": "LP1",
+              "weight": 9
+            },
+            {
+              "symbol": "LP2",
+              "weight": 8
+            },
+            {
+              "symbol": "LP3",
+              "weight": 9
+            },
+            {
+              "symbol": "LP4",
+              "weight": 6
+            },
+            {
+              "symbol": "LP5",
+              "weight": 6
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 1
+            },
+            {
+              "symbol": "HP3",
+              "weight": 2
+            },
+            {
+              "symbol": "HP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 6
+            },
+            {
+              "symbol": "LP2",
+              "weight": 9
+            },
+            {
+              "symbol": "LP3",
+              "weight": 8
+            },
+            {
+              "symbol": "LP4",
+              "weight": 10
+            },
+            {
+              "symbol": "LP5",
+              "weight": 9
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 2
+            },
+            {
+              "symbol": "HP2",
+              "weight": 3
+            },
+            {
+              "symbol": "HP3",
+              "weight": 3
+            },
+            {
+              "symbol": "HP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 4
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 5
+            },
+            {
+              "symbol": "LP4",
+              "weight": 5
+            },
+            {
+              "symbol": "LP5",
+              "weight": 4
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 2
+            },
+            {
+              "symbol": "HP3",
+              "weight": 2
+            },
+            {
+              "symbol": "HP4",
+              "weight": 2
+            },
+            {
+              "symbol": "LP1",
+              "weight": 4
+            },
+            {
+              "symbol": "LP2",
+              "weight": 3
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 4
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 1
+            },
+            {
+              "symbol": "HP3",
+              "weight": 3
+            },
+            {
+              "symbol": "HP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP1",
+              "weight": 3
+            },
+            {
+              "symbol": "LP2",
+              "weight": 3
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ]
+        ]
+      }
+    ],
+    "free_spins": [
+      {
+        "set": 1,
+        "reels": [
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 3
+            },
+            {
+              "symbol": "HP2",
+              "weight": 2
+            },
+            {
+              "symbol": "HP3",
+              "weight": 6
+            },
+            {
+              "symbol": "HP4",
+              "weight": 2
+            },
+            {
+              "symbol": "LP1",
+              "weight": 9
+            },
+            {
+              "symbol": "LP2",
+              "weight": 8
+            },
+            {
+              "symbol": "LP3",
+              "weight": 9
+            },
+            {
+              "symbol": "LP4",
+              "weight": 6
+            },
+            {
+              "symbol": "LP5",
+              "weight": 6
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 1
+            },
+            {
+              "symbol": "HP3",
+              "weight": 2
+            },
+            {
+              "symbol": "HP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 6
+            },
+            {
+              "symbol": "LP2",
+              "weight": 9
+            },
+            {
+              "symbol": "LP3",
+              "weight": 8
+            },
+            {
+              "symbol": "LP4",
+              "weight": 10
+            },
+            {
+              "symbol": "LP5",
+              "weight": 9
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 2
+            },
+            {
+              "symbol": "HP2",
+              "weight": 3
+            },
+            {
+              "symbol": "HP3",
+              "weight": 3
+            },
+            {
+              "symbol": "HP4",
+              "weight": 4
+            },
+            {
+              "symbol": "LP1",
+              "weight": 4
+            },
+            {
+              "symbol": "LP2",
+              "weight": 4
+            },
+            {
+              "symbol": "LP3",
+              "weight": 5
+            },
+            {
+              "symbol": "LP4",
+              "weight": 5
+            },
+            {
+              "symbol": "LP5",
+              "weight": 4
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 2
+            },
+            {
+              "symbol": "HP3",
+              "weight": 2
+            },
+            {
+              "symbol": "HP4",
+              "weight": 2
+            },
+            {
+              "symbol": "LP1",
+              "weight": 4
+            },
+            {
+              "symbol": "LP2",
+              "weight": 3
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 4
+            }
+          ],
+          [
+            {
+              "symbol": "BOOK",
+              "weight": 1
+            },
+            {
+              "symbol": "HP1",
+              "weight": 1
+            },
+            {
+              "symbol": "HP2",
+              "weight": 1
+            },
+            {
+              "symbol": "HP3",
+              "weight": 3
+            },
+            {
+              "symbol": "HP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP1",
+              "weight": 3
+            },
+            {
+              "symbol": "LP2",
+              "weight": 3
+            },
+            {
+              "symbol": "LP3",
+              "weight": 4
+            },
+            {
+              "symbol": "LP4",
+              "weight": 3
+            },
+            {
+              "symbol": "LP5",
+              "weight": 3
+            }
+          ]
+        ],
+        "note": "FS uses same physical strips as base."
+      }
+    ]
+  },
+  "paytable": {
+    "line_wins": {
+      "HP1": {
+        "5": 5000,
+        "4": 1000,
+        "3": 100,
+        "2": 10
+      },
+      "HP2": {
+        "5": 2000,
+        "4": 400,
+        "3": 40,
+        "2": 5
+      },
+      "HP3": {
+        "5": 750,
+        "4": 100,
+        "3": 30,
+        "2": 5
+      },
+      "HP4": {
+        "5": 750,
+        "4": 100,
+        "3": 30,
+        "2": 5
+      },
+      "LP1": {
+        "5": 150,
+        "4": 40,
+        "3": 5
+      },
+      "LP2": {
+        "5": 150,
+        "4": 40,
+        "3": 5
+      },
+      "LP3": {
+        "5": 100,
+        "4": 25,
+        "3": 5
+      },
+      "LP4": {
+        "5": 100,
+        "4": 25,
+        "3": 5
+      },
+      "LP5": {
+        "5": 100,
+        "4": 25,
+        "3": 5
+      }
+    },
+    "scatter": {
+      "symbol": "BOOK",
+      "pays_x_total_bet": {
+        "5": 100,
+        "4": 10,
+        "3": 1
+      }
+    }
+  },
+  "features": {
+    "free_spins": {
+      "trigger_min_scatters": 3,
+      "expansion_symbol_table": {
+        "HP1": 7,
+        "HP2": 18,
+        "HP3": 40,
+        "HP4": 40,
+        "LP1": 60,
+        "LP2": 60,
+        "LP3": 74,
+        "LP4": 75,
+        "LP5": 75
+      },
+      "expansion_limit_by_book_count": {
+        "5": 10,
+        "4": 6,
+        "3": 4
+      },
+      "expansion_cap": 99,
+      "retrigger": true,
+      "avg_spins_reference": 13.69438366960194,
+      "avg_expansions_reference": 4.397483048525336,
+      "avg_pay_x_bet_reference": 77,
+      "rtp_reference": 0.42579679451229185
+    },
+    "bonus_buy": {
+      "cost_x_total_bet": 100,
+      "rtp_bb_base": 0.06906633243347476,
+      "rtp_bb_bonus": 0.8930149712265941,
+      "rtp_bb_total": 0.9620813036600688,
+      "rtp_normal_reference": 0.9620441881443009,
+      "fair_price_delta": 3.711551576790484e-05,
+      "top_award_x_bet": 5000,
+      "top_award_odds_per_bb": 1013,
+      "stops_table": {
+        "stop_entries": 160,
+        "total_weight": 12965,
+        "sampling": "weighted_draw_with_replacement",
+        "guarantees_trigger": true
+      },
+      "deterministic_trigger": true,
+      "fair_price_target": "BB Total RTP ≈ Normal RTP (delta ≤ +0.1%)"
+    }
+  },
+  "industry_first_anchors": {
+    "W4_11_bonus_buy": true,
+    "W4_15_expanding_symbol_fs": true
+  }
+}

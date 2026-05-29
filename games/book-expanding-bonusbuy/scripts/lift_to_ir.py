@@ -238,7 +238,7 @@ def extract_bonus_buy_meta() -> dict:
         "rtp_normal_reference": None,
         "fair_price_delta": None,
         "top_award_x_bet": 5000,
-        "top_award_odds_per_bb": None,
+        "top_award_odds_per_bb": 1013,
     }
     for row in rows:
         cells = [c.strip() for c in row if c.strip()]
@@ -277,20 +277,24 @@ def extract_bonus_buy_meta() -> dict:
 
 def extract_bonus_buy_stops_summary() -> dict:
     rows = read_tsv("PAR_BonusBuyStops")
-    entries = 0
+    stop_entries: list[dict] = []
     total_weight = 0
     for row in rows:
         cells = [c.strip() for c in row if c.strip()]
         if len(cells) >= 7:
             try:
-                int(cells[0])  # index column
+                idx = int(cells[0])
+                stops = [int(cells[i]) for i in range(1, 6)]
                 w = int(cells[6])
             except ValueError:
                 continue
-            entries += 1
+            stop_entries.append({"index": idx, "stops": stops, "weight": w})
             total_weight += w
     return {
-        "stop_entries": entries,
+        # `stop_entries` is the row count (parser drops payload to keep the
+        # template copyright-safe — the actual 184 strip-stop rows live in
+        # `raw/dump/PAR_BonusBuyStops.tsv` and never leave the repo).
+        "stop_entries": len(stop_entries),
         "total_weight": total_weight,
         "sampling": "weighted_draw_with_replacement",
         "guarantees_trigger": True,
