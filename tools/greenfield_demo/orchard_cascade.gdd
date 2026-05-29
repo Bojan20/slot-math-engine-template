@@ -1,0 +1,78 @@
+# Greenfield demo GDD — Orchard Cascade (Tumble archetype).
+#
+# Topology: 5x3 ways (243).  Cascade: winning cells removed, holes
+# refilled from above with fresh stops (W4.10c cascade pass), repeat
+# until no more wins or depth-50 guard.
+# SWID:     200-9999-005.
+#
+# Archetype: CASCADE.  Engine reuses the W4.10c `evaluate_cascade`
+# code path; per-spin payout is the sum of all cascade-step ways pays.
+
+schema_version: "1.0.0"
+archetype: cascade
+
+meta:
+  name: "Orchard Cascade"
+  vendor: "studio-internal"
+  swid: "200-9999-005"
+  author: "greenfield-demo@studio"
+  description: "Greenfield 5x3 ways/243 + cascade remove-and-repop."
+  theme_tags: ["fruit", "orchard", "harvest"]
+
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+
+# 8 symbols (typical cascade fruits / candies design).
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_apple
+    kind: hp
+  - id: hp_pear
+    kind: hp
+  - id: hp_cherry
+    kind: hp
+  - id: lp_grape
+    kind: lp
+  - id: lp_plum
+    kind: lp
+  - id: lp_lime
+    kind: lp
+
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 10
+
+# Per-reel symbol distribution.  Wild deliberately scarcer than other
+# archetypes — cascade games typically use wild as a rare-event boost.
+reels:
+  reel_length: 30
+  per_reel_distribution:
+    - {wild: 0.015, scatter: 0.025, hp_apple: 0.060, hp_pear: 0.080, hp_cherry: 0.100, lp_grape: 0.230, lp_plum: 0.240, lp_lime: 0.250}
+    - {wild: 0.020, scatter: 0.025, hp_apple: 0.070, hp_pear: 0.080, hp_cherry: 0.090, lp_grape: 0.225, lp_plum: 0.240, lp_lime: 0.250}
+    - {wild: 0.025, scatter: 0.030, hp_apple: 0.080, hp_pear: 0.075, hp_cherry: 0.080, lp_grape: 0.220, lp_plum: 0.240, lp_lime: 0.250}
+    - {wild: 0.020, scatter: 0.025, hp_apple: 0.070, hp_pear: 0.080, hp_cherry: 0.090, lp_grape: 0.225, lp_plum: 0.240, lp_lime: 0.250}
+    - {wild: 0.015, scatter: 0.025, hp_apple: 0.060, hp_pear: 0.080, hp_cherry: 0.100, lp_grape: 0.230, lp_plum: 0.240, lp_lime: 0.250}
+
+# Pays in × total-bet units (ways pays * cascade chain).  Lower than
+# 243-ways base because cascade typically chains 2-4 steps.
+paytable:
+  hp_apple:  {3: 0.10, 4: 0.40, 5: 1.5}
+  hp_pear:   {3: 0.08, 4: 0.30, 5: 1.2}
+  hp_cherry: {3: 0.06, 4: 0.25, 5: 1.0}
+  lp_grape:  {3: 0.04, 4: 0.15, 5: 0.5}
+  lp_plum:   {3: 0.04, 4: 0.12, 5: 0.4}
+  lp_lime:   {3: 0.03, 4: 0.10, 5: 0.3}
+
+constraints:
+  target_rtp: 0.95
+  rtp_tolerance: 0.01
+  volatility_class: medium
+  hit_freq_target: 0.45
+  jurisdictions: [UKGC, MGA, ADM]

@@ -1,0 +1,85 @@
+# Greenfield demo GDD — Crimson Tiger (243-ways archetype).
+#
+# Format:  YAML subset matching tools.greenfield_demo.archetype_pipeline.
+# Topology: 5x3 grid, 243 ways (3^5 = every cell on every reel pays L→R).
+# SWID:     200-9999-002 — synthetic / demo block.
+#
+# Archetype: WAYS (243).  Differs from W5.7 lines demo by using
+# Evaluation::Ways with ways=243 and no payline list.  Engine uses
+# per-cell symbol counts × pays to compute win.
+
+schema_version: "1.0.0"
+archetype: ways
+
+meta:
+  name: "Crimson Tiger 243"
+  vendor: "studio-internal"
+  swid: "200-9999-002"
+  author: "greenfield-demo@studio"
+  description: "Greenfield 5x3 / 243 ways demo. Brand-new design, no PAR."
+  theme_tags: ["tiger", "jade", "lantern"]
+
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+
+# 10 symbols: 1 wild + 1 scatter + 4 HP + 4 LP — matches W5.7 shape.
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_tiger
+    kind: hp
+  - id: hp_jade
+    kind: hp
+  - id: hp_lantern
+    kind: hp
+  - id: hp_dragon
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+# Free spins: 3+ scatter → 8 spins (slightly higher than lines demo to
+# offset 243-ways higher hit volume).
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 8
+
+# Per-reel symbol distribution (sums to 1.0 per reel).  Designer-tuned so
+# the closed-form RTP lands at ~0.95 with the paytable below.
+reels:
+  reel_length: 30
+  per_reel_distribution:
+    - {wild: 0.020, scatter: 0.020, hp_tiger: 0.060, hp_jade: 0.080, hp_lantern: 0.100, hp_dragon: 0.080, lp_a: 0.160, lp_k: 0.170, lp_q: 0.150, lp_j: 0.160}
+    - {wild: 0.030, scatter: 0.025, hp_tiger: 0.070, hp_jade: 0.080, hp_lantern: 0.090, hp_dragon: 0.080, lp_a: 0.160, lp_k: 0.165, lp_q: 0.150, lp_j: 0.150}
+    - {wild: 0.040, scatter: 0.030, hp_tiger: 0.080, hp_jade: 0.075, hp_lantern: 0.085, hp_dragon: 0.080, lp_a: 0.150, lp_k: 0.165, lp_q: 0.145, lp_j: 0.150}
+    - {wild: 0.030, scatter: 0.025, hp_tiger: 0.070, hp_jade: 0.080, hp_lantern: 0.090, hp_dragon: 0.080, lp_a: 0.160, lp_k: 0.165, lp_q: 0.150, lp_j: 0.150}
+    - {wild: 0.020, scatter: 0.020, hp_tiger: 0.060, hp_jade: 0.080, hp_lantern: 0.100, hp_dragon: 0.080, lp_a: 0.160, lp_k: 0.170, lp_q: 0.150, lp_j: 0.160}
+
+# Pays in × total-bet units (ways pays are already total-bet multipliers).
+paytable:
+  hp_tiger:   {3: 0.25, 4: 1.0, 5: 5.0}
+  hp_jade:    {3: 0.20, 4: 0.8, 5: 3.0}
+  hp_lantern: {3: 0.15, 4: 0.5, 5: 2.0}
+  hp_dragon:  {3: 0.15, 4: 0.5, 5: 2.0}
+  lp_a:       {3: 0.10, 4: 0.3, 5: 1.0}
+  lp_k:       {3: 0.05, 4: 0.2, 5: 0.8}
+  lp_q:       {3: 0.05, 4: 0.2, 5: 0.6}
+  lp_j:       {3: 0.05, 4: 0.15, 5: 0.5}
+
+constraints:
+  target_rtp: 0.95
+  rtp_tolerance: 0.01
+  volatility_class: medium
+  hit_freq_target: 0.40
+  jurisdictions: [UKGC, MGA, ADM]

@@ -1,0 +1,84 @@
+# Greenfield demo GDD — Golden Vault (Hold & Win archetype).
+#
+# Topology: 5x3 lines (20).
+# H&W mechanic: random Bernoulli trigger -> bonus pay (avg pay table).
+# SWID:     200-9999-004.
+#
+# Archetype: HOLD_AND_WIN.  Uses Bernoulli-triggered avg-pay model
+# (W4.16 contract: units=total_bet_x, no respin loop, deterministic
+# average) — same as FKWR Fort Knox bonus encoding.
+
+schema_version: "1.0.0"
+archetype: hold_and_win
+
+meta:
+  name: "Golden Vault Hold&Win"
+  vendor: "studio-internal"
+  swid: "200-9999-004"
+  author: "greenfield-demo@studio"
+  description: "Greenfield 5x3 lines + Bernoulli Hold&Win bonus (no PAR)."
+  theme_tags: ["gold", "vault", "coins"]
+
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+
+# 8 symbols (smaller than W5.7 lines demo so H&W bonus carries more RTP).
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: coin
+    kind: hp
+  - id: hp_safe
+    kind: hp
+  - id: hp_gem
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+
+# Two features: Free Spins (lines path) + Hold&Win Bernoulli bonus.
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 8
+  - kind: hold_and_win
+    # Bernoulli trigger probability per base-game spin.
+    trigger_prob: 0.008
+    # Average pay per trigger in × total-bet units (designer-set so the
+    # H&W RTP share works out to ~0.10).
+    avg_pay_per_trigger: 12.5
+
+paylines: 20
+
+reels:
+  reel_length: 30
+  per_reel_distribution:
+    - {wild: 0.030, scatter: 0.030, coin: 0.040, hp_safe: 0.080, hp_gem: 0.100, lp_a: 0.220, lp_k: 0.200, lp_q: 0.300}
+    - {wild: 0.040, scatter: 0.030, coin: 0.050, hp_safe: 0.080, hp_gem: 0.090, lp_a: 0.210, lp_k: 0.200, lp_q: 0.300}
+    - {wild: 0.050, scatter: 0.035, coin: 0.060, hp_safe: 0.075, hp_gem: 0.080, lp_a: 0.200, lp_k: 0.200, lp_q: 0.300}
+    - {wild: 0.040, scatter: 0.030, coin: 0.050, hp_safe: 0.080, hp_gem: 0.090, lp_a: 0.210, lp_k: 0.200, lp_q: 0.300}
+    - {wild: 0.030, scatter: 0.030, coin: 0.040, hp_safe: 0.080, hp_gem: 0.100, lp_a: 0.220, lp_k: 0.200, lp_q: 0.300}
+
+# Line pays in × line-bet units (lines path).
+paytable:
+  coin:    {3: 0.5, 4: 2.0, 5: 8.0}
+  hp_safe: {3: 0.3, 4: 1.0, 5: 4.0}
+  hp_gem:  {3: 0.2, 4: 0.8, 5: 3.0}
+  lp_a:    {3: 0.1, 4: 0.3, 5: 1.0}
+  lp_k:    {3: 0.05, 4: 0.2, 5: 0.6}
+  lp_q:    {3: 0.05, 4: 0.15, 5: 0.5}
+
+constraints:
+  target_rtp: 0.95
+  rtp_tolerance: 0.01
+  volatility_class: high
+  hit_freq_target: 0.25
+  jurisdictions: [UKGC, MGA, ADM]

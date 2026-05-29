@@ -1,0 +1,93 @@
+# Greenfield demo GDD — Storm Megaways.
+#
+# Topology: 5 reels, rows variable 2..6 (canonical Megaways range).
+# Ways per spin = product of row counts (32..7776).
+# SWID:     200-9999-003.
+#
+# Archetype: MEGAWAYS.  Engine evaluates per-spin row count first, then
+# Ways pays as count-product L→R for each symbol prefix.
+
+schema_version: "1.0.0"
+archetype: megaways
+
+meta:
+  name: "Storm Megaways"
+  vendor: "studio-internal"
+  swid: "200-9999-003"
+  author: "greenfield-demo@studio"
+  description: "Greenfield Megaways demo (2..6 rows, 32..7776 ways)."
+  theme_tags: ["storm", "thunder", "olympus"]
+
+topology:
+  kind: megaways
+  reels: 5
+  rows_min: 2
+  rows_max: 6
+  # Per-reel weighted distribution of row count (rows_min..rows_max).
+  # Higher rows -> more ways; designer skews toward 4-5 on middle reels
+  # so spins land in the 1000-5000 ways band more often than the extreme
+  # ends.
+  rows_weights:
+    - [10, 18, 32, 25, 15]   # reel 0: 2,3,4,5,6 rows
+    - [8,  16, 30, 28, 18]   # reel 1
+    - [6,  14, 30, 30, 20]   # reel 2
+    - [8,  16, 30, 28, 18]   # reel 3
+    - [10, 18, 32, 25, 15]   # reel 4
+
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_zeus
+    kind: hp
+  - id: hp_lightning
+    kind: hp
+  - id: hp_eagle
+    kind: hp
+  - id: hp_helmet
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 10
+
+# Per-reel symbol distribution (sums to 1.0 per reel).
+reels:
+  reel_length: 50
+  per_reel_distribution:
+    - {wild: 0.020, scatter: 0.020, hp_zeus: 0.050, hp_lightning: 0.070, hp_eagle: 0.080, hp_helmet: 0.080, lp_a: 0.170, lp_k: 0.170, lp_q: 0.170, lp_j: 0.170}
+    - {wild: 0.030, scatter: 0.025, hp_zeus: 0.060, hp_lightning: 0.070, hp_eagle: 0.080, hp_helmet: 0.080, lp_a: 0.165, lp_k: 0.165, lp_q: 0.165, lp_j: 0.160}
+    - {wild: 0.030, scatter: 0.025, hp_zeus: 0.060, hp_lightning: 0.070, hp_eagle: 0.080, hp_helmet: 0.080, lp_a: 0.165, lp_k: 0.165, lp_q: 0.165, lp_j: 0.160}
+    - {wild: 0.030, scatter: 0.025, hp_zeus: 0.060, hp_lightning: 0.070, hp_eagle: 0.080, hp_helmet: 0.080, lp_a: 0.165, lp_k: 0.165, lp_q: 0.165, lp_j: 0.160}
+    - {wild: 0.020, scatter: 0.020, hp_zeus: 0.050, hp_lightning: 0.070, hp_eagle: 0.080, hp_helmet: 0.080, lp_a: 0.170, lp_k: 0.170, lp_q: 0.170, lp_j: 0.170}
+
+# Pays in × total-bet units.  Megaways pays per win = pay × ways_count.
+# Pays are an order of magnitude smaller than 243-ways to keep RTP at
+# ~0.95 since megaways can stack thousands of ways.
+paytable:
+  hp_zeus:      {3: 0.05, 4: 0.20, 5: 1.0}
+  hp_lightning: {3: 0.04, 4: 0.18, 5: 0.8}
+  hp_eagle:     {3: 0.03, 4: 0.15, 5: 0.6}
+  hp_helmet:    {3: 0.03, 4: 0.15, 5: 0.6}
+  lp_a:         {3: 0.02, 4: 0.08, 5: 0.30}
+  lp_k:         {3: 0.015, 4: 0.06, 5: 0.25}
+  lp_q:         {3: 0.015, 4: 0.06, 5: 0.20}
+  lp_j:         {3: 0.01, 4: 0.05, 5: 0.18}
+
+constraints:
+  target_rtp: 0.95
+  rtp_tolerance: 0.01
+  volatility_class: high
+  hit_freq_target: 0.30
+  jurisdictions: [UKGC, MGA, ADM]
