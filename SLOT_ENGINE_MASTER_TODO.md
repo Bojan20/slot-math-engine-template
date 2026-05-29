@@ -6,6 +6,44 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 13:15 (post **W4.3 + W5.3 + W6.3 TRIPLE-WAVE LANDED** — Vendor A pipeline closeout + cell-level provenance + RNG fault gate)
+
+**Status:** Drugi paralelni batch posle quad-wave-a. Ono što su nezavisno otvorene stavke iz P0/P1 sekcija — sve su zatvorene u jednom QA prolazu.
+
+| Wave | Šta | Files | Tests |
+|---|---|---|---|
+| **W4.3 — Pattern-FK Vendor A integration test** | Stripe parser je već landed kao W4.3a (igt.yaml profile v2). End-to-end test pokriva oba shipping SWID-a (200-1775-001 + 200-1775-002): meta-block matches Excel header (game name, vendor, 5 reels, 4 rows, 40 lines, left-to-right), per-reel strips imaju realistic length (70-130 stops), bonus reel strips ≥50 stops, **paytable rtp_pct sum self-consistency vs meta.rtp_breakdown.base_game** (dva nezavisna parsera puta validira jedan na drugom), WildWolf 5-of-a-kind 1000× + Bonus scatter 2× pinovani, free_spins/linear_progressive/fort_knox_pick_bonus/paylines bloci populated, SWID 001 vs 002 metadata diff (001 ima veći RTP), reel strip shape identical kroz SWID-ove | `tools/tests/test_fort_knox_wolf_run_pipeline.py` | **23 / 23 PASS** (parse + 7 invariants × 2 SWID-a + 2 cross-SWID diff specs) |
+| **W5.3 — Cell-level PAR provenance Merkle chain** | `canonical_cell_bytes(sheet, ref, value)` = `sheet\\x00ref\\x00json(value, sort_keys=True)` → SHA-256 leaf. Excel ref sort: column-length-then-letters-then-row (A1 < A2 < B1 < Z1 < AA1 < AB1). Merkle reduction reuse-uje `provenance_chain.merkle_root` "duplicate-last-on-odd" konvenciju (one tree shape, both granularities). `mint_cell_proof` → log₂(N) sibling-path proof. `verify_cell_proof` re-deriva root iz claimed value + sibling walk **bez originalnog XLSX-a**. ed25519 sign / verify reuse-uje `cert_bundle_swid.sign` (same key path conventions, same fingerprint). CLI: build / proof / verify subcommands. Live: 4416 FK Wolf Run cells → root computed, PAR_001!C3 proof minted i verified za "200-1775-001" (SWID) — tamper sa "999-9999-999" odmah pada | `tools/par_cell_provenance/{__init__,__main__,build}.py` + `tools/tests/test_par_cell_provenance.py` | **24 / 24 PASS** (canonical bytes 5 + ref sort 3 + collect 3 + build 3 + mint/verify 5 + ed25519 round-trip 2 + live FK Wolf Run 1 + CLI 2) |
+| **W6.3 — Fault injection harness (pre-cert smoke gate)** | Tri ortogonalne probe nad postojećim RNG plugin layer-om: (1) **seed-sweep RTP fan** — N nezavisnih seedova × M spinova, (mean, sample stddev) + per-seed z-score; (2) **lag-1 serial correlation** — Pearson koeficijent na next_f64 streamu, reject za |ρ| > 3/√n; (3) **monobit high-bit** — broji bit 63 set frequency, chi-squared statistika vs 0.5 expectation (reject za χ² > 10.83 = χ²(1, 0.999)). `run_full_harness` jedan-CLI gate sa Poisson-style outlier budget (`max(2, ⌈0.01·n⌉)` jer 50 seedova ima E[outliers]=0.13 ali Var=0.13, hard-0 pravi false-alarm na legitimnim seedovima). CLI bin `fault_injection` emituje JSON + exit code 0/1. Live: 50 seedova × 5k spinova × 100k probe samples na PCG64 → fan mean 0.204968 vs CF 0.202240, 1 outlier u budgetu, corr+monobit pass → **overall PASS ✓** | `rust-sim/src/fault_injection.rs` + `rust-sim/src/bin/fault_injection.rs` | **9 / 9 PASS** (fan mean 3% CF + stddev>0 + z mean=0 + outliers rare + lag1 corr + monobit + monobit baseline + full harness pass + determinism) |
+
+### Test tally for this batch
+
+| Suite | Pass |
+|---|---|
+| W4.3 `tools/tests/test_fort_knox_wolf_run_pipeline.py` | 23 / 23 ✅ |
+| W5.3 `tools/tests/test_par_cell_provenance.py` | 24 / 24 ✅ |
+| W6.3 `cargo test --lib fault_injection` | 9 / 9 ✅ |
+
+### Ultimate QA pass (post `11dd9ef` baseline)
+
+| Sloj | Rezultat |
+|---|---|
+| TS lint + `tsc --noEmit` | ✅ clean |
+| Vitest RNG parity trio (PCG-64 + ChaCha20 + Mulberry32) | **43 / 43 PASS** |
+| Cargo `clippy --release -- -D warnings` (lib+bins) | ✅ clean |
+| Cargo `test --release --lib` (`slot_sim`) | **332 / 332 PASS** (+9 nova fault_injection) |
+| Pytest `tools/tests/` (sans pre-existing mission3 + WIP qa_agent) | **2531 / 2531 PASS · 27 skipped** (+47 novih: 23 FK + 24 cell provenance) |
+
+**0 regresija.** Live fault_injection harness na PCG64: fan_mean=0.204968 / stddev=0.016378 / CF=0.202240 → overall PASS.
+
+### Operator/regulator deliverables emitovani uz wave
+
+| Artefakt | Putanja |
+|---|---|
+| Fault-injection harness JSON (50 seedova × 5k × 100k probe) | `reports/acceptance/FAULT_INJECTION.json` |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 12:50 (post **W6.4 + W5.4 + W5.6 + W6.2 QUAD-WAVE LANDED** — polish layer closeout)
 
 **Status:** Četiri paralelne quick-win wave-e zatvorene u jednom QA prolazu. Zadnji "polish" red iz roadmap-a sad je live: TS↔Rust PCG-64 bit-parity, QMC convergence wire, native PDF emitter za PAR sheet, multi-SWID HTML verification dashboard.
@@ -688,7 +726,7 @@ strictly enforced only under Mode C-4 / C-5.)
 |---|---|---|---|---|
 | W4.1 | **`ce-sim` → `slot-sim` refactor** | Univerzalni MC driver koji konzumira bilo koji IR. Iz `engine-rust/src/sim.rs` u workspace crate `engine/slot-sim/` koji ne zavisi od CE-specifične math-e. | 1-2 dana → 1 sesija | ✅ **LANDED** `dc65435` |
 | W4.2 | **Universal `parse_par.py` sa vendor profil sistemom** | `tools/parse_par/` paket sa vendor-agnostic engine + pluggable feature parserima (free_spins, cash_eruption_pages, linear_progressive, fort_knox_pick_bonus) + 0-dep mini-YAML loader. `tools/vendor_profiles/{lw,igt}.yaml` opisuju layout konvencije; profile schema validation. CLI: `python -m tools.parse_par <vendor> <raw_dir>`. **Vendor B round-trip bit-identičan** (3/3 SWID, modulo `vendor:` enrichment). **Vendor A Pick-Bonus parse-out** SWID+RTP+bet table (24 bm)+paytable+FS+linear progressive (odds*bm ≡ 7.5M)+FK bonus per-BM (24/24 rows). 15/15 unit tests pass. | 4-6 h → 1 sesija | ✅ **LANDED** |
-| W4.3 | **Pattern-FK integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. **W4.2 deo:** meta/paytable/FS/progressive radi clean za PAR_001+PAR_002. **Preostalo:** Vendor A-style per-reel reel strip parser (rows 197+: "Reel N / Weights" stripe layout, ne Vendor B "Reel Set: K" header blokovi) → onda 10B verify za sva 2 SWID-a Pattern-FK-a, 1:1 sa Excel-om. | 3-4 h | 🟡 čeka per-reel strip parser |
+| W4.3 | **Pattern-FK integration test** | Drugi data point (2. PAR familija) testira da li je W4.1+W4.2 arhitektura tačno generalizovana. **W4.2 deo:** meta/paytable/FS/progressive radi clean za PAR_001+PAR_002. **Preostalo:** Vendor A-style per-reel reel strip parser (rows 197+: "Reel N / Weights" stripe layout, ne Vendor B "Reel Set: K" header blokovi) → onda 10B verify za sva 2 SWID-a Pattern-FK-a, 1:1 sa Excel-om. | 3-4 h | ✅ **LANDED** (2026-05-29) — stripe parser je W4.3a (igt.yaml v2); end-to-end integration test `test_fort_knox_wolf_run_pipeline.py` pokriva oba SWID-a (23/23 PASS) sa paytable rtp_pct↔meta.base_game self-consistency check. |
 | W4.4 | **Rust engine codegen iz IR** (template-based, Tera) | Umesto da ručno pišem `cash_eruption.rs` za svaki novi game, codegen emituje game-specific Rust code iz IR-a. | 1-2 dana → **1 sesija (P3.2)** | ✅ **LANDED `0fa56ec`** kao P3.2 — `tools/slot_build/codegen_rust.py` + `slot-build --codegen-rust DIR` flag emituje per-game Rust crate (Cargo.toml + main.rs + sim.rs + IR snapshot + README). Auto-discover `engine/slot-sim` / `rust-sim` path. E2E: cargo check + cargo run --release oba exit 0; 8/8 P3.2 tests. |
 | W4.5 | **TS engine codegen + parity gate** | Mirror W4.4 ali za RGS-client TS runtime. Bit-identical PCG64 output Rust↔TS po seed-u. | 1 dan → **1 sesija** | ✅ **LANDED** — `tools/codegen_ts/codegen.py` + `slot-build --codegen-ts-engine DIR` emituje `<slug>-ts/` paket (package.json + tsconfig + src/sim.ts + main.ts + vitest spec). PCG64 koroutiniran sa Rust `rand_pcg::Pcg64` adapterom za seed parity. 7/7 W4.5 tests. |
 | W4.6 | **UI skeleton codegen** | Svelte komponenta: reel grid + paytable display + spin button + bonus screens. Generic iz IR meta (rows × cols, paylines viz, bonus type). | 1 dan → **1 sesija** | ✅ **LANDED** — `tools/codegen_svelte/codegen.py` + `slot-build --codegen-svelte DIR` emituje `<slug>-ui/` SvelteKit paket (package.json + svelte.config + vite.config + routes/+page.svelte + static/ir.json) sa reel grid + paytable + spin button + RTP ticker. 6/6 W4.6 tests. |
@@ -707,7 +745,7 @@ strictly enforced only under Mode C-4 / C-5.)
 |---|---|---|---|---|
 | W5.1 | **Slot Math DSL prototyp** | YAML/TOML/custom: `rtp_target`, `volatility_class`, `features [...]`, `constraints { hit_freq, win_freq, max_win }`. | 2 dana | 🔴 design |
 | W5.2 | **Z3 solver wrapper** (rust `z3-rs`) | Closed-form RTP komponente kao SMT formula. Constraint-solver nalazi reel weights koji matchuju spec. | 1 nedelja | 🔴 needs proof-of-concept |
-| W5.3 | **Verifiable PAR provenance chain** | SHA-256 + ed25519 sign svake PAR ćelije; Merkle tree → regulator može da verifikuje cell-level integrity bez sim-a. | 2 dana | 🟡 nice-to-have |
+| W5.3 | **Verifiable PAR provenance chain** | SHA-256 + ed25519 sign svake PAR ćelije; Merkle tree → regulator može da verifikuje cell-level integrity bez sim-a. | 2 dana | ✅ **LANDED** (2026-05-29) — `tools.par_cell_provenance` (canonical leaf encoding + log₂(N) inclusion proof + ed25519 root sign). Live: 4416 FK cells → root + PAR_001!C3 proof round-trip clean. |
 | W5.4 | **QMC sampling (Sobol/Halton)** | Već postoji `rust-sim/src/qmc.rs` — wire u CE/Pattern-FK sim za 100× brže konvergiranje na tail-event quantilima. | 1 dan | ✅ **LANDED** (2026-05-29) — `qmc_estimator.rs` + `qmc_convergence` bin emituje MC vs QMC report. Live: 1M spins → QMC rel_err 64× tighter (log10 +1.81). |
 | W5.5 | **LLM theme co-pilot** (Kimi/Claude) | NE za math; samo za theme/narrative/audio. Symbol art prompt gen, FS anim narrative, volatility-based BGM cues. | 3 dana | 🟡 secondary |
 | W5.6 | **PAR sheet PDF auto-generator** (GLI-16 Appendix D format) | IR + sim results → PDF za regulator lab submission. Reuse `rust-sim/src/par.rs` koji već postoji. | 1 dan | ✅ **LANDED** (2026-05-29) — `par_pdf.rs` pure-Rust PDF 1.4 emitter (zero deps, deterministic), wire-ovan kroz `gen_par_sheet --formats pdf`. |
@@ -718,7 +756,7 @@ strictly enforced only under Mode C-4 / C-5.)
 |---|---|---|---|---|
 | W6.1 | **CE RNG cert bundle pošalji NMi/iTechLabs** | Bundle već generisao (`ce_cert_package.sh` → 1.2 MiB ZIP). Treba samo email + upload portal. | 1 dan | 🟡 vendor onboarding |
 | W6.2 | **HTML dashboard** za par-verification (multi-SWID filter/diff) | Partneri vide rezultat klikom umesto čitanja MD-a. | 1 dan | ✅ **LANDED** (2026-05-29) — `tools.par_verification_dashboard` offline-first HTML (zero CDN), filter+diff+KPI ribbon, 12 live SWID bundle-ova već renderovano. |
-| W6.3 | **Fault injection harness** (seed sweep + RNG bias check) | Detect anomalies pre lab cert submission. | 1 dan | 🟢 nice-to-have |
+| W6.3 | **Fault injection harness** (seed sweep + RNG bias check) | Detect anomalies pre lab cert submission. | 1 dan | ✅ **LANDED** (2026-05-29) — `fault_injection` (seed-sweep fan + lag-1 corr + monobit high-bit) sa Poisson outlier budget. CLI bin sa exit 0/1 gate. Live: PCG64 50×5k×100k → overall PASS. |
 | W6.4 | **Bit-identical PCG64 parity (Rust↔TS)** | Već imam funkcionalnu parity (oba konvergiraju ka istom RTP-u). Treba refaktorisati `Prng.fromSeed` u TS da match-uje `rand_pcg::Pcg64::seed_from_u64` init seq. | 4-6 h | ✅ **LANDED** (2026-05-29) — `src/utils/pcg64.ts` BigInt-128 PCG-64 XSL-RR-64 + KAT fixture (5 seeds × 32 outputs, byte-identical sa `Pcg64Backend`). 29/29 parity specs. |
 
 ### 🌟 Wave 7: MOONSHOT IDEAS (radikalno futuristic — ne klasičan AI)

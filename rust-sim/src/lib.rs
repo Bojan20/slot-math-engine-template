@@ -56,6 +56,8 @@ pub mod par;
 pub mod qmc;
 /// W5.4 — QMC RTP estimator + MC convergence report (regulator deliverable).
 pub mod qmc_estimator;
+/// W6.3 — Fault injection harness (seed sweep + lag-1 corr + monobit).
+pub mod fault_injection;
 /// PAR-012 — Bonus Buy EV calculator + regulatory ban audit.
 pub mod bonus_buy;
 /// PAR-013 — Cluster Pays evaluator (connected-component scoring).
