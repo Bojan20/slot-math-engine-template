@@ -87,6 +87,9 @@ jobs:
       - name: Build portfolio validator dashboard
         run: python tools/build_portfolio_validator_dashboard.py
 
+      - name: Build sales one-pager (executive)
+        run: python tools/build_sales_one_pager.py
+
       - name: Build W4.11 evidence manifest (SHA-256 Merkle root)
         run: python tools/build_evidence_manifest.py
 
@@ -101,7 +104,8 @@ jobs:
             tools/tests/test_operator_portal.py \
             tools/tests/test_portfolio_validator.py \
             tools/tests/test_portfolio_validator_dashboard.py \
-            tools/tests/test_evidence_manifest.py
+            tools/tests/test_evidence_manifest.py \
+            tools/tests/test_sales_one_pager.py
 
       - name: Upload dashboard artifacts
         if: always()
@@ -112,6 +116,7 @@ jobs:
             reports/dashboards/mc-parity-dashboard.html
             reports/dashboards/portfolio-validator-dashboard.html
             reports/dashboards/real-market-portfolio.html
+            reports/dashboards/sales-one-pager.html
             reports/dashboards/index.html
             reports/acceptance/book_bonusbuy_parity.json
             reports/acceptance/book_bonusbuy_mc.json

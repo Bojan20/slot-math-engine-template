@@ -1,0 +1,15 @@
+{
+  "bundle_url": "reports/dashboards/sales-one-pager.html",
+  "size_bytes": 8376,
+  "size_kb": 8.18,
+  "offline_safe": true,
+  "print_friendly": true,
+  "sourced_from": [
+    "reports/acceptance/book_bonusbuy_parity.json",
+    "reports/acceptance/book_bonusbuy_mc.json",
+    "reports/acceptance/portfolio_validator.json",
+    "reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
+    "reports/dashboards/real-market-portfolio.manifest.json",
+    "reports/dossier/INDUSTRY_FIRST_DOSSIER.json"
+  ]
+}

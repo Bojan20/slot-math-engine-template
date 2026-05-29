@@ -28,8 +28,8 @@ def test_manifest_schema(manifest: dict):
     assert len(manifest["merkle_root_sha256"]) == 64  # SHA-256 hex
 
 
-def test_manifest_records_all_18_files(manifest: dict):
-    assert manifest["file_count"] == 18
+def test_manifest_records_all_20_files(manifest: dict):
+    assert manifest["file_count"] == 20
     assert manifest["missing_files"] == []
 
 
@@ -62,6 +62,7 @@ def test_manifest_includes_all_dashboards(manifest: dict):
     paths = {r["path"] for r in manifest["records"]}
     for dash in (
         "reports/dashboards/index.html",
+        "reports/dashboards/sales-one-pager.html",
         "reports/dashboards/mc-parity-dashboard.html",
         "reports/dashboards/real-market-portfolio.html",
         "reports/dashboards/portfolio-validator-dashboard.html",

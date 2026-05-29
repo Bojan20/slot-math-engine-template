@@ -39,6 +39,7 @@ OUT.parent.mkdir(parents=True, exist_ok=True)
 FILES_RELATIVE = [
     # Dashboards
     "reports/dashboards/index.html",
+    "reports/dashboards/sales-one-pager.html",
     "reports/dashboards/mc-parity-dashboard.html",
     "reports/dashboards/real-market-portfolio.html",
     "reports/dashboards/portfolio-validator-dashboard.html",
@@ -46,6 +47,7 @@ FILES_RELATIVE = [
     "reports/dashboards/live-par-compiler.html",
     # Dashboard sidecar manifests
     "reports/dashboards/index.manifest.json",
+    "reports/dashboards/sales-one-pager.manifest.json",
     "reports/dashboards/mc-parity-dashboard.manifest.json",
     "reports/dashboards/real-market-portfolio.manifest.json",
     "reports/dashboards/portfolio-validator-dashboard.manifest.json",

@@ -803,6 +803,20 @@ const WAVES = [
     }),
     industry_first: 'Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.',
   },
+  {
+    wave: '4.11h',
+    name: 'Sales One-Pager (executive, print-friendly)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/dashboards/sales-one-pager.manifest.json',
+    extractHeadline: (j) => {
+      const kb = j?.size_kb ?? 0;
+      const sources = (j?.sourced_from ?? []).length;
+      return `offline ${kb} KB · sources ${sources} pinned JSON reports · print-friendly @media query`;
+    },
+    extractDetail: (j) => j,
+    industry_first: 'Single-page executive landing surface that condenses every W4.11* + W4.15 number into one print-friendly screen — hero pitch, 8 KPI cards (line/scatter/BB Δ pp, portfolio size, validator 78/78, dossier 51/54, Merkle root, QA 94/94), parity gate table, real-market portfolio table, deliverable index. Sources data from 6 pinned JSON reports at build time so the page is always current with whatever passed the CI gate. Drop-in for any operator handshake or regulator briefing. No vendor publishes a single-page executive surface backed by a SHA-256 commitment graph.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

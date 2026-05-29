@@ -37,12 +37,13 @@ def test_portal_under_15_kb(html_doc: str):
     assert len(html_doc) <= 15_000
 
 
-def test_portal_lists_six_dashboards(manifest: dict):
-    assert len(manifest["dashboards"]) == 6
+def test_portal_lists_seven_dashboards(manifest: dict):
+    assert len(manifest["dashboards"]) == 7
 
 
 def test_portal_links_to_each_dashboard(html_doc: str):
     for href in (
+        "sales-one-pager.html",
         "mc-parity-dashboard.html",
         "portfolio-validator-dashboard.html",
         "real-market-portfolio.html",
@@ -54,7 +55,7 @@ def test_portal_links_to_each_dashboard(html_doc: str):
 
 
 def test_portal_includes_wave_labels(html_doc: str):
-    for wave in ("W4.11c", "W4.11d", "W4.11f", "W7.11", "W7.7", "PAR-001"):
+    for wave in ("W4.11c", "W4.11d", "W4.11f", "W4.11h", "W7.11", "W7.7", "PAR-001"):
         assert wave in html_doc, f"missing wave label: {wave}"
 
 
@@ -77,6 +78,7 @@ def test_portal_pinned_dashboards_exist_on_disk():
     """All linked dashboards must already exist next to index.html."""
     dash_dir = REPO / "reports" / "dashboards"
     for fname in (
+        "sales-one-pager.html",
         "mc-parity-dashboard.html",
         "portfolio-validator-dashboard.html",
         "real-market-portfolio.html",

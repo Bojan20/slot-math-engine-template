@@ -1,15 +1,15 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "2026-05-29T15:07:23.881028Z",
-  "merkle_root_sha256": "fe27401ee7c2aaf86a117b429a86fedee03e3d1ac6b61ad01204147deb764b3e",
-  "file_count": 18,
-  "total_bytes": 276754,
+  "generated_at_utc": "2026-05-29T15:13:41.487178Z",
+  "merkle_root_sha256": "61d9f28fa91df59a04def047f0499275fc0502ab6ed1d81ea4ad6cc4b65c3320",
+  "file_count": 20,
+  "total_bytes": 289337,
   "missing_files": [],
   "records": [
     {
       "path": ".github/workflows/template-parity.yml",
-      "size_bytes": 4126,
-      "sha256": "236e9873db3af6cb61a4361378b334564c00e032ccbeb1310340c4136623ab85"
+      "size_bytes": 4328,
+      "sha256": "242a9bed6f6e390f21a706591fd9f04a8bf01c419ccfa222c9bb68474f854427"
     },
     {
       "path": "docs/COMMERCIAL_PITCH.md",
@@ -23,8 +23,8 @@
     },
     {
       "path": "reports/acceptance/book_bonusbuy_mc.json",
-      "size_bytes": 1751,
-      "sha256": "7a0e85062aebb018614531b6bc1a64221732b9df800a7922420fa768a9ecfdb1"
+      "size_bytes": 1750,
+      "sha256": "ef9c8f66b779c3ac368d9e992030fb46b86b492bd11b30651a48466acac0da60"
     },
     {
       "path": "reports/acceptance/book_bonusbuy_parity.json",
@@ -38,13 +38,13 @@
     },
     {
       "path": "reports/dashboards/index.html",
-      "size_bytes": 5768,
-      "sha256": "5a1e456174d6a11bedda949fc95a60bb9f021cff6ef5830a4f8d890f3e07ed1f"
+      "size_bytes": 6066,
+      "sha256": "00fa52e881265a70cfbf4fa1e1073e715087b9d83c88106c9f8c91812cc4ea4f"
     },
     {
       "path": "reports/dashboards/index.manifest.json",
-      "size_bytes": 1069,
-      "sha256": "297a12a87437a6dd0186c10def6442f04e08f2759c93153ad73f7ceeac3a3f9c"
+      "size_bytes": 1219,
+      "sha256": "481b8e815536acd1ba8704d9f21112d3495a8decd78ba4191309458f4c3cac9f"
     },
     {
       "path": "reports/dashboards/live-par-compiler.html",
@@ -54,12 +54,12 @@
     {
       "path": "reports/dashboards/mc-parity-dashboard.html",
       "size_bytes": 9483,
-      "sha256": "34c4c46519ead9ab29759b3c429f9671e54970d8af6678f76197b86f4a73784f"
+      "sha256": "34b3bd1401e4038788caeefc094f934f170649283dfd65e92d3adebe4d3b7179"
     },
     {
       "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
-      "size_bytes": 690,
-      "sha256": "d7ada3a3fbf20882a8a57bea961c92af6a243cddf41b4d7611fa9f91517d15fb"
+      "size_bytes": 689,
+      "sha256": "35c984fee0a026a74fbc5231da807b4ea9d59bdac46fb5342865d8b9d6650c81"
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.html",
@@ -82,19 +82,29 @@
       "sha256": "990e458a0d724a5bae79c3b59ead5eacdd836919d11c8337f1054508d454c17c"
     },
     {
+      "path": "reports/dashboards/sales-one-pager.html",
+      "size_bytes": 8376,
+      "sha256": "df4f6366bbabf04e77506dc99ce86733e4a6cc1297cae3fc5ee9b45aa4ad5a5c"
+    },
+    {
+      "path": "reports/dashboards/sales-one-pager.manifest.json",
+      "size_bytes": 495,
+      "sha256": "3b21b30950f4c474964cc6d8d3ea87321a71f5a1e66bcd71a13ac5ec80f84419"
+    },
+    {
       "path": "reports/dashboards/unified-audit.html",
       "size_bytes": 13551,
       "sha256": "e554c06098889a2f7ec166076c20f8a1915af7aaf773f67d332d0ea124751647"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
-      "size_bytes": 84478,
-      "sha256": "4384bd4795eea94aab400c011c2a9c0b403ee88c3fe608dc1090f91e57f518e1"
+      "size_bytes": 86252,
+      "sha256": "083c2428fc1dd57758cfdc71a41798b7e8861a378ab5978ab86a2b85cd4c6149"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
-      "size_bytes": 59249,
-      "sha256": "5891127c9ebf86ababf7d2cd542bdfba103a7af7a8040e486ed29e42b5808c5f"
+      "size_bytes": 60539,
+      "sha256": "703a87000baf1f22e67648b5972657d23030331cfb7f3cb2321eb98e696fa418"
     }
   ],
   "verification": "To verify: hash each file with SHA-256, concatenate lines of the form `<path>|<size_bytes>|<sha256>\\n` sorted lexicographically by path, then SHA-256 that concatenation. The result must equal `merkle_root_sha256`."

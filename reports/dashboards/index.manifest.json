@@ -1,9 +1,15 @@
 {
   "bundle_url": "reports/dashboards/index.html",
-  "size_bytes": 5768,
-  "size_kb": 5.63,
+  "size_bytes": 6066,
+  "size_kb": 5.92,
   "offline_safe": true,
   "dashboards": [
+    {
+      "id": "sales-one-pager",
+      "name": "Sales One-Pager (executive)",
+      "wave": "W4.11h",
+      "href": "sales-one-pager.html"
+    },
     {
       "id": "mc-parity",
       "name": "MC Parity Dashboard",

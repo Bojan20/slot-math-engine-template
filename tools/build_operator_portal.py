@@ -30,6 +30,17 @@ DASH_DIR.mkdir(parents=True, exist_ok=True)
 # ---------------------------------------------------------------------------
 ENTRIES = [
     {
+        "id": "sales-one-pager",
+        "name": "Sales One-Pager (executive)",
+        "href": "sales-one-pager.html",
+        "summary": (
+            "Single executive-facing summary of the entire W4.11* + W4.15 parity story. "
+            "KPI strip + hero pitch + parity table + portfolio + deliverable index. Print-friendly."
+        ),
+        "wave": "W4.11h",
+        "category": "executive",
+    },
+    {
         "id": "mc-parity",
         "name": "MC Parity Dashboard",
         "href": "mc-parity-dashboard.html",
