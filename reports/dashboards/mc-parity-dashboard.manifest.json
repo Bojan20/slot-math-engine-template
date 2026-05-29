@@ -18,7 +18,7 @@
   "mc_summary": {
     "all_gates_pass": true,
     "spins": 200000,
-    "elapsed_seconds": 2.5417993330047466,
+    "elapsed_seconds": 2.5186398329678923,
     "line_pay_delta_pp": -0.18851698490046642,
     "scatter_pay_delta_pp": -0.00797237830043266,
     "fs_trigger_rel_err": 0.05886627906976753

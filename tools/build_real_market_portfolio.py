@@ -65,7 +65,28 @@ GAME_DESCRIPTIONS = {
         "mechanic": "5×3 / 10 lines · Expanding Symbol FS · direct-buy Bonus Buy (100×)",
         "industry_anchor": "W4.11 / W4.15 (copyright-safe template)",
     },
+    "megaways-clean-room-template": {
+        "display": "Megaways clean-room template",
+        "vendor": "<<redacted>>",
+        "mechanic": "6 reels · 2…7 rows · 117 649 ways · cascading wins · FS multiplier",
+        "industry_anchor": "W4.8 Megaways (copyright-safe template)",
+    },
+    "walking-wild-clean-room-template": {
+        "display": "Walking Wild clean-room template",
+        "vendor": "<<redacted>>",
+        "mechanic": "5×3 / 20 lines · sticky walking Wild · FS retrigger",
+        "industry_anchor": "W4.12 Walking Wild (copyright-safe template)",
+    },
 }
+
+# Folders that should be tagged with the TEMPLATE badge (copyright-safe).
+TEMPLATE_FOLDERS = frozenset(
+    {
+        "book-expanding-bonusbuy",
+        "megaways-clean-room-template",
+        "walking-wild-clean-room-template",
+    }
+)
 
 
 def collect_ir_files() -> dict[str, list[dict]]:
@@ -188,7 +209,7 @@ def render_game(folder: str, entries: list[dict]) -> str:
     vendor = desc.get("vendor", "?")
     mech = desc.get("mechanic", "?")
     anchor = desc.get("industry_anchor", "")
-    is_template = folder == "book-expanding-bonusbuy"
+    is_template = folder in TEMPLATE_FOLDERS
     badge = '<span class="badge template">TEMPLATE</span>' if is_template else '<span class="badge">REAL-MARKET</span>'
 
     rows = []

@@ -56,19 +56,21 @@ def test_dashboard_lists_all_games(html_doc: str):
         "fortune-coin-boost-classic",
         "skeleton-key",
         "book-expanding-bonusbuy",
+        "megaways-clean-room-template",
+        "walking-wild-clean-room-template",
     ):
         assert game in html_doc, f"missing game: {game}"
 
 
-def test_dashboard_shows_13_swids(html_doc: str):
-    """13 SWIDs should appear in the per-IR matrix rows."""
+def test_dashboard_shows_15_swids(html_doc: str):
+    """15 SWIDs should appear in the per-IR matrix rows (post W4.8 + W4.12)."""
     rows = html_doc.count("</tr>")
-    assert rows >= 13 + 3 + 5  # IR matrix + header + per-gate aggregate + by-game
+    assert rows >= 15 + 3 + 7  # IR matrix + header + per-gate aggregate + by-game
 
 
 def test_dashboard_kpi_totals_match_validator(manifest: dict):
-    assert manifest["total_irs"] == 13
-    assert manifest["passed"] == 13
+    assert manifest["total_irs"] == 15
+    assert manifest["passed"] == 15
     assert manifest["failed"] == 0
 
 
@@ -80,4 +82,4 @@ def test_dashboard_no_fail_chips_present(html_doc: str):
 def test_dashboard_records_every_gate_aggregate(manifest: dict):
     assert len(manifest["by_gate"]) == 6
     for gate, count in manifest["by_gate"].items():
-        assert count == 13, f"{gate}: {count}/13"
+        assert count == 15, f"{gate}: {count}/15"

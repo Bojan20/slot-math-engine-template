@@ -18,7 +18,6 @@ Pure stdlib — no numpy, no third-party deps, no network.
 from __future__ import annotations
 
 import json
-import math
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]

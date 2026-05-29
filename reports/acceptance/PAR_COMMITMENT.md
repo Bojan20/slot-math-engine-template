@@ -1,6 +1,6 @@
 # PAR Commitment v1.0 — Acceptance Report
 
-> Closes **Kimi K9** (deep-audit 2026-05-15). Generated `2026-05-16T04:14:21.332Z`.
+> Closes **Kimi K9** (deep-audit 2026-05-15). Generated `2026-05-29T15:15:53.939Z`.
 > 30 fixtures × 6 gates = 180 cells
 
 ## Headline: **180/180 cells PASS** ✅

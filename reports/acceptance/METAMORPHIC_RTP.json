@@ -1,6 +1,6 @@
 {
   "schema": "metamorphic-rtp-invariants/v1",
-  "generated_at": "2026-05-16T04:14:15.686Z",
+  "generated_at": "2026-05-29T15:15:48.211Z",
   "config": {
     "spins_per_seed": 20000,
     "seeds": [
@@ -16,7 +16,7 @@
     "total_checks": 50,
     "total_pass": 50,
     "all_pass": true,
-    "wall_seconds": "120.7"
+    "wall_seconds": "121.2"
   },
   "metamorphic_relations": {
     "MR1": "DETERMINISM      — same seed twice → bit-exact RTP",
@@ -29,7 +29,7 @@
     {
       "fixture": "classic-3x3-lines.json",
       "class": "lines",
-      "wallMs": 2023,
+      "wallMs": 1990,
       "mr1": {
         "pass": true,
         "rtpA": 0.5605499999999898,
@@ -71,7 +71,7 @@
     {
       "fixture": "5x3-20lines.json",
       "class": "lines",
-      "wallMs": 4094,
+      "wallMs": 4123,
       "mr1": {
         "pass": true,
         "rtpA": 4.227480000000083,
@@ -113,7 +113,7 @@
     {
       "fixture": "3x5-5lines.json",
       "class": "lines",
-      "wallMs": 2902,
+      "wallMs": 2920,
       "mr1": {
         "pass": true,
         "rtpA": 0.9779199999999293,
@@ -155,7 +155,7 @@
     {
       "fixture": "5x4-25lines.json",
       "class": "lines",
-      "wallMs": 8047,
+      "wallMs": 8235,
       "mr1": {
         "pass": true,
         "rtpA": 29.664329999999353,
@@ -197,7 +197,7 @@
     {
       "fixture": "5x3-243ways.json",
       "class": "ways",
-      "wallMs": 4013,
+      "wallMs": 3863,
       "mr1": {
         "pass": true,
         "rtpA": 304.67501500000327,
@@ -239,7 +239,7 @@
     {
       "fixture": "6x4-4096ways.json",
       "class": "ways",
-      "wallMs": 22413,
+      "wallMs": 22626,
       "mr1": {
         "pass": true,
         "rtpA": 14447.269284999918,
@@ -281,7 +281,7 @@
     {
       "fixture": "variable-rows-7reels.json",
       "class": "ways",
-      "wallMs": 19424,
+      "wallMs": 19282,
       "mr1": {
         "pass": true,
         "rtpA": 21545.99300999987,
@@ -323,7 +323,7 @@
     {
       "fixture": "pay-anywhere.json",
       "class": "pay-anywhere",
-      "wallMs": 5237,
+      "wallMs": 4931,
       "mr1": {
         "pass": true,
         "rtpA": 246.2898049999958,
@@ -365,7 +365,7 @@
     {
       "fixture": "cluster-7x7.json",
       "class": "cluster",
-      "wallMs": 43010,
+      "wallMs": 43579,
       "mr1": {
         "pass": true,
         "rtpA": 28.383774999997836,
@@ -405,7 +405,7 @@
     {
       "fixture": "cluster-diagonal.json",
       "class": "cluster",
-      "wallMs": 9509,
+      "wallMs": 9627,
       "mr1": {
         "pass": true,
         "rtpA": 1.6501999999998842,

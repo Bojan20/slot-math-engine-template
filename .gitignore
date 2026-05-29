@@ -191,6 +191,11 @@ agents/math-agent/corpus/*/ultimate_extract/
 agents/math-agent/corpus/*/raw/
 agents/math-agent/corpus/*/ultimate_extract.pointer.json
 
+# QA Agent run artefacts — one directory per run, accumulates fast.
+# Reports are reproducible from `make qa-quick` / `qa-full` so no value
+# in keeping run-id timestamps under git history.
+reports/qa_agent/
+
 # W4.8f/W4.10f — residual gap probe + LP solver outputs.
 # Reports contain vendor `rtp_breakdown` shares used as LP target_b vectors.
 # Tools themselves (par_probe_residual_gap.py + par_solver_picker_weights.py)

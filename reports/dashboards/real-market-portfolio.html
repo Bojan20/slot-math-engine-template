@@ -33,15 +33,15 @@
 </style>
 </head><body><div class="wrap"><h1>Real-Market Released-Game Portfolio</h1><p class="sub">Every IR ingested by the engine. Source XLSX files stay local (<code>games/*/raw/*.xlsx</code> — gitignored); only the math primitives + simulation reports ship. Click an entry's SWID to find the matching IR JSON in <code>games/&lt;name&gt;/out/&lt;swid&gt;.slot-sim.ir.json</code>.</p><div class="grid"><div class="kpi">
       <div class="label">Source games</div>
-      <div class="value">5</div>
+      <div class="value">7</div>
       <div class="delta">real-market + 1 template</div>
     </div><div class="kpi">
       <div class="label">SWIDs ingested</div>
-      <div class="value">13</div>
+      <div class="value">15</div>
       <div class="delta">vendor-coded paymodels</div>
     </div><div class="kpi">
       <div class="label">Mechanic anchors</div>
-      <div class="value">5</div>
+      <div class="value">7</div>
       <div class="delta">industry-first slots</div>
     </div><div class="kpi">
       <div class="label">RTP range</div>
@@ -64,9 +64,17 @@
       <p class="mech"><strong>IGT</strong> · 3×5 / 243 ways · Coin Boost respin · Jackpot Bonus · <em>W4.x 243-Ways + Cash Respin</em></p>
       <table><thead><tr><th>SWID</th><th>Family</th><th>Topology</th><th class="num">RTP</th><th class="num">Hit freq</th><th class="num">Win freq</th><th>Feature shares (top 3)</th></tr></thead><tbody><tr><td><code>200-1581-001</code></td><td>ways</td><td>5×3</td><td class='num'>95.01%</td><td class='num'>29.26%</td><td class='num'>9.58%</td><td>base_game_multiway=38.17% · base_game_scatter=0.27% · base_game_coins=31.59%</td></tr><tr><td><code>200-1581-002</code></td><td>ways</td><td>5×3</td><td class='num'>94.10%</td><td class='num'>29.24%</td><td class='num'>9.54%</td><td>base_game_multiway=37.26% · base_game_scatter=0.27% · base_game_coins=31.59%</td></tr><tr><td><code>200-1581-003</code></td><td>ways</td><td>5×3</td><td class='num'>92.09%</td><td class='num'>29.18%</td><td class='num'>9.43%</td><td>base_game_multiway=35.25% · base_game_scatter=0.27% · base_game_coins=31.59%</td></tr><tr><td><code>200-1581-004</code></td><td>ways</td><td>5×3</td><td class='num'>90.14%</td><td class='num'>29.13%</td><td class='num'>9.33%</td><td>base_game_multiway=33.30% · base_game_scatter=0.27% · base_game_coins=31.59%</td></tr></tbody></table>
     </div><div class="game">
+      <h3>Megaways clean-room template <span style="float:right"><span class="badge template">TEMPLATE</span></span></h3>
+      <p class="mech"><strong>&lt;&lt;redacted&gt;&gt;</strong> · 6 reels · 2…7 rows · 117 649 ways · cascading wins · FS multiplier · <em>W4.8 Megaways (copyright-safe template)</em></p>
+      <table><thead><tr><th>SWID</th><th>Family</th><th>Topology</th><th class="num">RTP</th><th class="num">Hit freq</th><th class="num">Win freq</th><th>Feature shares (top 3)</th></tr></thead><tbody><tr><td><code>template-megaways-cleanroom.ir</code></td><td>ways_variable_rows</td><td>6×7</td><td class='num'>—</td><td class='num'>27.00%</td><td class='num'>12.00%</td><td>free_spins=36.00%</td></tr></tbody></table>
+    </div><div class="game">
       <h3>Skeleton Key <span style="float:right"><span class="badge">REAL-MARKET</span></span></h3>
       <p class="mech"><strong>IGT</strong> · Megaways (3×5 → 6×5, 243…7776 ways) · Mystery Transform · <em>W4.8 Megaways</em></p>
       <table><thead><tr><th>SWID</th><th>Family</th><th>Topology</th><th class="num">RTP</th><th class="num">Hit freq</th><th class="num">Win freq</th><th>Feature shares (top 3)</th></tr></thead><tbody><tr><td><code>200-1517-001</code></td><td>megaways</td><td>Megaways 5×3…6</td><td class='num'>96.49%</td><td class='num'>29.13%</td><td class='num'>16.39%</td><td>free_spins=20.60%</td></tr><tr><td><code>200-1517-002</code></td><td>megaways</td><td>Megaways 5×3…6</td><td class='num'>94.46%</td><td class='num'>28.76%</td><td class='num'>16.12%</td><td>free_spins=20.46%</td></tr><tr><td><code>200-1517-003</code></td><td>megaways</td><td>Megaways 5×3…6</td><td class='num'>92.43%</td><td class='num'>28.16%</td><td class='num'>15.74%</td><td>free_spins=20.13%</td></tr></tbody></table>
+    </div><div class="game">
+      <h3>Walking Wild clean-room template <span style="float:right"><span class="badge template">TEMPLATE</span></span></h3>
+      <p class="mech"><strong>&lt;&lt;redacted&gt;&gt;</strong> · 5×3 / 20 lines · sticky walking Wild · FS retrigger · <em>W4.12 Walking Wild (copyright-safe template)</em></p>
+      <table><thead><tr><th>SWID</th><th>Family</th><th>Topology</th><th class="num">RTP</th><th class="num">Hit freq</th><th class="num">Win freq</th><th>Feature shares (top 3)</th></tr></thead><tbody><tr><td><code>template-walking-wild-cleanroom.ir</code></td><td>lines</td><td>5×3</td><td class='num'>—</td><td class='num'>30.00%</td><td class='num'>13.00%</td><td>free_spins=22.00% · sticky_walking_bonus=13.00%</td></tr></tbody></table>
     </div><div class="footer">
   Built locally by <code>tools/build_real_market_portfolio.py</code> · source XLSX files (<code>games/*/raw/*.xlsx</code>) stay local, gitignored · IR + reports ship · copyright posture: vendor / game / SWID identifiers either explicit (vendor PARs) or generic (template).
 </div></div></body></html>

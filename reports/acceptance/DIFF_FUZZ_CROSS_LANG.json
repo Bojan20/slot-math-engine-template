@@ -1,6 +1,6 @@
 {
   "schema": "diff-fuzz-cross-lang/v1",
-  "generatedAtUtc": "2026-05-16T04:14:16.538Z",
+  "generatedAtUtc": "2026-05-29T15:15:49.131Z",
   "config": {
     "base_fixture": "tests/fixtures/parity.json",
     "variants": 5,

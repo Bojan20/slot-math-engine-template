@@ -1,7 +1,7 @@
 {
   "summary": {
-    "total_irs": 13,
-    "passed": 13,
+    "total_irs": 15,
+    "passed": 15,
     "failed": 0,
     "by_game": {
       "book-expanding-bonusbuy": {
@@ -20,18 +20,26 @@
         "swids": 4,
         "passed": 4
       },
+      "megaways-clean-room-template": {
+        "swids": 1,
+        "passed": 1
+      },
       "skeleton-key": {
         "swids": 3,
         "passed": 3
+      },
+      "walking-wild-clean-room-template": {
+        "swids": 1,
+        "passed": 1
       }
     },
     "by_gate": {
-      "rtp_total_in_range": 13,
-      "hit_freq_sane": 13,
-      "win_freq_sane": 13,
-      "breakdown_sums": 13,
-      "reels_sane": 13,
-      "paytable_monotonic": 13
+      "rtp_total_in_range": 15,
+      "hit_freq_sane": 15,
+      "win_freq_sane": 15,
+      "breakdown_sums": 15,
+      "reels_sane": 15,
+      "paytable_monotonic": 15
     }
   },
   "results": [
@@ -406,6 +414,43 @@
       "all_gates_pass": true
     },
     {
+      "folder": "megaways-clean-room-template",
+      "swid": "template-megaways-cleanroom.ir",
+      "ir_path": "games/megaways-clean-room-template/out/template-megaways-cleanroom.ir.json",
+      "family": "ways_variable_rows",
+      "vendor": "<<synthetic>>",
+      "rtp_total": 0.96,
+      "hit_frequency": 0.27,
+      "win_frequency": 0.12,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.960000 within total 0.960000"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "no line_wins"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
       "folder": "skeleton-key",
       "swid": "200-1517-001",
       "ir_path": "games/skeleton-key/out/skeleton-key.200-1517-001.slot-sim.ir.json",
@@ -512,6 +557,43 @@
         "paytable_monotonic": {
           "pass": true,
           "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "walking-wild-clean-room-template",
+      "swid": "template-walking-wild-cleanroom.ir",
+      "ir_path": "games/walking-wild-clean-room-template/out/template-walking-wild-cleanroom.ir.json",
+      "family": "lines",
+      "vendor": "<<synthetic>>",
+      "rtp_total": 0.96,
+      "hit_frequency": 0.3,
+      "win_frequency": 0.13,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.960000 within total 0.960000"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "ok"
         }
       },
       "all_gates_pass": true

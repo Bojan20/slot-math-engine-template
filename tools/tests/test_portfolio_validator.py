@@ -28,14 +28,14 @@ def test_validator_runs_and_writes_report(report: dict):
     assert "results" in report
 
 
-def test_validator_finds_13_irs(report: dict):
-    """5 games × dedupe → 3+2+4+3+1 = 13."""
-    assert report["summary"]["total_irs"] == 13
+def test_validator_finds_15_irs(report: dict):
+    """7 games × dedupe → 3+2+4+3+1+1+1 = 15 (post W4.8 megaways + W4.12 walking-wild)."""
+    assert report["summary"]["total_irs"] == 15
 
 
 def test_all_irs_pass_validator(report: dict):
     assert report["summary"]["failed"] == 0
-    assert report["summary"]["passed"] == 13
+    assert report["summary"]["passed"] == 15
 
 
 def test_each_game_covered(report: dict):
@@ -46,15 +46,17 @@ def test_each_game_covered(report: dict):
         "fortune-coin-boost-classic": {"swids": 4, "passed": 4},
         "skeleton-key": {"swids": 3, "passed": 3},
         "book-expanding-bonusbuy": {"swids": 1, "passed": 1},
+        "megaways-clean-room-template": {"swids": 1, "passed": 1},
+        "walking-wild-clean-room-template": {"swids": 1, "passed": 1},
     }
     assert by_game == expected
 
 
 def test_all_gates_full_pass_count(report: dict):
-    """All 6 gates must show 13/13 pass."""
+    """All 6 gates must show 15/15 pass."""
     by_gate = report["summary"]["by_gate"]
     for gate, count in by_gate.items():
-        assert count == 13, f"gate {gate}: {count}/13 (expected 13/13)"
+        assert count == 15, f"gate {gate}: {count}/15 (expected 15/15)"
 
 
 def test_per_ir_rtp_total_in_pretty_range(report: dict):

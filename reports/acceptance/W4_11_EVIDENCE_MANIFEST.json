@@ -1,9 +1,9 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "2026-05-29T20:48:35.220213Z",
-  "merkle_root_sha256": "b89f2e0ea64b2c856da03d1f8aaf5418d984428d0302a01f6cd10853766aa2ac",
+  "generated_at_utc": "2026-05-29T22:10:22.740828Z",
+  "merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
   "file_count": 27,
-  "total_bytes": 340649,
+  "total_bytes": 346535,
   "missing_files": [],
   "records": [
     {
@@ -34,7 +34,7 @@
     {
       "path": "reports/acceptance/book_bonusbuy_mc.json",
       "size_bytes": 1751,
-      "sha256": "744ee6c2e107a3f524ca16830cf598724650d1a7e50f7e6dfe4e41def52de7a4"
+      "sha256": "2d6fdfa7ce5b6cd358527d207db8f3b1e4e922b1600c1bd487c137aedaafcc71"
     },
     {
       "path": "reports/acceptance/book_bonusbuy_parity.json",
@@ -53,8 +53,8 @@
     },
     {
       "path": "reports/acceptance/portfolio_validator.json",
-      "size_bytes": 13726,
-      "sha256": "7664ed64e621bfd218cbfdbed30c7a231ea3d0912764d6b0922e4f9f2534fc55"
+      "size_bytes": 15900,
+      "sha256": "e89da35500c02530261cf06cfc17b96b82fb88f8334becc4410baf80a94fcc05"
     },
     {
       "path": "reports/acceptance/walking_wild_mc_parity.json",
@@ -89,42 +89,42 @@
     {
       "path": "reports/dashboards/mc-parity-dashboard.html",
       "size_bytes": 9483,
-      "sha256": "f9d444179ed2d25bc0b2e7ac4b44ccc393a69c34b3d62b5b939014348a66cec7"
+      "sha256": "250a830da1131481f9f2f39f7dc0b9ef40ec8c6799b0704edee8a96cbb147fd5"
     },
     {
       "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "size_bytes": 690,
-      "sha256": "b7c6acfbde1e551c1160f8a442f5f172da2532c6870af20b9ae9b880f4e1e1d4"
+      "sha256": "fbc076516d1a7bd4f033172601d62a17cfe8a8f708ebf45ec72b437785cf8f06"
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.html",
-      "size_bytes": 13432,
-      "sha256": "6cc7b3fbe52d858d1d8eeeb60e778eedb32be538fe66ac4f2f912edf6055bb05"
+      "size_bytes": 15001,
+      "sha256": "43a64058fbb297ff5c7dcfd0234cb15fc73a0ab357583d5b0fbd16ddc0ae60fd"
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.manifest.json",
-      "size_bytes": 745,
-      "sha256": "32074bc41238badc466ce64aed04955af18dbc63cb6cc306d9a7bdabd6cfc0ed"
+      "size_bytes": 911,
+      "sha256": "896322ce8f59b1170a1a45e495404f669ff8bcd85965dc6fd42186b5a3e8797a"
     },
     {
       "path": "reports/dashboards/real-market-portfolio.html",
-      "size_bytes": 9317,
-      "sha256": "8050f8fc0c08378d2d37e313e15372441128d1acb20dbccb3e671a4c976896e0"
+      "size_bytes": 10872,
+      "sha256": "cdae7946773c5f2b529184a694455223f1c66ac611c2d87d60c127cd3fa8f00d"
     },
     {
       "path": "reports/dashboards/real-market-portfolio.manifest.json",
-      "size_bytes": 677,
-      "sha256": "990e458a0d724a5bae79c3b59ead5eacdd836919d11c8337f1054508d454c17c"
+      "size_bytes": 937,
+      "sha256": "6d7dec3e71d184f4dc776ad05f99ece009931f3e19e32cb94688aa9b96d0a152"
     },
     {
       "path": "reports/dashboards/sales-one-pager.html",
-      "size_bytes": 8402,
-      "sha256": "5e68a9b6f27bc316a15a98747caa57057e9e3799084844b0e5a20427cfdb78fa"
+      "size_bytes": 8564,
+      "sha256": "7818dc4e2caf0b8506fc2b157b2fc5f1cf7fdfab0c45737dcce19d8bfd9081af"
     },
     {
       "path": "reports/dashboards/sales-one-pager.manifest.json",
       "size_bytes": 495,
-      "sha256": "92685d5864a06fccf18d77712d45545fc6b4d94f6edc3708bf12ac360a93d17a"
+      "sha256": "4f9ed1a693e12a20a5e842fc6ac9863934350df815d1a83c0067dc2a25ee3e10"
     },
     {
       "path": "reports/dashboards/unified-audit.html",

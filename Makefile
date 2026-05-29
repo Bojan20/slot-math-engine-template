@@ -12,7 +12,8 @@
 .PHONY: help run unittest test lint build par-sheet par-diff par-stress \
         cert-bundle rng-cert rng-quality rng-submission parity parity-bin \
         mutate mutate-rust mutate-scoped clean ci \
-        agents-check agents-corpus agents-rag agents-eval agents-routing
+        agents-check agents-corpus agents-rag agents-eval agents-routing \
+        qa-selftest qa-quick qa-manual qa-full qa-status
 
 # ─── Default target ────────────────────────────────────────────────────────
 
@@ -120,10 +121,8 @@ agents-corpus: ## Rebuild + expand + stats traces.jsonl for all 3 PHASE 8 agents
 agents-rag: ## Re-ingest mock + (when reachable) Qdrant RAG indexes
 	python3 -m tools.agent_rag ingest all
 
-agents-eval: ## Structural check of all 3 agent eval fixtures
-	python3 -m tools.agent_eval par-parser --self-test
-	python3 -m tools.agent_eval reg-oracle --self-test
-	python3 -m tools.agent_eval math-debug --self-test
+agents-eval: ## Structural check of every agent eval fixture (missing → SKIP)
+	python3 -m tools.agent_eval qa-agent --self-test
 
 agents-routing: ## Dispatcher routing accuracy gate (≥95%, currently 100%)
 	@# W205+2: host-orchestrator-agnostic. The dispatcher binary path is
@@ -157,3 +156,20 @@ agents-check: ## PHASE 8 CI gate — corpus + RAG + eval + routing + scrape + ql
 		echo "slot-qlora-train not on PATH — skipping qlora gate (set SLOT_QLORA_BIN=/path to enable)"; \
 	fi
 	@echo "✅ agents-check OK"
+
+# ─── QA Agent (PHASE 8 P8.7) ───────────────────────────────────────────────
+
+qa-selftest: ## QA Agent L0 self-verification (scenarios + CLI + antibody roundtrip + report hash)
+	python3 -m tools.qa_agent selftest
+
+qa-quick: ## QA Agent quick scope (L0, L1, L2, L3, L9) — fast iteration
+	python3 -m tools.qa_agent auto --quick --allow-dirty
+
+qa-manual: ## QA Agent manual scenario suite (every scenario under tools/qa_agent/scenarios/)
+	python3 -m tools.qa_agent manual --all --allow-dirty
+
+qa-full: ## QA Agent every layer L0..L9 (BASELINE=<ref> optional for L7 regression)
+	python3 -m tools.qa_agent full $(if $(BASELINE),--baseline $(BASELINE),) --allow-dirty
+
+qa-status: ## Read the last persisted QA Agent report
+	python3 -m tools.qa_agent status

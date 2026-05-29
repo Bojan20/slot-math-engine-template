@@ -44,22 +44,25 @@ def test_portfolio_under_30_kb(html_doc: str):
     assert len(html_doc) <= 30_000
 
 
-def test_portfolio_all_five_games_present(html_doc: str):
+def test_portfolio_all_seven_games_present(html_doc: str):
     for game in (
         "Cash Eruption",
         "Fort Knox Wolf Run",
         "Fortune Coin Boost Classic",
         "Skeleton Key",
         "Book-style Expanding + Bonus Buy",
+        "Megaways",
+        "Walking Wild",
     ):
         assert game in html_doc, f"missing game: {game}"
 
 
 def test_portfolio_kpi_totals(html_doc: str, manifest: dict):
-    """KPI strip totals match manifest aggregates."""
-    assert manifest["total_swids"] == 13, f"expected 13 SWIDs, got {manifest['total_swids']}"
-    assert len(manifest["games"]) == 5
-    assert len(manifest["industry_anchors"]) == 5
+    """KPI strip totals match manifest aggregates (post W4.8 + W4.12 templates)."""
+    assert manifest["total_swids"] == 15, f"expected 15 SWIDs, got {manifest['total_swids']}"
+    assert len(manifest["games"]) == 7
+    # 5 real-market anchors + 2 template-clone anchors (Megaways + Walking Wild) = 7.
+    assert len(manifest["industry_anchors"]) == 7
 
 
 def test_portfolio_per_game_counts(manifest: dict):
@@ -69,16 +72,18 @@ def test_portfolio_per_game_counts(manifest: dict):
         "fortune-coin-boost-classic": 4,
         "skeleton-key": 3,
         "book-expanding-bonusbuy": 1,
+        "megaways-clean-room-template": 1,
+        "walking-wild-clean-room-template": 1,
     }
     assert manifest["per_game_counts"] == expected
 
 
 def test_portfolio_real_market_badges_outnumber_template(html_doc: str):
-    """4 real-market badges vs 1 template badge."""
+    """4 real-market badges vs 3 template badges (BB + Megaways + Walking Wild)."""
     real = html_doc.count('">REAL-MARKET<')
     tpl = html_doc.count('">TEMPLATE<')
     assert real == 4, f"expected 4 REAL-MARKET badges, got {real}"
-    assert tpl == 1, f"expected 1 TEMPLATE badge, got {tpl}"
+    assert tpl == 3, f"expected 3 TEMPLATE badges, got {tpl}"
 
 
 def test_portfolio_lists_swids_inline(html_doc: str):

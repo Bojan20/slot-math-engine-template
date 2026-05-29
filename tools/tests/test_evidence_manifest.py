@@ -28,8 +28,9 @@ def test_manifest_schema(manifest: dict):
     assert len(manifest["merkle_root_sha256"]) == 64  # SHA-256 hex
 
 
-def test_manifest_records_all_20_files(manifest: dict):
-    assert manifest["file_count"] == 20
+def test_manifest_records_all_27_files(manifest: dict):
+    """Post W4.8 + W4.12 templates: 20 → 27 evidence files (megaways + walking-wild)."""
+    assert manifest["file_count"] == 27
     assert manifest["missing_files"] == []
 
 

@@ -1,6 +1,6 @@
 # CLOSED_FORM_PORTFOLIO — 28 Closed-Form Math Kernels (Wave 49-110)
 
-Generated: `2026-05-18T02:12:22.321Z`
+Generated: `2026-05-29T15:16:01.087Z`
 
 ## Headline
 
@@ -74,22 +74,22 @@ All have MC verification, all clean-room, all bit-exact deterministic.
 | 175 | Skill-Stop Near-Miss Rate | P(any reel NM) | 0.67232 | 0.67406 | ✅ |
 | 177 | Avalanche Reactor Wave Aggregator (60. MILESTONE) | E[symbols/spin] | 8.00000 | 8.10615 | ✅ |
 | 179 | Sticky Multiplier FS Trail (BTG Bonanza-class) | E[M_N] | 5.80000 | 5.79635 | ✅ |
-| 181 | Reel-Bound Mystery Progressive (L&W Quick Hit M5) | E[RTP/spin] | 3.10500 | 3.19990 | ✅ |
-| 182 | Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3) | E[bags] | 22.29839 | 22.33830 | ✅ |
-| 183 | Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2) | E[total payout] | 1666.94888 | 1669.12333 | ✅ |
-| 184 | Colossal Reels Wild-Transfer (L&W Spartacus M7) | E[K_col] | 0.44200 | 0.43822 | ✅ |
-| 185 | Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1) | E[Y] | 11.91210 | 11.81892 | ✅ |
-| 186 | Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9) | E[total payout] | 18.84000 | 18.83611 | ✅ |
-| 187 | Deterministic Explosion Mult-Drop (L&W Dancing Drums M4) | E[Y/spin] | 7.87500 | 7.79540 | ✅ |
-| 188 | Player-Elects Feature Composition (L&W RR Pick n Mix M11) | best E[Y] | 0.95000 | 0.94655 | ✅ |
-| 189 | Random Feature-Injection FS (L&W Munchkinland M12) | E[S] | 20.00000 | 19.99032 | ✅ |
-| 190 | Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14) | E[Y/parent] | 1.80000 | 1.85044 | ✅ |
-| 191 | Bonus Bank Running-Balance Offset (L&W RR Megaways M10) | E[T_B] | 40.12500 | 40.01575 | ✅ |
-| 192 | Race Competitive Pick Winner (L&W Goldfish Race M8) | bestRtp | 10.00000 | 10.05400 | ✅ |
-| 193 | Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15) | E[Y/spin] | 2.66000 | 2.63717 | ✅ |
-| 194 | Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16) | E[Y/run] | 18.30144 | 19.29205 | ✅ |
-| 195 | Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13) | E[Y/spin] | 1.60960 | 1.60680 | ✅ |
-| 196 | 🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS) | E[Y/spin] | 42.05000 | 41.71062 | ✅ |
+| 181 | Reel-Bound Mystery Progressive (Vendor B Quick Hit M5) | E[RTP/spin] | 3.10500 | 3.19990 | ✅ |
+| 182 | Dynamic Grid-Expansion H&S (Vendor B Ultimate Fire Link M3) | E[bags] | 22.29839 | 22.33830 | ✅ |
+| 183 | Multi-State Frame Upgrade Markov (Vendor B Huff N' Puff M2) | E[total payout] | 1666.94888 | 1669.12333 | ✅ |
+| 184 | Colossal Reels Wild-Transfer (Vendor B Spartacus M7) | E[K_col] | 0.44200 | 0.43822 | ✅ |
+| 185 | Per-Reel Bag × Row-Mult Coupled (Vendor B Dragon Spin M1) | E[Y] | 11.91210 | 11.81892 | ✅ |
+| 186 | Big Bet Paid-Package (UK-CRITICAL Vendor B Monopoly M9) | E[total payout] | 18.84000 | 18.83611 | ✅ |
+| 187 | Deterministic Explosion Mult-Drop (Vendor B Dancing Drums M4) | E[Y/spin] | 7.87500 | 7.79540 | ✅ |
+| 188 | Player-Elects Feature Composition (Vendor B RR Pick n Mix M11) | best E[Y] | 0.95000 | 0.94655 | ✅ |
+| 189 | Random Feature-Injection FS (Vendor B Munchkinland M12) | E[S] | 20.00000 | 19.99032 | ✅ |
+| 190 | Nested Mini-Slot Inside Bonus (Vendor B LOTR Two Towers M14) | E[Y/parent] | 1.80000 | 1.85044 | ✅ |
+| 191 | Bonus Bank Running-Balance Offset (Vendor B RR Megaways M10) | E[T_B] | 40.12500 | 40.01575 | ✅ |
+| 192 | Race Competitive Pick Winner (Vendor B Goldfish Race M8) | bestRtp | 10.00000 | 10.05400 | ✅ |
+| 193 | Multi-Pot Branched H&S Sub-Feature (Vendor B Rich Little Piggies M15) | E[Y/spin] | 2.66000 | 2.63717 | ✅ |
+| 194 | Arcade-Shooter Survival Levels (Vendor B Stellar Jackpots M16) | E[Y/run] | 18.30144 | 19.29205 | ✅ |
+| 195 | Mid-Spin Reel-Reshape Mixture (Vendor B Wizard of Oz Glinda M13) | E[Y/spin] | 1.60960 | 1.60680 | ✅ |
+| 196 | 🏆 Stacked Multi-Wheel Composition (Vendor B Vendor H Triple Cash Wheel M6 — 16/16 Vendor B GAPS) | E[Y/spin] | 42.05000 | 41.71062 | ✅ |
 
 ## Per-solver detailed acceptance reports
 
