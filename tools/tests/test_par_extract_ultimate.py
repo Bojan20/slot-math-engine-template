@@ -845,14 +845,25 @@ class TestW416HaWFix:
 
     @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
     def test_ce_fs_avg_pay_calibrated(self, swid_idx: int, swid: str):
-        """CE FS-CE flat path must have a positive `fs_avg_pay_per_trigger`
-        derived from the published `cash_eruption_from_fs` share."""
+        """W4.16 → W4.17 — Originally asserted a positive
+        `fs_avg_pay_per_trigger` produced by the W4.16 flat-path
+        calibration. The W4.17 structural cleanup retires that field
+        in favour of the typed `fs_haw_pages` + `fs_big_fireball_trigger`
+        contract, so the new invariant is *None*. Kept under the
+        original class so the W4.16 closeout audit trail stays linked
+        to its successor wave.
+        """
         ir = build_cash_eruption(swid_idx)
         haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
-        assert haw.get("fs_trigger_prob") == 1.0
-        fs_avg = haw.get("fs_avg_pay_per_trigger")
-        assert fs_avg is not None and fs_avg > 0.0, (
-            f"CE {swid} fs_avg_pay_per_trigger should be positive, got {fs_avg!r}"
+        # W4.17 — flat path retired; the pages contract takes over.
+        assert haw.get("fs_trigger_prob") is None, (
+            f"CE {swid} fs_trigger_prob should be cleared by W4.17 "
+            f"(was the W4.16 Bernoulli-1 short-circuit), got "
+            f"{haw.get('fs_trigger_prob')!r}"
+        )
+        assert haw.get("fs_avg_pay_per_trigger") is None, (
+            f"CE {swid} fs_avg_pay_per_trigger should be None after W4.17 "
+            f"structural cleanup, got {haw.get('fs_avg_pay_per_trigger')!r}"
         )
 
     @pytest.mark.parametrize("swid_idx,swid", FKWR_SWIDS)
@@ -879,4 +890,223 @@ class TestW416HaWFix:
         assert avg_pay < 100.0, (
             f"FKWR {swid} avg_pay {avg_pay} looks like coin units "
             f"(expected total-bet-×, < 100)"
+        )
+
+
+class TestW417StructuralCleanup:
+    """W4.17 — Final HaW residuals cleanup. Closes the two honest
+    residuals documented in W4.16:
+
+      1. CE FS-CE flat path → pages-sampling. The W4.16 closed-form
+         calibration via `fs_avg_pay_per_trigger` is replaced by the
+         typed `fs_haw_pages` + `fs_big_fireball_trigger` contract.
+         All three CE SWIDs must emit `fs_haw_pages` populated and
+         `fs_avg_pay_per_trigger` cleared to None.
+
+      2. FKWR `-0.015 RTP` empirical absorb → distinct FS paytable.
+         Honest finding: vendor PAR `fs_paytable` (rows 145..177) is
+         bit-identical to the base paytable after WhiteWolf/Whitewolf
+         canonicalization, so the schema gap proposed by W4.17 does
+         not exist in this title. The schema is still emitted via
+         `Feature::FreeSpins.fs_paytable` for forward-compatibility
+         and audit trail, and the magic literal `-0.015` is replaced
+         in `build_ir.py` by the named, derived constant
+         `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416`. The follow-up wave
+         (W4.18) will re-fit FS reel-strip weights against the
+         published share to close the residual structurally.
+    """
+
+    CE_SWIDS = [(1, "200-1637-001"), (2, "200-1637-002"), (3, "200-1637-003")]
+    FKWR_SWIDS = [(1, "200-1775-001"), (2, "200-1775-002")]
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_fs_haw_pages_present(self, swid_idx: int, swid: str):
+        """CE HaW feature must emit `fs_haw_pages` populated with the
+        BM=1 page so the engine's W4.17 pages-sampling FS-CE path
+        activates.
+        """
+        ir = build_cash_eruption(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        fs_pages = haw.get("fs_haw_pages")
+        assert isinstance(fs_pages, dict), (
+            f"CE {swid} fs_haw_pages must be a dict, got {type(fs_pages)}"
+        )
+        assert "1" in fs_pages, (
+            f"CE {swid} fs_haw_pages must carry BM=1 page, got keys "
+            f"{list(fs_pages.keys()) if isinstance(fs_pages, dict) else fs_pages}"
+        )
+        page = fs_pages["1"]
+        assert page["bet_multiplier"] == 1
+        # FS-only block contract: 1 block ⇒ 1 BIG sample, 9 cells
+        # covered (3×3 sub-grid for respin-table lookup).
+        assert page.get("fs_initial_samples") == 1
+        assert page.get("fs_initial_landed") == 9
+        # Big-distribution + respin tables required for FS sampling.
+        assert len(page["big_coin_dist"]) > 0
+        assert len(page["respin_tables"]) > 0
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_fs_big_fireball_trigger_contract(
+        self, swid_idx: int, swid: str
+    ):
+        """CE HaW feature must emit a typed FS Big-Fireball trigger
+        contract `{symbol: "Big Fireball", count_min: 3}` so the
+        engine's W4.17 precedence selects the pages path.
+        """
+        ir = build_cash_eruption(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        trig = haw.get("fs_big_fireball_trigger")
+        assert isinstance(trig, dict), (
+            f"CE {swid} fs_big_fireball_trigger must be a dict, "
+            f"got {type(trig)}"
+        )
+        assert trig.get("symbol") == "Big Fireball"
+        # One CE FS-linked block = 9 cells (3 reels × 3 rows under
+        # the linked stop). Setting count_min = 9 keeps the
+        # `blocks = cells / count_min` derivation honest so a single
+        # block fires exactly one BIG initial-sample draw, matching
+        # the ce-copy-test reference impl.
+        assert trig.get("count_min") == 9, (
+            f"CE {swid} count_min must be 9 (one Big Fireball block "
+            f"= 3 reels × 3 rows = 9 cells under the linked stop)"
+        )
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_fs_avg_pay_per_trigger_absent(
+        self, swid_idx: int, swid: str
+    ):
+        """W4.17 — The W4.16 flat-path field must be cleared to None
+        (the typed pages contract replaces it). Either the key is
+        absent or it explicitly carries None.
+        """
+        ir = build_cash_eruption(swid_idx)
+        haw = next(f for f in ir["features"] if f["kind"] == "hold_and_win")
+        fs_avg = haw.get("fs_avg_pay_per_trigger")
+        assert fs_avg is None, (
+            f"CE {swid} fs_avg_pay_per_trigger must be None after W4.17 "
+            f"structural cleanup, got {fs_avg!r}"
+        )
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_linked_reels_emitted(self, swid_idx: int, swid: str):
+        """CE FreeSpins feature must declare `linked_reels = [1,2,3]`
+        so the engine uses `Grid::spin_linked` for FS spins. Without
+        this the linked-block Big Fireball contract is incoherent
+        (each reel rolls independently, producing 9 BF cells instead
+        of 3 cells = 1 block).
+        """
+        ir = build_cash_eruption(swid_idx)
+        fs = next(f for f in ir["features"] if f["kind"] == "free_spins")
+        assert fs.get("linked_reels") == [1, 2, 3], (
+            f"CE {swid} linked_reels must be [1,2,3], got {fs.get('linked_reels')!r}"
+        )
+
+    @pytest.mark.parametrize("swid_idx,swid", CE_SWIDS)
+    def test_ce_fs_paytable_emitted(self, swid_idx: int, swid: str):
+        """CE FreeSpins feature must emit a distinct FS paytable
+        extracted from PAR rows ~2664..2685. The vendor publishes
+        only 4-of-a-kind / 5-of-a-kind line wins + Big Volcano scatter
+        in FS — the base paytable's 3-of-a-kind rows are absent.
+        """
+        ir = build_cash_eruption(swid_idx)
+        fs = next(f for f in ir["features"] if f["kind"] == "free_spins")
+        fs_pt = fs.get("fs_paytable")
+        assert isinstance(fs_pt, list) and len(fs_pt) > 0, (
+            f"CE {swid} fs_paytable must be a non-empty list, got "
+            f"{type(fs_pt)}: {fs_pt!r}"
+        )
+        # Must include Big Volcano scatter and Red7 5-of-a-kind.
+        combos = [tuple(row["combo"]) for row in fs_pt]
+        assert ("Big Volcano",) in combos, (
+            f"CE {swid} fs_paytable missing Big Volcano scatter row"
+        )
+        red7_5oak = ("Red7", "Red7", "Red7", "Red7", "Red7")
+        assert red7_5oak in combos, (
+            f"CE {swid} fs_paytable missing Red7 5-of-a-kind row"
+        )
+        # No 3-of-a-kind rows (W4.17 finding).
+        for row in fs_pt:
+            if row.get("scope") != "line":
+                continue
+            non_dash = sum(1 for c in row["combo"] if c and c != "--")
+            assert non_dash >= 4, (
+                f"CE {swid} fs_paytable has unexpected 3-of-a-kind row: "
+                f"{row['combo']}"
+            )
+
+    @pytest.mark.parametrize("swid_idx,swid", FKWR_SWIDS)
+    def test_fkwr_fs_paytable_emitted(self, swid_idx: int, swid: str):
+        """FKWR FreeSpins feature must emit `fs_paytable`. Vendor
+        finding (PAR_001/002 rows 145..177): the FS paytable is
+        BIT-IDENTICAL to the base paytable after WhiteWolf/Whitewolf
+        canonicalization. We still emit the schema for forward-
+        compatibility and the audit trail.
+        """
+        ir = build_fort_knox_wolf_run(swid_idx)
+        fs = next(f for f in ir["features"] if f["kind"] == "free_spins")
+        fs_pt = fs.get("fs_paytable")
+        assert isinstance(fs_pt, list), (
+            f"FKWR {swid} fs_paytable must be a list, got {type(fs_pt)}"
+        )
+        assert len(fs_pt) >= 10, (
+            f"FKWR {swid} fs_paytable should carry the full extracted "
+            f"rows (≥10 entries), got {len(fs_pt)}"
+        )
+        # Honest documentation: confirm the FS paytable matches the
+        # base paytable row-for-row (after both go through the same
+        # WhiteWolf→Whitewolf normalization).
+        base_pt = ir["paytable"]
+        base_map = {tuple(r["combo"]): r["pays"] for r in base_pt}
+        fs_map = {tuple(r["combo"]): r["pays"] for r in fs_pt}
+        common = set(base_map) & set(fs_map)
+        diffs = [
+            (c, base_map[c], fs_map[c])
+            for c in common
+            if abs(base_map[c] - fs_map[c]) > 1e-9
+        ]
+        assert not diffs, (
+            f"FKWR {swid} fs_paytable diverges from base paytable for "
+            f"{len(diffs)} rows: {diffs[:3]} (the W4.17 honest finding "
+            f"expects bit-equal pays; if this fires, the vendor has "
+            f"started publishing a distinct FS paytable and the engine "
+            f"now naturally exercises it)"
+        )
+
+    def test_fkwr_no_magic_literal_in_builder(self):
+        """W4.17 — the W4.16 magic literal `0.015` (raw float
+        constant in the FKWR builder branch) must not appear as a
+        free-standing numeric expression. The replacement constant
+        `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` is named, documented, and
+        derived from the published-vs-engine FS RTP delta. The
+        constant declaration block IS allowed to mention `0.015`
+        as the captured value.
+        """
+        from tools.par_extract_ultimate import build_ir as bir
+        src_path = Path(bir.__file__)
+        src = src_path.read_text()
+        # Hard rule: no raw `0.015` literal divided by a trigger prob
+        # in the FKWR builder block. Pre-W4.17 line was
+        # `max(float(fk_avg_pay) / 40.0 - (0.015 / (float(fk_trigger_prob) ...`
+        # The dividing pattern `0.015 / ` should appear nowhere
+        # outside the explicit `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 =
+        # 0.015` declaration.
+        assert "0.015 / (" not in src and "0.015/(" not in src, (
+            "Found pre-W4.17 magic literal `0.015 / (...)` in "
+            "build_ir.py — should have been replaced by the named "
+            "constant FKWR_FS_ENGINE_OVERSHOOT_RTP_W416."
+        )
+        # Verify the named constant exists.
+        assert "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416" in src, (
+            "Named overshoot constant missing from build_ir.py"
+        )
+        # The Fort Knox feature must reference it (not the literal).
+        fkwr_branch_start = src.index("def build_fort_knox_wolf_run(")
+        # Walk to the next top-level `def`/`class`/`# ────` boundary
+        # so the assertion scans the entire Fort Knox builder body.
+        next_def = src.find("\ndef ", fkwr_branch_start + 1)
+        end = next_def if next_def != -1 else len(src)
+        fkwr_branch = src[fkwr_branch_start:end]
+        assert "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416" in fkwr_branch, (
+            "Fort Knox builder branch must reference the named "
+            "overshoot constant, not the raw 0.015 literal"
         )

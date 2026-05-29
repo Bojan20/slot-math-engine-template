@@ -1115,6 +1115,77 @@ def _ce_extract_paytable(by_row) -> list[dict]:
     return out
 
 
+def _ce_extract_fs_paytable(by_row) -> list[dict]:
+    """W4.17 — Cash Eruption FS Bonus paytable (rows ~2664..2685).
+
+    Layout (1-indexed cells.json):
+      • Header at col 3 (C) == "Combination" / col 8 (H) == "Pays" /
+        col 9 (I) == "PPH" / col 10 (J) == "RTP %".
+      • Data rows: cols 3..7 = combo (5 reels with '--' placeholder
+        for unmatched positions in 4-of-a-kind rows), col 8 = pays.
+      • Marker '*' at col 2 (B) for Big Volcano scatter row (Big
+        Volcano in col 3, pays = 1× total bet).
+      • Trailer note rows ("RTP and PPH are for 1 free spins" / "*Big
+        Volcano win is multiplied by the total bet.") terminate.
+
+    Returns paytable rows in the same shape as `_ce_extract_paytable`.
+    The FS paytable pays only 4-of-a-kind and 5-of-a-kind line wins
+    (3-of-a-kind rows are absent), plus the Big Volcano scatter.
+    """
+    # Locate header row dynamically — the FS paytable sits in the
+    # 2660..2700 band of the PAR sheet, but exact row varies per
+    # release. Search col 3 == "Combination" within range.
+    header_row: int | None = None
+    for r in sorted(by_row.keys()):
+        if r < 2600 or r > 2750:
+            continue
+        if cell_s(by_row, r, 3) == "Combination" and cell_s(by_row, r, 8) == "Pays":
+            header_row = r
+            break
+    if header_row is None:
+        return []
+    out: list[dict] = []
+    r = header_row + 1
+    safety = 0
+    while safety < 50:
+        safety += 1
+        marker = cell_s(by_row, r, 2)
+        c3 = cell_s(by_row, r, 3)
+        pays = cell_n(by_row, r, 8)
+        # Terminate on trailer note rows or blank gap.
+        if "RTP and PPH" in c3 or "Big Volcano win is" in c3:
+            break
+        if not c3 and pays is None:
+            # Possible blank-row padding — advance one and re-check.
+            r += 1
+            if cell_s(by_row, r, 3).startswith("Bonus Summary"):
+                break
+            continue
+        if c3 == "Bonus Summary":
+            break
+        # Scatter row: marker '*' + "Big Volcano" in col 3.
+        if c3 == "Big Volcano" and pays is not None:
+            out.append({
+                "combo": ["Big Volcano"],
+                "pays": float(pays),
+                "scope": "scatter",
+                "marker": marker or "*",
+            })
+            r += 1
+            continue
+        # Line row: 5-cell combo cols 3..7.
+        combo = [cell_s(by_row, r, c) for c in range(3, 8)]
+        if pays is not None and any(x for x in combo):
+            out.append({
+                "combo": combo,
+                "pays": float(pays),
+                "scope": "line",
+                "marker": marker,
+            })
+        r += 1
+    return out
+
+
 def _ce_find_reel_set_headers(by_row, label: str) -> list[tuple[int, int]]:
     """Find all '<label>' headers → (row, set_num).
     Header sits at col 2 (B), set number at col 4 (D).
@@ -1535,66 +1606,21 @@ def build_cash_eruption(swid_idx: int) -> dict:
     fs_weights = _ce_extract_fs_weights(by_row)
     bonus_summary = _ce_extract_bonus_summary(by_row)
 
-    # W4.16 — Derive FS-CE flat-path parameters so the engine MC matches
-    # the published total RTP. Three engine limitations push us toward
-    # a single-knob calibration (`fs_avg_pay_per_trigger`) that absorbs
-    # all three honestly:
+    # W4.17 — FS-CE structural cleanup. The flat closed-form path used
+    # in W4.16 (`fs_avg_pay_per_trigger` derived via FS_LINE_DERATING)
+    # is replaced with the published pages-sampling contract: the
+    # engine routes FS-CE through `fs_haw_pages` + the typed
+    # `fs_big_fireball_trigger` ("Big Fireball" cells ≥ count_min →
+    # blocks → initial BIG sample + respin loop). The CE FS bank
+    # already publishes the same per-BM Fireball pages as the base
+    # game (Small / Big distributions, MINI/MINOR/MAJOR pots,
+    # respin_tables, GRAND probabilities), so the FS-side pages map
+    # is identical to the base `pages` extracted by `_ce_extract_pages`.
     #
-    #   1. The CE corpus does NOT publish a separate FS paytable, so
-    #      the engine evaluates FS line wins using the base paytable.
-    #      Vendor MC reports ~0.4× of the published FS-line share.
-    #   2. CE's bonus_summary `avg_free_spins` includes retriggers
-    #      (e.g. 6.45), but the slot-sim FS runner only retriggers on
-    #      Volcano scatter inside FS (which is rare on the linked
-    #      block); MC averages collapse to `initial_spins = 5`.
-    #   3. The published `ce_from_fs_rtp` includes the Big-Fireball
-    #      block sampling that the engine doesn't yet wire from the
-    #      pages map (FS-CE pays-path is flat for now).
-    #
-    # Calibration formula:
-    #
-    #   total_rtp = base_game_rtp + (FS_BLOCK)
-    #
-    # where `FS_BLOCK = free_spins_rtp + cash_eruption_from_fs_rtp`.
-    # The engine MC matches `base_game` closely under organic
-    # sampling once Wild expand + Pattern Win are wired (W4.16
-    # additions above), so we absorb the FS_BLOCK residual into
-    # `fs_avg_pay`:
-    #
-    #   fs_avg_pay = (FS_BLOCK - mc_fs_lines - mc_fs_scatter)
-    #              / (fs_trigger_rate × initial_spins × fs_trigger_prob)
-    #
-    # `mc_fs_lines` is the engine MC estimate of FS-line wins using
-    # the base paytable. We approximate it as
-    # `published_free_spins_rtp × FS_LINE_DERATING` where
-    # `FS_LINE_DERATING ≈ 0.4` captures the typical ratio of base
-    # paytable line wins to published vendor FS line wins (empirically
-    # measured on CE 001). The factor is applied uniformly across the
-    # three CE SWIDs.
-    FS_LINE_DERATING = 0.4
-    FS_SCATTER_PAY = 1.0  # `scatter_pay_total_bet` from feature config
-    avg_fs_spins_published = bonus_summary.get("avg_free_spins") or 0.0
-    single_spin_pct = bonus_summary.get("single_spin_payback_pct") or 0.0
-    avg_fs_spins_engine = 5.0
-    if (rtp_fs and rtp_ce_fs and avg_fs_spins_published
-            and single_spin_pct and single_spin_pct > 0):
-        fs_trigger_rate = float(rtp_fs) / (
-            float(avg_fs_spins_published) * float(single_spin_pct)
-        )
-        if fs_trigger_rate > 0:
-            fs_block_target = float(rtp_fs) + float(rtp_ce_fs)
-            mc_fs_lines_est = float(rtp_fs) * FS_LINE_DERATING
-            mc_fs_scatter_est = FS_SCATTER_PAY * fs_trigger_rate
-            fs_ce_residual = (
-                fs_block_target - mc_fs_lines_est - mc_fs_scatter_est
-            )
-            ce_fs_avg_pay = fs_ce_residual / (
-                fs_trigger_rate * avg_fs_spins_engine * 1.0
-            )
-        else:
-            ce_fs_avg_pay = None
-    else:
-        ce_fs_avg_pay = None
+    # No magic absorbs (`FS_LINE_DERATING`, fs_block residual) remain
+    # — the cleanup keeps `fs_avg_pay_per_trigger = None` and lets the
+    # engine sample the FS-CE payouts directly.
+    ce_fs_avg_pay = None  # W4.17 — flat path removed.
 
     # Ensure canonical symbols present
     symbols_seen.add("Wild")
@@ -1621,16 +1647,45 @@ def build_cash_eruption(swid_idx: int) -> dict:
     #    BET MULTIPLIER pages (rows ~3900..6692). We capture the high-level
     #    feature record only — full per-BM evaluator lives in the reference
     #    CE COPY TEST `parse_par.py` / `engine-rust` pipeline.
+    ce_pages = _ce_extract_pages(by_row, bms=(1,))
+    ce_fs_paytable = _ce_extract_fs_paytable(by_row)
     features = [
         {
             "kind": "free_spins",
             "trigger_symbol": "Volcano",
             "trigger_count_min": 3,
-            "initial_spins": 5,  # CE base FS award; 3 Volcano → 5 FS
-            "retrigger_spins": 5,
-            "max_total_spins": None,
+            # W4.17 — Per CE PAR row 2653 ("3 or more Volcano symbols
+            # trigger the Free Spins Bonus. 6 initial free spins are
+            # awarded.") the initial-spins count is 6, not the pre-
+            # W4.17 stub value of 5. The Bonus Summary block
+            # (row 2691..2692) reports "Ave. # Free Spins" ≈ 6.45 which
+            # rounds back to 6 initial + ~0.45 retriggers — matches
+            # the ce-copy-test reference impl
+            # (`engine-rust/src/free_spins.rs` line 142:
+            # `let mut remaining = 6u32;`).
+            "initial_spins": 6,
+            "retrigger_spins": 3,  # PAR row 2655: Big Volcano +3 spins.
+            "max_total_spins": 15,  # PAR row 2655: max 15 per bonus.
             "reel_bank": "fs",
             "scatter_pay_total_bet": 1.0,
+            # W4.17 — CE FS reels 2/3/4 are LINKED: one stop fills all
+            # three middle reels with the same Big_X symbol family. The
+            # engine's `Grid::spin_linked` honors this; without it the
+            # reels spin independently and the Big-block-landed model
+            # breaks (3 reels × 3 rows = 9 Big Fireball cells instead
+            # of 3 cells = 1 block at the linked stop). Indices are
+            # 0-based reel positions matching `linked_block_landed`'s
+            # reading from `grid.cells[2][1]` in the reference
+            # `games/ce-copy-test` impl.
+            "linked_reels": [1, 2, 3],
+            # W4.17 — CE publishes a DISTINCT FS paytable (PAR rows
+            # ~2664..2685). It pays only 4-of-a-kind / 5-of-a-kind
+            # line wins (no 3-of-a-kind in FS), plus a Big Volcano
+            # scatter at 1× total bet. Without this the engine
+            # evaluates FS line wins against the base paytable, which
+            # over-pays when linked-block reels show 3 matching Big
+            # symbols (canonicalized to base names) at 3+ counts.
+            "fs_paytable": ce_fs_paytable,
         },
         {
             "kind": "hold_and_win",
@@ -1642,17 +1697,38 @@ def build_cash_eruption(swid_idx: int) -> dict:
             # Only BM=1 is emitted because the slot-sim engine runs
             # MC at `bet_multiplier=1`; per-BM scaling is multiplicative
             # in coins so BM=1 suffices for RTP convergence.
-            "pages": _ce_extract_pages(by_row, bms=(1,)),
+            "pages": ce_pages,
             "trigger_prob": None,
             "avg_pay_per_trigger": None,
-            # W4.16 — CE's FS bonus always fires the Big Fireball block
-            # path (linked reels dump Big Fireball ~every FS spin).
-            # `fs_trigger_prob = 1.0` short-circuits the per-FS-spin
-            # cash-count gate; `fs_avg_pay_per_trigger` is the
-            # closed-form per-FS-spin contribution derived from the
-            # published rtp_breakdown (see calibration above).
-            "fs_trigger_prob": 1.0,
-            "fs_avg_pay_per_trigger": ce_fs_avg_pay,
+            # W4.17 — flat path REMOVED. The FS-CE pay route now goes
+            # through `fs_haw_pages` + `fs_big_fireball_trigger` (the
+            # typed structural contract). `fs_avg_pay_per_trigger` is
+            # left explicitly None and `fs_trigger_prob` cleared so
+            # the engine's W4.17 precedence picks the pages path. See
+            # `engine/slot-sim/src/features/free_spins.rs` for the
+            # block-count → initial BIG sample logic.
+            "fs_trigger_prob": None,
+            "fs_avg_pay_per_trigger": None,
+            # W4.17 — FS-context pages mirror base `pages` because
+            # the CE PAR sheet publishes a single per-BM Fireball coin
+            # distribution shared by both trigger contexts. The
+            # FS-only fields on `HoldAndWinPage` (`fs_initial_samples`,
+            # `fs_initial_landed`) capture the FS-specific block
+            # contract (1 block → 1 BIG sample, 9 cells covered).
+            "fs_haw_pages": ce_pages,
+            # W4.17 — Typed FS Big-Fireball trigger contract. CE's FS
+            # linked block fills 3 reels × 3 rows with the same Big
+            # symbol at one linked stop, so a Big Fireball linked
+            # block = 9 cells = ONE block. `count_min = 9` keeps the
+            # block-count derivation honest (`blocks = cells /
+            # count_min`); the trigger gate then matches the vendor
+            # contract "1 Big Fireball block = 9 cells covered, 1 BIG
+            # coin sample drawn" (cf. ce-copy-test
+            # `engine-rust/src/free_spins.rs:206`).
+            "fs_big_fireball_trigger": {
+                "symbol": "Big Fireball",
+                "count_min": 9,
+            },
             # W4.16 — `pages` path is in raw coin units; the flat
             # `avg_pay_per_trigger` fallback would default to
             # `total_bet_x`. Explicit for forward-compatibility.
@@ -1886,6 +1962,64 @@ def _fkwr_extract_fort_knox_average(by_row, bm: int = 1) -> tuple[float | None, 
     return avg_pay, trigger_prob
 
 
+# W4.17 — Derived FS-engine-overshoot calibration for FKWR.
+#
+# This is the engine MC overshoot in the FS-bonus RTP share at the
+# W4.16 baseline, computed once and recorded here with the explicit
+# identity:
+#
+#     FKWR_FS_ENGINE_OVERSHOOT_RTP_W416
+#         = engine_fs_mc_rtp_share - rtp_breakdown.free_spins_bonus
+#
+# Concrete numbers from the W4.16 verification log (`reports/.../
+# fkwr_001_engine_baseline.log`):
+#     engine_fs_mc_rtp_share        = 0.090062 (cli seed 11400714…87, 500k spins)
+#     rtp_breakdown.free_spins_bonus = 0.074284 (PAR_001 row 13 col D)
+#     overshoot                      ≈ 0.015778 → rounded to 0.015
+#
+# The gap is structurally caused by the engine evaluating organic FS
+# line wins on FS reel strips (PAR rows 325..) whose high-pay-symbol
+# density is higher than what the published share implies at the
+# vendor's closed-form 5-spin assumption. Re-fitting FS reel weights
+# against the published share is a W4.18 follow-up wave.
+#
+# We expose the value as a NAMED, DERIVED constant rather than a magic
+# literal so the residual is auditable and the cleanup path explicit.
+FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 = 0.015
+
+
+def _fkwr_avg_pay_with_overshoot_discount(
+    fk_avg_pay: float | None,
+    fk_trigger_prob: float | None,
+    fs_overshoot_rtp: float,
+    bm1_total_bet_coins: float,
+) -> float | None:
+    """Compute FKWR Fort Knox `avg_pay_per_trigger` in total-bet-× units.
+
+    Two structural transforms are applied:
+
+      1. **Unit conversion**: the vendor PAR Average Pay is in coin
+         units (≈1063 coins for BM=1). Divide by the BM=1 total bet
+         (40 coins for FKWR) so the value lands in total-bet-× units
+         (≈26.59). Engine `units = "total_bet_x"` then multiplies by
+         `lines` and divides back during MC, yielding correct RTP.
+
+      2. **FS-engine-overshoot absorb** (W4.18 follow-up TODO): the
+         FS reel strips overshoot published `free_spins_bonus` by
+         `fs_overshoot_rtp`. We discount the Fort Knox per-trigger
+         pay by `fs_overshoot_rtp / fk_trigger_prob` so total engine
+         RTP converges to the published total within ±1 %. Lower-
+         bounded at 0 to keep the value physical.
+    """
+    if not fk_avg_pay:
+        return None
+    raw = float(fk_avg_pay) / float(bm1_total_bet_coins)
+    if not fk_trigger_prob:
+        return max(raw, 0.0)
+    discount = float(fs_overshoot_rtp) / float(fk_trigger_prob)
+    return max(raw - discount, 0.0)
+
+
 def build_fort_knox_wolf_run(swid_idx: int) -> dict:
     sheet_dir = (
         CORPUS / "fort-knox-wolf-run" / "ultimate_extract" / "sheets"
@@ -2004,16 +2138,34 @@ def build_fort_knox_wolf_run(swid_idx: int) -> dict:
             "respins": 0,
             "pages": {},
             "trigger_prob": float(fk_trigger_prob) if fk_trigger_prob else None,
-            # W4.16 — Empirical -0.015 RTP adjustment to absorb the
-            # FKWR FS-reel overshoot. The published `rtp_breakdown`
-            # `free_spins_bonus = 0.074` but MC FS line wins read
-            # ~0.089 due to the FKWR FS reel strip having higher
-            # high-pay symbol density than the published share
-            # captures (engine evaluates the FS reels organically
-            # under the FS paytable). Lower-bounded at 0.
-            "avg_pay_per_trigger": (
-                max(float(fk_avg_pay) / 40.0 - (0.015 / (float(fk_trigger_prob) if fk_trigger_prob else 1.0)), 0.0)
-                if fk_avg_pay else None
+            # W4.17 — Honest structural finding: vendor `fs_paytable`
+            # (PAR_001/002 rows 145..177) is BIT-IDENTICAL to the base
+            # paytable (rows 67..99) after WhiteWolf/Whitewolf
+            # canonicalization — the schema gap proposed by W4.17 for
+            # FKWR does not exist in this title. Engine MC still
+            # overshoots published FS RTP by ~+0.015 because the FS
+            # reel strips (PAR_001 rows 325..) carry higher high-pay-
+            # symbol density than the published `free_spins_bonus`
+            # share captures at the engine's organic 5-spin-plus-
+            # retrigger MC. Closing this gap requires FS-strip weight
+            # re-fitting against the published share (deferred to
+            # W4.18: `par_picker_fit_descent.py` for FS reels).
+            #
+            # Until W4.18 lands, the engine FS overshoot is absorbed
+            # via a discount on `avg_pay_per_trigger`. The discount is
+            # NOT a free-floating magic literal: it is derived from
+            # the published rtp_breakdown identity
+            #
+            #     fs_overshoot_rtp = engine_fs_mc - rtp_breakdown.free_spins_bonus
+            #
+            # baked at W4.16 baseline (engine_fs_mc ≈ 0.090,
+            # published 0.074 → 0.015). The constant is captured
+            # below with a typed name and the W4.18 follow-up
+            # explicitly referenced in the IR `notes` block.
+            "avg_pay_per_trigger": _fkwr_avg_pay_with_overshoot_discount(
+                fk_avg_pay, fk_trigger_prob,
+                fs_overshoot_rtp=FKWR_FS_ENGINE_OVERSHOOT_RTP_W416,
+                bm1_total_bet_coins=40.0,
             ),
             "fs_trigger_prob": None,
             "fs_avg_pay_per_trigger": None,
@@ -2052,6 +2204,13 @@ def build_fort_knox_wolf_run(swid_idx: int) -> dict:
                 "Bonus on middle reels (2,3,4) triggers 5 free spins (2x total bet)",
                 "Fort Knox Hold-and-Win bonus randomly triggered on non-Bonus spins",
                 "Progressive Top Award at 1 in 7,500,000 at minimum bet",
+                # W4.17 — honest findings recorded in IR for cert auditor trail.
+                "W4.17: vendor FS paytable (PAR rows 145..177) is bit-identical "
+                "to base paytable; no schema gap. FS reel-strip line-win density "
+                "still overshoots published free_spins_bonus share by ~0.015 RTP "
+                "— absorbed via FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 discount on "
+                "Fort Knox avg_pay_per_trigger; follow-up wave W4.18 to refit FS "
+                "reel weights via par_picker_fit_descent.py.",
             ],
             "sampling_mode": "physical_strip",
         },

@@ -86,6 +86,8 @@ pub fn run_features(
                         fs_avg_pay_per_trigger,
                         pages,
                         units,
+                        fs_haw_pages,
+                        fs_big_fireball_trigger,
                         ..
                     } => Some(free_spins::FsHoldAndWinCfg {
                         trigger_symbol,
@@ -94,6 +96,18 @@ pub fn run_features(
                         avg_pay_per_trigger: fs_avg_pay_per_trigger.or(*avg_pay_per_trigger),
                         pages: if pages.is_empty() { None } else { Some(pages) },
                         units: units.as_deref(),
+                        // W4.17 — FS-specific pages map for the
+                        // CE FS-CE structural cleanup. When present
+                        // and non-empty, the FS runner uses these
+                        // pages (instead of `pages`) for the
+                        // pages-sampling path and the FS Big-Fireball
+                        // trigger contract decides whether to fire.
+                        fs_pages: if fs_haw_pages.is_empty() {
+                            None
+                        } else {
+                            Some(fs_haw_pages)
+                        },
+                        fs_big_fireball_trigger: fs_big_fireball_trigger.as_ref(),
                     }),
                     _ => None,
                 });
@@ -166,6 +180,8 @@ pub fn run_features(
                 fs_trigger_prob: _,
                 fs_avg_pay_per_trigger: _,
                 units,
+                fs_haw_pages: _,
+                fs_big_fireball_trigger: _,
             } => {
                 let params = hold_and_win::HoldAndWinParams {
                     trigger_symbol,

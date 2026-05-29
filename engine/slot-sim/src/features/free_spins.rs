@@ -13,7 +13,7 @@
 
 use crate::evaluate::{evaluate_lines, CompiledPaytable, SpinWin};
 use crate::features::FeatureOutcome;
-use crate::ir::{Evaluation, HoldAndWinPage, Ir, Topology};
+use crate::ir::{Evaluation, FsBigFireballTrigger, HoldAndWinPage, Ir, Topology};
 use crate::reels::{Grid, ReelSetPicker};
 use crate::rng::Prng;
 use std::collections::BTreeMap;
@@ -74,6 +74,20 @@ pub struct FsHoldAndWinCfg<'a> {
     /// are already coin-denominated and the runner divides by total
     /// bet at the call site).
     pub units: Option<&'a str>,
+    /// W4.17 — FS-context pages map (CE structural cleanup). When
+    /// `Some` and non-empty, the FS runner prefers this over `pages`
+    /// for the pages-sampling path. The map is keyed identically to
+    /// the base `pages` (stringified bet multiplier) and `pick_page`
+    /// selects the BM=1 entry for engine MC.
+    pub fs_pages: Option<&'a BTreeMap<String, HoldAndWinPage>>,
+    /// W4.17 — Typed FS Big-Fireball trigger contract. When `Some`,
+    /// the FS runner counts cells of `symbol` on the FS grid each
+    /// spin; a trigger fires when `count >= count_min`. The block
+    /// count derived from `count / count_min` drives initial BIG
+    /// samples + respin-table lookup. When `None`, the runner falls
+    /// back to the base `trigger_symbol` / `trigger_count_min` /
+    /// `trigger_prob` contract.
+    pub fs_big_fireball_trigger: Option<&'a FsBigFireballTrigger>,
 }
 
 /// Runs the FS sequence for one base-game spin if the trigger fires.
@@ -182,57 +196,109 @@ pub fn run(
         let w = w_base; // keep w for scatter / role_counts access
         out.coins += line_coins;
 
-        // W4.8 — CE-from-FS: trigger HoldAndWin inside FS when fireball
-        // count crosses threshold. Independent dispatch — uses the same
-        // Bernoulli-or-cash-count contract as the base-game runner.
+        // W4.17 — CE-from-FS: trigger HoldAndWin inside FS using the
+        // structurally-typed precedence:
+        //
+        //   1. If `fs_big_fireball_trigger` + `fs_pages` (or `pages`)
+        //      are populated, count Big-Fireball cells on the FS grid
+        //      and route to the pages-sampling path. CE's linked
+        //      reels 2/3/4 place a single Big Fireball block on the
+        //      middle reel (3 cells per block). Each block → 1
+        //      initial BIG sample + 9 cells of grid coverage for the
+        //      respin-table lookup. This is the structurally correct
+        //      path published by the vendor (no magic numbers, full
+        //      volatility fidelity).
+        //   2. Else if `trigger_prob` + `avg_pay_per_trigger` are
+        //      populated (legacy flat path used by FKWR and
+        //      pre-W4.17 CE), apply the flat closed-form pay.
+        //   3. Else if `pages` are populated without the FS Big-
+        //      Fireball trigger contract, use the role-count gate
+        //      (pre-W4.17 best-effort).
+        //   4. Else, no FS-CE pay.
         if let Some(cfg) = params.fs_hold_and_win {
-            let triggered = if let Some(p) = cfg.trigger_prob {
-                if p > 0.0 { rng.gen_f64() < p } else { false }
-            } else {
-                let count = *w.role_counts.get(cfg.trigger_symbol).unwrap_or(&0);
-                count >= cfg.trigger_count_min
-            };
-            if triggered {
-                // W4.16 — precedence rules for FS-CE pay path:
-                //   1. If the IR populated `fs_avg_pay_per_trigger`
-                //      (flat path), USE IT. CE uses this because the
-                //      page-driven Big Fireball block sampling needs a
-                //      separate per-FS-spin landing probability that
-                //      the IR doesn't yet expose; the flat path
-                //      delivers the published `ce_from_fs` RTP
-                //      deterministically.
-                //   2. Else, if `pages` is populated, use the pages
-                //      Big-block sampler (future-ready path).
-                //   3. Else, no FS-CE pay.
-                if let Some(avg_pay) = cfg.avg_pay_per_trigger {
-                    if avg_pay > 0.0 {
-                        // W4.16 — units contract: when `units == "coin"`,
-                        // the payout is in raw coin units and the engine
-                        // does NOT multiply by `lines` (FKWR contract).
-                        // Default (`None` or `"total_bet_x"`) preserves
-                        // pre-W4.16 behavior: × lines so the engine's
-                        // post-divide-back yields total-bet-×.
-                        let multiplier = match cfg.units {
-                            Some("coin") => 1.0,
-                            _ => lines_of(ir) as f64,
-                        };
-                        out.coins += avg_pay * multiplier;
-                        out.events.push("hold_and_win:fs_triggered".into());
+            // W4.17 — structural pages-sampling path (CE FS-CE).
+            let fs_pages_active = cfg.fs_pages.or(cfg.pages);
+            let mut fs_pages_used = false;
+            if let (Some(bf), Some(pages)) =
+                (cfg.fs_big_fireball_trigger, fs_pages_active)
+            {
+                let cells = *w.role_counts.get(bf.symbol.as_str()).unwrap_or(&0);
+                if bf.count_min > 0 && cells >= bf.count_min {
+                    let blocks = cells / bf.count_min;
+                    if blocks > 0 {
+                        if let Some(page) =
+                            crate::features::hold_and_win::pick_page(pages)
+                        {
+                            // CE's FS-CE block contract: each block
+                            // emits one initial BIG-distribution coin
+                            // sample and covers a 3×3 sub-grid (9
+                            // cells) for the respin table lookup. The
+                            // pages field carries `fs_initial_samples`
+                            // and `fs_initial_landed` so the runner
+                            // honors any vendor-published override.
+                            let init_samples_per_block =
+                                page.fs_initial_samples.unwrap_or(1);
+                            let init_landed_per_block =
+                                page.fs_initial_landed.unwrap_or(9);
+                            let init_samples = init_samples_per_block * blocks;
+                            let init_landed = init_landed_per_block * blocks;
+                            let coins_paid =
+                                crate::features::hold_and_win::run_pages_sample(
+                                    page,
+                                    init_samples,
+                                    init_landed,
+                                    true, // initial_use_big (FS-only)
+                                    true, // fs_context (GRAND_FS gate)
+                                    rng,
+                                );
+                            out.coins += coins_paid;
+                            out.events.push("hold_and_win:fs_triggered".into());
+                            fs_pages_used = true;
+                        }
                     }
-                } else if let Some(pages) = cfg.pages {
-                    if let Some(page) = crate::features::hold_and_win::pick_page(pages) {
-                        let init_samples = page.fs_initial_samples.unwrap_or(1);
-                        let init_landed = page.fs_initial_landed.unwrap_or(9);
-                        let coins_paid = crate::features::hold_and_win::run_pages_sample(
-                            page,
-                            init_samples,
-                            init_landed,
-                            true, // initial_use_big
-                            true, // fs_context
-                            rng,
-                        );
-                        out.coins += coins_paid;
-                        out.events.push("hold_and_win:fs_triggered".into());
+                }
+            }
+            if !fs_pages_used {
+                // Legacy precedence — flat path or count-gated pages
+                // (only used by IRs that haven't migrated to the
+                // W4.17 structural contract).
+                let triggered = if let Some(p) = cfg.trigger_prob {
+                    if p > 0.0 { rng.gen_f64() < p } else { false }
+                } else {
+                    let count =
+                        *w.role_counts.get(cfg.trigger_symbol).unwrap_or(&0);
+                    count >= cfg.trigger_count_min
+                };
+                if triggered {
+                    if let Some(avg_pay) = cfg.avg_pay_per_trigger {
+                        if avg_pay > 0.0 {
+                            // W4.16 — units contract: see header comment.
+                            let multiplier = match cfg.units {
+                                Some("coin") => 1.0,
+                                _ => lines_of(ir) as f64,
+                            };
+                            out.coins += avg_pay * multiplier;
+                            out.events.push("hold_and_win:fs_triggered".into());
+                        }
+                    } else if let Some(pages) = cfg.pages {
+                        if let Some(page) =
+                            crate::features::hold_and_win::pick_page(pages)
+                        {
+                            let init_samples =
+                                page.fs_initial_samples.unwrap_or(1);
+                            let init_landed = page.fs_initial_landed.unwrap_or(9);
+                            let coins_paid =
+                                crate::features::hold_and_win::run_pages_sample(
+                                    page,
+                                    init_samples,
+                                    init_landed,
+                                    true,
+                                    true,
+                                    rng,
+                                );
+                            out.coins += coins_paid;
+                            out.events.push("hold_and_win:fs_triggered".into());
+                        }
                     }
                 }
             }

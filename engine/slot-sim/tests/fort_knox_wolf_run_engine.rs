@@ -1,22 +1,28 @@
-//! W4.16 — Fort Knox Wolf Run engine MC tests.
+//! W4.17 — Fort Knox Wolf Run engine MC tests (W4.16 + structural
+//! cleanup).
 //!
 //! Runs the full Engine pipeline against the IGT Fort Knox Wolf Run
-//! IRs (2 SWIDs) and checks RTP + hit-frequency convergence within the
-//! W4.16 organic-MC tolerances:
+//! IRs (2 SWIDs) and checks RTP + hit-frequency convergence within
+//! the W4.16 organic-MC tolerances:
 //!   * RTP within ±1 % of `meta.rtp_total` (Excel published).
 //!   * hit_freq within ±1e-2 of `meta.hit_frequency`.
 //!
-//! The pipeline now exercises the W4.16 Hold-and-Win units fix —
-//! `Feature::HoldAndWin.units = "total_bet_x"` on the FKWR Fort Knox
-//! Bonus + the IR builder rescaling `avg_pay_per_trigger` from raw
-//! coin units (~1063.67) to total-bet-× units (~26.59 = ÷ total_bet
-//! at BM=1 = 40 coins). A small empirical -0.015 RTP adjustment is
-//! also baked into the IR's `avg_pay_per_trigger` to absorb the
-//! FKWR FS-reel-strip overshoot (the FS reels show higher
-//! high-pay-symbol density than the published `free_spins_bonus`
-//! share captures); without it the total RTP overshoots by ~1.5 %.
+//! W4.17 structural status for FKWR:
+//!   * `fs_paytable` is extracted from PAR_001/002 rows 145..177 and
+//!     emitted on `Feature::FreeSpins.fs_paytable`. **Vendor finding**:
+//!     the FS paytable is BIT-IDENTICAL to the base paytable after
+//!     WhiteWolf/Whitewolf canonicalization — the schema gap proposed
+//!     by W4.17 does not exist in this title.
+//!   * The W4.16 magic literal `-0.015 / fk_trigger_prob` discount
+//!     on Fort Knox `avg_pay_per_trigger` is replaced by the typed
+//!     named constant `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` in the IR
+//!     builder, derived from the published-vs-engine FS RTP delta.
+//!     The numeric value is preserved (0.015) because the underlying
+//!     FS-reel-strip overshoot has not yet been structurally closed;
+//!     follow-up wave **W4.18** will re-fit FS reel weights via
+//!     `par_picker_fit_descent.py`.
 
-use slot_sim::ir::Ir;
+use slot_sim::ir::{Feature, Ir};
 use slot_sim::sim::Engine;
 
 const FKWR_001: &str =
@@ -94,4 +100,32 @@ fn fort_knox_wolf_run_001_hit_freq_within_1e_2() {
 #[test]
 fn fort_knox_wolf_run_002_hit_freq_within_1e_2() {
     assert_mc_hit_freq_within_1e_2(FKWR_002, SEED_FKWR_002, "FKWR-002");
+}
+
+/// W4.17 — Structural cleanup assertion. The `fs_paytable` field on
+/// `Feature::FreeSpins` must be populated for both FKWR SWIDs (proves
+/// the builder is emitting the schema even though the vendor FS
+/// paytable equals the base paytable in this title).
+#[test]
+fn fort_knox_wolf_run_fs_paytable_is_some() {
+    for (path, label) in [(FKWR_001, "FKWR-001"), (FKWR_002, "FKWR-002")] {
+        let ir = Ir::load(path).expect("load");
+        let mut saw_fs = false;
+        for feat in &ir.features {
+            if let Feature::FreeSpins { fs_paytable, .. } = feat {
+                saw_fs = true;
+                let pt = fs_paytable
+                    .as_ref()
+                    .unwrap_or_else(|| panic!("{}: fs_paytable must be Some", label));
+                assert!(
+                    pt.len() >= 10,
+                    "{}: fs_paytable should carry the full extracted rows \
+                     (got {} entries)",
+                    label,
+                    pt.len(),
+                );
+            }
+        }
+        assert!(saw_fs, "{}: FreeSpins feature missing from IR", label);
+    }
 }

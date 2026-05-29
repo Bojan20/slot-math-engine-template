@@ -216,6 +216,26 @@ pub enum Feature {
         /// wants coin-unit payouts can flip the field.
         #[serde(default)]
         units: Option<String>,
+        /// W4.17 — Per-FS-context pages-sampling map (CE FS-CE
+        /// structural cleanup). Mirrors the base-game `pages` schema
+        /// but is scoped to the FS bank. When `Some` and non-empty,
+        /// the FS-CE pay path uses pages-sampling (Big Fireball block
+        /// → initial BIG draw + respin loop) instead of the flat
+        /// `fs_avg_pay_per_trigger`. The CE builder emits the same
+        /// BM=1 page as `pages` (Big Fireball / Small Fireball coin
+        /// distributions are shared with the base trigger).
+        #[serde(default)]
+        fs_haw_pages: BTreeMap<String, HoldAndWinPage>,
+        /// W4.17 — Typed FS Big-Fireball trigger contract. CE's FS
+        /// uses linked reels 2/3/4 where one stop produces a 3×3 Big
+        /// Fireball block on the middle row. When `Some`, the FS
+        /// runner detects block landings by counting cells of the
+        /// configured symbol on the grid (`count_min` cells required
+        /// to trigger). For CE: `{ symbol: "Big Fireball", count_min:
+        /// 3 }` — one block = 3 cells × 1 column on the middle reel
+        /// at the linked stop.
+        #[serde(default)]
+        fs_big_fireball_trigger: Option<FsBigFireballTrigger>,
     },
     /// Wolf Run-style pick-bonus.
     ///
@@ -336,6 +356,25 @@ pub enum Feature {
         #[serde(default)]
         fs_per_set_distributions: BTreeMap<String, Vec<MysteryTarget>>,
     },
+}
+
+/// W4.17 — Typed FS Big-Fireball trigger contract (CE FS-CE).
+///
+/// Encodes the per-FS-spin condition that fires the pages-sampling
+/// FS-CE path. Two fields:
+///   * `symbol` — the cell value to look for on the FS grid (e.g.
+///     "Big Fireball"). The FS runner counts occurrences via the
+///     standard `role_counts` map (the symbol must have `role ==
+///     SymbolRole::Cash` to be tallied).
+///   * `count_min` — minimum cells of `symbol` required to consider a
+///     trigger. CE's linked block puts the same symbol on 3 cells of
+///     the middle reel (rows 0/1/2 at the linked stop), so 3 is the
+///     canonical threshold. Block count derived as `floor(cells /
+///     count_min)`; each block = one initial BIG draw.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FsBigFireballTrigger {
+    pub symbol: String,
+    pub count_min: u32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
