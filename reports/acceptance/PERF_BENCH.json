@@ -1,0 +1,95 @@
+{
+  "n_runs": 5,
+  "rows": [
+    {
+      "max_ns": 1219292,
+      "mean_throughput_ops_per_s": 991.9977525298918,
+      "median_ns": 950875,
+      "min_ns": 941042,
+      "n_runs": 5,
+      "name": "W7.1 Math Genome",
+      "p95_ns": 1219292,
+      "p99_ns": 1219292
+    },
+    {
+      "max_ns": 147625,
+      "mean_throughput_ops_per_s": 10033.451527392326,
+      "median_ns": 87750,
+      "min_ns": 84625,
+      "n_runs": 5,
+      "name": "W7.3 RL Cohort",
+      "p95_ns": 147625,
+      "p99_ns": 147625
+    },
+    {
+      "max_ns": 71792,
+      "mean_throughput_ops_per_s": 28571.428571428572,
+      "median_ns": 25375,
+      "min_ns": 22167,
+      "n_runs": 5,
+      "name": "W7.4 Asset Manifest",
+      "p95_ns": 71792,
+      "p99_ns": 71792
+    },
+    {
+      "max_ns": 240334,
+      "mean_throughput_ops_per_s": 4422.168507615416,
+      "median_ns": 228333,
+      "min_ns": 213333,
+      "n_runs": 5,
+      "name": "W7.5 Session Mesh",
+      "p95_ns": 240334,
+      "p99_ns": 240334
+    },
+    {
+      "max_ns": 233958,
+      "mean_throughput_ops_per_s": 4426.412224688225,
+      "median_ns": 223375,
+      "min_ns": 219709,
+      "n_runs": 5,
+      "name": "W7.6 Derivative Manifest",
+      "p95_ns": 233958,
+      "p99_ns": 233958
+    },
+    {
+      "max_ns": 16833,
+      "mean_throughput_ops_per_s": 122949.81188678782,
+      "median_ns": 5667,
+      "min_ns": 5292,
+      "n_runs": 5,
+      "name": "W7.7 JS Bundle",
+      "p95_ns": 16833,
+      "p99_ns": 16833
+    },
+    {
+      "max_ns": 1385791,
+      "mean_throughput_ops_per_s": 996.1318209130305,
+      "median_ns": 977708,
+      "min_ns": 834500,
+      "n_runs": 5,
+      "name": "W7.9 Vendor Graph Ingest",
+      "p95_ns": 1385791,
+      "p99_ns": 1385791
+    },
+    {
+      "max_ns": 13250,
+      "mean_throughput_ops_per_s": 114066.70620979149,
+      "median_ns": 7709,
+      "min_ns": 7500,
+      "n_runs": 5,
+      "name": "W7.10 Self-Play Probe",
+      "p95_ns": 13250,
+      "p99_ns": 13250
+    },
+    {
+      "max_ns": 1101792,
+      "mean_throughput_ops_per_s": 1000.8425092242651,
+      "median_ns": 969250,
+      "min_ns": 939083,
+      "n_runs": 5,
+      "name": "W7.11 Unified Pipeline",
+      "p95_ns": 1101792,
+      "p99_ns": 1101792
+    }
+  ]
+}

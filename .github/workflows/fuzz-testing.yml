@@ -13,7 +13,10 @@
 
 name: fuzz-testing
 
-on:
+# Quoted "on:" so YAML 1.1 parsers don't promote the `on` key to a
+# boolean `true` (some GH Actions log scrapers fall over on the
+# implicit-bool form). Semantics unchanged.
+"on":
   schedule:
     # Sunday 02:00 UTC — 1h sweep complements the 24h `fuzz-weekly.yml`.
     - cron: "0 2 * * 0"

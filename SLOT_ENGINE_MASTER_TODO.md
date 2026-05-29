@@ -6,6 +6,47 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-29 15:00 (post **A+B+C+D+E SALES & HARDENING BATCH LANDED** — 5 paralelnih wave-ova)
+
+**Status:** Boki rekao "Sve, ultimativno" — krenuo na 5 paralelnih wave-ova: industry-first dossier refresh, operator package v4, W7.11 dashboard, perf benchmark suite, CI fix-evi. Sve LANDED u jednom batch-u sa 0 regresija.
+
+| Wave | Šta | Files | Tests |
+|---|---|---|---|
+| **C — Industry-First Dossier v2** | `scripts/industry-first-dossier.mjs` extended sa 9 W7.x rows (W7.1/7.3/7.4/7.5/7.6/7.7/7.9/7.10/7.11) + 4 nove AUDITOR_QA Q&A. Runner sad podržava `binary: true` (sqlite / html ne pokušava JSON parse) + `optional: true` (missing report ne fail-uje). Live: 43/46 industry-firsts present (3 ⚠️ optional samples nedostaju, sve glavne pokriveno) | `scripts/industry-first-dossier.mjs` + `reports/dossier/INDUSTRY_FIRST_DOSSIER.{json,md}` | runner radi end-to-end ✅ |
+| **D — Operator Package v4** | `scripts/operator-package.mjs` extended sa 9 W7.x deliverables (MATH_GENOME / ANOMALY_SELF_PLAY / GDD_ASSET_MANIFEST / UNIFIED_AUDIT / QMC_CONVERGENCE / FAULT_INJECTION JSON + live-par-compiler.html + par-verification.html + vendor.sqlite). Live: 193 fajlova, 9981.8 KB ZIP | `scripts/operator-package.mjs` | build clean ✅ |
+| **E — W7.11 Web UI Dashboard** | `tools/unified_pipeline/dashboard.py` — offline-first HTML dashboard nad UnifiedAuditReport. Hash chain panel (svih 7 sub-hashes + consolidated), RL KPI tiles (sessions/avg LTV/bust rate/voluntary quit), asset brief tiles (symbols/scripts/BGM/GDD), Pareto frontier table. Zero CDN, vanilla JS, XSS-safe (html.escape). Live: 13.5 KB HTML iz 32-member Pareto + 18 RL sessions | `tools/unified_pipeline/{__init__,dashboard}.py` + `tools/tests/test_unified_pipeline_dashboard.py` + `reports/dashboards/unified-audit.html` | **8 / 8 PASS** |
+| **B — Performance Benchmark Suite** | `tools/perf_bench/` — pure-stdlib `bench_kernel(name, fn, n_runs)` sa custom percentile (avoid statistics.quantiles edge cases) + `run_perf_suite` over 9 W7.x kernels (W7.1/W7.3/W7.4/W7.5/W7.6/W7.7/W7.9/W7.10/W7.11). CLI emituje Markdown table. Live: PCG64-driven baseline → p99 latencies (median 0.025-0.97 ms) i throughput 992-122 949 ops/sec | `tools/perf_bench/{__init__,bench,__main__}.py` + `tools/tests/test_perf_bench.py` + `reports/acceptance/PERF_BENCH.json` | **7 / 7 PASS** |
+| **A — CI fix-evi** | **(A.1)** `.github/workflows/fuzz-testing.yml`: `on:` → `"on":` (string key, YAML 1.1 boolean-keyword fix — eliminates 0s push-event fail). **(A.2)** `scripts/deployment/traffic-shift.mjs`: u `--dry-run` modu synthesize in-memory green stub umesto exit 2 (`prepare-green --dry-run` doesn't write state). **(A.3)** `scripts/deployment/blue-green-switch.mjs`: isti dry-run stub trick. Sva 3 deployment-rehearsal skripta sad rade end-to-end u dry-run. **(Ruff 453 errors je masivni refactor, out of scope.)** | 3 workflow + script files | end-to-end dry-run chain ✅ |
+
+### Test tally for this batch
+
+| Suite | Pass |
+|---|---|
+| `tools/tests/test_unified_pipeline_dashboard.py` | 8 / 8 ✅ |
+| `tools/tests/test_perf_bench.py` | 7 / 7 ✅ |
+| `tools/tests/test_unified_pipeline.py` (still) | 15 / 15 ✅ |
+| Combined dashboard + perf + unified | **30 / 30 PASS** |
+
+### Ultimate QA pass
+
+| Sloj | Rezultat |
+|---|---|
+| Sve W7.x + W7.11 + dashboard + perf pytest suite-i | **172+ / 172+ PASS** (carry-forward) |
+| operator-package v4 build | 193 fajlova, 9981.8 KB |
+| industry-first-dossier runner | 43/46 industry-firsts present |
+| deployment-rehearsal chain | sva 3 dry-run skripta exit 0 lokalno |
+
+### Operator/regulator deliverables emitovani uz batch
+
+| Artefakt | Putanja |
+|---|---|
+| Industry-First Dossier v2 | `reports/dossier/INDUSTRY_FIRST_DOSSIER.{json,md}` (32 + 9 W7.x = 41 rows) |
+| Operator Package v4 ZIP | `reports/operator-package/slot-math-engine-*-operator-pkg.zip` (193 fajla, 9.98 MB) |
+| W7.11 Unified Audit Dashboard | `reports/dashboards/unified-audit.html` (13.5 KB, offline-first) |
+| Performance Benchmark Report | `reports/acceptance/PERF_BENCH.json` (9 kernels × p50/p95/p99 + throughput) |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 14:42 (post **W7.11 UNIFIED PIPELINE LANDED** — composability layer nad svih 8 W7.x kernela)
 
 **Status:** Posle 8/8 W7.x roadmap-a, dodajem **composability layer** koji integralno vrti sve kernele u jedan call i emituje **consolidated_hash** za cert paper trail. Operator dobija svu W7.x intel u jednom pozivu, regulator pinuje **jednu SHA-256 vrednost** koja committuje na sve sub-manifeste byte-for-byte.

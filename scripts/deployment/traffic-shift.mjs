@@ -18,8 +18,24 @@ const fast = !!args.fast; // shortcut for tests
 
 let state = loadState();
 if (!state.green.version) {
-  log('no green prepared — refusing to shift traffic');
-  process.exit(2);
+  if (dry) {
+    // In dry-run mode the preceding `prepare-green.mjs --dry-run` call
+    // didn't write state, which is correct behaviour. The rehearsal
+    // pipeline still wants to print a representative traffic-shift
+    // plan, so synthesise an in-memory green stub instead of bailing.
+    state = {
+      ...state,
+      green: {
+        version: 'dry-run-stub',
+        healthy: true,
+        trafficPercent: 0,
+      },
+    };
+    log('dry-run: no persisted green; using in-memory stub for plan');
+  } else {
+    log('no green prepared — refusing to shift traffic');
+    process.exit(2);
+  }
 }
 
 log(

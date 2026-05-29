@@ -35,10 +35,16 @@ from .pipeline import (
     run_unified_pipeline,
     write_unified_report,
 )
+from .dashboard import (
+    render_unified_audit_dashboard,
+    write_unified_audit_dashboard,
+)
 
 __all__ = [
     "UnifiedAuditConfig",
     "UnifiedAuditReport",
     "run_unified_pipeline",
     "write_unified_report",
+    "render_unified_audit_dashboard",
+    "write_unified_audit_dashboard",
 ]

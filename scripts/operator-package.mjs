@@ -315,6 +315,20 @@ const PACKAGE_FILES = [
   { kind: 'reports/acceptance', src: 'reports/acceptance/EXACT_ENUMERATION.md' },
   // DOCS — Wave 67 industry pattern catalog v2
   { kind: 'docs', src: 'docs/INDUSTRY_PATTERN_CATALOG.md' },
+
+  // REPORTS — W7.x futuristic close-out (2026-05-29 batch)
+  // Marked `optional` so the package builds even if a wave hasn't been
+  // re-run since checkout; binary artefacts (sqlite / html) skip the
+  // text-based content hash and use the file SHA-256 directly.
+  { kind: 'reports/acceptance', src: 'reports/acceptance/MATH_GENOME.json', optional: true },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/ANOMALY_SELF_PLAY.json', optional: true },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/GDD_ASSET_MANIFEST.json', optional: true },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/UNIFIED_AUDIT.json', optional: true },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/QMC_CONVERGENCE.json', optional: true },
+  { kind: 'reports/acceptance', src: 'reports/acceptance/FAULT_INJECTION.json', optional: true },
+  { kind: 'reports/dashboards', src: 'reports/dashboards/live-par-compiler.html', optional: true, binary: true },
+  { kind: 'reports/dashboards', src: 'reports/dashboards/par-verification.html', optional: true, binary: true },
+  { kind: 'reports/vendor-graph', src: 'reports/vendor-graph/vendor.sqlite', optional: true, binary: true },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────

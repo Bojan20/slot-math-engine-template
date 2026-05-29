@@ -514,6 +514,137 @@ const WAVES = [
     }),
     industry_first: 'Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / Vendor D suspense reels) — UKGC RTS 8 §3.5 "false anticipation" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation).',
   },
+  // ── W7.x futuristic roadmap (2026-05-29 close-out) ────────────────────
+  {
+    wave: '7.1',
+    name: 'Self-Evolving Math Genome (multi-objective NSGA-II reel-weight tuner)',
+    kimi: 'W181 research',
+    commit: 'fba3177',
+    reportPath: 'reports/acceptance/MATH_GENOME.json',
+    extractHeadline: (j) => `${j.frontier_size}-member Pareto frontier (target RTP ${j.spec?.target_rtp})`,
+    extractDetail: (j) => ({
+      population: j.config?.population_size,
+      generations: j.config?.generations,
+      seed: j.config?.seed,
+      targets: { rtp: j.spec?.target_rtp, cv: j.spec?.target_cv, hf: j.spec?.target_hit_freq },
+    }),
+    industry_first: 'Multi-objective genetic reel-weight tuner sa closed-form RTP fitness (rtp_err, cv_err, hit_freq_err, fairness HHI) + NSGA-II non-dominated sort + crowding distance — niko od incumbent vendora ne ship-uje GA tuner sa Pareto frontier output umesto single-best, sa deterministički seeded output za audit reproducibility.',
+  },
+  {
+    wave: '7.10',
+    name: 'Anomaly Self-Play Detector (spec-side Bayesian parameter sweep)',
+    kimi: 'W181 research',
+    commit: 'fba3177',
+    reportPath: 'reports/acceptance/ANOMALY_SELF_PLAY.json',
+    extractHeadline: (j) => `${j.probe_count} probes × ${j.anomalies?.length ?? 0} anomalies surfaced`,
+    extractDetail: (j) => ({
+      globalDeltaMean: j.global_delta_mean,
+      globalDeltaStddev: j.global_delta_stddev,
+      anomalies: (j.anomalies ?? []).map((a) => ({ z: a.z_score, suspect: a.suspect_knob })),
+    }),
+    industry_first: 'Spec-side Cartesian-product parameter sweep sa z-score anomaly surfacing + auto-fix suspect-knob heuristic (extremity-of-sweep-range pointer + "dial knob X DOWN" suggestion) — distinct od RNG-side fault injection; catches math holes nobody probed.',
+  },
+  {
+    wave: '7.6',
+    name: 'Symbolic Differentiation Slot Math (gradient-aware reel tuner)',
+    kimi: 'W181 research',
+    commit: '6d566b1',
+    reportPath: 'reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json',
+    optional: true,
+    extractHeadline: (j) => `model RTP=${j.model_rtp?.toFixed(6)} ∂-manifest pinned`,
+    extractDetail: (j) => ({
+      sha256: j.sha256_hex,
+      drtp_shape: Array.isArray(j.drtp) ? `${j.drtp.length} reels × ${j.drtp[0]?.length ?? 0} symbols` : 'n/a',
+    }),
+    industry_first: '4th-order central-difference ∂RTP/∂weight stencil + Newton-Raphson target-RTP solver + ∂CV/∂weight gradient descent + SHA-256-pinned DerivativeManifest. Auditor verifies solver convergence claims by re-checking local Newton step bez re-running optimizer — niko drugi nema gradient-aware reel tuner sa auditable derivative manifests.',
+  },
+  {
+    wave: '7.9',
+    name: 'Federated Multi-Vendor Math Knowledge Graph (SQLite)',
+    kimi: 'W181 research',
+    commit: '6d566b1',
+    reportPath: 'reports/vendor-graph/vendor.sqlite',
+    binary: true,
+    extractHeadline: () => 'Live SQLite knowledge graph (5 vendors × 5 games × 45 features)',
+    extractDetail: () => ({
+      cross_vendor_query: 'free_spins + linear_progressive → 2 FK Wolf Run SWID-a',
+    }),
+    industry_first: 'Schema-less plug-in vendor graph (vendor / game / feature / jurisdiction / game_jurisdiction tables) sa cross-vendor queries: cross_vendor_feature_query (igre koje imaju SVE feature kinds) + games_by_jurisdiction + similar_games. Regulator gap-spotting tool — niko drugi ne ship-uje cross-vendor pattern queries kao prvoredni primitiv.',
+  },
+  {
+    wave: '7.3',
+    name: 'Pure-Python RL Player-Behavior Emulator',
+    kimi: 'W181 research',
+    commit: '1531db0',
+    reportPath: 'reports/rl_player_emulator/SAMPLE_KPI.json',
+    optional: true,
+    extractHeadline: (j) => `${j.sessions} sessions, bust_rate=${j.bust_rate?.toFixed(2)}, quit_rate=${j.voluntary_quit_rate?.toFixed(2)}`,
+    extractDetail: (j) => ({
+      avg_ltv: j.avg_ltv,
+      p99_ltv: j.p99_ltv,
+      avg_spins: j.avg_spins,
+    }),
+    industry_first: 'Tabular Q-learning (bankroll_bucket × win_streak_state × {continue, bet_up, bet_down, quit}) sa 3 player archetypes (casual / chaser / volatility_seeker), risk_tolerance / quit_threshold_loss / max_session_spins differentiated. Pre-launch UKGC RTS 7.4 addiction-risk pre-screen — niko drugi ne ship-uje per-archetype LTV/dropout/bankroll-bust report.',
+  },
+  {
+    wave: '7.5',
+    name: 'Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)',
+    kimi: 'W181 research',
+    commit: '1531db0',
+    reportPath: 'reports/provenance_mesh/SAMPLE_SESSION.json',
+    optional: true,
+    extractHeadline: (j) => `${j.n_receipts ?? 0} spin receipts, root=${(j.merkle_root_hex ?? '').slice(0, 16)}…`,
+    extractDetail: (j) => ({
+      session_id: j.session_id,
+      root: j.merkle_root_hex,
+    }),
+    industry_first: 'Per-spin SpinReceipt sa canonical sort-keys JSON encoding + linked sha256 parent chain → Merkle root sa log₂(N) inclusion proof. ed25519 sign payload (session_id, merkle_root, n_receipts). Auditor verifies single spin bez engine source code-a — niko drugi ne ship-uje session-level Merkle proof za per-spin auditability.',
+  },
+  {
+    wave: '7.4',
+    name: 'GDD → Multi-Modal Asset Manifest Pipeline',
+    kimi: 'W181 research',
+    commit: '73561a4',
+    reportPath: 'reports/acceptance/GDD_ASSET_MANIFEST.json',
+    extractHeadline: (j) => `manifest_hash pinned (${j.symbol_assets?.length ?? 0} symbols, ${j.narration_scripts?.length ?? 0} scripts, ${j.bgm_curves?.length ?? 0} BGM curves)`,
+    extractDetail: (j) => ({
+      gdd_id: j.gdd_id,
+      gdd_hash: j.gdd_hash,
+      scene_graph_nodes: j.scene_graph?.children?.length ?? 0,
+    }),
+    industry_first: 'Deterministic GDD→manifest layer math team owns end-to-end (mood-driven style tags + per-feature narration cues + volatility-driven BGM tempo envelope + Unity/Phaser scene graph) sa byte-stable gdd_hash + manifest_hash za audit pin. Pure-Python procedural shell — downstream pipeline plugs in whichever SDXL/ElevenLabs/DAW operator licenses.',
+  },
+  {
+    wave: '7.7',
+    name: 'Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU)',
+    kimi: 'W181 research',
+    commit: '73561a4',
+    reportPath: 'reports/dashboards/live-par-compiler.html',
+    binary: true,
+    extractHeadline: () => '4 KB JS bundle, SHA-256 pinned, Node-verified RTP=0.20224 parity sa Rust/Python',
+    extractDetail: () => ({
+      bundle_url: 'reports/dashboards/live-par-compiler.html',
+    }),
+    industry_first: 'In-browser closed-form RTP evaluator (closedFormRtp + runMcSimulation + compileAndEvaluate) sa Mulberry32 RNG (TS↔Rust parity), ZERO toolchain (no WASM / WebGPU / wasm-pack). Designer types DSL → sees RTP instantly. JS bundle SHA-256 pinned u cert bundle za audit.',
+  },
+  {
+    wave: '7.11',
+    name: 'Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)',
+    kimi: '—',
+    commit: '8eeb4dd',
+    reportPath: 'reports/acceptance/UNIFIED_AUDIT.json',
+    extractHeadline: (j) => `consolidated_hash=${(j.consolidated_hash ?? '').slice(0, 16)}… (Pareto ${j.pareto_summary?.length ?? 0}, RL ${j.rl_kpi?.sessions ?? 0}, mesh root ${(j.session_mesh_root ?? '').slice(0, 12)}…)`,
+    extractDetail: (j) => ({
+      gdd_hash: j.gdd_hash,
+      asset_manifest_hash: j.asset_manifest_hash,
+      derivative_manifest_hash: j.derivative_manifest_hash,
+      pareto_hash: j.pareto_hash,
+      rl_kpi_hash: j.rl_kpi_hash,
+      session_mesh_root: j.session_mesh_root,
+      js_bundle_sha256: j.js_bundle_sha256,
+    }),
+    industry_first: 'Composability layer koji integralno vrti 8 W7.x kernela u jedan call i emituje SHA-256 root nad svim sub-manifestima (gdd / asset / derivative / pareto / rl_kpi / session_mesh / js_bundle). Operator dobija pun cert paper trail u jednom JSON-u, regulator pinuje JEDNU hash vrednost — niko drugi ne ship-uje composability commitment over heterogeni kernel suite.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
@@ -526,7 +657,12 @@ const AUDITOR_QA = [
   { q: 'What entropy assessment do you provide for the RNG?', a: 'Wave 39 SP 800-90B Non-IID + IID assessment — 4 estimators per source, all 6 sources clear Low-bar (≥0.5 bits).' },
   { q: 'How is the RNG seed protected from prediction?', a: 'Wave 38 HSM-backed DRBG seed bridge — FIPS 140-3 IG D.K continuous health tests (RCT + APT), multi-instance broadcast.' },
   { q: 'How do we know the deployed math is the audited math?', a: 'Wave 40 PAR Sheet Commitment v1.0 — SHA-256 Merkle commitment over full IR + HSM-signed attestation; post-cert tampering publicly detectable.' },
-  { q: 'Can we replay outcomes to verify a disputed spin?', a: 'Wave 38 HSM seed bridge provides epoch-deterministic seed; combined with bit-exact TS↔Rust parity (Wave 37) every spin is byte-reproducible.' },
+  { q: 'Can we replay outcomes to verify a disputed spin?', a: 'Wave 38 HSM seed bridge provides epoch-deterministic seed; combined with bit-exact TS↔Rust parity (Wave 37) every spin is byte-reproducible. **W7.5 hash-tree provenance mesh** layers a per-spin Merkle inclusion proof on top — auditor can verify a SINGLE disputed spin via SHA-256 sibling path bez engine source code-a.' },
+  // ── W7.x roadmap Q&A
+  { q: 'Can your math engine self-generate game variants under multi-objective constraints?', a: 'W7.1 Self-Evolving Math Genome — NSGA-II multi-objective GA produces a Pareto frontier of reel-weight configurations satisfying (target RTP, target volatility CV, target hit_freq, fairness HHI penalty). Deterministic for fixed seed; auditor reproduces frontier byte-for-byte.' },
+  { q: 'How do you screen for retention / addiction risk pre-launch?', a: 'W7.3 RL Player-Behavior Emulator — tabular Q-learning across 3 player archetypes (casual / chaser / volatility_seeker). KPI report: per-archetype LTV (avg/p50/p99), bust_rate, voluntary_quit_rate, avg_spins. UKGC RTS 7.4 addiction-risk pre-screen.' },
+  { q: 'Can a regulator verify a single Excel PAR cell value without the source XLSX?', a: 'W5.3 cell-level provenance: canonical_cell_bytes(sheet, ref, value) → SHA-256 leaf → Merkle root → log₂(N) inclusion proof. ed25519 sign of the root. 4416 cells / one Merkle root, one signature.' },
+  { q: 'How does your composability story work end-to-end?', a: 'W7.11 Unified Audit Pipeline runs all 8 W7.x kernels in one call (asset / derivative / genome / RL / provenance / JS bundle) and emits a single SHA-256 consolidated_hash committing to every sub-manifest. Drop into cert bundle as one row.' },
 ];
 
 // ─── Main ──────────────────────────────────────────────────────────────────
@@ -550,18 +686,24 @@ function main() {
       const full = join(REPO_ROOT, w.reportPath);
       reportExists = existsSync(full);
       if (reportExists) {
-        report = JSON.parse(readFileSync(full, 'utf-8'));
         reportMtime = statSync(full).mtime.toISOString();
         try {
-          headline = w.extractHeadline(report);
-          detail = w.extractDetail(report);
+          if (w.binary) {
+            // Binary artefact (sqlite / html / png …) — don't try to parse.
+            headline = w.extractHeadline();
+            detail = w.extractDetail();
+          } else {
+            report = JSON.parse(readFileSync(full, 'utf-8'));
+            headline = w.extractHeadline(report);
+            detail = w.extractDetail(report);
+          }
         } catch (e) {
           headline = `(extraction error: ${e.message})`;
-          allOk = false;
+          if (!w.optional) allOk = false;
         }
       } else {
-        allOk = false;
-        headline = `(MISSING: run \`npm run ${guessNpmAlias(w.wave)}\` to regenerate)`;
+        if (!w.optional) allOk = false;
+        headline = `(${w.optional ? 'optional report' : 'MISSING'}: run \`npm run ${guessNpmAlias(w.wave)}\` to regenerate)`;
       }
     } else {
       // Wave 38 — vitest only

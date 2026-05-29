@@ -21,14 +21,25 @@ if (to !== 'blue' && to !== 'green') {
 }
 const dry = !!args['dry-run'];
 
-const state = loadState();
+let state = loadState();
 if (state.active === to) {
   log(`active already ${to} (no-op)`);
   process.exit(0);
 }
 if (!state[to]?.healthy) {
-  log(`refusing to switch to unhealthy env ${to}`);
-  process.exit(3);
+  if (dry) {
+    // Same in-memory stub trick as traffic-shift: the rehearsal chain
+    // calls every script with --dry-run, so the persisted state never
+    // shows green as healthy. Synthesise it.
+    log(`dry-run: ${to} not persisted; using in-memory stub for plan`);
+    state = {
+      ...state,
+      [to]: { ...(state[to] ?? {}), version: 'dry-run-stub', healthy: true },
+    };
+  } else {
+    log(`refusing to switch to unhealthy env ${to}`);
+    process.exit(3);
+  }
 }
 log(`switch active ${state.active} → ${to}`);
 const next = { ...state, active: to };

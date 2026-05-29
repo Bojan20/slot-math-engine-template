@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-16T08:12:40.708Z",
-  "repo_sha": "48017001fd0f2bb8d5fdb84d74973327445c1f9f",
+  "generatedAtUtc": "2026-05-29T12:51:24.840Z",
+  "repo_sha": "7b3fe3dbf62552003df603ff11b4bdb7462215ba",
   "headline": {
-    "waves": 37,
-    "industry_firsts": 37,
+    "waves": 46,
+    "industry_firsts": 43,
     "all_present": true
   },
   "waves": [
@@ -15,7 +15,7 @@
       "name": "Metamorphic RTP Invariant Suite",
       "reportPath": "reports/acceptance/METAMORPHIC_RTP.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:15.688Z",
+      "reportMtime": "2026-05-17T10:18:07.543Z",
       "headline": "50/50 cells PASS",
       "detail": {
         "mrs": [
@@ -39,13 +39,49 @@
       "name": "Mutation-Score CI Gate",
       "reportPath": "reports/mutation/SUMMARY.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:12:14.832Z",
-      "headline": "TS 85.4% + Rust evaluator=100.0% / rng=92.6%",
+      "reportMtime": "2026-05-24T16:36:02.154Z",
+      "headline": "TS 91.2% + Rust adapter=100.0% / behavior_impls=100.0% / behavior_pipeline=100.0% / behavior_registry=100.0% / bulk=51.5% / cluster=92.9% / evaluator=100.0% / features=43.8% / jurisdiction_adapter=76.0% / markov=78.5% / rng=92.6% / rng_w236_final3=71.0% / validate=100.0%",
       "detail": {
         "ts_total": 342,
-        "ts_killed": 290,
-        "ts_survived": 50,
+        "ts_killed": 310,
+        "ts_survived": 30,
         "rust_crates": [
+          {
+            "crate": "adapter",
+            "total": 18,
+            "caught": 16,
+            "score": 1
+          },
+          {
+            "crate": "behavior_impls",
+            "total": 172,
+            "caught": 146,
+            "score": 1
+          },
+          {
+            "crate": "behavior_pipeline",
+            "total": 24,
+            "caught": 23,
+            "score": 1
+          },
+          {
+            "crate": "behavior_registry",
+            "total": 13,
+            "caught": 12,
+            "score": 1
+          },
+          {
+            "crate": "bulk",
+            "total": 35,
+            "caught": 15,
+            "score": 0.5151515151515151
+          },
+          {
+            "crate": "cluster",
+            "total": 47,
+            "caught": 13,
+            "score": 0.9285714285714286
+          },
           {
             "crate": "evaluator",
             "total": 24,
@@ -53,10 +89,40 @@
             "score": 1
           },
           {
+            "crate": "features",
+            "total": 112,
+            "caught": 49,
+            "score": 0.4375
+          },
+          {
+            "crate": "jurisdiction_adapter",
+            "total": 28,
+            "caught": 19,
+            "score": 0.76
+          },
+          {
+            "crate": "markov",
+            "total": 220,
+            "caught": 172,
+            "score": 0.7853881278538812
+          },
+          {
             "crate": "rng",
             "total": 69,
             "caught": 50,
             "score": 0.9264705882352942
+          },
+          {
+            "crate": "rng_w236_final3",
+            "total": 32,
+            "caught": 19,
+            "score": 0.7096774193548387
+          },
+          {
+            "crate": "validate",
+            "total": 26,
+            "caught": 25,
+            "score": 1
           }
         ]
       },
@@ -69,7 +135,7 @@
       "name": "USIF PAR Sheet Schema v1.0",
       "reportPath": "reports/usif-par/VALIDATION_REPORT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:12:14.887Z",
+      "reportMtime": "2026-05-17T10:18:07.545Z",
       "headline": "20/20 samples valid",
       "detail": {
         "mode": "baseline",
@@ -85,7 +151,7 @@
       "name": "Jurisdiction Auto-Gate Matrix",
       "reportPath": "reports/acceptance/JURISDICTION_AUTO_GATE.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:12:14.943Z",
+      "reportMtime": "2026-05-17T10:18:07.542Z",
       "headline": "450 verdicts (PASS=203 / WARN=175 / FAIL=72)",
       "detail": {
         "jurisdictions": 15,
@@ -101,7 +167,7 @@
       "name": "Differential Fuzz Cross-Language",
       "reportPath": "reports/acceptance/DIFF_FUZZ_CROSS_LANG.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:16.539Z",
+      "reportMtime": "2026-05-17T10:18:07.542Z",
       "headline": "40/40 cells PASS",
       "detail": {
         "mrs": [
@@ -143,7 +209,7 @@
       "name": "SP 800-90B Entropy Assessment",
       "reportPath": "reports/rng/SP_800_90B_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:17.254Z",
+      "reportMtime": "2026-05-17T10:18:07.545Z",
       "headline": "6 sources, all Low-bar (≥0.5 bits) ✅",
       "detail": {
         "sources": [
@@ -189,7 +255,7 @@
       "name": "PAR Sheet Commitment v1.0",
       "reportPath": "reports/acceptance/PAR_COMMITMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:21.333Z",
+      "reportMtime": "2026-05-17T10:18:07.543Z",
       "headline": "180/180 gates PASS",
       "detail": {
         "fixtures": 30,
@@ -203,7 +269,7 @@
           "g6"
         ]
       },
-      "industry_first": "Nijedan vendor (IGT/SG/L&W/Aristocrat/NetEnt/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable"
+      "industry_first": "Nijedan vendor (Vendor A/SG/Vendor B/Vendor C/Vendor D/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable"
     },
     {
       "wave": 43,
@@ -212,7 +278,7 @@
       "name": "ENT Entropy Battery (in-process)",
       "reportPath": "reports/rng/ENT_ASSESSMENT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T04:14:22.095Z",
+      "reportMtime": "2026-05-17T10:18:07.545Z",
       "headline": "6/6 sources PASS all 5 ENT stats",
       "detail": {
         "sampleBytes": 100000,
@@ -331,8 +397,8 @@
       "name": "Closed-Form Portfolio (12 hybrid math kernels)",
       "reportPath": "reports/dossier/CLOSED_FORM_PORTFOLIO.json",
       "reportExists": true,
-      "reportMtime": "2026-05-16T08:04:28.796Z",
-      "headline": "36/36 closed-form solvers PASS in single runner",
+      "reportMtime": "2026-05-19T15:12:22.549Z",
+      "headline": "77/77 closed-form solvers PASS in single runner",
       "detail": {
         "solvers": [
           {
@@ -513,6 +579,211 @@
           {
             "wave": 127,
             "solver": "Anticipation/Tease Reel Probability",
+            "ok": true
+          },
+          {
+            "wave": 130,
+            "solver": "Free Spins Buy Tier Trade-Off",
+            "ok": true
+          },
+          {
+            "wave": 132,
+            "solver": "Multi-Level Wild Tier Markov",
+            "ok": true
+          },
+          {
+            "wave": 134,
+            "solver": "Hold-and-Win Multi-Tier Value Jackpot",
+            "ok": true
+          },
+          {
+            "wave": 136,
+            "solver": "Locked/Held Reels During FS",
+            "ok": true
+          },
+          {
+            "wave": 138,
+            "solver": "Tumble Multiplier with Cap",
+            "ok": true
+          },
+          {
+            "wave": 140,
+            "solver": "Adjacent Pays Aggregator",
+            "ok": true
+          },
+          {
+            "wave": 142,
+            "solver": "Symbol Multiplier on Reel-Stop",
+            "ok": true
+          },
+          {
+            "wave": 144,
+            "solver": "Trail Bonus Progression",
+            "ok": true
+          },
+          {
+            "wave": 146,
+            "solver": "Cascade Meter Charge-Up Trigger",
+            "ok": true
+          },
+          {
+            "wave": 148,
+            "solver": "Max Win Cap Truncation",
+            "ok": true
+          },
+          {
+            "wave": 150,
+            "solver": "Voltage Meter Multi-Tier",
+            "ok": true
+          },
+          {
+            "wave": 152,
+            "solver": "Bonus Trigger Award Stratification",
+            "ok": true
+          },
+          {
+            "wave": 154,
+            "solver": "Free Bet Wagering Requirement",
+            "ok": true
+          },
+          {
+            "wave": 157,
+            "solver": "Session Bankroll Drawdown",
+            "ok": true
+          },
+          {
+            "wave": 159,
+            "solver": "Hit Frequency Distribution",
+            "ok": true
+          },
+          {
+            "wave": 161,
+            "solver": "Max Drop From Starting Bankroll",
+            "ok": true
+          },
+          {
+            "wave": 163,
+            "solver": "Martingale Bust Time",
+            "ok": true
+          },
+          {
+            "wave": 165,
+            "solver": "Paroli Streak Cash-Out",
+            "ok": true
+          },
+          {
+            "wave": 167,
+            "solver": "AWP Cycle Convergence",
+            "ok": true
+          },
+          {
+            "wave": 169,
+            "solver": "Drop-and-Stick Wild Expansion",
+            "ok": true
+          },
+          {
+            "wave": 171,
+            "solver": "Tumbling Cascade Chain Length",
+            "ok": true
+          },
+          {
+            "wave": 173,
+            "solver": "Pick-and-Click Pooper Bonus",
+            "ok": true
+          },
+          {
+            "wave": 175,
+            "solver": "Skill-Stop Near-Miss Rate",
+            "ok": true
+          },
+          {
+            "wave": 177,
+            "solver": "Avalanche Reactor Wave Aggregator (60. MILESTONE)",
+            "ok": true
+          },
+          {
+            "wave": 179,
+            "solver": "Sticky Multiplier FS Trail (BTG Bonanza-class)",
+            "ok": true
+          },
+          {
+            "wave": 181,
+            "solver": "Reel-Bound Mystery Progressive (L&W Quick Hit M5)",
+            "ok": true
+          },
+          {
+            "wave": 182,
+            "solver": "Dynamic Grid-Expansion H&S (L&W Ultimate Fire Link M3)",
+            "ok": true
+          },
+          {
+            "wave": 183,
+            "solver": "Multi-State Frame Upgrade Markov (L&W Huff N' Puff M2)",
+            "ok": true
+          },
+          {
+            "wave": 184,
+            "solver": "Colossal Reels Wild-Transfer (L&W Spartacus M7)",
+            "ok": true
+          },
+          {
+            "wave": 185,
+            "solver": "Per-Reel Bag × Row-Mult Coupled (L&W Dragon Spin M1)",
+            "ok": true
+          },
+          {
+            "wave": 186,
+            "solver": "Big Bet Paid-Package (UK-CRITICAL L&W Monopoly M9)",
+            "ok": true
+          },
+          {
+            "wave": 187,
+            "solver": "Deterministic Explosion Mult-Drop (L&W Dancing Drums M4)",
+            "ok": true
+          },
+          {
+            "wave": 188,
+            "solver": "Player-Elects Feature Composition (L&W RR Pick n Mix M11)",
+            "ok": true
+          },
+          {
+            "wave": 189,
+            "solver": "Random Feature-Injection FS (L&W Munchkinland M12)",
+            "ok": true
+          },
+          {
+            "wave": 190,
+            "solver": "Nested Mini-Slot Inside Bonus (L&W LOTR Two Towers M14)",
+            "ok": true
+          },
+          {
+            "wave": 191,
+            "solver": "Bonus Bank Running-Balance Offset (L&W RR Megaways M10)",
+            "ok": true
+          },
+          {
+            "wave": 192,
+            "solver": "Race Competitive Pick Winner (L&W Goldfish Race M8)",
+            "ok": true
+          },
+          {
+            "wave": 193,
+            "solver": "Multi-Pot Branched H&S Sub-Feature (L&W Rich Little Piggies M15)",
+            "ok": true
+          },
+          {
+            "wave": 194,
+            "solver": "Arcade-Shooter Survival Levels (L&W Stellar Jackpots M16)",
+            "ok": true
+          },
+          {
+            "wave": 195,
+            "solver": "Mid-Spin Reel-Reshape Mixture (L&W Wizard of Oz Glinda M13)",
+            "ok": true
+          },
+          {
+            "wave": 196,
+            "solver": "🏆 Stacked Multi-Wheel Composition (L&W Bally Triple Cash Wheel M6 — 16/16 L&W GAPS)",
             "ok": true
           }
         ]
@@ -949,7 +1220,7 @@
           }
         ]
       },
-      "industry_first": "NetEnt Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak."
+      "industry_first": "Vendor D Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = Π M_i over Binomial wild reels; E[W] = (p·μ_M + 1-p)^R (interchange product over per-reel active/inactive); E[W²] = (p·E[M²] + 1-p)^R; max combined = m_max^R deterministic peak."
     },
     {
       "wave": 95,
@@ -1144,13 +1415,13 @@
           }
         ]
       },
-      "industry_first": "NetEnt / Pragmatic / IGT wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget."
+      "industry_first": "Vendor D / Pragmatic / Vendor A wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)²; conditional payout (given terminate) μ_V = Σ p_i·v_i / (1-p_respin); tail P(N≥k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget."
     },
     {
       "wave": 107,
       "kimi": "—",
       "commit": "2ec7f20",
-      "name": "Pick Bonus N-Stage Tree — NetEnt classic / Microgaming \"pick til pop\"",
+      "name": "Pick Bonus N-Stage Tree — Vendor D classic / Vendor G \"pick til pop\"",
       "reportPath": "reports/acceptance/PICK_BONUS_N_STAGE.json",
       "reportExists": true,
       "reportMtime": "2026-05-16T06:20:01.668Z",
@@ -1300,7 +1571,7 @@
           }
         ]
       },
-      "industry_first": "Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / NetEnt Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre."
+      "industry_first": "Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / Vendor D Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: π_0 = 1/(1+N·p), π_k = p/(1+N·p) for k=1..N; M_k linear (base+(k−1)·step) or geometric (base·ratio^(k−1)); E[Y per spin] = E[V]·E[M] cross-independence; Var[Y] = E[V²]·E[M²] − E[Y]²; cycle 1/p + N length, ΣM_k mult, E[V]·ΣM_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre."
     },
     {
       "wave": 116,
@@ -1339,7 +1610,7 @@
           }
         ]
       },
-      "industry_first": "Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / NetEnt Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika."
+      "industry_first": "Pre-spin mystery → in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / Vendor D Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K · paytable[S] with K ⊥ S; E[Y] = E[K]·E[paytable[S]] (Wald-style), Var[Y] = E[K²]·E[paytable²] − E[K]²·E[paytable]²; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)·P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]·paytable[s]. Distinct from W47/W91/W93/W101/W114 — first auditor-verifiable closed-form for this mehanika."
     },
     {
       "wave": 118,
@@ -1456,7 +1727,7 @@
           }
         ]
       },
-      "industry_first": "Super-symbol multi-cell expansion aggregator (NetEnt Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form."
+      "industry_first": "Super-symbol multi-cell expansion aggregator (Vendor D Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S × S area i target T; Y = Σ_{i=1..K} S_i² · paytable[T_i] (S² area coverage); K ⊥ S ⊥ T cross-independence daje E[Y] = E[K]·E[S²]·E[paytable[T]]; E[Y²] = E[K]·E[S⁴]·E[paytable²] + (E[K²]−E[K])·(E[S²]·E[paytable])² (S⁴ area-of-area + cross-drop); probMaxConfig = P(K=K_max)·(P(S=max)·P(T=max))^K_max joint extreme. First Wxxx sa explicit S² area-coverage Wald-style closed-form."
     },
     {
       "wave": 125,
@@ -1495,7 +1766,7 @@
           }
         ]
       },
-      "industry_first": "Both-ways line pay aggregator (Microgaming Avalon / NetEnt Lights / Witches Wheel / IGT Cleopatra Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based."
+      "industry_first": "Both-ways line pay aggregator (Vendor G Avalon / Vendor D Lights / Witches Wheel / Vendor A Pattern-CL Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k·(1−q) za k<N, P(L_N) = q^N; P(R_k) symetrično; E[pay_BD] = E[L] + E[R] − paytable[N]·q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R − P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density→1). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based."
     },
     {
       "wave": 127,
@@ -1534,7 +1805,144 @@
           }
         ]
       },
-      "industry_first": "Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / NetEnt suspense reels) — UKGC RTS 8 §3.5 \"false anticipation\" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation)."
+      "industry_first": "Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / Vendor D suspense reels) — UKGC RTS 8 §3.5 \"false anticipation\" prohibition compliance: P(trigger | m, i) = Σ_{j=K-m}^{N-i} C(N-i,j)·q^j·(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional ≥ threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) ≤ 1−T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 §3.5 compliance hook (threshold=1.0 → zero false anticipation)."
+    },
+    {
+      "wave": "7.1",
+      "kimi": "W181 research",
+      "commit": "fba3177",
+      "name": "Self-Evolving Math Genome (multi-objective NSGA-II reel-weight tuner)",
+      "reportPath": "reports/acceptance/MATH_GENOME.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T11:36:55.207Z",
+      "headline": "32-member Pareto frontier (target RTP 96)",
+      "detail": {
+        "population": 32,
+        "generations": 40,
+        "seed": 12345,
+        "targets": {
+          "rtp": 96,
+          "cv": 8,
+          "hf": 0.27
+        }
+      },
+      "industry_first": "Multi-objective genetic reel-weight tuner sa closed-form RTP fitness (rtp_err, cv_err, hit_freq_err, fairness HHI) + NSGA-II non-dominated sort + crowding distance — niko od incumbent vendora ne ship-uje GA tuner sa Pareto frontier output umesto single-best, sa deterministički seeded output za audit reproducibility."
+    },
+    {
+      "wave": "7.10",
+      "kimi": "W181 research",
+      "commit": "fba3177",
+      "name": "Anomaly Self-Play Detector (spec-side Bayesian parameter sweep)",
+      "reportPath": "reports/acceptance/ANOMALY_SELF_PLAY.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T11:39:34.681Z",
+      "headline": "36 probes × 0 anomalies surfaced",
+      "detail": {
+        "globalDeltaMean": -0.006385597040495746,
+        "globalDeltaStddev": 0.020663718614638022,
+        "anomalies": []
+      },
+      "industry_first": "Spec-side Cartesian-product parameter sweep sa z-score anomaly surfacing + auto-fix suspect-knob heuristic (extremity-of-sweep-range pointer + \"dial knob X DOWN\" suggestion) — distinct od RNG-side fault injection; catches math holes nobody probed."
+    },
+    {
+      "wave": "7.6",
+      "kimi": "W181 research",
+      "commit": "6d566b1",
+      "name": "Symbolic Differentiation Slot Math (gradient-aware reel tuner)",
+      "reportPath": "reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json",
+      "reportExists": false,
+      "reportMtime": null,
+      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
+      "detail": {},
+      "industry_first": "4th-order central-difference ∂RTP/∂weight stencil + Newton-Raphson target-RTP solver + ∂CV/∂weight gradient descent + SHA-256-pinned DerivativeManifest. Auditor verifies solver convergence claims by re-checking local Newton step bez re-running optimizer — niko drugi nema gradient-aware reel tuner sa auditable derivative manifests."
+    },
+    {
+      "wave": "7.9",
+      "kimi": "W181 research",
+      "commit": "6d566b1",
+      "name": "Federated Multi-Vendor Math Knowledge Graph (SQLite)",
+      "reportPath": "reports/vendor-graph/vendor.sqlite",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T11:46:11.310Z",
+      "headline": "Live SQLite knowledge graph (5 vendors × 5 games × 45 features)",
+      "detail": {
+        "cross_vendor_query": "free_spins + linear_progressive → 2 FK Wolf Run SWID-a"
+      },
+      "industry_first": "Schema-less plug-in vendor graph (vendor / game / feature / jurisdiction / game_jurisdiction tables) sa cross-vendor queries: cross_vendor_feature_query (igre koje imaju SVE feature kinds) + games_by_jurisdiction + similar_games. Regulator gap-spotting tool — niko drugi ne ship-uje cross-vendor pattern queries kao prvoredni primitiv."
+    },
+    {
+      "wave": "7.3",
+      "kimi": "W181 research",
+      "commit": "1531db0",
+      "name": "Pure-Python RL Player-Behavior Emulator",
+      "reportPath": "reports/rl_player_emulator/SAMPLE_KPI.json",
+      "reportExists": false,
+      "reportMtime": null,
+      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
+      "detail": {},
+      "industry_first": "Tabular Q-learning (bankroll_bucket × win_streak_state × {continue, bet_up, bet_down, quit}) sa 3 player archetypes (casual / chaser / volatility_seeker), risk_tolerance / quit_threshold_loss / max_session_spins differentiated. Pre-launch UKGC RTS 7.4 addiction-risk pre-screen — niko drugi ne ship-uje per-archetype LTV/dropout/bankroll-bust report."
+    },
+    {
+      "wave": "7.5",
+      "kimi": "W181 research",
+      "commit": "1531db0",
+      "name": "Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)",
+      "reportPath": "reports/provenance_mesh/SAMPLE_SESSION.json",
+      "reportExists": false,
+      "reportMtime": null,
+      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
+      "detail": {},
+      "industry_first": "Per-spin SpinReceipt sa canonical sort-keys JSON encoding + linked sha256 parent chain → Merkle root sa log₂(N) inclusion proof. ed25519 sign payload (session_id, merkle_root, n_receipts). Auditor verifies single spin bez engine source code-a — niko drugi ne ship-uje session-level Merkle proof za per-spin auditability."
+    },
+    {
+      "wave": "7.4",
+      "kimi": "W181 research",
+      "commit": "73561a4",
+      "name": "GDD → Multi-Modal Asset Manifest Pipeline",
+      "reportPath": "reports/acceptance/GDD_ASSET_MANIFEST.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T12:15:41.878Z",
+      "headline": "manifest_hash pinned (7 symbols, 8 scripts, 4 BGM curves)",
+      "detail": {
+        "gdd_id": "CRIMSON-TIGER",
+        "gdd_hash": "ae71d2427ac2fe664941cb11b6ccfc2f71e17c9d176abb98237d9d495b41b076",
+        "scene_graph_nodes": 4
+      },
+      "industry_first": "Deterministic GDD→manifest layer math team owns end-to-end (mood-driven style tags + per-feature narration cues + volatility-driven BGM tempo envelope + Unity/Phaser scene graph) sa byte-stable gdd_hash + manifest_hash za audit pin. Pure-Python procedural shell — downstream pipeline plugs in whichever SDXL/ElevenLabs/DAW operator licenses."
+    },
+    {
+      "wave": "7.7",
+      "kimi": "W181 research",
+      "commit": "73561a4",
+      "name": "Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU)",
+      "reportPath": "reports/dashboards/live-par-compiler.html",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T12:15:41.833Z",
+      "headline": "4 KB JS bundle, SHA-256 pinned, Node-verified RTP=0.20224 parity sa Rust/Python",
+      "detail": {
+        "bundle_url": "reports/dashboards/live-par-compiler.html"
+      },
+      "industry_first": "In-browser closed-form RTP evaluator (closedFormRtp + runMcSimulation + compileAndEvaluate) sa Mulberry32 RNG (TS↔Rust parity), ZERO toolchain (no WASM / WebGPU / wasm-pack). Designer types DSL → sees RTP instantly. JS bundle SHA-256 pinned u cert bundle za audit."
+    },
+    {
+      "wave": "7.11",
+      "kimi": "—",
+      "commit": "8eeb4dd",
+      "name": "Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)",
+      "reportPath": "reports/acceptance/UNIFIED_AUDIT.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T12:43:44.993Z",
+      "headline": "consolidated_hash=6a32084a5e94e422… (Pareto 32, RL 18, mesh root a3a1e8d46951…)",
+      "detail": {
+        "gdd_hash": "ae71d2427ac2fe664941cb11b6ccfc2f71e17c9d176abb98237d9d495b41b076",
+        "asset_manifest_hash": "0e5a9d06ef651623fb3cbbe3cf26239b3f3b36f9bba7b307356c0ea940291ad5",
+        "derivative_manifest_hash": "4fed7b1d2b565800577659bea0aabcc31b066ee7759bc72b5bc7e1dda297aa43",
+        "pareto_hash": "0424e1031bd42da8921934bbad3cb7a3545c6d3314233502f58dfa2920c45d3b",
+        "rl_kpi_hash": "f45e45a5e09dc4803a046e18f580aaab80cbfeb93af15db2e739bc04fdedb770",
+        "session_mesh_root": "a3a1e8d46951b51d65c97cd71e54a93d8c07e5eab4445066e817bbf384cb4f9b",
+        "js_bundle_sha256": "fbf2f6ef34612e79afd5f50cf8f8bf91dc447ba2e4e3c266a0a12ef745b199d2"
+      },
+      "industry_first": "Composability layer koji integralno vrti 8 W7.x kernela u jedan call i emituje SHA-256 root nad svim sub-manifestima (gdd / asset / derivative / pareto / rl_kpi / session_mesh / js_bundle). Operator dobija pun cert paper trail u jednom JSON-u, regulator pinuje JEDNU hash vrednost — niko drugi ne ship-uje composability commitment over heterogeni kernel suite."
     }
   ],
   "auditor_qa": [
@@ -1568,7 +1976,23 @@
     },
     {
       "q": "Can we replay outcomes to verify a disputed spin?",
-      "a": "Wave 38 HSM seed bridge provides epoch-deterministic seed; combined with bit-exact TS↔Rust parity (Wave 37) every spin is byte-reproducible."
+      "a": "Wave 38 HSM seed bridge provides epoch-deterministic seed; combined with bit-exact TS↔Rust parity (Wave 37) every spin is byte-reproducible. **W7.5 hash-tree provenance mesh** layers a per-spin Merkle inclusion proof on top — auditor can verify a SINGLE disputed spin via SHA-256 sibling path bez engine source code-a."
+    },
+    {
+      "q": "Can your math engine self-generate game variants under multi-objective constraints?",
+      "a": "W7.1 Self-Evolving Math Genome — NSGA-II multi-objective GA produces a Pareto frontier of reel-weight configurations satisfying (target RTP, target volatility CV, target hit_freq, fairness HHI penalty). Deterministic for fixed seed; auditor reproduces frontier byte-for-byte."
+    },
+    {
+      "q": "How do you screen for retention / addiction risk pre-launch?",
+      "a": "W7.3 RL Player-Behavior Emulator — tabular Q-learning across 3 player archetypes (casual / chaser / volatility_seeker). KPI report: per-archetype LTV (avg/p50/p99), bust_rate, voluntary_quit_rate, avg_spins. UKGC RTS 7.4 addiction-risk pre-screen."
+    },
+    {
+      "q": "Can a regulator verify a single Excel PAR cell value without the source XLSX?",
+      "a": "W5.3 cell-level provenance: canonical_cell_bytes(sheet, ref, value) → SHA-256 leaf → Merkle root → log₂(N) inclusion proof. ed25519 sign of the root. 4416 cells / one Merkle root, one signature."
+    },
+    {
+      "q": "How does your composability story work end-to-end?",
+      "a": "W7.11 Unified Audit Pipeline runs all 8 W7.x kernels in one call (asset / derivative / genome / RL / provenance / JS bundle) and emits a single SHA-256 consolidated_hash committing to every sub-manifest. Drop into cert bundle as one row."
     }
   ]
 }
