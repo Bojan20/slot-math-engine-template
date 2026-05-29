@@ -1,0 +1,238 @@
+{
+  "bgm_curves": [
+    {
+      "bpm_end": 105,
+      "bpm_start": 105,
+      "duration_s": 30.0,
+      "phase": "lobby"
+    },
+    {
+      "bpm_end": 115,
+      "bpm_start": 105,
+      "duration_s": 120.0,
+      "phase": "base_game"
+    },
+    {
+      "bpm_end": 120,
+      "bpm_start": 115,
+      "duration_s": 60.0,
+      "phase": "bonus"
+    },
+    {
+      "bpm_end": 125,
+      "bpm_start": 125,
+      "duration_s": 8.0,
+      "phase": "big_win"
+    }
+  ],
+  "gdd_hash": "ae71d2427ac2fe664941cb11b6ccfc2f71e17c9d176abb98237d9d495b41b076",
+  "gdd_id": "CRIMSON-TIGER",
+  "narration_scripts": [
+    {
+      "cue_id": "free_spins.enter",
+      "feature_kind": "free_spins",
+      "text": "[jungle] Enter free spins!",
+      "trigger": "enter",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "free_spins.big_win",
+      "feature_kind": "free_spins",
+      "text": "[jungle] Big win!",
+      "trigger": "big_win",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "free_spins.retrigger",
+      "feature_kind": "free_spins",
+      "text": "[jungle] Free spins retriggered!",
+      "trigger": "retrigger",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "hold_and_win.enter",
+      "feature_kind": "hold_and_win",
+      "text": "[jungle] Enter hold and win!",
+      "trigger": "enter",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "hold_and_win.big_win",
+      "feature_kind": "hold_and_win",
+      "text": "[jungle] Big win!",
+      "trigger": "big_win",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "hold_and_win.jackpot",
+      "feature_kind": "hold_and_win",
+      "text": "[jungle] Jackpot!",
+      "trigger": "jackpot",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "multiplier_ladder.enter",
+      "feature_kind": "multiplier_ladder",
+      "text": "[jungle] Enter multiplier ladder!",
+      "trigger": "enter",
+      "voice_persona": "warm_baritone"
+    },
+    {
+      "cue_id": "multiplier_ladder.big_win",
+      "feature_kind": "multiplier_ladder",
+      "text": "[jungle] Big win!",
+      "trigger": "big_win",
+      "voice_persona": "warm_baritone"
+    }
+  ],
+  "scene_graph": {
+    "children": [
+      {
+        "anchor_symbols": [
+          "Tiger"
+        ],
+        "id": "reels",
+        "n_reels": 5,
+        "n_rows": 3,
+        "type": "ReelStrip"
+      },
+      {
+        "id": "paytable",
+        "symbols": [
+          {
+            "id": "sym_000",
+            "name": "Tiger"
+          },
+          {
+            "id": "sym_001",
+            "name": "Lotus"
+          },
+          {
+            "id": "sym_002",
+            "name": "Bamboo"
+          },
+          {
+            "id": "sym_003",
+            "name": "Sun"
+          },
+          {
+            "id": "sym_004",
+            "name": "Moon"
+          },
+          {
+            "id": "sym_005",
+            "name": "Wild"
+          },
+          {
+            "id": "sym_006",
+            "name": "Scatter"
+          }
+        ],
+        "type": "PaytablePanel"
+      },
+      {
+        "features": [
+          "free_spins",
+          "hold_and_win",
+          "multiplier_ladder"
+        ],
+        "id": "features",
+        "type": "FeatureOverlay"
+      },
+      {
+        "id": "audio",
+        "tempo_envelope": "see bgm_curves",
+        "type": "AudioLayer"
+      }
+    ],
+    "id": "CRIMSON-TIGER_root",
+    "theme": "jungle",
+    "type": "Scene"
+  },
+  "symbol_assets": [
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Tiger",
+      "prompt": "Tiger icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 1913563103,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_000"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Lotus",
+      "prompt": "Lotus icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 2610470474,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_001"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Bamboo",
+      "prompt": "Bamboo icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 792649374,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_002"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Sun",
+      "prompt": "Sun icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 2140384610,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_003"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Moon",
+      "prompt": "Moon icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 4076751258,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_004"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Wild",
+      "prompt": "Wild icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 1915827495,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_005"
+    },
+    {
+      "aspect_ratio": "1:1",
+      "display_name": "Scatter",
+      "prompt": "Scatter icon for jungle-themed slot game, cinematic, dramatic lighting, high contrast, transparent background, square frame",
+      "seed_hint": 13863545,
+      "style_tags": [
+        "cinematic",
+        "dramatic lighting",
+        "high contrast"
+      ],
+      "symbol_id": "sym_006"
+    }
+  ]
+}
