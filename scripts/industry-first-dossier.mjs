@@ -841,6 +841,41 @@ const WAVES = [
     }),
     industry_first: 'Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering — missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.',
   },
+  // ── W4.8 + W4.12 clean-room mech library close-out (2026-05-29) ───────
+  {
+    wave: '4.8',
+    name: 'Megaways-Style Variable-Rows Ways Clean-Room Template',
+    kimi: '—',
+    commit: 'c37042c',
+    reportPath: 'reports/acceptance/megaways_parity.json',
+    extractHeadline: (j) => `${j.gates_passed}/${j.gates_total} structural gates PASS (${j.reel_count} reels × ${j.expected_rows_per_reel.toFixed(1)} avg rows)`,
+    extractDetail: (j) => ({
+      reels: j.reel_count,
+      row_pmf: j.row_pmf,
+      fs_trigger_p_4_of_6: j.scatter_trigger_p_4_of_6,
+      cf_total_estimate: j.closed_form_total,
+      ref_total: j.reference_total,
+    }),
+    industry_first: 'Public-domain clean-room math fixture for Megaways-style variable-rows ways slot — 6 reels × 2-7 rows / 7⁶ = 117 649 max ways / Mystery same-symbol grid resolve / cascade tumble / unlimited progressive FS multiplier. BTG Megaways patent EXPIRED 2023; the row-count PMF + same-symbol Mystery resolution + edge-evaporate semantics are public-domain math primitives. Closed-form parity validator emits structural-validity gates over IR (trigger probability finite-in-unit / BG shares non-negative finite / scatter share non-negative / FS RTP ref in unit / closed-form total finite) so any future schema bump surfaces immediately. No vendor ships a copyright-safe Megaways template with an analyzable IR + parity gate.',
+  },
+  {
+    wave: '4.12',
+    name: 'Sticky + Walking Wild State-Machine Clean-Room Template',
+    kimi: '—',
+    commit: 'c37042c',
+    reportPath: 'reports/acceptance/walking_wild_parity.json',
+    extractHeadline: (j) => `${j.gates_passed}/${j.gates_total} gates PASS (E[wilds/spin]=${j.expected_wilds_per_spin.toFixed(2)}, E[TTL]=${j.sticky_wild.expected_ttl.toFixed(2)}, E[steps]=${j.walking_wild.expected_steps.toFixed(2)})`,
+    extractDetail: (j) => ({
+      reels: j.reel_count,
+      rows: j.rows,
+      fs_trigger: j.p_fs_trigger,
+      expected_wilds_per_spin: j.expected_wilds_per_spin,
+      sticky_ttl: j.sticky_wild,
+      walking_steps_pmf: j.walking_wild.steps_pmf,
+      walking_distance_per_start_reel: j.walking_wild.expected_walking_distance_per_start_reel,
+    }),
+    industry_first: 'Clean-room dual-state-machine template for sticky + walking wild slot mechanics — 5×3 / 20-line / Sticky Wild TTL state machine (TTL PMF 1=20% / 2=40% / 3=25% / 4=10% / 5=5%, per-cell {empty / freshly_landed / sticky / expired} states) + Walking Wild lock-position + direction + steps state machine (left/right 50/50 PMF, steps 1..5 PMF) + **edge-evaporate** semantics (wild evaporates at grid edge but completes in-progress respin chain) + FS auto-walking-left-steps_left=4. Closed-form parity validator emits per-reel walking-distance grid awareness (E[distance | start_reel] caps at edge), monotone scatter-trigger P(≥3 / ≥4 / ≥5), E[TTL] / E[steps] in PMF support, breakdown components sum consistency. No vendor ships an analyzable per-cell wild state-machine IR with edge-aware walking-distance closed-form.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

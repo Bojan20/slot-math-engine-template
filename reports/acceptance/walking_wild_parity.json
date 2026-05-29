@@ -1,0 +1,96 @@
+{
+  "all_gates_pass": true,
+  "expected_wilds_per_spin": 0.4613252273896,
+  "free_spins": {
+    "award_schedule": {
+      "3": 10,
+      "4": 15,
+      "5": 20
+    },
+    "expected_fs_per_spin": 0.4882001340773695
+  },
+  "gates": {
+    "expected_walking_distance_non_negative": true,
+    "expected_wilds_finite": true,
+    "rtp_breakdown_components_consistent": true,
+    "scatter_trigger_3_in_open_unit": true,
+    "scatter_trigger_4_lt_3": true,
+    "scatter_trigger_5_lt_4": true,
+    "sticky_ttl_positive": true,
+    "walking_direction_sums_to_one": true,
+    "walking_steps_positive": true
+  },
+  "gates_passed": 9,
+  "gates_total": 9,
+  "ir_path": "games/walking-wild-clean-room-template/out/template-walking-wild-cleanroom.ir.json",
+  "p_fs_trigger": {
+    "\u22653": 0.04219157268289366,
+    "\u22654": 0.00419394228204506,
+    "\u22655": 0.0001687636508878474
+  },
+  "p_scatter_per_reel": [
+    0.05405405405405406,
+    0.07894736842105263,
+    0.05263157894736842,
+    0.07894736842105263,
+    0.05405405405405406
+  ],
+  "p_wild_per_reel": [
+    0.02702702702702703,
+    0.02631578947368421,
+    0.05263157894736842,
+    0.02631578947368421,
+    0.02702702702702703
+  ],
+  "q_scatter_per_reel_per_spin": [
+    0.15355457722148735,
+    0.218636098556641,
+    0.14973028138212552,
+    0.218636098556641,
+    0.15355457722148735
+  ],
+  "q_wild_per_reel_per_spin": [
+    0.0789094426786171,
+    0.07688803032512015,
+    0.14973028138212552,
+    0.07688803032512015,
+    0.0789094426786171
+  ],
+  "reel_count": 5,
+  "rows": 3,
+  "rtp_breakdown_components_sum": 0.96,
+  "rtp_breakdown_total": 0.96,
+  "sticky_wild": {
+    "expected_ttl": 2.4,
+    "ttl_pmf": {
+      "1": 0.2,
+      "2": 0.4,
+      "3": 0.25,
+      "4": 0.1,
+      "5": 0.05
+    },
+    "variance_ttl": 1.1400000000000001
+  },
+  "walking_wild": {
+    "direction_pmf": {
+      "left": 0.5,
+      "right": 0.5
+    },
+    "expected_steps": 2.75,
+    "expected_walking_distance_per_start_reel": {
+      "0": 1.325,
+      "1": 1.7,
+      "2": 1.8499999999999999,
+      "3": 1.7,
+      "4": 1.325
+    },
+    "steps_pmf": {
+      "1": 0.15,
+      "2": 0.3,
+      "3": 0.3,
+      "4": 0.15,
+      "5": 0.1
+    },
+    "variance_steps": 1.3875
+  }
+}

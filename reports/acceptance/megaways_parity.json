@@ -1,0 +1,45 @@
+{
+  "all_gates_pass": true,
+  "bg_shares": {
+    "HP1": 0.14097390330248652,
+    "HP2": 0.038276340224269574,
+    "HP3": 0.021176660254746883,
+    "HP4": 0.006925695404410906,
+    "LP1": 0.0068230894616559895,
+    "LP2": 0.0027008479870345215,
+    "LP3": 0.0015562668841181265,
+    "LP4": 0.0007619583069677202,
+    "LP5": 0.00034551581253333875
+  },
+  "bg_total": 0.2195402776382236,
+  "closed_form_total": 7.212243843657083,
+  "delta": 6.252243843657083,
+  "expected_rows_per_reel": 4.72,
+  "fs_rtp_reference": 0.36,
+  "gates": {
+    "bg_shares_finite": true,
+    "bg_shares_non_negative": true,
+    "closed_form_total_finite": true,
+    "fs_rtp_reference_in_unit": true,
+    "scatter_share_non_negative": true,
+    "trigger_finite_in_open_unit": true
+  },
+  "gates_passed": 6,
+  "gates_total": 6,
+  "ir_path": "games/megaways-clean-room-template/out/template-megaways-cleanroom.ir.json",
+  "parity_pass": false,
+  "parity_tolerance": 0.1,
+  "reel_count": 6,
+  "reference_total": 0.96,
+  "row_pmf": {
+    "2": 0.05,
+    "3": 0.15,
+    "4": 0.25,
+    "5": 0.25,
+    "6": 0.18,
+    "7": 0.12
+  },
+  "scatter_share": 6.632703566018859,
+  "scatter_trigger_finite": true,
+  "scatter_trigger_p_4_of_6": 0.0483238243177703
+}

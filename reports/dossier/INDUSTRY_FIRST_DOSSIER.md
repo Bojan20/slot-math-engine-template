@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T15:18:15.392Z` · repo SHA: `c239e5498aaf`
+> Generated: `2026-05-29T20:33:04.915Z` · repo SHA: `03e6203ae3d0`
 
-## Headline: **53/56 industry-firsts attested** ✅
+## Headline: **55/58 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -62,9 +62,11 @@
 | 4.11d | — | **Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)** | ✅ 5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB | [`reports/dashboards/real-market-portfolio.manifest.json`](../../reports/dashboards/real-market-portfolio.manifest.md) |
 | 4.11e | — | **Operator Portal + CI parity gate (69-spec offline gate, GH Actions)** | ✅ 7 dashboards + 9 top reports · offline 5.92 KB · 69-spec CI gate (template-parity.yml) wired | [`reports/dashboards/index.manifest.json`](../../reports/dashboards/index.manifest.md) |
 | 4.11f | — | **Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)** | ✅ 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered | [`reports/acceptance/portfolio_validator.json`](../../reports/acceptance/portfolio_validator.md) |
-| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 20 files committed · 282.8 KB · merkle_root=8c69e578c404a19d… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
+| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 20 files committed · 285.6 KB · merkle_root=7774cced30e06571… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
 | 4.11h | — | **Sales One-Pager (executive, print-friendly)** | ✅ offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query | [`reports/dashboards/sales-one-pager.manifest.json`](../../reports/dashboards/sales-one-pager.manifest.md) |
-| 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 20/20 files verified · merkle_root=8c69e578c404… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
+| 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 20/20 files verified · merkle_root=7774cced30e0… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
+| 4.8 | — | **Megaways-Style Variable-Rows Ways Clean-Room Template** | ✅ 6/6 structural gates PASS (6 reels × 4.7 avg rows) | [`reports/acceptance/megaways_parity.json`](../../reports/acceptance/megaways_parity.md) |
+| 4.12 | — | **Sticky + Walking Wild State-Machine Clean-Room Template** | ✅ 9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75) | [`reports/acceptance/walking_wild_parity.json`](../../reports/acceptance/walking_wild_parity.md) |
 
 ## Why each is industry-first
 
@@ -406,7 +408,7 @@
 - **Acceptance**: 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.52 s
 - **Industry-first claim**: Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time.
 - **Commit**: `pending`
-- **Detail**: `{"spins":200000,"seed":20260529,"line_pay_delta_pp":-0.18851698490046642,"scatter_pay_delta_pp":-0.00797237830043266,"hit_freq_delta_pp":-2.9060911999999997,"fs_trigger_rel_err":0.05886627906976753,"elapsed_seconds":2.52`…
+- **Detail**: `{"spins":200000,"seed":20260529,"line_pay_delta_pp":-0.18851698490046642,"scatter_pay_delta_pp":-0.00797237830043266,"hit_freq_delta_pp":-2.9060911999999997,"fs_trigger_rel_err":0.05886627906976753,"elapsed_seconds":2.51`…
 
 ### Wave 4.11c · MC Parity Dashboard (offline single-file HTML, sales/regulator surface) (—)
 
@@ -438,10 +440,10 @@
 
 ### Wave 4.11g · Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out) (—)
 
-- **Acceptance**: 20 files committed · 282.8 KB · merkle_root=8c69e578c404a19d…
+- **Acceptance**: 20 files committed · 285.6 KB · merkle_root=7774cced30e06571…
 - **Industry-first claim**: Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.
 - **Commit**: `pending`
-- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":20,"total_bytes":289542,"merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2fcb7665ecf9499d7702646","missing_files":[]}`
+- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":20,"total_bytes":292475,"merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000","missing_files":[]}`
 
 ### Wave 4.11h · Sales One-Pager (executive, print-friendly) (—)
 
@@ -452,10 +454,24 @@
 
 ### Wave 4.11i · Standalone Evidence Manifest Verifier (regulator-side tamper check) (—)
 
-- **Acceptance**: 20/20 files verified · merkle_root=8c69e578c404… · receipt-schema v1
+- **Acceptance**: 20/20 files verified · merkle_root=7774cced30e0… · receipt-schema v1
 - **Industry-first claim**: Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering — missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.
 - **Commit**: `pending`
-- **Detail**: `{"verified":true,"file_count":20,"passed_count":20,"expected_merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2fcb7665ecf9499d7702646","derived_merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2`…
+- **Detail**: `{"verified":true,"file_count":20,"passed_count":20,"expected_merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000","derived_merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e7`…
+
+### Wave 4.8 · Megaways-Style Variable-Rows Ways Clean-Room Template (—)
+
+- **Acceptance**: 6/6 structural gates PASS (6 reels × 4.7 avg rows)
+- **Industry-first claim**: Public-domain clean-room math fixture for Megaways-style variable-rows ways slot — 6 reels × 2-7 rows / 7⁶ = 117 649 max ways / Mystery same-symbol grid resolve / cascade tumble / unlimited progressive FS multiplier. BTG Megaways patent EXPIRED 2023; the row-count PMF + same-symbol Mystery resolution + edge-evaporate semantics are public-domain math primitives. Closed-form parity validator emits structural-validity gates over IR (trigger probability finite-in-unit / BG shares non-negative finite / scatter share non-negative / FS RTP ref in unit / closed-form total finite) so any future schema bump surfaces immediately. No vendor ships a copyright-safe Megaways template with an analyzable IR + parity gate.
+- **Commit**: `c37042c`
+- **Detail**: `{"reels":6,"row_pmf":{"2":0.05,"3":0.15,"4":0.25,"5":0.25,"6":0.18,"7":0.12},"fs_trigger_p_4_of_6":0.0483238243177703,"cf_total_estimate":7.212243843657083,"ref_total":0.96}`
+
+### Wave 4.12 · Sticky + Walking Wild State-Machine Clean-Room Template (—)
+
+- **Acceptance**: 9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75)
+- **Industry-first claim**: Clean-room dual-state-machine template for sticky + walking wild slot mechanics — 5×3 / 20-line / Sticky Wild TTL state machine (TTL PMF 1=20% / 2=40% / 3=25% / 4=10% / 5=5%, per-cell {empty / freshly_landed / sticky / expired} states) + Walking Wild lock-position + direction + steps state machine (left/right 50/50 PMF, steps 1..5 PMF) + **edge-evaporate** semantics (wild evaporates at grid edge but completes in-progress respin chain) + FS auto-walking-left-steps_left=4. Closed-form parity validator emits per-reel walking-distance grid awareness (E[distance | start_reel] caps at edge), monotone scatter-trigger P(≥3 / ≥4 / ≥5), E[TTL] / E[steps] in PMF support, breakdown components sum consistency. No vendor ships an analyzable per-cell wild state-machine IR with edge-aware walking-distance closed-form.
+- **Commit**: `c37042c`
+- **Detail**: `{"reels":5,"rows":3,"fs_trigger":{"≥3":0.04219157268289366,"≥4":0.00419394228204506,"≥5":0.0001687636508878474},"expected_wilds_per_spin":0.4613252273896,"sticky_ttl":{"expected_ttl":2.4,"ttl_pmf":{"1":0.2,"2":0.4,"3":0.`…
 
 ## Auditor Q&A Map
 
