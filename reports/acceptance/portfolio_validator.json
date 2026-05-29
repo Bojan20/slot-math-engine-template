@@ -1,0 +1,520 @@
+{
+  "summary": {
+    "total_irs": 13,
+    "passed": 13,
+    "failed": 0,
+    "by_game": {
+      "book-expanding-bonusbuy": {
+        "swids": 1,
+        "passed": 1
+      },
+      "cash-eruption": {
+        "swids": 3,
+        "passed": 3
+      },
+      "fort-knox-wolf-run": {
+        "swids": 2,
+        "passed": 2
+      },
+      "fortune-coin-boost-classic": {
+        "swids": 4,
+        "passed": 4
+      },
+      "skeleton-key": {
+        "swids": 3,
+        "passed": 3
+      }
+    },
+    "by_gate": {
+      "rtp_total_in_range": 13,
+      "hit_freq_sane": 13,
+      "win_freq_sane": 13,
+      "breakdown_sums": 13,
+      "reels_sane": 13,
+      "paytable_monotonic": 13
+    }
+  },
+  "results": [
+    {
+      "folder": "book-expanding-bonusbuy",
+      "swid": "template-book-bonusbuy.ir",
+      "ir_path": "games/book-expanding-bonusbuy/out/template-book-bonusbuy.ir.json",
+      "family": "lines",
+      "vendor": "<<redacted>>",
+      "rtp_total": 0.9620441881443009,
+      "hit_frequency": 0.299380912,
+      "win_frequency": 0.079729474,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.962044 within total 0.962044"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "ok"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "cash-eruption",
+      "swid": "200-1637-001",
+      "ir_path": "games/cash-eruption/out/cash-eruption.200-1637-001.slot-sim.ir.json",
+      "family": "lines",
+      "vendor": "igt",
+      "rtp_total": 0.960000018370437,
+      "hit_frequency": 0.19030599,
+      "win_frequency": 0.08936075,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.960000 within total 0.960000"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "cash-eruption",
+      "swid": "200-1637-002",
+      "ir_path": "games/cash-eruption/out/cash-eruption.200-1637-002.slot-sim.ir.json",
+      "family": "lines",
+      "vendor": "igt",
+      "rtp_total": 0.950000015007889,
+      "hit_frequency": 0.1902107,
+      "win_frequency": 0.0889773,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.950000 within total 0.950000"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "cash-eruption",
+      "swid": "200-1637-003",
+      "ir_path": "games/cash-eruption/out/cash-eruption.200-1637-003.slot-sim.ir.json",
+      "family": "lines",
+      "vendor": "igt",
+      "rtp_total": 0.931000016534967,
+      "hit_frequency": 0.19066094,
+      "win_frequency": 0.08770657,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.931000 within total 0.931000"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fort-knox-wolf-run",
+      "swid": "200-1775-001",
+      "ir_path": "games/fort-knox-wolf-run/out/fort-knox-wolf-run.200-1775-001.slot-sim.ir.json",
+      "family": "lines",
+      "vendor": "igt",
+      "rtp_total": 0.964442695231276,
+      "hit_frequency": 0.244331512,
+      "win_frequency": 0.11490461,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.964443 within total 0.964443"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fort-knox-wolf-run",
+      "swid": "200-1775-002",
+      "ir_path": "games/fort-knox-wolf-run/out/fort-knox-wolf-run.200-1775-002.slot-sim.ir.json",
+      "family": "lines",
+      "vendor": "igt",
+      "rtp_total": 0.9432110100299161,
+      "hit_frequency": 0.24430426,
+      "win_frequency": 0.114143134,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.943211 within total 0.943211"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fortune-coin-boost-classic",
+      "swid": "200-1581-001",
+      "ir_path": "games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-001.slot-sim.ir.json",
+      "family": "ways",
+      "vendor": "igt",
+      "rtp_total": 0.9500571981399999,
+      "hit_frequency": 0.29257761,
+      "win_frequency": 0.09578519,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.950057 within total 0.950057"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fortune-coin-boost-classic",
+      "swid": "200-1581-002",
+      "ir_path": "games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-002.slot-sim.ir.json",
+      "family": "ways",
+      "vendor": "igt",
+      "rtp_total": 0.9410231089933333,
+      "hit_frequency": 0.29238477,
+      "win_frequency": 0.09537686,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.941023 within total 0.941023"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fortune-coin-boost-classic",
+      "swid": "200-1581-003",
+      "ir_path": "games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-003.slot-sim.ir.json",
+      "family": "ways",
+      "vendor": "igt",
+      "rtp_total": 0.9209171870599999,
+      "hit_frequency": 0.2918083963933388,
+      "win_frequency": 0.0943134148578878,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.920917 within total 0.920917"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "fortune-coin-boost-classic",
+      "swid": "200-1581-004",
+      "ir_path": "games/fortune-coin-boost-classic/out/fortune-coin-boost-classic.200-1581-004.slot-sim.ir.json",
+      "family": "ways",
+      "vendor": "igt",
+      "rtp_total": 0.9013806433333333,
+      "hit_frequency": 0.29130015456039793,
+      "win_frequency": 0.09329399311691242,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.901381 within total 0.901381"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "skeleton-key",
+      "swid": "200-1517-001",
+      "ir_path": "games/skeleton-key/out/skeleton-key.200-1517-001.slot-sim.ir.json",
+      "family": "megaways",
+      "vendor": "igt",
+      "rtp_total": 0.964932002856927,
+      "hit_frequency": 0.2912526541600486,
+      "win_frequency": 0.1638564379600296,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.964932 within total 0.964932"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "skeleton-key",
+      "swid": "200-1517-002",
+      "ir_path": "games/skeleton-key/out/skeleton-key.200-1517-002.slot-sim.ir.json",
+      "family": "megaways",
+      "vendor": "igt",
+      "rtp_total": 0.9446393800822339,
+      "hit_frequency": 0.2875902469200525,
+      "win_frequency": 0.16119967704002766,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.944639 within total 0.944639"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    },
+    {
+      "folder": "skeleton-key",
+      "swid": "200-1517-003",
+      "ir_path": "games/skeleton-key/out/skeleton-key.200-1517-003.slot-sim.ir.json",
+      "family": "megaways",
+      "vendor": "igt",
+      "rtp_total": 0.9243222845800672,
+      "hit_frequency": 0.2816312349200482,
+      "win_frequency": 0.15744989976002974,
+      "gates": {
+        "rtp_total_in_range": {
+          "pass": true,
+          "message": "ok"
+        },
+        "hit_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "win_freq_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "breakdown_sums": {
+          "pass": true,
+          "message": "breakdown sum 0.924322 within total 0.924322"
+        },
+        "reels_sane": {
+          "pass": true,
+          "message": "ok"
+        },
+        "paytable_monotonic": {
+          "pass": true,
+          "message": "list-shaped paytable (skipped)"
+        }
+      },
+      "all_gates_pass": true
+    }
+  ]
+}

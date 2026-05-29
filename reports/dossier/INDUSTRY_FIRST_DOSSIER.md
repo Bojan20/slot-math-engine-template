@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T14:57:20.321Z` · repo SHA: `0f8d66f68603`
+> Generated: `2026-05-29T15:01:27.316Z` · repo SHA: `9f9500b58dd2`
 
-## Headline: **49/52 industry-firsts attested** ✅
+## Headline: **50/53 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -61,6 +61,7 @@
 | 4.11c | — | **MC Parity Dashboard (offline single-file HTML, sales/regulator surface)** | ✅ offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.56 s | [`reports/dashboards/mc-parity-dashboard.manifest.json`](../../reports/dashboards/mc-parity-dashboard.manifest.md) |
 | 4.11d | — | **Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)** | ✅ 5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB | [`reports/dashboards/real-market-portfolio.manifest.json`](../../reports/dashboards/real-market-portfolio.manifest.md) |
 | 4.11e | — | **Operator Portal + CI parity gate (69-spec offline gate, GH Actions)** | ✅ 5 dashboards + 7 top reports · offline 5.09 KB · 69-spec CI gate (template-parity.yml) wired | [`reports/dashboards/index.manifest.json`](../../reports/dashboards/index.manifest.md) |
+| 4.11f | — | **Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)** | ✅ 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered | [`reports/acceptance/portfolio_validator.json`](../../reports/acceptance/portfolio_validator.md) |
 
 ## Why each is industry-first
 
@@ -424,6 +425,13 @@
 - **Industry-first claim**: Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report — MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification — plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR.
 - **Commit**: `pending`
 - **Detail**: `{"bundle_url":"reports/dashboards/index.html","size_bytes":5215,"size_kb":5.09,"offline_safe":true,"dashboards":[{"id":"mc-parity","name":"MC Parity Dashboard","wave":"W4.11c","href":"mc-parity-dashboard.html"},{"id":"re`…
+
+### Wave 4.11f · Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78) (—)
+
+- **Acceptance**: 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered
+- **Industry-first claim**: Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass.
+- **Commit**: `pending`
+- **Detail**: `{"total_irs":13,"passed":13,"failed":0,"by_game":{"book-expanding-bonusbuy":{"swids":1,"passed":1},"cash-eruption":{"swids":3,"passed":3},"fort-knox-wolf-run":{"swids":2,"passed":2},"fortune-coin-boost-classic":{"swids":`…
 
 ## Auditor Q&A Map
 

@@ -81,7 +81,10 @@ jobs:
       - name: Build operator portal
         run: python tools/build_operator_portal.py
 
-      - name: Run pytest (book-bonusbuy + dashboards + portal)
+      - name: Run portfolio IR validator
+        run: python tools/parity/portfolio_validator.py
+
+      - name: Run pytest (book-bonusbuy + dashboards + portal + portfolio)
         run: |
           python -m pytest -v \
             tools/tests/test_book_expanding_bonusbuy_pipeline.py \
@@ -89,7 +92,8 @@ jobs:
             tools/tests/test_book_bonusbuy_mc.py \
             tools/tests/test_mc_parity_dashboard.py \
             tools/tests/test_real_market_portfolio.py \
-            tools/tests/test_operator_portal.py
+            tools/tests/test_operator_portal.py \
+            tools/tests/test_portfolio_validator.py
 
       - name: Upload dashboard artifacts
         if: always()
@@ -102,4 +106,5 @@ jobs:
             reports/dashboards/index.html
             reports/acceptance/book_bonusbuy_parity.json
             reports/acceptance/book_bonusbuy_mc.json
+            reports/acceptance/portfolio_validator.json
           retention-days: 30

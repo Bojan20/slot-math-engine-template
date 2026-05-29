@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-29T14:57:20.321Z",
-  "repo_sha": "0f8d66f686036683e6459bd4b7040c2da0e7c863",
+  "generatedAtUtc": "2026-05-29T15:01:27.316Z",
+  "repo_sha": "9f9500b58dd27543d0debfbf523a44ed624ad03b",
   "headline": {
-    "waves": 52,
-    "industry_firsts": 49,
+    "waves": 53,
+    "industry_firsts": 50,
     "all_present": true
   },
   "waves": [
@@ -2127,6 +2127,52 @@
         "report_count": 7
       },
       "industry_first": "Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report — MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification — plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR."
+    },
+    {
+      "wave": "4.11f",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)",
+      "reportPath": "reports/acceptance/portfolio_validator.json",
+      "reportExists": true,
+      "reportMtime": "2026-05-29T15:01:04.308Z",
+      "headline": "13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered",
+      "detail": {
+        "total_irs": 13,
+        "passed": 13,
+        "failed": 0,
+        "by_game": {
+          "book-expanding-bonusbuy": {
+            "swids": 1,
+            "passed": 1
+          },
+          "cash-eruption": {
+            "swids": 3,
+            "passed": 3
+          },
+          "fort-knox-wolf-run": {
+            "swids": 2,
+            "passed": 2
+          },
+          "fortune-coin-boost-classic": {
+            "swids": 4,
+            "passed": 4
+          },
+          "skeleton-key": {
+            "swids": 3,
+            "passed": 3
+          }
+        },
+        "by_gate": {
+          "rtp_total_in_range": 13,
+          "hit_freq_sane": 13,
+          "win_freq_sane": 13,
+          "breakdown_sums": 13,
+          "reels_sane": 13,
+          "paytable_monotonic": 13
+        }
+      },
+      "industry_first": "Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass."
     }
   ],
   "auditor_qa": [

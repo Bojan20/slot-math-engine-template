@@ -766,6 +766,22 @@ const WAVES = [
     extractDetail: (j) => j,
     industry_first: 'Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report — MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification — plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR.',
   },
+  {
+    wave: '4.11f',
+    name: 'Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/acceptance/portfolio_validator.json',
+    extractHeadline: (j) => {
+      const s = j?.summary ?? {};
+      const total = s.total_irs ?? 0;
+      const passed = s.passed ?? 0;
+      const games = Object.keys(s.by_game ?? {}).length;
+      return `${passed}/${total} IRs PASS · 6 gates × ${total} IRs = ${6 * total}/${6 * total} · ${games} games covered`;
+    },
+    extractDetail: (j) => j?.summary ?? {},
+    industry_first: 'Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
