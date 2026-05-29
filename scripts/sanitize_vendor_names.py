@@ -16,7 +16,6 @@ target, dist, large generated artifacts).
 Idempotent: re-running after replacement is safe (no nested expansions).
 """
 from __future__ import annotations
-import os
 import re
 import sys
 from pathlib import Path

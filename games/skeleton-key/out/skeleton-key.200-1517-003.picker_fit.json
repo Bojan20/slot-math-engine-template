@@ -1,0 +1,121 @@
+{
+  "game": "skeleton-key",
+  "swid": "200-1517-003",
+  "target_rtp": 0.9243222845800672,
+  "target_hit_freq": 0.2816312349200482,
+  "init": {
+    "rtp": 0.920584,
+    "hit_freq": 0.274676,
+    "delta_rtp": 0.003738284580067197,
+    "delta_hit_freq": 0.006955234920048237
+  },
+  "final": {
+    "rtp": 0.9227563750000001,
+    "hit_freq": 0.272618375,
+    "delta_rtp": 0.001565909580067082,
+    "delta_hit_freq": 0.009012859920048188,
+    "rtp_sem": 0.0012304000501796686,
+    "hit_freq_sem": 4.5582710342224195e-05,
+    "n_seeds": 8,
+    "spins_per_seed": 5000000
+  },
+  "iters": 136,
+  "fitted": {
+    "rows_weights": [
+      [
+        10000,
+        0,
+        0,
+        0
+      ],
+      [
+        10000,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        4634,
+        5366
+      ],
+      [
+        0,
+        0,
+        4002,
+        5998
+      ],
+      [
+        0,
+        0,
+        3999,
+        6001
+      ]
+    ],
+    "base_weights": [
+      {
+        "set": 1,
+        "weight": 7507
+      },
+      {
+        "set": 2,
+        "weight": 2069
+      },
+      {
+        "set": 3,
+        "weight": 54
+      },
+      {
+        "set": 4,
+        "weight": 117
+      },
+      {
+        "set": 5,
+        "weight": 12
+      },
+      {
+        "set": 6,
+        "weight": 0
+      },
+      {
+        "set": 7,
+        "weight": 60
+      },
+      {
+        "set": 8,
+        "weight": 181
+      }
+    ],
+    "base_weights_total": 10000,
+    "fs_weights": [
+      {
+        "set": 1,
+        "weight": 8580
+      },
+      {
+        "set": 2,
+        "weight": 1320
+      },
+      {
+        "set": 3,
+        "weight": 32
+      },
+      {
+        "set": 4,
+        "weight": 58
+      },
+      {
+        "set": 5,
+        "weight": 2
+      },
+      {
+        "set": 6,
+        "weight": 8
+      }
+    ],
+    "fs_weights_total": 10000
+  },
+  "converged": false,
+  "noise_converged": false
+}

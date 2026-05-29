@@ -1,0 +1,121 @@
+{
+  "game": "skeleton-key",
+  "swid": "200-1517-001",
+  "target_rtp": 0.964932002856927,
+  "target_hit_freq": 0.2912526541600486,
+  "init": {
+    "rtp": 0.963869,
+    "hit_freq": 0.283164,
+    "delta_rtp": 0.0010630028569270644,
+    "delta_hit_freq": 0.008088654160048558
+  },
+  "final": {
+    "rtp": 0.9648902500000001,
+    "hit_freq": 0.284389375,
+    "delta_rtp": 4.175285692697983e-05,
+    "delta_hit_freq": 0.006863279160048585,
+    "rtp_sem": 0.0025240028069799833,
+    "hit_freq_sem": 8.122981892225968e-05,
+    "n_seeds": 8,
+    "spins_per_seed": 5000000
+  },
+  "iters": 12,
+  "fitted": {
+    "rows_weights": [
+      [
+        9179,
+        821,
+        0,
+        0
+      ],
+      [
+        9500,
+        500,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        5000,
+        5000
+      ],
+      [
+        0,
+        0,
+        5000,
+        5000
+      ],
+      [
+        0,
+        0,
+        5000,
+        5000
+      ]
+    ],
+    "base_weights": [
+      {
+        "set": 1,
+        "weight": 8595
+      },
+      {
+        "set": 2,
+        "weight": 922
+      },
+      {
+        "set": 3,
+        "weight": 70
+      },
+      {
+        "set": 4,
+        "weight": 138
+      },
+      {
+        "set": 5,
+        "weight": 14
+      },
+      {
+        "set": 6,
+        "weight": 0
+      },
+      {
+        "set": 7,
+        "weight": 60
+      },
+      {
+        "set": 8,
+        "weight": 200
+      }
+    ],
+    "base_weights_total": 9999,
+    "fs_weights": [
+      {
+        "set": 1,
+        "weight": 8580
+      },
+      {
+        "set": 2,
+        "weight": 1320
+      },
+      {
+        "set": 3,
+        "weight": 32
+      },
+      {
+        "set": 4,
+        "weight": 58
+      },
+      {
+        "set": 5,
+        "weight": 2
+      },
+      {
+        "set": 6,
+        "weight": 8
+      }
+    ],
+    "fs_weights_total": 10000
+  },
+  "converged": true,
+  "noise_converged": true
+}

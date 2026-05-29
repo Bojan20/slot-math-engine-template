@@ -1,0 +1,113 @@
+{
+  "game": "fortune-coin-boost-classic",
+  "swid": "200-1581-003",
+  "target_rtp": 0.9209171870599999,
+  "target_hit_freq": 0.2918083963933388,
+  "init": {
+    "rtp": 0.941723,
+    "hit_freq": 0.19873,
+    "delta_rtp": 0.020805812940000057,
+    "delta_hit_freq": 0.09307839639333879
+  },
+  "final": {
+    "rtp": 0.92200375,
+    "hit_freq": 0.196532125,
+    "delta_rtp": 0.001086562940000091,
+    "delta_hit_freq": 0.09527627139333877,
+    "rtp_sem": 0.00032594186324294306,
+    "hit_freq_sem": 9.349893763720256e-05,
+    "n_seeds": 8,
+    "spins_per_seed": 5000000
+  },
+  "iters": 306,
+  "fitted": {
+    "base_weights": [
+      {
+        "set": 1,
+        "weight": 1401
+      },
+      {
+        "set": 2,
+        "weight": 956
+      },
+      {
+        "set": 3,
+        "weight": 957
+      },
+      {
+        "set": 4,
+        "weight": 958
+      },
+      {
+        "set": 5,
+        "weight": 956
+      },
+      {
+        "set": 6,
+        "weight": 886
+      },
+      {
+        "set": 7,
+        "weight": 952
+      },
+      {
+        "set": 8,
+        "weight": 1015
+      },
+      {
+        "set": 9,
+        "weight": 963
+      },
+      {
+        "set": 10,
+        "weight": 956
+      }
+    ],
+    "base_weights_total": 10000,
+    "fs_weights": [
+      {
+        "set": 1,
+        "weight": 829
+      },
+      {
+        "set": 2,
+        "weight": 1037
+      },
+      {
+        "set": 3,
+        "weight": 1026
+      },
+      {
+        "set": 4,
+        "weight": 889
+      },
+      {
+        "set": 5,
+        "weight": 1071
+      },
+      {
+        "set": 6,
+        "weight": 1030
+      },
+      {
+        "set": 7,
+        "weight": 1030
+      },
+      {
+        "set": 8,
+        "weight": 1030
+      },
+      {
+        "set": 9,
+        "weight": 1030
+      },
+      {
+        "set": 10,
+        "weight": 1030
+      }
+    ],
+    "fs_weights_total": 10002
+  },
+  "converged": false,
+  "noise_converged": false
+}

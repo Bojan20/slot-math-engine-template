@@ -1,0 +1,113 @@
+{
+  "game": "fortune-coin-boost-classic",
+  "swid": "200-1581-001",
+  "target_rtp": 0.9500571981399999,
+  "target_hit_freq": 0.29257761,
+  "init": {
+    "rtp": 0.942775,
+    "hit_freq": 0.199386,
+    "delta_rtp": 0.0072821981399998625,
+    "delta_hit_freq": 0.09319160999999998
+  },
+  "final": {
+    "rtp": 0.95011025,
+    "hit_freq": 0.199318125,
+    "delta_rtp": 5.305186000015283e-05,
+    "delta_hit_freq": 0.09325948499999998,
+    "rtp_sem": 0.00039425606934362573,
+    "hit_freq_sem": 4.1923585886365924e-05,
+    "n_seeds": 8,
+    "spins_per_seed": 5000000
+  },
+  "iters": 131,
+  "fitted": {
+    "base_weights": [
+      {
+        "set": 1,
+        "weight": 736
+      },
+      {
+        "set": 2,
+        "weight": 1025
+      },
+      {
+        "set": 3,
+        "weight": 1025
+      },
+      {
+        "set": 4,
+        "weight": 1055
+      },
+      {
+        "set": 5,
+        "weight": 1050
+      },
+      {
+        "set": 6,
+        "weight": 997
+      },
+      {
+        "set": 7,
+        "weight": 1037
+      },
+      {
+        "set": 8,
+        "weight": 1025
+      },
+      {
+        "set": 9,
+        "weight": 1025
+      },
+      {
+        "set": 10,
+        "weight": 1025
+      }
+    ],
+    "base_weights_total": 10000,
+    "fs_weights": [
+      {
+        "set": 1,
+        "weight": 1000
+      },
+      {
+        "set": 2,
+        "weight": 1000
+      },
+      {
+        "set": 3,
+        "weight": 1000
+      },
+      {
+        "set": 4,
+        "weight": 1000
+      },
+      {
+        "set": 5,
+        "weight": 1000
+      },
+      {
+        "set": 6,
+        "weight": 1000
+      },
+      {
+        "set": 7,
+        "weight": 1000
+      },
+      {
+        "set": 8,
+        "weight": 1000
+      },
+      {
+        "set": 9,
+        "weight": 1000
+      },
+      {
+        "set": 10,
+        "weight": 1000
+      }
+    ],
+    "fs_weights_total": 10000
+  },
+  "converged": true,
+  "noise_converged": true
+}

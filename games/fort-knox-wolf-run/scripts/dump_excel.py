@@ -6,7 +6,10 @@ attribute in its stylesheet (vendor-export bug). We unzip → patch → reload
 before dumping. Output schema mirrors `games/ce-copy-test/raw/*` so the
 downstream IR parser can reuse helpers.
 """
-import json, os, re, shutil, subprocess, tempfile, zipfile
+import json
+import re
+import tempfile
+import zipfile
 from pathlib import Path
 import openpyxl
 
