@@ -58,6 +58,8 @@ pub mod qmc;
 pub mod qmc_estimator;
 /// W6.3 — Fault injection harness (seed sweep + lag-1 corr + monobit).
 pub mod fault_injection;
+/// W7.10 — Anomaly self-play detector (spec-side Bayesian outlier sweep).
+pub mod anomaly_self_play;
 /// PAR-012 — Bonus Buy EV calculator + regulatory ban audit.
 pub mod bonus_buy;
 /// PAR-013 — Cluster Pays evaluator (connected-component scoring).
