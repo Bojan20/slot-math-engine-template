@@ -1,10 +1,12 @@
-"""W4.13 ORGANIC CLOSEOUT — Gradient-descent picker / rows-weights fit.
+"""W4.13/W4.19 ORGANIC CLOSEOUT — Gradient-descent picker / rows-weights /
+FS reel-strip fit.
 
-Reverse-engineers the structurally-missing picker weights for Skeleton
-Key (rows_weights) and Fortune Coin Boost Classic (BG + FS reel-set
-picker weights) so the engine's organic Monte-Carlo RTP matches the
-Excel target without falling back to the deterministic
-`rtp_source = breakdown` replay path.
+Reverse-engineers the structurally-missing weights for Skeleton Key
+(rows_weights), Fortune Coin Boost Classic (BG + FS reel-set picker
+weights), and Fort Knox Wolf Run (FS reel-strip per-symbol weights) so
+the engine's organic Monte-Carlo RTP matches the Excel target without
+falling back to deterministic replay paths or named compensation
+constants.
 
 Algorithm (per SWID):
   1. Load the canonical IR + remove `rtp_source = "breakdown"`.
@@ -15,7 +17,8 @@ Algorithm (per SWID):
      hit_freq → compute loss `(ΔRTP)² + λ·(Δ_hit_freq)²`.
   4. Outer loop: two-stage —
        a) coarse 2-param sweep over a designed family of rows_weights
-          (or picker weights) to locate the right basin
+          (or picker weights / per-symbol scalars) to locate the right
+          basin
        b) scipy `Powell` refinement over the full softmax parameter
           space starting from the basin centre.
      Cache the same seed each evaluation so the loss surface is
@@ -24,12 +27,25 @@ Algorithm (per SWID):
      `games/<game>/out/<game>.<swid>.picker_fit.json` overlay AND echo
      a Python literal so they can be baked into `build_ir.py`.
 
+W4.19 — FKWR FS reel-strip stop weight optimizer.
+  FKWR has only 1 FS reel set, but each reel has 68..105 stops carrying
+  integer weights. Optimizing per-stop weights directly is ill-posed
+  (~460 free vars, MC noise floor swamps the gradient). The optimizer
+  parameterizes per-symbol multipliers shared across reels — 12 free
+  vars for the 12 distinct FS symbols. For each FS reel r and symbol s,
+  every stop with symbol s gets weight `round(exp(theta_s) * 100)`.
+  This collapses the FS overshoot caused by uniform-weight stops with
+  higher high-pay symbol density than the published `free_spins_bonus`
+  share captures, while preserving the physical reel-strip order
+  (vendor's auditable reel-strip topology stays intact).
+
 Privacy: emits only RTP / hit_freq deltas + iteration counts to stdout
 — no raw vendor symbol weights.
 
 Usage:
     python3 -m tools.par_picker_fit_descent skeleton-key            # all 3 SWIDs
     python3 -m tools.par_picker_fit_descent fortune-coin-boost-classic
+    python3 -m tools.par_picker_fit_descent fort-knox-wolf-run       # W4.19
     python3 -m tools.par_picker_fit_descent skeleton-key 200-1517-001
     python3 -m tools.par_picker_fit_descent all
 """
@@ -232,7 +248,6 @@ def _sk_coarse(ir: dict) -> tuple[np.ndarray, dict]:
           f"rtp={best['stats']['rtp']:.6f} hf={best['stats']['hit_freq']:.6f}",
           file=sys.stderr)
     # Extend with zero softmax params for BG + FS picker (uniform).
-    n_base = len(ir["reels"]["base_weights"]["weights"])
     n_fs = (
         len(ir["reels"]["fs_weights"]["weights"])
         if ir["reels"].get("fs_weights") else 0
@@ -294,8 +309,6 @@ def _fc_coarse(ir: dict) -> tuple[np.ndarray, dict]:
     target 0.95), the coarse stage just confirms uniform is a good
     starting point. Returns init params and uniform stats.
     """
-    target_rtp = ir["meta"]["rtp_total"]
-    target_hf = ir["meta"]["hit_frequency"]
     n_base = len(ir["reels"]["base_weights"]["weights"])
     n_fs = (
         len(ir["reels"]["fs_weights"]["weights"])
@@ -309,6 +322,135 @@ def _fc_coarse(ir: dict) -> tuple[np.ndarray, dict]:
     print(f"  coarse uniform: rtp={st['rtp']:.6f} hf={st['hit_freq']:.6f}",
           file=sys.stderr)
     return x0, st
+
+
+# ──────────────────────── FKWR FS reel-strip fit (W4.19) ────────────────────────
+
+
+def _fkwr_fs_symbols(ir: dict) -> list[str]:
+    """Return sorted list of distinct symbols across all FS reel-strip
+    stops. Used to parameterize the per-symbol weight multiplier vector.
+    """
+    seen: set[str] = set()
+    for rs in ir["reels"]["fs"]:
+        for reel in rs["reels"]:
+            for stop in reel:
+                seen.add(stop["symbol"])
+    return sorted(seen)
+
+
+def _fkwr_apply(ir: dict, params: np.ndarray) -> dict:
+    """Apply per-symbol log-weight multipliers to every FS reel-strip stop.
+
+    `params` has length len(symbols). Each symbol s gets multiplier
+    `exp(params[s_idx])`, snapped to integer ≥ 1 after scaling by 100.
+    All FS reel-strip stops with symbol s receive that weight, replacing
+    the published uniform weight (=1). The IR's vendor-published reel-
+    strip ORDER (which symbols sit at which stops) is unchanged — only
+    the visit probability per stop is reweighted.
+
+    The base reel strips, paytable, and all bonus mechanics are left
+    untouched: only FS reel-strip stop weights are mutated. The hold-
+    and-win `avg_pay_per_trigger` is recomputed from raw
+    `fk_avg_pay / bm1_total_bet_coins` (no overshoot discount) so the
+    organic engine MC RTP is end-to-end physical.
+    """
+    out = json.loads(json.dumps(ir))
+    out["meta"].pop("rtp_source", None)
+    symbols = _fkwr_fs_symbols(out)
+    sym_idx = {s: i for i, s in enumerate(symbols)}
+    # Per-symbol multiplier (≥ 1 after snapping). Centered at exp(0)=1.
+    mult = np.maximum(np.round(np.exp(params) * 100.0).astype(int), 1)
+    for rs in out["reels"]["fs"]:
+        for reel in rs["reels"]:
+            for stop in reel:
+                stop["weight"] = int(mult[sym_idx[stop["symbol"]]])
+    # W4.19 — remove the named-constant overshoot discount on Fort Knox
+    # avg_pay_per_trigger. The hold_and_win entry must now carry the raw
+    # `fk_avg_pay / bm1_total_bet_coins` value. The IR's overlay carries
+    # the discounted value baked at build time; an overlay slot stores
+    # the raw value alongside so the fitter can reapply it cleanly.
+    hw = next(
+        (f for f in out["features"] if f.get("kind") == "hold_and_win"),
+        None,
+    )
+    if hw is not None and hw.get("_w419_raw_avg_pay_per_trigger") is not None:
+        hw["avg_pay_per_trigger"] = float(hw["_w419_raw_avg_pay_per_trigger"])
+    return out
+
+
+def _fkwr_undiscount(ir: dict) -> dict:
+    """Restore the raw (undiscounted) Fort Knox `avg_pay_per_trigger`
+    in-place. The discount factor 0.015 / trigger_prob was baked at
+    W4.17; reverse it so the fitter starts from a physical baseline.
+
+    Stores the raw value into a private slot `_w419_raw_avg_pay_per_trigger`
+    so `_fkwr_apply` can re-apply it inside each MC evaluation.
+    """
+    out = json.loads(json.dumps(ir))
+    hw = next(
+        (f for f in out["features"] if f.get("kind") == "hold_and_win"),
+        None,
+    )
+    if hw is not None and hw.get("avg_pay_per_trigger") is not None \
+            and hw.get("trigger_prob") is not None:
+        # discount = FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 / trigger_prob
+        discount = 0.015 / float(hw["trigger_prob"])
+        raw = float(hw["avg_pay_per_trigger"]) + discount
+        hw["_w419_raw_avg_pay_per_trigger"] = raw
+        hw["avg_pay_per_trigger"] = raw
+    return out
+
+
+def _fkwr_coarse(ir: dict) -> tuple[np.ndarray, dict]:
+    """Coarse 1-D sweep over a uniform high-pay-symbol down-scaling
+    parameter `s`. For symbols classified as high-pay (WildWolf, Whitewolf,
+    DarkWolf, BearTotem, BirdTotem, Ace, King), the multiplier is exp(s);
+    for low-pay (Queen, Jack, Ten, Nine), the multiplier is exp(-s);
+    Bonus is exp(0). The sweep over s ∈ [-0.5, 0.2] locates the basin
+    where engine FS RTP share aligns with published 0.074.
+
+    Returns the full 12-d softmax-input vector init at the basin centre.
+    """
+    target_rtp = ir["meta"]["rtp_total"]
+    target_hf = ir["meta"]["hit_frequency"]
+    symbols = _fkwr_fs_symbols(ir)
+    high_pay = {"WildWolf", "Whitewolf", "DarkWolf", "BearTotem",
+                "BirdTotem", "Ace", "King"}
+    low_pay = {"Queen", "Jack", "Ten", "Nine"}
+    best = {"loss": float("inf"), "s": 0.0, "x": np.zeros(len(symbols)),
+            "stats": None}
+    for s in np.linspace(-0.5, 0.2, 8):
+        x = np.zeros(len(symbols))
+        for i, sym in enumerate(symbols):
+            if sym in high_pay:
+                x[i] = float(s)
+            elif sym in low_pay:
+                x[i] = float(-s)
+            # Bonus and any unknown stay at 0 (no scaling).
+        ir_x = _fkwr_apply(ir, x)
+        try:
+            st = _run_mc(ir_x, spins=COARSE_SPINS)
+        except Exception:
+            continue
+        d_rtp = st["rtp"] - target_rtp
+        d_hf = st["hit_freq"] - target_hf
+        L = d_rtp * d_rtp + LAMBDA_HF_COARSE * d_hf * d_hf
+        if L < best["loss"]:
+            best["loss"] = L
+            best["s"] = float(s)
+            best["x"] = x
+            best["stats"] = st
+    if best["stats"] is None:
+        # Fallback: uniform init (no scaling).
+        x0 = np.zeros(len(symbols))
+        st = _run_mc(_fkwr_apply(ir, x0), spins=COARSE_SPINS)
+        best["x"] = x0
+        best["stats"] = st
+    print(f"  coarse best s={best['s']:+.3f} "
+          f"rtp={best['stats']['rtp']:.6f} hf={best['stats']['hit_freq']:.6f}",
+          file=sys.stderr)
+    return best["x"], best["stats"]
 
 
 # ──────────────────────── Powell refinement ────────────────────────
@@ -424,6 +566,14 @@ def fit_one(
     elif game == "fortune-coin-boost-classic":
         apply_fn = _fc_apply
         x0, init_stats = _fc_coarse(ir)
+    elif game == "fort-knox-wolf-run":
+        # W4.19 — undiscount the Fort Knox `avg_pay_per_trigger` ONCE
+        # (reverse the W4.17 named-constant overshoot absorption) so the
+        # fitter sees a physical baseline. `_fkwr_apply` re-applies the
+        # raw value inside every MC eval.
+        ir = _fkwr_undiscount(ir)
+        apply_fn = _fkwr_apply
+        x0, init_stats = _fkwr_coarse(ir)
     else:
         raise ValueError(f"unsupported game: {game}")
 
@@ -464,7 +614,33 @@ def fit_one(
     # Extract structured fitted weights from the materialized IR.
     ir_materialized = apply_fn(ir, x_best)
     fitted: dict[str, Any] = {}
-    if game == "skeleton-key":
+    if game == "fort-knox-wolf-run":
+        # W4.19 — per-symbol multiplier table + the per-reel materialized
+        # stop weights so build_ir.py can paste them back into the IR
+        # emission path without re-running the fitter.
+        symbols = _fkwr_fs_symbols(ir)
+        mult = np.maximum(np.round(np.exp(x_best) * 100.0).astype(int), 1)
+        fitted["fs_strip_symbol_multipliers"] = {
+            s: int(mult[i]) for i, s in enumerate(symbols)
+        }
+        fitted["fs_strip_weights_per_reel"] = []
+        for rs in ir_materialized["reels"]["fs"]:
+            per_reel = []
+            for reel in rs["reels"]:
+                per_reel.append([int(stop["weight"]) for stop in reel])
+            fitted["fs_strip_weights_per_reel"].append(per_reel)
+        # Also expose the raw avg_pay_per_trigger so build_ir.py knows
+        # to skip the W4.17 discount.
+        hw = next(
+            (f for f in ir_materialized["features"]
+             if f.get("kind") == "hold_and_win"),
+            None,
+        )
+        if hw is not None:
+            fitted["hold_and_win_avg_pay_per_trigger"] = float(
+                hw.get("avg_pay_per_trigger") or 0.0
+            )
+    elif game == "skeleton-key":
         fitted["rows_weights"] = ir_materialized["topology"]["rows_weights"]
         # W4.13: SK fit also tunes BG + FS picker weights — bake them too.
         fitted["base_weights"] = [
@@ -539,7 +715,8 @@ def main() -> int:
               file=sys.stderr)
         return 1
     if args[0] == "all":
-        games = ["skeleton-key", "fortune-coin-boost-classic"]
+        games = ["skeleton-key", "fortune-coin-boost-classic",
+                 "fort-knox-wolf-run"]
         swid_filter = None
     else:
         games = [args[0]]
@@ -563,15 +740,20 @@ def main() -> int:
     print("\n# ──────── BAKE-IN TABLE (paste into build_ir.py) ────────")
     sk_table: dict[str, dict] = {}
     fc_table: dict[str, dict] = {}
+    fkwr_table: dict[str, dict] = {}
     for r in all_results:
         if r["game"] == "skeleton-key":
             sk_table[r["swid"]] = r["fitted"]
         elif r["game"] == "fortune-coin-boost-classic":
             fc_table[r["swid"]] = r["fitted"]
+        elif r["game"] == "fort-knox-wolf-run":
+            fkwr_table[r["swid"]] = r["fitted"]
     if sk_table:
         print("SK_FITTED_W413 =", json.dumps(sk_table, indent=2))
     if fc_table:
         print("FC_FITTED_W413 =", json.dumps(fc_table, indent=2))
+    if fkwr_table:
+        print("FKWR_FITTED_W419 =", json.dumps(fkwr_table, indent=2))
 
     # Convergence summary.
     print("\n# ──────── W4.13 fit summary ────────")

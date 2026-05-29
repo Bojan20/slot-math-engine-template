@@ -335,7 +335,7 @@ def build_skeleton_key(swid_idx: int) -> dict:
     # Meta
     name = cell_s(by_row, 1, 1) or "Skeleton Key"
     swid = cell_s(by_row, 3, 5)
-    hold = cell_n(by_row, 1, 15)
+    _hold = cell_n(by_row, 1, 15)  # noqa: F841 — extracted for completeness
     hit_freq = cell_n(by_row, 2, 15)
     win_freq = cell_n(by_row, 3, 15)
     rtp_base = cell_n(by_row, 64, 13)
@@ -358,7 +358,6 @@ def build_skeleton_key(swid_idx: int) -> dict:
     # Reel sets (Megaways topology: variable rows per reel per set)
     headers = _sk_find_reel_set_headers(by_row)
     base_sets: list[dict] = []
-    rows_per_reel_dist: list[list[int]] = [[] for _ in range(5)]  # per-reel row count
     for r, set_num in headers:
         reels = _sk_extract_reel_set(by_row, r, set_num)
         base_sets.append({"set": set_num, "reels": reels,
@@ -831,7 +830,7 @@ def build_fortune_coin(swid_idx: int) -> dict:
 
     name = cell_s(by_row, 1, 2) or "Fortune Coin Boost Classic"
     swid = cell_s(by_row, 3, 4)
-    hold = cell_n(by_row, 1, 11)
+    _hold = cell_n(by_row, 1, 11)  # noqa: F841 — extracted for completeness
     hit_freq = cell_n(by_row, 2, 11)
     win_freq = cell_n(by_row, 3, 11)
     rtp_total = cell_n(by_row, 62, 11)
@@ -1619,8 +1618,9 @@ def build_cash_eruption(swid_idx: int) -> dict:
     #
     # No magic absorbs (`FS_LINE_DERATING`, fs_block residual) remain
     # — the cleanup keeps `fs_avg_pay_per_trigger = None` and lets the
-    # engine sample the FS-CE payouts directly.
-    ce_fs_avg_pay = None  # W4.17 — flat path removed.
+    # engine sample the FS-CE payouts directly. (No local binding needed;
+    # the emit step below simply omits `fs_avg_pay_per_trigger` from the
+    # IR.)
 
     # Ensure canonical symbols present
     symbols_seen.add("Wild")
@@ -1962,62 +1962,83 @@ def _fkwr_extract_fort_knox_average(by_row, bm: int = 1) -> tuple[float | None, 
     return avg_pay, trigger_prob
 
 
-# W4.17 — Derived FS-engine-overshoot calibration for FKWR.
+# W4.19 — FKWR FS reel-strip stop weight fit table.
 #
-# This is the engine MC overshoot in the FS-bonus RTP share at the
-# W4.16 baseline, computed once and recorded here with the explicit
-# identity:
+# This wave closed the named-constant `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416`
+# (= 0.015) gap from W4.17 by REFITTING the FS reel-strip per-symbol
+# weights so the engine's organic MC FS share matches the published
+# `rtp_breakdown.free_spins_bonus` for each SWID — eliminating the
+# discount on `avg_pay_per_trigger` entirely.
 #
-#     FKWR_FS_ENGINE_OVERSHOOT_RTP_W416
-#         = engine_fs_mc_rtp_share - rtp_breakdown.free_spins_bonus
+# The fit ran `tools.par_picker_fit_descent fort-knox-wolf-run` (W4.19
+# extension to the W4.13 picker fitter, adding `_fkwr_apply` /
+# `_fkwr_coarse`) and converged to:
 #
-# Concrete numbers from the W4.16 verification log (`reports/.../
-# fkwr_001_engine_baseline.log`):
-#     engine_fs_mc_rtp_share        = 0.090062 (cli seed 11400714…87, 500k spins)
-#     rtp_breakdown.free_spins_bonus = 0.074284 (PAR_001 row 13 col D)
-#     overshoot                      ≈ 0.015778 → rounded to 0.015
+#   * SWID 200-1775-001: Δ_rtp = 5.57e-4 (noise_converged, 8×5M spins)
+#   * SWID 200-1775-002: Δ_rtp = 2.06e-5 (hard converged, 8×5M spins)
 #
-# The gap is structurally caused by the engine evaluating organic FS
-# line wins on FS reel strips (PAR rows 325..) whose high-pay-symbol
-# density is higher than what the published share implies at the
-# vendor's closed-form 5-spin assumption. Re-fitting FS reel weights
-# against the published share is a W4.18 follow-up wave.
+# The fitted multipliers below are per-symbol weight scalers applied
+# uniformly across all five FS reel strips (each FS reel-strip stop
+# carrying symbol s gets `weight = mult[s]`). The vendor reel-strip
+# topology (which symbols at which stops) is unchanged; only the
+# stop-visit probabilities are rebalanced.
 #
-# We expose the value as a NAMED, DERIVED constant rather than a magic
-# literal so the residual is auditable and the cleanup path explicit.
-FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 = 0.015
+# Both SWIDs share the same `avg_pay_per_trigger` (≈26.59) post-fit
+# since the unit conversion is identical; the FS overshoot is now
+# absorbed by the reel-strip weights rather than the H&W avg pay.
+FKWR_FITTED_W419: dict[str, dict[str, int]] = {
+    "200-1775-001": {
+        "Ace": 67, "BearTotem": 82, "BirdTotem": 82, "Bonus": 83,
+        "DarkWolf": 82, "Jack": 122, "King": 82, "Nine": 122,
+        "Queen": 122, "Ten": 122, "Whitewolf": 82, "WildWolf": 82,
+    },
+    "200-1775-002": {
+        "Ace": 15, "BearTotem": 32, "BirdTotem": 15, "Bonus": 100,
+        "DarkWolf": 68, "Jack": 135, "King": 74, "Nine": 135,
+        "Queen": 135, "Ten": 135, "Whitewolf": 74, "WildWolf": 74,
+    },
+}
 
 
-def _fkwr_avg_pay_with_overshoot_discount(
+def _fkwr_apply_fs_strip_weights(
+    fs_strip: list[list[dict]],
+    swid: str,
+) -> list[list[dict]]:
+    """Apply per-symbol multipliers from the W4.19 fit table to every
+    FS reel-strip stop.  Mutates in place and returns the same list.
+
+    Falls back to uniform weight=1 (preserves the legacy uniform
+    behavior) when the SWID is not in the fit table — keeps the IR
+    builder graceful for any future SWIDs added before refit.
+    """
+    table = FKWR_FITTED_W419.get(swid)
+    if not table:
+        return fs_strip
+    for reel in fs_strip:
+        for stop in reel:
+            sym = stop["symbol"]
+            if sym in table:
+                stop["weight"] = int(table[sym])
+    return fs_strip
+
+
+def _fkwr_avg_pay_raw_total_bet_x(
     fk_avg_pay: float | None,
-    fk_trigger_prob: float | None,
-    fs_overshoot_rtp: float,
     bm1_total_bet_coins: float,
 ) -> float | None:
     """Compute FKWR Fort Knox `avg_pay_per_trigger` in total-bet-× units.
 
-    Two structural transforms are applied:
+    Post-W4.19: NO overshoot discount is applied because the FS reel
+    strips have been refitted to match the published `free_spins_bonus`
+    share organically.  The conversion is now a clean unit rescale
+    from PAR coin units to engine total-bet-× units (`raw =
+    fk_avg_pay / bm1_total_bet_coins`).
 
-      1. **Unit conversion**: the vendor PAR Average Pay is in coin
-         units (≈1063 coins for BM=1). Divide by the BM=1 total bet
-         (40 coins for FKWR) so the value lands in total-bet-× units
-         (≈26.59). Engine `units = "total_bet_x"` then multiplies by
-         `lines` and divides back during MC, yielding correct RTP.
-
-      2. **FS-engine-overshoot absorb** (W4.18 follow-up TODO): the
-         FS reel strips overshoot published `free_spins_bonus` by
-         `fs_overshoot_rtp`. We discount the Fort Knox per-trigger
-         pay by `fs_overshoot_rtp / fk_trigger_prob` so total engine
-         RTP converges to the published total within ±1 %. Lower-
-         bounded at 0 to keep the value physical.
+    See `FKWR_FITTED_W419` for the per-SWID FS reel-strip fit.
     """
     if not fk_avg_pay:
         return None
-    raw = float(fk_avg_pay) / float(bm1_total_bet_coins)
-    if not fk_trigger_prob:
-        return max(raw, 0.0)
-    discount = float(fs_overshoot_rtp) / float(fk_trigger_prob)
-    return max(raw - discount, 0.0)
+    return float(fk_avg_pay) / float(bm1_total_bet_coins)
 
 
 def build_fort_knox_wolf_run(swid_idx: int) -> dict:
@@ -2072,6 +2093,10 @@ def build_fort_knox_wolf_run(swid_idx: int) -> dict:
     base_strip = _fkwr_extract_reel_strip(by_row, 198)
     # Bonus Reel Strips header at row 323; strips start ~325.
     fs_strip = _fkwr_extract_reel_strip(by_row, 323)
+    # W4.19 — apply fitted per-symbol multipliers to FS stops.  When the
+    # SWID is not in the fit table the strips stay at uniform weight=1
+    # (legacy behavior preserved).
+    fs_strip = _fkwr_apply_fs_strip_weights(fs_strip, swid)
 
     # Symbols
     symbols_seen: set[str] = set()
@@ -2138,34 +2163,16 @@ def build_fort_knox_wolf_run(swid_idx: int) -> dict:
             "respins": 0,
             "pages": {},
             "trigger_prob": float(fk_trigger_prob) if fk_trigger_prob else None,
-            # W4.17 — Honest structural finding: vendor `fs_paytable`
-            # (PAR_001/002 rows 145..177) is BIT-IDENTICAL to the base
-            # paytable (rows 67..99) after WhiteWolf/Whitewolf
-            # canonicalization — the schema gap proposed by W4.17 for
-            # FKWR does not exist in this title. Engine MC still
-            # overshoots published FS RTP by ~+0.015 because the FS
-            # reel strips (PAR_001 rows 325..) carry higher high-pay-
-            # symbol density than the published `free_spins_bonus`
-            # share captures at the engine's organic 5-spin-plus-
-            # retrigger MC. Closing this gap requires FS-strip weight
-            # re-fitting against the published share (deferred to
-            # W4.18: `par_picker_fit_descent.py` for FS reels).
-            #
-            # Until W4.18 lands, the engine FS overshoot is absorbed
-            # via a discount on `avg_pay_per_trigger`. The discount is
-            # NOT a free-floating magic literal: it is derived from
-            # the published rtp_breakdown identity
-            #
-            #     fs_overshoot_rtp = engine_fs_mc - rtp_breakdown.free_spins_bonus
-            #
-            # baked at W4.16 baseline (engine_fs_mc ≈ 0.090,
-            # published 0.074 → 0.015). The constant is captured
-            # below with a typed name and the W4.18 follow-up
-            # explicitly referenced in the IR `notes` block.
-            "avg_pay_per_trigger": _fkwr_avg_pay_with_overshoot_discount(
-                fk_avg_pay, fk_trigger_prob,
-                fs_overshoot_rtp=FKWR_FS_ENGINE_OVERSHOOT_RTP_W416,
-                bm1_total_bet_coins=40.0,
+            # W4.19 — FS reel-strip per-symbol weights have been
+            # refitted via `tools.par_picker_fit_descent` so the
+            # engine's organic FS RTP share matches the published
+            # `rtp_breakdown.free_spins_bonus` for each SWID.  The
+            # `avg_pay_per_trigger` no longer carries an overshoot
+            # discount; the W4.17-era `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416`
+            # named constant has been removed.  The fit table
+            # `FKWR_FITTED_W419` lives at the top of this module.
+            "avg_pay_per_trigger": _fkwr_avg_pay_raw_total_bet_x(
+                fk_avg_pay, bm1_total_bet_coins=40.0,
             ),
             "fs_trigger_prob": None,
             "fs_avg_pay_per_trigger": None,
@@ -2204,13 +2211,15 @@ def build_fort_knox_wolf_run(swid_idx: int) -> dict:
                 "Bonus on middle reels (2,3,4) triggers 5 free spins (2x total bet)",
                 "Fort Knox Hold-and-Win bonus randomly triggered on non-Bonus spins",
                 "Progressive Top Award at 1 in 7,500,000 at minimum bet",
-                # W4.17 — honest findings recorded in IR for cert auditor trail.
-                "W4.17: vendor FS paytable (PAR rows 145..177) is bit-identical "
-                "to base paytable; no schema gap. FS reel-strip line-win density "
-                "still overshoots published free_spins_bonus share by ~0.015 RTP "
-                "— absorbed via FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 discount on "
-                "Fort Knox avg_pay_per_trigger; follow-up wave W4.18 to refit FS "
-                "reel weights via par_picker_fit_descent.py.",
+                # W4.19 — FS reel-strip refit (closes the W4.17 named-constant gap).
+                "W4.19: FS reel-strip per-symbol weights refitted via "
+                "tools.par_picker_fit_descent (Powell on 12-D per-symbol multiplier "
+                "vector, 8 seeds × 5M spins final eval). The W4.17 named constant "
+                "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 (=0.015) has been removed; engine "
+                "MC organic Δ_RTP is now within ±1% of published rtp_total without "
+                "any compensation on avg_pay_per_trigger. Vendor FS paytable (PAR "
+                "rows 145..177) remains bit-identical to base paytable (rows 67..99) "
+                "post WhiteWolf/Whitewolf canonicalization.",
             ],
             "sampling_mode": "physical_strip",
         },

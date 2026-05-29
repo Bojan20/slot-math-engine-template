@@ -1073,40 +1073,70 @@ class TestW417StructuralCleanup:
         )
 
     def test_fkwr_no_magic_literal_in_builder(self):
-        """W4.17 — the W4.16 magic literal `0.015` (raw float
-        constant in the FKWR builder branch) must not appear as a
-        free-standing numeric expression. The replacement constant
-        `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` is named, documented, and
-        derived from the published-vs-engine FS RTP delta. The
-        constant declaration block IS allowed to mention `0.015`
-        as the captured value.
+        """W4.19 — both the magic literal `0.015 / (trigger_prob)` AND
+        the W4.17 replacement named constant
+        `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` must be ABSENT from the
+        FKWR builder code path (only documentation references allowed).
+        The W4.19 wave closes the residual organically by refitting
+        the FS reel-strip per-symbol weights (`FKWR_FITTED_W419`),
+        eliminating the discount on `avg_pay_per_trigger` entirely.
         """
         from tools.par_extract_ultimate import build_ir as bir
         src_path = Path(bir.__file__)
         src = src_path.read_text()
-        # Hard rule: no raw `0.015` literal divided by a trigger prob
-        # in the FKWR builder block. Pre-W4.17 line was
-        # `max(float(fk_avg_pay) / 40.0 - (0.015 / (float(fk_trigger_prob) ...`
-        # The dividing pattern `0.015 / ` should appear nowhere
-        # outside the explicit `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 =
-        # 0.015` declaration.
+        # Hard rule: no raw `0.015 / (...)` literal anywhere.
         assert "0.015 / (" not in src and "0.015/(" not in src, (
-            "Found pre-W4.17 magic literal `0.015 / (...)` in "
-            "build_ir.py — should have been replaced by the named "
-            "constant FKWR_FS_ENGINE_OVERSHOOT_RTP_W416."
+            "Found magic literal `0.015 / (...)` in build_ir.py — "
+            "should have been removed in W4.19 with the FS reel-strip "
+            "refit."
         )
-        # Verify the named constant exists.
-        assert "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416" in src, (
-            "Named overshoot constant missing from build_ir.py"
+        # The W4.19 fit table must exist (carries per-SWID per-symbol
+        # multipliers fitted via `tools.par_picker_fit_descent`).
+        assert "FKWR_FITTED_W419" in src, (
+            "FKWR_FITTED_W419 fit table missing from build_ir.py — "
+            "this is the W4.19 replacement for the W4.17 named "
+            "overshoot constant."
         )
-        # The Fort Knox feature must reference it (not the literal).
+        # The Fort Knox builder branch must invoke the FS strip
+        # weight-applier (no compensation on avg_pay_per_trigger).
         fkwr_branch_start = src.index("def build_fort_knox_wolf_run(")
-        # Walk to the next top-level `def`/`class`/`# ────` boundary
-        # so the assertion scans the entire Fort Knox builder body.
         next_def = src.find("\ndef ", fkwr_branch_start + 1)
         end = next_def if next_def != -1 else len(src)
         fkwr_branch = src[fkwr_branch_start:end]
-        assert "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416" in fkwr_branch, (
-            "Fort Knox builder branch must reference the named "
-            "overshoot constant, not the raw 0.015 literal"
+        assert "_fkwr_apply_fs_strip_weights" in fkwr_branch, (
+            "Fort Knox builder must call _fkwr_apply_fs_strip_weights "
+            "to rebalance FS reel-strip stop weights from the W4.19 "
+            "fit table"
         )
+        # And it must use the raw (no-discount) avg_pay helper.
+        assert "_fkwr_avg_pay_raw_total_bet_x" in fkwr_branch, (
+            "Fort Knox builder must call _fkwr_avg_pay_raw_total_bet_x "
+            "(W4.19) — no overshoot discount on avg_pay_per_trigger"
+        )
+        # No NAMED constant referenced as a Python identifier — only
+        # doc/comment/string-literal mentions allowed (e.g. in
+        # `meta.notes` strings for the audit trail).  A real
+        # identifier reference would parse as a bare name surrounded
+        # by whitespace / operator / punctuation; a string-literal
+        # mention lives inside quotes.
+        import ast
+        tree = ast.parse(src, str(src_path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and \
+                    node.id == "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416":
+                assert False, (
+                    f"build_ir.py line {node.lineno} still references "
+                    f"removed named constant "
+                    f"FKWR_FS_ENGINE_OVERSHOOT_RTP_W416 as an identifier"
+                )
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                # Direct assignments are also disallowed.
+                targets = node.targets if isinstance(node, ast.Assign) \
+                    else [node.target]
+                for t in targets:
+                    if isinstance(t, ast.Name) and \
+                            t.id == "FKWR_FS_ENGINE_OVERSHOOT_RTP_W416":
+                        assert False, (
+                            f"build_ir.py line {node.lineno} still "
+                            f"assigns FKWR_FS_ENGINE_OVERSHOOT_RTP_W416"
+                        )

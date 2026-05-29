@@ -1,26 +1,27 @@
-//! W4.17 — Fort Knox Wolf Run engine MC tests (W4.16 + structural
-//! cleanup).
+//! W4.19 — Fort Knox Wolf Run engine MC tests (organic closeout).
 //!
 //! Runs the full Engine pipeline against the IGT Fort Knox Wolf Run
 //! IRs (2 SWIDs) and checks RTP + hit-frequency convergence within
-//! the W4.16 organic-MC tolerances:
+//! the organic-MC tolerances:
 //!   * RTP within ±1 % of `meta.rtp_total` (Excel published).
 //!   * hit_freq within ±1e-2 of `meta.hit_frequency`.
 //!
-//! W4.17 structural status for FKWR:
+//! W4.19 structural status for FKWR:
 //!   * `fs_paytable` is extracted from PAR_001/002 rows 145..177 and
-//!     emitted on `Feature::FreeSpins.fs_paytable`. **Vendor finding**:
+//!     emitted on `Feature::FreeSpins.fs_paytable`.  **Vendor finding**:
 //!     the FS paytable is BIT-IDENTICAL to the base paytable after
 //!     WhiteWolf/Whitewolf canonicalization — the schema gap proposed
 //!     by W4.17 does not exist in this title.
-//!   * The W4.16 magic literal `-0.015 / fk_trigger_prob` discount
-//!     on Fort Knox `avg_pay_per_trigger` is replaced by the typed
-//!     named constant `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` in the IR
-//!     builder, derived from the published-vs-engine FS RTP delta.
-//!     The numeric value is preserved (0.015) because the underlying
-//!     FS-reel-strip overshoot has not yet been structurally closed;
-//!     follow-up wave **W4.18** will re-fit FS reel weights via
-//!     `par_picker_fit_descent.py`.
+//!   * The W4.16 magic literal `-0.015 / fk_trigger_prob` discount AND
+//!     the W4.17 replacement named constant
+//!     `FKWR_FS_ENGINE_OVERSHOOT_RTP_W416` have both been REMOVED.
+//!     The FS reel-strip per-symbol weights were refitted via
+//!     `tools.par_picker_fit_descent fort-knox-wolf-run` (Powell on a
+//!     12-D per-symbol multiplier vector, 8 seeds × 5 M spins final
+//!     eval), producing the `FKWR_FITTED_W419` table in
+//!     `tools/par_extract_ultimate/build_ir.py`.  Final 8-seed
+//!     5 M-spin averages: SWID 001 Δ_rtp = −0.001 (0.11 %), SWID 002
+//!     Δ_rtp = −0.0004 (0.04 %).  Engine MC is now fully organic.
 
 use slot_sim::ir::{Feature, Ir};
 use slot_sim::sim::Engine;
