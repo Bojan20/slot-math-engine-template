@@ -18,6 +18,8 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: [
+      // W244 — Stryker 95 % push, targets remaining 30 survived mutants
+      'tests/w244_stryker_95_killers.test.ts',
       // W239 final-pass killers
       'tests/w239_session_extra_killers.test.ts',
       'tests/w239_analyzer_extra_killers.test.ts',

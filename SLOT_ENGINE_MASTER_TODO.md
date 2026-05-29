@@ -6,6 +6,51 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:50 (post **W244 STRYKER 91.23 → 93.57 % PUSH + L1 ANTIBODY DB CONFIRM**, commit pending)
+
+**Status:** "cepaj dalje redom ultimativno" wave — dve stavke iz prethodnog queue-a istovremeno:
+
+| Wave | Šta | Rezultat |
+|---|---|---|
+| **#2 L1 antibody DB confirm** | `data/antibodies.db` (46 antibodies × 14 families, 36 KB) i `tools/agent_corpus/bootstrap_antibodies.py` (494 lin seed script) već landed iz prethodnog wave-a — prethodni master TODO snapshot je bio outdated ("L1 SKIP no antibody db"). `make qa-quick` sada reportuje **L1 = PASS (db=data/antibodies.db, tokens=65)**. | ✅ L1 PASS |
+| **#3 TS Stryker pass 1** | `tests/w244_stryker_95_killers.test.ts` — 21 ciljanih testova za 30 surviving mutanata (13 rg/session + 17 sensitivity/analyzer). `vitest.stryker.config.ts` proširena `include` lista sa W244 fajlom. `stryker.scoped.config.mjs` `ignorePatterns` za qa_agent symlink + sandbox dirs (sprečava ENOTSUP socket copy crash). | ✅ partial |
+
+### QA-quick verdict (ALL_PASS)
+
+| Layer | Status | Detail |
+|---|---|---|
+| L0 selftest | ✅ PASS | SCN=PASS; CLI=PASS; AB=PASS; RPT=PASS; SUB=PASS |
+| L1 antibody | ✅ PASS | db=data/antibodies.db tokens=65 (was SKIP — DB landed) |
+| L2 syntax | ✅ PASS | ruff=0; cargo-check=0; npm-lint=0 |
+| L3 unit | ✅ PASS | pytest=0; cargo-test=0; npm-test=0 |
+| L9 manual | ✅ PASS | 6 run · 0 fail · 0 error |
+| **verdict** | **ALL_PASS** | exit_code=0 |
+
+### Stryker scoped result (per-file)
+
+| Metric | Before | After | Δ |
+|---|---:|---:|---:|
+| **Overall** | 91.23 % | **93.57 %** | **+2.34 pp** |
+| `src/rg/session.ts` | 93.93 % | **95.33 %** ✅ | +1.40 pp (pređe 95 % gate) |
+| `src/sensitivity/analyzer.ts` | 86.72 % | 90.62 % | +3.90 pp |
+| Killed mutants | 310 | **318** | +8 |
+| Survived | 30 | **22** | −8 |
+| Timeout | 2 | 2 | 0 |
+
+CI threshold bands: break=70 % (still PASS), low=80 %, high=95 %. Pass 2 (sensitivity → ≥ 95 %) ostaje sledeći wave.
+
+### Sledeći wave queue (ažuriran)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | Stryker pass 2 — sensitivity 90.62 → ≥ 95 % (12 survived + 2 timeout); ciljati L26/L177/L206:37/L207:12/L241:68 sa spy-based test-ovima ili Logical-operator (`??` vs `&&`) detekcijama | 30–60 min, tech debt |
+| **2** | Boki fleet decision — `agents/*` + `tools/qa_agent/` commit (96 MB corpora) | pending odluka |
+| **3** | W4.9 Cluster Pays + W4.10 Cascade primitivi | čekaju 1 PAR uzorak svaki |
+| **4** | Pattern-FK Wave 0 followup — Fort Knox parser closure | čeka Wave 4 multi-game refactor |
+| **5** | Industry-First Dossier 43/46 → 46/46 (3 ⚠️ optional samples) | 20-40 min, neblokirajuće |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-29 22:10 (post **QA-QUICK L3 GREEN — portfolio count refresh + matrix paytable scaling + Makefile qa-\* targets**, commit `b905319`)
 
 **Status:** Posle W4.8 + W4.12 (megaways + walking-wild clean-room template) batch-a, QA Agent `qa-quick` skenirao 5 pytest fajlova koji su brojali 13 IRs / 5 igara / 20 evidence file-a, plus 1 cert-lab matrix cell-a sa RTP=147 %. Zatvoreno kroz topology-aware paytable down-scaling + count refresh. Boki je već pripremio QA Agent fleet (P8.7) — Makefile patch sa `qa-selftest` / `qa-quick` / `qa-manual` / `qa-full` / `qa-status` targets sad surfsuje kao official CLI.

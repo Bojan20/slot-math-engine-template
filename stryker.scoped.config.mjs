@@ -18,4 +18,6 @@ export default {
   timeoutFactor: 2.5,
   jsonReporter: { fileName: 'reports/mutation/scoped-2026-05-24.json' },
   disableTypeChecks: true,
+  // Exclude live QA-agent symlinks/run artefacts that break Stryker's sandbox copy
+  ignorePatterns: ['reports/qa_agent', '.stryker-tmp', 'node_modules'],
 };
