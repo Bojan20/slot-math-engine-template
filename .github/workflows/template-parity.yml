@@ -93,6 +93,9 @@ jobs:
       - name: Build W4.11 evidence manifest (SHA-256 Merkle root)
         run: python tools/build_evidence_manifest.py
 
+      - name: Verify W4.11 evidence manifest (tamper check)
+        run: python tools/parity/verify_evidence_manifest.py
+
       - name: Run pytest (full W4.11* + W4.15 sweep)
         run: |
           python -m pytest -v \
@@ -105,7 +108,8 @@ jobs:
             tools/tests/test_portfolio_validator.py \
             tools/tests/test_portfolio_validator_dashboard.py \
             tools/tests/test_evidence_manifest.py \
-            tools/tests/test_sales_one_pager.py
+            tools/tests/test_sales_one_pager.py \
+            tools/tests/test_verify_evidence_manifest.py
 
       - name: Upload dashboard artifacts
         if: always()

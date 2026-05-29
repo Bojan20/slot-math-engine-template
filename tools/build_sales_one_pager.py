@@ -118,10 +118,12 @@ def render(cf: dict, mc: dict, val: dict, em: dict, portfolio: dict, dossier: di
     dh = dossier.get("headline", {})
 
     title = '<h1>Slot Math Engine · Sales One-Pager</h1>'
+    # Deterministic build — no wall-clock timestamp so the rebuilt HTML can be
+    # committed to the Merkle evidence manifest without drifting on every run.
     lede = (
         '<p class="lede">'
         'A single executive-facing summary of the engine\'s real-market released-game PAR parity story. '
-        f'Generated {datetime.now(timezone.utc).isoformat()[:10]} from pinned JSON reports.</p>'
+        'Sourced from pinned JSON reports under <code>reports/acceptance/</code>.</p>'
     )
 
     hero = (

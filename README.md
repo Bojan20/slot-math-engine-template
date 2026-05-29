@@ -6,6 +6,25 @@ A professional Monte Carlo simulation engine for slot game mathematics. Designed
 
 ---
 
+## 🎯 Sales / Regulator Entry Points
+
+Open these first if you are evaluating the engine for an operator pilot, certification handoff, or commercial partnership:
+
+| Surface | What it shows | Path |
+|---|---|---|
+| **Sales One-Pager** (executive, print-friendly) | One screen: real-market PAR parity Δ pp + portfolio + Merkle commitment + 94/94 QA. | [`reports/dashboards/sales-one-pager.html`](reports/dashboards/sales-one-pager.html) |
+| **Operator Portal** (landing) | Navigates to every shippable dashboard + 9 top reports. | [`reports/dashboards/index.html`](reports/dashboards/index.html) |
+| **Real-Market Portfolio** | 5 source games × 13 SWIDs × 5 mechanic anchors with per-game RTP / hit-freq / feature shares. | [`reports/dashboards/real-market-portfolio.html`](reports/dashboards/real-market-portfolio.html) |
+| **MC Parity Dashboard** | Closed-form + Monte Carlo parity vs a real-market released-game PAR (book-expanding-bonusbuy template). | [`reports/dashboards/mc-parity-dashboard.html`](reports/dashboards/mc-parity-dashboard.html) |
+| **Portfolio Validator Dashboard** | 6×13 PASS/FAIL chip matrix across every ingested IR. | [`reports/dashboards/portfolio-validator-dashboard.html`](reports/dashboards/portfolio-validator-dashboard.html) |
+| **Industry-First Dossier** | 52/55 industry-firsts attested across W33–W127 + W7.x + W4.11*. | [`reports/dossier/INDUSTRY_FIRST_DOSSIER.md`](reports/dossier/INDUSTRY_FIRST_DOSSIER.md) |
+| **Evidence Manifest** (SHA-256 Merkle root over 20 deliverables) | Cryptographic commitment so the whole sales surface verifies from one hash. | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](reports/acceptance/W4_11_EVIDENCE_MANIFEST.json) |
+| **Verify the bundle** | Standalone Python verifier — re-hashes every file, re-derives the Merkle root, exits non-zero on any tampering. | `python3 tools/parity/verify_evidence_manifest.py` |
+
+The full W4.11* + W4.15 surface is re-verified on every PR via `.github/workflows/template-parity.yml` (104-spec sweep, dashboards uploaded as CI artifacts).
+
+---
+
 ## Quick Start
 
 ```bash

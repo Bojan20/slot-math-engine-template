@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T15:13:15.544Z` · repo SHA: `c91d9f856d08`
+> Generated: `2026-05-29T15:18:15.392Z` · repo SHA: `c239e5498aaf`
 
-## Headline: **52/55 industry-firsts attested** ✅
+## Headline: **53/56 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -57,13 +57,14 @@
 | 7.11 | — | **Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)** | ✅ consolidated_hash=6a32084a5e94e422… (Pareto 32, RL 18, mesh root a3a1e8d46951…) | [`reports/acceptance/UNIFIED_AUDIT.json`](../../reports/acceptance/UNIFIED_AUDIT.md) |
 | 4.11 | — | **Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)** | ✅ 5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
 | 4.15 | — | **Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)** | ✅ Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
-| 4.11b | — | **Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)** | ✅ 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s | [`reports/acceptance/book_bonusbuy_mc.json`](../../reports/acceptance/book_bonusbuy_mc.md) |
-| 4.11c | — | **MC Parity Dashboard (offline single-file HTML, sales/regulator surface)** | ✅ offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.53 s | [`reports/dashboards/mc-parity-dashboard.manifest.json`](../../reports/dashboards/mc-parity-dashboard.manifest.md) |
+| 4.11b | — | **Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)** | ✅ 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.52 s | [`reports/acceptance/book_bonusbuy_mc.json`](../../reports/acceptance/book_bonusbuy_mc.md) |
+| 4.11c | — | **MC Parity Dashboard (offline single-file HTML, sales/regulator surface)** | ✅ offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.52 s | [`reports/dashboards/mc-parity-dashboard.manifest.json`](../../reports/dashboards/mc-parity-dashboard.manifest.md) |
 | 4.11d | — | **Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)** | ✅ 5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB | [`reports/dashboards/real-market-portfolio.manifest.json`](../../reports/dashboards/real-market-portfolio.manifest.md) |
 | 4.11e | — | **Operator Portal + CI parity gate (69-spec offline gate, GH Actions)** | ✅ 7 dashboards + 9 top reports · offline 5.92 KB · 69-spec CI gate (template-parity.yml) wired | [`reports/dashboards/index.manifest.json`](../../reports/dashboards/index.manifest.md) |
 | 4.11f | — | **Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)** | ✅ 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered | [`reports/acceptance/portfolio_validator.json`](../../reports/acceptance/portfolio_validator.md) |
-| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 20 files committed · 279.6 KB · merkle_root=d26868cc35676673… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
-| 4.11h | — | **Sales One-Pager (executive, print-friendly)** | ✅ offline 8.18 KB · sources 6 pinned JSON reports · print-friendly @media query | [`reports/dashboards/sales-one-pager.manifest.json`](../../reports/dashboards/sales-one-pager.manifest.md) |
+| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 20 files committed · 282.8 KB · merkle_root=8c69e578c404a19d… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
+| 4.11h | — | **Sales One-Pager (executive, print-friendly)** | ✅ offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query | [`reports/dashboards/sales-one-pager.manifest.json`](../../reports/dashboards/sales-one-pager.manifest.md) |
+| 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 20/20 files verified · merkle_root=8c69e578c404… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
 
 ## Why each is industry-first
 
@@ -72,7 +73,7 @@
 - **Acceptance**: 50/50 cells PASS
 - **Industry-first claim**: No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators
 - **Commit**: `f4ca791`
-- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"122.6"}`
+- **Detail**: `{"mrs":["MR1","MR2","MR3","MR4","MR5"],"fixtures":10,"seeds":4,"spinsPerSeed":20000,"wallSeconds":"121.2"}`
 
 ### Wave 34 · Mutation-Score CI Gate (K6)
 
@@ -402,14 +403,14 @@
 
 ### Wave 4.11b · Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger) (—)
 
-- **Acceptance**: 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.53 s
+- **Acceptance**: 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.52 s
 - **Industry-first claim**: Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time.
 - **Commit**: `pending`
 - **Detail**: `{"spins":200000,"seed":20260529,"line_pay_delta_pp":-0.18851698490046642,"scatter_pay_delta_pp":-0.00797237830043266,"hit_freq_delta_pp":-2.9060911999999997,"fs_trigger_rel_err":0.05886627906976753,"elapsed_seconds":2.52`…
 
 ### Wave 4.11c · MC Parity Dashboard (offline single-file HTML, sales/regulator surface) (—)
 
-- **Acceptance**: offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.53 s
+- **Acceptance**: offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.52 s
 - **Industry-first claim**: Offline single-file HTML dashboard that visualises closed-form + MC parity against a real-market released-game PAR in one page (no JS deps, no remote URLs, ≤ 25 KB). Drops directly into the operator-package ZIP. KPI strip foregrounds the engine-side line + scatter Δ pp (≤ 0.5 pp / ≤ 0.1 pp) plus BB fair-price Δ and MC runtime. No vendor ships a regulator-facing visual parity dashboard whose source is reproducible and copyright-safe.
 - **Commit**: `pending`
 - **Detail**: `{"bundle_url":"reports/dashboards/mc-parity-dashboard.html","size_bytes":9483,"size_kb":9.26,"offline_safe":true,"kpi_strip":["MC line-pay Δ","MC scatter-pay Δ","BB fair-price Δ","MC runtime"],"cf_summary":{"all_gates_pa`…
@@ -437,17 +438,24 @@
 
 ### Wave 4.11g · Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out) (—)
 
-- **Acceptance**: 20 files committed · 279.6 KB · merkle_root=d26868cc35676673…
+- **Acceptance**: 20 files committed · 282.8 KB · merkle_root=8c69e578c404a19d…
 - **Industry-first claim**: Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.
 - **Commit**: `pending`
-- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":20,"total_bytes":286275,"merkle_root_sha256":"d26868cc356766736515743c0b19ac973926259bd32798cd759e7a9f999dfc25","missing_files":[]}`
+- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":20,"total_bytes":289542,"merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2fcb7665ecf9499d7702646","missing_files":[]}`
 
 ### Wave 4.11h · Sales One-Pager (executive, print-friendly) (—)
 
-- **Acceptance**: offline 8.18 KB · sources 6 pinned JSON reports · print-friendly @media query
+- **Acceptance**: offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query
 - **Industry-first claim**: Single-page executive landing surface that condenses every W4.11* + W4.15 number into one print-friendly screen — hero pitch, 8 KPI cards (line/scatter/BB Δ pp, portfolio size, validator 78/78, dossier 51/54, Merkle root, QA 94/94), parity gate table, real-market portfolio table, deliverable index. Sources data from 6 pinned JSON reports at build time so the page is always current with whatever passed the CI gate. Drop-in for any operator handshake or regulator briefing. No vendor publishes a single-page executive surface backed by a SHA-256 commitment graph.
 - **Commit**: `pending`
-- **Detail**: `{"bundle_url":"reports/dashboards/sales-one-pager.html","size_bytes":8376,"size_kb":8.18,"offline_safe":true,"print_friendly":true,"sourced_from":["reports/acceptance/book_bonusbuy_parity.json","reports/acceptance/book_b`…
+- **Detail**: `{"bundle_url":"reports/dashboards/sales-one-pager.html","size_bytes":8402,"size_kb":8.21,"offline_safe":true,"print_friendly":true,"sourced_from":["reports/acceptance/book_bonusbuy_parity.json","reports/acceptance/book_b`…
+
+### Wave 4.11i · Standalone Evidence Manifest Verifier (regulator-side tamper check) (—)
+
+- **Acceptance**: 20/20 files verified · merkle_root=8c69e578c404… · receipt-schema v1
+- **Industry-first claim**: Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering — missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.
+- **Commit**: `pending`
+- **Detail**: `{"verified":true,"file_count":20,"passed_count":20,"expected_merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2fcb7665ecf9499d7702646","derived_merkle_root_sha256":"8c69e578c404a19dfb50393575c6effa3bb7c585c2`…
 
 ## Auditor Q&A Map
 

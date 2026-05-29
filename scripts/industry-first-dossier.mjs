@@ -817,6 +817,30 @@ const WAVES = [
     extractDetail: (j) => j,
     industry_first: 'Single-page executive landing surface that condenses every W4.11* + W4.15 number into one print-friendly screen — hero pitch, 8 KPI cards (line/scatter/BB Δ pp, portfolio size, validator 78/78, dossier 51/54, Merkle root, QA 94/94), parity gate table, real-market portfolio table, deliverable index. Sources data from 6 pinned JSON reports at build time so the page is always current with whatever passed the CI gate. Drop-in for any operator handshake or regulator briefing. No vendor publishes a single-page executive surface backed by a SHA-256 commitment graph.',
   },
+  {
+    wave: '4.11i',
+    name: 'Standalone Evidence Manifest Verifier (regulator-side tamper check)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/acceptance/W4_11_EVIDENCE_RECEIPT.json',
+    extractHeadline: (j) => {
+      const passed = j?.passed_count ?? 0;
+      const total = j?.file_count ?? 0;
+      const root = (j?.derived_merkle_root_sha256 ?? '').slice(0, 12);
+      return `${passed}/${total} files verified · merkle_root=${root}… · receipt-schema v1`;
+    },
+    extractDetail: (j) => ({
+      verified: j?.verified,
+      file_count: j?.file_count,
+      passed_count: j?.passed_count,
+      expected_merkle_root_sha256: j?.expected_merkle_root_sha256,
+      derived_merkle_root_sha256: j?.derived_merkle_root_sha256,
+      missing: j?.missing,
+      digest_mismatch: j?.digest_mismatch,
+      size_mismatch: j?.size_mismatch,
+    }),
+    industry_first: 'Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering — missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────
