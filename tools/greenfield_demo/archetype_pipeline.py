@@ -993,7 +993,13 @@ def run_pipeline(
                 )
     line_target_rtp = target_rtp - haw_share
 
-    cal_spins = max(min(spins // 5, 200_000), 100_000)
+    # Larger calibration budget for high-variance archetypes (cascade
+    # has chain depth → wider sample dispersion; megaways has variable
+    # ways per spin → wider tail).  500k spins per pass for these.
+    if archetype in ("cascade", "megaways"):
+        cal_spins = max(min(spins, 500_000), 200_000)
+    else:
+        cal_spins = max(min(spins // 5, 200_000), 100_000)
     cal_passes_done = 0
     for pass_idx in range(4):
         cal_mc = _run_engine_mc(
@@ -1019,9 +1025,11 @@ def run_pipeline(
             f"(line share={line_mc_rtp:.6f}) vs target "
             f"line_RTP={line_target_rtp:.6f}."
         )
-        # Convergence: when scale is within 0.5 % of 1.0, paytable is
-        # stable enough that the final MC will land within ±1 %.
-        if abs(cal_scale - 1.0) < 5e-3:
+        # Convergence: when scale is within 0.3 % of 1.0 the post-cal
+        # paytable should land within ±0.5 % at the calibration seed
+        # (tighter than the MC ±1 % gate to leave headroom for the
+        # final MC's seed-noise dispersion).
+        if abs(cal_scale - 1.0) < 3e-3:
             break
 
     # Stage 4b — Final MC on calibrated IR.
