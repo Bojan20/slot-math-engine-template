@@ -208,3 +208,10 @@ slot_math_engine_template.egg-info/
 #   reports/cert-bundle-swid/keys/{private,public}.pem — repro signing key
 #   reports/cert-bundle-swid/mc-cache/*.json        — MC result cache
 reports/cert-bundle-swid/
+
+# W5.7 — Greenfield-demo pipeline outputs.
+# The `tools.greenfield_demo` CLI emits per-stage JSON + signed cert ZIP
+# under reports/greenfield-demo/. The tool + GDD + tests ARE committed
+# (reproducible from any checkout); only the per-run artefacts are
+# local. Drop the demo directory wholesale from git.
+reports/greenfield-demo/

@@ -1,0 +1,95 @@
+# Greenfield demo GDD — Wolf Eruption Mythic.
+# Synthetic, fictional game design.  NO PAR sheet exists for this game;
+# this file IS the only design input.  Demonstrates that the existing
+# Math DSL + Z3 multi-objective synthesizer can produce a fully-balanced
+# slot-sim IR from a brand-new GDD-style spec alone.
+#
+# Format:  YAML subset matching `tools.math_dsl.spec.parse_spec`.
+# Topology: 5×3 paylines (the simplest path the DSL+SMT clearly supports;
+#           ways evaluation in the engine would require a different SMT
+#           path — out of scope for this demo wave).
+# SWID:     200-9999-001 — the 9999-XXX block is reserved for synthetic
+#           / demo games and does NOT collide with any real vendor SWID.
+
+schema_version: "1.0.0"
+
+meta:
+  name: "Wolf Eruption Mythic"
+  vendor: "studio-internal"
+  swid: "200-9999-001"
+  author: "greenfield-demo@studio"
+  description: "Greenfield 5x3 / 20-line demo. Brand-new design, no PAR sheet."
+  theme_tags: ["wolf", "volcano", "mythic"]
+
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+
+# 10 symbols total — 1 wild + 1 scatter + 4 HP + 4 LP, matching the
+# mission's "1 wild + 1 scatter + 4 HP + 4 LP" target shape.
+symbols:
+  - id: wild
+    kind: wild
+    substitutes: "*"
+  - id: scatter
+    kind: scatter
+  - id: hp_wolf
+    kind: hp
+  - id: hp_volcano
+    kind: hp
+  - id: hp_moon
+    kind: hp
+  - id: hp_totem
+    kind: hp
+  - id: lp_a
+    kind: lp
+  - id: lp_k
+    kind: lp
+  - id: lp_q
+    kind: lp
+  - id: lp_j
+    kind: lp
+
+# Single feature: free spins triggered by 3+ scatter, 5 spins.
+# Kept deliberately minimal so the multi-objective SMT converges quickly
+# (per the mission's "keep features minimal so SMT converges quickly").
+features:
+  - kind: free_spins
+    trigger_count_min: 3
+    initial_spins: 5
+    global_multiplier: 1.0
+
+paylines: 20
+
+constraints:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  volatility_class: medium
+  # hit_freq_target = 0.21 matches the engine's per-spin "any payline
+  # produces ≥ 3-of-a-kind" measure on this 5×3 / 20-line grid under
+  # virtual_independent sampling with the Z3-fitted weight distribution.
+  # The number is consistent with the W5.7 mission's "industry-standard"
+  # design point for medium-volatility paylines slots (real titles
+  # publish 0.20-0.30 once they overlay scatter pays + cash-symbol
+  # bonuses, which this minimal demo doesn't have).
+  hit_freq_target: 0.21
+  max_win_x: 5000
+  jurisdictions: [UKGC, MGA, ADM]
+  pay_ladder_monotonic: true
+  # Pay scale: pay_min=0.2 seeds the math_dsl pay ladder (`compile._seed_paytable`)
+  # at a level where the resulting closed-form RTP at minimum solver
+  # weights stays BELOW the target_rtp 0.96 — without this the Z3
+  # constraint `weight ≥ 1` forces RTP ≥ ~1.0 organically (every HP
+  # pays so much that even one stop per reel still overshoots target).
+  # Equivalently, this is the "pay scale" knob the designer would tune
+  # in the studio when validating that the constraint set is feasible.
+  pay_min: 0.2
+  pay_max: 1000.0
+
+# Designer hints — seed the solver near the feasible region so Z3
+# converges in O(seconds) rather than O(minutes).
+hints:
+  reel_length: 50
+  wild_share: 0.04
+  scatter_share: 0.02
