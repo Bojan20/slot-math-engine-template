@@ -1,0 +1,39 @@
+{
+  "bundle_url": "reports/dashboards/index.html",
+  "size_bytes": 5215,
+  "size_kb": 5.09,
+  "offline_safe": true,
+  "dashboards": [
+    {
+      "id": "mc-parity",
+      "name": "MC Parity Dashboard",
+      "wave": "W4.11c",
+      "href": "mc-parity-dashboard.html"
+    },
+    {
+      "id": "real-market-portfolio",
+      "name": "Real-Market Portfolio",
+      "wave": "W4.11d",
+      "href": "real-market-portfolio.html"
+    },
+    {
+      "id": "unified-audit",
+      "name": "Unified Audit Pipeline",
+      "wave": "W7.11",
+      "href": "unified-audit.html"
+    },
+    {
+      "id": "live-par-compiler",
+      "name": "Live PAR Compiler (browser)",
+      "wave": "W7.7",
+      "href": "live-par-compiler.html"
+    },
+    {
+      "id": "par-verification",
+      "name": "PAR Verification Dashboard",
+      "wave": "PAR-001",
+      "href": "par-verification.html"
+    }
+  ],
+  "report_count": 7
+}

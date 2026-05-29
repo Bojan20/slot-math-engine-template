@@ -1,0 +1,105 @@
+name: template-parity
+
+# W4.11 + W4.11b + W4.11c + W4.11d + W4.15 parity gate.
+#
+# Locks the real-market released-game PAR parity chain into CI:
+#   1. Closed-form parity verifier (≤ 250 ms)
+#   2. Monte Carlo parity validator (200K spinov, < 3 s)
+#   3. MC parity dashboard build
+#   4. Real-market portfolio dashboard build
+#   5. Operator portal landing page build
+#
+# Any PR touching `tools/parity/**`, `tools/build_*.py`, `games/**`, or
+# the dashboards under `reports/dashboards/` must keep all 69 specs
+# green and re-emit the dashboards.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "games/**"
+      - "tools/parity/**"
+      - "tools/build_mc_parity_dashboard.py"
+      - "tools/build_real_market_portfolio.py"
+      - "tools/build_operator_portal.py"
+      - "tools/tests/test_book_*.py"
+      - "tools/tests/test_mc_parity_dashboard.py"
+      - "tools/tests/test_real_market_portfolio.py"
+      - "tools/tests/test_operator_portal.py"
+      - "reports/dashboards/**"
+      - ".github/workflows/template-parity.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "games/**"
+      - "tools/parity/**"
+      - "tools/build_mc_parity_dashboard.py"
+      - "tools/build_real_market_portfolio.py"
+      - "tools/build_operator_portal.py"
+      - "tools/tests/test_book_*.py"
+      - "tools/tests/test_mc_parity_dashboard.py"
+      - "tools/tests/test_real_market_portfolio.py"
+      - "tools/tests/test_operator_portal.py"
+      - "reports/dashboards/**"
+      - ".github/workflows/template-parity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    name: Real-market PAR parity (69 specs)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest openpyxl
+
+      - name: Build closed-form parity report
+        run: python tools/parity/book_bonusbuy_closed_form.py
+
+      - name: Build MC parity report
+        run: python tools/parity/book_bonusbuy_mc.py --spins 200000 --seed 20260529
+
+      - name: Build MC parity dashboard
+        run: python tools/build_mc_parity_dashboard.py
+
+      - name: Build real-market portfolio dashboard
+        run: python tools/build_real_market_portfolio.py
+
+      - name: Build operator portal
+        run: python tools/build_operator_portal.py
+
+      - name: Run pytest (book-bonusbuy + dashboards + portal)
+        run: |
+          python -m pytest -v \
+            tools/tests/test_book_expanding_bonusbuy_pipeline.py \
+            tools/tests/test_book_bonusbuy_parity.py \
+            tools/tests/test_book_bonusbuy_mc.py \
+            tools/tests/test_mc_parity_dashboard.py \
+            tools/tests/test_real_market_portfolio.py \
+            tools/tests/test_operator_portal.py
+
+      - name: Upload dashboard artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: template-parity-dashboards
+          path: |
+            reports/dashboards/mc-parity-dashboard.html
+            reports/dashboards/real-market-portfolio.html
+            reports/dashboards/index.html
+            reports/acceptance/book_bonusbuy_parity.json
+            reports/acceptance/book_bonusbuy_mc.json
+          retention-days: 30

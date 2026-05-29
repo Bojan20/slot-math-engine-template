@@ -751,6 +751,21 @@ const WAVES = [
     extractDetail: (j) => j,
     industry_first: 'Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio.',
   },
+  {
+    wave: '4.11e',
+    name: 'Operator Portal + CI parity gate (69-spec offline gate, GH Actions)',
+    kimi: '—',
+    commit: 'pending',
+    reportPath: 'reports/dashboards/index.manifest.json',
+    extractHeadline: (j) => {
+      const dash = (j?.dashboards ?? []).length;
+      const rep = j?.report_count ?? 0;
+      const kb = j?.size_kb ?? 0;
+      return `${dash} dashboards + ${rep} top reports · offline ${kb} KB · 69-spec CI gate (template-parity.yml) wired`;
+    },
+    extractDetail: (j) => j,
+    industry_first: 'Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report — MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification — plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR.',
+  },
 ];
 
 // ─── Auditor Q&A map ───────────────────────────────────────────────────────

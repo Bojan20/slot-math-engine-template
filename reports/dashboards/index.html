@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Slot Math Engine · Operator Portal</title>
+<style>
+  :root {
+    --bg:#0b1018; --panel:#151c2b; --line:#28324b; --text:#d8e0ff;
+    --muted:#7c8ab2; --accent:#66d9ff; --pass:#5dd39e;
+  }
+  html,body { background:var(--bg); color:var(--text); font:14px/1.45 ui-monospace,Menlo,monospace; margin:0; }
+  .wrap { max-width:1100px; margin:0 auto; padding:32px 18px 64px; }
+  h1 { font-size:24px; margin:0 0 4px; color:var(--accent); letter-spacing:-0.01em; }
+  h2 { font-size:16px; margin:32px 0 12px; color:var(--text); border-bottom:1px solid var(--line); padding-bottom:6px; }
+  .sub { color:var(--muted); font-size:12px; margin:0 0 16px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px 20px; transition:border-color .15s; }
+  .card:hover { border-color:var(--accent); }
+  .card a { color:var(--accent); text-decoration:none; font-size:16px; font-weight:600; }
+  .card a:hover { text-decoration:underline; }
+  .card .wave { display:inline-block; font-size:10px; color:var(--muted); border:1px solid var(--line); padding:1px 6px; border-radius:999px; margin-left:8px; vertical-align:middle; letter-spacing:0.06em; }
+  .card .sum { color:var(--text); font-size:12.5px; margin:8px 0 0; line-height:1.5; }
+  .reports { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px 18px; }
+  .reports ul { margin:0; padding-left:18px; }
+  .reports li { margin:6px 0; font-size:13px; }
+  .reports a { color:var(--accent); text-decoration:none; }
+  .reports a:hover { text-decoration:underline; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; background:rgba(93,211,158,.15); color:var(--pass); border:1px solid var(--pass); }
+  .footer { color:var(--muted); font-size:11px; margin-top:28px; padding-top:12px; border-top:1px solid var(--line); }
+  code { background:var(--bg); padding:1px 6px; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+</style>
+</head><body><div class="wrap"><h1>Slot Math Engine · Operator Portal</h1><p class="sub"><span class="badge">100 % offline</span> &nbsp; file:// safe · no remote URLs · no JS deps · drops into the operator-package ZIP</p><p class="sub">Single landing surface that indexes every shippable dashboard + cert report. Click any card to open the matching offline HTML, or follow the report links for the underlying JSON / Markdown evidence.</p><h2>Dashboards</h2><div class="grid"><div class="card"><a href="mc-parity-dashboard.html">MC Parity Dashboard</a><span class="wave">W4.11c</span><p class="sum">Closed-form + Monte Carlo parity against the real-market released-game PAR (book-expanding-bonusbuy template). KPI strip + PAR-vs-CF-vs-MC table + gate matrix.</p></div><div class="card"><a href="real-market-portfolio.html">Real-Market Portfolio</a><span class="wave">W4.11d</span><p class="sum">Every real-market released-game PAR ingested by the engine (5 games, 13 SWIDs, 5 mechanic anchors). Per-game cards expose family, topology, RTP, hit/win freq, feature shares.</p></div><div class="card"><a href="unified-audit.html">Unified Audit Pipeline</a><span class="wave">W7.11</span><p class="sum">W7.11 composability — all 8 W7.x kernels run in one call + emit a single SHA-256 consolidated_hash committing to every sub-manifest (gdd / asset / derivative / pareto / RL / mesh / JS).</p></div><div class="card"><a href="live-par-compiler.html">Live PAR Compiler (browser)</a><span class="wave">W7.7</span><p class="sum">Designer DSL → RTP in real-time in the browser. 4 KB vanilla JS bundle, SHA-256 pinned, Node-verified parity vs Rust + Python.</p></div><div class="card"><a href="par-verification.html">PAR Verification Dashboard</a><span class="wave">PAR-001</span><p class="sum">Per-SWID drill-down for ingested vendor PARs — paytable / reel-weight / payline / cell-provenance commitment surfaces.</p></div></div><h2>Top reports</h2><div class="reports"><ul><li><a href="../../reports/dossier/INDUSTRY_FIRST_DOSSIER.json">Industry-First Dossier (JSON)</a></li><li><a href="../../reports/dossier/INDUSTRY_FIRST_DOSSIER.md">Industry-First Dossier (Markdown)</a></li><li><a href="../../reports/dossier/CLOSED_FORM_PORTFOLIO.md">Closed-Form Portfolio</a></li><li><a href="../../reports/acceptance/PERF_BENCH.json">Performance Benchmark</a></li><li><a href="../../reports/acceptance/book_bonusbuy_parity.json">Book-BonusBuy Closed-Form Parity</a></li><li><a href="../../reports/acceptance/book_bonusbuy_mc.json">Book-BonusBuy MC Parity</a></li><li><a href="../../reports/acceptance/UNIFIED_AUDIT.json">Unified Audit (consolidated SHA-256)</a></li></ul></div><div class="footer">
+  Built locally by <code>tools/build_operator_portal.py</code> · all linked dashboards are file:// safe ·
+  source XLSX files (<code>games/*/raw/*.xlsx</code>) never ship · vendor / game / SWID identifiers preserved
+  for real-market PARs and stripped for the template.
+</div></div></body></html>
