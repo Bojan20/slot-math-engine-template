@@ -41,6 +41,24 @@ result = charge_meter.charge_meter_rtp(params)
 print(result["rtp_contribution"])  # → 0.10
 ```
 
+## Runnable examples
+
+5 working end-to-end demos in `examples/`:
+
+| File | Pattern | Industry refs |
+|---|---|---|
+| `01_charge_meter_starburst.py` | Wald multi-tier meter | NetEnt Starburst / Money Cart |
+| `02_buy_feature_compliance.py` | Bonus Buy + UKGC/MGA gates | BTG / Pragmatic Bonus Buy |
+| `03_inverse_solver_designer.py` | Newton-Raphson auto-resolve | Goal-Seek replacement |
+| `04_wheel_megafortune.py` | Geometric amortisation | Mega Fortune / WoF |
+| `05_money_collect_cash_eruption.py` | Markov DP respin chain | Money Train / Cash Eruption |
+
+Each runs in <100ms with assertions:
+```bash
+python examples/01_charge_meter_starburst.py
+# → RTP contribution: 0.1000 ✓ Wald identity check passed
+```
+
 ## Kernel coverage
 
 | Kernel | Pattern | Tech |
