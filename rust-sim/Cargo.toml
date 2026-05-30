@@ -82,6 +82,12 @@ harness = false
 name = "W212_bench"
 harness = false
 
+# W244 wave 39 — math kernel benchmark suite. Run with:
+#   cargo bench --bench w244_kernel_bench
+[[bench]]
+name = "w244_kernel_bench"
+harness = false
+
 # Package-wide lint policy.
 #
 # New modules (`ir`, `recall`) ship with `-D warnings` clean. The
