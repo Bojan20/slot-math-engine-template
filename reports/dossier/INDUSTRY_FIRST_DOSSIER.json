@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:2a1ef1eaead6d97d",
-  "repo_sha": "f56bea59d2a92e12c27de33ab6b9ecd1855a04b3",
+  "generatedAtUtc": "deterministic-by-merkle:82b1c955629d9003",
+  "repo_sha": "d6a9dc1c4f0e8b209b55bef1191b4ff21f37c869",
   "headline": {
-    "waves": 71,
-    "industry_firsts": 71,
+    "waves": 72,
+    "industry_firsts": 72,
     "all_present": true
   },
   "waves": [
@@ -2600,6 +2600,27 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source exact Markov DP za sticky-wilds respin chain. Wild count distribution iterative Binomial PMF propagation, no MC needed. Linear in fixed pay_per_wild_count."
+    },
+    {
+      "wave": "244.24",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)",
+      "reportPath": "reports/acceptance/STACKED_WILDS_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, Binomial(n_reels, p_stacked) × pay_per_stacked_count",
+      "detail": {
+        "kernel_module": "tools.math_dsl.stacked_wilds",
+        "patterns_covered": [
+          "Microgaming Mega Moolah",
+          "Aristocrat Buffalo 1024-ways",
+          "IGT Cleopatra II",
+          "NetEnt Twin Spin 243-ways"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source closed-form za stacked-wilds reels sa K-fold pay multiplication. Binomial PMF computed via iterative product (pure-stdlib, no scipy). Linear u operator-supplied pay_per_stacked_count."
     }
   ],
   "auditor_qa": [

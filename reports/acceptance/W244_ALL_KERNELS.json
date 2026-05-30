@@ -1,12 +1,12 @@
 {
   "schema": "w244-all-kernels/v1",
-  "master_merkle_root_sha256": "a481e144c7cf006d4fc1f6d7fb8c7dbec99fccdf69319591677cc5a8853a3d7f",
-  "generated_at_utc": "deterministic-by-merkle:a481e144c7cf006d",
+  "master_merkle_root_sha256": "94cf5742782df429a048eabaf6fe17a2a425bd39cd5482692e036e4bf22400e1",
+  "generated_at_utc": "deterministic-by-merkle:94cf5742782df429",
   "all_kernels_ok": true,
-  "kernels_total": 12,
-  "kernels_ok": 12,
+  "kernels_total": 13,
+  "kernels_ok": 13,
   "kernels_fail": 0,
-  "total_fixtures": 38,
+  "total_fixtures": 41,
   "records": [
     {
       "wave_id": "244.10",
@@ -115,6 +115,15 @@
       "output_path": "reports/acceptance/STICKY_WILDS_KERNEL.json",
       "fixtures_count": 3,
       "merkle_root_sha256": "a51c8d2fd1f91d19d5d20c67f8992cba7564f9f49eed42b60b180936b8303889"
+    },
+    {
+      "wave_id": "244.24",
+      "kernel": "stacked_wilds",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/STACKED_WILDS_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "357944f9eb1cb905a9eb8a1ec03be72e048060a4b703fa4427101b0d22398b52"
     }
   ],
   "verification": "Re-run `python -m tools.build_all_w244_kernels`. Output must match `master_merkle_root_sha256` exactly. Each per-kernel Merkle root is independently verifiable via its own builder. Master root = SHA-256 over '<wave_id>|<kernel>|<merkle>\\n' lines in registry order."

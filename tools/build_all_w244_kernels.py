@@ -48,6 +48,8 @@ KERNELS = [
      "CLUSTER_PAYS_KERNEL.json"),
     ("244.23", "tools.build_sticky_wilds_kernel", "sticky_wilds",
      "STICKY_WILDS_KERNEL.json"),
+    ("244.24", "tools.build_stacked_wilds_kernel", "stacked_wilds",
+     "STACKED_WILDS_KERNEL.json"),
 ]
 
 

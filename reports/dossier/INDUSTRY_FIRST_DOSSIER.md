@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 50 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 23) · repo SHA: `f56bea59`
+> **Unified operator deliverable** — aggregates 51 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 24) · repo SHA: `d6a9dc1c`
 
-## Headline: **71/71 industry-firsts attested** ✅
+## Headline: **72/72 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -80,6 +80,7 @@
 | 244.21 | — | **Cluster-Pays Aggregation Kernel (Sweet Bonanza / Aloha / Gates of Olympus)** | ✅ 3 fixtures: 7×7, 5×4, 6×5 grids; 4-way + 8-way adjacency | [`reports/acceptance/CLUSTER_PAYS_KERNEL.json`](../../reports/acceptance/CLUSTER_PAYS_KERNEL.json) |
 | 244.22 | — | **W244 All-Kernel Batch Runner + Master Merkle** | ✅ 12/12 kernels OK, 38 fixtures, master merkle a481e144c7cf006d | [`reports/acceptance/W244_ALL_KERNELS.json`](../../reports/acceptance/W244_ALL_KERNELS.json) |
 | 244.23 | — | **Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG)** | ✅ 3 fixtures, exact Markov DP over (wild_count, respin_t) | [`reports/acceptance/STICKY_WILDS_KERNEL.json`](../../reports/acceptance/STICKY_WILDS_KERNEL.json) |
+| 244.24 | — | **Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)** | ✅ 3 fixtures, Binomial(n_reels, p_stacked) × pay table | [`reports/acceptance/STACKED_WILDS_KERNEL.json`](../../reports/acceptance/STACKED_WILDS_KERNEL.json) |
 
 ## Why each is industry-first
 
