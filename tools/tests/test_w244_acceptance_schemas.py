@@ -188,6 +188,9 @@ class TestSchemasValidateRealArtefakti(unittest.TestCase):
             # INVERSE_SOLVER uses `modules` (plural) + `scenarios_count`
             # instead of `module` + `fixtures_count`.
             "INVERSE_SOLVER_KERNEL.json",
+            # WASM_PYTHON_PARITY also uses bespoke schema (no kernel /
+            # module / industry_pattern keys; has fixtures_count + records).
+            "WASM_PYTHON_PARITY_KERNEL.json",
         }
         bad = []
         for f in sorted(ACCEPT.glob("*_KERNEL.json")):

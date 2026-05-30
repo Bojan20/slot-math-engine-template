@@ -33,6 +33,7 @@ OUT = DOSSIER / "search-index.json"
 SKIP_FILES = {
     "DONE_UNIVERSAL_CLOSURE_KERNEL.json",
     "RUST_PYTHON_PARITY_KERNEL.json",
+    "WASM_PYTHON_PARITY_KERNEL.json",
 }
 
 

@@ -218,6 +218,11 @@ wasm-test: ## Run native cargo tests on slot-math-wasm (14 tests, ~5s)
 	cd packages/slot-math-wasm && \
 		RUSTUP_TOOLCHAIN=stable cargo test --release
 
+wasm-parity: ## Verify wasm ↔ Python kernel parity (20 fixtures, max ULP delta)
+	cd packages/slot-math-wasm && \
+		RUSTUP_TOOLCHAIN=stable wasm-pack build --target nodejs --release
+	python3 tools/parity/w244_wasm_python_parity.py
+
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
@@ -266,6 +271,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_search_index.py \
 		tools/tests/test_w244_docs_index.py \
 		tools/tests/test_w244_wasm_build.py \
+		tools/tests/test_w244_wasm_python_parity.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

@@ -26,6 +26,7 @@ SKIP_FILES = {
     "DONE_UNIVERSAL_CLOSURE_KERNEL.json",
     "RUST_PYTHON_PARITY_KERNEL.json",
     "SHOWCASE_GAME_KERNEL.json",
+    "WASM_PYTHON_PARITY_KERNEL.json",
 }
 
 # Closed-form formulas in LaTeX (per kernel, hand-curated from W244 docs)
