@@ -1,0 +1,93 @@
+{
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/w244_all_kernels.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Schema za reports/acceptance/W244_ALL_KERNELS.json \u2014 master Merkle attestation across svih kernels.",
+  "properties": {
+    "all_kernels_ok": {
+      "type": "boolean"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "kernels_fail": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "kernels_ok": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "kernels_total": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "master_merkle_root_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "records": {
+      "items": {
+        "properties": {
+          "builder_exit_code": {
+            "type": "integer"
+          },
+          "fixtures_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "kernel": {
+            "type": "string"
+          },
+          "merkle_root_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "output_path": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "OK",
+              "FAIL"
+            ],
+            "type": "string"
+          },
+          "wave_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "wave_id",
+          "kernel",
+          "status",
+          "builder_exit_code",
+          "output_path",
+          "fixtures_count",
+          "merkle_root_sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "total_fixtures": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "master_merkle_root_sha256",
+    "generated_at_utc",
+    "all_kernels_ok",
+    "kernels_total",
+    "kernels_ok",
+    "kernels_fail",
+    "total_fixtures",
+    "records"
+  ],
+  "title": "W244 master kernel dossier",
+  "type": "object"
+}

@@ -1,0 +1,72 @@
+{
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/w244_benchmark.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Schema za reports/acceptance/W244_BENCHMARK_DOSSIER.json.",
+  "properties": {
+    "all_sub_microsecond": {
+      "type": "boolean"
+    },
+    "bench_count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "fastest": {
+      "type": "object"
+    },
+    "mean_across_all_benches_ns": {
+      "type": "number"
+    },
+    "merkle_root_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "records": {
+      "items": {
+        "properties": {
+          "bench": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "mean_ns": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "ops_per_sec": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "stderr_ns": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "group",
+          "bench",
+          "mean_ns",
+          "ops_per_sec"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "slowest": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "merkle_root_sha256",
+    "bench_count",
+    "fastest",
+    "slowest",
+    "all_sub_microsecond",
+    "records"
+  ],
+  "title": "W244 benchmark dossier",
+  "type": "object"
+}

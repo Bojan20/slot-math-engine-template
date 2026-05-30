@@ -1,0 +1,49 @@
+{
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/w244_kernel.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Schema za standardne *_KERNEL.json acceptance fajlove pod reports/acceptance/. Excludes meta artefakti (DONE_UNIVERSAL_CLOSURE, RUST_PYTHON_PARITY, SHOWCASE_GAME) koji imaju vlastite shape-ove.",
+  "properties": {
+    "fixtures_count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "industry_pattern": {
+      "type": "string"
+    },
+    "kernel": {
+      "type": "string"
+    },
+    "merkle_root_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "records": {
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "verification": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "merkle_root_sha256",
+    "generated_at_utc",
+    "kernel",
+    "module",
+    "industry_pattern",
+    "fixtures_count",
+    "records"
+  ],
+  "title": "W244 per-kernel acceptance artefakt",
+  "type": "object"
+}

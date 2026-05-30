@@ -1,0 +1,79 @@
+{
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/closed_form_portfolio.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "acceptance_reports_total": {
+      "type": "integer"
+    },
+    "generated_utc": {
+      "type": "string"
+    },
+    "overall_fail_count": {
+      "type": "integer"
+    },
+    "overall_pass_count": {
+      "type": "integer"
+    },
+    "pass_rate_pct": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "portfolio_milestone": {
+      "type": "string"
+    },
+    "report_id": {
+      "type": "string"
+    },
+    "reports": {
+      "items": {
+        "properties": {
+          "configsPassed": {
+            "type": "integer"
+          },
+          "configsTotal": {
+            "type": "integer"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "overallPass": {
+            "type": "boolean"
+          },
+          "reportId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileName",
+          "reportId",
+          "overallPass",
+          "configsTotal",
+          "configsPassed"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "type": "string"
+    },
+    "total_configs": {
+      "type": "integer"
+    },
+    "total_configs_passed": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "report_id",
+    "generated_utc",
+    "total_configs",
+    "total_configs_passed",
+    "reports"
+  ],
+  "title": "Closed-Form Portfolio dossier",
+  "type": "object"
+}

@@ -1,0 +1,40 @@
+{
+  "draft": "json-schema draft 2020-12",
+  "manifest_merkle_root_sha256": "58b954dbcbea91d3591720f94d081db671b6a82c200f43186370af471d7ef5c6",
+  "purpose": "Industry-standard JSON Schema files validating the W244 acceptance + dossier surface. Validates with any conforming validator (ajv, Python jsonschema, gojsonschema, NJsonSchema).",
+  "schema": "w244-schemas-manifest/v1",
+  "schemas": [
+    {
+      "filename": "closed_form_portfolio.schema.json",
+      "sha256": "519f0346524009e106662c9c1f5d336c4fd0b31655cb364646605d3332b87052",
+      "size_bytes": 1641,
+      "title": "Closed-Form Portfolio dossier"
+    },
+    {
+      "filename": "industry_first_dossier.schema.json",
+      "sha256": "6d5136ca1a4b6fd013d2f852ea0b7c33b31e92883a71676fa6f540a2652d6660",
+      "size_bytes": 1266,
+      "title": "Industry First Dossier"
+    },
+    {
+      "filename": "w244_all_kernels.schema.json",
+      "sha256": "c6dc5976eb0a37e852569493805a27f87d64a08e9bddab755db00b9cc46ce5c1",
+      "size_bytes": 2113,
+      "title": "W244 master kernel dossier"
+    },
+    {
+      "filename": "w244_benchmark.schema.json",
+      "sha256": "0dac0ea370830b3f6ac9c73df706c728c87741c96b155a7b5ecdb4d099d994f5",
+      "size_bytes": 1537,
+      "title": "W244 benchmark dossier"
+    },
+    {
+      "filename": "w244_kernel.schema.json",
+      "sha256": "6ceecc40dd4178fb087ab266f52b3cac69c241bc45f4645e08e3cf0918de30e6",
+      "size_bytes": 1196,
+      "title": "W244 per-kernel acceptance artefakt"
+    }
+  ],
+  "schemas_count": 5,
+  "verification": "Re-run `python3 tools/build_acceptance_schemas.py`. manifest_merkle_root_sha256 must rebuild byte-identical."
+}

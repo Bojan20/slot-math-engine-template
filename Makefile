@@ -188,6 +188,9 @@ dossier-portfolio-html: ## Build Closed-Form Portfolio HTML (120 solvers, 589 co
 dossier-kernel-refs: ## Build 19 per-kernel reference HTML pages + index
 	python3 tools/build_kernel_reference_cards.py
 
+dossier-schemas: ## Build 5 JSON Schema files + Merkle manifest
+	python3 tools/build_acceptance_schemas.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
@@ -217,6 +220,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_dossier_schema.py \
 		tools/tests/test_w244_kernel_reference_cards.py \
 		tools/tests/test_w244_health_probe.py \
+		tools/tests/test_w244_acceptance_schemas.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

@@ -1,0 +1,64 @@
+{
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/industry_first_dossier.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "generatedAtUtc": {
+      "type": "string"
+    },
+    "headline": {
+      "type": "object"
+    },
+    "repo_sha": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "waves": {
+      "items": {
+        "properties": {
+          "commit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "headline": {
+            "type": "string"
+          },
+          "industry_first": {
+            "type": "string"
+          },
+          "kimi": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "wave": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "wave"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "generatedAtUtc",
+    "headline",
+    "waves"
+  ],
+  "title": "Industry First Dossier",
+  "type": "object"
+}

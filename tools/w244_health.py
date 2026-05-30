@@ -198,6 +198,25 @@ def check_vendored_drift():
     )
 
 
+def check_schemas():
+    sd = REPO / "reports" / "schemas"
+    if not sd.is_dir():
+        _check("schemas dir present", False, "missing")
+        return
+    schemas = list(sd.glob("*.schema.json"))
+    _check("≥5 JSON Schema files", len(schemas) >= 5, f"{len(schemas)}")
+    manifest = sd / "schemas_manifest.json"
+    _check("schemas manifest present", manifest.exists(), "")
+    if manifest.exists():
+        d = json.loads(manifest.read_text())
+        m = d.get("manifest_merkle_root_sha256", "")
+        _check(
+            "schemas manifest Merkle 64-hex",
+            bool(HEX64.match(m)),
+            m,
+        )
+
+
 def check_api_surface():
     f = REPO / "packages" / "slot-math-kernels" / "API_SURFACE.json"
     if not f.exists():
@@ -229,6 +248,7 @@ def main() -> int:
         check_pypi_vendored,
         check_vendored_drift,
         check_api_surface,
+        check_schemas,
     ]
     for check_fn in checks_in_order:
         check_fn()
