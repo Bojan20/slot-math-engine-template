@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 52 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 25) · repo SHA: `8b090238`
+> **Unified operator deliverable** — aggregates 53 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 26) · repo SHA: `8b137378`
 
-## Headline: **73/73 industry-firsts attested** ✅
+## Headline: **74/74 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -82,6 +82,7 @@
 | 244.23 | — | **Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG)** | ✅ 3 fixtures, exact Markov DP over (wild_count, respin_t) | [`reports/acceptance/STICKY_WILDS_KERNEL.json`](../../reports/acceptance/STICKY_WILDS_KERNEL.json) |
 | 244.24 | — | **Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)** | ✅ 3 fixtures, Binomial(n_reels, p_stacked) × pay table | [`reports/acceptance/STACKED_WILDS_KERNEL.json`](../../reports/acceptance/STACKED_WILDS_KERNEL.json) |
 | 244.25 | — | **Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)** | ✅ 4 fixtures, ways = product(E[rows]) under reel independence | [`reports/acceptance/WAYS_EVALUATOR_KERNEL.json`](../../reports/acceptance/WAYS_EVALUATOR_KERNEL.json) |
+| 244.26 | — | **Pay-Anywhere Evaluator Kernel (Sweet Bonanza scatter / Gonzo / Wolf Gold)** | ✅ 3 fixtures, Binomial × pay table with min_pay_count threshold | [`reports/acceptance/PAY_ANYWHERE_KERNEL.json`](../../reports/acceptance/PAY_ANYWHERE_KERNEL.json) |
 
 ## Why each is industry-first
 

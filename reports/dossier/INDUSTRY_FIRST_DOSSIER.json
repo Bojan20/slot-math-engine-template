@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:05fecfbea4891191",
-  "repo_sha": "8b090238990ae931f6dac7ad1aec7398093b34a3",
+  "generatedAtUtc": "deterministic-by-merkle:61116feabf28eb25",
+  "repo_sha": "8b137378939e9578ff232ba8bdd0e428a5039a5a",
   "headline": {
-    "waves": 73,
-    "industry_firsts": 73,
+    "waves": 74,
+    "industry_firsts": 74,
     "all_present": true
   },
   "waves": [
@@ -2642,6 +2642,26 @@
         "fixtures_count": 4
       },
       "industry_first": "First open-source closed-form za variable-rows ways evaluator. E[ways] = product(E[row_count_per_reel]) under independent reels. Linear u operator-supplied per_way_rtp."
+    },
+    {
+      "wave": "244.26",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Pay-Anywhere Evaluator Kernel (Sweet Bonanza / Gonzo / Wolf Gold)",
+      "reportPath": "reports/acceptance/PAY_ANYWHERE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, Binomial(n_cells, p) × pay[K] sa min_pay_count threshold",
+      "detail": {
+        "kernel_module": "tools.math_dsl.pay_anywhere",
+        "patterns_covered": [
+          "Pragmatic Sweet Bonanza scatter",
+          "NetEnt Gonzo's Quest",
+          "Pragmatic Wolf Gold money-symbol"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source closed-form za pay-anywhere/scatter-pay evaluation. Binomial PMF computed iteratively, min_pay_count threshold codified, pure-stdlib."
     }
   ],
   "auditor_qa": [

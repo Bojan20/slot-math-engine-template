@@ -52,6 +52,8 @@ KERNELS = [
      "STACKED_WILDS_KERNEL.json"),
     ("244.25", "tools.build_ways_evaluator_kernel", "ways_evaluator",
      "WAYS_EVALUATOR_KERNEL.json"),
+    ("244.26", "tools.build_pay_anywhere_kernel", "pay_anywhere",
+     "PAY_ANYWHERE_KERNEL.json"),
 ]
 
 
