@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:7c5fad6bda08292e",
-  "repo_sha": "6dc150843b7681baf2aae2aa594d9fa6f83a3152",
+  "generatedAtUtc": "deterministic-by-merkle:69460c751f6b155c",
+  "repo_sha": "504a08ef890e84c6ba82e4c30361e3532ba27d4c",
   "headline": {
-    "waves": 84,
-    "industry_firsts": 84,
+    "waves": 85,
+    "industry_firsts": 85,
     "all_present": true
   },
   "waves": [
@@ -2884,6 +2884,29 @@
         "merkle_root": "c5185d35efd6aafbf92bc075b7cb8645eb9e7b9bfdcf3c06330d87e31751f850"
       },
       "industry_first": "Komplet open-source 18-kernel cross-language math fleet parity. Composed kernel (hold_and_win) propagation across Python/Rust matches byte-stable. Sve glavne industry slot math primitives port-ovane sa CI gate-om."
+    },
+    {
+      "wave": "244.43",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "DONE-UNIVERSAL #1 + #2 Closure — both_ways + expanding_wild + asymmetric showcase",
+      "reportPath": "reports/acceptance/DONE_UNIVERSAL_CLOSURE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "20/20 DONE-UNIVERSAL stavki zatvoreno (#1 Both-ways + expanding, #2 Asymmetric showcase)",
+      "detail": {
+        "modules": [
+          "tools.math_dsl.both_ways_expanding_wild",
+          "tools.math_dsl.asymmetric_showcase"
+        ],
+        "asymmetric_proxies": [
+          "twin_spin",
+          "wild_west_gold",
+          "wild_toro"
+        ],
+        "tests": "7/7 PASS"
+      },
+      "industry_first": "DONE-UNIVERSAL coverage 100 % (20/20). Composed both_ways + expanding_wild kernel + 3 asymmetric paytable showcase proxies (NetEnt Twin Spin, Yggdrasil Wild West Gold, Microgaming Wild Toro). Sve glavne industry slot math primitives sad zatvorene closed-form."
     }
   ],
   "auditor_qa": [
