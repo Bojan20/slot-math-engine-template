@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 46 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 19) · repo SHA: `0d15d43a`
+> **Unified operator deliverable** — aggregates 47 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 20) · repo SHA: `02e86d70`
 
-## Headline: **67/67 industry-firsts attested** ✅
+## Headline: **68/68 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -76,6 +76,7 @@
 | 244.17 | — | **Multi-Mode State-Machine Supermeter Kernel** | ✅ 3 fixtures, Markov stationary via Gaussian elimination | [`reports/acceptance/STATE_MACHINE_KERNEL.json`](../../reports/acceptance/STATE_MACHINE_KERNEL.json) |
 | 244.18 | — | **Book-of-Ra/Book-of-Dead Expanding Symbol FS Kernel** | ✅ 3 fixtures, Binomial(reels, p_per_reel) × pay_table expectation | [`reports/acceptance/EXPANDING_SYMBOL_KERNEL.json`](../../reports/acceptance/EXPANDING_SYMBOL_KERNEL.json) |
 | 244.19 | — | **Persistent Multiplier FS Kernel (Sticky Bandits / Mighty Wild)** | ✅ 3 fixtures, exact DP over (bump_count, spin) state space | [`reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json`](../../reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json) |
+| 244.20 | — | **Cascade/Tumble Closed-Form (Sweet Bonanza / Money Train)** | ✅ 3 fixtures, bounded geometric chain × multiplier_ladder per-step | [`reports/acceptance/CASCADE_KERNEL.json`](../../reports/acceptance/CASCADE_KERNEL.json) |
 
 ## Why each is industry-first
 

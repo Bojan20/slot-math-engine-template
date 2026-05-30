@@ -1,0 +1,207 @@
+{
+  "schema": "cascade-kernel/v1",
+  "merkle_root_sha256": "3b96a0bda944603e91b71336726595315f488b3f89abc12d9e8d00d0480c905f",
+  "generated_at_utc": "deterministic-by-merkle:3b96a0bda944603e",
+  "kernel": "cascade",
+  "module": "tools.math_dsl.cascade",
+  "industry_pattern": "Pragmatic Sweet Bonanza, Relax Money Train, Play'n GO Reactoonz, BTG Bonanza tumble/avalanche/cascade. Winning symbols disappear, remaining fall, new drop from top. Multiplier ramps per step.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "sweet-bonanza-style",
+      "description": "Pragmatic Sweet Bonanza cascade: medium-frequency, mild mult ramp",
+      "rtp_contribution": 0.17581536,
+      "p_initial_win": 0.27,
+      "base_pay_per_cascade_x_bet": 0.3,
+      "p_win_per_cascade": 0.4,
+      "max_chain": 8,
+      "expected_chain_length": 0.66622976,
+      "expected_pay_per_trigger_x_bet": 0.651168,
+      "per_step_breakdown": [
+        {
+          "step": 1,
+          "p_reach": 1.0,
+          "multiplier": 1.0,
+          "contribution_x_bet": 0.3
+        },
+        {
+          "step": 2,
+          "p_reach": 0.4,
+          "multiplier": 1.0,
+          "contribution_x_bet": 0.12
+        },
+        {
+          "step": 3,
+          "p_reach": 0.16000000000000003,
+          "multiplier": 2.0,
+          "contribution_x_bet": 0.09600000000000002
+        },
+        {
+          "step": 4,
+          "p_reach": 0.06400000000000002,
+          "multiplier": 2.0,
+          "contribution_x_bet": 0.03840000000000001
+        },
+        {
+          "step": 5,
+          "p_reach": 0.025600000000000008,
+          "multiplier": 5.0,
+          "contribution_x_bet": 0.03840000000000001
+        },
+        {
+          "step": 6,
+          "p_reach": 0.010240000000000004,
+          "multiplier": 5.0,
+          "contribution_x_bet": 0.015360000000000007
+        },
+        {
+          "step": 7,
+          "p_reach": 0.0040960000000000015,
+          "multiplier": 25.0,
+          "contribution_x_bet": 0.03072000000000001
+        },
+        {
+          "step": 8,
+          "p_reach": 0.0016384000000000008,
+          "multiplier": 25.0,
+          "contribution_x_bet": 0.012288000000000004
+        }
+      ]
+    },
+    {
+      "fixture_name": "money-train-aggressive",
+      "description": "Relax Money Train cascade: high mult ramp, frequent cascades",
+      "rtp_contribution": 0.9599999999999999,
+      "p_initial_win": 0.3,
+      "base_pay_per_cascade_x_bet": 0.4,
+      "p_win_per_cascade": 0.5,
+      "max_chain": 8,
+      "expected_chain_length": 0.99609375,
+      "expected_pay_per_trigger_x_bet": 3.1999999999999997,
+      "per_step_breakdown": [
+        {
+          "step": 1,
+          "p_reach": 1.0,
+          "multiplier": 1.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 2,
+          "p_reach": 0.5,
+          "multiplier": 2.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 3,
+          "p_reach": 0.25,
+          "multiplier": 4.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 4,
+          "p_reach": 0.125,
+          "multiplier": 8.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 5,
+          "p_reach": 0.0625,
+          "multiplier": 16.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 6,
+          "p_reach": 0.03125,
+          "multiplier": 32.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 7,
+          "p_reach": 0.015625,
+          "multiplier": 64.0,
+          "contribution_x_bet": 0.4
+        },
+        {
+          "step": 8,
+          "p_reach": 0.0078125,
+          "multiplier": 128.0,
+          "contribution_x_bet": 0.4
+        }
+      ]
+    },
+    {
+      "fixture_name": "reactoonz-style",
+      "description": "Play'n GO Reactoonz: cluster cascade with charge meter",
+      "rtp_contribution": 0.12011688426367187,
+      "p_initial_win": 0.2,
+      "base_pay_per_cascade_x_bet": 0.25,
+      "p_win_per_cascade": 0.35,
+      "max_chain": 10,
+      "expected_chain_length": 0.5384466847450194,
+      "expected_pay_per_trigger_x_bet": 0.6005844213183593,
+      "per_step_breakdown": [
+        {
+          "step": 1,
+          "p_reach": 1.0,
+          "multiplier": 1.0,
+          "contribution_x_bet": 0.25
+        },
+        {
+          "step": 2,
+          "p_reach": 0.35,
+          "multiplier": 2.0,
+          "contribution_x_bet": 0.175
+        },
+        {
+          "step": 3,
+          "p_reach": 0.12249999999999998,
+          "multiplier": 3.0,
+          "contribution_x_bet": 0.09187499999999998
+        },
+        {
+          "step": 4,
+          "p_reach": 0.04287499999999999,
+          "multiplier": 4.0,
+          "contribution_x_bet": 0.04287499999999999
+        },
+        {
+          "step": 5,
+          "p_reach": 0.015006249999999995,
+          "multiplier": 6.0,
+          "contribution_x_bet": 0.02250937499999999
+        },
+        {
+          "step": 6,
+          "p_reach": 0.005252187499999998,
+          "multiplier": 8.0,
+          "contribution_x_bet": 0.010504374999999996
+        },
+        {
+          "step": 7,
+          "p_reach": 0.0018382656249999992,
+          "multiplier": 10.0,
+          "contribution_x_bet": 0.0045956640624999975
+        },
+        {
+          "step": 8,
+          "p_reach": 0.0006433929687499997,
+          "multiplier": 12.0,
+          "contribution_x_bet": 0.0019301789062499991
+        },
+        {
+          "step": 9,
+          "p_reach": 0.0002251875390624999,
+          "multiplier": 16.0,
+          "contribution_x_bet": 0.0009007501562499996
+        },
+        {
+          "step": 10,
+          "p_reach": 7.881563867187496e-05,
+          "multiplier": 20.0,
+          "contribution_x_bet": 0.0003940781933593748
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_cascade_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: bounded geometric chain sum × multiplier_ladder per-step weighting."
+}

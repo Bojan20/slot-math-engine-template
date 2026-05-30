@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:66c5f9795e6dee53",
-  "repo_sha": "0d15d43a9ae83c4e6306e06d5e07e2759f9874f4",
+  "generatedAtUtc": "deterministic-by-merkle:b9212da0407aa99e",
+  "repo_sha": "02e86d70e54728a5d661247503e8680a1c653a96",
   "headline": {
-    "waves": 67,
-    "industry_firsts": 67,
+    "waves": 68,
+    "industry_firsts": 68,
     "all_present": true
   },
   "waves": [
@@ -2518,6 +2518,27 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source cap-aware DP for persistent-multiplier FS. Per-spin Bernoulli bump propagation with absorbing cap state. Pure-stdlib (no scipy)."
+    },
+    {
+      "wave": "244.20",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Cascade/Tumble Closed-Form (Sweet Bonanza / Money Train)",
+      "reportPath": "reports/acceptance/CASCADE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, bounded geometric chain × multiplier_ladder per-step",
+      "detail": {
+        "kernel_module": "tools.math_dsl.cascade",
+        "patterns_covered": [
+          "Pragmatic Sweet Bonanza",
+          "Relax Money Train",
+          "Play'n GO Reactoonz",
+          "BTG Bonanza"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source cap-bounded geometric chain closed-form za tumble/avalanche/cascade pattern. Per-step multiplier ladder weighting + truncation at max_chain."
     }
   ],
   "auditor_qa": [
