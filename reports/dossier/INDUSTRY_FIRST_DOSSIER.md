@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 43 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 16) · repo SHA: `8d199d7d`
+> **Unified operator deliverable** — aggregates 44 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 17) · repo SHA: `cea0d39c`
 
-## Headline: **64/64 industry-firsts attested** ✅
+## Headline: **65/65 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -73,6 +73,7 @@
 | 244.13 | — | **Multi-Level Pick Bonus — Mega Moolah / Mighty Cash Kernel** | ✅ 3 fixtures, first-order-statistic E[picks] + relative-odds advance | [`reports/acceptance/PICK_CHAIN_KERNEL.json`](../../reports/acceptance/PICK_CHAIN_KERNEL.json) |
 | 244.15 | — | **Bonus Buy Fair-Price Regulator-Audit Kernel** | ✅ 5 fixtures, UKGC RTS 13C + MGA RG 2021/02 codified | [`reports/acceptance/BUY_FEATURE_KERNEL.json`](../../reports/acceptance/BUY_FEATURE_KERNEL.json) |
 | 244.16 | — | **Bonus Wheel Closed-Form with Spin-Again Chain** | ✅ 3 fixtures, bounded geometric-amortised E[award] | [`reports/acceptance/WHEEL_KERNEL.json`](../../reports/acceptance/WHEEL_KERNEL.json) |
+| 244.17 | — | **Multi-Mode State-Machine Supermeter Kernel** | ✅ 3 fixtures, Markov stationary via Gaussian elimination | [`reports/acceptance/STATE_MACHINE_KERNEL.json`](../../reports/acceptance/STATE_MACHINE_KERNEL.json) |
 
 ## Why each is industry-first
 

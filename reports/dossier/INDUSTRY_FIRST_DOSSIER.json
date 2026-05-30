@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:9fd3b595648953f7",
-  "repo_sha": "8d199d7d82484a1005178e091a345c7759029c79",
+  "generatedAtUtc": "deterministic-by-merkle:610a2b3486b26539",
+  "repo_sha": "cea0d39c380e023005e2fba2d83dae455c687a2d",
   "headline": {
-    "waves": 64,
-    "industry_firsts": 64,
+    "waves": 65,
+    "industry_firsts": 65,
     "all_present": true
   },
   "waves": [
@@ -2453,6 +2453,27 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source bounded geometric-amortised closed-form for bonus-wheel spin-again chains. Covers IGT Wheel of Fortune, Aristocrat Dragon Cash, NetEnt Megafortune, all WAP-jackpot wheels."
+    },
+    {
+      "wave": "244.17",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Multi-Mode State-Machine Supermeter Kernel",
+      "reportPath": "reports/acceptance/STATE_MACHINE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, Markov stationary distribution via Gaussian elimination",
+      "detail": {
+        "kernel_module": "tools.math_dsl.state_machine",
+        "patterns_covered": [
+          "Stakelogic Supermeter",
+          "Pragmatic Power of Thor",
+          "Buffalo Stampede tier escalation",
+          "Big Bass Splash multi-mode FS"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source closed-form Markov-stationary RTP decomposition for multi-mode slot state machines. Pure-stdlib Gaussian elimination (no numpy dep). Covers supermeter, mode switch, multi-tier escalation patterns."
     }
   ],
   "auditor_qa": [

@@ -1,0 +1,91 @@
+{
+  "schema": "state-machine-kernel/v1",
+  "merkle_root_sha256": "8eef3a07ea8e92029a84de4138ecace2d5ea87e90aa11624e12b478bce55554f",
+  "generated_at_utc": "deterministic-by-merkle:8eef3a07ea8e9202",
+  "kernel": "state_machine",
+  "module": "tools.math_dsl.state_machine",
+  "industry_pattern": "Multi-mode slot state machine (Stakelogic Supermeter, Pragmatic Power of Thor mode switch, Big Bass Splash multi-mode FS, Aristocrat Buffalo Stampede tier escalation). Each state has own per-spin RTP component; transitions follow stochastic matrix.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "classic-supermeter-2state",
+      "description": "Stakelogic-style supermeter: 1% rare upgrade, 50% drop-back",
+      "rtp_contribution": 0.9901960784313725,
+      "states_count": 2,
+      "stationary_distribution": [
+        0.9803921568627451,
+        0.01960784313725492
+      ],
+      "states": [
+        {
+          "name": "base",
+          "stationary_probability": 0.9803921568627451,
+          "rtp_component_in_state": 0.96,
+          "weighted_rtp_contribution": 0.9411764705882352
+        },
+        {
+          "name": "super",
+          "stationary_probability": 0.01960784313725492,
+          "rtp_component_in_state": 2.5,
+          "weighted_rtp_contribution": 0.049019607843137296
+        }
+      ]
+    },
+    {
+      "fixture_name": "three-tier-escalation",
+      "description": "base/super/mega ladder (Aristocrat Buffalo Stampede style)",
+      "rtp_contribution": 0.9879456706281834,
+      "states_count": 3,
+      "stationary_distribution": [
+        0.899830220713073,
+        0.07470288624787778,
+        0.02546689303904932
+      ],
+      "states": [
+        {
+          "name": "base",
+          "stationary_probability": 0.899830220713073,
+          "rtp_component_in_state": 0.95,
+          "weighted_rtp_contribution": 0.8548387096774193
+        },
+        {
+          "name": "super",
+          "stationary_probability": 0.07470288624787778,
+          "rtp_component_in_state": 1.1,
+          "weighted_rtp_contribution": 0.08217317487266557
+        },
+        {
+          "name": "mega",
+          "stationary_probability": 0.02546689303904932,
+          "rtp_component_in_state": 2.0,
+          "weighted_rtp_contribution": 0.05093378607809864
+        }
+      ]
+    },
+    {
+      "fixture_name": "fury-mode-toggle",
+      "description": "base / fury 2-state toggle (Pragmatic Power of Thor)",
+      "rtp_contribution": 0.9773333333333333,
+      "states_count": 2,
+      "stationary_distribution": [
+        0.9333333333333332,
+        0.06666666666666672
+      ],
+      "states": [
+        {
+          "name": "base",
+          "stationary_probability": 0.9333333333333332,
+          "rtp_component_in_state": 0.94,
+          "weighted_rtp_contribution": 0.8773333333333332
+        },
+        {
+          "name": "fury",
+          "stationary_probability": 0.06666666666666672,
+          "rtp_component_in_state": 1.5,
+          "weighted_rtp_contribution": 0.10000000000000009
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_state_machine_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: stationary distribution via Gaussian elimination on (P^T - I) with sum=1 constraint; RTP = π · rtp_components."
+}
