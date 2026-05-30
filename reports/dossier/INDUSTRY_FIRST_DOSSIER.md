@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 54 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 27) · repo SHA: `2ae30015`
+> **Unified operator deliverable** — aggregates 55 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 30) · repo SHA: `38e56f71`
 
-## Headline: **75/75 industry-firsts attested** ✅
+## Headline: **76/76 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -84,6 +84,7 @@
 | 244.25 | — | **Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)** | ✅ 4 fixtures, ways = product(E[rows]) under reel independence | [`reports/acceptance/WAYS_EVALUATOR_KERNEL.json`](../../reports/acceptance/WAYS_EVALUATOR_KERNEL.json) |
 | 244.26 | — | **Pay-Anywhere Evaluator Kernel (Sweet Bonanza scatter / Gonzo / Wolf Gold)** | ✅ 3 fixtures, Binomial × pay table with min_pay_count threshold | [`reports/acceptance/PAY_ANYWHERE_KERNEL.json`](../../reports/acceptance/PAY_ANYWHERE_KERNEL.json) |
 | 244.27 | — | **Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash)** | ✅ 3 fixtures, composes money_collect + must_hit_by | [`reports/acceptance/HOLD_AND_WIN_KERNEL.json`](../../reports/acceptance/HOLD_AND_WIN_KERNEL.json) |
+| 244.30 | — | **Both-Ways Evaluator Kernel (Thunderstruck II / Starburst / Cleopatra)** | ✅ 3 fixtures, RTP = ltr × (1 + line_pay_share) | [`reports/acceptance/BOTH_WAYS_KERNEL.json`](../../reports/acceptance/BOTH_WAYS_KERNEL.json) |
 
 ## Why each is industry-first
 

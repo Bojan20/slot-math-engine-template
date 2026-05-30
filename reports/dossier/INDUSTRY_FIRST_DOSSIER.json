@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:74d9cf965b0617ff",
-  "repo_sha": "2ae3001599dc57c7a7a1980402e501577d3c7b9d",
+  "generatedAtUtc": "deterministic-by-merkle:8febbfaf268069e9",
+  "repo_sha": "38e56f71f2920e6cab63f62e47d0b17cfd5645e4",
   "headline": {
-    "waves": 75,
-    "industry_firsts": 75,
+    "waves": 76,
+    "industry_firsts": 76,
     "all_present": true
   },
   "waves": [
@@ -2688,6 +2688,26 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source COMPOSED H&W kernel (money_collect + must_hit_by jackpot tiers). Demonstrates kernel composition pattern — multi-mechanic games via composition rather than monolithic."
+    },
+    {
+      "wave": "244.30",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Both-Ways Evaluator Kernel (Thunderstruck II / Starburst / Cleopatra)",
+      "reportPath": "reports/acceptance/BOTH_WAYS_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, RTP = ltr_rtp × (1 + line_pay_share)",
+      "detail": {
+        "kernel_module": "tools.math_dsl.both_ways",
+        "patterns_covered": [
+          "Microgaming Thunderstruck II both-ways",
+          "NetEnt Starburst both-ways",
+          "IGT Cleopatra both-ways"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source closed-form za both-ways evaluator sa scatter-vs-line decomposition. Line pays double, scatter/bonus stay flat."
     }
   ],
   "auditor_qa": [

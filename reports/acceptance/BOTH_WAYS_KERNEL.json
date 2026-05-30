@@ -1,0 +1,48 @@
+{
+  "schema": "both-ways-kernel/v1",
+  "merkle_root_sha256": "409acefb80341c4182c68da813cdcafb7d5ae06055de5022c3bc5b88e4a25b42",
+  "generated_at_utc": "deterministic-by-merkle:409acefb80341c41",
+  "kernel": "both_ways",
+  "module": "tools.math_dsl.both_ways",
+  "industry_pattern": "Microgaming Thunderstruck II both-ways, NetEnt Starburst both-ways, IGT Cleopatra both-ways. Line pays evaluate LTR + RTL; scatter/bonus stay flat.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "thunderstruck-ii-classic",
+      "description": "Microgaming Thunderstruck II both-ways, 70 % line share",
+      "rtp_contribution": 1.632,
+      "ltr_only_rtp": 0.96,
+      "line_pay_share": 0.7,
+      "bidirectional_multiplier": 1.7,
+      "line_pay_ltr": 0.6719999999999999,
+      "line_pay_doubled": 1.3439999999999999,
+      "scatter_bonus_unchanged": 0.28800000000000003,
+      "uplift_x_bet": 0.6719999999999999
+    },
+    {
+      "fixture_name": "starburst-both-ways",
+      "description": "NetEnt Starburst both-ways, 80 % line share (high)",
+      "rtp_contribution": 1.728,
+      "ltr_only_rtp": 0.96,
+      "line_pay_share": 0.8,
+      "bidirectional_multiplier": 1.8,
+      "line_pay_ltr": 0.768,
+      "line_pay_doubled": 1.536,
+      "scatter_bonus_unchanged": 0.19199999999999995,
+      "uplift_x_bet": 0.768
+    },
+    {
+      "fixture_name": "cleopatra-both-ways-classic",
+      "description": "IGT Cleopatra both-ways, 60 % line share (scatter heavy)",
+      "rtp_contribution": 1.536,
+      "ltr_only_rtp": 0.96,
+      "line_pay_share": 0.6,
+      "bidirectional_multiplier": 1.6,
+      "line_pay_ltr": 0.576,
+      "line_pay_doubled": 1.152,
+      "scatter_bonus_unchanged": 0.384,
+      "uplift_x_bet": 0.5760000000000001
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_both_ways_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: RTP = ltr_only_rtp × (1 + line_pay_share). Line component doubles; scatter/bonus unchanged."
+}

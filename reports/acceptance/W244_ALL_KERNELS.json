@@ -1,12 +1,12 @@
 {
   "schema": "w244-all-kernels/v1",
-  "master_merkle_root_sha256": "f4335fb9b5b060cd6d332ea578934bee28e11e90b1928a7f406e8014c7b277d4",
-  "generated_at_utc": "deterministic-by-merkle:f4335fb9b5b060cd",
+  "master_merkle_root_sha256": "2c7f000976025652a5831536f7e92efdb6b6e914e73c069cbd9de7710e3dfdc8",
+  "generated_at_utc": "deterministic-by-merkle:2c7f000976025652",
   "all_kernels_ok": true,
-  "kernels_total": 16,
-  "kernels_ok": 16,
+  "kernels_total": 17,
+  "kernels_ok": 17,
   "kernels_fail": 0,
-  "total_fixtures": 51,
+  "total_fixtures": 54,
   "records": [
     {
       "wave_id": "244.10",
@@ -151,6 +151,15 @@
       "output_path": "reports/acceptance/HOLD_AND_WIN_KERNEL.json",
       "fixtures_count": 3,
       "merkle_root_sha256": "0b5dead8928dcbc6126f32973c0dc239b79d384e0262f70735977df97bcf9b43"
+    },
+    {
+      "wave_id": "244.30",
+      "kernel": "both_ways",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/BOTH_WAYS_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "409acefb80341c4182c68da813cdcafb7d5ae06055de5022c3bc5b88e4a25b42"
     }
   ],
   "verification": "Re-run `python -m tools.build_all_w244_kernels`. Output must match `master_merkle_root_sha256` exactly. Each per-kernel Merkle root is independently verifiable via its own builder. Master root = SHA-256 over '<wave_id>|<kernel>|<merkle>\\n' lines in registry order."
