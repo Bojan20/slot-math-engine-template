@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:8febbfaf268069e9",
-  "repo_sha": "38e56f71f2920e6cab63f62e47d0b17cfd5645e4",
+  "generatedAtUtc": "deterministic-by-merkle:d28cb04fac564190",
+  "repo_sha": "ded6385dbd4e60e1001da6c1a1af504e5164090e",
   "headline": {
-    "waves": 76,
-    "industry_firsts": 76,
+    "waves": 77,
+    "industry_firsts": 77,
     "all_present": true
   },
   "waves": [
@@ -2708,6 +2708,26 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source closed-form za both-ways evaluator sa scatter-vs-line decomposition. Line pays double, scatter/bonus stay flat."
+    },
+    {
+      "wave": "244.31",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Asymmetric Paytable Aggregator Kernel (Twin Spin / Wild West Gold / Wild Toro)",
+      "reportPath": "reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, per-symbol-per-shape contribution aggregator",
+      "detail": {
+        "kernel_module": "tools.math_dsl.asymmetric_paytable",
+        "patterns_covered": [
+          "NetEnt Twin Spin asymmetric reels",
+          "Pragmatic Wild West Gold asymmetric scaling",
+          "ELK Wild Toro asymmetric stacks"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source asymmetric-paytable aggregator: per-symbol-per-shape RTP decomposition. Operator-supplied empirical contributions (sourced from PAR/MC); kernel aggregates deterministically."
     }
   ],
   "auditor_qa": [

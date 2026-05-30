@@ -58,6 +58,8 @@ KERNELS = [
      "HOLD_AND_WIN_KERNEL.json"),
     ("244.30", "tools.build_both_ways_kernel", "both_ways",
      "BOTH_WAYS_KERNEL.json"),
+    ("244.31", "tools.build_asymmetric_paytable_kernel", "asymmetric_paytable",
+     "ASYMMETRIC_PAYTABLE_KERNEL.json"),
 ]
 
 

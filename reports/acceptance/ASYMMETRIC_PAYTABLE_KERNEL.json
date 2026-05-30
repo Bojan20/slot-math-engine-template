@@ -1,0 +1,139 @@
+{
+  "schema": "asymmetric-paytable-kernel/v1",
+  "merkle_root_sha256": "b6c73b0f69080258801793736f56b04c4439fb48006bb04319e4beb19eb92219",
+  "generated_at_utc": "deterministic-by-merkle:b6c73b0f69080258",
+  "kernel": "asymmetric_paytable",
+  "module": "tools.math_dsl.asymmetric_paytable",
+  "industry_pattern": "NetEnt Twin Spin asymmetric reels, Pragmatic Wild West Gold asymmetric pay scaling, ELK Wild Toro asymmetric stacks. Per-symbol pay depends on reel-set shape (not just k-of-a-kind).",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "twin-spin-asymmetric-reels",
+      "description": "NetEnt Twin Spin asymmetric reels (twin/triple/quad/quint columns)",
+      "rtp_contribution": 0.875,
+      "symbols_count": 4,
+      "per_symbol_breakdown": [
+        {
+          "symbol": "hp1",
+          "total_contribution_x_bet": 0.27,
+          "per_shape": {
+            "twin": 0.05,
+            "triple": 0.1,
+            "quad": 0.08,
+            "quint": 0.04
+          }
+        },
+        {
+          "symbol": "hp2",
+          "total_contribution_x_bet": 0.21,
+          "per_shape": {
+            "twin": 0.04,
+            "triple": 0.08,
+            "quad": 0.06,
+            "quint": 0.03
+          }
+        },
+        {
+          "symbol": "lp1",
+          "total_contribution_x_bet": 0.2,
+          "per_shape": {
+            "twin": 0.1,
+            "triple": 0.06,
+            "quad": 0.03,
+            "quint": 0.01
+          }
+        },
+        {
+          "symbol": "lp2",
+          "total_contribution_x_bet": 0.195,
+          "per_shape": {
+            "twin": 0.12,
+            "triple": 0.05,
+            "quad": 0.02,
+            "quint": 0.005
+          }
+        }
+      ]
+    },
+    {
+      "fixture_name": "wild-west-gold-asymmetric",
+      "description": "Pragmatic Wild West Gold asymmetric pay scaling",
+      "rtp_contribution": 1.26,
+      "symbols_count": 4,
+      "per_symbol_breakdown": [
+        {
+          "symbol": "ace",
+          "total_contribution_x_bet": 0.3,
+          "per_shape": {
+            "left_3": 0.15,
+            "left_4": 0.1,
+            "left_5": 0.05
+          }
+        },
+        {
+          "symbol": "cowboy",
+          "total_contribution_x_bet": 0.33999999999999997,
+          "per_shape": {
+            "left_3": 0.06,
+            "left_4": 0.1,
+            "left_5": 0.18
+          }
+        },
+        {
+          "symbol": "horse",
+          "total_contribution_x_bet": 0.3,
+          "per_shape": {
+            "left_3": 0.08,
+            "left_4": 0.1,
+            "left_5": 0.12
+          }
+        },
+        {
+          "symbol": "sheriff",
+          "total_contribution_x_bet": 0.32,
+          "per_shape": {
+            "left_3": 0.04,
+            "left_4": 0.08,
+            "left_5": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "fixture_name": "wild-toro-asymmetric-stacks",
+      "description": "ELK Wild Toro asymmetric stack pays",
+      "rtp_contribution": 0.6599999999999999,
+      "symbols_count": 3,
+      "per_symbol_breakdown": [
+        {
+          "symbol": "matador",
+          "total_contribution_x_bet": 0.18,
+          "per_shape": {
+            "single": 0.08,
+            "stack_2": 0.06,
+            "stack_3": 0.04
+          }
+        },
+        {
+          "symbol": "ribbon",
+          "total_contribution_x_bet": 0.18,
+          "per_shape": {
+            "single": 0.12,
+            "stack_2": 0.04,
+            "stack_3": 0.02
+          }
+        },
+        {
+          "symbol": "toro",
+          "total_contribution_x_bet": 0.3,
+          "per_shape": {
+            "single": 0.05,
+            "stack_2": 0.1,
+            "stack_3": 0.15
+          }
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_asymmetric_paytable_kernel`. Output must match `merkle_root_sha256` exactly. Kernel aggregates operator-supplied per-symbol-per-shape contributions (sourced from validated PAR data)."
+}
