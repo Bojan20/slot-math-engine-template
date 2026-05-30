@@ -6,7 +6,40 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-30 20:45 (post wave 71: unified search index)
+## 📊 REALAN STATUS — 2026-05-31 00:15 (post wave 73: slot-math-wasm landed)
+
+**Delta od prethodnog snapshot-a (waves 72 + 73):**
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **72** | `22333579` | `docs/README.md` auto-index (94 docs / 18 kategorija) — GitHub `docs/` landing |
+| **73** | `30babb7d` | **`slot-math-wasm`** — 5 hot kernels → 17 KB WebAssembly (parking #2 zatvoren) |
+
+**Wave 73 isporuke**:
+- Nova krate `packages/slot-math-wasm/` (standalone, ne deli rust-toolchain pin)
+- 10 wasm-bindgen exposed funkcija: both_ways, charge_meter, buy_feature (+ UKGC/MGA), pay_anywhere, binomial helper, wheel, ways_total, crash
+- 14/14 native cargo tests PASS (math correctness)
+- Build output: 17 KB .wasm + 8.6 KB .js + 4 KB .d.ts (~30 KB total)
+- Browser-side use ready (ES module / nodejs / bundler targets)
+- Make targets: `make wasm-build` + `make wasm-test`
+
+**Test count**: 118 → **130** (+12 wasm tests, +1 skip za opt-in cargo)
+**`make qa-w244-session`**: 20 test fajla, **130/130 PASS** in 1.81s
+
+**Parking lista progress**: **3/7 zatvoreno** (wave 70 Showcase + wave 71 Search + wave 73 wasm-pack)
+
+**Preostalo na parking** (svi non-trivial engineering):
+
+| # | Stavka | Effort | Status |
+|---|---|---|---|
+| 1 | TS↔Rust kernel parity gate | 3-4h | non-trivial — TS evaluator vs closed-form models |
+| 3 | cargo-mutants kernel fleet | 12-24h compute | baseline test timeout fix needed |
+| 6 | 30-mech 1B MC validation | 24-48h compute | hardware-bound |
+| 7 | Pattern-FK Wave 0 multi-game parser | 4-6h | specs not ready |
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-30 20:45 (post wave 71: unified search index)
 
 **Delta od prethodnog snapshot-a:**
 - Wave 71 landed (`dcb7facd`) — `search-index.json` (229 entries) + landing search bar
