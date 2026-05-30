@@ -6,7 +6,39 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-31 01:15 (post wave 80: top-level CHANGELOG)
+## 📊 REALAN STATUS — 2026-05-31 01:45 (post wave 81-83: reproducibility recipe + verifier + acceptance index)
+
+**Delta od prethodnog snapshot-a:**
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **81** | `3093bbc7` | `REPRODUCIBILITY.md` — 6-step audit recipe za regulator labs |
+| **82** | `3093bbc7` | `scripts/verify_all_merkles.sh` — executable verifier (77 Merkle roots reproduce byte-identical) |
+| **83** | `72b81d40` | `acceptance_index.html` — 163 JSON artefakti table sa download links |
+
+**Auditor-grade flow zatvoren**:
+
+1. Auditor klonira repo + čita `REPRODUCIBILITY.md` (6 step recipe + checklist)
+2. Pokreće `./scripts/verify_all_merkles.sh` — single command da verify svih 77 Merkle roots
+3. Otvara `reports/dossier/index.html` (landing) → klikne na bilo koji dashboard
+4. Sa bilo kog dashboard-a klikne nav-bar do **Acceptance Index** (163 JSON files)
+5. Klikne filename → download raw JSON → validira eksterno sa ajv / jsonschema
+
+**`make qa-w244-session`**: 26 test fajla, **167/167 PASS** in 2.02s
+**Dossier HTML pages**: 26 (5 root + 1 landing + 19 kernel refs + 1 showcase + 1 acceptance index)
+
+**Session totals (waves 49-83)**:
+- 35 wave-ova landed
+- 45+ commit-ova pushed
+- 167 testova zelena
+- 6 nove CI workflow-a (zajedno sa postojećim)
+- 26 standalone HTML dashboard pages + 5 JSON Schema + 163 acceptance JSONs
+- 3 kernel implementacije (Python + Rust + wasm) sa ULP-stable parity
+- 2 distribuirana paketa + 1 wasm crate + 1 CLI runner
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-31 01:15 (post wave 80: top-level CHANGELOG)
 
 **Sesija "kreni sve do kraja ultimativno" — final closure:**
 
