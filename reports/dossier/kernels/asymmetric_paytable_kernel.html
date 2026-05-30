@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>asymmetric_paytable — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>asymmetric_paytable <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.asymmetric_paytable</div>
+    <p class="industry">NetEnt Twin Spin asymmetric reels, Pragmatic Wild West Gold asymmetric pay scaling, ELK Wild Toro asymmetric stacks. Per-symbol pay depends on reel-set shape (not just k-of-a-kind).</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>asymmetric-paytable-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>b6c73b0f69080258801793736f56b04c4439fb48006bb04319e4beb19eb92219</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:b6c73b0f69080258</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>twin-spin-asymmetric-reels</h3>
+        <p>NetEnt Twin Spin asymmetric reels (twin/triple/quad/quint columns)</p>
+        <div class="rtp">RTP contribution: <strong>0.875</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.875</td></tr><tr><th>symbols_count</th><td>4</td></tr><tr><th>per_symbol_breakdown</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;hp1&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.27,
+    &quot;per_shape&quot;: {
+      &quot;twin&quot;: 0.05,
+      &quot;triple&quot;: 0.1,
+      &quot;quad&quot;: 0.08,
+      &quot;quint&quot;: 0.04
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;hp2&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.21,
+    &quot;per_shape&quot;: {
+      &quot;twin&quot;: 0.04,
+      &quot;triple&quot;: 0.08,
+      &quot;quad&quot;: 0.06,
+      &quot;quint&quot;: 0.03
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;lp1&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.2,
+    &quot;per_shape&quot;: {
+      &quot;twin&quot;: 0.1,
+      &quot;triple&quot;: 0.06,
+      &quot;quad&quot;: 0.03,
+      &quot;quint&quot;: 0.01
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;lp2&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.195,
+    &quot;per_shape&quot;: {
+      &quot;twin&quot;: 0.12,
+      &quot;triple&quot;: 0.05,
+      &quot;quad&quot;: 0.02,
+      &quot;quint&quot;: 0.005
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>wild-west-gold-asymmetric</h3>
+        <p>Pragmatic Wild West Gold asymmetric pay scaling</p>
+        <div class="rtp">RTP contribution: <strong>1.26</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>1.26</td></tr><tr><th>symbols_count</th><td>4</td></tr><tr><th>per_symbol_breakdown</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;ace&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.3,
+    &quot;per_shape&quot;: {
+      &quot;left_3&quot;: 0.15,
+      &quot;left_4&quot;: 0.1,
+      &quot;left_5&quot;: 0.05
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;cowboy&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.33999999999999997,
+    &quot;per_shape&quot;: {
+      &quot;left_3&quot;: 0.06,
+      &quot;left_4&quot;: 0.1,
+      &quot;left_5&quot;: 0.18
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;horse&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.3,
+    &quot;per_shape&quot;: {
+      &quot;left_3&quot;: 0.08,
+      &quot;left_4&quot;: 0.1,
+      &quot;left_5&quot;: 0.12
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;sheriff&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.32,
+    &quot;per_shape&quot;: {
+      &quot;left_3&quot;: 0.04,
+      &quot;left_4&quot;: 0.08,
+      &quot;left_5&quot;: 0.2
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>wild-toro-asymmetric-stacks</h3>
+        <p>ELK Wild Toro asymmetric stack pays</p>
+        <div class="rtp">RTP contribution: <strong>0.66</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.66</td></tr><tr><th>symbols_count</th><td>3</td></tr><tr><th>per_symbol_breakdown</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;matador&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.18,
+    &quot;per_shape&quot;: {
+      &quot;single&quot;: 0.08,
+      &quot;stack_2&quot;: 0.06,
+      &quot;stack_3&quot;: 0.04
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;ribbon&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.18,
+    &quot;per_shape&quot;: {
+      &quot;single&quot;: 0.12,
+      &quot;stack_2&quot;: 0.04,
+      &quot;stack_3&quot;: 0.02
+    }
+  },
+  {
+    &quot;symbol&quot;: &quot;toro&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.3,
+    &quot;per_shape&quot;: {
+      &quot;single&quot;: 0.05,
+      &quot;stack_2&quot;: 0.1,
+      &quot;stack_3&quot;: 0.15
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>56c859f88a49345ad22aeaeada1cc0e7302ea391c4e21b309cff3d456b163ec6</code>
+  </footer>
+</body>
+</html>

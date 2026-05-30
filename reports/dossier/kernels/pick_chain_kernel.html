@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pick_chain — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>pick_chain <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.pick_chain</div>
+    <p class="industry">Multi-level pick bonus (Microgaming Mega Moolah pick-pot, Aristocrat Mighty Cash, NetEnt Hall of Spins). Player picks from N-option pool revealing credit / advance / end tokens. Multi-tier ladders escalate per-pick award size.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>pick-chain-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>a74d1be63abd1e5068336b36c46f4272edb20b4ee5ef37d08ba18cbb92622a15</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:a74d1be63abd1e50</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>two-level-bronze-silver</h3>
+        <p>bronze (12-pool) → silver (8-pool) chain</p>
+        <div class="rtp">RTP contribution: <strong>0.268333</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.268333</td></tr><tr><th>trigger_p</th><td>0.02</td></tr><tr><th>expected_total_award_x_bet</th><td>13.416667</td></tr><tr><th>levels</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;bronze&quot;,
+    &quot;pool_size&quot;: 12,
+    &quot;p_credit&quot;: 0.5,
+    &quot;p_end&quot;: 0.25,
+    &quot;p_advance&quot;: 0.25,
+    &quot;expected_credit_per_pick&quot;: 1.3333333333333333,
+    &quot;expected_picks&quot;: 3.25,
+    &quot;probability_reached&quot;: 1.0,
+    &quot;credit_contribution_x_bet&quot;: 2.1666666666666665
+  },
+  {
+    &quot;name&quot;: &quot;silver&quot;,
+    &quot;pool_size&quot;: 8,
+    &quot;p_credit&quot;: 0.75,
+    &quot;p_end&quot;: 0.125,
+    &quot;p_advance&quot;: 0.125,
+    &quot;expected_credit_per_pick&quot;: 6.666666666666667,
+    &quot;expected_picks&quot;: 4.5,
+    &quot;probability_reached&quot;: 0.5,
+    &quot;credit_contribution_x_bet&quot;: 11.25
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>three-level-mighty-cash</h3>
+        <p>bronze/silver/gold (Mighty Cash pattern)</p>
+        <div class="rtp">RTP contribution: <strong>1.134167</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>1.134167</td></tr><tr><th>trigger_p</th><td>0.01</td></tr><tr><th>expected_total_award_x_bet</th><td>113.416667</td></tr><tr><th>levels</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;bronze&quot;,
+    &quot;pool_size&quot;: 12,
+    &quot;p_credit&quot;: 0.5,
+    &quot;p_end&quot;: 0.25,
+    &quot;p_advance&quot;: 0.25,
+    &quot;expected_credit_per_pick&quot;: 1.3333333333333333,
+    &quot;expected_picks&quot;: 3.25,
+    &quot;probability_reached&quot;: 1.0,
+    &quot;credit_contribution_x_bet&quot;: 2.1666666666666665
+  },
+  {
+    &quot;name&quot;: &quot;silver&quot;,
+    &quot;pool_size&quot;: 8,
+    &quot;p_credit&quot;: 0.75,
+    &quot;p_end&quot;: 0.125,
+    &quot;p_advance&quot;: 0.125,
+    &quot;expected_credit_per_pick&quot;: 6.666666666666667,
+    &quot;expected_picks&quot;: 4.5,
+    &quot;probability_reached&quot;: 0.5,
+    &quot;credit_contribution_x_bet&quot;: 11.25
+  },
+  {
+    &quot;name&quot;: &quot;gold&quot;,
+    &quot;pool_size&quot;: 6,
+    &quot;p_credit&quot;: 1.0,
+    &quot;p_end&quot;: 0.0,
+    &quot;p_advance&quot;: 0.0,
+    &quot;expected_credit_per_pick&quot;: 66.66666666666667,
+    &quot;expected_picks&quot;: 6.0,
+    &quot;probability_reached&quot;: 0.25,
+    &quot;credit_contribution_x_bet&quot;: 100.0
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>single-level-credit-only</h3>
+        <p>single pick screen, all credit awards (no chain)</p>
+        <div class="rtp">RTP contribution: <strong>0.54</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.54</td></tr><tr><th>trigger_p</th><td>0.03</td></tr><tr><th>expected_total_award_x_bet</th><td>18</td></tr><tr><th>levels</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;only&quot;,
+    &quot;pool_size&quot;: 6,
+    &quot;p_credit&quot;: 1.0,
+    &quot;p_end&quot;: 0.0,
+    &quot;p_advance&quot;: 0.0,
+    &quot;expected_credit_per_pick&quot;: 3.0,
+    &quot;expected_picks&quot;: 6.0,
+    &quot;probability_reached&quot;: 1.0,
+    &quot;credit_contribution_x_bet&quot;: 18.0
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/PICK_CHAIN_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>20f2061f9e547c6ed8977320be1d6d360179260a91cbc7b04ea8dce69b2666d1</code>
+  </footer>
+</body>
+</html>

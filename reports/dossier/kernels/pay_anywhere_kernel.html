@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pay_anywhere — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>pay_anywhere <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.pay_anywhere</div>
+    <p class="industry">Pragmatic Sweet Bonanza scatter trigger, NetEnt Gonzo&#x27;s Quest pay-anywhere, Pragmatic Wolf Gold money-symbol anywhere. Binomial(n_cells, p_per_cell) landings × pay_table[K] with min_pay_count threshold.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>pay-anywhere-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>a6c5a6e161b7e231f110142c3275458e01a9990ad3f839f53e96b442d81553fe</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:a6c5a6e161b7e231</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>sweet-bonanza-scatter-6x5</h3>
+        <p>Pragmatic Sweet Bonanza scatter trigger 8+ symbols</p>
+        <div class="rtp">RTP contribution: <strong>0.003849</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.003849</td></tr><tr><th>n_cells</th><td>30</td></tr><tr><th>p_per_cell</th><td>0.07</td></tr><tr><th>min_pay_count</th><td>8</td></tr><tr><th>expected_landings</th><td>2.1</td></tr><tr><th>symbol_name</th><td>scatter</td></tr><tr><th>per_k_breakdown</th><td><pre>[
+  {
+    &quot;k_landings&quot;: 0,
+    &quot;probability&quot;: 0.11336747050629987,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 1,
+    &quot;probability&quot;: 0.25599106243358044,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 2,
+    &quot;probability&quot;: 0.2793880950215959,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 3,
+    &quot;probability&quot;: 0.19627264023022511,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 4,
+    &quot;probability&quot;: 0.09971916398793697,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 5,
+    &quot;probability&quot;: 0.03902986633506351,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 6,
+    &quot;probability&quot;: 0.012240549477842502,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 7,
+    &quot;probability&quot;: 0.0031588514781529043,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 8,
+    &quot;probability&quot;: 0.0006835686666433033,
+    &quot;pay_x_bet&quot;: 5.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0034178433332165167
+  },
+  {
+    &quot;k_landings&quot;: 9,
+    &quot;probability&quot;: 0.00012577010115061976,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 10,
+    &quot;probability&quot;: 1.987979018187216e-05,
+    &quot;pay_x_bet&quot;: 20.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0003975958036374432
+  },
+  {
+    &quot;k_landings&quot;: 11,
+    &quot;probability&quot;: 2.7205968968349e-06,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 12,
+    &quot;probability&quot;: 3.242288416478869e-07,
+    &quot;pay_x_bet&quot;: 100.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 3.242288416478869e-05
+  },
+  {
+    &quot;k_landings&quot;: 13,
+    &quot;probability&quot;: 3.37905988814175e-08,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 14,
+    &quot;probability&quot;: 3.0883880698069764e-09,
+    &quot;pay_x_bet&quot;: 500.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 1.5441940349034883e-06
+  },
+  {
+    &quot;k_landings&quot;: 15,
+    &quot;probability&quot;: 2.479566048877286e-10,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 16,
+    &quot;probability&quot;: 1.7496937844900208e-11,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 17,
+    &quot;probability&quot;: 1.0845666722329035e-12,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 18,
+    &quot;probability&quot;: 5.895792543201567e-14,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 19,
+    &quot;probability&quot;: 2.8027536707919167e-15,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 20,
+    &quot;probability&quot;: 1.1602797454353636e-16,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 21,
+    &quot;probability&quot;: 4.158708765001304e-18,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 22,
+    &quot;probability&quot;: 1.2805408220678506e-19,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 23,
+    &quot;probability&quot;: 3.352514541178104e-21,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 24,
+    &quot;probability&quot;: 7.359910955095303e-23,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 25,
+    &quot;probability&quot;: 1.3295323015656031e-24,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 26,
+    &quot;probability&quot;: 1.924467764879906e-26,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 27,
+    &quot;probability&quot;: 2.145961665338008e-28,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 28,
+    &quot;probability&quot;: 1.7306142462403294e-30,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 29,
+    &quot;probability&quot;: 8.983537058718804e-33,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 30,
+    &quot;probability&quot;: 2.2539340290692344e-35,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>gonzo-quest-fall-symbol</h3>
+        <p>NetEnt Gonzo&#x27;s Quest pay-anywhere on cascade</p>
+        <div class="rtp">RTP contribution: <strong>0.875426</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.875426</td></tr><tr><th>n_cells</th><td>15</td></tr><tr><th>p_per_cell</th><td>0.12</td></tr><tr><th>min_pay_count</th><td>3</td></tr><tr><th>expected_landings</th><td>1.8</td></tr><tr><th>symbol_name</th><td>gonzo</td></tr><tr><th>per_k_breakdown</th><td><pre>[
+  {
+    &quot;k_landings&quot;: 0,
+    &quot;probability&quot;: 0.1469738539001126,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 1,
+    &quot;probability&quot;: 0.3006283375229576,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 2,
+    &quot;probability&quot;: 0.2869634130900959,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 3,
+    &quot;probability&quot;: 0.16956928955323844,
+    &quot;pay_x_bet&quot;: 0.5,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.08478464477661922
+  },
+  {
+    &quot;k_landings&quot;: 4,
+    &quot;probability&quot;: 0.0693692548172339,
+    &quot;pay_x_bet&quot;: 2.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.1387385096344678
+  },
+  {
+    &quot;k_landings&quot;: 5,
+    &quot;probability&quot;: 0.020810776445170168,
+    &quot;pay_x_bet&quot;: 10.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.20810776445170168
+  },
+  {
+    &quot;k_landings&quot;: 6,
+    &quot;probability&quot;: 0.004729721919356856,
+    &quot;pay_x_bet&quot;: 50.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.2364860959678428
+  },
+  {
+    &quot;k_landings&quot;: 7,
+    &quot;probability&quot;: 0.0008292369598872411,
+    &quot;pay_x_bet&quot;: 250.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.20730923997181028
+  },
+  {
+    &quot;k_landings&quot;: 8,
+    &quot;probability&quot;: 0.00011307776725735105,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 9,
+    &quot;probability&quot;: 1.1993096527294807e-05,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 10,
+    &quot;probability&quot;: 9.812533522332113e-07,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 11,
+    &quot;probability&quot;: 6.082148877478581e-08,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 12,
+    &quot;probability&quot;: 2.7646131261266272e-09,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 13,
+    &quot;probability&quot;: 8.699831515783092e-11,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 14,
+    &quot;probability&quot;: 1.694772373204498e-12,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 15,
+    &quot;probability&quot;: 1.5407021574586345e-14,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>wolf-gold-money-anywhere</h3>
+        <p>Pragmatic Wolf Gold money-symbol pay-anywhere</p>
+        <div class="rtp">RTP contribution: <strong>0.000877</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.000877</td></tr><tr><th>n_cells</th><td>15</td></tr><tr><th>p_per_cell</th><td>0.08</td></tr><tr><th>min_pay_count</th><td>6</td></tr><tr><th>expected_landings</th><td>1.2</td></tr><tr><th>symbol_name</th><td>money</td></tr><tr><th>per_k_breakdown</th><td><pre>[
+  {
+    &quot;k_landings&quot;: 0,
+    &quot;probability&quot;: 0.28629740407020515,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 1,
+    &quot;probability&quot;: 0.3734313966133111,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 2,
+    &quot;probability&quot;: 0.2273060675037546,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 3,
+    &quot;probability&quot;: 0.08565156166808142,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 4,
+    &quot;probability&quot;: 0.02234388565254298,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 5,
+    &quot;probability&quot;: 0.004274482472660396,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: true,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 6,
+    &quot;probability&quot;: 0.0006194902134290429,
+    &quot;pay_x_bet&quot;: 1.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0006194902134290429
+  },
+  {
+    &quot;k_landings&quot;: 7,
+    &quot;probability&quot;: 6.925977541442716e-05,
+    &quot;pay_x_bet&quot;: 3.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.00020777932624328147
+  },
+  {
+    &quot;k_landings&quot;: 8,
+    &quot;probability&quot;: 6.0225891664719266e-06,
+    &quot;pay_x_bet&quot;: 8.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 4.818071333177541e-05
+  },
+  {
+    &quot;k_landings&quot;: 9,
+    &quot;probability&quot;: 4.073248711623525e-07,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 10,
+    &quot;probability&quot;: 2.1251732408470566e-08,
+    &quot;pay_x_bet&quot;: 50.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 1.0625866204235283e-06
+  },
+  {
+    &quot;k_landings&quot;: 11,
+    &quot;probability&quot;: 8.399894232597062e-10,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 12,
+    &quot;probability&quot;: 2.434751951477409e-11,
+    &quot;pay_x_bet&quot;: 200.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 4.869503902954818e-09
+  },
+  {
+    &quot;k_landings&quot;: 13,
+    &quot;probability&quot;: 4.885789869185437e-13,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 14,
+    &quot;probability&quot;: 6.069304185323523e-15,
+    &quot;pay_x_bet&quot;: 0.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 0.0
+  },
+  {
+    &quot;k_landings&quot;: 15,
+    &quot;probability&quot;: 3.518437208883202e-17,
+    &quot;pay_x_bet&quot;: 1500.0,
+    &quot;below_min&quot;: false,
+    &quot;contribution_x_bet&quot;: 5.2776558133248034e-14
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/PAY_ANYWHERE_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>86afb1a12d95bc51d2087317714507a768b77d99780354fc63653d3879e412b8</code>
+  </footer>
+</body>
+</html>

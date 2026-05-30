@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>sticky_wilds — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>sticky_wilds <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.sticky_wilds</div>
+    <p class="industry">NetEnt Sticky Bandits Trail of Blood, Pragmatic Pyramid King, JTG Wild Bounty Showdown, Quickspin Sticky Bandits, BTG Bonanza Billion sticky-wild respin chain pattern.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>sticky-wilds-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>a51c8d2fd1f91d19d5d20c67f8992cba7564f9f49eed42b60b180936b8303889</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:a51c8d2fd1f91d19</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>netent-sticky-bandits-trail</h3>
+        <p>NetEnt Sticky Bandits Trail of Blood: 5×3, 3 respins</p>
+        <div class="rtp">RTP contribution: <strong>0.537219</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.537219</td></tr><tr><th>trigger_p</th><td>0.012</td></tr><tr><th>n_respins</th><td>3</td></tr><tr><th>n_cells</th><td>15</td></tr><tr><th>p_wild_per_cell_per_respin</th><td>0.06</td></tr><tr><th>initial_wilds</th><td>1</td></tr><tr><th>expected_wilds_per_respin</th><td>1.84, 2.6296, 3.371824</td></tr><tr><th>expected_pay_per_chain_x_bet</th><td>44.768211</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>pragmatic-pyramid-king</h3>
+        <p>Pragmatic Pyramid King sticky: 5×4, 4 respins, slow respawn</p>
+        <div class="rtp">RTP contribution: <strong>0.885429</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.885429</td></tr><tr><th>trigger_p</th><td>0.008</td></tr><tr><th>n_respins</th><td>4</td></tr><tr><th>n_cells</th><td>20</td></tr><tr><th>p_wild_per_cell_per_respin</th><td>0.04</td></tr><tr><th>initial_wilds</th><td>2</td></tr><tr><th>expected_wilds_per_respin</th><td>2.72, 3.4112, 4.074752, 4.711762</td></tr><tr><th>expected_pay_per_chain_x_bet</th><td>110.678581</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>jtg-wild-bounty-showdown</h3>
+        <p>JTG Wild Bounty: 6×4, 5 respins, aggressive respawn</p>
+        <div class="rtp">RTP contribution: <strong>3.087118</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>3.087118</td></tr><tr><th>trigger_p</th><td>0.015</td></tr><tr><th>n_respins</th><td>5</td></tr><tr><th>n_cells</th><td>24</td></tr><tr><th>p_wild_per_cell_per_respin</th><td>0.08</td></tr><tr><th>initial_wilds</th><td>1</td></tr><tr><th>expected_wilds_per_respin</th><td>2.84, 4.5328, 6.090176, 7.522962, 8.841125</td></tr><tr><th>expected_pay_per_chain_x_bet</th><td>205.807882</td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/STICKY_WILDS_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>9d6cb9f2f95b3eba05e7578558707680f6d0f10ba3563e1a8968b838edb55086</code>
+  </footer>
+</body>
+</html>

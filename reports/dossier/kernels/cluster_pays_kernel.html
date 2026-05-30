@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cluster_pays — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>cluster_pays <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.cluster_pays</div>
+    <p class="industry">Pragmatic Sweet Bonanza, NetEnt Aloha Cluster Pays, Pragmatic Gates of Olympus, BTG Money Cart, ELK Mystery Mish-Mash. Connected cluster of same-symbol cells (4-way or 8-way) ≥ min_cluster_size pays per published ladder.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>cluster-pays-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>cbebb59b2187f11ec096908aa0fa89a9eeb76e2c76099b9c40fe0689bf7c2145</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:cbebb59b2187f11e</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>sweet-bonanza-7x7</h3>
+        <p>Pragmatic Sweet Bonanza 7×7 cluster pays, 4-way</p>
+        <div class="rtp">RTP contribution: <strong>1.8625</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>1.8625</td></tr><tr><th>grid</th><td>7×7</td></tr><tr><th>adjacency</th><td>4-way</td></tr><tr><th>min_cluster_size</th><td>5</td></tr><tr><th>per_symbol</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;hp1&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.7300000000000001,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.04,
+        &quot;pay_x_bet&quot;: 5.0,
+        &quot;contribution_x_bet&quot;: 0.2
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.018,
+        &quot;pay_x_bet&quot;: 10.0,
+        &quot;contribution_x_bet&quot;: 0.18
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.008,
+        &quot;pay_x_bet&quot;: 25.0,
+        &quot;contribution_x_bet&quot;: 0.2
+      },
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.003,
+        &quot;pay_x_bet&quot;: 50.0,
+        &quot;contribution_x_bet&quot;: 0.15
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;hp2&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.552,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.05,
+        &quot;pay_x_bet&quot;: 3.0,
+        &quot;contribution_x_bet&quot;: 0.15000000000000002
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.022,
+        &quot;pay_x_bet&quot;: 6.0,
+        &quot;contribution_x_bet&quot;: 0.132
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.01,
+        &quot;pay_x_bet&quot;: 15.0,
+        &quot;contribution_x_bet&quot;: 0.15
+      },
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.004,
+        &quot;pay_x_bet&quot;: 30.0,
+        &quot;contribution_x_bet&quot;: 0.12
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;lp1&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.345,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.15,
+        &quot;pay_x_bet&quot;: 0.5,
+        &quot;contribution_x_bet&quot;: 0.075
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.08,
+        &quot;pay_x_bet&quot;: 1.0,
+        &quot;contribution_x_bet&quot;: 0.08
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.04,
+        &quot;pay_x_bet&quot;: 2.5,
+        &quot;contribution_x_bet&quot;: 0.1
+      },
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.018,
+        &quot;pay_x_bet&quot;: 5.0,
+        &quot;contribution_x_bet&quot;: 0.09
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;lp2&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.2355,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.18,
+        &quot;pay_x_bet&quot;: 0.3,
+        &quot;contribution_x_bet&quot;: 0.054
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.09,
+        &quot;pay_x_bet&quot;: 0.6,
+        &quot;contribution_x_bet&quot;: 0.054
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.045,
+        &quot;pay_x_bet&quot;: 1.5,
+        &quot;contribution_x_bet&quot;: 0.0675
+      },
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.02,
+        &quot;pay_x_bet&quot;: 3.0,
+        &quot;contribution_x_bet&quot;: 0.06
+      }
+    ]
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>aloha-cluster-5x4</h3>
+        <p>NetEnt Aloha Cluster Pays 5×4, 4-way</p>
+        <div class="rtp">RTP contribution: <strong>1.472</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>1.472</td></tr><tr><th>grid</th><td>4×5</td></tr><tr><th>adjacency</th><td>4-way</td></tr><tr><th>min_cluster_size</th><td>5</td></tr><tr><th>per_symbol</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;fruit&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.234,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.08,
+        &quot;pay_x_bet&quot;: 0.8,
+        &quot;contribution_x_bet&quot;: 0.064
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.04,
+        &quot;pay_x_bet&quot;: 2.0,
+        &quot;contribution_x_bet&quot;: 0.08
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.018,
+        &quot;pay_x_bet&quot;: 5.0,
+        &quot;contribution_x_bet&quot;: 0.09
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;tiki1&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.74,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.025,
+        &quot;pay_x_bet&quot;: 8.0,
+        &quot;contribution_x_bet&quot;: 0.2
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.012,
+        &quot;pay_x_bet&quot;: 20.0,
+        &quot;contribution_x_bet&quot;: 0.24
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.005,
+        &quot;pay_x_bet&quot;: 60.0,
+        &quot;contribution_x_bet&quot;: 0.3
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;tiki2&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.498,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 5,
+        &quot;expected_count_per_spin&quot;: 0.03,
+        &quot;pay_x_bet&quot;: 5.0,
+        &quot;contribution_x_bet&quot;: 0.15
+      },
+      {
+        &quot;cluster_size&quot;: 6,
+        &quot;expected_count_per_spin&quot;: 0.014,
+        &quot;pay_x_bet&quot;: 12.0,
+        &quot;contribution_x_bet&quot;: 0.168
+      },
+      {
+        &quot;cluster_size&quot;: 7,
+        &quot;expected_count_per_spin&quot;: 0.006,
+        &quot;pay_x_bet&quot;: 30.0,
+        &quot;contribution_x_bet&quot;: 0.18
+      }
+    ]
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>gates-of-olympus-6x5</h3>
+        <p>Pragmatic Gates of Olympus 6×5, scatter-pay (8-way)</p>
+        <div class="rtp">RTP contribution: <strong>8.1975</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>8.1975</td></tr><tr><th>grid</th><td>5×6</td></tr><tr><th>adjacency</th><td>8-way</td></tr><tr><th>min_cluster_size</th><td>8</td></tr><tr><th>per_symbol</th><td><pre>[
+  {
+    &quot;symbol&quot;: &quot;crown&quot;,
+    &quot;total_contribution_x_bet&quot;: 2.7750000000000004,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.025,
+        &quot;pay_x_bet&quot;: 25.0,
+        &quot;contribution_x_bet&quot;: 0.625
+      },
+      {
+        &quot;cluster_size&quot;: 9,
+        &quot;expected_count_per_spin&quot;: 0.014,
+        &quot;pay_x_bet&quot;: 50.0,
+        &quot;contribution_x_bet&quot;: 0.7000000000000001
+      },
+      {
+        &quot;cluster_size&quot;: 10,
+        &quot;expected_count_per_spin&quot;: 0.007,
+        &quot;pay_x_bet&quot;: 100.0,
+        &quot;contribution_x_bet&quot;: 0.7000000000000001
+      },
+      {
+        &quot;cluster_size&quot;: 11,
+        &quot;expected_count_per_spin&quot;: 0.003,
+        &quot;pay_x_bet&quot;: 250.0,
+        &quot;contribution_x_bet&quot;: 0.75
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;gem&quot;,
+    &quot;total_contribution_x_bet&quot;: 0.2225,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.1,
+        &quot;pay_x_bet&quot;: 0.5,
+        &quot;contribution_x_bet&quot;: 0.05
+      },
+      {
+        &quot;cluster_size&quot;: 9,
+        &quot;expected_count_per_spin&quot;: 0.05,
+        &quot;pay_x_bet&quot;: 1.0,
+        &quot;contribution_x_bet&quot;: 0.05
+      },
+      {
+        &quot;cluster_size&quot;: 10,
+        &quot;expected_count_per_spin&quot;: 0.025,
+        &quot;pay_x_bet&quot;: 2.5,
+        &quot;contribution_x_bet&quot;: 0.0625
+      },
+      {
+        &quot;cluster_size&quot;: 11,
+        &quot;expected_count_per_spin&quot;: 0.012,
+        &quot;pay_x_bet&quot;: 5.0,
+        &quot;contribution_x_bet&quot;: 0.06
+      }
+    ]
+  },
+  {
+    &quot;symbol&quot;: &quot;zeus&quot;,
+    &quot;total_contribution_x_bet&quot;: 5.2,
+    &quot;sizes&quot;: [
+      {
+        &quot;cluster_size&quot;: 8,
+        &quot;expected_count_per_spin&quot;: 0.02,
+        &quot;pay_x_bet&quot;: 50.0,
+        &quot;contribution_x_bet&quot;: 1.0
+      },
+      {
+        &quot;cluster_size&quot;: 9,
+        &quot;expected_count_per_spin&quot;: 0.012,
+        &quot;pay_x_bet&quot;: 100.0,
+        &quot;contribution_x_bet&quot;: 1.2
+      },
+      {
+        &quot;cluster_size&quot;: 10,
+        &quot;expected_count_per_spin&quot;: 0.006,
+        &quot;pay_x_bet&quot;: 250.0,
+        &quot;contribution_x_bet&quot;: 1.5
+      },
+      {
+        &quot;cluster_size&quot;: 11,
+        &quot;expected_count_per_spin&quot;: 0.003,
+        &quot;pay_x_bet&quot;: 500.0,
+        &quot;contribution_x_bet&quot;: 1.5
+      }
+    ]
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/CLUSTER_PAYS_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>2a7ec3db0ec37116bdd601c137ee7f61a923e061d44ed4e76b26dcde76e0dd8e</code>
+  </footer>
+</body>
+</html>

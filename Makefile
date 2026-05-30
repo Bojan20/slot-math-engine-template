@@ -185,6 +185,9 @@ dossier-portal: ## Build unified Regulator Portal (3-tab: IFs + Kernels + Bench)
 dossier-portfolio-html: ## Build Closed-Form Portfolio HTML (120 solvers, 589 configs)
 	python3 tools/build_closed_form_portfolio_html.py
 
+dossier-kernel-refs: ## Build 19 per-kernel reference HTML pages + index
+	python3 tools/build_kernel_reference_cards.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
@@ -192,10 +195,12 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	$(MAKE) dossier-ifs-html
 	$(MAKE) dossier-portal
 	$(MAKE) dossier-portfolio-html
+	$(MAKE) dossier-kernel-refs
 	@echo "✅ All dossier HTML pages rebuilt"
 	@echo "   reports/dossier/INDUSTRY_FIRST_DOSSIER.html"
 	@echo "   reports/dossier/REGULATOR_PORTAL.html"
 	@echo "   reports/dossier/CLOSED_FORM_PORTFOLIO.html"
+	@echo "   reports/dossier/kernels/ (19 per-kernel + index)"
 
 health-w244: ## W244 one-shot health probe (16 checks, ~0.1s)
 	python3 tools/w244_health.py
@@ -210,6 +215,8 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_pypi_examples_run.py \
 		tools/tests/test_w244_pypi_api_contract.py \
 		tools/tests/test_w244_dossier_schema.py \
+		tools/tests/test_w244_kernel_reference_cards.py \
+		tools/tests/test_w244_health_probe.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

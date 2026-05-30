@@ -217,6 +217,7 @@ def main() -> int:
       <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
       <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
       <a class="current" href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+      <a href="kernels/index.html">Kernel References</a>
     </nav>
   </header>
 

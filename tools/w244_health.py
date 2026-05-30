@@ -143,6 +143,21 @@ def check_html_dashboards():
         )
 
 
+def check_kernel_reference_cards():
+    krefs = DOSSIER / "kernels"
+    if not krefs.is_dir():
+        _check("kernel reference cards dir", False, "missing")
+        return
+    index = krefs / "index.html"
+    _check("kernel refs index.html", index.exists(), "")
+    pages = list(krefs.glob("*_kernel.html"))
+    _check(
+        "kernel refs ≥19 pages",
+        len(pages) >= 19,
+        f"{len(pages)} per-kernel pages",
+    )
+
+
 def check_pypi_vendored():
     if not PKG_SRC.is_dir():
         _check("PyPI package present", False, f"missing {PKG_SRC}")
@@ -210,6 +225,7 @@ def main() -> int:
         check_benchmark_dossier,
         check_industry_firsts_dossier,
         check_html_dashboards,
+        check_kernel_reference_cards,
         check_pypi_vendored,
         check_vendored_drift,
         check_api_surface,

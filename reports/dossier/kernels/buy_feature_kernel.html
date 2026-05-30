@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>buy_feature — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>buy_feature <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.buy_feature</div>
+    <p class="industry">BTG Bonus Buy / Pragmatic Buy Feature / Hacksaw all-buy / Push Gaming Bonus Buy / Nolimit City Feature Buy. Player pays buy_cost_x_bet × bet to immediately enter bonus. Regulator contract: UKGC RTS 13C (buy_rtp delta ≤ 0.5 pp vs base) + MGA RG 2021/02 (buy_rtp ≤ 0.96 ceiling) + disclosure UI.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>buy-feature-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>0ccff42741e9012029cce2fbbc7943663571e9c903e7f6dce170d3df01cf31f5</code></div>
+    <div><strong>Fixtures:</strong> 5</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:0ccff42741e90120</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (5)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>fair-buy-base-rtp-match</h3>
+        <p>buy RTP exactly equals base game RTP (regulator default)</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>bonus_average_pay_x_bet</th><td>96</td></tr><tr><th>buy_cost_x_bet</th><td>100</td></tr><tr><th>base_game_rtp</th><td>0.96</td></tr><tr><th>target_buy_rtp</th><td>0.96</td></tr><tr><th>buy_rtp</th><td>0.96</td></tr><tr><th>fair_buy_cost_x_bet</th><td>100</td></tr><tr><th>delta_pp_vs_base</th><td>0.0000e+00</td></tr><tr><th>delta_pp_vs_target</th><td>0.0000e+00</td></tr><tr><th>ukgc_rts13c_pass_0p5</th><td>✓</td></tr><tr><th>ukgc_rts13c_pass_1p0</th><td>✓</td></tr><tr><th>mga_2021_02_pass_0p96</th><td>✓</td></tr><tr><th>mga_2021_02_pass_0p97</th><td>✓</td></tr><tr><th>rtp_contribution</th><td>0.96</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>btg-bonus-buy-100x</h3>
+        <p>BTG Bonus Buy at 100× bet, slight buyer-side edge</p>
+        <div class="rtp">RTP contribution: <strong>0.965</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>bonus_average_pay_x_bet</th><td>96.5</td></tr><tr><th>buy_cost_x_bet</th><td>100</td></tr><tr><th>base_game_rtp</th><td>0.96</td></tr><tr><th>target_buy_rtp</th><td>0.96</td></tr><tr><th>buy_rtp</th><td>0.965</td></tr><tr><th>fair_buy_cost_x_bet</th><td>100.520833</td></tr><tr><th>delta_pp_vs_base</th><td>0.5</td></tr><tr><th>delta_pp_vs_target</th><td>0.5</td></tr><tr><th>ukgc_rts13c_pass_0p5</th><td>✗</td></tr><tr><th>ukgc_rts13c_pass_1p0</th><td>✓</td></tr><tr><th>mga_2021_02_pass_0p96</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p97</th><td>✓</td></tr><tr><th>rtp_contribution</th><td>0.965</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>pragmatic-buy-feature-cheap</h3>
+        <p>cheap buy at 50× — bonus RTP higher than buy cost</p>
+        <div class="rtp">RTP contribution: <strong>1.01</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>bonus_average_pay_x_bet</th><td>50.5</td></tr><tr><th>buy_cost_x_bet</th><td>50</td></tr><tr><th>base_game_rtp</th><td>0.96</td></tr><tr><th>target_buy_rtp</th><td>0.96</td></tr><tr><th>buy_rtp</th><td>1.01</td></tr><tr><th>fair_buy_cost_x_bet</th><td>52.604167</td></tr><tr><th>delta_pp_vs_base</th><td>5</td></tr><tr><th>delta_pp_vs_target</th><td>5</td></tr><tr><th>ukgc_rts13c_pass_0p5</th><td>✗</td></tr><tr><th>ukgc_rts13c_pass_1p0</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p96</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p97</th><td>✗</td></tr><tr><th>rtp_contribution</th><td>1.01</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f3">
+      <header>
+        <h3>ukgc-rts13c-near-limit</h3>
+        <p>RTS 13C +0.4 pp delta — within tolerance</p>
+        <div class="rtp">RTP contribution: <strong>0.964</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>bonus_average_pay_x_bet</th><td>96.4</td></tr><tr><th>buy_cost_x_bet</th><td>100</td></tr><tr><th>base_game_rtp</th><td>0.96</td></tr><tr><th>target_buy_rtp</th><td>0.96</td></tr><tr><th>buy_rtp</th><td>0.964</td></tr><tr><th>fair_buy_cost_x_bet</th><td>100.416667</td></tr><tr><th>delta_pp_vs_base</th><td>0.4</td></tr><tr><th>delta_pp_vs_target</th><td>0.4</td></tr><tr><th>ukgc_rts13c_pass_0p5</th><td>✓</td></tr><tr><th>ukgc_rts13c_pass_1p0</th><td>✓</td></tr><tr><th>mga_2021_02_pass_0p96</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p97</th><td>✓</td></tr><tr><th>rtp_contribution</th><td>0.964</td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f4">
+      <header>
+        <h3>mga-2021-02-fails</h3>
+        <p>buy RTP 97 % — fails MGA 0.96 ceiling</p>
+        <div class="rtp">RTP contribution: <strong>0.97</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>bonus_average_pay_x_bet</th><td>97</td></tr><tr><th>buy_cost_x_bet</th><td>100</td></tr><tr><th>base_game_rtp</th><td>0.96</td></tr><tr><th>target_buy_rtp</th><td>0.96</td></tr><tr><th>buy_rtp</th><td>0.97</td></tr><tr><th>fair_buy_cost_x_bet</th><td>101.041667</td></tr><tr><th>delta_pp_vs_base</th><td>1</td></tr><tr><th>delta_pp_vs_target</th><td>1</td></tr><tr><th>ukgc_rts13c_pass_0p5</th><td>✗</td></tr><tr><th>ukgc_rts13c_pass_1p0</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p96</th><td>✗</td></tr><tr><th>mga_2021_02_pass_0p97</th><td>✓</td></tr><tr><th>rtp_contribution</th><td>0.97</td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/BUY_FEATURE_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>072ff4d2d2c43174ce8ea9a9a93a22681b6c919eb382de907fafd8a9937631a1</code>
+  </footer>
+</body>
+</html>

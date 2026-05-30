@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ways_evaluator — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>ways_evaluator <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.ways_evaluator</div>
+    <p class="industry">Microgaming 243/1024-ways, Aristocrat Buffalo 1024-ways, BTG Megaways (Bonanza, Extra Chilli, White Rabbit), Pragmatic Big Bass Splash 4096-ways. Variable-rows or fixed topology with ways_count = product(row_count_per_reel).</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>ways-evaluator-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>21b07d9af98d620441775054e847ed769edc3be985d18300758db17fefe9ab0d</code></div>
+    <div><strong>Fixtures:</strong> 4</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:21b07d9af98d6204</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (4)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>classic-243-ways-5x3</h3>
+        <p>Microgaming 243-ways: 5 reels × 3 rows (fixed)</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.96</td></tr><tr><th>n_reels</th><td>5</td></tr><tr><th>expected_rows_per_reel</th><td>3, 3, 3, 3, 3</td></tr><tr><th>expected_ways_count</th><td>243</td></tr><tr><th>per_way_rtp_x_bet</th><td>0.003951</td></tr><tr><th>per_reel_breakdown</th><td><pre>[
+  {
+    &quot;reel_index&quot;: 0,
+    &quot;expected_rows&quot;: 3.0,
+    &quot;row_distribution&quot;: {
+      &quot;3&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 1,
+    &quot;expected_rows&quot;: 3.0,
+    &quot;row_distribution&quot;: {
+      &quot;3&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 2,
+    &quot;expected_rows&quot;: 3.0,
+    &quot;row_distribution&quot;: {
+      &quot;3&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 3,
+    &quot;expected_rows&quot;: 3.0,
+    &quot;row_distribution&quot;: {
+      &quot;3&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 4,
+    &quot;expected_rows&quot;: 3.0,
+    &quot;row_distribution&quot;: {
+      &quot;3&quot;: 1.0
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>buffalo-1024-ways-5x4</h3>
+        <p>Aristocrat Buffalo 1024 ways: 5 reels × 4 rows</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.96</td></tr><tr><th>n_reels</th><td>5</td></tr><tr><th>expected_rows_per_reel</th><td>4, 4, 4, 4, 4</td></tr><tr><th>expected_ways_count</th><td>1024</td></tr><tr><th>per_way_rtp_x_bet</th><td>0.000937</td></tr><tr><th>per_reel_breakdown</th><td><pre>[
+  {
+    &quot;reel_index&quot;: 0,
+    &quot;expected_rows&quot;: 4.0,
+    &quot;row_distribution&quot;: {
+      &quot;4&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 1,
+    &quot;expected_rows&quot;: 4.0,
+    &quot;row_distribution&quot;: {
+      &quot;4&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 2,
+    &quot;expected_rows&quot;: 4.0,
+    &quot;row_distribution&quot;: {
+      &quot;4&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 3,
+    &quot;expected_rows&quot;: 4.0,
+    &quot;row_distribution&quot;: {
+      &quot;4&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 4,
+    &quot;expected_rows&quot;: 4.0,
+    &quot;row_distribution&quot;: {
+      &quot;4&quot;: 1.0
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>btg-megaways-bonanza-6reel</h3>
+        <p>BTG Megaways Bonanza: 6 reels × variable 2-7 rows</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.96</td></tr><tr><th>n_reels</th><td>6</td></tr><tr><th>expected_rows_per_reel</th><td>4.5, 4.5, 4.5, 4.5, 4.5, 4.5</td></tr><tr><th>expected_ways_count</th><td>8303.765625</td></tr><tr><th>per_way_rtp_x_bet</th><td>0.000116</td></tr><tr><th>per_reel_breakdown</th><td><pre>[
+  {
+    &quot;reel_index&quot;: 0,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  },
+  {
+    &quot;reel_index&quot;: 1,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  },
+  {
+    &quot;reel_index&quot;: 2,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  },
+  {
+    &quot;reel_index&quot;: 3,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  },
+  {
+    &quot;reel_index&quot;: 4,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  },
+  {
+    &quot;reel_index&quot;: 5,
+    &quot;expected_rows&quot;: 4.5,
+    &quot;row_distribution&quot;: {
+      &quot;2&quot;: 0.16666666666666666,
+      &quot;3&quot;: 0.16666666666666666,
+      &quot;4&quot;: 0.16666666666666666,
+      &quot;5&quot;: 0.16666666666666666,
+      &quot;6&quot;: 0.16666666666666666,
+      &quot;7&quot;: 0.16666666666666666
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f3">
+      <header>
+        <h3>btg-megaways-117649-max</h3>
+        <p>BTG Megaways max state: 6 reels × 7 rows = 117649 ways</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.96</td></tr><tr><th>n_reels</th><td>6</td></tr><tr><th>expected_rows_per_reel</th><td>7, 7, 7, 7, 7, 7</td></tr><tr><th>expected_ways_count</th><td>117649</td></tr><tr><th>per_way_rtp_x_bet</th><td>8.1599e-06</td></tr><tr><th>per_reel_breakdown</th><td><pre>[
+  {
+    &quot;reel_index&quot;: 0,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 1,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 2,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 3,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 4,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  },
+  {
+    &quot;reel_index&quot;: 5,
+    &quot;expected_rows&quot;: 7.0,
+    &quot;row_distribution&quot;: {
+      &quot;7&quot;: 1.0
+    }
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/WAYS_EVALUATOR_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>3fc8841f088a7b26848869f9e721e689fa65b1def92e6b785b7591d68d61d023</code>
+  </footer>
+</body>
+</html>

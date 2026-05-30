@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cascade — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>cascade <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.cascade</div>
+    <p class="industry">Pragmatic Sweet Bonanza, Relax Money Train, Play&#x27;n GO Reactoonz, BTG Bonanza tumble/avalanche/cascade. Winning symbols disappear, remaining fall, new drop from top. Multiplier ramps per step.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>cascade-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>3b96a0bda944603e91b71336726595315f488b3f89abc12d9e8d00d0480c905f</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:3b96a0bda944603e</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>sweet-bonanza-style</h3>
+        <p>Pragmatic Sweet Bonanza cascade: medium-frequency, mild mult ramp</p>
+        <div class="rtp">RTP contribution: <strong>0.175815</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.175815</td></tr><tr><th>p_initial_win</th><td>0.27</td></tr><tr><th>base_pay_per_cascade_x_bet</th><td>0.3</td></tr><tr><th>p_win_per_cascade</th><td>0.4</td></tr><tr><th>max_chain</th><td>8</td></tr><tr><th>expected_chain_length</th><td>0.66623</td></tr><tr><th>expected_pay_per_trigger_x_bet</th><td>0.651168</td></tr><tr><th>per_step_breakdown</th><td><pre>[
+  {
+    &quot;step&quot;: 1,
+    &quot;p_reach&quot;: 1.0,
+    &quot;multiplier&quot;: 1.0,
+    &quot;contribution_x_bet&quot;: 0.3
+  },
+  {
+    &quot;step&quot;: 2,
+    &quot;p_reach&quot;: 0.4,
+    &quot;multiplier&quot;: 1.0,
+    &quot;contribution_x_bet&quot;: 0.12
+  },
+  {
+    &quot;step&quot;: 3,
+    &quot;p_reach&quot;: 0.16000000000000003,
+    &quot;multiplier&quot;: 2.0,
+    &quot;contribution_x_bet&quot;: 0.09600000000000002
+  },
+  {
+    &quot;step&quot;: 4,
+    &quot;p_reach&quot;: 0.06400000000000002,
+    &quot;multiplier&quot;: 2.0,
+    &quot;contribution_x_bet&quot;: 0.03840000000000001
+  },
+  {
+    &quot;step&quot;: 5,
+    &quot;p_reach&quot;: 0.025600000000000008,
+    &quot;multiplier&quot;: 5.0,
+    &quot;contribution_x_bet&quot;: 0.03840000000000001
+  },
+  {
+    &quot;step&quot;: 6,
+    &quot;p_reach&quot;: 0.010240000000000004,
+    &quot;multiplier&quot;: 5.0,
+    &quot;contribution_x_bet&quot;: 0.015360000000000007
+  },
+  {
+    &quot;step&quot;: 7,
+    &quot;p_reach&quot;: 0.0040960000000000015,
+    &quot;multiplier&quot;: 25.0,
+    &quot;contribution_x_bet&quot;: 0.03072000000000001
+  },
+  {
+    &quot;step&quot;: 8,
+    &quot;p_reach&quot;: 0.0016384000000000008,
+    &quot;multiplier&quot;: 25.0,
+    &quot;contribution_x_bet&quot;: 0.012288000000000004
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>money-train-aggressive</h3>
+        <p>Relax Money Train cascade: high mult ramp, frequent cascades</p>
+        <div class="rtp">RTP contribution: <strong>0.96</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.96</td></tr><tr><th>p_initial_win</th><td>0.3</td></tr><tr><th>base_pay_per_cascade_x_bet</th><td>0.4</td></tr><tr><th>p_win_per_cascade</th><td>0.5</td></tr><tr><th>max_chain</th><td>8</td></tr><tr><th>expected_chain_length</th><td>0.996094</td></tr><tr><th>expected_pay_per_trigger_x_bet</th><td>3.2</td></tr><tr><th>per_step_breakdown</th><td><pre>[
+  {
+    &quot;step&quot;: 1,
+    &quot;p_reach&quot;: 1.0,
+    &quot;multiplier&quot;: 1.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 2,
+    &quot;p_reach&quot;: 0.5,
+    &quot;multiplier&quot;: 2.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 3,
+    &quot;p_reach&quot;: 0.25,
+    &quot;multiplier&quot;: 4.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 4,
+    &quot;p_reach&quot;: 0.125,
+    &quot;multiplier&quot;: 8.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 5,
+    &quot;p_reach&quot;: 0.0625,
+    &quot;multiplier&quot;: 16.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 6,
+    &quot;p_reach&quot;: 0.03125,
+    &quot;multiplier&quot;: 32.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 7,
+    &quot;p_reach&quot;: 0.015625,
+    &quot;multiplier&quot;: 64.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  },
+  {
+    &quot;step&quot;: 8,
+    &quot;p_reach&quot;: 0.0078125,
+    &quot;multiplier&quot;: 128.0,
+    &quot;contribution_x_bet&quot;: 0.4
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>reactoonz-style</h3>
+        <p>Play&#x27;n GO Reactoonz: cluster cascade with charge meter</p>
+        <div class="rtp">RTP contribution: <strong>0.120117</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.120117</td></tr><tr><th>p_initial_win</th><td>0.2</td></tr><tr><th>base_pay_per_cascade_x_bet</th><td>0.25</td></tr><tr><th>p_win_per_cascade</th><td>0.35</td></tr><tr><th>max_chain</th><td>10</td></tr><tr><th>expected_chain_length</th><td>0.538447</td></tr><tr><th>expected_pay_per_trigger_x_bet</th><td>0.600584</td></tr><tr><th>per_step_breakdown</th><td><pre>[
+  {
+    &quot;step&quot;: 1,
+    &quot;p_reach&quot;: 1.0,
+    &quot;multiplier&quot;: 1.0,
+    &quot;contribution_x_bet&quot;: 0.25
+  },
+  {
+    &quot;step&quot;: 2,
+    &quot;p_reach&quot;: 0.35,
+    &quot;multiplier&quot;: 2.0,
+    &quot;contribution_x_bet&quot;: 0.175
+  },
+  {
+    &quot;step&quot;: 3,
+    &quot;p_reach&quot;: 0.12249999999999998,
+    &quot;multiplier&quot;: 3.0,
+    &quot;contribution_x_bet&quot;: 0.09187499999999998
+  },
+  {
+    &quot;step&quot;: 4,
+    &quot;p_reach&quot;: 0.04287499999999999,
+    &quot;multiplier&quot;: 4.0,
+    &quot;contribution_x_bet&quot;: 0.04287499999999999
+  },
+  {
+    &quot;step&quot;: 5,
+    &quot;p_reach&quot;: 0.015006249999999995,
+    &quot;multiplier&quot;: 6.0,
+    &quot;contribution_x_bet&quot;: 0.02250937499999999
+  },
+  {
+    &quot;step&quot;: 6,
+    &quot;p_reach&quot;: 0.005252187499999998,
+    &quot;multiplier&quot;: 8.0,
+    &quot;contribution_x_bet&quot;: 0.010504374999999996
+  },
+  {
+    &quot;step&quot;: 7,
+    &quot;p_reach&quot;: 0.0018382656249999992,
+    &quot;multiplier&quot;: 10.0,
+    &quot;contribution_x_bet&quot;: 0.0045956640624999975
+  },
+  {
+    &quot;step&quot;: 8,
+    &quot;p_reach&quot;: 0.0006433929687499997,
+    &quot;multiplier&quot;: 12.0,
+    &quot;contribution_x_bet&quot;: 0.0019301789062499991
+  },
+  {
+    &quot;step&quot;: 9,
+    &quot;p_reach&quot;: 0.0002251875390624999,
+    &quot;multiplier&quot;: 16.0,
+    &quot;contribution_x_bet&quot;: 0.0009007501562499996
+  },
+  {
+    &quot;step&quot;: 10,
+    &quot;p_reach&quot;: 7.881563867187496e-05,
+    &quot;multiplier&quot;: 20.0,
+    &quot;contribution_x_bet&quot;: 0.0003940781933593748
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/CASCADE_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>c12e30039df3c3c1d0d06b85500f76eaacbdcbe113397a81ff943fcaf974e359</code>
+  </footer>
+</body>
+</html>

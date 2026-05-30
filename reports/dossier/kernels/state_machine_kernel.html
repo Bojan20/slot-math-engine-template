@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>state_machine — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>state_machine <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.state_machine</div>
+    <p class="industry">Multi-mode slot state machine (Stakelogic Supermeter, Pragmatic Power of Thor mode switch, Big Bass Splash multi-mode FS, Aristocrat Buffalo Stampede tier escalation). Each state has own per-spin RTP component; transitions follow stochastic matrix.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>state-machine-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>8eef3a07ea8e92029a84de4138ecace2d5ea87e90aa11624e12b478bce55554f</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:8eef3a07ea8e9202</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>classic-supermeter-2state</h3>
+        <p>Stakelogic-style supermeter: 1% rare upgrade, 50% drop-back</p>
+        <div class="rtp">RTP contribution: <strong>0.990196</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.990196</td></tr><tr><th>states_count</th><td>2</td></tr><tr><th>stationary_distribution</th><td>0.980392, 0.019608</td></tr><tr><th>states</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;base&quot;,
+    &quot;stationary_probability&quot;: 0.9803921568627451,
+    &quot;rtp_component_in_state&quot;: 0.96,
+    &quot;weighted_rtp_contribution&quot;: 0.9411764705882352
+  },
+  {
+    &quot;name&quot;: &quot;super&quot;,
+    &quot;stationary_probability&quot;: 0.01960784313725492,
+    &quot;rtp_component_in_state&quot;: 2.5,
+    &quot;weighted_rtp_contribution&quot;: 0.049019607843137296
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>three-tier-escalation</h3>
+        <p>base/super/mega ladder (Aristocrat Buffalo Stampede style)</p>
+        <div class="rtp">RTP contribution: <strong>0.987946</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.987946</td></tr><tr><th>states_count</th><td>3</td></tr><tr><th>stationary_distribution</th><td>0.89983, 0.074703, 0.025467</td></tr><tr><th>states</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;base&quot;,
+    &quot;stationary_probability&quot;: 0.899830220713073,
+    &quot;rtp_component_in_state&quot;: 0.95,
+    &quot;weighted_rtp_contribution&quot;: 0.8548387096774193
+  },
+  {
+    &quot;name&quot;: &quot;super&quot;,
+    &quot;stationary_probability&quot;: 0.07470288624787778,
+    &quot;rtp_component_in_state&quot;: 1.1,
+    &quot;weighted_rtp_contribution&quot;: 0.08217317487266557
+  },
+  {
+    &quot;name&quot;: &quot;mega&quot;,
+    &quot;stationary_probability&quot;: 0.02546689303904932,
+    &quot;rtp_component_in_state&quot;: 2.0,
+    &quot;weighted_rtp_contribution&quot;: 0.05093378607809864
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>fury-mode-toggle</h3>
+        <p>base / fury 2-state toggle (Pragmatic Power of Thor)</p>
+        <div class="rtp">RTP contribution: <strong>0.977333</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.977333</td></tr><tr><th>states_count</th><td>2</td></tr><tr><th>stationary_distribution</th><td>0.933333, 0.066667</td></tr><tr><th>states</th><td><pre>[
+  {
+    &quot;name&quot;: &quot;base&quot;,
+    &quot;stationary_probability&quot;: 0.9333333333333332,
+    &quot;rtp_component_in_state&quot;: 0.94,
+    &quot;weighted_rtp_contribution&quot;: 0.8773333333333332
+  },
+  {
+    &quot;name&quot;: &quot;fury&quot;,
+    &quot;stationary_probability&quot;: 0.06666666666666672,
+    &quot;rtp_component_in_state&quot;: 1.5,
+    &quot;weighted_rtp_contribution&quot;: 0.10000000000000009
+  }
+]</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/STATE_MACHINE_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>da109325475b4479fcafa0c3f8b5cfb70bc5ec7740c55e2afbc0b3565490a29d</code>
+  </footer>
+</body>
+</html>

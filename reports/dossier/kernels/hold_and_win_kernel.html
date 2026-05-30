@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>hold_and_win — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>hold_and_win <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.hold_and_win</div>
+    <p class="industry">IGT Lightning Link, Aristocrat Dragon Cash, Scientific Games Lightning Cash, Pragmatic Big Bass H&amp;W, Quickspin Hold&#x27;n&#x27;Link. Money-collect + multi-tier jackpot composition.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>hold-and-win-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>0b5dead8928dcbc6126f32973c0dc239b79d384e0262f70735977df97bcf9b43</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:0b5dead8928dcbc6</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>lightning-link-4tier</h3>
+        <p>IGT Lightning Link: money collect + mini/minor/major/grand pots</p>
+        <div class="rtp">RTP contribution: <strong>0.008818</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.008818</td></tr><tr><th>money_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.0003179049509416583,
+  &quot;trigger_p&quot;: 1.4990591392871622e-05,
+  &quot;expected_value_per_money&quot;: 2.75,
+  &quot;expected_total_per_episode&quot;: 21.206965263080253
+}</pre></td></tr><tr><th>jackpot_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.0085,
+  &quot;pots_count&quot;: 4,
+  &quot;pots&quot;: [
+    {
+      &quot;name&quot;: &quot;mini&quot;,
+      &quot;seed_x_bet&quot;: 10,
+      &quot;contribution_x&quot;: 0.0005,
+      &quot;must_hit_by_x_bet&quot;: 100,
+      &quot;p_strike_per_spin&quot;: 0.0001,
+      &quot;expected_spins_to_cap&quot;: 180000.0,
+      &quot;probability_forced_strike&quot;: 1.5216278016188968e-08,
+      &quot;expected_strike_value_x_bet&quot;: 15.000001293383631,
+      &quot;per_spin_rtp_contribution&quot;: 0.0005
+    },
+    {
+      &quot;name&quot;: &quot;minor&quot;,
+      &quot;seed_x_bet&quot;: 50,
+      &quot;contribution_x&quot;: 0.001,
+      &quot;must_hit_by_x_bet&quot;: 500,
+      &quot;p_strike_per_spin&quot;: 1e-05,
+      &quot;expected_spins_to_cap&quot;: 450000.0,
+      &quot;probability_forced_strike&quot;: 0.011108746586965807,
+      &quot;expected_strike_value_x_bet&quot;: 153.88806130543804,
+      &quot;per_spin_rtp_contribution&quot;: 0.001
+    },
+    {
+      &quot;name&quot;: &quot;major&quot;,
+      &quot;seed_x_bet&quot;: 500,
+      &quot;contribution_x&quot;: 0.002,
+      &quot;must_hit_by_x_bet&quot;: 5000,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 2250000.0,
+      &quot;probability_forced_strike&quot;: 0.10539910598772437,
+      &quot;expected_strike_value_x_bet&quot;: 2763.497764969311,
+      &quot;per_spin_rtp_contribution&quot;: 0.002
+    },
+    {
+      &quot;name&quot;: &quot;grand&quot;,
+      &quot;seed_x_bet&quot;: 10000,
+      &quot;contribution_x&quot;: 0.005,
+      &quot;must_hit_by_x_bet&quot;: 100000,
+      &quot;p_strike_per_spin&quot;: 1e-07,
+      &quot;expected_spins_to_cap&quot;: 18000000.0,
+      &quot;probability_forced_strike&quot;: 0.1652988733446863,
+      &quot;expected_strike_value_x_bet&quot;: 66611.95493378745,
+      &quot;per_spin_rtp_contribution&quot;: 0.005
+    }
+  ]
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>dragon-cash-2tier</h3>
+        <p>Aristocrat Dragon Cash: money collect + minor/grand only</p>
+        <div class="rtp">RTP contribution: <strong>0.030593</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.030593</td></tr><tr><th>money_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.02659308387168454,
+  &quot;trigger_p&quot;: 0.0003292943245292168,
+  &quot;expected_value_per_money&quot;: 7.533333333333334,
+  &quot;expected_total_per_episode&quot;: 80.75779596172498
+}</pre></td></tr><tr><th>jackpot_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.004,
+  &quot;pots_count&quot;: 2,
+  &quot;pots&quot;: [
+    {
+      &quot;name&quot;: &quot;minor&quot;,
+      &quot;seed_x_bet&quot;: 100,
+      &quot;contribution_x&quot;: 0.001,
+      &quot;must_hit_by_x_bet&quot;: 1000,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 900000.0,
+      &quot;probability_forced_strike&quot;: 0.4065694767841714,
+      &quot;expected_strike_value_x_bet&quot;: 1000.0,
+      &quot;per_spin_rtp_contribution&quot;: 0.001
+    },
+    {
+      &quot;name&quot;: &quot;grand&quot;,
+      &quot;seed_x_bet&quot;: 50000,
+      &quot;contribution_x&quot;: 0.003,
+      &quot;must_hit_by_x_bet&quot;: 500000,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 150000000.0,
+      &quot;probability_forced_strike&quot;: 7.174557860787124e-66,
+      &quot;expected_strike_value_x_bet&quot;: 53000.0,
+      &quot;per_spin_rtp_contribution&quot;: 0.003
+    }
+  ]
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>lightning-cash-3tier</h3>
+        <p>Scientific Games Lightning Cash: 3-tier (mini/major/grand)</p>
+        <div class="rtp">RTP contribution: <strong>0.008369</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.008369</td></tr><tr><th>money_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.0015694483924540046,
+  &quot;trigger_p&quot;: 2.9205570062695863e-05,
+  &quot;expected_value_per_money&quot;: 6.722222222222222,
+  &quot;expected_total_per_episode&quot;: 53.7379817988437
+}</pre></td></tr><tr><th>jackpot_component</th><td><pre>{
+  &quot;rtp_contribution&quot;: 0.0068000000000000005,
+  &quot;pots_count&quot;: 3,
+  &quot;pots&quot;: [
+    {
+      &quot;name&quot;: &quot;mini&quot;,
+      &quot;seed_x_bet&quot;: 20,
+      &quot;contribution_x&quot;: 0.0008,
+      &quot;must_hit_by_x_bet&quot;: 200,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 225000.0,
+      &quot;probability_forced_strike&quot;: 0.7985161289262476,
+      &quot;expected_strike_value_x_bet&quot;: 200.0,
+      &quot;per_spin_rtp_contribution&quot;: 0.0008
+    },
+    {
+      &quot;name&quot;: &quot;major&quot;,
+      &quot;seed_x_bet&quot;: 1000,
+      &quot;contribution_x&quot;: 0.002,
+      &quot;must_hit_by_x_bet&quot;: 10000,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 4500000.0,
+      &quot;probability_forced_strike&quot;: 0.011108971543011555,
+      &quot;expected_strike_value_x_bet&quot;: 3077.7628008010806,
+      &quot;per_spin_rtp_contribution&quot;: 0.002
+    },
+    {
+      &quot;name&quot;: &quot;grand&quot;,
+      &quot;seed_x_bet&quot;: 25000,
+      &quot;contribution_x&quot;: 0.004,
+      &quot;must_hit_by_x_bet&quot;: 250000,
+      &quot;p_strike_per_spin&quot;: 1e-06,
+      &quot;expected_spins_to_cap&quot;: 56250000.0,
+      &quot;probability_forced_strike&quot;: 3.7232584035655007e-25,
+      &quot;expected_strike_value_x_bet&quot;: 29000.0,
+      &quot;per_spin_rtp_contribution&quot;: 0.004
+    }
+  ]
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/HOLD_AND_WIN_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>d85940dba6db1f0bcfe463a3b401ffa1119b86f1110670bd1f6b81ef3a026a2a</code>
+  </footer>
+</body>
+</html>

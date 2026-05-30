@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>expanding_symbol — W244 kernel reference</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .module-tag {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); margin: 4px 0;
+}
+header.top .industry {
+  color: var(--fg); font-size: 14px; max-width: 900px;
+  margin: 8px 0 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.merkle-bar {
+  margin: 20px 32px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, "SF Mono", monospace;
+  word-break: break-all;
+}
+.merkle-bar strong { color: var(--fg); }
+section.fixtures { padding: 0 32px 24px; }
+section.fixtures h2 {
+  font-size: 18px; margin: 16px 0;
+  color: var(--fg-mute); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+article.fixture {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+article.fixture header h3 {
+  margin: 0; font-size: 18px; color: var(--acc);
+}
+article.fixture header p {
+  margin: 4px 0 8px; color: var(--fg-mute); font-size: 13px;
+}
+.rtp {
+  background: var(--bg-elev); padding: 8px 12px; border-radius: 6px;
+  margin: 10px 0; font-size: 14px; color: var(--green);
+}
+table.kv {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.kv th, table.kv td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.kv th {
+  font-weight: 500; color: var(--fg-mute); width: 30%;
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td {
+  font: 12px ui-monospace, "SF Mono", monospace;
+}
+table.kv td pre {
+  margin: 0; padding: 6px 8px; background: var(--bg-elev);
+  border-radius: 4px; font-size: 11px; max-height: 200px;
+  overflow: auto; line-height: 1.5;
+}
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+
+/* Index page */
+.index-list {
+  display: grid; gap: 12px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.index-list a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 14px 16px;
+  border-radius: 8px; transition: border-color 0.15s;
+  display: block;
+}
+.index-list a:hover { border-color: var(--acc); }
+.index-list a strong { color: var(--acc); display: block; margin-bottom: 4px; }
+.index-list a .meta {
+  font-size: 12px; color: var(--fg-mute);
+  font: 11px ui-monospace, monospace; margin-top: 6px;
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>expanding_symbol <span class="accent">kernel</span></h1>
+    <div class="module-tag">tools.math_dsl.expanding_symbol</div>
+    <p class="industry">Book of Ra/Book of Dead/Book of Atem/Book of Tut/Book of Demi Gods expanding-symbol Free Spins pattern. One HP symbol chosen at FS start expands to fill the reel on any landing, paying pay-anywhere across rows.</p>
+    <nav class="dossier-nav">
+      <a href="index.html">← All kernels</a>
+      <a href="../INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="../REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="../CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
+  </header>
+
+  <div class="merkle-bar">
+    <div><strong>Schema:</strong> <code>expanding-symbol-kernel/v1</code></div>
+    <div><strong>Merkle (SHA-256):</strong> <code>0097a333353d4d427973441407fa3e5add53274b84db6d3d277ed7616787e439</code></div>
+    <div><strong>Fixtures:</strong> 3</div>
+    <div><strong>Generated UTC:</strong> <code>deterministic-by-merkle:0097a333353d4d42</code></div>
+  </div>
+
+  <section class="fixtures">
+    <h2>Acceptance fixtures (3)</h2>
+    
+    <article class="fixture" id="f0">
+      <header>
+        <h3>book-of-dead-like-5x3</h3>
+        <p>Book of Dead-style: 5×3, 10 FS, explorer symbol</p>
+        <div class="rtp">RTP contribution: <strong>0.032668</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.032668</td></tr><tr><th>fs_trigger_p</th><td>0.005</td></tr><tr><th>fs_initial_spins</th><td>10</td></tr><tr><th>reels</th><td>5</td></tr><tr><th>rows</th><td>3</td></tr><tr><th>p_per_cell_in_fs</th><td>0.12</td></tr><tr><th>p_per_reel</th><td>0.318528</td></tr><tr><th>expected_reels_expanded_per_spin</th><td>1.59264</td></tr><tr><th>expected_pay_per_fs_spin</th><td>0.653362</td></tr><tr><th>expected_pay_per_trigger</th><td>6.533624</td></tr><tr><th>symbol_name</th><td>explorer</td></tr><tr><th>pay_table</th><td><pre>{
+  &quot;3&quot;: 1.0,
+  &quot;4&quot;: 5.0,
+  &quot;5&quot;: 100.0
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f1">
+      <header>
+        <h3>egyptian-high-volatility</h3>
+        <p>Aggressive expansion: 5×3, 12 FS, higher p_per_cell</p>
+        <div class="rtp">RTP contribution: <strong>0.306144</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.306144</td></tr><tr><th>fs_trigger_p</th><td>0.004</td></tr><tr><th>fs_initial_spins</th><td>12</td></tr><tr><th>reels</th><td>5</td></tr><tr><th>rows</th><td>3</td></tr><tr><th>p_per_cell_in_fs</th><td>0.18</td></tr><tr><th>p_per_reel</th><td>0.448632</td></tr><tr><th>expected_reels_expanded_per_spin</th><td>2.24316</td></tr><tr><th>expected_pay_per_fs_spin</th><td>6.377999</td></tr><tr><th>expected_pay_per_trigger</th><td>76.53599</td></tr><tr><th>symbol_name</th><td>pharaoh</td></tr><tr><th>pay_table</th><td><pre>{
+  &quot;2&quot;: 0.5,
+  &quot;3&quot;: 2.0,
+  &quot;4&quot;: 10.0,
+  &quot;5&quot;: 250.0
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+
+    <article class="fixture" id="f2">
+      <header>
+        <h3>asian-themed-6x4</h3>
+        <p>6×4 grid (Megaways-adjacent), 8 FS</p>
+        <div class="rtp">RTP contribution: <strong>0.043698</strong></div>
+      </header>
+      <table class="kv">
+        <tbody><tr><th>rtp_contribution</th><td>0.043698</td></tr><tr><th>fs_trigger_p</th><td>0.006</td></tr><tr><th>fs_initial_spins</th><td>8</td></tr><tr><th>reels</th><td>6</td></tr><tr><th>rows</th><td>4</td></tr><tr><th>p_per_cell_in_fs</th><td>0.1</td></tr><tr><th>p_per_reel</th><td>0.3439</td></tr><tr><th>expected_reels_expanded_per_spin</th><td>2.0634</td></tr><tr><th>expected_pay_per_fs_spin</th><td>0.91038</td></tr><tr><th>expected_pay_per_trigger</th><td>7.283039</td></tr><tr><th>symbol_name</th><td>dragon</td></tr><tr><th>pay_table</th><td><pre>{
+  &quot;3&quot;: 0.5,
+  &quot;4&quot;: 2.0,
+  &quot;5&quot;: 15.0,
+  &quot;6&quot;: 200.0
+}</pre></td></tr></tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/EXPANDING_SYMBOL_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>46be5264d6f36a5127cd41d93587225bafdbb0b99f0b74385370c755fe818830</code>
+  </footer>
+</body>
+</html>
