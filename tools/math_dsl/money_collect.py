@@ -164,7 +164,6 @@ def expected_episode_total_value(
     # Iterate by descending r (since transitions only decrease r OR jump up to R).
     # Actually transitions on m>0 jump r → R, on m==0 r → r-1. So we can
     # do fixed-point iteration over the (k,r) grid.
-    INF = 10**9
     e = [[0.0] * (R + 1) for _ in range(grid_cap + 1)]
 
     # Terminal: r == 0 → e[k][0] = k. k == grid_cap → e[grid_cap][r] = grid_cap.

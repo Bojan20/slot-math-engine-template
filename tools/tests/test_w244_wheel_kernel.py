@@ -14,7 +14,6 @@ from tools.math_dsl.wheel import (  # noqa: E402
     expected_award_per_trigger,
     spin_again_probability,
     terminal_award_expectation,
-    total_weight,
     wheel_rtp,
 )
 
