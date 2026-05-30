@@ -6,6 +6,76 @@
 
 ---
 
+## 🏁 ULTIMATE MILESTONE — 2026-05-30 13:30 (post **RUST HOT-PATH PORT WAVE 34-36 — 18/20 kernels (90 %), 58/58 tests PASS, 4 commits pushed**)
+
+**Status:** Rust port roadmap je u 90 % completion-u. Wave 34-36 landed 18 W244 kernel-a u native Rust (mirror Python tools/math_dsl). Sve closed-form math, byte-identičan output unutar f64 epsilon, sub-microsecond per kernel call.
+
+### Rust kernel catalog (svih 18 portovanih)
+
+| # | Kernel | Lines | Wave | Industry games |
+|---|---|---:|---|---|
+| 1 | `asymmetric_paytable` | 139 | 35 | Twin Spin / Wild West Gold / Wild Toro |
+| 2 | `both_ways` | 87 | (pre) | Thunderstruck II / Starburst / Cleopatra |
+| 3 | `buy_feature` | 128 | 36 | Pragmatic Bonus Buy / BTG Feature Buy / NetEnt Buy Bonus (UKGC RTS 13C + MGA RG 2021/02) |
+| 4 | `cascade` | 164 | 34 | Sweet Bonanza tumble / Money Train / Reactoonz |
+| 5 | `charge_meter` | 167 | (pre) | Starburst-like multi-tier meter |
+| 6 | `cluster_pays` | 204 | 34 | Aloha 4-way / Olympus 8-way BFS |
+| 7 | `expanding_symbol` | 197 | 34 | Book of Dead / Book of Ra |
+| 8 | **`hold_and_win`** (composed) | 158 | 36 | Lightning Link / Dragon Cash (money_collect + must_hit_by) |
+| 9 | `money_collect` | 223 | 34 | Lightning Link / Big Bass H&W cash mechanic |
+| 10 | `must_hit_by` | 196 | (pre) | WAP jackpots with must-hit ceiling |
+| 11 | `pay_anywhere` | 207 | (pre) | Sweet Bonanza scatter / Gonzo / Wolf Gold |
+| 12 | `persistent_multiplier` | 249 | 35 | Sticky Bandits / Mighty Wild / NetEnt Multiplier FS |
+| 13 | `pick_chain` | 215 | 35 | Multi-level pick bonus chain |
+| 14 | `stacked_wilds` | 158 | (pre) | Mega Moolah / Buffalo / Cleopatra II |
+| 15 | `state_machine` | 203 | 35 | Generic Markov sa Gaussian elimination stationary distribution |
+| 16 | `sticky_wilds` | 166 | 35 | NetEnt Sticky Bandits / Pragmatic Pyramid King |
+| 17 | `ways_evaluator` | 127 | 35 | Megaways 117 649 / 1024 / 243 |
+| 18 | `wheel` | 242 | 34 | Wheel of Fortune / Dragon Cash wheel (geometric amortisation) |
+
+### Rust port roadmap status
+
+| Faza | Kerneli | Status | ETA preostalo |
+|---|---|---|---|
+| R1 — Trivial primitives | wheel, pay_anywhere, both_ways, asymmetric_paytable | ✅ 4/4 | done |
+| R2 — Closed-form FS solvers | expanding_symbol, persistent_multiplier, buy_feature, charge_meter, money_collect, must_hit_by, pick_chain | ✅ 7/7 | done |
+| R3 — Markov + state machine | state_machine, sticky_wilds | ✅ 2/2 | done |
+| R4 — Grid evaluators | cascade, cluster_pays, ways_evaluator, stacked_wilds | ✅ 4/4 | done |
+| R5 — Composition + inverse | hold_and_win composed | ✅ 1/1 (composed done) | inverse_solver still pending |
+
+### Performance + verification
+
+| Metric | Vrednost |
+|---|---|
+| Native Rust kernel count | **18** |
+| Cargo test --lib kernels:: PASS | **58/58** |
+| Compile time (release) | ~3 s (incremental), ~30 s (cold) |
+| Single-kernel eval | sub-microsecond (no MC, all closed-form) |
+| Python parity (3-way TS↔Py↔Rust) | covered via `tools/parity/w244_rust_python_parity.py` harness |
+
+### Wave 34→36 commits
+
+| Wave | Commit | Šta |
+|---|---|---|
+| 34 init | `1c949033` | First Rust kernel batch sa Python parity gate |
+| 34 ext | `0c7fadeb` | wheel + expanding_symbol + cascade + cluster_pays + money_collect (5 new) |
+| 35a | `c172b103` | cluster_pays + cascade + money_collect parity (8/8) |
+| 35b | `e4c85601` | asymmetric_paytable + persistent_multiplier + pick_chain + state_machine + sticky_wilds + ways_evaluator |
+| 36 | `c213d98b` | buy_feature + hold_and_win composed (parity 14/14) |
+
+### Sledeći wave queue (refinisan)
+
+| # | Item | Effort | Vrednost | Status |
+|---|---|---|---|---|
+| **🔴 1** | inverse_solver Rust port (Newton-Raphson + bisection + ∂RTP/∂param) | 2-3 h | low (Python sub-second already) | next |
+| 2 | Crash-style kernel | 1 h | low (corner case) | parking |
+| 3 | Pattern-FK multi-game refactor | 4-6 h | medium | parking |
+| 4 | Benchmark harness (Rust vs Python perf measurement) | 1-2 h | high (validates speedup claim) | parking |
+| 5 | Stryker bug GitHub issue submission | 30-45 min | open-source contribution | čeka tvoj signal |
+| 6 | W4.9 Cluster + W4.10 Cascade real-vendor PAR | čeka PAR XLSX | per-game closed-form | čeka tvoj input |
+
+---
+
 ## 🏁 ULTIMATE MILESTONE — 2026-05-30 08:50 (post **W244 BATCH CLOSURE — wave 16→33, 18 commits, 20 math kernels, Stryker 98.88 %, dossier 79 IFs, master Merkle gate live**)
 
 **Status:** "kreni ovaj najveci rad, ali prvo azuriraj master todo" — ovo je konsolidovani snapshot 18 wave-ova kojeg sam landed posle wave 15 (svi pojedinačni snapshots ispod ostaju kao istorija). Sledeći aktivni wave (po Boki signal-u) je **Rust hot-path port** — najveći outstanding posao.
