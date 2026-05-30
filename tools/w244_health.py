@@ -130,6 +130,7 @@ def check_html_dashboards():
         "INDUSTRY_FIRST_DOSSIER.html",
         "REGULATOR_PORTAL.html",
         "CLOSED_FORM_PORTFOLIO.html",
+        "showcase_game.html",
     ):
         p = DOSSIER / name
         if not p.exists():

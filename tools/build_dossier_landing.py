@@ -229,6 +229,15 @@ def main() -> int:
       <div class="meta">{kref_count} per-kernel pages + index</div>
     </a>
 
+    <a class="card" href="showcase_game.html">
+      <span class="badge">SHOWCASE</span>
+      <h2>Showcase Game</h2>
+      <p>Composed 4-kernel synthetic game ("Crimson Tiger") demonstrating
+         closed-form total RTP &amp; Monte Carlo round-trip self-consistency
+         PASS at 100k spins.</p>
+      <div class="meta">cluster_pays + cascade + charge_meter + hold_and_win</div>
+    </a>
+
   </section>
 
   <section class="aux">

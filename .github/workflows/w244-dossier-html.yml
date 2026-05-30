@@ -27,16 +27,20 @@ on:
       - 'tools/build_industry_firsts_html.py'
       - 'tools/build_regulator_portal.py'
       - 'tools/build_closed_form_portfolio_html.py'
+      - 'tools/build_showcase_game_html.py'
       - 'tools/tests/test_w244_industry_firsts_html.py'
       - 'tools/tests/test_w244_regulator_portal.py'
       - 'tools/tests/test_w244_closed_form_portfolio_html.py'
+      - 'tools/tests/test_w244_showcase_game_html.py'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
       - 'reports/dossier/REGULATOR_PORTAL.html'
       - 'reports/dossier/CLOSED_FORM_PORTFOLIO_100.json'
       - 'reports/dossier/CLOSED_FORM_PORTFOLIO.html'
+      - 'reports/dossier/showcase_game.html'
       - 'reports/acceptance/W244_ALL_KERNELS.json'
       - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
+      - 'reports/acceptance/SHOWCASE_GAME_KERNEL.json'
       - '.github/workflows/w244-dossier-html.yml'
   pull_request:
     branches: [main]
@@ -44,16 +48,20 @@ on:
       - 'tools/build_industry_firsts_html.py'
       - 'tools/build_regulator_portal.py'
       - 'tools/build_closed_form_portfolio_html.py'
+      - 'tools/build_showcase_game_html.py'
       - 'tools/tests/test_w244_industry_firsts_html.py'
       - 'tools/tests/test_w244_regulator_portal.py'
       - 'tools/tests/test_w244_closed_form_portfolio_html.py'
+      - 'tools/tests/test_w244_showcase_game_html.py'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
       - 'reports/dossier/REGULATOR_PORTAL.html'
       - 'reports/dossier/CLOSED_FORM_PORTFOLIO_100.json'
       - 'reports/dossier/CLOSED_FORM_PORTFOLIO.html'
+      - 'reports/dossier/showcase_game.html'
       - 'reports/acceptance/W244_ALL_KERNELS.json'
       - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
+      - 'reports/acceptance/SHOWCASE_GAME_KERNEL.json'
       - '.github/workflows/w244-dossier-html.yml'
   workflow_dispatch:
 
@@ -83,6 +91,7 @@ jobs:
             tools/tests/test_w244_industry_firsts_html.py \
             tools/tests/test_w244_regulator_portal.py \
             tools/tests/test_w244_closed_form_portfolio_html.py \
+            tools/tests/test_w244_showcase_game_html.py \
             -v --tb=short
 
       - name: Snapshot committed HTML
@@ -90,6 +99,7 @@ jobs:
           cp reports/dossier/INDUSTRY_FIRST_DOSSIER.html /tmp/ifs-committed.html
           cp reports/dossier/REGULATOR_PORTAL.html /tmp/portal-committed.html
           cp reports/dossier/CLOSED_FORM_PORTFOLIO.html /tmp/cf-committed.html
+          cp reports/dossier/showcase_game.html /tmp/showcase-committed.html
 
       - name: Rebuild Industry-First HTML
         run: |
@@ -102,6 +112,10 @@ jobs:
       - name: Rebuild Closed-Form Portfolio HTML
         run: |
           python3 tools/build_closed_form_portfolio_html.py
+
+      - name: Rebuild Showcase Game HTML
+        run: |
+          python3 tools/build_showcase_game_html.py
 
       - name: Verify Industry-First HTML byte-identical
         run: |
@@ -139,6 +153,18 @@ jobs:
           fi
           echo "✓ CLOSED_FORM_PORTFOLIO.html: rebuild byte-identical"
 
+      - name: Verify Showcase Game HTML byte-identical
+        run: |
+          if ! diff -q /tmp/showcase-committed.html \
+               reports/dossier/showcase_game.html; then
+            echo "::error::showcase_game.html DRIFT — committed != fresh rebuild"
+            echo "::error::Run \`make dossier-showcase\` and commit the result."
+            diff /tmp/showcase-committed.html \
+                 reports/dossier/showcase_game.html | head -30
+            exit 1
+          fi
+          echo "✓ showcase_game.html: rebuild byte-identical"
+
       - name: Emit page Merkle summary
         run: |
           IFS_HASH=$(sha256sum reports/dossier/INDUSTRY_FIRST_DOSSIER.html \
@@ -147,13 +173,17 @@ jobs:
                         | cut -d' ' -f1)
           CF_HASH=$(sha256sum reports/dossier/CLOSED_FORM_PORTFOLIO.html \
                     | cut -d' ' -f1)
+          SHOWCASE_HASH=$(sha256sum reports/dossier/showcase_game.html \
+                          | cut -d' ' -f1)
           echo "Industry-First HTML SHA-256: $IFS_HASH"
           echo "Regulator Portal HTML SHA-256: $PORTAL_HASH"
           echo "Closed-Form Portfolio SHA-256: $CF_HASH"
+          echo "Showcase Game SHA-256:         $SHOWCASE_HASH"
           echo "## W244 Dossier HTML Merkle Roots" >> $GITHUB_STEP_SUMMARY
           echo "- IF Dashboard:        \`$IFS_HASH\`" >> $GITHUB_STEP_SUMMARY
           echo "- Regulator Portal:    \`$PORTAL_HASH\`" >> $GITHUB_STEP_SUMMARY
           echo "- CF Portfolio:        \`$CF_HASH\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Showcase Game:       \`$SHOWCASE_HASH\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload portal artifact
         if: always()
@@ -164,4 +194,5 @@ jobs:
             reports/dossier/INDUSTRY_FIRST_DOSSIER.html
             reports/dossier/REGULATOR_PORTAL.html
             reports/dossier/CLOSED_FORM_PORTFOLIO.html
+            reports/dossier/showcase_game.html
           if-no-files-found: error

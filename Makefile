@@ -200,6 +200,9 @@ dossier-lint: ## Lint dossier HTML (no CDN, Merkle present, no dead links)
 dossier-kernel-md: ## Build 19 per-kernel Markdown docs sa LaTeX formulama
 	python3 tools/build_kernel_markdown_docs.py
 
+dossier-showcase: ## Build Showcase Game HTML (4-kernel composition demo)
+	python3 tools/build_showcase_game_html.py
+
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
@@ -211,12 +214,14 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	$(MAKE) dossier-portal
 	$(MAKE) dossier-portfolio-html
 	$(MAKE) dossier-kernel-refs
+	$(MAKE) dossier-showcase
 	$(MAKE) dossier-landing
 	@echo "✅ All dossier HTML pages rebuilt"
 	@echo "   reports/dossier/index.html               ← landing"
 	@echo "   reports/dossier/INDUSTRY_FIRST_DOSSIER.html"
 	@echo "   reports/dossier/REGULATOR_PORTAL.html"
 	@echo "   reports/dossier/CLOSED_FORM_PORTFOLIO.html"
+	@echo "   reports/dossier/showcase_game.html"
 	@echo "   reports/dossier/kernels/ (19 per-kernel + index)"
 
 health-w244: ## W244 one-shot health probe (16 checks, ~0.1s)
@@ -241,6 +246,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_dossier_html_lint.py \
 		tools/tests/test_w244_perf_regression.py \
 		tools/tests/test_w244_kernel_markdown_docs.py \
+		tools/tests/test_w244_showcase_game_html.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

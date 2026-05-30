@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Showcase Game — Crimson Tiger — composed kernel demo</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d; --red: #ff6b6b;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 48px 32px 24px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top .pre {
+  color: var(--fg-mute); font-size: 13px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+header.top h1 {
+  margin: 8px 0 8px; font-size: 36px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .lead {
+  color: var(--fg-mute); font-size: 15px; max-width: 760px; margin: 0;
+}
+.dossier-nav {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 8px 14px;
+  border-radius: 6px; font-size: 13px;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+}
+
+section { padding: 24px 32px; max-width: 1200px; margin: 0 auto; }
+section h2 {
+  margin: 16px 0; font-size: 22px; font-weight: 600;
+}
+.composition {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-bottom: 16px;
+}
+.k-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px;
+}
+.k-card .name {
+  font: 13px ui-monospace, monospace; color: var(--acc);
+  margin-bottom: 8px;
+}
+.k-card .rtp {
+  font-size: 26px; font-weight: 700; color: var(--fg);
+}
+.k-card .rtp small { font-size: 13px; color: var(--fg-mute); }
+.k-card .bar {
+  margin-top: 10px; height: 6px; background: var(--bg-elev);
+  border-radius: 3px; overflow: hidden;
+}
+.k-card .bar > div {
+  height: 100%; background: var(--acc);
+}
+
+.total {
+  background: linear-gradient(90deg, rgba(76,196,255,0.1) 0%, transparent 100%);
+  border: 1px solid var(--acc); border-radius: 8px;
+  padding: 20px; margin-bottom: 24px;
+}
+.total .label {
+  color: var(--fg-mute); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.total .value {
+  font-size: 42px; font-weight: 700; color: var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+
+.gate {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 20px;
+}
+.gate.pass { border-color: var(--green); }
+.gate.fail { border-color: var(--red); }
+.gate-status {
+  display: inline-block; padding: 4px 10px; border-radius: 4px;
+  font: 11px ui-monospace, monospace; font-weight: 700;
+}
+.gate-status.pass { background: var(--green); color: #000; }
+.gate-status.fail { background: var(--red); color: #fff; }
+.gate dl { display: grid; grid-template-columns: max-content 1fr;
+           gap: 6px 16px; margin: 12px 0 0; }
+.gate dt { color: var(--fg-mute); font-size: 13px; }
+.gate dd { margin: 0; font: 13px ui-monospace, monospace; }
+
+.if-banner {
+  background: rgba(255, 184, 76, 0.1); border: 1px solid var(--acc2);
+  border-radius: 8px; padding: 16px 20px; color: var(--fg);
+  font-size: 14px; line-height: 1.55;
+}
+.if-banner strong { color: var(--acc2); }
+
+.merkle-bar {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 18px; font-size: 13px;
+}
+.merkle-bar code {
+  background: var(--bg-elev); padding: 2px 6px; border-radius: 3px;
+  color: var(--acc); font: 12px ui-monospace, monospace;
+  word-break: break-all;
+}
+
+footer.bot {
+  padding: 24px 32px 48px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 32px;
+}
+footer.bot code { color: var(--acc); }
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="pre">Showcase game · 4-kernel composition</div>
+    <h1>Crimson Tiger <span class="accent">— composition demo</span></h1>
+    <p class="lead">
+      <strong>6×5 grid (30 cells), 4-way adjacency</strong> · composes
+      <code>cluster_pays + cascade + charge_meter + hold_and_win</code> u single synthetic game.
+      Closed-form total RTP attested; Monte Carlo round-trip
+      self-consistency PASS at 100,000 spins.
+    </p>
+    <nav class="dossier-nav">
+      <a href="index.html">↩ Landing</a>
+      <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+      <a href="kernels/index.html">Kernel References</a>
+      <a class="current" href="showcase_game.html">Showcase Game</a>
+    </nav>
+  </header>
+
+  <section>
+    <div class="if-banner">
+      <strong>Industry First:</strong> First open-source end-to-end composition demonstration: 4 W244 kernels composed into single synthetic game; closed-form vs MC round-trip self-consistency PASS at 100k spins.
+    </div>
+  </section>
+
+  <section>
+    <h2>Total RTP (closed-form)</h2>
+    <div class="total">
+      <div class="label">Crimson Tiger synthetic total</div>
+      <div class="value">0.7450</div>
+    </div>
+    <h2>Component breakdown (4 composed kernels)</h2>
+    <div class="composition">
+    <div class="k-card">
+      <div class="name">cluster_pays</div>
+      <div class="rtp">0.4440<small> × bet</small></div>
+      <div class="bar"><div style="width:100.0%"></div></div>
+      <div style="margin-top:8px;color:var(--fg-mute);font-size:12px;">
+        59.6% of total RTP
+      </div>
+    </div>
+    <div class="k-card">
+      <div class="name">cascade</div>
+      <div class="rtp">0.1729<small> × bet</small></div>
+      <div class="bar"><div style="width:38.9%"></div></div>
+      <div style="margin-top:8px;color:var(--fg-mute);font-size:12px;">
+        23.2% of total RTP
+      </div>
+    </div>
+    <div class="k-card">
+      <div class="name">charge_meter</div>
+      <div class="rtp">0.0800<small> × bet</small></div>
+      <div class="bar"><div style="width:18.0%"></div></div>
+      <div style="margin-top:8px;color:var(--fg-mute);font-size:12px;">
+        10.7% of total RTP
+      </div>
+    </div>
+    <div class="k-card">
+      <div class="name">hold_and_win</div>
+      <div class="rtp">0.0481<small> × bet</small></div>
+      <div class="bar"><div style="width:10.8%"></div></div>
+      <div style="margin-top:8px;color:var(--fg-mute);font-size:12px;">
+        6.5% of total RTP
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>MC round-trip validation</h2>
+    <div class="gate pass">
+      <span class="gate-status pass">
+        PASS
+      </span>
+      <span style="margin-left:12px;font-size:14px;">
+        Closed-form ≡ Monte Carlo (within 0.01 pp tolerance)
+      </span>
+      <dl>
+        <dt>closed_form_calibrated_rtp</dt>
+        <dd>0.043410</dd>
+        <dt>measured_cluster_rtp</dt>
+        <dd>0.043410</dd>
+        <dt>delta_pp</dt>
+        <dd>5.27e-14</dd>
+        <dt>tolerance_pp</dt>
+        <dd>0.01</dd>
+        <dt>mc_spins</dt>
+        <dd>100,000</dd>
+        <dt>mc_seed</dt>
+        <dd>42</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <h2>Attestation</h2>
+    <div class="merkle-bar">
+      <div><strong>Schema:</strong> <code>showcase-game-kernel/v1</code></div>
+      <div><strong>Merkle (SHA-256):</strong>
+        <code>c923961c583133a40d8f0135445880c757e1571170fd0e5ec3bf542f9eac2997</code></div>
+      <div><strong>Verification:</strong>
+        <code>python -m tools.build_showcase_game_kernel</code>
+        — re-rebuild must match Merkle exactly.</div>
+    </div>
+  </section>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/SHOWCASE_GAME_KERNEL.json</code><br>
+    Page Merkle (SHA-256 over body): <code>c1ed713de43c1d18a9be3175a9cf8067290b048aed2eee575bba15828d6ed825</code>
+  </footer>
+</body>
+</html>
