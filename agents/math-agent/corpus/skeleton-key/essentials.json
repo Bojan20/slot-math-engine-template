@@ -1,0 +1,808 @@
+[
+  {
+    "sheet_name": "PAR-Base-001",
+    "metadata": {
+      "hold_pct": 0.03509999999999991,
+      "hit_frequency": 0.2912526541600486,
+      "all_ways_hit_frequency": 0.2912526541600486,
+      "win_frequency": 0.1638564379600296,
+      "all_ways_win_frequency": 0.1638564379600296
+    },
+    "paytable": [
+      {
+        "_row": 27,
+        "Combination": "Chest",
+        "Pays": 500,
+        "PPH": 2854.383076476915,
+        "RTP %": 0.01751692
+      },
+      {
+        "_row": 28,
+        "Combination": "Chest",
+        "Pays": 100,
+        "PPH": 633.0972144513936,
+        "RTP %": 0.0157953625
+      },
+      {
+        "_row": 29,
+        "Combination": "Chest",
+        "Pays": 40,
+        "PPH": 97.08640589154484,
+        "RTP %": 0.0412004128
+      },
+      {
+        "_row": 30,
+        "Combination": "Chest",
+        "Pays": 20,
+        "PPH": 31.264937410065237,
+        "RTP %": 0.0639694228
+      },
+      {
+        "_row": 31,
+        "Combination": "Book",
+        "Pays": 50,
+        "PPH": 266.3649107381218,
+        "RTP %": 0.018771241249999997
+      },
+      {
+        "_row": 32,
+        "Combination": "Book",
+        "Pays": 20,
+        "PPH": 100.89827870916615,
+        "RTP %": 0.0198219437
+      },
+      {
+        "_row": 33,
+        "Combination": "Book",
+        "Pays": 10,
+        "PPH": 58.58690843366836,
+        "RTP %": 0.01706865965
+      },
+      {
+        "_row": 34,
+        "Combination": "Vase",
+        "Pays": 16,
+        "PPH": 58.12819718163343,
+        "RTP %": 0.027525367680000003
+      },
+      {
+        "_row": 35,
+        "Combination": "Vase",
+        "Pays": 10,
+        "PPH": 23.110221225851227,
+        "RTP %": 0.0432708969
+      },
+      {
+        "_row": 36,
+        "Combination": "Vase",
+        "Pays": 6,
+        "PPH": 14.362335571212379,
+        "RTP %": 0.04177593519
+      },
+      {
+        "_row": 37,
+        "Combination": "PurpleGem",
+        "Pays": 12,
+        "PPH": 26.143296143326836,
+        "RTP %": 0.045900868559999995
+      },
+      {
+        "_row": 38,
+        "Combination": "PurpleGem",
+        "Pays": 8,
+        "PPH": 28.68136929968057,
+        "RTP %": 0.027892671079999997
+      },
+      {
+        "_row": 39,
+        "Combination": "PurpleGem",
+        "Pays": 4,
+        "PPH": 13.254520487679986,
+        "RTP %": 0.030178383320000002
+      },
+      {
+        "_row": 40,
+        "Combination": "RedGem",
+        "Pays": 10,
+        "PPH": 36.53532922767936,
+        "RTP %": 0.02737076745
+      },
+      {
+        "_row": 41,
+        "Combination": "RedGem",
+        "Pays": 6,
+        "PPH": 53.2738957189116,
+        "RTP %": 0.011262551610000001
+      },
+      {
+        "_row": 42,
+        "Combination": "RedGem",
+        "Pays": 2,
+        "PPH": 31.617234124959477,
+        "RTP %": 0.00632566401
+      },
+      {
+        "_row": 43,
+        "Combination": "GreenGem",
+        "Pays": 10,
+        "PPH": 38.62539242722762,
+        "RTP %": 0.0258897046
+      },
+      {
+        "_row": 44,
+        "Combination": "GreenGem",
+        "Pays": 6,
+        "PPH": 54.45521799183412,
+        "RTP %": 0.011018227860000002
+      },
+      {
+        "_row": 45,
+        "Combination": "GreenGem",
+        "Pays": 2,
+        "PPH": 17.974732223291582,
+        "RTP %": 0.011126730429999999
+      },
+      {
+        "_row": 46,
+        "Combination": "Ace",
+        "Pays": 8,
+        "PPH": 14.891227383245733,
+        "RTP %": 0.0537229054
+      },
+      {
+        "_row": 47,
+        "Combination": "Ace",
+        "Pays": 4,
+        "PPH": 31.235476918590404,
+        "RTP %": 0.01280595142
+      },
+      {
+        "_row": 48,
+        "Combination": "Ace",
+        "Pays": 2,
+        "PPH": 20.501639066065135,
+        "RTP %": 0.00975531758
+      },
+      {
+        "_row": 49,
+        "Combination": "King",
+        "Pays": 8,
+        "PPH": 28.17203063444641,
+        "RTP %": 0.028396959040000003
+      },
+      {
+        "_row": 50,
+        "Combination": "King",
+        "Pays": 4,
+        "PPH": 28.923447504525583,
+        "RTP %": 0.01382961004
+      },
+      {
+        "_row": 51,
+        "Combination": "King",
+        "Pays": 2,
+        "PPH": 14.684311423378869,
+        "RTP %": 0.0136199781
+      },
+      {
+        "_row": 52,
+        "Combination": "Queen",
+        "Pays": 6,
+        "PPH": 17.582459069292433,
+        "RTP %": 0.03412491948
+      },
+      {
+        "_row": 53,
+        "Combination": "Queen",
+        "Pays": 4,
+        "PPH": 36.52331676939437,
+        "RTP %": 0.01095190786
+      },
+      {
+        "_row": 54,
+        "Combination": "Queen",
+        "Pays": 2,
+        "PPH": 13.662713390149772,
+        "RTP %": 0.0146383807
+      },
+      {
+        "_row": 55,
+        "Combination": "Jack",
+        "Pays": 6,
+        "PPH": 21.4634018691807,
+        "RTP %": 0.027954562080000002
+      },
+      {
+        "_row": 56,
+        "Combination": "Jack",
+        "Pays": 4,
+        "PPH": 16.912682864345566,
+        "RTP %": 0.02365088988
+      },
+      {
+        "_row": 57,
+        "Combination": "Jack",
+        "Pays": 2,
+        "PPH": 17.014840308836945,
+        "RTP %": 0.011754444729999999
+      },
+      {
+        "_row": 58,
+        "Combination": "5 Scattered Bonus",
+        "Pays": 547.5544825,
+        "PPH": 1243008.079552517,
+        "RTP %": 0.00044050758117124993
+      },
+      {
+        "_row": 59,
+        "Combination": "4 Scattered Bonus",
+        "Pays": 269.99414006,
+        "PPH": 15767.088567678258,
+        "RTP %": 0.017123905843560393
+      },
+      {
+        "_row": 60,
+        "Combination": "3 Scattered Bonus",
+        "Pays": 94.68639118574514,
+        "PPH": 502.3682897097642,
+        "RTP %": 0.1884800317321955
+      },
+      {
+        "_row": 62,
+        "Combination": "Notes:"
+      },
+      {
+        "_row": 63,
+        "Combination": "243 to 7,776 Multiway for 10 coins."
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game RTP": 0.7588875576999999,
+      "Free Spins RTP": 0.20604444515692713
+    },
+    "bonus": {
+      "Free Spins RTP": 0.20604444515692713
+    }
+  },
+  {
+    "sheet_name": "PAR-Base-002",
+    "metadata": {
+      "hold_pct": 0.055360619917765974,
+      "hit_frequency": 0.2875902469200525,
+      "all_ways_hit_frequency": 0.2875902469200525,
+      "win_frequency": 0.16119967704002766,
+      "all_ways_win_frequency": 0.16119967704002766
+    },
+    "paytable": [
+      {
+        "_row": 27,
+        "Combination": "Chest",
+        "Pays": 500,
+        "PPH": 2931.58243595152,
+        "RTP %": 0.017055635
+      },
+      {
+        "_row": 28,
+        "Combination": "Chest",
+        "Pays": 100,
+        "PPH": 647.1061574415752,
+        "RTP %": 0.015453414999999998
+      },
+      {
+        "_row": 29,
+        "Combination": "Chest",
+        "Pays": 40,
+        "PPH": 99.0648937762312,
+        "RTP %": 0.0403775732
+      },
+      {
+        "_row": 30,
+        "Combination": "Chest",
+        "Pays": 20,
+        "PPH": 31.599233094828588,
+        "RTP %": 0.0632926753
+      },
+      {
+        "_row": 31,
+        "Combination": "Book",
+        "Pays": 50,
+        "PPH": 276.13460429807657,
+        "RTP %": 0.01810711125
+      },
+      {
+        "_row": 32,
+        "Combination": "Book",
+        "Pays": 20,
+        "PPH": 103.71227617633289,
+        "RTP %": 0.0192841202
+      },
+      {
+        "_row": 33,
+        "Combination": "Book",
+        "Pays": 10,
+        "PPH": 59.790322394620105,
+        "RTP %": 0.0167251147
+      },
+      {
+        "_row": 34,
+        "Combination": "Vase",
+        "Pays": 16,
+        "PPH": 61.024905972824875,
+        "RTP %": 0.0262188032
+      },
+      {
+        "_row": 35,
+        "Combination": "Vase",
+        "Pays": 10,
+        "PPH": 23.86465422910573,
+        "RTP %": 0.0419029746
+      },
+      {
+        "_row": 36,
+        "Combination": "Vase",
+        "Pays": 6,
+        "PPH": 14.713059881198838,
+        "RTP %": 0.040780096380000005
+      },
+      {
+        "_row": 37,
+        "Combination": "PurpleGem",
+        "Pays": 12,
+        "PPH": 27.14705645315224,
+        "RTP %": 0.0442036875
+      },
+      {
+        "_row": 38,
+        "Combination": "PurpleGem",
+        "Pays": 8,
+        "PPH": 29.77800478080209,
+        "RTP %": 0.02686546684
+      },
+      {
+        "_row": 39,
+        "Combination": "PurpleGem",
+        "Pays": 4,
+        "PPH": 13.69232324657625,
+        "RTP %": 0.02921344996
+      },
+      {
+        "_row": 40,
+        "Combination": "RedGem",
+        "Pays": 10,
+        "PPH": 38.47972797695212,
+        "RTP %": 0.0259877097
+      },
+      {
+        "_row": 41,
+        "Combination": "RedGem",
+        "Pays": 6,
+        "PPH": 53.8132259057752,
+        "RTP %": 0.011149675380000001
+      },
+      {
+        "_row": 42,
+        "Combination": "RedGem",
+        "Pays": 2,
+        "PPH": 31.922948167390615,
+        "RTP %": 0.00626508551
+      },
+      {
+        "_row": 43,
+        "Combination": "GreenGem",
+        "Pays": 10,
+        "PPH": 39.95752714651961,
+        "RTP %": 0.025026573749999996
+      },
+      {
+        "_row": 44,
+        "Combination": "GreenGem",
+        "Pays": 6,
+        "PPH": 54.16626503509607,
+        "RTP %": 0.011077005210000001
+      },
+      {
+        "_row": 45,
+        "Combination": "GreenGem",
+        "Pays": 2,
+        "PPH": 17.852466483246083,
+        "RTP %": 0.01120293379
+      },
+      {
+        "_row": 46,
+        "Combination": "Ace",
+        "Pays": 8,
+        "PPH": 15.324502160388164,
+        "RTP %": 0.05220397972
+      },
+      {
+        "_row": 47,
+        "Combination": "Ace",
+        "Pays": 4,
+        "PPH": 31.39669985363251,
+        "RTP %": 0.0127401925
+      },
+      {
+        "_row": 48,
+        "Combination": "Ace",
+        "Pays": 2,
+        "PPH": 20.651446833963238,
+        "RTP %": 0.009684551480000001
+      },
+      {
+        "_row": 49,
+        "Combination": "King",
+        "Pays": 8,
+        "PPH": 30.001391674555606,
+        "RTP %": 0.02666542968
+      },
+      {
+        "_row": 50,
+        "Combination": "King",
+        "Pays": 4,
+        "PPH": 29.102942808525103,
+        "RTP %": 0.01374431454
+      },
+      {
+        "_row": 51,
+        "Combination": "King",
+        "Pays": 2,
+        "PPH": 14.630786677487148,
+        "RTP %": 0.013669804939999999
+      },
+      {
+        "_row": 52,
+        "Combination": "Queen",
+        "Pays": 6,
+        "PPH": 18.174183669874054,
+        "RTP %": 0.03301386246
+      },
+      {
+        "_row": 53,
+        "Combination": "Queen",
+        "Pays": 4,
+        "PPH": 36.4592201089166,
+        "RTP %": 0.01097116172
+      },
+      {
+        "_row": 54,
+        "Combination": "Queen",
+        "Pays": 2,
+        "PPH": 13.665267098707478,
+        "RTP %": 0.01463564514
+      },
+      {
+        "_row": 55,
+        "Combination": "Jack",
+        "Pays": 6,
+        "PPH": 22.31743036392632,
+        "RTP %": 0.0268848156
+      },
+      {
+        "_row": 56,
+        "Combination": "Jack",
+        "Pays": 4,
+        "PPH": 16.813164207887535,
+        "RTP %": 0.02379088166
+      },
+      {
+        "_row": 57,
+        "Combination": "Jack",
+        "Pays": 2,
+        "PPH": 16.9184216774979,
+        "RTP %": 0.011821433689999999
+      },
+      {
+        "_row": 58,
+        "Combination": "5 Scattered Bonus",
+        "Pays": 547.5544825,
+        "PPH": 1266624.445851805,
+        "RTP %": 0.00043229426393374997
+      },
+      {
+        "_row": 59,
+        "Combination": "4 Scattered Bonus",
+        "Pays": 269.99414006,
+        "PPH": 15896.052533274413,
+        "RTP %": 0.01698498035879252
+      },
+      {
+        "_row": 60,
+        "Combination": "3 Scattered Bonus",
+        "Pays": 94.68639118574514,
+        "PPH": 505.7846591466603,
+        "RTP %": 0.18720692585950754
+      },
+      {
+        "_row": 62,
+        "Combination": "Notes:"
+      },
+      {
+        "_row": 63,
+        "Combination": "243 to 7,776 Multiway for 10 coins."
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game RTP": 0.7400151796000001,
+      "Free Spins RTP": 0.20462420048223381
+    },
+    "bonus": {
+      "Free Spins RTP": 0.20462420048223381
+    }
+  },
+  {
+    "sheet_name": "PAR-Base-003",
+    "metadata": {
+      "hold_pct": 0.07567771541993296,
+      "hit_frequency": 0.2816312349200482,
+      "all_ways_hit_frequency": 0.2816312349200482,
+      "win_frequency": 0.15744989976002974,
+      "all_ways_win_frequency": 0.15744989976002974
+    },
+    "paytable": [
+      {
+        "_row": 27,
+        "Combination": "Chest",
+        "Pays": 500,
+        "PPH": 2996.962279033971,
+        "RTP %": 0.01668356
+      },
+      {
+        "_row": 28,
+        "Combination": "Chest",
+        "Pays": 100,
+        "PPH": 663.8312442730034,
+        "RTP %": 0.015064069499999999
+      },
+      {
+        "_row": 29,
+        "Combination": "Chest",
+        "Pays": 40,
+        "PPH": 101.82375924236443,
+        "RTP %": 0.0392835624
+      },
+      {
+        "_row": 30,
+        "Combination": "Chest",
+        "Pays": 20,
+        "PPH": 32.084157926939376,
+        "RTP %": 0.0623360602
+      },
+      {
+        "_row": 31,
+        "Combination": "Book",
+        "Pays": 50,
+        "PPH": 287.41164445115965,
+        "RTP %": 0.01739665075
+      },
+      {
+        "_row": 32,
+        "Combination": "Book",
+        "Pays": 20,
+        "PPH": 108.21333475482369,
+        "RTP %": 0.0184820106
+      },
+      {
+        "_row": 33,
+        "Combination": "Book",
+        "Pays": 10,
+        "PPH": 62.216564081973765,
+        "RTP %": 0.01607289015
+      },
+      {
+        "_row": 34,
+        "Combination": "Vase",
+        "Pays": 16,
+        "PPH": 64.35399288387062,
+        "RTP %": 0.024862482159999998
+      },
+      {
+        "_row": 35,
+        "Combination": "Vase",
+        "Pays": 10,
+        "PPH": 24.886979608481198,
+        "RTP %": 0.04018165385
+      },
+      {
+        "_row": 36,
+        "Combination": "Vase",
+        "Pays": 6,
+        "PPH": 15.28616228131218,
+        "RTP %": 0.03925118607
+      },
+      {
+        "_row": 37,
+        "Combination": "PurpleGem",
+        "Pays": 12,
+        "PPH": 28.574615253342504,
+        "RTP %": 0.0419953161
+      },
+      {
+        "_row": 38,
+        "Combination": "PurpleGem",
+        "Pays": 8,
+        "PPH": 31.50073780083055,
+        "RTP %": 0.02539623056
+      },
+      {
+        "_row": 39,
+        "Combination": "PurpleGem",
+        "Pays": 4,
+        "PPH": 14.46466950303696,
+        "RTP %": 0.02765358724
+      },
+      {
+        "_row": 40,
+        "Combination": "RedGem",
+        "Pays": 10,
+        "PPH": 39.756222239882376,
+        "RTP %": 0.02515329535
+      },
+      {
+        "_row": 41,
+        "Combination": "RedGem",
+        "Pays": 6,
+        "PPH": 54.77335087292878,
+        "RTP %": 0.01095423213
+      },
+      {
+        "_row": 42,
+        "Combination": "RedGem",
+        "Pays": 2,
+        "PPH": 32.588517391250925,
+        "RTP %": 0.00613713099
+      },
+      {
+        "_row": 43,
+        "Combination": "GreenGem",
+        "Pays": 10,
+        "PPH": 40.019485247249975,
+        "RTP %": 0.02498782765
+      },
+      {
+        "_row": 44,
+        "Combination": "GreenGem",
+        "Pays": 6,
+        "PPH": 53.14510146201031,
+        "RTP %": 0.01128984579
+      },
+      {
+        "_row": 45,
+        "Combination": "GreenGem",
+        "Pays": 2,
+        "PPH": 17.592059747835116,
+        "RTP %": 0.01136876539
+      },
+      {
+        "_row": 46,
+        "Combination": "Ace",
+        "Pays": 8,
+        "PPH": 15.55027853052443,
+        "RTP %": 0.05144602384
+      },
+      {
+        "_row": 47,
+        "Combination": "Ace",
+        "Pays": 4,
+        "PPH": 31.646477904213143,
+        "RTP %": 0.01263963722
+      },
+      {
+        "_row": 48,
+        "Combination": "Ace",
+        "Pays": 2,
+        "PPH": 20.95847551737778,
+        "RTP %": 0.0095426788
+      },
+      {
+        "_row": 49,
+        "Combination": "King",
+        "Pays": 8,
+        "PPH": 30.861284901850706,
+        "RTP %": 0.02592244628
+      },
+      {
+        "_row": 50,
+        "Combination": "King",
+        "Pays": 4,
+        "PPH": 29.272281209731176,
+        "RTP %": 0.013664804499999999
+      },
+      {
+        "_row": 51,
+        "Combination": "King",
+        "Pays": 2,
+        "PPH": 14.507844409607081,
+        "RTP %": 0.013785645499999999
+      },
+      {
+        "_row": 52,
+        "Combination": "Queen",
+        "Pays": 6,
+        "PPH": 18.251159863262565,
+        "RTP %": 0.032874623010000006
+      },
+      {
+        "_row": 53,
+        "Combination": "Queen",
+        "Pays": 4,
+        "PPH": 36.122815665979665,
+        "RTP %": 0.011073333920000001
+      },
+      {
+        "_row": 54,
+        "Combination": "Queen",
+        "Pays": 2,
+        "PPH": 13.669351649699545,
+        "RTP %": 0.014631271849999999
+      },
+      {
+        "_row": 55,
+        "Combination": "Jack",
+        "Pays": 6,
+        "PPH": 22.34134638041748,
+        "RTP %": 0.02685603588
+      },
+      {
+        "_row": 56,
+        "Combination": "Jack",
+        "Pays": 4,
+        "PPH": 16.57387826498182,
+        "RTP %": 0.02413436334
+      },
+      {
+        "_row": 57,
+        "Combination": "Jack",
+        "Pays": 2,
+        "PPH": 16.755914882985216,
+        "RTP %": 0.01193608355
+      },
+      {
+        "_row": 58,
+        "Combination": "5 Scattered Bonus",
+        "Pays": 547.5544825,
+        "PPH": 1305227.4358807022,
+        "RTP %": 0.00041950886676737497
+      },
+      {
+        "_row": 59,
+        "Combination": "4 Scattered Bonus",
+        "Pays": 269.99414006,
+        "PPH": 16241.662951386266,
+        "RTP %": 0.016623552703201202
+      },
+      {
+        "_row": 60,
+        "Combination": "3 Scattered Bonus",
+        "Pays": 94.68639118574514,
+        "PPH": 513.9800518174129,
+        "RTP %": 0.1842219184400987
+      },
+      {
+        "_row": 62,
+        "Combination": "Notes:"
+      },
+      {
+        "_row": 63,
+        "Combination": "243 to 7,776 Multiway for 10 coins."
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game RTP": 0.7230573045699998,
+      "Free Spins RTP": 0.20126498001006726
+    },
+    "bonus": {
+      "Free Spins RTP": 0.20126498001006726
+    }
+  },
+  {
+    "sheet_name": "PAR-Bonus",
+    "metadata": {},
+    "paytable": [],
+    "rtp_breakdown": {},
+    "bonus": {
+      "10 Free Spins": 94.68639118574514,
+      "20 Free Spins": 269.99414006,
+      "30 Free Spins": 547.5544825
+    }
+  }
+]

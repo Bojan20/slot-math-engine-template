@@ -1,0 +1,63 @@
+{
+  "agent": "math-agent",
+  "version": "1.0.0",
+  "description": "Lokalni math-agent za slot PAR sheet analizu. Sadrži potpunu ćelijsku ekstrakciju iz Vendor A PAR fajlova.",
+  "scope": "local-only",
+  "remote_policy": "NEVER — svi vendor podaci ostaju isključivo lokalno. Ni jedan bajt ne ide na eksterni server, uključujući Anthropic, OpenAI, ili bilo koji cloud.",
+  "games": [
+    {
+      "key": "skeleton-key",
+      "display_name": "Skeleton Key",
+      "mechanic": "multiways",
+      "reels": "3x5 to 6x5",
+      "ways": "243 to 7,776",
+      "swids": ["200-1517-001", "200-1517-002", "200-1517-003"],
+      "hold_range": [0.0351, 0.0554, 0.0757],
+      "hit_freq_range": [0.2913, 0.2876, 0.2816],
+      "win_freq_range": [0.1639, 0.1612, 0.1574],
+      "sheets": ["PAR-Base-001", "PAR-Base-002", "PAR-Base-003", "PAR-Bonus"],
+      "corpus_files": [
+        "corpus/skeleton-key/summary.json",
+        "corpus/skeleton-key/sheet_0_PAR-Base-001.json",
+        "corpus/skeleton-key/sheet_1_PAR-Base-002.json",
+        "corpus/skeleton-key/sheet_2_PAR-Base-003.json",
+        "corpus/skeleton-key/sheet_3_PAR-Bonus.json",
+        "corpus/skeleton-key/full_corpus.json (LOCAL ONLY)"
+      ]
+    },
+    {
+      "key": "fortune-coin-boost-classic",
+      "display_name": "Fortune Coin Boost Classic",
+      "mechanic": "tumbler / 243 ways",
+      "reels": "3x5",
+      "ways": "243",
+      "swids": ["200-1581-001", "200-1581-002", "200-1581-003", "200-1581-004"],
+      "hold_range": [0.0499, 0.0590, 0.0791, 0.0986],
+      "hit_freq_range": [0.2926, 0.2924, 0.2918, 0.2913],
+      "win_freq_range": [0.0958, 0.0954, 0.0943, 0.0933],
+      "sheets": ["par_001", "par_002", "par_003", "par_004"],
+      "corpus_files": [
+        "corpus/fortune-coin-boost-classic/summary.json",
+        "corpus/fortune-coin-boost-classic/sheet_0_par_001.json",
+        "corpus/fortune-coin-boost-classic/sheet_1_par_002.json",
+        "corpus/fortune-coin-boost-classic/sheet_2_par_003.json",
+        "corpus/fortune-coin-boost-classic/sheet_3_par_004.json",
+        "corpus/fortune-coin-boost-classic/full_corpus.json (LOCAL ONLY)"
+      ]
+    }
+  ],
+  "extracted_entities": [
+    "metadata (SWID, hold%, hit freq, win freq)",
+    "base_game_paytable (symbol combos, pays, probabilities, PPH, return %)",
+    "scatter_paytable",
+    "free_spins_bonus_paytable",
+    "reel_strips (per-reel symbol positions)",
+    "rtp_breakdown (multiway, scatter, coins credit, jackpot, free spins)",
+    "bonus_notes (wild behavior, multiway rules, scatter rules)"
+  ],
+  "tools": [
+    "scripts/extract_par_corpus.py — raw cell-level extraction",
+    "scripts/extract_semantic_par.py — structured entity extraction"
+  ],
+  "updated_at": "2026-05-28T14:09:00+02:00"
+}

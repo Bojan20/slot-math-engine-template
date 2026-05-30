@@ -1,0 +1,1450 @@
+[
+  {
+    "sheet_name": "par_001",
+    "metadata": {
+      "hold_pct": 0.04994280186000011,
+      "hit_frequency": 0.29257761,
+      "win_frequency": 0.09578519
+    },
+    "paytable": [
+      {
+        "_row": 9,
+        "Combinations": "Emperor",
+        "Pay": 100,
+        "Prob.": 0.0212298788,
+        "PPH": 47.10342482030561,
+        "Return %": 0.028306505066666668
+      },
+      {
+        "_row": 10,
+        "Combinations": "Emperor",
+        "Pay": 80,
+        "Prob.": 0.0421407981,
+        "PPH": 23.72997297362529,
+        "Return %": 0.04495018464
+      },
+      {
+        "_row": 11,
+        "Combinations": "Emperor",
+        "Pay": 60,
+        "Prob.": 0.0362585161,
+        "PPH": 27.579727676720893,
+        "Return %": 0.02900681288
+      },
+      {
+        "_row": 12,
+        "Pay": 40,
+        "Prob.": 0.0594178031,
+        "PPH": 16.829972631552916,
+        "Return %": 0.031689494986666664
+      },
+      {
+        "_row": 13,
+        "Combinations": "Lucky Kirin",
+        "Pay": 40,
+        "Prob.": 0.0184467364,
+        "PPH": 54.21013117529017,
+        "Return %": 0.009838259413333333
+      },
+      {
+        "_row": 14,
+        "Combinations": "Lucky Kirin",
+        "Pay": 35,
+        "Prob.": 0.0377965629,
+        "PPH": 26.4574321915393,
+        "Return %": 0.01763839602
+      },
+      {
+        "_row": 15,
+        "Combinations": "Lucky Kirin",
+        "Pay": 30,
+        "Prob.": 0.0320619407,
+        "PPH": 31.189627894234114,
+        "Return %": 0.01282477628
+      },
+      {
+        "_row": 16,
+        "Combinations": "Lucky Turtle",
+        "Pay": 35,
+        "Prob.": 0.0203858449,
+        "PPH": 49.05364506133371,
+        "Return %": 0.009513394286666666
+      },
+      {
+        "_row": 17,
+        "Combinations": "Lucky Turtle",
+        "Pay": 30,
+        "Prob.": 0.036634956,
+        "PPH": 27.296334135081256,
+        "Return %": 0.014653982400000001
+      },
+      {
+        "_row": 18,
+        "Combinations": "Lucky Turtle",
+        "Pay": 25,
+        "Prob.": 0.031831314,
+        "PPH": 31.415605400392835,
+        "Return %": 0.010610438
+      },
+      {
+        "_row": 19,
+        "Combinations": "Lucky Fish",
+        "Pay": 30,
+        "Prob.": 0.0235968703,
+        "PPH": 42.378501355749705,
+        "Return %": 0.00943874812
+      },
+      {
+        "_row": 20,
+        "Combinations": "Lucky Fish",
+        "Pay": 25,
+        "Prob.": 0.051415561,
+        "PPH": 19.449364755545506,
+        "Return %": 0.017138520333333334
+      },
+      {
+        "_row": 21,
+        "Combinations": "Lucky Fish",
+        "Pay": 20,
+        "Prob.": 0.0328417726,
+        "PPH": 30.44902637198091,
+        "Return %": 0.008757806026666665
+      },
+      {
+        "_row": 22,
+        "Combinations": "Dog Urn",
+        "Pay": 25,
+        "Prob.": 0.0322420025,
+        "PPH": 31.0154432870601,
+        "Return %": 0.010747334166666667
+      },
+      {
+        "_row": 23,
+        "Combinations": "Dog Urn",
+        "Pay": 20,
+        "Prob.": 0.0654452681,
+        "PPH": 15.279943516649755,
+        "Return %": 0.017452071493333332
+      },
+      {
+        "_row": 24,
+        "Combinations": "Dog Urn",
+        "Pay": 15,
+        "Prob.": 0.0431394493,
+        "PPH": 23.180638979552295,
+        "Return %": 0.00862788986
+      },
+      {
+        "_row": 25,
+        "Combinations": "Dragon Bell",
+        "Pay": 20,
+        "Prob.": 0.0308177869,
+        "PPH": 32.44879339470025,
+        "Return %": 0.008218076506666666
+      },
+      {
+        "_row": 26,
+        "Combinations": "Dragon Bell",
+        "Pay": 15,
+        "Prob.": 0.0799083973,
+        "PPH": 12.514329329440825,
+        "Return %": 0.01598167946
+      },
+      {
+        "_row": 27,
+        "Combinations": "Dragon Bell",
+        "Pay": 10,
+        "Prob.": 0.0439523375,
+        "PPH": 22.751918484426454,
+        "Return %": 0.005860311666666666
+      },
+      {
+        "_row": 28,
+        "Combinations": "Ace",
+        "Pay": 15,
+        "Prob.": 0.0155449733,
+        "PPH": 64.32947684767011,
+        "Return %": 0.0031089946600000003
+      },
+      {
+        "_row": 29,
+        "Combinations": "Ace",
+        "Pay": 10,
+        "Prob.": 0.0432741958,
+        "PPH": 23.10845947598176,
+        "Return %": 0.005769892773333333
+      },
+      {
+        "_row": 30,
+        "Combinations": "Ace",
+        "Pay": 5,
+        "Prob.": 0.0349484459,
+        "PPH": 28.61357563255767,
+        "Return %": 0.0023298963933333335
+      },
+      {
+        "_row": 31,
+        "Combinations": "King",
+        "Pay": 15,
+        "Prob.": 0.0238730598,
+        "PPH": 41.888220796900114,
+        "Return %": 0.00477461196
+      },
+      {
+        "_row": 32,
+        "Combinations": "King",
+        "Pay": 10,
+        "Prob.": 0.0413793394,
+        "PPH": 24.166649697650804,
+        "Return %": 0.005517245253333333
+      },
+      {
+        "_row": 33,
+        "Combinations": "King",
+        "Pay": 5,
+        "Prob.": 0.0333586723,
+        "PPH": 29.977212252539196,
+        "Return %": 0.002223911486666667
+      },
+      {
+        "_row": 34,
+        "Combinations": "Queen",
+        "Pay": 15,
+        "Prob.": 0.0263666493,
+        "PPH": 37.926700075614086,
+        "Return %": 0.005273329859999999
+      },
+      {
+        "_row": 35,
+        "Combinations": "Queen",
+        "Pay": 10,
+        "Prob.": 0.033417994,
+        "PPH": 29.92399843030674,
+        "Return %": 0.004455732533333334
+      },
+      {
+        "_row": 36,
+        "Combinations": "Queen",
+        "Pay": 5,
+        "Prob.": 0.0335363438,
+        "PPH": 29.818396601718998,
+        "Return %": 0.0022357562533333332
+      },
+      {
+        "_row": 37,
+        "Combinations": "Jack",
+        "Pay": 15,
+        "Prob.": 0.016514628,
+        "PPH": 60.552378170431695,
+        "Return %": 0.0033029255999999997
+      },
+      {
+        "_row": 38,
+        "Combinations": "Jack",
+        "Pay": 10,
+        "Prob.": 0.0458553639,
+        "PPH": 21.807699578630974,
+        "Return %": 0.00611404852
+      },
+      {
+        "_row": 39,
+        "Combinations": "Jack",
+        "Pay": 5,
+        "Prob.": 0.0308697183,
+        "PPH": 32.3942055538615,
+        "Return %": 0.0020579812200000004
+      },
+      {
+        "_row": 40,
+        "Combinations": "Ten",
+        "Pay": 15,
+        "Prob.": 0.0255433081,
+        "PPH": 39.14919696716965,
+        "Return %": 0.005108661620000001
+      },
+      {
+        "_row": 41,
+        "Combinations": "Ten",
+        "Pay": 10,
+        "Prob.": 0.0332355573,
+        "PPH": 30.0882573135008,
+        "Return %": 0.00443140764
+      },
+      {
+        "_row": 42,
+        "Combinations": "Ten",
+        "Pay": 5,
+        "Prob.": 0.0340296336,
+        "PPH": 29.38615242686598,
+        "Return %": 0.00226864224
+      },
+      {
+        "_row": 43,
+        "Combinations": "Nine",
+        "Pay": 15,
+        "Prob.": 0.0177741631,
+        "PPH": 56.261439392327844,
+        "Return %": 0.0035548326199999996
+      },
+      {
+        "_row": 44,
+        "Combinations": "Nine",
+        "Pay": 10,
+        "Prob.": 0.0429144159,
+        "PPH": 23.302192958427284,
+        "Return %": 0.00572192212
+      },
+      {
+        "_row": 45,
+        "Combinations": "Nine",
+        "Pay": 5,
+        "Prob.": 0.0325445637,
+        "PPH": 30.727098056011116,
+        "Return %": 0.00216963758
+      },
+      {
+        "_row": 46,
+        "Combinations": "Scatter",
+        "Pay": "Pay",
+        "Prob.": "Prob.",
+        "PPH": "PPH",
+        "Return %": "Return %"
+      },
+      {
+        "_row": 47,
+        "Combinations": "Any 5 Scattered Bonus",
+        "Pay": 10,
+        "Prob.": 1.77199e-05,
+        "PPH": 56433.72705263574,
+        "Return %": 0.000177199
+      },
+      {
+        "_row": 48,
+        "Combinations": "Any 4 Scattered Bonus",
+        "Pay": 5,
+        "Prob.": 0.0001363204,
+        "PPH": 7335.659226352035,
+        "Return %": 0.000681602
+      },
+      {
+        "_row": 49,
+        "Combinations": "Any 3 Scattered Bonus",
+        "Pay": 2,
+        "Prob.": 0.0009171426,
+        "PPH": 1090.3429848313665,
+        "Return %": 0.0018342852
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game multiway RTP": 0.3816741119400001,
+      "Base Game scatter RTP": 0.0026930862,
+      "Base Game Coins credit RTP": 0.31585,
+      "Base Game Jackpot RTP": 0.11522,
+      "Free Spins multiway RTP": 0.09417,
+      "Free Spins scatter RTP": 0.00028,
+      "Free Spins Coins credit RTP": 0.03643,
+      "Free Spins Jackpot RTP": 0.00374,
+      "Total RTP": 0.9500571981399999
+    },
+    "bonus": {
+      "Ave # Free Spins": 11.2,
+      "avg_free_spins": 11.2,
+      "notes": [
+        "Notes:",
+        "243 MultiWay for 75 coins fixed.",
+        "MultiWay wins pay for the same symbol in adjacent columns starting from the leftmost column.",
+        "Same symbol or its substitute in the same column multiplies the MultiWay win.",
+        "Only the highest MultiWay win per symbol is paid per spin.",
+        "MultiWay wins multiplied by coin value.",
+        "Wild appears on reels 2,3,4 and 5. Wild is substitute for all symbols except Bonus, Coin, and Coin Boost symbols.",
+        "Scatter wins multiplied by total bet."
+      ]
+    }
+  },
+  {
+    "sheet_name": "par_002",
+    "metadata": {
+      "hold_pct": 0.0589768910066667,
+      "hit_frequency": 0.29238477,
+      "win_frequency": 0.09537686
+    },
+    "paytable": [
+      {
+        "_row": 9,
+        "Combinations": "Emperor",
+        "Pay": 100,
+        "Prob.": 0.019540463,
+        "PPH": 51.17586006022477,
+        "Return %": 0.02605395066666667
+      },
+      {
+        "_row": 10,
+        "Combinations": "Emperor",
+        "Pay": 80,
+        "Prob.": 0.0386986742,
+        "PPH": 25.84067854190209,
+        "Return %": 0.04127858581333333
+      },
+      {
+        "_row": 11,
+        "Combinations": "Emperor",
+        "Pay": 60,
+        "Prob.": 0.0348025961,
+        "PPH": 28.73348864914132,
+        "Return %": 0.027842076879999997
+      },
+      {
+        "_row": 12,
+        "Pay": 40,
+        "Prob.": 0.0582791284,
+        "PPH": 17.158801571919184,
+        "Return %": 0.031082201813333335
+      },
+      {
+        "_row": 13,
+        "Combinations": "Lucky Kirin",
+        "Pay": 40,
+        "Prob.": 0.0168748207,
+        "PPH": 59.25988890655294,
+        "Return %": 0.008999904373333334
+      },
+      {
+        "_row": 14,
+        "Combinations": "Lucky Kirin",
+        "Pay": 35,
+        "Prob.": 0.0344348708,
+        "PPH": 29.04032966489306,
+        "Return %": 0.016069606373333337
+      },
+      {
+        "_row": 15,
+        "Combinations": "Lucky Kirin",
+        "Pay": 30,
+        "Prob.": 0.0305304629,
+        "PPH": 32.754170916943416,
+        "Return %": 0.012212185160000001
+      },
+      {
+        "_row": 16,
+        "Combinations": "Lucky Turtle",
+        "Pay": 35,
+        "Prob.": 0.0193448538,
+        "PPH": 51.69333458596622,
+        "Return %": 0.00902759844
+      },
+      {
+        "_row": 17,
+        "Combinations": "Lucky Turtle",
+        "Pay": 30,
+        "Prob.": 0.0347874789,
+        "PPH": 28.745975035287767,
+        "Return %": 0.013914991560000001
+      },
+      {
+        "_row": 18,
+        "Combinations": "Lucky Turtle",
+        "Pay": 25,
+        "Prob.": 0.0309330914,
+        "PPH": 32.32783904682737,
+        "Return %": 0.010311030466666668
+      },
+      {
+        "_row": 19,
+        "Combinations": "Lucky Fish",
+        "Pay": 30,
+        "Prob.": 0.024043742,
+        "PPH": 41.590863851392186,
+        "Return %": 0.0096174968
+      },
+      {
+        "_row": 20,
+        "Combinations": "Lucky Fish",
+        "Pay": 25,
+        "Prob.": 0.0524239084,
+        "PPH": 19.075266047885894,
+        "Return %": 0.017474636133333332
+      },
+      {
+        "_row": 21,
+        "Combinations": "Lucky Fish",
+        "Pay": 20,
+        "Prob.": 0.0331923448,
+        "PPH": 30.127428659393775,
+        "Return %": 0.008851291946666668
+      },
+      {
+        "_row": 22,
+        "Combinations": "Dog Urn",
+        "Pay": 25,
+        "Prob.": 0.0329275189,
+        "PPH": 30.369734295407238,
+        "Return %": 0.010975839633333333
+      },
+      {
+        "_row": 23,
+        "Combinations": "Dog Urn",
+        "Pay": 20,
+        "Prob.": 0.0668069349,
+        "PPH": 14.96850591180168,
+        "Return %": 0.01781518264
+      },
+      {
+        "_row": 24,
+        "Combinations": "Dog Urn",
+        "Pay": 15,
+        "Prob.": 0.0437336564,
+        "PPH": 22.865684745261774,
+        "Return %": 0.00874673128
+      },
+      {
+        "_row": 25,
+        "Combinations": "Dragon Bell",
+        "Pay": 20,
+        "Prob.": 0.0314703443,
+        "PPH": 31.775947236776815,
+        "Return %": 0.008392091813333334
+      },
+      {
+        "_row": 26,
+        "Combinations": "Dragon Bell",
+        "Pay": 15,
+        "Prob.": 0.0816501079,
+        "PPH": 12.247381243203476,
+        "Return %": 0.01633002158
+      },
+      {
+        "_row": 27,
+        "Combinations": "Dragon Bell",
+        "Pay": 10,
+        "Prob.": 0.0445765034,
+        "PPH": 22.433343212828127,
+        "Return %": 0.005943533786666667
+      },
+      {
+        "_row": 28,
+        "Combinations": "Ace",
+        "Pay": 15,
+        "Prob.": 0.0158402275,
+        "PPH": 63.1304064288218,
+        "Return %": 0.0031680455000000006
+      },
+      {
+        "_row": 29,
+        "Combinations": "Ace",
+        "Pay": 10,
+        "Prob.": 0.0441450201,
+        "PPH": 22.652611726866105,
+        "Return %": 0.0058860026799999994
+      },
+      {
+        "_row": 30,
+        "Combinations": "Ace",
+        "Pay": 5,
+        "Prob.": 0.0353455469,
+        "PPH": 28.29210714518609,
+        "Return %": 0.002356369793333333
+      },
+      {
+        "_row": 31,
+        "Combinations": "King",
+        "Pay": 15,
+        "Prob.": 0.024366736,
+        "PPH": 41.03955490796962,
+        "Return %": 0.0048733472
+      },
+      {
+        "_row": 32,
+        "Combinations": "King",
+        "Pay": 10,
+        "Prob.": 0.0421845193,
+        "PPH": 23.705378574741754,
+        "Return %": 0.005624602573333333
+      },
+      {
+        "_row": 33,
+        "Combinations": "King",
+        "Pay": 5,
+        "Prob.": 0.0336924286,
+        "PPH": 29.680258786687762,
+        "Return %": 0.002246161906666666
+      },
+      {
+        "_row": 34,
+        "Combinations": "Queen",
+        "Pay": 15,
+        "Prob.": 0.0269249747,
+        "PPH": 37.14023916984405,
+        "Return %": 0.005384994939999999
+      },
+      {
+        "_row": 35,
+        "Combinations": "Queen",
+        "Pay": 10,
+        "Prob.": 0.0340723625,
+        "PPH": 29.349300331023418,
+        "Return %": 0.004542981666666667
+      },
+      {
+        "_row": 36,
+        "Combinations": "Queen",
+        "Pay": 5,
+        "Prob.": 0.0338788213,
+        "PPH": 29.516965514972032,
+        "Return %": 0.0022585880866666666
+      },
+      {
+        "_row": 37,
+        "Combinations": "Jack",
+        "Pay": 15,
+        "Prob.": 0.0168199545,
+        "PPH": 59.45319293224009,
+        "Return %": 0.0033639909
+      },
+      {
+        "_row": 38,
+        "Combinations": "Jack",
+        "Pay": 10,
+        "Prob.": 0.0467930592,
+        "PPH": 21.370690805357732,
+        "Return %": 0.006239074559999999
+      },
+      {
+        "_row": 39,
+        "Combinations": "Jack",
+        "Pay": 5,
+        "Prob.": 0.0311810666,
+        "PPH": 32.07074385325869,
+        "Return %": 0.0020787377733333338
+      },
+      {
+        "_row": 40,
+        "Combinations": "Ten",
+        "Pay": 15,
+        "Prob.": 0.0260731975,
+        "PPH": 38.35356212064132,
+        "Return %": 0.0052146395
+      },
+      {
+        "_row": 41,
+        "Combinations": "Ten",
+        "Pay": 10,
+        "Prob.": 0.0338526612,
+        "PPH": 29.53977514772162,
+        "Return %": 0.00451368816
+      },
+      {
+        "_row": 42,
+        "Combinations": "Ten",
+        "Pay": 5,
+        "Prob.": 0.0344084719,
+        "PPH": 29.062610013785587,
+        "Return %": 0.002293898126666667
+      },
+      {
+        "_row": 43,
+        "Combinations": "Nine",
+        "Pay": 15,
+        "Prob.": 0.0181374398,
+        "PPH": 55.13457307243551,
+        "Return %": 0.00362748796
+      },
+      {
+        "_row": 44,
+        "Combinations": "Nine",
+        "Pay": 10,
+        "Prob.": 0.0437664922,
+        "PPH": 22.848529770909995,
+        "Return %": 0.005835532293333333
+      },
+      {
+        "_row": 45,
+        "Combinations": "Nine",
+        "Pay": 5,
+        "Prob.": 0.0328822712,
+        "PPH": 30.411524615124517,
+        "Return %": 0.0021921514133333335
+      },
+      {
+        "_row": 46,
+        "Combinations": "Scatter",
+        "Pay": "Pay",
+        "Prob.": "Prob.",
+        "PPH": "PPH",
+        "Return %": "Return %"
+      },
+      {
+        "_row": 47,
+        "Combinations": "Any 5 Scattered Bonus",
+        "Pay": 10,
+        "Prob.": 1.77188e-05,
+        "PPH": 56437.230512224305,
+        "Return %": 0.000177188
+      },
+      {
+        "_row": 48,
+        "Combinations": "Any 4 Scattered Bonus",
+        "Pay": 5,
+        "Prob.": 0.0001365304,
+        "PPH": 7324.376109642981,
+        "Return %": 0.000682652
+      },
+      {
+        "_row": 49,
+        "Combinations": "Any 3 Scattered Bonus",
+        "Pay": 2,
+        "Prob.": 0.0009170084,
+        "PPH": 1090.5025515578702,
+        "Return %": 0.0018340167999999998
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game multiway RTP": 0.37263925219333344,
+      "Base Game scatter RTP": 0.0026938568,
+      "Base Game Coins credit RTP": 0.31585,
+      "Base Game Jackpot RTP": 0.11522,
+      "Free Spins multiway RTP": 0.09417,
+      "Free Spins scatter RTP": 0.00028,
+      "Free Spins Coins credit RTP": 0.03643,
+      "Free Spins Jackpot RTP": 0.00374,
+      "Total RTP": 0.9410231089933333
+    },
+    "bonus": {
+      "Ave # Free Spins": 11.2,
+      "avg_free_spins": 11.2,
+      "notes": [
+        "Notes:",
+        "243 MultiWay for 75 coins fixed.",
+        "MultiWay wins pay for the same symbol in adjacent columns starting from the leftmost column.",
+        "Same symbol or its substitute in the same column multiplies the MultiWay win.",
+        "Only the highest MultiWay win per symbol is paid per spin.",
+        "MultiWay wins multiplied by coin value.",
+        "Wild appears on reels 2,3,4 and 5. Wild is substitute for all symbols except Bonus, Coin, and Coin Boost symbols.",
+        "Scatter wins multiplied by total bet."
+      ]
+    }
+  },
+  {
+    "sheet_name": "par_003",
+    "metadata": {
+      "hold_pct": 0.07908281294000008,
+      "hit_frequency": 0.2918083963933388,
+      "win_frequency": 0.0943134148578878
+    },
+    "paytable": [
+      {
+        "_row": 9,
+        "Combinations": "Emperor",
+        "Pay": 100,
+        "Prob.": 0.0153578823,
+        "PPH": 65.11314388703187,
+        "Return %": 0.020477176400000005
+      },
+      {
+        "_row": 10,
+        "Combinations": "Emperor",
+        "Pay": 80,
+        "Prob.": 0.0301003591,
+        "PPH": 33.22219501361364,
+        "Return %": 0.03210704970666666
+      },
+      {
+        "_row": 11,
+        "Combinations": "Emperor",
+        "Pay": 60,
+        "Prob.": 0.0311378505,
+        "PPH": 32.11525471226731,
+        "Return %": 0.024910280400000002
+      },
+      {
+        "_row": 12,
+        "Pay": 40,
+        "Prob.": 0.0554657685,
+        "PPH": 18.029138098032483,
+        "Return %": 0.0295817432
+      },
+      {
+        "_row": 13,
+        "Combinations": "Lucky Kirin",
+        "Pay": 40,
+        "Prob.": 0.0128938955,
+        "PPH": 77.55608070501269,
+        "Return %": 0.006876744266666666
+      },
+      {
+        "_row": 14,
+        "Combinations": "Lucky Kirin",
+        "Pay": 35,
+        "Prob.": 0.0260885402,
+        "PPH": 38.331006347377,
+        "Return %": 0.012174652093333333
+      },
+      {
+        "_row": 15,
+        "Combinations": "Lucky Kirin",
+        "Pay": 30,
+        "Prob.": 0.0267399212,
+        "PPH": 37.39726802186687,
+        "Return %": 0.01069596848
+      },
+      {
+        "_row": 16,
+        "Combinations": "Lucky Turtle",
+        "Pay": 35,
+        "Prob.": 0.01995408,
+        "PPH": 50.115064187374216,
+        "Return %": 0.009311904
+      },
+      {
+        "_row": 17,
+        "Combinations": "Lucky Turtle",
+        "Pay": 30,
+        "Prob.": 0.0358891073,
+        "PPH": 27.863607518596595,
+        "Return %": 0.014355642919999998
+      },
+      {
+        "_row": 18,
+        "Combinations": "Lucky Turtle",
+        "Pay": 25,
+        "Prob.": 0.0314505117,
+        "PPH": 31.795985055467312,
+        "Return %": 0.010483503900000002
+      },
+      {
+        "_row": 19,
+        "Combinations": "Lucky Fish",
+        "Pay": 30,
+        "Prob.": 0.0248626247,
+        "PPH": 40.221014959856596,
+        "Return %": 0.00994504988
+      },
+      {
+        "_row": 20,
+        "Combinations": "Lucky Fish",
+        "Pay": 25,
+        "Prob.": 0.0542415997,
+        "PPH": 18.436034437236557,
+        "Return %": 0.01808053323333333
+      },
+      {
+        "_row": 21,
+        "Combinations": "Lucky Fish",
+        "Pay": 20,
+        "Prob.": 0.0337903585,
+        "PPH": 29.594240617482647,
+        "Return %": 0.009010762266666666
+      },
+      {
+        "_row": 22,
+        "Combinations": "Dog Urn",
+        "Pay": 25,
+        "Prob.": 0.0340950637,
+        "PPH": 29.329758958626027,
+        "Return %": 0.011365021233333333
+      },
+      {
+        "_row": 23,
+        "Combinations": "Dog Urn",
+        "Pay": 20,
+        "Prob.": 0.0692420699,
+        "PPH": 14.442087035298176,
+        "Return %": 0.01846455197333333
+      },
+      {
+        "_row": 24,
+        "Combinations": "Dog Urn",
+        "Pay": 15,
+        "Prob.": 0.0448480193,
+        "PPH": 22.297528756191916,
+        "Return %": 0.00896960386
+      },
+      {
+        "_row": 25,
+        "Combinations": "Dragon Bell",
+        "Pay": 20,
+        "Prob.": 0.0326485197,
+        "PPH": 30.629260045747184,
+        "Return %": 0.00870627192
+      },
+      {
+        "_row": 26,
+        "Combinations": "Dragon Bell",
+        "Pay": 15,
+        "Prob.": 0.0847618451,
+        "PPH": 11.797761113154438,
+        "Return %": 0.01695236902
+      },
+      {
+        "_row": 27,
+        "Combinations": "Dragon Bell",
+        "Pay": 10,
+        "Prob.": 0.0457417043,
+        "PPH": 21.86188764287036,
+        "Return %": 0.006098893906666666
+      },
+      {
+        "_row": 28,
+        "Combinations": "Ace",
+        "Pay": 15,
+        "Prob.": 0.0163687239,
+        "PPH": 61.09211726639241,
+        "Return %": 0.0032737447800000002
+      },
+      {
+        "_row": 29,
+        "Combinations": "Ace",
+        "Pay": 10,
+        "Prob.": 0.0457137554,
+        "PPH": 21.875253766615725,
+        "Return %": 0.006095167386666668
+      },
+      {
+        "_row": 30,
+        "Combinations": "Ace",
+        "Pay": 5,
+        "Prob.": 0.0360316825,
+        "PPH": 27.753352899909682,
+        "Return %": 0.0024021121666666667
+      },
+      {
+        "_row": 31,
+        "Combinations": "King",
+        "Pay": 15,
+        "Prob.": 0.0251821238,
+        "PPH": 39.71070938822086,
+        "Return %": 0.005036424759999999
+      },
+      {
+        "_row": 32,
+        "Combinations": "King",
+        "Pay": 10,
+        "Prob.": 0.0436412058,
+        "PPH": 22.914123972257432,
+        "Return %": 0.0058188274399999995
+      },
+      {
+        "_row": 33,
+        "Combinations": "King",
+        "Pay": 5,
+        "Prob.": 0.0342969402,
+        "PPH": 29.157119969553435,
+        "Return %": 0.0022864626800000003
+      },
+      {
+        "_row": 34,
+        "Combinations": "Queen",
+        "Pay": 15,
+        "Prob.": 0.0278438239,
+        "PPH": 35.91460726053508,
+        "Return %": 0.005568764779999999
+      },
+      {
+        "_row": 35,
+        "Combinations": "Queen",
+        "Pay": 10,
+        "Prob.": 0.0351983111,
+        "PPH": 28.410454045904494,
+        "Return %": 0.004693108146666666
+      },
+      {
+        "_row": 36,
+        "Combinations": "Queen",
+        "Pay": 5,
+        "Prob.": 0.0345179145,
+        "PPH": 28.970464018039095,
+        "Return %": 0.0023011943
+      },
+      {
+        "_row": 37,
+        "Combinations": "Jack",
+        "Pay": 15,
+        "Prob.": 0.0173842724,
+        "PPH": 57.523258781886085,
+        "Return %": 0.00347685448
+      },
+      {
+        "_row": 38,
+        "Combinations": "Jack",
+        "Pay": 10,
+        "Prob.": 0.0484361701,
+        "PPH": 20.645728139434375,
+        "Return %": 0.006458156013333334
+      },
+      {
+        "_row": 39,
+        "Combinations": "Jack",
+        "Pay": 5,
+        "Prob.": 0.0317615925,
+        "PPH": 31.484567406372967,
+        "Return %": 0.0021174394999999998
+      },
+      {
+        "_row": 40,
+        "Combinations": "Ten",
+        "Pay": 15,
+        "Prob.": 0.0270371102,
+        "PPH": 36.98620128418902,
+        "Return %": 0.00540742204
+      },
+      {
+        "_row": 41,
+        "Combinations": "Ten",
+        "Pay": 10,
+        "Prob.": 0.0349954194,
+        "PPH": 28.575168326172427,
+        "Return %": 0.00466605592
+      },
+      {
+        "_row": 42,
+        "Combinations": "Ten",
+        "Pay": 5,
+        "Prob.": 0.0350989015,
+        "PPH": 28.490920150307268,
+        "Return %": 0.0023399267666666668
+      },
+      {
+        "_row": 43,
+        "Combinations": "Nine",
+        "Pay": 15,
+        "Prob.": 0.0187584479,
+        "PPH": 53.30931457287573,
+        "Return %": 0.00375168958
+      },
+      {
+        "_row": 44,
+        "Combinations": "Nine",
+        "Pay": 10,
+        "Prob.": 0.0452876461,
+        "PPH": 22.081076984921943,
+        "Return %": 0.006038352813333333
+      },
+      {
+        "_row": 45,
+        "Combinations": "Nine",
+        "Pay": 5,
+        "Prob.": 0.0335137627,
+        "PPH": 29.838487816230796,
+        "Return %": 0.0022342508466666666
+      },
+      {
+        "_row": 46,
+        "Combinations": "Scatter",
+        "Pay": "Pay",
+        "Prob.": "Prob.",
+        "PPH": "PPH",
+        "Return %": "Return %"
+      },
+      {
+        "_row": 47,
+        "Combinations": "Any 5 Scattered Bonus",
+        "Pay": 10,
+        "Prob.": 1.7707e-05,
+        "PPH": 56474.84045857571,
+        "Return %": 0.00017706999999999998
+      },
+      {
+        "_row": 48,
+        "Combinations": "Any 4 Scattered Bonus",
+        "Pay": 5,
+        "Prob.": 0.0001363272,
+        "PPH": 7335.293323709428,
+        "Return %": 0.000681636
+      },
+      {
+        "_row": 49,
+        "Combinations": "Any 3 Scattered Bonus",
+        "Pay": 2,
+        "Prob.": 0.000917402,
+        "PPH": 1090.0346849036737,
+        "Return %": 0.001834804
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game multiway RTP": 0.35253367706,
+      "Base Game scatter RTP": 0.00269351,
+      "Base Game Coins credit RTP": 0.31585,
+      "Base Game Jackpot RTP": 0.11522,
+      "Free Spins multiway RTP": 0.09417,
+      "Free Spins scatter RTP": 0.00028,
+      "Free Spins Coins credit RTP": 0.03643,
+      "Free Spins Jackpot RTP": 0.00374,
+      "Total RTP": 0.9209171870599999
+    },
+    "bonus": {
+      "Ave # Free Spins": 11.2,
+      "avg_free_spins": 11.2,
+      "notes": [
+        "Notes:",
+        "243 MultiWay for 75 coins fixed.",
+        "MultiWay wins pay for the same symbol in adjacent columns starting from the leftmost column.",
+        "Same symbol or its substitute in the same column multiplies the MultiWay win.",
+        "Only the highest MultiWay win per symbol is paid per spin.",
+        "MultiWay wins multiplied by coin value.",
+        "Wild appears on reels 2,3,4 and 5. Wild is substitute for all symbols except Bonus, Coin, and Coin Boost symbols.",
+        "Scatter wins multiplied by total bet."
+      ]
+    }
+  },
+  {
+    "sheet_name": "par_004",
+    "metadata": {
+      "hold_pct": 0.09861935666666666,
+      "hit_frequency": 0.29130015456039793,
+      "win_frequency": 0.09329399311691242
+    },
+    "paytable": [
+      {
+        "_row": 9,
+        "Combinations": "Emperor",
+        "Pay": 100,
+        "Prob.": 0.0106156806,
+        "PPH": 94.2002720014014,
+        "Return %": 0.014154240799999999
+      },
+      {
+        "_row": 10,
+        "Combinations": "Emperor",
+        "Pay": 80,
+        "Prob.": 0.0203741496,
+        "PPH": 49.081803149222,
+        "Return %": 0.021732426239999998
+      },
+      {
+        "_row": 11,
+        "Combinations": "Emperor",
+        "Pay": 60,
+        "Prob.": 0.0269965184,
+        "PPH": 37.04181351029324,
+        "Return %": 0.02159721472
+      },
+      {
+        "_row": 12,
+        "Pay": 40,
+        "Prob.": 0.0522583461,
+        "PPH": 19.135699359609088,
+        "Return %": 0.027871117919999997
+      },
+      {
+        "_row": 13,
+        "Combinations": "Lucky Kirin",
+        "Pay": 40,
+        "Prob.": 0.0113627711,
+        "PPH": 88.0067011118441,
+        "Return %": 0.006060144586666667
+      },
+      {
+        "_row": 14,
+        "Combinations": "Lucky Kirin",
+        "Pay": 35,
+        "Prob.": 0.0228826514,
+        "PPH": 43.70122948252404,
+        "Return %": 0.010678570653333334
+      },
+      {
+        "_row": 15,
+        "Combinations": "Lucky Kirin",
+        "Pay": 30,
+        "Prob.": 0.0252809187,
+        "PPH": 39.55552453875025,
+        "Return %": 0.01011236748
+      },
+      {
+        "_row": 16,
+        "Combinations": "Lucky Turtle",
+        "Pay": 35,
+        "Prob.": 0.0204300588,
+        "PPH": 48.947485163380925,
+        "Return %": 0.00953402744
+      },
+      {
+        "_row": 17,
+        "Combinations": "Lucky Turtle",
+        "Pay": 30,
+        "Prob.": 0.0367384243,
+        "PPH": 27.21945807566929,
+        "Return %": 0.014695369720000002
+      },
+      {
+        "_row": 18,
+        "Combinations": "Lucky Turtle",
+        "Pay": 25,
+        "Prob.": 0.0318691583,
+        "PPH": 31.37829968982896,
+        "Return %": 0.010623052766666667
+      },
+      {
+        "_row": 19,
+        "Combinations": "Lucky Fish",
+        "Pay": 30,
+        "Prob.": 0.0254988752,
+        "PPH": 39.21741614704636,
+        "Return %": 0.010199550080000001
+      },
+      {
+        "_row": 20,
+        "Combinations": "Lucky Fish",
+        "Pay": 25,
+        "Prob.": 0.0556186948,
+        "PPH": 17.979566108048978,
+        "Return %": 0.018539564933333336
+      },
+      {
+        "_row": 21,
+        "Combinations": "Lucky Fish",
+        "Pay": 20,
+        "Prob.": 0.0342387223,
+        "PPH": 29.206697353890448,
+        "Return %": 0.009130325946666667
+      },
+      {
+        "_row": 22,
+        "Combinations": "Dog Urn",
+        "Pay": 25,
+        "Prob.": 0.0350040878,
+        "PPH": 28.568091981531367,
+        "Return %": 0.011668029266666666
+      },
+      {
+        "_row": 23,
+        "Combinations": "Dog Urn",
+        "Pay": 20,
+        "Prob.": 0.0710981733,
+        "PPH": 14.065058968259034,
+        "Return %": 0.01895951288
+      },
+      {
+        "_row": 24,
+        "Combinations": "Dog Urn",
+        "Pay": 15,
+        "Prob.": 0.0456651279,
+        "PPH": 21.898548104143163,
+        "Return %": 0.009133025579999999
+      },
+      {
+        "_row": 25,
+        "Combinations": "Dragon Bell",
+        "Pay": 20,
+        "Prob.": 0.0335204001,
+        "PPH": 29.832579474491414,
+        "Return %": 0.00893877336
+      },
+      {
+        "_row": 26,
+        "Combinations": "Dragon Bell",
+        "Pay": 15,
+        "Prob.": 0.0871880618,
+        "PPH": 11.469460145746698,
+        "Return %": 0.017437612359999997
+      },
+      {
+        "_row": 27,
+        "Combinations": "Dragon Bell",
+        "Pay": 10,
+        "Prob.": 0.0465959237,
+        "PPH": 21.461104761831344,
+        "Return %": 0.006212789826666666
+      },
+      {
+        "_row": 28,
+        "Combinations": "Ace",
+        "Pay": 15,
+        "Prob.": 0.0167709,
+        "PPH": 59.627092165596366,
+        "Return %": 0.00335418
+      },
+      {
+        "_row": 29,
+        "Combinations": "Ace",
+        "Pay": 10,
+        "Prob.": 0.0468794363,
+        "PPH": 21.331314514974235,
+        "Return %": 0.006250591506666667
+      },
+      {
+        "_row": 30,
+        "Combinations": "Ace",
+        "Pay": 5,
+        "Prob.": 0.0365565738,
+        "PPH": 27.354861138545758,
+        "Return %": 0.0024371049199999996
+      },
+      {
+        "_row": 31,
+        "Combinations": "King",
+        "Pay": 15,
+        "Prob.": 0.0258497383,
+        "PPH": 38.68511117576769,
+        "Return %": 0.005169947659999999
+      },
+      {
+        "_row": 32,
+        "Combinations": "King",
+        "Pay": 10,
+        "Prob.": 0.0447577395,
+        "PPH": 22.34250458515672,
+        "Return %": 0.0059676986
+      },
+      {
+        "_row": 33,
+        "Combinations": "King",
+        "Pay": 5,
+        "Prob.": 0.0347582145,
+        "PPH": 28.770177478477784,
+        "Return %": 0.0023172143000000003
+      },
+      {
+        "_row": 34,
+        "Combinations": "Queen",
+        "Pay": 15,
+        "Prob.": 0.0286181943,
+        "PPH": 34.94280559832526,
+        "Return %": 0.00572363886
+      },
+      {
+        "_row": 35,
+        "Combinations": "Queen",
+        "Pay": 10,
+        "Prob.": 0.0360754901,
+        "PPH": 27.719651132334857,
+        "Return %": 0.004810065346666667
+      },
+      {
+        "_row": 36,
+        "Combinations": "Queen",
+        "Pay": 5,
+        "Prob.": 0.0349735472,
+        "PPH": 28.59303902693633,
+        "Return %": 0.0023315698133333338
+      },
+      {
+        "_row": 37,
+        "Combinations": "Jack",
+        "Pay": 15,
+        "Prob.": 0.0178283297,
+        "PPH": 56.090504092483776,
+        "Return %": 0.00356566594
+      },
+      {
+        "_row": 38,
+        "Combinations": "Jack",
+        "Pay": 10,
+        "Prob.": 0.0497422891,
+        "PPH": 20.10361843198728,
+        "Return %": 0.0066323052133333334
+      },
+      {
+        "_row": 39,
+        "Combinations": "Jack",
+        "Pay": 5,
+        "Prob.": 0.0322060756,
+        "PPH": 31.05004199890781,
+        "Return %": 0.0021470717066666666
+      },
+      {
+        "_row": 40,
+        "Combinations": "Ten",
+        "Pay": 15,
+        "Prob.": 0.0277277645,
+        "PPH": 36.06493412045533,
+        "Return %": 0.0055455529
+      },
+      {
+        "_row": 41,
+        "Combinations": "Ten",
+        "Pay": 10,
+        "Prob.": 0.0358699871,
+        "PPH": 27.87845998416877,
+        "Return %": 0.004782664946666667
+      },
+      {
+        "_row": 42,
+        "Combinations": "Ten",
+        "Pay": 5,
+        "Prob.": 0.0355977367,
+        "PPH": 28.091673592270826,
+        "Return %": 0.0023731824466666665
+      },
+      {
+        "_row": 43,
+        "Combinations": "Nine",
+        "Pay": 15,
+        "Prob.": 0.0192422364,
+        "PPH": 51.969011252766855,
+        "Return %": 0.0038484472800000002
+      },
+      {
+        "_row": 44,
+        "Combinations": "Nine",
+        "Pay": 10,
+        "Prob.": 0.046482134,
+        "PPH": 21.513642209284107,
+        "Return %": 0.006197617866666667
+      },
+      {
+        "_row": 45,
+        "Combinations": "Nine",
+        "Pay": 5,
+        "Prob.": 0.033977851,
+        "PPH": 29.43093723025626,
+        "Return %": 0.002265190066666667
+      },
+      {
+        "_row": 46,
+        "Combinations": "Scatter",
+        "Pay": "Pay",
+        "Prob.": "Prob.",
+        "PPH": "PPH",
+        "Return %": "Return %"
+      },
+      {
+        "_row": 47,
+        "Combinations": "Any 5 Scattered Bonus",
+        "Pay": 10,
+        "Prob.": 1.77183e-05,
+        "PPH": 56438.823137659936,
+        "Return %": 0.000177183
+      },
+      {
+        "_row": 48,
+        "Combinations": "Any 4 Scattered Bonus",
+        "Pay": 5,
+        "Prob.": 0.0001362012,
+        "PPH": 7342.0792180979315,
+        "Return %": 0.0006810060000000001
+      },
+      {
+        "_row": 49,
+        "Combinations": "Any 3 Scattered Bonus",
+        "Pay": 2,
+        "Prob.": 0.0009175142,
+        "PPH": 1089.9013879022255,
+        "Return %": 0.0018350284
+      }
+    ],
+    "rtp_breakdown": {
+      "Base Game multiway RTP": 0.3329974259333334,
+      "Base Game scatter RTP": 0.0026932174,
+      "Base Game Coins credit RTP": 0.31585,
+      "Base Game Jackpot RTP": 0.11522,
+      "Free Spins multiway RTP": 0.09417,
+      "Free Spins scatter RTP": 0.00028,
+      "Free Spins Coins credit RTP": 0.03643,
+      "Free Spins Jackpot RTP": 0.00374,
+      "Total RTP": 0.9013806433333333
+    },
+    "bonus": {
+      "Ave # Free Spins": 11.2,
+      "avg_free_spins": 11.2,
+      "notes": [
+        "Notes:",
+        "243 MultiWay for 75 coins fixed.",
+        "MultiWay wins pay for the same symbol in adjacent columns starting from the leftmost column.",
+        "Same symbol or its substitute in the same column multiplies the MultiWay win.",
+        "Only the highest MultiWay win per symbol is paid per spin.",
+        "MultiWay wins multiplied by coin value.",
+        "Wild appears on reels 2,3,4 and 5. Wild is substitute for all symbols except Bonus, Coin, and Coin Boost symbols.",
+        "Scatter wins multiplied by total bet."
+      ]
+    }
+  }
+]

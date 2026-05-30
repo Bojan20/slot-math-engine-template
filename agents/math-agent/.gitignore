@@ -1,0 +1,19 @@
+# ─── Vendor PAR raw data — local-only ────────────────────────────────
+# .xlsx je izvor istine. NIKAD ne ide u git (vendor NDA).
+*.xlsx
+*.xls
+*.xlsm
+
+# Full corpus = 7–22 MB per game dump iz parsera. Local-only.
+**/full_corpus.json
+
+# ─── Ultimate-extract artefakti (96 MB ukupno) ───────────────────────
+# `corpus/<game>/ultimate_extract/` sadrži unzip-ovan XML + per-sheet cells.json.
+# Sve regeneriše ekstraktor iz .xlsx-a. SHA-pinovan reference je
+# `ultimate_extract.pointer.json` (~300 B per game) koji OSTAJE u gitu.
+# Zadržavamo i `essentials.json` (18–36 KB) kao kondenzovani snapshot
+# (paytable + win_distribution + metadata) za regulator/operator pre-flight.
+corpus/*/ultimate_extract/
+corpus/*/extraction_summary.json
+corpus/*/summary.json
+corpus/*/sheet_*.json

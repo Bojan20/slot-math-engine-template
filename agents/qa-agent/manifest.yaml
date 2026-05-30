@@ -1,0 +1,52 @@
+name: qa-agent
+description: |
+  Infallible end-to-end QA orchestrator across the slot-math build section.
+  Runs every automatic surface (syntax · unit · integration · property · mutation ·
+  regression · coverage) plus YAML-driven manual scenarios, all behind an
+  antibody pre-flight gate. Emits a single deterministic verdict.
+
+# Held-out acceptance eval — `tools.agent_eval` reads `eval.held_out_file`.
+eval:
+  held_out_file: ~/Projects/slot-math-engine-template/agents/qa-agent/eval/held_out.yaml
+
+# This agent does not consume vendor NDA-gated material directly.
+nda_corpus: {}
+
+# Inputs the corpus builder walks. `tools.agent_corpus` discovers these and
+# produces a unified `traces.jsonl`. Paths are env-expanded; missing roots
+# degrade silently to zero traces from that source.
+corpus_targets:
+  scenarios_root: ~/Projects/slot-math-engine-template/tools/qa_agent/scenarios
+  qa_runs_root: ~/Projects/slot-math-engine-template/reports/qa_agent
+  spec_md: ~/Projects/slot-math-engine-template/agents/QA_AGENT.md
+
+# RAG ingest config — qdrant collection name + endpoint. Mock store is
+# always built as a fallback by `tools.agent_rag` for CI determinism.
+rag:
+  endpoint: http://localhost:6333
+  collection: qa_agent_corpus
+  metadata_schema:
+    trace_id: uuid
+    source: enum(spec|scenario|report)
+    layer: enum(L0|L1|L2|L3|L4|L5|L6|L7|L8|L9|aggregate)
+    severity: enum(critical|high|medium|low|info)
+    repo_sha: str
+    ingested_at: iso-8601
+
+# CLI surface tied to this agent — used by docs + dispatcher.
+cli:
+  entry: python -m tools.qa_agent
+  subcommands:
+    - selftest
+    - auto
+    - manual
+    - full
+    - status
+    - antibody
+
+# Determinism contract — every metric below must hold across two runs at
+# the same seed + repo sha.
+determinism:
+  seed_env: SLOT_QA_SEED
+  default_seed: 42
+  canonical_hash_field: canonical_hash

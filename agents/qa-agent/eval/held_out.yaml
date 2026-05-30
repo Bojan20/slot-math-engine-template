@@ -1,0 +1,132 @@
+# Held-out acceptance eval for the qa-agent.
+#
+# Agent output schema (per case in the responses JSONL):
+#   {
+#     "id":          "<case id>",
+#     "agent_output": "<the report.md verdict block, ASCII>",
+#     "elapsed_ms":   <int>
+#   }
+#
+# Evaluator (tools.agent_eval.cli._eval_qa_agent) checks:
+#   - expected_verdict literal appears as `verdict: <V>` (case-insensitive)
+#   - every `must_layer` entry appears as a layer row in the markdown
+#   - every `must_finding` substring appears somewhere in the report
+#   - reproducer present (a fenced ```bash or ```sh block, or the
+#     `repro_cmd` literal) for any non-PASS case
+#   - antibody_blocked → `BLOCKED_ANTIBODY` literal present + exit_code 4 noted
+
+cases:
+  - id: qa-pass-selftest
+    scope: selftest
+    symptom: "L0 selftest scope, all sub-checks green"
+    expected_verdict: ALL_PASS
+    expected_exit_code: 0
+    must_layer:
+      - "L0"
+    must_finding: []
+    antibody_blocked: false
+
+  - id: qa-pass-manual-base
+    scope: manual
+    symptom: "manual scope, only base-smoke scenario passes"
+    expected_verdict: ALL_PASS
+    expected_exit_code: 0
+    must_layer:
+      - "L0"
+      - "L9"
+    must_finding: []
+    antibody_blocked: false
+
+  - id: qa-fail-unit-regression
+    scope: quick
+    symptom: "L3 unit suite regresses; pytest exits 1"
+    expected_verdict: FAIL
+    expected_exit_code: 1
+    must_layer:
+      - "L0"
+      - "L3"
+    must_finding:
+      - "pytest exited 1"
+    antibody_blocked: false
+
+  - id: qa-fail-scenario-shell
+    scope: manual
+    symptom: "manual scenario shell step exits non-zero"
+    expected_verdict: FAIL
+    expected_exit_code: 1
+    must_layer:
+      - "L9"
+    must_finding:
+      - "scenario:"
+    antibody_blocked: false
+
+  - id: qa-block-antibody
+    scope: full
+    symptom: "antibody DB has a HIGH match for the planted symptom"
+    expected_verdict: BLOCKED_ANTIBODY
+    expected_exit_code: 4
+    must_layer:
+      - "L1"
+    must_finding:
+      - "antibody"
+    antibody_blocked: true
+
+  - id: qa-skip-no-baseline
+    scope: full
+    symptom: "L7 regression has no baseline snapshot for the parent SHA"
+    expected_verdict: ALL_PASS
+    expected_exit_code: 0
+    must_layer:
+      - "L7"
+    must_finding: []
+    antibody_blocked: false
+
+  - id: qa-determinism-rerun
+    scope: full
+    symptom: "full run, --verify-determinism: canonical_hash must match across runs"
+    expected_verdict: ALL_PASS
+    expected_exit_code: 0
+    must_layer:
+      - "L0"
+    must_finding: []
+    antibody_blocked: false
+
+  - id: qa-bad-input-dirty
+    scope: auto
+    symptom: "working tree dirty without --allow-dirty"
+    expected_verdict: BAD_INPUT
+    expected_exit_code: 2
+    must_layer: []
+    must_finding:
+      - "repo dirty"
+    antibody_blocked: false
+
+  - id: qa-infra-cargo-mutants-absent
+    scope: full
+    symptom: "L6 mutation layer SKIPs when cargo-mutants is not on PATH"
+    expected_verdict: ALL_PASS
+    expected_exit_code: 0
+    must_layer:
+      - "L6"
+    must_finding: []
+    antibody_blocked: false
+
+  - id: qa-coverage-floor-breach
+    scope: full
+    symptom: "L8 coverage floor breached on python line coverage"
+    expected_verdict: FAIL
+    expected_exit_code: 1
+    must_layer:
+      - "L8"
+    must_finding:
+      - "floor"
+    antibody_blocked: false
+
+thresholds:
+  verdict_accuracy: 0.95           # ≥ 95 % of cases produce the expected verdict literal
+  exit_code_accuracy: 0.95         # ≥ 95 % of cases produce the expected exit code
+  layer_coverage: 1.0              # 100 % — every must_layer in every case must appear
+  finding_recall: 0.90             # ≥ 90 % of must_finding strings present
+  reproducer_present: 1.0          # 100 % of non-PASS cases have a fenced repro block
+  antibody_precision: 1.0          # 100 % — every antibody_blocked case marked BLOCKED_ANTIBODY
+  mean_latency_s: 10               # ≤ 10 s wall-clock per case (selftest scope)
