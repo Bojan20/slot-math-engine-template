@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 48 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 21) · repo SHA: `10ee8dde`
+> **Unified operator deliverable** — aggregates 49 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 22) · repo SHA: `ea6d7dfc`
 
-## Headline: **69/69 industry-firsts attested** ✅
+## Headline: **70/70 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -78,6 +78,7 @@
 | 244.19 | — | **Persistent Multiplier FS Kernel (Sticky Bandits / Mighty Wild)** | ✅ 3 fixtures, exact DP over (bump_count, spin) state space | [`reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json`](../../reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json) |
 | 244.20 | — | **Cascade/Tumble Closed-Form (Sweet Bonanza / Money Train)** | ✅ 3 fixtures, bounded geometric chain × multiplier_ladder per-step | [`reports/acceptance/CASCADE_KERNEL.json`](../../reports/acceptance/CASCADE_KERNEL.json) |
 | 244.21 | — | **Cluster-Pays Aggregation Kernel (Sweet Bonanza / Aloha / Gates of Olympus)** | ✅ 3 fixtures: 7×7, 5×4, 6×5 grids; 4-way + 8-way adjacency | [`reports/acceptance/CLUSTER_PAYS_KERNEL.json`](../../reports/acceptance/CLUSTER_PAYS_KERNEL.json) |
+| 244.22 | — | **W244 All-Kernel Batch Runner + Master Merkle** | ✅ 11/11 kernels OK, 35 fixtures, master merkle 442707890d5263d8 | [`reports/acceptance/W244_ALL_KERNELS.json`](../../reports/acceptance/W244_ALL_KERNELS.json) |
 
 ## Why each is industry-first
 

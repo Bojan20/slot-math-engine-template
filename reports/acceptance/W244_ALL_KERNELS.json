@@ -1,0 +1,112 @@
+{
+  "schema": "w244-all-kernels/v1",
+  "master_merkle_root_sha256": "442707890d5263d86ef9f2d401085644b24c18d66f7332c4224ffebcb3c49db8",
+  "generated_at_utc": "deterministic-by-merkle:442707890d5263d8",
+  "all_kernels_ok": true,
+  "kernels_total": 11,
+  "kernels_ok": 11,
+  "kernels_fail": 0,
+  "total_fixtures": 35,
+  "records": [
+    {
+      "wave_id": "244.10",
+      "kernel": "money_collect",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/MONEY_COLLECT_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "1f0b1d9ae1b0611a99f03d592b4cf566ccaf9cc39062e05087315a957e806477"
+    },
+    {
+      "wave_id": "244.11",
+      "kernel": "charge_meter",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/CHARGE_METER_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "6906cabad4616ddc234b703deaef28985085449c03e8c82994cf7271afecba02"
+    },
+    {
+      "wave_id": "244.12",
+      "kernel": "must_hit_by",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/MUST_HIT_BY_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "892e27ed3f32b7ff44865f17b3b954e8ca99ef3a1e93078b7f30d58b73935478"
+    },
+    {
+      "wave_id": "244.13",
+      "kernel": "pick_chain",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/PICK_CHAIN_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "a74d1be63abd1e5068336b36c46f4272edb20b4ee5ef37d08ba18cbb92622a15"
+    },
+    {
+      "wave_id": "244.15",
+      "kernel": "buy_feature",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/BUY_FEATURE_KERNEL.json",
+      "fixtures_count": 5,
+      "merkle_root_sha256": "0ccff42741e9012029cce2fbbc7943663571e9c903e7f6dce170d3df01cf31f5"
+    },
+    {
+      "wave_id": "244.16",
+      "kernel": "wheel",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/WHEEL_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "7d8b51de15893eb1a887b55e45a67e32ed48a9cd797fa11c9bbbb6e19fc4ce02"
+    },
+    {
+      "wave_id": "244.17",
+      "kernel": "state_machine",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/STATE_MACHINE_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "8eef3a07ea8e92029a84de4138ecace2d5ea87e90aa11624e12b478bce55554f"
+    },
+    {
+      "wave_id": "244.18",
+      "kernel": "expanding_symbol",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/EXPANDING_SYMBOL_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "0097a333353d4d427973441407fa3e5add53274b84db6d3d277ed7616787e439"
+    },
+    {
+      "wave_id": "244.19",
+      "kernel": "persistent_multiplier",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "b03c2a86ef23994bb0c473d7f1e897628d0651f2450359cb3240899bab743403"
+    },
+    {
+      "wave_id": "244.20",
+      "kernel": "cascade",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/CASCADE_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "3b96a0bda944603e91b71336726595315f488b3f89abc12d9e8d00d0480c905f"
+    },
+    {
+      "wave_id": "244.21",
+      "kernel": "cluster_pays",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/CLUSTER_PAYS_KERNEL.json",
+      "fixtures_count": 3,
+      "merkle_root_sha256": "cbebb59b2187f11ec096908aa0fa89a9eeb76e2c76099b9c40fe0689bf7c2145"
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_all_w244_kernels`. Output must match `master_merkle_root_sha256` exactly. Each per-kernel Merkle root is independently verifiable via its own builder. Master root = SHA-256 over '<wave_id>|<kernel>|<merkle>\\n' lines in registry order."
+}
