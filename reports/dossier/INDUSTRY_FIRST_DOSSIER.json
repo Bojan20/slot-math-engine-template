@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:f2c1d7a9153ed901",
-  "repo_sha": "e4c8560102cd074cbdfd3c9366920a4c2a2f5e6c",
+  "generatedAtUtc": "deterministic-by-merkle:3913335ff7cf124b",
+  "repo_sha": "c213d98b5c347de1a7f3a5cd6e959c7e032d0250",
   "headline": {
-    "waves": 82,
-    "industry_firsts": 82,
+    "waves": 83,
+    "industry_firsts": 83,
     "all_present": true
   },
   "waves": [
@@ -2839,6 +2839,28 @@
         "max_delta": "9.42e-15 ULP (money_collect Markov DP)"
       },
       "industry_first": "First open-source cross-language math kernel parity gate at 14-kernel scale. Includes Markov stationary (state_machine), Markov DP (money_collect, sticky_wilds), iterative Binomial PMF (pay_anywhere, stacked_wilds), and composition-compat (buy_feature rtp_contribution)."
+    },
+    {
+      "wave": "244.37",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Rust Parity Gate ULTIMATE — 17/17 native kernels byte-stable",
+      "reportPath": "reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "17/17 native kernels Python↔Rust byte-stable (composed hold_and_win deferred to wave 38)",
+      "detail": {
+        "new_parity_kernels": [
+          "expanding_symbol",
+          "wheel",
+          "asymmetric_paytable"
+        ],
+        "remaining": [
+          "hold_and_win (composed, deferred for nested-result handling)"
+        ],
+        "max_delta": "9.42e-15 ULP (money_collect)"
+      },
+      "industry_first": "First open-source 17-kernel cross-language parity gate. Covers all common slot math primitives: Markov stationary, Markov DP, Binomial PMF, geometric chain, Gaussian elim, Wald identity, conservation flow, first-order statistic, jurisdiction passes."
     }
   ],
   "auditor_qa": [

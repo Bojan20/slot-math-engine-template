@@ -1,9 +1,9 @@
 {
   "schema": "w244-rust-python-parity/v1",
-  "merkle_root_sha256": "14ef966ebb42cfd769921d157cf929a81f28407f0d7952ca1b71627a26f20359",
-  "generated_at_utc": "deterministic-by-merkle:14ef966ebb42cfd7",
-  "kernels_checked": 14,
-  "kernels_match": 14,
+  "merkle_root_sha256": "ffb54cf9d49c7b2246aecd9b9c0f1c5ccf727111ad44357173c38f77406e4356",
+  "generated_at_utc": "deterministic-by-merkle:ffb54cf9d49c7b22",
+  "kernels_checked": 17,
+  "kernels_match": 17,
   "all_match": true,
   "epsilon": 1e-10,
   "rust_binary": "target/release/kernel_parity",
@@ -117,6 +117,30 @@
       "status": "OK",
       "py_rtp": 0.96,
       "rust_rtp": 0.96,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "expanding_symbol",
+      "status": "OK",
+      "py_rtp": 0.03266811929255693,
+      "rust_rtp": 0.032668119292556946,
+      "delta": 1.3877787807814457e-17,
+      "within_eps": true
+    },
+    {
+      "kernel": "wheel",
+      "status": "OK",
+      "py_rtp": 1.6500000000000001,
+      "rust_rtp": 1.6500000000000001,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "asymmetric_paytable",
+      "status": "OK",
+      "py_rtp": 0.4,
+      "rust_rtp": 0.4,
       "delta": 0.0,
       "within_eps": true
     }

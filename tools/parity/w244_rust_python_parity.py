@@ -424,6 +424,119 @@ def _py_buy_feature(p: dict) -> dict:
     return buy_feature_audit(BuyFeatureParams(**p))
 
 
+# ─── Wave 37 — 4 more parity fixtures ─────────────────────────────────
+
+
+def fixture_expanding_symbol() -> tuple[dict, dict]:
+    pay = {3: 1.0, 4: 5.0, 5: 100.0}
+    common = dict(
+        fs_trigger_p=0.005, fs_initial_spins=10,
+        reels=5, rows=3, p_per_cell_in_fs=0.12,
+    )
+    py_params = {**common, "pay_table": pay, "symbol_name": "explorer"}
+    rust_params = {
+        **common,
+        "pay_table": {str(k): v for k, v in pay.items()},
+        "symbol_name": "explorer",
+    }
+    return py_params, rust_params
+
+
+def fixture_wheel() -> tuple[dict, dict]:
+    segs = [
+        ("no_win", 4.0, 0.0, ""),
+        ("credit", 3.0, 10.0, ""),
+        ("credit", 2.0, 50.0, ""),
+        ("credit", 1.0, 200.0, ""),
+    ]
+    py_params = {"trigger_p": 0.05, "segs": segs, "max_again": 5}
+    rust_params = {
+        "trigger_p": 0.05,
+        "segments": [{"kind": k, "weight": w, "value_x_bet": v,
+                      "jackpot_id": jid}
+                     for k, w, v, jid in segs],
+        "max_spin_again": 5,
+    }
+    return py_params, rust_params
+
+
+def fixture_asymmetric_paytable() -> tuple[dict, dict]:
+    contrib = {
+        "A": {"left_only": 0.20, "any": 0.05},
+        "B": {"any": 0.15},
+    }
+    py_params = {"contrib": contrib}
+    rust_params = {"per_symbol_contributions": contrib}
+    return py_params, rust_params
+
+
+def fixture_hold_and_win() -> tuple[dict, dict]:
+    # Lightning Link-style: money_collect + 4-tier pots
+    money_value_table = {1.0: 50.0, 2.0: 30.0, 5.0: 15.0, 10.0: 4.0, 50.0: 1.0}
+    pots = [
+        ("mini",  10.0,     0.0005, 100.0,     1e-4),
+        ("minor", 50.0,     0.001,  500.0,     1e-5),
+        ("major", 500.0,    0.002,  5_000.0,   1e-6),
+        ("grand", 10_000.0, 0.005,  100_000.0, 1e-7),
+    ]
+    py_params = {"money_value_table": money_value_table, "pots": pots}
+    rust_params = {
+        "money_params": {
+            "p_per_cell": 0.04, "n_cells": 15, "trigger_count_min": 6,
+            "respins_reset": 3, "grid_cap": 15,
+            "value_table": {str(k): v for k, v in money_value_table.items()},
+        },
+        "jackpot_pots": [
+            {"name": n, "seed_x_bet": s, "contribution_x": c,
+             "must_hit_by_x_bet": m, "p_strike_per_spin": ps}
+            for n, s, c, m, ps in pots
+        ],
+    }
+    return py_params, rust_params
+
+
+def _py_expanding_symbol(p: dict) -> dict:
+    from tools.math_dsl.expanding_symbol import (
+        ExpandingSymbolParams, expanding_symbol_rtp,
+    )
+    return expanding_symbol_rtp(ExpandingSymbolParams(**p))
+
+
+def _py_wheel(p: dict) -> dict:
+    from tools.math_dsl.wheel import WheelParams, WheelSegment, wheel_rtp
+    segs = tuple(
+        WheelSegment(kind=k, weight=w, value_x_bet=v, jackpot_id=jid)
+        for k, w, v, jid in p["segs"]
+    )
+    return wheel_rtp(WheelParams(
+        trigger_p=p["trigger_p"], segments=segs, max_spin_again=p["max_again"],
+    ))
+
+
+def _py_asymmetric_paytable(p: dict) -> dict:
+    from tools.math_dsl.asymmetric_paytable import (
+        AsymmetricPaytableParams, asymmetric_paytable_rtp,
+    )
+    return asymmetric_paytable_rtp(AsymmetricPaytableParams(
+        per_symbol_contributions=p["contrib"],
+    ))
+
+
+def _py_hold_and_win(p: dict) -> dict:
+    from tools.math_dsl.hold_and_win import HoldAndWinParams, hold_and_win_rtp
+    from tools.math_dsl.money_collect import MoneyCollectParams
+    from tools.math_dsl.must_hit_by import MustHitByPot
+    money = MoneyCollectParams(
+        p_per_cell=0.04, n_cells=15, trigger_count_min=6,
+        respins_reset=3, grid_cap=15,
+        value_table=p["money_value_table"],
+    )
+    pots = tuple(
+        MustHitByPot(n, s, c, m, ps) for n, s, c, m, ps in p["pots"]
+    )
+    return hold_and_win_rtp(HoldAndWinParams(money_params=money, jackpot_pots=pots))
+
+
 KERNELS = [
     ("charge_meter", fixture_charge_meter, _py_charge_meter),
     ("stacked_wilds", fixture_stacked_wilds, _py_stacked_wilds),
@@ -439,6 +552,12 @@ KERNELS = [
     ("sticky_wilds", fixture_sticky_wilds, _py_sticky_wilds),
     ("pick_chain", fixture_pick_chain, _py_pick_chain),
     ("buy_feature", fixture_buy_feature, _py_buy_feature),
+    ("expanding_symbol", fixture_expanding_symbol, _py_expanding_symbol),
+    ("wheel", fixture_wheel, _py_wheel),
+    ("asymmetric_paytable", fixture_asymmetric_paytable, _py_asymmetric_paytable),
+    # hold_and_win — composed kernel, Python returns nested money + jackpot
+    # components. Currently Rust port has hold_and_win.rs but parity needs
+    # special composed handling. Adding incrementally next wave.
 ]
 
 
