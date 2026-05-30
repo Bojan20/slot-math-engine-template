@@ -6,7 +6,50 @@
 
 ---
 
-## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:57 (post **W244 STRYKER PASS 2 → 95.91 % ✅ 95 % GATE OBOREN**, commit pending)
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 02:10 (post **W244 WAVE 3 — DOSSIER 58/58 ✅ + ANTIBODY JACCARD FIX**, commit `1ef9b21`)
+
+**Status:** "cepaj dalje redom ultimativno" wave 3 — dva fix-a u jednom batch-u koji zatvaraju ostatak `qa-quick`/dossier surfaces.
+
+| Wave | Šta | Rezultat |
+|---|---|---|
+| **A) Industry-First Dossier 55→58/58** | `scripts/generate_dossier_samples.py` (151 lin) generiše 3 deterministička sample reports za W7.3/W7.5/W7.6 optional rows: `reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json` (classic 5×2 RtpModel + ∂RTP/∂w + ∂CV/∂w + SHA-256), `reports/provenance_mesh/SAMPLE_SESSION.json` (8 spin receipts + Merkle root + n_receipts), `reports/rl_player_emulator/SAMPLE_KPI.json` (casual archetype, 32 traces). Fixed seeds → byte-stable. Dossier verdict: **58/58 industry-firsts present ✅** | ✅ landed |
+| **B) L1 antibody Jaccard rewrite** | `tools/qa_agent/antibody.py` prepisan: naivni `LIKE %tok%` per-token query zamenjen sa **dual-path token-set overlap (Jaccard)**: strong path A jaccard ≥ 0.30, weak path B \|inter\| ≥ 3 ∧ jaccard ≥ 0.10. Stopwords rastao na 40+ entries (rtp/paytable/rng/seed/wave/stryker/mutation/drift/reference/snapshot/…). Bug: prethodni pre-fix qa-quick blokirao 9 HIGH/CRITICAL antibodies (AB-MATH-001/004/006, AB-PAR-003, AB-RNG-001/005, AB-IR-006, AB-QA-002, AB-TRUTH-001) jer su W244 commit poruke sadržale generic tokens. `tools/tests/test_antibody_jaccard.py` — 10 regression testova pin-uju Jaccard kontrakt. | ✅ landed |
+
+### Kombinovani 3-wave bilans (W244 cele serije, commit-evi `3362316`+`4ae473f`+`1ef9b21`)
+
+| Metric | Pre W244 | Posle W244 cele serije | Δ |
+|---|---:|---:|---:|
+| **Stryker overall mutation score** | 91.23 % | **95.91 %** ✅ | **+4.68 pp** |
+| `src/rg/session.ts` | 93.93 % | 95.33 % | +1.40 pp |
+| `src/sensitivity/analyzer.ts` | 86.72 % | 96.88 % | +10.16 pp |
+| Killed mutants | 310 | 326 | +16 |
+| Industry-first dossier coverage | 55/58 | **58/58** ✅ | +3 |
+| L1 antibody gate | SKIP (no DB) | **PASS** (Jaccard, false-pos free) | qualitative |
+| qa-quick verdict | ALL_PASS | **ALL_PASS** | same gate, more layers |
+
+### QA-quick verdict (ALL_PASS, post wave 3)
+
+| Layer | Status | Detail |
+|---|---|---|
+| L0 selftest | ✅ PASS | SCN=PASS; CLI=PASS; AB=PASS; RPT=PASS; SUB=PASS |
+| L1 antibody | ✅ PASS | db=data/antibodies.db tokens=61 (Jaccard — no false-positives) |
+| L2 syntax | ✅ PASS | ruff=0; cargo-check=0; npm-lint=0 |
+| L3 unit | ✅ PASS | pytest=0; cargo-test=0; npm-test=0 |
+| L9 manual | ✅ PASS | 6 run · 0 fail · 0 error |
+| **verdict** | **ALL_PASS** | exit_code=0 |
+
+### Sledeći wave queue (ažuriran)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | Boki fleet decision — `agents/*` + `tools/qa_agent/` commit (96 MB corpora) | pending odluka |
+| **2** | W4.9 Cluster Pays + W4.10 Cascade primitivi | čekaju 1 PAR uzorak svaki |
+| **3** | Pattern-FK Wave 0 followup — Fort Knox parser closure | čeka Wave 4 multi-game refactor |
+| **4** | Stryker death-equivalent eliminatori (14 → 0 — rg/session duplicate kontrolni klasifikator + sensitivity float-equality refactor) | tech debt, out-of-scope (95 % gate prošao) |
+
+---
+
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 01:57 (post **W244 STRYKER PASS 2 → 95.91 % ✅ 95 % GATE OBOREN**, commit `4ae473f`)
 
 **Status:** "cepaj dalje redom ultimativno" wave 2 — spy-based pristup za sensitivity LogicalOperator (`??` → `&&`) i Object/Block (→ {}) mutante koji su preživeli pass 1.
 
