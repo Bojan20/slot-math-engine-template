@@ -61,6 +61,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pyyaml cryptography
 
+      - name: Kernel structural lint (W244 wave 48)
+        run: |
+          python -m tools.math_dsl.kernel_lint
+          # Exit 0 ok, 1 if any blocking (error severity) finding.
+
       - name: Run W244 acceptance tests
         run: |
           python -m pytest tools/tests/test_w244_*_kernel.py -v \

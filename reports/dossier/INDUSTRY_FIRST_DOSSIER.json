@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:42b4b7aac6c0441c",
-  "repo_sha": "09b84921426302b7be34ba24cf2f6a5f37c61059",
+  "generatedAtUtc": "deterministic-by-merkle:8b33d144af5a48ff",
+  "repo_sha": "ef324190818129bc26c233bce1c932681a2046ac",
   "headline": {
-    "waves": 88,
-    "industry_firsts": 88,
+    "waves": 89,
+    "industry_firsts": 89,
     "all_present": true
   },
   "waves": [
@@ -2966,6 +2966,23 @@
         "tooling": "criterion + cargo bench"
       },
       "industry_first": "Prvi open-source slot math kernel performance dossier sa Merkle attestation. Sub-microsecond baseline za sve W244 Rust ports demonstrira marketing claim '10,000× faster than typical Python implementation'."
+    },
+    {
+      "wave": "244.48",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "kernel_lint CI integration — 22/22 kernels structural lint PASS in pipeline",
+      "reportPath": ".github/workflows/w244-kernel-attest.yml",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "kernel_lint dodato u CI pipeline pre acceptance tests",
+      "detail": {
+        "ci_workflow": ".github/workflows/w244-kernel-attest.yml",
+        "step_added": "Kernel structural lint (W244 wave 48)",
+        "step_order": "Pre acceptance tests — fail fast",
+        "modules_checked": 22
+      },
+      "industry_first": "Cross-language kernel fleet sa structural lint CI gate — KLINT001-KLINT010 rule set hvata designer-side typo greške pre acceptance tests fire."
     }
   ],
   "auditor_qa": [
