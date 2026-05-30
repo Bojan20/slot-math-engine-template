@@ -197,6 +197,12 @@ dossier-landing: ## Build dossier landing index.html (GitHub Pages entry)
 dossier-lint: ## Lint dossier HTML (no CDN, Merkle present, no dead links)
 	python3 tools/lint_dossier_html.py
 
+dossier-kernel-md: ## Build 19 per-kernel Markdown docs sa LaTeX formulama
+	python3 tools/build_kernel_markdown_docs.py
+
+perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
+	python3 tools/perf_regression_check.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
@@ -233,6 +239,8 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_pre_commit_config.py \
 		tools/tests/test_w244_dossier_landing.py \
 		tools/tests/test_w244_dossier_html_lint.py \
+		tools/tests/test_w244_perf_regression.py \
+		tools/tests/test_w244_kernel_markdown_docs.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
