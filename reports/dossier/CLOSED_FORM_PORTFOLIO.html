@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Closed-Form Portfolio — slot-math-engine-template</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d; --red: #ff6b6b;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 48px 32px 24px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 36px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .lead {
+  color: var(--fg-mute); font-size: 16px; max-width: 820px; margin: 0;
+}
+.stats {
+  display: grid; gap: 16px; padding: 24px 32px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  border-bottom: 1px solid var(--border);
+}
+.stat {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px;
+}
+.stat .n {
+  font-size: 28px; font-weight: 700; color: var(--acc); display: block;
+}
+.stat .l {
+  color: var(--fg-mute); font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 4px;
+}
+.toolbar {
+  padding: 20px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--bg); z-index: 10;
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 10px 14px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar select {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 10px 14px; border-radius: 6px;
+  font: inherit;
+}
+.toolbar input:focus, .toolbar select:focus {
+  outline: none; border-color: var(--acc);
+}
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+table.data {
+  width: calc(100% - 64px); margin: 24px 32px; border-collapse: collapse;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+table.data th, table.data td {
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+table.data thead th {
+  background: var(--bg-elev); color: var(--fg-mute);
+  font: 11px/1 inherit; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  position: sticky; top: 64px; z-index: 5;
+}
+table.data tbody tr:hover { background: var(--bg-elev); }
+table.data td.num {
+  font: 13px ui-monospace, "SF Mono", monospace; text-align: right;
+}
+.filename {
+  font: 11px ui-monospace, "SF Mono", monospace; color: var(--fg-mute);
+  margin-top: 2px;
+}
+.status { font-weight: 600; font-size: 11px; padding: 3px 8px; border-radius: 4px; }
+.status.ok { background: rgba(109, 212, 157, 0.15); color: var(--green); }
+.status.fail { background: rgba(255, 107, 107, 0.15); color: var(--red); }
+footer.bot {
+  padding: 24px 32px 48px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 32px;
+}
+footer.bot code { color: var(--acc); }
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>Closed-Form <span class="accent">Portfolio</span></h1>
+    <p class="lead">
+      120 closed-form solvers across 589 acceptance configs.
+      Each row links to an MC-validated acceptance report under
+      <code>reports/acceptance/</code>. The full portfolio is part of
+      the 🎯 100-SOLVER MILESTONE milestone.
+    </p>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><span class="n">120</span>
+      <span class="l">Closed-form solvers</span></div>
+    <div class="stat"><span class="n">589</span>
+      <span class="l">Configs validated</span></div>
+    <div class="stat"><span class="n">102</span>
+      <span class="l">Reports passing</span></div>
+    <div class="stat"><span class="n">18</span>
+      <span class="l">Reports failing</span></div>
+    <div class="stat"><span class="n">100.0%</span>
+      <span class="l">Config pass rate</span></div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" type="search"
+           placeholder="Search by report ID…" autocomplete="off">
+    <select id="filter">
+      <option value="all">All statuses</option>
+      <option value="PASS">PASS only</option>
+      <option value="FAIL">FAIL only</option>
+    </select>
+    <span class="count"><span id="count">0</span>
+      / 120 visible</span>
+  </div>
+
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Report ID / file</th>
+        <th>Configs</th>
+        <th>%</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr data-name="adjacent_pays_aggregator" data-status="PASS">
+      <td><strong>ADJACENT_PAYS_AGGREGATOR</strong>
+        <div class="filename">ADJACENT_PAYS_AGGREGATOR.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="ai_fairness_audit" data-status="PASS">
+      <td><strong>AI_FAIRNESS_AUDIT</strong>
+        <div class="filename">AI_FAIRNESS_AUDIT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="ante_bet_tradeoff" data-status="PASS">
+      <td><strong>ANTE_BET_TRADEOFF</strong>
+        <div class="filename">ANTE_BET_TRADEOFF.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="anticipation_reel_tease" data-status="PASS">
+      <td><strong>ANTICIPATION_REEL_TEASE</strong>
+        <div class="filename">ANTICIPATION_REEL_TEASE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="arcade_shooter_survival_levels" data-status="PASS">
+      <td><strong>ARCADE_SHOOTER_SURVIVAL_LEVELS</strong>
+        <div class="filename">ARCADE_SHOOTER_SURVIVAL_LEVELS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="auto_spin_dual_stop" data-status="PASS">
+      <td><strong>AUTO_SPIN_DUAL_STOP</strong>
+        <div class="filename">AUTO_SPIN_DUAL_STOP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="avalanche_reactor_wave_aggregator" data-status="PASS">
+      <td><strong>AVALANCHE_REACTOR_WAVE_AGGREGATOR</strong>
+        <div class="filename">AVALANCHE_REACTOR_WAVE_AGGREGATOR.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="awp_cycle_convergence" data-status="PASS">
+      <td><strong>AWP_CYCLE_CONVERGENCE</strong>
+        <div class="filename">AWP_CYCLE_CONVERGENCE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bidirectional_line_pay" data-status="PASS">
+      <td><strong>BIDIRECTIONAL_LINE_PAY</strong>
+        <div class="filename">BIDIRECTIONAL_LINE_PAY.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="big_bet_paid_package_multi_spin" data-status="PASS">
+      <td><strong>BIG_BET_PAID_PACKAGE_MULTI_SPIN</strong>
+        <div class="filename">BIG_BET_PAID_PACKAGE_MULTI_SPIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_bank_running_balance_offset" data-status="PASS">
+      <td><strong>BONUS_BANK_RUNNING_BALANCE_OFFSET</strong>
+        <div class="filename">BONUS_BANK_RUNNING_BALANCE_OFFSET.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_buy_variance" data-status="PASS">
+      <td><strong>BONUS_BUY_VARIANCE</strong>
+        <div class="filename">BONUS_BUY_VARIANCE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_collect_n" data-status="PASS">
+      <td><strong>BONUS_COLLECT_N</strong>
+        <div class="filename">BONUS_COLLECT_N.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_trigger_award_stratification" data-status="PASS">
+      <td><strong>BONUS_TRIGGER_AWARD_STRATIFICATION</strong>
+        <div class="filename">BONUS_TRIGGER_AWARD_STRATIFICATION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_trigger_wait_time" data-status="PASS">
+      <td><strong>BONUS_TRIGGER_WAIT_TIME</strong>
+        <div class="filename">BONUS_TRIGGER_WAIT_TIME.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="bonus_wheel_respin" data-status="PASS">
+      <td><strong>BONUS_WHEEL_RESPIN</strong>
+        <div class="filename">BONUS_WHEEL_RESPIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cascade_meter_charge_up" data-status="PASS">
+      <td><strong>CASCADE_METER_CHARGE_UP</strong>
+        <div class="filename">CASCADE_METER_CHARGE_UP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cascade_multiplier_chain" data-status="PASS">
+      <td><strong>CASCADE_MULTIPLIER_CHAIN</strong>
+        <div class="filename">CASCADE_MULTIPLIER_CHAIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cascade_multiplier_pyramid" data-status="PASS">
+      <td><strong>CASCADE_MULTIPLIER_PYRAMID</strong>
+        <div class="filename">CASCADE_MULTIPLIER_PYRAMID.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="charge_meter" data-status="PASS">
+      <td><strong>CHARGE_METER</strong>
+        <div class="filename">CHARGE_METER.json</div></td>
+      <td class="num">7/7</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="class_ii_bingo" data-status="PASS">
+      <td><strong>CLASS_II_BINGO</strong>
+        <div class="filename">CLASS_II_BINGO.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cluster_compound_variance" data-status="PASS">
+      <td><strong>CLUSTER_COMPOUND_VARIANCE</strong>
+        <div class="filename">CLUSTER_COMPOUND_VARIANCE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="coin_accumulator_mystery" data-status="PASS">
+      <td><strong>COIN_ACCUMULATOR_MYSTERY</strong>
+        <div class="filename">COIN_ACCUMULATOR_MYSTERY.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="colossal_reels_wild_transfer" data-status="PASS">
+      <td><strong>COLOSSAL_REELS_WILD_TRANSFER</strong>
+        <div class="filename">COLOSSAL_REELS_WILD_TRANSFER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="crash_multiplier" data-status="PASS">
+      <td><strong>CRASH_MULTIPLIER</strong>
+        <div class="filename">CRASH_MULTIPLIER.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cross_jurisdiction_tax_optimizer" data-status="PASS">
+      <td><strong>CROSS_JURISDICTION_TAX_OPTIMIZER</strong>
+        <div class="filename">CROSS_JURISDICTION_TAX_OPTIMIZER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="customer_affordability_stratification" data-status="PASS">
+      <td><strong>CUSTOMER_AFFORDABILITY_STRATIFICATION</strong>
+        <div class="filename">CUSTOMER_AFFORDABILITY_STRATIFICATION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="customer_service_ai_hallucination" data-status="PASS">
+      <td><strong>CUSTOMER_SERVICE_AI_HALLUCINATION</strong>
+        <div class="filename">CUSTOMER_SERVICE_AI_HALLUCINATION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="cybersecurity_breach_cost" data-status="PASS">
+      <td><strong>CYBERSECURITY_BREACH_COST</strong>
+        <div class="filename">CYBERSECURITY_BREACH_COST.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="demo_mode" data-status="PASS">
+      <td><strong>DEMO_MODE</strong>
+        <div class="filename">DEMO_MODE.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="deterministic_explosion_multiplier_drop" data-status="PASS">
+      <td><strong>DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP</strong>
+        <div class="filename">DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="drop_stick_wild_expansion" data-status="PASS">
+      <td><strong>DROP_STICK_WILD_EXPANSION</strong>
+        <div class="filename">DROP_STICK_WILD_EXPANSION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="dynamic_grid_expansion_hold_spin" data-status="PASS">
+      <td><strong>DYNAMIC_GRID_EXPANSION_HOLD_SPIN</strong>
+        <div class="filename">DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="entropy_health_monitor" data-status="PASS">
+      <td><strong>ENTROPY_HEALTH_MONITOR</strong>
+        <div class="filename">ENTROPY_HEALTH_MONITOR.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="esg_carbon_cost" data-status="PASS">
+      <td><strong>ESG_CARBON_COST</strong>
+        <div class="filename">ESG_CARBON_COST.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="exact_enumeration" data-status="PASS">
+      <td><strong>EXACT_ENUMERATION</strong>
+        <div class="filename">EXACT_ENUMERATION.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="free_bet_wagering_requirement" data-status="PASS">
+      <td><strong>FREE_BET_WAGERING_REQUIREMENT</strong>
+        <div class="filename">FREE_BET_WAGERING_REQUIREMENT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="free_spins_lookback_multiplier" data-status="PASS">
+      <td><strong>FREE_SPINS_LOOKBACK_MULTIPLIER</strong>
+        <div class="filename">FREE_SPINS_LOOKBACK_MULTIPLIER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="free_spins_retrigger" data-status="PASS">
+      <td><strong>FREE_SPINS_RETRIGGER</strong>
+        <div class="filename">FREE_SPINS_RETRIGGER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="fs_buy_tier_tradeoff" data-status="PASS">
+      <td><strong>FS_BUY_TIER_TRADEOFF</strong>
+        <div class="filename">FS_BUY_TIER_TRADEOFF.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="game_provider_revenue_share" data-status="PASS">
+      <td><strong>GAME_PROVIDER_REVENUE_SHARE</strong>
+        <div class="filename">GAME_PROVIDER_REVENUE_SHARE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="hit_frequency_distribution" data-status="PASS">
+      <td><strong>HIT_FREQUENCY_DISTRIBUTION</strong>
+        <div class="filename">HIT_FREQUENCY_DISTRIBUTION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="hnw_ladder" data-status="PASS">
+      <td><strong>HNW_LADDER</strong>
+        <div class="filename">HNW_LADDER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="hold_win_value_jackpot" data-status="PASS">
+      <td><strong>HOLD_WIN_VALUE_JACKPOT</strong>
+        <div class="filename">HOLD_WIN_VALUE_JACKPOT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="jp_pachislot_skill_stop" data-status="PASS">
+      <td><strong>JP_PACHISLOT_SKILL_STOP</strong>
+        <div class="filename">JP_PACHISLOT_SKILL_STOP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="kyc_aml_sanction_screening" data-status="PASS">
+      <td><strong>KYC_AML_SANCTION_SCREENING</strong>
+        <div class="filename">KYC_AML_SANCTION_SCREENING.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="live_casino_dealer_integrity" data-status="PASS">
+      <td><strong>LIVE_CASINO_DEALER_INTEGRITY</strong>
+        <div class="filename">LIVE_CASINO_DEALER_INTEGRITY.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="locked_reels_fs" data-status="PASS">
+      <td><strong>LOCKED_REELS_FS</strong>
+        <div class="filename">LOCKED_REELS_FS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="martingale_bust_time" data-status="PASS">
+      <td><strong>MARTINGALE_BUST_TIME</strong>
+        <div class="filename">MARTINGALE_BUST_TIME.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="max_win_cap_truncation" data-status="PASS">
+      <td><strong>MAX_WIN_CAP_TRUNCATION</strong>
+        <div class="filename">MAX_WIN_CAP_TRUNCATION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="megacluster_stack_ways" data-status="PASS">
+      <td><strong>MEGACLUSTER_STACK_WAYS</strong>
+        <div class="filename">MEGACLUSTER_STACK_WAYS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="mega_symbol_expansion" data-status="PASS">
+      <td><strong>MEGA_SYMBOL_EXPANSION</strong>
+        <div class="filename">MEGA_SYMBOL_EXPANSION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="mid_spin_reel_reshape_mixture" data-status="PASS">
+      <td><strong>MID_SPIN_REEL_RESHAPE_MIXTURE</strong>
+        <div class="filename">MID_SPIN_REEL_RESHAPE_MIXTURE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multiplicative_wild_stack" data-status="PASS">
+      <td><strong>MULTIPLICATIVE_WILD_STACK</strong>
+        <div class="filename">MULTIPLICATIVE_WILD_STACK.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_account_bonus_abuse" data-status="PASS">
+      <td><strong>MULTI_ACCOUNT_BONUS_ABUSE</strong>
+        <div class="filename">MULTI_ACCOUNT_BONUS_ABUSE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_currency_fx_risk" data-status="PASS">
+      <td><strong>MULTI_CURRENCY_FX_RISK</strong>
+        <div class="filename">MULTI_CURRENCY_FX_RISK.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_level_wild_markov" data-status="PASS">
+      <td><strong>MULTI_LEVEL_WILD_MARKOV</strong>
+        <div class="filename">MULTI_LEVEL_WILD_MARKOV.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_pot_branched_hold_spin_sub_feature" data-status="PASS">
+      <td><strong>MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE</strong>
+        <div class="filename">MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_state_frame_upgrade_markov" data-status="PASS">
+      <td><strong>MULTI_STATE_FRAME_UPGRADE_MARKOV</strong>
+        <div class="filename">MULTI_STATE_FRAME_UPGRADE_MARKOV.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="multi_tier_wap_wheel" data-status="PASS">
+      <td><strong>MULTI_TIER_WAP_WHEEL</strong>
+        <div class="filename">MULTI_TIER_WAP_WHEEL.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="must_hit_by_jackpot" data-status="PASS">
+      <td><strong>MUST_HIT_BY_JACKPOT</strong>
+        <div class="filename">MUST_HIT_BY_JACKPOT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="mystery_symbol_reveal" data-status="PASS">
+      <td><strong>MYSTERY_SYMBOL_REVEAL</strong>
+        <div class="filename">MYSTERY_SYMBOL_REVEAL.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="nested_mini_slot_inside_bonus" data-status="PASS">
+      <td><strong>NESTED_MINI_SLOT_INSIDE_BONUS</strong>
+        <div class="filename">NESTED_MINI_SLOT_INSIDE_BONUS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="operator_daily_pnl_var" data-status="PASS">
+      <td><strong>OPERATOR_DAILY_PNL_VAR</strong>
+        <div class="filename">OPERATOR_DAILY_PNL_VAR.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="parallel_screens" data-status="PASS">
+      <td><strong>PARALLEL_SCREENS</strong>
+        <div class="filename">PARALLEL_SCREENS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="paroli_streak_cash_out" data-status="PASS">
+      <td><strong>PAROLI_STREAK_CASH_OUT</strong>
+        <div class="filename">PAROLI_STREAK_CASH_OUT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="persistent_multiplier" data-status="PASS">
+      <td><strong>PERSISTENT_MULTIPLIER</strong>
+        <div class="filename">PERSISTENT_MULTIPLIER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="per_reel_bag_row_multiplier_coupled" data-status="PASS">
+      <td><strong>PER_REEL_BAG_ROW_MULTIPLIER_COUPLED</strong>
+        <div class="filename">PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="pick_bonus_n_stage" data-status="PASS">
+      <td><strong>PICK_BONUS_N_STAGE</strong>
+        <div class="filename">PICK_BONUS_N_STAGE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="pick_click_pooper_bonus" data-status="PASS">
+      <td><strong>PICK_CLICK_POOPER_BONUS</strong>
+        <div class="filename">PICK_CLICK_POOPER_BONUS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="player_elects_feature_composition" data-status="PASS">
+      <td><strong>PLAYER_ELECTS_FEATURE_COMPOSITION</strong>
+        <div class="filename">PLAYER_ELECTS_FEATURE_COMPOSITION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="player_ltv_bayesian" data-status="PASS">
+      <td><strong>PLAYER_LTV_BAYESIAN</strong>
+        <div class="filename">PLAYER_LTV_BAYESIAN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="pre_commitment_loss_limit" data-status="PASS">
+      <td><strong>PRE_COMMITMENT_LOSS_LIMIT</strong>
+        <div class="filename">PRE_COMMITMENT_LOSS_LIMIT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="pseudo_must_hit_level" data-status="PASS">
+      <td><strong>PSEUDO_MUST_HIT_LEVEL</strong>
+        <div class="filename">PSEUDO_MUST_HIT_LEVEL.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="quantum_resistant_rng" data-status="PASS">
+      <td><strong>QUANTUM_RESISTANT_RNG</strong>
+        <div class="filename">QUANTUM_RESISTANT_RNG.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="race_competitive_pick_winner" data-status="PASS">
+      <td><strong>RACE_COMPETITIVE_PICK_WINNER</strong>
+        <div class="filename">RACE_COMPETITIVE_PICK_WINNER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="random_feature_injection_during_fs" data-status="PASS">
+      <td><strong>RANDOM_FEATURE_INJECTION_DURING_FS</strong>
+        <div class="filename">RANDOM_FEATURE_INJECTION_DURING_FS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="reel_bound_mystery_progressive" data-status="PASS">
+      <td><strong>REEL_BOUND_MYSTERY_PROGRESSIVE</strong>
+        <div class="filename">REEL_BOUND_MYSTERY_PROGRESSIVE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="rtp_drift_cusum" data-status="PASS">
+      <td><strong>RTP_DRIFT_CUSUM</strong>
+        <div class="filename">RTP_DRIFT_CUSUM.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="running_max_drawdown" data-status="PASS">
+      <td><strong>RUNNING_MAX_DRAWDOWN</strong>
+        <div class="filename">RUNNING_MAX_DRAWDOWN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="self_exclusion_lifecycle" data-status="PASS">
+      <td><strong>SELF_EXCLUSION_LIFECYCLE</strong>
+        <div class="filename">SELF_EXCLUSION_LIFECYCLE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="session_bankroll_drawdown" data-status="PASS">
+      <td><strong>SESSION_BANKROLL_DRAWDOWN</strong>
+        <div class="filename">SESSION_BANKROLL_DRAWDOWN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="session_cool_off_enforcement" data-status="PASS">
+      <td><strong>SESSION_COOL_OFF_ENFORCEMENT</strong>
+        <div class="filename">SESSION_COOL_OFF_ENFORCEMENT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="skill_stop_near_miss" data-status="PASS">
+      <td><strong>SKILL_STOP_NEAR_MISS</strong>
+        <div class="filename">SKILL_STOP_NEAR_MISS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="spin_velocity_compliance" data-status="PASS">
+      <td><strong>SPIN_VELOCITY_COMPLIANCE</strong>
+        <div class="filename">SPIN_VELOCITY_COMPLIANCE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="sportsbook_odds_margin" data-status="PASS">
+      <td><strong>SPORTSBOOK_ODDS_MARGIN</strong>
+        <div class="filename">SPORTSBOOK_ODDS_MARGIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="stacked_multi_wheel_composition" data-status="PASS">
+      <td><strong>STACKED_MULTI_WHEEL_COMPOSITION</strong>
+        <div class="filename">STACKED_MULTI_WHEEL_COMPOSITION.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="sticky_cash_collector" data-status="PASS">
+      <td><strong>STICKY_CASH_COLLECTOR</strong>
+        <div class="filename">STICKY_CASH_COLLECTOR.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="sticky_cash_reveal" data-status="PASS">
+      <td><strong>STICKY_CASH_REVEAL</strong>
+        <div class="filename">STICKY_CASH_REVEAL.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="sticky_multiplier_fs_trail" data-status="PASS">
+      <td><strong>STICKY_MULTIPLIER_FS_TRAIL</strong>
+        <div class="filename">STICKY_MULTIPLIER_FS_TRAIL.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="sticky_wild_countdown_mult" data-status="PASS">
+      <td><strong>STICKY_WILD_COUNTDOWN_MULT</strong>
+        <div class="filename">STICKY_WILD_COUNTDOWN_MULT.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="stream_latency_sla" data-status="PASS">
+      <td><strong>STREAM_LATENCY_SLA</strong>
+        <div class="filename">STREAM_LATENCY_SLA.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="supermeter" data-status="PASS">
+      <td><strong>SUPERMETER</strong>
+        <div class="filename">SUPERMETER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="symbol_mult_reel_stop" data-status="PASS">
+      <td><strong>SYMBOL_MULT_REEL_STOP</strong>
+        <div class="filename">SYMBOL_MULT_REEL_STOP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="symbol_upgrade_chain" data-status="PASS">
+      <td><strong>SYMBOL_UPGRADE_CHAIN</strong>
+        <div class="filename">SYMBOL_UPGRADE_CHAIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="trail_bonus_tracker" data-status="PASS">
+      <td><strong>TRAIL_BONUS_TRACKER</strong>
+        <div class="filename">TRAIL_BONUS_TRACKER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="tumble_multiplier_cap" data-status="PASS">
+      <td><strong>TUMBLE_MULTIPLIER_CAP</strong>
+        <div class="filename">TUMBLE_MULTIPLIER_CAP.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="tumbling_cascade_chain_length" data-status="PASS">
+      <td><strong>TUMBLING_CASCADE_CHAIN_LENGTH</strong>
+        <div class="filename">TUMBLING_CASCADE_CHAIN_LENGTH.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="us_state_regulator_compliance" data-status="PASS">
+      <td><strong>US_STATE_REGULATOR_COMPLIANCE</strong>
+        <div class="filename">US_STATE_REGULATOR_COMPLIANCE.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="variable_reel_height_ways" data-status="PASS">
+      <td><strong>VARIABLE_REEL_HEIGHT_WAYS</strong>
+        <div class="filename">VARIABLE_REEL_HEIGHT_WAYS.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="voltage_meter_multi_tier" data-status="PASS">
+      <td><strong>VOLTAGE_METER_MULTI_TIER</strong>
+        <div class="filename">VOLTAGE_METER_MULTI_TIER.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="walking_wild_respin" data-status="PASS">
+      <td><strong>WALKING_WILD_RESPIN</strong>
+        <div class="filename">WALKING_WILD_RESPIN.json</div></td>
+      <td class="num">6/6</td>
+      <td class="num">100%</td>
+      <td><span class="status ok">PASS</span></td>
+    </tr>
+
+    <tr data-name="behaviors_compositional" data-status="FAIL">
+      <td><strong>BEHAVIORS_COMPOSITIONAL</strong>
+        <div class="filename">BEHAVIORS_COMPOSITIONAL.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="both_ways" data-status="FAIL">
+      <td><strong>BOTH_WAYS</strong>
+        <div class="filename">BOTH_WAYS.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="cluster_cascade" data-status="FAIL">
+      <td><strong>CLUSTER_CASCADE</strong>
+        <div class="filename">CLUSTER_CASCADE.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="diff_fuzz_cross_lang" data-status="FAIL">
+      <td><strong>DIFF_FUZZ_CROSS_LANG</strong>
+        <div class="filename">DIFF_FUZZ_CROSS_LANG.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="fs_configs" data-status="FAIL">
+      <td><strong>FS_CONFIGS</strong>
+        <div class="filename">FS_CONFIGS.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="hnw_multi_jackpot" data-status="FAIL">
+      <td><strong>HNW_MULTI_JACKPOT</strong>
+        <div class="filename">HNW_MULTI_JACKPOT.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="industry_patterns" data-status="FAIL">
+      <td><strong>INDUSTRY_PATTERNS</strong>
+        <div class="filename">INDUSTRY_PATTERNS.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="jurisdiction_auto_gate" data-status="FAIL">
+      <td><strong>JURISDICTION_AUTO_GATE</strong>
+        <div class="filename">JURISDICTION_AUTO_GATE.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="mechanic_29" data-status="FAIL">
+      <td><strong>MECHANIC_29</strong>
+        <div class="filename">MECHANIC_29.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="mechanic_30" data-status="FAIL">
+      <td><strong>MECHANIC_30</strong>
+        <div class="filename">MECHANIC_30.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="mechanic_family" data-status="FAIL">
+      <td><strong>MECHANIC_FAMILY</strong>
+        <div class="filename">MECHANIC_FAMILY.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="metamorphic_rtp" data-status="FAIL">
+      <td><strong>METAMORPHIC_RTP</strong>
+        <div class="filename">METAMORPHIC_RTP.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="par_commitment" data-status="FAIL">
+      <td><strong>PAR_COMMITMENT</strong>
+        <div class="filename">PAR_COMMITMENT.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="random_config_sweep" data-status="FAIL">
+      <td><strong>RANDOM_CONFIG_SWEEP</strong>
+        <div class="filename">RANDOM_CONFIG_SWEEP.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="varrows_cascade" data-status="FAIL">
+      <td><strong>VARROWS_CASCADE</strong>
+        <div class="filename">VARROWS_CASCADE.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="ways_acceptance" data-status="FAIL">
+      <td><strong>WAYS_ACCEPTANCE</strong>
+        <div class="filename">WAYS_ACCEPTANCE.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="dossier-2026-05-14_233949019z" data-status="FAIL">
+      <td><strong>dossier-2026-05-14_233949019Z</strong>
+        <div class="filename">dossier-2026-05-14_233949019Z.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+
+    <tr data-name="golden" data-status="FAIL">
+      <td><strong>golden</strong>
+        <div class="filename">golden.json</div></td>
+      <td class="num">0/0</td>
+      <td class="num">0%</td>
+      <td><span class="status fail">FAIL</span></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <footer class="bot">
+    Schema: <code>1.0.0</code><br>
+    Generated UTC: <code>2026-05-19T12:56:19.141Z</code><br>
+    Source: <code>reports/dossier/CLOSED_FORM_PORTFOLIO_100.json</code><br>
+    Page Merkle (SHA-256 over body): <code>1880050cdd78bd68fd019ba69367fb4e4356fd317f214a9d44ce991b14f9e40a</code>
+  </footer>
+  <script>
+(function() {
+  const $search = document.querySelector('#search');
+  const $filter = document.querySelector('#filter');
+  const $count = document.querySelector('#count');
+  const $rows = document.querySelectorAll('tbody tr');
+  function apply() {
+    const q = $search.value.toLowerCase().trim();
+    const f = $filter.value;
+    let n = 0;
+    $rows.forEach(r => {
+      const matches_q = !q || r.dataset.name.includes(q);
+      const matches_f = f === 'all' || r.dataset.status === f;
+      const show = matches_q && matches_f;
+      r.style.display = show ? '' : 'none';
+      if (show) n++;
+    });
+    $count.textContent = n;
+  }
+  $search.addEventListener('input', apply);
+  $filter.addEventListener('change', apply);
+  $count.textContent = $rows.length;
+})();
+</script>
+</body>
+</html>

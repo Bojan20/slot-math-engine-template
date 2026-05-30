@@ -26,11 +26,15 @@ on:
     paths:
       - 'tools/build_industry_firsts_html.py'
       - 'tools/build_regulator_portal.py'
+      - 'tools/build_closed_form_portfolio_html.py'
       - 'tools/tests/test_w244_industry_firsts_html.py'
       - 'tools/tests/test_w244_regulator_portal.py'
+      - 'tools/tests/test_w244_closed_form_portfolio_html.py'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
       - 'reports/dossier/REGULATOR_PORTAL.html'
+      - 'reports/dossier/CLOSED_FORM_PORTFOLIO_100.json'
+      - 'reports/dossier/CLOSED_FORM_PORTFOLIO.html'
       - 'reports/acceptance/W244_ALL_KERNELS.json'
       - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
       - '.github/workflows/w244-dossier-html.yml'
@@ -39,11 +43,15 @@ on:
     paths:
       - 'tools/build_industry_firsts_html.py'
       - 'tools/build_regulator_portal.py'
+      - 'tools/build_closed_form_portfolio_html.py'
       - 'tools/tests/test_w244_industry_firsts_html.py'
       - 'tools/tests/test_w244_regulator_portal.py'
+      - 'tools/tests/test_w244_closed_form_portfolio_html.py'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
       - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
       - 'reports/dossier/REGULATOR_PORTAL.html'
+      - 'reports/dossier/CLOSED_FORM_PORTFOLIO_100.json'
+      - 'reports/dossier/CLOSED_FORM_PORTFOLIO.html'
       - 'reports/acceptance/W244_ALL_KERNELS.json'
       - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
       - '.github/workflows/w244-dossier-html.yml'
@@ -74,12 +82,14 @@ jobs:
           python -m pytest \
             tools/tests/test_w244_industry_firsts_html.py \
             tools/tests/test_w244_regulator_portal.py \
+            tools/tests/test_w244_closed_form_portfolio_html.py \
             -v --tb=short
 
       - name: Snapshot committed HTML
         run: |
           cp reports/dossier/INDUSTRY_FIRST_DOSSIER.html /tmp/ifs-committed.html
           cp reports/dossier/REGULATOR_PORTAL.html /tmp/portal-committed.html
+          cp reports/dossier/CLOSED_FORM_PORTFOLIO.html /tmp/cf-committed.html
 
       - name: Rebuild Industry-First HTML
         run: |
@@ -88,6 +98,10 @@ jobs:
       - name: Rebuild Regulator Portal
         run: |
           python3 tools/build_regulator_portal.py
+
+      - name: Rebuild Closed-Form Portfolio HTML
+        run: |
+          python3 tools/build_closed_form_portfolio_html.py
 
       - name: Verify Industry-First HTML byte-identical
         run: |
@@ -113,17 +127,33 @@ jobs:
           fi
           echo "✓ REGULATOR_PORTAL.html: rebuild byte-identical"
 
+      - name: Verify Closed-Form Portfolio HTML byte-identical
+        run: |
+          if ! diff -q /tmp/cf-committed.html \
+               reports/dossier/CLOSED_FORM_PORTFOLIO.html; then
+            echo "::error::CLOSED_FORM_PORTFOLIO.html DRIFT — committed != fresh rebuild"
+            echo "::error::Run \`make dossier-portfolio-html\` and commit the result."
+            diff /tmp/cf-committed.html \
+                 reports/dossier/CLOSED_FORM_PORTFOLIO.html | head -30
+            exit 1
+          fi
+          echo "✓ CLOSED_FORM_PORTFOLIO.html: rebuild byte-identical"
+
       - name: Emit page Merkle summary
         run: |
           IFS_HASH=$(sha256sum reports/dossier/INDUSTRY_FIRST_DOSSIER.html \
                      | cut -d' ' -f1)
           PORTAL_HASH=$(sha256sum reports/dossier/REGULATOR_PORTAL.html \
                         | cut -d' ' -f1)
+          CF_HASH=$(sha256sum reports/dossier/CLOSED_FORM_PORTFOLIO.html \
+                    | cut -d' ' -f1)
           echo "Industry-First HTML SHA-256: $IFS_HASH"
           echo "Regulator Portal HTML SHA-256: $PORTAL_HASH"
+          echo "Closed-Form Portfolio SHA-256: $CF_HASH"
           echo "## W244 Dossier HTML Merkle Roots" >> $GITHUB_STEP_SUMMARY
-          echo "- IF Dashboard: \`$IFS_HASH\`" >> $GITHUB_STEP_SUMMARY
-          echo "- Portal:       \`$PORTAL_HASH\`" >> $GITHUB_STEP_SUMMARY
+          echo "- IF Dashboard:        \`$IFS_HASH\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Regulator Portal:    \`$PORTAL_HASH\`" >> $GITHUB_STEP_SUMMARY
+          echo "- CF Portfolio:        \`$CF_HASH\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload portal artifact
         if: always()
@@ -133,4 +163,5 @@ jobs:
           path: |
             reports/dossier/INDUSTRY_FIRST_DOSSIER.html
             reports/dossier/REGULATOR_PORTAL.html
+            reports/dossier/CLOSED_FORM_PORTFOLIO.html
           if-no-files-found: error

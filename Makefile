@@ -182,15 +182,20 @@ dossier-ifs-html: ## Build Industry-First Dossier static HTML dashboard (89 card
 dossier-portal: ## Build unified Regulator Portal (3-tab: IFs + Kernels + Bench)
 	python3 tools/build_regulator_portal.py
 
+dossier-portfolio-html: ## Build Closed-Form Portfolio HTML (120 solvers, 589 configs)
+	python3 tools/build_closed_form_portfolio_html.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
 dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON changes)
 	$(MAKE) dossier-ifs-html
 	$(MAKE) dossier-portal
+	$(MAKE) dossier-portfolio-html
 	@echo "✅ All dossier HTML pages rebuilt"
 	@echo "   reports/dossier/INDUSTRY_FIRST_DOSSIER.html"
 	@echo "   reports/dossier/REGULATOR_PORTAL.html"
+	@echo "   reports/dossier/CLOSED_FORM_PORTFOLIO.html"
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
 #
