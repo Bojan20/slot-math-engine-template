@@ -6,7 +6,57 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 18:30 (post **W244 WAVE 49-63 — kernel reference + JSON Schema sweep**)
+## 🏁 ABSOLUTE FINAL — 2026-05-30 19:00 (post **W244 WAVE 49-65 — full developer-experience polish**)
+
+**Status:** "cepaj" — wave 64+65 landed (CLI + pre-commit), session totals 17 wave-ova, 79 pytest + 22 health = 101 testova zelena. Sve interno.
+
+### Wave 64 + 65 deltas
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **64** | `05ab3689` | **`slot-math` CLI runner** — 6 sub-komandi (list/info/both-ways/charge-meter/buy-feature/run), JSON stdout, `pip install` daje working command-line |
+| **65** | `714f6857` | **Pre-commit hooks** — ruff auto-fix + W244 health probe + API contract gate, file-pattern scoped, fast (<5s) |
+
+### slot-math CLI usage (post-wave 64)
+
+```bash
+pip install slot-math-kernels
+slot-math list                                  # 22 kernels
+slot-math info charge_meter                     # docs + API
+slot-math both-ways --ltr-rtp 0.96 --share 0.7  # 1.632 RTP
+slot-math charge-meter --expected-charge 0.5 \
+          --tier classic:50:10                  # 0.10 RTP (Wald)
+slot-math buy-feature --bonus 95 --cost 100 \
+          --base-rtp 0.965                      # UKGC + MGA audit
+slot-math run wheel --config params.json        # JSON-driven any kernel
+```
+
+### Developer workflow (post-wave 65)
+
+```bash
+pip install pre-commit
+pre-commit install              # one-time
+# Hooks auto-run on every `git commit`:
+#   • trailing-whitespace / end-of-file-fixer / check-yaml / check-json
+#   • ruff lint+format (scoped na tools/ + packages/)
+#   • w244-health (16-22 checks, when surface files change)
+#   • w244-api-contract (when PyPI src or API_SURFACE.json change)
+pre-commit run --all-files     # manual full sweep
+```
+
+### Final QA stanje (2026-05-30 19:00)
+
+| Layer | Status |
+|---|---|
+| Cargo check rust-sim | ✅ clean |
+| Pytest `make qa-w244-session` (12 fajla) | ✅ **79/79 PASS** (1.12s) |
+| W244 health probe `make health-w244` | ✅ **22/22 PASS** (0.1s) |
+| Ruff (tools + packages) | ✅ All checks passed |
+| Total tests u sesiji | ✅ 101 green |
+
+---
+
+## 🏁 EARLIER FINAL — 2026-05-30 18:30 (post **W244 WAVE 49-63 — kernel reference + JSON Schema sweep**)
 
 **Status:** "cepaj dalje ultimativno" — 15 wave-ova landed kontinuirano, 64+21=85 testova zelena, javni push pauziran. Sve interno.
 
