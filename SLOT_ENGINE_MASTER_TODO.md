@@ -6,6 +6,70 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:35 (post **W244 WAVE 13 — `pick_chain` multi-level pick bonus kernel landed**, commit pending)
+
+**Status:** Četvrta math kernel u autonomnom batch-u. Math DSL feature union sada **16 mehanika** (12 baseline + 4 W244 wave 10/11/12/13).
+
+### Wave 13 — `pick_chain` multi-level pick bonus kernel
+
+Industry pattern: Microgaming Mega Moolah pick-pot, Aristocrat Mighty Cash, NetEnt Hall of Spins. Player picks iz N-option pool koji otkrivaju credit / advance / end tokens. Multi-level chain.
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `tools/math_dsl/spec.py` (DSL extension) | `pick_chain` u VALID_FEATURE_KINDS + `pick_trigger_p` + `pick_levels` polja + parser level-list validation (counts sum to pool_size) | +40 lines |
+| `tools/math_dsl/pick_chain.py` (kernel) | First-order statistic on uniform end-token placement + level-advance via relative odds (advance / (advance + end)). Multi-tier DP. | 210 lines |
+| `tools/tests/test_w244_pick_chain_kernel.py` | 15 testova — level probabilities, E[credit/pick], E[picks], multi-level award, DSL integration, validation | **15/15 PASS** u 60ms |
+| `tools/build_pick_chain_kernel.py` | 3 canonical fixtures | 115 lines |
+| `reports/acceptance/PICK_CHAIN_KERNEL.json` | schema v1, Merkle pinned | — |
+
+### Closed-form fixtures
+
+| Fixture | Levels | trigger_p | E[total] | RTP |
+|---|---:|---:|---:|---:|
+| two-level-bronze-silver | 2 | 0.0200 | 13.4 | 0.2683 |
+| three-level-mighty-cash | 3 | 0.0100 | 113.4 | 1.1342 (ekstrem) |
+| single-level-credit-only | 1 | 0.0300 | 18.0 | 0.5400 |
+
+### Industry coverage delta (sad **16 feature kinds**)
+
+DONE-UNIVERSAL coverage zatvorene tokom W244 wave 10-13:
+- #5 Money-collect FS (wave 10) ✅
+- #10 Cluster cascade + charge meter (wave 11) ✅
+- #13 Supermeter state-switch (wave 11, kao charge_meter) ✅
+- #15 Must-hit-by jackpot (wave 12) ✅
+- #17 Pseudo-must-hit (wave 12) ✅
+- #18 Pick bonus + multi-level (wave 13) ✅
+
+**6 / 20 DONE-UNIVERSAL stavki dodatno zatvorene u jednoj autonomous seriji.**
+
+### Regression check
+
+`pytest -k "math_dsl or w5_1 or w5_2 or w7_1 or w244_money_collect or w244_charge_meter or w244_must_hit_by or w244_pick_chain" -m "not slow"` → **132/132 PASS** u 2.80s.
+
+### W244 autonomous batch bilans (wave 8 → wave 13)
+
+| Wave | Commit | Šta | Δ |
+|---|---|---|---|
+| 8 | `3cd207cd` | analyzer.ts source refactor | Stryker 98.02 → 98.88 % |
+| 9a | `563761aa` | reg-oracle agent bootstrap | 117 traces / 12 jurisdictions |
+| 9b | `5298d1be` | 30M MC parity dossier | 15/15 gates PASS |
+| 10 | `ca1805c9` | money_collect math kernel | 13 feature kinds |
+| 11 | `cf504781` | charge_meter math kernel | 14 feature kinds |
+| 12 | `a3c62d9d` | must_hit_by math kernel | 15 feature kinds |
+| 13 | pending | pick_chain math kernel | **16 feature kinds** |
+
+### Sledeći wave queue
+
+| # | Item | Status |
+|---|---|---|
+| **1** | W4.9/W4.10 PAR | Boki nema |
+| **2** | Plan B full: rust-sim config bridge | 2-3h, deferred |
+| **3** | Math DSL: supermeter / state_machine / mystery_symbol_v2 | autonomous, 30-45 min svaka |
+| **4** | Stryker bug GitHub issue submission | Boki repo decision |
+| **5** | Industry-First Dossier refresh (sa 6 novih kernela) | autonomous, 30 min |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:20 (post **W244 WAVE 12 — `must_hit_by` jackpot kernel landed**, commit pending)
 
 **Status:** Treća math kernel u autonomnom batch-u (wave 10/11/12). Math DSL feature union sada 15 mehanika.

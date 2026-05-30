@@ -1,0 +1,105 @@
+{
+  "schema": "pick-chain-kernel/v1",
+  "merkle_root_sha256": "a74d1be63abd1e5068336b36c46f4272edb20b4ee5ef37d08ba18cbb92622a15",
+  "generated_at_utc": "deterministic-by-merkle:a74d1be63abd1e50",
+  "kernel": "pick_chain",
+  "module": "tools.math_dsl.pick_chain",
+  "industry_pattern": "Multi-level pick bonus (Microgaming Mega Moolah pick-pot, Aristocrat Mighty Cash, NetEnt Hall of Spins). Player picks from N-option pool revealing credit / advance / end tokens. Multi-tier ladders escalate per-pick award size.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "two-level-bronze-silver",
+      "description": "bronze (12-pool) → silver (8-pool) chain",
+      "rtp_contribution": 0.2683333333333333,
+      "trigger_p": 0.02,
+      "expected_total_award_x_bet": 13.416666666666666,
+      "levels": [
+        {
+          "name": "bronze",
+          "pool_size": 12,
+          "p_credit": 0.5,
+          "p_end": 0.25,
+          "p_advance": 0.25,
+          "expected_credit_per_pick": 1.3333333333333333,
+          "expected_picks": 3.25,
+          "probability_reached": 1.0,
+          "credit_contribution_x_bet": 2.1666666666666665
+        },
+        {
+          "name": "silver",
+          "pool_size": 8,
+          "p_credit": 0.75,
+          "p_end": 0.125,
+          "p_advance": 0.125,
+          "expected_credit_per_pick": 6.666666666666667,
+          "expected_picks": 4.5,
+          "probability_reached": 0.5,
+          "credit_contribution_x_bet": 11.25
+        }
+      ]
+    },
+    {
+      "fixture_name": "three-level-mighty-cash",
+      "description": "bronze/silver/gold (Mighty Cash pattern)",
+      "rtp_contribution": 1.1341666666666668,
+      "trigger_p": 0.01,
+      "expected_total_award_x_bet": 113.41666666666667,
+      "levels": [
+        {
+          "name": "bronze",
+          "pool_size": 12,
+          "p_credit": 0.5,
+          "p_end": 0.25,
+          "p_advance": 0.25,
+          "expected_credit_per_pick": 1.3333333333333333,
+          "expected_picks": 3.25,
+          "probability_reached": 1.0,
+          "credit_contribution_x_bet": 2.1666666666666665
+        },
+        {
+          "name": "silver",
+          "pool_size": 8,
+          "p_credit": 0.75,
+          "p_end": 0.125,
+          "p_advance": 0.125,
+          "expected_credit_per_pick": 6.666666666666667,
+          "expected_picks": 4.5,
+          "probability_reached": 0.5,
+          "credit_contribution_x_bet": 11.25
+        },
+        {
+          "name": "gold",
+          "pool_size": 6,
+          "p_credit": 1.0,
+          "p_end": 0.0,
+          "p_advance": 0.0,
+          "expected_credit_per_pick": 66.66666666666667,
+          "expected_picks": 6.0,
+          "probability_reached": 0.25,
+          "credit_contribution_x_bet": 100.0
+        }
+      ]
+    },
+    {
+      "fixture_name": "single-level-credit-only",
+      "description": "single pick screen, all credit awards (no chain)",
+      "rtp_contribution": 0.54,
+      "trigger_p": 0.03,
+      "expected_total_award_x_bet": 18.0,
+      "levels": [
+        {
+          "name": "only",
+          "pool_size": 6,
+          "p_credit": 1.0,
+          "p_end": 0.0,
+          "p_advance": 0.0,
+          "expected_credit_per_pick": 3.0,
+          "expected_picks": 6.0,
+          "probability_reached": 1.0,
+          "credit_contribution_x_bet": 18.0
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_pick_chain_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: first-order statistic on uniform end-token placement, level-advance via relative odds (advance / (advance + end))."
+}

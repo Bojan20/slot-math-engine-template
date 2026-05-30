@@ -144,6 +144,12 @@ class FeatureSpec:
     # Used by IGT Lightning Link, Aristocrat Dragon Link, Scientific Games
     # Dollar Storm, all NGCB-cert mystery pots.
     mhb_pots: Optional[list[dict]] = None             # [{name, seed_x_bet, contribution_x, must_hit_by_x_bet, p_strike_per_spin}]
+    # Pick chain — W244 wave 13. Multi-level pick bonus (Microgaming
+    # Mega Moolah-style tier wheel, Aristocrat Mighty Cash). Player
+    # picks options from a pool that reveal credit / advance / end
+    # tokens. Used by all "wheel of fortune" multi-tier pick patterns.
+    pick_trigger_p: Optional[float] = None            # per-spin trigger probability
+    pick_levels: Optional[list[dict]] = None          # [{name, pool_size, award_distribution}]
     # Generic catch-all so designer can pass vendor-specific keys
     extra: dict = field(default_factory=dict)
 
@@ -372,6 +378,8 @@ _VALID_FEATURE_KINDS = {
     "charge_meter",
     # W244 wave 12 — Mystery / "Must Hit By" jackpot (NGCB, IGT, Aristocrat).
     "must_hit_by",
+    # W244 wave 13 — Multi-level pick chain (Mega Moolah / Mighty Cash).
+    "pick_chain",
 }
 
 
@@ -477,6 +485,8 @@ def parse_spec(text: str) -> MathDslSpec:
             "charge_tiers", "charge_persistent",
             # W244 wave 12 — must_hit_by known keys
             "mhb_pots",
+            # W244 wave 13 — pick_chain known keys
+            "pick_trigger_p", "pick_levels",
         }
         extra = {k: v for k, v in f.items() if k not in known_keys}
         # money_value_weights normalization: YAML can carry float keys as
@@ -541,6 +551,39 @@ def parse_spec(text: str) -> MathDslSpec:
                         f"mhb_pots must_hit_by_x_bet must exceed seed_x_bet: {pot!r}"
                     )
             mhb = list(mhb_raw)
+        # pick_levels validation: list of {name, pool_size, award_distribution}
+        # where award_distribution counts sum to pool_size.
+        pl_raw = f.get("pick_levels")
+        pl: Optional[list[dict]] = None
+        if pl_raw is not None:
+            if not isinstance(pl_raw, list) or not pl_raw:
+                raise DslParseError(
+                    "pick_levels must be a non-empty list of {name, pool_size, "
+                    "award_distribution} dicts"
+                )
+            for lvl in pl_raw:
+                if not isinstance(lvl, dict):
+                    raise DslParseError(f"pick_levels entry must be mapping: {lvl!r}")
+                for req in ("name", "pool_size", "award_distribution"):
+                    if req not in lvl:
+                        raise DslParseError(
+                            f"pick_levels entry missing required key {req!r}: {lvl}"
+                        )
+                ad = lvl["award_distribution"]
+                if not isinstance(ad, dict) or not ad:
+                    raise DslParseError(
+                        f"pick_levels award_distribution must be non-empty mapping: {lvl!r}"
+                    )
+                # Normalize float keys (YAML may carry strings or ints)
+                ad_norm = {float(k): int(v) for k, v in ad.items()}
+                total = sum(ad_norm.values())
+                if total != int(lvl["pool_size"]):
+                    raise DslParseError(
+                        f"pick_levels award counts ({total}) must equal pool_size "
+                        f"({lvl['pool_size']}): {lvl!r}"
+                    )
+                lvl["award_distribution"] = ad_norm  # mutate in place
+            pl = list(pl_raw)
         features.append(FeatureSpec(
             kind=fk,
             trigger_count_min=f.get("trigger_count_min"),
@@ -567,6 +610,8 @@ def parse_spec(text: str) -> MathDslSpec:
             charge_tiers=ct,
             charge_persistent=f.get("charge_persistent"),
             mhb_pots=mhb,
+            pick_trigger_p=f.get("pick_trigger_p"),
+            pick_levels=pl,
             extra=extra,
         ))
 
