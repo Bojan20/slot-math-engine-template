@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 41 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle:8ac9615e79feba6c · repo SHA: `cbdc8c4c`
+> **Unified operator deliverable** — aggregates 43 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 16) · repo SHA: `8d199d7d`
 
-## Headline: **62/62 industry-firsts attested** ✅
+## Headline: **64/64 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -71,6 +71,8 @@
 | 244.11 | — | **Starburst Meter / Money Cart Charge Meter Kernel** | ✅ 3 fixtures, Wald-identity multi-tier RTP, Merkle pinned | [`reports/acceptance/CHARGE_METER_KERNEL.json`](../../reports/acceptance/CHARGE_METER_KERNEL.json) |
 | 244.12 | — | **Mystery Jackpot — Lightning Link / Dragon Link Kernel** | ✅ 3 fixtures, conservation-flow RTP + geometric arrival truncated at cap | [`reports/acceptance/MUST_HIT_BY_KERNEL.json`](../../reports/acceptance/MUST_HIT_BY_KERNEL.json) |
 | 244.13 | — | **Multi-Level Pick Bonus — Mega Moolah / Mighty Cash Kernel** | ✅ 3 fixtures, first-order-statistic E[picks] + relative-odds advance | [`reports/acceptance/PICK_CHAIN_KERNEL.json`](../../reports/acceptance/PICK_CHAIN_KERNEL.json) |
+| 244.15 | — | **Bonus Buy Fair-Price Regulator-Audit Kernel** | ✅ 5 fixtures, UKGC RTS 13C + MGA RG 2021/02 codified | [`reports/acceptance/BUY_FEATURE_KERNEL.json`](../../reports/acceptance/BUY_FEATURE_KERNEL.json) |
+| 244.16 | — | **Bonus Wheel Closed-Form with Spin-Again Chain** | ✅ 3 fixtures, bounded geometric-amortised E[award] | [`reports/acceptance/WHEEL_KERNEL.json`](../../reports/acceptance/WHEEL_KERNEL.json) |
 
 ## Why each is industry-first
 

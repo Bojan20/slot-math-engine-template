@@ -1,0 +1,146 @@
+{
+  "schema": "wheel-kernel/v1",
+  "merkle_root_sha256": "7d8b51de15893eb1a887b55e45a67e32ed48a9cd797fa11c9bbbb6e19fc4ce02",
+  "generated_at_utc": "deterministic-by-merkle:7d8b51de15893eb1",
+  "kernel": "wheel",
+  "module": "tools.math_dsl.wheel",
+  "industry_pattern": "Bonus wheel (IGT Wheel of Fortune, Aristocrat Dragon Cash wheel, NetEnt Megafortune, all WAP-jackpot wheels). N-segment wheel with credit / jackpot / spin-again / no-win segments. Spin-again supports geometric-amortised closed-form via bounded chain cap.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "simple-credit-wheel-10seg",
+      "description": "10-segment uniform credit wheel",
+      "rtp_contribution": 0.66,
+      "trigger_p": 0.02,
+      "expected_award_per_trigger": 33.0,
+      "terminal_award_expectation": 33.0,
+      "spin_again_probability": 0.0,
+      "max_spin_again": 5,
+      "segments": [
+        {
+          "kind": "no_win",
+          "weight": 4.0,
+          "probability": 0.4,
+          "value_x_bet": 0.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 3.0,
+          "probability": 0.3,
+          "value_x_bet": 10.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 2.0,
+          "probability": 0.2,
+          "value_x_bet": 50.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 1.0,
+          "probability": 0.1,
+          "value_x_bet": 200.0,
+          "jackpot_id": null
+        }
+      ]
+    },
+    {
+      "fixture_name": "wap-jackpot-wheel-with-tiers",
+      "description": "Wheel of Fortune-style multi-tier jackpot wheel",
+      "rtp_contribution": 6.2125,
+      "trigger_p": 0.005,
+      "expected_award_per_trigger": 1242.5,
+      "terminal_award_expectation": 1242.5,
+      "spin_again_probability": 0.0,
+      "max_spin_again": 5,
+      "segments": [
+        {
+          "kind": "no_win",
+          "weight": 50.0,
+          "probability": 0.5,
+          "value_x_bet": 0.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 30.0,
+          "probability": 0.3,
+          "value_x_bet": 25.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 10.0,
+          "probability": 0.1,
+          "value_x_bet": 100.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 5.0,
+          "probability": 0.05,
+          "value_x_bet": 500.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "jackpot",
+          "weight": 4.0,
+          "probability": 0.04,
+          "value_x_bet": 5000.0,
+          "jackpot_id": "major"
+        },
+        {
+          "kind": "jackpot",
+          "weight": 1.0,
+          "probability": 0.01,
+          "value_x_bet": 100000.0,
+          "jackpot_id": "grand"
+        }
+      ]
+    },
+    {
+      "fixture_name": "spin-again-megafortune-style",
+      "description": "Outer wheel: 1/3 spin-again to inner wheel, geometric amortisation",
+      "rtp_contribution": 0.3499776,
+      "trigger_p": 0.01,
+      "expected_award_per_trigger": 34.99776,
+      "terminal_award_expectation": 28.0,
+      "spin_again_probability": 0.2,
+      "max_spin_again": 5,
+      "segments": [
+        {
+          "kind": "credit",
+          "weight": 4.0,
+          "probability": 0.4,
+          "value_x_bet": 20.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "credit",
+          "weight": 2.0,
+          "probability": 0.2,
+          "value_x_bet": 100.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "spin_again",
+          "weight": 2.0,
+          "probability": 0.2,
+          "value_x_bet": 0.0,
+          "jackpot_id": null
+        },
+        {
+          "kind": "no_win",
+          "weight": 2.0,
+          "probability": 0.2,
+          "value_x_bet": 0.0,
+          "jackpot_id": null
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_wheel_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: weighted segment expectation + bounded geometric sum on spin-again chain."
+}

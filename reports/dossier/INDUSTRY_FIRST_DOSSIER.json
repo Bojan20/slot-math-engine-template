@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:8ac9615e79feba6c",
-  "repo_sha": "cbdc8c4ca0987d4e90f8a63c339087f3a9f071fc",
+  "generatedAtUtc": "deterministic-by-merkle:9fd3b595648953f7",
+  "repo_sha": "8d199d7d82484a1005178e091a345c7759029c79",
   "headline": {
-    "waves": 62,
-    "industry_firsts": 62,
+    "waves": 64,
+    "industry_firsts": 64,
     "all_present": true
   },
   "waves": [
@@ -2413,6 +2413,46 @@
         "merkle_root_sha256": "a74d1be63abd1e5068336b36c46f4272edb20b4ee5ef37d08ba18cbb92622a15"
       },
       "industry_first": "First open-source closed-form for multi-level pick chain with relative-odds advance probability. Industry-known pattern (Mega Moolah, Mighty Cash) but no vendor publishes the level-DP decomposition."
+    },
+    {
+      "wave": "244.15",
+      "kimi": "—",
+      "commit": "8d199d7d",
+      "name": "Bonus Buy Fair-Price Regulator-Audit Kernel",
+      "reportPath": "reports/acceptance/BUY_FEATURE_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "5 fixtures, UKGC RTS 13C + MGA RG 2021/02 codified",
+      "detail": {
+        "kernel_module": "tools.math_dsl.buy_feature",
+        "regulator_contract": [
+          "UKGC RTS 13C ≤0.5 pp delta",
+          "MGA RG 2021/02 ≤0.96 ceiling"
+        ],
+        "fixtures_count": 5
+      },
+      "industry_first": "First open-source closed-form buy-feature kernel with codified UKGC RTS 13C + MGA RG 2021/02 jurisdiction passes. Industry-pinned audit dict per fixture."
+    },
+    {
+      "wave": "244.16",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Bonus Wheel Closed-Form with Spin-Again Chain",
+      "reportPath": "reports/acceptance/WHEEL_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, bounded geometric-amortised E[award] for spin-again chains",
+      "detail": {
+        "kernel_module": "tools.math_dsl.wheel",
+        "segment_kinds": [
+          "credit",
+          "jackpot",
+          "spin_again",
+          "no_win"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source bounded geometric-amortised closed-form for bonus-wheel spin-again chains. Covers IGT Wheel of Fortune, Aristocrat Dragon Cash, NetEnt Megafortune, all WAP-jackpot wheels."
     }
   ],
   "auditor_qa": [
