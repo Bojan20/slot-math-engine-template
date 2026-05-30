@@ -1,0 +1,11 @@
+{
+  "archetype": "casual",
+  "avg_hold_pct": 0.11318118416073703,
+  "avg_ltv": 1.2421525607071568,
+  "avg_spins": 7.84375,
+  "bust_rate": 0.0,
+  "p50_ltv": 4.253767197952911,
+  "p99_ltv": 16.874436578940724,
+  "sessions": 32,
+  "voluntary_quit_rate": 1.0
+}

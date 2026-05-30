@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-29T20:33:04.915Z",
-  "repo_sha": "03e6203ae3d049b4c33cbb986bc0c12f92865a50",
+  "generatedAtUtc": "2026-05-30T00:01:47.972Z",
+  "repo_sha": "4ae473fead475151698a3e6008f5249d2eee84e1",
   "headline": {
     "waves": 58,
-    "industry_firsts": 55,
+    "industry_firsts": 58,
     "all_present": true
   },
   "waves": [
@@ -1850,10 +1850,13 @@
       "commit": "6d566b1",
       "name": "Symbolic Differentiation Slot Math (gradient-aware reel tuner)",
       "reportPath": "reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json",
-      "reportExists": false,
-      "reportMtime": null,
-      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
-      "detail": {},
+      "reportExists": true,
+      "reportMtime": "2026-05-30T00:01:39.556Z",
+      "headline": "model RTP=0.202240 ∂-manifest pinned",
+      "detail": {
+        "sha256": "4fed7b1d2b565800577659bea0aabcc31b066ee7759bc72b5bc7e1dda297aa43",
+        "drtp_shape": "5 reels × 2 symbols"
+      },
       "industry_first": "4th-order central-difference ∂RTP/∂weight stencil + Newton-Raphson target-RTP solver + ∂CV/∂weight gradient descent + SHA-256-pinned DerivativeManifest. Auditor verifies solver convergence claims by re-checking local Newton step bez re-running optimizer — niko drugi nema gradient-aware reel tuner sa auditable derivative manifests."
     },
     {
@@ -1876,10 +1879,14 @@
       "commit": "1531db0",
       "name": "Pure-Python RL Player-Behavior Emulator",
       "reportPath": "reports/rl_player_emulator/SAMPLE_KPI.json",
-      "reportExists": false,
-      "reportMtime": null,
-      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
-      "detail": {},
+      "reportExists": true,
+      "reportMtime": "2026-05-30T00:01:39.568Z",
+      "headline": "32 sessions, bust_rate=0.00, quit_rate=1.00",
+      "detail": {
+        "avg_ltv": 1.2421525607071568,
+        "p99_ltv": 16.874436578940724,
+        "avg_spins": 7.84375
+      },
       "industry_first": "Tabular Q-learning (bankroll_bucket × win_streak_state × {continue, bet_up, bet_down, quit}) sa 3 player archetypes (casual / chaser / volatility_seeker), risk_tolerance / quit_threshold_loss / max_session_spins differentiated. Pre-launch UKGC RTS 7.4 addiction-risk pre-screen — niko drugi ne ship-uje per-archetype LTV/dropout/bankroll-bust report."
     },
     {
@@ -1888,10 +1895,13 @@
       "commit": "1531db0",
       "name": "Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)",
       "reportPath": "reports/provenance_mesh/SAMPLE_SESSION.json",
-      "reportExists": false,
-      "reportMtime": null,
-      "headline": "(optional report: run `npm run (unknown)` to regenerate)",
-      "detail": {},
+      "reportExists": true,
+      "reportMtime": "2026-05-30T00:01:39.563Z",
+      "headline": "8 spin receipts, root=f2d59e6594f556ef…",
+      "detail": {
+        "session_id": "w244-dossier-sample-001",
+        "root": "f2d59e6594f556efb6e0d3800edfb67e1d3ef40a4d1980403b4d7bcc0b0ee3b4"
+      },
       "industry_first": "Per-spin SpinReceipt sa canonical sort-keys JSON encoding + linked sha256 parent chain → Merkle root sa log₂(N) inclusion proof. ed25519 sign payload (session_id, merkle_root, n_receipts). Auditor verifies single spin bez engine source code-a — niko drugi ne ship-uje session-level Merkle proof za per-spin auditability."
     },
     {
@@ -1951,7 +1961,7 @@
       "name": "Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase Δ_pp probe)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:56.304Z",
+      "reportMtime": "2026-05-29T23:33:07.701Z",
       "headline": "5/5 gates PASS · scatter Δ 0.00 pp · BB fair-price Δ +0.0037 pp · total Δ +0.96 pp ≤ 1.5 pp tolerance",
       "detail": {
         "scatter_pay_delta_pp": 1.734723475976807e-15,
@@ -1968,7 +1978,7 @@
       "name": "Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)",
       "reportPath": "reports/acceptance/book_bonusbuy_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:56.304Z",
+      "reportMtime": "2026-05-29T23:33:07.701Z",
       "headline": "Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp",
       "detail": {
         "book_pmf": {
@@ -1988,7 +1998,7 @@
       "name": "Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)",
       "reportPath": "reports/acceptance/book_bonusbuy_mc.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:23.532Z",
+      "reportMtime": "2026-05-29T23:38:16.826Z",
       "headline": "4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.52 s",
       "detail": {
         "spins": 200000,
@@ -1997,8 +2007,8 @@
         "scatter_pay_delta_pp": -0.00797237830043266,
         "hit_freq_delta_pp": -2.9060911999999997,
         "fs_trigger_rel_err": 0.05886627906976753,
-        "elapsed_seconds": 2.5157612090115435,
-        "spins_per_second": 79498.80111180388
+        "elapsed_seconds": 2.5186398329678923,
+        "spins_per_second": 79407.93970701471
       },
       "industry_first": "Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely — line-pay Δ ≤ 0.5 pp + scatter Δ ≤ 0.1 pp + FS trigger rel-err ≤ 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to ≤ 0.5 pp accuracy in unit-test time."
     },
@@ -2009,7 +2019,7 @@
       "name": "MC Parity Dashboard (offline single-file HTML, sales/regulator surface)",
       "reportPath": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:23.533Z",
+      "reportMtime": "2026-05-29T23:38:16.828Z",
       "headline": "offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.52 s",
       "detail": {
         "bundle_url": "reports/dashboards/mc-parity-dashboard.html",
@@ -2031,7 +2041,7 @@
         "mc_summary": {
           "all_gates_pass": true,
           "spins": 200000,
-          "elapsed_seconds": 2.5157612090115435,
+          "elapsed_seconds": 2.5186398329678923,
           "line_pay_delta_pp": -0.18851698490046642,
           "scatter_pay_delta_pp": -0.00797237830043266,
           "fs_trigger_rel_err": 0.05886627906976753
@@ -2046,24 +2056,28 @@
       "name": "Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)",
       "reportPath": "reports/dashboards/real-market-portfolio.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:18.445Z",
-      "headline": "5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB",
+      "reportMtime": "2026-05-29T23:34:26.227Z",
+      "headline": "7 games · 15 SWIDs · 7 mechanic anchors · offline 10.62 KB",
       "detail": {
         "bundle_url": "reports/dashboards/real-market-portfolio.html",
-        "size_bytes": 9317,
-        "size_kb": 9.1,
+        "size_bytes": 10872,
+        "size_kb": 10.62,
         "offline_safe": true,
         "games": [
           "book-expanding-bonusbuy",
           "cash-eruption",
           "fort-knox-wolf-run",
           "fortune-coin-boost-classic",
-          "skeleton-key"
+          "megaways-clean-room-template",
+          "skeleton-key",
+          "walking-wild-clean-room-template"
         ],
-        "total_swids": 13,
+        "total_swids": 15,
         "industry_anchors": [
           "W4.11 / W4.15 (copyright-safe template)",
+          "W4.12 Walking Wild (copyright-safe template)",
           "W4.8 Megaways",
+          "W4.8 Megaways (copyright-safe template)",
           "W4.x 243-Ways + Cash Respin",
           "W4.x H&W (link-and-spin)",
           "W4.x Lines + Pick + Progressive"
@@ -2073,7 +2087,9 @@
           "cash-eruption": 3,
           "fort-knox-wolf-run": 2,
           "fortune-coin-boost-classic": 4,
-          "skeleton-key": 3
+          "megaways-clean-room-template": 1,
+          "skeleton-key": 3,
+          "walking-wild-clean-room-template": 1
         }
       },
       "industry_first": "Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio."
@@ -2085,7 +2101,7 @@
       "name": "Operator Portal + CI parity gate (69-spec offline gate, GH Actions)",
       "reportPath": "reports/dashboards/index.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:18.474Z",
+      "reportMtime": "2026-05-29T23:34:15.137Z",
       "headline": "7 dashboards + 9 top reports · offline 5.92 KB · 69-spec CI gate (template-parity.yml) wired",
       "detail": {
         "bundle_url": "reports/dashboards/index.html",
@@ -2147,11 +2163,11 @@
       "name": "Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)",
       "reportPath": "reports/acceptance/portfolio_validator.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:18.536Z",
-      "headline": "13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered",
+      "reportMtime": "2026-05-29T23:34:25.590Z",
+      "headline": "15/15 IRs PASS · 6 gates × 15 IRs = 90/90 · 7 games covered",
       "detail": {
-        "total_irs": 13,
-        "passed": 13,
+        "total_irs": 15,
+        "passed": 15,
         "failed": 0,
         "by_game": {
           "book-expanding-bonusbuy": {
@@ -2170,18 +2186,26 @@
             "swids": 4,
             "passed": 4
           },
+          "megaways-clean-room-template": {
+            "swids": 1,
+            "passed": 1
+          },
           "skeleton-key": {
             "swids": 3,
             "passed": 3
+          },
+          "walking-wild-clean-room-template": {
+            "swids": 1,
+            "passed": 1
           }
         },
         "by_gate": {
-          "rtp_total_in_range": 13,
-          "hit_freq_sane": 13,
-          "win_freq_sane": 13,
-          "breakdown_sums": 13,
-          "reels_sane": 13,
-          "paytable_monotonic": 13
+          "rtp_total_in_range": 15,
+          "hit_freq_sane": 15,
+          "win_freq_sane": 15,
+          "breakdown_sums": 15,
+          "reels_sane": 15,
+          "paytable_monotonic": 15
         }
       },
       "industry_first": "Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass."
@@ -2193,13 +2217,13 @@
       "name": "Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)",
       "reportPath": "reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:24.657Z",
-      "headline": "20 files committed · 285.6 KB · merkle_root=7774cced30e06571…",
+      "reportMtime": "2026-05-29T23:38:16.824Z",
+      "headline": "27 files committed · 338.4 KB · merkle_root=dc5c7fcd3e75600b…",
       "detail": {
         "schema": "w4-11-evidence-manifest/v1",
-        "file_count": 20,
-        "total_bytes": 292475,
-        "merkle_root_sha256": "7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000",
+        "file_count": 27,
+        "total_bytes": 346535,
+        "merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
         "missing_files": []
       },
       "industry_first": "Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time."
@@ -2211,12 +2235,12 @@
       "name": "Sales One-Pager (executive, print-friendly)",
       "reportPath": "reports/dashboards/sales-one-pager.manifest.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:23.533Z",
-      "headline": "offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query",
+      "reportMtime": "2026-05-29T23:34:26.769Z",
+      "headline": "offline 8.36 KB · sources 6 pinned JSON reports · print-friendly @media query",
       "detail": {
         "bundle_url": "reports/dashboards/sales-one-pager.html",
-        "size_bytes": 8402,
-        "size_kb": 8.21,
+        "size_bytes": 8564,
+        "size_kb": 8.36,
         "offline_safe": true,
         "print_friendly": true,
         "sourced_from": [
@@ -2237,14 +2261,14 @@
       "name": "Standalone Evidence Manifest Verifier (regulator-side tamper check)",
       "reportPath": "reports/acceptance/W4_11_EVIDENCE_RECEIPT.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T15:18:24.702Z",
-      "headline": "20/20 files verified · merkle_root=7774cced30e0… · receipt-schema v1",
+      "reportMtime": "2026-05-29T23:38:16.825Z",
+      "headline": "27/27 files verified · merkle_root=dc5c7fcd3e75… · receipt-schema v1",
       "detail": {
         "verified": true,
-        "file_count": 20,
-        "passed_count": 20,
-        "expected_merkle_root_sha256": "7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000",
-        "derived_merkle_root_sha256": "7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000",
+        "file_count": 27,
+        "passed_count": 27,
+        "expected_merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
+        "derived_merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
         "missing": [],
         "digest_mismatch": [],
         "size_mismatch": []
@@ -2258,7 +2282,7 @@
       "name": "Megaways-Style Variable-Rows Ways Clean-Room Template",
       "reportPath": "reports/acceptance/megaways_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T20:31:37.463Z",
+      "reportMtime": "2026-05-29T23:34:10.678Z",
       "headline": "6/6 structural gates PASS (6 reels × 4.7 avg rows)",
       "detail": {
         "reels": 6,
@@ -2283,7 +2307,7 @@
       "name": "Sticky + Walking Wild State-Machine Clean-Room Template",
       "reportPath": "reports/acceptance/walking_wild_parity.json",
       "reportExists": true,
-      "reportMtime": "2026-05-29T20:31:37.671Z",
+      "reportMtime": "2026-05-29T23:34:10.891Z",
       "headline": "9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75)",
       "detail": {
         "reels": 5,

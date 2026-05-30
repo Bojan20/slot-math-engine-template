@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
 > **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-29T20:33:04.915Z` · repo SHA: `03e6203ae3d0`
+> Generated: `2026-05-30T00:01:47.972Z` · repo SHA: `4ae473fead47`
 
-## Headline: **55/58 industry-firsts attested** ✅
+## Headline: **58/58 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -48,10 +48,10 @@
 | 127 | — | **Anticipation/Tease Reel Probability Tracker — Bayesian conditional + UKGC RTS 8 §3.5** | ✅ 6/6 configs PASS at 100000 spins each (600K MC) | [`reports/acceptance/ANTICIPATION_REEL_TEASE.json`](../../reports/acceptance/ANTICIPATION_REEL_TEASE.md) |
 | 7.1 | W181 research | **Self-Evolving Math Genome (multi-objective NSGA-II reel-weight tuner)** | ✅ 32-member Pareto frontier (target RTP 96) | [`reports/acceptance/MATH_GENOME.json`](../../reports/acceptance/MATH_GENOME.md) |
 | 7.10 | W181 research | **Anomaly Self-Play Detector (spec-side Bayesian parameter sweep)** | ✅ 36 probes × 0 anomalies surfaced | [`reports/acceptance/ANOMALY_SELF_PLAY.json`](../../reports/acceptance/ANOMALY_SELF_PLAY.md) |
-| 7.6 | W181 research | **Symbolic Differentiation Slot Math (gradient-aware reel tuner)** | ⚠️ (optional report: run `npm run (unknown)` to regenerate) | [`reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json`](../../reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.md) |
+| 7.6 | W181 research | **Symbolic Differentiation Slot Math (gradient-aware reel tuner)** | ✅ model RTP=0.202240 ∂-manifest pinned | [`reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.json`](../../reports/symbolic_slot_math/SAMPLE_DERIVATIVE_MANIFEST.md) |
 | 7.9 | W181 research | **Federated Multi-Vendor Math Knowledge Graph (SQLite)** | ✅ Live SQLite knowledge graph (5 vendors × 5 games × 45 features) | [`reports/vendor-graph/vendor.sqlite`](../../reports/vendor-graph/vendor.sqlite) |
-| 7.3 | W181 research | **Pure-Python RL Player-Behavior Emulator** | ⚠️ (optional report: run `npm run (unknown)` to regenerate) | [`reports/rl_player_emulator/SAMPLE_KPI.json`](../../reports/rl_player_emulator/SAMPLE_KPI.md) |
-| 7.5 | W181 research | **Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)** | ⚠️ (optional report: run `npm run (unknown)` to regenerate) | [`reports/provenance_mesh/SAMPLE_SESSION.json`](../../reports/provenance_mesh/SAMPLE_SESSION.md) |
+| 7.3 | W181 research | **Pure-Python RL Player-Behavior Emulator** | ✅ 32 sessions, bust_rate=0.00, quit_rate=1.00 | [`reports/rl_player_emulator/SAMPLE_KPI.json`](../../reports/rl_player_emulator/SAMPLE_KPI.md) |
+| 7.5 | W181 research | **Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)** | ✅ 8 spin receipts, root=f2d59e6594f556ef… | [`reports/provenance_mesh/SAMPLE_SESSION.json`](../../reports/provenance_mesh/SAMPLE_SESSION.md) |
 | 7.4 | W181 research | **GDD → Multi-Modal Asset Manifest Pipeline** | ✅ manifest_hash pinned (7 symbols, 8 scripts, 4 BGM curves) | [`reports/acceptance/GDD_ASSET_MANIFEST.json`](../../reports/acceptance/GDD_ASSET_MANIFEST.md) |
 | 7.7 | W181 research | **Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU)** | ✅ 4 KB JS bundle, SHA-256 pinned, Node-verified RTP=0.20224 parity sa Rust/Python | [`reports/dashboards/live-par-compiler.html`](../../reports/dashboards/live-par-compiler.html) |
 | 7.11 | — | **Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)** | ✅ consolidated_hash=6a32084a5e94e422… (Pareto 32, RL 18, mesh root a3a1e8d46951…) | [`reports/acceptance/UNIFIED_AUDIT.json`](../../reports/acceptance/UNIFIED_AUDIT.md) |
@@ -59,12 +59,12 @@
 | 4.15 | — | **Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)** | ✅ Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 · P(3+)=5.504e-3 · FS RTP Δ -0.20 pp | [`reports/acceptance/book_bonusbuy_parity.json`](../../reports/acceptance/book_bonusbuy_parity.md) |
 | 4.11b | — | **Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)** | ✅ 4/4 gates PASS @ N=200,000 · line Δ -0.189 pp · scatter Δ -0.008 pp · FS trigger rel-err 5.89 % · 2.52 s | [`reports/acceptance/book_bonusbuy_mc.json`](../../reports/acceptance/book_bonusbuy_mc.md) |
 | 4.11c | — | **MC Parity Dashboard (offline single-file HTML, sales/regulator surface)** | ✅ offline 9.26 KB · MC line Δ -0.189 pp · scatter Δ -0.008 pp · BB Δ +0.0037 pp · 2.52 s | [`reports/dashboards/mc-parity-dashboard.manifest.json`](../../reports/dashboards/mc-parity-dashboard.manifest.md) |
-| 4.11d | — | **Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)** | ✅ 5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB | [`reports/dashboards/real-market-portfolio.manifest.json`](../../reports/dashboards/real-market-portfolio.manifest.md) |
+| 4.11d | — | **Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors)** | ✅ 7 games · 15 SWIDs · 7 mechanic anchors · offline 10.62 KB | [`reports/dashboards/real-market-portfolio.manifest.json`](../../reports/dashboards/real-market-portfolio.manifest.md) |
 | 4.11e | — | **Operator Portal + CI parity gate (69-spec offline gate, GH Actions)** | ✅ 7 dashboards + 9 top reports · offline 5.92 KB · 69-spec CI gate (template-parity.yml) wired | [`reports/dashboards/index.manifest.json`](../../reports/dashboards/index.manifest.md) |
-| 4.11f | — | **Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)** | ✅ 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered | [`reports/acceptance/portfolio_validator.json`](../../reports/acceptance/portfolio_validator.md) |
-| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 20 files committed · 285.6 KB · merkle_root=7774cced30e06571… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
-| 4.11h | — | **Sales One-Pager (executive, print-friendly)** | ✅ offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query | [`reports/dashboards/sales-one-pager.manifest.json`](../../reports/dashboards/sales-one-pager.manifest.md) |
-| 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 20/20 files verified · merkle_root=7774cced30e0… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
+| 4.11f | — | **Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78)** | ✅ 15/15 IRs PASS · 6 gates × 15 IRs = 90/90 · 7 games covered | [`reports/acceptance/portfolio_validator.json`](../../reports/acceptance/portfolio_validator.md) |
+| 4.11g | — | **Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)** | ✅ 27 files committed · 338.4 KB · merkle_root=dc5c7fcd3e75600b… | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](../../reports/acceptance/W4_11_EVIDENCE_MANIFEST.md) |
+| 4.11h | — | **Sales One-Pager (executive, print-friendly)** | ✅ offline 8.36 KB · sources 6 pinned JSON reports · print-friendly @media query | [`reports/dashboards/sales-one-pager.manifest.json`](../../reports/dashboards/sales-one-pager.manifest.md) |
+| 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 27/27 files verified · merkle_root=dc5c7fcd3e75… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
 | 4.8 | — | **Megaways-Style Variable-Rows Ways Clean-Room Template** | ✅ 6/6 structural gates PASS (6 reels × 4.7 avg rows) | [`reports/acceptance/megaways_parity.json`](../../reports/acceptance/megaways_parity.md) |
 | 4.12 | — | **Sticky + Walking Wild State-Machine Clean-Room Template** | ✅ 9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75) | [`reports/acceptance/walking_wild_parity.json`](../../reports/acceptance/walking_wild_parity.md) |
 
@@ -345,9 +345,10 @@
 
 ### Wave 7.6 · Symbolic Differentiation Slot Math (gradient-aware reel tuner) (W181 research)
 
-- **Acceptance**: (optional report: run `npm run (unknown)` to regenerate)
+- **Acceptance**: model RTP=0.202240 ∂-manifest pinned
 - **Industry-first claim**: 4th-order central-difference ∂RTP/∂weight stencil + Newton-Raphson target-RTP solver + ∂CV/∂weight gradient descent + SHA-256-pinned DerivativeManifest. Auditor verifies solver convergence claims by re-checking local Newton step bez re-running optimizer — niko drugi nema gradient-aware reel tuner sa auditable derivative manifests.
 - **Commit**: `6d566b1`
+- **Detail**: `{"sha256":"4fed7b1d2b565800577659bea0aabcc31b066ee7759bc72b5bc7e1dda297aa43","drtp_shape":"5 reels × 2 symbols"}`
 
 ### Wave 7.9 · Federated Multi-Vendor Math Knowledge Graph (SQLite) (W181 research)
 
@@ -358,15 +359,17 @@
 
 ### Wave 7.3 · Pure-Python RL Player-Behavior Emulator (W181 research)
 
-- **Acceptance**: (optional report: run `npm run (unknown)` to regenerate)
+- **Acceptance**: 32 sessions, bust_rate=0.00, quit_rate=1.00
 - **Industry-first claim**: Tabular Q-learning (bankroll_bucket × win_streak_state × {continue, bet_up, bet_down, quit}) sa 3 player archetypes (casual / chaser / volatility_seeker), risk_tolerance / quit_threshold_loss / max_session_spins differentiated. Pre-launch UKGC RTS 7.4 addiction-risk pre-screen — niko drugi ne ship-uje per-archetype LTV/dropout/bankroll-bust report.
 - **Commit**: `1531db0`
+- **Detail**: `{"avg_ltv":1.2421525607071568,"p99_ltv":16.874436578940724,"avg_spins":7.84375}`
 
 ### Wave 7.5 · Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519) (W181 research)
 
-- **Acceptance**: (optional report: run `npm run (unknown)` to regenerate)
+- **Acceptance**: 8 spin receipts, root=f2d59e6594f556ef…
 - **Industry-first claim**: Per-spin SpinReceipt sa canonical sort-keys JSON encoding + linked sha256 parent chain → Merkle root sa log₂(N) inclusion proof. ed25519 sign payload (session_id, merkle_root, n_receipts). Auditor verifies single spin bez engine source code-a — niko drugi ne ship-uje session-level Merkle proof za per-spin auditability.
 - **Commit**: `1531db0`
+- **Detail**: `{"session_id":"w244-dossier-sample-001","root":"f2d59e6594f556efb6e0d3800edfb67e1d3ef40a4d1980403b4d7bcc0b0ee3b4"}`
 
 ### Wave 7.4 · GDD → Multi-Modal Asset Manifest Pipeline (W181 research)
 
@@ -419,10 +422,10 @@
 
 ### Wave 4.11d · Real-Market Portfolio Dashboard (5 IGT games × 13 SWIDs × 5 mechanic anchors) (—)
 
-- **Acceptance**: 5 games · 13 SWIDs · 5 mechanic anchors · offline 9.1 KB
+- **Acceptance**: 7 games · 15 SWIDs · 7 mechanic anchors · offline 10.62 KB
 - **Industry-first claim**: Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio.
 - **Commit**: `pending`
-- **Detail**: `{"bundle_url":"reports/dashboards/real-market-portfolio.html","size_bytes":9317,"size_kb":9.1,"offline_safe":true,"games":["book-expanding-bonusbuy","cash-eruption","fort-knox-wolf-run","fortune-coin-boost-classic","skel`…
+- **Detail**: `{"bundle_url":"reports/dashboards/real-market-portfolio.html","size_bytes":10872,"size_kb":10.62,"offline_safe":true,"games":["book-expanding-bonusbuy","cash-eruption","fort-knox-wolf-run","fortune-coin-boost-classic","m`…
 
 ### Wave 4.11e · Operator Portal + CI parity gate (69-spec offline gate, GH Actions) (—)
 
@@ -433,31 +436,31 @@
 
 ### Wave 4.11f · Portfolio-wide IR consistency validator (13 IRs × 6 gates = 78/78) (—)
 
-- **Acceptance**: 13/13 IRs PASS · 6 gates × 13 IRs = 78/78 · 5 games covered
+- **Acceptance**: 15/15 IRs PASS · 6 gates × 15 IRs = 90/90 · 7 games covered
 - **Industry-first claim**: Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 — 5 source games × deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass.
 - **Commit**: `pending`
-- **Detail**: `{"total_irs":13,"passed":13,"failed":0,"by_game":{"book-expanding-bonusbuy":{"swids":1,"passed":1},"cash-eruption":{"swids":3,"passed":3},"fort-knox-wolf-run":{"swids":2,"passed":2},"fortune-coin-boost-classic":{"swids":`…
+- **Detail**: `{"total_irs":15,"passed":15,"failed":0,"by_game":{"book-expanding-bonusbuy":{"swids":1,"passed":1},"cash-eruption":{"swids":3,"passed":3},"fort-knox-wolf-run":{"swids":2,"passed":2},"fortune-coin-boost-classic":{"swids":`…
 
 ### Wave 4.11g · Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out) (—)
 
-- **Acceptance**: 20 files committed · 285.6 KB · merkle_root=7774cced30e06571…
+- **Acceptance**: 27 files committed · 338.4 KB · merkle_root=dc5c7fcd3e75600b…
 - **Industry-first claim**: Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface — 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6×13 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.
 - **Commit**: `pending`
-- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":20,"total_bytes":292475,"merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000","missing_files":[]}`
+- **Detail**: `{"schema":"w4-11-evidence-manifest/v1","file_count":27,"total_bytes":346535,"merkle_root_sha256":"dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7","missing_files":[]}`
 
 ### Wave 4.11h · Sales One-Pager (executive, print-friendly) (—)
 
-- **Acceptance**: offline 8.21 KB · sources 6 pinned JSON reports · print-friendly @media query
+- **Acceptance**: offline 8.36 KB · sources 6 pinned JSON reports · print-friendly @media query
 - **Industry-first claim**: Single-page executive landing surface that condenses every W4.11* + W4.15 number into one print-friendly screen — hero pitch, 8 KPI cards (line/scatter/BB Δ pp, portfolio size, validator 78/78, dossier 51/54, Merkle root, QA 94/94), parity gate table, real-market portfolio table, deliverable index. Sources data from 6 pinned JSON reports at build time so the page is always current with whatever passed the CI gate. Drop-in for any operator handshake or regulator briefing. No vendor publishes a single-page executive surface backed by a SHA-256 commitment graph.
 - **Commit**: `pending`
-- **Detail**: `{"bundle_url":"reports/dashboards/sales-one-pager.html","size_bytes":8402,"size_kb":8.21,"offline_safe":true,"print_friendly":true,"sourced_from":["reports/acceptance/book_bonusbuy_parity.json","reports/acceptance/book_b`…
+- **Detail**: `{"bundle_url":"reports/dashboards/sales-one-pager.html","size_bytes":8564,"size_kb":8.36,"offline_safe":true,"print_friendly":true,"sourced_from":["reports/acceptance/book_bonusbuy_parity.json","reports/acceptance/book_b`…
 
 ### Wave 4.11i · Standalone Evidence Manifest Verifier (regulator-side tamper check) (—)
 
-- **Acceptance**: 20/20 files verified · merkle_root=7774cced30e0… · receipt-schema v1
+- **Acceptance**: 27/27 files verified · merkle_root=dc5c7fcd3e75… · receipt-schema v1
 - **Industry-first claim**: Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering — missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.
 - **Commit**: `pending`
-- **Detail**: `{"verified":true,"file_count":20,"passed_count":20,"expected_merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e75fec3205c8523997ea1000","derived_merkle_root_sha256":"7774cced30e0657152a9fbb24a2c8e7d6c0174a6e7`…
+- **Detail**: `{"verified":true,"file_count":27,"passed_count":27,"expected_merkle_root_sha256":"dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7","derived_merkle_root_sha256":"dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4`…
 
 ### Wave 4.8 · Megaways-Style Variable-Rows Ways Clean-Room Template (—)
 

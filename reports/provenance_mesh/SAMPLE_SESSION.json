@@ -1,0 +1,319 @@
+{
+  "merkle_root_hex": "f2d59e6594f556efb6e0d3800edfb67e1d3ef40a4d1980403b4d7bcc0b0ee3b4",
+  "n_receipts": 8,
+  "receipts": [
+    {
+      "client_seed": "client-000",
+      "index": 0,
+      "nonce": 0,
+      "outcome": {
+        "lines_paid": 1,
+        "reels": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "win_x": 0.0
+      },
+      "parent_sha256_hex": "",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-001",
+      "index": 1,
+      "nonce": 1,
+      "outcome": {
+        "lines_paid": 2,
+        "reels": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "win_x": 1.0
+      },
+      "parent_sha256_hex": "ad921638e9141e2eeae6d8f48d0c1c693f39075d51d9028365432b97a8000cbd",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000001",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-002",
+      "index": 2,
+      "nonce": 2,
+      "outcome": {
+        "lines_paid": 3,
+        "reels": [
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ]
+        ],
+        "win_x": 2.0
+      },
+      "parent_sha256_hex": "97d67f85e55549394e09b0a2046766768b7204544cb9989f108b5f7c7edd0b3e",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000002",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-003",
+      "index": 3,
+      "nonce": 3,
+      "outcome": {
+        "lines_paid": 1,
+        "reels": [
+          [
+            3,
+            4,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ]
+        ],
+        "win_x": 3.0
+      },
+      "parent_sha256_hex": "eb92fa0b48d286bbbd3aaa053bb71b357db3be15408ad3be4837a6bcf02afc6a",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000003",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-004",
+      "index": 4,
+      "nonce": 4,
+      "outcome": {
+        "lines_paid": 2,
+        "reels": [
+          [
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            0,
+            1
+          ]
+        ],
+        "win_x": 0.0
+      },
+      "parent_sha256_hex": "96e20919bec5ca9693e5fb3f9e635a8e3fb8fe13ac71db526b9f9d82a8c7558e",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000004",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-005",
+      "index": 5,
+      "nonce": 5,
+      "outcome": {
+        "lines_paid": 3,
+        "reels": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "win_x": 1.0
+      },
+      "parent_sha256_hex": "3b38bc052c2a067d49982e519960ed42c5fcb39996ed3773a411cb6364a5f765",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000005",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-006",
+      "index": 6,
+      "nonce": 6,
+      "outcome": {
+        "lines_paid": 1,
+        "reels": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "win_x": 2.0
+      },
+      "parent_sha256_hex": "91a7b3500f00456c9df02b8e935a3c8a30db826776616f7881e7b19a79817041",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000006",
+      "session_id": "w244-dossier-sample-001"
+    },
+    {
+      "client_seed": "client-007",
+      "index": 7,
+      "nonce": 7,
+      "outcome": {
+        "lines_paid": 2,
+        "reels": [
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            2,
+            3,
+            4
+          ]
+        ],
+        "win_x": 3.0
+      },
+      "parent_sha256_hex": "dcdba2c63c6b2267656ab80b84dd8932fc957026924d3bb99202f23edc29e3e6",
+      "server_seed_hex": "0000000000000000000000000000000000000000000000000000000000000007",
+      "session_id": "w244-dossier-sample-001"
+    }
+  ],
+  "session_id": "w244-dossier-sample-001"
+}
