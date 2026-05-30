@@ -14,7 +14,8 @@ use serde::{Deserialize, Serialize};
 use std::io::{self, Read, Write};
 
 use slot_sim::kernels::{
-    both_ways, charge_meter, must_hit_by, pay_anywhere, stacked_wilds,
+    both_ways, cascade, charge_meter, cluster_pays, expanding_symbol,
+    money_collect, must_hit_by, pay_anywhere, stacked_wilds, wheel,
 };
 
 #[derive(Debug, Deserialize)]
@@ -68,6 +69,46 @@ fn run(req: Request) -> Result<serde_json::Value, String> {
                     .map_err(|e| format!("parse: {}", e))?;
             p.validate()?;
             Ok(serde_json::to_value(pay_anywhere::pay_anywhere_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "cluster_pays" => {
+            let p: cluster_pays::ClusterPaysParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(cluster_pays::cluster_pays_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "cascade" => {
+            let p: cascade::CascadeParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(cascade::cascade_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "money_collect" => {
+            let p: money_collect::MoneyCollectParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(money_collect::money_collect_rtp_contribution(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "expanding_symbol" => {
+            let p: expanding_symbol::ExpandingSymbolParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(expanding_symbol::expanding_symbol_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "wheel" => {
+            let p: wheel::WheelParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(wheel::wheel_rtp(&p))
                 .map_err(|e| e.to_string())?)
         }
         other => Err(format!("unknown kernel: {}", other)),
