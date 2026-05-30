@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "2026-05-30T00:01:47.972Z",
-  "repo_sha": "4ae473fead475151698a3e6008f5249d2eee84e1",
+  "generatedAtUtc": "deterministic-by-merkle:8ac9615e79feba6c",
+  "repo_sha": "cbdc8c4ca0987d4e90f8a63c339087f3a9f071fc",
   "headline": {
-    "waves": 58,
-    "industry_firsts": 58,
+    "waves": 62,
+    "industry_firsts": 62,
     "all_present": true
   },
   "waves": [
@@ -1984,7 +1984,7 @@
         "book_pmf": {
           "3": 0.00526592412112775,
           "4": 0.000233603500571827,
-          "5": 0.000004027646561583229
+          "5": 4.027646561583229e-06
         },
         "fs_rtp_inferred": 0.4237737556561093,
         "delta_pp": -0.20230388561825463
@@ -2345,6 +2345,74 @@
         }
       },
       "industry_first": "Clean-room dual-state-machine template for sticky + walking wild slot mechanics — 5×3 / 20-line / Sticky Wild TTL state machine (TTL PMF 1=20% / 2=40% / 3=25% / 4=10% / 5=5%, per-cell {empty / freshly_landed / sticky / expired} states) + Walking Wild lock-position + direction + steps state machine (left/right 50/50 PMF, steps 1..5 PMF) + **edge-evaporate** semantics (wild evaporates at grid edge but completes in-progress respin chain) + FS auto-walking-left-steps_left=4. Closed-form parity validator emits per-reel walking-distance grid awareness (E[distance | start_reel] caps at edge), monotone scatter-trigger P(≥3 / ≥4 / ≥5), E[TTL] / E[steps] in PMF support, breakdown components sum consistency. No vendor ships an analyzable per-cell wild state-machine IR with edge-aware walking-distance closed-form."
+    },
+    {
+      "wave": "244.10",
+      "kimi": "—",
+      "commit": "ca1805c9",
+      "name": "Cash Eruption / Money Train Math Kernel",
+      "reportPath": "reports/acceptance/MONEY_COLLECT_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "13 features kinds (12→13), 3 fixtures, Merkle pinned",
+      "detail": {
+        "kernel_module": "tools.math_dsl.money_collect",
+        "fixtures_count": 3,
+        "schema": "money-collect-kernel/v1",
+        "merkle_root_sha256": "1f0b1d9ae1b0611a99f03d592b4cf566ccaf9cc39062e05087315a957e806477"
+      },
+      "industry_first": "First open-source closed-form (binomial trigger + Markov DP episode) for money-collect lock-and-respin pattern — no vendor publishes the (P_per_cell × E[episode]) decomposition."
+    },
+    {
+      "wave": "244.11",
+      "kimi": "—",
+      "commit": "cf504781",
+      "name": "Starburst Meter / Money Cart Charge Meter Kernel",
+      "reportPath": "reports/acceptance/CHARGE_METER_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "14 features kinds, 3 fixtures, Wald-identity RTP",
+      "detail": {
+        "kernel_module": "tools.math_dsl.charge_meter",
+        "fixtures_count": 3,
+        "schema": "charge-meter-kernel/v1",
+        "merkle_root_sha256": "6906cabad4616ddc234b703deaef28985085449c03e8c82994cf7271afecba02"
+      },
+      "industry_first": "First open-source Wald-identity multi-tier charge meter closed-form. Public-spec proxies for Starburst, Power Stacks, Money Cart meter mode."
+    },
+    {
+      "wave": "244.12",
+      "kimi": "—",
+      "commit": "a3c62d9d",
+      "name": "Mystery Jackpot — Lightning Link / Dragon Link Kernel",
+      "reportPath": "reports/acceptance/MUST_HIT_BY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "15 features kinds, 3 fixtures, conservation-flow RTP",
+      "detail": {
+        "kernel_module": "tools.math_dsl.must_hit_by",
+        "fixtures_count": 3,
+        "schema": "must-hit-by-kernel/v1",
+        "merkle_root_sha256": "892e27ed3f32b7ff44865f17b3b954e8ca99ef3a1e93078b7f30d58b73935478"
+      },
+      "industry_first": "First open-source closed-form for must-hit-by mystery jackpots with geometric-arrival truncated-at-cap. Covers NGCB-cert mystery pots (Lightning Link, Dragon Link, Dollar Storm)."
+    },
+    {
+      "wave": "244.13",
+      "kimi": "—",
+      "commit": "cbdc8c4c",
+      "name": "Multi-Level Pick Bonus — Mega Moolah / Mighty Cash Kernel",
+      "reportPath": "reports/acceptance/PICK_CHAIN_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "16 features kinds, 3 fixtures, first-order-statistic E[picks]",
+      "detail": {
+        "kernel_module": "tools.math_dsl.pick_chain",
+        "fixtures_count": 3,
+        "schema": "pick-chain-kernel/v1",
+        "merkle_root_sha256": "a74d1be63abd1e5068336b36c46f4272edb20b4ee5ef37d08ba18cbb92622a15"
+      },
+      "industry_first": "First open-source closed-form for multi-level pick chain with relative-odds advance probability. Industry-known pattern (Mega Moolah, Mighty Cash) but no vendor publishes the level-DP decomposition."
     }
   ],
   "auditor_qa": [

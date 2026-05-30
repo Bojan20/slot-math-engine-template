@@ -6,6 +6,37 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:45 (post **W244 WAVE 14 — Industry-First Dossier refresh 58 → 62 industry-firsts**, commit pending)
+
+**Status:** Auto wave 14 — refresh dossier sa 4 nove W244 kernel mehanike.
+
+| Pre wave 14 | Posle wave 14 |
+|---:|---:|
+| 58 industry-firsts | **62 industry-firsts** |
+| 58/58 attested ✅ | **62/62 attested ✅** |
+
+### Šta je dodato
+
+| Wave ID | Kernel | Report Path |
+|---|---|---|
+| 244.10 | Cash Eruption / Money Train | `reports/acceptance/MONEY_COLLECT_KERNEL.json` |
+| 244.11 | Starburst Meter / Money Cart | `reports/acceptance/CHARGE_METER_KERNEL.json` |
+| 244.12 | Mystery Jackpot — Lightning Link | `reports/acceptance/MUST_HIT_BY_KERNEL.json` |
+| 244.13 | Multi-Level Pick — Mega Moolah | `reports/acceptance/PICK_CHAIN_KERNEL.json` |
+
+Industry-first claims:
+- **244.10**: First open-source closed-form (binomial + Markov DP) za money-collect lock-and-respin
+- **244.11**: First open-source Wald-identity multi-tier charge meter
+- **244.12**: First open-source must-hit-by sa geometric arrival truncated-at-cap
+- **244.13**: First open-source pick chain sa first-order-statistic E[picks] + relative-odds advance
+
+### Dossier MD + JSON sync
+
+- `reports/dossier/INDUSTRY_FIRST_DOSSIER.json` — append 4 wave entries, refresh `headline.waves` 58→62, deterministic-by-merkle timestamp + Merkle digest pin
+- `reports/dossier/INDUSTRY_FIRST_DOSSIER.md` — twin table refresh sa 4 nova reda + headline 58/58 → 62/62
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:35 (post **W244 WAVE 13 — `pick_chain` multi-level pick bonus kernel landed**, commit pending)
 
 **Status:** Četvrta math kernel u autonomnom batch-u. Math DSL feature union sada **16 mehanika** (12 baseline + 4 W244 wave 10/11/12/13).

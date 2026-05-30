@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 37 industry-first acceptance proofs from Waves 33-127.
-> Generated: `2026-05-30T00:01:47.972Z` · repo SHA: `4ae473fead47`
+> **Unified operator deliverable** — aggregates 41 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle:8ac9615e79feba6c · repo SHA: `cbdc8c4c`
 
-## Headline: **58/58 industry-firsts attested** ✅
+## Headline: **62/62 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -67,6 +67,10 @@
 | 4.11i | — | **Standalone Evidence Manifest Verifier (regulator-side tamper check)** | ✅ 27/27 files verified · merkle_root=dc5c7fcd3e75… · receipt-schema v1 | [`reports/acceptance/W4_11_EVIDENCE_RECEIPT.json`](../../reports/acceptance/W4_11_EVIDENCE_RECEIPT.md) |
 | 4.8 | — | **Megaways-Style Variable-Rows Ways Clean-Room Template** | ✅ 6/6 structural gates PASS (6 reels × 4.7 avg rows) | [`reports/acceptance/megaways_parity.json`](../../reports/acceptance/megaways_parity.md) |
 | 4.12 | — | **Sticky + Walking Wild State-Machine Clean-Room Template** | ✅ 9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75) | [`reports/acceptance/walking_wild_parity.json`](../../reports/acceptance/walking_wild_parity.md) |
+| 244.10 | — | **Cash Eruption / Money Train Math Kernel** | ✅ 3 fixtures, binomial trigger + Markov-DP episode value, Merkle pinned | [`reports/acceptance/MONEY_COLLECT_KERNEL.json`](../../reports/acceptance/MONEY_COLLECT_KERNEL.json) |
+| 244.11 | — | **Starburst Meter / Money Cart Charge Meter Kernel** | ✅ 3 fixtures, Wald-identity multi-tier RTP, Merkle pinned | [`reports/acceptance/CHARGE_METER_KERNEL.json`](../../reports/acceptance/CHARGE_METER_KERNEL.json) |
+| 244.12 | — | **Mystery Jackpot — Lightning Link / Dragon Link Kernel** | ✅ 3 fixtures, conservation-flow RTP + geometric arrival truncated at cap | [`reports/acceptance/MUST_HIT_BY_KERNEL.json`](../../reports/acceptance/MUST_HIT_BY_KERNEL.json) |
+| 244.13 | — | **Multi-Level Pick Bonus — Mega Moolah / Mighty Cash Kernel** | ✅ 3 fixtures, first-order-statistic E[picks] + relative-odds advance | [`reports/acceptance/PICK_CHAIN_KERNEL.json`](../../reports/acceptance/PICK_CHAIN_KERNEL.json) |
 
 ## Why each is industry-first
 
