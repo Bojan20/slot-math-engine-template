@@ -133,6 +133,20 @@ header.top .pill {
   color: var(--fg-mute);
 }
 header.top .pill strong { color: var(--green); }
+.dossier-nav {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 8px 14px;
+  border-radius: 6px; font-size: 13px; font-weight: 500;
+  transition: border-color 0.15s, color 0.15s;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+  cursor: default;
+}
 
 nav.tabs {
   position: sticky; top: 0; z-index: 20; background: var(--bg);
@@ -372,6 +386,11 @@ def main() -> int:
       <span class="pill">all <strong>sub-µs</strong>:
         {"✓" if bench_sub_us else "✗"}</span>
     </div>
+    <nav class="dossier-nav">
+      <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a class="current" href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
   </header>
 
   <nav class="tabs">

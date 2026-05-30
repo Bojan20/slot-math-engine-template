@@ -34,6 +34,20 @@ header.top h1 .accent { color: var(--acc); }
 header.top .lead {
   color: var(--fg-mute); font-size: 16px; max-width: 760px; margin: 0;
 }
+.dossier-nav {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 8px 14px;
+  border-radius: 6px; font-size: 13px; font-weight: 500;
+  transition: border-color 0.15s, color 0.15s;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+  cursor: default;
+}
 .stats {
   display: grid; gap: 16px; padding: 24px 32px;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -128,6 +142,11 @@ footer.bot code { color: var(--acc); }
       publishes</strong>. Each card is a closed wave with a Merkle-pinned
       acceptance report under <code>reports/acceptance/</code>.
     </p>
+    <nav class="dossier-nav">
+      <a class="current" href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
   </header>
 
   <section class="stats">
@@ -1583,7 +1602,7 @@ footer.bot code { color: var(--acc); }
     Dossier schema: <code>industry-first-dossier/v1</code><br>
     Generated UTC: <code>deterministic-by-merkle:8b33d144af5a48ff</code><br>
     Source: <code>reports/dossier/INDUSTRY_FIRST_DOSSIER.json</code><br>
-    HTML Merkle (SHA-256 over body): <code>b6479eb03a3ec2ec85a0600f8a153068718b343664c3b6ffce1d85216f42954c</code>
+    HTML Merkle (SHA-256 over body): <code>42844059c54c80de6c5b6e75935ff3914b7719d69bf17697ee6670cce7b5e76e</code>
   </footer>
   <script>
 (function() {

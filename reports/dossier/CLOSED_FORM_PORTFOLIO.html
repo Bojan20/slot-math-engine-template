@@ -29,6 +29,20 @@ header.top h1 .accent { color: var(--acc); }
 header.top .lead {
   color: var(--fg-mute); font-size: 16px; max-width: 820px; margin: 0;
 }
+.dossier-nav {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 8px 14px;
+  border-radius: 6px; font-size: 13px; font-weight: 500;
+  transition: border-color 0.15s, color 0.15s;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+  cursor: default;
+}
 .stats {
   display: grid; gap: 16px; padding: 24px 32px;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -108,6 +122,11 @@ footer.bot code { color: var(--acc); }
       <code>reports/acceptance/</code>. The full portfolio is part of
       the 🎯 100-SOLVER MILESTONE milestone.
     </p>
+    <nav class="dossier-nav">
+      <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a class="current" href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
   </header>
 
   <section class="stats">
@@ -1111,7 +1130,7 @@ footer.bot code { color: var(--acc); }
     Schema: <code>1.0.0</code><br>
     Generated UTC: <code>2026-05-19T12:56:19.141Z</code><br>
     Source: <code>reports/dossier/CLOSED_FORM_PORTFOLIO_100.json</code><br>
-    Page Merkle (SHA-256 over body): <code>1880050cdd78bd68fd019ba69367fb4e4356fd317f214a9d44ce991b14f9e40a</code>
+    Page Merkle (SHA-256 over body): <code>df5da65f3fb76619069b4eb6771c6641b19ee537c9398ca237eb05a5184d2ca3</code>
   </footer>
   <script>
 (function() {

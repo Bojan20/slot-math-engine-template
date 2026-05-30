@@ -68,6 +68,20 @@ header.top h1 .accent { color: var(--acc); }
 header.top .lead {
   color: var(--fg-mute); font-size: 16px; max-width: 820px; margin: 0;
 }
+.dossier-nav {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 8px 14px;
+  border-radius: 6px; font-size: 13px; font-weight: 500;
+  transition: border-color 0.15s, color 0.15s;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+  cursor: default;
+}
 .stats {
   display: grid; gap: 16px; padding: 24px 32px;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -199,6 +213,11 @@ def main() -> int:
       <code>reports/acceptance/</code>. The full portfolio is part of
       the {_esc(milestone)} milestone.
     </p>
+    <nav class="dossier-nav">
+      <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a class="current" href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+    </nav>
   </header>
 
   <section class="stats">
