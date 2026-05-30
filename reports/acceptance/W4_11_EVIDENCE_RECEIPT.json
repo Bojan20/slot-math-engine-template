@@ -1,11 +1,11 @@
 {
   "schema": "w4-11-evidence-receipt/v1",
   "verified": true,
-  "verified_at_utc": "2026-05-29T22:10:22.780242Z",
+  "verified_at_utc": "2026-05-30T00:15:36.757702Z",
   "manifest_path": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
   "repo_root": "/Users/vanvinklstudio/Projects/slot-math-engine-template",
-  "expected_merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
-  "derived_merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
+  "expected_merkle_root_sha256": "d07ebb9b5732f060d2dc87a25bfd66d0754194f44c98dfee6de7ab7eca7d11e2",
+  "derived_merkle_root_sha256": "d07ebb9b5732f060d2dc87a25bfd66d0754194f44c98dfee6de7ab7eca7d11e2",
   "merkle_root_match": true,
   "file_count": 27,
   "passed_count": 27,
@@ -62,10 +62,10 @@
       "path": "reports/acceptance/book_bonusbuy_mc.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "2d6fdfa7ce5b6cd358527d207db8f3b1e4e922b1600c1bd487c137aedaafcc71",
-      "actual_sha256": "2d6fdfa7ce5b6cd358527d207db8f3b1e4e922b1600c1bd487c137aedaafcc71",
-      "expected_size": 1751,
-      "actual_size": 1751
+      "expected_sha256": "c68ab5afd6693f1a129f7aceedcdf5fa0914412bf0ee4528ee605fbcbb27ceee",
+      "actual_sha256": "c68ab5afd6693f1a129f7aceedcdf5fa0914412bf0ee4528ee605fbcbb27ceee",
+      "expected_size": 1750,
+      "actual_size": 1750
     },
     {
       "path": "reports/acceptance/book_bonusbuy_parity.json",
@@ -161,8 +161,8 @@
       "path": "reports/dashboards/mc-parity-dashboard.html",
       "ok": true,
       "reason": null,
-      "expected_sha256": "250a830da1131481f9f2f39f7dc0b9ef40ec8c6799b0704edee8a96cbb147fd5",
-      "actual_sha256": "250a830da1131481f9f2f39f7dc0b9ef40ec8c6799b0704edee8a96cbb147fd5",
+      "expected_sha256": "a177b379248706ed868269292347cef8bfc45faa48fa7e999d904acf1c661010",
+      "actual_sha256": "a177b379248706ed868269292347cef8bfc45faa48fa7e999d904acf1c661010",
       "expected_size": 9483,
       "actual_size": 9483
     },
@@ -170,10 +170,10 @@
       "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "fbc076516d1a7bd4f033172601d62a17cfe8a8f708ebf45ec72b437785cf8f06",
-      "actual_sha256": "fbc076516d1a7bd4f033172601d62a17cfe8a8f708ebf45ec72b437785cf8f06",
-      "expected_size": 690,
-      "actual_size": 690
+      "expected_sha256": "a2a466b50b0cb61ea6a1c1afe79f36e81f5b5d033fe24fb06177681f218110ad",
+      "actual_sha256": "a2a466b50b0cb61ea6a1c1afe79f36e81f5b5d033fe24fb06177681f218110ad",
+      "expected_size": 689,
+      "actual_size": 689
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.html",
@@ -215,8 +215,8 @@
       "path": "reports/dashboards/sales-one-pager.html",
       "ok": true,
       "reason": null,
-      "expected_sha256": "7818dc4e2caf0b8506fc2b157b2fc5f1cf7fdfab0c45737dcce19d8bfd9081af",
-      "actual_sha256": "7818dc4e2caf0b8506fc2b157b2fc5f1cf7fdfab0c45737dcce19d8bfd9081af",
+      "expected_sha256": "0ba8545c7da8bdb761d2f3e6d1e43af0f1129435eb9951aac9a2e6913d03c213",
+      "actual_sha256": "0ba8545c7da8bdb761d2f3e6d1e43af0f1129435eb9951aac9a2e6913d03c213",
       "expected_size": 8564,
       "actual_size": 8564
     },
@@ -242,19 +242,19 @@
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "966d2fffcc7e2b06dcdba4a359bcfd298e8646f88a000a32b1d8ea7654d1281f",
-      "actual_sha256": "966d2fffcc7e2b06dcdba4a359bcfd298e8646f88a000a32b1d8ea7654d1281f",
-      "expected_size": 91281,
-      "actual_size": 91281
+      "expected_sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440",
+      "actual_sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440",
+      "expected_size": 92201,
+      "actual_size": 92201
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
       "ok": true,
       "reason": null,
-      "expected_sha256": "d535c537baaaed1c56e63a328f8b7c74a3926dca72a9f58b66117985dbe12390",
-      "actual_sha256": "d535c537baaaed1c56e63a328f8b7c74a3926dca72a9f58b66117985dbe12390",
-      "expected_size": 64824,
-      "actual_size": 64824
+      "expected_sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2",
+      "actual_sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2",
+      "expected_size": 65084,
+      "actual_size": 65084
     }
   ]
 }

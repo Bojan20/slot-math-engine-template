@@ -1,8 +1,8 @@
 {
   "spins": 200000,
   "seed": 20260529,
-  "elapsed_seconds": 2.5186398329678923,
-  "spins_per_second": 79407.93970701471,
+  "elapsed_seconds": 2.580610124976374,
+  "spins_per_second": 77501.05219858851,
   "reference_rtp_breakdown": {
     "line_pay": 0.5282426698490047,
     "scatter_pay": 0.008004723783004326,

@@ -1,9 +1,9 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "2026-05-29T22:10:22.740828Z",
-  "merkle_root_sha256": "dc5c7fcd3e75600b32e28a9aa6c3f16fe2e1175aa4afb37ef0c99ef946827dc7",
+  "generated_at_utc": "2026-05-30T00:15:36.714732Z",
+  "merkle_root_sha256": "d07ebb9b5732f060d2dc87a25bfd66d0754194f44c98dfee6de7ab7eca7d11e2",
   "file_count": 27,
-  "total_bytes": 346535,
+  "total_bytes": 347713,
   "missing_files": [],
   "records": [
     {
@@ -33,8 +33,8 @@
     },
     {
       "path": "reports/acceptance/book_bonusbuy_mc.json",
-      "size_bytes": 1751,
-      "sha256": "2d6fdfa7ce5b6cd358527d207db8f3b1e4e922b1600c1bd487c137aedaafcc71"
+      "size_bytes": 1750,
+      "sha256": "c68ab5afd6693f1a129f7aceedcdf5fa0914412bf0ee4528ee605fbcbb27ceee"
     },
     {
       "path": "reports/acceptance/book_bonusbuy_parity.json",
@@ -89,12 +89,12 @@
     {
       "path": "reports/dashboards/mc-parity-dashboard.html",
       "size_bytes": 9483,
-      "sha256": "250a830da1131481f9f2f39f7dc0b9ef40ec8c6799b0704edee8a96cbb147fd5"
+      "sha256": "a177b379248706ed868269292347cef8bfc45faa48fa7e999d904acf1c661010"
     },
     {
       "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
-      "size_bytes": 690,
-      "sha256": "fbc076516d1a7bd4f033172601d62a17cfe8a8f708ebf45ec72b437785cf8f06"
+      "size_bytes": 689,
+      "sha256": "a2a466b50b0cb61ea6a1c1afe79f36e81f5b5d033fe24fb06177681f218110ad"
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.html",
@@ -119,7 +119,7 @@
     {
       "path": "reports/dashboards/sales-one-pager.html",
       "size_bytes": 8564,
-      "sha256": "7818dc4e2caf0b8506fc2b157b2fc5f1cf7fdfab0c45737dcce19d8bfd9081af"
+      "sha256": "0ba8545c7da8bdb761d2f3e6d1e43af0f1129435eb9951aac9a2e6913d03c213"
     },
     {
       "path": "reports/dashboards/sales-one-pager.manifest.json",
@@ -133,13 +133,13 @@
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
-      "size_bytes": 91281,
-      "sha256": "966d2fffcc7e2b06dcdba4a359bcfd298e8646f88a000a32b1d8ea7654d1281f"
+      "size_bytes": 92201,
+      "sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
-      "size_bytes": 64824,
-      "sha256": "d535c537baaaed1c56e63a328f8b7c74a3926dca72a9f58b66117985dbe12390"
+      "size_bytes": 65084,
+      "sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2"
     }
   ],
   "verification": "To verify: hash each file with SHA-256, concatenate lines of the form `<path>|<size_bytes>|<sha256>\\n` sorted lexicographically by path, then SHA-256 that concatenation. The result must equal `merkle_root_sha256`."

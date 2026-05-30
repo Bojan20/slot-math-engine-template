@@ -204,6 +204,15 @@ reports/qa_agent/
 reports/residual_gap_probe.json
 reports/picker_solver.json
 
+# ─── Per-run timestamp churn (no semantic content) ──────────────────
+# Ovi fajlovi se rebuild-uju kod svakog `npm test` / `make qa-quick` —
+# u diff-u uvek samo `at` / `startedAt` / `durationMs` timestamps. Bez
+# vrednosti za git history. Svi su deterministički regeneracije iz
+# fixtures + RNG seed-a; bit-identical replay je već testiran u smoke.
+reports/smoke/summary.json
+reports/fuzz/seed-corpus/**/*.json
+reports/fuzz/checkpoints/**/*.json
+
 dist/pilot/
 dist/cert/
 dist/test-cert/
