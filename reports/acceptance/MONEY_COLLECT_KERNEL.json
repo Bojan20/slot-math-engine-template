@@ -1,0 +1,80 @@
+{
+  "schema": "money-collect-kernel/v1",
+  "merkle_root_sha256": "1f0b1d9ae1b0611a99f03d592b4cf566ccaf9cc39062e05087315a957e806477",
+  "generated_at_utc": "deterministic-by-merkle:1f0b1d9ae1b0611a",
+  "kernel": "money_collect",
+  "module": "tools.math_dsl.money_collect",
+  "industry_pattern": "Cash Eruption / Money Train / Coin Volcano pattern: trigger by ≥ N money symbols on initial spin, lock-and-respin episode with reset counter, terminate on empty respin pool or grid-fill, payout = SUM(locked money values) × bet",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "5x3-classic",
+      "topology_label": "rectangular 5×3 = 15 cells",
+      "trigger_p": 1.4990591392871622e-05,
+      "expected_value_per_money": 2.75,
+      "expected_total_per_episode": 21.206965263080253,
+      "rtp_contribution": 0.0003179049509416583,
+      "params": {
+        "p_per_cell": 0.04,
+        "n_cells": 15,
+        "trigger_count_min": 6,
+        "respins_reset": 3,
+        "grid_cap": 15,
+        "value_table": {
+          "1.0": 50.0,
+          "2.0": 30.0,
+          "5.0": 15.0,
+          "10.0": 4.0,
+          "50.0": 1.0
+        }
+      }
+    },
+    {
+      "fixture_name": "6x4-megaways-like",
+      "topology_label": "rectangular 6×4 = 24 cells",
+      "trigger_p": 1.0004177092293176e-06,
+      "expected_value_per_money": 4.0,
+      "expected_total_per_episode": 46.54759722221548,
+      "rtp_contribution": 4.656704058317776e-05,
+      "params": {
+        "p_per_cell": 0.035,
+        "n_cells": 24,
+        "trigger_count_min": 8,
+        "respins_reset": 3,
+        "grid_cap": 24,
+        "value_table": {
+          "1.0": 45.0,
+          "2.0": 30.0,
+          "5.0": 15.0,
+          "10.0": 7.0,
+          "25.0": 2.0,
+          "100.0": 1.0
+        }
+      }
+    },
+    {
+      "fixture_name": "5x4-volcano",
+      "topology_label": "rectangular 5×4 = 20 cells",
+      "trigger_p": 1.721982222835372e-05,
+      "expected_value_per_money": 4.6,
+      "expected_total_per_episode": 48.84736019471091,
+      "rtp_contribution": 0.0008411428588772837,
+      "params": {
+        "p_per_cell": 0.045,
+        "n_cells": 20,
+        "trigger_count_min": 7,
+        "respins_reset": 3,
+        "grid_cap": 20,
+        "value_table": {
+          "1.0": 40.0,
+          "3.0": 30.0,
+          "5.0": 18.0,
+          "10.0": 8.0,
+          "20.0": 3.0,
+          "100.0": 1.0
+        }
+      }
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_money_collect_kernel`. The output must match the committed `merkle_root_sha256` exactly. Closed-form computation is deterministic (binomial CDF + Markov-chain DP, no RNG)."
+}

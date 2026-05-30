@@ -98,7 +98,7 @@ class SymbolSpec:
 
 @dataclass
 class FeatureSpec:
-    kind: str  # free_spins | hold_and_win | cascade | respin | pick | wheel | buy_feature | ante_bet | gamble | mystery_symbol | symbol_upgrade | linear_progressive
+    kind: str  # free_spins | hold_and_win | cascade | respin | pick | wheel | buy_feature | ante_bet | gamble | mystery_symbol | symbol_upgrade | linear_progressive | money_collect
     # Free spins
     trigger_count_min: Optional[int] = None
     initial_spins: Optional[int] = None
@@ -117,6 +117,17 @@ class FeatureSpec:
     must_hit_by_x: Optional[float] = None
     # Pick / wheel
     awards: Optional[list[dict]] = None
+    # Money-collect — W244 wave 10. Trigger: ≥ trigger_count_min money
+    # symbols on initial spin opens a 3-respin "cash bonus" mode. Each
+    # landed money symbol locks + resets respin counter. Each money
+    # symbol carries a value drawn from `money_value_weights` (× bet).
+    # Episode total = SUM(locked money values).
+    # Standard industry shape (Cash Eruption, Money Train, Coin Volcano).
+    money_trigger_count_min: Optional[int] = None    # e.g. 6
+    money_respins_reset: Optional[int] = None         # respin pool, default 3
+    money_value_weights: Optional[dict[float, float]] = None  # {value_x_bet: weight}
+    money_grid_cap: Optional[int] = None              # e.g. 15 (5×3 full)
+    money_symbol_id: Optional[str] = None             # "$" / "coin"
     # Generic catch-all so designer can pass vendor-specific keys
     extra: dict = field(default_factory=dict)
 
@@ -339,6 +350,8 @@ _VALID_FEATURE_KINDS = {
     "free_spins", "hold_and_win", "cascade", "respin", "pick", "wheel",
     "buy_feature", "ante_bet", "gamble", "mystery_symbol", "symbol_upgrade",
     "linear_progressive",
+    # W244 wave 10 — Cash Eruption / Money Train / Coin Volcano pattern.
+    "money_collect",
 }
 
 
@@ -436,8 +449,27 @@ def parse_spec(text: str) -> MathDslSpec:
             "retrigger_spins", "max_total_spins", "respins_initial",
             "replacement", "max_chain", "pool_id", "contribution_x", "seed_x",
             "must_hit_by_x", "awards",
+            # W244 wave 10 — money_collect known keys
+            "money_trigger_count_min", "money_respins_reset",
+            "money_value_weights", "money_grid_cap", "money_symbol_id",
         }
         extra = {k: v for k, v in f.items() if k not in known_keys}
+        # money_value_weights normalization: YAML can carry float keys as
+        # strings; coerce to {float: float} for downstream Z3 / closed-form.
+        mvw_raw = f.get("money_value_weights")
+        mvw: Optional[dict[float, float]] = None
+        if mvw_raw is not None:
+            if not isinstance(mvw_raw, dict):
+                raise DslParseError(
+                    "money_value_weights must be a mapping {value_x_bet: weight}"
+                )
+            mvw = {}
+            for k, v in mvw_raw.items():
+                mvw[float(k)] = float(v)
+            if not mvw:
+                raise DslParseError("money_value_weights must be non-empty")
+            if any(v < 0 for v in mvw.values()):
+                raise DslParseError("money_value_weights weights must be ≥ 0")
         features.append(FeatureSpec(
             kind=fk,
             trigger_count_min=f.get("trigger_count_min"),
@@ -453,6 +485,11 @@ def parse_spec(text: str) -> MathDslSpec:
             seed_x=f.get("seed_x"),
             must_hit_by_x=f.get("must_hit_by_x"),
             awards=f.get("awards"),
+            money_trigger_count_min=f.get("money_trigger_count_min"),
+            money_respins_reset=f.get("money_respins_reset"),
+            money_value_weights=mvw,
+            money_grid_cap=f.get("money_grid_cap"),
+            money_symbol_id=f.get("money_symbol_id"),
             extra=extra,
         ))
 

@@ -6,6 +6,51 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 06:50 (post **W244 WAVE 10 — `money_collect` math kernel landed**, commit pending)
+
+**Status:** Autonomni nastavak nakon Boki-jeve eskalacije "koji moj signal čekaš majke ti". Direktno na queue stavku #3 (Math DSL nova mehanika).
+
+### Wave 10 — `money_collect` feature kernel (Cash Eruption / Money Train pattern)
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `tools/math_dsl/spec.py` | Feature union proširen: `money_collect` u `_VALID_FEATURE_KINDS`, `FeatureSpec` 5 novih polja (`money_trigger_count_min`, `money_respins_reset`, `money_value_weights`, `money_grid_cap`, `money_symbol_id`) + parser validation (mapping check, weights ≥ 0, non-empty) | +60 lines |
+| `tools/math_dsl/money_collect.py` | Closed-form RTP solver: binomial CDF tail za trigger probability + Markov-chain DP nad `(k_locked, respins_remaining)` state-spaceom. Pure-stdlib, sub-millisecond. | 224 lines |
+| `tools/tests/test_w244_money_collect_kernel.py` | Acceptance suite: 20 testova (E[V] math, binomial CDF, DP monotonicity, grid_cap cap, p=0/p=1 edge cases, params validation, DSL integration) | **20/20 PASS** u 90ms |
+| `tools/build_money_collect_kernel.py` | Deterministic artefakt builder, 3 canonical fixtures (5×3 / 6×4 / 5×4) | 122 lines |
+| `reports/acceptance/MONEY_COLLECT_KERNEL.json` | Acceptance JSON sa Merkle root, byte-stable rebuild | schema v1 |
+
+### Closed-form fixtures
+
+| Fixture | Topology | trigger_p | E[episode] | RTP contribution |
+|---|---|---:|---:|---:|
+| 5x3-classic | 5×3 = 15 cells | 1.50 × 10⁻⁵ | 21.21 | 3.18 × 10⁻⁴ |
+| 6x4-megaways-like | 6×4 = 24 cells | 1.00 × 10⁻⁶ | 46.55 | 4.66 × 10⁻⁵ |
+| 5x4-volcano | 5×4 = 20 cells | 1.72 × 10⁻⁵ | 48.85 | 8.41 × 10⁻⁴ |
+
+Trigger probabilities su konservativne (proxies, ne vendor-derived) — real-world balance traži p_per_cell ≥ 0.1 ili trigger_count_min ≤ 4 za feature RTP od 5-15%. Kernel je tunable kroz `MoneyCollectParams`.
+
+### Industry coverage delta
+
+Pre wave 10: Math DSL podržava 12 feature kinds.
+Posle: **13 feature kinds** — money_collect zatvara DONE-UNIVERSAL stavku #5 (Money-collect FS, Cash Eruption pattern) i deo #20 (money-collect + variable-rows ways).
+
+### Regression check
+
+`pytest -k "math_dsl or w5_1 or w5_2 or w7_1 or w8_4 or w8_5 or w8_6" -m "not slow"` → **84/84 PASS** za 2.81s — feature addition ne diraku postojeću DSL semantiku.
+
+### Sledeći wave queue (post wave 10)
+
+| # | Item | Status |
+|---|---|---|
+| **1** | W4.9 Cluster Pays + W4.10 Cascade PAR validation | čekaju PAR — **Boki nema** |
+| **2** | Plan B full: rust-sim config bridge za 1B MC × 30 mech | 2-3h refactor, autonomous, deferred |
+| **3** | Math DSL: dodatne mehanike (charge_meter / must_hit_by / supermeter) | autonomous, 2-3h svaka |
+| **4** | Stryker bug GitHub issue submission | pending Boki repo decision |
+| **5** | 4 preostalih Stryker survivors | death-equivalent, ne vredi |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 06:30 (post **W244 WAVE 9 — REG-ORACLE BOOTSTRAP + 30M MC PARITY DOSSIER**, commits `563761aa` + pending)
 
 **Status:** "auto" / "sam sve radi" — autonomous batch zatvorio dve queue stavke u jednoj seriji.
