@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 56 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 31) · repo SHA: `ded6385d`
+> **Unified operator deliverable** — aggregates 57 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 32) · repo SHA: `663e562e`
 
-## Headline: **77/77 industry-firsts attested** ✅
+## Headline: **78/78 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -86,6 +86,7 @@
 | 244.27 | — | **Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash)** | ✅ 3 fixtures, composes money_collect + must_hit_by | [`reports/acceptance/HOLD_AND_WIN_KERNEL.json`](../../reports/acceptance/HOLD_AND_WIN_KERNEL.json) |
 | 244.30 | — | **Both-Ways Evaluator Kernel (Thunderstruck II / Starburst / Cleopatra)** | ✅ 3 fixtures, RTP = ltr × (1 + line_pay_share) | [`reports/acceptance/BOTH_WAYS_KERNEL.json`](../../reports/acceptance/BOTH_WAYS_KERNEL.json) |
 | 244.31 | — | **Asymmetric Paytable Aggregator (Twin Spin / Wild West Gold / Wild Toro)** | ✅ 3 fixtures, per-symbol-per-shape decomposition | [`reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json`](../../reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json) |
+| 244.32 | — | **Symbolic Gradient + Newton-Raphson Inverse Solver** | ✅ 6/6 scenarios converged (3 NR + 3 Bisection), pure-stdlib | [`reports/acceptance/INVERSE_SOLVER_KERNEL.json`](../../reports/acceptance/INVERSE_SOLVER_KERNEL.json) |
 
 ## Why each is industry-first
 

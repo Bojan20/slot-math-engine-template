@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:d28cb04fac564190",
-  "repo_sha": "ded6385dbd4e60e1001da6c1a1af504e5164090e",
+  "generatedAtUtc": "deterministic-by-merkle:a7564c4c13e6476e",
+  "repo_sha": "663e562e4140626a4875d312e941b608afedd402",
   "headline": {
-    "waves": 77,
-    "industry_firsts": 77,
+    "waves": 78,
+    "industry_firsts": 78,
     "all_present": true
   },
   "waves": [
@@ -2728,6 +2728,25 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source asymmetric-paytable aggregator: per-symbol-per-shape RTP decomposition. Operator-supplied empirical contributions (sourced from PAR/MC); kernel aggregates deterministically."
+    },
+    {
+      "wave": "244.32",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Symbolic Gradient + Newton-Raphson Inverse Solver",
+      "reportPath": "reports/acceptance/INVERSE_SOLVER_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "6/6 scenarios converged: 3 Newton-Raphson + 3 Bisection",
+      "detail": {
+        "modules": [
+          "tools.math_dsl.symbolic_gradient",
+          "tools.math_dsl.inverse_solver"
+        ],
+        "convergence": "Newton-Raphson ≤2 iters (linear), Bisection ≤20 iters (non-linear)",
+        "dependency": "pure-stdlib (no SymPy, no scipy)"
+      },
+      "industry_first": "First open-source designer-target → kernel-parameter auto-resolver. Pure-stdlib analytic gradients (no SymPy dep) + Newton-Raphson + Bisection fallback. Replaces manual reel-weight tuning sa direktnim target specification."
     }
   ],
   "auditor_qa": [

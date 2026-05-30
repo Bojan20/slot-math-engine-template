@@ -1,0 +1,76 @@
+{
+  "schema": "inverse-solver-kernel/v1",
+  "merkle_root_sha256": "a3ba1e43b92e54a31895c8010e9da0b00c779d8424def807a4daa4cad092b9f9",
+  "generated_at_utc": "deterministic-by-merkle:a3ba1e43b92e54a3",
+  "kernel": "inverse_solver",
+  "modules": [
+    "tools.math_dsl.symbolic_gradient",
+    "tools.math_dsl.inverse_solver"
+  ],
+  "industry_pattern": "Designer-target → kernel-parameter auto-resolution. Newton-Raphson with analytic gradient where available; bisection fallback for non-smooth or boundary-prone kernels. Replaces manual reel-weight tuning.",
+  "scenarios_count": 6,
+  "all_converged": true,
+  "records": [
+    {
+      "scenario_name": "charge-meter-target-0.10",
+      "method": "Newton-Raphson",
+      "converged": true,
+      "iterations": 2,
+      "target_rtp": 0.1,
+      "final_param": 0.5,
+      "final_rtp": 0.1,
+      "error": 0.0
+    },
+    {
+      "scenario_name": "charge-meter-target-0.20",
+      "method": "Newton-Raphson",
+      "converged": true,
+      "iterations": 2,
+      "target_rtp": 0.2,
+      "final_param": 1.0,
+      "final_rtp": 0.2,
+      "error": 0.0
+    },
+    {
+      "scenario_name": "both-ways-target-1.30",
+      "method": "Newton-Raphson",
+      "converged": true,
+      "iterations": 2,
+      "target_rtp": 1.3,
+      "final_param": 0.6249999999999998,
+      "final_rtp": 1.2999999999999998,
+      "error": 2.220446049250313e-16
+    },
+    {
+      "scenario_name": "pay-anywhere-target-0.05",
+      "method": "Bisection",
+      "converged": true,
+      "iterations": 18,
+      "target_rtp": 0.05,
+      "final_param": 0.10485824584960937,
+      "final_rtp": 0.05000912249963617,
+      "error": 9.12249963616607e-06
+    },
+    {
+      "scenario_name": "stacked-wilds-target-0.001",
+      "method": "Bisection",
+      "converged": true,
+      "iterations": 20,
+      "target_rtp": 0.001,
+      "final_param": 0.03314399719238281,
+      "final_rtp": 0.0009999180916036182,
+      "error": 8.190839638185302e-08
+    },
+    {
+      "scenario_name": "cascade-target-0.20",
+      "method": "Bisection",
+      "converged": true,
+      "iterations": 17,
+      "target_rtp": 0.2,
+      "final_param": 0.2593887329101562,
+      "final_rtp": 0.19999571235500874,
+      "error": 4.28764499127432e-06
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_inverse_solver_kernel`. Output must match `merkle_root_sha256` exactly. Each scenario convergence is deterministic given the same initial guess + iteration cap."
+}
