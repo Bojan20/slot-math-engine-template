@@ -222,6 +222,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_health_probe.py \
 		tools/tests/test_w244_acceptance_schemas.py \
 		tools/tests/test_w244_pypi_cli.py \
+		tools/tests/test_w244_pre_commit_config.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

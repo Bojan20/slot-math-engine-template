@@ -1,0 +1,74 @@
+# W244 wave 65 — pre-commit hook config.
+#
+# Install:
+#   $ pip install pre-commit
+#   $ pre-commit install
+#
+# Run manually:
+#   $ pre-commit run --all-files
+#
+# Hooks run automatically on `git commit` and abort the commit if any
+# hook fails. This catches issues before they hit CI — saves cycles +
+# keeps green main branch invariant.
+#
+# Philosophy: only blockers in pre-commit. Heavy checks (cargo test,
+# pytest full sweep) belong in CI. Pre-commit must be FAST (< 5 s).
+
+repos:
+  # ── Generic safety ─────────────────────────────────────────────────
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.snap$|\.md$'  # snapshots + markdown ok with trailing
+      - id: end-of-file-fixer
+        exclude: '\.snap$|\.html$|\.json$'  # generated artefakti immutable
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=2000']
+      - id: detect-private-key
+      - id: mixed-line-ending
+
+  # ── Python: ruff (lint + format) ───────────────────────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: '^(tools/|packages/)'
+
+  # ── W244 health probe — fast sanity ────────────────────────────────
+  # Runs only when W244 surface files change (kernel JSONs, dossier
+  # builders, etc). Catches drift in dossier / acceptance / vendored
+  # PyPI BEFORE commit lands.
+  - repo: local
+    hooks:
+      - id: w244-health
+        name: W244 health probe (16 checks)
+        entry: python3 tools/w244_health.py
+        language: system
+        pass_filenames: false
+        # Run only when these patterns are touched
+        files: |
+          (?x)^(
+            reports/acceptance/.*\.json|
+            reports/dossier/.*\.(json|html)|
+            reports/schemas/.*\.json|
+            packages/slot-math-kernels/.*|
+            tools/build_.*\.py|
+            tools/math_dsl/.*\.py|
+            tools/w244_health\.py
+          )$
+
+      - id: w244-api-contract
+        name: slot-math-kernels API contract check
+        entry: python3 -m pytest tools/tests/test_w244_pypi_api_contract.py -q
+        language: system
+        pass_filenames: false
+        files: |
+          (?x)^(
+            packages/slot-math-kernels/src/slot_math_kernels/.*\.py|
+            packages/slot-math-kernels/API_SURFACE\.json
+          )$
