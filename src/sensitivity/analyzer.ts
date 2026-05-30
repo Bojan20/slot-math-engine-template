@@ -28,9 +28,15 @@ export function applyWeightMultiplier(
   const reels = clone.reels as Extract<typeof clone.reels, { mode: 'weighted' }>;
   const reelSet = new Set(reelIndices);
 
-  for (let i = 0; i < reels.base.length; i++) {
+  // W244 wave 8 — `for...of entries()` umesto `for (let i = 0; i < len; i++)`
+  // eliminiše Stryker EqualityOperator `<` → `<=` mutant na loop kondiciji
+  // (mutant je bio death-equivalent jer `reels.base[len]` je `undefined`
+  // što je `if (!reelMap) continue` neutralizovao). Sparse-array guard
+  // (`if (!reelMap) continue`) ostaje — testovi pin-uju da se rupa u
+  // `reels.base[i]` ne baci. `for...of entries()` yield-uje `[i, undefined]`
+  // za sparse holes, ne preskače ih.
+  for (const [i, reelMap] of reels.base.entries()) {
     if (!reelSet.has(i)) continue;
-    const reelMap = reels.base[i];
     if (!reelMap) continue;
     if (!(symbolId in reelMap)) continue;
     const current = reelMap[symbolId] ?? 1;
@@ -38,6 +44,26 @@ export function applyWeightMultiplier(
   }
 
   return clone;
+}
+
+// W244 wave 8 — extracted bisection-boundary guards so Stryker mutates a
+// named, isolated method instead of inline `error < tolerance` short-circuits.
+// Each helper has a dedicated killer test that pins the strict-inequality
+// semantics via a deterministic spy on `runIRSimulation` returning the EXACT
+// boundary value.
+//
+// EqualityOperator `<` → `<=` mutants on these helpers are now killable:
+//   `_hasConverged(tol, tol)` → original false (mutant true)
+//   `_needsHigherWeights(target, target)` → original false (mutant true)
+// Exported so direct unit tests can pin the strict-inequality semantics
+// independently of the bisection loop's end-to-end behavior. The W244 wave 8
+// killer suite (tests/w244_stryker_99_killers.test.ts) imports both.
+export function _hasConverged(error: number, tolerance: number): boolean {
+  return error < tolerance;
+}
+
+export function _needsHigherWeights(achievedRtp: number, targetRtp: number): boolean {
+  return achievedRtp < targetRtp;
 }
 
 // ─── analyzeSensitivity ───────────────────────────────────────────────────
@@ -168,13 +194,13 @@ export async function solveTargetRtp(
     weightChange = mid;
 
     const error = Math.abs(achievedRtp - config.targetRtp);
-    if (error < tolerance) {
+    if (_hasConverged(error, tolerance)) {
       converged = true;
       break;
     }
 
     // If achievedRtp < targetRtp → need higher weights → lo = mid
-    if (achievedRtp < config.targetRtp) {
+    if (_needsHigherWeights(achievedRtp, config.targetRtp)) {
       lo = mid;
     } else {
       hi = mid;
