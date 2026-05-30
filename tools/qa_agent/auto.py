@@ -211,12 +211,15 @@ def run_l3_unit(ctx: LayerContext) -> LayerResult:
     findings: List[Finding] = []
     parts: List[Dict[str, Any]] = []
 
-    # pytest
-    rc, out, err, ms = _capture_run(
-        ctx,
-        ["python3", "-m", "pytest", "-q", "--no-header",
-         "-x" if os.environ.get("SLOT_QA_FAILFAST") else "--maxfail=10"],
-    )
+    # pytest — W244 wave 7: skip `slow` marker u quick/auto scope (set
+    # od strane runner.py kroz ctx.env["SLOT_QA_QUICK"]). FULL scope ne
+    # postavlja env varijablu pa pokreće sve testove uključujući Z3 SMT
+    # multi-objective, stress synth, LLM-ingest E2E, i benchmark.
+    pytest_cmd = ["python3", "-m", "pytest", "-q", "--no-header",
+                  "-x" if os.environ.get("SLOT_QA_FAILFAST") else "--maxfail=10"]
+    if ctx.env.get("SLOT_QA_QUICK") == "1":
+        pytest_cmd.extend(["-m", "not slow"])
+    rc, out, err, ms = _capture_run(ctx, pytest_cmd)
     parts.append({
         "tool": "pytest",
         "rc": rc,

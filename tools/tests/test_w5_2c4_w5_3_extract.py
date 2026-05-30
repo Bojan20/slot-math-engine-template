@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import sys
 import unittest
+
+import pytest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -53,6 +55,7 @@ class TestVolatilitySynth(unittest.TestCase):
         cls = volatility_class_of(solved)
         self.assertIn(cls, VOLATILITY_CV_BUCKETS)
 
+    @pytest.mark.slow  # W244 wave 7: Z3 NRA volatility CV synth ~14s
     def test_mode_c4_lands_in_medium_bucket(self):
         spec = parse_spec(SPEC_CLASSIC)
         ir = compile_to_ir(spec)
@@ -74,6 +77,7 @@ class TestVolatilitySynth(unittest.TestCase):
         with self.assertRaises(RtpSynthesisError):
             synth_with_volatility(ir, 0.96, "insane")
 
+    @pytest.mark.slow  # W244 wave 7: Z3 NRA volatility CV synth ~14s
     def test_mode_c4_log_block(self):
         spec = parse_spec(SPEC_CLASSIC)
         ir = compile_to_ir(spec)

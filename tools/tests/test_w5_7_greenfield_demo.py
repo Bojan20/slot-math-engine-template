@@ -44,6 +44,13 @@ from tools.greenfield_demo.pipeline import (
 from tools.math_dsl.spec import parse_spec
 
 
+# W244 wave 7: ceo modul tagovan `slow` — `artefacts` fixture pokreće
+# `run_pipeline` (DSL parse + Z3 SMT synth + IR roundtrip + 500k MC + cert
+# bundle) jednom po modulu, ~33s. Skipovano u qa-quick L3 budgetu, runs u
+# qa-full / CI nightly.
+pytestmark = pytest.mark.slow
+
+
 GDD_PATH = (
     Path(__file__).resolve().parents[1] / "greenfield_demo"
     / "wolf_eruption_mythic.gdd"

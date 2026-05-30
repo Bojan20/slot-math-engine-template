@@ -238,6 +238,7 @@ def test_missing_api_key_falls_back(tmp_path, monkeypatch, capfd):
 # ─── 6. End-to-end pipeline on mocked LLM GDD ───────────────────────────
 
 
+@pytest.mark.slow  # W244 wave 7: ~32s end-to-end (mocked LLM + Z3 + 500k MC)
 @pytest.mark.skipif(
     not ENGINE_BIN.exists(),
     reason=(

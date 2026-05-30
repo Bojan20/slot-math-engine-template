@@ -92,8 +92,11 @@ def test_generator_deterministic():
 
 
 # ─── 2. quick mode runs end-to-end ──────────────────────────────────────
+# W244 wave 7: sledeća 5 testova tagovana `slow` — benchmark suite koja
+# pokreće MC × archetype scoring 7-15s svaki. Skipovano u qa-quick L3.
 
 
+@pytest.mark.slow
 def test_quick_mode_runs(tmp_path: Path):
     """`--quick` emits all four artefact files in < 30 s and scores 10
     samples without error."""
@@ -127,6 +130,7 @@ def test_quick_mode_runs(tmp_path: Path):
 # ─── 3. speedup threshold ───────────────────────────────────────────────
 
 
+@pytest.mark.slow
 def test_speedup_threshold(tmp_path: Path):
     """Overall median convergence speedup must clear 5×.
 
@@ -155,6 +159,7 @@ def test_speedup_threshold(tmp_path: Path):
 _SVG_NS = 'xmlns="http://www.w3.org/2000/svg"'
 
 
+@pytest.mark.slow
 def test_report_self_contained(tmp_path: Path):
     """Neither the Markdown nor the SVG references any external URL."""
     cfg = BenchmarkConfig(mode="quick", out_dir=tmp_path)
@@ -177,10 +182,10 @@ def test_report_self_contained(tmp_path: Path):
     assert len(svg_text) > 500
     assert len(md_text) > 500
 
-
 # ─── 5. reproducibility — byte-stable handoff hash ──────────────────────
 
 
+@pytest.mark.slow
 def test_reproducible(tmp_path: Path):
     """Two `--quick` runs against the same config produce byte-identical
     timing-invariant handoff hashes AND byte-identical SVG output (the
@@ -218,6 +223,7 @@ def test_reproducible(tmp_path: Path):
 # ─── 6. CLI smoke (extra: keeps argparse honest) ────────────────────────
 
 
+@pytest.mark.slow
 def test_cli_quick(tmp_path: Path):
     """`python3 -m tools.benchmark --quick --out-dir <tmp>` exits 0."""
     from tools.benchmark.__main__ import main

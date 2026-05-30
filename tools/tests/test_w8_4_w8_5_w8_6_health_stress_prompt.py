@@ -5,6 +5,8 @@ import sys
 import unittest
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
@@ -62,8 +64,12 @@ class TestHealthCheck(unittest.TestCase):
 
 
 # ─── W8.5 — Stress synth ──────────────────────────────────────────
+# W244 wave 7: tagged `slow` — 3 testova × ~70s svaki (Z3 multi-class
+# volatility synth across LOW/MED/HIGH/EXTREME). Skipped in qa-quick L3
+# but runs in qa-full / CI nightly.
 
 
+@pytest.mark.slow
 class TestStressSynth(unittest.TestCase):
     def test_stress_returns_one_row_per_class(self):
         spec = parse_spec(SPEC_CLASSIC)

@@ -250,6 +250,16 @@ testpaths = ["tools/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+# W244 wave 7 — qa-quick L3 budget protection. The `slow` marker tags
+# tests that individually exceed ~7s (Z3 multi-objective synth, stress
+# test runs across volatility classes, LLM-ingest end-to-end, evolution
+# benchmark). Without filtering, L3 takes ~7 min and gets SIGKILL by
+# the qa-agent runner's per-layer timeout. `qa-quick` invokes pytest
+# with `-m "not slow"` to keep L3 < 90s; `qa-full` (and CI nightlies)
+# run the full set including these heavy regression checks.
+markers = [
+    "slow: tests >7s, skipped in qa-quick L3 (Z3 / stress / LLM / benchmark)",
+]
 
 [tool.ruff]
 line-length = 100

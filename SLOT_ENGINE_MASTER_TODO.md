@@ -6,6 +6,55 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 03:11 (post **W244 WAVE 7 — qa-quick L3 PYTEST SIGKILL FIX + `slow` marker**, commit pending)
+
+**Status:** "nastavi šta je ostalo za math" — pytest L3 sloj qa-quick orkestratora padao sa `rc=-9 SIGKILL` posle ~58s (timeout u qa-agent runner-u protiv ~405s ceo pytest run). Identifikovao 7 testova × 14-70s svaki koji su činili **81 %** ukupnog vremena (Z3 multi-objective synth, stress-volatility, LLM ingest E2E, greenfield E2E pipeline, benchmark suite). Rešenje: tagiraju se sa `@pytest.mark.slow`, qa-quick L3 prosljeđuje `-m "not slow"`, qa-full vodi sve.
+
+| Komponent | Pre wave 7 | Posle wave 7 |
+|---|---:|---:|
+| `qa-quick` wallclock | timeout/SIGKILL na ~90s | **151s** ✅ |
+| Pytest L3 (qa-quick scope) | -9 (rc=255+9) | **0 (PASS)** |
+| qa-quick verdict | **FAIL** | **ALL_PASS** ✅ |
+| Pytest collected | 2912 | 2885 active + 21 deselected `slow` |
+| Pytest wallclock sa "not slow" | n/a | **108s** |
+
+### Šta je tagovano `@pytest.mark.slow`
+
+| Test fajl / klasa | Razlog | Vreme po testu |
+|---|---|---:|
+| `test_w8_4_w8_5_w8_6_health_stress_prompt.py::TestStressSynth` (klasa) | Z3 multi-class volatility synth (LOW/MED/HIGH/EXTREME) | ~70s × 3 |
+| `test_w5_7_greenfield_demo.py` (ceo modul, `pytestmark`) | `artefacts` module fixture: parse + Z3 + IR + 500k MC + cert | ~33s setup |
+| `test_w6_2_llm_ingest.py::test_pipeline_e2e_on_llm_gdd` | Mock-LLM + Z3 + 500k MC | ~32s |
+| `test_w4_9_w4_10_w5_6_extras.py::TestMultiObjectiveSynth` (klasa) | Z3 NRA joint RTP + volatility | ~14s × 2 |
+| `test_w5_2c4_w5_3_extract.py::TestVolatilitySynth::test_mode_c4_*` (2 testa) | Z3 NRA volatility CV synth | ~14s × 2 |
+| `test_w7_benchmark.py` (5 testova) | MC × archetype scoring loop | ~7s × 5 |
+
+### Implementation detail
+
+- `pyproject.toml`: dodat `[tool.pytest.ini_options] markers = ["slow: ..."]` registracija.
+- `tools/qa_agent/runner.py`: `LayerContext.env` dobija `SLOT_QA_QUICK="1"` za `QaScope.QUICK` i `QaScope.AUTO`. `FULL` ne postavlja (pokriva sve).
+- `tools/qa_agent/auto.py::run_l3_unit`: pytest cmd dobija `-m "not slow"` ako `ctx.env["SLOT_QA_QUICK"] == "1"`.
+
+### Stryker scoped baseline (post wave 7)
+
+| Metric | Vrednost |
+|---|---:|
+| **Overall** | **98.02 %** ✅ |
+| Killed | 345 |
+| Survived | 7 (5 death-equivalent klasifikovano u wave 5) |
+| Timeout | 2 |
+
+### Sledeći wave queue (post wave 7)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | W4.9 Cluster Pays + W4.10 Cascade PAR validation | čekaju 1 PAR uzorak svaki — **Boki nema** |
+| **2** | Stryker bug GitHub issue submission (`bug-reports/.../GITHUB_ISSUE.md`) | pending Boki repo decision |
+| **3** | `agents/reg-oracle/` first regulator trace dump | čeka data |
+| **4** | 7 preostalih Stryker survivors | death-equivalent, ne vredi pattern menjati |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 03:50 (post **W244 WAVE 6 — MERKLE DETERMINISM FIX: 6 pinned reports byte-stable**, commit `89a7f9fb`)
 
 **Status:** "ultimativno sredjuj sve" — eliminisan kaskadni dirty-cycle koji je dirtio 6 regulator-pinned fajlova na svakom `qa-quick` rerun-u.

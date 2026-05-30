@@ -288,12 +288,19 @@ def run_qa(cfg: QaConfig) -> Tuple[QaReport, Path]:
         repo_sha=_git_head_sha(cfg.repo),
         started_at=now_iso_utc(),
     )
+    # W244 wave 7 — `SLOT_QA_QUICK=1` signal for L3 pytest to apply
+    # `-m "not slow"` filter. Quick/AUTO scope hides Z3 multi-objective,
+    # stress synth, LLM-ingest E2E, benchmark; FULL scope runs everything.
+    ctx_env = {"SLOT_QA_SEED": str(cfg.seed)}
+    if cfg.scope in (QaScope.QUICK, QaScope.AUTO):
+        ctx_env["SLOT_QA_QUICK"] = "1"
+
     ctx = LayerContext(
         repo=cfg.repo,
         out_dir=run_dir,
         seed=cfg.seed,
         skip=cfg.skip,
-        env={"SLOT_QA_SEED": str(cfg.seed)},
+        env=ctx_env,
     )
 
     block_after = None  # layer id past which we cascade-SKIP

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import sys
 import unittest
+
+import pytest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -106,8 +108,11 @@ class TestCascadeSpec(unittest.TestCase):
 
 
 # ─── W5.6 — Multi-objective synth ─────────────────────────────────────
+# W244 wave 7: tagovan `slow` — 2 testa × ~14s svaki (Z3 NRA joint
+# RTP+volatility constraint). Skipovano u qa-quick L3.
 
 
+@pytest.mark.slow
 class TestMultiObjectiveSynth(unittest.TestCase):
     def test_rtp_only_mode_equivalent_to_c1(self):
         spec = parse_spec(SPEC_CLASSIC)
