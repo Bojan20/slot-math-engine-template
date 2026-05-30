@@ -1,0 +1,87 @@
+{
+  "schema": "charge-meter-kernel/v1",
+  "merkle_root_sha256": "6906cabad4616ddc234b703deaef28985085449c03e8c82994cf7271afecba02",
+  "generated_at_utc": "deterministic-by-merkle:6906cabad4616ddc",
+  "kernel": "charge_meter",
+  "module": "tools.math_dsl.charge_meter",
+  "industry_pattern": "Starburst-meter / Power Stacks / Money Cart meter mode: per-spin charge accumulates into a meter; reaching threshold fires award (credit / multiplier / free spin / feature token). Multi-tier ladders sum independently.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "single-tier-starburst-like",
+      "description": "single-meter, mid-frequency feature trigger",
+      "rtp_contribution": 0.1,
+      "expected_charge_per_spin": 0.5,
+      "tiers": [
+        {
+          "name": "classic",
+          "threshold": 50.0,
+          "award_value_x_bet": 10.0,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.1,
+          "expected_charges_per_spin": 0.01
+        }
+      ],
+      "persistent_across_sessions": false
+    },
+    {
+      "fixture_name": "three-tier-multi-meter",
+      "description": "small/medium/grand tier ladder (Pragmatic Power Stacks style)",
+      "rtp_contribution": 1.0,
+      "expected_charge_per_spin": 1.0,
+      "tiers": [
+        {
+          "name": "small",
+          "threshold": 20.0,
+          "award_value_x_bet": 4.0,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.2,
+          "expected_charges_per_spin": 0.05
+        },
+        {
+          "name": "medium",
+          "threshold": 100.0,
+          "award_value_x_bet": 30.0,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.3,
+          "expected_charges_per_spin": 0.01
+        },
+        {
+          "name": "grand",
+          "threshold": 1000.0,
+          "award_value_x_bet": 500.0,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.5,
+          "expected_charges_per_spin": 0.001
+        }
+      ],
+      "persistent_across_sessions": false
+    },
+    {
+      "fixture_name": "money-cart-dense-fast",
+      "description": "dense-fast meter — high charge rate, low threshold, frequent trigger",
+      "rtp_contribution": 0.78,
+      "expected_charge_per_spin": 2.0,
+      "tiers": [
+        {
+          "name": "base-cart",
+          "threshold": 10.0,
+          "award_value_x_bet": 1.5,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.30000000000000004,
+          "expected_charges_per_spin": 0.2
+        },
+        {
+          "name": "super-cart",
+          "threshold": 50.0,
+          "award_value_x_bet": 12.0,
+          "award_kind": "credit_x_bet",
+          "rtp_contribution": 0.48,
+          "expected_charges_per_spin": 0.04
+        }
+      ],
+      "persistent_across_sessions": false
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_charge_meter_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: Wald identity RTP[tier] = (E[charge]/threshold) × award; no RNG."
+}

@@ -128,6 +128,17 @@ class FeatureSpec:
     money_value_weights: Optional[dict[float, float]] = None  # {value_x_bet: weight}
     money_grid_cap: Optional[int] = None              # e.g. 15 (5×3 full)
     money_symbol_id: Optional[str] = None             # "$" / "coin"
+    # Charge meter — W244 wave 11. Energy meter grows by
+    # `charge_per_spin` (mean) each spin; reaching `charge_threshold`
+    # fires the tier's `charge_award_x_bet` award (credit/multiplier/
+    # free-spin/feature-token) and rolls excess forward. Multi-tier
+    # supported via `charge_tiers` list. Used by NetEnt Starburst-like
+    # meters, Pragmatic Power Stacks, Relax Money Cart meter mode.
+    charge_per_spin: Optional[float] = None           # mean charge per spin
+    charge_threshold: Optional[float] = None          # single-tier shortcut
+    charge_award_x_bet: Optional[float] = None        # single-tier award
+    charge_tiers: Optional[list[dict]] = None         # [{name, threshold, award_value_x_bet, award_kind}]
+    charge_persistent: Optional[bool] = None          # survives session boundary
     # Generic catch-all so designer can pass vendor-specific keys
     extra: dict = field(default_factory=dict)
 
@@ -352,6 +363,8 @@ _VALID_FEATURE_KINDS = {
     "linear_progressive",
     # W244 wave 10 — Cash Eruption / Money Train / Coin Volcano pattern.
     "money_collect",
+    # W244 wave 11 — Charge meter (Starburst-like, Money Cart meter mode).
+    "charge_meter",
 }
 
 
@@ -452,6 +465,9 @@ def parse_spec(text: str) -> MathDslSpec:
             # W244 wave 10 — money_collect known keys
             "money_trigger_count_min", "money_respins_reset",
             "money_value_weights", "money_grid_cap", "money_symbol_id",
+            # W244 wave 11 — charge_meter known keys
+            "charge_per_spin", "charge_threshold", "charge_award_x_bet",
+            "charge_tiers", "charge_persistent",
         }
         extra = {k: v for k, v in f.items() if k not in known_keys}
         # money_value_weights normalization: YAML can carry float keys as
@@ -470,6 +486,29 @@ def parse_spec(text: str) -> MathDslSpec:
                 raise DslParseError("money_value_weights must be non-empty")
             if any(v < 0 for v in mvw.values()):
                 raise DslParseError("money_value_weights weights must be ≥ 0")
+        # charge_tiers validation: list of {name, threshold,
+        # award_value_x_bet [, award_kind]} dicts, sorted ascending.
+        ct_raw = f.get("charge_tiers")
+        ct: Optional[list[dict]] = None
+        if ct_raw is not None:
+            if not isinstance(ct_raw, list) or not ct_raw:
+                raise DslParseError(
+                    "charge_tiers must be a non-empty list of {name, threshold, "
+                    "award_value_x_bet} dicts"
+                )
+            for tier in ct_raw:
+                if not isinstance(tier, dict):
+                    raise DslParseError(f"charge_tiers entry must be mapping: {tier!r}")
+                for req in ("name", "threshold", "award_value_x_bet"):
+                    if req not in tier:
+                        raise DslParseError(
+                            f"charge_tiers entry missing required key {req!r}: {tier}"
+                        )
+                if float(tier["threshold"]) <= 0:
+                    raise DslParseError(
+                        f"charge_tiers threshold must be > 0: {tier!r}"
+                    )
+            ct = list(ct_raw)
         features.append(FeatureSpec(
             kind=fk,
             trigger_count_min=f.get("trigger_count_min"),
@@ -490,6 +529,11 @@ def parse_spec(text: str) -> MathDslSpec:
             money_value_weights=mvw,
             money_grid_cap=f.get("money_grid_cap"),
             money_symbol_id=f.get("money_symbol_id"),
+            charge_per_spin=f.get("charge_per_spin"),
+            charge_threshold=f.get("charge_threshold"),
+            charge_award_x_bet=f.get("charge_award_x_bet"),
+            charge_tiers=ct,
+            charge_persistent=f.get("charge_persistent"),
             extra=extra,
         ))
 

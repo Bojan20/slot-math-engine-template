@@ -6,6 +6,52 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:05 (post **W244 WAVE 11 — `charge_meter` math kernel landed**, commit pending)
+
+**Status:** Nastavak autonomnog batch-a posle wave 10. Druga math kernel mehanika u par sa money_collect.
+
+### Wave 11 — `charge_meter` feature kernel (Starburst meter / Power Stacks / Money Cart pattern)
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `tools/math_dsl/spec.py` (DSL extension) | `charge_meter` u VALID_FEATURE_KINDS + 5 polja (`charge_per_spin`, `charge_threshold`, `charge_award_x_bet`, `charge_tiers`, `charge_persistent`) + parser tier-list validation | +30 lines |
+| `tools/math_dsl/charge_meter.py` (kernel) | Closed-form: Wald identity RTP[tier] = (E[charge] / threshold) × award. Multi-tier sum. Pure-stdlib. | 135 lines |
+| `tools/tests/test_w244_charge_meter_kernel.py` | 16 testova — Wald math, multi-tier sum, params validation, DSL integration | **16/16 PASS** u 60ms |
+| `tools/build_charge_meter_kernel.py` | Deterministic artefakt builder, 3 fixtures | 95 lines |
+| `reports/acceptance/CHARGE_METER_KERNEL.json` | schema v1, Merkle root pinned, byte-stable rebuild | — |
+
+### Closed-form fixtures
+
+| Fixture | Pattern | E[charge/spin] | RTP |
+|---|---|---:|---:|
+| single-tier-starburst-like | mid-frequency single meter | 0.500 | 0.1000 |
+| three-tier-multi-meter | small/medium/grand ladder | 1.000 | 1.0000 |
+| money-cart-dense-fast | dense fast meter | 2.000 | 0.7800 |
+
+Drugi fixture (1.000 RTP) je matematički ekstrem — proxies za "engine kapacitet kernela", ne real-world balance. Real balance traži suma `E[charge]/threshold × award` ≈ 0.05-0.30 (deo total RTP).
+
+### Industry coverage (sad)
+
+**14 feature kinds** — money_collect (W10) + charge_meter (W11) prošireni union. DONE-UNIVERSAL coverage:
+- #10 Cluster cascade + charge meter — kernel sad postoji ✅
+- #13 Supermeter state-switch — može da se model-uje kao charge_meter sa `award_kind: state_transition`
+
+### Regression check
+
+`pytest -k "math_dsl or w5_1 or w5_2 or w7_1 or w8_4 or w244_money_collect or w244_charge_meter" -m "not slow"` → **120/120 PASS** u 2.79s.
+
+### Sledeći wave queue
+
+| # | Item | Status |
+|---|---|---|
+| **1** | W4.9/W4.10 PAR validation | Boki nema PAR |
+| **2** | Plan B full: rust-sim config bridge | 2-3h refactor, deferred |
+| **3** | Math DSL: must_hit_by / supermeter / additional kernels | autonomous, 2-3h svaka |
+| **4** | Stryker bug GitHub issue submission | pending repo decision |
+| **5** | 4 preostalih Stryker survivors | death-equivalent |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 06:50 (post **W244 WAVE 10 — `money_collect` math kernel landed**, commit pending)
 
 **Status:** Autonomni nastavak nakon Boki-jeve eskalacije "koji moj signal čekaš majke ti". Direktno na queue stavku #3 (Math DSL nova mehanika).
