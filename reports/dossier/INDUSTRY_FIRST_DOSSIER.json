@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:04963a0c1068d120",
-  "repo_sha": "2bb26692621580d710a6f9e80c0feee6671aaf85",
+  "generatedAtUtc": "deterministic-by-merkle:b406b84e3056e636",
+  "repo_sha": "0c7fadeb6c99fb52ab69757a844383916e955c52",
   "headline": {
-    "waves": 80,
-    "industry_firsts": 80,
+    "waves": 81,
+    "industry_firsts": 81,
     "all_present": true
   },
   "waves": [
@@ -2793,6 +2793,27 @@
         "pytest_gate": "1/1 PASS"
       },
       "industry_first": "First open-source cross-language math kernel parity gate. Python ↔ Rust byte-stable verification via JSON stdin/stdout binary. Deterministic Merkle pin attestation."
+    },
+    {
+      "wave": "244.35",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Rust Port Wave 2 — cluster_pays + cascade + money_collect + parity 8/8",
+      "reportPath": "reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "8/8 kernels Python↔Rust byte-stable (incl. Markov DP money_collect)",
+      "detail": {
+        "new_rust_kernels": [
+          "cluster_pays",
+          "cascade",
+          "money_collect"
+        ],
+        "total_rust_kernels_ported": 10,
+        "remaining_to_port": 10,
+        "max_delta": "9.42e-15 ULP (money_collect — Markov DP)"
+      },
+      "industry_first": "First open-source Rust port of Markov-DP money_collect kernel sa Python parity gate. Complex multi-step DP across (k_locked, respins_remaining) state space matches Python byte-stable."
     }
   ],
   "auditor_qa": [

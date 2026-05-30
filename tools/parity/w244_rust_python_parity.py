@@ -217,12 +217,100 @@ def _py_pay_anywhere(p: dict) -> dict:
     ))
 
 
+def fixture_cluster_pays() -> tuple[dict, dict]:
+    dist = {"A": {5: 0.1, 6: 0.05}, "B": {5: 0.2}}
+    pay = {"A": {5: 2.0, 6: 5.0}, "B": {5: 1.0}}
+    py_params = {"dist": dist, "pay": pay, "min_size": 5}
+    rust_params = {
+        "cluster_count_distribution": {
+            sym: {str(k): v for k, v in sub.items()} for sym, sub in dist.items()
+        },
+        "pay_table": {
+            sym: {str(k): v for k, v in sub.items()} for sym, sub in pay.items()
+        },
+        "min_cluster_size": 5,
+        "grid_rows": 5, "grid_cols": 6,
+        "adjacency": "4-way",
+    }
+    return py_params, rust_params
+
+
+def fixture_cascade() -> tuple[dict, dict]:
+    py_params = {
+        "p_initial_win": 0.27,
+        "base_pay_per_cascade_x_bet": 0.3,
+        "p_win_per_cascade": 0.40,
+        "multiplier_ladder": (1.0, 1.0, 2.0, 2.0, 5.0, 5.0, 25.0, 25.0),
+        "max_chain": 8,
+    }
+    rust_params = {
+        "p_initial_win": 0.27,
+        "base_pay_per_cascade_x_bet": 0.3,
+        "p_win_per_cascade": 0.40,
+        "multiplier_ladder": [1.0, 1.0, 2.0, 2.0, 5.0, 5.0, 25.0, 25.0],
+        "max_chain": 8,
+    }
+    return py_params, rust_params
+
+
+def fixture_money_collect() -> tuple[dict, dict]:
+    value_table = {1.0: 50.0, 2.0: 30.0, 5.0: 15.0, 10.0: 4.0, 50.0: 1.0}
+    py_params = {
+        "p_per_cell": 0.04, "n_cells": 15, "trigger_count_min": 6,
+        "respins_reset": 3, "grid_cap": 15,
+        "value_table": value_table,
+    }
+    rust_params = {
+        "p_per_cell": 0.04, "n_cells": 15, "trigger_count_min": 6,
+        "respins_reset": 3, "grid_cap": 15,
+        "value_table": {str(k): v for k, v in value_table.items()},
+    }
+    return py_params, rust_params
+
+
+def _py_cluster_pays(p: dict) -> dict:
+    from tools.math_dsl.cluster_pays import ClusterPaysParams, cluster_pays_rtp
+    return cluster_pays_rtp(ClusterPaysParams(
+        cluster_count_distribution=p["dist"],
+        pay_table=p["pay"],
+        min_cluster_size=p["min_size"],
+    ))
+
+
+def _py_cascade(p: dict) -> dict:
+    from tools.math_dsl.cascade import CascadeParams, cascade_rtp
+    return cascade_rtp(CascadeParams(
+        p_initial_win=p["p_initial_win"],
+        base_pay_per_cascade_x_bet=p["base_pay_per_cascade_x_bet"],
+        p_win_per_cascade=p["p_win_per_cascade"],
+        multiplier_ladder=p["multiplier_ladder"],
+        max_chain=p["max_chain"],
+    ))
+
+
+def _py_money_collect(p: dict) -> dict:
+    from tools.math_dsl.money_collect import (
+        MoneyCollectParams, money_collect_rtp_contribution,
+    )
+    return money_collect_rtp_contribution(MoneyCollectParams(
+        p_per_cell=p["p_per_cell"],
+        n_cells=p["n_cells"],
+        trigger_count_min=p["trigger_count_min"],
+        value_table=p["value_table"],
+        respins_reset=p["respins_reset"],
+        grid_cap=p["grid_cap"],
+    ))
+
+
 KERNELS = [
     ("charge_meter", fixture_charge_meter, _py_charge_meter),
     ("stacked_wilds", fixture_stacked_wilds, _py_stacked_wilds),
     ("must_hit_by", fixture_must_hit_by, _py_must_hit_by),
     ("both_ways", fixture_both_ways, _py_both_ways),
     ("pay_anywhere", fixture_pay_anywhere, _py_pay_anywhere),
+    ("cluster_pays", fixture_cluster_pays, _py_cluster_pays),
+    ("cascade", fixture_cascade, _py_cascade),
+    ("money_collect", fixture_money_collect, _py_money_collect),
 ]
 
 

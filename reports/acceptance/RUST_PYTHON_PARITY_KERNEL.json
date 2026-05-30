@@ -1,9 +1,9 @@
 {
   "schema": "w244-rust-python-parity/v1",
-  "merkle_root_sha256": "e8612a0893ff87f7cc852cf3ac8aa308919dcd9e5f026d6c4af46b3085a6a8ed",
-  "generated_at_utc": "deterministic-by-merkle:e8612a0893ff87f7",
-  "kernels_checked": 5,
-  "kernels_match": 5,
+  "merkle_root_sha256": "87bccfe8133d547f41332e3286dda2bba36712d4820628431bda74a3485a036c",
+  "generated_at_utc": "deterministic-by-merkle:87bccfe8133d547f",
+  "kernels_checked": 8,
+  "kernels_match": 8,
   "all_match": true,
   "epsilon": 1e-10,
   "rust_binary": "target/release/kernel_parity",
@@ -46,6 +46,30 @@
       "py_rtp": 0.003849406215053652,
       "rust_rtp": 0.0038494062150536516,
       "delta": 4.336808689942018e-19,
+      "within_eps": true
+    },
+    {
+      "kernel": "cluster_pays",
+      "status": "OK",
+      "py_rtp": 0.65,
+      "rust_rtp": 0.65,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "cascade",
+      "status": "OK",
+      "py_rtp": 0.17581536,
+      "rust_rtp": 0.17581536,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "money_collect",
+      "status": "OK",
+      "py_rtp": 0.0003179049509416583,
+      "rust_rtp": 0.0003179049509322409,
+      "delta": 9.417380070209092e-15,
       "within_eps": true
     }
   ],
