@@ -38,7 +38,7 @@ impl MoneyCollectParams {
         if self.value_table.is_empty() {
             return Err("value_table must be non-empty".into());
         }
-        for (_, &w) in &self.value_table {
+        for &w in self.value_table.values() {
             if w < 0.0 {
                 return Err("value_table weights must be ≥ 0".into());
             }

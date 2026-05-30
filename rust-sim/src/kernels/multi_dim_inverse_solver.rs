@@ -208,7 +208,7 @@ mod tests {
             vec![2.0 * theta[0] + theta[1], theta[0] - theta[1]]
         };
         let r = newton_raphson_nd(
-            &f,
+            f,
             &[3.0, 0.0],
             &[0.0, 0.0],
             None,
@@ -233,7 +233,7 @@ mod tests {
             ]
         };
         let r = newton_raphson_nd(
-            &f,
+            f,
             &[2.0, 0.0],
             &[0.5, 0.3],
             None,
@@ -252,7 +252,7 @@ mod tests {
     fn bounds_clamp() {
         let f = |theta: &[f64]| vec![10.0 * theta[0]];
         let r = newton_raphson_nd(
-            &f,
+            f,
             &[100.0],
             &[1.0],
             None,

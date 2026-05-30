@@ -209,6 +209,15 @@ dossier-search-index: ## Build unified search-index.json (229+ entries cross-dos
 docs-index: ## Build docs/README.md auto-index (75 top-level + 19 kernel docs)
 	python3 tools/build_docs_index.py
 
+wasm-build: ## Build slot-math-wasm package (5 hot kernels → 17 KB wasm)
+	cd packages/slot-math-wasm && \
+		RUSTUP_TOOLCHAIN=stable wasm-pack build --target web --release
+	@echo "✅ wasm output: packages/slot-math-wasm/pkg/"
+
+wasm-test: ## Run native cargo tests on slot-math-wasm (14 tests, ~5s)
+	cd packages/slot-math-wasm && \
+		RUSTUP_TOOLCHAIN=stable cargo test --release
+
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
@@ -256,6 +265,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_showcase_game_html.py \
 		tools/tests/test_w244_search_index.py \
 		tools/tests/test_w244_docs_index.py \
+		tools/tests/test_w244_wasm_build.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
