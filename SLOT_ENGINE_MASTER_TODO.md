@@ -6,6 +6,91 @@
 
 ---
 
+## 🏁 ULTIMATE MILESTONE — 2026-05-30 08:50 (post **W244 BATCH CLOSURE — wave 16→33, 18 commits, 20 math kernels, Stryker 98.88 %, dossier 79 IFs, master Merkle gate live**)
+
+**Status:** "kreni ovaj najveci rad, ali prvo azuriraj master todo" — ovo je konsolidovani snapshot 18 wave-ova kojeg sam landed posle wave 15 (svi pojedinačni snapshots ispod ostaju kao istorija). Sledeći aktivni wave (po Boki signal-u) je **Rust hot-path port** — najveći outstanding posao.
+
+### W244 KERNEL CATALOG (wave 16 → wave 33, 18 commits svi pushed)
+
+| Wave | Commit | Kernel / Deliverable | Industry-first |
+|---|---|---|---|
+| 16 | `78165bab` | `wheel` kernel (3-12 segment wheel + multipliers + jackpot tiers) | — |
+| 17 | `6c69c28f` | `state_machine` (Markov + Gauss tail-quantile) | yes |
+| 18 | `0d15d43a` | `expanding_symbol` (Book of Dead / Book of Ra pattern) | yes |
+| 19 | `02e86d70` | `persistent_multiplier` (Sticky Bandits / Mighty Wild) | yes |
+| 20 | `10ee8dde` | `cascade` (Sweet Bonanza tumble + multiplier ramp) | yes |
+| 21 | `ea6d7dfc` | `cluster_pays` (Aloha 4-way / Olympus 8-way BFS) | yes |
+| 22 | `f56bea59` | **all-kernel batch runner** + master Merkle attestation | yes |
+| 23 | `d6a9dc1c` | `sticky_wilds` respin chain (NetEnt / Pragmatic / JTG) | yes |
+| 24 | `8b090238` | `stacked_wilds` (Mega Moolah / Buffalo / Cleopatra II) | yes |
+| 25 | `8b137378` | `ways_evaluator` (Megaways 117 649 / 1024 / 243) | yes |
+| 26 | `2ae30015` | `pay_anywhere` (Sweet Bonanza scatter / Gonzo / Wolf Gold) | yes |
+| 27 | `4e94b35b` | **`hold_and_win` composed kernel** (Lightning Link / Dragon Cash) | yes |
+| 28 | `6a56c3c8` | comprehensive Math DSL kernel catalog | — |
+| 29 | `38e56f71` | **kernel attestation CI gate** (master Merkle determinism) | yes |
+| 30 | `ded6385d` | `both_ways` evaluator (Thunderstruck II / Starburst / Cleopatra) | yes |
+| 31 | `663e562e` | `asymmetric_paytable` aggregator (Twin Spin / Wild West Gold) | yes |
+| 32 | `7ab22ca9` | **symbolic gradient + Newton-Raphson inverse solver** (W7.6 vision) | yes |
+| 33 | `29771b73` | **end-to-end "Crimson Tiger" showcase** (4-kernel composition + 100k MC round-trip, Δ 0.0 pp) | yes |
+
+### Cumulative session bilans (wave 8 → wave 33, 26 commits)
+
+| Metric | Pre wave 8 | Posle wave 33 | Δ |
+|---|---:|---:|---:|
+| W244 math kernels | 0 | **20** (14 native + 1 composed + 5 utility/tooling) | +20 |
+| Acceptance fixtures + scenarios | 0 | **57** | +57 |
+| Acceptance tests | ~84 | **230+** (all PASS < 3 s) | +146 |
+| Stryker mutation score | 91.23 % | **98.88 %** ✅ | **+7.65 pp** |
+| Industry-First Dossier | 58 | **79** ✅ | +21 |
+| DONE-UNIVERSAL coverage | ~14/20 | **17/20** | +3 |
+| Master Merkle attestation | ❌ | ✅ `909d22d2f6dce710dff1…` | new |
+| CI determinism gate | ❌ | ✅ (`kernel-attestation` workflow) | new |
+| Symbolic gradient + inverse solver | ❌ | ✅ (W7.6 vision realized) | new |
+| End-to-end MC round-trip | ❌ | ✅ (delta 0.0 pp) | new |
+| Comprehensive catalog markdown | ❌ | ✅ (`docs/MATH_DSL_KERNEL_CATALOG.md`) | new |
+
+### Kategorisani kernel mapping (svih 20)
+
+| Kategorija | Kernel(s) |
+|---|---|
+| Cash bonus collector | `money_collect`, `charge_meter` |
+| Hold & Win composed | **`hold_and_win`** (money_collect + must_hit_by + wheel) |
+| Jackpots | `must_hit_by`, `wheel` |
+| FS mechanics | `expanding_symbol`, `persistent_multiplier`, `sticky_wilds`, `pick_chain` |
+| Grid evaluators | `cascade`, `cluster_pays`, `pay_anywhere`, `both_ways`, `asymmetric_paytable` |
+| Ways topology | `ways_evaluator`, `stacked_wilds` |
+| State machines | `state_machine`, `pick_chain` |
+| Buy & regulator | `buy_feature` (UKGC RTS 13C + MGA RG 2021/02) |
+| Symbolic / inverse | gradient + Newton-Raphson + bisection solver |
+| Composition pattern | `hold_and_win` exemplar |
+
+### Sledeći wave queue (Rust hot-path port = aktivni, signal "kreni najveci rad")
+
+| # | Item | Effort | Vrednost | Status |
+|---|---|---|---|---|
+| **🔴 1** | **Rust hot-path port × 20 kernel** (Python `tools/math_dsl/*` → Rust `rust-sim/src/kernels/*`) | 32-48 h | massive (perf: 10⁹ spinova u sekundu vs Python 10⁵) | **AKTIVNO — krenuvio sad** |
+| 2 | Pattern-FK multi-game refactor | 4-6 h | medium | parking |
+| 3 | Crash-style kernel | 1 h | low (corner case) | parking |
+| 4 | Multi-dim inverse solver (N-dim Newton-Raphson) | 3-4 h | low | parking |
+| 5 | Stryker bug GitHub issue submission | 30-45 min | open-source contribution | čeka tvoj signal za public push |
+| 6 | W4.9 Cluster + W4.10 Cascade real-vendor PAR | čeka PAR XLSX | per-game closed-form | čeka tvoj input |
+
+### Rust hot-path port — strategija
+
+20 W244 kernela trenutno žive samo u Pythonu. Plan portovanja:
+
+| Faza | Šta | Kerneli | Effort |
+|---|---|---|---|
+| R1 | Trivial primitives (no MC, čista aritmetika) | `wheel`, `pay_anywhere`, `both_ways`, `asymmetric_paytable` | 4-6 h |
+| R2 | Closed-form FS solvers | `expanding_symbol`, `persistent_multiplier`, `buy_feature`, `charge_meter`, `money_collect`, `must_hit_by`, `pick_chain` | 8-12 h |
+| R3 | Markov + state machine | `state_machine`, `sticky_wilds` | 4-6 h |
+| R4 | Grid evaluators (largest) | `cascade`, `cluster_pays`, `ways_evaluator`, `stacked_wilds` | 12-18 h |
+| R5 | Composition + inverse solver | `hold_and_win` composed, gradient + Newton-Raphson | 4-6 h |
+
+Po-kernel acceptance: TS ↔ Python ↔ Rust parity (3-way), benchmark Rust vs Python (cilj ≥ 100× perf), Stryker score Rust kernel.
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:55 (post **W244 WAVE 15 — `buy_feature` Bonus Buy regulator-audit kernel**, commit pending)
 
 **Status:** Autonomni continuation. 5. math kernel u seriji.
