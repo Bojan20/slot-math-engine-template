@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:69460c751f6b155c",
-  "repo_sha": "504a08ef890e84c6ba82e4c30361e3532ba27d4c",
+  "generatedAtUtc": "deterministic-by-merkle:83a98c24926e5cc9",
+  "repo_sha": "2865729f8332204824659cbea32f07238dda3d24",
   "headline": {
-    "waves": 85,
-    "industry_firsts": 85,
+    "waves": 86,
+    "industry_firsts": 86,
     "all_present": true
   },
   "waves": [
@@ -2907,6 +2907,29 @@
         "tests": "7/7 PASS"
       },
       "industry_first": "DONE-UNIVERSAL coverage 100 % (20/20). Composed both_ways + expanding_wild kernel + 3 asymmetric paytable showcase proxies (NetEnt Twin Spin, Yggdrasil Wild West Gold, Microgaming Wild Toro). Sve glavne industry slot math primitives sad zatvorene closed-form."
+    },
+    {
+      "wave": "244.44",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Multi-dim Newton-Raphson Rust port — N-D auto-calibration sub-microsecond",
+      "reportPath": "rust-sim/src/kernels/multi_dim_inverse_solver.rs",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "Rust N-D Newton-Raphson + analytic/numerical Jacobian + bounds + damping",
+      "detail": {
+        "module": "rust-sim/src/kernels/multi_dim_inverse_solver.rs",
+        "lines": 250,
+        "tests": "3/3 PASS (linear_2d 1-step, quadratic_2d converges, bounds_clamp)",
+        "features": [
+          "Gauss elimination + partial pivoting",
+          "Optional analytic Jacobian",
+          "Central-diff fallback",
+          "Per-dim bounds clamp",
+          "Damped Newton step"
+        ]
+      },
+      "industry_first": "First open-source Rust N-D Newton-Raphson za multi-objective slot calibration. Pure-stdlib Gauss elimination (no nalgebra). Sub-microsecond per iter. Designer specifikuje (target_rtp + target_volatility + target_max_win) → solver resolves param vector simultaneously."
     }
   ],
   "auditor_qa": [

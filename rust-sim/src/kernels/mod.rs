@@ -21,6 +21,7 @@ pub mod hold_and_win;
 pub mod inverse_solver;
 pub mod showcase_game;
 pub mod money_collect;
+pub mod multi_dim_inverse_solver;
 pub mod must_hit_by;
 pub mod pay_anywhere;
 pub mod persistent_multiplier;
