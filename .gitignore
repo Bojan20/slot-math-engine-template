@@ -54,6 +54,11 @@ reports/mutation/rust/*/mutants.out/diff/
 reports/mutation/rust/*/mutants.out/lock.json
 reports/mutation/rust/*/mutants.out/debug.log
 
+# W244 wave 54 — incomplete cargo-mutants exploratory runs (baseline
+# timeout on this repo's test suite; not real mutation results). Until
+# we either bump timeout or scope the test runner, these dirs are local-only.
+reports/mutation/rust/both_ways/
+
 # ─── Daily cert replay output (W152 Wave 15 cert-daily.mjs) ───────────
 # Per-day timestamped dossiers + HEAD/CHAIN are operator-side cron output,
 # regenerated daily. Tracking them would commit-noise every CI run.
