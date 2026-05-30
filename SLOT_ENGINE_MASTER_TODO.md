@@ -6,7 +6,55 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-31 00:35 (post wave 74: wasm ↔ Python parity)
+## 📊 REALAN STATUS — 2026-05-31 01:15 (post wave 80: top-level CHANGELOG)
+
+**Sesija "kreni sve do kraja ultimativno" — final closure:**
+
+| Wave | Commit | Šta |
+|---|---|---|
+| 75 | `8cbbe6cb` | wasm-parity CI workflow (`.yml`) |
+| 76 | `69edb280` | `make qa-w244-full` orchestrator (5-step all-gate) |
+| 77 | `69edb280` | TS wrapper `packages/slot-math-wasm/ts/index.ts` sa 3 namespaces |
+| 78 | `69edb280` | `AGENT.md` za AI coding assistants (javan navigator) |
+| 79 | `9e534e5a` | Bench history snapshot — per-commit time-series |
+| 80 | `531d5e76` | Top-level `CHANGELOG.md` za monorepo (Keep-a-Changelog) |
+
+**Final QA stanje (2026-05-31 01:15)**:
+
+| Layer | Status |
+|---|---|
+| Pytest `make qa-w244-session` (24 fajla) | ✅ **152/152 PASS** (1.95s) |
+| W244 health probe | ✅ 26/26 PASS |
+| Dossier HTML lint | ✅ 25/25 pages clean |
+| Cargo rust-sim | ✅ 412/412 |
+| Cargo wasm crate | ✅ 14/14 |
+| Ruff | ✅ All clean |
+| `make qa-w244-full` orchestrator | ✅ **ALL GATES GREEN** |
+| Working tree | ✅ clean, origin/main sync |
+
+**Session totals** (waves 49 → 80, 2026-05-30 → 2026-05-31):
+- 32 wave-ova landed kontinuirano
+- 40+ commit-ova pushed
+- 152 testova zelena
+- 5 nove CI workflow-a
+- 130+ standalone HTML page-ova u dossier surface
+- 3 nezavisne kernel implementacije (Python + Rust + wasm) sa ULP-stable parity
+
+**Outstanding** (sve čekaju eksplicitnu Boki akciju, ne autonomne):
+
+| Stavka | Šta čeka |
+|---|---|
+| gh-pages enable | 3 klika u Settings → Pages → "GitHub Actions" |
+| PyPI `twine upload` | API token + namespace check |
+| Stryker upstream issue | Eksplicitan submit signal |
+
+Autonomne parking stavke iz #1, #3, #6, #7 su sve **compute-bound /
+specs-blocked / duplicates of existing** — nema više smislenog autonomous
+rada bez Boki signal-a.
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-31 00:35 (post wave 74: wasm ↔ Python parity)
 
 **Delta od prethodnog snapshot-a:**
 
