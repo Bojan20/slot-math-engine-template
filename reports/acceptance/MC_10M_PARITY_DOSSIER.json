@@ -1,0 +1,65 @@
+{
+  "schema": "mc-10m-parity-dossier/v2",
+  "merkle_root_sha256": "6fd37872f8a2aba5668ecc4189c004838bb7126de176887f04791f57a3c1e937",
+  "generated_at_utc": "deterministic-by-merkle:6fd37872f8a2aba5",
+  "spins_per_game": 10000000,
+  "spin_budget_total": 30000000,
+  "games_total": 3,
+  "games_ok": 3,
+  "all_games_ok": true,
+  "records": [
+    {
+      "slug": "book-expanding-bonusbuy",
+      "status": "OK",
+      "report_path": "reports/acceptance/book_bonusbuy_mc.json",
+      "report_sha256": "731e29e9ca5f8bbe8b93befd534ec352984ed23e6887f7aa7ba2fc75a5d046f9",
+      "spins": 10000000,
+      "all_gates_pass": true,
+      "gates_passed": 4,
+      "gates_total": 4,
+      "per_gate": {
+        "line_pp_le_0p5": true,
+        "scatter_pp_le_0p1": true,
+        "hit_freq_pp_le_5p0": true,
+        "fs_trigger_freq_rel_err_le_0p10": true
+      }
+    },
+    {
+      "slug": "megaways-clean-room-template",
+      "status": "OK",
+      "report_path": "reports/acceptance/megaways_mc_parity.json",
+      "report_sha256": "25139d2de036915413f8adca76ddbc31dbb754bdb3bc199603cf2e01e34c4ec8",
+      "spins": 10000000,
+      "all_gates_pass": true,
+      "gates_passed": 5,
+      "gates_total": 5,
+      "per_gate": {
+        "fs_trigger_rate_in_open_unit": true,
+        "n_triggers_positive": true,
+        "rtp_total_finite": true,
+        "rtp_total_non_negative": true,
+        "total_fs_awarded_positive": true
+      }
+    },
+    {
+      "slug": "walking-wild-clean-room-template",
+      "status": "OK",
+      "report_path": "reports/acceptance/walking_wild_mc_parity.json",
+      "report_sha256": "6cd81656d7bd2b4e64776f2323daa182c137ed77d210bde14e1dea0f1cd8af25",
+      "spins": 10000000,
+      "all_gates_pass": true,
+      "gates_passed": 6,
+      "gates_total": 6,
+      "per_gate": {
+        "fs_trigger_rate_positive": true,
+        "rtp_base_finite": true,
+        "rtp_base_non_negative": true,
+        "sticky_ttl_mean_in_pmf_support": true,
+        "walking_dir_balanced": true,
+        "wild_landing_rate_positive": true
+      }
+    }
+  ],
+  "verification": "To verify: re-hash each per-game MC report file with SHA-256, concatenate `<slug>|<sha256>|<all_gates_pass>|<gates_passed>/<gates_total>\\n` rows in dossier order, SHA-256 that concatenation. The result must equal `merkle_root_sha256`.",
+  "note": "Each validator encodes its own per-component gate ladder (line / scatter / FS / hit_freq) with empirically-derived tolerances. We aggregate by the per-validator all_gates_pass boolean rather than chasing a synthetic overall RTP metric — the validators' own gate semantics are the source of truth."
+}

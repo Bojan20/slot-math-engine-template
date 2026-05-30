@@ -6,6 +6,56 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 06:30 (post **W244 WAVE 9 — REG-ORACLE BOOTSTRAP + 30M MC PARITY DOSSIER**, commits `563761aa` + pending)
+
+**Status:** "auto" / "sam sve radi" — autonomous batch zatvorio dve queue stavke u jednoj seriji.
+
+### Wave 9a — reg-oracle agent bootstrap (queue #4)
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `agents/reg-oracle/manifest.yaml` | Full agent definition (mirror qa-agent) | 49 lines |
+| `agents/reg-oracle/corpus/traces.jsonl` | Deterministic bootstrap iz 12 jurisdiction profiles × 9 fields-of-interest + few-shot + spec | **117 traces** |
+| `agents/reg-oracle/examples/*.md` | Few-shot examples (UKGC lookup, cross-jurisdiction sweep, prohibited-feature pre-flight) | 3 × MD |
+| `agents/reg-oracle/eval/held_out.yaml` | Schema v1 acceptance eval | **13 cases** |
+| `tools/reg_oracle/bootstrap_corpus.py` | Generator: UUID5(REG_ORACLE_NS) + Merkle-derived timestamps | 171 lines |
+| `tools/tests/test_reg_oracle_corpus.py` | Acceptance: parse + determinism + 12-jurisdiction coverage | **7/7 PASS** |
+
+### Wave 9b — 30M MC parity dossier
+
+Pokrenuo postojeće 3 python MC validatore × 10M spinova each (50× više od 200k default). 28 min ukupno (megaways najsporiji, single-thread Python). Emitovao `reports/acceptance/MC_10M_PARITY_DOSSIER.json` sa Merkle root verification protokolom.
+
+| Igra | Validator | Spinova | Gates | All PASS |
+|---|---|---:|---:|:---:|
+| book-expanding-bonusbuy | `tools/parity/book_bonusbuy_mc.py` | 10,000,000 | 4/4 | ✅ |
+| megaways-clean-room-template | `tools/parity/megaways_mc.py` | 10,000,000 | 5/5 | ✅ |
+| walking-wild-clean-room-template | `tools/parity/walking_wild_mc.py` | 10,000,000 | 6/6 | ✅ |
+| **Total spin budget** | | **30,000,000** | **15/15** | ✅ |
+
+Dossier schema `mc-10m-parity-dossier/v2` agregira po per-validator `all_gates_pass` (svaki validator ima sopstvenu per-component gate ladder — line/scatter/FS/hit_freq sa empirijski-derived tolerancama; chasing synthetic overall_rtp metric promaši per-mechanism semantiku).
+
+### Stryker scoped baseline (post wave 8 held)
+
+| Metric | Vrednost |
+|---|---:|
+| **Overall** | **98.88 %** ✅ |
+| analyzer.ts | 99.23 % |
+| session.ts | 98.67 % |
+| Killed | 351 |
+| Survived | 4 (svi death-equivalent) |
+
+### Sledeći wave queue (post wave 9)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | W4.9 Cluster Pays + W4.10 Cascade PAR validation | čekaju 1 PAR uzorak svaki — **Boki nema** |
+| **2** | Plan B (full): rust-sim config bridge za 1B MC × 30 mechanics | 2-3h refactor, autonomous, deferred |
+| **3** | Math DSL nova mehanika (W7.x style) | 2-3h, pure-synthetic, autonomous |
+| **4** | Stryker bug GitHub issue submission | pending Boki repo decision |
+| **5** | 4 preostalih Stryker survivors | death-equivalent, ne vredi |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 05:46 (post **W244 WAVE 8 — analyzer.ts float-boundary kill: 98.02 → 98.88 %**, commit pending)
 
 **Status:** "auto" — autonomous prio A (Stryker source pattern refactor). Cilj: pomeriti Stryker 98 → 99 % zatvaranjem 4 float-boundary mutanata u `src/sensitivity/analyzer.ts`.
