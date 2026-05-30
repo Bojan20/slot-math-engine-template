@@ -6,21 +6,35 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 16:40 (post **W244 WAVE 39-50 — multi_dim parity + vendored PyPI package fully `pip install`-able**)
+## 🏁 ABSOLUTE FINAL — 2026-05-30 17:00 (post **W244 WAVE 49-53 — parity polish + PyPI vendored + HTML portals + CI gates**)
 
-**Status:** "dalje, ultimativno" — wave 48-50 landed, paket je sad funkcionalan na PyPI standardu (`pip install slot-math-kernels` radi clean bez monorepo).
+**Status:** "AJDE DALJE RADI ULTIMATIVNO ZATVARJ SVE" — pet wave-ova landed kontinuirano, sve internih.
 
-### Wave 46 → 50 deltas
+### Wave 49 → 53 deltas
 
 | Wave | Commit | Šta |
 |---|---|---|
-| **46** | `6bb8474b` | Ruff + Stryker killer test landed (parallel session) |
-| **47** | `ef324190` | Benchmark dossier — sub-µs Rust performance attestation |
-| **48** | `c86a513d` | kernel_lint CI integration — fail-fast gate pre acceptance |
 | **49** | `0899a049` | `multi_dim_inverse_solver` Python↔Rust parity snapshot tests (5/5) |
-| **50** | _(this commit)_ | PyPI paket **vendored** — 22 kernel modules + relative-import rewrite za `both_ways_expanding_wild` + `hold_and_win`; clean-venv `pip install` verified; drift-detect test gard u `tools/tests/` |
+| **50** | `11f24d69` | PyPI paket **vendored** — 22 kernels, clean-venv `pip install` ready, drift guard (5/5) |
+| **51** | `1837c391` | Industry-First HTML dashboard — 89 cards, deterministic Merkle (3/3) |
+| **52** | `a5dce4e6` | Unified Regulator Portal — 3-tab single-page (IFs + Kernels + Bench) (6/6) |
+| **53** | _(this commit)_ | Makefile + CI integration — `make dossier-all` / `make pypi-smoke` + `w244-dossier-html.yml` workflow drift guard |
 
-**`packages/slot-math-kernels-1.0.0-py3-none-any.whl`** uspešno builds + installs + imports svih 22 kernela bez fallback-a na monorepo.
+### Wave 53 deliverables
+
+| Komponenta | Putanja |
+|---|---|
+| `make dossier-ifs-html` | rebuilds IF dashboard |
+| `make dossier-portal` | rebuilds Regulator Portal |
+| `make dossier-bench` | regenerates W244_BENCHMARK_DOSSIER.json from criterion |
+| `make dossier-all` | parallelno rebuild oba HTML page |
+| `make pypi-build` | builds slot-math-kernels wheel |
+| `make pypi-smoke` | end-to-end wheel install + import test (clean venv) |
+| `.github/workflows/w244-dossier-html.yml` | CI gate: rebuild dossier HTML i diff vs commited; fails ako drift |
+
+**Total session: 19+/19+ PASS, 5 wave commits, sve interno na našem repo.**
+
+**Public push (Stryker upstream issue, PyPI `twine upload`) — čeka Boki signal.**
 
 ---
 

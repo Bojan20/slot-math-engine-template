@@ -1,0 +1,136 @@
+# W244 wave 53 — Dossier HTML deterministic build gate.
+#
+# Whenever the underlying dossier JSON files change (Industry-First,
+# All-Kernels, Benchmark), the corresponding rendered HTML page must
+# rebuild byte-identical. This gate:
+#
+#   1. Rebuilds `INDUSTRY_FIRST_DOSSIER.html` (89-card IF dashboard)
+#   2. Rebuilds `REGULATOR_PORTAL.html` (3-tab unified portal)
+#   3. Verifies that the rebuild matches the committed copy in git
+#      (drift detector — auditors trust the page Merkle only if the
+#      committed file = freshly rebuilt file).
+#   4. Runs the structure tests for both HTML pages.
+#
+# Fails CI if:
+#   * Either rebuild produces drift vs. committed HTML
+#   * Any structure / Merkle / card-count test fails
+#
+# This pairs with `w244-kernel-attest.yml` which already verifies the
+# JSON sources rebuild byte-stable.
+
+name: w244-dossier-html
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/build_industry_firsts_html.py'
+      - 'tools/build_regulator_portal.py'
+      - 'tools/tests/test_w244_industry_firsts_html.py'
+      - 'tools/tests/test_w244_regulator_portal.py'
+      - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
+      - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
+      - 'reports/dossier/REGULATOR_PORTAL.html'
+      - 'reports/acceptance/W244_ALL_KERNELS.json'
+      - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
+      - '.github/workflows/w244-dossier-html.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/build_industry_firsts_html.py'
+      - 'tools/build_regulator_portal.py'
+      - 'tools/tests/test_w244_industry_firsts_html.py'
+      - 'tools/tests/test_w244_regulator_portal.py'
+      - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.json'
+      - 'reports/dossier/INDUSTRY_FIRST_DOSSIER.html'
+      - 'reports/dossier/REGULATOR_PORTAL.html'
+      - 'reports/acceptance/W244_ALL_KERNELS.json'
+      - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
+      - '.github/workflows/w244-dossier-html.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dossier-html-attest:
+    name: Dossier HTML byte-stable + structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run dossier HTML structure tests
+        run: |
+          python -m pytest \
+            tools/tests/test_w244_industry_firsts_html.py \
+            tools/tests/test_w244_regulator_portal.py \
+            -v --tb=short
+
+      - name: Snapshot committed HTML
+        run: |
+          cp reports/dossier/INDUSTRY_FIRST_DOSSIER.html /tmp/ifs-committed.html
+          cp reports/dossier/REGULATOR_PORTAL.html /tmp/portal-committed.html
+
+      - name: Rebuild Industry-First HTML
+        run: |
+          python3 tools/build_industry_firsts_html.py
+
+      - name: Rebuild Regulator Portal
+        run: |
+          python3 tools/build_regulator_portal.py
+
+      - name: Verify Industry-First HTML byte-identical
+        run: |
+          if ! diff -q /tmp/ifs-committed.html \
+               reports/dossier/INDUSTRY_FIRST_DOSSIER.html; then
+            echo "::error::INDUSTRY_FIRST_DOSSIER.html DRIFT — committed != fresh rebuild"
+            echo "::error::Run \`make dossier-ifs-html\` and commit the result."
+            diff /tmp/ifs-committed.html \
+                 reports/dossier/INDUSTRY_FIRST_DOSSIER.html | head -30
+            exit 1
+          fi
+          echo "✓ INDUSTRY_FIRST_DOSSIER.html: rebuild byte-identical"
+
+      - name: Verify Regulator Portal byte-identical
+        run: |
+          if ! diff -q /tmp/portal-committed.html \
+               reports/dossier/REGULATOR_PORTAL.html; then
+            echo "::error::REGULATOR_PORTAL.html DRIFT — committed != fresh rebuild"
+            echo "::error::Run \`make dossier-portal\` and commit the result."
+            diff /tmp/portal-committed.html \
+                 reports/dossier/REGULATOR_PORTAL.html | head -30
+            exit 1
+          fi
+          echo "✓ REGULATOR_PORTAL.html: rebuild byte-identical"
+
+      - name: Emit page Merkle summary
+        run: |
+          IFS_HASH=$(sha256sum reports/dossier/INDUSTRY_FIRST_DOSSIER.html \
+                     | cut -d' ' -f1)
+          PORTAL_HASH=$(sha256sum reports/dossier/REGULATOR_PORTAL.html \
+                        | cut -d' ' -f1)
+          echo "Industry-First HTML SHA-256: $IFS_HASH"
+          echo "Regulator Portal HTML SHA-256: $PORTAL_HASH"
+          echo "## W244 Dossier HTML Merkle Roots" >> $GITHUB_STEP_SUMMARY
+          echo "- IF Dashboard: \`$IFS_HASH\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Portal:       \`$PORTAL_HASH\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload portal artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: w244-dossier-html
+          path: |
+            reports/dossier/INDUSTRY_FIRST_DOSSIER.html
+            reports/dossier/REGULATOR_PORTAL.html
+          if-no-files-found: error

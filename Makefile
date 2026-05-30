@@ -173,3 +173,52 @@ qa-full: ## QA Agent every layer L0..L9 (BASELINE=<ref> optional for L7 regressi
 
 qa-status: ## Read the last persisted QA Agent report
 	python3 -m tools.qa_agent status
+
+# ─── W244 wave 53 — Dossier HTML build targets ─────────────────────────────
+
+dossier-ifs-html: ## Build Industry-First Dossier static HTML dashboard (89 cards)
+	python3 tools/build_industry_firsts_html.py
+
+dossier-portal: ## Build unified Regulator Portal (3-tab: IFs + Kernels + Bench)
+	python3 tools/build_regulator_portal.py
+
+dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
+	python3 tools/build_benchmark_dossier.py
+
+dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON changes)
+	$(MAKE) dossier-ifs-html
+	$(MAKE) dossier-portal
+	@echo "✅ All dossier HTML pages rebuilt"
+	@echo "   reports/dossier/INDUSTRY_FIRST_DOSSIER.html"
+	@echo "   reports/dossier/REGULATOR_PORTAL.html"
+
+# ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
+#
+# Note: PEP 517 `build` package is required. Install via:
+#   python3 -m pip install build
+# Override `PY` if your default python lacks `build`:
+#   make pypi-build PY=python3.11
+
+PY ?= python3
+
+pypi-build: ## Build slot-math-kernels wheel via PEP 517 (dist/)
+	@$(PY) -c "import build" 2>/dev/null || { \
+		echo "Missing PEP 517 'build' — run: $(PY) -m pip install build"; \
+		exit 2; \
+	}
+	cd packages/slot-math-kernels && $(PY) -m build --wheel --outdir dist
+
+pypi-smoke: pypi-build ## Build wheel + smoke install + import test in /tmp venv
+	@rm -rf /tmp/smk-pypi-venv
+	@$(PY) -m venv /tmp/smk-pypi-venv
+	@/tmp/smk-pypi-venv/bin/pip install --quiet \
+		packages/slot-math-kernels/dist/slot_math_kernels-*.whl
+	@/tmp/smk-pypi-venv/bin/python -c "import slot_math_kernels as smk; \
+		assert len(smk.__all__) == 22, smk.__all__; \
+		from slot_math_kernels import charge_meter as cm; \
+		p = cm.ChargeMeterParams(expected_charge_per_spin=0.5, \
+			tiers=(cm.ChargeTier('classic', threshold=50.0, \
+			award_value_x_bet=10.0),)); \
+		r = cm.charge_meter_rtp(p); \
+		assert abs(r['rtp_contribution'] - 0.10) < 1e-9, r; \
+		print('✅ slot-math-kernels wheel install + import OK')"
