@@ -145,6 +145,25 @@ def check_html_dashboards():
         )
 
 
+def check_search_index():
+    idx = DOSSIER / "search-index.json"
+    if not idx.exists():
+        _check("search-index.json present", False, "missing")
+        return
+    d = json.loads(idx.read_text())
+    _check(
+        "search-index.json present",
+        True,
+        f"{d.get('entries_count', 0)} entries",
+    )
+    merkle = d.get("merkle_root_sha256", "")
+    _check(
+        "search-index Merkle 64-hex",
+        bool(HEX64.match(merkle)),
+        merkle[:16] + "…" if merkle else "(missing)",
+    )
+
+
 def check_kernel_reference_cards():
     krefs = DOSSIER / "kernels"
     if not krefs.is_dir():
@@ -252,6 +271,7 @@ def main() -> int:
         check_benchmark_dossier,
         check_industry_firsts_dossier,
         check_html_dashboards,
+        check_search_index,
         check_kernel_reference_cards,
         check_pypi_vendored,
         check_vendored_drift,

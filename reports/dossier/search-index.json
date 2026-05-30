@@ -1,0 +1,1616 @@
+{
+  "by_kind": {
+    "cf-solver": 120,
+    "industry-first": 89,
+    "kernel": 19,
+    "showcase": 1
+  },
+  "entries": [
+    {
+      "body": "ADJACENT_PAYS_AGGREGATOR ADJACENT_PAYS_AGGREGATOR.json configs=6/6 PASS",
+      "id": "ADJACENT_PAYS_AGGREGATOR",
+      "kind": "cf-solver",
+      "title": "CF solver: ADJACENT_PAYS_AGGREGATOR",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "AI_FAIRNESS_AUDIT AI_FAIRNESS_AUDIT.json configs=6/6 PASS",
+      "id": "AI_FAIRNESS_AUDIT",
+      "kind": "cf-solver",
+      "title": "CF solver: AI_FAIRNESS_AUDIT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "ANTE_BET_TRADEOFF ANTE_BET_TRADEOFF.json configs=6/6 PASS",
+      "id": "ANTE_BET_TRADEOFF",
+      "kind": "cf-solver",
+      "title": "CF solver: ANTE_BET_TRADEOFF",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "ANTICIPATION_REEL_TEASE ANTICIPATION_REEL_TEASE.json configs=6/6 PASS",
+      "id": "ANTICIPATION_REEL_TEASE",
+      "kind": "cf-solver",
+      "title": "CF solver: ANTICIPATION_REEL_TEASE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "ARCADE_SHOOTER_SURVIVAL_LEVELS ARCADE_SHOOTER_SURVIVAL_LEVELS.json configs=6/6 PASS",
+      "id": "ARCADE_SHOOTER_SURVIVAL_LEVELS",
+      "kind": "cf-solver",
+      "title": "CF solver: ARCADE_SHOOTER_SURVIVAL_LEVELS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "AUTO_SPIN_DUAL_STOP AUTO_SPIN_DUAL_STOP.json configs=6/6 PASS",
+      "id": "AUTO_SPIN_DUAL_STOP",
+      "kind": "cf-solver",
+      "title": "CF solver: AUTO_SPIN_DUAL_STOP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "AVALANCHE_REACTOR_WAVE_AGGREGATOR AVALANCHE_REACTOR_WAVE_AGGREGATOR.json configs=6/6 PASS",
+      "id": "AVALANCHE_REACTOR_WAVE_AGGREGATOR",
+      "kind": "cf-solver",
+      "title": "CF solver: AVALANCHE_REACTOR_WAVE_AGGREGATOR",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "AWP_CYCLE_CONVERGENCE AWP_CYCLE_CONVERGENCE.json configs=6/6 PASS",
+      "id": "AWP_CYCLE_CONVERGENCE",
+      "kind": "cf-solver",
+      "title": "CF solver: AWP_CYCLE_CONVERGENCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BEHAVIORS_COMPOSITIONAL BEHAVIORS_COMPOSITIONAL.json configs=0/0 FAIL",
+      "id": "BEHAVIORS_COMPOSITIONAL",
+      "kind": "cf-solver",
+      "title": "CF solver: BEHAVIORS_COMPOSITIONAL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BIDIRECTIONAL_LINE_PAY BIDIRECTIONAL_LINE_PAY.json configs=6/6 PASS",
+      "id": "BIDIRECTIONAL_LINE_PAY",
+      "kind": "cf-solver",
+      "title": "CF solver: BIDIRECTIONAL_LINE_PAY",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BIG_BET_PAID_PACKAGE_MULTI_SPIN BIG_BET_PAID_PACKAGE_MULTI_SPIN.json configs=6/6 PASS",
+      "id": "BIG_BET_PAID_PACKAGE_MULTI_SPIN",
+      "kind": "cf-solver",
+      "title": "CF solver: BIG_BET_PAID_PACKAGE_MULTI_SPIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_BANK_RUNNING_BALANCE_OFFSET BONUS_BANK_RUNNING_BALANCE_OFFSET.json configs=6/6 PASS",
+      "id": "BONUS_BANK_RUNNING_BALANCE_OFFSET",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_BANK_RUNNING_BALANCE_OFFSET",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_BUY_VARIANCE BONUS_BUY_VARIANCE.json configs=6/6 PASS",
+      "id": "BONUS_BUY_VARIANCE",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_BUY_VARIANCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_COLLECT_N BONUS_COLLECT_N.json configs=6/6 PASS",
+      "id": "BONUS_COLLECT_N",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_COLLECT_N",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_TRIGGER_AWARD_STRATIFICATION BONUS_TRIGGER_AWARD_STRATIFICATION.json configs=6/6 PASS",
+      "id": "BONUS_TRIGGER_AWARD_STRATIFICATION",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_TRIGGER_AWARD_STRATIFICATION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_TRIGGER_WAIT_TIME BONUS_TRIGGER_WAIT_TIME.json configs=6/6 PASS",
+      "id": "BONUS_TRIGGER_WAIT_TIME",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_TRIGGER_WAIT_TIME",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BONUS_WHEEL_RESPIN BONUS_WHEEL_RESPIN.json configs=6/6 PASS",
+      "id": "BONUS_WHEEL_RESPIN",
+      "kind": "cf-solver",
+      "title": "CF solver: BONUS_WHEEL_RESPIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "BOTH_WAYS BOTH_WAYS.json configs=0/0 FAIL",
+      "id": "BOTH_WAYS",
+      "kind": "cf-solver",
+      "title": "CF solver: BOTH_WAYS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CASCADE_METER_CHARGE_UP CASCADE_METER_CHARGE_UP.json configs=6/6 PASS",
+      "id": "CASCADE_METER_CHARGE_UP",
+      "kind": "cf-solver",
+      "title": "CF solver: CASCADE_METER_CHARGE_UP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CASCADE_MULTIPLIER_CHAIN CASCADE_MULTIPLIER_CHAIN.json configs=6/6 PASS",
+      "id": "CASCADE_MULTIPLIER_CHAIN",
+      "kind": "cf-solver",
+      "title": "CF solver: CASCADE_MULTIPLIER_CHAIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CASCADE_MULTIPLIER_PYRAMID CASCADE_MULTIPLIER_PYRAMID.json configs=6/6 PASS",
+      "id": "CASCADE_MULTIPLIER_PYRAMID",
+      "kind": "cf-solver",
+      "title": "CF solver: CASCADE_MULTIPLIER_PYRAMID",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CHARGE_METER CHARGE_METER.json configs=7/7 PASS",
+      "id": "CHARGE_METER",
+      "kind": "cf-solver",
+      "title": "CF solver: CHARGE_METER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CLASS_II_BINGO CLASS_II_BINGO.json configs=6/6 PASS",
+      "id": "CLASS_II_BINGO",
+      "kind": "cf-solver",
+      "title": "CF solver: CLASS_II_BINGO",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CLUSTER_CASCADE CLUSTER_CASCADE.json configs=0/0 FAIL",
+      "id": "CLUSTER_CASCADE",
+      "kind": "cf-solver",
+      "title": "CF solver: CLUSTER_CASCADE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CLUSTER_COMPOUND_VARIANCE CLUSTER_COMPOUND_VARIANCE.json configs=6/6 PASS",
+      "id": "CLUSTER_COMPOUND_VARIANCE",
+      "kind": "cf-solver",
+      "title": "CF solver: CLUSTER_COMPOUND_VARIANCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "COIN_ACCUMULATOR_MYSTERY COIN_ACCUMULATOR_MYSTERY.json configs=6/6 PASS",
+      "id": "COIN_ACCUMULATOR_MYSTERY",
+      "kind": "cf-solver",
+      "title": "CF solver: COIN_ACCUMULATOR_MYSTERY",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "COLOSSAL_REELS_WILD_TRANSFER COLOSSAL_REELS_WILD_TRANSFER.json configs=6/6 PASS",
+      "id": "COLOSSAL_REELS_WILD_TRANSFER",
+      "kind": "cf-solver",
+      "title": "CF solver: COLOSSAL_REELS_WILD_TRANSFER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CRASH_MULTIPLIER CRASH_MULTIPLIER.json configs=0/0 PASS",
+      "id": "CRASH_MULTIPLIER",
+      "kind": "cf-solver",
+      "title": "CF solver: CRASH_MULTIPLIER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CROSS_JURISDICTION_TAX_OPTIMIZER CROSS_JURISDICTION_TAX_OPTIMIZER.json configs=6/6 PASS",
+      "id": "CROSS_JURISDICTION_TAX_OPTIMIZER",
+      "kind": "cf-solver",
+      "title": "CF solver: CROSS_JURISDICTION_TAX_OPTIMIZER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CUSTOMER_AFFORDABILITY_STRATIFICATION CUSTOMER_AFFORDABILITY_STRATIFICATION.json configs=6/6 PASS",
+      "id": "CUSTOMER_AFFORDABILITY_STRATIFICATION",
+      "kind": "cf-solver",
+      "title": "CF solver: CUSTOMER_AFFORDABILITY_STRATIFICATION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CUSTOMER_SERVICE_AI_HALLUCINATION CUSTOMER_SERVICE_AI_HALLUCINATION.json configs=6/6 PASS",
+      "id": "CUSTOMER_SERVICE_AI_HALLUCINATION",
+      "kind": "cf-solver",
+      "title": "CF solver: CUSTOMER_SERVICE_AI_HALLUCINATION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "CYBERSECURITY_BREACH_COST CYBERSECURITY_BREACH_COST.json configs=6/6 PASS",
+      "id": "CYBERSECURITY_BREACH_COST",
+      "kind": "cf-solver",
+      "title": "CF solver: CYBERSECURITY_BREACH_COST",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "DEMO_MODE DEMO_MODE.json configs=0/0 PASS",
+      "id": "DEMO_MODE",
+      "kind": "cf-solver",
+      "title": "CF solver: DEMO_MODE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json configs=6/6 PASS",
+      "id": "DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP",
+      "kind": "cf-solver",
+      "title": "CF solver: DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "DIFF_FUZZ_CROSS_LANG DIFF_FUZZ_CROSS_LANG.json configs=0/0 FAIL",
+      "id": "DIFF_FUZZ_CROSS_LANG",
+      "kind": "cf-solver",
+      "title": "CF solver: DIFF_FUZZ_CROSS_LANG",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "DROP_STICK_WILD_EXPANSION DROP_STICK_WILD_EXPANSION.json configs=6/6 PASS",
+      "id": "DROP_STICK_WILD_EXPANSION",
+      "kind": "cf-solver",
+      "title": "CF solver: DROP_STICK_WILD_EXPANSION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "DYNAMIC_GRID_EXPANSION_HOLD_SPIN DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json configs=6/6 PASS",
+      "id": "DYNAMIC_GRID_EXPANSION_HOLD_SPIN",
+      "kind": "cf-solver",
+      "title": "CF solver: DYNAMIC_GRID_EXPANSION_HOLD_SPIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "ENTROPY_HEALTH_MONITOR ENTROPY_HEALTH_MONITOR.json configs=0/0 PASS",
+      "id": "ENTROPY_HEALTH_MONITOR",
+      "kind": "cf-solver",
+      "title": "CF solver: ENTROPY_HEALTH_MONITOR",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "ESG_CARBON_COST ESG_CARBON_COST.json configs=6/6 PASS",
+      "id": "ESG_CARBON_COST",
+      "kind": "cf-solver",
+      "title": "CF solver: ESG_CARBON_COST",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "EXACT_ENUMERATION EXACT_ENUMERATION.json configs=0/0 PASS",
+      "id": "EXACT_ENUMERATION",
+      "kind": "cf-solver",
+      "title": "CF solver: EXACT_ENUMERATION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "FREE_BET_WAGERING_REQUIREMENT FREE_BET_WAGERING_REQUIREMENT.json configs=6/6 PASS",
+      "id": "FREE_BET_WAGERING_REQUIREMENT",
+      "kind": "cf-solver",
+      "title": "CF solver: FREE_BET_WAGERING_REQUIREMENT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "FREE_SPINS_LOOKBACK_MULTIPLIER FREE_SPINS_LOOKBACK_MULTIPLIER.json configs=6/6 PASS",
+      "id": "FREE_SPINS_LOOKBACK_MULTIPLIER",
+      "kind": "cf-solver",
+      "title": "CF solver: FREE_SPINS_LOOKBACK_MULTIPLIER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "FREE_SPINS_RETRIGGER FREE_SPINS_RETRIGGER.json configs=6/6 PASS",
+      "id": "FREE_SPINS_RETRIGGER",
+      "kind": "cf-solver",
+      "title": "CF solver: FREE_SPINS_RETRIGGER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "FS_BUY_TIER_TRADEOFF FS_BUY_TIER_TRADEOFF.json configs=6/6 PASS",
+      "id": "FS_BUY_TIER_TRADEOFF",
+      "kind": "cf-solver",
+      "title": "CF solver: FS_BUY_TIER_TRADEOFF",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "FS_CONFIGS FS_CONFIGS.json configs=0/0 FAIL",
+      "id": "FS_CONFIGS",
+      "kind": "cf-solver",
+      "title": "CF solver: FS_CONFIGS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "GAME_PROVIDER_REVENUE_SHARE GAME_PROVIDER_REVENUE_SHARE.json configs=6/6 PASS",
+      "id": "GAME_PROVIDER_REVENUE_SHARE",
+      "kind": "cf-solver",
+      "title": "CF solver: GAME_PROVIDER_REVENUE_SHARE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "HIT_FREQUENCY_DISTRIBUTION HIT_FREQUENCY_DISTRIBUTION.json configs=6/6 PASS",
+      "id": "HIT_FREQUENCY_DISTRIBUTION",
+      "kind": "cf-solver",
+      "title": "CF solver: HIT_FREQUENCY_DISTRIBUTION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "HNW_LADDER HNW_LADDER.json configs=6/6 PASS",
+      "id": "HNW_LADDER",
+      "kind": "cf-solver",
+      "title": "CF solver: HNW_LADDER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "HNW_MULTI_JACKPOT HNW_MULTI_JACKPOT.json configs=0/0 FAIL",
+      "id": "HNW_MULTI_JACKPOT",
+      "kind": "cf-solver",
+      "title": "CF solver: HNW_MULTI_JACKPOT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "HOLD_WIN_VALUE_JACKPOT HOLD_WIN_VALUE_JACKPOT.json configs=6/6 PASS",
+      "id": "HOLD_WIN_VALUE_JACKPOT",
+      "kind": "cf-solver",
+      "title": "CF solver: HOLD_WIN_VALUE_JACKPOT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "INDUSTRY_PATTERNS INDUSTRY_PATTERNS.json configs=0/0 FAIL",
+      "id": "INDUSTRY_PATTERNS",
+      "kind": "cf-solver",
+      "title": "CF solver: INDUSTRY_PATTERNS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "JP_PACHISLOT_SKILL_STOP JP_PACHISLOT_SKILL_STOP.json configs=6/6 PASS",
+      "id": "JP_PACHISLOT_SKILL_STOP",
+      "kind": "cf-solver",
+      "title": "CF solver: JP_PACHISLOT_SKILL_STOP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "JURISDICTION_AUTO_GATE JURISDICTION_AUTO_GATE.json configs=0/0 FAIL",
+      "id": "JURISDICTION_AUTO_GATE",
+      "kind": "cf-solver",
+      "title": "CF solver: JURISDICTION_AUTO_GATE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "KYC_AML_SANCTION_SCREENING KYC_AML_SANCTION_SCREENING.json configs=6/6 PASS",
+      "id": "KYC_AML_SANCTION_SCREENING",
+      "kind": "cf-solver",
+      "title": "CF solver: KYC_AML_SANCTION_SCREENING",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "LIVE_CASINO_DEALER_INTEGRITY LIVE_CASINO_DEALER_INTEGRITY.json configs=6/6 PASS",
+      "id": "LIVE_CASINO_DEALER_INTEGRITY",
+      "kind": "cf-solver",
+      "title": "CF solver: LIVE_CASINO_DEALER_INTEGRITY",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "LOCKED_REELS_FS LOCKED_REELS_FS.json configs=6/6 PASS",
+      "id": "LOCKED_REELS_FS",
+      "kind": "cf-solver",
+      "title": "CF solver: LOCKED_REELS_FS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MARTINGALE_BUST_TIME MARTINGALE_BUST_TIME.json configs=6/6 PASS",
+      "id": "MARTINGALE_BUST_TIME",
+      "kind": "cf-solver",
+      "title": "CF solver: MARTINGALE_BUST_TIME",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MAX_WIN_CAP_TRUNCATION MAX_WIN_CAP_TRUNCATION.json configs=6/6 PASS",
+      "id": "MAX_WIN_CAP_TRUNCATION",
+      "kind": "cf-solver",
+      "title": "CF solver: MAX_WIN_CAP_TRUNCATION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MECHANIC_29 MECHANIC_29.json configs=0/0 FAIL",
+      "id": "MECHANIC_29",
+      "kind": "cf-solver",
+      "title": "CF solver: MECHANIC_29",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MECHANIC_30 MECHANIC_30.json configs=0/0 FAIL",
+      "id": "MECHANIC_30",
+      "kind": "cf-solver",
+      "title": "CF solver: MECHANIC_30",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MECHANIC_FAMILY MECHANIC_FAMILY.json configs=0/0 FAIL",
+      "id": "MECHANIC_FAMILY",
+      "kind": "cf-solver",
+      "title": "CF solver: MECHANIC_FAMILY",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MEGACLUSTER_STACK_WAYS MEGACLUSTER_STACK_WAYS.json configs=6/6 PASS",
+      "id": "MEGACLUSTER_STACK_WAYS",
+      "kind": "cf-solver",
+      "title": "CF solver: MEGACLUSTER_STACK_WAYS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MEGA_SYMBOL_EXPANSION MEGA_SYMBOL_EXPANSION.json configs=6/6 PASS",
+      "id": "MEGA_SYMBOL_EXPANSION",
+      "kind": "cf-solver",
+      "title": "CF solver: MEGA_SYMBOL_EXPANSION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "METAMORPHIC_RTP METAMORPHIC_RTP.json configs=0/0 FAIL",
+      "id": "METAMORPHIC_RTP",
+      "kind": "cf-solver",
+      "title": "CF solver: METAMORPHIC_RTP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MID_SPIN_REEL_RESHAPE_MIXTURE MID_SPIN_REEL_RESHAPE_MIXTURE.json configs=6/6 PASS",
+      "id": "MID_SPIN_REEL_RESHAPE_MIXTURE",
+      "kind": "cf-solver",
+      "title": "CF solver: MID_SPIN_REEL_RESHAPE_MIXTURE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTIPLICATIVE_WILD_STACK MULTIPLICATIVE_WILD_STACK.json configs=6/6 PASS",
+      "id": "MULTIPLICATIVE_WILD_STACK",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTIPLICATIVE_WILD_STACK",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_ACCOUNT_BONUS_ABUSE MULTI_ACCOUNT_BONUS_ABUSE.json configs=6/6 PASS",
+      "id": "MULTI_ACCOUNT_BONUS_ABUSE",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_ACCOUNT_BONUS_ABUSE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_CURRENCY_FX_RISK MULTI_CURRENCY_FX_RISK.json configs=6/6 PASS",
+      "id": "MULTI_CURRENCY_FX_RISK",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_CURRENCY_FX_RISK",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_LEVEL_WILD_MARKOV MULTI_LEVEL_WILD_MARKOV.json configs=6/6 PASS",
+      "id": "MULTI_LEVEL_WILD_MARKOV",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_LEVEL_WILD_MARKOV",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json configs=6/6 PASS",
+      "id": "MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_STATE_FRAME_UPGRADE_MARKOV MULTI_STATE_FRAME_UPGRADE_MARKOV.json configs=6/6 PASS",
+      "id": "MULTI_STATE_FRAME_UPGRADE_MARKOV",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_STATE_FRAME_UPGRADE_MARKOV",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MULTI_TIER_WAP_WHEEL MULTI_TIER_WAP_WHEEL.json configs=6/6 PASS",
+      "id": "MULTI_TIER_WAP_WHEEL",
+      "kind": "cf-solver",
+      "title": "CF solver: MULTI_TIER_WAP_WHEEL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MUST_HIT_BY_JACKPOT MUST_HIT_BY_JACKPOT.json configs=6/6 PASS",
+      "id": "MUST_HIT_BY_JACKPOT",
+      "kind": "cf-solver",
+      "title": "CF solver: MUST_HIT_BY_JACKPOT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "MYSTERY_SYMBOL_REVEAL MYSTERY_SYMBOL_REVEAL.json configs=6/6 PASS",
+      "id": "MYSTERY_SYMBOL_REVEAL",
+      "kind": "cf-solver",
+      "title": "CF solver: MYSTERY_SYMBOL_REVEAL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "NESTED_MINI_SLOT_INSIDE_BONUS NESTED_MINI_SLOT_INSIDE_BONUS.json configs=6/6 PASS",
+      "id": "NESTED_MINI_SLOT_INSIDE_BONUS",
+      "kind": "cf-solver",
+      "title": "CF solver: NESTED_MINI_SLOT_INSIDE_BONUS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "OPERATOR_DAILY_PNL_VAR OPERATOR_DAILY_PNL_VAR.json configs=6/6 PASS",
+      "id": "OPERATOR_DAILY_PNL_VAR",
+      "kind": "cf-solver",
+      "title": "CF solver: OPERATOR_DAILY_PNL_VAR",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PARALLEL_SCREENS PARALLEL_SCREENS.json configs=6/6 PASS",
+      "id": "PARALLEL_SCREENS",
+      "kind": "cf-solver",
+      "title": "CF solver: PARALLEL_SCREENS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PAROLI_STREAK_CASH_OUT PAROLI_STREAK_CASH_OUT.json configs=6/6 PASS",
+      "id": "PAROLI_STREAK_CASH_OUT",
+      "kind": "cf-solver",
+      "title": "CF solver: PAROLI_STREAK_CASH_OUT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PAR_COMMITMENT PAR_COMMITMENT.json configs=0/0 FAIL",
+      "id": "PAR_COMMITMENT",
+      "kind": "cf-solver",
+      "title": "CF solver: PAR_COMMITMENT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PERSISTENT_MULTIPLIER PERSISTENT_MULTIPLIER.json configs=6/6 PASS",
+      "id": "PERSISTENT_MULTIPLIER",
+      "kind": "cf-solver",
+      "title": "CF solver: PERSISTENT_MULTIPLIER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PER_REEL_BAG_ROW_MULTIPLIER_COUPLED PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json configs=6/6 PASS",
+      "id": "PER_REEL_BAG_ROW_MULTIPLIER_COUPLED",
+      "kind": "cf-solver",
+      "title": "CF solver: PER_REEL_BAG_ROW_MULTIPLIER_COUPLED",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PICK_BONUS_N_STAGE PICK_BONUS_N_STAGE.json configs=6/6 PASS",
+      "id": "PICK_BONUS_N_STAGE",
+      "kind": "cf-solver",
+      "title": "CF solver: PICK_BONUS_N_STAGE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PICK_CLICK_POOPER_BONUS PICK_CLICK_POOPER_BONUS.json configs=6/6 PASS",
+      "id": "PICK_CLICK_POOPER_BONUS",
+      "kind": "cf-solver",
+      "title": "CF solver: PICK_CLICK_POOPER_BONUS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PLAYER_ELECTS_FEATURE_COMPOSITION PLAYER_ELECTS_FEATURE_COMPOSITION.json configs=6/6 PASS",
+      "id": "PLAYER_ELECTS_FEATURE_COMPOSITION",
+      "kind": "cf-solver",
+      "title": "CF solver: PLAYER_ELECTS_FEATURE_COMPOSITION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PLAYER_LTV_BAYESIAN PLAYER_LTV_BAYESIAN.json configs=6/6 PASS",
+      "id": "PLAYER_LTV_BAYESIAN",
+      "kind": "cf-solver",
+      "title": "CF solver: PLAYER_LTV_BAYESIAN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PRE_COMMITMENT_LOSS_LIMIT PRE_COMMITMENT_LOSS_LIMIT.json configs=6/6 PASS",
+      "id": "PRE_COMMITMENT_LOSS_LIMIT",
+      "kind": "cf-solver",
+      "title": "CF solver: PRE_COMMITMENT_LOSS_LIMIT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "PSEUDO_MUST_HIT_LEVEL PSEUDO_MUST_HIT_LEVEL.json configs=6/6 PASS",
+      "id": "PSEUDO_MUST_HIT_LEVEL",
+      "kind": "cf-solver",
+      "title": "CF solver: PSEUDO_MUST_HIT_LEVEL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "QUANTUM_RESISTANT_RNG QUANTUM_RESISTANT_RNG.json configs=6/6 PASS",
+      "id": "QUANTUM_RESISTANT_RNG",
+      "kind": "cf-solver",
+      "title": "CF solver: QUANTUM_RESISTANT_RNG",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "RACE_COMPETITIVE_PICK_WINNER RACE_COMPETITIVE_PICK_WINNER.json configs=6/6 PASS",
+      "id": "RACE_COMPETITIVE_PICK_WINNER",
+      "kind": "cf-solver",
+      "title": "CF solver: RACE_COMPETITIVE_PICK_WINNER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "RANDOM_CONFIG_SWEEP RANDOM_CONFIG_SWEEP.json configs=0/0 FAIL",
+      "id": "RANDOM_CONFIG_SWEEP",
+      "kind": "cf-solver",
+      "title": "CF solver: RANDOM_CONFIG_SWEEP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "RANDOM_FEATURE_INJECTION_DURING_FS RANDOM_FEATURE_INJECTION_DURING_FS.json configs=6/6 PASS",
+      "id": "RANDOM_FEATURE_INJECTION_DURING_FS",
+      "kind": "cf-solver",
+      "title": "CF solver: RANDOM_FEATURE_INJECTION_DURING_FS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "REEL_BOUND_MYSTERY_PROGRESSIVE REEL_BOUND_MYSTERY_PROGRESSIVE.json configs=6/6 PASS",
+      "id": "REEL_BOUND_MYSTERY_PROGRESSIVE",
+      "kind": "cf-solver",
+      "title": "CF solver: REEL_BOUND_MYSTERY_PROGRESSIVE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "RTP_DRIFT_CUSUM RTP_DRIFT_CUSUM.json configs=6/6 PASS",
+      "id": "RTP_DRIFT_CUSUM",
+      "kind": "cf-solver",
+      "title": "CF solver: RTP_DRIFT_CUSUM",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "RUNNING_MAX_DRAWDOWN RUNNING_MAX_DRAWDOWN.json configs=6/6 PASS",
+      "id": "RUNNING_MAX_DRAWDOWN",
+      "kind": "cf-solver",
+      "title": "CF solver: RUNNING_MAX_DRAWDOWN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SELF_EXCLUSION_LIFECYCLE SELF_EXCLUSION_LIFECYCLE.json configs=6/6 PASS",
+      "id": "SELF_EXCLUSION_LIFECYCLE",
+      "kind": "cf-solver",
+      "title": "CF solver: SELF_EXCLUSION_LIFECYCLE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SESSION_BANKROLL_DRAWDOWN SESSION_BANKROLL_DRAWDOWN.json configs=6/6 PASS",
+      "id": "SESSION_BANKROLL_DRAWDOWN",
+      "kind": "cf-solver",
+      "title": "CF solver: SESSION_BANKROLL_DRAWDOWN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SESSION_COOL_OFF_ENFORCEMENT SESSION_COOL_OFF_ENFORCEMENT.json configs=6/6 PASS",
+      "id": "SESSION_COOL_OFF_ENFORCEMENT",
+      "kind": "cf-solver",
+      "title": "CF solver: SESSION_COOL_OFF_ENFORCEMENT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SKILL_STOP_NEAR_MISS SKILL_STOP_NEAR_MISS.json configs=6/6 PASS",
+      "id": "SKILL_STOP_NEAR_MISS",
+      "kind": "cf-solver",
+      "title": "CF solver: SKILL_STOP_NEAR_MISS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SPIN_VELOCITY_COMPLIANCE SPIN_VELOCITY_COMPLIANCE.json configs=6/6 PASS",
+      "id": "SPIN_VELOCITY_COMPLIANCE",
+      "kind": "cf-solver",
+      "title": "CF solver: SPIN_VELOCITY_COMPLIANCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SPORTSBOOK_ODDS_MARGIN SPORTSBOOK_ODDS_MARGIN.json configs=6/6 PASS",
+      "id": "SPORTSBOOK_ODDS_MARGIN",
+      "kind": "cf-solver",
+      "title": "CF solver: SPORTSBOOK_ODDS_MARGIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STACKED_MULTI_WHEEL_COMPOSITION STACKED_MULTI_WHEEL_COMPOSITION.json configs=6/6 PASS",
+      "id": "STACKED_MULTI_WHEEL_COMPOSITION",
+      "kind": "cf-solver",
+      "title": "CF solver: STACKED_MULTI_WHEEL_COMPOSITION",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STICKY_CASH_COLLECTOR STICKY_CASH_COLLECTOR.json configs=6/6 PASS",
+      "id": "STICKY_CASH_COLLECTOR",
+      "kind": "cf-solver",
+      "title": "CF solver: STICKY_CASH_COLLECTOR",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STICKY_CASH_REVEAL STICKY_CASH_REVEAL.json configs=6/6 PASS",
+      "id": "STICKY_CASH_REVEAL",
+      "kind": "cf-solver",
+      "title": "CF solver: STICKY_CASH_REVEAL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STICKY_MULTIPLIER_FS_TRAIL STICKY_MULTIPLIER_FS_TRAIL.json configs=6/6 PASS",
+      "id": "STICKY_MULTIPLIER_FS_TRAIL",
+      "kind": "cf-solver",
+      "title": "CF solver: STICKY_MULTIPLIER_FS_TRAIL",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STICKY_WILD_COUNTDOWN_MULT STICKY_WILD_COUNTDOWN_MULT.json configs=6/6 PASS",
+      "id": "STICKY_WILD_COUNTDOWN_MULT",
+      "kind": "cf-solver",
+      "title": "CF solver: STICKY_WILD_COUNTDOWN_MULT",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "STREAM_LATENCY_SLA STREAM_LATENCY_SLA.json configs=6/6 PASS",
+      "id": "STREAM_LATENCY_SLA",
+      "kind": "cf-solver",
+      "title": "CF solver: STREAM_LATENCY_SLA",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SUPERMETER SUPERMETER.json configs=6/6 PASS",
+      "id": "SUPERMETER",
+      "kind": "cf-solver",
+      "title": "CF solver: SUPERMETER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SYMBOL_MULT_REEL_STOP SYMBOL_MULT_REEL_STOP.json configs=6/6 PASS",
+      "id": "SYMBOL_MULT_REEL_STOP",
+      "kind": "cf-solver",
+      "title": "CF solver: SYMBOL_MULT_REEL_STOP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "SYMBOL_UPGRADE_CHAIN SYMBOL_UPGRADE_CHAIN.json configs=6/6 PASS",
+      "id": "SYMBOL_UPGRADE_CHAIN",
+      "kind": "cf-solver",
+      "title": "CF solver: SYMBOL_UPGRADE_CHAIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "TRAIL_BONUS_TRACKER TRAIL_BONUS_TRACKER.json configs=6/6 PASS",
+      "id": "TRAIL_BONUS_TRACKER",
+      "kind": "cf-solver",
+      "title": "CF solver: TRAIL_BONUS_TRACKER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "TUMBLE_MULTIPLIER_CAP TUMBLE_MULTIPLIER_CAP.json configs=6/6 PASS",
+      "id": "TUMBLE_MULTIPLIER_CAP",
+      "kind": "cf-solver",
+      "title": "CF solver: TUMBLE_MULTIPLIER_CAP",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "TUMBLING_CASCADE_CHAIN_LENGTH TUMBLING_CASCADE_CHAIN_LENGTH.json configs=6/6 PASS",
+      "id": "TUMBLING_CASCADE_CHAIN_LENGTH",
+      "kind": "cf-solver",
+      "title": "CF solver: TUMBLING_CASCADE_CHAIN_LENGTH",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "US_STATE_REGULATOR_COMPLIANCE US_STATE_REGULATOR_COMPLIANCE.json configs=6/6 PASS",
+      "id": "US_STATE_REGULATOR_COMPLIANCE",
+      "kind": "cf-solver",
+      "title": "CF solver: US_STATE_REGULATOR_COMPLIANCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "VARIABLE_REEL_HEIGHT_WAYS VARIABLE_REEL_HEIGHT_WAYS.json configs=6/6 PASS",
+      "id": "VARIABLE_REEL_HEIGHT_WAYS",
+      "kind": "cf-solver",
+      "title": "CF solver: VARIABLE_REEL_HEIGHT_WAYS",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "VARROWS_CASCADE VARROWS_CASCADE.json configs=0/0 FAIL",
+      "id": "VARROWS_CASCADE",
+      "kind": "cf-solver",
+      "title": "CF solver: VARROWS_CASCADE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "VOLTAGE_METER_MULTI_TIER VOLTAGE_METER_MULTI_TIER.json configs=6/6 PASS",
+      "id": "VOLTAGE_METER_MULTI_TIER",
+      "kind": "cf-solver",
+      "title": "CF solver: VOLTAGE_METER_MULTI_TIER",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "WALKING_WILD_RESPIN WALKING_WILD_RESPIN.json configs=6/6 PASS",
+      "id": "WALKING_WILD_RESPIN",
+      "kind": "cf-solver",
+      "title": "CF solver: WALKING_WILD_RESPIN",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "WAYS_ACCEPTANCE WAYS_ACCEPTANCE.json configs=0/0 FAIL",
+      "id": "WAYS_ACCEPTANCE",
+      "kind": "cf-solver",
+      "title": "CF solver: WAYS_ACCEPTANCE",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "dossier-2026-05-14_233949019Z dossier-2026-05-14_233949019Z.json configs=0/0 FAIL",
+      "id": "dossier-2026-05-14_233949019Z",
+      "kind": "cf-solver",
+      "title": "CF solver: dossier-2026-05-14_233949019Z",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "golden golden.json configs=0/0 FAIL",
+      "id": "golden",
+      "kind": "cf-solver",
+      "title": "CF solver: golden",
+      "url": "CLOSED_FORM_PORTFOLIO.html"
+    },
+    {
+      "body": "Symbol Upgrade Chain Markov \u2014 Pragmatic / BTG / Push Gaming ladder 6/6 configs PASS at 100000 episodes each (600K MC) Closed-form Markov chain za sticky symbol upgrade kroz L+1 tier ladder: A ~ Binomial(K, p), final state F = min(A, L). P(F=i) = C(K,i)\u00b7p^i\u00b7(1-p)^(K-i) za i<L, P(F=L) = 1 \u2212 \u03a3_{i<L} P(F=i); E[Y]=\u03a3 P(F=i)\u00b7v_i; log-space binomial PMF za numeri\u010dku stabilnost. Tail: P(reach top), P(stay at base)=(1-p)^K. No vendor publishes closed-form ladder Markov.",
+      "id": "W101",
+      "kind": "industry-first",
+      "title": "W101: Symbol Upgrade Chain Markov \u2014 Pragmatic / BTG / Push Gaming ladder",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w101"
+    },
+    {
+      "body": "Cluster Compound Variance \u2014 Wald compound-sum identity 6/6 configs PASS at 100000 episodes each (600K MC) Closed-form Wald compound-sum identity za Sweet Bonanza / Reactoonz / Jammin Jars / Wild Swarm style: \u03bc_Y = \u03a3 clusterPmf[k]\u00b7paytable[k]; E[Y_total] = E[N]\u00b7\u03bc_Y; **Var[Y_total] = E[N]\u00b7\u03c3\u00b2_Y + Var[N]\u00b7\u03bc\u00b2_Y**; 3 input modes (explicit chainPmf+clusterPmf, geometric pKill, bridge helper). No vendor publishes formal compound-sum decomposition for cluster cascade families.",
+      "id": "W102",
+      "kind": "industry-first",
+      "title": "W102: Cluster Compound Variance \u2014 Wald compound-sum identity",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w102"
+    },
+    {
+      "body": "Bonus Wheel + Respin Markov \u2014 shifted-geometric chain 6/6 configs PASS at 100000 episodes each (600K MC) Vendor D / Pragmatic / Vendor A wheel bonus sa respin segmentom closed-form: N ~ shifted-geometric, E[N]=1/(1-p_respin), Var[N]=p_respin/(1-p_respin)\u00b2; conditional payout (given terminate) \u03bc_V = \u03a3 p_i\u00b7v_i / (1-p_respin); tail P(N\u2265k)=p_respin^(k-1); max payout + P(hit max). Operator/regulator-pinnable spin chain budget.",
+      "id": "W105",
+      "kind": "industry-first",
+      "title": "W105: Bonus Wheel + Respin Markov \u2014 shifted-geometric chain",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w105"
+    },
+    {
+      "body": "Pick Bonus N-Stage Tree \u2014 Vendor D classic / Vendor G \"pick til pop\" 6/6 configs PASS at 100000 episodes each (600K MC) Multi-stage pick-til-pop bonus tree closed-form: per-stage outcomes p_advance + p_collect + p_end = 1; P(reach 1)=1, P(reach i)=\u03a0 advance_{j<i}; P(collect at i) = P(reach i)\u00b7collect_i; E[Y] = \u03a3 P(collect at i)\u00b7v_i; tail P(reach top), P(end with 0). Recursive stage-tree analyzer first published as auditor-verifiable closed-form.",
+      "id": "W107",
+      "kind": "industry-first",
+      "title": "W107: Pick Bonus N-Stage Tree \u2014 Vendor D classic / Vendor G \"pick til pop\"",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w107"
+    },
+    {
+      "body": "Bonus Trigger Wait Time Analyzer \u2014 UKGC RTS 14 + MGA PPD \u00a711.f compliance 6/6 configs PASS at 100000 episodes each (600K MC) Multi-feature bonus-trigger wait time closed-form: T_i ~ shifted-geometric(p_i) gives E[T_i]=1/p_i, Var[T_i]=(1-p_i)/p_i\u00b2, Median=\u2308log(0.5)/log(1-p_i)\u2309, custom percentile k_q=\u2308log(1-q)/log(1-p_i)\u2309; any-feature combined p_any=1\u2212\u03a0(1-p_i), E[T_any]=1/p_any; aggregate rate \u03a3 p_i; multi-feature simultaneous P(multiple)=1\u2212P(0)\u2212P(1). UKGC RTS 14 mandatory disclosure first published with auditor-pinnable closed-form across multi-feature trigger structures.",
+      "id": "W110",
+      "kind": "industry-first",
+      "title": "W110: Bonus Trigger Wait Time Analyzer \u2014 UKGC RTS 14 + MGA PPD \u00a711.f compliance",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w110"
+    },
+    {
+      "body": "Variable Reel Height Ways \u2014 BTG Megaways patent EXPIRED 2023, clean-room naming 6/6 configs PASS at 100000 episodes each (600K MC) Megaways-style variable reel height ways closed-form (BTG patent expired 2023, naming standardized \"variable reel height ways\"): per-reel H_i ~ discrete pmf, ways W = \u03a0_i H_i cross-reel independence; E[W] = \u03a0_i E[H_i], Var[W] = \u03a0_i E[H_i\u00b2] \u2212 (\u03a0_i E[H_i])\u00b2; sparse PMF via multiplicative convolution (Cartesian \u00d7 value-merge); tail maxWays, probMaxWays = \u03a0 P(H_i=max), P(W \u2265 threshold) for \"epic ways\" disclosure. First public auditor-verifiable closed-form post patent-expiration.",
+      "id": "W112",
+      "kind": "industry-first",
+      "title": "W112: Variable Reel Height Ways \u2014 BTG Megaways patent EXPIRED 2023, clean-room naming",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w112"
+    },
+    {
+      "body": "Sticky Wild Countdown Multiplier \u2014 Markov stationary chain 6/6 configs PASS at 100000 spins each (600K MC) Sticky-wild countdown multiplier (Pragmatic Hot Fiesta / Vendor D Vikings Berzerk / Push Gaming Wild Swarm) (N+1)-state Markov chain stationary: \u03c0_0 = 1/(1+N\u00b7p), \u03c0_k = p/(1+N\u00b7p) for k=1..N; M_k linear (base+(k\u22121)\u00b7step) or geometric (base\u00b7ratio^(k\u22121)); E[Y per spin] = E[V]\u00b7E[M] cross-independence; Var[Y] = E[V\u00b2]\u00b7E[M\u00b2] \u2212 E[Y]\u00b2; cycle 1/p + N length, \u03a3M_k mult, E[V]\u00b7\u03a3M_k payout. Distinct from W93 (product co-active), W89 (drop-chain), W43/W97 (post-hoc), W47 (walking static). First closed-form Markov stationary published for this genre.",
+      "id": "W114",
+      "kind": "industry-first",
+      "title": "W114: Sticky Wild Countdown Multiplier \u2014 Markov stationary chain",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w114"
+    },
+    {
+      "body": "Mystery Symbol Reveal Aggregator \u2014 Wald-style K \u22a5 S decomposition 6/6 configs PASS at 100000 spins each (600K MC) Pre-spin mystery \u2192 in-spin uniform reveal aggregator (Pragmatic Big Bass Bonanza family / Wolf Gold / Vendor D Wild-O-Tron / Yggdrasil Vault of Anubis): K ~ countPmf positions, S ~ symbolPmf revealed symbol, Y = K \u00b7 paytable[S] with K \u22a5 S; E[Y] = E[K]\u00b7E[paytable[S]] (Wald-style), Var[Y] = E[K\u00b2]\u00b7E[paytable\u00b2] \u2212 E[K]\u00b2\u00b7E[paytable]\u00b2; tail P(K=0), P(K=K_max), probFullGridMaxSymbol = P(K=K_max)\u00b7P(S=max) joint; per-symbol conditional E[Y|S=s] = E[K]\u00b7paytable[s]. Distinct from W47/W91/W93/W101/W114 \u2014 first auditor-verifiable closed-form for this mehanika.",
+      "id": "W116",
+      "kind": "industry-first",
+      "title": "W116: Mystery Symbol Reveal Aggregator \u2014 Wald-style K \u22a5 S decomposition",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w116"
+    },
+    {
+      "body": "Bonus Collect-N Trigger Tracker \u2014 Negative Binomial NB(N, p) 6/6 configs PASS at 50000 episodes each (300K MC episodes) Collect-N trigger tracker (Pragmatic Money Cart / Money Train / Stake Logic Wild Swarm / Hacksaw Money Hunt / Push Gaming Razor Shark): T_N ~ NB(N, p), P(T_N = k) = C(k\u22121, N\u22121)\u00b7p^N\u00b7(1\u2212p)^(k\u2212N), E[T_N] = N/p, Var[T_N] = N(1\u2212p)/p\u00b2; tail P(T_N > k) = P(C_k < N) via log-space binomial PMF (Lanczos logGamma numerical stability); median + percentile via monotone CDF binary search; operator disclosure probTriggerWithinHorizon, expectedTriggersInHorizon = K\u00b7p/N. Distinct from W110 (Geometric N=1). First clean-room NB(N,p) closed-form for collector mehaniku.",
+      "id": "W118",
+      "kind": "industry-first",
+      "title": "W118: Bonus Collect-N Trigger Tracker \u2014 Negative Binomial NB(N, p)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w118"
+    },
+    {
+      "body": "Cascade Multiplier Chain Lockstep Conditional \u2014 Wald-style \u03a3 M_k\u00b7p^k 6/6 configs PASS at 100000 spins each (600K MC) Lockstep conditional cascade multiplier chain (Quickspin Reactor Wilds / Push Gaming Token of Life / Hacksaw cascade / BTG Megaways multiplier-on-win): chain length L ~ Geometric(1-p) sa support {0,1,2,...}, P(L\u2265k)=p^k; M_k linear (base+(k-1)\u00b7step) ili geometric (base\u00b7r^(k-1)) sa r\u00b7p<1 convergence guard; Y = \u03a3_{k=1..L} V_k\u00b7M_k; Wald-style E[Y] = E[V]\u00b7\u03a3 M_k\u00b7p^k = E[V]\u00b7[base\u00b7p/(1-p)+step\u00b7p\u00b2/(1-p)\u00b2] za linear; Var[Y] = E[Y\u00b2]\u2212E[Y]\u00b2 sa cross-term 2\u00b7E[V]\u00b2\u00b7\u03a3_{j<k} M_j\u00b7M_k\u00b7p^k. Distinct od W86 (deterministic ladder), W89 (Binomial drop), W102 (no multiplier), W114 (time-based, not win-based). First Wxxx za skip-on-empty conditional chain closed-form.",
+      "id": "W121",
+      "kind": "industry-first",
+      "title": "W121: Cascade Multiplier Chain Lockstep Conditional \u2014 Wald-style \u03a3 M_k\u00b7p^k",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w121"
+    },
+    {
+      "body": "Mega Symbol Multi-Cell Expansion Aggregator \u2014 S\u00b2 area Wald-style 6/6 configs PASS at 100000 spins each (600K MC) Super-symbol multi-cell expansion aggregator (Vendor D Mega Joker / Slot Mountain Megaways jumbo / Pragmatic Sweet Bonanza super-symbols / Push Razor Shark jumbo blocks / BTG Megaways multi-cell): per spin K drops sa S \u00d7 S area i target T; Y = \u03a3_{i=1..K} S_i\u00b2 \u00b7 paytable[T_i] (S\u00b2 area coverage); K \u22a5 S \u22a5 T cross-independence daje E[Y] = E[K]\u00b7E[S\u00b2]\u00b7E[paytable[T]]; E[Y\u00b2] = E[K]\u00b7E[S\u2074]\u00b7E[paytable\u00b2] + (E[K\u00b2]\u2212E[K])\u00b7(E[S\u00b2]\u00b7E[paytable])\u00b2 (S\u2074 area-of-area + cross-drop); probMaxConfig = P(K=K_max)\u00b7(P(S=max)\u00b7P(T=max))^K_max joint extreme. First Wxxx sa explicit S\u00b2 area-coverage Wald-style closed-form.",
+      "id": "W123",
+      "kind": "industry-first",
+      "title": "W123: Mega Symbol Multi-Cell Expansion Aggregator \u2014 S\u00b2 area Wald-style",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w123"
+    },
+    {
+      "body": "Bi-Directional Line Pay Aggregator \u2014 both-ways evaluation sa N-match deduplication 6/6 configs PASS at 100000 spins each (600K MC) Both-ways line pay aggregator (Vendor G Avalon / Vendor D Lights / Witches Wheel / Vendor A Pattern-CL Bi-Way / Stakelogic Witchcraft Academy): N reels independent per-symbol density q; P(L_k) = q^k\u00b7(1\u2212q) za k<N, P(L_N) = q^N; P(R_k) symetri\u010dno; E[pay_BD] = E[L] + E[R] \u2212 paytable[N]\u00b7q^N (L_N i R_N su SAMA event, deduct overlap); hit_freq_BD = hf_L + hf_R \u2212 P(L_N); bidirectionalUpliftRatio = E[pay_BD]/E[pay_L] (~1.5-2 non-degenerate, drops sa density\u21921). First Wxxx za bi-directional line evaluation closed-form; sve ostale Wxxx feature-state, area, ili chain-based.",
+      "id": "W125",
+      "kind": "industry-first",
+      "title": "W125: Bi-Directional Line Pay Aggregator \u2014 both-ways evaluation sa N-match deduplication",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w125"
+    },
+    {
+      "body": "Anticipation/Tease Reel Probability Tracker \u2014 Bayesian conditional + UKGC RTS 8 \u00a73.5 6/6 configs PASS at 100000 spins each (600K MC) Anticipation/tease reel Bayesian conditional tracker (BTG Megaways tease / Pragmatic anticipation / Vendor D suspense reels) \u2014 UKGC RTS 8 \u00a73.5 \"false anticipation\" prohibition compliance: P(trigger | m, i) = \u03a3_{j=K-m}^{N-i} C(N-i,j)\u00b7q^j\u00b7(1-q)^(N-i-j) Bayesian update; anticipation activated kada conditional \u2265 threshold T; forward state propagation za exact P(any antic per spin); falseAnticipationRate = P(no trigger | active) \u2264 1\u2212T (Bayesian compliance guarantee). First Wxxx sa per-reel Bayesian conditional analyzer + UKGC RTS 8 \u00a73.5 compliance hook (threshold=1.0 \u2192 zero false anticipation).",
+      "id": "W127",
+      "kind": "industry-first",
+      "title": "W127: Anticipation/Tease Reel Probability Tracker \u2014 Bayesian conditional + UKGC RTS 8 \u00a73.5",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w127"
+    },
+    {
+      "body": "Cash Eruption / Money Train Math Kernel 13 features kinds (12\u219213), 3 fixtures, Merkle pinned First open-source closed-form (binomial trigger + Markov DP episode) for money-collect lock-and-respin pattern \u2014 no vendor publishes the (P_per_cell \u00d7 E[episode]) decomposition.",
+      "id": "W244.10",
+      "kind": "industry-first",
+      "title": "W244.10: Cash Eruption / Money Train Math Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.10"
+    },
+    {
+      "body": "Starburst Meter / Money Cart Charge Meter Kernel 14 features kinds, 3 fixtures, Wald-identity RTP First open-source Wald-identity multi-tier charge meter closed-form. Public-spec proxies for Starburst, Power Stacks, Money Cart meter mode.",
+      "id": "W244.11",
+      "kind": "industry-first",
+      "title": "W244.11: Starburst Meter / Money Cart Charge Meter Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.11"
+    },
+    {
+      "body": "Mystery Jackpot \u2014 Lightning Link / Dragon Link Kernel 15 features kinds, 3 fixtures, conservation-flow RTP First open-source closed-form for must-hit-by mystery jackpots with geometric-arrival truncated-at-cap. Covers NGCB-cert mystery pots (Lightning Link, Dragon Link, Dollar Storm).",
+      "id": "W244.12",
+      "kind": "industry-first",
+      "title": "W244.12: Mystery Jackpot \u2014 Lightning Link / Dragon Link Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.12"
+    },
+    {
+      "body": "Multi-Level Pick Bonus \u2014 Mega Moolah / Mighty Cash Kernel 16 features kinds, 3 fixtures, first-order-statistic E[picks] First open-source closed-form for multi-level pick chain with relative-odds advance probability. Industry-known pattern (Mega Moolah, Mighty Cash) but no vendor publishes the level-DP decomposition.",
+      "id": "W244.13",
+      "kind": "industry-first",
+      "title": "W244.13: Multi-Level Pick Bonus \u2014 Mega Moolah / Mighty Cash Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.13"
+    },
+    {
+      "body": "Bonus Buy Fair-Price Regulator-Audit Kernel 5 fixtures, UKGC RTS 13C + MGA RG 2021/02 codified First open-source closed-form buy-feature kernel with codified UKGC RTS 13C + MGA RG 2021/02 jurisdiction passes. Industry-pinned audit dict per fixture.",
+      "id": "W244.15",
+      "kind": "industry-first",
+      "title": "W244.15: Bonus Buy Fair-Price Regulator-Audit Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.15"
+    },
+    {
+      "body": "Bonus Wheel Closed-Form with Spin-Again Chain 3 fixtures, bounded geometric-amortised E[award] for spin-again chains First open-source bounded geometric-amortised closed-form for bonus-wheel spin-again chains. Covers IGT Wheel of Fortune, Aristocrat Dragon Cash, NetEnt Megafortune, all WAP-jackpot wheels.",
+      "id": "W244.16",
+      "kind": "industry-first",
+      "title": "W244.16: Bonus Wheel Closed-Form with Spin-Again Chain",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.16"
+    },
+    {
+      "body": "Multi-Mode State-Machine Supermeter Kernel 3 fixtures, Markov stationary distribution via Gaussian elimination First open-source closed-form Markov-stationary RTP decomposition for multi-mode slot state machines. Pure-stdlib Gaussian elimination (no numpy dep). Covers supermeter, mode switch, multi-tier escalation patterns.",
+      "id": "W244.17",
+      "kind": "industry-first",
+      "title": "W244.17: Multi-Mode State-Machine Supermeter Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.17"
+    },
+    {
+      "body": "Book-of-Ra/Book-of-Dead Expanding Symbol FS Kernel 3 fixtures, Binomial(reels, p_per_reel) \u00d7 pay_table expectation First open-source closed-form for Book-style expanding-symbol Free Spins. Per-FS-spin Binomial(reels, p_per_reel) decomposition \u00d7 pay_table[k_reels_expanded]. Covers all 'Book of \u2026' clones across vendors.",
+      "id": "W244.18",
+      "kind": "industry-first",
+      "title": "W244.18: Book-of-Ra/Book-of-Dead Expanding Symbol FS Kernel",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.18"
+    },
+    {
+      "body": "Persistent Multiplier FS Kernel (Sticky Bandits / Mighty Wild) 3 fixtures, exact DP over (bump_count, spin) state space, cap-aware First open-source cap-aware DP for persistent-multiplier FS. Per-spin Bernoulli bump propagation with absorbing cap state. Pure-stdlib (no scipy).",
+      "id": "W244.19",
+      "kind": "industry-first",
+      "title": "W244.19: Persistent Multiplier FS Kernel (Sticky Bandits / Mighty Wild)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.19"
+    },
+    {
+      "body": "Cascade/Tumble Closed-Form (Sweet Bonanza / Money Train) 3 fixtures, bounded geometric chain \u00d7 multiplier_ladder per-step First open-source cap-bounded geometric chain closed-form za tumble/avalanche/cascade pattern. Per-step multiplier ladder weighting + truncation at max_chain.",
+      "id": "W244.20",
+      "kind": "industry-first",
+      "title": "W244.20: Cascade/Tumble Closed-Form (Sweet Bonanza / Money Train)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.20"
+    },
+    {
+      "body": "Cluster-Pays Aggregation Kernel (Sweet Bonanza / Aloha / Gates of Olympus) 3 fixtures: 7\u00d77, 5\u00d74, 6\u00d75 grids; 4-way + 8-way adjacency First open-source operator-supplied-distribution cluster-pays aggregator. Decouples math-complexity (percolation theory) into validated PAR data while keeping kernel deterministic + auditable. 4-way + 8-way adjacency support.",
+      "id": "W244.21",
+      "kind": "industry-first",
+      "title": "W244.21: Cluster-Pays Aggregation Kernel (Sweet Bonanza / Aloha / Gates of Olympus)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.21"
+    },
+    {
+      "body": "W244 All-Kernel Batch Runner + Master Merkle 11/11 kernels OK, 35 fixtures, master merkle 442707890d5263d8 First open-source single-CLI math-kernel batch attestation. 11 W244 kernels chained, per-kernel + master Merkle roots, deterministic regeneration. One artifact for the entire kernel fleet \u2014 single 256-bit hash attest celokupan W244 batch.",
+      "id": "W244.22",
+      "kind": "industry-first",
+      "title": "W244.22: W244 All-Kernel Batch Runner + Master Merkle",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.22"
+    },
+    {
+      "body": "Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG) 3 fixtures, exact Markov DP over (wild_count, respin_t) state space First open-source exact Markov DP za sticky-wilds respin chain. Wild count distribution iterative Binomial PMF propagation, no MC needed. Linear in fixed pay_per_wild_count.",
+      "id": "W244.23",
+      "kind": "industry-first",
+      "title": "W244.23: Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.23"
+    },
+    {
+      "body": "Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II) 3 fixtures, Binomial(n_reels, p_stacked) \u00d7 pay_per_stacked_count First open-source closed-form za stacked-wilds reels sa K-fold pay multiplication. Binomial PMF computed via iterative product (pure-stdlib, no scipy). Linear u operator-supplied pay_per_stacked_count.",
+      "id": "W244.24",
+      "kind": "industry-first",
+      "title": "W244.24: Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.24"
+    },
+    {
+      "body": "Ways Evaluator Kernel (Megaways 117649 / 1024 / 243) 4 fixtures, ways=product(E[rows]); covers 243, 1024, 8303 (variable), 117649 First open-source closed-form za variable-rows ways evaluator. E[ways] = product(E[row_count_per_reel]) under independent reels. Linear u operator-supplied per_way_rtp.",
+      "id": "W244.25",
+      "kind": "industry-first",
+      "title": "W244.25: Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.25"
+    },
+    {
+      "body": "Pay-Anywhere Evaluator Kernel (Sweet Bonanza / Gonzo / Wolf Gold) 3 fixtures, Binomial(n_cells, p) \u00d7 pay[K] sa min_pay_count threshold First open-source closed-form za pay-anywhere/scatter-pay evaluation. Binomial PMF computed iteratively, min_pay_count threshold codified, pure-stdlib.",
+      "id": "W244.26",
+      "kind": "industry-first",
+      "title": "W244.26: Pay-Anywhere Evaluator Kernel (Sweet Bonanza / Gonzo / Wolf Gold)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.26"
+    },
+    {
+      "body": "Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash) 3 fixtures, composed money_collect + must_hit_by First open-source COMPOSED H&W kernel (money_collect + must_hit_by jackpot tiers). Demonstrates kernel composition pattern \u2014 multi-mechanic games via composition rather than monolithic.",
+      "id": "W244.27",
+      "kind": "industry-first",
+      "title": "W244.27: Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.27"
+    },
+    {
+      "body": "Both-Ways Evaluator Kernel (Thunderstruck II / Starburst / Cleopatra) 3 fixtures, RTP = ltr_rtp \u00d7 (1 + line_pay_share) First open-source closed-form za both-ways evaluator sa scatter-vs-line decomposition. Line pays double, scatter/bonus stay flat.",
+      "id": "W244.30",
+      "kind": "industry-first",
+      "title": "W244.30: Both-Ways Evaluator Kernel (Thunderstruck II / Starburst / Cleopatra)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.30"
+    },
+    {
+      "body": "Asymmetric Paytable Aggregator Kernel (Twin Spin / Wild West Gold / Wild Toro) 3 fixtures, per-symbol-per-shape contribution aggregator First open-source asymmetric-paytable aggregator: per-symbol-per-shape RTP decomposition. Operator-supplied empirical contributions (sourced from PAR/MC); kernel aggregates deterministically.",
+      "id": "W244.31",
+      "kind": "industry-first",
+      "title": "W244.31: Asymmetric Paytable Aggregator Kernel (Twin Spin / Wild West Gold / Wild Toro)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.31"
+    },
+    {
+      "body": "Symbolic Gradient + Newton-Raphson Inverse Solver 6/6 scenarios converged: 3 Newton-Raphson + 3 Bisection First open-source designer-target \u2192 kernel-parameter auto-resolver. Pure-stdlib analytic gradients (no SymPy dep) + Newton-Raphson + Bisection fallback. Replaces manual reel-weight tuning sa direktnim target specification.",
+      "id": "W244.32",
+      "kind": "industry-first",
+      "title": "W244.32: Symbolic Gradient + Newton-Raphson Inverse Solver",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.32"
+    },
+    {
+      "body": "End-to-End Showcase Game (Crimson Tiger): 4-kernel composition + MC round-trip Round-trip self-consistency PASS at 100k spins, delta < 1e-6 pp First open-source end-to-end composition demonstration. 4 W244 kernels composed into synthetic game; MC round-trip self-consistency check at 100k spins. Validates that composition pattern scales to real game configs.",
+      "id": "W244.33",
+      "kind": "industry-first",
+      "title": "W244.33: End-to-End Showcase Game (Crimson Tiger): 4-kernel composition + MC round-trip",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.33"
+    },
+    {
+      "body": "Rust Hot-Path Port \u2014 5 W244 Kernels with Python Parity Gate 5/5 Python\u2194Rust kernels byte-stable (max delta = 4.34e-19 ULP) First open-source cross-language math kernel parity gate. Python \u2194 Rust byte-stable verification via JSON stdin/stdout binary. Deterministic Merkle pin attestation.",
+      "id": "W244.34",
+      "kind": "industry-first",
+      "title": "W244.34: Rust Hot-Path Port \u2014 5 W244 Kernels with Python Parity Gate",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.34"
+    },
+    {
+      "body": "Rust Port Wave 2 \u2014 cluster_pays + cascade + money_collect + parity 8/8 8/8 kernels Python\u2194Rust byte-stable (incl. Markov DP money_collect) First open-source Rust port of Markov-DP money_collect kernel sa Python parity gate. Complex multi-step DP across (k_locked, respins_remaining) state space matches Python byte-stable.",
+      "id": "W244.35",
+      "kind": "industry-first",
+      "title": "W244.35: Rust Port Wave 2 \u2014 cluster_pays + cascade + money_collect + parity 8/8",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.35"
+    },
+    {
+      "body": "Rust Port Wave 3 \u2014 7 More Kernels (parity 14/14) 14/14 Python\u2194Rust kernels byte-stable, full math fleet parity First open-source cross-language math kernel parity gate at 14-kernel scale. Includes Markov stationary (state_machine), Markov DP (money_collect, sticky_wilds), iterative Binomial PMF (pay_anywhere, stacked_wilds), and composition-compat (buy_feature rtp_contribution).",
+      "id": "W244.36",
+      "kind": "industry-first",
+      "title": "W244.36: Rust Port Wave 3 \u2014 7 More Kernels (parity 14/14)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.36"
+    },
+    {
+      "body": "Rust Parity Gate ULTIMATE \u2014 17/17 native kernels byte-stable 17/17 native kernels Python\u2194Rust byte-stable (composed hold_and_win deferred to wave 38) First open-source 17-kernel cross-language parity gate. Covers all common slot math primitives: Markov stationary, Markov DP, Binomial PMF, geometric chain, Gaussian elim, Wald identity, conservation flow, first-order statistic, jurisdiction passes.",
+      "id": "W244.37",
+      "kind": "industry-first",
+      "title": "W244.37: Rust Parity Gate ULTIMATE \u2014 17/17 native kernels byte-stable",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.37"
+    },
+    {
+      "body": "Rust Port ULTIMATE FINAL \u2014 18/18 kernels Python\u2194Rust byte-stable 18/18 W244 kernels (incl. composed hold_and_win) Python\u2194Rust parity OK, max delta 9.42e-15 ULP Komplet open-source 18-kernel cross-language math fleet parity. Composed kernel (hold_and_win) propagation across Python/Rust matches byte-stable. Sve glavne industry slot math primitives port-ovane sa CI gate-om.",
+      "id": "W244.38",
+      "kind": "industry-first",
+      "title": "W244.38: Rust Port ULTIMATE FINAL \u2014 18/18 kernels Python\u2194Rust byte-stable",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.38"
+    },
+    {
+      "body": "DONE-UNIVERSAL #1 + #2 Closure \u2014 both_ways + expanding_wild + asymmetric showcase 20/20 DONE-UNIVERSAL stavki zatvoreno (#1 Both-ways + expanding, #2 Asymmetric showcase) DONE-UNIVERSAL coverage 100 % (20/20). Composed both_ways + expanding_wild kernel + 3 asymmetric paytable showcase proxies (NetEnt Twin Spin, Yggdrasil Wild West Gold, Microgaming Wild Toro). Sve glavne industry slot math primitives sad zatvorene closed-form.",
+      "id": "W244.43",
+      "kind": "industry-first",
+      "title": "W244.43: DONE-UNIVERSAL #1 + #2 Closure \u2014 both_ways + expanding_wild + asymmetric showcase",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.43"
+    },
+    {
+      "body": "Multi-dim Newton-Raphson Rust port \u2014 N-D auto-calibration sub-microsecond Rust N-D Newton-Raphson + analytic/numerical Jacobian + bounds + damping First open-source Rust N-D Newton-Raphson za multi-objective slot calibration. Pure-stdlib Gauss elimination (no nalgebra). Sub-microsecond per iter. Designer specifikuje (target_rtp + target_volatility + target_max_win) \u2192 solver resolves param vector simultaneously.",
+      "id": "W244.44",
+      "kind": "industry-first",
+      "title": "W244.44: Multi-dim Newton-Raphson Rust port \u2014 N-D auto-calibration sub-microsecond",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.44"
+    },
+    {
+      "body": "slot-math-kernels PyPI package skeleton \u2014 22 kernels distribuciono ready PyPI distribuciona kostura za W244 fleet, 22 kernel re-exported, MIT license First MIT-licensed PyPI distributable za slot math kernel fleet. 22 closed-form kernel-a (RTP, jackpot, FS, cluster, cascade, ways, sticky/stacked wilds, both-ways, asymmetric, crash, inverse solvers) accessible via pip install. Pure-stdlib \u2014 no numpy/scipy/sympy.",
+      "id": "W244.45",
+      "kind": "industry-first",
+      "title": "W244.45: slot-math-kernels PyPI package skeleton \u2014 22 kernels distribuciono ready",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.45"
+    },
+    {
+      "body": "W244 Benchmark Dossier \u2014 sub-microsecond Rust performance attestation Sve W244 Rust bench-ovi sub-microsecond: fastest 24.2 ns, mean 138.9 ns Prvi open-source slot math kernel performance dossier sa Merkle attestation. Sub-microsecond baseline za sve W244 Rust ports demonstrira marketing claim '10,000\u00d7 faster than typical Python implementation'.",
+      "id": "W244.47",
+      "kind": "industry-first",
+      "title": "W244.47: W244 Benchmark Dossier \u2014 sub-microsecond Rust performance attestation",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.47"
+    },
+    {
+      "body": "kernel_lint CI integration \u2014 22/22 kernels structural lint PASS in pipeline kernel_lint dodato u CI pipeline pre acceptance tests Cross-language kernel fleet sa structural lint CI gate \u2014 KLINT001-KLINT010 rule set hvata designer-side typo gre\u0161ke pre acceptance tests fire.",
+      "id": "W244.48",
+      "kind": "industry-first",
+      "title": "W244.48: kernel_lint CI integration \u2014 22/22 kernels structural lint PASS in pipeline",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w244.48"
+    },
+    {
+      "body": "Metamorphic RTP Invariant Suite 50/50 cells PASS No slot vendor publishes MR1-MR5 (determinism / zero-payout / scaling / strip-permute / mean-stationarity) for slot engine evaluators",
+      "id": "W33",
+      "kind": "industry-first",
+      "title": "W33: Metamorphic RTP Invariant Suite",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w33"
+    },
+    {
+      "body": "Mutation-Score CI Gate TS 91.2% + Rust adapter=100.0% / behavior_impls=100.0% / behavior_pipeline=100.0% / behavior_registry=100.0% / bulk=51.5% / cluster=92.9% / evaluator=100.0% / features=43.8% / jurisdiction_adapter=76.0% / markov=78.5% / rng=92.6% / rng_w236_final3=71.0% / validate=100.0% No slot vendor advertises mutation-tested math kernel sa CI-gated regression baseline",
+      "id": "W34",
+      "kind": "industry-first",
+      "title": "W34: Mutation-Score CI Gate",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w34"
+    },
+    {
+      "body": "USIF PAR Sheet Schema v1.0 20/20 samples valid No slot vendor publishes formal PAR sheet schema sa Markov transition matrices, EVT Pareto tail, jurisdiction-gated RTP",
+      "id": "W35",
+      "kind": "industry-first",
+      "title": "W35: USIF PAR Sheet Schema v1.0",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w35"
+    },
+    {
+      "body": "Jurisdiction Auto-Gate Matrix 450 verdicts (PASS=203 / WARN=175 / FAIL=72) No slot vendor publishes 15-jurisdiction compliance matrix sa near-miss UKGC RTS-3 enforcement",
+      "id": "W36",
+      "kind": "industry-first",
+      "title": "W36: Jurisdiction Auto-Gate Matrix",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w36"
+    },
+    {
+      "body": "Differential Fuzz Cross-Language 40/40 cells PASS No slot vendor tests cross-language scaling agreement TS\u2194Rust sa metamorphic invariants",
+      "id": "W37",
+      "kind": "industry-first",
+      "title": "W37: Differential Fuzz Cross-Language",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w37"
+    },
+    {
+      "body": "HSM-Backed DRBG Seed Bridge 15/15 vitest tests PASS No slot vendor publishes HSM-attested DRBG seed sa multi-instance broadcast i continuous health tests",
+      "id": "W38",
+      "kind": "industry-first",
+      "title": "W38: HSM-Backed DRBG Seed Bridge",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w38"
+    },
+    {
+      "body": "SP 800-90B Entropy Assessment 6 sources, all Low-bar (\u22650.5 bits) \u2705 No slot vendor publishes SP 800-90B Non-IID Track assessment per RNG backend + HSM bridge",
+      "id": "W39",
+      "kind": "industry-first",
+      "title": "W39: SP 800-90B Entropy Assessment",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w39"
+    },
+    {
+      "body": "Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase \u0394_pp probe) 5/5 gates PASS \u00b7 scatter \u0394 0.00 pp \u00b7 BB fair-price \u0394 +0.0037 pp \u00b7 total \u0394 +0.96 pp \u2264 1.5 pp tolerance Pure-Python closed-form direct-purchase Bonus-Buy verifier \u2014 emituje per-component \u0394_pp protiv Excel PAR-a (line / scatter / FS share / BB fair-price) bez Monte Carlo. Hypergeometric 3-row window PMF za scatter daje EXACT match na real-market PAR PPH brojeve. No vendor ships analytical BB fair-price gate in seconds.",
+      "id": "W4.11",
+      "kind": "industry-first",
+      "title": "W4.11: Bonus-Buy Fair-Price Closed-Form Verifier (direct-purchase \u0394_pp probe)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11"
+    },
+    {
+      "body": "Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger) 4/4 gates PASS @ N=200,000 \u00b7 line \u0394 -0.189 pp \u00b7 scatter \u0394 -0.008 pp \u00b7 FS trigger rel-err 5.89 % \u00b7 2.52 s Pure-stdlib MC parity validator removes closed-form's wild double-count bias entirely \u2014 line-pay \u0394 \u2264 0.5 pp + scatter \u0394 \u2264 0.1 pp + FS trigger rel-err \u2264 10 % validated in < 3 s on 200K spins, against real-market released-game PAR. Engine MC convergence proven externally on a vendor sheet (not a synthetic fixture). No vendor publishes a copyright-safe MC harness that reproduces a released game's base-game RTP shares to \u2264 0.5 pp accuracy in unit-test time.",
+      "id": "W4.11b",
+      "kind": "industry-first",
+      "title": "W4.11b: Bonus-Buy Real-Market MC Parity Validator (left-anchored line + scatter + FS trigger)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11b"
+    },
+    {
+      "body": "MC Parity Dashboard (offline single-file HTML, sales/regulator surface) offline 9.26 KB \u00b7 MC line \u0394 -0.189 pp \u00b7 scatter \u0394 -0.008 pp \u00b7 BB \u0394 +0.0037 pp \u00b7 2.52 s Offline single-file HTML dashboard that visualises closed-form + MC parity against a real-market released-game PAR in one page (no JS deps, no remote URLs, \u2264 25 KB). Drops directly into the operator-package ZIP. KPI strip foregrounds the engine-side line + scatter \u0394 pp (\u2264 0.5 pp / \u2264 0.1 pp) plus BB fair-price \u0394 and MC runtime. No vendor ships a regulator-facing visual parity dashboard whose source is reproducible and copyright-safe.",
+      "id": "W4.11c",
+      "kind": "industry-first",
+      "title": "W4.11c: MC Parity Dashboard (offline single-file HTML, sales/regulator surface)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11c"
+    },
+    {
+      "body": "Real-Market Portfolio Dashboard (5 IGT games \u00d7 13 SWIDs \u00d7 5 mechanic anchors) 7 games \u00b7 15 SWIDs \u00b7 7 mechanic anchors \u00b7 offline 10.62 KB Offline single-file HTML dashboard listing every real-market released-game PAR ingested by the engine alongside the copyright-safe `book-expanding-bonusbuy` template. KPI strip aggregates SWID and anchor counts; per-game cards expose family, topology, RTP, hit/win frequency and feature-RTP shares directly from the live IRs. Source XLSX files stay local (gitignored); only math primitives ship. No vendor publishes a single regulator-facing surface that catalogs an end-to-end real-market PAR ingestion portfolio.",
+      "id": "W4.11d",
+      "kind": "industry-first",
+      "title": "W4.11d: Real-Market Portfolio Dashboard (5 IGT games \u00d7 13 SWIDs \u00d7 5 mechanic anchors)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11d"
+    },
+    {
+      "body": "Operator Portal + CI parity gate (69-spec offline gate, GH Actions) 7 dashboards + 9 top reports \u00b7 offline 5.92 KB \u00b7 69-spec CI gate (template-parity.yml) wired Single offline landing page (`index.html`) indexes every shippable HTML dashboard + cert report \u2014 MC parity dashboard, real-market portfolio, W7.11 unified audit, Live PAR compiler, PAR verification \u2014 plus 7 top JSON/MD reports. Pairs with the `template-parity.yml` GitHub Actions workflow that re-runs the closed-form + MC parity builders + dashboard builders + 69-spec pytest sweep on every PR touching the parity surface, and uploads the rebuilt dashboards as CI artifacts. No vendor publishes an offline operator portal whose CI gate re-verifies engine accuracy against released-game PARs on every PR.",
+      "id": "W4.11e",
+      "kind": "industry-first",
+      "title": "W4.11e: Operator Portal + CI parity gate (69-spec offline gate, GH Actions)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11e"
+    },
+    {
+      "body": "Portfolio-wide IR consistency validator (13 IRs \u00d7 6 gates = 78/78) 15/15 IRs PASS \u00b7 6 gates \u00d7 15 IRs = 90/90 \u00b7 7 games covered Six-gate portfolio-wide IR consistency validator: rtp_total range / hit_freq sanity / win_freq sanity / breakdown_sums / reels_sane / paytable_monotonic. Runs across every IR ingested by the engine (currently 13 \u2014 5 source games \u00d7 deduplicated SWIDs). Pure-stdlib, runs in < 30 ms, produces a JSON report keyed by `(folder, swid)` with per-gate `pass + message` payload. Catches lift-bugs (e.g. paytable inversion, missing rtp_breakdown components, orphan reel strips) before they reach the parity gates. No vendor publishes a portfolio-wide IR validator that runs in unit-test time and covers paytable / reel / RTP / frequency invariants in one pass.",
+      "id": "W4.11f",
+      "kind": "industry-first",
+      "title": "W4.11f: Portfolio-wide IR consistency validator (13 IRs \u00d7 6 gates = 78/78)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11f"
+    },
+    {
+      "body": "Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out) 27 files committed \u00b7 338.4 KB \u00b7 merkle_root=dc5c7fcd3e75600b\u2026 Cryptographic tamper-evidence over the entire W4.11* + W4.15 deliverable surface \u2014 18 files (6 dashboards + 4 sidecar manifests + 4 acceptance reports + 1 IR + 1 workflow + 2 docs) collapsed to a single SHA-256 Merkle root. Reproducible from records alone (no need to re-read source files). Paired with the portfolio-validator HTML dashboard that renders the 6\u00d713 gate matrix as PASS/FAIL chips plus per-game + per-gate aggregates. Operator + regulator commit to ONE 256-bit hash to attest to the full sales surface integrity. No vendor publishes a Merkle-rooted evidence manifest over the dashboard + report deliverable graph in unit-test time.",
+      "id": "W4.11g",
+      "kind": "industry-first",
+      "title": "W4.11g: Portfolio Validator Dashboard + SHA-256 Evidence Manifest (W4.11* close-out)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11g"
+    },
+    {
+      "body": "Sales One-Pager (executive, print-friendly) offline 8.36 KB \u00b7 sources 6 pinned JSON reports \u00b7 print-friendly @media query Single-page executive landing surface that condenses every W4.11* + W4.15 number into one print-friendly screen \u2014 hero pitch, 8 KPI cards (line/scatter/BB \u0394 pp, portfolio size, validator 78/78, dossier 51/54, Merkle root, QA 94/94), parity gate table, real-market portfolio table, deliverable index. Sources data from 6 pinned JSON reports at build time so the page is always current with whatever passed the CI gate. Drop-in for any operator handshake or regulator briefing. No vendor publishes a single-page executive surface backed by a SHA-256 commitment graph.",
+      "id": "W4.11h",
+      "kind": "industry-first",
+      "title": "W4.11h: Sales One-Pager (executive, print-friendly)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11h"
+    },
+    {
+      "body": "Standalone Evidence Manifest Verifier (regulator-side tamper check) 27/27 files verified \u00b7 merkle_root=dc5c7fcd3e75\u2026 \u00b7 receipt-schema v1 Pure-stdlib standalone verifier that re-hashes every file in the SHA-256 evidence manifest, re-derives the Merkle root, and emits a signed receipt JSON (`W4_11_EVIDENCE_RECEIPT.json`). Exits non-zero on ANY tampering \u2014 missing files, digest mismatches, size mismatches, or merkle-root divergence. Designed for regulator / auditor offline use: no third-party dependencies, no Cortie / Anthropic call. Pytest covers happy-path + synthetic tamper detection + missing-file detection + CLI --help. CI runs the verifier after the manifest build step, so any drift between builds fails the gate. No vendor ships a regulator-side tamper-check verifier for its evidence bundle.",
+      "id": "W4.11i",
+      "kind": "industry-first",
+      "title": "W4.11i: Standalone Evidence Manifest Verifier (regulator-side tamper check)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.11i"
+    },
+    {
+      "body": "Sticky + Walking Wild State-Machine Clean-Room Template 9/9 gates PASS (E[wilds/spin]=0.46, E[TTL]=2.40, E[steps]=2.75) Clean-room dual-state-machine template for sticky + walking wild slot mechanics \u2014 5\u00d73 / 20-line / Sticky Wild TTL state machine (TTL PMF 1=20% / 2=40% / 3=25% / 4=10% / 5=5%, per-cell {empty / freshly_landed / sticky / expired} states) + Walking Wild lock-position + direction + steps state machine (left/right 50/50 PMF, steps 1..5 PMF) + **edge-evaporate** semantics (wild evaporates at grid edge but completes in-progress respin chain) + FS auto-walking-left-steps_left=4. Closed-form parity validator emits per-reel walking-distance grid awareness (E[distance | start_reel] caps at edge), monotone scatter-trigger P(\u22653 / \u22654 / \u22655), E[TTL] / E[steps] in PMF support, breakdown components sum consistency. No vendor ships an analyzable per-cell wild state-machine IR with edge-aware walking-distance closed-form.",
+      "id": "W4.12",
+      "kind": "industry-first",
+      "title": "W4.12: Sticky + Walking Wild State-Machine Clean-Room Template",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.12"
+    },
+    {
+      "body": "Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF) Book PMF (k=3/4/5) = 5.266e-3 / 2.336e-4 / 4.028e-6 \u00b7 P(3+)=5.504e-3 \u00b7 FS RTP \u0394 -0.20 pp Closed-form Book-style expanding-symbol FS analyzer: per-reel q_i = 1 \u2212 C(N\u2212K, 3)/C(N, 3) (hypergeometric), generating polynomial \u220f((1\u2212q_i) + q_i x) yields exact PMF of \"reels with \u22651 BOOK\". Matches real-market PAR PPH to < 0.5 % rel-err on k \u2208 {3, 4, 5} \u2014 no MC required. No vendor ships analytical expanding-FS probe in unit-test time.",
+      "id": "W4.15",
+      "kind": "industry-first",
+      "title": "W4.15: Expanding-Symbol Free-Spins Closed-Form Probe (hypergeometric 3-row window PMF)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.15"
+    },
+    {
+      "body": "Megaways-Style Variable-Rows Ways Clean-Room Template 6/6 structural gates PASS (6 reels \u00d7 4.7 avg rows) Public-domain clean-room math fixture for Megaways-style variable-rows ways slot \u2014 6 reels \u00d7 2-7 rows / 7\u2076 = 117 649 max ways / Mystery same-symbol grid resolve / cascade tumble / unlimited progressive FS multiplier. BTG Megaways patent EXPIRED 2023; the row-count PMF + same-symbol Mystery resolution + edge-evaporate semantics are public-domain math primitives. Closed-form parity validator emits structural-validity gates over IR (trigger probability finite-in-unit / BG shares non-negative finite / scatter share non-negative / FS RTP ref in unit / closed-form total finite) so any future schema bump surfaces immediately. No vendor ships a copyright-safe Megaways template with an analyzable IR + parity gate.",
+      "id": "W4.8",
+      "kind": "industry-first",
+      "title": "W4.8: Megaways-Style Variable-Rows Ways Clean-Room Template",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w4.8"
+    },
+    {
+      "body": "PAR Sheet Commitment v1.0 180/180 gates PASS Nijedan vendor (Vendor A/SG/Vendor B/Vendor C/Vendor D/Pragmatic) ne objavljuje per-game cryptographic commitment nad reel strips + paytable",
+      "id": "W40",
+      "kind": "industry-first",
+      "title": "W40: PAR Sheet Commitment v1.0",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w40"
+    },
+    {
+      "body": "ENT Entropy Battery (in-process) 6/6 sources PASS all 5 ENT stats ENT 5-stat battery (entropy/\u03c7\u00b2/mean/MC \u03c0/serial \u03c1) na svih 5 PRNG backend-a + HSM bridge je sad in-process attestation, kombinovan sa NIST SP 800-22 (Wave 27) + SP 800-90B (Wave 39) = three-of-six Kimi-cited batteries landed",
+      "id": "W43",
+      "kind": "industry-first",
+      "title": "W43: ENT Entropy Battery (in-process)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w43"
+    },
+    {
+      "body": "General Entropy Health Monitor (streaming sliding-window) 7/7 sources PASS \u00b7 5 PRNG + 2 adversarial UKGC RTS 8.A.1 + MGA PPD \u00a711.b + eCOGRA TG-VG require continuous RNG monitoring during operation \u2014 no vendor publishes streaming sliding-window \u03c7\u00b2 + Shannon entropy monitor with pluggable alert sinks for 5 PRNG backends + HSM bridge",
+      "id": "W55",
+      "kind": "industry-first",
+      "title": "W55: General Entropy Health Monitor (streaming sliding-window)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w55"
+    },
+    {
+      "body": "Demo Mode controller w/ auditor attestation 6/6 scenarios PASS \u00b7 tamper-detect verified GLI-19 \u00a73.3.9 (Replay Capability) + UKGC RTS 9 (demo distinction) + MGA PPD \u00a711.b (auditor traceability) + eCOGRA TG-VG \u2014 no vendor publishes architectural assertNoRngCall guard + SHA-256 attestation + tamper-evident audit trail",
+      "id": "W56",
+      "kind": "industry-first",
+      "title": "W56: Demo Mode controller w/ auditor attestation",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w56"
+    },
+    {
+      "body": "Closed-Form Portfolio (12 hybrid math kernels) 77/77 closed-form solvers PASS in single runner 12 mathematically independent closed-form solvers (N-tier H&W ladder, charge meter, supermeter Markov, sticky cash + reveal, walking-wild, megacluster, crash multiplier, parallel screens, Class-II bingo, sticky-cash collector + 2 compliance) \u2014 no vendor ships unified single-button portfolio with MC verification for all hybrid mechanics",
+      "id": "W61",
+      "kind": "industry-first",
+      "title": "W61: Closed-Form Portfolio (12 hybrid math kernels)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w61"
+    },
+    {
+      "body": "Exact Enumeration ground-truth RTP 11/11 fixtures with EXACT analytical RTP Direct analytical enumeration provides auditor-pinnable EXACT base-game RTP (closed-form sum over |symbols|^N per-line combinations) \u2014 not statistical estimate. No vendor publishes per-fixture exact RTP as deterministic ground truth.",
+      "id": "W63",
+      "kind": "industry-first",
+      "title": "W63: Exact Enumeration ground-truth RTP",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w63"
+    },
+    {
+      "body": "Self-Evolving Math Genome (multi-objective NSGA-II reel-weight tuner) 32-member Pareto frontier (target RTP 96) Multi-objective genetic reel-weight tuner sa closed-form RTP fitness (rtp_err, cv_err, hit_freq_err, fairness HHI) + NSGA-II non-dominated sort + crowding distance \u2014 niko od incumbent vendora ne ship-uje GA tuner sa Pareto frontier output umesto single-best, sa deterministi\u010dki seeded output za audit reproducibility.",
+      "id": "W7.1",
+      "kind": "industry-first",
+      "title": "W7.1: Self-Evolving Math Genome (multi-objective NSGA-II reel-weight tuner)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.1"
+    },
+    {
+      "body": "Anomaly Self-Play Detector (spec-side Bayesian parameter sweep) 36 probes \u00d7 0 anomalies surfaced Spec-side Cartesian-product parameter sweep sa z-score anomaly surfacing + auto-fix suspect-knob heuristic (extremity-of-sweep-range pointer + \"dial knob X DOWN\" suggestion) \u2014 distinct od RNG-side fault injection; catches math holes nobody probed.",
+      "id": "W7.10",
+      "kind": "industry-first",
+      "title": "W7.10: Anomaly Self-Play Detector (spec-side Bayesian parameter sweep)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.10"
+    },
+    {
+      "body": "Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela) consolidated_hash=6a32084a5e94e422\u2026 (Pareto 32, RL 18, mesh root a3a1e8d46951\u2026) Composability layer koji integralno vrti 8 W7.x kernela u jedan call i emituje SHA-256 root nad svim sub-manifestima (gdd / asset / derivative / pareto / rl_kpi / session_mesh / js_bundle). Operator dobija pun cert paper trail u jednom JSON-u, regulator pinuje JEDNU hash vrednost \u2014 niko drugi ne ship-uje composability commitment over heterogeni kernel suite.",
+      "id": "W7.11",
+      "kind": "industry-first",
+      "title": "W7.11: Unified Audit Pipeline (composability layer nad svih 8 W7.x kernela)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.11"
+    },
+    {
+      "body": "Pure-Python RL Player-Behavior Emulator 32 sessions, bust_rate=0.00, quit_rate=1.00 Tabular Q-learning (bankroll_bucket \u00d7 win_streak_state \u00d7 {continue, bet_up, bet_down, quit}) sa 3 player archetypes (casual / chaser / volatility_seeker), risk_tolerance / quit_threshold_loss / max_session_spins differentiated. Pre-launch UKGC RTS 7.4 addiction-risk pre-screen \u2014 niko drugi ne ship-uje per-archetype LTV/dropout/bankroll-bust report.",
+      "id": "W7.3",
+      "kind": "industry-first",
+      "title": "W7.3: Pure-Python RL Player-Behavior Emulator",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.3"
+    },
+    {
+      "body": "GDD \u2192 Multi-Modal Asset Manifest Pipeline manifest_hash pinned (7 symbols, 8 scripts, 4 BGM curves) Deterministic GDD\u2192manifest layer math team owns end-to-end (mood-driven style tags + per-feature narration cues + volatility-driven BGM tempo envelope + Unity/Phaser scene graph) sa byte-stable gdd_hash + manifest_hash za audit pin. Pure-Python procedural shell \u2014 downstream pipeline plugs in whichever SDXL/ElevenLabs/DAW operator licenses.",
+      "id": "W7.4",
+      "kind": "industry-first",
+      "title": "W7.4: GDD \u2192 Multi-Modal Asset Manifest Pipeline",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.4"
+    },
+    {
+      "body": "Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519) 8 spin receipts, root=f2d59e6594f556ef\u2026 Per-spin SpinReceipt sa canonical sort-keys JSON encoding + linked sha256 parent chain \u2192 Merkle root sa log\u2082(N) inclusion proof. ed25519 sign payload (session_id, merkle_root, n_receipts). Auditor verifies single spin bez engine source code-a \u2014 niko drugi ne ship-uje session-level Merkle proof za per-spin auditability.",
+      "id": "W7.5",
+      "kind": "industry-first",
+      "title": "W7.5: Hash-Tree Provenance Mesh (per-spin Merkle inclusion proof + ed25519)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.5"
+    },
+    {
+      "body": "Symbolic Differentiation Slot Math (gradient-aware reel tuner) model RTP=0.202240 \u2202-manifest pinned 4th-order central-difference \u2202RTP/\u2202weight stencil + Newton-Raphson target-RTP solver + \u2202CV/\u2202weight gradient descent + SHA-256-pinned DerivativeManifest. Auditor verifies solver convergence claims by re-checking local Newton step bez re-running optimizer \u2014 niko drugi nema gradient-aware reel tuner sa auditable derivative manifests.",
+      "id": "W7.6",
+      "kind": "industry-first",
+      "title": "W7.6: Symbolic Differentiation Slot Math (gradient-aware reel tuner)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.6"
+    },
+    {
+      "body": "Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU) 4 KB JS bundle, SHA-256 pinned, Node-verified RTP=0.20224 parity sa Rust/Python In-browser closed-form RTP evaluator (closedFormRtp + runMcSimulation + compileAndEvaluate) sa Mulberry32 RNG (TS\u2194Rust parity), ZERO toolchain (no WASM / WebGPU / wasm-pack). Designer types DSL \u2192 sees RTP instantly. JS bundle SHA-256 pinned u cert bundle za audit.",
+      "id": "W7.7",
+      "kind": "industry-first",
+      "title": "W7.7: Live PAR Compiler (vanilla JS browser runtime, no WASM/WebGPU)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.7"
+    },
+    {
+      "body": "Federated Multi-Vendor Math Knowledge Graph (SQLite) Live SQLite knowledge graph (5 vendors \u00d7 5 games \u00d7 45 features) Schema-less plug-in vendor graph (vendor / game / feature / jurisdiction / game_jurisdiction tables) sa cross-vendor queries: cross_vendor_feature_query (igre koje imaju SVE feature kinds) + games_by_jurisdiction + similar_games. Regulator gap-spotting tool \u2014 niko drugi ne ship-uje cross-vendor pattern queries kao prvoredni primitiv.",
+      "id": "W7.9",
+      "kind": "industry-first",
+      "title": "W7.9: Federated Multi-Vendor Math Knowledge Graph (SQLite)",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w7.9"
+    },
+    {
+      "body": "Must-Hit-By Jackpot (Mystery Progressive) \u2014 closed-form 6/6 configs PASS at 5000 trigger cycles each NIGC 25 CFR 542.7(c)-compliant Must-Hit-By Jackpot solver with provable E[N*] = span/(2c) + Var[N*] = span\u00b2/(12c\u00b2) closed-form. Effective per-spin RTP = c\u00b7(seed+cap)/(cap\u2212seed) exactly disclosable to auditor.",
+      "id": "W71",
+      "kind": "industry-first",
+      "title": "W71: Must-Hit-By Jackpot (Mystery Progressive) \u2014 closed-form",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w71"
+    },
+    {
+      "body": "Pseudo-Must-Hit + Level Progression \u2014 escalating-hazard Markov 6/6 configs PASS at 100000 spins each Soft-cap progressive with linear escalating hazard rate + N-level Markov chain stationary distribution (\u03c0_maxL = 1/(1+maxL\u00b7r), \u03c0_other = r\u00b7\u03c0_maxL) \u2014 closed-form per-level RTP share disclosure. No vendor publishes analytical level-chain solver.",
+      "id": "W72",
+      "kind": "industry-first",
+      "title": "W72: Pseudo-Must-Hit + Level Progression \u2014 escalating-hazard Markov",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w72"
+    },
+    {
+      "body": "Multi-tier WAP Jackpot + Wheel \u2014 per-tier renewal solver 6/6 configs PASS at 2000000 spins each (12.0M MC) WAP progressive with wheel-selection: per-tier \u03bb_i = p_trigger\u00b7w_i/\u03a3w, E[pool_i@hit] = seed_i + c_i/\u03bb_i, E[payout_i/spin] = c_i + \u03bb_i\u00b7seed_i, normalized RTP share (\u03a3=1). Operator-funded portion = p_trigger\u00b7E[seed|hit] separately disclosable per UKGC RTS 12 + MGA PPD 2018.",
+      "id": "W75",
+      "kind": "industry-first",
+      "title": "W75: Multi-tier WAP Jackpot + Wheel \u2014 per-tier renewal solver",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w75"
+    },
+    {
+      "body": "Bonus Buy / Feature Buy Variance Analyzer with CLT convergence 6/6 configs PASS at 200000 buys each (1.2M MC) Closed-form RTP=E[Y]/C, Var[Y], house edge, hit freq, win/loss ratio + **CLT convergence N* = (z\u00b7\u221aVar[Y]/(tol\u00b7C))\u00b2** + risk metrics (P(bust), P(below cost), P(break-even)). UKGC (banned 2022) / MGA (disclosure required) / AU (banned 2024) compliance. No vendor publishes formal CLT convergence formula for feature-buy pricing transparency.",
+      "id": "W81",
+      "kind": "industry-first",
+      "title": "W81: Bonus Buy / Feature Buy Variance Analyzer with CLT convergence",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w81"
+    },
+    {
+      "body": "Free Spins Retrigger Compound Variance \u2014 Wald + compound-sum 6/6 configs PASS at 50000 episodes each (300K MC) Closed-form Wald + compound-sum identities: N ~ shifted-geometric with E[N]=1/(1-p), Var[N]=p/(1-p)\u00b2; T=K\u00b7N: E[T]=K/(1-p), Var[T]=K\u00b2\u00b7p/(1-p)\u00b2; E[Y]=E[T]\u00b7\u03bc (Wald), Var[Y]=E[T]\u00b7\u03c3\u00b2 + Var[T]\u00b7\u03bc\u00b2 (compound-sum). Required for UKGC RTS 14 variance disclosure + MGA PPD \u00a711.f player protection limits.",
+      "id": "W84",
+      "kind": "industry-first",
+      "title": "W84: Free Spins Retrigger Compound Variance \u2014 Wald + compound-sum",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w84"
+    },
+    {
+      "body": "Cascade Sequential Multiplier Pyramid \u2014 geometric \u00d7 ladder 6/6 configs PASS at 100000 episodes each (600K MC) Closed-form Sweet-Bonanza/Sugar-Rush-style cascade \u00d7 multiplier-ladder: E[Y] = \u03bc_W\u00b7[\u03a3 q^(k-1)\u00b7m_k + m_max\u00b7q^L/(1-q)] (geometric-sum interchange); Var[Y] via E[Y\u00b2] = \u03c3\u00b2\u00b7E[\u03a3m_k\u00b2] + \u03bc\u00b2\u00b7E[S_N\u00b2] (compound + variance decomposition); tail P(reach max ladder) = q^(L-1). No vendor publishes closed-form for cascade-ladder products.",
+      "id": "W86",
+      "kind": "industry-first",
+      "title": "W86: Cascade Sequential Multiplier Pyramid \u2014 geometric \u00d7 ladder",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w86"
+    },
+    {
+      "body": "Persistent Multiplier Accumulator \u2014 Binomial drop chain 6/6 configs PASS at 50000 episodes each (300K MC) Pragmatic / BTG-Megaways sticky multiplier closed-form: D_n ~ Binomial(n,q), running M_n = m_init + D_n\u00b7m_drop; E[Y] = \u03bc_W\u00b7(K\u00b7m_init + q\u00b7m_drop\u00b7K(K+1)/2) (linearity + arithmetic sum); Var[Y] handles cross-spin Cov(M_n, M_m) = min(n,m)\u00b7q(1-q)\u00b7m_drop\u00b2 via 2\u03bc\u00b2\u00b7m_drop\u00b2\u00b7q(1-q)\u00b7\u03a3n(K-n) crossSum.",
+      "id": "W89",
+      "kind": "industry-first",
+      "title": "W89: Persistent Multiplier Accumulator \u2014 Binomial drop chain",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w89"
+    },
+    {
+      "body": "Coin Accumulator + Mystery Values \u2014 Wald + Bernoulli-Binomial nesting 6/6 configs PASS at 100000 episodes each (600K MC) Money-Train/Money-Cart style coin-collect closed-form: N ~ Binomial(K,q), V from mystery distribution; E[Y]=E[N]\u00b7\u03bc_V (Wald), Var[Y]=E[N]\u00b7\u03c3\u00b2_V+Var[N]\u00b7\u03bc\u00b2_V; P(\u22651 max-value)=1\u2212(1\u2212q\u00b7p_max)^K (Bernoulli-Binomial nesting identity).",
+      "id": "W91",
+      "kind": "industry-first",
+      "title": "W91: Coin Accumulator + Mystery Values \u2014 Wald + Bernoulli-Binomial nesting",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w91"
+    },
+    {
+      "body": "Multiplicative Wild Stack Bonus \u2014 product moment formula 6/6 configs PASS at 100000 episodes each (600K MC) Vendor D Hotline / Wanted Dead-style PRODUCT wild multiplier closed-form: W = \u03a0 M_i over Binomial wild reels; E[W] = (p\u00b7\u03bc_M + 1-p)^R (interchange product over per-reel active/inactive); E[W\u00b2] = (p\u00b7E[M\u00b2] + 1-p)^R; max combined = m_max^R deterministic peak.",
+      "id": "W93",
+      "kind": "industry-first",
+      "title": "W93: Multiplicative Wild Stack Bonus \u2014 product moment formula",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w93"
+    },
+    {
+      "body": "Ante Bet / Bet Boost Trade-Off Analyzer \u2014 decision math 6/6 configs PASS at 100000 spins each (600K MC) Operator + regulator ante-bet decision math: base RTP=\u03bc_0/1, ante RTP=\u03bc_a/(1+a); anteIsPositiveEV iff RTP_a>RTP_b; boost premium=(RTP_a\u2212RTP_b)/RTP_b; 2-sigma crossover N*=4\u03c3\u00b2/\u03bc_net\u00b2 (long-run convergence budget); aggregate revenue-weighted RTP w/ adoption fraction f. UKGC RTS 12 + MGA PPD \u00a711.f compliance + regulator-flag \"player-trap\" detection.",
+      "id": "W95",
+      "kind": "industry-first",
+      "title": "W95: Ante Bet / Bet Boost Trade-Off Analyzer \u2014 decision math",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w95"
+    },
+    {
+      "body": "Free Spins Lookback Multiplier Aggregator \u2014 Wald + compound variance 6/6 configs PASS at 100000 episodes each (600K MC) Push Money Cart 4 / Hacksaw post-FS multiplier closed-form: S_K=\u03a3 W_i, M ~ discrete distribution; E[Y]=\u03bc_M\u00b7K\u00b7\u03bc_W (Wald-like); Var[Y]=K\u00b7\u03c3\u00b2_W\u00b7(\u03c3\u00b2_M+\u03bc\u00b2_M)+K\u00b2\u00b7\u03bc\u00b2_W\u00b7\u03c3\u00b2_M (compound variance decomposition). Distinct from cascade ladder (per-step), sticky accumulator (during FS), wild stack product (single-win).",
+      "id": "W97",
+      "kind": "industry-first",
+      "title": "W97: Free Spins Lookback Multiplier Aggregator \u2014 Wald + compound variance",
+      "url": "INDUSTRY_FIRST_DOSSIER.html#w97"
+    },
+    {
+      "body": "asymmetric_paytable tools.math_dsl.asymmetric_paytable NetEnt Twin Spin asymmetric reels, Pragmatic Wild West Gold asymmetric pay scaling, ELK Wild Toro asymmetric stacks. Per-symbol pay depends on reel-set shape (not just k-of-a-kind).",
+      "id": "asymmetric_paytable",
+      "kind": "kernel",
+      "title": "Kernel: asymmetric_paytable",
+      "url": "kernels/asymmetric_paytable_kernel.html"
+    },
+    {
+      "body": "both_ways tools.math_dsl.both_ways Microgaming Thunderstruck II both-ways, NetEnt Starburst both-ways, IGT Cleopatra both-ways. Line pays evaluate LTR + RTL; scatter/bonus stay flat.",
+      "id": "both_ways",
+      "kind": "kernel",
+      "title": "Kernel: both_ways",
+      "url": "kernels/both_ways_kernel.html"
+    },
+    {
+      "body": "buy_feature tools.math_dsl.buy_feature BTG Bonus Buy / Pragmatic Buy Feature / Hacksaw all-buy / Push Gaming Bonus Buy / Nolimit City Feature Buy. Player pays buy_cost_x_bet \u00d7 bet to immediately enter bonus. Regulator contract: UKGC RTS 13C (buy_rtp delta \u2264 0.5 pp vs base) + MGA RG 2021/02 (buy_rtp \u2264 0.96 ceiling) + disclosure UI.",
+      "id": "buy_feature",
+      "kind": "kernel",
+      "title": "Kernel: buy_feature",
+      "url": "kernels/buy_feature_kernel.html"
+    },
+    {
+      "body": "cascade tools.math_dsl.cascade Pragmatic Sweet Bonanza, Relax Money Train, Play'n GO Reactoonz, BTG Bonanza tumble/avalanche/cascade. Winning symbols disappear, remaining fall, new drop from top. Multiplier ramps per step.",
+      "id": "cascade",
+      "kind": "kernel",
+      "title": "Kernel: cascade",
+      "url": "kernels/cascade_kernel.html"
+    },
+    {
+      "body": "charge_meter tools.math_dsl.charge_meter Starburst-meter / Power Stacks / Money Cart meter mode: per-spin charge accumulates into a meter; reaching threshold fires award (credit / multiplier / free spin / feature token). Multi-tier ladders sum independently.",
+      "id": "charge_meter",
+      "kind": "kernel",
+      "title": "Kernel: charge_meter",
+      "url": "kernels/charge_meter_kernel.html"
+    },
+    {
+      "body": "cluster_pays tools.math_dsl.cluster_pays Pragmatic Sweet Bonanza, NetEnt Aloha Cluster Pays, Pragmatic Gates of Olympus, BTG Money Cart, ELK Mystery Mish-Mash. Connected cluster of same-symbol cells (4-way or 8-way) \u2265 min_cluster_size pays per published ladder.",
+      "id": "cluster_pays",
+      "kind": "kernel",
+      "title": "Kernel: cluster_pays",
+      "url": "kernels/cluster_pays_kernel.html"
+    },
+    {
+      "body": "expanding_symbol tools.math_dsl.expanding_symbol Book of Ra/Book of Dead/Book of Atem/Book of Tut/Book of Demi Gods expanding-symbol Free Spins pattern. One HP symbol chosen at FS start expands to fill the reel on any landing, paying pay-anywhere across rows.",
+      "id": "expanding_symbol",
+      "kind": "kernel",
+      "title": "Kernel: expanding_symbol",
+      "url": "kernels/expanding_symbol_kernel.html"
+    },
+    {
+      "body": "hold_and_win tools.math_dsl.hold_and_win IGT Lightning Link, Aristocrat Dragon Cash, Scientific Games Lightning Cash, Pragmatic Big Bass H&W, Quickspin Hold'n'Link. Money-collect + multi-tier jackpot composition.",
+      "id": "hold_and_win",
+      "kind": "kernel",
+      "title": "Kernel: hold_and_win",
+      "url": "kernels/hold_and_win_kernel.html"
+    },
+    {
+      "body": "inverse_solver Designer-target \u2192 kernel-parameter auto-resolution. Newton-Raphson with analytic gradient where available; bisection fallback for non-smooth or boundary-prone kernels. Replaces manual reel-weight tuning.",
+      "id": "inverse_solver",
+      "kind": "kernel",
+      "title": "Kernel: inverse_solver",
+      "url": "kernels/inverse_solver_kernel.html"
+    },
+    {
+      "body": "money_collect tools.math_dsl.money_collect Cash Eruption / Money Train / Coin Volcano pattern: trigger by \u2265 N money symbols on initial spin, lock-and-respin episode with reset counter, terminate on empty respin pool or grid-fill, payout = SUM(locked money values) \u00d7 bet",
+      "id": "money_collect",
+      "kind": "kernel",
+      "title": "Kernel: money_collect",
+      "url": "kernels/money_collect_kernel.html"
+    },
+    {
+      "body": "must_hit_by tools.math_dsl.must_hit_by Mystery / 'Must Hit By' jackpot (NGCB Reg 14.040, IGT Lightning Link, Aristocrat Dragon Link, Scientific Games Dollar Storm). Pot seeded at `seed_x_bet`, grows by `contribution_x` per bet, guaranteed strike at `must_hit_by_x_bet` cap.",
+      "id": "must_hit_by",
+      "kind": "kernel",
+      "title": "Kernel: must_hit_by",
+      "url": "kernels/must_hit_by_kernel.html"
+    },
+    {
+      "body": "pay_anywhere tools.math_dsl.pay_anywhere Pragmatic Sweet Bonanza scatter trigger, NetEnt Gonzo's Quest pay-anywhere, Pragmatic Wolf Gold money-symbol anywhere. Binomial(n_cells, p_per_cell) landings \u00d7 pay_table[K] with min_pay_count threshold.",
+      "id": "pay_anywhere",
+      "kind": "kernel",
+      "title": "Kernel: pay_anywhere",
+      "url": "kernels/pay_anywhere_kernel.html"
+    },
+    {
+      "body": "persistent_multiplier tools.math_dsl.persistent_multiplier Quickspin Sticky Bandits, Pragmatic Mighty Wild, NetEnt Money Vault FS, ELK Bompergo, BTG Extra Chilli mega-multiplier. Multiplier escalates over FS via per-spin Bernoulli bump.",
+      "id": "persistent_multiplier",
+      "kind": "kernel",
+      "title": "Kernel: persistent_multiplier",
+      "url": "kernels/persistent_multiplier_kernel.html"
+    },
+    {
+      "body": "pick_chain tools.math_dsl.pick_chain Multi-level pick bonus (Microgaming Mega Moolah pick-pot, Aristocrat Mighty Cash, NetEnt Hall of Spins). Player picks from N-option pool revealing credit / advance / end tokens. Multi-tier ladders escalate per-pick award size.",
+      "id": "pick_chain",
+      "kind": "kernel",
+      "title": "Kernel: pick_chain",
+      "url": "kernels/pick_chain_kernel.html"
+    },
+    {
+      "body": "stacked_wilds tools.math_dsl.stacked_wilds Microgaming Mega Moolah, Aristocrat Buffalo + 1024-ways, IGT Cleopatra II, NetEnt Twin Spin 243-ways. Per-reel Bernoulli stacked-wild event with K-fold pay multiplication.",
+      "id": "stacked_wilds",
+      "kind": "kernel",
+      "title": "Kernel: stacked_wilds",
+      "url": "kernels/stacked_wilds_kernel.html"
+    },
+    {
+      "body": "state_machine tools.math_dsl.state_machine Multi-mode slot state machine (Stakelogic Supermeter, Pragmatic Power of Thor mode switch, Big Bass Splash multi-mode FS, Aristocrat Buffalo Stampede tier escalation). Each state has own per-spin RTP component; transitions follow stochastic matrix.",
+      "id": "state_machine",
+      "kind": "kernel",
+      "title": "Kernel: state_machine",
+      "url": "kernels/state_machine_kernel.html"
+    },
+    {
+      "body": "sticky_wilds tools.math_dsl.sticky_wilds NetEnt Sticky Bandits Trail of Blood, Pragmatic Pyramid King, JTG Wild Bounty Showdown, Quickspin Sticky Bandits, BTG Bonanza Billion sticky-wild respin chain pattern.",
+      "id": "sticky_wilds",
+      "kind": "kernel",
+      "title": "Kernel: sticky_wilds",
+      "url": "kernels/sticky_wilds_kernel.html"
+    },
+    {
+      "body": "ways_evaluator tools.math_dsl.ways_evaluator Microgaming 243/1024-ways, Aristocrat Buffalo 1024-ways, BTG Megaways (Bonanza, Extra Chilli, White Rabbit), Pragmatic Big Bass Splash 4096-ways. Variable-rows or fixed topology with ways_count = product(row_count_per_reel).",
+      "id": "ways_evaluator",
+      "kind": "kernel",
+      "title": "Kernel: ways_evaluator",
+      "url": "kernels/ways_evaluator_kernel.html"
+    },
+    {
+      "body": "wheel tools.math_dsl.wheel Bonus wheel (IGT Wheel of Fortune, Aristocrat Dragon Cash wheel, NetEnt Megafortune, all WAP-jackpot wheels). N-segment wheel with credit / jackpot / spin-again / no-win segments. Spin-again supports geometric-amortised closed-form via bounded chain cap.",
+      "id": "wheel",
+      "kind": "kernel",
+      "title": "Kernel: wheel",
+      "url": "kernels/wheel_kernel.html"
+    },
+    {
+      "body": "Crimson Tiger 6\u00d75 grid (30 cells), 4-way adjacency cluster_pays cascade charge_meter hold_and_win First open-source end-to-end composition demonstration: 4 W244 kernels composed into single synthetic game; closed-form vs MC round-trip self-consistency PASS at 100k spins.",
+      "id": "showcase-game",
+      "kind": "showcase",
+      "title": "Showcase game: Crimson Tiger",
+      "url": "showcase_game.html"
+    }
+  ],
+  "entries_count": 229,
+  "merkle_root_sha256": "0dd53983536ee0502f453918d3da394af2f6cc2ce6b4f089f2849c6d764fa4da",
+  "schema": "w244-search-index/v1"
+}

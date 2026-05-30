@@ -78,6 +78,43 @@ a.card .meta {
 }
 a.card .meta strong { color: var(--fg); }
 
+section.search {
+  padding: 24px 32px 12px; max-width: 1200px; margin: 0 auto;
+}
+section.search input {
+  width: 100%; background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); padding: 14px 18px; border-radius: 8px;
+  font: 15px inherit;
+}
+section.search input:focus { outline: none; border-color: var(--acc); }
+section.search .count {
+  margin-top: 8px; color: var(--fg-mute); font-size: 13px;
+}
+section.search-results {
+  padding: 0 32px 24px; max-width: 1200px; margin: 0 auto;
+  display: none;
+}
+section.search-results.active { display: block; }
+section.search-results .group {
+  margin-bottom: 16px;
+}
+section.search-results .group h3 {
+  color: var(--fg-mute); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin: 12px 0 6px; font-weight: 600;
+}
+section.search-results a.hit {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 10px 14px;
+  border-radius: 6px; font-size: 13px;
+  display: block; margin-bottom: 4px;
+}
+section.search-results a.hit:hover { border-color: var(--acc); }
+section.search-results a.hit strong { color: var(--acc); }
+section.search-results a.hit .preview {
+  color: var(--fg-mute); font-size: 12px; margin-top: 2px;
+  display: block;
+}
 section.aux {
   padding: 24px 32px 40px; max-width: 1200px; margin: 0 auto;
 }
@@ -130,6 +167,14 @@ footer.bot a:hover { text-decoration: underline; }
       <span class="pill"><strong>98.88 %</strong> mutation score</span>
     </div>
   </header>
+
+  <section class="search">
+    <input id="q" type="search"
+           placeholder="Search across 89 industry firsts, 19 kernels, 120 CF solvers…"
+           autocomplete="off">
+    <div class="count" id="count">Indexing…</div>
+  </section>
+  <section class="search-results" id="results"></section>
 
   <section class="cards">
 
@@ -209,7 +254,73 @@ footer.bot a:hover { text-decoration: underline; }
     Distribution package:
     <code>pip install slot-math-kernels</code>
     (22 closed-form kernels, MIT licensed, pure-stdlib)<br><br>
-    Page Merkle (SHA-256 over body): <code>13f30703ca4853580c44030478666ce94a3b297444512603176b770ff25129b1</code>
+    Page Merkle (SHA-256 over body): <code>70e1c7afbffac6476c802039458c6c99dac307671bb44dac3fe4c7a091b05769</code>
   </footer>
+
+  <script>
+  (function () {
+    var $q = document.getElementById('q');
+    var $count = document.getElementById('count');
+    var $results = document.getElementById('results');
+    var index = null;
+    fetch('search-index.json')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        index = d;
+        $count.textContent =
+          'Index ready: ' + d.entries_count + ' entries across ' +
+          Object.keys(d.by_kind).length + ' kinds. Type to search.';
+      })
+      .catch(function () {
+        $count.textContent =
+          'Search index not loaded (open via file:// blocks fetch — use http://).';
+      });
+
+    function render(hits, q) {
+      if (!q) {
+        $results.classList.remove('active');
+        $results.innerHTML = '';
+        return;
+      }
+      $results.classList.add('active');
+      var groups = {};
+      hits.forEach(function (e) {
+        (groups[e.kind] = groups[e.kind] || []).push(e);
+      });
+      var html = '';
+      var kinds = Object.keys(groups).sort();
+      kinds.forEach(function (k) {
+        html += '<div class="group"><h3>' + k +
+          ' (' + groups[k].length + ')</h3>';
+        groups[k].slice(0, 25).forEach(function (e) {
+          var snippet = (e.body || '').substring(0, 160);
+          html += '<a class="hit" href="' + e.url + '">' +
+            '<strong>' + e.title + '</strong>' +
+            '<span class="preview">' + snippet + '…</span></a>';
+        });
+        if (groups[k].length > 25) {
+          html += '<div style="color:var(--fg-mute);font-size:12px;' +
+            'margin:4px 0 0;">+ ' + (groups[k].length - 25) +
+            ' more results in ' + k + '</div>';
+        }
+        html += '</div>';
+      });
+      $results.innerHTML = html;
+    }
+
+    $q.addEventListener('input', function () {
+      if (!index) return;
+      var q = $q.value.toLowerCase().trim();
+      if (!q) {
+        render([], '');
+        return;
+      }
+      var hits = index.entries.filter(function (e) {
+        return (e.title + ' ' + e.body).toLowerCase().indexOf(q) !== -1;
+      });
+      render(hits, q);
+    });
+  })();
+  </script>
 </body>
 </html>

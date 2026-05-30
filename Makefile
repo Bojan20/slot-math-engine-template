@@ -203,6 +203,9 @@ dossier-kernel-md: ## Build 19 per-kernel Markdown docs sa LaTeX formulama
 dossier-showcase: ## Build Showcase Game HTML (4-kernel composition demo)
 	python3 tools/build_showcase_game_html.py
 
+dossier-search-index: ## Build unified search-index.json (229+ entries cross-dossier)
+	python3 tools/build_search_index.py
+
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
@@ -215,6 +218,7 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	$(MAKE) dossier-portfolio-html
 	$(MAKE) dossier-kernel-refs
 	$(MAKE) dossier-showcase
+	$(MAKE) dossier-search-index
 	$(MAKE) dossier-landing
 	@echo "✅ All dossier HTML pages rebuilt"
 	@echo "   reports/dossier/index.html               ← landing"
@@ -247,6 +251,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_perf_regression.py \
 		tools/tests/test_w244_kernel_markdown_docs.py \
 		tools/tests/test_w244_showcase_game_html.py \
+		tools/tests/test_w244_search_index.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
