@@ -126,6 +126,7 @@ def check_industry_firsts_dossier():
 
 def check_html_dashboards():
     for name in (
+        "index.html",
         "INDUSTRY_FIRST_DOSSIER.html",
         "REGULATOR_PORTAL.html",
         "CLOSED_FORM_PORTFOLIO.html",

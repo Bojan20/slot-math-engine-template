@@ -387,6 +387,7 @@ def main() -> int:
         {"✓" if bench_sub_us else "✗"}</span>
     </div>
     <nav class="dossier-nav">
+      <a href="index.html">↩ Landing</a>
       <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
       <a class="current" href="REGULATOR_PORTAL.html">Regulator Portal</a>
       <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>

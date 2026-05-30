@@ -1,0 +1,98 @@
+# W244 wave 66 — GitHub Pages deploy za audit dossier surface.
+#
+# Posle svake merge u main, deploy-uje:
+#   - reports/dossier/* (4 root HTML + landing + 20 kernel reference pages)
+#   - reports/schemas/* (5 JSON Schema files + manifest)
+#   - reports/acceptance/W244_ALL_KERNELS.json + W244_BENCHMARK_DOSSIER.json
+#
+# Na: https://Bojan20.github.io/slot-math-engine-template/
+#
+# Auditor / regulator klikne URL, dobija landing page → 4 dashboards →
+# 19 per-kernel deep-dives + downloadable schemas + acceptance JSONs.
+#
+# Prereq (one-time owner action):
+#   1. Settings → Pages → Source: "GitHub Actions"
+#   2. (optional) Custom domain configured here
+#
+# Workflow uses official `actions/deploy-pages` — no third-party deps.
+
+name: gh-pages-dossier
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reports/dossier/**'
+      - 'reports/schemas/**'
+      - 'reports/acceptance/W244_ALL_KERNELS.json'
+      - 'reports/acceptance/W244_BENCHMARK_DOSSIER.json'
+      - 'tools/build_dossier_landing.py'
+      - '.github/workflows/gh-pages-dossier.yml'
+  workflow_dispatch:
+
+# Only one Pages deploy at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rebuild landing index (in case dossier sources changed)
+        run: |
+          python3 tools/build_dossier_landing.py
+
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site
+          # Root: dossier landing + 4 root HTML pages
+          cp reports/dossier/*.html _site/
+          # Kernel reference cards (sub-dir)
+          mkdir -p _site/kernels
+          cp reports/dossier/kernels/*.html _site/kernels/
+          # Schemas (downloadable)
+          mkdir -p _site/schemas
+          cp reports/schemas/*.json _site/schemas/
+          # Key acceptance artefakti (for cross-link)
+          mkdir -p _site/acceptance
+          cp reports/acceptance/W244_ALL_KERNELS.json \
+             _site/acceptance/W244_ALL_KERNELS.json
+          cp reports/acceptance/W244_BENCHMARK_DOSSIER.json \
+             _site/acceptance/W244_BENCHMARK_DOSSIER.json
+          # Emit a .nojekyll to disable Jekyll processing (we are plain HTML)
+          touch _site/.nojekyll
+          echo "Pages site contents:"
+          find _site -type f | sort | head -50
+          echo "Total files: $(find _site -type f | wc -l)"
+          echo "Total size:  $(du -sh _site | cut -f1)"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

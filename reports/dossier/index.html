@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>slot-math-engine-template — Audit Dossier</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.hero {
+  padding: 72px 32px 40px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+header.hero h1 {
+  margin: 0 0 12px; font-size: 48px; font-weight: 800;
+  letter-spacing: -1px;
+}
+header.hero h1 .accent { color: var(--acc); }
+header.hero .lead {
+  color: var(--fg-mute); font-size: 18px; max-width: 720px;
+  margin: 0 auto; line-height: 1.55;
+}
+header.hero .pills {
+  margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center;
+}
+header.hero .pill {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 6px 14px; border-radius: 999px; font-size: 13px;
+  color: var(--fg-mute);
+}
+header.hero .pill strong { color: var(--green); }
+
+section.cards {
+  display: grid; gap: 20px; padding: 40px 32px;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  max-width: 1200px; margin: 0 auto;
+}
+a.card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  text-decoration: none; color: var(--fg);
+  transition: border-color 0.15s, transform 0.15s;
+  display: block;
+}
+a.card:hover {
+  border-color: var(--acc); transform: translateY(-2px);
+}
+a.card .badge {
+  display: inline-block; padding: 4px 10px; border-radius: 4px;
+  background: var(--acc); color: #000;
+  font: 11px ui-monospace, monospace; font-weight: 700;
+  margin-bottom: 12px;
+}
+a.card h2 {
+  margin: 0 0 8px; font-size: 22px; font-weight: 700;
+  color: var(--acc);
+}
+a.card p {
+  margin: 0 0 14px; color: var(--fg-mute);
+  font-size: 14px; line-height: 1.55;
+}
+a.card .meta {
+  font: 12px ui-monospace, "SF Mono", monospace;
+  color: var(--fg-mute); padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+a.card .meta strong { color: var(--fg); }
+
+section.aux {
+  padding: 24px 32px 40px; max-width: 1200px; margin: 0 auto;
+}
+section.aux h3 {
+  font-size: 18px; color: var(--fg-mute);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  font-weight: 600; margin: 16px 0;
+}
+.aux-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.aux-grid a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg); text-decoration: none; padding: 12px 14px;
+  border-radius: 6px; font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.aux-grid a:hover { border-color: var(--acc); }
+.aux-grid a strong { color: var(--acc); }
+.aux-grid a span { color: var(--fg-mute); font-size: 12px; }
+
+footer.bot {
+  padding: 24px 32px 48px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 32px;
+  text-align: center;
+}
+footer.bot code { color: var(--acc); }
+footer.bot a { color: var(--acc); text-decoration: none; }
+footer.bot a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <h1>slot-math-engine-template<br>
+        <span class="accent">audit dossier</span></h1>
+    <p class="lead">
+      Engineering &amp; math attestation for 22 closed-form slot kernels —
+      Merkle-pinned, byte-stable, regulator-audit-ready. Four entry points,
+      one cryptographic commitment.
+    </p>
+    <div class="pills">
+      <span class="pill">89 <strong>industry firsts</strong></span>
+      <span class="pill">20
+        <strong>kernels attested</strong></span>
+      <span class="pill">120 CF solvers ×
+        <strong>589 configs</strong></span>
+      <span class="pill">3 benches ·
+        <strong>139 ns mean</strong></span>
+      <span class="pill"><strong>98.88 %</strong> mutation score</span>
+    </div>
+  </header>
+
+  <section class="cards">
+
+    <a class="card" href="INDUSTRY_FIRST_DOSSIER.html">
+      <span class="badge">DOSSIER</span>
+      <h2>Industry Firsts</h2>
+      <p>89 engineering &amp; math innovations across W33-W244 that no
+         slot vendor publishes. Live search, kimi/wave filter, Merkle
+         paper-trail.</p>
+      <div class="meta">89 cards · deterministic SHA-256</div>
+    </a>
+
+    <a class="card" href="REGULATOR_PORTAL.html">
+      <span class="badge">PORTAL</span>
+      <h2>Regulator Portal</h2>
+      <p>3-tab single-page auditor landing: Industry Firsts + Kernel
+         Attestation (master Merkle) + Performance (sub-µs benches).
+         UKGC RTS 13C / MGA RG 2021/02 / GLI-19 ready.</p>
+      <div class="meta">3 tabs · master Merkle attested</div>
+    </a>
+
+    <a class="card" href="CLOSED_FORM_PORTFOLIO.html">
+      <span class="badge">PORTFOLIO</span>
+      <h2>Closed-Form Portfolio</h2>
+      <p>120 closed-form solvers across 589 MC-validated configs
+         (100 % config pass rate). Searchable table with status filter.</p>
+      <div class="meta">120 solvers · 589 configs</div>
+    </a>
+
+    <a class="card" href="kernels/index.html">
+      <span class="badge">REFERENCES</span>
+      <h2>Kernel References</h2>
+      <p>Per-kernel HTML deep-dive: industry pattern, Merkle root, full
+         acceptance fixture detail with rendered RTP &amp; key-value tables.</p>
+      <div class="meta">19 per-kernel pages + index</div>
+    </a>
+
+  </section>
+
+  <section class="aux">
+    <h3>Schemas &amp; verification</h3>
+    <div class="aux-grid">
+      <a href="../schemas/schemas_manifest.json">
+        <strong>schemas_manifest.json</strong>
+        <span>Merkle-pinned</span>
+      </a>
+      <a href="../schemas/w244_kernel.schema.json">
+        <strong>w244_kernel.schema.json</strong>
+        <span>Draft 2020-12</span>
+      </a>
+      <a href="../acceptance/W244_ALL_KERNELS.json">
+        <strong>W244_ALL_KERNELS.json</strong>
+        <span>master Merkle</span>
+      </a>
+      <a href="../acceptance/W244_BENCHMARK_DOSSIER.json">
+        <strong>W244_BENCHMARK_DOSSIER.json</strong>
+        <span>perf attestation</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="bot">
+    All HTML pages are byte-stable across rebuilds. The aggregate Merkle
+    over per-page bodies is the cryptographic commitment auditors verify.<br><br>
+    Source repository:
+    <a href="https://github.com/Bojan20/slot-math-engine-template">
+      github.com/Bojan20/slot-math-engine-template</a><br>
+    Distribution package:
+    <code>pip install slot-math-kernels</code>
+    (22 closed-form kernels, MIT licensed, pure-stdlib)<br><br>
+    Page Merkle (SHA-256 over body): <code>ec93550652ceae3a258e1c0c8a10bf3ff3819921b0ae607a3a5c889e3c687b54</code>
+  </footer>
+</body>
+</html>

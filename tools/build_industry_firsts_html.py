@@ -276,6 +276,7 @@ def main() -> int:
       acceptance report under <code>reports/acceptance/</code>.
     </p>
     <nav class="dossier-nav">
+      <a href="index.html">↩ Landing</a>
       <a class="current" href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
       <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
       <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
