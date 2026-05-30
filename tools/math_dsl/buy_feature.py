@@ -127,4 +127,8 @@ def buy_feature_audit(params: BuyFeatureParams) -> dict:
         "ukgc_rts13c_pass_1p0": ukgc_rts13c_pass(params, 1.0),
         "mga_2021_02_pass_0p96": mga_2021_02_pass(params, 0.96),
         "mga_2021_02_pass_0p97": mga_2021_02_pass(params, 0.97),
+        # W244 wave 36 — composition compat: kernel-uniform `rtp_contribution`
+        # key (= buy_rtp). Other kernels expose `rtp_contribution`; this
+        # alignment lets composed kernels sum across the fleet uniformly.
+        "rtp_contribution": buy_rtp(params),
     }

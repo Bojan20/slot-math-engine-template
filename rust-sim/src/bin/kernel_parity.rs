@@ -14,8 +14,10 @@ use serde::{Deserialize, Serialize};
 use std::io::{self, Read, Write};
 
 use slot_sim::kernels::{
-    both_ways, cascade, charge_meter, cluster_pays, expanding_symbol,
-    money_collect, must_hit_by, pay_anywhere, stacked_wilds, wheel,
+    asymmetric_paytable, both_ways, buy_feature, cascade, charge_meter,
+    cluster_pays, expanding_symbol, money_collect, must_hit_by,
+    pay_anywhere, persistent_multiplier, pick_chain, stacked_wilds,
+    state_machine, sticky_wilds, ways_evaluator, wheel,
 };
 
 #[derive(Debug, Deserialize)]
@@ -109,6 +111,62 @@ fn run(req: Request) -> Result<serde_json::Value, String> {
                     .map_err(|e| format!("parse: {}", e))?;
             p.validate()?;
             Ok(serde_json::to_value(wheel::wheel_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "state_machine" => {
+            let p: state_machine::StateMachineParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(state_machine::state_machine_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "persistent_multiplier" => {
+            let p: persistent_multiplier::PersistentMultiplierParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(persistent_multiplier::persistent_multiplier_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "asymmetric_paytable" => {
+            let p: asymmetric_paytable::AsymmetricPaytableParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(asymmetric_paytable::asymmetric_paytable_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "ways_evaluator" => {
+            let p: ways_evaluator::WaysEvaluatorParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(ways_evaluator::ways_evaluator_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "sticky_wilds" => {
+            let p: sticky_wilds::StickyWildsParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(sticky_wilds::sticky_wilds_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "pick_chain" => {
+            let p: pick_chain::PickChainParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(pick_chain::pick_chain_rtp(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "buy_feature" => {
+            let p: buy_feature::BuyFeatureParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(buy_feature::buy_feature_audit(&p))
                 .map_err(|e| e.to_string())?)
         }
         other => Err(format!("unknown kernel: {}", other)),

@@ -302,6 +302,128 @@ def _py_money_collect(p: dict) -> dict:
     ))
 
 
+def fixture_state_machine() -> tuple[dict, dict]:
+    py_params = {
+        "states_tuples": [("base", 0.96), ("super", 2.50)],
+        "transitions": ((0.99, 0.01), (0.50, 0.50)),
+    }
+    rust_params = {
+        "states": [{"name": "base", "rtp_component": 0.96},
+                   {"name": "super", "rtp_component": 2.50}],
+        "transitions": [[0.99, 0.01], [0.50, 0.50]],
+    }
+    return py_params, rust_params
+
+
+def fixture_persistent_multiplier() -> tuple[dict, dict]:
+    common = dict(
+        fs_trigger_p=0.005, fs_initial_spins=10,
+        base_pay_per_spin_x_bet=0.5,
+        initial_multiplier=1.0, bump_increment=1.0,
+        p_bump_per_spin=0.3,
+    )
+    py_params = {**common, "max_multiplier": None}
+    rust_params = {**common, "max_multiplier": None}
+    return py_params, rust_params
+
+
+def fixture_ways_evaluator() -> tuple[dict, dict]:
+    py_params = {
+        "row_dist": [{3: 1.0}] * 5,
+        "per_way_rtp": 0.96 / 243,
+    }
+    rust_params = {
+        "row_distribution_per_reel": [{"3": 1.0}] * 5,
+        "per_way_rtp_x_bet": 0.96 / 243,
+    }
+    return py_params, rust_params
+
+
+def fixture_sticky_wilds() -> tuple[dict, dict]:
+    pay = {1: 0.5, 2: 1.5, 3: 5.0, 4: 25.0, 5: 100.0}
+    common = dict(
+        trigger_p=0.012, n_respins=3, n_cells=15,
+        p_wild_per_cell_per_respin=0.06, initial_wilds=1,
+    )
+    py_params = {**common, "pay_per_wild_count": pay}
+    rust_params = {**common, "pay_per_wild_count": {str(k): v for k, v in pay.items()}}
+    return py_params, rust_params
+
+
+def fixture_pick_chain() -> tuple[dict, dict]:
+    # Single-level all-credit, 6 picks × 2.0 = 12, trig=0.01 → RTP=0.12
+    py_params = {
+        "trigger_p": 0.01,
+        "levels": [{"name": "L1", "pool_size": 6,
+                    "award_distribution": {2.0: 6}}],
+    }
+    rust_params = {
+        "trigger_p": 0.01,
+        "levels": [{"name": "L1", "pool_size": 6,
+                    "award_distribution": {"2.0": 6}}],
+    }
+    return py_params, rust_params
+
+
+def fixture_buy_feature() -> tuple[dict, dict]:
+    common = dict(
+        bonus_average_pay_x_bet=96.0,
+        buy_cost_x_bet=100.0,
+        base_game_rtp=0.96,
+        target_buy_rtp=0.96,
+    )
+    return common, common
+
+
+def _py_state_machine(p: dict) -> dict:
+    from tools.math_dsl.state_machine import (
+        GameState, StateMachineParams, state_machine_rtp,
+    )
+    states = tuple(GameState(name, rtp) for name, rtp in p["states_tuples"])
+    return state_machine_rtp(StateMachineParams(
+        states=states, transitions=p["transitions"],
+    ))
+
+
+def _py_persistent_multiplier(p: dict) -> dict:
+    from tools.math_dsl.persistent_multiplier import (
+        PersistentMultiplierParams, persistent_multiplier_rtp,
+    )
+    return persistent_multiplier_rtp(PersistentMultiplierParams(**p))
+
+
+def _py_ways_evaluator(p: dict) -> dict:
+    from tools.math_dsl.ways_evaluator import (
+        WaysEvaluatorParams, ways_evaluator_rtp,
+    )
+    return ways_evaluator_rtp(WaysEvaluatorParams(
+        row_distribution_per_reel=tuple(p["row_dist"]),
+        per_way_rtp_x_bet=p["per_way_rtp"],
+    ))
+
+
+def _py_sticky_wilds(p: dict) -> dict:
+    from tools.math_dsl.sticky_wilds import StickyWildsParams, sticky_wilds_rtp
+    return sticky_wilds_rtp(StickyWildsParams(**p))
+
+
+def _py_pick_chain(p: dict) -> dict:
+    from tools.math_dsl.pick_chain import PickChainParams, PickLevel, pick_chain_rtp
+    levels = tuple(PickLevel(
+        name=lvl["name"],
+        pool_size=lvl["pool_size"],
+        award_distribution=lvl["award_distribution"],
+    ) for lvl in p["levels"])
+    return pick_chain_rtp(PickChainParams(
+        trigger_p=p["trigger_p"], levels=levels,
+    ))
+
+
+def _py_buy_feature(p: dict) -> dict:
+    from tools.math_dsl.buy_feature import BuyFeatureParams, buy_feature_audit
+    return buy_feature_audit(BuyFeatureParams(**p))
+
+
 KERNELS = [
     ("charge_meter", fixture_charge_meter, _py_charge_meter),
     ("stacked_wilds", fixture_stacked_wilds, _py_stacked_wilds),
@@ -311,6 +433,12 @@ KERNELS = [
     ("cluster_pays", fixture_cluster_pays, _py_cluster_pays),
     ("cascade", fixture_cascade, _py_cascade),
     ("money_collect", fixture_money_collect, _py_money_collect),
+    ("state_machine", fixture_state_machine, _py_state_machine),
+    ("persistent_multiplier", fixture_persistent_multiplier, _py_persistent_multiplier),
+    ("ways_evaluator", fixture_ways_evaluator, _py_ways_evaluator),
+    ("sticky_wilds", fixture_sticky_wilds, _py_sticky_wilds),
+    ("pick_chain", fixture_pick_chain, _py_pick_chain),
+    ("buy_feature", fixture_buy_feature, _py_buy_feature),
 ]
 
 

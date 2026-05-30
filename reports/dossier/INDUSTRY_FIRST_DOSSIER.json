@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:b406b84e3056e636",
-  "repo_sha": "0c7fadeb6c99fb52ab69757a844383916e955c52",
+  "generatedAtUtc": "deterministic-by-merkle:f2c1d7a9153ed901",
+  "repo_sha": "e4c8560102cd074cbdfd3c9366920a4c2a2f5e6c",
   "headline": {
-    "waves": 81,
-    "industry_firsts": 81,
+    "waves": 82,
+    "industry_firsts": 82,
     "all_present": true
   },
   "waves": [
@@ -2814,6 +2814,31 @@
         "max_delta": "9.42e-15 ULP (money_collect — Markov DP)"
       },
       "industry_first": "First open-source Rust port of Markov-DP money_collect kernel sa Python parity gate. Complex multi-step DP across (k_locked, respins_remaining) state space matches Python byte-stable."
+    },
+    {
+      "wave": "244.36",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Rust Port Wave 3 — 7 More Kernels (parity 14/14)",
+      "reportPath": "reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "14/14 Python↔Rust kernels byte-stable, full math fleet parity",
+      "detail": {
+        "new_rust_kernels": [
+          "state_machine",
+          "ways_evaluator",
+          "sticky_wilds",
+          "pick_chain",
+          "buy_feature",
+          "persistent_multiplier (mod.rs only)",
+          "asymmetric_paytable (mod.rs only)"
+        ],
+        "total_rust_kernels_ported": "17 native (state_machine + ways_evaluator + sticky_wilds + pick_chain + buy_feature added)",
+        "parity_status": "14/14 kernels in parity gate, all byte-stable",
+        "max_delta": "9.42e-15 ULP (money_collect Markov DP)"
+      },
+      "industry_first": "First open-source cross-language math kernel parity gate at 14-kernel scale. Includes Markov stationary (state_machine), Markov DP (money_collect, sticky_wilds), iterative Binomial PMF (pay_anywhere, stacked_wilds), and composition-compat (buy_feature rtp_contribution)."
     }
   ],
   "auditor_qa": [

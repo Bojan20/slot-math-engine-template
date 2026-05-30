@@ -146,6 +146,8 @@ class TestBuyFeatureAudit(unittest.TestCase):
             "delta_pp_vs_base", "delta_pp_vs_target",
             "ukgc_rts13c_pass_0p5", "ukgc_rts13c_pass_1p0",
             "mga_2021_02_pass_0p96", "mga_2021_02_pass_0p97",
+            # W244 wave 36 — composition compat
+            "rtp_contribution",
         }
         self.assertEqual(set(a.keys()), expected_keys)
         self.assertAlmostEqual(a["buy_rtp"], 0.96)
