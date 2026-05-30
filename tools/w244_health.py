@@ -175,6 +175,12 @@ def check_pypi_vendored():
         not missing,
         f"missing: {missing}" if missing else "all present",
     )
+    cli = pkg_dir / "_cli.py"
+    _check(
+        "PyPI CLI module present",
+        cli.exists(),
+        "_cli.py present" if cli.exists() else "missing",
+    )
 
 
 def check_vendored_drift():

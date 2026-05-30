@@ -51,6 +51,9 @@ Documentation = "https://github.com/Bojan20/slot-math-engine-template/blob/main/
 Repository = "https://github.com/Bojan20/slot-math-engine-template"
 Issues = "https://github.com/Bojan20/slot-math-engine-template/issues"
 
+[project.scripts]
+slot-math = "slot_math_kernels._cli:main"
+
 [project.optional-dependencies]
 # Acceptance test fixtures + parity check tooling.
 test = [

@@ -4,6 +4,20 @@ All notable changes to `slot-math-kernels` are documented here. Format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioning
 follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`slot-math` CLI entry-point** (`pyproject.toml` `[project.scripts]`):
+  - `slot-math list` — enumerate 22 kernels with one-line docs
+  - `slot-math info <kernel>` — docstring + public API surface
+  - `slot-math both-ways --ltr-rtp X --share Y` — quick closed-form RTP
+  - `slot-math charge-meter --expected-charge X --tier name:thresh:award`
+  - `slot-math buy-feature --bonus X --cost Y --base-rtp Z --target W`
+  - `slot-math run <kernel> --config params.json` — generic JSON-driven runner
+  - `slot-math --version` — package version
+  - All output JSON on stdout, pipeable to `jq` / `python -m json.tool`
+
 ## [1.0.0] — 2026-05-30
 
 First public release. 22 closed-form slot math kernels, fully vendored

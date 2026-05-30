@@ -24,6 +24,23 @@ Each kernel:
 pip install slot-math-kernels
 ```
 
+## Command-line usage
+
+The package installs a `slot-math` entry-point CLI:
+
+```bash
+slot-math list                                    # show all 22 kernels
+slot-math info charge_meter                       # docs + API for one
+slot-math both-ways --ltr-rtp 0.96 --share 0.7    # quick calc
+slot-math charge-meter --expected-charge 0.5 \
+          --tier classic:50:10                    # Wald RTP
+slot-math buy-feature --bonus 95 --cost 100 \
+          --base-rtp 0.965 --target 0.95          # UKGC/MGA audit
+slot-math run wheel --config params.json          # run any kernel from JSON
+```
+
+All output is JSON on stdout — pipe to `jq` or `python -m json.tool`.
+
 ## Quick start
 
 ```python
