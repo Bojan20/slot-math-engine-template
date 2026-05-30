@@ -206,6 +206,9 @@ dossier-showcase: ## Build Showcase Game HTML (4-kernel composition demo)
 dossier-search-index: ## Build unified search-index.json (229+ entries cross-dossier)
 	python3 tools/build_search_index.py
 
+docs-index: ## Build docs/README.md auto-index (75 top-level + 19 kernel docs)
+	python3 tools/build_docs_index.py
+
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
@@ -252,6 +255,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_kernel_markdown_docs.py \
 		tools/tests/test_w244_showcase_game_html.py \
 		tools/tests/test_w244_search_index.py \
+		tools/tests/test_w244_docs_index.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
