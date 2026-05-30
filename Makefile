@@ -197,6 +197,9 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	@echo "   reports/dossier/REGULATOR_PORTAL.html"
 	@echo "   reports/dossier/CLOSED_FORM_PORTFOLIO.html"
 
+health-w244: ## W244 one-shot health probe (16 checks, ~0.1s)
+	python3 tools/w244_health.py
+
 qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 	python3 -m pytest \
 		tools/tests/test_w244_multi_dim_parity.py \
