@@ -118,8 +118,9 @@ def render(cf: dict, mc: dict, val: dict, em: dict, portfolio: dict, dossier: di
     val_passed = val["summary"]["passed"]
     val_gate_count = len(val["summary"]["by_gate"])
     em_files = em["file_count"]
-    em_root = em["merkle_root_sha256"]
-    em_bytes = em["total_bytes"]
+    # W244 wave 6: em_root + em_bytes intentionally NOT extracted — embedding
+    # either created a render cycle (manifest hash ↔ sales-pager bytes feedback
+    # loop). Auditors read both from W4_11_EVIDENCE_MANIFEST.json directly.
     dh = dossier.get("headline", {})
 
     title = '<h1>Slot Math Engine · Sales One-Pager</h1>'

@@ -28,7 +28,6 @@ import json
 import math
 import random
 from pathlib import Path
-from time import perf_counter
 
 REPO = Path(__file__).resolve().parents[2]
 IR_PATH = REPO / "games" / "book-expanding-bonusbuy" / "out" / "template-book-bonusbuy.ir.json"
@@ -217,7 +216,10 @@ def run_mc(spins: int, seed: int) -> dict:
     fs_total_spins = 0
     fs_total_expansions = 0
 
-    t0 = perf_counter()
+    # W244 wave 6: t0/elapsed removed — wall-clock timing was producing
+    # non-deterministic JSON output (`elapsed_seconds` + `spins_per_second`
+    # flipped on every CI run even with identical RNG seed). Per CI log
+    # banner at line ~350 we print "elapsed kept in CI log only".
     for i in range(spins):
         total_wagered += TOTAL_BET_COINS
         pay, books, _ = evaluate_base_spin(
@@ -246,8 +248,6 @@ def run_mc(spins: int, seed: int) -> dict:
             fs_total_expansions += fs_x
         if pay > 0 or books >= 3:
             hits += 1
-    elapsed = perf_counter() - t0
-
     rtp = total_won / total_wagered
     line_rtp = base_line_won / total_wagered
     scatter_rtp = base_scatter_won / total_wagered

@@ -79,8 +79,17 @@ def test_mc_fs_trigger_freq_in_par_realistic_range(report: dict):
 
 
 def test_mc_runtime_under_10_seconds_for_200k_spins(report: dict):
-    """Performance gate — full evaluator (line + scatter + FS) ≤ 10 s @ 200K spins."""
-    assert report["elapsed_seconds"] <= 10.0
+    """Performance gate moved to CI logs — JSON no longer carries timing.
+
+    W244 wave 6 — `elapsed_seconds` was excised from the MC JSON for Merkle
+    determinism (machine-load wall-clock was the cascade root that dirtied
+    6 pinned regulator files on every rebuild). Performance budget for
+    200K spins remains ≤ 10 s; CI keeps the actual measurement in its run
+    summary. This test now just confirms the field is intentionally absent
+    so future contributors don't re-add wall-clock fields by accident.
+    """
+    assert "elapsed_seconds" not in report
+    assert "spins_per_second" not in report
 
 
 def test_mc_report_contains_evaluator_note(report: dict):
