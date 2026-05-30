@@ -253,6 +253,12 @@ reports/llm-demo/
 # source-of-truth.
 reports/benchmark/
 
+# W244 — empty reg-oracle agent placeholder.
+# `agents/reg-oracle/corpus/traces.jsonl` is a 0-byte stub until the
+# reg-oracle agent gets its first regulator trace dump. Excluding the
+# empty placeholder from git; will land when content arrives.
+agents/reg-oracle/corpus/traces.jsonl
+
 # W244 — Stryker+vitest bug reproducer minimal repo.
 # Standalone reproducer for an upstream bug; install + run artefacts are
 # transient. The repro sources (5 files: README, GITHUB_ISSUE.md,
