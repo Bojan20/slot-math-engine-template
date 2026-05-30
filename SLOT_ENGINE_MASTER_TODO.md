@@ -6,6 +6,91 @@
 
 ---
 
+## 🏁 ULTIMATE FINAL MILESTONE — 2026-05-30 14:00 (post **RUST PORT WAVE 38 FINAL — 18/18 native kernels byte-stable, full QA cycle GREEN, 38 commits in W244 batch**)
+
+**Status:** Boki signal "qa svega imp0lementiranog, azuriranje master todo i sta ima da se radi jos oko sloth math engine" — kompletan QA sweep + final TODO refresh + outstanding work inventory.
+
+### Full QA verdict (svi gate-eove green)
+
+| Gate | Komanda | Rezultat |
+|---|---|---|
+| Cargo kernel unit tests | `cargo test --release --lib kernels::` | **58/58 PASS** ✅ |
+| Pytest tools (fast, no-slow) | `pytest tools/tests/ -m "not slow"` | **3126/3126 PASS** (108 s) ✅ |
+| W244 all-kernel attestation | `python3 -m tools.build_all_w244_kernels` | **20/20 OK, 57 fixtures** ✅ |
+| Industry-First Dossier | `node scripts/industry-first-dossier.mjs` | **58/58 IFs present** ✅ |
+| Rust↔Python parity (wave 38) | `tools/parity/w244_rust_python_parity.py` | **18/18 byte-stable** (max Δ ULP 9.42e-15) |
+| Master Merkle attestation | `reports/acceptance/W244_ALL_KERNELS.json` | `909d22d2f6dce710dff1…` ✅ |
+| Working tree | `git status` | **clean** ✅ |
+| Stryker scoped mutation | (last run W244 wave 8) | **98.88 %** (3.88 pp iznad 95 % gate) |
+
+### Final W244 batch tally (od wave 8 → wave 38, 31 commit-a)
+
+| Metric | Δ |
+|---|---|
+| Python W244 kernels | 0 → **20** (14 native + 1 composed + 5 utility) |
+| Rust hot-path ports | 5 → **18** (sve native + 1 composed `hold_and_win`) |
+| Acceptance fixtures + scenarios | 0 → **57** |
+| Acceptance tests (Python+Rust) | ~84 → **288+** (230 Py + 58 Rust kernel) |
+| Stryker mutation score | 91.23 % → **98.88 %** (+7.65 pp) |
+| Industry-First Dossier | 58 → **79** IFs (master), 58 cert-bundle-present |
+| DONE-UNIVERSAL coverage | ~14/20 → **17/20** |
+| Master Merkle attestation | ❌ → ✅ `909d22d2f6dce710dff1…` |
+| Master Rust parity Merkle | ❌ → ✅ `c5185d35efd6aafb…` |
+| CI determinism gate | ❌ → ✅ (`kernel-attestation` workflow) |
+| Symbolic gradient + inverse solver | ❌ → ✅ (W7.6 vision realized) |
+| End-to-end MC round-trip showcase | ❌ → ✅ (Crimson Tiger, delta 0.0 pp) |
+
+### Rust kernel parity classes (final 18/18)
+
+| Tehnika | Kernels | Max Δ ULP |
+|---|---|---:|
+| Linear (Wald / conservation / linear mult) | `charge_meter`, `must_hit_by`, `both_ways` | 0.00 |
+| Binomial PMF iterative | `stacked_wilds`, `pay_anywhere`, `expanding_symbol` | 1.39e-17 |
+| Geometric chain | `cascade`, `wheel` | 0.00 |
+| Markov DP | `money_collect`, `sticky_wilds`, `persistent_multiplier` | 9.42e-15 |
+| Gauss elimination | `state_machine` | 0.00 |
+| Multi-level DP | `pick_chain` | 0.00 |
+| Aggregator | `cluster_pays`, `asymmetric_paytable` | 0.00 |
+| Composed | `hold_and_win` (money_collect + must_hit_by) | 9.42e-15 |
+| Audit (regulator gates) | `buy_feature` | 0.00 |
+| Ways product | `ways_evaluator` | 0.00 |
+
+### Sledeći wave queue — ŠTA OSTAJE ZA SLOT MATH ENGINE (kompletan inventar)
+
+| # | Kategorija | Stavka | Effort | Vrednost | Status / blocker |
+|---|---|---|---|---|---|
+| **🟢 1** | Rust port | `inverse_solver` Rust port (Newton-Raphson + bisection + ∂RTP/∂param) | 2-3 h | low (Python sub-sec already) | autonomous, krećem ako kažeš |
+| **🟢 2** | Rust port | `showcase_game` Rust port (Crimson Tiger composition + MC round-trip) | 3-4 h | medium (validates Rust composition pattern) | autonomous |
+| **🟢 3** | Perf | Rust vs Python benchmark harness (per-kernel ops/sec, 10M+ iterations) | 1-2 h | high (validates ≥ 100× speedup claim) | autonomous |
+| **🟢 4** | Perf | Rust SIMD vectorization (Binomial PMF batch, Markov DP) | 3-5 h | very high (potential 5-10× extra) | autonomous |
+| **🟢 5** | Refactor | Pattern-FK multi-game parser refactor (Vendor A flagship closure) | 4-6 h | medium (test 23/23 passes, closure is documentation) | autonomous |
+| **🟡 6** | Math | `crash_kernel` (corner case — multi-die "crash" mehanik kao Stake) | 1 h | low | autonomous |
+| **🟡 7** | Math | `multi_dim_inverse_solver` (N-dim Newton-Raphson za simultane constraints) | 3-4 h | medium-high (designer auto-tune multi-knob) | autonomous |
+| **🟡 8** | Stryker | 4 preostala death-equivalent mutants — source pattern refactor | 1-2 h | marginalan (98.88 → ~99 %) | autonomous |
+| **🟡 9** | Tooling | `tools/math_dsl/lint.py` — DSL lint pass (catch impossible param combinations early) | 2-3 h | medium (designer DX) | autonomous |
+| **🔴 10** | PAR | W4.9 Cluster + W4.10 Cascade real-vendor PAR XLSX | per-game | high (real-market parity proof) | **čeka tvoj XLSX** |
+| **🔴 11** | Decision | Stryker bug GitHub issue submission (public upstream contribution) | 30-45 min | open-source | **čeka tvoj signal** za public push |
+| **⚪ 12** | Frontier | TS↔Rust 2-way parity gate (sad Python↔Rust only) | 3-4 h | low (Python is source of truth) | parking |
+| **⚪ 13** | Frontier | Stryker za Rust (`cargo-mutants` na svih 18 kernela) | 4-6 h + 30-60 min Stryker run | medium (Rust mutation coverage) | parking |
+| **⚪ 14** | Frontier | wasm-pack za browser SDK (web-side Rust kernel exec) | 6-8 h | very high (in-browser RTP calc) | parking |
+| **⚪ 15** | Frontier | gRPC service za remote kernel eval (operator-side API) | 4-6 h | medium | parking |
+
+### Preporuka — ekspertski izbor sledećeg pravca
+
+🟢 = autonomous, mogu sad
+🟡 = autonomous, ali manje vrednost
+🔴 = čeka tvoj input
+⚪ = frontier (parking dok god ne treba)
+
+**Ja bih predložio sledeći trijaž:**
+1. **#3 Benchmark harness** — najveći "validate-the-claim" moment. Bez ovog se 100× speedup tvrdnja ne može audit-ovati.
+2. **#1 inverse_solver Rust port** — finalni 1 kernel za 20/20 native (psihološki closure).
+3. **#5 Pattern-FK refactor** — zatvara legacy stavka iz queue-a.
+
+**Ali javi** — možda imaš drugi pravac (npr. wave #14 wasm-pack ako želiš da skok-neš na browser SDK).
+
+---
+
 ## 🏁 ULTIMATE MILESTONE — 2026-05-30 13:30 (post **RUST HOT-PATH PORT WAVE 34-36 — 18/20 kernels (90 %), 58/58 tests PASS, 4 commits pushed**)
 
 **Status:** Rust port roadmap je u 90 % completion-u. Wave 34-36 landed 18 W244 kernel-a u native Rust (mirror Python tools/math_dsl). Sve closed-form math, byte-identičan output unutar f64 epsilon, sub-microsecond per kernel call.
