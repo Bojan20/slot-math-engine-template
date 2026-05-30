@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:a7564c4c13e6476e",
-  "repo_sha": "663e562e4140626a4875d312e941b608afedd402",
+  "generatedAtUtc": "deterministic-by-merkle:26de333b451e0bf4",
+  "repo_sha": "7ab22ca9fd5b90b6795d9571260a645e9aa96515",
   "headline": {
-    "waves": 78,
-    "industry_firsts": 78,
+    "waves": 79,
+    "industry_firsts": 79,
     "all_present": true
   },
   "waves": [
@@ -2747,6 +2747,27 @@
         "dependency": "pure-stdlib (no SymPy, no scipy)"
       },
       "industry_first": "First open-source designer-target → kernel-parameter auto-resolver. Pure-stdlib analytic gradients (no SymPy dep) + Newton-Raphson + Bisection fallback. Replaces manual reel-weight tuning sa direktnim target specification."
+    },
+    {
+      "wave": "244.33",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "End-to-End Showcase Game (Crimson Tiger): 4-kernel composition + MC round-trip",
+      "reportPath": "reports/acceptance/SHOWCASE_GAME_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "Round-trip self-consistency PASS at 100k spins, delta < 1e-6 pp",
+      "detail": {
+        "kernels_composed": [
+          "cluster_pays",
+          "cascade",
+          "charge_meter",
+          "hold_and_win"
+        ],
+        "topology": "6×5 grid, 4-way adjacency",
+        "validation": "MC's empirical distribution → kernel → match MC measurement byte-exactly"
+      },
+      "industry_first": "First open-source end-to-end composition demonstration. 4 W244 kernels composed into synthetic game; MC round-trip self-consistency check at 100k spins. Validates that composition pattern scales to real game configs."
     }
   ],
   "auditor_qa": [

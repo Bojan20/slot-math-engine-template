@@ -1,10 +1,10 @@
 {
   "schema": "w244-all-kernels/v1",
-  "master_merkle_root_sha256": "606f60e441efd332afbc749a99ecfc441b7758e45b83d79d2ef7440e0414f970",
-  "generated_at_utc": "deterministic-by-merkle:606f60e441efd332",
+  "master_merkle_root_sha256": "909d22d2f6dce710dff1387468c05484444290c13f48ee586210e0735e5e1925",
+  "generated_at_utc": "deterministic-by-merkle:909d22d2f6dce710",
   "all_kernels_ok": true,
-  "kernels_total": 18,
-  "kernels_ok": 18,
+  "kernels_total": 20,
+  "kernels_ok": 20,
   "kernels_fail": 0,
   "total_fixtures": 57,
   "records": [
@@ -169,6 +169,24 @@
       "output_path": "reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json",
       "fixtures_count": 3,
       "merkle_root_sha256": "b6c73b0f69080258801793736f56b04c4439fb48006bb04319e4beb19eb92219"
+    },
+    {
+      "wave_id": "244.32",
+      "kernel": "inverse_solver",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/INVERSE_SOLVER_KERNEL.json",
+      "fixtures_count": 0,
+      "merkle_root_sha256": "a3ba1e43b92e54a31895c8010e9da0b00c779d8424def807a4daa4cad092b9f9"
+    },
+    {
+      "wave_id": "244.33",
+      "kernel": "showcase_game",
+      "status": "OK",
+      "builder_exit_code": 0,
+      "output_path": "reports/acceptance/SHOWCASE_GAME_KERNEL.json",
+      "fixtures_count": 0,
+      "merkle_root_sha256": "c923961c583133a40d8f0135445880c757e1571170fd0e5ec3bf542f9eac2997"
     }
   ],
   "verification": "Re-run `python -m tools.build_all_w244_kernels`. Output must match `master_merkle_root_sha256` exactly. Each per-kernel Merkle root is independently verifiable via its own builder. Master root = SHA-256 over '<wave_id>|<kernel>|<merkle>\\n' lines in registry order."

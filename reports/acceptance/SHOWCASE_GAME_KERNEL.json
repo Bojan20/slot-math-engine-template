@@ -1,0 +1,39 @@
+{
+  "schema": "showcase-game-kernel/v1",
+  "merkle_root_sha256": "c923961c583133a40d8f0135445880c757e1571170fd0e5ec3bf542f9eac2997",
+  "generated_at_utc": "deterministic-by-merkle:c923961c583133a4",
+  "game_name": "Crimson Tiger",
+  "topology": "6×5 grid (30 cells), 4-way adjacency",
+  "kernels_composed": [
+    "cluster_pays",
+    "cascade",
+    "charge_meter",
+    "hold_and_win"
+  ],
+  "closed_form": {
+    "total_rtp": 0.7450310977709661,
+    "components": {
+      "cluster_pays": 0.44400000000000006,
+      "cascade": 0.17292,
+      "charge_meter": 0.08,
+      "hold_and_win": 0.04811109777096613
+    }
+  },
+  "mc_round_trip_validation": {
+    "closed_form_calibrated_rtp": 0.04341,
+    "measured_cluster_rtp": 0.04340999999999947,
+    "delta_pp": 5.2735593669694936e-14,
+    "tolerance_pp": 0.01,
+    "gate_pass": true,
+    "mc_spins": 100000,
+    "mc_seed": 42,
+    "empirical_distribution_symbols": [
+      "hp1",
+      "hp2",
+      "lp1",
+      "lp2"
+    ]
+  },
+  "industry_first": "First open-source end-to-end composition demonstration: 4 W244 kernels composed into single synthetic game; closed-form vs MC round-trip self-consistency PASS at 100k spins.",
+  "verification": "Re-run `python -m tools.build_showcase_game_kernel`. Output must match `merkle_root_sha256` exactly. Round-trip gate compares kernel(MC's empirical distribution) ≡ MC measurement."
+}

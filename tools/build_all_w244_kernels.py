@@ -60,6 +60,10 @@ KERNELS = [
      "BOTH_WAYS_KERNEL.json"),
     ("244.31", "tools.build_asymmetric_paytable_kernel", "asymmetric_paytable",
      "ASYMMETRIC_PAYTABLE_KERNEL.json"),
+    ("244.32", "tools.build_inverse_solver_kernel", "inverse_solver",
+     "INVERSE_SOLVER_KERNEL.json"),
+    ("244.33", "tools.build_showcase_game_kernel", "showcase_game",
+     "SHOWCASE_GAME_KERNEL.json"),
 ]
 
 
