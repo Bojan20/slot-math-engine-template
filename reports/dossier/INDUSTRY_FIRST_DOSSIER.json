@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:61116feabf28eb25",
-  "repo_sha": "8b137378939e9578ff232ba8bdd0e428a5039a5a",
+  "generatedAtUtc": "deterministic-by-merkle:74d9cf965b0617ff",
+  "repo_sha": "2ae3001599dc57c7a7a1980402e501577d3c7b9d",
   "headline": {
-    "waves": 74,
-    "industry_firsts": 74,
+    "waves": 75,
+    "industry_firsts": 75,
     "all_present": true
   },
   "waves": [
@@ -2662,6 +2662,32 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source closed-form za pay-anywhere/scatter-pay evaluation. Binomial PMF computed iteratively, min_pay_count threshold codified, pure-stdlib."
+    },
+    {
+      "wave": "244.27",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash)",
+      "reportPath": "reports/acceptance/HOLD_AND_WIN_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, composed money_collect + must_hit_by",
+      "detail": {
+        "kernel_module": "tools.math_dsl.hold_and_win",
+        "composes": [
+          "money_collect",
+          "must_hit_by"
+        ],
+        "patterns_covered": [
+          "IGT Lightning Link",
+          "Aristocrat Dragon Cash",
+          "Scientific Games Lightning Cash",
+          "Pragmatic Big Bass H&W",
+          "Quickspin Hold'n'Link"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source COMPOSED H&W kernel (money_collect + must_hit_by jackpot tiers). Demonstrates kernel composition pattern — multi-mechanic games via composition rather than monolithic."
     }
   ],
   "auditor_qa": [

@@ -1,0 +1,166 @@
+{
+  "schema": "hold-and-win-kernel/v1",
+  "merkle_root_sha256": "0b5dead8928dcbc6126f32973c0dc239b79d384e0262f70735977df97bcf9b43",
+  "generated_at_utc": "deterministic-by-merkle:0b5dead8928dcbc6",
+  "kernel": "hold_and_win",
+  "module": "tools.math_dsl.hold_and_win",
+  "composes": [
+    "tools.math_dsl.money_collect",
+    "tools.math_dsl.must_hit_by"
+  ],
+  "industry_pattern": "IGT Lightning Link, Aristocrat Dragon Cash, Scientific Games Lightning Cash, Pragmatic Big Bass H&W, Quickspin Hold'n'Link. Money-collect + multi-tier jackpot composition.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "lightning-link-4tier",
+      "description": "IGT Lightning Link: money collect + mini/minor/major/grand pots",
+      "rtp_contribution": 0.008817904950941658,
+      "money_component": {
+        "rtp_contribution": 0.0003179049509416583,
+        "trigger_p": 1.4990591392871622e-05,
+        "expected_value_per_money": 2.75,
+        "expected_total_per_episode": 21.206965263080253
+      },
+      "jackpot_component": {
+        "rtp_contribution": 0.0085,
+        "pots_count": 4,
+        "pots": [
+          {
+            "name": "mini",
+            "seed_x_bet": 10,
+            "contribution_x": 0.0005,
+            "must_hit_by_x_bet": 100,
+            "p_strike_per_spin": 0.0001,
+            "expected_spins_to_cap": 180000.0,
+            "probability_forced_strike": 1.5216278016188968e-08,
+            "expected_strike_value_x_bet": 15.000001293383631,
+            "per_spin_rtp_contribution": 0.0005
+          },
+          {
+            "name": "minor",
+            "seed_x_bet": 50,
+            "contribution_x": 0.001,
+            "must_hit_by_x_bet": 500,
+            "p_strike_per_spin": 1e-05,
+            "expected_spins_to_cap": 450000.0,
+            "probability_forced_strike": 0.011108746586965807,
+            "expected_strike_value_x_bet": 153.88806130543804,
+            "per_spin_rtp_contribution": 0.001
+          },
+          {
+            "name": "major",
+            "seed_x_bet": 500,
+            "contribution_x": 0.002,
+            "must_hit_by_x_bet": 5000,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 2250000.0,
+            "probability_forced_strike": 0.10539910598772437,
+            "expected_strike_value_x_bet": 2763.497764969311,
+            "per_spin_rtp_contribution": 0.002
+          },
+          {
+            "name": "grand",
+            "seed_x_bet": 10000,
+            "contribution_x": 0.005,
+            "must_hit_by_x_bet": 100000,
+            "p_strike_per_spin": 1e-07,
+            "expected_spins_to_cap": 18000000.0,
+            "probability_forced_strike": 0.1652988733446863,
+            "expected_strike_value_x_bet": 66611.95493378745,
+            "per_spin_rtp_contribution": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "fixture_name": "dragon-cash-2tier",
+      "description": "Aristocrat Dragon Cash: money collect + minor/grand only",
+      "rtp_contribution": 0.03059308387168454,
+      "money_component": {
+        "rtp_contribution": 0.02659308387168454,
+        "trigger_p": 0.0003292943245292168,
+        "expected_value_per_money": 7.533333333333334,
+        "expected_total_per_episode": 80.75779596172498
+      },
+      "jackpot_component": {
+        "rtp_contribution": 0.004,
+        "pots_count": 2,
+        "pots": [
+          {
+            "name": "minor",
+            "seed_x_bet": 100,
+            "contribution_x": 0.001,
+            "must_hit_by_x_bet": 1000,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 900000.0,
+            "probability_forced_strike": 0.4065694767841714,
+            "expected_strike_value_x_bet": 1000.0,
+            "per_spin_rtp_contribution": 0.001
+          },
+          {
+            "name": "grand",
+            "seed_x_bet": 50000,
+            "contribution_x": 0.003,
+            "must_hit_by_x_bet": 500000,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 150000000.0,
+            "probability_forced_strike": 7.174557860787124e-66,
+            "expected_strike_value_x_bet": 53000.0,
+            "per_spin_rtp_contribution": 0.003
+          }
+        ]
+      }
+    },
+    {
+      "fixture_name": "lightning-cash-3tier",
+      "description": "Scientific Games Lightning Cash: 3-tier (mini/major/grand)",
+      "rtp_contribution": 0.008369448392454005,
+      "money_component": {
+        "rtp_contribution": 0.0015694483924540046,
+        "trigger_p": 2.9205570062695863e-05,
+        "expected_value_per_money": 6.722222222222222,
+        "expected_total_per_episode": 53.7379817988437
+      },
+      "jackpot_component": {
+        "rtp_contribution": 0.0068000000000000005,
+        "pots_count": 3,
+        "pots": [
+          {
+            "name": "mini",
+            "seed_x_bet": 20,
+            "contribution_x": 0.0008,
+            "must_hit_by_x_bet": 200,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 225000.0,
+            "probability_forced_strike": 0.7985161289262476,
+            "expected_strike_value_x_bet": 200.0,
+            "per_spin_rtp_contribution": 0.0008
+          },
+          {
+            "name": "major",
+            "seed_x_bet": 1000,
+            "contribution_x": 0.002,
+            "must_hit_by_x_bet": 10000,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 4500000.0,
+            "probability_forced_strike": 0.011108971543011555,
+            "expected_strike_value_x_bet": 3077.7628008010806,
+            "per_spin_rtp_contribution": 0.002
+          },
+          {
+            "name": "grand",
+            "seed_x_bet": 25000,
+            "contribution_x": 0.004,
+            "must_hit_by_x_bet": 250000,
+            "p_strike_per_spin": 1e-06,
+            "expected_spins_to_cap": 56250000.0,
+            "probability_forced_strike": 3.7232584035655007e-25,
+            "expected_strike_value_x_bet": 29000.0,
+            "per_spin_rtp_contribution": 0.004
+          }
+        ]
+      }
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_hold_and_win_kernel`. Output must match `merkle_root_sha256` exactly. RTP = money_collect + must_hit_by jackpot contributions, summed independently."
+}

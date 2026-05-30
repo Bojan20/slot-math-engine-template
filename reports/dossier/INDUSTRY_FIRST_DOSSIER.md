@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 53 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 26) · repo SHA: `8b137378`
+> **Unified operator deliverable** — aggregates 54 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 27) · repo SHA: `2ae30015`
 
-## Headline: **74/74 industry-firsts attested** ✅
+## Headline: **75/75 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -83,6 +83,7 @@
 | 244.24 | — | **Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)** | ✅ 3 fixtures, Binomial(n_reels, p_stacked) × pay table | [`reports/acceptance/STACKED_WILDS_KERNEL.json`](../../reports/acceptance/STACKED_WILDS_KERNEL.json) |
 | 244.25 | — | **Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)** | ✅ 4 fixtures, ways = product(E[rows]) under reel independence | [`reports/acceptance/WAYS_EVALUATOR_KERNEL.json`](../../reports/acceptance/WAYS_EVALUATOR_KERNEL.json) |
 | 244.26 | — | **Pay-Anywhere Evaluator Kernel (Sweet Bonanza scatter / Gonzo / Wolf Gold)** | ✅ 3 fixtures, Binomial × pay table with min_pay_count threshold | [`reports/acceptance/PAY_ANYWHERE_KERNEL.json`](../../reports/acceptance/PAY_ANYWHERE_KERNEL.json) |
+| 244.27 | — | **Hold & Win Composed Kernel (Lightning Link / Dragon Cash / Lightning Cash)** | ✅ 3 fixtures, composes money_collect + must_hit_by | [`reports/acceptance/HOLD_AND_WIN_KERNEL.json`](../../reports/acceptance/HOLD_AND_WIN_KERNEL.json) |
 
 ## Why each is industry-first
 
