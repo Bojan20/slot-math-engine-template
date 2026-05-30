@@ -1,0 +1,90 @@
+{
+  "schema": "persistent-multiplier-kernel/v1",
+  "merkle_root_sha256": "b03c2a86ef23994bb0c473d7f1e897628d0651f2450359cb3240899bab743403",
+  "generated_at_utc": "deterministic-by-merkle:b03c2a86ef23994b",
+  "kernel": "persistent_multiplier",
+  "module": "tools.math_dsl.persistent_multiplier",
+  "industry_pattern": "Quickspin Sticky Bandits, Pragmatic Mighty Wild, NetEnt Money Vault FS, ELK Bompergo, BTG Extra Chilli mega-multiplier. Multiplier escalates over FS via per-spin Bernoulli bump.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "sticky-bandits-uncapped",
+      "description": "Quickspin Sticky Bandits style: uncapped escalator over 10 FS",
+      "rtp_contribution": 0.05874999999999999,
+      "fs_trigger_p": 0.005,
+      "fs_initial_spins": 10,
+      "base_pay_per_spin_x_bet": 0.5,
+      "initial_multiplier": 1.0,
+      "bump_increment": 1.0,
+      "p_bump_per_spin": 0.3,
+      "max_multiplier": null,
+      "expected_multiplier_per_spin": [
+        1.0,
+        1.2999999999999998,
+        1.5999999999999999,
+        1.9,
+        2.1999999999999997,
+        2.4999999999999996,
+        2.7999999999999994,
+        3.099999999999999,
+        3.399999999999999,
+        3.6999999999999984
+      ],
+      "average_multiplier": 2.3499999999999996,
+      "expected_fs_total_x_bet": 11.749999999999998
+    },
+    {
+      "fixture_name": "mighty-wild-capped-5x",
+      "description": "Pragmatic Mighty Wild style: cap at 5×, 12 FS",
+      "rtp_contribution": 0.04500466766357423,
+      "fs_trigger_p": 0.004,
+      "fs_initial_spins": 12,
+      "base_pay_per_spin_x_bet": 0.4,
+      "initial_multiplier": 1.0,
+      "bump_increment": 1.0,
+      "p_bump_per_spin": 0.25,
+      "max_multiplier": 5.0,
+      "expected_multiplier_per_spin": [
+        1.0,
+        1.25,
+        1.5,
+        1.75,
+        2.0,
+        2.2490234375,
+        2.4951171875,
+        2.7357177734375,
+        2.96807861328125,
+        3.189624786376953,
+        3.398193359375,
+        3.5921621322631836
+      ],
+      "average_multiplier": 2.3439931074778237,
+      "expected_fs_total_x_bet": 11.251166915893556
+    },
+    {
+      "fixture_name": "money-vault-fs-heavy-cap",
+      "description": "NetEnt Money Vault FS: cap=10x, 8 FS, aggressive bump",
+      "rtp_contribution": 0.14624405859375006,
+      "fs_trigger_p": 0.006,
+      "fs_initial_spins": 8,
+      "base_pay_per_spin_x_bet": 0.6,
+      "initial_multiplier": 2.0,
+      "bump_increment": 2.0,
+      "p_bump_per_spin": 0.45,
+      "max_multiplier": 10.0,
+      "expected_multiplier_per_spin": [
+        2.0,
+        2.9000000000000004,
+        3.8000000000000007,
+        4.700000000000001,
+        5.600000000000001,
+        6.463094375000001,
+        7.244996375000002,
+        7.915258859375002
+      ],
+      "average_multiplier": 5.0779187011718765,
+      "expected_fs_total_x_bet": 24.374009765625008
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_persistent_multiplier_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: exact DP over (bump_count, spin) state space, cap-aware."
+}

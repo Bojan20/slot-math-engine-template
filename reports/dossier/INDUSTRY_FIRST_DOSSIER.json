@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:776751bec03e0328",
-  "repo_sha": "6c69c28ffe6d886505eaca1ce12b3cce58923d21",
+  "generatedAtUtc": "deterministic-by-merkle:66c5f9795e6dee53",
+  "repo_sha": "0d15d43a9ae83c4e6306e06d5e07e2759f9874f4",
   "headline": {
-    "waves": 66,
-    "industry_firsts": 66,
+    "waves": 67,
+    "industry_firsts": 67,
     "all_present": true
   },
   "waves": [
@@ -2496,6 +2496,28 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source closed-form for Book-style expanding-symbol Free Spins. Per-FS-spin Binomial(reels, p_per_reel) decomposition × pay_table[k_reels_expanded]. Covers all 'Book of …' clones across vendors."
+    },
+    {
+      "wave": "244.19",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Persistent Multiplier FS Kernel (Sticky Bandits / Mighty Wild)",
+      "reportPath": "reports/acceptance/PERSISTENT_MULTIPLIER_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, exact DP over (bump_count, spin) state space, cap-aware",
+      "detail": {
+        "kernel_module": "tools.math_dsl.persistent_multiplier",
+        "patterns_covered": [
+          "Quickspin Sticky Bandits",
+          "Pragmatic Mighty Wild",
+          "NetEnt Money Vault FS",
+          "ELK Bompergo",
+          "BTG Extra Chilli mega-mult"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source cap-aware DP for persistent-multiplier FS. Per-spin Bernoulli bump propagation with absorbing cap state. Pure-stdlib (no scipy)."
     }
   ],
   "auditor_qa": [
