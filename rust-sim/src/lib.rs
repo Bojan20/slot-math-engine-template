@@ -99,3 +99,7 @@ pub mod jurisdiction;
 /// Protocol adapter layer bridging engine IR to industry-standard
 /// casino backend message formats.
 pub mod protocols;
+/// W244 — Math kernel Rust hot-path ports. 1:1 parity with
+/// `tools/math_dsl/*.py` closed-form kernels. Byte-identical output
+/// (within float epsilon) verified via Python parity tests.
+pub mod kernels;

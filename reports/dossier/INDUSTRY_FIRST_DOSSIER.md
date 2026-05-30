@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 58 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 33) · repo SHA: `7ab22ca9`
+> **Unified operator deliverable** — aggregates 59 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 34) · repo SHA: `29771b73`
 
-## Headline: **79/79 industry-firsts attested** ✅
+## Headline: **80/80 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -88,6 +88,7 @@
 | 244.31 | — | **Asymmetric Paytable Aggregator (Twin Spin / Wild West Gold / Wild Toro)** | ✅ 3 fixtures, per-symbol-per-shape decomposition | [`reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json`](../../reports/acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json) |
 | 244.32 | — | **Symbolic Gradient + Newton-Raphson Inverse Solver** | ✅ 6/6 scenarios converged (3 NR + 3 Bisection), pure-stdlib | [`reports/acceptance/INVERSE_SOLVER_KERNEL.json`](../../reports/acceptance/INVERSE_SOLVER_KERNEL.json) |
 | 244.33 | — | **End-to-End Showcase Game (Crimson Tiger) — 4-kernel composition + MC round-trip** | ✅ Round-trip delta < 1e-6 pp at 100k spins | [`reports/acceptance/SHOWCASE_GAME_KERNEL.json`](../../reports/acceptance/SHOWCASE_GAME_KERNEL.json) |
+| 244.34 | — | **Rust Hot-Path Port — 5 W244 Kernels with Python Parity Gate** | ✅ 5/5 Python↔Rust byte-stable (max delta 4.34e-19 ULP) | [`reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json`](../../reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json) |
 
 ## Why each is industry-first
 

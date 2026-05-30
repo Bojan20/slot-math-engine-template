@@ -1,0 +1,53 @@
+{
+  "schema": "w244-rust-python-parity/v1",
+  "merkle_root_sha256": "e8612a0893ff87f7cc852cf3ac8aa308919dcd9e5f026d6c4af46b3085a6a8ed",
+  "generated_at_utc": "deterministic-by-merkle:e8612a0893ff87f7",
+  "kernels_checked": 5,
+  "kernels_match": 5,
+  "all_match": true,
+  "epsilon": 1e-10,
+  "rust_binary": "target/release/kernel_parity",
+  "records": [
+    {
+      "kernel": "charge_meter",
+      "status": "OK",
+      "py_rtp": 1.0,
+      "rust_rtp": 1.0,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "stacked_wilds",
+      "status": "OK",
+      "py_rtp": 0.19390873600000005,
+      "rust_rtp": 0.19390873600000005,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "must_hit_by",
+      "status": "OK",
+      "py_rtp": 0.0085,
+      "rust_rtp": 0.0085,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "both_ways",
+      "status": "OK",
+      "py_rtp": 1.632,
+      "rust_rtp": 1.632,
+      "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "pay_anywhere",
+      "status": "OK",
+      "py_rtp": 0.003849406215053652,
+      "rust_rtp": 0.0038494062150536516,
+      "delta": 4.336808689942018e-19,
+      "within_eps": true
+    }
+  ],
+  "verification": "Re-build Rust binary (`cargo build --release --bin kernel_parity`), re-run this script. Output must match committed merkle_root."
+}

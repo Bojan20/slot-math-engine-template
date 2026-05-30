@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+"""W244 wave 34 — Python ↔ Rust parity gate for math kernels.
+
+For each ported kernel, run the same fixture through both Python and Rust
+implementations and assert byte-equivalence (within float64 epsilon × pay).
+
+Emits acceptance JSON. Used by:
+  * tests/test_w244_rust_python_parity.py — pytest gate
+  * .github/workflows/w244-kernel-attest.yml — CI gate
+
+Currently covered kernels:
+  * charge_meter
+  * must_hit_by
+  * stacked_wilds
+  * both_ways
+  * pay_anywhere
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+REPO = Path(__file__).resolve().parents[2]
+RUST_BIN = REPO / "target" / "release" / "kernel_parity"
+OUT = REPO / "reports" / "acceptance" / "RUST_PYTHON_PARITY_KERNEL.json"
+OUT.parent.mkdir(parents=True, exist_ok=True)
+
+# Float-equality tolerance for cross-language compare.
+EPS = 1e-10
+
+
+def _run_rust(kernel: str, params: dict[str, Any]) -> dict[str, Any]:
+    """Run the kernel_parity Rust binary with JSON stdin → JSON stdout."""
+    if not RUST_BIN.exists():
+        raise RuntimeError(
+            f"Rust binary not built: {RUST_BIN}\n"
+            f"  Run: cd rust-sim && cargo build --release --bin kernel_parity"
+        )
+    req = json.dumps({"kernel": kernel, "params": params})
+    rc = subprocess.run(
+        [str(RUST_BIN)],
+        input=req,
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    if rc.returncode != 0:
+        raise RuntimeError(
+            f"Rust binary failed (exit {rc.returncode}): {rc.stderr}\n"
+            f"  stdout: {rc.stdout}"
+        )
+    return json.loads(rc.stdout)
+
+
+def _compare_rtp(py_result: dict, rust_result: dict, kernel: str) -> dict:
+    """Compare rtp_contribution + key metrics between Python and Rust."""
+    py_rtp = py_result.get("rtp_contribution")
+    rust_rtp = rust_result.get("rtp_contribution")
+    if py_rtp is None or rust_rtp is None:
+        return {
+            "kernel": kernel,
+            "status": "MISSING_FIELD",
+            "py_rtp": py_rtp,
+            "rust_rtp": rust_rtp,
+        }
+    delta = abs(py_rtp - rust_rtp)
+    return {
+        "kernel": kernel,
+        "status": "OK" if delta < EPS else "MISMATCH",
+        "py_rtp": py_rtp,
+        "rust_rtp": rust_rtp,
+        "delta": delta,
+        "within_eps": delta < EPS,
+    }
+
+
+# ─── Fixtures (mirror Python kernel builder fixtures) ────────────────
+
+
+def fixture_charge_meter() -> tuple[dict, dict]:
+    """3-tier multi-meter."""
+    py_params = {
+        "expected_charge_per_spin": 1.0,
+        "tiers_yaml": [
+            ("small", 20.0, 4.0),
+            ("medium", 100.0, 30.0),
+            ("grand", 1000.0, 500.0),
+        ],
+    }
+    rust_params = {
+        "expected_charge_per_spin": 1.0,
+        "tiers": [
+            {"name": "small", "threshold": 20.0, "award_value_x_bet": 4.0,
+             "award_kind": "credit_x_bet"},
+            {"name": "medium", "threshold": 100.0, "award_value_x_bet": 30.0,
+             "award_kind": "credit_x_bet"},
+            {"name": "grand", "threshold": 1000.0, "award_value_x_bet": 500.0,
+             "award_kind": "credit_x_bet"},
+        ],
+    }
+    return py_params, rust_params
+
+
+def fixture_stacked_wilds() -> tuple[dict, dict]:
+    py_params = {
+        "n_reels": 5,
+        "p_stacked_per_reel": 0.04,
+        "pay": {0: 0.0, 1: 0.5, 2: 5.0, 3: 50.0, 4: 500.0, 5: 25_000.0},
+    }
+    rust_params = {
+        "n_reels": 5,
+        "p_stacked_per_reel": 0.04,
+        "pay_per_stacked_count": {
+            "0": 0.0, "1": 0.5, "2": 5.0, "3": 50.0, "4": 500.0, "5": 25_000.0,
+        },
+    }
+    return py_params, rust_params
+
+
+def fixture_must_hit_by() -> tuple[dict, dict]:
+    pots = [
+        ("mini",  10.0,     0.0005, 100.0,     1e-4),
+        ("minor", 50.0,     0.001,  500.0,     1e-5),
+        ("major", 500.0,    0.002,  5_000.0,   1e-6),
+        ("grand", 10_000.0, 0.005,  100_000.0, 1e-7),
+    ]
+    py_params = {"pots_tuples": pots}
+    rust_params = {
+        "pots": [
+            {
+                "name": n, "seed_x_bet": s, "contribution_x": c,
+                "must_hit_by_x_bet": m, "p_strike_per_spin": ps,
+            }
+            for n, s, c, m, ps in pots
+        ],
+    }
+    return py_params, rust_params
+
+
+def fixture_both_ways() -> tuple[dict, dict]:
+    py_params = {"ltr_only_rtp": 0.96, "line_pay_share": 0.7}
+    rust_params = {"ltr_only_rtp": 0.96, "line_pay_share": 0.7}
+    return py_params, rust_params
+
+
+def fixture_pay_anywhere() -> tuple[dict, dict]:
+    pay = {8: 5.0, 10: 20.0, 12: 100.0, 14: 500.0}
+    py_params = {
+        "n_cells": 30, "p_per_cell": 0.07, "pay_table": pay,
+        "min_pay_count": 8,
+    }
+    rust_params = {
+        "n_cells": 30, "p_per_cell": 0.07,
+        "pay_table": {str(k): v for k, v in pay.items()},
+        "min_pay_count": 8,
+        "symbol_name": "",
+    }
+    return py_params, rust_params
+
+
+# ─── Python kernel runners ───────────────────────────────────────────
+
+
+def _py_charge_meter(p: dict) -> dict:
+    from tools.math_dsl.charge_meter import (
+        ChargeMeterParams, ChargeTier, charge_meter_rtp,
+    )
+    tiers = tuple(
+        ChargeTier(name, threshold, award)
+        for name, threshold, award in p["tiers_yaml"]
+    )
+    return charge_meter_rtp(ChargeMeterParams(
+        expected_charge_per_spin=p["expected_charge_per_spin"],
+        tiers=tiers,
+    ))
+
+
+def _py_stacked_wilds(p: dict) -> dict:
+    from tools.math_dsl.stacked_wilds import StackedWildsParams, stacked_wilds_rtp
+    return stacked_wilds_rtp(StackedWildsParams(
+        n_reels=p["n_reels"],
+        p_stacked_per_reel=p["p_stacked_per_reel"],
+        pay_per_stacked_count=p["pay"],
+    ))
+
+
+def _py_must_hit_by(p: dict) -> dict:
+    from tools.math_dsl.must_hit_by import (
+        MustHitByParams, MustHitByPot, must_hit_by_rtp,
+    )
+    pots = tuple(
+        MustHitByPot(n, s, c, m, ps)
+        for n, s, c, m, ps in p["pots_tuples"]
+    )
+    return must_hit_by_rtp(MustHitByParams(pots=pots))
+
+
+def _py_both_ways(p: dict) -> dict:
+    from tools.math_dsl.both_ways import BothWaysParams, both_ways_rtp
+    return both_ways_rtp(BothWaysParams(
+        ltr_only_rtp=p["ltr_only_rtp"],
+        line_pay_share=p["line_pay_share"],
+    ))
+
+
+def _py_pay_anywhere(p: dict) -> dict:
+    from tools.math_dsl.pay_anywhere import PayAnywhereParams, pay_anywhere_rtp
+    return pay_anywhere_rtp(PayAnywhereParams(
+        n_cells=p["n_cells"],
+        p_per_cell=p["p_per_cell"],
+        pay_table=p["pay_table"],
+        min_pay_count=p["min_pay_count"],
+    ))
+
+
+KERNELS = [
+    ("charge_meter", fixture_charge_meter, _py_charge_meter),
+    ("stacked_wilds", fixture_stacked_wilds, _py_stacked_wilds),
+    ("must_hit_by", fixture_must_hit_by, _py_must_hit_by),
+    ("both_ways", fixture_both_ways, _py_both_ways),
+    ("pay_anywhere", fixture_pay_anywhere, _py_pay_anywhere),
+]
+
+
+def main() -> int:
+    records = []
+    all_match = True
+    for kernel, fixture_fn, py_runner in KERNELS:
+        py_params, rust_params = fixture_fn()
+        py_result = py_runner(py_params)
+        rust_result = _run_rust(kernel, rust_params)
+        cmp = _compare_rtp(py_result, rust_result, kernel)
+        records.append(cmp)
+        if cmp["status"] != "OK":
+            all_match = False
+
+    leaf_lines = []
+    for r in records:
+        leaf_lines.append(
+            f"{r['kernel']}|status={r['status']}|"
+            f"py={r.get('py_rtp', 'NA')}|"
+            f"rust={r.get('rust_rtp', 'NA')}|"
+            f"delta={r.get('delta', 'NA')}\n"
+        )
+    merkle_root = hashlib.sha256("".join(leaf_lines).encode()).hexdigest()
+
+    artifact = {
+        "schema": "w244-rust-python-parity/v1",
+        "merkle_root_sha256": merkle_root,
+        "generated_at_utc": f"deterministic-by-merkle:{merkle_root[:16]}",
+        "kernels_checked": len(KERNELS),
+        "kernels_match": sum(1 for r in records if r["status"] == "OK"),
+        "all_match": all_match,
+        "epsilon": EPS,
+        "rust_binary": str(RUST_BIN.relative_to(REPO)),
+        "records": records,
+        "verification": (
+            "Re-build Rust binary (`cargo build --release --bin kernel_parity`), "
+            "re-run this script. Output must match committed merkle_root."
+        ),
+    }
+    OUT.write_text(json.dumps(artifact, ensure_ascii=False, indent=2))
+
+    print(f"[w244-parity] wrote {OUT.relative_to(REPO)}")
+    print(f"  kernels checked: {len(KERNELS)}")
+    print(f"  matches:         {artifact['kernels_match']} / {len(KERNELS)}")
+    for r in records:
+        sym = "✓" if r["status"] == "OK" else "✗"
+        print(f"    {sym} {r['kernel']:20s}  py={r.get('py_rtp', 'NA'):.10g}  "
+              f"rust={r.get('rust_rtp', 'NA'):.10g}  "
+              f"Δ={r.get('delta', 'NA'):.2e}")
+    print(f"  merkle root:     {merkle_root}")
+    return 0 if all_match else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

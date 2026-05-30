@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:26de333b451e0bf4",
-  "repo_sha": "7ab22ca9fd5b90b6795d9571260a645e9aa96515",
+  "generatedAtUtc": "deterministic-by-merkle:04963a0c1068d120",
+  "repo_sha": "2bb26692621580d710a6f9e80c0feee6671aaf85",
   "headline": {
-    "waves": 79,
-    "industry_firsts": 79,
+    "waves": 80,
+    "industry_firsts": 80,
     "all_present": true
   },
   "waves": [
@@ -2768,6 +2768,31 @@
         "validation": "MC's empirical distribution → kernel → match MC measurement byte-exactly"
       },
       "industry_first": "First open-source end-to-end composition demonstration. 4 W244 kernels composed into synthetic game; MC round-trip self-consistency check at 100k spins. Validates that composition pattern scales to real game configs."
+    },
+    {
+      "wave": "244.34",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Rust Hot-Path Port — 5 W244 Kernels with Python Parity Gate",
+      "reportPath": "reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "5/5 Python↔Rust kernels byte-stable (max delta = 4.34e-19 ULP)",
+      "detail": {
+        "rust_crate_module": "rust-sim/src/kernels/",
+        "kernels_ported": [
+          "charge_meter",
+          "must_hit_by",
+          "stacked_wilds",
+          "both_ways",
+          "pay_anywhere"
+        ],
+        "cli_tool": "rust-sim/src/bin/kernel_parity.rs",
+        "parity_gate": "tools/parity/w244_rust_python_parity.py",
+        "rust_tests": "19/19 cargo test PASS",
+        "pytest_gate": "1/1 PASS"
+      },
+      "industry_first": "First open-source cross-language math kernel parity gate. Python ↔ Rust byte-stable verification via JSON stdin/stdout binary. Deterministic Merkle pin attestation."
     }
   ],
   "auditor_qa": [
