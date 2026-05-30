@@ -248,6 +248,20 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 health-w244: ## W244 one-shot health probe (16 checks, ~0.1s)
 	python3 tools/w244_health.py
 
+qa-w244-full: ## W244 ALL gates: session tests + health + lint + cargo wasm + parity (~10s)
+	@echo "▶ Step 1/5 — pytest session sweep"
+	@$(MAKE) qa-w244-session 2>&1 | tail -3
+	@echo "▶ Step 2/5 — health probe"
+	@$(MAKE) health-w244 2>&1 | tail -3
+	@echo "▶ Step 3/5 — dossier HTML lint"
+	@$(MAKE) dossier-lint 2>&1 | tail -3
+	@echo "▶ Step 4/5 — cargo wasm tests"
+	@$(MAKE) wasm-test 2>&1 | tail -3
+	@echo "▶ Step 5/5 — ruff lint (tools + packages)"
+	@ruff check tools/ packages/ 2>&1 | tail -3
+	@echo ""
+	@echo "✅ W244 ALL gates GREEN."
+
 qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 	python3 -m pytest \
 		tools/tests/test_w244_multi_dim_parity.py \
@@ -273,6 +287,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_wasm_build.py \
 		tools/tests/test_w244_wasm_python_parity.py \
 		tools/tests/test_w244_wasm_parity_workflow.py \
+		tools/tests/test_w244_wasm_ts_wrapper.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
