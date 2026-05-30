@@ -1,0 +1,324 @@
+{
+  "schema": "cluster-pays-kernel/v1",
+  "merkle_root_sha256": "cbebb59b2187f11ec096908aa0fa89a9eeb76e2c76099b9c40fe0689bf7c2145",
+  "generated_at_utc": "deterministic-by-merkle:cbebb59b2187f11e",
+  "kernel": "cluster_pays",
+  "module": "tools.math_dsl.cluster_pays",
+  "industry_pattern": "Pragmatic Sweet Bonanza, NetEnt Aloha Cluster Pays, Pragmatic Gates of Olympus, BTG Money Cart, ELK Mystery Mish-Mash. Connected cluster of same-symbol cells (4-way or 8-way) ≥ min_cluster_size pays per published ladder.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "sweet-bonanza-7x7",
+      "description": "Pragmatic Sweet Bonanza 7×7 cluster pays, 4-way",
+      "rtp_contribution": 1.8625000000000003,
+      "grid": "7×7",
+      "adjacency": "4-way",
+      "min_cluster_size": 5,
+      "per_symbol": [
+        {
+          "symbol": "hp1",
+          "total_contribution_x_bet": 0.7300000000000001,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.04,
+              "pay_x_bet": 5.0,
+              "contribution_x_bet": 0.2
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.018,
+              "pay_x_bet": 10.0,
+              "contribution_x_bet": 0.18
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.008,
+              "pay_x_bet": 25.0,
+              "contribution_x_bet": 0.2
+            },
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.003,
+              "pay_x_bet": 50.0,
+              "contribution_x_bet": 0.15
+            }
+          ]
+        },
+        {
+          "symbol": "hp2",
+          "total_contribution_x_bet": 0.552,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.05,
+              "pay_x_bet": 3.0,
+              "contribution_x_bet": 0.15000000000000002
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.022,
+              "pay_x_bet": 6.0,
+              "contribution_x_bet": 0.132
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.01,
+              "pay_x_bet": 15.0,
+              "contribution_x_bet": 0.15
+            },
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.004,
+              "pay_x_bet": 30.0,
+              "contribution_x_bet": 0.12
+            }
+          ]
+        },
+        {
+          "symbol": "lp1",
+          "total_contribution_x_bet": 0.345,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.15,
+              "pay_x_bet": 0.5,
+              "contribution_x_bet": 0.075
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.08,
+              "pay_x_bet": 1.0,
+              "contribution_x_bet": 0.08
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.04,
+              "pay_x_bet": 2.5,
+              "contribution_x_bet": 0.1
+            },
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.018,
+              "pay_x_bet": 5.0,
+              "contribution_x_bet": 0.09
+            }
+          ]
+        },
+        {
+          "symbol": "lp2",
+          "total_contribution_x_bet": 0.2355,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.18,
+              "pay_x_bet": 0.3,
+              "contribution_x_bet": 0.054
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.09,
+              "pay_x_bet": 0.6,
+              "contribution_x_bet": 0.054
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.045,
+              "pay_x_bet": 1.5,
+              "contribution_x_bet": 0.0675
+            },
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.02,
+              "pay_x_bet": 3.0,
+              "contribution_x_bet": 0.06
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fixture_name": "aloha-cluster-5x4",
+      "description": "NetEnt Aloha Cluster Pays 5×4, 4-way",
+      "rtp_contribution": 1.4720000000000002,
+      "grid": "4×5",
+      "adjacency": "4-way",
+      "min_cluster_size": 5,
+      "per_symbol": [
+        {
+          "symbol": "fruit",
+          "total_contribution_x_bet": 0.234,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.08,
+              "pay_x_bet": 0.8,
+              "contribution_x_bet": 0.064
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.04,
+              "pay_x_bet": 2.0,
+              "contribution_x_bet": 0.08
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.018,
+              "pay_x_bet": 5.0,
+              "contribution_x_bet": 0.09
+            }
+          ]
+        },
+        {
+          "symbol": "tiki1",
+          "total_contribution_x_bet": 0.74,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.025,
+              "pay_x_bet": 8.0,
+              "contribution_x_bet": 0.2
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.012,
+              "pay_x_bet": 20.0,
+              "contribution_x_bet": 0.24
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.005,
+              "pay_x_bet": 60.0,
+              "contribution_x_bet": 0.3
+            }
+          ]
+        },
+        {
+          "symbol": "tiki2",
+          "total_contribution_x_bet": 0.498,
+          "sizes": [
+            {
+              "cluster_size": 5,
+              "expected_count_per_spin": 0.03,
+              "pay_x_bet": 5.0,
+              "contribution_x_bet": 0.15
+            },
+            {
+              "cluster_size": 6,
+              "expected_count_per_spin": 0.014,
+              "pay_x_bet": 12.0,
+              "contribution_x_bet": 0.168
+            },
+            {
+              "cluster_size": 7,
+              "expected_count_per_spin": 0.006,
+              "pay_x_bet": 30.0,
+              "contribution_x_bet": 0.18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fixture_name": "gates-of-olympus-6x5",
+      "description": "Pragmatic Gates of Olympus 6×5, scatter-pay (8-way)",
+      "rtp_contribution": 8.197500000000002,
+      "grid": "5×6",
+      "adjacency": "8-way",
+      "min_cluster_size": 8,
+      "per_symbol": [
+        {
+          "symbol": "crown",
+          "total_contribution_x_bet": 2.7750000000000004,
+          "sizes": [
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.025,
+              "pay_x_bet": 25.0,
+              "contribution_x_bet": 0.625
+            },
+            {
+              "cluster_size": 9,
+              "expected_count_per_spin": 0.014,
+              "pay_x_bet": 50.0,
+              "contribution_x_bet": 0.7000000000000001
+            },
+            {
+              "cluster_size": 10,
+              "expected_count_per_spin": 0.007,
+              "pay_x_bet": 100.0,
+              "contribution_x_bet": 0.7000000000000001
+            },
+            {
+              "cluster_size": 11,
+              "expected_count_per_spin": 0.003,
+              "pay_x_bet": 250.0,
+              "contribution_x_bet": 0.75
+            }
+          ]
+        },
+        {
+          "symbol": "gem",
+          "total_contribution_x_bet": 0.2225,
+          "sizes": [
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.1,
+              "pay_x_bet": 0.5,
+              "contribution_x_bet": 0.05
+            },
+            {
+              "cluster_size": 9,
+              "expected_count_per_spin": 0.05,
+              "pay_x_bet": 1.0,
+              "contribution_x_bet": 0.05
+            },
+            {
+              "cluster_size": 10,
+              "expected_count_per_spin": 0.025,
+              "pay_x_bet": 2.5,
+              "contribution_x_bet": 0.0625
+            },
+            {
+              "cluster_size": 11,
+              "expected_count_per_spin": 0.012,
+              "pay_x_bet": 5.0,
+              "contribution_x_bet": 0.06
+            }
+          ]
+        },
+        {
+          "symbol": "zeus",
+          "total_contribution_x_bet": 5.2,
+          "sizes": [
+            {
+              "cluster_size": 8,
+              "expected_count_per_spin": 0.02,
+              "pay_x_bet": 50.0,
+              "contribution_x_bet": 1.0
+            },
+            {
+              "cluster_size": 9,
+              "expected_count_per_spin": 0.012,
+              "pay_x_bet": 100.0,
+              "contribution_x_bet": 1.2
+            },
+            {
+              "cluster_size": 10,
+              "expected_count_per_spin": 0.006,
+              "pay_x_bet": 250.0,
+              "contribution_x_bet": 1.5
+            },
+            {
+              "cluster_size": 11,
+              "expected_count_per_spin": 0.003,
+              "pay_x_bet": 500.0,
+              "contribution_x_bet": 1.5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_cluster_pays_kernel`. Output must match `merkle_root_sha256` exactly. Kernel aggregates operator-supplied empirical cluster count distribution × pay ladder — no first-principles percolation theory needed (that boundary lives in validated PAR data)."
+}

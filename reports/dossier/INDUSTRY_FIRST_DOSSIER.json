@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:b9212da0407aa99e",
-  "repo_sha": "02e86d70e54728a5d661247503e8680a1c653a96",
+  "generatedAtUtc": "deterministic-by-merkle:47cb5e477afad7e6",
+  "repo_sha": "10ee8ddef4f21ce4a439c609f211bef300266b7f",
   "headline": {
-    "waves": 68,
-    "industry_firsts": 68,
+    "waves": 69,
+    "industry_firsts": 69,
     "all_present": true
   },
   "waves": [
@@ -2539,6 +2539,28 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source cap-bounded geometric chain closed-form za tumble/avalanche/cascade pattern. Per-step multiplier ladder weighting + truncation at max_chain."
+    },
+    {
+      "wave": "244.21",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Cluster-Pays Aggregation Kernel (Sweet Bonanza / Aloha / Gates of Olympus)",
+      "reportPath": "reports/acceptance/CLUSTER_PAYS_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures: 7×7, 5×4, 6×5 grids; 4-way + 8-way adjacency",
+      "detail": {
+        "kernel_module": "tools.math_dsl.cluster_pays",
+        "patterns_covered": [
+          "Pragmatic Sweet Bonanza",
+          "NetEnt Aloha Cluster Pays",
+          "Pragmatic Gates of Olympus",
+          "BTG Money Cart cluster mode",
+          "ELK Mystery Mish-Mash"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source operator-supplied-distribution cluster-pays aggregator. Decouples math-complexity (percolation theory) into validated PAR data while keeping kernel deterministic + auditable. 4-way + 8-way adjacency support."
     }
   ],
   "auditor_qa": [
