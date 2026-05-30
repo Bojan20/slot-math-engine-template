@@ -197,6 +197,18 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	@echo "   reports/dossier/REGULATOR_PORTAL.html"
 	@echo "   reports/dossier/CLOSED_FORM_PORTFOLIO.html"
 
+qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
+	python3 -m pytest \
+		tools/tests/test_w244_multi_dim_parity.py \
+		tools/tests/test_w244_pypi_package_vendored.py \
+		tools/tests/test_w244_industry_firsts_html.py \
+		tools/tests/test_w244_regulator_portal.py \
+		tools/tests/test_w244_closed_form_portfolio_html.py \
+		tools/tests/test_w244_pypi_examples_run.py \
+		tools/tests/test_w244_pypi_api_contract.py \
+		tools/tests/test_w244_dossier_schema.py \
+		-v --tb=short
+
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
 #
 # Note: PEP 517 `build` package is required. Install via:

@@ -17,11 +17,14 @@ Open these first if you are evaluating the engine for an operator pilot, certifi
 | **Real-Market Portfolio** | 5 source games × 13 SWIDs × 5 mechanic anchors with per-game RTP / hit-freq / feature shares. | [`reports/dashboards/real-market-portfolio.html`](reports/dashboards/real-market-portfolio.html) |
 | **MC Parity Dashboard** | Closed-form + Monte Carlo parity vs a real-market released-game PAR (book-expanding-bonusbuy template). | [`reports/dashboards/mc-parity-dashboard.html`](reports/dashboards/mc-parity-dashboard.html) |
 | **Portfolio Validator Dashboard** | 6×13 PASS/FAIL chip matrix across every ingested IR. | [`reports/dashboards/portfolio-validator-dashboard.html`](reports/dashboards/portfolio-validator-dashboard.html) |
-| **Industry-First Dossier** | 52/55 industry-firsts attested across W33–W127 + W7.x + W4.11*. | [`reports/dossier/INDUSTRY_FIRST_DOSSIER.md`](reports/dossier/INDUSTRY_FIRST_DOSSIER.md) |
+| **Industry-First Dossier** (HTML, 89 cards, deterministic Merkle) | 89 industry-firsts across W33-W244 — search/filter, paper-trail links. | [`reports/dossier/INDUSTRY_FIRST_DOSSIER.html`](reports/dossier/INDUSTRY_FIRST_DOSSIER.html) |
+| **Regulator Portal** (3-tab single-page) | Industry Firsts + Kernel Attestation (Merkle) + Performance (sub-µs Rust benches) in one auditor-ready landing. | [`reports/dossier/REGULATOR_PORTAL.html`](reports/dossier/REGULATOR_PORTAL.html) |
+| **Closed-Form Portfolio** (HTML, 120 solvers) | 120 closed-form solvers × 589 configs (100% pass rate) — searchable + status-filterable. | [`reports/dossier/CLOSED_FORM_PORTFOLIO.html`](reports/dossier/CLOSED_FORM_PORTFOLIO.html) |
+| **`slot-math-kernels` PyPI package** | 22 kernels vendored, pure-stdlib, MIT-licensed, `pip install`-ready (clean-venv tested). | [`packages/slot-math-kernels/`](packages/slot-math-kernels/) |
 | **Evidence Manifest** (SHA-256 Merkle root over 20 deliverables) | Cryptographic commitment so the whole sales surface verifies from one hash. | [`reports/acceptance/W4_11_EVIDENCE_MANIFEST.json`](reports/acceptance/W4_11_EVIDENCE_MANIFEST.json) |
 | **Verify the bundle** | Standalone Python verifier — re-hashes every file, re-derives the Merkle root, exits non-zero on any tampering. | `python3 tools/parity/verify_evidence_manifest.py` |
 
-The full W4.11* + W4.15 surface is re-verified on every PR via `.github/workflows/template-parity.yml` (104-spec sweep, dashboards uploaded as CI artifacts).
+The full W4.11* + W4.15 surface is re-verified on every PR via `.github/workflows/template-parity.yml` (104-spec sweep, dashboards uploaded as CI artifacts). The W244 kernel attestation + dossier HTML drift gates run on every PR via `.github/workflows/w244-kernel-attest.yml` and `.github/workflows/w244-dossier-html.yml`.
 
 ---
 
