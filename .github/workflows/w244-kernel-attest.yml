@@ -1,0 +1,119 @@
+# W244 wave 29 — math kernel batch determinism + acceptance gate.
+#
+# On every PR + push to main:
+#   1. Run all 16 W244 kernel builders → emit acceptance JSONs
+#   2. Run all 180+ W244 acceptance tests
+#   3. Verify master Merkle root is BYTE-STABLE across two rebuilds
+#   4. Verify committed `W244_ALL_KERNELS.json` matches freshly generated
+#
+# Fails CI if:
+#   * Any per-kernel test fails
+#   * Two consecutive rebuilds produce different master Merkle roots
+#   * Committed master JSON differs from freshly generated one
+#
+# This is the "regulator one-hash attestation" CI gate — auditors trust
+# the single 256-bit hash because CI proves it regenerates byte-identical.
+
+name: w244-kernel-attest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/math_dsl/**'
+      - 'tools/build_*_kernel.py'
+      - 'tools/build_all_w244_kernels.py'
+      - 'tools/tests/test_w244_*_kernel.py'
+      - 'reports/acceptance/W244_ALL_KERNELS.json'
+      - 'reports/acceptance/*_KERNEL.json'
+      - 'pyproject.toml'
+      - '.github/workflows/w244-kernel-attest.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/math_dsl/**'
+      - 'tools/build_*_kernel.py'
+      - 'tools/build_all_w244_kernels.py'
+      - 'tools/tests/test_w244_*_kernel.py'
+      - 'reports/acceptance/W244_ALL_KERNELS.json'
+      - 'reports/acceptance/*_KERNEL.json'
+      - 'pyproject.toml'
+      - '.github/workflows/w244-kernel-attest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  attest:
+    name: W244 kernel attestation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pyyaml cryptography
+
+      - name: Run W244 acceptance tests
+        run: |
+          python -m pytest tools/tests/test_w244_*_kernel.py -v \
+            --tb=short
+
+      - name: Rebuild all 16 kernels (run 1)
+        run: |
+          python -m tools.build_all_w244_kernels
+          cp reports/acceptance/W244_ALL_KERNELS.json /tmp/w244-run1.json
+
+      - name: Rebuild all 16 kernels (run 2 — determinism check)
+        run: |
+          python -m tools.build_all_w244_kernels
+          cp reports/acceptance/W244_ALL_KERNELS.json /tmp/w244-run2.json
+
+      - name: Verify byte-identical between two rebuilds
+        run: |
+          if ! diff -q /tmp/w244-run1.json /tmp/w244-run2.json; then
+            echo "::error::W244 master Merkle DRIFT across two rebuilds — determinism contract broken"
+            diff /tmp/w244-run1.json /tmp/w244-run2.json | head -50
+            exit 1
+          fi
+          echo "✓ Run 1 and Run 2 byte-identical (determinism OK)"
+
+      - name: Verify committed master Merkle matches fresh rebuild
+        run: |
+          # Note: only check the master Merkle root field, not the whole
+          # file — `repo_sha` (if present) would naturally drift; root is
+          # what we attest.
+          COMMITTED=$(git show HEAD:reports/acceptance/W244_ALL_KERNELS.json \
+                      | python -c 'import json,sys; print(json.load(sys.stdin)["master_merkle_root_sha256"])')
+          FRESH=$(python -c 'import json; print(json.load(open("reports/acceptance/W244_ALL_KERNELS.json"))["master_merkle_root_sha256"])')
+          if [ "$COMMITTED" != "$FRESH" ]; then
+            echo "::error::Committed master Merkle ($COMMITTED) != fresh rebuild ($FRESH)"
+            echo "::error::Either the kernel implementation drifted or someone forgot to refresh the JSON"
+            exit 1
+          fi
+          echo "✓ Committed master Merkle matches fresh rebuild: $FRESH"
+
+      - name: Emit summary
+        run: |
+          python -c "
+          import json
+          d = json.load(open('reports/acceptance/W244_ALL_KERNELS.json'))
+          print(f\"Kernels:        {d['kernels_ok']} / {d['kernels_total']}\")
+          print(f\"Fixtures:       {d['total_fixtures']}\")
+          print(f\"Master Merkle:  {d['master_merkle_root_sha256']}\")
+          "
+
+      - name: Upload master attestation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: w244-kernel-attestation
+          path: reports/acceptance/W244_ALL_KERNELS.json
+          if-no-files-found: error
