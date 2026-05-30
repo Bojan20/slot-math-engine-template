@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:dd4d079e67c07578",
-  "repo_sha": "ea6d7dfca4d0c0945724c23f72b1a55812e4097c",
+  "generatedAtUtc": "deterministic-by-merkle:2a1ef1eaead6d97d",
+  "repo_sha": "f56bea59d2a92e12c27de33ab6b9ecd1855a04b3",
   "headline": {
-    "waves": 70,
-    "industry_firsts": 70,
+    "waves": 71,
+    "industry_firsts": 71,
     "all_present": true
   },
   "waves": [
@@ -2578,6 +2578,28 @@
         "master_merkle": "442707890d5263d86ef9f2d401085644b24c18d66f7332c4224ffebcb3c49db8"
       },
       "industry_first": "First open-source single-CLI math-kernel batch attestation. 11 W244 kernels chained, per-kernel + master Merkle roots, deterministic regeneration. One artifact for the entire kernel fleet — single 256-bit hash attest celokupan W244 batch."
+    },
+    {
+      "wave": "244.23",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG)",
+      "reportPath": "reports/acceptance/STICKY_WILDS_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, exact Markov DP over (wild_count, respin_t) state space",
+      "detail": {
+        "kernel_module": "tools.math_dsl.sticky_wilds",
+        "patterns_covered": [
+          "NetEnt Sticky Bandits Trail of Blood",
+          "Pragmatic Pyramid King",
+          "JTG Wild Bounty Showdown",
+          "Quickspin Sticky Bandits",
+          "BTG Bonanza Billion"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source exact Markov DP za sticky-wilds respin chain. Wild count distribution iterative Binomial PMF propagation, no MC needed. Linear in fixed pay_per_wild_count."
     }
   ],
   "auditor_qa": [

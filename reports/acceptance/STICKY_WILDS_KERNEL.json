@@ -1,0 +1,63 @@
+{
+  "schema": "sticky-wilds-kernel/v1",
+  "merkle_root_sha256": "a51c8d2fd1f91d19d5d20c67f8992cba7564f9f49eed42b60b180936b8303889",
+  "generated_at_utc": "deterministic-by-merkle:a51c8d2fd1f91d19",
+  "kernel": "sticky_wilds",
+  "module": "tools.math_dsl.sticky_wilds",
+  "industry_pattern": "NetEnt Sticky Bandits Trail of Blood, Pragmatic Pyramid King, JTG Wild Bounty Showdown, Quickspin Sticky Bandits, BTG Bonanza Billion sticky-wild respin chain pattern.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "netent-sticky-bandits-trail",
+      "description": "NetEnt Sticky Bandits Trail of Blood: 5×3, 3 respins",
+      "rtp_contribution": 0.5372185327470833,
+      "trigger_p": 0.012,
+      "n_respins": 3,
+      "n_cells": 15,
+      "p_wild_per_cell_per_respin": 0.06,
+      "initial_wilds": 1,
+      "expected_wilds_per_respin": [
+        1.8399999999999985,
+        2.629599999999996,
+        3.371823999999992
+      ],
+      "expected_pay_per_chain_x_bet": 44.768211062256945
+    },
+    {
+      "fixture_name": "pragmatic-pyramid-king",
+      "description": "Pragmatic Pyramid King sticky: 5×4, 4 respins, slow respawn",
+      "rtp_contribution": 0.8854286467722275,
+      "trigger_p": 0.008,
+      "n_respins": 4,
+      "n_cells": 20,
+      "p_wild_per_cell_per_respin": 0.04,
+      "initial_wilds": 2,
+      "expected_wilds_per_respin": [
+        2.7199999999999984,
+        3.411199999999996,
+        4.074751999999993,
+        4.711761919999989
+      ],
+      "expected_pay_per_chain_x_bet": 110.67858084652845
+    },
+    {
+      "fixture_name": "jtg-wild-bounty-showdown",
+      "description": "JTG Wild Bounty: 6×4, 5 respins, aggressive respawn",
+      "rtp_contribution": 3.0871182327418545,
+      "trigger_p": 0.015,
+      "n_respins": 5,
+      "n_cells": 24,
+      "p_wild_per_cell_per_respin": 0.08,
+      "initial_wilds": 1,
+      "expected_wilds_per_respin": [
+        2.8400000000000034,
+        4.532800000000009,
+        6.090176000000017,
+        7.522961920000027,
+        8.841124966400038
+      ],
+      "expected_pay_per_chain_x_bet": 205.8078821827903
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_sticky_wilds_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: exact Markov DP over (wild_count, respin_t) state space using iterative Binomial PMF construction."
+}

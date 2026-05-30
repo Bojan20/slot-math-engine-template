@@ -46,6 +46,8 @@ KERNELS = [
      "CASCADE_KERNEL.json"),
     ("244.21", "tools.build_cluster_pays_kernel", "cluster_pays",
      "CLUSTER_PAYS_KERNEL.json"),
+    ("244.23", "tools.build_sticky_wilds_kernel", "sticky_wilds",
+     "STICKY_WILDS_KERNEL.json"),
 ]
 
 
