@@ -6,6 +6,63 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:55 (post **W244 WAVE 15 — `buy_feature` Bonus Buy regulator-audit kernel**, commit pending)
+
+**Status:** Autonomni continuation. 5. math kernel u seriji.
+
+### Wave 15 — `buy_feature` (Bonus Buy / Feature Buy) regulator-audit kernel
+
+Industry pattern: BTG Bonus Buy, Pragmatic Buy Feature, Hacksaw all-buy, Push Gaming Bonus Buy, Nolimit City Feature Buy. Player plaća `buy_cost_x_bet × bet` za immediate entry u bonus.
+
+**Regulator contract** (codified u kernel-u):
+- **UKGC RTS 13C**: buy_rtp delta vs base_rtp ≤ 0.5 pp tolerance (default), 1.0 pp permissive
+- **MGA RG 2021/02**: buy_rtp ≤ 0.96 absolute ceiling (default), 0.97 permissive
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `tools/math_dsl/buy_feature.py` (kernel) | buy_rtp / fair_cost / delta_pp / UKGC RTS 13C / MGA RG 2021/02 closed-form | 140 lines |
+| `tools/tests/test_w244_buy_feature_kernel.py` | 17 testova — math + jurisdiction passes + validation | **17/17 PASS** u 60ms |
+| `tools/build_buy_feature_kernel.py` | 5 canonical fixtures (regulator near-limit + fail cases) | 115 lines |
+| `reports/acceptance/BUY_FEATURE_KERNEL.json` | schema v1, Merkle pinned | — |
+
+### Canonical fixtures
+
+| Fixture | buy_rtp | Δ pp | UKGC RTS 13C @ 0.5 | MGA 0.96 |
+|---|---:|---:|:---:|:---:|
+| fair-buy-base-rtp-match | 0.9600 | +0.00 | ✅ | ✅ |
+| btg-bonus-buy-100x | 0.9650 | +0.50 (float-noisy) | ❌ | ❌ |
+| pragmatic-buy-feature-cheap | 1.0100 | +5.00 | ❌ | ❌ |
+| ukgc-rts13c-near-limit | 0.9640 | +0.40 | ✅ | ❌ |
+| mga-2021-02-fails | 0.9700 | +1.00 | ❌ | ❌ |
+
+### W244 batch wave 8-15 final summary
+
+| Wave | Commit | Δ |
+|---|---|---|
+| 8 | `3cd207cd` | Stryker 98.02 → 98.88 % |
+| 9a | `563761aa` | reg-oracle 117 traces / 12 jurisdictions |
+| 9b | `5298d1be` | 30M MC parity dossier 15/15 gates |
+| 10 | `ca1805c9` | money_collect kernel (13 DSL kinds) |
+| 11 | `cf504781` | charge_meter kernel (14) |
+| 12 | `a3c62d9d` | must_hit_by kernel (15) |
+| 13 | `cbdc8c4c` | pick_chain kernel (16) |
+| 14 | `a0db7e3c` | Industry-First Dossier 58 → 62 |
+| 15 | pending | buy_feature kernel — UKGC RTS 13C + MGA RG 2021/02 audit |
+
+**Regression**: 83/83 W244 kernel tests PASS u 110ms.
+
+### Sledeći wave queue (post wave 15)
+
+| # | Item | Status |
+|---|---|---|
+| **1** | W4.9/W4.10 PAR | Boki nema |
+| **2** | Plan B full: rust-sim config bridge | 2-3h, deferred |
+| **3** | Math DSL: state_machine / mystery_symbol_v2 | autonomous, 30-45 min |
+| **4** | Industry-First Dossier refresh sa buy_feature (63rd) | autonomous, 5 min |
+| **5** | Stryker bug GitHub issue submission | Boki repo decision |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:45 (post **W244 WAVE 14 — Industry-First Dossier refresh 58 → 62 industry-firsts**, commit pending)
 
 **Status:** Auto wave 14 — refresh dossier sa 4 nove W244 kernel mehanike.
