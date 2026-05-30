@@ -85,10 +85,14 @@ def verify(manifest_path: Path, repo: Path) -> tuple[bool, dict]:
     all_files_ok = not missing and not digest_mismatch and not size_mismatch
     verified = all_files_ok and root_ok
 
+    # W244 wave 6 — deterministic receipt. `verified_at_utc` previously
+    # wall-clock; now derived from the verified root so re-running with
+    # the same evidence bundle produces a byte-identical receipt.
+    derived_ts = f"deterministic-by-merkle:{derived_root[:16]}"
     receipt = {
         "schema": "w4-11-evidence-receipt/v1",
         "verified": verified,
-        "verified_at_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "verified_at_utc": derived_ts,
         "manifest_path": str(manifest_path),
         "repo_root": str(repo),
         "expected_merkle_root_sha256": expected_root,

@@ -1,11 +1,11 @@
 {
   "schema": "w4-11-evidence-receipt/v1",
   "verified": true,
-  "verified_at_utc": "2026-05-30T01:22:50.607408Z",
+  "verified_at_utc": "deterministic-by-merkle:d1926aaa68c48ed4",
   "manifest_path": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
   "repo_root": "/Users/vanvinklstudio/Projects/slot-math-engine-template",
-  "expected_merkle_root_sha256": "ba05d9da3f1de2bc66a60b7da4ee60d6c016d190728e9b2a838cf2821941a9e4",
-  "derived_merkle_root_sha256": "ba05d9da3f1de2bc66a60b7da4ee60d6c016d190728e9b2a838cf2821941a9e4",
+  "expected_merkle_root_sha256": "d1926aaa68c48ed42cc3566f8a96df7ea883947772503dd3bfce43151aedca20",
+  "derived_merkle_root_sha256": "d1926aaa68c48ed42cc3566f8a96df7ea883947772503dd3bfce43151aedca20",
   "merkle_root_match": true,
   "file_count": 27,
   "passed_count": 27,
@@ -62,10 +62,10 @@
       "path": "reports/acceptance/book_bonusbuy_mc.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "a94ac97f4a173bfe2291308c594df9f8e01aa38cf8d5f1ecf1b75c5ab5add5f7",
-      "actual_sha256": "a94ac97f4a173bfe2291308c594df9f8e01aa38cf8d5f1ecf1b75c5ab5add5f7",
-      "expected_size": 1751,
-      "actual_size": 1751
+      "expected_sha256": "e0aa44a5d64c4681064434325c366529e0863f98a7def8609c4e59517d34fc15",
+      "actual_sha256": "e0aa44a5d64c4681064434325c366529e0863f98a7def8609c4e59517d34fc15",
+      "expected_size": 1669,
+      "actual_size": 1669
     },
     {
       "path": "reports/acceptance/book_bonusbuy_parity.json",
@@ -161,19 +161,19 @@
       "path": "reports/dashboards/mc-parity-dashboard.html",
       "ok": true,
       "reason": null,
-      "expected_sha256": "745f384704c46f503258e3e387bb881b48002c23f0727ac9e0e1043d5020f619",
-      "actual_sha256": "745f384704c46f503258e3e387bb881b48002c23f0727ac9e0e1043d5020f619",
-      "expected_size": 9483,
-      "actual_size": 9483
+      "expected_sha256": "56b95a08d348e2df3136c72abd619d17476a8d5d4937c866c9b3d7f28a2b27e9",
+      "actual_sha256": "56b95a08d348e2df3136c72abd619d17476a8d5d4937c866c9b3d7f28a2b27e9",
+      "expected_size": 9491,
+      "actual_size": 9491
     },
     {
       "path": "reports/dashboards/mc-parity-dashboard.manifest.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "29e1ce534fcf52b5d0f647734b36e23de7e3a91f4dafd7039c122ad6104c0f53",
-      "actual_sha256": "29e1ce534fcf52b5d0f647734b36e23de7e3a91f4dafd7039c122ad6104c0f53",
-      "expected_size": 690,
-      "actual_size": 690
+      "expected_sha256": "df5b2a96ed22b0e736c87a570b59a59b16d580d6cecf7bad825abb115077ba47",
+      "actual_sha256": "df5b2a96ed22b0e736c87a570b59a59b16d580d6cecf7bad825abb115077ba47",
+      "expected_size": 647,
+      "actual_size": 647
     },
     {
       "path": "reports/dashboards/portfolio-validator-dashboard.html",
@@ -215,17 +215,17 @@
       "path": "reports/dashboards/sales-one-pager.html",
       "ok": true,
       "reason": null,
-      "expected_sha256": "ac5749e7f1df142cb126e18e5612e0da851d8307410e7132bfd167f4c8bd02bb",
-      "actual_sha256": "ac5749e7f1df142cb126e18e5612e0da851d8307410e7132bfd167f4c8bd02bb",
-      "expected_size": 8564,
-      "actual_size": 8564
+      "expected_sha256": "36f0635c16e7ccd858a5199f647c03be72c28d74c07ad1a001bdc577a8b43f97",
+      "actual_sha256": "36f0635c16e7ccd858a5199f647c03be72c28d74c07ad1a001bdc577a8b43f97",
+      "expected_size": 8570,
+      "actual_size": 8570
     },
     {
       "path": "reports/dashboards/sales-one-pager.manifest.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "4f9ed1a693e12a20a5e842fc6ac9863934350df815d1a83c0067dc2a25ee3e10",
-      "actual_sha256": "4f9ed1a693e12a20a5e842fc6ac9863934350df815d1a83c0067dc2a25ee3e10",
+      "expected_sha256": "72bc1c249a86fe70d25e91eaea2742875cbd7b0b916f286dbc5f392b969b52df",
+      "actual_sha256": "72bc1c249a86fe70d25e91eaea2742875cbd7b0b916f286dbc5f392b969b52df",
       "expected_size": 495,
       "actual_size": 495
     },

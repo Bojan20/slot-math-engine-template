@@ -146,7 +146,7 @@ def render_gates(cf: dict, mc: dict) -> str:
         mc_rows.append(f'<tr><td>{html.escape(gate)}</td><td>{gate_badge(ok)}</td></tr>')
     cf_table = '<table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody>' + ''.join(cf_rows) + '</tbody></table>'
     mc_table = '<table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody>' + ''.join(mc_rows) + '</tbody></table>'
-    return f'<div class="grid"><div class="panel"><h3>Closed-form (≤ 250 ms)</h3>{cf_table}</div><div class="panel"><h3>Monte Carlo (200K spinov, {mc["elapsed_seconds"]:.2f} s)</h3>{mc_table}</div></div>'
+    return f'<div class="grid"><div class="panel"><h3>Closed-form (≤ 250 ms)</h3>{cf_table}</div><div class="panel"><h3>Monte Carlo (200K spinov)</h3>{mc_table}</div></div>'
 
 
 def render_book_pmf(cf: dict) -> str:
@@ -189,7 +189,8 @@ def render_dashboard(cf: dict, mc: dict) -> str:
     mc_scatter = mc["deltas_pp"]["scatter_pay_delta_pp"]
     cf_bb = cf["bonus_buy_fair_price_pp"]
     spins = mc["spins"]
-    seconds = mc["elapsed_seconds"]
+    # W244 wave 6 — `elapsed_seconds` removed from MC JSON for determinism;
+    # render a static "spins only" label instead.
 
     kpis = (
         '<div class="grid">' +
@@ -212,9 +213,9 @@ def render_dashboard(cf: dict, mc: dict) -> str:
             "pass" if abs(cf_bb) <= 0.05 else "fail",
         ) +
         render_kpi(
-            "MC runtime",
-            f"{seconds:.2f} s @ {spins:,} spinova",
-            f"{mc['spins_per_second']:,.0f} spins/sec",
+            "MC sample size",
+            f"{spins:,} spinova",
+            "fixed seed · CI logs hold wall-clock",
             "pass",
         ) +
         "</div>"
@@ -279,7 +280,8 @@ def main() -> None:
         "mc_summary": {
             "all_gates_pass": mc.get("all_gates_pass"),
             "spins": mc["spins"],
-            "elapsed_seconds": mc["elapsed_seconds"],
+            # W244 wave 6 — elapsed_seconds excised from MC JSON; removed
+            # here too so the manifest stays Merkle-deterministic.
             "line_pay_delta_pp": mc["deltas_pp"]["line_pay_delta_pp"],
             "scatter_pay_delta_pp": mc["deltas_pp"]["scatter_pay_delta_pp"],
             "fs_trigger_rel_err": mc["fs_trigger_rel_err"],

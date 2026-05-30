@@ -295,11 +295,16 @@ def run_mc(spins: int, seed: int) -> dict:
     }
     all_pass = all(gates.values())
 
+    # W244 wave 6 — full Merkle determinism. Wall-clock timing fields were
+    # the cascade root: `elapsed_seconds` and `spins_per_second` flip on
+    # every machine + load combo, dirtying 6 downstream files. Rounding to
+    # the nearest whole second still bistable at the rounding boundary
+    # (2 ↔ 3 s alternation on ~2.5 s mean). Drop both fields entirely; the
+    # spin count + seed + RTP results ARE the auditable record. Throughput
+    # numbers belong in CI logs and README, not in the regulator manifest.
     return {
         "spins": spins,
         "seed": seed,
-        "elapsed_seconds": elapsed,
-        "spins_per_second": spins / elapsed if elapsed > 0 else 0,
         "reference_rtp_breakdown": ref,
         "reference_hit_freq": ir["meta"]["hit_frequency_reference"],
         "mc": {
@@ -342,7 +347,7 @@ def main() -> int:
     args = parser.parse_args()
     report = run_mc(args.spins, args.seed)
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2))
-    print(f"[mc-parity] N={args.spins:,}  seed={args.seed}  in {report['elapsed_seconds']:.2f} s")
+    print(f"[mc-parity] N={args.spins:,}  seed={args.seed}  (elapsed kept in CI log only — deterministic JSON)")
     print(f"  RTP:           {report['mc']['total_rtp']:.6f}  ref {report['reference_rtp_breakdown']['total_normal']:.6f}  Δ {report['deltas_pp']['total_delta_pp']:+.4f} pp  CI95 ±{report['ci95_pp']:.4f} pp")
     print(f"  Line:          {report['mc']['line_pay_rtp']:.6f}  ref {report['reference_rtp_breakdown']['line_pay']:.6f}  Δ {report['deltas_pp']['line_pay_delta_pp']:+.4f} pp")
     print(f"  Scatter:       {report['mc']['scatter_pay_rtp']:.6f}  ref {report['reference_rtp_breakdown']['scatter_pay']:.6f}  Δ {report['deltas_pp']['scatter_pay_delta_pp']:+.4f} pp")

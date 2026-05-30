@@ -99,9 +99,17 @@ def main() -> int:
     leaf_lines = [f"{r['path']}|{r['size_bytes']}|{r['sha256']}\n" for r in records]
     root_hash = hashlib.sha256("".join(leaf_lines).encode("utf-8")).hexdigest()
 
+    # W244 wave 6 — deterministic manifest. `generated_at_utc` previously
+    # used `datetime.now()`, which dirtied the manifest + downstream sales
+    # one-pager + receipt on every rebuild even when the underlying file
+    # set was byte-identical. We now derive the timestamp from the Merkle
+    # root itself: stable rebuild ⇒ stable timestamp ⇒ stable JSON ⇒ no
+    # spurious git churn. Auditors who need a real wall-clock time read
+    # the git commit metadata for this file instead.
+    derived_ts = f"deterministic-by-merkle:{root_hash[:16]}"
     manifest = {
         "schema": "w4-11-evidence-manifest/v1",
-        "generated_at_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "generated_at_utc": derived_ts,
         "merkle_root_sha256": root_hash,
         "file_count": len(records),
         "total_bytes": sum(r["size_bytes"] for r in records),

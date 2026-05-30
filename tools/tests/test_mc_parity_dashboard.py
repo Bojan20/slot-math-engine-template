@@ -76,6 +76,13 @@ def test_dashboard_documents_fs_limitation_honestly(html_doc: str):
 
 
 def test_dashboard_displays_runtime_for_mc(html_doc: str):
-    """Runtime KPI is part of the sales surface."""
+    """MC sample-size KPI is part of the sales surface.
+
+    W244 wave 6 — wall-clock throughput numbers (spins/sec, elapsed_seconds)
+    were excised from the MC JSON for Merkle determinism (machine-load
+    timing was the cascade root that dirtied 6 files per rebuild). The
+    dashboard now renders only the spin count + fixed-seed note. Wall-clock
+    throughput lives in CI logs and README, not the regulator manifest.
+    """
     assert "spinova" in html_doc or "spins" in html_doc
-    assert "spins/sec" in html_doc or "spins_per_second" in html_doc
+    assert "fixed seed" in html_doc.lower() or "CI log" in html_doc.lower() or "ci logs" in html_doc.lower()

@@ -131,12 +131,18 @@ def render(cf: dict, mc: dict, val: dict, em: dict, portfolio: dict, dossier: di
         'Sourced from pinned JSON reports under <code>reports/acceptance/</code>.</p>'
     )
 
+    # W244 wave 6 — decouple from manifest byte size. `em_bytes` previously
+    # rendered the actual total, but the sales-pager itself is one of the
+    # manifest files, so any change to its size feeds back into em_bytes →
+    # next render produces a different size → fixed point never reaches.
+    # We now render only the file count (which IS stable since the file
+    # list is hardcoded); auditors read the byte total from the manifest.
     hero = (
         '<div class="hero"><p>'
         '<strong>The engine math matches a real-market released-game PAR within ≤ 0.5 pp on the line term '
         'and ≤ 0.1 pp on the scatter term</strong> — Monte Carlo validated in '
         '<strong>under 3 seconds on 200 000 spins</strong>. The entire deliverable surface '
-        f'(<strong>{em_files} files, {em_bytes:,} bytes</strong>) is committed to a single SHA-256 Merkle root, '
+        f'(<strong>{em_files} files</strong>, byte total in manifest) is committed to a single SHA-256 Merkle root, '
         'so an operator or regulator commits to <strong>one 256-bit hash</strong> to attest the whole package.'
         '</p></div>'
     )
@@ -155,8 +161,13 @@ def render(cf: dict, mc: dict, val: dict, em: dict, portfolio: dict, dossier: di
         render_kpi("Industry-firsts attested",
                    f"{dh.get('industry_firsts', '?')}/{dh.get('waves', '?')}",
                    "dossier-pinned") +
+        # W244 wave 6 — render a static label instead of the Merkle prefix.
+        # Embedding the Merkle hash here created a render cycle:
+        #   manifest hash → sales-pager bytes → manifest hash → …
+        # The actual root lives in W4_11_EVIDENCE_MANIFEST.json (regulator
+        # source of truth); auditors who need the hex string read it there.
         render_kpi("Evidence Merkle root",
-                   em_root[:12] + "…",
+                   "see manifest",
                    f"{em_files} files committed") +
         render_kpi("Combined QA",
                    "94 / 94 specs",
