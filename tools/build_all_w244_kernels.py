@@ -50,6 +50,8 @@ KERNELS = [
      "STICKY_WILDS_KERNEL.json"),
     ("244.24", "tools.build_stacked_wilds_kernel", "stacked_wilds",
      "STACKED_WILDS_KERNEL.json"),
+    ("244.25", "tools.build_ways_evaluator_kernel", "ways_evaluator",
+     "WAYS_EVALUATOR_KERNEL.json"),
 ]
 
 

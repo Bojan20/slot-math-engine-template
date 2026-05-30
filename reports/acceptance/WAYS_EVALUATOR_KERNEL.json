@@ -1,0 +1,266 @@
+{
+  "schema": "ways-evaluator-kernel/v1",
+  "merkle_root_sha256": "21b07d9af98d620441775054e847ed769edc3be985d18300758db17fefe9ab0d",
+  "generated_at_utc": "deterministic-by-merkle:21b07d9af98d6204",
+  "kernel": "ways_evaluator",
+  "module": "tools.math_dsl.ways_evaluator",
+  "industry_pattern": "Microgaming 243/1024-ways, Aristocrat Buffalo 1024-ways, BTG Megaways (Bonanza, Extra Chilli, White Rabbit), Pragmatic Big Bass Splash 4096-ways. Variable-rows or fixed topology with ways_count = product(row_count_per_reel).",
+  "fixtures_count": 4,
+  "records": [
+    {
+      "fixture_name": "classic-243-ways-5x3",
+      "description": "Microgaming 243-ways: 5 reels × 3 rows (fixed)",
+      "rtp_contribution": 0.9600000000000001,
+      "n_reels": 5,
+      "expected_rows_per_reel": [
+        3.0,
+        3.0,
+        3.0,
+        3.0,
+        3.0
+      ],
+      "expected_ways_count": 243.0,
+      "per_way_rtp_x_bet": 0.003950617283950617,
+      "per_reel_breakdown": [
+        {
+          "reel_index": 0,
+          "expected_rows": 3.0,
+          "row_distribution": {
+            "3": 1.0
+          }
+        },
+        {
+          "reel_index": 1,
+          "expected_rows": 3.0,
+          "row_distribution": {
+            "3": 1.0
+          }
+        },
+        {
+          "reel_index": 2,
+          "expected_rows": 3.0,
+          "row_distribution": {
+            "3": 1.0
+          }
+        },
+        {
+          "reel_index": 3,
+          "expected_rows": 3.0,
+          "row_distribution": {
+            "3": 1.0
+          }
+        },
+        {
+          "reel_index": 4,
+          "expected_rows": 3.0,
+          "row_distribution": {
+            "3": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "fixture_name": "buffalo-1024-ways-5x4",
+      "description": "Aristocrat Buffalo 1024 ways: 5 reels × 4 rows",
+      "rtp_contribution": 0.96,
+      "n_reels": 5,
+      "expected_rows_per_reel": [
+        4.0,
+        4.0,
+        4.0,
+        4.0,
+        4.0
+      ],
+      "expected_ways_count": 1024.0,
+      "per_way_rtp_x_bet": 0.0009375,
+      "per_reel_breakdown": [
+        {
+          "reel_index": 0,
+          "expected_rows": 4.0,
+          "row_distribution": {
+            "4": 1.0
+          }
+        },
+        {
+          "reel_index": 1,
+          "expected_rows": 4.0,
+          "row_distribution": {
+            "4": 1.0
+          }
+        },
+        {
+          "reel_index": 2,
+          "expected_rows": 4.0,
+          "row_distribution": {
+            "4": 1.0
+          }
+        },
+        {
+          "reel_index": 3,
+          "expected_rows": 4.0,
+          "row_distribution": {
+            "4": 1.0
+          }
+        },
+        {
+          "reel_index": 4,
+          "expected_rows": 4.0,
+          "row_distribution": {
+            "4": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "fixture_name": "btg-megaways-bonanza-6reel",
+      "description": "BTG Megaways Bonanza: 6 reels × variable 2-7 rows",
+      "rtp_contribution": 0.96,
+      "n_reels": 6,
+      "expected_rows_per_reel": [
+        4.5,
+        4.5,
+        4.5,
+        4.5,
+        4.5,
+        4.5
+      ],
+      "expected_ways_count": 8303.765625,
+      "per_way_rtp_x_bet": 0.00011561019943888408,
+      "per_reel_breakdown": [
+        {
+          "reel_index": 0,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        },
+        {
+          "reel_index": 1,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        },
+        {
+          "reel_index": 2,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        },
+        {
+          "reel_index": 3,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        },
+        {
+          "reel_index": 4,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        },
+        {
+          "reel_index": 5,
+          "expected_rows": 4.5,
+          "row_distribution": {
+            "2": 0.16666666666666666,
+            "3": 0.16666666666666666,
+            "4": 0.16666666666666666,
+            "5": 0.16666666666666666,
+            "6": 0.16666666666666666,
+            "7": 0.16666666666666666
+          }
+        }
+      ]
+    },
+    {
+      "fixture_name": "btg-megaways-117649-max",
+      "description": "BTG Megaways max state: 6 reels × 7 rows = 117649 ways",
+      "rtp_contribution": 0.96,
+      "n_reels": 6,
+      "expected_rows_per_reel": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "expected_ways_count": 117649.0,
+      "per_way_rtp_x_bet": 8.159865362221523e-06,
+      "per_reel_breakdown": [
+        {
+          "reel_index": 0,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        },
+        {
+          "reel_index": 1,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        },
+        {
+          "reel_index": 2,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        },
+        {
+          "reel_index": 3,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        },
+        {
+          "reel_index": 4,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        },
+        {
+          "reel_index": 5,
+          "expected_rows": 7.0,
+          "row_distribution": {
+            "7": 1.0
+          }
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_ways_evaluator_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: product over reels of E[row_count_per_reel] under independent reels assumption × per_way_rtp_x_bet."
+}

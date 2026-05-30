@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:82b1c955629d9003",
-  "repo_sha": "d6a9dc1c4f0e8b209b55bef1191b4ff21f37c869",
+  "generatedAtUtc": "deterministic-by-merkle:05fecfbea4891191",
+  "repo_sha": "8b090238990ae931f6dac7ad1aec7398093b34a3",
   "headline": {
-    "waves": 72,
-    "industry_firsts": 72,
+    "waves": 73,
+    "industry_firsts": 73,
     "all_present": true
   },
   "waves": [
@@ -2621,6 +2621,27 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source closed-form za stacked-wilds reels sa K-fold pay multiplication. Binomial PMF computed via iterative product (pure-stdlib, no scipy). Linear u operator-supplied pay_per_stacked_count."
+    },
+    {
+      "wave": "244.25",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)",
+      "reportPath": "reports/acceptance/WAYS_EVALUATOR_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "4 fixtures, ways=product(E[rows]); covers 243, 1024, 8303 (variable), 117649",
+      "detail": {
+        "kernel_module": "tools.math_dsl.ways_evaluator",
+        "patterns_covered": [
+          "Microgaming 243/1024-ways",
+          "Aristocrat Buffalo 1024-ways",
+          "BTG Megaways (Bonanza/Extra Chilli/White Rabbit)",
+          "Pragmatic Big Bass Splash 4096-ways"
+        ],
+        "fixtures_count": 4
+      },
+      "industry_first": "First open-source closed-form za variable-rows ways evaluator. E[ways] = product(E[row_count_per_reel]) under independent reels. Linear u operator-supplied per_way_rtp."
     }
   ],
   "auditor_qa": [

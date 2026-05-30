@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 51 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 24) · repo SHA: `d6a9dc1c`
+> **Unified operator deliverable** — aggregates 52 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 25) · repo SHA: `8b090238`
 
-## Headline: **72/72 industry-firsts attested** ✅
+## Headline: **73/73 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -81,6 +81,7 @@
 | 244.22 | — | **W244 All-Kernel Batch Runner + Master Merkle** | ✅ 12/12 kernels OK, 38 fixtures, master merkle a481e144c7cf006d | [`reports/acceptance/W244_ALL_KERNELS.json`](../../reports/acceptance/W244_ALL_KERNELS.json) |
 | 244.23 | — | **Sticky Wilds Respin Chain Kernel (NetEnt / Pragmatic / JTG)** | ✅ 3 fixtures, exact Markov DP over (wild_count, respin_t) | [`reports/acceptance/STICKY_WILDS_KERNEL.json`](../../reports/acceptance/STICKY_WILDS_KERNEL.json) |
 | 244.24 | — | **Stacked Wilds Kernel (Mega Moolah / Buffalo 1024-ways / Cleopatra II)** | ✅ 3 fixtures, Binomial(n_reels, p_stacked) × pay table | [`reports/acceptance/STACKED_WILDS_KERNEL.json`](../../reports/acceptance/STACKED_WILDS_KERNEL.json) |
+| 244.25 | — | **Ways Evaluator Kernel (Megaways 117649 / 1024 / 243)** | ✅ 4 fixtures, ways = product(E[rows]) under reel independence | [`reports/acceptance/WAYS_EVALUATOR_KERNEL.json`](../../reports/acceptance/WAYS_EVALUATOR_KERNEL.json) |
 
 ## Why each is industry-first
 
