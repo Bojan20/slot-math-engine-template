@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:3913335ff7cf124b",
-  "repo_sha": "c213d98b5c347de1a7f3a5cd6e959c7e032d0250",
+  "generatedAtUtc": "deterministic-by-merkle:7c5fad6bda08292e",
+  "repo_sha": "6dc150843b7681baf2aae2aa594d9fa6f83a3152",
   "headline": {
-    "waves": 83,
-    "industry_firsts": 83,
+    "waves": 84,
+    "industry_firsts": 84,
     "all_present": true
   },
   "waves": [
@@ -2861,6 +2861,29 @@
         "max_delta": "9.42e-15 ULP (money_collect)"
       },
       "industry_first": "First open-source 17-kernel cross-language parity gate. Covers all common slot math primitives: Markov stationary, Markov DP, Binomial PMF, geometric chain, Gaussian elim, Wald identity, conservation flow, first-order statistic, jurisdiction passes."
+    },
+    {
+      "wave": "244.38",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Rust Port ULTIMATE FINAL — 18/18 kernels Python↔Rust byte-stable",
+      "reportPath": "reports/acceptance/RUST_PYTHON_PARITY_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "18/18 W244 kernels (incl. composed hold_and_win) Python↔Rust parity OK, max delta 9.42e-15 ULP",
+      "detail": {
+        "ported_kernels": 18,
+        "parity_gate_kernels": 18,
+        "tools_python_only": [
+          "inverse_solver",
+          "showcase_game",
+          "symbolic_gradient"
+        ],
+        "max_delta_ulp": "9.42e-15 (money_collect + hold_and_win Markov DP)",
+        "rust_cargo_tests": "all kernel modules pass",
+        "merkle_root": "c5185d35efd6aafbf92bc075b7cb8645eb9e7b9bfdcf3c06330d87e31751f850"
+      },
+      "industry_first": "Komplet open-source 18-kernel cross-language math fleet parity. Composed kernel (hold_and_win) propagation across Python/Rust matches byte-stable. Sve glavne industry slot math primitives port-ovane sa CI gate-om."
     }
   ],
   "auditor_qa": [

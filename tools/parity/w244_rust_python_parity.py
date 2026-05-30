@@ -555,9 +555,7 @@ KERNELS = [
     ("expanding_symbol", fixture_expanding_symbol, _py_expanding_symbol),
     ("wheel", fixture_wheel, _py_wheel),
     ("asymmetric_paytable", fixture_asymmetric_paytable, _py_asymmetric_paytable),
-    # hold_and_win — composed kernel, Python returns nested money + jackpot
-    # components. Currently Rust port has hold_and_win.rs but parity needs
-    # special composed handling. Adding incrementally next wave.
+    ("hold_and_win", fixture_hold_and_win, _py_hold_and_win),
 ]
 
 

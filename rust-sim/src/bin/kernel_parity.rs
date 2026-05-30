@@ -15,7 +15,7 @@ use std::io::{self, Read, Write};
 
 use slot_sim::kernels::{
     asymmetric_paytable, both_ways, buy_feature, cascade, charge_meter,
-    cluster_pays, expanding_symbol, money_collect, must_hit_by,
+    cluster_pays, expanding_symbol, hold_and_win, money_collect, must_hit_by,
     pay_anywhere, persistent_multiplier, pick_chain, stacked_wilds,
     state_machine, sticky_wilds, ways_evaluator, wheel,
 };
@@ -167,6 +167,14 @@ fn run(req: Request) -> Result<serde_json::Value, String> {
                     .map_err(|e| format!("parse: {}", e))?;
             p.validate()?;
             Ok(serde_json::to_value(buy_feature::buy_feature_audit(&p))
+                .map_err(|e| e.to_string())?)
+        }
+        "hold_and_win" => {
+            let p: hold_and_win::HoldAndWinParams =
+                serde_json::from_value(req.params)
+                    .map_err(|e| format!("parse: {}", e))?;
+            p.validate()?;
+            Ok(serde_json::to_value(hold_and_win::hold_and_win_rtp(&p))
                 .map_err(|e| e.to_string())?)
         }
         other => Err(format!("unknown kernel: {}", other)),

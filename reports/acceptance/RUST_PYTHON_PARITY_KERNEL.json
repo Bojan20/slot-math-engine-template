@@ -1,9 +1,9 @@
 {
   "schema": "w244-rust-python-parity/v1",
-  "merkle_root_sha256": "ffb54cf9d49c7b2246aecd9b9c0f1c5ccf727111ad44357173c38f77406e4356",
-  "generated_at_utc": "deterministic-by-merkle:ffb54cf9d49c7b22",
-  "kernels_checked": 17,
-  "kernels_match": 17,
+  "merkle_root_sha256": "c5185d35efd6aafbf92bc075b7cb8645eb9e7b9bfdcf3c06330d87e31751f850",
+  "generated_at_utc": "deterministic-by-merkle:c5185d35efd6aafb",
+  "kernels_checked": 18,
+  "kernels_match": 18,
   "all_match": true,
   "epsilon": 1e-10,
   "rust_binary": "target/release/kernel_parity",
@@ -142,6 +142,14 @@
       "py_rtp": 0.4,
       "rust_rtp": 0.4,
       "delta": 0.0,
+      "within_eps": true
+    },
+    {
+      "kernel": "hold_and_win",
+      "status": "OK",
+      "py_rtp": 0.008817904950941658,
+      "rust_rtp": 0.008817904950932242,
+      "delta": 9.416079027602109e-15,
       "within_eps": true
     }
   ],
