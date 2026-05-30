@@ -6,7 +6,83 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 19:30 (post **W244 WAVE 49-67 — gh-pages + community profile**)
+## 📊 REALAN STATUS — 2026-05-30 19:50 (post wave 68+69, sesija "cepaj" zatvorena)
+
+Format: jasno šta je urađeno, jasno šta je pending, bez marketing-a.
+
+### Šta JE završeno (W244 wave 49-69, sve interno, na main)
+
+| Wave | Šta tačno | Test count |
+|---|---|---:|
+| 49 | `multi_dim_inverse_solver` Python↔Rust snapshot parity | 5 |
+| 50 | PyPI paket vendored — 22 kernela copy + relative-import rewrite | 5 |
+| 51 | `INDUSTRY_FIRST_DOSSIER.html` (89 cards, search, Merkle u footer) | 3 |
+| 52 | `REGULATOR_PORTAL.html` (3-tab: IFs + kernels + bench) | 6 |
+| 53 | Makefile `dossier-*` targets + CI workflow `w244-dossier-html.yml` | — |
+| 54 | 5 runnable `examples/*.py` u PyPI paketu + CHANGELOG.md | 3 |
+| 55 | `API_SURFACE.json` snapshot (27 dataclass-a + 72 funkcije) + contract test | 5 |
+| 56 | Stdlib JSON shape validation za 24 acceptance/dossier file-a | 14 |
+| 57 | `CLOSED_FORM_PORTFOLIO.html` (120 solvers × 589 configs) | 5 |
+| 58 | Cross-link `<nav class="dossier-nav">` u sva 3 HTML | — |
+| 59 | `make qa-w244-session` aggregate target | — |
+| 60 | Top-level `README.md` Sales/Regulator entry update | — |
+| 61 | `tools/w244_health.py` — 16-23 check probe | 1 |
+| 62 | 19 per-kernel HTML deep-dive pages + searchable index | 6 |
+| 63 | 5 JSON Schema (Draft 2020-12) + Merkle manifest | 11 |
+| 64 | `slot-math` CLI runner — 6 sub-komandi, `pip install` gives CLI | 8 |
+| 65 | `.pre-commit-config.yaml` — ruff + W244 health + API contract | 7 |
+| 66 | `gh-pages-dossier.yml` workflow + `index.html` landing | 5 |
+| 67 | Community profile (CITATION/SECURITY/CONTRIBUTING/CoC) + HTML lint | 4 |
+| 68 | `perf_regression_check.py` — bench drift detector (>10% threshold) | 4 |
+| 69 | 19 Markdown kernel docs sa LaTeX formulama + index | 7 |
+
+**Test count totals (verified `make qa-w244-session`):** **99/99 PASS** in 1.63s
+**W244 health probe (`make health-w244`):** 23/23 PASS in 0.1s
+
+### Šta NIJE završeno (čeka tvoju akciju)
+
+| Stavka | Šta čeka | Risk ako se uradi |
+|---|---|---|
+| **gh-pages deploy** | Settings → Pages → Source: "GitHub Actions" (3 klika) → workflow_dispatch | ⚪ nizak — naš content |
+| **PyPI `twine upload`** | PyPI API token + namespace check (`slot-math-kernels` na pypi.org) | 🟡 srednji — javan paket pod tvojim imenom, ne može se "unbump" |
+| **Stryker upstream issue** | Izričit "submit it" + tvoj GitHub username | 🟠 viši — javan signal upstream pod tvojim username-om |
+
+### Šta NIJE završeno (autonomne stavke, nezavisne od public push-a)
+
+| # | Stavka | Realan effort | Razlog parking |
+|---|---|---|---|
+| 1 | TS↔Rust kernel parity gate | 3-4h | TS evaluator i Rust kernels koriste različite modele (IR vs closed-form) — non-trivial bridge |
+| 2 | wasm-pack za 3-5 hot kernela | 2-3h | Specifičan use-case (vendor browser eval); niko ga sad ne traži |
+| 3 | cargo-mutants kernel fleet | 12-24h compute | Baseline test timeout 30s je premali; treba scope-uje runner ili bumpa timeout |
+| 4 | Showcase game HTML | 1h | Niche; SHOWCASE_GAME_KERNEL.json se već renderuje u Regulator Portal-u |
+| 5 | Unified `search.json` cross-dossier | 2h | UX polish; postojeći per-page search dovoljan za većinu use-case-a |
+| 6 | 30-mech 1B MC validation | 24-48h compute | Hardware-bound, nije razvojno blocked |
+| 7 | Pattern-FK Wave 0 multi-game parser | 4-6h | Vendor A flagship; čeka Pattern-FK specs koji se još ne pišu |
+
+### CI gates aktivni
+
+| Workflow | Triggered on | Šta radi |
+|---|---|---|
+| `w244-kernel-attest.yml` | acceptance JSON / kernel src changes | rebuild 16 kernela 2× + diff master Merkle |
+| `w244-dossier-html.yml` | dossier HTML/JSON changes | rebuild 3 dashboards + diff vs committed |
+| `gh-pages-dossier.yml` | dossier/schemas/acceptance changes | deploy to GitHub Pages (zahteva Settings enable) |
+| `pr-security-gate.yml` | every PR | secret scanning + audit |
+| `template-parity.yml` | every PR | 104-spec TS-side parity sweep |
+| 14 ostalih workflow-a | various | RNG cert, fuzz, deploy rehearsal, etc. |
+
+### Tačno šta je clean
+
+- ✅ Working tree čist
+- ✅ origin/main sync (sve push-ovano)
+- ✅ Cargo check rust-sim clean
+- ✅ Ruff (tools + packages) clean
+- ✅ Pytest session 99/99
+- ✅ Health probe 23/23
+- ✅ HTML lint 24/24
+
+---
+
+## 🏁 EARLIER FINAL — 2026-05-30 19:30 (post **W244 WAVE 49-67 — gh-pages + community profile**)
 
 **Status:** "cepaj" — wave 66+67 landed (gh-pages auto-deploy + community profile docs + HTML lint). 19 wave-ova ukupno, 88 pytest + 23 health = 111 testova zelena, sve interno.
 
