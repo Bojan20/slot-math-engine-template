@@ -51,41 +51,34 @@ License: MIT (this package). Underlying monorepo proprietary.
 
 __version__ = "1.0.0"
 
-# Re-export kernel modules from the underlying tools.math_dsl path.
-# When this package is installed via pip without the monorepo, we
-# fall back to a vendored copy (TODO: copy on build).
-try:
-    from tools.math_dsl import (  # type: ignore[import-not-found]
-        asymmetric_paytable,
-        both_ways,
-        both_ways_expanding_wild,
-        buy_feature,
-        cascade,
-        charge_meter,
-        cluster_pays,
-        crash_kernel,
-        expanding_symbol,
-        hold_and_win,
-        inverse_solver,
-        money_collect,
-        multi_dim_inverse_solver,
-        must_hit_by,
-        pay_anywhere,
-        persistent_multiplier,
-        pick_chain,
-        stacked_wilds,
-        state_machine,
-        sticky_wilds,
-        ways_evaluator,
-        wheel,
-    )
-except ImportError as _ie:  # pragma: no cover
-    raise ImportError(
-        "slot-math-kernels package skeleton expects monorepo path "
-        "`tools/math_dsl/*.py` accessible. Standalone PyPI distribution "
-        "requires the kernel modules to be vendored into "
-        "src/slot_math_kernels/ via the build step (TODO)."
-    ) from _ie
+# 22 vendored kernel modules — fully standalone (no monorepo dep).
+# Source vendored from `tools/math_dsl/*.py` at slot-math-engine-template
+# wave 50 (2026-05-30). Cross-kernel deps (both_ways_expanding_wild,
+# hold_and_win) rewritten to relative imports.
+from . import (
+    asymmetric_paytable,
+    both_ways,
+    both_ways_expanding_wild,
+    buy_feature,
+    cascade,
+    charge_meter,
+    cluster_pays,
+    crash_kernel,
+    expanding_symbol,
+    hold_and_win,
+    inverse_solver,
+    money_collect,
+    multi_dim_inverse_solver,
+    must_hit_by,
+    pay_anywhere,
+    persistent_multiplier,
+    pick_chain,
+    stacked_wilds,
+    state_machine,
+    sticky_wilds,
+    ways_evaluator,
+    wheel,
+)
 
 
 __all__ = [

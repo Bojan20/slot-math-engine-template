@@ -6,7 +6,25 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 16:15 (post **W244 WAVE 39-45 — SVE autonomous queue zatvoreno: 22 Rust + 22 Python kernels, Stryker 98.88 %, benchmark 100-900× Python, PyPI skeleton**)
+## 🏁 ABSOLUTE FINAL — 2026-05-30 16:40 (post **W244 WAVE 39-50 — multi_dim parity + vendored PyPI package fully `pip install`-able**)
+
+**Status:** "dalje, ultimativno" — wave 48-50 landed, paket je sad funkcionalan na PyPI standardu (`pip install slot-math-kernels` radi clean bez monorepo).
+
+### Wave 46 → 50 deltas
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **46** | `6bb8474b` | Ruff + Stryker killer test landed (parallel session) |
+| **47** | `ef324190` | Benchmark dossier — sub-µs Rust performance attestation |
+| **48** | `c86a513d` | kernel_lint CI integration — fail-fast gate pre acceptance |
+| **49** | `0899a049` | `multi_dim_inverse_solver` Python↔Rust parity snapshot tests (5/5) |
+| **50** | _(this commit)_ | PyPI paket **vendored** — 22 kernel modules + relative-import rewrite za `both_ways_expanding_wild` + `hold_and_win`; clean-venv `pip install` verified; drift-detect test gard u `tools/tests/` |
+
+**`packages/slot-math-kernels-1.0.0-py3-none-any.whl`** uspešno builds + installs + imports svih 22 kernela bez fallback-a na monorepo.
+
+---
+
+## 🏁 EARLIER FINAL — 2026-05-30 16:15 (post **W244 WAVE 39-45 — SVE autonomous queue zatvoreno: 22 Rust + 22 Python kernels, Stryker 98.88 %, benchmark 100-900× Python, PyPI skeleton**)
 
 **Status:** Boki signal: "brate ajde ne pitaj nego zatvaraj sve za sloth math engine" — krenuto autonomno na svih outstanding stavki iz wave 38 inventory. **7 wave-ova landed, sve push-ovano. Working tree CLEAN.**
 
