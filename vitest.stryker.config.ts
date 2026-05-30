@@ -26,6 +26,8 @@ export default defineConfig({
       'tests/w244_stryker_98_killers.test.ts',
       // W244 wave 8 — analyzer.ts float-boundary killers + entries() refactor
       'tests/w244_stryker_99_killers.test.ts',
+      // W244 wave 44 — final 3 compound-conditional killers (post wave-5 guard refactor)
+      'tests/w244_stryker_final_killers.test.ts',
       // W239 final-pass killers
       'tests/w239_session_extra_killers.test.ts',
       'tests/w239_analyzer_extra_killers.test.ts',
