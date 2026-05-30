@@ -6,7 +6,22 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-30 19:50 (post wave 68+69, sesija "cepaj" zatvorena)
+## 📊 REALAN STATUS — 2026-05-30 20:15 (post wave 70: Showcase Game HTML landed)
+
+**Delta od prethodnog snapshot-a:**
+- Wave 70 landed (`8b647694`) — Showcase Game HTML (parking #4 zatvoren)
+- Test count: 99 → **105** (+6 showcase tests)
+- Health probe: 23 → **24** (showcase_game.html check)
+- Dossier HTML pages: 24 → **25** (sve lint-clean)
+- CI workflow w244-dossier-html.yml: dodaje showcase rebuild + diff + Merkle
+
+**Parking lista delta**:
+- ✅ #4 Showcase game HTML — ZATVOREN (umesto 1h, realno 30 min)
+- Ostali parking items unchanged
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-30 19:50 (post wave 68+69, sesija "cepaj" zatvorena)
 
 Format: jasno šta je urađeno, jasno šta je pending, bez marketing-a.
 
