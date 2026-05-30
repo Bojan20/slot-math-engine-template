@@ -56,6 +56,10 @@ SPECIAL_FILES = {
     "WASM_PYTHON_PARITY_KERNEL.json",
 }
 
+# Meta files koji ne završavaju u *_KERNEL.json — već-skipnuti automatski
+# jer glob ne hvata ih. (Ovde za referencu.)
+# - W244_BENCHMARK_HISTORY.json — bespoke schema, drugačiji glob
+
 
 class TestKernelArtefactShape(unittest.TestCase):
     """Standard *_KERNEL.json files share a per-kernel shape."""

@@ -226,6 +226,9 @@ wasm-parity: ## Verify wasm ↔ Python kernel parity (20 fixtures, max ULP delta
 perf-regress: ## Detect benchmark regressions vs git HEAD (>10% slowdown)
 	python3 tools/perf_regression_check.py
 
+bench-history: ## Collect bench mean_ns per commit → W244_BENCHMARK_HISTORY.json
+	python3 tools/build_bench_history.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
@@ -288,6 +291,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_wasm_python_parity.py \
 		tools/tests/test_w244_wasm_parity_workflow.py \
 		tools/tests/test_w244_wasm_ts_wrapper.py \
+		tools/tests/test_w244_bench_history.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

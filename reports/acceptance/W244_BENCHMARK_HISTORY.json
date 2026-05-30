@@ -1,0 +1,22 @@
+{
+  "earliest_commit": "ef324190",
+  "latest_commit": "ef324190",
+  "merkle_root_sha256": "c2fab4a535fb88025ddc715a2c294eaf75f8ac8deb6592d06f46191d39320b9d",
+  "schema": "w244-benchmark-history/v1",
+  "snapshot_count": 1,
+  "snapshots": [
+    {
+      "bench_count": 3,
+      "commit": "ef324190",
+      "mean_across_all": 138.9406957622865,
+      "merkle_root_sha256": "4e4d1298dc3b7015854c0bc5e8593810614904fbd69ce94ca44b87dc3ab7ef70",
+      "records": {
+        "dp/persistent_multiplier_n10": 273.2290381026228,
+        "solvers/bisection_pay_anywhere": 119.43091354210719,
+        "solvers/newton_raphson_charge_meter": 24.162135642129584
+      },
+      "timestamp": "2026-05-30T16:08:38+02:00"
+    }
+  ],
+  "verification": "Re-run `python3 tools/build_bench_history.py` from the same git HEAD. Merkle must be byte-identical (commits + means u git history are immutable)."
+}
