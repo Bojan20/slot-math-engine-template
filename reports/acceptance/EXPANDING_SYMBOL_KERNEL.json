@@ -1,0 +1,74 @@
+{
+  "schema": "expanding-symbol-kernel/v1",
+  "merkle_root_sha256": "0097a333353d4d427973441407fa3e5add53274b84db6d3d277ed7616787e439",
+  "generated_at_utc": "deterministic-by-merkle:0097a333353d4d42",
+  "kernel": "expanding_symbol",
+  "module": "tools.math_dsl.expanding_symbol",
+  "industry_pattern": "Book of Ra/Book of Dead/Book of Atem/Book of Tut/Book of Demi Gods expanding-symbol Free Spins pattern. One HP symbol chosen at FS start expands to fill the reel on any landing, paying pay-anywhere across rows.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "book-of-dead-like-5x3",
+      "description": "Book of Dead-style: 5×3, 10 FS, explorer symbol",
+      "rtp_contribution": 0.03266811929255693,
+      "fs_trigger_p": 0.005,
+      "fs_initial_spins": 10,
+      "reels": 5,
+      "rows": 3,
+      "p_per_cell_in_fs": 0.12,
+      "p_per_reel": 0.31852800000000003,
+      "expected_reels_expanded_per_spin": 1.5926400000000003,
+      "expected_pay_per_fs_spin": 0.6533623858511387,
+      "expected_pay_per_trigger": 6.533623858511387,
+      "symbol_name": "explorer",
+      "pay_table": {
+        "3": 1.0,
+        "4": 5.0,
+        "5": 100.0
+      }
+    },
+    {
+      "fixture_name": "egyptian-high-volatility",
+      "description": "Aggressive expansion: 5×3, 12 FS, higher p_per_cell",
+      "rtp_contribution": 0.30614396093784413,
+      "fs_trigger_p": 0.004,
+      "fs_initial_spins": 12,
+      "reels": 5,
+      "rows": 3,
+      "p_per_cell_in_fs": 0.18,
+      "p_per_reel": 0.4486319999999999,
+      "expected_reels_expanded_per_spin": 2.2431599999999996,
+      "expected_pay_per_fs_spin": 6.377999186205086,
+      "expected_pay_per_trigger": 76.53599023446102,
+      "symbol_name": "pharaoh",
+      "pay_table": {
+        "2": 0.5,
+        "3": 2.0,
+        "4": 10.0,
+        "5": 250.0
+      }
+    },
+    {
+      "fixture_name": "asian-themed-6x4",
+      "description": "6×4 grid (Megaways-adjacent), 8 FS",
+      "rtp_contribution": 0.043698236715333565,
+      "fs_trigger_p": 0.006,
+      "fs_initial_spins": 8,
+      "reels": 6,
+      "rows": 4,
+      "p_per_cell_in_fs": 0.1,
+      "p_per_reel": 0.3439,
+      "expected_reels_expanded_per_spin": 2.0633999999999997,
+      "expected_pay_per_fs_spin": 0.9103799315694492,
+      "expected_pay_per_trigger": 7.2830394525555935,
+      "symbol_name": "dragon",
+      "pay_table": {
+        "3": 0.5,
+        "4": 2.0,
+        "5": 15.0,
+        "6": 200.0
+      }
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_expanding_symbol_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: Binomial(reels, p_per_reel) PMF × pay_table[k] expectation."
+}

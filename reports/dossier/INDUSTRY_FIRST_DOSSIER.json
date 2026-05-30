@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:610a2b3486b26539",
-  "repo_sha": "cea0d39c380e023005e2fba2d83dae455c687a2d",
+  "generatedAtUtc": "deterministic-by-merkle:776751bec03e0328",
+  "repo_sha": "6c69c28ffe6d886505eaca1ce12b3cce58923d21",
   "headline": {
-    "waves": 65,
-    "industry_firsts": 65,
+    "waves": 66,
+    "industry_firsts": 66,
     "all_present": true
   },
   "waves": [
@@ -2474,6 +2474,28 @@
         "fixtures_count": 3
       },
       "industry_first": "First open-source closed-form Markov-stationary RTP decomposition for multi-mode slot state machines. Pure-stdlib Gaussian elimination (no numpy dep). Covers supermeter, mode switch, multi-tier escalation patterns."
+    },
+    {
+      "wave": "244.18",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "Book-of-Ra/Book-of-Dead Expanding Symbol FS Kernel",
+      "reportPath": "reports/acceptance/EXPANDING_SYMBOL_KERNEL.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "3 fixtures, Binomial(reels, p_per_reel) × pay_table expectation",
+      "detail": {
+        "kernel_module": "tools.math_dsl.expanding_symbol",
+        "patterns_covered": [
+          "Novomatic Book of Ra",
+          "Play'n GO Book of Dead",
+          "Microgaming Book of Atem",
+          "Pragmatic Book of Tut",
+          "Spinomenal Book of Demi Gods"
+        ],
+        "fixtures_count": 3
+      },
+      "industry_first": "First open-source closed-form for Book-style expanding-symbol Free Spins. Per-FS-spin Binomial(reels, p_per_reel) decomposition × pay_table[k_reels_expanded]. Covers all 'Book of …' clones across vendors."
     }
   ],
   "auditor_qa": [

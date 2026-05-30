@@ -1,9 +1,9 @@
 # Industry-First Acceptance Dossier
 
-> **Unified operator deliverable** — aggregates 44 industry-first acceptance proofs from Waves 33-244.
-> Generated: deterministic-by-merkle (refreshed wave 17) · repo SHA: `cea0d39c`
+> **Unified operator deliverable** — aggregates 45 industry-first acceptance proofs from Waves 33-244.
+> Generated: deterministic-by-merkle (refreshed wave 18) · repo SHA: `6c69c28f`
 
-## Headline: **65/65 industry-firsts attested** ✅
+## Headline: **66/66 industry-firsts attested** ✅
 
 ## Wave Roster
 
@@ -74,6 +74,7 @@
 | 244.15 | — | **Bonus Buy Fair-Price Regulator-Audit Kernel** | ✅ 5 fixtures, UKGC RTS 13C + MGA RG 2021/02 codified | [`reports/acceptance/BUY_FEATURE_KERNEL.json`](../../reports/acceptance/BUY_FEATURE_KERNEL.json) |
 | 244.16 | — | **Bonus Wheel Closed-Form with Spin-Again Chain** | ✅ 3 fixtures, bounded geometric-amortised E[award] | [`reports/acceptance/WHEEL_KERNEL.json`](../../reports/acceptance/WHEEL_KERNEL.json) |
 | 244.17 | — | **Multi-Mode State-Machine Supermeter Kernel** | ✅ 3 fixtures, Markov stationary via Gaussian elimination | [`reports/acceptance/STATE_MACHINE_KERNEL.json`](../../reports/acceptance/STATE_MACHINE_KERNEL.json) |
+| 244.18 | — | **Book-of-Ra/Book-of-Dead Expanding Symbol FS Kernel** | ✅ 3 fixtures, Binomial(reels, p_per_reel) × pay_table expectation | [`reports/acceptance/EXPANDING_SYMBOL_KERNEL.json`](../../reports/acceptance/EXPANDING_SYMBOL_KERNEL.json) |
 
 ## Why each is industry-first
 
