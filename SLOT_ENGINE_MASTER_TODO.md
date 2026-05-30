@@ -6,7 +6,29 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-30 20:15 (post wave 70: Showcase Game HTML landed)
+## 📊 REALAN STATUS — 2026-05-30 20:45 (post wave 71: unified search index)
+
+**Delta od prethodnog snapshot-a:**
+- Wave 71 landed (`dcb7facd`) — `search-index.json` (229 entries) + landing search bar
+- Test count: 105 → **112** (+7 search index tests)
+- Health probe: 24 → **26** (search index present + Merkle)
+- Parking #5 (Unified search.json) ZATVOREN
+
+**Parking lista progress**: 2/7 zatvoren (Showcase Game HTML + Unified Search)
+
+**Preostalo na parking**:
+
+| # | Stavka | Effort | Status |
+|---|---|---|---|
+| 1 | TS↔Rust kernel parity gate | 3-4h | non-trivial bridge (different models) |
+| 2 | wasm-pack za 3-5 hot kernela | 2-3h | niche use-case (vendor browser) |
+| 3 | cargo-mutants kernel fleet | 12-24h compute | baseline timeout fix needed |
+| 6 | 30-mech 1B MC | 24-48h compute | hardware-bound |
+| 7 | Pattern-FK Wave 0 | 4-6h | specs not ready |
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-30 20:15 (post wave 70: Showcase Game HTML landed)
 
 **Delta od prethodnog snapshot-a:**
 - Wave 70 landed (`8b647694`) — Showcase Game HTML (parking #4 zatvoren)
