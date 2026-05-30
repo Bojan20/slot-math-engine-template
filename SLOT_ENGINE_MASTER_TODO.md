@@ -6,6 +6,60 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 03:50 (post **W244 WAVE 6 — MERKLE DETERMINISM FIX: 6 pinned reports byte-stable**, commit `89a7f9fb`)
+
+**Status:** "ultimativno sredjuj sve" — eliminisan kaskadni dirty-cycle koji je dirtio 6 regulator-pinned fajlova na svakom `qa-quick` rerun-u.
+
+**Problem (cascade root):** `book_bonusbuy_mc.json` je sadržao `elapsed_seconds` + `spins_per_second` — wall-clock fields koje variraju po mašini i load-u. Svaka rerun → 2 menja se → dashboard render menja → file size menja → Merkle root menja → manifest + receipt + sales-pager menja. Net efekat: 6 fajlova uvek dirty, "real" parity numbers su STABILNI, ali git status je uvek šaren.
+
+**Tri izvora non-determinizma eliminisana u dependency redu:**
+
+| # | Izvor | Fix | Razlog |
+|---|---|---|---|
+| **A** | Wall-clock timing (`elapsed_seconds`, `spins_per_second`) u MC JSON | **EXCISE** oba field-a. Round-to-int bio bistable na 2.5 s mean. | MC sample size + seed + RTP rezultati su auditable record; throughput pripada CI logovima i README, ne regulator manifest-u. |
+| **B** | `generated_at_utc` + `verified_at_utc` u evidence manifest + receipt | **Derive iz Merkle root**: `deterministic-by-merkle:<root_prefix>` | Stable rebuild → stable timestamp → stable JSON. Auditor čita git commit metadata za real wall-clock. |
+| **C** | Self-referencijalni cycle: `sales-one-pager.html` embed-uje Merkle root preview + `em_bytes` koji zavise od **svoje vlastite size** | Zameni hash sa "see manifest" label + drop literal byte count | Hex root + total bytes ostaju u `W4_11_EVIDENCE_MANIFEST.json` (regulator source of truth). Sales-pager je render layer. |
+
+### Determinism proof (3 consecutive full-chain rebuilds, byte-identical)
+
+| Fajl | MD5 |
+|---|---|
+| `reports/acceptance/book_bonusbuy_mc.json` | `ea385145f0c208c7a624349f970827f8` |
+| `reports/dashboards/mc-parity-dashboard.html` | `42bad22b8080fa79d29e9649d64878ba` |
+| `reports/dashboards/mc-parity-dashboard.manifest.json` | `9e859850299eee283928084de8416d32` |
+| `reports/dashboards/sales-one-pager.html` | `038f472834f160eced27b6b0e0f4e423` |
+| `reports/acceptance/W4_11_EVIDENCE_MANIFEST.json` | `2d92996ffb0987fa44f9096276d512f9` |
+| `reports/acceptance/W4_11_EVIDENCE_RECEIPT.json` | `c90897a2da0280c9785ca938ad13e9cf` |
+
+### Regression suite
+
+| Test fajl | Result |
+|---|---|
+| `tools/tests/test_mc_parity_dashboard.py` | 5/5 PASS (1 test updated: assert "fixed seed · CI logs" umesto "spins/sec") |
+| `tools/tests/test_evidence_manifest.py` | 9/9 PASS unchanged |
+| `tools/tests/test_verify_evidence_manifest.py` | 8/8 PASS unchanged |
+| **Combined** | **22/22 PASS** post-refactor |
+
+### Operational effect
+
+| Stanje | Pre | Posle |
+|---|---|---|
+| `qa-quick` rerun → dirty files | **6 svaki put** | **0 unless real change** |
+| Merkle root drift | svaki rebuild | samo na real parity/source change |
+| CI artefact churn | trajno noise | clean unless content changes |
+
+### Sledeći wave queue (ažuriran)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | W4.9 Cluster Pays + W4.10 Cascade primitivi | čekaju 1 PAR uzorak svaki — **Boki nema** |
+| **2** | Pattern-FK Wave 0 followup | testovi 23/23 PASS, closure verified (stara TODO stavka outdated) |
+| **3** | Stryker bug GitHub issue submission | spreman draft (`bug-reports/.../GITHUB_ISSUE.md`), pending Boki repo decision (public upstream contribution) |
+| **4** | `agents/reg-oracle/` | sadržaj/data za prvi regulator trace dump (0-byte placeholder već gitignored) |
+| **5** | 7 preostalih Stryker survivors | death-equivalent, source pattern menjati ne vredi |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 03:15 (post **W244 WAVE 5 — STRYKER 95.91 → 98.02 % via guard refactor + upstream bug reproducer**, commits `610d4b00`+`dffc8ad8`)
 
 **Status:** "idi sve kako ti mislis, osim PAR" — dva fix-a koji zatvaraju Stryker tooling-blocked surface bez source semantike.
