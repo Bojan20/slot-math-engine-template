@@ -61,19 +61,62 @@ export class RGSession {
     this.lastRealityCheckAt = null;
   }
 
+  // ── W244 wave 5 — guard methods (Stryker compound-conditional bug workaround)
+  //
+  // Each `_is*` returns a plain boolean.  Hoisting the inline
+  // `if (X !== undefined && violation)` compound expressions into named
+  // single-decision methods lets Stryker's mutator target the method
+  // body — which is then correctly mapped to covering tests by V8's
+  // line-based perTest tracker.  See `bug-reports/stryker-vitest-
+  // compound-conditional/` for the upstream issue and reproducer.
+  // Behaviour is identical to the previous inline form; existing tests
+  // (faza118, faza1310, w239, w244) all pass unchanged.
+
+  /** Player has self-excluded — gate refuses every spin. */
+  private _isSelfExcluded(): boolean {
+    return this.limits.selfExcluded === true;
+  }
+
+  // Helper: numeric ceiling fallback for undefined optional caps.  Using
+  // `?? Infinity` instead of `if (cap === undefined) return false` removes
+  // the entire `if`-statement surface from Stryker — every comparison
+  // remains a single non-compound expression that mutates cleanly.
+
+  /** Wager exceeds the per-spin cap (or no cap configured → false). */
+  private _isMaxWagerExceeded(wager: number): boolean {
+    return wager > (this.limits.maxWagerPerSpin ?? Infinity);
+  }
+
+  /** Less time than jurisdiction-min has passed since the prior spin. */
+  private _isMinSpinTimeViolation(now: number): { violated: boolean; minMs: number; elapsed: number } {
+    const minMs = MIN_SPIN_MS[this.jurisdiction];
+    const elapsed = now - this.lastSpinCompletedAt;
+    // Single boolean: pre-first-spin (lastSpinCompletedAt === 0) OR
+    // jurisdiction-min is zero OR elapsed is already past min → no violation.
+    const violated = this.lastSpinCompletedAt > 0 && minMs > 0 && elapsed < minMs;
+    return { violated, minMs, elapsed };
+  }
+
+  /** Elapsed session-wall-clock has reached the configured cap. */
+  private _isMaxSessionDurationReached(now: number): boolean {
+    return now - this.startTime >= (this.limits.maxSessionDurationMs ?? Infinity);
+  }
+
+  /** Cumulative net loss has reached the session-loss cap. */
+  private _isMaxLossSessionReached(): boolean {
+    return this.netLoss >= (this.limits.maxLossPerSession ?? Infinity);
+  }
+
   checkSpinAllowed(wager: number, nowMs?: number): RGDecision {
     const now = nowMs ?? Date.now();
 
     // 1. Self-exclusion
-    if (this.limits.selfExcluded) {
+    if (this._isSelfExcluded()) {
       return { allow: false, reason: 'self_excluded', message: 'Player is self-excluded.' };
     }
 
     // 2. Max wager per spin
-    if (
-      this.limits.maxWagerPerSpin !== undefined &&
-      wager > this.limits.maxWagerPerSpin
-    ) {
+    if (this._isMaxWagerExceeded(wager)) {
       return {
         allow: false,
         reason: 'max_wager_exceeded',
@@ -82,23 +125,17 @@ export class RGSession {
     }
 
     // 3. Min spin time (only after the first spin has been recorded)
-    if (this.lastSpinCompletedAt > 0) {
-      const minMs = MIN_SPIN_MS[this.jurisdiction];
-      const elapsed = now - this.lastSpinCompletedAt;
-      if (minMs > 0 && elapsed < minMs) {
-        return {
-          allow: false,
-          reason: 'min_spin_time_not_elapsed',
-          message: `Must wait ${minMs - elapsed}ms more before spinning.`,
-        };
-      }
+    const minSpin = this._isMinSpinTimeViolation(now);
+    if (minSpin.violated) {
+      return {
+        allow: false,
+        reason: 'min_spin_time_not_elapsed',
+        message: `Must wait ${minSpin.minMs - minSpin.elapsed}ms more before spinning.`,
+      };
     }
 
     // 4. Session duration
-    if (
-      this.limits.maxSessionDurationMs !== undefined &&
-      now - this.startTime >= this.limits.maxSessionDurationMs
-    ) {
+    if (this._isMaxSessionDurationReached(now)) {
       return {
         allow: false,
         reason: 'max_session_duration',
@@ -107,10 +144,7 @@ export class RGSession {
     }
 
     // 5. Session loss limit
-    if (
-      this.limits.maxLossPerSession !== undefined &&
-      this.netLoss >= this.limits.maxLossPerSession
-    ) {
+    if (this._isMaxLossSessionReached()) {
       return {
         allow: false,
         reason: 'max_loss_session',
@@ -154,11 +188,7 @@ export class RGSession {
     );
     const spinsInWindow = this.amlState.recentSpinTimestamps.length;
     const maxSpinsPerMinute = this.amlConfig.maxSpinsPerMinute;
-    if (
-      !this.amlVelocityFired &&
-      maxSpinsPerMinute !== undefined &&
-      spinsInWindow > maxSpinsPerMinute
-    ) {
+    if (this._shouldFireAmlVelocity(spinsInWindow)) {
       this.amlVelocityFired = true;
       this.amlState.flagged = true;
       this.amlState.flagReason = 'velocity';
@@ -173,17 +203,13 @@ export class RGSession {
     }
 
     // AML win-rate sigma: after 30+ spins
-    if (
-      !this.amlWinRateFired &&
-      this.amlState.totalSpins >= 30 &&
-      this.amlConfig.winRateSigmaThreshold !== undefined
-    ) {
+    if (this._isAmlWinRateGateOpen()) {
       const n = this.amlState.totalSpins;
       const p = 0.35; // expected win rate
       const actualRate = this.amlState.totalWins / n;
       const stdErr = Math.sqrt((p * (1 - p)) / n);
       const sigma = Math.abs(actualRate - p) / stdErr;
-      if (sigma > this.amlConfig.winRateSigmaThreshold) {
+      if (sigma > (this.amlConfig.winRateSigmaThreshold as number)) {
         this.amlWinRateFired = true;
         this.amlState.flagged = true;
         this.amlState.flagReason = this.amlState.flagReason ?? 'win_rate_sigma';
@@ -199,10 +225,7 @@ export class RGSession {
     }
 
     // Reality check (lastRealityCheckAt is non-null here — initialized above)
-    if (
-      this.limits.realityCheckIntervalMs !== undefined &&
-      now - (this.lastRealityCheckAt as number) >= this.limits.realityCheckIntervalMs
-    ) {
+    if (this._shouldFireRealityCheck(now)) {
       this.lastRealityCheckAt = now;
       const event: RGEvent = {
         kind: 'reality_check_due',
@@ -220,10 +243,7 @@ export class RGSession {
     }
 
     // Session limit warning at 80%
-    if (
-      this.limits.maxLossPerSession !== undefined &&
-      this.netLoss >= this.limits.maxLossPerSession * 0.8
-    ) {
+    if (this._shouldFireSessionLimitWarning()) {
       const event: RGEvent = {
         kind: 'session_limit_warning',
         sessionId: this.sessionId,
@@ -231,7 +251,7 @@ export class RGSession {
         detail: {
           netLoss: this.netLoss,
           limit: this.limits.maxLossPerSession,
-          pct: this.netLoss / this.limits.maxLossPerSession,
+          pct: this.netLoss / (this.limits.maxLossPerSession as number),
         },
       };
       events.push(event);
@@ -239,6 +259,38 @@ export class RGSession {
     }
 
     return events;
+  }
+
+  // ── recordSpin-side guard methods (Stryker compound-conditional workaround)
+  //
+  // Same `?? Infinity` / `?? -1` pattern: optional caps fall through to a
+  // sentinel that flips the comparison's outcome, so the body remains a
+  // single arithmetic expression with no embedded `if`.
+
+  /** AML velocity fire iff not yet fired AND cap is configured AND threshold exceeded. */
+  private _shouldFireAmlVelocity(spinsInWindow: number): boolean {
+    return !this.amlVelocityFired
+      && spinsInWindow > (this.amlConfig.maxSpinsPerMinute ?? Infinity);
+  }
+
+  /** AML win-rate gate opens iff not yet fired AND ≥30 spins AND threshold configured. */
+  private _isAmlWinRateGateOpen(): boolean {
+    return !this.amlWinRateFired
+      && this.amlState.totalSpins >= 30
+      && this.amlConfig.winRateSigmaThreshold !== undefined;
+  }
+
+  /** Reality-check fires iff interval is configured AND interval has elapsed since last check. */
+  private _shouldFireRealityCheck(now: number): boolean {
+    // lastRealityCheckAt is non-null at every call site (lazy-init above).
+    const interval = this.limits.realityCheckIntervalMs ?? Infinity;
+    return now - (this.lastRealityCheckAt as number) >= interval;
+  }
+
+  /** Session-limit warning fires iff cap configured AND netLoss ≥ 80 % of cap. */
+  private _shouldFireSessionLimitWarning(): boolean {
+    const cap = this.limits.maxLossPerSession ?? Infinity;
+    return this.netLoss >= cap * 0.8;
   }
 
   getState(): Readonly<RGSessionState> {
@@ -255,9 +307,14 @@ export class RGSession {
     };
   }
 
+  /** AML cash-out hold required iff threshold configured AND amount ≥ threshold. */
+  private _shouldHoldCashOut(amount: number): boolean {
+    return amount >= (this.amlConfig.cashOutHoldThreshold ?? Infinity);
+  }
+
   cashOutHoldRequired(amount: number): { required: boolean; reason?: string } {
-    const threshold = this.amlConfig.cashOutHoldThreshold;
-    if (threshold !== undefined && amount >= threshold) {
+    if (this._shouldHoldCashOut(amount)) {
+      const threshold = this.amlConfig.cashOutHoldThreshold as number;
       return { required: true, reason: `Cash-out amount ${amount} meets AML hold threshold ${threshold}.` };
     }
     return { required: false };
