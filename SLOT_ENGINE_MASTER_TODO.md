@@ -6,7 +6,55 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 19:00 (post **W244 WAVE 49-65 — full developer-experience polish**)
+## 🏁 ABSOLUTE FINAL — 2026-05-30 19:30 (post **W244 WAVE 49-67 — gh-pages + community profile**)
+
+**Status:** "cepaj" — wave 66+67 landed (gh-pages auto-deploy + community profile docs + HTML lint). 19 wave-ova ukupno, 88 pytest + 23 health = 111 testova zelena, sve interno.
+
+### Wave 66 + 67 deltas
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **66** | `d24ccff8` | **GitHub Pages auto-deploy** workflow + landing index.html (6.8 KB hero page sa 5 pills + 4 dashboard cards) |
+| **67** | `37b732e7` | **Community profile** (CITATION.cff + SECURITY.md + CONTRIBUTING.md + CODE_OF_CONDUCT.md) + **dossier HTML lint** (no CDN / Merkle / dead-link checks across 24 pages) |
+
+### gh-pages auto-deploy (wave 66)
+
+Posle owner-side aktivacije u Settings → Pages → Source: "GitHub Actions",
+sledeća push na main automatski deploy-uje:
+
+| Asset | Putanja na deploy site |
+|---|---|
+| Landing index | `/index.html` |
+| 4 dashboard-a | `/INDUSTRY_FIRST_DOSSIER.html` + 3 ostala |
+| 19 kernel ref pages | `/kernels/*_kernel.html` |
+| 5 JSON Schema files | `/schemas/*.schema.json` |
+| 2 key acceptance JSONs | `/acceptance/*.json` |
+
+URL: `https://Bojan20.github.io/slot-math-engine-template/`
+
+### Community profile (wave 67)
+
+| Doc | Size | Coverage |
+|---|---:|---|
+| `CITATION.cff` | 1.7 KB | Academic citation + jurisdiction refs |
+| `SECURITY.md` | 1.7 KB | Vuln disclosure 7d ack / 30d fix |
+| `CONTRIBUTING.md` | 3.3 KB | Quick-start + kernel addition workflow |
+| `CODE_OF_CONDUCT.md` | 1.0 KB | Adapted Contributor Covenant v2.1 |
+
+### Final QA stanje (2026-05-30 19:30)
+
+| Layer | Status |
+|---|---|
+| Cargo check rust-sim | ✅ clean |
+| Pytest `make qa-w244-session` (14 fajla) | ✅ **88/88 PASS** (1.41s) |
+| W244 health probe `make health-w244` | ✅ **23/23 PASS** (0.1s) |
+| Dossier HTML lint `make dossier-lint` | ✅ **24/24 pages clean** |
+| Ruff (tools + packages) | ✅ All checks passed |
+| **Total session testova** | ✅ **111 green** |
+
+---
+
+## 🏁 EARLIER FINAL — 2026-05-30 19:00 (post **W244 WAVE 49-65 — full developer-experience polish**)
 
 **Status:** "cepaj" — wave 64+65 landed (CLI + pre-commit), session totals 17 wave-ova, 79 pytest + 22 health = 101 testova zelena. Sve interno.
 
