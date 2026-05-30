@@ -6,6 +6,52 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:20 (post **W244 WAVE 12 — `must_hit_by` jackpot kernel landed**, commit pending)
+
+**Status:** Treća math kernel u autonomnom batch-u (wave 10/11/12). Math DSL feature union sada 15 mehanika.
+
+### Wave 12 — `must_hit_by` mystery jackpot kernel
+
+Industry pattern: NGCB Reg 14.040 mystery pots, IGT Lightning Link, Aristocrat Dragon Link, Scientific Games Dollar Storm. Pot seeded at `seed_x_bet`, raste linearno `contribution_x` × bet, garantovano hit-uje pri `must_hit_by_x_bet` capu.
+
+| Komponent | Šta | Količina |
+|---|---|---:|
+| `tools/math_dsl/spec.py` (DSL extension) | `must_hit_by` u VALID_FEATURE_KINDS + `mhb_pots` polje + parser pot-list validation | +30 lines |
+| `tools/math_dsl/must_hit_by.py` (kernel) | Conservation flow (RTP = contribution_x) + geometric arrival truncated at cap + forced-strike probability via log1p | 160 lines |
+| `tools/tests/test_w244_must_hit_by_kernel.py` | 15 testova — spins-to-cap, forced strike prob, expected strike value, multi-pot sum, params validation, DSL integration | **15/15 PASS** u 70ms |
+| `tools/build_must_hit_by_kernel.py` | 3 canonical fixtures | 110 lines |
+| `reports/acceptance/MUST_HIT_BY_KERNEL.json` | schema v1, Merkle pinned | — |
+
+### Closed-form fixtures
+
+| Fixture | Pots | RTP contribution |
+|---|---:|---:|
+| two-pot-mystery | 2 | 0.0040 (0.4%) |
+| four-tier-ladder | 4 | 0.0085 (0.85%) |
+| single-pot-guaranteed | 1 | 0.0100 (1.0%) |
+
+### Industry coverage delta
+
+**15 feature kinds** total. DONE-UNIVERSAL coverage zatvorene:
+- #15 Must-hit-by jackpot ✅
+- #17 Pseudo-must-hit (modeluje se kao `must_hit_by` sa p_strike > 0)
+
+### Regression check
+
+`pytest -k "math_dsl or w5_1 or w5_2 or w7_1 or w244_money_collect or w244_charge_meter or w244_must_hit_by" -m "not slow"` → **117/117 PASS** u 2.94s.
+
+### Sledeći wave queue
+
+| # | Item | Status |
+|---|---|---|
+| **1** | W4.9/W4.10 PAR | Boki nema |
+| **2** | Plan B full: rust-sim config bridge | 2-3h, deferred |
+| **3** | Math DSL: supermeter / coin_collect / pick_chain | autonomous, 2-3h svaka |
+| **4** | Stryker bug GitHub issue submission | Boki repo decision |
+| **5** | 4 preostalih Stryker survivors | death-equivalent |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 07:05 (post **W244 WAVE 11 — `charge_meter` math kernel landed**, commit pending)
 
 **Status:** Nastavak autonomnog batch-a posle wave 10. Druga math kernel mehanika u par sa money_collect.

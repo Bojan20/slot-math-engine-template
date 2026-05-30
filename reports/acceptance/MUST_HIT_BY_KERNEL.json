@@ -1,0 +1,110 @@
+{
+  "schema": "must-hit-by-kernel/v1",
+  "merkle_root_sha256": "892e27ed3f32b7ff44865f17b3b954e8ca99ef3a1e93078b7f30d58b73935478",
+  "generated_at_utc": "deterministic-by-merkle:892e27ed3f32b7ff",
+  "kernel": "must_hit_by",
+  "module": "tools.math_dsl.must_hit_by",
+  "industry_pattern": "Mystery / 'Must Hit By' jackpot (NGCB Reg 14.040, IGT Lightning Link, Aristocrat Dragon Link, Scientific Games Dollar Storm). Pot seeded at `seed_x_bet`, grows by `contribution_x` per bet, guaranteed strike at `must_hit_by_x_bet` cap.",
+  "fixtures_count": 3,
+  "records": [
+    {
+      "fixture_name": "two-pot-mystery",
+      "description": "two-pot mystery — mini + major",
+      "rtp_contribution": 0.004,
+      "pots": [
+        {
+          "name": "mini",
+          "seed_x_bet": 10,
+          "contribution_x": 0.001,
+          "must_hit_by_x_bet": 100,
+          "p_strike_per_spin": 0.0001,
+          "expected_spins_to_cap": 90000.0,
+          "probability_forced_strike": 0.00012335427846730314,
+          "expected_strike_value_x_bet": 20.009868342277382,
+          "per_spin_rtp_contribution": 0.001
+        },
+        {
+          "name": "major",
+          "seed_x_bet": 500,
+          "contribution_x": 0.003,
+          "must_hit_by_x_bet": 5000,
+          "p_strike_per_spin": 1e-06,
+          "expected_spins_to_cap": 1500000.0,
+          "probability_forced_strike": 0.22312999280076087,
+          "expected_strike_value_x_bet": 3834.6949892011417,
+          "per_spin_rtp_contribution": 0.003
+        }
+      ]
+    },
+    {
+      "fixture_name": "four-tier-ladder",
+      "description": "mini/minor/major/grand ladder (Lightning Link style)",
+      "rtp_contribution": 0.0085,
+      "pots": [
+        {
+          "name": "mini",
+          "seed_x_bet": 10,
+          "contribution_x": 0.0005,
+          "must_hit_by_x_bet": 100,
+          "p_strike_per_spin": 0.0001,
+          "expected_spins_to_cap": 180000.0,
+          "probability_forced_strike": 1.5216278016188968e-08,
+          "expected_strike_value_x_bet": 15.000001293383631,
+          "per_spin_rtp_contribution": 0.0005
+        },
+        {
+          "name": "minor",
+          "seed_x_bet": 50,
+          "contribution_x": 0.001,
+          "must_hit_by_x_bet": 500,
+          "p_strike_per_spin": 1e-05,
+          "expected_spins_to_cap": 450000.0,
+          "probability_forced_strike": 0.011108746586965807,
+          "expected_strike_value_x_bet": 153.88806130543804,
+          "per_spin_rtp_contribution": 0.001
+        },
+        {
+          "name": "major",
+          "seed_x_bet": 500,
+          "contribution_x": 0.002,
+          "must_hit_by_x_bet": 5000,
+          "p_strike_per_spin": 1e-06,
+          "expected_spins_to_cap": 2250000.0,
+          "probability_forced_strike": 0.10539910598772437,
+          "expected_strike_value_x_bet": 2763.497764969311,
+          "per_spin_rtp_contribution": 0.002
+        },
+        {
+          "name": "grand",
+          "seed_x_bet": 10000,
+          "contribution_x": 0.005,
+          "must_hit_by_x_bet": 100000,
+          "p_strike_per_spin": 1e-07,
+          "expected_spins_to_cap": 18000000.0,
+          "probability_forced_strike": 0.1652988733446863,
+          "expected_strike_value_x_bet": 66611.95493378745,
+          "per_spin_rtp_contribution": 0.005
+        }
+      ]
+    },
+    {
+      "fixture_name": "single-pot-guaranteed",
+      "description": "single high-cap pot, p_strike=0 (always forced)",
+      "rtp_contribution": 0.01,
+      "pots": [
+        {
+          "name": "grand-only",
+          "seed_x_bet": 1000,
+          "contribution_x": 0.01,
+          "must_hit_by_x_bet": 100000,
+          "p_strike_per_spin": 0.0,
+          "expected_spins_to_cap": 9900000.0,
+          "probability_forced_strike": 1.0,
+          "expected_strike_value_x_bet": 100000.0,
+          "per_spin_rtp_contribution": 0.01
+        }
+      ]
+    }
+  ],
+  "verification": "Re-run `python -m tools.build_must_hit_by_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: conservation argument (RTP[pot] = contribution_x), expected strike value via geometric arrival truncated at cap."
+}

@@ -139,6 +139,11 @@ class FeatureSpec:
     charge_award_x_bet: Optional[float] = None        # single-tier award
     charge_tiers: Optional[list[dict]] = None         # [{name, threshold, award_value_x_bet, award_kind}]
     charge_persistent: Optional[bool] = None          # survives session boundary
+    # Must-hit-by jackpot — W244 wave 12. Mystery pot guaranteed to
+    # hit by `mhb_must_hit_by_x_bet` cumulative bet. Multi-tier supported.
+    # Used by IGT Lightning Link, Aristocrat Dragon Link, Scientific Games
+    # Dollar Storm, all NGCB-cert mystery pots.
+    mhb_pots: Optional[list[dict]] = None             # [{name, seed_x_bet, contribution_x, must_hit_by_x_bet, p_strike_per_spin}]
     # Generic catch-all so designer can pass vendor-specific keys
     extra: dict = field(default_factory=dict)
 
@@ -365,6 +370,8 @@ _VALID_FEATURE_KINDS = {
     "money_collect",
     # W244 wave 11 — Charge meter (Starburst-like, Money Cart meter mode).
     "charge_meter",
+    # W244 wave 12 — Mystery / "Must Hit By" jackpot (NGCB, IGT, Aristocrat).
+    "must_hit_by",
 }
 
 
@@ -468,6 +475,8 @@ def parse_spec(text: str) -> MathDslSpec:
             # W244 wave 11 — charge_meter known keys
             "charge_per_spin", "charge_threshold", "charge_award_x_bet",
             "charge_tiers", "charge_persistent",
+            # W244 wave 12 — must_hit_by known keys
+            "mhb_pots",
         }
         extra = {k: v for k, v in f.items() if k not in known_keys}
         # money_value_weights normalization: YAML can carry float keys as
@@ -509,6 +518,29 @@ def parse_spec(text: str) -> MathDslSpec:
                         f"charge_tiers threshold must be > 0: {tier!r}"
                     )
             ct = list(ct_raw)
+        # mhb_pots validation: list of {name, seed_x_bet, contribution_x,
+        # must_hit_by_x_bet} dicts; p_strike_per_spin optional.
+        mhb_raw = f.get("mhb_pots")
+        mhb: Optional[list[dict]] = None
+        if mhb_raw is not None:
+            if not isinstance(mhb_raw, list) or not mhb_raw:
+                raise DslParseError(
+                    "mhb_pots must be a non-empty list of {name, seed_x_bet, "
+                    "contribution_x, must_hit_by_x_bet} dicts"
+                )
+            for pot in mhb_raw:
+                if not isinstance(pot, dict):
+                    raise DslParseError(f"mhb_pots entry must be mapping: {pot!r}")
+                for req in ("name", "seed_x_bet", "contribution_x", "must_hit_by_x_bet"):
+                    if req not in pot:
+                        raise DslParseError(
+                            f"mhb_pots entry missing required key {req!r}: {pot}"
+                        )
+                if float(pot["must_hit_by_x_bet"]) <= float(pot["seed_x_bet"]):
+                    raise DslParseError(
+                        f"mhb_pots must_hit_by_x_bet must exceed seed_x_bet: {pot!r}"
+                    )
+            mhb = list(mhb_raw)
         features.append(FeatureSpec(
             kind=fk,
             trigger_count_min=f.get("trigger_count_min"),
@@ -534,6 +566,7 @@ def parse_spec(text: str) -> MathDslSpec:
             charge_award_x_bet=f.get("charge_award_x_bet"),
             charge_tiers=ct,
             charge_persistent=f.get("charge_persistent"),
+            mhb_pots=mhb,
             extra=extra,
         ))
 
