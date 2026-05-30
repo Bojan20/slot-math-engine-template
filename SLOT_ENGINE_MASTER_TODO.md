@@ -6,7 +6,55 @@
 
 ---
 
-## 🏁 ABSOLUTE FINAL — 2026-05-30 18:00 (post **W244 WAVE 49-61 — full extended sweep, sve interno**)
+## 🏁 ABSOLUTE FINAL — 2026-05-30 18:30 (post **W244 WAVE 49-63 — kernel reference + JSON Schema sweep**)
+
+**Status:** "cepaj dalje ultimativno" — 15 wave-ova landed kontinuirano, 64+21=85 testova zelena, javni push pauziran. Sve interno.
+
+### Wave 62 + 63 deltas (post-wave 61 extension)
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **62** | `bf5e8d97` | **Per-kernel reference cards** — 19 HTML deep-dive pages + searchable index + cross-link nav iz sva 3 root dashboard-a |
+| **63** | `f7a5677b` | **JSON Schema (Draft 2020-12) export** — 5 industry-standard schema fajla + Merkle manifest + real-data validation |
+
+### Dossier HTML surface (final stanje)
+
+| Page | Cards | URL |
+|---|---|---|
+| Industry-First Dossier | 89 IFs | `reports/dossier/INDUSTRY_FIRST_DOSSIER.html` |
+| Regulator Portal | 3-tab summary | `reports/dossier/REGULATOR_PORTAL.html` |
+| Closed-Form Portfolio | 120 solvers | `reports/dossier/CLOSED_FORM_PORTFOLIO.html` |
+| Kernel References index | 19 entries | `reports/dossier/kernels/index.html` |
+| Per-kernel deep-dive | 19 pages | `reports/dossier/kernels/*_kernel.html` |
+
+**Cross-linked** kroz svaki page (dossier-nav bar).
+
+### JSON Schema surface (wave 63)
+
+| Schema | Purpose | Size |
+|---|---|---|
+| `w244_kernel.schema.json` | per-kernel artefakt | 1196 B |
+| `w244_all_kernels.schema.json` | master dossier | 2113 B |
+| `w244_benchmark.schema.json` | bench dossier | 1537 B |
+| `industry_first_dossier.schema.json` | IF dossier | 1212 B |
+| `closed_form_portfolio.schema.json` | CF portfolio | 1641 B |
+| `schemas_manifest.json` | Merkle index | dynamic |
+
+**Manifest Merkle**: `58b954dbcbea91d3591720f94d081db671b6a82c200f43186370af471d7ef5c6`
+
+### Final QA stanje (2026-05-30 18:30)
+
+| Layer | Status |
+|---|---|
+| Cargo check (rust-sim) | ✅ clean |
+| Pytest `make qa-w244-session` | ✅ **64/64 PASS** (0.79s) |
+| W244 health probe `make health-w244` | ✅ **21/21 PASS** (0.1s) |
+| Ruff (tools + packages) | ✅ All checks passed |
+| 10 test fajla, 64 ukupno testova | ✅ green |
+
+---
+
+## 🏁 EARLIER FINAL — 2026-05-30 18:00 (post **W244 WAVE 49-61 — full extended sweep, sve interno**)
 
 **Status:** "rekao sam ti bre da ceas dalje ultimativno" — odgovor: 13 wave-ova landed kontinuirano (49→61), 46+16=62 testova zelena, javni push ostaje pauziran. Sve striktno interno.
 
