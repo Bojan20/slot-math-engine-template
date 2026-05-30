@@ -1,9 +1,9 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "deterministic-by-merkle:d1926aaa68c48ed4",
-  "merkle_root_sha256": "d1926aaa68c48ed42cc3566f8a96df7ea883947772503dd3bfce43151aedca20",
+  "generated_at_utc": "deterministic-by-merkle:a171d777caf5bc58",
+  "merkle_root_sha256": "a171d777caf5bc583687a0a02b6231df893630faf901ef6e843c5a71754191c6",
   "file_count": 27,
-  "total_bytes": 347604,
+  "total_bytes": 377138,
   "missing_files": [],
   "records": [
     {
@@ -133,13 +133,13 @@
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
-      "size_bytes": 92201,
-      "sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440"
+      "size_bytes": 116283,
+      "sha256": "917c136e5dc75a2f914fbec4d8d73e5d6454a48012b5d62174a14d01f4ceea1f"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
-      "size_bytes": 65084,
-      "sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2"
+      "size_bytes": 70536,
+      "sha256": "4f07395ba7026e1e861b222450294824ee22cf1ad657f50a296a01aaed4c48d3"
     }
   ],
   "verification": "To verify: hash each file with SHA-256, concatenate lines of the form `<path>|<size_bytes>|<sha256>\\n` sorted lexicographically by path, then SHA-256 that concatenation. The result must equal `merkle_root_sha256`."

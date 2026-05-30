@@ -21,7 +21,8 @@
       "ukgc_rts13c_pass_0p5": true,
       "ukgc_rts13c_pass_1p0": true,
       "mga_2021_02_pass_0p96": true,
-      "mga_2021_02_pass_0p97": true
+      "mga_2021_02_pass_0p97": true,
+      "rtp_contribution": 0.96
     },
     {
       "fixture_name": "btg-bonus-buy-100x",
@@ -37,7 +38,8 @@
       "ukgc_rts13c_pass_0p5": false,
       "ukgc_rts13c_pass_1p0": true,
       "mga_2021_02_pass_0p96": false,
-      "mga_2021_02_pass_0p97": true
+      "mga_2021_02_pass_0p97": true,
+      "rtp_contribution": 0.965
     },
     {
       "fixture_name": "pragmatic-buy-feature-cheap",
@@ -53,7 +55,8 @@
       "ukgc_rts13c_pass_0p5": false,
       "ukgc_rts13c_pass_1p0": false,
       "mga_2021_02_pass_0p96": false,
-      "mga_2021_02_pass_0p97": false
+      "mga_2021_02_pass_0p97": false,
+      "rtp_contribution": 1.01
     },
     {
       "fixture_name": "ukgc-rts13c-near-limit",
@@ -69,7 +72,8 @@
       "ukgc_rts13c_pass_0p5": true,
       "ukgc_rts13c_pass_1p0": true,
       "mga_2021_02_pass_0p96": false,
-      "mga_2021_02_pass_0p97": true
+      "mga_2021_02_pass_0p97": true,
+      "rtp_contribution": 0.9640000000000001
     },
     {
       "fixture_name": "mga-2021-02-fails",
@@ -85,7 +89,8 @@
       "ukgc_rts13c_pass_0p5": false,
       "ukgc_rts13c_pass_1p0": false,
       "mga_2021_02_pass_0p96": false,
-      "mga_2021_02_pass_0p97": true
+      "mga_2021_02_pass_0p97": true,
+      "rtp_contribution": 0.97
     }
   ],
   "verification": "Re-run `python -m tools.build_buy_feature_kernel`. Output must match `merkle_root_sha256` exactly. Closed-form: buy_rtp = bonus_pay/cost, fair_cost = bonus_pay/target_rtp, delta_pp = (buy_rtp - base_rtp) × 100."

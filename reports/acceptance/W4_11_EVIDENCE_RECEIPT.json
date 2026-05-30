@@ -1,11 +1,11 @@
 {
   "schema": "w4-11-evidence-receipt/v1",
   "verified": true,
-  "verified_at_utc": "deterministic-by-merkle:d1926aaa68c48ed4",
+  "verified_at_utc": "deterministic-by-merkle:735a2eaf4320ca5d",
   "manifest_path": "/Users/vanvinklstudio/Projects/slot-math-engine-template/reports/acceptance/W4_11_EVIDENCE_MANIFEST.json",
   "repo_root": "/Users/vanvinklstudio/Projects/slot-math-engine-template",
-  "expected_merkle_root_sha256": "d1926aaa68c48ed42cc3566f8a96df7ea883947772503dd3bfce43151aedca20",
-  "derived_merkle_root_sha256": "d1926aaa68c48ed42cc3566f8a96df7ea883947772503dd3bfce43151aedca20",
+  "expected_merkle_root_sha256": "735a2eaf4320ca5d9cffeff9ad4b65ca90f6ba11a030cf7a401a81fc730970fc",
+  "derived_merkle_root_sha256": "735a2eaf4320ca5d9cffeff9ad4b65ca90f6ba11a030cf7a401a81fc730970fc",
   "merkle_root_match": true,
   "file_count": 27,
   "passed_count": 27,
@@ -242,19 +242,19 @@
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
       "ok": true,
       "reason": null,
-      "expected_sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440",
-      "actual_sha256": "0e741e4aa7b22698c7ebbd9cc4186ec33f4dc6154ced00114a1c755f02b60440",
-      "expected_size": 92201,
-      "actual_size": 92201
+      "expected_sha256": "8c69c15c5833abbbe81a34dea3107bc78d58958493f5d5812dfc128de19d4305",
+      "actual_sha256": "8c69c15c5833abbbe81a34dea3107bc78d58958493f5d5812dfc128de19d4305",
+      "expected_size": 92058,
+      "actual_size": 92058
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",
       "ok": true,
       "reason": null,
-      "expected_sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2",
-      "actual_sha256": "4d8cff195e87c9b358ceb6e95aee736f539771ce0917747b61884662a0c661b2",
-      "expected_size": 65084,
-      "actual_size": 65084
+      "expected_sha256": "a20a6fa76daeff5900db6903c3521de574164336c16ba9b5922aa6a16bb9f004",
+      "actual_sha256": "a20a6fa76daeff5900db6903c3521de574164336c16ba9b5922aa6a16bb9f004",
+      "expected_size": 65059,
+      "actual_size": 65059
     }
   ]
 }
