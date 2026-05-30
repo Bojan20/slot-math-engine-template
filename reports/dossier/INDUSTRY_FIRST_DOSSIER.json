@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:83a98c24926e5cc9",
-  "repo_sha": "2865729f8332204824659cbea32f07238dda3d24",
+  "generatedAtUtc": "deterministic-by-merkle:0f87f2e0aa47c617",
+  "repo_sha": "e63c6adfaf0a1a0e5afb91e48a1cf248d915809a",
   "headline": {
-    "waves": 86,
-    "industry_firsts": 86,
+    "waves": 87,
+    "industry_firsts": 87,
     "all_present": true
   },
   "waves": [
@@ -2930,6 +2930,24 @@
         ]
       },
       "industry_first": "First open-source Rust N-D Newton-Raphson za multi-objective slot calibration. Pure-stdlib Gauss elimination (no nalgebra). Sub-microsecond per iter. Designer specifikuje (target_rtp + target_volatility + target_max_win) → solver resolves param vector simultaneously."
+    },
+    {
+      "wave": "244.45",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "slot-math-kernels PyPI package skeleton — 22 kernels distribuciono ready",
+      "reportPath": "packages/slot-math-kernels/",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "PyPI distribuciona kostura za W244 fleet, 22 kernel re-exported, MIT license",
+      "detail": {
+        "package_root": "packages/slot-math-kernels/",
+        "module_count": 22,
+        "license": "MIT",
+        "external_deps": "zero (pure-stdlib by design)",
+        "smoke_test_passes": "charge_meter RTP=0.1000 verified"
+      },
+      "industry_first": "First MIT-licensed PyPI distributable za slot math kernel fleet. 22 closed-form kernel-a (RTP, jackpot, FS, cluster, cascade, ways, sticky/stacked wilds, both-ways, asymmetric, crash, inverse solvers) accessible via pip install. Pure-stdlib — no numpy/scipy/sympy."
     }
   ],
   "auditor_qa": [
