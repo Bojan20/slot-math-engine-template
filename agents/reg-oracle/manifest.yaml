@@ -1,0 +1,49 @@
+name: reg-oracle
+description: |
+  Cross-jurisdiction slot regulator knowledge base. Returns cited
+  answers with source URL + effective date over 12 jurisdictions
+  (UKGC, MGA, NV, NJ, ON, AAMS/ADM, MI, PA, BC, Quebec, GLI-16, GLI-19).
+  Answers always cross-checked against the canonical jurisdiction
+  profile YAMLs under `tools/jurisdiction/profiles/`.
+
+# Held-out acceptance eval — `tools.agent_eval` reads `eval.held_out_file`.
+eval:
+  held_out_file: ~/Projects/slot-math-engine-template/agents/reg-oracle/eval/held_out.yaml
+
+# This agent does not consume vendor NDA-gated material directly —
+# regulator clauses are public.
+nda_corpus: {}
+
+# Inputs the corpus builder walks. `tools.agent_corpus` discovers these and
+# produces a unified `traces.jsonl`. Paths are env-expanded; missing roots
+# degrade silently to zero traces from that source.
+corpus_targets:
+  profiles_root: ~/Projects/slot-math-engine-template/tools/jurisdiction/profiles
+  research_root: ~/Projects/slot-math-engine-template/docs/research
+  spec_md: ~/Projects/slot-math-engine-template/agents/REGULATORY_ORACLE.md
+
+# RAG ingest config — qdrant collection name + endpoint. Mock store is
+# always built as a fallback by `tools.agent_rag` for CI determinism.
+rag:
+  endpoint: http://localhost:6333
+  collection: reg_oracle_corpus
+  metadata_schema:
+    trace_id: uuid
+    source: enum(profile|spec|few_shot_example)
+    jurisdiction: enum(ukgc|mga|nv|nj|on|aams|mi|pa|bc|quebec|gli16|gli19|cross)
+    category: enum(rtp|stake|duration|autoplay|disclosure|age|prohibited)
+    repo_sha: str
+    ingested_at: iso-8601
+
+# CLI surface — for now reg-oracle is consumed via subagent invocation,
+# not a top-level CLI. Future revision may add `tools.reg_oracle` for
+# offline jurisdiction Q&A.
+cli:
+  entry: null
+
+# Determinism contract — corpus rebuild from identical profile YAMLs must
+# yield bit-identical traces.jsonl when seed is fixed.
+determinism:
+  seed_env: SLOT_REG_ORACLE_SEED
+  default_seed: 42
+  canonical_hash_field: canonical_hash

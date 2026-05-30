@@ -1,0 +1,125 @@
+# W244 wave 9 — reg-oracle held-out acceptance eval.
+#
+# Each test case is a (question, expected-answer-shape, expected-citations)
+# tuple. The eval harness (`tools.agent_eval`) reads this file and grades
+# the agent's offline answer against the ground-truth values pinned here.
+#
+# Determinism: all ground-truth values are sourced from
+# `tools/jurisdiction/profiles/<jurisdiction>.yaml` so the eval is
+# self-consistent — if the profile changes, regenerate this file.
+
+schema: urn:slotmath:reg-oracle:eval:v1
+seed: 42
+
+cases:
+  # ─── UKGC RTS 14D minimum spin cycle ──────────────────────────────────
+  - id: ukgc_min_spin_cycle
+    question: "What is UKGC's minimum spin cycle duration in milliseconds?"
+    expected_jurisdiction: ukgc
+    expected_field: min_spin_duration_ms
+    expected_value: 2500
+    expected_category: duration
+    required_citations:
+      - RTS 14D
+    severity: critical
+
+  - id: ukgc_rtp_floor
+    question: "What is UKGC's absolute minimum RTP for slot games?"
+    expected_jurisdiction: ukgc
+    expected_field: rtp_range
+    expected_value_index: 0
+    expected_value: 0.85
+    expected_category: rtp
+    severity: critical
+
+  - id: ukgc_rtp_ceiling
+    question: "What is UKGC's RTP ceiling for slot games?"
+    expected_jurisdiction: ukgc
+    expected_field: rtp_range
+    expected_value_index: 1
+    expected_value: 0.97
+    expected_category: rtp
+    severity: high
+
+  # ─── Cross-jurisdiction sweeps ────────────────────────────────────────
+  - id: rtp_floor_sweep_5
+    question: "List RTP floors for UKGC, MGA, NV, NJ, ON sorted ascending."
+    expected_jurisdictions: [nv, nj, ukgc, mga, on]
+    expected_field: rtp_range
+    expected_value_index: 0
+    expected_category: rtp
+    severity: high
+
+  - id: autoplay_prohibition_sweep
+    question: "Which jurisdictions prohibit autoplay_unlimited?"
+    expected_jurisdictions_with_field:
+      - ukgc
+      - nj
+    expected_field: prohibited_features
+    expected_member: autoplay_unlimited
+    expected_category: prohibited
+    severity: high
+
+  # ─── Single-jurisdiction structural lookups ───────────────────────────
+  - id: mga_prohibited_features_set
+    question: "Does MGA prohibit any specific slot features?"
+    expected_jurisdiction: mga
+    expected_field: prohibited_features
+    severity: medium
+
+  - id: nj_max_win_x
+    question: "What is the New Jersey max-win-x cap?"
+    expected_jurisdiction: nj
+    expected_field: max_win_x
+    expected_category: stake
+    severity: high
+
+  - id: nv_min_spin_no_cap
+    question: "Does Nevada (NGCB) mandate a minimum spin cycle?"
+    expected_jurisdiction: nv
+    expected_field: min_spin_duration_ms
+    expected_value_or_null: true
+    expected_category: duration
+    severity: medium
+
+  # ─── Compliance toggles ───────────────────────────────────────────────
+  - id: ukgc_ldw_required
+    question: "Does UKGC require LDW (losses-disguised-as-wins) disclosure?"
+    expected_jurisdiction: ukgc
+    expected_field: require_ldw_disclosure
+    expected_value: true
+    expected_category: disclosure
+    severity: high
+
+  - id: ukgc_reality_checks_required
+    question: "Does UKGC require reality check intervals?"
+    expected_jurisdiction: ukgc
+    expected_field: require_reality_checks
+    expected_value: true
+    expected_category: disclosure
+    severity: high
+
+  - id: ukgc_age_tiered_stakes
+    question: "What stake limits does UKGC impose by age tier?"
+    expected_jurisdiction: ukgc
+    expected_field: age_tiered_stakes
+    expected_value_member:
+      min_age: 18
+      max_age: 24
+      max_stake: 2.0
+    expected_category: age
+    severity: high
+
+  # ─── Negative / absence cases (agent must not fabricate) ──────────────
+  - id: aams_age_tier_absence
+    question: "What is AAMS's age-tiered stake structure?"
+    expected_jurisdiction: aams
+    expected_field: age_tiered_stakes
+    expected_value_or_null: true
+    severity: medium
+
+  - id: invalid_jurisdiction_refusal
+    question: "What is the slot RTP floor in Atlantis?"
+    expected_refusal: true
+    expected_refusal_reason: jurisdiction_not_in_kb
+    severity: high
