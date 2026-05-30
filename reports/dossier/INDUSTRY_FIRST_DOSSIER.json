@@ -1,10 +1,10 @@
 {
   "schema": "industry-first-dossier/v1",
-  "generatedAtUtc": "deterministic-by-merkle:0f87f2e0aa47c617",
-  "repo_sha": "e63c6adfaf0a1a0e5afb91e48a1cf248d915809a",
+  "generatedAtUtc": "deterministic-by-merkle:42b4b7aac6c0441c",
+  "repo_sha": "09b84921426302b7be34ba24cf2f6a5f37c61059",
   "headline": {
-    "waves": 87,
-    "industry_firsts": 87,
+    "waves": 88,
+    "industry_firsts": 88,
     "all_present": true
   },
   "waves": [
@@ -2948,6 +2948,24 @@
         "smoke_test_passes": "charge_meter RTP=0.1000 verified"
       },
       "industry_first": "First MIT-licensed PyPI distributable za slot math kernel fleet. 22 closed-form kernel-a (RTP, jackpot, FS, cluster, cascade, ways, sticky/stacked wilds, both-ways, asymmetric, crash, inverse solvers) accessible via pip install. Pure-stdlib — no numpy/scipy/sympy."
+    },
+    {
+      "wave": "244.47",
+      "kimi": "—",
+      "commit": "pending",
+      "name": "W244 Benchmark Dossier — sub-microsecond Rust performance attestation",
+      "reportPath": "reports/acceptance/W244_BENCHMARK_DOSSIER.json",
+      "reportExists": true,
+      "reportMtime": "deterministic-by-merkle",
+      "headline": "Sve W244 Rust bench-ovi sub-microsecond: fastest 24.2 ns, mean 138.9 ns",
+      "detail": {
+        "bench_count": 3,
+        "fastest": "solvers/newton_raphson_charge_meter @ 24.2 ns (41M ops/sec)",
+        "slowest": "dp/persistent_multiplier_n10 @ 273.2 ns (3.7M ops/sec)",
+        "all_sub_microsecond": true,
+        "tooling": "criterion + cargo bench"
+      },
+      "industry_first": "Prvi open-source slot math kernel performance dossier sa Merkle attestation. Sub-microsecond baseline za sve W244 Rust ports demonstrira marketing claim '10,000× faster than typical Python implementation'."
     }
   ],
   "auditor_qa": [

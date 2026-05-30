@@ -1,0 +1,48 @@
+{
+  "schema": "w244-benchmark-dossier/v1",
+  "merkle_root_sha256": "4e4d1298dc3b7015854c0bc5e8593810614904fbd69ce94ca44b87dc3ab7ef70",
+  "generated_at_utc": "deterministic-by-merkle:4e4d1298dc3b7015",
+  "bench_count": 3,
+  "fastest": {
+    "bench": "solvers/newton_raphson_charge_meter",
+    "mean_ns": 24.162135642129584,
+    "ops_per_sec": 41387070.034338355
+  },
+  "slowest": {
+    "bench": "dp/persistent_multiplier_n10",
+    "mean_ns": 273.2290381026228,
+    "ops_per_sec": 3659933.0984154306
+  },
+  "mean_across_all_benches_ns": 138.9406957622865,
+  "all_sub_microsecond": true,
+  "records": [
+    {
+      "group": "dp",
+      "bench": "persistent_multiplier_n10",
+      "mean_ns": 273.2290381026228,
+      "stderr_ns": 0.4593285780836321,
+      "ops_per_sec": 3659933.0984154306
+    },
+    {
+      "group": "solvers",
+      "bench": "bisection_pay_anywhere",
+      "mean_ns": 119.43091354210719,
+      "stderr_ns": 0.7324877949083575,
+      "ops_per_sec": 8373041.53792171
+    },
+    {
+      "group": "solvers",
+      "bench": "newton_raphson_charge_meter",
+      "mean_ns": 24.162135642129584,
+      "stderr_ns": 0.0911542956625677,
+      "ops_per_sec": 41387070.034338355
+    }
+  ],
+  "tooling": {
+    "runner": "criterion 0.x (cargo bench)",
+    "input": "rust-sim/benches/w244_kernel_bench.rs",
+    "rust_profile": "release",
+    "host_cpu": "Apple M-series (Darwin arm64) — see local hardware"
+  },
+  "verification": "Re-run `cargo bench --bench w244_kernel_bench`. After completion, re-run `python3 tools/build_benchmark_dossier.py`. Output merkle_root will rotate (estimates.json contains live measurements; this dossier is snapshot-only)."
+}
