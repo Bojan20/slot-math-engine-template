@@ -1,0 +1,15 @@
+{
+  "name": "stryker-vitest-compound-conditional-repro",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "mutate": "stryker run"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^8.7.1",
+    "@stryker-mutator/vitest-runner": "^8.7.1",
+    "vitest": "^1.0.0"
+  }
+}

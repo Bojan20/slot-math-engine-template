@@ -252,3 +252,13 @@ reports/llm-demo/
 # acceptance tests ARE committed — they are the reproducible
 # source-of-truth.
 reports/benchmark/
+
+# W244 — Stryker+vitest bug reproducer minimal repo.
+# Standalone reproducer for an upstream bug; install + run artefacts are
+# transient. The repro sources (5 files: README, GITHUB_ISSUE.md,
+# package.json, stryker.config.mjs, vitest.config.ts, tsconfig.json,
+# src/limits.ts, tests/limits.test.ts) ARE committed.
+bug-reports/*/node_modules/
+bug-reports/*/package-lock.json
+bug-reports/*/.stryker-tmp/
+bug-reports/*/reports/
