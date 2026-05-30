@@ -272,6 +272,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_docs_index.py \
 		tools/tests/test_w244_wasm_build.py \
 		tools/tests/test_w244_wasm_python_parity.py \
+		tools/tests/test_w244_wasm_parity_workflow.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

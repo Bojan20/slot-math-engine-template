@@ -1,0 +1,169 @@
+# W244 wave 75 — wasm ↔ Python parity gate CI.
+#
+# Wasm pkg compiled from `packages/slot-math-wasm/` must produce
+# ULP-identical (≤ 1e-12) results vs the Python reference impl in
+# `slot_math_kernels` for 20+ canonical fixtures across 7 kernels.
+#
+# Triggers when:
+#   - wasm crate source / Cargo.toml changes
+#   - Python kernel package src changes
+#   - parity script or test guard changes
+#   - acceptance JSON for the parity gate changes
+#
+# Fails CI if:
+#   - wasm build fails
+#   - any fixture delta > 1e-12 ULP
+#   - committed acceptance JSON Merkle != fresh rebuild
+#   - test_w244_wasm_python_parity gate fails
+
+name: wasm-parity
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/slot-math-wasm/**'
+      - 'packages/slot-math-kernels/src/**'
+      - 'tools/parity/w244_wasm_python_parity.py'
+      - 'tools/tests/test_w244_wasm_python_parity.py'
+      - 'tools/tests/test_w244_wasm_build.py'
+      - 'reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json'
+      - '.github/workflows/wasm-parity.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/slot-math-wasm/**'
+      - 'packages/slot-math-kernels/src/**'
+      - 'tools/parity/w244_wasm_python_parity.py'
+      - 'tools/tests/test_w244_wasm_python_parity.py'
+      - 'tools/tests/test_w244_wasm_build.py'
+      - 'reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json'
+      - '.github/workflows/wasm-parity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wasm-parity:
+    name: wasm ↔ Python parity gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Rust stable + wasm32 target
+        run: |
+          rustup toolchain install stable --profile minimal --no-self-update
+          rustup target add wasm32-unknown-unknown --toolchain stable
+
+      - name: Install wasm-pack
+        run: |
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Run structural tests (no build required)
+        run: |
+          python -m pytest \
+            tools/tests/test_w244_wasm_build.py::TestWasmCrateStructure \
+            -v --tb=short
+
+      - name: Build wasm pkg (nodejs target)
+        working-directory: packages/slot-math-wasm
+        run: |
+          RUSTUP_TOOLCHAIN=stable wasm-pack build --target nodejs --release
+
+      - name: Verify build artefakti present
+        run: |
+          ls -la packages/slot-math-wasm/pkg/
+          test -f packages/slot-math-wasm/pkg/slot_math_wasm_bg.wasm
+          test -f packages/slot-math-wasm/pkg/slot_math_wasm.js
+          test -f packages/slot-math-wasm/pkg/slot_math_wasm.d.ts
+
+      - name: Run native cargo tests on wasm crate
+        working-directory: packages/slot-math-wasm
+        run: |
+          RUSTUP_TOOLCHAIN=stable cargo test --release
+
+      - name: Run build artefakt presence tests
+        run: |
+          python -m pytest \
+            tools/tests/test_w244_wasm_build.py::TestWasmBuildArtefakti \
+            -v --tb=short
+
+      - name: Snapshot committed parity acceptance JSON
+        run: |
+          if [ -f reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json ]; then
+            cp reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json \
+               /tmp/wasm-parity-committed.json
+          fi
+
+      - name: Run wasm ↔ Python parity gate
+        run: |
+          python3 tools/parity/w244_wasm_python_parity.py
+
+      - name: Verify committed acceptance matches fresh
+        run: |
+          if [ -f /tmp/wasm-parity-committed.json ]; then
+            COMMITTED_MERKLE=$(python -c "import json; \
+              print(json.load(open('/tmp/wasm-parity-committed.json'))['merkle_root_sha256'])")
+            FRESH_MERKLE=$(python -c "import json; \
+              print(json.load(open('reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json'))['merkle_root_sha256'])")
+            if [ "$COMMITTED_MERKLE" != "$FRESH_MERKLE" ]; then
+              echo "::error::WASM parity Merkle DRIFT — committed $COMMITTED_MERKLE != fresh $FRESH_MERKLE"
+              exit 1
+            fi
+            echo "✓ Committed Merkle matches fresh rebuild: $FRESH_MERKLE"
+          else
+            echo "(no prior committed JSON — first run)"
+          fi
+
+      - name: Run acceptance test gate
+        run: |
+          python -m pytest \
+            tools/tests/test_w244_wasm_python_parity.py \
+            -v --tb=short
+
+      - name: Emit summary
+        run: |
+          python -c "
+          import json
+          d = json.load(open('reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json'))
+          print(f\"Fixtures:        {d['fixtures_count']}\")
+          print(f\"Kernels:         {len(d['kernels_covered'])}\")
+          print(f\"All match:       {d['all_match']}\")
+          print(f\"Max delta:       {d['max_observed_delta']:.3e}\")
+          print(f\"Epsilon:         {d['epsilon']}\")
+          print(f\"Merkle:          {d['merkle_root_sha256']}\")
+          "
+          echo "## wasm ↔ Python parity" >> $GITHUB_STEP_SUMMARY
+          python -c "
+          import json
+          d = json.load(open('reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json'))
+          print(f\"- Fixtures: **{d['fixtures_count']}**\")
+          print(f\"- Kernels: **{len(d['kernels_covered'])}** ({', '.join(d['kernels_covered'])})\")
+          print(f\"- Max ULP delta: \`{d['max_observed_delta']:.3e}\` (ε={d['epsilon']})\")
+          print(f\"- Merkle: \`{d['merkle_root_sha256']}\`\")
+          " >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload acceptance JSON + wasm pkg
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-parity-bundle
+          path: |
+            reports/acceptance/WASM_PYTHON_PARITY_KERNEL.json
+            packages/slot-math-wasm/pkg/
+          if-no-files-found: error
