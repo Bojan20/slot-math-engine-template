@@ -194,6 +194,9 @@ dossier-schemas: ## Build 5 JSON Schema files + Merkle manifest
 dossier-landing: ## Build dossier landing index.html (GitHub Pages entry)
 	python3 tools/build_dossier_landing.py
 
+dossier-lint: ## Lint dossier HTML (no CDN, Merkle present, no dead links)
+	python3 tools/lint_dossier_html.py
+
 dossier-bench: ## Aggregate criterion estimates → benchmark dossier JSON
 	python3 tools/build_benchmark_dossier.py
 
@@ -229,6 +232,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_pypi_cli.py \
 		tools/tests/test_w244_pre_commit_config.py \
 		tools/tests/test_w244_dossier_landing.py \
+		tools/tests/test_w244_dossier_html_lint.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
