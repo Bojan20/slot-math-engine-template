@@ -22,6 +22,8 @@ export default defineConfig({
       'tests/w244_stryker_95_killers.test.ts',
       // W244 pass 2 — spy-based killers for sensitivity Logical/Object mutants
       'tests/w244_stryker_95_killers_pass2.test.ts',
+      // W244 pass 3 — branch-trigger killers for V8 perTest coverage gap
+      'tests/w244_stryker_98_killers.test.ts',
       // W239 final-pass killers
       'tests/w239_session_extra_killers.test.ts',
       'tests/w239_analyzer_extra_killers.test.ts',
