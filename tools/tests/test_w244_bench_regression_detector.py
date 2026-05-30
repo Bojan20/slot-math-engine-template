@@ -8,7 +8,6 @@ import pytest
 
 from tools.bench_regression_detector import (
     BenchRecord,
-    Regression,
     detect_regressions,
     load_current,
 )
