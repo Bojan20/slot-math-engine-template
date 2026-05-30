@@ -282,6 +282,7 @@ def main() -> int:
       <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
       <a href="kernels/index.html">Kernel References</a>
       <a href="showcase_game.html">Showcase Game</a>
+      <a href="acceptance_index.html">Acceptance Index</a>
     </nav>
   </header>
 

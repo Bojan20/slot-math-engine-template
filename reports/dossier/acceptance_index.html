@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acceptance index — W244 artefakti</title>
+  <style>
+:root {
+  --bg: #0a0e14; --bg-card: #131821; --bg-elev: #1c2230;
+  --fg: #e6e9ef; --fg-mute: #9098a8;
+  --acc: #4cc4ff; --acc2: #ffb84c; --green: #6dd49d;
+  --border: #2a3142;
+}
+* { box-sizing: border-box; }
+body {
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+  margin: 0; background: var(--bg); color: var(--fg);
+}
+header.top {
+  padding: 36px 32px 20px;
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+header.top h1 {
+  margin: 0 0 8px; font-size: 30px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+header.top h1 .accent { color: var(--acc); }
+header.top .lead {
+  color: var(--fg-mute); font-size: 14px; max-width: 760px;
+  margin: 0; line-height: 1.55;
+}
+.dossier-nav {
+  margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dossier-nav a {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-mute); text-decoration: none; padding: 7px 12px;
+  border-radius: 6px; font-size: 12px;
+}
+.dossier-nav a:hover { border-color: var(--acc); color: var(--fg); }
+.dossier-nav a.current {
+  border-color: var(--acc); color: var(--acc); background: var(--bg-elev);
+}
+.toolbar {
+  padding: 16px 32px; display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border);
+}
+.toolbar input {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--fg); padding: 8px 12px; border-radius: 6px;
+  font: inherit; width: 320px;
+}
+.toolbar input:focus { outline: none; border-color: var(--acc); }
+.toolbar .count {
+  color: var(--fg-mute); font-size: 13px; margin-left: auto;
+}
+table.data {
+  width: 100%; border-collapse: collapse;
+}
+table.data thead {
+  position: sticky; top: 0; background: var(--bg-elev);
+}
+table.data th, table.data td {
+  padding: 10px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+table.data thead th {
+  color: var(--fg-mute); font: 11px/1 inherit; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+table.data tbody tr:hover { background: var(--bg-elev); }
+table.data td.num {
+  font: 13px ui-monospace, monospace; text-align: right;
+}
+table.data td code {
+  font: 11px ui-monospace, monospace;
+}
+table.data td.hash {
+  color: var(--acc); font: 11px ui-monospace, monospace;
+}
+table.data a {
+  color: var(--acc); text-decoration: none;
+}
+table.data a:hover { text-decoration: underline; }
+footer.bot {
+  padding: 20px 32px 40px; color: var(--fg-mute); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+footer.bot code { color: var(--acc); }
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>Acceptance <span class="accent">index</span></h1>
+    <p class="lead">
+      Every Merkle-pinned acceptance / dossier JSON pod
+      <code>reports/acceptance/</code>. Click a filename to download
+      the raw JSON for external validation (ajv / jsonschema / vlastiti
+      validator) against schemas u <code>reports/schemas/</code>.
+    </p>
+    <nav class="dossier-nav">
+      <a href="index.html">↩ Landing</a>
+      <a href="INDUSTRY_FIRST_DOSSIER.html">Industry Firsts</a>
+      <a href="REGULATOR_PORTAL.html">Regulator Portal</a>
+      <a href="CLOSED_FORM_PORTFOLIO.html">Closed-Form Portfolio</a>
+      <a href="kernels/index.html">Kernel References</a>
+      <a href="showcase_game.html">Showcase Game</a>
+      <a class="current" href="acceptance_index.html">Acceptance Index</a>
+    </nav>
+  </header>
+
+  <div class="toolbar">
+    <input id="search" type="search"
+           placeholder="Search by filename / schema / Merkle…"
+           autocomplete="off">
+    <span class="count"><span id="count">0</span>
+      / 163 visible</span>
+  </div>
+
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Filename</th>
+        <th>Schema</th>
+        <th>Merkle (24-hex prefix)</th>
+        <th>Records</th>
+        <th>Size</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><a href="../acceptance/ADJACENT_PAYS_AGGREGATOR.json">
+        <strong>ADJACENT_PAYS_AGGREGATOR.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/AI_FAIRNESS_AUDIT.json">
+        <strong>AI_FAIRNESS_AUDIT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ANOMALY_SELF_PLAY.json">
+        <strong>ANOMALY_SELF_PLAY.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ANTE_BET_TRADEOFF.json">
+        <strong>ANTE_BET_TRADEOFF.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">6.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ANTICIPATION_REEL_TEASE.json">
+        <strong>ANTICIPATION_REEL_TEASE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ARCADE_SHOOTER_SURVIVAL_LEVELS.json">
+        <strong>ARCADE_SHOOTER_SURVIVAL_LEVELS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">23.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ASYMMETRIC_PAYTABLE_KERNEL.json">
+        <strong>ASYMMETRIC_PAYTABLE_KERNEL.json</strong></a></td>
+      <td><code>asymmetric-paytable-kernel/v1</code></td>
+      <td class="hash">b6c73b0f6908025880179373…</td>
+      <td class="num">3</td>
+      <td class="num">3.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/AUTO_SPIN_DUAL_STOP.json">
+        <strong>AUTO_SPIN_DUAL_STOP.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/AVALANCHE_REACTOR_WAVE_AGGREGATOR.json">
+        <strong>AVALANCHE_REACTOR_WAVE_AGGREGATOR.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">15.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/AWP_CYCLE_CONVERGENCE.json">
+        <strong>AWP_CYCLE_CONVERGENCE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BEHAVIORS_COMPOSITIONAL.json">
+        <strong>BEHAVIORS_COMPOSITIONAL.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">3.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BIDIRECTIONAL_LINE_PAY.json">
+        <strong>BIDIRECTIONAL_LINE_PAY.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BIG_BET_PAID_PACKAGE_MULTI_SPIN.json">
+        <strong>BIG_BET_PAID_PACKAGE_MULTI_SPIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_BANK_RUNNING_BALANCE_OFFSET.json">
+        <strong>BONUS_BANK_RUNNING_BALANCE_OFFSET.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_BUY_VARIANCE.json">
+        <strong>BONUS_BUY_VARIANCE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_COLLECT_N.json">
+        <strong>BONUS_COLLECT_N.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_TRIGGER_AWARD_STRATIFICATION.json">
+        <strong>BONUS_TRIGGER_AWARD_STRATIFICATION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_TRIGGER_WAIT_TIME.json">
+        <strong>BONUS_TRIGGER_WAIT_TIME.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BONUS_WHEEL_RESPIN.json">
+        <strong>BONUS_WHEEL_RESPIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BOTH_WAYS.json">
+        <strong>BOTH_WAYS.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BOTH_WAYS_KERNEL.json">
+        <strong>BOTH_WAYS_KERNEL.json</strong></a></td>
+      <td><code>both-ways-kernel/v1</code></td>
+      <td class="hash">409acefb80341c4182c68da8…</td>
+      <td class="num">3</td>
+      <td class="num">1.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/BUY_FEATURE_KERNEL.json">
+        <strong>BUY_FEATURE_KERNEL.json</strong></a></td>
+      <td><code>buy-feature-kernel/v1</code></td>
+      <td class="hash">0ccff42741e9012029cce2fb…</td>
+      <td class="num">5</td>
+      <td class="num">3.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CASCADE_KERNEL.json">
+        <strong>CASCADE_KERNEL.json</strong></a></td>
+      <td><code>cascade-kernel/v1</code></td>
+      <td class="hash">3b96a0bda944603e91b71336…</td>
+      <td class="num">3</td>
+      <td class="num">5.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CASCADE_METER_CHARGE_UP.json">
+        <strong>CASCADE_METER_CHARGE_UP.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CASCADE_MULTIPLIER_CHAIN.json">
+        <strong>CASCADE_MULTIPLIER_CHAIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CASCADE_MULTIPLIER_PYRAMID.json">
+        <strong>CASCADE_MULTIPLIER_PYRAMID.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CHARGE_METER.json">
+        <strong>CHARGE_METER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CHARGE_METER_KERNEL.json">
+        <strong>CHARGE_METER_KERNEL.json</strong></a></td>
+      <td><code>charge-meter-kernel/v1</code></td>
+      <td class="hash">6906cabad4616ddc234b703d…</td>
+      <td class="num">3</td>
+      <td class="num">3.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CLASS_II_BINGO.json">
+        <strong>CLASS_II_BINGO.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">37.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CLUSTER_CASCADE.json">
+        <strong>CLUSTER_CASCADE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CLUSTER_COMPOUND_VARIANCE.json">
+        <strong>CLUSTER_COMPOUND_VARIANCE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CLUSTER_PAYS_KERNEL.json">
+        <strong>CLUSTER_PAYS_KERNEL.json</strong></a></td>
+      <td><code>cluster-pays-kernel/v1</code></td>
+      <td class="hash">cbebb59b2187f11ec096908a…</td>
+      <td class="num">3</td>
+      <td class="num">9.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/COIN_ACCUMULATOR_MYSTERY.json">
+        <strong>COIN_ACCUMULATOR_MYSTERY.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/COLOSSAL_REELS_WILD_TRANSFER.json">
+        <strong>COLOSSAL_REELS_WILD_TRANSFER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">16.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CRASH_MULTIPLIER.json">
+        <strong>CRASH_MULTIPLIER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CROSS_JURISDICTION_TAX_OPTIMIZER.json">
+        <strong>CROSS_JURISDICTION_TAX_OPTIMIZER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">18.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CUSTOMER_AFFORDABILITY_STRATIFICATION.json">
+        <strong>CUSTOMER_AFFORDABILITY_STRATIFICATION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CUSTOMER_SERVICE_AI_HALLUCINATION.json">
+        <strong>CUSTOMER_SERVICE_AI_HALLUCINATION.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/CYBERSECURITY_BREACH_COST.json">
+        <strong>CYBERSECURITY_BREACH_COST.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DEMO_MODE.json">
+        <strong>DEMO_MODE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json">
+        <strong>DETERMINISTIC_EXPLOSION_MULTIPLIER_DROP.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">15.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DIFF_FUZZ_CROSS_LANG.json">
+        <strong>DIFF_FUZZ_CROSS_LANG.json</strong></a></td>
+      <td><code>diff-fuzz-cross-lang/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">4.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DONE_UNIVERSAL_CLOSURE_KERNEL.json">
+        <strong>DONE_UNIVERSAL_CLOSURE_KERNEL.json</strong></a></td>
+      <td><code>done-universal-closure/v1</code></td>
+      <td class="hash">5b5d6d73379774bacefcf8b3…</td>
+      <td class="num">0</td>
+      <td class="num">3.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DROP_STICK_WILD_EXPANSION.json">
+        <strong>DROP_STICK_WILD_EXPANSION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json">
+        <strong>DYNAMIC_GRID_EXPANSION_HOLD_SPIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ENTROPY_HEALTH_MONITOR.json">
+        <strong>ENTROPY_HEALTH_MONITOR.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/ESG_CARBON_COST.json">
+        <strong>ESG_CARBON_COST.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/EXACT_ENUMERATION.json">
+        <strong>EXACT_ENUMERATION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">2.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/EXPANDING_SYMBOL_KERNEL.json">
+        <strong>EXPANDING_SYMBOL_KERNEL.json</strong></a></td>
+      <td><code>expanding-symbol-kernel/v1</code></td>
+      <td class="hash">0097a333353d4d4279734414…</td>
+      <td class="num">3</td>
+      <td class="num">2.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FAULT_INJECTION.json">
+        <strong>FAULT_INJECTION.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FREE_BET_WAGERING_REQUIREMENT.json">
+        <strong>FREE_BET_WAGERING_REQUIREMENT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FREE_SPINS_LOOKBACK_MULTIPLIER.json">
+        <strong>FREE_SPINS_LOOKBACK_MULTIPLIER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FREE_SPINS_RETRIGGER.json">
+        <strong>FREE_SPINS_RETRIGGER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FS_BUY_TIER_TRADEOFF.json">
+        <strong>FS_BUY_TIER_TRADEOFF.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/FS_CONFIGS.json">
+        <strong>FS_CONFIGS.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/GAME_PROVIDER_REVENUE_SHARE.json">
+        <strong>GAME_PROVIDER_REVENUE_SHARE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/GDD_ASSET_MANIFEST.json">
+        <strong>GDD_ASSET_MANIFEST.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">6.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/HIT_FREQUENCY_DISTRIBUTION.json">
+        <strong>HIT_FREQUENCY_DISTRIBUTION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">32.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/HNW_LADDER.json">
+        <strong>HNW_LADDER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">32.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/HNW_MULTI_JACKPOT.json">
+        <strong>HNW_MULTI_JACKPOT.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/HOLD_AND_WIN_KERNEL.json">
+        <strong>HOLD_AND_WIN_KERNEL.json</strong></a></td>
+      <td><code>hold-and-win-kernel/v1</code></td>
+      <td class="hash">0b5dead8928dcbc6126f3297…</td>
+      <td class="num">3</td>
+      <td class="num">6.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/HOLD_WIN_VALUE_JACKPOT.json">
+        <strong>HOLD_WIN_VALUE_JACKPOT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/INDUSTRY_PATTERNS.json">
+        <strong>INDUSTRY_PATTERNS.json</strong></a></td>
+      <td><code>industry-patterns/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/INVERSE_SOLVER_KERNEL.json">
+        <strong>INVERSE_SOLVER_KERNEL.json</strong></a></td>
+      <td><code>inverse-solver-kernel/v1</code></td>
+      <td class="hash">a3ba1e43b92e54a31895c801…</td>
+      <td class="num">6</td>
+      <td class="num">2.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/JP_PACHISLOT_SKILL_STOP.json">
+        <strong>JP_PACHISLOT_SKILL_STOP.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">4.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/JURISDICTION_AUTO_GATE.json">
+        <strong>JURISDICTION_AUTO_GATE.json</strong></a></td>
+      <td><code>jurisdiction-auto-gate/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">81.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/KYC_AML_SANCTION_SCREENING.json">
+        <strong>KYC_AML_SANCTION_SCREENING.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/LIVE_CASINO_DEALER_INTEGRITY.json">
+        <strong>LIVE_CASINO_DEALER_INTEGRITY.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">6.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/LOCKED_REELS_FS.json">
+        <strong>LOCKED_REELS_FS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MARTINGALE_BUST_TIME.json">
+        <strong>MARTINGALE_BUST_TIME.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MATH_GENOME.json">
+        <strong>MATH_GENOME.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">25.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MAX_WIN_CAP_TRUNCATION.json">
+        <strong>MAX_WIN_CAP_TRUNCATION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MC_10M_PARITY_DOSSIER.json">
+        <strong>MC_10M_PARITY_DOSSIER.json</strong></a></td>
+      <td><code>mc-10m-parity-dossier/v2</code></td>
+      <td class="hash">6fd37872f8a2aba5668ecc41…</td>
+      <td class="num">3</td>
+      <td class="num">2.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MECHANIC_29.json">
+        <strong>MECHANIC_29.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">16.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MECHANIC_30.json">
+        <strong>MECHANIC_30.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MECHANIC_FAMILY.json">
+        <strong>MECHANIC_FAMILY.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MEGACLUSTER_STACK_WAYS.json">
+        <strong>MEGACLUSTER_STACK_WAYS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MEGA_SYMBOL_EXPANSION.json">
+        <strong>MEGA_SYMBOL_EXPANSION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/METAMORPHIC_RTP.json">
+        <strong>METAMORPHIC_RTP.json</strong></a></td>
+      <td><code>metamorphic-rtp-invariants/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MID_SPIN_REEL_RESHAPE_MIXTURE.json">
+        <strong>MID_SPIN_REEL_RESHAPE_MIXTURE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">17.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MONEY_COLLECT_KERNEL.json">
+        <strong>MONEY_COLLECT_KERNEL.json</strong></a></td>
+      <td><code>money-collect-kernel/v1</code></td>
+      <td class="hash">1f0b1d9ae1b0611a99f03d59…</td>
+      <td class="num">3</td>
+      <td class="num">2.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTIPLICATIVE_WILD_STACK.json">
+        <strong>MULTIPLICATIVE_WILD_STACK.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_ACCOUNT_BONUS_ABUSE.json">
+        <strong>MULTI_ACCOUNT_BONUS_ABUSE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_CURRENCY_FX_RISK.json">
+        <strong>MULTI_CURRENCY_FX_RISK.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_LEVEL_WILD_MARKOV.json">
+        <strong>MULTI_LEVEL_WILD_MARKOV.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json">
+        <strong>MULTI_POT_BRANCHED_HOLD_SPIN_SUB_FEATURE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">19.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_STATE_FRAME_UPGRADE_MARKOV.json">
+        <strong>MULTI_STATE_FRAME_UPGRADE_MARKOV.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">16.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MULTI_TIER_WAP_WHEEL.json">
+        <strong>MULTI_TIER_WAP_WHEEL.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">20.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MUST_HIT_BY_JACKPOT.json">
+        <strong>MUST_HIT_BY_JACKPOT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MUST_HIT_BY_KERNEL.json">
+        <strong>MUST_HIT_BY_KERNEL.json</strong></a></td>
+      <td><code>must-hit-by-kernel/v1</code></td>
+      <td class="hash">892e27ed3f32b7ff44865f17…</td>
+      <td class="num">3</td>
+      <td class="num">4.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/MYSTERY_SYMBOL_REVEAL.json">
+        <strong>MYSTERY_SYMBOL_REVEAL.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/NESTED_MINI_SLOT_INSIDE_BONUS.json">
+        <strong>NESTED_MINI_SLOT_INSIDE_BONUS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/OPERATOR_DAILY_PNL_VAR.json">
+        <strong>OPERATOR_DAILY_PNL_VAR.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PARALLEL_SCREENS.json">
+        <strong>PARALLEL_SCREENS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PAROLI_STREAK_CASH_OUT.json">
+        <strong>PAROLI_STREAK_CASH_OUT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PAR_COMMITMENT.json">
+        <strong>PAR_COMMITMENT.json</strong></a></td>
+      <td><code>par-commitment-acceptance/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PAY_ANYWHERE_KERNEL.json">
+        <strong>PAY_ANYWHERE_KERNEL.json</strong></a></td>
+      <td><code>pay-anywhere-kernel/v1</code></td>
+      <td class="hash">a6c5a6e161b7e231f110142c…</td>
+      <td class="num">3</td>
+      <td class="num">13.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PERF_BENCH.json">
+        <strong>PERF_BENCH.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">2.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PERSISTENT_MULTIPLIER.json">
+        <strong>PERSISTENT_MULTIPLIER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PERSISTENT_MULTIPLIER_KERNEL.json">
+        <strong>PERSISTENT_MULTIPLIER_KERNEL.json</strong></a></td>
+      <td><code>persistent-multiplier-kernel/v1</code></td>
+      <td class="hash">b03c2a86ef23994bb0c473d7…</td>
+      <td class="num">3</td>
+      <td class="num">3.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json">
+        <strong>PER_REEL_BAG_ROW_MULTIPLIER_COUPLED.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PICK_BONUS_N_STAGE.json">
+        <strong>PICK_BONUS_N_STAGE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PICK_CHAIN_KERNEL.json">
+        <strong>PICK_CHAIN_KERNEL.json</strong></a></td>
+      <td><code>pick-chain-kernel/v1</code></td>
+      <td class="hash">a74d1be63abd1e5068336b36…</td>
+      <td class="num">3</td>
+      <td class="num">3.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PICK_CLICK_POOPER_BONUS.json">
+        <strong>PICK_CLICK_POOPER_BONUS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PLAYER_ELECTS_FEATURE_COMPOSITION.json">
+        <strong>PLAYER_ELECTS_FEATURE_COMPOSITION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">18.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PLAYER_LTV_BAYESIAN.json">
+        <strong>PLAYER_LTV_BAYESIAN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PRE_COMMITMENT_LOSS_LIMIT.json">
+        <strong>PRE_COMMITMENT_LOSS_LIMIT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/PSEUDO_MUST_HIT_LEVEL.json">
+        <strong>PSEUDO_MUST_HIT_LEVEL.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/QMC_CONVERGENCE.json">
+        <strong>QMC_CONVERGENCE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">2.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/QUANTUM_RESISTANT_RNG.json">
+        <strong>QUANTUM_RESISTANT_RNG.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">6.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RACE_COMPETITIVE_PICK_WINNER.json">
+        <strong>RACE_COMPETITIVE_PICK_WINNER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">22.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RANDOM_CONFIG_SWEEP.json">
+        <strong>RANDOM_CONFIG_SWEEP.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RANDOM_FEATURE_INJECTION_DURING_FS.json">
+        <strong>RANDOM_FEATURE_INJECTION_DURING_FS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/REEL_BOUND_MYSTERY_PROGRESSIVE.json">
+        <strong>REEL_BOUND_MYSTERY_PROGRESSIVE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RTP_DRIFT_CUSUM.json">
+        <strong>RTP_DRIFT_CUSUM.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RUNNING_MAX_DRAWDOWN.json">
+        <strong>RUNNING_MAX_DRAWDOWN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/RUST_PYTHON_PARITY_KERNEL.json">
+        <strong>RUST_PYTHON_PARITY_KERNEL.json</strong></a></td>
+      <td><code>w244-rust-python-parity/v1</code></td>
+      <td class="hash">c5185d35efd6aafbf92bc075…</td>
+      <td class="num">18</td>
+      <td class="num">3.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SELF_EXCLUSION_LIFECYCLE.json">
+        <strong>SELF_EXCLUSION_LIFECYCLE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SESSION_BANKROLL_DRAWDOWN.json">
+        <strong>SESSION_BANKROLL_DRAWDOWN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SESSION_COOL_OFF_ENFORCEMENT.json">
+        <strong>SESSION_COOL_OFF_ENFORCEMENT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">8.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SHOWCASE_GAME_KERNEL.json">
+        <strong>SHOWCASE_GAME_KERNEL.json</strong></a></td>
+      <td><code>showcase-game-kernel/v1</code></td>
+      <td class="hash">c923961c583133a40d8f0135…</td>
+      <td class="num">0</td>
+      <td class="num">1.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SKILL_STOP_NEAR_MISS.json">
+        <strong>SKILL_STOP_NEAR_MISS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SPIN_VELOCITY_COMPLIANCE.json">
+        <strong>SPIN_VELOCITY_COMPLIANCE.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SPORTSBOOK_ODDS_MARGIN.json">
+        <strong>SPORTSBOOK_ODDS_MARGIN.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">6.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STACKED_MULTI_WHEEL_COMPOSITION.json">
+        <strong>STACKED_MULTI_WHEEL_COMPOSITION.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">33.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STACKED_WILDS_KERNEL.json">
+        <strong>STACKED_WILDS_KERNEL.json</strong></a></td>
+      <td><code>stacked-wilds-kernel/v1</code></td>
+      <td class="hash">357944f9eb1cb905a9eb8a1e…</td>
+      <td class="num">3</td>
+      <td class="num">4.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STATE_MACHINE_KERNEL.json">
+        <strong>STATE_MACHINE_KERNEL.json</strong></a></td>
+      <td><code>state-machine-kernel/v1</code></td>
+      <td class="hash">8eef3a07ea8e92029a84de41…</td>
+      <td class="num">3</td>
+      <td class="num">3.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STICKY_CASH_COLLECTOR.json">
+        <strong>STICKY_CASH_COLLECTOR.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STICKY_CASH_REVEAL.json">
+        <strong>STICKY_CASH_REVEAL.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">12.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STICKY_MULTIPLIER_FS_TRAIL.json">
+        <strong>STICKY_MULTIPLIER_FS_TRAIL.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STICKY_WILDS_KERNEL.json">
+        <strong>STICKY_WILDS_KERNEL.json</strong></a></td>
+      <td><code>sticky-wilds-kernel/v1</code></td>
+      <td class="hash">a51c8d2fd1f91d19d5d20c67…</td>
+      <td class="num">3</td>
+      <td class="num">2.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STICKY_WILD_COUNTDOWN_MULT.json">
+        <strong>STICKY_WILD_COUNTDOWN_MULT.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">11.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/STREAM_LATENCY_SLA.json">
+        <strong>STREAM_LATENCY_SLA.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SUPERMETER.json">
+        <strong>SUPERMETER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">18.3 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SYMBOL_MULT_REEL_STOP.json">
+        <strong>SYMBOL_MULT_REEL_STOP.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/SYMBOL_UPGRADE_CHAIN.json">
+        <strong>SYMBOL_UPGRADE_CHAIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">7.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/TRAIL_BONUS_TRACKER.json">
+        <strong>TRAIL_BONUS_TRACKER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/TUMBLE_MULTIPLIER_CAP.json">
+        <strong>TUMBLE_MULTIPLIER_CAP.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/TUMBLING_CASCADE_CHAIN_LENGTH.json">
+        <strong>TUMBLING_CASCADE_CHAIN_LENGTH.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/UNIFIED_AUDIT.json">
+        <strong>UNIFIED_AUDIT.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">9.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/US_STATE_REGULATOR_COMPLIANCE.json">
+        <strong>US_STATE_REGULATOR_COMPLIANCE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">14.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/VARIABLE_REEL_HEIGHT_WAYS.json">
+        <strong>VARIABLE_REEL_HEIGHT_WAYS.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">31.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/VARROWS_CASCADE.json">
+        <strong>VARROWS_CASCADE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/VOLTAGE_METER_MULTI_TIER.json">
+        <strong>VOLTAGE_METER_MULTI_TIER.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/W244_ALL_KERNELS.json">
+        <strong>W244_ALL_KERNELS.json</strong></a></td>
+      <td><code>w244-all-kernels/v1</code></td>
+      <td class="hash">909d22d2f6dce710dff13874…</td>
+      <td class="num">20</td>
+      <td class="num">6.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/W244_BENCHMARK_DOSSIER.json">
+        <strong>W244_BENCHMARK_DOSSIER.json</strong></a></td>
+      <td><code>w244-benchmark-dossier/v1</code></td>
+      <td class="hash">4e4d1298dc3b7015854c0bc5…</td>
+      <td class="num">3</td>
+      <td class="num">1.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/W244_BENCHMARK_HISTORY.json">
+        <strong>W244_BENCHMARK_HISTORY.json</strong></a></td>
+      <td><code>w244-benchmark-history/v1</code></td>
+      <td class="hash">c2fab4a535fb88025ddc715a…</td>
+      <td class="num">0</td>
+      <td class="num">0.9 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/W4_11_EVIDENCE_MANIFEST.json">
+        <strong>W4_11_EVIDENCE_MANIFEST.json</strong></a></td>
+      <td><code>w4-11-evidence-manifest/v1</code></td>
+      <td class="hash">a171d777caf5bc583687a0a0…</td>
+      <td class="num">27</td>
+      <td class="num">5.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/W4_11_EVIDENCE_RECEIPT.json">
+        <strong>W4_11_EVIDENCE_RECEIPT.json</strong></a></td>
+      <td><code>w4-11-evidence-receipt/v1</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">10.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/WALKING_WILD_RESPIN.json">
+        <strong>WALKING_WILD_RESPIN.json</strong></a></td>
+      <td><code>1.0.0</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">13.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/WASM_PYTHON_PARITY_KERNEL.json">
+        <strong>WASM_PYTHON_PARITY_KERNEL.json</strong></a></td>
+      <td><code>wasm-python-parity/v1</code></td>
+      <td class="hash">c6b1dc8e4319e79e1afc71fc…</td>
+      <td class="num">20</td>
+      <td class="num">5.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/WAYS_ACCEPTANCE.json">
+        <strong>WAYS_ACCEPTANCE.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/WAYS_EVALUATOR_KERNEL.json">
+        <strong>WAYS_EVALUATOR_KERNEL.json</strong></a></td>
+      <td><code>ways-evaluator-kernel/v1</code></td>
+      <td class="hash">21b07d9af98d620441775054…</td>
+      <td class="num">4</td>
+      <td class="num">6.8 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/WHEEL_KERNEL.json">
+        <strong>WHEEL_KERNEL.json</strong></a></td>
+      <td><code>wheel-kernel/v1</code></td>
+      <td class="hash">7d8b51de15893eb1a887b55e…</td>
+      <td class="num">3</td>
+      <td class="num">4.1 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/book_bonusbuy_mc.json">
+        <strong>book_bonusbuy_mc.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/book_bonusbuy_parity.json">
+        <strong>book_bonusbuy_parity.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">2.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/dossier-2026-05-14_233949019Z.json">
+        <strong>dossier-2026-05-14_233949019Z.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">15.7 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/golden.json">
+        <strong>golden.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">5.4 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/megaways_mc_parity.json">
+        <strong>megaways_mc_parity.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">0.6 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/megaways_parity.json">
+        <strong>megaways_parity.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.2 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/portfolio_validator.json">
+        <strong>portfolio_validator.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">15.5 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/walking_wild_mc_parity.json">
+        <strong>walking_wild_mc_parity.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">1.0 KB</td>
+    </tr>
+    <tr>
+      <td><a href="../acceptance/walking_wild_parity.json">
+        <strong>walking_wild_parity.json</strong></a></td>
+      <td><code>?</code></td>
+      <td class="hash">…</td>
+      <td class="num">0</td>
+      <td class="num">2.2 KB</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <footer class="bot">
+    Source: <code>reports/acceptance/*.json</code>
+    (163 files)<br>
+    Validate externally:
+    <code>ajv validate -s reports/schemas/&lt;X&gt;.schema.json
+      -d reports/acceptance/&lt;Y&gt;.json</code><br>
+    Reproduce:
+    <code>./scripts/verify_all_merkles.sh</code><br>
+    Page Merkle (SHA-256 over body): <code>cf71ffe203ce1f2e9c3687449e953de48daa6b8f29280feb94175cb5f130a0da</code>
+  </footer>
+  <script>
+(function () {
+  var $s = document.getElementById('search');
+  var $rows = document.querySelectorAll('tbody tr');
+  var $c = document.getElementById('count');
+  function f() {
+    var q = $s.value.toLowerCase().trim();
+    var n = 0;
+    $rows.forEach(function (r) {
+      var hay = r.textContent.toLowerCase();
+      var show = !q || hay.indexOf(q) !== -1;
+      r.style.display = show ? '' : 'none';
+      if (show) n++;
+    });
+    $c.textContent = n;
+  }
+  $s.addEventListener('input', f);
+  $c.textContent = $rows.length;
+})();
+</script>
+</body>
+</html>

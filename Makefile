@@ -206,6 +206,9 @@ dossier-showcase: ## Build Showcase Game HTML (4-kernel composition demo)
 dossier-search-index: ## Build unified search-index.json (229+ entries cross-dossier)
 	python3 tools/build_search_index.py
 
+dossier-acceptance-index: ## Build acceptance_index.html (163 JSON artefakti table)
+	python3 tools/build_acceptance_index_html.py
+
 docs-index: ## Build docs/README.md auto-index (75 top-level + 19 kernel docs)
 	python3 tools/build_docs_index.py
 
@@ -241,6 +244,7 @@ dossier-all: ## Rebuild ALL dossier HTML artefakte (run after acceptance JSON ch
 	$(MAKE) dossier-portfolio-html
 	$(MAKE) dossier-kernel-refs
 	$(MAKE) dossier-showcase
+	$(MAKE) dossier-acceptance-index
 	$(MAKE) dossier-search-index
 	$(MAKE) dossier-landing
 	@echo "✅ All dossier HTML pages rebuilt"
@@ -296,6 +300,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_wasm_ts_wrapper.py \
 		tools/tests/test_w244_bench_history.py \
 		tools/tests/test_w244_verify_all_merkles.py \
+		tools/tests/test_w244_acceptance_index_html.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────
