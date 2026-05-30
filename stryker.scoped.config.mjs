@@ -9,21 +9,18 @@ export default {
   reporters: ['clear-text', 'progress', 'json'],
   testRunner: 'vitest',
   testRunnerNodeArgs: ['--experimental-vm-modules'],
-  // W244 pass 3 investigation note (2026-05-30):
-  // Score held at 95.91 % despite 9 new logically-killable killer tests in
-  // `tests/w244_stryker_98_killers.test.ts`. Manual mutation reproduction
-  // confirmed RG-01 (limits={}) AND W244-PASS3 RG-L74 (limits.maxWagerPerSpin=100,
-  // wager=50) BOTH fail when L74 source is hand-mutated to `if (true)`.
-  // Stryker scoped run with coverageAnalysis: 'perTest', 'all', AND 'off'
-  // all returned identical 326 killed / 14 survived. Stryker + vitest
-  // perTest coverage map appears to drop short-circuited compound
-  // conditional evaluations from the test→mutant mapping. The 14 survivors
-  // include 5 true death-equivalents (constant-folded MIN_SPIN_MS, off-by-one
-  // neutralized by `if (!reelMap) continue`, two float boundaries on RNG output)
-  // and 9 tooling-reported survivors that are killed by hand-mutation runs.
-  // Keeping 'perTest' as fastest default; 'off' didn't change tally so no
-  // value paying ~30× CPU per release. Pass-3 tests retained as semantic
-  // regression guards.
+  // W244 wave 5 update (2026-05-30): score 95.91 → 98.02 % after
+  // `src/rg/session.ts` guard-method refactor (commit dffc8ad8). The
+  // compound short-circuit `if (X !== undefined && violation)` lines
+  // were hoisted into named `_is*` methods with `?? Infinity` fallback,
+  // removing both the Stryker+vitest perTest attribution bug surface
+  // (see bug-reports/stryker-vitest-compound-conditional/) AND the
+  // `if (cap === undefined) return false` death-equivalents that the
+  // naive guard-extract pattern introduced. Remaining 7 surviving
+  // mutants are genuine death-equivalents: 3 in rg/session.ts
+  // (MIN_SPIN_MS constant-folded edges) and 4 in sensitivity/analyzer.ts
+  // (float `<` vs `<=` boundaries on RNG output where exact equality is
+  // statistically unreachable). Threshold high=95 cleared by 3 pp.
   coverageAnalysis: 'perTest',
   mutate: ['src/rg/session.ts', 'src/sensitivity/analyzer.ts'],
   thresholds: { high: 95, low: 80, break: 70 },

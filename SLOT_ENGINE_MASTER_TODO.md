@@ -6,6 +6,39 @@
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-05-30 03:15 (post **W244 WAVE 5 — STRYKER 95.91 → 98.02 % via guard refactor + upstream bug reproducer**, commits `610d4b00`+`dffc8ad8`)
+
+**Status:** "idi sve kako ti mislis, osim PAR" — dva fix-a koji zatvaraju Stryker tooling-blocked surface bez source semantike.
+
+| Wave | Šta | Rezultat |
+|---|---|---|
+| **#4 Stryker+vitest bug reproducer** | `bug-reports/stryker-vitest-compound-conditional/` (8 fajlova, standalone npm projekat). README + GITHUB_ISSUE.md + minimal `src/limits.ts` + 4 killer testovi. Reproduces `@stryker-mutator/vitest-runner` v8.7.1 bug: `ConditionalExpression → true` mutant na compound `&&` liniji reported Survived uprkos 4/4 hand-mutation-killing testova. Verified: clean `npm test` = 4/4 PASS, hand-mutate `if (true)` = 4/4 FAIL, Stryker = 1 SURVIVED across all 3 coverage modes (`'perTest'`/`'all'`/`'off'`). `.gitignore` skips transient install artefacts. | ✅ landed (`610d4b00`) |
+| **#3 rg/session.ts guard refactor** | 9 compound `&&` `if`-ova izvučeni u named `_is*` / `_should*` private metode. **Pattern v2**: `cap ?? Infinity` umesto `if (cap === undefined) return false` — eliminiše BOTH inline compound (Stryker bug trigger) AND naive-extract death-equivalent surface. Public API unchanged, error messages identical, 146/146 RG-suite tests PASS. | ✅ landed (`dffc8ad8`) |
+
+### Stryker scoped result (W244 full timeline)
+
+| Metric | Pre W244 | Pass 1 | Pass 2 | Refactor v2 | Δ ukupno |
+|---|---:|---:|---:|---:|---:|
+| **Overall** | 91.23 % | 93.57 % | 95.91 % | **98.02 %** | **+6.79 pp** |
+| `src/rg/session.ts` | 93.93 % | 95.33 % | 95.33 % | **98.67 %** | +4.74 pp |
+| `src/sensitivity/analyzer.ts` | 86.72 % | 90.62 % | 96.88 % | 96.88 % | +10.16 pp |
+| Killed mutants | 310 | 318 | 326 | **345** | +35 |
+| Survived | 30 | 22 | 14 | **7** | −23 |
+| Timeout | 2 | 2 | 2 | 2 | 0 |
+
+Preostalih 7 surviving je genuine death-equivalent klasa: 3 u `rg/session.ts` (MIN_SPIN_MS constant-folded edges pod `?? Infinity`), 4 u `sensitivity/analyzer.ts` (float `<` vs `<=` boundary na RNG outputs gde exact equality je statistički nedostižna). Threshold `high=95` prošao sa 3 pp margine.
+
+### Sledeći wave queue (ažuriran)
+
+| # | Item | Status / blokira |
+|---|---|---|
+| **1** | W4.9 Cluster Pays + W4.10 Cascade primitivi | čekaju 1 PAR uzorak svaki — **Boki nema** |
+| **2** | Pattern-FK Wave 0 followup — multi-game parser refactor (Vendor A flagship closure) | autonomous, ~4-6h, dira hot path (7266+ vitest specs), držim na kraju |
+| **3** | Stryker bug GitHub issue submission | spreman (`GITHUB_ISSUE.md` draft), pending Boki repo decision |
+| **4** | Boki fleet decision finalize | `agents/reg-oracle/` ostao untracked |
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-30 02:50 (post **W244 PASS 3 INVESTIGATION + REPO HYGIENE + AGENT FLEET COMMIT**, commits `d5e8977`+`27cd469`+pending)
 
 **Status:** "ok, šta ćeš dalje" autonomous batch — 3 stavke iz queue-a u jednoj seriji bez čekanja:
