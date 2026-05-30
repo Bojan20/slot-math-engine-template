@@ -6,7 +6,29 @@
 
 ---
 
-## 📊 REALAN STATUS — 2026-05-31 00:15 (post wave 73: slot-math-wasm landed)
+## 📊 REALAN STATUS — 2026-05-31 00:35 (post wave 74: wasm ↔ Python parity)
+
+**Delta od prethodnog snapshot-a:**
+
+| Wave | Commit | Šta |
+|---|---|---|
+| **74** | `6b2ea13c` | **Wasm ↔ Python parity gate** — 20 fixtures × 7 kernela, max delta 3.4e-15 (sub-ULP) |
+
+Treća parity dimenzija u repo-u:
+- Python ↔ Rust (rust-sim 18 kernela) — postoji
+- TS ↔ Rust (template-parity.yml 104 specs) — postoji
+- **Python ↔ wasm (NEW)** — dodatna verifikacija za browser-side use
+
+Pipeline: `wasm-pack build --target nodejs` → Python skript spawn-uje
+Node subprocess + load-uje wasm + diff vs Python kernel reference.
+
+**Test count**: 130 → **136** (+6 wasm parity tests)
+**`make qa-w244-session`**: 21 test fajla, 136/136 PASS in 1.82s
+**Make target**: `make wasm-parity` (build + verify u jednom shot-u)
+
+---
+
+## 📊 EARLIER STATUS — 2026-05-31 00:15 (post wave 73: slot-math-wasm landed)
 
 **Delta od prethodnog snapshot-a (waves 72 + 73):**
 
