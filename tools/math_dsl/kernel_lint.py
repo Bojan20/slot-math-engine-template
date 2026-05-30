@@ -130,7 +130,7 @@ def _check_dunder_underscore_init(
     """KLINT005 — `def _init_` typo (would silently skip __post_init__)."""
     try:
         tree = ast.parse(source)
-    except SyntaxError as exc:
+    except SyntaxError:
         # Caught by KLINT002 later
         return
     for node in ast.walk(tree):

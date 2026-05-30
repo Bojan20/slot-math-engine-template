@@ -5,7 +5,6 @@ that the live kernel surface passes clean.
 """
 from __future__ import annotations
 
-import pytest
 
 from tools.math_dsl.kernel_lint import (
     Finding,

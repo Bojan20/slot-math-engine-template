@@ -6,7 +6,6 @@ import math
 import pytest
 
 from tools.math_dsl.multi_dim_inverse_solver import (
-    MultiDimSolveResult,
     newton_raphson_nd,
 )
 
