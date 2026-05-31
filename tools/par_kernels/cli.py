@@ -446,20 +446,300 @@ def cmd_init(args: argparse.Namespace) -> int:
     return 0
 
 
+def _evaluate_one_silent(
+    ir_path: Path, cf_path: Path,
+    mc_spins: int = 0, seed: int = 42, tolerance_bps: float = 50.0,
+) -> dict:
+    """Run composer + (optional) MC for a single game without printing.
+
+    Returns a dict with everything `cmd_batch` needs to render a row.
+    Mirrors the dispatch logic of `cmd_evaluate` but stays library-only.
+    """
+    from tools.par_kernels.composer import compose
+    from tools.par_kernels.generic_params import (
+        cascade_uplift_from_cf,
+        delegated_baseline_rtp,
+        lightning_uplift_rtp_from_ir,
+        lines_eval_rtp_from_ir,
+        make_params_builder,
+        pay_anywhere_rtp_from_cf,
+        scatter_pay_rtp_from_ir,
+    )
+
+    ir = json.loads(ir_path.read_text())
+    cf = json.loads(cf_path.read_text())
+    target_rtp = cf.get("total_rtp", 0.0)
+    par = {"rtp": {"rtp_total": target_rtp}}
+    game_id = ir.get("meta", {}).get("id", "unknown")
+    shape = ir.get("evaluation", {}).get("kind", "?")
+    variant = ir.get("meta", {}).get("version", "?")
+
+    t0 = time.perf_counter()
+    builder = make_params_builder(cf)
+    comp_result = compose(ir, par=par, params_builder=builder, tolerance_bps=tolerance_bps)
+    composer_secs = time.perf_counter() - t0
+
+    lines_rtp, _ = lines_eval_rtp_from_ir(ir)
+    base_rtp = lines_rtp if lines_rtp > 0 else cf.get("components", {}).get("base_line", 0.0)
+    scatter_rtp, _ = scatter_pay_rtp_from_ir(ir)
+    if scatter_rtp == 0:
+        scatter_rtp = cf.get("components", {}).get("scatter_pay_base", 0.0)
+    lightning_rtp, _ = lightning_uplift_rtp_from_ir(ir, base_rtp=base_rtp)
+    if lightning_rtp == 0:
+        lightning_rtp = cf.get("components", {}).get("lightning_uplift", 0.0)
+    cascade_rtp = cascade_uplift_from_cf(cf)
+    pa_rtp, _ = pay_anywhere_rtp_from_cf(cf)
+    delegated = (
+        delegated_baseline_rtp(cf)
+        + base_rtp + scatter_rtp + lightning_rtp + cascade_rtp + pa_rtp
+    )
+    composed_total = comp_result.composed_rtp + delegated
+    composer_delta_bps = (composed_total - target_rtp) * 10000.0
+    composer_ok = abs(composer_delta_bps) <= tolerance_bps
+
+    mc_kind = "n/a"
+    mc_secs = 0.0
+    mc_delta_bps = None
+    mc_rtp = None
+    mc_pass = None
+    rounds_per_sec = None
+    threads = None
+
+    if mc_spins > 0:
+        if "pay_anywhere_symbols" in cf:
+            mc_kind = "skip (CF exact)"
+            mc_pass = True  # CF is exact — by definition, converges
+        elif "cluster_distribution" in cf:
+            from tools.par_kernels.mc_extended_rust import run_cluster_rust
+            t0 = time.perf_counter()
+            r = run_cluster_rust(cf, ir, n_rounds=mc_spins, seed=seed, cf_target_rtp=target_rtp)
+            mc_secs = time.perf_counter() - t0
+            mc_kind = "cluster"
+            mc_rtp = r.rtp
+            mc_delta_bps = r.delta_bps
+            mc_pass = bool(r.convergence_pass)
+            rounds_per_sec = r.rounds_per_sec
+            threads = r.threads_used
+        elif "row_distribution_per_reel" in cf:
+            from tools.par_kernels.mc_extended_rust import run_ways_rust
+            t0 = time.perf_counter()
+            r = run_ways_rust(cf, ir, n_rounds=mc_spins, seed=seed, cf_target_rtp=target_rtp)
+            mc_secs = time.perf_counter() - t0
+            mc_kind = "ways"
+            mc_rtp = r.rtp
+            mc_delta_bps = r.delta_bps
+            mc_pass = bool(r.convergence_pass)
+            rounds_per_sec = r.rounds_per_sec
+            threads = r.threads_used
+        elif "house_edge" in cf and "cashout_multiplier" in cf:
+            from tools.par_kernels.mc_extended_rust import run_crash_rust
+            t0 = time.perf_counter()
+            r = run_crash_rust(cf, ir, n_rounds=mc_spins, seed=seed, cf_target_rtp=target_rtp)
+            mc_secs = time.perf_counter() - t0
+            mc_kind = "crash"
+            mc_rtp = r.rtp
+            mc_delta_bps = r.delta_bps
+            mc_pass = bool(r.convergence_pass)
+            rounds_per_sec = r.rounds_per_sec
+            threads = r.threads_used
+        else:
+            from tools.par_kernels.mc_runtime import build_wrath_executor_from_cf
+            from tools.par_kernels.mc_runtime_rust import run_mc_rust
+            executor = build_wrath_executor_from_cf(cf)
+            t0 = time.perf_counter()
+            r, rust_extra = run_mc_rust(
+                executor, spins=mc_spins, seed=seed,
+                cf_target_rtp=target_rtp, fallback_to_python=True,
+            )
+            mc_secs = time.perf_counter() - t0
+            mc_kind = "wrath"
+            mc_rtp = r.rtp
+            mc_delta_bps = r.delta_bps
+            mc_pass = bool(r.convergence_pass)
+            rounds_per_sec = rust_extra.spins_per_sec if rust_extra else (mc_spins / mc_secs)
+            threads = 1
+
+    return {
+        "game": game_id,
+        "variant": variant,
+        "shape": shape,
+        "target_rtp": target_rtp,
+        "composed_rtp": composed_total,
+        "composer_delta_bps": composer_delta_bps,
+        "composer_ok": composer_ok,
+        "composer_secs": composer_secs,
+        "mc_kind": mc_kind,
+        "mc_secs": mc_secs,
+        "mc_rtp": mc_rtp,
+        "mc_delta_bps": mc_delta_bps,
+        "mc_pass": mc_pass,
+        "rounds_per_sec": rounds_per_sec,
+        "threads": threads,
+        "overall_ok": composer_ok and (mc_pass if mc_pass is not None else True),
+    }
+
+
+def cmd_batch(args: argparse.Namespace) -> int:
+    """Iterate the entire PAR library and emit an aggregate dashboard.
+
+    Exit 0 iff every game passes (composer parity ∧ MC convergence).
+    Designed for CI and studio demo: one command → portfolio health snapshot.
+    """
+    library = REPO / "reports" / "par-library"
+    if not library.is_dir():
+        print(f"PAR library missing: {library}", file=sys.stderr)
+        return 1
+
+    # Resolve all (game, variant, ir, cf) triples.
+    targets: list[tuple[str, str, Path, Path]] = []
+    for game_dir in sorted(library.iterdir()):
+        if not game_dir.is_dir():
+            continue
+        for var_dir in sorted(game_dir.iterdir()):
+            if not var_dir.is_dir():
+                continue
+            ir_p = var_dir / "game.ir.json"
+            cf_p = var_dir / "closed-form-rtp.json"
+            if ir_p.is_file() and cf_p.is_file():
+                targets.append((game_dir.name, var_dir.name, ir_p, cf_p))
+
+    if not targets:
+        print("No games found in PAR library", file=sys.stderr)
+        return 1
+
+    # Optional filter (e.g. --filter cluster or --filter wrath-of-olympus)
+    if args.filter:
+        targets = [
+            t for t in targets
+            if args.filter in t[0] or args.filter in t[1]
+        ]
+        if not targets:
+            print(f"No games matched filter '{args.filter}'", file=sys.stderr)
+            return 1
+
+    print("# SLOT-MATH Portfolio Health — batch evaluate", file=sys.stderr)
+    print(f"Evaluating {len(targets)} game/variant pairs "
+          f"(--mc-spins {args.mc_spins}, seed {args.seed})...", file=sys.stderr)
+
+    rows = []
+    t_start = time.perf_counter()
+    for game, variant, ir_p, cf_p in targets:
+        print(f"  [{game}/{variant}] running...", file=sys.stderr)
+        try:
+            row = _evaluate_one_silent(
+                ir_p, cf_p,
+                mc_spins=args.mc_spins, seed=args.seed,
+                tolerance_bps=args.tolerance_bps,
+            )
+        except Exception as e:
+            row = {
+                "game": game, "variant": variant, "shape": "?",
+                "target_rtp": 0.0, "composed_rtp": 0.0,
+                "composer_delta_bps": 0.0, "composer_ok": False,
+                "composer_secs": 0.0, "mc_kind": "ERROR",
+                "mc_secs": 0.0, "mc_rtp": None, "mc_delta_bps": None,
+                "mc_pass": False, "rounds_per_sec": None, "threads": None,
+                "overall_ok": False, "error": str(e)[:200],
+            }
+        rows.append(row)
+    total_secs = time.perf_counter() - t_start
+
+    # Aggregate dashboard
+    out_lines = [
+        "# SLOT-MATH Portfolio Health Dashboard",
+        "",
+        f"_Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}_  ",
+        f"_Wallclock: {total_secs:.2f}s · {len(rows)} games · "
+        f"--mc-spins {args.mc_spins} · seed {args.seed}_",
+        "",
+        "## Per-game results",
+        "",
+        "| Game | Variant | Shape | Target RTP | Composed | Composer Δ | MC engine | MC RTP | MC Δ | MC rate | Status |",
+        "|---|---|---|---:|---:|---:|:---:|---:|---:|---:|:---:|",
+    ]
+    for r in rows:
+        target_pct = f"{r['target_rtp']*100:.2f}%" if r['target_rtp'] else "—"
+        composed_pct = f"{r['composed_rtp']*100:.2f}%" if r['composed_rtp'] else "—"
+        comp_delta = f"{r['composer_delta_bps']:+.2f} bps"
+        mc_rtp = f"{r['mc_rtp']*100:.2f}%" if r['mc_rtp'] is not None else "—"
+        mc_delta = f"{r['mc_delta_bps']:+.2f} bps" if r['mc_delta_bps'] is not None else "—"
+        if r['rounds_per_sec']:
+            rate = f"{r['rounds_per_sec']/1e6:.0f}M/s"
+            if r['threads'] and r['threads'] > 1:
+                rate += f" ×{r['threads']}T"
+        else:
+            rate = "—"
+        status = "✅" if r['overall_ok'] else "🔴"
+        out_lines.append(
+            f"| {r['game']} | {r['variant']} | `{r['shape']}` | {target_pct} | {composed_pct} | "
+            f"{comp_delta} | `{r['mc_kind']}` | {mc_rtp} | {mc_delta} | {rate} | {status} |"
+        )
+
+    # Roll-up
+    passed = sum(1 for r in rows if r['overall_ok'])
+    failed = len(rows) - passed
+    overall_emoji = "✅" if failed == 0 else "🔴"
+    out_lines.extend([
+        "",
+        "## Roll-up",
+        "",
+        "| Metric | Value |",
+        "|---|---|",
+        f"| Games evaluated | {len(rows)} |",
+        f"| Passed (composer ∧ MC convergence) | {passed} |",
+        f"| Failed | {failed} |",
+        f"| **Overall portfolio gate** | **{overall_emoji}** |",
+        f"| Total wallclock | {total_secs:.2f}s |",
+        "",
+    ])
+    if failed > 0:
+        out_lines.extend([
+            "### Failed games",
+            "",
+            "| Game | Variant | Composer Δ | MC Δ | Error |",
+            "|---|---|---:|---:|---|",
+        ])
+        for r in rows:
+            if not r['overall_ok']:
+                err = r.get("error", "")
+                cd = f"{r['composer_delta_bps']:+.2f}" if r['composer_delta_bps'] is not None else "—"
+                md = f"{r['mc_delta_bps']:+.2f}" if r['mc_delta_bps'] is not None else "—"
+                out_lines.append(f"| {r['game']} | {r['variant']} | {cd} bps | {md} bps | {err} |")
+        out_lines.append("")
+
+    report = "\n".join(out_lines)
+    if args.out:
+        Path(args.out).write_text(report)
+        print(f"Dashboard written to {args.out}", file=sys.stderr)
+    else:
+        print(report)
+
+    return 0 if failed == 0 else 1
+
+
 def cmd_shapes(args: argparse.Namespace) -> int:
-    """Print supported evaluation shapes + industry examples."""
+    """Print supported evaluation shapes + industry examples + MC throughput."""
     print("# SLOT-MATH supported shapes (W244 kernel coverage)")
     print()
-    print("| Shape | Industry pattern | Composer | MC executor |")
-    print("|---|---|:---:|:---:|")
-    print("| lines | Classic 3-reel, 20/30/50-line | ✅ | ✅ Rust (554M/s) + Python |")
-    print("| cluster_pays | Sweet Bonanza, Aloha, Gates of Olympus | ✅ | ✅ Python (200K/s) |")
-    print("| ways | Megaways: Bonanza, Big Bass, Extra Chilli | ✅ | ✅ Python (586K/s) |")
-    print("| crash | Stake Crash, Aviator, Bustabit | ✅ | ✅ Python (1.75M/s) |")
-    print("| pay_anywhere | Sweet Bonanza scatter, Gonzo's Quest | ✅ | ✅ CF (exact) |")
+    print("All 5 shapes now have **Rust parallel MC executors** "
+          "(`mc_runtime_real`, `mc_extended_real`).")
+    print()
+    print("| Shape | Industry pattern | Composer | MC engine (parallel) | Pure-Python fallback |")
+    print("|---|---|:---:|:---:|:---:|")
+    print("| lines | Classic 3-reel, 20/30/50-line | ✅ | ✅ Rust **554M/s** | ✅ 1.17M/s |")
+    print("| cluster_pays | Aloha, cluster grids | ✅ | ✅ Rust **42-60M/s** ×11T | ✅ 200K/s |")
+    print("| ways | Megaways family | ✅ | ✅ Rust **65-107M/s** ×11T | ✅ 586K/s |")
+    print("| crash | Stake Crash, Aviator | ✅ | ✅ Rust **229-1,524M/s** ×11T | ✅ 1.75M/s |")
+    print("| pay_anywhere | Sweet Bonanza scatter | ✅ | ✅ CF (exact, no MC needed) | n/a |")
+    print()
+    print("Throughput numbers measured on Apple M3 Pro, 11 perf-cores, ")
+    print("`cargo build --release --bin mc_extended_real`.")
     print()
     print("Add a new game via:")
     print("  python3 -m tools.par_kernels.cli init <game> <variant> --shape <shape>")
+    print()
+    print("Evaluate entire portfolio in one command (with optional MC):")
+    print("  python3 -m tools.par_kernels.cli batch --mc-spins 100000")
     return 0
 
 
@@ -497,6 +777,20 @@ def main(argv: list[str] | None = None) -> int:
                         help="Evaluation shape (see 'shapes' subcommand)")
     p_init.add_argument("--force", action="store_true", help="Overwrite if exists")
     p_init.set_defaults(func=cmd_init)
+
+    p_batch = sub.add_parser(
+        "batch",
+        help="Evaluate the entire PAR library and emit a portfolio dashboard",
+    )
+    p_batch.add_argument("--mc-spins", type=int, default=0,
+                         help="If > 0, run MC per game (shape-dispatched)")
+    p_batch.add_argument("--seed", type=int, default=42)
+    p_batch.add_argument("--tolerance-bps", type=float, default=50.0)
+    p_batch.add_argument("--filter", default=None,
+                         help="Substring filter (matches game or variant)")
+    p_batch.add_argument("--out", help="Write dashboard to this Markdown path "
+                                       "(default stdout)")
+    p_batch.set_defaults(func=cmd_batch)
 
     p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")
     p_shapes.set_defaults(func=cmd_shapes)
