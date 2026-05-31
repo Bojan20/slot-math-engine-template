@@ -50,7 +50,7 @@
 
 | Sub-task | Path | Acceptance | Status |
 |---|---|---|---|
-| 1.1 Canonical PAR JSON Schema (Draft 2020-12) | `reports/schemas/canonical_par.schema.json` | parses sa ajv, all fields documented, examples valid | ⬜ |
+| 1.1 Canonical PAR JSON Schema (Draft 2020-12) | `reports/schemas/canonical_par.schema.json` | parses sa ajv, all fields documented, examples valid | ✅ landed `<this commit>` — 14/14 tests, 11 topologija + 5 RNG algoritma + 10 jurisdikcija pokriveno |
 | 1.2 PAR library skeleton | `reports/par-library/<game>/<variant>/` | dir layout per arhitektura, gitignored variants | ⬜ |
 | 1.3 Format detector | `tools/par_normalize/detect.py` | XLSX/PDF/JSON/CSV magic bytes + sheet shape | ⬜ |
 | 1.4 XLSX vendor adapter (prvi) | `tools/par_normalize/adapters/generic_xlsx.py` | parses sheet, emit canonical, audit lossless | ⬜ |

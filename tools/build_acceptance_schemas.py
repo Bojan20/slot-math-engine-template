@@ -245,6 +245,29 @@ def main() -> int:
             "size_bytes": len(text),
         })
 
+    # Hand-curated schemas written as standalone JSON files (not Python
+    # literals because they're too large or domain-specific). Pick these
+    # up automatically into the manifest. Excluded: hardcoded SCHEMAS
+    # above + the manifest itself.
+    hardcoded_names = set(SCHEMAS.keys()) | {"schemas_manifest.json"}
+    for json_path in sorted(OUT_DIR.glob("*.schema.json")):
+        if json_path.name in hardcoded_names:
+            continue
+        try:
+            text = json_path.read_text(encoding="utf-8")
+            d = json.loads(text)
+        except (json.JSONDecodeError, OSError):
+            continue
+        digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        entries.append({
+            "filename": json_path.name,
+            "title": d.get("title", "?"),
+            "sha256": digest,
+            "size_bytes": len(text),
+        })
+    # Re-sort by filename so manifest order is stable
+    entries.sort(key=lambda e: e["filename"])
+
     # Manifest Merkle = sha256 over the sorted-by-filename digest stream
     leaf_lines = "".join(
         f"{e['filename']}|{e['sha256']}\n" for e in entries

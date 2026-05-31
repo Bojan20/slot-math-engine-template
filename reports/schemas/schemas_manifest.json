@@ -1,9 +1,15 @@
 {
   "draft": "json-schema draft 2020-12",
-  "manifest_merkle_root_sha256": "58b954dbcbea91d3591720f94d081db671b6a82c200f43186370af471d7ef5c6",
+  "manifest_merkle_root_sha256": "83a8b92c843185449cd546aad5b1239bfa5744deec244d8fc0ec281949c8ff86",
   "purpose": "Industry-standard JSON Schema files validating the W244 acceptance + dossier surface. Validates with any conforming validator (ajv, Python jsonschema, gojsonschema, NJsonSchema).",
   "schema": "w244-schemas-manifest/v1",
   "schemas": [
+    {
+      "filename": "canonical_par.schema.json",
+      "sha256": "2a593fe2e7e045768f1dbe37eaca29949ff30af32feb908cb34eaf118c0b9a24",
+      "size_bytes": 12060,
+      "title": "Canonical PAR \u2014 slot-math-engine internal format"
+    },
     {
       "filename": "closed_form_portfolio.schema.json",
       "sha256": "519f0346524009e106662c9c1f5d336c4fd0b31655cb364646605d3332b87052",
@@ -35,6 +41,6 @@
       "title": "W244 per-kernel acceptance artefakt"
     }
   ],
-  "schemas_count": 5,
+  "schemas_count": 6,
   "verification": "Re-run `python3 tools/build_acceptance_schemas.py`. manifest_merkle_root_sha256 must rebuild byte-identical."
 }

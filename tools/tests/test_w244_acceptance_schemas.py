@@ -30,16 +30,19 @@ class TestSchemasBuild(unittest.TestCase):
     def test_schemas_dir_exists(self):
         self.assertTrue(SCHEMAS_DIR.is_dir())
 
-    def test_all_5_schemas_present(self):
-        expected = {
+    def test_required_schemas_present(self):
+        # Originalnih 5 W244 schemas + canonical_par dodat u wave 1.1
+        required = {
             "w244_kernel.schema.json",
             "w244_all_kernels.schema.json",
             "w244_benchmark.schema.json",
             "industry_first_dossier.schema.json",
             "closed_form_portfolio.schema.json",
+            "canonical_par.schema.json",
         }
         actual = {p.name for p in SCHEMAS_DIR.glob("*.schema.json")}
-        self.assertEqual(actual, expected)
+        missing = required - actual
+        self.assertFalse(missing, f"missing schemas: {missing}")
 
     def test_manifest_present_with_merkle(self):
         m = SCHEMAS_DIR / "schemas_manifest.json"

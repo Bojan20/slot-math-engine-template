@@ -1,0 +1,349 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/canonical_par.schema.json",
+  "title": "Canonical PAR — slot-math-engine internal format",
+  "description": "Lossless representation of a vendor PAR (Probability Accounting Report) sheet. Every vendor-specific format (XLSX/PDF/JSON/CSV) is normalized into this schema by `tools/par_normalize/` adapters. Engine-internal source of truth for game build pipeline.",
+  "type": "object",
+  "required": [
+    "schema",
+    "merkle_root_sha256",
+    "meta",
+    "topology",
+    "reels",
+    "paytable",
+    "rtp",
+    "rng_profile"
+  ],
+  "properties": {
+    "schema": {
+      "const": "slot-math-canonical-par/v1",
+      "description": "Schema version (immutable for v1 series)"
+    },
+    "merkle_root_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 over canonical sorted-key bytes (excluding this field). Pin-point for audit chain."
+    },
+    "generated_at_utc": {
+      "type": "string",
+      "description": "ISO-8601 timestamp ili 'deterministic-by-merkle:<prefix>'"
+    },
+    "source": {
+      "type": "object",
+      "description": "Provenance of the import (which vendor file generated this canonical PAR).",
+      "required": ["vendor", "format", "filename"],
+      "properties": {
+        "vendor": {
+          "type": "string",
+          "examples": ["IGT", "NetEnt", "Pragmatic", "Aristocrat", "BTG", "Hacksaw", "Nolimit", "ELK", "custom"]
+        },
+        "format": {
+          "type": "string",
+          "enum": ["xlsx", "pdf", "json", "csv", "yaml", "synthetic"]
+        },
+        "filename": { "type": "string" },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the original vendor file (for audit chain)"
+        },
+        "adapter_version": { "type": "string" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["game_name", "variant_id", "rtp_target_pct"],
+      "properties": {
+        "game_name": { "type": "string", "minLength": 1 },
+        "variant_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$",
+          "description": "Library identifier (e.g. 'a', 'b', 'c', 'd' or '92pct', '94pct'...)"
+        },
+        "vendor_swid": {
+          "type": "string",
+          "description": "Vendor SWID (proprietary, NEVER published)"
+        },
+        "rtp_target_pct": {
+          "type": "number",
+          "minimum": 50.0,
+          "maximum": 100.0
+        },
+        "volatility": {
+          "type": "string",
+          "enum": ["very_low", "low", "med_low", "med", "med_high", "high", "very_high", "extreme"]
+        },
+        "max_win_x_bet": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Theoretical max win as multiple of bet (e.g. 50000)"
+        },
+        "min_bet": { "type": "number", "minimum": 0 },
+        "max_bet": { "type": "number" },
+        "currencies": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[A-Z]{3}$" },
+          "description": "ISO-4217 codes — RTP must hold for each"
+        }
+      }
+    },
+    "topology": {
+      "type": "object",
+      "required": ["kind", "shape"],
+      "description": "Game grid / play surface topology",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "reel_grid",
+            "cluster_grid",
+            "megaways",
+            "infinireels",
+            "cascade_grid",
+            "crash",
+            "plinko",
+            "pachislot",
+            "class_ii_bingo",
+            "wheel_only",
+            "scratch"
+          ]
+        },
+        "shape": {
+          "type": "object",
+          "properties": {
+            "reels": { "type": "integer", "minimum": 1, "maximum": 12 },
+            "rows": { "type": "integer", "minimum": 1, "maximum": 12 },
+            "rows_per_reel": {
+              "type": "array",
+              "items": { "type": "integer", "minimum": 1 },
+              "description": "For Megaways/varied-rows: rows count per reel"
+            },
+            "lines": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "0 = ways, 1+ = line count"
+            },
+            "ways": { "type": "integer", "minimum": 0 },
+            "adjacency": {
+              "type": "string",
+              "enum": ["4-way", "8-way", "diagonal", "n/a"]
+            },
+            "min_cluster_size": { "type": "integer", "minimum": 2 }
+          }
+        },
+        "directions": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["ltr", "rtl", "both", "n/a"] }
+        }
+      }
+    },
+    "reels": {
+      "type": "object",
+      "description": "Reel strips per band (base, FS, super-FS, etc).",
+      "required": ["base"],
+      "properties": {
+        "base": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Symbol stack on one reel (e.g. ['A','K','Q','J','10','WILD','SCATTER',...])"
+          },
+          "description": "Per-reel strip for base game"
+        },
+        "free_spins": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "string" } }
+        },
+        "respin": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "symbols": {
+      "type": "array",
+      "description": "Symbol catalog with kind + special behavior.",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "regular",
+              "wild",
+              "scatter",
+              "bonus",
+              "jackpot",
+              "money_value",
+              "multiplier",
+              "mystery",
+              "transformer",
+              "expanding_wild",
+              "walking_wild",
+              "sticky_wild",
+              "stacked_wild",
+              "linked_pot"
+            ]
+          },
+          "tier": { "type": "string", "enum": ["high", "med", "low", "premium"] },
+          "substitutes_for": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Wild substitution targets (typically scatter/bonus excluded)"
+          },
+          "value_x_bet_pmf": {
+            "type": "object",
+            "description": "For money_value symbols: pmf of cash values",
+            "patternProperties": {
+              "^[0-9]+(\\.[0-9]+)?$": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "paytable": {
+      "type": "object",
+      "description": "Per-symbol pay structure — count → value × bet.",
+      "patternProperties": {
+        "^[A-Za-z0-9_-]+$": {
+          "type": "object",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Pay multiplier for that symbol count"
+            }
+          }
+        }
+      }
+    },
+    "paylines": {
+      "type": "array",
+      "description": "Per-line cell pattern (for line games).",
+      "items": {
+        "type": "array",
+        "items": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "rtp": {
+      "type": "object",
+      "required": ["total_pct"],
+      "description": "RTP breakdown by component (must sum to total_pct)",
+      "properties": {
+        "total_pct": { "type": "number", "minimum": 50, "maximum": 100 },
+        "base_game_pct": { "type": "number", "minimum": 0 },
+        "free_spins_pct": { "type": "number", "minimum": 0 },
+        "buy_feature_pct": { "type": "number", "minimum": 0 },
+        "hold_and_win_pct": { "type": "number", "minimum": 0 },
+        "jackpot_pct": { "type": "number", "minimum": 0 },
+        "side_bet_pct": { "type": "number", "minimum": 0 },
+        "wheel_pct": { "type": "number", "minimum": 0 },
+        "respin_pct": { "type": "number", "minimum": 0 }
+      }
+    },
+    "hit_frequency": {
+      "type": "object",
+      "description": "Per-event hit frequency targets (denominators).",
+      "properties": {
+        "any_win_per_spin": {
+          "type": "number",
+          "description": "Probability of any winning spin (numerator/denominator inverse)"
+        },
+        "free_spins_trigger": {
+          "type": "number",
+          "description": "P[free spins trigger | one base spin]"
+        },
+        "buy_feature_win": {
+          "type": "number",
+          "description": "P[any FS win | bonus buy]"
+        },
+        "max_win_hit": {
+          "type": "number",
+          "description": "P[max win | one base spin] — typically 1e-7 to 1e-9"
+        }
+      }
+    },
+    "features": {
+      "type": "array",
+      "description": "Feature chain definition (each maps to W244 kernel composition).",
+      "items": {
+        "type": "object",
+        "required": ["id", "kernel"],
+        "properties": {
+          "id": { "type": "string" },
+          "kernel": {
+            "type": "string",
+            "description": "W244 kernel name (e.g. 'expanding_symbol', 'hold_and_win', 'cascade')"
+          },
+          "params": { "type": "object" },
+          "trigger": {
+            "type": "object",
+            "properties": {
+              "kind": { "type": "string", "enum": ["scatter_count", "bonus_count", "random", "buy", "retrigger"] },
+              "min_count": { "type": "integer" },
+              "probability": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          },
+          "composes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Other feature IDs this feature triggers (e.g. FS → respin)"
+          }
+        }
+      }
+    },
+    "rng_profile": {
+      "type": "object",
+      "required": ["algorithm"],
+      "description": "RNG algorithm + jurisdiction binding",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": ["philox_4x32_10", "pcg64", "chacha20", "xoshiro256pp", "splitmix64"]
+        },
+        "seed_stream_kind": {
+          "type": "string",
+          "enum": ["per_spin", "per_feature", "per_round", "global"]
+        },
+        "jurisdiction_allowed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["UKGC", "MGA", "GLI-19", "Quebec", "AAMS", "Ontario", "Michigan", "Pennsylvania", "Nevada", "NewJersey"]
+          }
+        },
+        "provably_fair": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, server seed + client seed commit-reveal applies"
+        }
+      }
+    },
+    "regulatory": {
+      "type": "object",
+      "description": "Jurisdiction-specific overrides + compliance flags",
+      "properties": {
+        "ukgc_rts13c_compliant": { "type": "boolean" },
+        "mga_rg_2021_02_compliant": { "type": "boolean" },
+        "gli_19_compliant": { "type": "boolean" },
+        "buy_feature_rtp_ceiling": { "type": "number" },
+        "min_return_pct": { "type": "number" },
+        "max_loss_per_hour_x_bet": { "type": "number" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "description": "Original-file ↔ canonical round-trip evidence.",
+      "properties": {
+        "lossless_byte_diff": { "type": "integer", "minimum": 0, "description": "Bytes differing on re-export to original format (0 = lossless)" },
+        "rtp_reconstructed": { "type": "number", "description": "RTP computed from canonical content (must match rtp.total_pct)" },
+        "rtp_delta_pp": { "type": "number", "description": "|reconstructed - target| in percentage points" },
+        "adapter_runtime_ms": { "type": "number" }
+      }
+    }
+  },
+  "additionalProperties": false
+}
