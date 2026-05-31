@@ -6,6 +6,174 @@
 
 ---
 
+# 🎯 GLAVNA RADNA SEKCIJA — SLOT-MATH GAME COMPILE PIPELINE
+
+> **Status:** 📋 Planning landed (`c1af0dad` arhitektura v1.0). 0/5 faza implementirano. **Ovo je sad glavni rad na repo-u**, sve W244 wave 49-83 isporuke su **infrastructure** za ovo.
+
+**Vision (fixed 2026-05-31):** Designer upload-uje **4 različite matematike** (PAR sheets) za ISTU igru. Engine **automatski** kompajluje svaku u **production-grade slot igru** (web playable + RGS backend), pokreće **MC convergence sweep** od 1M do 100B spinova kroz multi-seed grid, i **kad svi parametri u izgrađenoj igri 1:1 reprodukuju PAR brojeve** (sub-ULP delta) **automatski deploy-uje** finalnu igru. Designer onda bira među 4 varijante.
+
+**Bez kompromisa. Ne demo. Production-grade. Regulator-ready. Merkle attested end-to-end.**
+
+📖 **Detaljna arhitektura**: [`docs/PAR_TO_PLAYABLE_GAME_ARCHITECTURE.md`](docs/PAR_TO_PLAYABLE_GAME_ARCHITECTURE.md) (516 linija, v1.0, commit `c1af0dad`)
+
+## 📐 Pipeline (5 faza)
+
+```
+[upload] N PAR sheets (XLSX/PDF/JSON/CSV) za istu igru
+   │
+   ▼
+[FAZA 1] AUTO-NORMALIZER    → canonical.par.yaml × N
+   │                          (lossless audit, Merkle pin)
+   ▼
+[par library] reports/par-library/<game>/<variant>/
+   │
+   ▼
+[FAZA 2] PAR → Game IR      → game.ir.json × N (1:1 copy, no design)
+   │
+   ▼
+[FAZA 3] MC CONVERGENCE     → 5 tier: 1M → 100B spinova
+   │   GATE BLOCKS DEPLOY     × multi-seed grid (32 → 2)
+   │                          if measured != PAR (sub-ULP)
+   ▼
+[FAZA 4] AUTO-DEPLOY        → games/<game>/<variant>/
+   │                          ├── web/ (Pixi production playable)
+   │                          ├── server/ (Fastify RGS)
+   │                          └── attestation/ (Merkle chain)
+   ▼
+[FAZA 5] STUDIO COMPARE     → 4-pane variant compare
+                              promote winner → live
+```
+
+## 📊 Faze sa detaljnim deliverables + acceptance
+
+### 🔴 FAZA 1 — Auto-normalizer (0% done)
+
+| Sub-task | Path | Acceptance | Status |
+|---|---|---|---|
+| 1.1 Canonical PAR JSON Schema (Draft 2020-12) | `reports/schemas/canonical_par.schema.json` | parses sa ajv, all fields documented, examples valid | ⬜ |
+| 1.2 PAR library skeleton | `reports/par-library/<game>/<variant>/` | dir layout per arhitektura, gitignored variants | ⬜ |
+| 1.3 Format detector | `tools/par_normalize/detect.py` | XLSX/PDF/JSON/CSV magic bytes + sheet shape | ⬜ |
+| 1.4 XLSX vendor adapter (prvi) | `tools/par_normalize/adapters/generic_xlsx.py` | parses sheet, emit canonical, audit lossless | ⬜ |
+| 1.5 Lossless audit gate | `tools/par_normalize/audit.py` | re-export → byte-diff vs original = 0 | ⬜ |
+| 1.6 Merkle pin per variant | `merkle.sha256` per variant dir | sha256 over canonical bytes, deterministic | ⬜ |
+| 1.7 CLI: `slot-math par add/list/info/remove` | `tools/par_library_cli.py` | 4 sub-commands working | ⬜ |
+| 1.8 Test gate | `tools/tests/test_par_normalize.py` | 10+ tests, all PASS | ⬜ |
+
+**Acceptance Faza 1:** 4 PAR sheets uvedeno u library, svaka ima canonical YAML + lossless audit PASS + Merkle pinned. CLI list radi.
+
+### 🔴 FAZA 2 — PAR → Game IR mapping (0% done)
+
+| Sub-task | Path | Acceptance | Status |
+|---|---|---|---|
+| 2.1 Game IR JSON Schema | `reports/schemas/game_ir.schema.json` | Vendor B IR shape, MathDSL compatible | ⬜ |
+| 2.2 PAR → IR mapper (pure copy) | `tools/par_to_ir/map.py` | every PAR field → IR slot, no inference | ⬜ |
+| 2.3 Coverage validation | `tools/par_to_ir/validate.py` | "every PAR field consumed, every IR field present" | ⬜ |
+| 2.4 W244 kernel dispatcher | `tools/par_to_ir/dispatcher.py` | mehanika list → kernel composition (e.g. money_collect+must_hit_by) | ⬜ |
+| 2.5 RNG profile binding | `tools/par_to_ir/rng_bind.py` | Pcg64/ChaCha20/Philox per jurisdiction | ⬜ |
+| 2.6 Test gate | `tools/tests/test_par_to_ir.py` | 4 variants → 4 IRs, all valid | ⬜ |
+
+**Acceptance Faza 2:** Svaka od 4 PAR varijante producuje validan `game.ir.json` koji prolazi schema check + coverage gate.
+
+### 🔴 FAZA 3 — MC convergence sweep (0% done)
+
+| Sub-task | Path | Acceptance | Status |
+|---|---|---|---|
+| 3.1 MC orchestrator (Rust) | `rust-sim/src/bin/mc_convergence.rs` | rayon parallel, multi-seed, Welford streaming | ⬜ |
+| 3.2 Tier matrix config | `tools/par_mc_convergence/tiers.py` | T1 (1M×32) → T5 (100B×2) | ⬜ |
+| 3.3 Wilson CI gate | `tools/par_mc_convergence/wilson.py` | 99.9% CI, per-metric | ⬜ |
+| 3.4 Metric comparators (6 axes) | `tools/par_mc_convergence/compare.py` | RTP, hit_freq, feature_freq, var, max_win, P50/90/99/99.9 | ⬜ |
+| 3.5 FAIL diff reporter | `tools/par_mc_convergence/diff_report.py` | per-metric delta, suspected root cause | ⬜ |
+| 3.6 Attestation emit | `mc_sweep.attestation.json` per variant | all 200B+ MC results, Merkle pinned | ⬜ |
+| 3.7 Test gate | `tools/tests/test_mc_convergence.py` | synthetic PAR → guaranteed PASS, mutated PAR → FAIL | ⬜ |
+
+**Acceptance Faza 3:** Za sve 4 varijante, T3 (1B × 8 seedova) PASS sa Wilson CI ±0.002 pp. T5 (100B × 2 seeds) opt-in, audit-grade.
+
+### 🔴 FAZA 4 — Auto-deploy (production playable, 0% done)
+
+| Sub-task | Path | Acceptance | Status |
+|---|---|---|---|
+| 4.1 Pixi.js web playable shell | `web/play-template/` | reel sprites + bet/spin + animations + sound | ⬜ |
+| 4.2 IR → web bindings | `tools/par_deploy/web_emit.py` | UI calls engine_api.spin(), result animations match PAR | ⬜ |
+| 4.3 Fastify RGS backend | `server/rgs/` | session, bet/win endpoints, audit log | ⬜ |
+| 4.4 IR → RGS bindings | `tools/par_deploy/rgs_emit.py` | RGS evaluator = MC math (zero drift) | ⬜ |
+| 4.5 Asset pipeline | `tools/par_deploy/assets.py` | skin folder → reel symbols / line glyphs / sound | ⬜ |
+| 4.6 Build artefakt assembly | `games/<game>/<variant>/` | web/ + server/ + attestation/ + README.md | ⬜ |
+| 4.7 Merkle attestation chain | `attestation/{par,ir,mc,deploy}.merkle` | linkable Merkle chain od PAR-a do deploy-a | ⬜ |
+| 4.8 Multi-jurisdiction RTP clamp | `server/rgs/jurisdiction/*.py` | UKGC/MGA/GLI-19/Quebec adapters | ⬜ |
+| 4.9 Test gate (e2e) | `tools/tests/test_deploy_e2e.py` | spin 10K via RGS → web rendering, RTP measure = PAR | ⬜ |
+
+**Acceptance Faza 4:** Build proizvodi **prava slot igru** — Pixi.js animations, sound, full UI, RGS deployment-ready (Docker), Merkle chain unbroken.
+
+### 🔴 FAZA 5 — Studio variant compare (0% done)
+
+| Sub-task | Path | Acceptance | Status |
+|---|---|---|---|
+| 5.1 4-pane Studio HTML | `web/studio/variant-compare/` | 4 iframe-ovana playable side-by-side | ⬜ |
+| 5.2 Live KPI ribbon | per variant pane | RTP / hit-freq / vol delta visible | ⬜ |
+| 5.3 Promote-winner button | `tools/par_deploy/promote.py` | move chosen variant to `games/<game>/live/` | ⬜ |
+| 5.4 Compare report HTML | `reports/dossier/variant-compare-<game>.html` | side-by-side metrics + Merkle attestation chain | ⬜ |
+| 5.5 Test gate | `tools/tests/test_studio_compare.py` | 4 variants render, KPI calc correct, promote works | ⬜ |
+
+**Acceptance Faza 5:** Designer otvori Studio → vidi 4 varijante u 4-pane sa live KPI → klikne "Promote" na varijanti → ta varijanta postaje live build.
+
+## 🎚️ Acceptance criteria (cross-faza)
+
+| Criterion | Tolerance | Verification |
+|---|---|---|
+| `measured.rtp == par.rtp` | sub-ULP (1e-12) ili Wilson CI 99.9% | Faza 3 gate |
+| `measured.hit_freq == par.hit_freq` | sub-ULP | Faza 3 gate |
+| `measured.feature_freq == par.feature_freq` | sub-ULP per feature | Faza 3 gate |
+| `measured.max_win == par.max_win_cap` | exact | Faza 3 gate |
+| Build determinism | byte-identical 2× | Faza 4 gate |
+| Merkle chain unbroken | 4 links (par → ir → mc → deploy) | Faza 4 gate |
+| Web playable functional | bet/spin/win loop, animations, sound | Faza 4 e2e test |
+| RGS endpoint functional | session/bet/win/cashout | Faza 4 e2e test |
+
+## 💻 Compute regime
+
+| Tier | Spins/seed | Seeds | Total | Wallclock (M-series 12-core) | Kada |
+|---|---:|---:|---:|---|---|
+| T1 | 1M | 32 | 32M | ~15s | Designer fast feedback |
+| T2 | 10M | 16 | 160M | ~1 min | CI gate (PR check) |
+| T3 | 1B | 8 | 8B | ~10 min | Regulator GLI-19 default |
+| T4 | 10B | 4 | 40B | ~30 min | Pre-deploy stress |
+| T5 | 100B | 2 | 200B | ~30-60 min | Ultimate audit (opt-in) |
+
+## ⏱️ Realan timeline (5-7 nedelja POC za **1 igra × 4 varijante**)
+
+| Faza | Trajanje |
+|---|---|
+| Faza 1 — Auto-normalizer | 4-5 dana |
+| Faza 2 — PAR → IR mapping | 5-7 dana |
+| Faza 3 — MC convergence sweep | 4-5 dana |
+| Faza 4 — Production web playable + RGS | 17-24 dana (najveći deo) |
+| Faza 5 — Studio compare | 3-4 dana |
+| Integration + polish + 0-pp gate + audit dossier | 4-5 dana |
+| **Total POC** | **5-7 nedelja** sa production-grade web playable; **3-4 nedelje** sa scaffolded shell |
+
+## 🧱 Outstanding decisions (čeka Boki)
+
+1. **Web playable scope**: production (custom skin + animations + sound) ili scaffolded (default Pixi reel kit + minimal UI)?
+   - Production = 5-7 nedelja POC, regulator-pitch ready
+   - Scaffolded = 3-4 nedelje POC, demo-grade UI ali real math + RGS
+2. **UX**: CLI prvo, Web upload posle MVP? Ili obadva paralelno?
+3. **Sample PAR**: Boki obezbeđuje sample XLSX, ili krećem sa syntetic iz `quick-hit-platinum-phoenix` pilot-a?
+4. **Hardware**: Mac-only za POC (do T5 = 100B u ~30-60 min) ili cloud za production scale?
+
+## 📌 NEXT ACTION (čim Boki kaže "krećem fazu 1")
+
+```
+Day 1-2:  reports/schemas/canonical_par.schema.json (Draft 2020-12)
+          tools/par_normalize/{__init__,detect,canonical}.py
+Day 3-4:  tools/par_normalize/adapters/generic_xlsx.py
+          tools/par_normalize/audit.py (lossless gate)
+Day 5:    tools/par_library_cli.py + Merkle pin per variant
+          tools/tests/test_par_normalize.py (10+ tests)
+Commit:   feat(SLOT-MATH wave 1.1): canonical PAR schema + auto-normalizer skeleton
+```
+
+---
+
 ## 📊 REALAN STATUS — 2026-05-31 01:45 (post wave 81-83: reproducibility recipe + verifier + acceptance index)
 
 **Delta od prethodnog snapshot-a:**
