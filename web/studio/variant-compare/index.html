@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>slot-math · Variant Compare</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0a0a0a; color: #e0e0e0; font-family: ui-monospace, "SF Mono", Menlo, monospace; min-height: 100vh; }
+    header { padding: 16px 32px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 24px; }
+    header h1 { font-size: 18px; margin: 0; color: #00d4ff; }
+    header .meta { color: #666; font-size: 12px; }
+    select, button { background: #1a1a1a; color: #e0e0e0; border: 1px solid #333; padding: 8px 14px; border-radius: 4px; font: inherit; cursor: pointer; }
+    button.primary { background: #00d4ff; color: #000; border-color: #00d4ff; font-weight: bold; }
+    button.primary:hover { background: #00aacc; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    main { padding: 24px; max-width: 1600px; margin: 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .pane { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 16px; }
+    .pane.winner { border-color: #00ff88; box-shadow: 0 0 24px rgba(0,255,136,0.15); }
+    .pane h2 { margin: 0 0 12px; font-size: 16px; color: #00d4ff; }
+    .pane h2 .label { color: #888; font-size: 12px; font-weight: normal; margin-left: 8px; }
+    .frame-host { aspect-ratio: 16/9; background: #050505; border-radius: 4px; margin-bottom: 12px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; color: #555; font-size: 11px; }
+    iframe { width: 100%; height: 100%; border: 0; }
+    .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 12px; }
+    .metric { background: #0a0a0a; padding: 6px 10px; border-radius: 4px; }
+    .metric .label { color: #666; font-size: 10px; text-transform: uppercase; }
+    .metric .value { color: #e0e0e0; font-weight: bold; font-size: 14px; }
+    .metric .delta { color: #00ff88; font-size: 10px; }
+    .metric .delta.neg { color: #ff6666; }
+    .metric .delta.neu { color: #888; }
+    .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid #2a2a2a; }
+    .promote-radio { display: flex; align-items: center; gap: 8px; color: #888; font-size: 12px; }
+    .promote-radio input { accent-color: #00d4ff; transform: scale(1.3); cursor: pointer; }
+    #promote-btn { margin-top: 16px; padding: 14px 32px; font-size: 14px; }
+    .audit-log { margin-top: 24px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 16px; font-size: 12px; }
+    .audit-log h3 { margin: 0 0 12px; color: #00d4ff; font-size: 14px; }
+    .audit-log pre { color: #888; margin: 0; max-height: 180px; overflow-y: auto; white-space: pre-wrap; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #00ff88; color: #000; padding: 12px 20px; border-radius: 4px; font-weight: bold; display: none; }
+    .toast.show { display: block; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎰 Variant Compare</h1>
+    <select id="game-select" aria-label="Select game">
+      <option value="">— select game —</option>
+    </select>
+    <span class="meta" id="meta-line">no game loaded</span>
+    <button id="refresh">⟳ Refresh</button>
+  </header>
+
+  <main>
+    <div class="grid" id="grid">
+      <!-- Panes injected by compare.js -->
+    </div>
+
+    <button class="primary" id="promote-btn" disabled>Promote selected variant to live</button>
+
+    <div class="audit-log">
+      <h3>📜 Promotion audit log</h3>
+      <pre id="audit-pre">(no promotions yet)</pre>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="compare.js"></script>
+</body>
+</html>
