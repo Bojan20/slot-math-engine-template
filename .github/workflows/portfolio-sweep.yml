@@ -173,31 +173,119 @@ jobs:
           path: reports/portfolio/
           retention-days: 90
 
-      - name: Post PR comment with dashboard
+      # ─────────────────────────────────────────────────────────────────
+      # PR-only: fetch latest main artifact as baseline, compute diff.
+      # Baseline absence is NOT an error (first run on a new repo, or
+      # main has no artifact yet) — we just fall back to the full
+      # dashboard in the PR comment.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Fetch baseline bench.json from latest main run
+        id: baseline
+        if: github.event_name == 'pull_request' && always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p reports/portfolio/baseline
+          set +e
+          # Pick most recent SUCCESSFUL run of this workflow on main.
+          base_run_id=$(gh run list \
+              --workflow="portfolio-sweep.yml" \
+              --branch=main \
+              --status=success \
+              --limit=1 \
+              --json databaseId \
+              --jq '.[0].databaseId')
+          set -e
+          if [ -z "$base_run_id" ]; then
+            echo "::notice::No baseline run found on main — skipping diff."
+            echo "have_baseline=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::notice::Baseline run on main: $base_run_id"
+          # Artifact name pattern: portfolio-dashboard-<sha>. The exact
+          # SHA is unknown, so just download whatever matches the prefix.
+          gh run download "$base_run_id" \
+              --dir reports/portfolio/baseline \
+              --pattern "portfolio-dashboard-*" || {
+            echo "::warning::Failed to download baseline artifact"
+            echo "have_baseline=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+          # Artifact extraction puts files inside portfolio-dashboard-<sha>/
+          # (a directory). Locate bench.json within.
+          baseline_json=$(find reports/portfolio/baseline -name "bench.json" | head -1)
+          if [ -z "$baseline_json" ] || [ ! -f "$baseline_json" ]; then
+            echo "::warning::Baseline artifact has no bench.json"
+            echo "have_baseline=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          cp "$baseline_json" reports/portfolio/baseline/bench.json
+          echo "have_baseline=true" >> "$GITHUB_OUTPUT"
+          echo "baseline_run_id=$base_run_id" >> "$GITHUB_OUTPUT"
+          echo "::notice::Baseline bench.json staged at $baseline_json"
+
+      - name: Compute regression diff (current vs baseline)
+        id: diff
+        if: |
+          github.event_name == 'pull_request' &&
+          steps.baseline.outputs.have_baseline == 'true'
+        run: |
+          set +e
+          python -m tools.par_kernels.cli bench-diff \
+              reports/portfolio/bench.json \
+              reports/portfolio/baseline/bench.json \
+              --out reports/portfolio/diff.md \
+              --fail-on-regression
+          diff_ec=$?
+          set -e
+          echo "exit_code=$diff_ec" >> "$GITHUB_OUTPUT"
+          if [ $diff_ec -eq 0 ]; then
+            echo "::notice::Bench-diff: no regression vs main."
+          else
+            echo "::warning::Bench-diff: REGRESSION detected vs main."
+          fi
+
+      - name: Post PR comment (diff if baseline available, else dashboard)
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const path = 'reports/portfolio/dashboard.md';
-            if (!fs.existsSync(path)) {
-              console.log('No dashboard file — skipping comment.');
-              return;
-            }
-            const dashboard = fs.readFileSync(path, 'utf8');
+            const have_baseline = '${{ steps.baseline.outputs.have_baseline }}' === 'true';
+            const diff_exists = fs.existsSync('reports/portfolio/diff.md');
+            const dashboard_exists = fs.existsSync('reports/portfolio/dashboard.md');
+
             const status = '${{ steps.batch.outputs.status }}';
-            const emoji = status === '0' ? '✅' : '🔴';
-            const verdict = status === '0' ? 'PASSED' : 'FAILED';
+            const sweep_emoji = status === '0' ? '✅' : '🔴';
+            const sweep_verdict = status === '0' ? 'PASSED' : 'FAILED';
+
+            // Primary block: regression diff (compact, signal-focused)
+            const diff_md = (have_baseline && diff_exists)
+              ? fs.readFileSync('reports/portfolio/diff.md', 'utf8')
+              : '_No baseline available — showing full dashboard below._';
+
+            // Secondary block: full dashboard (collapsed)
+            const dashboard_md = dashboard_exists
+              ? fs.readFileSync('reports/portfolio/dashboard.md', 'utf8')
+              : '(dashboard missing — see workflow logs)';
+
+            const baseline_link = have_baseline
+              ? `[run ${{ steps.baseline.outputs.baseline_run_id || '0' }}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${{ steps.baseline.outputs.baseline_run_id || '0' }})`
+              : '_(none)_';
+
             const body = [
-              `## ${emoji} Portfolio Sweep — ${verdict}`,
+              `## ${sweep_emoji} Portfolio Sweep — ${sweep_verdict}`,
               '',
-              `**SHA:** \`${context.sha.slice(0,7)}\` · `,
+              `**Current SHA:** \`${context.sha.slice(0,7)}\` · `,
               `**MC spins/game:** ${{ steps.params.outputs.mc_spins }} · `,
-              `**Tolerance:** ${{ steps.params.outputs.tolerance_bps }} bps`,
+              `**Tolerance:** ${{ steps.params.outputs.tolerance_bps }} bps · `,
+              `**Baseline:** ${baseline_link}`,
               '',
-              '<details><summary>Click to expand dashboard</summary>',
+              diff_md,
               '',
-              dashboard,
+              '<details><summary>Click to expand full dashboard</summary>',
+              '',
+              dashboard_md,
               '',
               '</details>',
               '',
@@ -232,8 +320,22 @@ jobs:
               console.log('Created new portfolio comment');
             }
 
-      - name: Fail job on red sweep
-        if: steps.batch.outputs.status != '0'
+      - name: Fail job on red sweep or regression
+        # Sweep failure (composer/MC) → always fatal.
+        # Regression diff failure → fatal only on PR (don't break main pushes
+        # since main is the new baseline and we already gated via batch).
+        if: |
+          steps.batch.outputs.status != '0' ||
+          (github.event_name == 'pull_request' &&
+           steps.diff.outputs.exit_code != '' &&
+           steps.diff.outputs.exit_code != '0')
         run: |
-          echo "::error::Portfolio sweep returned exit ${{ steps.batch.outputs.status }} — check dashboard artifact"
+          sweep_ec="${{ steps.batch.outputs.status }}"
+          diff_ec="${{ steps.diff.outputs.exit_code }}"
+          if [ "$sweep_ec" != "0" ]; then
+            echo "::error::Portfolio sweep returned exit $sweep_ec — check dashboard artifact"
+          fi
+          if [ -n "$diff_ec" ] && [ "$diff_ec" != "0" ]; then
+            echo "::error::Bench-diff returned exit $diff_ec — regression vs main baseline"
+          fi
           exit 1

@@ -118,3 +118,52 @@ def test_workflow_concurrency_cancels_in_progress(workflow_dict):
 def test_workflow_emits_job_summary(workflow_text):
     """Dashboard must be appended to GITHUB_STEP_SUMMARY for inline UI view."""
     assert "GITHUB_STEP_SUMMARY" in workflow_text
+
+
+# ───────── bench-diff integration (PR-only regression detection) ─────────
+
+
+def test_workflow_fetches_baseline_from_main(workflow_text):
+    """On PR, must download latest successful main run artifact for baseline."""
+    assert "Fetch baseline bench.json" in workflow_text
+    assert "gh run list" in workflow_text
+    assert "--branch=main" in workflow_text
+    assert "--status=success" in workflow_text
+
+
+def test_workflow_runs_bench_diff_on_pr(workflow_text):
+    """PR runs must compute regression diff via `slot-math bench-diff`."""
+    assert "Compute regression diff" in workflow_text
+    assert "bench-diff" in workflow_text
+    assert "--fail-on-regression" in workflow_text
+    assert "reports/portfolio/diff.md" in workflow_text
+
+
+def test_workflow_pr_comment_includes_diff(workflow_text):
+    """PR comment must surface diff Markdown + collapsed full dashboard."""
+    assert "diff.md" in workflow_text
+    assert "Click to expand full dashboard" in workflow_text
+
+
+def test_workflow_baseline_absence_is_not_error(workflow_text):
+    """Missing baseline (first PR ever, etc.) must NOT fail the workflow."""
+    # Sentinel-driven graceful fallback
+    assert "have_baseline=false" in workflow_text
+    assert "No baseline run found on main" in workflow_text
+
+
+def test_workflow_uses_gh_token_for_artifact_download(workflow_text):
+    """gh run download needs GITHUB_TOKEN in env."""
+    assert "GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}" in workflow_text
+
+
+def test_workflow_fails_on_pr_regression(workflow_text):
+    """PR with diff exit != 0 must mark job red (gate)."""
+    assert "Fail job on red sweep or regression" in workflow_text
+    assert "steps.diff.outputs.exit_code" in workflow_text
+
+
+def test_workflow_main_push_never_regression_gated(workflow_text):
+    """Main push must skip regression gate (it IS the new baseline)."""
+    # The gate condition restricts diff-failure path to PR only.
+    assert "github.event_name == 'pull_request'" in workflow_text
