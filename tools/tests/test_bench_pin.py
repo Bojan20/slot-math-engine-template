@@ -17,6 +17,8 @@ import pytest
 from tools.par_kernels.bench_pin import (
     INDEX_NAME,
     compute_trend,
+    detect_trend_regression,
+    format_regression_markdown,
     format_trend_markdown,
     load_history,
     pin_bench,
@@ -240,6 +242,159 @@ def test_cli_bench_pin_idempotent_second_run():
         assert proc1.returncode == 0 and proc2.returncode == 0
         assert "✓ Pinned" in proc1.stdout
         assert "= Already pinned" in proc2.stdout
+
+
+# ───────── trend-based regression detection ─────────
+
+
+def test_regression_skipped_when_history_too_short():
+    """Need at least min_runs entries before slope can be trusted."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(3):  # < default min_runs=5
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z", mc_rtp=0.96)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir))
+        assert report["skipped"] is True
+        assert report["has_regression"] is False
+
+
+def test_regression_flat_series_no_drift():
+    """6 identical-RTP runs → slope = 0 → no regression."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z", mc_rtp=0.96)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=10.0)
+        assert report["has_regression"] is False
+        assert report["regressions"] == []
+
+
+def test_regression_steep_drift_up_flagged():
+    """Each run RTP +0.005 (+50 bps) → slope ≈ 50 bps/run → fails 20-bps gate."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z",
+                     mc_rtp=0.96 + i*0.005)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=20.0)
+        assert report["has_regression"] is True
+        assert len(report["regressions"]) == 1
+        r = report["regressions"][0]
+        assert r["game_variant"] == "wrath/v1"
+        assert r["slope_bps_per_run"] == pytest.approx(50.0, abs=0.1)
+        assert r["direction"] == "drift up ⬆️"
+
+
+def test_regression_steep_drift_down_flagged():
+    """Each run -0.003 (-30 bps) → slope ≈ -30 bps → fails 20-bps gate."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z",
+                     mc_rtp=0.96 - i*0.003)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=20.0)
+        assert report["has_regression"] is True
+        r = report["regressions"][0]
+        assert r["slope_bps_per_run"] == pytest.approx(-30.0, abs=0.1)
+        assert r["direction"] == "drift down ⬇️"
+
+
+def test_regression_subthreshold_drift_not_flagged():
+    """Drift of 8 bps/run vs 20-bps gate = within tolerance."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z",
+                     mc_rtp=0.96 + i*0.0008)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=20.0)
+        assert report["has_regression"] is False
+
+
+def test_regression_markdown_renders_table_when_flagged():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z",
+                     mc_rtp=0.96 + i*0.005)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=20.0)
+        md = format_regression_markdown(report)
+        assert "🔴 Trend regression detected" in md
+        assert "wrath/v1" in md
+        assert "drift up" in md
+        # Threshold + min_runs surfaced
+        assert "20" in md  # threshold value
+
+
+def test_regression_markdown_renders_pass_when_clean():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            _pin_one(td, pin_dir, f"2026-05-31T10:0{i}:00Z", mc_rtp=0.96)
+        report = detect_trend_regression(compute_trend(pin_dir=pin_dir),
+                                         slope_threshold_bps=20.0)
+        md = format_regression_markdown(report)
+        assert "✅ No trend regression" in md
+
+
+def test_cli_bench_trend_fail_on_slope_exits_one():
+    """CLI --fail-on-slope must exit 1 when slope exceeds threshold."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            b = _make_bench(f"2026-05-31T10:0{i}:00Z",
+                            mc_rtp=0.96 + i*0.005)
+            p = td / f"b{i}.json"
+            p.write_text(json.dumps(b))
+            subprocess.run(
+                [sys.executable, "-m", "tools.par_kernels.cli",
+                 "bench-pin", str(p), "--pin-dir", str(pin_dir)],
+                cwd=REPO, capture_output=True, text=True, check=False, timeout=30,
+            )
+        proc = subprocess.run(
+            [sys.executable, "-m", "tools.par_kernels.cli",
+             "bench-trend", "--pin-dir", str(pin_dir),
+             "--fail-on-slope", "20"],
+            cwd=REPO, capture_output=True, text=True, check=False, timeout=30,
+        )
+        assert proc.returncode == 1
+        assert "🔴 Trend regression detected" in proc.stdout
+
+
+def test_cli_bench_trend_fail_on_slope_exits_zero_when_clean():
+    """CLI --fail-on-slope must exit 0 when slopes are within bounds."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        pin_dir = td / "history"
+        for i in range(6):
+            b = _make_bench(f"2026-05-31T10:0{i}:00Z", mc_rtp=0.96)
+            p = td / f"b{i}.json"
+            p.write_text(json.dumps(b))
+            subprocess.run(
+                [sys.executable, "-m", "tools.par_kernels.cli",
+                 "bench-pin", str(p), "--pin-dir", str(pin_dir)],
+                cwd=REPO, capture_output=True, text=True, check=False, timeout=30,
+            )
+        proc = subprocess.run(
+            [sys.executable, "-m", "tools.par_kernels.cli",
+             "bench-trend", "--pin-dir", str(pin_dir),
+             "--fail-on-slope", "20"],
+            cwd=REPO, capture_output=True, text=True, check=False, timeout=30,
+        )
+        assert proc.returncode == 0
+        assert "✅ No trend regression" in proc.stdout
 
 
 def test_cli_bench_trend_renders_after_two_pins():

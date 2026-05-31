@@ -292,6 +292,86 @@ def format_trend_markdown(trend: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+# ───────── slope-based regression detection ─────────
+
+
+def detect_trend_regression(
+    trend: dict[str, Any], *,
+    slope_threshold_bps: float = 20.0,
+    min_runs: int = 5,
+) -> dict[str, Any]:
+    """Flag games whose RTP slope across pinned history exceeds threshold.
+
+    A slope of ±20 bps/run over min_runs+ pinned runs is "drift" — even
+    if no single run failed convergence, the long-run direction is wrong
+    and the math is no longer Wilson-stable vs the pinned baseline.
+
+    Returns a dict with `regressions` list (each game-key + slope) and
+    `has_regression` boolean.
+    """
+    if trend["n_entries"] < min_runs:
+        return {"has_regression": False, "regressions": [],
+                "skipped": True, "reason": f"n_entries < min_runs ({min_runs})"}
+    regressions = []
+    for key, g in trend["games"].items():
+        slope = g.get("rtp_slope_bps_per_run")
+        if slope is None:
+            continue
+        n_valid = sum(1 for r in g.get("rtp_series", []) if r is not None)
+        if n_valid < min_runs:
+            continue
+        if abs(slope) > slope_threshold_bps:
+            regressions.append({
+                "game_variant": key,
+                "shape": g.get("shape"),
+                "slope_bps_per_run": slope,
+                "n_runs": n_valid,
+                "rtp_min": g.get("rtp_min"),
+                "rtp_max": g.get("rtp_max"),
+                "direction": "drift up ⬆️" if slope > 0 else "drift down ⬇️",
+            })
+    return {
+        "has_regression": len(regressions) > 0,
+        "regressions": regressions,
+        "skipped": False,
+        "threshold_bps": slope_threshold_bps,
+        "min_runs": min_runs,
+    }
+
+
+def format_regression_markdown(report: dict[str, Any]) -> str:
+    """Render a trend-regression report as Markdown."""
+    if report.get("skipped"):
+        return (f"_Trend regression check skipped: {report.get('reason', 'unknown')}_\n")
+    if not report["has_regression"]:
+        return (
+            f"## ✅ No trend regression\n\n"
+            f"_Threshold: ±{report['threshold_bps']:.1f} bps/run over "
+            f"≥{report['min_runs']} runs · all games within bounds._\n"
+        )
+    lines = [
+        f"## 🔴 Trend regression detected ({len(report['regressions'])} games)",
+        "",
+        f"_Threshold: ±{report['threshold_bps']:.1f} bps/run over "
+        f"≥{report['min_runs']} runs._",
+        "",
+        "| Game/Variant | Shape | Slope (bps/run) | Direction | "
+        "n_runs | RTP min..max |",
+        "|---|---|---:|:---:|---:|---|",
+    ]
+    for r in report["regressions"]:
+        rmin = r["rtp_min"]
+        rmax = r["rtp_max"]
+        range_s = (f"{rmin*100:.4f}% .. {rmax*100:.4f}%"
+                   if rmin is not None and rmax is not None else "—")
+        lines.append(
+            f"| `{r['game_variant']}` | `{r['shape']}` | "
+            f"{r['slope_bps_per_run']:+.4f} | {r['direction']} | "
+            f"{r['n_runs']} | {range_s} |"
+        )
+    return "\n".join(lines) + "\n"
+
+
 # ───────── CLI hooks ─────────
 
 
@@ -308,9 +388,19 @@ def cmd_bench_pin(args) -> int:
 
 def cmd_bench_trend(args) -> int:
     trend = compute_trend(pin_dir=args.pin_dir, last_n=args.last_n)
-    md = format_trend_markdown(trend)
+    md_parts = [format_trend_markdown(trend)]
+    regression_ec = 0
+    if getattr(args, "fail_on_slope", None) is not None:
+        report = detect_trend_regression(
+            trend,
+            slope_threshold_bps=float(args.fail_on_slope),
+            min_runs=int(getattr(args, "min_runs", 5)),
+        )
+        md_parts.append(format_regression_markdown(report))
+        regression_ec = 1 if report.get("has_regression") else 0
+    combined = "\n".join(md_parts)
     if args.out:
-        Path(args.out).write_text(md)
+        Path(args.out).write_text(combined)
     else:
-        print(md)
-    return 0
+        print(combined)
+    return regression_ec

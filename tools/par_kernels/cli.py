@@ -1087,6 +1087,12 @@ def main(argv: list[str] | None = None) -> int:
     p_trend.add_argument("--last-n", type=int, default=None,
                          help="Only analyze the N most recent entries")
     p_trend.add_argument("--out", help="Write trend Markdown to path (default stdout)")
+    p_trend.add_argument("--fail-on-slope", type=float, default=None,
+                         help="Exit 1 if any game's RTP slope exceeds ±BPS/run "
+                              "(typical: 20 for tight gate, 50 for permissive)")
+    p_trend.add_argument("--min-runs", type=int, default=5,
+                         help="Minimum pinned runs required for slope detection "
+                              "(default: 5)")
     from tools.par_kernels.bench_pin import cmd_bench_trend
     p_trend.set_defaults(func=cmd_bench_trend)
 
