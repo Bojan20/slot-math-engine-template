@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "mystic-cluster",
+    "name": "Mystic Cluster",
+    "version": "1.0.0",
+    "description": "3rd real-world proof — 6×5 cluster-pays + cascade. Different topology + different kernel set than Wrath/Oracle."
+  },
+  "topology": { "kind": "rectangular", "reels": 6, "rows": 5 },
+  "symbols": [
+    { "id": "GEM_R", "name": "Ruby",     "kind": "hp" },
+    { "id": "GEM_B", "name": "Sapphire", "kind": "hp" },
+    { "id": "GEM_G", "name": "Emerald",  "kind": "hp" },
+    { "id": "GEM_Y", "name": "Topaz",    "kind": "mp" },
+    { "id": "GEM_P", "name": "Amethyst", "kind": "mp" },
+    { "id": "FRUIT_A", "name": "Cherry", "kind": "lp" },
+    { "id": "FRUIT_B", "name": "Lemon",  "kind": "lp" },
+    { "id": "SCAT", "name": "Star Scatter", "kind": "scatter" }
+  ],
+  "evaluation": { "kind": "cluster_pays", "min_cluster_size": 5, "adjacency": "4-way" },
+  "features": [
+    { "kind": "cascade", "name": "Cascade after every winning spin",
+      "trigger": "any_paying_cluster", "max_cascades": 8 }
+  ],
+  "rng": { "kind": "pcg64" },
+  "bet": {
+    "currency": "EUR", "base_bet": 1,
+    "max_win_x": 10000, "win_cap_apply": "per_spin",
+    "target_volatility": "high"
+  },
+  "provenance": { "par_source": "v1.0.0", "ir_sha256": "synthetic" }
+}

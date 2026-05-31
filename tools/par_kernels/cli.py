@@ -141,6 +141,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
 
     from tools.par_kernels.composer import compose
     from tools.par_kernels.generic_params import (
+        cascade_uplift_from_cf,
         delegated_baseline_rtp,
         lightning_uplift_rtp_from_ir,
         lines_eval_rtp_from_ir,
@@ -186,7 +187,10 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     if lightning_rtp == 0:
         lightning_rtp = cf.get("components", {}).get("lightning_uplift", 0.0)
 
-    delegated = delegated_baseline_rtp(cf) + base_rtp + scatter_rtp + lightning_rtp
+    # Cascade uplift (delegated slice — kernel-level cascade math TBD)
+    cascade_rtp = cascade_uplift_from_cf(cf)
+
+    delegated = delegated_baseline_rtp(cf) + base_rtp + scatter_rtp + lightning_rtp + cascade_rtp
 
     # MC (optional) — defaults to Rust runtime, falls back to Python
     mc_result = None

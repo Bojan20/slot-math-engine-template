@@ -134,6 +134,46 @@ def build_generic_params(
     if kernel_id == "asymmetric_paytable":
         return None
 
+    # ── cluster_pays (NEW — 3rd game shape: cluster grids) ────────
+    # CF source provides `cluster_distribution` + `pay_table`; we feed
+    # them straight to the closed-form kernel.
+    if kernel_id == "cluster_pays":
+        from slot_math_kernels.cluster_pays import ClusterPaysParams
+        cluster_dist_raw = cf.get("cluster_distribution")
+        pay_table_raw = cf.get("pay_table")
+        if not cluster_dist_raw or not pay_table_raw:
+            return None
+        # Convert string keys to int (closed-form size keys)
+        cluster_dist = {
+            sym: {int(k): float(v) for k, v in dist.items()}
+            for sym, dist in cluster_dist_raw.items()
+        }
+        pay_table = {
+            sym: {int(k): float(v) for k, v in tier.items()}
+            for sym, tier in pay_table_raw.items()
+        }
+        # Topology + min_cluster_size from IR
+        eval_block = ir.get("evaluation", {})
+        min_cluster = int(eval_block.get("min_cluster_size", 5))
+        topo = ir.get("topology", {})
+        return ClusterPaysParams(
+            cluster_count_distribution=cluster_dist,
+            pay_table=pay_table,
+            min_cluster_size=min_cluster,
+            grid_rows=int(topo.get("rows", 7)),
+            grid_cols=int(topo.get("reels", 7)),
+            adjacency=eval_block.get("adjacency", "4-way"),
+        )
+
+    # ── cascade (NEW — per-spin uplift after winning spin) ────────
+    # cascade kernel needs trigger_p + uplift factor. CF source carries
+    # `cascade_uplift` (already a multiplier on base RTP).
+    # For now, we model cascade as a constant uplift slice: handled by
+    # cascade_uplift_from_cf() helper, NOT by the cascade kernel here
+    # (cascade kernel expects per-cascade tumble math we don't have in CF).
+    if kernel_id == "cascade":
+        return None  # delegated to cascade_uplift_from_cf()
+
     # ── expanding_symbol (free_spins) ──────────────────────────────
     if kernel_id == "expanding_symbol":
         from slot_math_kernels.expanding_symbol import ExpandingSymbolParams
@@ -247,6 +287,17 @@ def lightning_uplift_rtp_from_ir(
         return 0.0, {}
     r = lightning_uplift_rtp(p)
     return r["rtp_contribution"], r
+
+
+def cascade_uplift_from_cf(cf: dict[str, Any]) -> float:
+    """Return the cascade-uplift slice from CF (delegated; not a kernel).
+
+    Cascade RTP contribution is modeled as a fixed slice (`cascade_uplift`
+    component in CF). Per-cascade tumble math (cascade pays × probability
+    of N-th cascade) is NOT modeled by the generic composer — game-
+    specific cascade simulation belongs in MC, not in closed-form.
+    """
+    return cf.get("components", {}).get("cascade_uplift", 0.0)
 
 
 def lines_eval_rtp_from_ir(ir: dict[str, Any]) -> tuple[float, dict[str, Any]]:

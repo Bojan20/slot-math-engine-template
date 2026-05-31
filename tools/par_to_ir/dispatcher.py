@@ -41,6 +41,7 @@ EVALUATION_KIND_TO_KERNELS: dict[str, list[str]] = {
     "lines": ["asymmetric_paytable"],  # generic line eval
     "ways": ["ways_evaluator"],
     "cluster": ["cluster_pays"],
+    "cluster_pays": ["cluster_pays"],  # alias — many GDDs use the full name
     "pay_anywhere": ["pay_anywhere"],
     "pattern": ["asymmetric_paytable"],
 }
