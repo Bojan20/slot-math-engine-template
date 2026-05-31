@@ -1,8 +1,10 @@
 # SLOT-MATH — Shape Coverage Dossier
 
 > One-page authority on what slot-math W244 stack supports end-to-end.
-> Status: **v2.1 — 5/5 shapes covered, 6/6 games proven, sub-bps composer
-> + Wilson CI MC, CI-gated portfolio sweep on every push.**
+> Status: **v2.3 — 5/5 shapes covered, 6/6 games proven, sub-bps composer
+> + Wilson CI MC, CI-gated portfolio sweep with bench-history ledger,
+> 1-run + multi-run regression detection (composer drift, MC convergence,
+> throughput, slope), and one-command end-to-end demo subcommand.**
 
 [![PAR Library Portfolio Sweep](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/portfolio-sweep.yml/badge.svg?branch=main)](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/portfolio-sweep.yml)
 [![slot-math-ci](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/slot-math-ci.yml/badge.svg?branch=main)](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/slot-math-ci.yml)
@@ -60,31 +62,55 @@ Real-world or synthetic-stand-in game per shape, all in
 
 ---
 
-## CLI surface (post v2.0)
+## CLI surface (post v2.3 — full pipeline)
 
 ```bash
-# Discovery
-python3 -m tools.par_kernels.cli shapes        # what shapes are supported
-python3 -m tools.par_kernels.cli list-games    # what games are in the library
+# ───── Discovery ─────
+slot-math shapes         # what shapes are supported (+ throughput)
+slot-math list-games     # what games are in the PAR library
 
-# Scaffold a new game (any shape)
-python3 -m tools.par_kernels.cli init <game> <variant> --shape <shape>
+# ───── Scaffold a new game (any shape) ─────
+slot-math init <game> <variant> --shape <shape>
 #   e.g. init crimson-tiger v1.0.0 --shape ways
 
-# Evaluate (composer + optional MC + per-feature breakdown)
-python3 -m tools.par_kernels.cli evaluate --game <game> --variant <variant>
-python3 -m tools.par_kernels.cli evaluate --game <game> --variant <variant> --mc-spins 10_000_000
-python3 -m tools.par_kernels.cli evaluate --game <game> --variant <variant> --mc-spins 10_000_000 --python-mc
+# ───── Evaluate ONE game (composer + optional MC + per-feature breakdown) ─────
+slot-math evaluate --game <game> --variant <variant>
+slot-math evaluate --game <game> --variant <variant> --mc-spins 10_000_000
+slot-math evaluate path/to/game.ir.json --cf path/to/cf.json   # direct file mode
 
-# Direct file mode (no PAR library entry needed)
-python3 -m tools.par_kernels.cli evaluate path/to/game.ir.json --cf path/to/cf.json
+# ───── Portfolio sweep (ALL games at once) ─────
+slot-math batch                                 # composer only, ~4s
+slot-math batch --mc-spins 100000               # add MC, shape-dispatched
+slot-math batch --mc-spins 1000000 --out dashboard.md --bench bench.json
+slot-math batch --smoke                         # fast PR-style (--mc-spins 1000)
+slot-math batch --filter cluster                # only games matching substring
+
+# ───── Bench history (long-running ledger + diff + trend) ─────
+slot-math bench-diff current.json baseline.json --fail-on-regression
+slot-math bench-pin current.json --pin-dir reports/bench/portfolio-history
+slot-math bench-trend --last-n 20
+slot-math bench-trend --last-n 20 --fail-on-slope 50 --min-runs 5
+
+# ───── End-to-end showcase (screencast / demo) ─────
+slot-math demo --out demo.md                    # runs all 4 primitives in one
 ```
 
+`slot-math` is the entrypoint installed by `pip install -e .`. Equivalent
+explicit form: `python3 -m tools.par_kernels.cli <subcommand>`.
+
 Default behaviour:
-- Composer always runs (closed-form, sub-bps target)
-- MC opt-in (`--mc-spins N`), Rust if binary built, Python fallback
-- Tolerance 50 bps (accommodates reel-strip vs RNG model gap)
-- Markdown report to stdout or `--out path.md`
+- Composer always runs (closed-form, sub-bps target).
+- MC opt-in (`--mc-spins N`), shape-dispatched (cluster/ways/crash/wrath/
+  pay_anywhere), Rust binary preferred (`mc_extended_real`,
+  `mc_runtime_real`), Python fallback if binary missing.
+- Tolerance 50 bps (accommodates reel-strip vs RNG model gap).
+- Markdown report to stdout or `--out path.md`.
+
+CI gate: `.github/workflows/portfolio-sweep.yml` runs `batch --mc-spins
+1_000_000` on every push to main + every PR + weekly cron. On PRs the
+workflow downloads the latest `portfolio-history-ledger` artifact, runs
+`bench-diff --fail-on-regression`, and posts a single regression comment.
+On main pushes it pins the new run into the ledger and re-uploads.
 
 ---
 
