@@ -1,0 +1,11 @@
+{
+  "status": "LOCKED",
+  "game": "Wrath of Olympus",
+  "version": "12.0.0",
+  "sealed_at": "2026-05-19T15:07:26.014Z",
+  "root_manifest_hash": "9a000a38911a4995da617b01d9e6ff8a4349d671d3ccb84443b7df012901a15b",
+  "files_sealed": 23,
+  "certificate": "reports/lock/LOCK_CERTIFICATE.md",
+  "manifest": "reports/lock/MANIFEST.json",
+  "unlock_procedure": "Delete LOCK_STATE.json + bump spec version + re-derive + re-validate + re-run scripts/lock-math.mjs"
+}

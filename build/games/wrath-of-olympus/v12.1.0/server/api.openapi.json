@@ -1,0 +1,100 @@
+{
+  "info": {
+    "description": "Production RGS for slot-math-engine-template build. PAR Merkle: ...",
+    "title": "slot-math RGS \u2014 Wrath of Olympus",
+    "version": "12.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/bet": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "stake": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "session_id"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spin result + audit hash"
+          }
+        },
+        "summary": "Place bet + spin"
+      }
+    },
+    "/cashout": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Cashout receipt"
+          }
+        },
+        "summary": "Close session, return final balance"
+      }
+    },
+    "/game": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Game IR"
+          }
+        },
+        "summary": "IR (regulator-readable)"
+      }
+    },
+    "/healthz": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "Liveness"
+      }
+    },
+    "/session": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "balance": {
+                    "type": "number"
+                  },
+                  "jurisdiction": {
+                    "type": "string"
+                  },
+                  "seed": {
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session opened"
+          }
+        },
+        "summary": "Open player session"
+      }
+    }
+  }
+}

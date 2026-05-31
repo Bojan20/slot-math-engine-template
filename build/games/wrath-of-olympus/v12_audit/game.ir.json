@@ -1,0 +1,606 @@
+{
+  "bet": {
+    "base_bet": 1.0,
+    "currency": "USD",
+    "denominations": [
+      0.1,
+      0.2,
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ]
+  },
+  "compliance": {
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ DGE",
+      "MT",
+      "ON",
+      "AU NCPF"
+    ],
+    "ldw_disclosure": true,
+    "max_win_cap_required": 250000.0,
+    "near_miss_rule": "must_be_random",
+    "rtp_range_required": [
+      0.92,
+      0.98
+    ],
+    "session_time_display": true
+  },
+  "evaluation": {
+    "blockers": [
+      "S",
+      "B"
+    ],
+    "direction": "ltr",
+    "kind": "lines",
+    "min_match": 3,
+    "pay_left_to_right_only": true,
+    "paylines": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        1,
+        2,
+        2
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "wild_substitution": {
+      "best_paying_interpretation": true,
+      "enabled": true,
+      "excludes": [
+        "S",
+        "B"
+      ]
+    }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "name": "Soul of Olympus Free Spins",
+      "notes": "Lightning disabled during FS \u2014 clean progressive-mult math (no anti-drift hacks).",
+      "progressive_multiplier": {
+        "increment": 1,
+        "increments_on": "each_winning_fs_spin",
+        "max": 10,
+        "start": 1
+      },
+      "reels_override": "free_spins",
+      "retrigger": {
+        "enabled": true,
+        "max_total": 100,
+        "thresholds": {
+          "3": 14,
+          "4": 16,
+          "5": 18
+        }
+      },
+      "scatter_pays": {
+        "3": 2,
+        "4": 3,
+        "5": 10
+      },
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": {
+          "3": 14,
+          "4": 16,
+          "5": 18
+        }
+      }
+    },
+    {
+      "cash_value_distribution": [
+        {
+          "value": 1,
+          "weight": 404
+        },
+        {
+          "value": 2,
+          "weight": 250
+        },
+        {
+          "value": 3,
+          "weight": 150
+        },
+        {
+          "value": 5,
+          "weight": 82
+        },
+        {
+          "value": 8,
+          "weight": 45
+        },
+        {
+          "value": 10,
+          "weight": 25
+        },
+        {
+          "value": 15,
+          "weight": 11
+        }
+      ],
+      "full_grid_bonus_x": 500,
+      "jackpot_tiers": [
+        {
+          "id": "MINI",
+          "multiplier": 25,
+          "weight": 10
+        },
+        {
+          "id": "MINOR",
+          "multiplier": 75,
+          "weight": 8
+        },
+        {
+          "id": "MAJOR",
+          "multiplier": 200,
+          "weight": 5
+        },
+        {
+          "id": "GRAND",
+          "multiplier": 500,
+          "weight": 2
+        }
+      ],
+      "kind": "hold_and_win",
+      "name": "Zeus's Storm",
+      "orb_land_chance_base": 0.0352,
+      "orb_land_chance_fill_bonus": 0.015,
+      "respin_reset_on_new": true,
+      "respins_initial": 3,
+      "trigger": {
+        "by": "bonus_count",
+        "min": 6
+      }
+    },
+    {
+      "distribution": [
+        {
+          "value": 2,
+          "weight": 70
+        },
+        {
+          "value": 3,
+          "weight": 18
+        },
+        {
+          "value": 5,
+          "weight": 10
+        },
+        {
+          "value": 10,
+          "weight": 2
+        }
+      ],
+      "kind": "multiplier",
+      "name": "Lightning Multiplier",
+      "notes": "Disabled during Free Spins (FS uses its own progressive multiplier).",
+      "scope": "base_game_only",
+      "trigger": {
+        "by": "winning_spin",
+        "probability": 0.1485
+      }
+    }
+  ],
+  "kernel_composition": [
+    {
+      "feature_kind": "evaluation.lines",
+      "kernel_id": "asymmetric_paytable",
+      "kernel_version": "w244"
+    },
+    {
+      "feature_kind": "feature.free_spins",
+      "kernel_id": "expanding_symbol",
+      "kernel_version": "w244"
+    },
+    {
+      "feature_kind": "feature.hold_and_win",
+      "kernel_id": "hold_and_win",
+      "kernel_version": "w244"
+    }
+  ],
+  "limits": {
+    "hit_freq_target": 22.26768075,
+    "max_win_x": 5000.0,
+    "rtp_tolerance": 5e-05,
+    "target_rtp": 0.960011,
+    "target_volatility": "high",
+    "win_cap_apply": "per_spin"
+  },
+  "meta": {
+    "id": "wrath-of-olympus",
+    "name": "Wrath of Olympus",
+    "theme_tags": [
+      "greek-mythology",
+      "lightning",
+      "zeus"
+    ],
+    "version": "12.0.0"
+  },
+  "paytable": {
+    "AM": {
+      "3": 0.351,
+      "4": 1.285,
+      "5": 4.62
+    },
+    "GM": {
+      "3": 0.391,
+      "4": 1.545,
+      "5": 5.56
+    },
+    "H": {
+      "3": 1.2,
+      "4": 5.0,
+      "5": 20.0
+    },
+    "HM": {
+      "3": 0.55,
+      "4": 2.3,
+      "5": 9.0
+    },
+    "LA": {
+      "3": 0.391,
+      "4": 1.545,
+      "5": 5.56
+    },
+    "LR": {
+      "3": 0.351,
+      "4": 1.285,
+      "5": 4.62
+    },
+    "P": {
+      "3": 0.8,
+      "4": 3.2,
+      "5": 13.0
+    },
+    "SH": {
+      "3": 0.55,
+      "4": 2.3,
+      "5": 9.0
+    },
+    "SW": {
+      "3": 0.45,
+      "4": 2.0,
+      "5": 8.0
+    },
+    "VA": {
+      "3": 0.331,
+      "4": 1.025,
+      "5": 3.6
+    },
+    "W": {
+      "3": 2.0,
+      "4": 8.0,
+      "5": 40.0
+    },
+    "Z": {
+      "3": 1.6,
+      "4": 6.5,
+      "5": 32.0
+    }
+  },
+  "provenance": {
+    "ir_sha256": "b7031546884a02a36a19f4add687274c5bfac753c25a5bf277c2b0e626ddb447",
+    "par_sha256": "27b83dba8298547db4cd151bc4d6776546ecb4aaf581bf43a46d505236cea110",
+    "par_source": "wrath-of-olympus.ir.json",
+    "vendor": "vanvinkl-studio"
+  },
+  "reels": {
+    "base": [
+      {
+        "AM": 7.0,
+        "B": 12.0,
+        "GM": 9.0,
+        "H": 5.0,
+        "HM": 6.0,
+        "LA": 9.0,
+        "LR": 7.0,
+        "P": 6.0,
+        "S": 3.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 6.0,
+        "W": 6.0,
+        "Z": 4.0
+      },
+      {
+        "AM": 7.0,
+        "B": 12.0,
+        "GM": 9.0,
+        "H": 5.0,
+        "HM": 6.0,
+        "LA": 9.0,
+        "LR": 7.0,
+        "P": 6.0,
+        "S": 3.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 6.0,
+        "W": 7.0,
+        "Z": 4.0
+      },
+      {
+        "AM": 7.0,
+        "B": 13.0,
+        "GM": 8.0,
+        "H": 5.0,
+        "HM": 6.0,
+        "LA": 8.0,
+        "LR": 6.0,
+        "P": 6.0,
+        "S": 4.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 6.0,
+        "W": 8.0,
+        "Z": 4.0
+      },
+      {
+        "AM": 7.0,
+        "B": 12.0,
+        "GM": 9.0,
+        "H": 5.0,
+        "HM": 6.0,
+        "LA": 9.0,
+        "LR": 7.0,
+        "P": 6.0,
+        "S": 3.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 6.0,
+        "W": 7.0,
+        "Z": 4.0
+      },
+      {
+        "AM": 7.0,
+        "B": 12.0,
+        "GM": 9.0,
+        "H": 5.0,
+        "HM": 6.0,
+        "LA": 9.0,
+        "LR": 7.0,
+        "P": 6.0,
+        "S": 3.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 6.0,
+        "W": 6.0,
+        "Z": 4.0
+      }
+    ],
+    "free_spins": [
+      {
+        "AM": 12.0,
+        "GM": 14.0,
+        "H": 4.0,
+        "HM": 7.0,
+        "LA": 14.0,
+        "LR": 12.0,
+        "P": 6.0,
+        "S": 2.0,
+        "SH": 7.0,
+        "SW": 7.0,
+        "VA": 11.0,
+        "W": 8.0,
+        "Z": 3.0
+      },
+      {
+        "AM": 12.0,
+        "GM": 14.0,
+        "H": 4.0,
+        "HM": 7.0,
+        "LA": 14.0,
+        "LR": 12.0,
+        "P": 6.0,
+        "S": 2.0,
+        "SH": 7.0,
+        "SW": 7.0,
+        "VA": 11.0,
+        "W": 9.0,
+        "Z": 3.0
+      },
+      {
+        "AM": 11.0,
+        "GM": 13.0,
+        "H": 4.0,
+        "HM": 6.0,
+        "LA": 13.0,
+        "LR": 11.0,
+        "P": 5.0,
+        "S": 3.0,
+        "SH": 6.0,
+        "SW": 6.0,
+        "VA": 10.0,
+        "W": 12.0,
+        "Z": 3.0
+      },
+      {
+        "AM": 12.0,
+        "GM": 14.0,
+        "H": 4.0,
+        "HM": 7.0,
+        "LA": 14.0,
+        "LR": 12.0,
+        "P": 6.0,
+        "S": 2.0,
+        "SH": 7.0,
+        "SW": 7.0,
+        "VA": 11.0,
+        "W": 9.0,
+        "Z": 3.0
+      },
+      {
+        "AM": 12.0,
+        "GM": 14.0,
+        "H": 4.0,
+        "HM": 7.0,
+        "LA": 14.0,
+        "LR": 12.0,
+        "P": 6.0,
+        "S": 2.0,
+        "SH": 7.0,
+        "SW": 7.0,
+        "VA": 11.0,
+        "W": 8.0,
+        "Z": 3.0
+      }
+    ],
+    "mode": "weighted"
+  },
+  "rng": {
+    "default_seed": 12345,
+    "kind": "chacha20"
+  },
+  "rtp_allocation": {
+    "base_game": 0.36347599999999997,
+    "free_spins": 0.200146,
+    "hold_and_win": 0.396388,
+    "jackpot": 0.0,
+    "tolerance": 5e-05
+  },
+  "schema_version": "1.0.0",
+  "symbols": [
+    {
+      "id": "W",
+      "kind": "wild",
+      "name": "Wild",
+      "substitutes": "*"
+    },
+    {
+      "id": "Z",
+      "kind": "hp",
+      "name": "Zeus"
+    },
+    {
+      "id": "H",
+      "kind": "hp",
+      "name": "Hades"
+    },
+    {
+      "id": "P",
+      "kind": "hp",
+      "name": "Poseidon"
+    },
+    {
+      "id": "HM",
+      "kind": "hp",
+      "name": "Helm"
+    },
+    {
+      "id": "SH",
+      "kind": "hp",
+      "name": "Shield"
+    },
+    {
+      "id": "SW",
+      "kind": "hp",
+      "name": "Sword"
+    },
+    {
+      "id": "LA",
+      "kind": "lp",
+      "name": "Lyre"
+    },
+    {
+      "id": "GM",
+      "kind": "lp",
+      "name": "Coin"
+    },
+    {
+      "id": "AM",
+      "kind": "lp",
+      "name": "Amphora"
+    },
+    {
+      "id": "LR",
+      "kind": "lp",
+      "name": "Laurel"
+    },
+    {
+      "id": "VA",
+      "kind": "lp",
+      "name": "Vase"
+    },
+    {
+      "id": "S",
+      "kind": "scatter",
+      "name": "Scatter"
+    },
+    {
+      "id": "B",
+      "kind": "bonus",
+      "name": "Bonus"
+    }
+  ],
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 3
+  }
+}

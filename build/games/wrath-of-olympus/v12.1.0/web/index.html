@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wrath of Olympus — v12.1.0</title>
+  <style>
+    body { margin: 0; background: #0a0a0a; color: #e0e0e0; font-family: ui-monospace, monospace; }
+    #app { max-width: 960px; margin: 0 auto; padding: 24px; }
+    h1 { color: #00d4ff; margin: 0 0 8px; }
+    .meta { color: #888; font-size: 12px; margin-bottom: 24px; }
+    .reel-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: #1a1a1a; padding: 12px; border-radius: 8px; }
+    .cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: #2a2a2a; font-size: 24px; font-weight: bold; border-radius: 4px; }
+    button { margin-top: 16px; padding: 12px 32px; font-size: 16px; background: #00d4ff; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .hud { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 14px; }
+    .hud-item { background: #1a1a1a; padding: 8px 12px; border-radius: 4px; }
+    .hud-label { color: #888; font-size: 11px; text-transform: uppercase; }
+    .hud-value { color: #00d4ff; font-weight: bold; font-size: 18px; }
+    #math-mode { display: none; margin-top: 16px; padding: 12px; background: #1a1a1a; border: 1px solid #00d4ff; border-radius: 4px; }
+    #math-mode.active { display: block; }
+    .math-row { display: flex; justify-content: space-between; margin: 4px 0; font-size: 13px; }
+    .math-pass { color: #00ff88; }
+    .math-fail { color: #ff4444; }
+    .footer { margin-top: 32px; color: #444; font-size: 11px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Wrath of Olympus</h1>
+    <div class="meta">variant <code>v12.1.0</code> · RTP <code>96.00%</code> · UKGC / MGA / NJ DGE / MT / ON / AU NCPF · merkle <code>n/a</code></div>
+
+    <div class="reel-grid" id="reels"></div>
+
+    <div class="hud">
+      <div class="hud-item"><div class="hud-label">Balance</div><div class="hud-value" id="balance">1000.00</div></div>
+      <div class="hud-item"><div class="hud-label">Bet</div><div class="hud-value" id="bet">1</div></div>
+      <div class="hud-item"><div class="hud-label">Last Win</div><div class="hud-value" id="last-win">0.00</div></div>
+      <div class="hud-item"><div class="hud-label">Spins</div><div class="hud-value" id="spin-count">0</div></div>
+    </div>
+
+    <button id="spin">SPIN</button>
+    <button id="math-toggle" style="background:#444;color:#e0e0e0;">Math Mode (Cmd+M)</button>
+
+    <div id="math-mode">
+      <div style="color:#00d4ff;font-weight:bold;margin-bottom:8px;">🔬 MATH MODE — Live auditor overlay</div>
+      <div class="math-row"><span>Target RTP</span><span id="math-target-rtp">96.00%</span></div>
+      <div class="math-row"><span>Running RTP</span><span id="math-running-rtp">—</span></div>
+      <div class="math-row"><span>Target hit-freq</span><span id="math-target-hf">20.70%</span></div>
+      <div class="math-row"><span>Running hit-freq</span><span id="math-running-hf">—</span></div>
+      <div class="math-row"><span>Within Wilson CI (99%)</span><span id="math-ci-pass" class="math-pass">—</span></div>
+      <div class="math-row"><span>Variance (rolling)</span><span id="math-variance">—</span></div>
+      <div class="math-row"><span>Max win observed</span><span id="math-max-win">—</span></div>
+      <div class="math-row"><span>Total spins</span><span id="math-total-spins">0</span></div>
+    </div>
+
+    <div class="footer">
+      slot-math-engine-template · canonical-par/v1 · attestation pinned in deploy.signature.sha256<br/>
+      <code>iiiiiiiiiiiiiiii...</code> (IR Merkle)
+    </div>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>

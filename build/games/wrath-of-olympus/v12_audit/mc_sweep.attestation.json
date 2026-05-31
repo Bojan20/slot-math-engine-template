@@ -1,0 +1,112 @@
+{
+  "attestation_sha256": "257d1f71b5d846041bcf3cc0bee8526b1faf77553e019547a78d1078143b99af",
+  "comparison": {
+    "cross_seed_cv": 0.000436101940288792,
+    "deltas": [
+      {
+        "measured": 0.08857279132293652,
+        "name": "rtp",
+        "notes": "tolerance 0.02 pp (T2)",
+        "passed": false,
+        "target": 0.960011,
+        "tolerance": 0.0002
+      },
+      {
+        "measured": 1.0,
+        "name": "hit_freq",
+        "notes": "Wilson CI 0.9900 half-width 0.000000",
+        "passed": false,
+        "target": 22.26768075,
+        "tolerance": 2.0734051031645606e-08
+      },
+      {
+        "measured": 0.025327968881021783,
+        "name": "variance",
+        "notes": "\u00b15% of PAR variance",
+        "passed": false,
+        "target": 20.34,
+        "tolerance": 1.0170000000000001
+      },
+      {
+        "measured": 49.062412895491725,
+        "name": "max_win_x",
+        "notes": "must not exceed PAR cap",
+        "passed": true,
+        "target": 5000.0,
+        "tolerance": 0.0
+      }
+    ],
+    "failed_count": 3,
+    "overall_pass": false
+  },
+  "game_id": "wrath-of-olympus",
+  "ir_merkle_sha256": "b7031546884a02a36a19f4add687274c5bfac753c25a5bf277c2b0e626ddb447",
+  "measured": {
+    "feature_trigger_counts": {
+      "free_spins": 800000,
+      "hold_and_win": 800000,
+      "multiplier": 800000
+    },
+    "hit_freq": 1.0,
+    "hits": 160000000,
+    "max_win_x": 49.062412895491725,
+    "p99_9_win_x": 48.571788766536805,
+    "per_seed_rtps": [
+      0.08855695930519465,
+      0.0886319081091356,
+      0.08853637524370586,
+      0.08851268281093427,
+      0.08861298939028839,
+      0.08850810539394426,
+      0.08859204867388425,
+      0.08858081734256157,
+      0.0885375695658327,
+      0.0886358865491708,
+      0.08857254166599852,
+      0.08861548485628043,
+      0.088574751988201,
+      0.08856013723525544,
+      0.08855795711722284,
+      0.08857844591937378
+    ],
+    "rtp": 0.08857279132293652,
+    "seed_count": 16,
+    "total_spins": 160000000,
+    "variance": 0.025327968881021783
+  },
+  "par_merkle_sha256": "adcd910fd218564b6fa85838a9f6a3dd4f2fcbf7ca91a1fe24c301c918255a81",
+  "runtime": {
+    "cpu": "arm",
+    "hostname": "Bojans-MacBook-Pro.local",
+    "python_version": "3.14.5",
+    "rust_version": "n/a (python reference worker)",
+    "wallclock_seconds": 133.25640166702215
+  },
+  "schema": "slot-math-mc-attestation/v1",
+  "seeds": [
+    "9250693189960662263",
+    "4864589749250749736",
+    "18212143622779536529",
+    "381812797308299027",
+    "3998670246865466324",
+    "8934811240365962281",
+    "15230839513772875464",
+    "2614494025214202398",
+    "268967419264957532",
+    "5026809113679509537",
+    "14798030331382218216",
+    "12110244544264825572",
+    "2151005920150754955",
+    "13167404498151804139",
+    "18429960170225720049",
+    "9508002474676461405"
+  ],
+  "tier": "T2",
+  "tier_config": {
+    "description": "CI gate per PR/commit",
+    "seed_count": 16,
+    "spins_per_seed": 10000000,
+    "total_spins": 160000000
+  },
+  "variant_id": "wrath-of-olympus.ir.json"
+}

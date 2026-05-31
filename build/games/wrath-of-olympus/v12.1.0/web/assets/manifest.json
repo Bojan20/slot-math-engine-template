@@ -1,0 +1,115 @@
+{
+  "animations": {
+    "reel_stop_stagger_ms": 120,
+    "spin_duration_ms": 800,
+    "win_celebrate_ms": 1500
+  },
+  "schema": "slot-math-asset-manifest/v1",
+  "skin_id": "default-text-glyph",
+  "sounds": {
+    "spin": null,
+    "win_big": null,
+    "win_jackpot": null,
+    "win_small": null
+  },
+  "symbols": [
+    {
+      "asset_url": null,
+      "color": "#ffd700",
+      "glyph": "W",
+      "id": "W",
+      "label": "Wild"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "Z",
+      "id": "Z",
+      "label": "Zeus"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "H",
+      "id": "H",
+      "label": "Hades"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "P",
+      "id": "P",
+      "label": "Poseidon"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "HM",
+      "id": "HM",
+      "label": "Helm"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "SH",
+      "id": "SH",
+      "label": "Shield"
+    },
+    {
+      "asset_url": null,
+      "color": "#00d4ff",
+      "glyph": "SW",
+      "id": "SW",
+      "label": "Sword"
+    },
+    {
+      "asset_url": null,
+      "color": "#888888",
+      "glyph": "LA",
+      "id": "LA",
+      "label": "Lyre"
+    },
+    {
+      "asset_url": null,
+      "color": "#888888",
+      "glyph": "GM",
+      "id": "GM",
+      "label": "Coin"
+    },
+    {
+      "asset_url": null,
+      "color": "#888888",
+      "glyph": "AM",
+      "id": "AM",
+      "label": "Amphora"
+    },
+    {
+      "asset_url": null,
+      "color": "#888888",
+      "glyph": "LR",
+      "id": "LR",
+      "label": "Laurel"
+    },
+    {
+      "asset_url": null,
+      "color": "#888888",
+      "glyph": "VA",
+      "id": "VA",
+      "label": "Vase"
+    },
+    {
+      "asset_url": null,
+      "color": "#ff4444",
+      "glyph": "S",
+      "id": "S",
+      "label": "Scatter"
+    },
+    {
+      "asset_url": null,
+      "color": "#9b59b6",
+      "glyph": "B",
+      "id": "B",
+      "label": "Bonus"
+    }
+  ]
+}

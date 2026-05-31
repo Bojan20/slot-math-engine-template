@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>wrath-of-olympus — Variant Compare</title>
+  <style>* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0a0f1c;
+    color: #e0e4eb;
+    padding: 24px;
+}
+h1 { color: #00d4ff; font-size: 24px; margin-bottom: 8px; }
+.subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+.variants-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-bottom: 32px;
+}
+.variant-card {
+    background: #131826;
+    border: 1px solid #2a3245;
+    border-radius: 8px;
+    padding: 16px;
+}
+.variant-card h2 {
+    color: #00d4ff;
+    font-size: 18px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a3245;
+}
+.kpi { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+.kpi .label { color: #888; }
+.kpi .value { color: #e0e4eb; font-family: ui-monospace, monospace; }
+.kpi .delta-pos { color: #4caf50; }
+.kpi .delta-neg { color: #f44336; }
+.kpi .delta-zero { color: #888; }
+.merkle-chain {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #2a3245;
+}
+.merkle-chain h3 {
+    color: #888;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+.merkle-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    padding: 2px 0;
+}
+.merkle-row .stage { color: #888; }
+.merkle-row .hash { color: #00d4ff; }
+.promote-cta {
+    margin-top: 16px;
+    background: #00d4ff;
+    color: #0a0f1c;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+.promote-cta:hover { background: #00b8e0; }
+table.metric-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #131826;
+    border: 1px solid #2a3245;
+    border-radius: 8px;
+    overflow: hidden;
+}
+table.metric-table th, table.metric-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #2a3245;
+    font-size: 13px;
+}
+table.metric-table th {
+    background: #1a2030;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+}
+table.metric-table td.numeric {
+    font-family: ui-monospace, monospace;
+    text-align: right;
+}
+.footer {
+    margin-top: 32px;
+    padding: 16px;
+    background: #131826;
+    border: 1px solid #2a3245;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #888;
+    font-family: ui-monospace, monospace;
+}
+</style>
+</head>
+<body>
+  <h1>wrath-of-olympus · Variant Compare</h1>
+  <div class="subtitle">4 variants · baseline: <code>variant_v12.1.0-92pct</code></div>
+  <div class="variants-grid">
+        <div class="variant-card">
+          <h2>variant_v12.1.0-92pct</h2>
+          <div class="kpi"><span class="label">RTP</span><span class="value">92.01%</span></div>
+          <div class="kpi"><span class="label">Hit Freq</span><span class="value">20.70%</span></div>
+          <div class="kpi"><span class="label">Variance</span><span class="value">21.5</span></div>
+          <div class="kpi"><span class="label">Max Win</span><span class="value">5000×</span></div>
+          <div class="kpi"><span class="label">Vol Class</span><span class="value">MED</span></div>
+          
+          <div class="merkle-chain">
+            <h3>Merkle attestation chain</h3>
+            <div class="merkle-row"><span class="stage">par</span><span class="hash" title="vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt">vvvvvvvvvvvvvvvv…</span></div><div class="merkle-row"><span class="stage">ir</span><span class="hash" title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaaaaaaaa…</span></div><div class="merkle-row"><span class="stage">mc_sweep</span><span class="hash" title="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm">mmmmmmmmmmmmmmmm…</span></div><div class="merkle-row"><span class="stage">deploy</span><span class="hash" title="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd">dddddddddddddddd…</span></div>
+          </div>
+          <button class="promote-cta" onclick="promoteVariant('v12.1.0-92pct')">Promote to production</button>
+        </div>
+    
+        <div class="variant-card">
+          <h2>variant_v12.1.0-94pct</h2>
+          <div class="kpi"><span class="label">RTP</span><span class="value">94.02%</span></div>
+          <div class="kpi"><span class="label">Hit Freq</span><span class="value">20.70%</span></div>
+          <div class="kpi"><span class="label">Variance</span><span class="value">20.9</span></div>
+          <div class="kpi"><span class="label">Max Win</span><span class="value">5000×</span></div>
+          <div class="kpi"><span class="label">Vol Class</span><span class="value">MED</span></div>
+          
+            <div class="kpi">
+              <span class="label">Δ RTP vs v12.1.0-92pct</span>
+              <span class="value delta-pos">+0.0201</span>
+            </div>
+            <div class="kpi">
+              <span class="label">Δ hit_freq</span>
+              <span class="value delta-zero">+0.0000</span>
+            </div>
+        
+          <div class="merkle-chain">
+            <h3>Merkle attestation chain</h3>
+            <div class="merkle-row"><span class="stage">par</span><span class="hash" title="vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt">vvvvvvvvvvvvvvvv…</span></div><div class="merkle-row"><span class="stage">ir</span><span class="hash" title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaaaaaaaa…</span></div><div class="merkle-row"><span class="stage">mc_sweep</span><span class="hash" title="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm">mmmmmmmmmmmmmmmm…</span></div><div class="merkle-row"><span class="stage">deploy</span><span class="hash" title="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd">dddddddddddddddd…</span></div>
+          </div>
+          <button class="promote-cta" onclick="promoteVariant('v12.1.0-94pct')">Promote to production</button>
+        </div>
+    
+        <div class="variant-card">
+          <h2>variant_v12.1.0-96pct</h2>
+          <div class="kpi"><span class="label">RTP</span><span class="value">96.05%</span></div>
+          <div class="kpi"><span class="label">Hit Freq</span><span class="value">20.70%</span></div>
+          <div class="kpi"><span class="label">Variance</span><span class="value">20.3</span></div>
+          <div class="kpi"><span class="label">Max Win</span><span class="value">5000×</span></div>
+          <div class="kpi"><span class="label">Vol Class</span><span class="value">MED</span></div>
+          
+            <div class="kpi">
+              <span class="label">Δ RTP vs v12.1.0-92pct</span>
+              <span class="value delta-pos">+0.0404</span>
+            </div>
+            <div class="kpi">
+              <span class="label">Δ hit_freq</span>
+              <span class="value delta-zero">+0.0000</span>
+            </div>
+        
+          <div class="merkle-chain">
+            <h3>Merkle attestation chain</h3>
+            <div class="merkle-row"><span class="stage">par</span><span class="hash" title="vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt">vvvvvvvvvvvvvvvv…</span></div><div class="merkle-row"><span class="stage">ir</span><span class="hash" title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaaaaaaaa…</span></div><div class="merkle-row"><span class="stage">mc_sweep</span><span class="hash" title="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm">mmmmmmmmmmmmmmmm…</span></div><div class="merkle-row"><span class="stage">deploy</span><span class="hash" title="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd">dddddddddddddddd…</span></div>
+          </div>
+          <button class="promote-cta" onclick="promoteVariant('v12.1.0-96pct')">Promote to production</button>
+        </div>
+    
+        <div class="variant-card">
+          <h2>variant_v12.1.0-98pct</h2>
+          <div class="kpi"><span class="label">RTP</span><span class="value">98.03%</span></div>
+          <div class="kpi"><span class="label">Hit Freq</span><span class="value">20.70%</span></div>
+          <div class="kpi"><span class="label">Variance</span><span class="value">19.8</span></div>
+          <div class="kpi"><span class="label">Max Win</span><span class="value">5000×</span></div>
+          <div class="kpi"><span class="label">Vol Class</span><span class="value">LOW</span></div>
+          
+            <div class="kpi">
+              <span class="label">Δ RTP vs v12.1.0-92pct</span>
+              <span class="value delta-pos">+0.0602</span>
+            </div>
+            <div class="kpi">
+              <span class="label">Δ hit_freq</span>
+              <span class="value delta-zero">+0.0000</span>
+            </div>
+        
+          <div class="merkle-chain">
+            <h3>Merkle attestation chain</h3>
+            <div class="merkle-row"><span class="stage">par</span><span class="hash" title="vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt">vvvvvvvvvvvvvvvv…</span></div><div class="merkle-row"><span class="stage">ir</span><span class="hash" title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaaaaaaaa…</span></div><div class="merkle-row"><span class="stage">mc_sweep</span><span class="hash" title="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm">mmmmmmmmmmmmmmmm…</span></div><div class="merkle-row"><span class="stage">deploy</span><span class="hash" title="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd">dddddddddddddddd…</span></div>
+          </div>
+          <button class="promote-cta" onclick="promoteVariant('v12.1.0-98pct')">Promote to production</button>
+        </div>
+    </div>
+  <table class="metric-table"><thead><tr><th>Metric</th><th class="numeric">variant_v12.1.0-92pct</th><th class="numeric">variant_v12.1.0-94pct</th><th class="numeric">variant_v12.1.0-96pct</th><th class="numeric">variant_v12.1.0-98pct</th></tr></thead><tbody><tr><td>RTP</td><td class="numeric">92.01%</td><td class="numeric">94.02%</td><td class="numeric">96.05%</td><td class="numeric">98.03%</td></tr><tr><td>Hit Freq</td><td class="numeric">20.70%</td><td class="numeric">20.70%</td><td class="numeric">20.70%</td><td class="numeric">20.70%</td></tr><tr><td>Variance</td><td class="numeric">21.50</td><td class="numeric">20.90</td><td class="numeric">20.34</td><td class="numeric">19.80</td></tr><tr><td>Max Win (x)</td><td class="numeric">5000</td><td class="numeric">5000</td><td class="numeric">5000</td><td class="numeric">5000</td></tr><tr><td>PAR SHA-256</td><td class="numeric"><span style="font-family:ui-monospace,monospace;font-size:10px">vvvvvvvvvvvv…</span></td><td class="numeric"><span style="font-family:ui-monospace,monospace;font-size:10px">vvvvvvvvvvvv…</span></td><td class="numeric"><span style="font-family:ui-monospace,monospace;font-size:10px">vvvvvvvvvvvv…</span></td><td class="numeric"><span style="font-family:ui-monospace,monospace;font-size:10px">vvvvvvvvvvvv…</span></td></tr><tr><td>MC tier</td><td class="numeric">T-relock-10B</td><td class="numeric">T-relock-10B</td><td class="numeric">T-relock-10B</td><td class="numeric">T-relock-10B</td></tr></tbody></table>
+  <div class="footer">
+    <strong>Paper trail (regulator-grade):</strong>
+    <pre style="margin-top:8px;white-space:pre-wrap">{
+  &quot;baseline_variant&quot;: &quot;v12.1.0-92pct&quot;,
+  &quot;game_id&quot;: &quot;wrath-of-olympus&quot;,
+  &quot;variants&quot;: [
+    {
+      &quot;deploy_signature&quot;: &quot;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&quot;,
+      &quot;ir_sha256&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;mc_sha256&quot;: &quot;mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+      &quot;par_sha256&quot;: &quot;vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt&quot;,
+      &quot;variant_id&quot;: &quot;v12.1.0-92pct&quot;
+    },
+    {
+      &quot;deploy_signature&quot;: &quot;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&quot;,
+      &quot;ir_sha256&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;mc_sha256&quot;: &quot;mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+      &quot;par_sha256&quot;: &quot;vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt&quot;,
+      &quot;variant_id&quot;: &quot;v12.1.0-94pct&quot;
+    },
+    {
+      &quot;deploy_signature&quot;: &quot;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&quot;,
+      &quot;ir_sha256&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;mc_sha256&quot;: &quot;mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+      &quot;par_sha256&quot;: &quot;vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt&quot;,
+      &quot;variant_id&quot;: &quot;v12.1.0-96pct&quot;
+    },
+    {
+      &quot;deploy_signature&quot;: &quot;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&quot;,
+      &quot;ir_sha256&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;mc_sha256&quot;: &quot;mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+      &quot;par_sha256&quot;: &quot;vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvtttttttttttttttttttttttttttttttt&quot;,
+      &quot;variant_id&quot;: &quot;v12.1.0-98pct&quot;
+    }
+  ]
+}</pre>
+  </div>
+  <script>
+    function promoteVariant(id) {
+      alert('Promotion request for variant_' + id + ' — invoke tools/par_deploy/promote.py');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "artefact_paths": {
+    "attestation": "games/wrath-of-olympus/v12.1.0/attestation",
+    "readme": "games/wrath-of-olympus/v12.1.0/README.md",
+    "server": "games/wrath-of-olympus/v12.1.0/server",
+    "web": "games/wrath-of-olympus/v12.1.0/web"
+  },
+  "build_timestamp": "2026-05-31T02:55:00Z",
+  "deploy_merkle_root": "c7040d434e64047af983b2035ad889d4de104c00116561b8c2a20645d91e2f98",
+  "deploy_signature": "3b4ff8f5c3985aae51d92cf0a071ed29d5c9b281a18692da9d8b3166f90c250c",
+  "game_id": "wrath-of-olympus",
+  "ir_sha256": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+  "jurisdiction": "MGA",
+  "mc_attestation_sha256": "7e443c547c50ba04473d836fccf2951172c5f0c31ca243cabef95f82bb624361",
+  "par_merkle_sha256": "9a000a38911a4995da617b01d9e6ff8a4349d671d3ccb84443b7df012901a15b",
+  "rgs_bundle_sha256": "fa1af488725952998a977438d762e7bd5f9ed5c68dc51ce8a0d2325e212d59c4",
+  "schema": "slot-math-build-manifest/v1",
+  "variant_id": "v12.1.0",
+  "web_bundle_sha256": "e8f71d9ec92a1e1453566914e837067762cf5a52e7e6c1206805e4509972d206"
+}

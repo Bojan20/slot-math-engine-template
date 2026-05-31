@@ -1,0 +1,464 @@
+schema: slot-math-canonical-par/v1
+merkle_root_sha256: adcd910fd218564b6fa85838a9f6a3dd4f2fcbf7ca91a1fe24c301c918255a81
+generated_at_utc: deterministic-by-merkle
+source:
+  vendor: vanvinkl-studio
+  format: synthetic
+  filename: wrath-of-olympus.ir.json
+  sha256: 27b83dba8298547db4cd151bc4d6776546ecb4aaf581bf43a46d505236cea110
+  adapter_version: wrath-ir-to-canonical-par/v1
+meta:
+  id: wrath-of-olympus
+  name: Wrath of Olympus
+  version: 12.0.0
+  theme_tags:
+  - greek-mythology
+  - lightning
+  - zeus
+topology:
+  kind: rectangular
+  reels: 5
+  rows: 3
+symbols:
+- id: W
+  name: Wild
+  kind: wild
+  substitutes: '*'
+- id: Z
+  name: Zeus
+  kind: hp
+- id: H
+  name: Hades
+  kind: hp
+- id: P
+  name: Poseidon
+  kind: hp
+- id: HM
+  name: Helm
+  kind: hp
+- id: SH
+  name: Shield
+  kind: hp
+- id: SW
+  name: Sword
+  kind: hp
+- id: LA
+  name: Lyre
+  kind: lp
+- id: GM
+  name: Coin
+  kind: lp
+- id: AM
+  name: Amphora
+  kind: lp
+- id: LR
+  name: Laurel
+  kind: lp
+- id: VA
+  name: Vase
+  kind: lp
+- id: S
+  name: Scatter
+  kind: scatter
+- id: B
+  name: Bonus
+  kind: bonus
+reels:
+  mode: weighted
+  base:
+  - LA: 9
+    GM: 9
+    AM: 7
+    LR: 7
+    VA: 6
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 6
+    H: 5
+    Z: 4
+    W: 6
+    S: 3
+    B: 12
+  - LA: 9
+    GM: 9
+    AM: 7
+    LR: 7
+    VA: 6
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 6
+    H: 5
+    Z: 4
+    W: 7
+    S: 3
+    B: 12
+  - LA: 8
+    GM: 8
+    AM: 7
+    LR: 6
+    VA: 6
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 6
+    H: 5
+    Z: 4
+    W: 8
+    S: 4
+    B: 13
+  - LA: 9
+    GM: 9
+    AM: 7
+    LR: 7
+    VA: 6
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 6
+    H: 5
+    Z: 4
+    W: 7
+    S: 3
+    B: 12
+  - LA: 9
+    GM: 9
+    AM: 7
+    LR: 7
+    VA: 6
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 6
+    H: 5
+    Z: 4
+    W: 6
+    S: 3
+    B: 12
+  free_spins:
+  - LA: 14
+    GM: 14
+    AM: 12
+    LR: 12
+    VA: 11
+    HM: 7
+    SH: 7
+    SW: 7
+    P: 6
+    H: 4
+    Z: 3
+    W: 8
+    S: 2
+  - LA: 14
+    GM: 14
+    AM: 12
+    LR: 12
+    VA: 11
+    HM: 7
+    SH: 7
+    SW: 7
+    P: 6
+    H: 4
+    Z: 3
+    W: 9
+    S: 2
+  - LA: 13
+    GM: 13
+    AM: 11
+    LR: 11
+    VA: 10
+    HM: 6
+    SH: 6
+    SW: 6
+    P: 5
+    H: 4
+    Z: 3
+    W: 12
+    S: 3
+  - LA: 14
+    GM: 14
+    AM: 12
+    LR: 12
+    VA: 11
+    HM: 7
+    SH: 7
+    SW: 7
+    P: 6
+    H: 4
+    Z: 3
+    W: 9
+    S: 2
+  - LA: 14
+    GM: 14
+    AM: 12
+    LR: 12
+    VA: 11
+    HM: 7
+    SH: 7
+    SW: 7
+    P: 6
+    H: 4
+    Z: 3
+    W: 8
+    S: 2
+  scatter_prevention:
+    enabled: true
+    max_scatters_per_reel: 1
+    replacement_symbol: LA
+    note: Second scatter on a reel is replaced with the most common low-pay symbol
+      (LA).
+evaluation:
+  kind: lines
+  paylines:
+  - - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 2
+    - 2
+    - 2
+    - 2
+    - 2
+  - - 0
+    - 1
+    - 2
+    - 1
+    - 0
+  - - 2
+    - 1
+    - 0
+    - 1
+    - 2
+  - - 0
+    - 0
+    - 1
+    - 0
+    - 0
+  - - 2
+    - 2
+    - 1
+    - 2
+    - 2
+  - - 1
+    - 0
+    - 0
+    - 0
+    - 1
+  - - 1
+    - 2
+    - 2
+    - 2
+    - 1
+  - - 0
+    - 1
+    - 1
+    - 1
+    - 0
+  direction: ltr
+  min_match: 3
+  pay_left_to_right_only: true
+  blockers:
+  - S
+  - B
+  wild_substitution:
+    enabled: true
+    excludes:
+    - S
+    - B
+    best_paying_interpretation: true
+paytable:
+  W:
+    '3': 2
+    '4': 8
+    '5': 40
+  Z:
+    '3': 1.6
+    '4': 6.5
+    '5': 32
+  H:
+    '3': 1.2
+    '4': 5
+    '5': 20
+  P:
+    '3': 0.8
+    '4': 3.2
+    '5': 13
+  HM:
+    '3': 0.55
+    '4': 2.3
+    '5': 9
+  SH:
+    '3': 0.55
+    '4': 2.3
+    '5': 9
+  SW:
+    '3': 0.45
+    '4': 2
+    '5': 8
+  LA:
+    '3': 0.391
+    '4': 1.545
+    '5': 5.56
+  GM:
+    '3': 0.391
+    '4': 1.545
+    '5': 5.56
+  AM:
+    '3': 0.351
+    '4': 1.285
+    '5': 4.62
+  LR:
+    '3': 0.351
+    '4': 1.285
+    '5': 4.62
+  VA:
+    '3': 0.331
+    '4': 1.025
+    '5': 3.6
+features:
+- kind: free_spins
+  name: Soul of Olympus Free Spins
+  trigger:
+    by: scatter_count
+    thresholds:
+      '3': 14
+      '4': 16
+      '5': 18
+  scatter_pays:
+    '3': 2
+    '4': 3
+    '5': 10
+  progressive_multiplier:
+    start: 1
+    increment: 1
+    max: 10
+    increments_on: each_winning_fs_spin
+  retrigger:
+    enabled: true
+    thresholds:
+      '3': 14
+      '4': 16
+      '5': 18
+    max_total: 100
+  reels_override: free_spins
+  notes: Lightning disabled during FS — clean progressive-mult math (no anti-drift
+    hacks).
+- kind: hold_and_win
+  name: Zeus's Storm
+  trigger:
+    by: bonus_count
+    min: 6
+  respins_initial: 3
+  respin_reset_on_new: true
+  orb_land_chance_base: 0.0352
+  orb_land_chance_fill_bonus: 0.015
+  full_grid_bonus_x: 500
+  cash_value_distribution:
+  - value: 1
+    weight: 404
+  - value: 2
+    weight: 250
+  - value: 3
+    weight: 150
+  - value: 5
+    weight: 82
+  - value: 8
+    weight: 45
+  - value: 10
+    weight: 25
+  - value: 15
+    weight: 11
+  jackpot_tiers:
+  - id: MINI
+    multiplier: 25
+    weight: 10
+  - id: MINOR
+    multiplier: 75
+    weight: 8
+  - id: MAJOR
+    multiplier: 200
+    weight: 5
+  - id: GRAND
+    multiplier: 500
+    weight: 2
+- kind: multiplier
+  name: Lightning Multiplier
+  trigger:
+    by: winning_spin
+    probability: 0.1485
+  distribution:
+  - value: 2
+    weight: 70
+  - value: 3
+    weight: 18
+  - value: 5
+    weight: 10
+  - value: 10
+    weight: 2
+  scope: base_game_only
+  notes: Disabled during Free Spins (FS uses its own progressive multiplier).
+rtp:
+  rtp_total: 0.960011
+  base_game: 0.36347599999999997
+  free_spins: 0.200146
+  hold_and_win: 0.396388
+  jackpot: 0.0
+  tolerance: 5.0e-05
+  variance: 20.34
+  design_target: 0.96
+rng_profile:
+  kind: xoshiro256pp
+  default_seed: 12345
+  jurisdiction_required_crypto: false
+  _note: Wrath uses xoshiro128** (W218); canonical map → xoshiro256pp closest equivalent.
+    UKGC compliance verified via separate ChaCha20 build (compliance.crypto_rng_required).
+bet:
+  currency: USD
+  base_bet: 1.0
+  denominations:
+  - 0.1
+  - 0.2
+  - 0.5
+  - 1.0
+  - 2.0
+  - 5.0
+limits:
+  target_rtp: 0.96
+  rtp_tolerance: 0.005
+  max_win_x: 5000
+  win_cap_apply: per_spin
+  target_volatility: high
+  hit_freq_target: 22.26768075
+compliance:
+  jurisdictions:
+  - UKGC
+  - MGA
+  - NJ DGE
+  - MT
+  - 'ON'
+  - AU NCPF
+  rtp_range_required:
+  - 0.92
+  - 0.98
+  max_win_cap_required: 250000.0
+  near_miss_rule: must_be_random
+  ldw_disclosure: true
+  session_time_display: true
+validated_baseline_v12:
+  rtp: 0.960011
+  hit_rate: 22.26768075
+  fs_frequency: 117.67
+  hnw_frequency: 110.98
+  max_win_observed_x: 2020
+  total_spins: 10000000000
+  rng_used: xoshiro128**
+  validated_at_utc: '2026-05-21T13:12:40Z'
+  ci_low: null
+  ci_high: null

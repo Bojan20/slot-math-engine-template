@@ -1,0 +1,700 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "wrath-of-olympus",
+    "name": "Wrath of Olympus",
+    "version": "12.0.0",
+    "description": "Wrath of Olympus — 5×3, 10 paylines, HIGH volatility slot. Greek-mythology pantheon theme. Three signature features: Soul-of-Olympus Free Spins with progressive multiplier 1×→10×, Zeus's Storm Hold & Win with 4-tier jackpots, and base-game Lightning Multiplier on winning spins. PCG64 RNG, period 2¹²⁸, cross-language bit-identical (TypeScript ↔ Rust).",
+    "theme_tags": [
+      "greek-mythology",
+      "zeus",
+      "olympus",
+      "high-volatility",
+      "lightning",
+      "hold-and-win",
+      "progressive-multiplier"
+    ],
+    "author": "VanVinkl Studio — Bojan Petković",
+    "created_at_utc": "2026-05-19T16:51:37.192Z",
+    "locked": true,
+    "lock_root_hash": "9a000a38911a4995da617b01d9e6ff8a4349d671d3ccb84443b7df012901a15b",
+    "spec_document": "MATH_SPEC_v12.md"
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 5,
+    "rows": 3
+  },
+  "symbols": [
+    {
+      "id": "W",
+      "name": "Wild",
+      "kind": "wild",
+      "substitutes": "*"
+    },
+    {
+      "id": "Z",
+      "name": "Zeus",
+      "kind": "hp"
+    },
+    {
+      "id": "H",
+      "name": "Hades",
+      "kind": "hp"
+    },
+    {
+      "id": "P",
+      "name": "Poseidon",
+      "kind": "hp"
+    },
+    {
+      "id": "HM",
+      "name": "Helm",
+      "kind": "hp"
+    },
+    {
+      "id": "SH",
+      "name": "Shield",
+      "kind": "hp"
+    },
+    {
+      "id": "SW",
+      "name": "Sword",
+      "kind": "hp"
+    },
+    {
+      "id": "LA",
+      "name": "Lyre",
+      "kind": "lp"
+    },
+    {
+      "id": "GM",
+      "name": "Coin",
+      "kind": "lp"
+    },
+    {
+      "id": "AM",
+      "name": "Amphora",
+      "kind": "lp"
+    },
+    {
+      "id": "LR",
+      "name": "Laurel",
+      "kind": "lp"
+    },
+    {
+      "id": "VA",
+      "name": "Vase",
+      "kind": "lp"
+    },
+    {
+      "id": "S",
+      "name": "Scatter",
+      "kind": "scatter"
+    },
+    {
+      "id": "B",
+      "name": "Bonus",
+      "kind": "bonus"
+    }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      {
+        "LA": 9,
+        "GM": 9,
+        "AM": 7,
+        "LR": 7,
+        "VA": 6,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 6,
+        "H": 5,
+        "Z": 4,
+        "W": 6,
+        "S": 3,
+        "B": 12
+      },
+      {
+        "LA": 9,
+        "GM": 9,
+        "AM": 7,
+        "LR": 7,
+        "VA": 6,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 6,
+        "H": 5,
+        "Z": 4,
+        "W": 7,
+        "S": 3,
+        "B": 12
+      },
+      {
+        "LA": 8,
+        "GM": 8,
+        "AM": 7,
+        "LR": 6,
+        "VA": 6,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 6,
+        "H": 5,
+        "Z": 4,
+        "W": 8,
+        "S": 4,
+        "B": 13
+      },
+      {
+        "LA": 9,
+        "GM": 9,
+        "AM": 7,
+        "LR": 7,
+        "VA": 6,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 6,
+        "H": 5,
+        "Z": 4,
+        "W": 7,
+        "S": 3,
+        "B": 12
+      },
+      {
+        "LA": 9,
+        "GM": 9,
+        "AM": 7,
+        "LR": 7,
+        "VA": 6,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 6,
+        "H": 5,
+        "Z": 4,
+        "W": 6,
+        "S": 3,
+        "B": 12
+      }
+    ],
+    "free_spins": [
+      {
+        "LA": 14,
+        "GM": 14,
+        "AM": 12,
+        "LR": 12,
+        "VA": 11,
+        "HM": 7,
+        "SH": 7,
+        "SW": 7,
+        "P": 6,
+        "H": 4,
+        "Z": 3,
+        "W": 8,
+        "S": 2
+      },
+      {
+        "LA": 14,
+        "GM": 14,
+        "AM": 12,
+        "LR": 12,
+        "VA": 11,
+        "HM": 7,
+        "SH": 7,
+        "SW": 7,
+        "P": 6,
+        "H": 4,
+        "Z": 3,
+        "W": 9,
+        "S": 2
+      },
+      {
+        "LA": 13,
+        "GM": 13,
+        "AM": 11,
+        "LR": 11,
+        "VA": 10,
+        "HM": 6,
+        "SH": 6,
+        "SW": 6,
+        "P": 5,
+        "H": 4,
+        "Z": 3,
+        "W": 12,
+        "S": 3
+      },
+      {
+        "LA": 14,
+        "GM": 14,
+        "AM": 12,
+        "LR": 12,
+        "VA": 11,
+        "HM": 7,
+        "SH": 7,
+        "SW": 7,
+        "P": 6,
+        "H": 4,
+        "Z": 3,
+        "W": 9,
+        "S": 2
+      },
+      {
+        "LA": 14,
+        "GM": 14,
+        "AM": 12,
+        "LR": 12,
+        "VA": 11,
+        "HM": 7,
+        "SH": 7,
+        "SW": 7,
+        "P": 6,
+        "H": 4,
+        "Z": 3,
+        "W": 8,
+        "S": 2
+      }
+    ],
+    "scatter_prevention": {
+      "enabled": true,
+      "max_scatters_per_reel": 1,
+      "replacement_symbol": "LA",
+      "note": "Second scatter on a reel is replaced with the most common low-pay symbol (LA)."
+    }
+  },
+  "evaluation": {
+    "kind": "lines",
+    "paylines": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        1,
+        2,
+        2
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "direction": "ltr",
+    "min_match": 3,
+    "pay_left_to_right_only": true,
+    "blockers": [
+      "S",
+      "B"
+    ],
+    "wild_substitution": {
+      "enabled": true,
+      "excludes": [
+        "S",
+        "B"
+      ],
+      "best_paying_interpretation": true
+    }
+  },
+  "paytable": {
+    "W": {
+      "3": 2,
+      "4": 8,
+      "5": 40
+    },
+    "Z": {
+      "3": 1.6,
+      "4": 6.5,
+      "5": 32
+    },
+    "H": {
+      "3": 1.2,
+      "4": 5,
+      "5": 20
+    },
+    "P": {
+      "3": 0.8,
+      "4": 3.2,
+      "5": 13
+    },
+    "HM": {
+      "3": 0.55,
+      "4": 2.3,
+      "5": 9
+    },
+    "SH": {
+      "3": 0.55,
+      "4": 2.3,
+      "5": 9
+    },
+    "SW": {
+      "3": 0.45,
+      "4": 2,
+      "5": 8
+    },
+    "LA": {
+      "3": 0.391,
+      "4": 1.545,
+      "5": 5.56
+    },
+    "GM": {
+      "3": 0.391,
+      "4": 1.545,
+      "5": 5.56
+    },
+    "AM": {
+      "3": 0.351,
+      "4": 1.285,
+      "5": 4.62
+    },
+    "LR": {
+      "3": 0.351,
+      "4": 1.285,
+      "5": 4.62
+    },
+    "VA": {
+      "3": 0.331,
+      "4": 1.025,
+      "5": 3.6
+    }
+  },
+  "features": [
+    {
+      "kind": "free_spins",
+      "name": "Soul of Olympus Free Spins",
+      "trigger": {
+        "by": "scatter_count",
+        "thresholds": {
+          "3": 14,
+          "4": 16,
+          "5": 18
+        }
+      },
+      "scatter_pays": {
+        "3": 2,
+        "4": 3,
+        "5": 10
+      },
+      "progressive_multiplier": {
+        "start": 1,
+        "increment": 1,
+        "max": 10,
+        "increments_on": "each_winning_fs_spin"
+      },
+      "retrigger": {
+        "enabled": true,
+        "thresholds": {
+          "3": 14,
+          "4": 16,
+          "5": 18
+        },
+        "max_total": 100
+      },
+      "reels_override": "free_spins",
+      "notes": "Lightning disabled during FS — clean progressive-mult math (no anti-drift hacks)."
+    },
+    {
+      "kind": "hold_and_win",
+      "name": "Zeus's Storm",
+      "trigger": {
+        "by": "bonus_count",
+        "min": 6
+      },
+      "respins_initial": 3,
+      "respin_reset_on_new": true,
+      "orb_land_chance_base": 0.0352,
+      "orb_land_chance_fill_bonus": 0.015,
+      "full_grid_bonus_x": 500,
+      "cash_value_distribution": [
+        {
+          "value": 1,
+          "weight": 404
+        },
+        {
+          "value": 2,
+          "weight": 250
+        },
+        {
+          "value": 3,
+          "weight": 150
+        },
+        {
+          "value": 5,
+          "weight": 82
+        },
+        {
+          "value": 8,
+          "weight": 45
+        },
+        {
+          "value": 10,
+          "weight": 25
+        },
+        {
+          "value": 15,
+          "weight": 11
+        }
+      ],
+      "jackpot_tiers": [
+        {
+          "id": "MINI",
+          "multiplier": 25,
+          "weight": 10
+        },
+        {
+          "id": "MINOR",
+          "multiplier": 75,
+          "weight": 8
+        },
+        {
+          "id": "MAJOR",
+          "multiplier": 200,
+          "weight": 5
+        },
+        {
+          "id": "GRAND",
+          "multiplier": 500,
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "kind": "multiplier",
+      "name": "Lightning Multiplier",
+      "trigger": {
+        "by": "winning_spin",
+        "probability": 0.1485
+      },
+      "distribution": [
+        {
+          "value": 2,
+          "weight": 70
+        },
+        {
+          "value": 3,
+          "weight": 18
+        },
+        {
+          "value": 5,
+          "weight": 10
+        },
+        {
+          "value": 10,
+          "weight": 2
+        }
+      ],
+      "scope": "base_game_only",
+      "notes": "Disabled during Free Spins (FS uses its own progressive multiplier)."
+    }
+  ],
+  "rng": {
+    "kind": "xoshiro128**",
+    "variant": "xoshiro128starstar (Blackman/Vigna 2018)",
+    "state_bits": 128,
+    "output_bits": 32,
+    "period": "2^128 − 1",
+    "default_seed": 12345,
+    "default_stream": 0,
+    "cross_language_parity": true,
+    "implementation": "Number-only (Math.imul + shifts, no BigInt) — bit-identical between runtime.js, oracle.js, and scripts/wrath-runtime-mc-fast.mjs.  splitmix32 seeder expands single u32 seed to 4-word state.",
+    "notes": "result = rotl(s1 * 5, 7) * 9; u32 / 2^32 → f64 in [0,1).  W218 (2026-05-20) upgrade from mulberry32 — mulberry32 had measured +0.06% upward bias in Hold-and-Win feature (11σ event, validated against 16B-spin MC + brute-force enumeration). xoshiro128** converges to closed-form ground-truth within Monte Carlo stderr.",
+    "previous_kind": "mulberry32 (W217 and earlier) — deprecated due to distribution skew"
+  },
+  "bet": {
+    "currency": "EUR",
+    "base_bet": 1,
+    "denominations": [
+      0.01,
+      0.05,
+      0.1,
+      0.2,
+      0.5,
+      1,
+      2,
+      5,
+      10
+    ],
+    "bet_multipliers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      15,
+      20,
+      25,
+      30,
+      40,
+      50,
+      70,
+      80,
+      100,
+      120,
+      150,
+      160,
+      200,
+      300
+    ]
+  },
+  "limits": {
+    "target_rtp": 0.96,
+    "rtp_tolerance": 0.005,
+    "max_win_x": 5000,
+    "win_cap_apply": "per_spin",
+    "target_volatility": "high",
+    "hit_freq_target": 0.207,
+    "feature_loop_cap": 100
+  },
+  "compliance": {
+    "jurisdictions": [
+      "UKGC",
+      "MGA",
+      "NJ DGE",
+      "MT",
+      "ON",
+      "AU NCPF"
+    ],
+    "rtp_range_required": [
+      0.85,
+      0.99
+    ],
+    "max_win_cap_required": 10000,
+    "rng_certification": "PCG64 (PCG-XSL-RR-128/64) — BMM-targeted RNG",
+    "determinism": "replay-from-seed verified (per-spin RNG state recoverable)",
+    "near_miss_rule": "must_be_random",
+    "ldw_disclosure": true,
+    "session_time_display": true,
+    "gli_compliance": "GLI-11 / GLI-19 ready",
+    "cross_language_parity": "TypeScript ↔ Rust PCG64 bit-identical (256 outputs × 8 cases)"
+  },
+  "rtp_allocation": {
+    "base_line_wins": 0.278205,
+    "scatter_pays": 0.017516,
+    "lightning_uplift": 0.067755,
+    "free_spins": 0.200146,
+    "hold_and_win": 0.396388,
+    "total_cf": 0.960011,
+    "total_mc_10b": 0.960011,
+    "mc_std_error_pp": 0.0106,
+    "tolerance_pp": 0.005,
+    "design_target_pct": 96.0,
+    "design_target_delta_pp": 0.0011,
+    "marketing_claim_match": true,
+    "_w231_note": "W231 re-kalibracija — H&W cash_value_distribution tweak (5: 90→82, 15: 14→11). Total RTP recalibrirana sa 96.183% (W230 baseline) na 96.0011% — within ±0.005pp marketing-claim gate od 96.00 design target."
+  },
+  "validated_metrics": {
+    "source": "scripts/wrath-runtime-mc-parallel.sh 10000000000 8 (10B-spin xoshiro128** MC, 2026-05-21, W231 post-recalibration)",
+    "total_spins": 10000000000,
+    "rng_kind": "xoshiro128**",
+    "rtp": 96.0011,
+    "hit_rate": 22.26768075,
+    "max_win_observed_x": 2020,
+    "fs_frequency": 117.67,
+    "hnw_frequency": 110.98,
+    "confidence": {
+      "mean_rtp": 96.0011,
+      "cross_worker_stderr_pp": 0.0106,
+      "ci_95_low": 95.9802,
+      "ci_95_high": 96.0219,
+      "design_target_pct": 96.0,
+      "design_target_delta_pp": 0.0011,
+      "industry_gate_pp": 0.05,
+      "industry_gate_pass": true,
+      "marketing_claim_gate_pp": 0.005,
+      "marketing_claim_gate_pass": true
+    },
+    "rtp_breakdown": {
+      "base_line_wins": 27.8205,
+      "scatter_pays": 1.7516,
+      "lightning_uplift": 6.7755,
+      "free_spins": 20.0146,
+      "hold_and_win": 39.6388
+    },
+    "validated_at_utc": "2026-05-21T13:12:40Z",
+    "wallclock_sec": 1488,
+    "workers": 8,
+    "spins_per_worker": 1250000000,
+    "seeds_used": [13345, 14345, 15345, 16345, 17345, 18345, 19345, 20345],
+    "per_worker_rtps": [96.0164, 96.0448, 95.9740, 95.9739, 95.9696, 96.0045, 95.9858, 96.0394],
+    "previous_validation": {
+      "source": "reports/validation/par-v2-data-500M.json (500M-spin mulberry32 MC, pre-W218)",
+      "total_spins": 500000000,
+      "rng_kind": "mulberry32",
+      "rtp": 96.0232,
+      "deprecated_reason": "mulberry32 had +0.06% H&W upward bias (W218); pre-W231 IR weights gave 96.183% runtime"
+    }
+  },
+  "source": {
+    "upstream_repo": "https://github.com/Bojan20/wrath-of-olympus (private)",
+    "upstream_version": "12.0.0",
+    "par_sheet": "WRATH_OF_OLYMPUS_v12.0.0_PAR_v2.xlsx (24-tab, audit-grade)",
+    "submission_bundle": "dist/WRATH_OF_OLYMPUS_v12.0.0_MATH_SUBMISSION.zip",
+    "mega_validation": "reports/validation/mega-5B-v12.0.txt (5 × 10⁹ MC, RTP 96.038%)",
+    "closed_form_proof": "math/analytical/rtp-v2.json"
+  }
+}
