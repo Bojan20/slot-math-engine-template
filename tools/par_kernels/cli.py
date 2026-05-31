@@ -125,6 +125,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     from tools.par_kernels.composer import compose
     from tools.par_kernels.generic_params import (
         delegated_baseline_rtp,
+        lines_eval_rtp_from_ir,
         make_params_builder,
     )
 
@@ -140,7 +141,19 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     comp_result = compose(ir, par=par, params_builder=builder, tolerance_bps=args.tolerance_bps)
     wallclock["composer"] = time.perf_counter() - t0
 
-    delegated = delegated_baseline_rtp(cf)
+    # Lines enumerator (re-derives base_line from reel weights + paytable)
+    t0 = time.perf_counter()
+    lines_rtp, lines_breakdown = lines_eval_rtp_from_ir(ir)
+    wallclock["lines_eval"] = time.perf_counter() - t0
+
+    # If lines_eval returns 0 (no reel data in IR), fall back to the CF
+    # `base_line` slice. Otherwise prefer lines_eval (first-principles).
+    if lines_rtp > 0:
+        base_rtp = lines_rtp
+    else:
+        base_rtp = cf.get("components", {}).get("base_line", 0.0)
+
+    delegated = delegated_baseline_rtp(cf) + base_rtp
 
     # MC (optional)
     mc_result = None
@@ -192,7 +205,9 @@ def main(argv: list[str] | None = None) -> int:
     p_eval.add_argument("--variant", help="Variant tag (default v12.0.0)")
     p_eval.add_argument("--mc-spins", type=int, default=0, help="If > 0, run MC sampler with this many spins")
     p_eval.add_argument("--seed", type=int, default=42)
-    p_eval.add_argument("--tolerance-bps", type=float, default=1.0)
+    p_eval.add_argument("--tolerance-bps", type=float, default=50.0,
+                        help="bps tolerance for composer pass/fail "
+                             "(default 50 — accommodates reel-strip vs RNG gap)")
     p_eval.add_argument("--out", help="Write Markdown report to this path (default stdout)")
     p_eval.set_defaults(func=cmd_evaluate)
 

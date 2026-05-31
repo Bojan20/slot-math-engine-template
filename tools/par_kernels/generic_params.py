@@ -124,10 +124,14 @@ def build_generic_params(
     components = cf.get("components", {})
     triggers = cf.get("triggers", {})
 
-    # ── lines/base evaluator (delegated) ──────────────────────────
+    # ── lines/base evaluator (NOW HANDLED by lines_eval kernel) ──
+    # The dispatcher routes evaluation.lines → asymmetric_paytable, but
+    # the actual numeric work happens in tools/par_kernels/lines_eval.py
+    # which does exact 14⁵ enumeration over weighted reels. We return
+    # None here so the composer treats it as a "kernel-internal handled"
+    # entry; the lines_eval result is added by the caller via
+    # `lines_eval_rtp_from_ir(ir)` (see CLI / multi-game tests).
     if kernel_id == "asymmetric_paytable":
-        # No W244 kernel re-enumerates per-line × per-symbol weights
-        # generically — delegate to game's own enumeration.
         return None
 
     # ── expanding_symbol (free_spins) ──────────────────────────────
@@ -205,9 +209,24 @@ def build_generic_params(
 
 
 def delegated_baseline_rtp(cf: dict[str, Any]) -> float:
-    """Sum of CF components NOT modeled by W244 kernels."""
+    """Sum of CF components NOT modeled by W244 kernels.
+
+    Excludes `base_line` — that's now handled by lines_eval kernel.
+    """
     c = cf.get("components", {})
-    return sum(c.get(name, 0.0) for name in DELEGATED_COMPONENTS)
+    return sum(c.get(name, 0.0) for name in DELEGATED_COMPONENTS if name != "base_line")
+
+
+def lines_eval_rtp_from_ir(ir: dict[str, Any]) -> tuple[float, dict[str, Any]]:
+    """Run the per-line enumerator on an IR. Returns (rtp, full_result)."""
+    from tools.par_kernels.lines_eval import (
+        build_lines_params_from_ir, lines_eval_rtp,
+    )
+    params = build_lines_params_from_ir(ir)
+    if params is None:
+        return 0.0, {}
+    result = lines_eval_rtp(params)
+    return result["rtp_contribution"], result
 
 
 def make_params_builder(cf: dict[str, Any]):
