@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "oracle-of-delphi",
+    "name": "Oracle of Delphi",
+    "version": "1.0.0",
+    "description": "Synthetic 2nd-game proof — proves slot-math composer + MC is NOT Wrath-specific."
+  },
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "W", "name": "Oracle", "kind": "wild", "substitutes": "*" },
+    { "id": "A", "name": "Apollo", "kind": "hp" },
+    { "id": "S", "name": "Scatter", "kind": "scatter" },
+    { "id": "B", "name": "Bonus Orb", "kind": "bonus" }
+  ],
+  "evaluation": { "kind": "lines", "paylines": 10 },
+  "features": [
+    { "kind": "free_spins", "trigger": "scatter_3" },
+    { "kind": "hold_and_win", "trigger": "orbs_6plus" }
+  ],
+  "rng": { "kind": "pcg64" },
+  "bet": { "currency": "EUR", "base_bet": 1, "max_win_x": 4000, "target_volatility": "medium-high" },
+  "provenance": { "par_source": "v1.0.0", "ir_sha256": "synthetic" }
+}

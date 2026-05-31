@@ -1,0 +1,20 @@
+{
+  "game": "Oracle of Delphi",
+  "version": "1.0.0",
+  "algorithm": "synthetic test game — known closed-form RTP for composer parity validation",
+  "target_rtp": 0.95,
+  "total_rtp": 0.9500,
+  "components": {
+    "base_line": 0.4500,
+    "scatter_pay_base": 0.0200,
+    "lightning_uplift": 0.0000,
+    "fs": 0.2500,
+    "hnw": 0.2300
+  },
+  "triggers": {
+    "fs":  { "p": 0.0100, "one_in": 100.0 },
+    "hnw": { "p": 0.0085, "one_in": 117.6 }
+  },
+  "fs_session":  { "E": 25.0, "std": 28.0, "avgActualSpins": 12 },
+  "hnw_session": { "E": 27.06, "std": 50.0 }
+}
