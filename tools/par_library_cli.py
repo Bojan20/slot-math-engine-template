@@ -20,9 +20,9 @@ from typing import Optional
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_REPO_ROOT))
 
-from tools.par_normalize.adapters import adapt
-from tools.par_normalize.audit import audit, sha256_file
-from tools.par_normalize.detect import detect_format
+from tools.par_normalize.adapters import adapt  # noqa: E402
+from tools.par_normalize.audit import audit  # noqa: E402
+from tools.par_normalize.detect import detect_format  # noqa: E402
 
 _LIBRARY_ROOT = _REPO_ROOT / "reports" / "par-library"
 

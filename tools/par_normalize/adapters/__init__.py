@@ -4,8 +4,6 @@ from pathlib import Path
 from typing import Callable, Dict
 
 import json
-from pathlib import Path
-from typing import Callable, Dict
 
 from tools.par_normalize.detect import FormatKind, detect_format
 
