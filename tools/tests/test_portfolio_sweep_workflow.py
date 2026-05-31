@@ -167,3 +167,33 @@ def test_workflow_main_push_never_regression_gated(workflow_text):
     """Main push must skip regression gate (it IS the new baseline)."""
     # The gate condition restricts diff-failure path to PR only.
     assert "github.event_name == 'pull_request'" in workflow_text
+
+
+# ───────── bench-pin + trend (ledger workflow integration) ─────────
+
+
+def test_workflow_pins_bench_on_main_push(workflow_text):
+    """Successful main push must invoke `slot-math bench-pin`."""
+    assert "bench-pin" in workflow_text
+    assert "reports/bench/portfolio-history" in workflow_text
+    assert "--git-sha" in workflow_text
+
+
+def test_workflow_uploads_portfolio_history_ledger(workflow_text):
+    """Ledger directory must be uploaded as a separate artifact."""
+    assert "portfolio-history-ledger" in workflow_text
+
+
+def test_workflow_runs_slope_check_in_informational_mode(workflow_text):
+    """Trend + --fail-on-slope step exists, but doesn't break main pushes."""
+    assert "--fail-on-slope" in workflow_text
+    assert "--min-runs" in workflow_text
+    # Informational: warning, not error annotation
+    assert "::warning::Slope-based drift detected" in workflow_text
+
+
+def test_workflow_baseline_prefers_ledger_artifact(workflow_text):
+    """PR baseline fetch must try ledger first, fall back to per-run."""
+    assert "portfolio-history-ledger" in workflow_text
+    # The ledger has an INDEX.json — verified by parse step
+    assert "INDEX.json" in workflow_text

@@ -189,13 +189,36 @@ jobs:
               reports/portfolio/bench.json \
               --pin-dir reports/bench/portfolio-history \
               --git-sha "${{ github.sha }}"
-          # Render trend summary into job summary
+
+      # ─────────────────────────────────────────────────────────────────
+      # Trend dashboard + multi-run slope regression check (informational
+      # for now — gate kicks in once min_runs=5 history accumulates).
+      # The `|| true` keeps the workflow green if slope crosses threshold;
+      # we surface it as a ::warning:: annotation instead so reviewers
+      # see it without breaking main pushes during ramp-up.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Render trend + slope check (informational, main only)
+        if: |
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          steps.batch.outputs.status == '0'
+        run: |
+          set +e
+          python -m tools.par_kernels.cli bench-trend \
+              --pin-dir reports/bench/portfolio-history \
+              --last-n 20 \
+              --fail-on-slope 50 \
+              --min-runs 5 \
+              --out reports/portfolio/trend.md
+          slope_ec=$?
+          set -e
+          if [ "$slope_ec" -ne 0 ]; then
+            echo "::warning::Slope-based drift detected — see trend.md (informational, not fatal yet)"
+          fi
           {
             echo ""
             echo "## Portfolio Trend (across pinned history)"
-            python -m tools.par_kernels.cli bench-trend \
-                --pin-dir reports/bench/portfolio-history \
-                --last-n 20
+            cat reports/portfolio/trend.md
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload portfolio-history ledger artifact (main only)
