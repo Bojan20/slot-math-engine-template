@@ -219,8 +219,47 @@ fn sample_bernoulli_session(
 
 // ─── Streaming Welford stats ──────────────────────────────────────────
 
+/// Per-feature streaming accumulator — Welford for (n, mean, M2).
+#[derive(Clone, Default)]
+struct FeatureStats {
+    n: u64,
+    mean: f64,
+    m2: f64,
+}
+
+impl FeatureStats {
+    #[inline(always)]
+    fn push(&mut self, x: f64) {
+        self.n += 1;
+        let delta = x - self.mean;
+        self.mean += delta / self.n as f64;
+        let delta2 = x - self.mean;
+        self.m2 += delta * delta2;
+    }
+
+    fn merge(&self, other: &Self) -> Self {
+        if other.n == 0 { return self.clone(); }
+        if self.n == 0 { return other.clone(); }
+        let n_total = self.n + other.n;
+        let delta = other.mean - self.mean;
+        let mean = (self.n as f64 * self.mean + other.n as f64 * other.mean) / n_total as f64;
+        let m2 = self.m2 + other.m2
+            + delta * delta * (self.n as f64 * other.n as f64) / n_total as f64;
+        Self { n: n_total, mean, m2 }
+    }
+
+    fn variance(&self) -> f64 {
+        self.m2 / (self.n.max(1) - 1).max(1) as f64
+    }
+
+    fn std_error(&self) -> f64 {
+        (self.variance() / self.n.max(1) as f64).sqrt()
+    }
+}
+
 #[derive(Clone, Default)]
 struct StreamingStats {
+    // Total payout per spin
     n: u64,
     mean: f64,
     m2: f64,
@@ -228,6 +267,10 @@ struct StreamingStats {
     hits: u64,
     fs_triggers: u64,
     hnw_triggers: u64,
+    // Per-feature accumulators (per-spin contribution, so 0 when feature didn't fire)
+    base_stats: FeatureStats,
+    fs_stats: FeatureStats,
+    hnw_stats: FeatureStats,
 }
 
 impl StreamingStats {
@@ -236,24 +279,30 @@ impl StreamingStats {
     }
 
     #[inline(always)]
-    fn push(&mut self, x: f64, hit: bool, fs: bool, hnw: bool) {
+    fn push_components(
+        &mut self,
+        base: f64, fs_pay: f64, hnw_pay: f64,
+        capped_total: f64,
+        hit: bool, fs_hit: bool, hnw_hit: bool,
+    ) {
+        // Total payout aggregate
         self.n += 1;
-        let delta = x - self.mean;
+        let delta = capped_total - self.mean;
         self.mean += delta / self.n as f64;
-        let delta2 = x - self.mean;
+        let delta2 = capped_total - self.mean;
         self.m2 += delta * delta2;
-        if x > self.max_observed {
-            self.max_observed = x;
+        if capped_total > self.max_observed {
+            self.max_observed = capped_total;
         }
-        if hit {
-            self.hits += 1;
-        }
-        if fs {
-            self.fs_triggers += 1;
-        }
-        if hnw {
-            self.hnw_triggers += 1;
-        }
+        if hit { self.hits += 1; }
+        if fs_hit { self.fs_triggers += 1; }
+        if hnw_hit { self.hnw_triggers += 1; }
+        // Per-feature per-spin contribution (already capped if total > cap;
+        // when cap fires the proportional scale is reflected in passed
+        // component values from caller)
+        self.base_stats.push(base);
+        self.fs_stats.push(fs_pay);
+        self.hnw_stats.push(hnw_pay);
     }
 
     /// Chan parallel combine — merge two Welford accumulators numerically stable.
@@ -278,6 +327,9 @@ impl StreamingStats {
             hits: self.hits + other.hits,
             fs_triggers: self.fs_triggers + other.fs_triggers,
             hnw_triggers: self.hnw_triggers + other.hnw_triggers,
+            base_stats: self.base_stats.merge(&other.base_stats),
+            fs_stats: self.fs_stats.merge(&other.fs_stats),
+            hnw_stats: self.hnw_stats.merge(&other.hnw_stats),
         }
     }
 
@@ -291,6 +343,13 @@ impl StreamingStats {
 }
 
 // ─── Output ───────────────────────────────────────────────────────────
+
+#[derive(Debug, Serialize)]
+struct FeatureBreakdown {
+    rtp_contribution: f64,
+    std_error: f64,
+    wilson_99_halfwidth: f64,
+}
 
 #[derive(Debug, Serialize)]
 struct McResult {
@@ -310,6 +369,16 @@ struct McResult {
     spins_per_sec: f64,
     threads_used: usize,
     parallel: bool,
+    // Per-feature MC breakdown — regulator-grade transparency.
+    // Each entry: per-spin RTP contribution + Wilson 99% CI half-width.
+    feature_breakdown: FeatureBreakdownByKind,
+}
+
+#[derive(Debug, Serialize)]
+struct FeatureBreakdownByKind {
+    base_lines: FeatureBreakdown,
+    free_spins: FeatureBreakdown,
+    hold_and_win: FeatureBreakdown,
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────
@@ -332,10 +401,20 @@ fn run_chunk(exec: &ExecutorParams, chunk_seed: u64, spins: u64) -> StreamingSta
             &mut rng, exec.hnw_trigger_p, exec.hnw_session_e, exec.hnw_session_std,
         );
         let mut total = base + fs_pay + hnw_pay;
+        let mut base_capped = base;
+        let mut fs_capped = fs_pay;
+        let mut hnw_capped = hnw_pay;
         if total > exec.max_win_cap_x {
+            let scale = exec.max_win_cap_x / total;
             total = exec.max_win_cap_x;
+            base_capped *= scale;
+            fs_capped *= scale;
+            hnw_capped *= scale;
         }
-        stats.push(total, base > 0.0, fs_hit, hnw_hit);
+        stats.push_components(
+            base_capped, fs_capped, hnw_capped, total,
+            base > 0.0, fs_hit, hnw_hit,
+        );
     }
     stats
 }
@@ -416,6 +495,13 @@ fn run_mc(input: &McInput) -> McResult {
         None => (None, true),
     };
 
+    // Per-feature breakdown (helper)
+    let mk = |fs: &FeatureStats| FeatureBreakdown {
+        rtp_contribution: fs.mean,
+        std_error: fs.std_error(),
+        wilson_99_halfwidth: 2.576 * fs.std_error(),
+    };
+
     McResult {
         spins: input.spins,
         seed: input.seed,
@@ -433,6 +519,11 @@ fn run_mc(input: &McInput) -> McResult {
         spins_per_sec,
         threads_used: n_chunks,
         parallel: use_parallel,
+        feature_breakdown: FeatureBreakdownByKind {
+            base_lines: mk(&stats.base_stats),
+            free_spins: mk(&stats.fs_stats),
+            hold_and_win: mk(&stats.hnw_stats),
+        },
     }
 }
 

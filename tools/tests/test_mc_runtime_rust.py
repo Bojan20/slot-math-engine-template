@@ -218,3 +218,62 @@ def test_fallback_raises_when_disabled():
             os.environ["SLOT_MATH_MC_RUNTIME_BIN"] = old
         else:
             os.environ.pop("SLOT_MATH_MC_RUNTIME_BIN", None)
+
+
+@_skip_no_rust
+def test_rust_per_feature_breakdown_present(wrath_executor):
+    """Rust MC must emit per-feature breakdown with Wilson CI."""
+    from tools.par_kernels.mc_runtime_rust import (
+        FeatureBreakdown,
+        run_mc_rust,
+    )
+    executor, _ = wrath_executor
+    _, extra = run_mc_rust(executor, spins=500_000, seed=42)
+    assert extra is not None
+    assert extra.feature_breakdown is not None
+    expected = {"base_lines", "free_spins", "hold_and_win"}
+    assert set(extra.feature_breakdown.keys()) == expected
+    for name, fb in extra.feature_breakdown.items():
+        assert isinstance(fb, FeatureBreakdown)
+        assert fb.rtp_contribution >= 0.0
+        assert fb.std_error >= 0.0
+        assert fb.wilson_99_halfwidth >= 0.0
+
+
+@_skip_no_rust
+def test_rust_per_feature_sums_to_total(wrath_executor):
+    """sum(per-feature) == total RTP to float ULP."""
+    from tools.par_kernels.mc_runtime_rust import run_mc_rust
+    executor, _ = wrath_executor
+    mc, extra = run_mc_rust(executor, spins=500_000, seed=99)
+    assert extra is not None and extra.feature_breakdown is not None
+    total = sum(fb.rtp_contribution for fb in extra.feature_breakdown.values())
+    # When cap doesn't fire, sum == total exactly. When cap fires, sum
+    # may be slightly less (capped values per-feature are scaled).
+    # Both within float precision.
+    assert abs(total - mc.rtp) < 1e-9
+
+
+@_skip_no_rust
+def test_rust_per_feature_wrath_matches_cf(wrath_executor):
+    """At 100M spinova, per-feature MC must match Wrath CF within Wilson CI."""
+    import json
+    from pathlib import Path
+    from tools.par_kernels.mc_runtime_rust import run_mc_rust
+    cf = json.loads((Path(__file__).resolve().parents[2] /
+                     "reports/par-library/wrath-of-olympus/v12.0.0/closed-form-rtp.json").read_text())
+    executor, _ = wrath_executor
+    _, extra = run_mc_rust(executor, spins=100_000_000, seed=42)
+    assert extra is not None and extra.feature_breakdown is not None
+    components = cf["components"]
+    cf_base = components.get("base_line", 0) + components.get("scatter_pay_base", 0) + components.get("lightning_uplift", 0)
+    cf_fs = components.get("fs", 0)
+    cf_hnw = components.get("hnw", 0)
+    # Each feature MC must bracket CF within Wilson 99% CI
+    fb = extra.feature_breakdown
+    assert abs(fb["base_lines"].rtp_contribution - cf_base) <= fb["base_lines"].wilson_99_halfwidth, \
+        f"base mismatch: MC={fb['base_lines'].rtp_contribution:.4%} CF={cf_base:.4%} CI=±{fb['base_lines'].wilson_99_halfwidth:.4%}"
+    assert abs(fb["free_spins"].rtp_contribution - cf_fs) <= fb["free_spins"].wilson_99_halfwidth, \
+        f"fs mismatch: MC={fb['free_spins'].rtp_contribution:.4%} CF={cf_fs:.4%}"
+    assert abs(fb["hold_and_win"].rtp_contribution - cf_hnw) <= fb["hold_and_win"].wilson_99_halfwidth, \
+        f"hnw mismatch: MC={fb['hold_and_win'].rtp_contribution:.4%} CF={cf_hnw:.4%}"

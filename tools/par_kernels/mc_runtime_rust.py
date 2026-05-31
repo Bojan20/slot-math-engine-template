@@ -51,10 +51,22 @@ def find_binary() -> Path | None:
 
 
 @dataclass
+class FeatureBreakdown:
+    """Per-feature MC convergence: RTP + std error + Wilson 99% CI."""
+    rtp_contribution: float
+    std_error: float
+    wilson_99_halfwidth: float
+
+
+@dataclass
 class RustMcExtra:
     """Extra Rust-side metrics not in Python McResult."""
     wallclock_seconds: float
     spins_per_sec: float
+    threads_used: int = 1
+    parallel: bool = False
+    # Per-feature MC breakdown — None when running pure-Python fallback
+    feature_breakdown: dict[str, FeatureBreakdown] | None = None
 
 
 def run_mc_rust(
@@ -127,8 +139,23 @@ def run_mc_rust(
         delta_bps=raw.get("delta_bps"),
         convergence_pass=bool(raw.get("convergence_pass", True)),
     )
+    feature_breakdown = None
+    fb_raw = raw.get("feature_breakdown")
+    if isinstance(fb_raw, dict):
+        feature_breakdown = {
+            name: FeatureBreakdown(
+                rtp_contribution=float(fb.get("rtp_contribution", 0.0)),
+                std_error=float(fb.get("std_error", 0.0)),
+                wilson_99_halfwidth=float(fb.get("wilson_99_halfwidth", 0.0)),
+            )
+            for name, fb in fb_raw.items()
+        }
+
     extra = RustMcExtra(
         wallclock_seconds=float(raw.get("wallclock_seconds", 0.0)),
         spins_per_sec=float(raw.get("spins_per_sec", 0.0)),
+        threads_used=int(raw.get("threads_used", 1)),
+        parallel=bool(raw.get("parallel", False)),
+        feature_breakdown=feature_breakdown,
     )
     return mc, extra

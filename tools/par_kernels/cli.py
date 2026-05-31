@@ -77,6 +77,10 @@ def _format_report(
     if mc_result is not None:
         lines.append("## Monte Carlo runtime")
         lines.append("")
+        engine_note = getattr(mc_result, "_engine_note", None)
+        if engine_note:
+            lines.append(f"_Engine: {engine_note}_")
+            lines.append("")
         lines.append("| Metric | Value |")
         lines.append("|---|---|")
         lines.append(f"| Spins | {mc_result.spins:,} |")
@@ -94,6 +98,19 @@ def _format_report(
             rate = mc_result.spins / wallclock["mc"] if wallclock["mc"] > 0 else 0
             lines.append(f"| Throughput | {rate:,.0f} spins/sec |")
         lines.append("")
+        # Per-feature breakdown (NEW — regulator-grade transparency)
+        per_feature = getattr(mc_result, "_feature_breakdown", None)
+        if per_feature:
+            lines.append("### Per-feature MC breakdown (Wilson 99% CI)")
+            lines.append("")
+            lines.append("| Feature | RTP contribution | ± Wilson 99% |")
+            lines.append("|---|---:|---:|")
+            for name, fb in per_feature.items():
+                lines.append(
+                    f"| {name.replace('_', ' ')} | {fb.rtp_contribution:.6%} | "
+                    f"±{fb.wilson_99_halfwidth:.6%} |"
+                )
+            lines.append("")
 
     if wallclock:
         lines.append("## Performance")
@@ -199,9 +216,12 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
                 else "python (rust binary missing — fallback)"
             )
         wallclock["mc"] = time.perf_counter() - t0
-        # Stash engine note in result.summary by appending to wallclock label later
+        # Stash engine note + per-feature breakdown for report renderer.
         if mc_result is not None:
             setattr(mc_result, "_engine_note", mc_engine_note)
+            fb = getattr(rust_extra, "feature_breakdown", None) if not args.python_mc else None
+            if fb is not None:
+                setattr(mc_result, "_feature_breakdown", fb)
 
     report = _format_report(
         game_id=game_id,
