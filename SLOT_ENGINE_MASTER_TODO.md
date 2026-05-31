@@ -160,7 +160,266 @@
 3. **Sample PAR**: Boki obezbeđuje sample XLSX, ili krećem sa syntetic iz `quick-hit-platinum-phoenix` pilot-a?
 4. **Hardware**: Mac-only za POC (do T5 = 100B u ~30-60 min) ili cloud za production scale?
 
-## 📌 NEXT ACTION (čim Boki kaže "krećem fazu 1")
+## 🎮 MULTI-UX ARHITEKTURA (designer-facing)
+
+Designer pristupa pipeline-u kroz **3 paralelne UX površine**, sve hit-uju isti backend:
+
+### UX A — Studio Web drag-drop (non-tech designer)
+
+```
+1. Otvori studio.local → klikni "New Game" → unesi "Crimson Tiger"
+2. Drag-drop folder sa 4 PAR sheet-ova (variant_a..d)
+3. Real-time progress dashboard:
+   ┌──────────────────────────────────────────────────────────────┐
+   │ Crimson Tiger · 4 variants                                   │
+   │ variant_a (92%)  [Normalize ✓] [IR ✓] [MC T3 ✓] [Deploy ⏳]  │
+   │ variant_b (94%)  [Normalize ✓] [IR ✓] [MC T3 ⏳]            │
+   │ variant_c (96%)  [Normalize ✓] [IR ⏳]                       │
+   │ variant_d (98%)  [Normalize ⏳]                              │
+   └──────────────────────────────────────────────────────────────┘
+4. Posle ~10-30 min sve 4 u "Compare View" 2×2 grid:
+   ┌──────────────────┬──────────────────┐
+   │  VARIANT A (92%) │  VARIANT B (94%) │
+   │  [▶ Play 100 spins] [▶ Play 100 spins]
+   │  RTP 92.01  Vol LOW  Hit 24.2%   │
+   ├──────────────────┼──────────────────┤
+   │  VARIANT C (96%) │  VARIANT D (98%) │
+   │  RTP 96.00  Vol MED-HI Hit 27.1% │
+   └──────────────────┴──────────────────┘
+   ( ) A  (•) C  ( ) B  ( ) D  ╰─ Promote to production
+5. Klik "Promote Variant C" → audit log entry → live build u games/<game>/live/
+```
+
+### UX B — CLI (developer / batch)
+
+```bash
+slot-math par add crimson-tiger \
+    --variant a=variants/variant_a_92pct.xlsx \
+    --variant b=variants/variant_b_94pct.xlsx \
+    --variant c=variants/variant_c_96pct.xlsx \
+    --variant d=variants/variant_d_98pct.xlsx
+
+slot-math build crimson-tiger --all-variants --mc-tier T3
+
+slot-math compare crimson-tiger --variants a,b,c,d --metric all
+
+slot-math promote crimson-tiger --variant c --tag GA-2026-Q2
+```
+
+### UX C — Watch folder (set-and-forget)
+
+```
+~/par-inbox/crimson-tiger/
+  variant_a.xlsx   ← drop here
+  variant_b.xlsx
+  variant_c.xlsx
+  variant_d.xlsx
+        ↓ (fswatch detektuje)
+  PIPELINE FIRES AUTOMATICALLY
+        ↓
+  ~/games-out/crimson-tiger/  ← all 4 variant builds appear here
+```
+
+---
+
+## 🧬 ATOM-BY-ATOM EFFORT BREAKDOWN
+
+Sve atomi parallelizable u tabelama unutar svake faze (gore navedeni). Ovo je kvantifikovan effort estimate u h, izvedeno za AI-autonomous pace:
+
+| Faza | Atom count | Effort (h) | Wallclock days (8h/day) |
+|------|-----------:|-----------:|-------------------------:|
+| 1 — Auto-normalizer | 8 sub-tasks | ~7h | 1 dan |
+| 2 — PAR → IR | 6 sub-tasks | ~6h | 1 dan |
+| 3 — MC convergence | 7 sub-tasks | ~6h | 1 dan |
+| 4 — Auto-deploy (production playable) | 9 sub-tasks | ~24h | 3-4 dana (najveći deo zbog Pixi/sound) |
+| 4 — Auto-deploy (scaffolded shell only) | 9 sub-tasks | ~9h | 1.5 dana (skip animations/sound) |
+| 5 — Studio variant compare | 5 sub-tasks | ~8h | 1 dan |
+| **TOTAL (production)** | **35 atoms** | **~51h** | **~6-7 dana** = 1.5 nedelje |
+| **TOTAL (scaffolded)** | **35 atoms** | **~36h** | **~5 dana** = 1 nedelja |
+
+> Razlog razlike: Faza 4 production-grade Pixi shell sa custom animations + sound + bespoke skin = 24h. Scaffolded shell sa default reel kit = 9h. **Math precision identičnna u oba slučaja** — razlika je samo vizuelni polish.
+
+---
+
+## 🛡️ INVARIANTI KOJE SE NE SMEJU PREKRŠITI
+
+| # | Invariant | Konsekvenca proboja |
+|---|-----------|---------------------|
+| 1 | PAR je read-only posle import-a | "Updated" verzija mora ići kao novi variant ID (npr. `c_v2`) — old build-ovi sa `c` ostaju cryptographically pinned |
+| 2 | 0-pp PAR reproduction (sub-ULP gde matematika dopušta, Wilson CI inače) | Bilo koji drift > tolerance threshold = blok deploy + diff report |
+| 3 | Engine never invents data | IR validator FAIL ako bilo koji IR field nije derived iz PAR field-a |
+| 4 | Merkle chain unbroken | par → ir → mc → bundle hash-evi linked u deploy.signature.sha256 |
+| 5 | RNG determinism per seed | Re-run sa istim seed → identičan win sequence (byte-stable) |
+| 6 | Skin swap ne menja matematiku | `--skin <dir>` flag samo asseti, kernel composition + paytable + reel-strips nepromenjeni |
+| 7 | Multi-variant izolacija | Variant A build nikad ne čita Variant B canonical PAR; per-variant attestation chain |
+| 8 | No public push without explicit signal | Stryker / PyPI / vendor data / gh-pages — blocked by default, čeka eksplicitni "PUSH" |
+
+---
+
+## 📦 NEW FILE INVENTORY (komplet Faza 1-5)
+
+```
+slot-math-engine-template/
+├── tools/
+│   ├── par_normalize/                           ← Faza 1 (NEW, ~7h)
+│   │   ├── __init__.py
+│   │   ├── canonical.py                         ← Pydantic schema
+│   │   ├── detect.py                            ← format detector
+│   │   ├── audit.py                             ← lossless round-trip
+│   │   └── adapters/
+│   │       ├── generic_xlsx.py                  ← PoC (Faza 1)
+│   │       ├── igt.py                           ← Faza 1b
+│   │       ├── lw.py                            ← Faza 1b
+│   │       ├── pragmatic.py                     ← Faza 1c
+│   │       ├── netent.py                        ← Faza 1c
+│   │       └── aristocrat.py                    ← Faza 1c
+│   ├── par_to_ir/                               ← Faza 2 (NEW, ~6h)
+│   │   ├── __init__.py
+│   │   ├── map.py                               ← reel/paytable/feature/rng combined
+│   │   ├── dispatcher.py                        ← W244 kernel composition
+│   │   └── validate.py                          ← completeness gate
+│   ├── par_mc_convergence/                      ← Faza 3 (NEW, ~6h)
+│   │   ├── __init__.py
+│   │   ├── tiers.py                             ← T1-T5 definitions
+│   │   ├── wilson.py                            ← Wilson CI
+│   │   ├── compare.py                           ← measured vs PAR
+│   │   ├── diff_report.py                       ← FAIL diff generator
+│   │   └── attestation.py                       ← MC result Merkle emit
+│   ├── par_deploy/                              ← Faza 4 (NEW, ~9-24h)
+│   │   ├── __init__.py
+│   │   ├── web_emit.py                          ← Pixi shell composer
+│   │   ├── rgs_emit.py                          ← Fastify scaffold
+│   │   ├── assets.py                            ← skin pipeline
+│   │   ├── promote.py                           ← winner selection
+│   │   └── attestation_chain.py                 ← end-to-end Merkle finalizer
+│   ├── par_library_cli.py                       ← Faza 1 CLI
+│   └── tests/
+│       ├── test_par_normalize.py                ← Faza 1 tests
+│       ├── test_par_to_ir.py                    ← Faza 2 tests
+│       ├── test_mc_convergence.py               ← Faza 3 tests
+│       ├── test_deploy_e2e.py                   ← Faza 4 tests
+│       └── test_studio_compare.py               ← Faza 5 tests
+├── rust-sim/src/bin/
+│   └── mc_convergence.rs                        ← Faza 3 Rust hot-path (rayon)
+├── reports/
+│   ├── par-library/<game>/<variant>/            ← Faza 1 output
+│   │   ├── canonical.par.yaml
+│   │   ├── audit.lossless.json
+│   │   ├── merkle.sha256
+│   │   └── vendor_origin.json
+│   └── schemas/
+│       ├── canonical_par.schema.json            ← Faza 1
+│       └── game_ir.schema.json                  ← Faza 2
+├── build/games/<game>/<variant>/                ← Faza 2-4 output (gitignored)
+│   ├── game.ir.json
+│   ├── ir.merkle.sha256
+│   ├── mc_sweep.attestation.json
+│   ├── mc_sweep.merkle.sha256
+│   ├── mc_diff_report.md                        ← only if FAIL
+│   ├── web/                                     ← static bundle
+│   ├── server/                                  ← Node RGS Docker
+│   ├── attestation/                             ← Merkle chain
+│   └── README.md                                ← regulator audit summary
+├── web/
+│   ├── play-template/                           ← Faza 4 Pixi shell
+│   └── studio/
+│       ├── par-upload/                          ← Faza 5 drag-drop
+│       └── variant-compare/                     ← Faza 5 N-pane grid
+├── server/rgs/                                  ← Faza 4 RGS template
+│   ├── server.js
+│   ├── Dockerfile
+│   ├── api.openapi.json
+│   └── jurisdiction/
+│       ├── ukgc.py
+│       ├── mga.py
+│       └── gli19.py
+└── docs/
+    └── PAR_TO_PLAYABLE_GAME_ARCHITECTURE.md    ← ALREADY LANDED (c1af0dad)
+```
+
+---
+
+## 🚧 OUT-OF-SCOPE (deferred to v2)
+
+| Deferred | Razlog | v2 ETA |
+|----------|--------|--------|
+| PAR design / auto-calibration | v1 import-only (locked vendor math) | Q3 2026 |
+| Reel-strip generator (constraint solver) | v1 imports vendor reels as-is | Q3 2026 |
+| LLM-assisted PAR drafting | v1 needs human-authored PAR | Q4 2026 |
+| Multi-jurisdiction adapter (12 markets) | v1 ships UKGC + MGA + GLI-19 + Quebec | Q3 2026 |
+| Mobile-native shells (iOS/Android) | v1 ships web playable only | Q4 2026 |
+| Cloud MC cluster (192-vCPU) | v1 single M-series host (200B u 1h) | Q3 2026 |
+| Stryker bug GitHub issue submission | Boki explicit signal required (public push) | on-demand |
+
+---
+
+## 📊 PROGRESS TRACKER (živo, ažurirati posle svake atom-completion)
+
+| Faza | Atom | Status | Commit | Tests |
+|------|------|:------:|--------|-------|
+| 1.1 | Canonical PAR JSON Schema | 🔴 | — | — |
+| 1.2 | PAR library skeleton | 🔴 | — | — |
+| 1.3 | Format detector | 🔴 | — | — |
+| 1.4 | XLSX adapter (generic) | 🔴 | — | — |
+| 1.5 | Lossless audit gate | 🔴 | — | — |
+| 1.6 | Merkle pin per variant | 🔴 | — | — |
+| 1.7 | CLI par add/list/info/remove | 🔴 | — | — |
+| 1.8 | Test gate (10+ tests) | 🔴 | — | — |
+| 2.1 | Game IR JSON Schema | 🔴 | — | — |
+| 2.2 | PAR → IR mapper | 🔴 | — | — |
+| 2.3 | Coverage validation | 🔴 | — | — |
+| 2.4 | W244 kernel dispatcher | 🔴 | — | — |
+| 2.5 | RNG profile binding | 🔴 | — | — |
+| 2.6 | Test gate | 🔴 | — | — |
+| 3.1 | MC orchestrator (Rust) | 🔴 | — | — |
+| 3.2 | Tier matrix config | 🔴 | — | — |
+| 3.3 | Wilson CI gate | 🔴 | — | — |
+| 3.4 | Metric comparators (6) | 🔴 | — | — |
+| 3.5 | FAIL diff reporter | 🔴 | — | — |
+| 3.6 | Attestation emit | 🔴 | — | — |
+| 3.7 | Test gate | 🔴 | — | — |
+| 4.1 | Pixi.js web playable shell | 🔴 | — | — |
+| 4.2 | IR → web bindings | 🔴 | — | — |
+| 4.3 | Fastify RGS backend | 🔴 | — | — |
+| 4.4 | IR → RGS bindings | 🔴 | — | — |
+| 4.5 | Asset pipeline | 🔴 | — | — |
+| 4.6 | Build artefakt assembly | 🔴 | — | — |
+| 4.7 | Merkle attestation chain | 🔴 | — | — |
+| 4.8 | Multi-jurisdiction RTP clamp | 🔴 | — | — |
+| 4.9 | Test gate (e2e) | 🔴 | — | — |
+| 5.1 | 4-pane Studio HTML | 🔴 | — | — |
+| 5.2 | Live KPI ribbon | 🔴 | — | — |
+| 5.3 | Promote-winner button | 🔴 | — | — |
+| 5.4 | Compare report HTML | 🔴 | — | — |
+| 5.5 | Test gate | 🔴 | — | — |
+
+**Legend:** 🔴 not started · 🟡 in progress · 🟢 done · ⚪ deferred
+
+---
+
+## 🎬 KICKOFF ORDER (Corti next-actions queue, čim Boki kaže "krećem")
+
+| # | Atomi | Trajanje | Output commit |
+|---|-------|---------:|---------------|
+| 1 | F1.1 + F1.2 + F1.6 (canonical schema + library skeleton + Merkle pin) | 2.5h | `feat(SLOT wave A.1): canonical PAR schema + library skeleton` |
+| 2 | F1.3 + F1.4 (format detector + XLSX adapter) parallel | 3h | `feat(SLOT wave A.2): XLSX adapter + format detect` |
+| 3 | F1.5 + F1.7 + F1.8 (lossless audit + CLI + tests) | 2h | `feat(SLOT wave A.3): par CLI + lossless audit gate` |
+| 4 | F2.1 + F2.5 (IR schema + RNG bind) | 1.5h | `feat(SLOT wave B.1): game IR schema + RNG profile bind` |
+| 5 | F2.2 + F2.3 + F2.4 + F2.6 (mapper + validator + dispatcher + tests) | 4h | `feat(SLOT wave B.2): PAR → IR mapper + kernel dispatcher` |
+| 6 | F3.1 + F3.2 (Rust MC orchestrator + tier matrix) | 3h | `feat(SLOT wave C.1): MC orchestrator T1-T5` |
+| 7 | F3.3 + F3.4 + F3.5 + F3.6 + F3.7 (Wilson + comparators + diff + attestation + tests) | 3.5h | `feat(SLOT wave C.2): MC convergence gate + attestation` |
+| 8 | F4.1 + F4.2 (Pixi shell + IR bindings) parallel | 6-12h | `feat(SLOT wave D.1): Pixi web playable + IR bindings` |
+| 9 | F4.3 + F4.4 + F4.8 (Fastify RGS + bindings + jurisdiction) parallel | 6-8h | `feat(SLOT wave D.2): Fastify RGS + multi-jurisdiction` |
+| 10 | F4.5 + F4.6 + F4.7 + F4.9 (assets + assembly + attestation + e2e) | 4h | `feat(SLOT wave D.3): asset pipeline + Merkle chain + e2e` |
+| 11 | F5.1 + F5.2 + F5.3 (Studio 4-pane + KPI ribbon + promote) | 5h | `feat(SLOT wave E.1): Studio variant compare + promote` |
+| 12 | F5.4 + F5.5 (compare report HTML + tests) | 3h | `feat(SLOT wave E.2): compare report + studio tests` |
+| 13 | End-to-end smoke + master TODO closure | 2h | `docs(SLOT v1.0): pipeline closed — 4 variants → 4 production games` |
+
+**Cumulative wallclock:** ~5-7 dana production-grade · ~5 dana scaffolded.
+
+---
+
+## 📌 KICKOFF SIGNAL
 
 ```
 Day 1-2:  reports/schemas/canonical_par.schema.json (Draft 2020-12)
@@ -169,8 +428,10 @@ Day 3-4:  tools/par_normalize/adapters/generic_xlsx.py
           tools/par_normalize/audit.py (lossless gate)
 Day 5:    tools/par_library_cli.py + Merkle pin per variant
           tools/tests/test_par_normalize.py (10+ tests)
-Commit:   feat(SLOT-MATH wave 1.1): canonical PAR schema + auto-normalizer skeleton
+Commit:   feat(SLOT-MATH wave A.1): canonical PAR schema + auto-normalizer skeleton
 ```
+
+Boki signal "krećem Fazu 1" → Corti odmah krene sa atomom #1 iz kickoff order tabele.
 
 ---
 
