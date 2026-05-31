@@ -117,8 +117,8 @@ def test_lines_eval_ignores_scatter():
 
 
 @pytest.mark.skipif(not WRATH_IR.is_file(), reason="Wrath not in PAR library")
-def test_lines_eval_wrath_within_reasonable_tolerance():
-    """Wrath base_line via 14⁵ enumeration must be within 50 bps of published."""
+def test_lines_eval_wrath_exact_parity():
+    """Wrath base_line via scatter-aware enumeration ≡ published to ≤ 0.5 bps."""
     from tools.par_kernels.lines_eval import (
         build_lines_params_from_ir, lines_eval_rtp,
     )
@@ -127,19 +127,28 @@ def test_lines_eval_wrath_within_reasonable_tolerance():
 
     params = build_lines_params_from_ir(ir)
     assert params is not None
+    assert params.scatter_prevention is not None
+    assert params.scatter_prevention.enabled
     result = lines_eval_rtp(params)
 
     target = cf["components"]["base_line"]
     delta_bps = (result["rtp_contribution"] - target) * 10000.0
-    assert abs(delta_bps) <= 50.0, (
-        f"Wrath base_line delta {delta_bps:+.2f} bps > 50 bps tolerance. "
+    # With scatter-aware joint-distribution evaluation, gap closes from
+    # 9 bps (uniform) to ≤ 0.5 bps (essentially float-stable parity).
+    assert abs(delta_bps) <= 0.5, (
+        f"Wrath base_line delta {delta_bps:+.4f} bps > 0.5 bps tolerance. "
         f"Computed {result['rtp_contribution']:.6%}, target {target:.6%}"
     )
 
 
 @pytest.mark.skipif(not WRATH_IR.is_file(), reason="Wrath not in PAR library")
 def test_lines_eval_wrath_performance():
-    """14⁵ enumeration must complete in < 1s."""
+    """14⁵ × 10 paylines × scatter-aware joint distribution < 10s.
+
+    Scatter-aware mode is ~10× slower than uniform mode but delivers
+    exact parity with Wrath's published base_line (vs 9 bps gap in
+    uniform mode). Trade-off is documented.
+    """
     import time
     from tools.par_kernels.lines_eval import (
         build_lines_params_from_ir, lines_eval_rtp,
@@ -149,7 +158,7 @@ def test_lines_eval_wrath_performance():
     t0 = time.perf_counter()
     lines_eval_rtp(params)
     dt = time.perf_counter() - t0
-    assert dt < 1.0, f"Lines enum took {dt:.3f}s (>1s budget)"
+    assert dt < 10.0, f"Lines enum took {dt:.3f}s (>10s budget)"
 
 
 @pytest.mark.skipif(not WRATH_IR.is_file(), reason="Wrath not in PAR library")
@@ -184,5 +193,5 @@ def test_lines_eval_full_pipeline_via_generic_params():
     expected_delegated = cf["components"].get("scatter_pay_base", 0.0) + \
                           cf["components"].get("lightning_uplift", 0.0)
     assert abs(delegated - expected_delegated) < 1e-12
-    # lines_rtp must be close (within 50 bps) to base_line
-    assert abs(lines_rtp - cf["components"]["base_line"]) < 0.005
+    # With scatter-aware enumeration, lines_rtp ≡ published base_line.
+    assert abs(lines_rtp - cf["components"]["base_line"]) < 5e-5
