@@ -585,6 +585,14 @@ def cmd_batch(args: argparse.Namespace) -> int:
     Exit 0 iff every game passes (composer parity ∧ MC convergence).
     Designed for CI and studio demo: one command → portfolio health snapshot.
     """
+    # --smoke shortcut: override mc_spins to a tiny value for fast PR feedback.
+    # Composer parity still gated; MC convergence is informational at 1K samples
+    # (Wilson CI is wide enough that drift is unlikely to flag but is checked).
+    if getattr(args, "smoke", False):
+        args.mc_spins = 1000
+        print("[smoke] forcing --mc-spins 1000 for fast feedback",
+              file=sys.stderr)
+
     library = REPO / "reports" / "par-library"
     if not library.is_dir():
         print(f"PAR library missing: {library}", file=sys.stderr)
@@ -1033,6 +1041,9 @@ def main(argv: list[str] | None = None) -> int:
     p_batch.add_argument("--bench", help="Write structured JSON metrics to this "
                                          "path (for bench-history pinning + "
                                          "regression detection)")
+    p_batch.add_argument("--smoke", action="store_true",
+                         help="Fast PR-style sweep: override --mc-spins to 1000 "
+                              "(composer parity still gated, MC informational)")
     p_batch.set_defaults(func=cmd_batch)
 
     p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")

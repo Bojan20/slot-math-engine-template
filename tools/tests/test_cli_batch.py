@@ -130,6 +130,37 @@ def test_batch_seed_is_deterministic_across_runs():
     assert len(rtps1) >= 5, f"expected ≥5 games extracted, got {len(rtps1)}"
 
 
+def test_batch_smoke_overrides_mc_spins_to_1000():
+    """--smoke must force mc_spins to 1000 and surface notice on stderr."""
+    proc = subprocess.run(
+        [sys.executable, "-m", "tools.par_kernels.cli", "batch",
+         "--smoke", "--mc-spins", "999999999"],
+        cwd=REPO, capture_output=True, text=True, timeout=120, check=False,
+    )
+    assert proc.returncode == 0
+    assert "[smoke] forcing --mc-spins 1000" in proc.stderr
+    # The bench (if requested) would reflect the override, but the
+    # plain dashboard renders the config line:
+    assert "--mc-spins 1000" in proc.stdout
+    # 999999999 must NOT appear (override worked)
+    assert "999999999" not in proc.stdout
+
+
+def test_batch_smoke_with_bench_records_overridden_value():
+    """--smoke + --bench must record mc_spins=1000 in JSON config block."""
+    with tempfile.TemporaryDirectory() as td:
+        bench = Path(td) / "bench.json"
+        proc = subprocess.run(
+            [sys.executable, "-m", "tools.par_kernels.cli", "batch",
+             "--smoke", "--bench", str(bench)],
+            cwd=REPO, capture_output=True, text=True, timeout=120, check=False,
+        )
+        assert proc.returncode == 0
+        import json
+        data = json.loads(bench.read_text())
+        assert data["config"]["mc_spins"] == 1000
+
+
 def test_batch_lists_all_six_reference_games():
     """No filter → all 6 reference games appear."""
     ec, stdout, _ = _run([])
