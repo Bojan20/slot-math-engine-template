@@ -126,9 +126,9 @@ jobs:
         run: |
           python -c "
           from tools.par_kernels.mc_extended_rust import find_extended_binary
-          from tools.par_kernels.mc_runtime_rust   import find_real_binary
+          from tools.par_kernels.mc_runtime_rust   import find_binary as find_wrath_binary
           ext = find_extended_binary()
-          wrath = find_real_binary()
+          wrath = find_wrath_binary()
           assert ext is not None,   'mc_extended_real not found'
           assert wrath is not None, 'mc_runtime_real not found'
           print('  mc_extended_real:', ext)
@@ -143,18 +143,27 @@ jobs:
           python -m tools.par_kernels.cli batch \
               --mc-spins "${{ steps.params.outputs.mc_spins }}" \
               --tolerance-bps "${{ steps.params.outputs.tolerance_bps }}" \
-              --out reports/portfolio/dashboard.md
+              --out   reports/portfolio/dashboard.md \
+              --bench reports/portfolio/bench.json
           ec=$?
           set -e
           echo "status=$ec" >> "$GITHUB_OUTPUT"
           if [ $ec -eq 0 ]; then
             echo "::notice::Portfolio sweep PASSED — all games converge."
           else
-            echo "::warning::Portfolio sweep FAILED (exit $ec) — see dashboard artifact."
+            echo "::warning::Portfolio sweep FAILED (exit $ec) — see dashboard + bench artifacts."
           fi
-          # Always emit dashboard to job summary
-          echo "## Portfolio Sweep Dashboard" >> "$GITHUB_STEP_SUMMARY"
-          cat reports/portfolio/dashboard.md >> "$GITHUB_STEP_SUMMARY"
+          # Always emit dashboard + compact bench summary to job summary
+          {
+            echo "## Portfolio Sweep Dashboard"
+            cat reports/portfolio/dashboard.md
+            echo ""
+            echo "### Bench summary"
+            echo ""
+            echo '```json'
+            python -c "import json; d=json.load(open('reports/portfolio/bench.json')); print(json.dumps({k:d[k] for k in ['schema_version','generated_at','wallclock_secs','config','summary']}, indent=2))"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload dashboard artifact
         if: always()

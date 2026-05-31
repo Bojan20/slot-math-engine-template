@@ -714,6 +714,55 @@ def cmd_batch(args: argparse.Namespace) -> int:
     else:
         print(report)
 
+    # --bench: emit structured JSON for bench-history pinning / regression
+    # detection. Schema is stable so downstream tooling can diff across runs.
+    if args.bench:
+        bench_payload = {
+            "schema_version": "1.0.0",
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "wallclock_secs": round(total_secs, 3),
+            "config": {
+                "mc_spins": args.mc_spins,
+                "seed": args.seed,
+                "tolerance_bps": args.tolerance_bps,
+                "filter": args.filter,
+            },
+            "summary": {
+                "games_total": len(rows),
+                "games_passed": passed,
+                "games_failed": failed,
+                "overall_ok": failed == 0,
+            },
+            "games": [
+                {
+                    "game": r["game"],
+                    "variant": r["variant"],
+                    "shape": r["shape"],
+                    "target_rtp": r["target_rtp"],
+                    "composed_rtp": r["composed_rtp"],
+                    "composer_delta_bps": r["composer_delta_bps"],
+                    "composer_ok": r["composer_ok"],
+                    "composer_secs": round(r["composer_secs"], 4),
+                    "mc": {
+                        "kind": r["mc_kind"],
+                        "secs": round(r["mc_secs"], 4),
+                        "rtp": r["mc_rtp"],
+                        "delta_bps": r["mc_delta_bps"],
+                        "pass": r["mc_pass"],
+                        "rounds_per_sec": r["rounds_per_sec"],
+                        "threads": r["threads"],
+                    },
+                    "overall_ok": r["overall_ok"],
+                    "error": r.get("error"),
+                }
+                for r in rows
+            ],
+        }
+        bench_path = Path(args.bench)
+        bench_path.parent.mkdir(parents=True, exist_ok=True)
+        bench_path.write_text(json.dumps(bench_payload, indent=2) + "\n")
+        print(f"Bench JSON written to {bench_path}", file=sys.stderr)
+
     return 0 if failed == 0 else 1
 
 
@@ -790,6 +839,9 @@ def main(argv: list[str] | None = None) -> int:
                          help="Substring filter (matches game or variant)")
     p_batch.add_argument("--out", help="Write dashboard to this Markdown path "
                                        "(default stdout)")
+    p_batch.add_argument("--bench", help="Write structured JSON metrics to this "
+                                         "path (for bench-history pinning + "
+                                         "regression detection)")
     p_batch.set_defaults(func=cmd_batch)
 
     p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")
