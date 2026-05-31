@@ -302,6 +302,7 @@ qa-w244-session: ## Run all W244 wave 49-58 test files (full session sweep, ~1s)
 		tools/tests/test_w244_verify_all_merkles.py \
 		tools/tests/test_w244_acceptance_index_html.py \
 		tools/tests/test_slot_math_canonical_par_schema.py \
+		tools/tests/test_slot_math_par_library_skeleton.py \
 		-v --tb=short
 
 # ─── W244 wave 53 — PyPI build + smoke ─────────────────────────────────────

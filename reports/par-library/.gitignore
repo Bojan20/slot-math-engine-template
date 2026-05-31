@@ -1,0 +1,32 @@
+# PAR library — exclude proprietary vendor data, KEEP engine-internal canonical.
+#
+# Rule of thumb:
+#   - canonical.par.yaml + audit.lossless.json + merkle.sha256  → in git
+#   - source.original.*  → gitignored (proprietary vendor format)
+#   - vendor SWID / identifiers → gitignored
+#
+# This protects against accidental publishing of vendor IP. Re-verify
+# this list whenever a new vendor adapter is added.
+
+# Original vendor files (XLSX/PDF/JSON/CSV uploads)
+source.original.*
+*.source.xlsx
+*.source.pdf
+*.source.json
+*.source.csv
+*.source.yaml
+**/source.original.xlsx
+**/source.original.pdf
+**/source.original.json
+**/source.original.csv
+
+# Vendor identifiers
+*.swid.txt
+*.swid.json
+swid.*
+*.identifier.txt
+*.vendor_id.txt
+
+# Cached intermediate parse results
+*.cache.json
+**/.par_cache/
