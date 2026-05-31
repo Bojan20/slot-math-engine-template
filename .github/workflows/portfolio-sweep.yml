@@ -80,8 +80,15 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install Rust toolchain (stable)
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust toolchain (pinned via rust-toolchain.toml)
+        # We do NOT specify a channel here — `cargo build` reads
+        # `./rust-toolchain.toml` and triggers rustup auto-install of
+        # the pinned 1.83.0 toolchain. Specifying @stable conflicts
+        # with the pinned channel (clippy binary overlap).
+        run: |
+          rustup show active-toolchain || rustup show
+          rustc --version
+          cargo --version
 
       - name: Cache cargo build
         uses: actions/cache@v4
@@ -90,7 +97,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-portfolio-${{ hashFiles('Cargo.lock', 'rust-sim/Cargo.toml') }}
+          key: ${{ runner.os }}-cargo-portfolio-${{ hashFiles('Cargo.lock', 'rust-sim/Cargo.toml', 'rust-toolchain.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-portfolio-
 
