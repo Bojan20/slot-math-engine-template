@@ -1,0 +1,13 @@
+{
+  "game": "Stake Rush",
+  "version": "1.0.0",
+  "algorithm": "synthetic 5th-game proof — crash mechanic (Pareto multiplier + player cashout)",
+  "target_rtp": 0.99,
+  "total_rtp": 0.9900,
+  "components": {
+    "crash_base": 0.9900
+  },
+  "house_edge": 0.01,
+  "cashout_multiplier": 2.0,
+  "notes": "RTP is independent of cashout_multiplier T — kernel proves this analytically. T=2.0 chosen for variance characterization; player can pick any T ≥ 1.00 with same RTP."
+}

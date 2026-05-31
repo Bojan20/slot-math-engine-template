@@ -134,6 +134,21 @@ def build_generic_params(
     if kernel_id == "asymmetric_paytable":
         return None
 
+    # ── crash_kernel (5th game shape: Stake Crash / Aviator) ──────
+    # CF supplies house_edge (typical 0.01) + cashout_multiplier (player
+    # target). RTP is INDEPENDENT of T: rtp = 1 - house_edge. Composer
+    # just needs the (house_edge, T) pair to call kernel.rtp().
+    if kernel_id == "crash_kernel":
+        from slot_math_kernels.crash_kernel import CrashParams
+        house_edge = cf.get("house_edge")
+        cashout = cf.get("cashout_multiplier")
+        if house_edge is None or cashout is None:
+            return None
+        return CrashParams(
+            house_edge=float(house_edge),
+            cashout_multiplier=float(cashout),
+        )
+
     # ── ways_evaluator (4th game shape: Megaways / variable-rows) ─
     # CF supplies row_distribution_per_reel + per_way_rtp_x_bet. Kernel
     # multiplies E[ways] × per_way_rtp to produce per-spin ways RTP.

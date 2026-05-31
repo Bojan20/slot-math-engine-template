@@ -44,6 +44,7 @@ EVALUATION_KIND_TO_KERNELS: dict[str, list[str]] = {
     "cluster_pays": ["cluster_pays"],  # alias — many GDDs use the full name
     "pay_anywhere": ["pay_anywhere"],
     "pattern": ["asymmetric_paytable"],
+    "crash": ["crash_kernel"],  # Stake Crash / Aviator / Bustabit pattern
 }
 
 

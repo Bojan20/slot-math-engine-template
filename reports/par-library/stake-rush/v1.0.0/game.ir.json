@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "stake-rush",
+    "name": "Stake Rush",
+    "version": "1.0.0",
+    "description": "5th-game proof — crash shape (Stake Crash / Aviator / Bustabit pattern). NO reels, NO clusters, just a Pareto-tail multiplier + player cashout strategy. Provably fair."
+  },
+  "topology": { "kind": "crash" },
+  "evaluation": { "kind": "crash" },
+  "symbols": [],
+  "features": [],
+  "rng": { "kind": "pcg64" },
+  "bet": {
+    "currency": "EUR", "base_bet": 1,
+    "max_win_x": 1000000, "win_cap_apply": "per_round",
+    "target_volatility": "extreme"
+  },
+  "provenance": { "par_source": "v1.0.0", "ir_sha256": "synthetic" }
+}

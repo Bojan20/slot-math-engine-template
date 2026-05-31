@@ -26,6 +26,7 @@ GAMES = [
     ("oracle-of-delphi", "v1.0.0"),
     ("mystic-cluster", "v1.0.0"),    # 3rd-game proof: cluster_pays + cascade, 6×5 grid
     ("lightning-ways", "v1.0.0"),    # 4th-game proof: ways/Megaways + cascade, 6 reels × {2..7} rows
+    ("stake-rush", "v1.0.0"),        # 5th-game proof: crash (Stake/Aviator/Bustabit pattern)
 ]
 
 
@@ -134,11 +135,27 @@ def test_mc_runtime_convergence_per_game(game: str, variant: str):
         )
         return
 
+    # Crash shape — Stake/Aviator/Bustabit pattern
+    if cf.get("house_edge") is not None and cf.get("cashout_multiplier") is not None:
+        from tools.par_kernels.mc_crash_runtime import (
+            build_crash_executor_from_cf, run_mc_crash,
+        )
+        executor = build_crash_executor_from_cf(cf, ir)
+        result = run_mc_crash(
+            executor, rounds=200_000, seed=42, cf_target_rtp=target,
+        )
+        assert result.convergence_pass, (
+            f"{game}/{variant} crash MC RTP {result.rtp:.4%} outside Wilson "
+            f"99% CI of CF target {target:.4%}. Δ={result.delta_bps:+.2f} bps, "
+            f"CI half-width=±{result.wilson_99_halfwidth:.4%}"
+        )
+        return
+
     # Wrath-shape (fs + hnw sessions)
     if "fs_session" not in cf or "hnw_session" not in cf:
         pytest.skip(
             f"{game}/{variant} CF lacks fs_session/hnw_session AND lacks "
-            f"cluster_distribution/row_distribution — no MC executor available"
+            f"cluster_distribution/row_distribution/house_edge — no MC executor"
         )
 
     from tools.par_kernels.mc_runtime import (

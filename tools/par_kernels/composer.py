@@ -99,6 +99,12 @@ KERNEL_REGISTRY: dict[str, dict[str, str]] = {
         "params": "MoneyCollectParams",
         "rtp_fn": "money_collect_rtp_contribution",
     },
+    "crash_kernel": {
+        "module": "slot_math_kernels.crash_kernel",
+        "params": "CrashParams",
+        # crash_kernel.rtp returns float, not dict — composer wraps below.
+        "rtp_fn": "rtp",
+    },
 }
 
 
@@ -227,6 +233,9 @@ def compose(
                 ))
                 continue
             result = rtp_fn(params)
+            # Some kernels (crash_kernel.rtp) return float directly; wrap.
+            if isinstance(result, (int, float)):
+                result = {"rtp_contribution": float(result)}
             rtp_contrib = float(result.get("rtp_contribution", 0.0))
             total_rtp += rtp_contrib
             per_kernel.append(KernelExecution(
