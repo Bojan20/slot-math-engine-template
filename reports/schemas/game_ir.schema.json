@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Bojan20/slot-math-engine-template/reports/schemas/game_ir.schema.json",
+  "title": "Game IR — engine-native runtime spec",
+  "description": "Output of `tools/par_to_ir/map.py`. Compiled deterministic representation of a single (game, variant) build, consumed by `web/runtime/par-game-shell/` and `services/rgs-template/`. Mirrors `src/ir/types.ts` (TS truth) and `rust-sim/src/ir/types.rs` (Rust truth) — every field name byte-identical or the cross-runtime parity gate fails.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "meta",
+    "topology",
+    "symbols",
+    "reels",
+    "evaluation",
+    "paytable",
+    "features",
+    "rng",
+    "bet",
+    "limits",
+    "compliance",
+    "rtp_allocation",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semver of the IR schema (v1.0.0 for Faza 2 v1)"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["id", "name", "version", "theme_tags"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "description": { "type": "string" },
+        "theme_tags": { "type": "array", "items": { "type": "string" } },
+        "author": { "type": "string" },
+        "created_at_utc": { "type": "string" }
+      }
+    },
+    "topology": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "reels", "rows"],
+          "properties": {
+            "kind": { "const": "rectangular" },
+            "reels": { "type": "integer", "minimum": 1 },
+            "rows": { "type": "integer", "minimum": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "reels", "row_range_per_reel"],
+          "properties": {
+            "kind": { "const": "variable_rows" },
+            "reels": { "type": "integer", "minimum": 1 },
+            "row_range_per_reel": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "integer", "minimum": 1 },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "ways_cap": { "type": "integer", "minimum": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "columns", "rows", "adjacency"],
+          "properties": {
+            "kind": { "const": "cluster_grid" },
+            "columns": { "type": "integer", "minimum": 1 },
+            "rows": { "type": "integer", "minimum": 1 },
+            "adjacency": { "enum": ["orthogonal", "diagonal", "hex"] }
+          }
+        }
+      ]
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string" },
+          "kind": {
+            "enum": [
+              "lp", "hp", "wild", "scatter", "bonus",
+              "multiplier", "sticky", "expanding", "mystery",
+              "transform", "chain_wild"
+            ]
+          },
+          "substitutes": {
+            "oneOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "const": "*" }
+            ]
+          },
+          "weight_hint": { "type": "number", "minimum": 0 },
+          "appears_on": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+          "behavior": {
+            "type": "object",
+            "properties": {
+              "colossal_size": {
+                "type": "array",
+                "items": { "type": "integer", "minimum": 1 },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "behavior_type": {
+                "enum": [
+                  "expanding_full_reel", "walking", "transforming",
+                  "collecting", "mystery_reveal", "colossal", "sticky"
+                ]
+              },
+              "transform_target": { "type": "string" },
+              "collection_priority": { "type": "integer" },
+              "sticky_duration_spins": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "reels": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["mode", "base"],
+          "properties": {
+            "mode": { "const": "weighted" },
+            "base": {
+              "type": "array",
+              "items": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0 } }
+            },
+            "free_spins": {
+              "type": "array",
+              "items": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0 } }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["mode", "base"],
+          "properties": {
+            "mode": { "const": "strips" },
+            "base": {
+              "type": "array",
+              "items": { "type": "array", "items": { "type": "string" } }
+            },
+            "free_spins": {
+              "type": "array",
+              "items": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      ]
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["lines", "ways", "cluster", "pay_anywhere", "pattern"] }
+      }
+    },
+    "paytable": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "number", "minimum": 0 }
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+          "kind": {
+            "enum": [
+              "free_spins", "hold_and_win", "cascade", "respin",
+              "pick", "wheel", "buy_feature", "ante_bet",
+              "gamble", "mystery_symbol", "symbol_upgrade",
+              "linear_progressive"
+            ]
+          }
+        }
+      }
+    },
+    "rng": {
+      "type": "object",
+      "required": ["kind", "default_seed"],
+      "properties": {
+        "kind": { "enum": ["mulberry32", "pcg64", "xoshiro256pp", "philox4x32", "aes_ctr_drbg", "chacha20"] },
+        "default_seed": { "type": "integer" },
+        "jump_function": { "type": "string" }
+      }
+    },
+    "bet": {
+      "type": "object",
+      "required": ["currency", "base_bet", "denominations"],
+      "properties": {
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3 },
+        "base_bet": { "type": "number", "minimum": 0 },
+        "denominations": { "type": "array", "items": { "type": "number", "minimum": 0 } }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "required": ["target_rtp", "rtp_tolerance", "max_win_x", "win_cap_apply", "target_volatility", "hit_freq_target"],
+      "properties": {
+        "target_rtp": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rtp_tolerance": { "type": "number", "minimum": 0 },
+        "max_win_x": { "type": "number", "minimum": 0 },
+        "win_cap_apply": { "enum": ["per_spin", "per_feature_session"] },
+        "target_volatility": { "enum": ["low", "medium", "high", "ultra"] },
+        "hit_freq_target": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "required": ["jurisdictions", "rtp_range_required", "max_win_cap_required", "near_miss_rule", "ldw_disclosure", "session_time_display"],
+      "properties": {
+        "jurisdictions": { "type": "array", "items": { "type": "string" } },
+        "rtp_range_required": {
+          "type": "array",
+          "items": { "type": "number", "minimum": 0, "maximum": 1 },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "max_win_cap_required": { "type": "number", "minimum": 0 },
+        "near_miss_rule": { "enum": ["must_be_random", "allowed_within_distribution"] },
+        "ldw_disclosure": { "type": "boolean" },
+        "session_time_display": { "type": "boolean" }
+      }
+    },
+    "rtp_allocation": {
+      "type": "object",
+      "required": ["base_game", "tolerance"],
+      "properties": {
+        "base_game": { "type": "number", "minimum": 0, "maximum": 1 },
+        "free_spins": { "type": "number", "minimum": 0, "maximum": 1 },
+        "hold_and_win": { "type": "number", "minimum": 0, "maximum": 1 },
+        "jackpot": { "type": "number", "minimum": 0, "maximum": 1 },
+        "tolerance": { "type": "number", "minimum": 0 }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["vendor", "par_source", "par_sha256"],
+      "properties": {
+        "vendor": { "type": "string" },
+        "par_source": { "type": "string", "description": "Filename or library path of source PAR" },
+        "swid": { "type": "string" },
+        "par_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "ir_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "build_hash": { "type": "string" },
+        "built_at_utc": { "type": "string" },
+        "signed_by": { "type": "string" },
+        "signature": { "type": "string" }
+      }
+    },
+    "kernel_composition": {
+      "type": "array",
+      "description": "Faza 2.4 W244 kernel dispatcher output — which kernels evaluate this game.",
+      "items": {
+        "type": "object",
+        "required": ["feature_kind", "kernel_id"],
+        "properties": {
+          "feature_kind": { "type": "string" },
+          "kernel_id": {
+            "type": "string",
+            "description": "Reference to tools/math_dsl/<kernel_id>.py"
+          },
+          "kernel_version": { "type": "string" }
+        }
+      }
+    }
+  }
+}
