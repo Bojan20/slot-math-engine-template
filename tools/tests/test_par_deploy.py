@@ -300,7 +300,7 @@ def test_promote_variant_copies_to_live(tmp_path: Path):
     variant_dir.mkdir(parents=True)
     (variant_dir / "marker.txt").write_text("variant-c")
 
-    result = promote_variant(
+    promote_variant(
         games_root, "game-x", "variant-c",
         promoter="bojan@example.com",
         deploy_signature="abc123",
