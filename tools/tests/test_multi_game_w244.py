@@ -90,20 +90,40 @@ def test_composer_sub_bps_parity_per_game(game: str, variant: str):
 def test_mc_runtime_convergence_per_game(game: str, variant: str):
     """MC runtime converges to CF target within Wilson 99% CI for each game.
 
-    Skips games whose CF lacks fs_session/hnw_session — those need a
-    different MC executor shape (cluster-pays, ways, etc.). The current
-    `build_wrath_executor_from_cf` only models the Wrath-shape (base lines
-    + FS + H&W); other shapes get their own MC executor in a follow-up.
+    Routes to the appropriate per-shape MC executor:
+      - Wrath-shape (lines + FS + HW): `build_wrath_executor_from_cf`
+      - Cluster-pays shape: `build_cluster_executor_from_cf`
     """
     ir_path, cf_path = _game_paths(game, variant)
     if not (ir_path.is_file() and cf_path.is_file()):
         pytest.skip(f"{game}/{variant} not in PAR library")
-    # MC executor is currently Wrath-shape-specific
-    cf_preview = json.loads(cf_path.read_text())
-    if "fs_session" not in cf_preview or "hnw_session" not in cf_preview:
+
+    cf = json.loads(cf_path.read_text())
+    ir = json.loads(ir_path.read_text())
+    target = cf["total_rtp"]
+
+    # Dispatch by CF shape
+    if "cluster_distribution" in cf:
+        from tools.par_kernels.mc_cluster_runtime import (
+            build_cluster_executor_from_cf, run_mc_cluster,
+        )
+        executor = build_cluster_executor_from_cf(cf, ir)
+        # Cluster-pays MC is heavy-tailed; bump spin count for tighter CI
+        result = run_mc_cluster(
+            executor, spins=200_000, seed=42, cf_target_rtp=target,
+        )
+        assert result.convergence_pass, (
+            f"{game}/{variant} cluster MC RTP {result.rtp:.4%} outside Wilson "
+            f"99% CI of CF target {target:.4%}. Δ={result.delta_bps:+.2f} bps, "
+            f"CI half-width=±{result.wilson_99_halfwidth:.4%}"
+        )
+        return
+
+    # Wrath-shape (fs + hnw sessions)
+    if "fs_session" not in cf or "hnw_session" not in cf:
         pytest.skip(
-            f"{game}/{variant} CF lacks fs_session/hnw_session — "
-            f"cluster-pays / ways MC executor TBD"
+            f"{game}/{variant} CF lacks fs_session/hnw_session AND lacks "
+            f"cluster_distribution — no MC executor available"
         )
 
     from tools.par_kernels.mc_runtime import (
