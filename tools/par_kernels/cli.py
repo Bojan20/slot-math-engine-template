@@ -125,8 +125,10 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     from tools.par_kernels.composer import compose
     from tools.par_kernels.generic_params import (
         delegated_baseline_rtp,
+        lightning_uplift_rtp_from_ir,
         lines_eval_rtp_from_ir,
         make_params_builder,
+        scatter_pay_rtp_from_ir,
     )
 
     target_rtp = cf.get("total_rtp", 0.0)
@@ -153,7 +155,21 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     else:
         base_rtp = cf.get("components", {}).get("base_line", 0.0)
 
-    delegated = delegated_baseline_rtp(cf) + base_rtp
+    # Scatter pay kernel (anywhere pays for K ≥ 3 scatters)
+    t0 = time.perf_counter()
+    scatter_rtp, _ = scatter_pay_rtp_from_ir(ir)
+    wallclock["scatter_pay"] = time.perf_counter() - t0
+    if scatter_rtp == 0:
+        scatter_rtp = cf.get("components", {}).get("scatter_pay_base", 0.0)
+
+    # Lightning uplift kernel (base-game multiplier on winning spins)
+    t0 = time.perf_counter()
+    lightning_rtp, _ = lightning_uplift_rtp_from_ir(ir, base_rtp=base_rtp)
+    wallclock["lightning_uplift"] = time.perf_counter() - t0
+    if lightning_rtp == 0:
+        lightning_rtp = cf.get("components", {}).get("lightning_uplift", 0.0)
+
+    delegated = delegated_baseline_rtp(cf) + base_rtp + scatter_rtp + lightning_rtp
 
     # MC (optional)
     mc_result = None

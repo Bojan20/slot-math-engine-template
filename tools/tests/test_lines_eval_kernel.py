@@ -178,7 +178,7 @@ def test_lines_eval_per_symbol_decomposition_consistent():
 
 
 def test_lines_eval_full_pipeline_via_generic_params():
-    """End-to-end through CLI helper: lines_eval + composer + delegated."""
+    """End-to-end: lines_eval + delegated baseline (which is now 0 — all kernels native)."""
     from tools.par_kernels.generic_params import (
         delegated_baseline_rtp,
         lines_eval_rtp_from_ir,
@@ -189,9 +189,8 @@ def test_lines_eval_full_pipeline_via_generic_params():
     cf = json.loads(WRATH_RTP.read_text())
     lines_rtp, _ = lines_eval_rtp_from_ir(ir)
     delegated = delegated_baseline_rtp(cf)
-    # delegated MUST exclude base_line (now lines_eval handles it)
-    expected_delegated = cf["components"].get("scatter_pay_base", 0.0) + \
-                          cf["components"].get("lightning_uplift", 0.0)
-    assert abs(delegated - expected_delegated) < 1e-12
+    # All previously-delegated components now have native W244 kernels →
+    # delegated_baseline_rtp returns 0.
+    assert delegated == 0.0
     # With scatter-aware enumeration, lines_rtp ≡ published base_line.
     assert abs(lines_rtp - cf["components"]["base_line"]) < 5e-5

@@ -40,9 +40,10 @@ def test_composer_sub_bps_parity_per_game(game: str, variant: str):
 
     from tools.par_kernels.composer import compose
     from tools.par_kernels.generic_params import (
-        delegated_baseline_rtp,
+        lightning_uplift_rtp_from_ir,
         lines_eval_rtp_from_ir,
         make_params_builder,
+        scatter_pay_rtp_from_ir,
     )
 
     ir = json.loads(ir_path.read_text())
@@ -50,22 +51,29 @@ def test_composer_sub_bps_parity_per_game(game: str, variant: str):
     target = cf["total_rtp"]
     par = {"rtp": {"rtp_total": target}}
 
+    # Composer (FS + H&W kernels)
     result = compose(ir, par=par, params_builder=make_params_builder(cf))
-    delegated = delegated_baseline_rtp(cf)
+
+    # Lines kernel (or CF fallback for synthetic games without reel data)
     lines_rtp, _ = lines_eval_rtp_from_ir(ir)
-    composed_total = result.composed_rtp + delegated + lines_rtp
+    if lines_rtp == 0:
+        lines_rtp = cf["components"].get("base_line", 0.0)
+
+    # Scatter pay kernel
+    scatter_rtp, _ = scatter_pay_rtp_from_ir(ir)
+    if scatter_rtp == 0:
+        scatter_rtp = cf["components"].get("scatter_pay_base", 0.0)
+
+    # Lightning kernel
+    lightning_rtp, _ = lightning_uplift_rtp_from_ir(ir, base_rtp=lines_rtp)
+    if lightning_rtp == 0:
+        lightning_rtp = cf["components"].get("lightning_uplift", 0.0)
+
+    composed_total = result.composed_rtp + lines_rtp + scatter_rtp + lightning_rtp
     delta_bps = (composed_total - target) * 10000.0
 
-    # Oracle of Delphi is synthetic with no real reels → lines_eval returns 0,
-    # but its CF has base_line=45% baked in. For that game we accept the
-    # delegated baseline path. The test asserts COMPOSER+(lines OR delegated)
-    # is within 50 bps.
-    fallback_total = result.composed_rtp + cf["components"].get("base_line", 0.0) + delegated
-    fallback_delta = (fallback_total - target) * 10000.0
-    best_delta = min(abs(delta_bps), abs(fallback_delta))
-    assert best_delta <= 50.0, (
-        f"{game}/{variant} composer off by {delta_bps:+.4f} bps "
-        f"(fallback {fallback_delta:+.4f} bps)\n"
+    assert abs(delta_bps) <= 50.0, (
+        f"{game}/{variant} composer off by {delta_bps:+.4f} bps\n"
         f"composed={composed_total:.6%}, target={target:.6%}\n"
         f"{result.summary()}"
     )

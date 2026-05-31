@@ -211,10 +211,42 @@ def build_generic_params(
 def delegated_baseline_rtp(cf: dict[str, Any]) -> float:
     """Sum of CF components NOT modeled by W244 kernels.
 
-    Excludes `base_line` — that's now handled by lines_eval kernel.
+    Excludes base_line (lines_eval), scatter_pay_base (scatter_pay kernel),
+    lightning_uplift (lightning_uplift kernel) — those are now first-class
+    W244 kernels.
     """
     c = cf.get("components", {})
-    return sum(c.get(name, 0.0) for name in DELEGATED_COMPONENTS if name != "base_line")
+    # All previously-delegated components are now handled by kernels.
+    # Return 0 unless future CF schemas add new delegated slices.
+    handled = {"base_line", "scatter_pay_base", "lightning_uplift"}
+    return sum(v for name, v in c.items()
+               if name in DELEGATED_COMPONENTS and name not in handled)
+
+
+def scatter_pay_rtp_from_ir(ir: dict[str, Any]) -> tuple[float, dict[str, Any]]:
+    """Run scatter_pay kernel on an IR. Returns (rtp, full_result) or (0, {})."""
+    from tools.par_kernels.scatter_pay import (
+        build_scatter_pay_params_from_ir, scatter_pay_rtp,
+    )
+    p = build_scatter_pay_params_from_ir(ir)
+    if p is None:
+        return 0.0, {}
+    r = scatter_pay_rtp(p)
+    return r["rtp_contribution"], r
+
+
+def lightning_uplift_rtp_from_ir(
+    ir: dict[str, Any], base_rtp: float,
+) -> tuple[float, dict[str, Any]]:
+    """Run lightning_uplift kernel on an IR. Returns (rtp, full_result) or (0, {})."""
+    from tools.par_kernels.lightning_uplift import (
+        build_lightning_params_from_ir, lightning_uplift_rtp,
+    )
+    p = build_lightning_params_from_ir(ir, base_rtp=base_rtp)
+    if p is None:
+        return 0.0, {}
+    r = lightning_uplift_rtp(p)
+    return r["rtp_contribution"], r
 
 
 def lines_eval_rtp_from_ir(ir: dict[str, Any]) -> tuple[float, dict[str, Any]]:
