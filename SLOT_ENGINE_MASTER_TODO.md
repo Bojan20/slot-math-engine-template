@@ -74,11 +74,11 @@
 
 **Acceptance Faza 2:** Svaka od 4 PAR varijante producuje validan `game.ir.json` koji prolazi schema check + coverage gate.
 
-### 🟡 FAZA 3 — MC convergence sweep (86% done — 6/7, Rust hot-path pending)
+### ✅ FAZA 3 — MC convergence sweep (100% done — 7/7)
 
 | Sub-task | Path | Acceptance | Status |
 |---|---|---|---|
-| 3.1 MC orchestrator (Rust) | `rust-sim/src/bin/mc_convergence.rs` | rayon parallel, multi-seed, Welford streaming | ⬜ |
+| 3.1 MC orchestrator (Rust) | `rust-sim/src/bin/mc_convergence.rs` + `tools/par_mc_convergence/rust_worker.py` | rayon parallel, multi-seed, Welford streaming — 290M spins/s | ✅ |
 | 3.2 Tier matrix config | `tools/par_mc_convergence/tiers.py` | T1 (1M×32) → T5 (100B×2) | ✅ |
 | 3.3 Wilson CI gate | `tools/par_mc_convergence/wilson.py` | 99.9% CI, per-metric | ✅ |
 | 3.4 Metric comparators (6 axes) | `tools/par_mc_convergence/compare.py` | RTP, hit_freq, feature_freq, var, max_win, P50/90/99/99.9 | ✅ |

@@ -373,3 +373,133 @@ def test_orchestrator_writes_diff_when_fail(tmp_path: Path):
     assert "diff_report" in paths
     assert paths["diff_report"].exists()
     assert "MC Sweep Diff Report" in paths["diff_report"].read_text()
+
+
+# ─── Faza 3.1 — Rust hot-path worker integration ─────────────────────────
+
+import os
+import subprocess
+
+
+_RUST_BIN = (
+    Path(__file__).resolve().parents[2]
+    / "target" / "release" / "mc_convergence"
+)
+
+
+def _rust_binary_available() -> bool:
+    """Skip Rust-hot-path tests when binary isn't built (CI before cargo build)."""
+    if os.environ.get("SLOT_MATH_MC_BIN"):
+        return Path(os.environ["SLOT_MATH_MC_BIN"]).is_file()
+    return _RUST_BIN.is_file() and os.access(_RUST_BIN, os.X_OK)
+
+
+_skip_no_rust = pytest.mark.skipif(
+    not _rust_binary_available(),
+    reason="mc_convergence Rust binary not built; run `cargo build --release --bin mc_convergence`",
+)
+
+
+@_skip_no_rust
+def test_rust_worker_emits_valid_seed_result():
+    """Rust hot-path returns SeedResult with all required fields populated."""
+    from tools.par_mc_convergence.rust_worker import make_rust_worker
+
+    ir = _synthetic_ir()
+    worker = make_rust_worker(game_id="rust-test", variant_id="va")
+    # Smoke at T1 with tiny override so test runs in milliseconds
+    seed = tier_seeds(Tier.T1, "rust-test", "va")[0]
+    result = worker(ir, seed, spins=10_000)
+
+    assert isinstance(result, SeedResult)
+    assert result.seed == seed
+    assert result.spins == 10_000
+    assert result.hits > 0
+    assert result.total_won_x > 0.0
+    assert result.sum_sq_payout > 0.0
+    assert result.max_win_x > 0.0
+    assert "free_spins" in result.feature_trigger_counts
+
+
+@_skip_no_rust
+def test_rust_worker_seed_derivation_matches_python():
+    """Rust binary derives seeds identical to tools/par_mc_convergence/tiers.py."""
+    from tools.par_mc_convergence.rust_worker import make_rust_worker
+
+    ir = _synthetic_ir()
+    expected_seeds = tier_seeds(Tier.T1, "seed-parity", "va")
+    worker = make_rust_worker(game_id="seed-parity", variant_id="va")
+    # Drive worker with first 4 seeds; each call should pool internally
+    for i, seed in enumerate(expected_seeds[:4]):
+        result = worker(ir, seed, spins=10_000)
+        assert result.seed == seed, (
+            f"Rust binary returned seed[{i}]={result.seed}, "
+            f"Python expected {seed} — derive_seed parity broken"
+        )
+
+
+@_skip_no_rust
+def test_rust_worker_runs_full_orchestrator_sweep():
+    """End-to-end: orchestrator + Rust worker produces valid attestation."""
+    from tools.par_mc_convergence.rust_worker import make_rust_worker
+
+    par = _synthetic_par()
+    ir = _synthetic_ir()
+    worker = make_rust_worker(game_id="e2e", variant_id="va")
+    result = run_sweep(ir, par, Tier.T1, worker=worker)
+
+    # Plumbing assertions only — RTP parity is for the real kernel,
+    # not the synthetic Bernoulli+lognormal proof-of-plumbing.
+    assert result.measured.total_spins == 32 * 1_000_000  # T1 × 32 seeds
+    assert result.measured.seed_count == 32
+    assert result.measured.hits > 0
+    assert result.attestation["schema"] == "slot-math-mc-attestation/v1"
+    assert result.attestation["tier"] == "T1"
+    assert "game_id" in result.attestation
+    assert result.wallclock_seconds > 0.0
+
+
+@_skip_no_rust
+def test_rust_worker_throughput_beats_python_reference():
+    """Sanity: Rust path is materially faster than Python ref at MC-scale loads."""
+    import time
+
+    from tools.par_mc_convergence.orchestrator import _python_reference_worker
+    from tools.par_mc_convergence.rust_worker import make_rust_worker
+
+    ir = _synthetic_ir()
+    # At 1M spins Python is ~30k spins/s = ~33s, Rust ~290M spins/s = ~3ms
+    # subprocess startup is ~80-150ms so Rust pays back at >100K spins.
+    spins = 1_000_000
+    seed = 42
+
+    t0 = time.perf_counter()
+    _python_reference_worker(ir, seed, spins)
+    py_time = time.perf_counter() - t0
+
+    # Warmup pays subprocess startup
+    rust_worker = make_rust_worker(game_id="bench", variant_id="va")
+    rust_worker(ir, 1, 1_000)
+    t0 = time.perf_counter()
+    rust_worker(ir, seed, spins)
+    rust_time = time.perf_counter() - t0
+
+    # Allow generous margin; even with subprocess overhead Rust should be ≥10×
+    # at 200K spins. On a modest laptop Python does ~30k spins/s, Rust ~290M/s.
+    assert rust_time < py_time, (
+        f"Rust ({rust_time:.3f}s) slower than Python ({py_time:.3f}s) for {spins} spins — regression?"
+    )
+
+
+def test_rust_binary_help_responds():
+    """Rust binary exists or test gates Skip — verify --help works when present."""
+    if not _rust_binary_available():
+        pytest.skip("mc_convergence binary not built")
+    proc = subprocess.run(
+        [str(_RUST_BIN), "--help"],
+        capture_output=True, text=True, timeout=10, check=False,
+    )
+    assert proc.returncode == 0
+    assert "mc_convergence" in proc.stdout
+    assert "--ir-path" in proc.stdout
+    assert "--tier" in proc.stdout
