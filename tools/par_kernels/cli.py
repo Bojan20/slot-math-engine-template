@@ -255,6 +255,129 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     return 0 if abs(delta_bps) <= args.tolerance_bps else 1
 
 
+def cmd_list_games(args: argparse.Namespace) -> int:
+    """List all games in reports/par-library/ with shape + status."""
+    library = REPO / "reports" / "par-library"
+    if not library.is_dir():
+        print(f"PAR library missing: {library}", file=sys.stderr)
+        return 1
+
+    print(f"# SLOT-MATH PAR Library — {library.relative_to(REPO)}")
+    print()
+    print("| Game | Variant | Shape | RTP target | Files |")
+    print("|---|---|---|---:|:---:|")
+
+    games = sorted(d.name for d in library.iterdir() if d.is_dir())
+    for game in games:
+        game_dir = library / game
+        variants = sorted(v.name for v in game_dir.iterdir() if v.is_dir())
+        for variant in variants:
+            v_dir = game_dir / variant
+            ir_path = v_dir / "game.ir.json"
+            cf_path = v_dir / "closed-form-rtp.json"
+            if not (ir_path.is_file() and cf_path.is_file()):
+                continue
+            try:
+                ir = json.loads(ir_path.read_text())
+                cf = json.loads(cf_path.read_text())
+                shape = ir.get("evaluation", {}).get("kind", "?")
+                rtp = cf.get("total_rtp", 0.0)
+                n_files = sum(1 for _ in v_dir.iterdir() if _.is_file())
+                print(f"| {game} | {variant} | {shape} | {rtp*100:.2f}% | {n_files} |")
+            except Exception as e:
+                print(f"| {game} | {variant} | ERROR | — | {e} |")
+    return 0
+
+
+def cmd_init(args: argparse.Namespace) -> int:
+    """Scaffold a new game directory from a shape template."""
+    shape_templates = {
+        "lines": {
+            "evaluation": {"kind": "lines"},
+            "components_keys": ["base_line", "scatter_pay_base", "lightning_uplift"],
+            "features_example": ["free_spins", "hold_and_win", "multiplier"],
+        },
+        "cluster_pays": {
+            "evaluation": {"kind": "cluster_pays", "min_cluster_size": 5, "adjacency": "4-way"},
+            "components_keys": ["cluster_pays_base", "cascade_uplift"],
+            "features_example": ["cascade"],
+        },
+        "ways": {
+            "evaluation": {"kind": "ways"},
+            "components_keys": ["ways_base", "cascade_uplift"],
+            "features_example": ["cascade"],
+        },
+        "crash": {
+            "evaluation": {"kind": "crash"},
+            "components_keys": ["crash_base"],
+            "features_example": [],
+        },
+        "pay_anywhere": {
+            "evaluation": {"kind": "pay_anywhere", "min_pay_count": 8},
+            "components_keys": ["pay_anywhere_base", "cascade_uplift"],
+            "features_example": ["cascade"],
+        },
+    }
+    shape = args.shape
+    if shape not in shape_templates:
+        print(f"Unknown shape: {shape}. Supported: {list(shape_templates.keys())}",
+              file=sys.stderr)
+        return 2
+    tmpl = shape_templates[shape]
+    out_dir = REPO / "reports" / "par-library" / args.game / args.variant
+    if out_dir.exists() and not args.force:
+        print(f"Already exists: {out_dir} (use --force to overwrite)", file=sys.stderr)
+        return 3
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    ir = {
+        "schema_version": "1.0.0",
+        "meta": {
+            "id": args.game,
+            "name": args.game.replace("-", " ").title(),
+            "version": args.variant,
+            "description": f"Scaffolded {shape} game — fill out paytable + reels + features",
+        },
+        "topology": {"kind": "rectangular", "reels": 5, "rows": 3},
+        "symbols": [],
+        "evaluation": tmpl["evaluation"],
+        "features": [{"kind": k, "TODO": f"configure {k}"} for k in tmpl["features_example"]],
+        "rng": {"kind": "pcg64"},
+        "bet": {"currency": "EUR", "base_bet": 1, "max_win_x": 5000},
+        "provenance": {"par_source": args.variant, "ir_sha256": "TODO"},
+    }
+    cf = {
+        "game": args.game,
+        "version": args.variant,
+        "target_rtp": 0.96,
+        "total_rtp": 0.96,
+        "components": {k: 0.0 for k in tmpl["components_keys"]},
+    }
+    (out_dir / "game.ir.json").write_text(json.dumps(ir, indent=2) + "\n")
+    (out_dir / "closed-form-rtp.json").write_text(json.dumps(cf, indent=2) + "\n")
+    print(f"✓ Scaffolded {shape} game at {out_dir}", file=sys.stderr)
+    print("  Next: fill out symbols, paytable, components in JSON, then:")
+    print(f"  python3 -m tools.par_kernels.cli evaluate --game {args.game} --variant {args.variant}")
+    return 0
+
+
+def cmd_shapes(args: argparse.Namespace) -> int:
+    """Print supported evaluation shapes + industry examples."""
+    print("# SLOT-MATH supported shapes (W244 kernel coverage)")
+    print()
+    print("| Shape | Industry pattern | Composer | MC executor |")
+    print("|---|---|:---:|:---:|")
+    print("| lines | Classic 3-reel, 20/30/50-line | ✅ | ✅ Rust (554M/s) + Python |")
+    print("| cluster_pays | Sweet Bonanza, Aloha, Gates of Olympus | ✅ | ✅ Python (200K/s) |")
+    print("| ways | Megaways: Bonanza, Big Bass, Extra Chilli | ✅ | ✅ Python (586K/s) |")
+    print("| crash | Stake Crash, Aviator, Bustabit | ✅ | ✅ Python (1.75M/s) |")
+    print("| pay_anywhere | Sweet Bonanza scatter, Gonzo's Quest | ✅ | ✅ CF (exact) |")
+    print()
+    print("Add a new game via:")
+    print("  python3 -m tools.par_kernels.cli init <game> <variant> --shape <shape>")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="slot-math",
@@ -277,6 +400,21 @@ def main(argv: list[str] | None = None) -> int:
                              "(default 50 — accommodates reel-strip vs RNG gap)")
     p_eval.add_argument("--out", help="Write Markdown report to this path (default stdout)")
     p_eval.set_defaults(func=cmd_evaluate)
+
+    p_list = sub.add_parser("list-games", help="List all games in PAR library")
+    p_list.set_defaults(func=cmd_list_games)
+
+    p_init = sub.add_parser("init", help="Scaffold a new game from a shape template")
+    p_init.add_argument("game", help="Game ID (kebab-case, e.g. 'crimson-tiger')")
+    p_init.add_argument("variant", help="Variant tag (e.g. 'v1.0.0')")
+    p_init.add_argument("--shape", required=True,
+                        choices=["lines", "cluster_pays", "ways", "crash", "pay_anywhere"],
+                        help="Evaluation shape (see 'shapes' subcommand)")
+    p_init.add_argument("--force", action="store_true", help="Overwrite if exists")
+    p_init.set_defaults(func=cmd_init)
+
+    p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")
+    p_shapes.set_defaults(func=cmd_shapes)
 
     args = parser.parse_args(argv)
     return args.func(args)

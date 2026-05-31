@@ -222,3 +222,65 @@ def test_cli_evaluate_exits_zero_for_known_games():
             f"CLI exit {proc.returncode} for {game}/{variant}\n"
             f"stderr: {proc.stderr[:500]}"
         )
+
+
+# ─── CLI subcommand gates (v2.0 polish) ─────────────────────────────────
+
+
+def test_cli_shapes_subcommand():
+    """`shapes` lists all 5 supported shapes."""
+    import subprocess
+    proc = subprocess.run(
+        ["python3", "-m", "tools.par_kernels.cli", "shapes"],
+        capture_output=True, text=True, timeout=10, check=False, cwd=REPO,
+    )
+    assert proc.returncode == 0
+    for shape in ("lines", "cluster_pays", "ways", "crash", "pay_anywhere"):
+        assert shape in proc.stdout, f"shapes output missing {shape}"
+
+
+def test_cli_list_games_shows_all_six():
+    """`list-games` shows all 6 reference games."""
+    import subprocess
+    proc = subprocess.run(
+        ["python3", "-m", "tools.par_kernels.cli", "list-games"],
+        capture_output=True, text=True, timeout=10, check=False, cwd=REPO,
+    )
+    assert proc.returncode == 0
+    for game in (
+        "wrath-of-olympus", "oracle-of-delphi", "mystic-cluster",
+        "lightning-ways", "stake-rush", "sky-cascade",
+    ):
+        assert game in proc.stdout, f"list-games missing {game}"
+
+
+def test_cli_init_scaffolds_each_shape(tmp_path):
+    """`init` produces valid IR + CF for every supported shape.
+
+    Uses a tmp_path proxy: scaffold to PAR library, then immediately remove.
+    """
+    import subprocess
+    import shutil
+    for shape in ("lines", "cluster_pays", "ways", "crash", "pay_anywhere"):
+        game_id = f"test-init-{shape}"
+        out_dir = REPO / "reports" / "par-library" / game_id
+        try:
+            proc = subprocess.run(
+                ["python3", "-m", "tools.par_kernels.cli", "init",
+                 game_id, "v0.0.0", "--shape", shape, "--force"],
+                capture_output=True, text=True, timeout=10, check=False, cwd=REPO,
+            )
+            assert proc.returncode == 0, (
+                f"init {shape} failed: {proc.stderr[:200]}"
+            )
+            ir_path = out_dir / "v0.0.0" / "game.ir.json"
+            cf_path = out_dir / "v0.0.0" / "closed-form-rtp.json"
+            assert ir_path.is_file()
+            assert cf_path.is_file()
+            ir = json.loads(ir_path.read_text())
+            cf = json.loads(cf_path.read_text())
+            assert ir["evaluation"]["kind"] in (shape, "cluster_pays")
+            assert cf["total_rtp"] == 0.96
+        finally:
+            if out_dir.is_dir():
+                shutil.rmtree(out_dir)
