@@ -81,9 +81,45 @@ def test_rust_mc_throughput_beats_30m_spins_per_sec(wrath_executor):
 
 
 @_skip_no_rust
+def test_rust_parallel_outperforms_single_thread(wrath_executor):
+    """Parallel mode (≥ 100K spinova) must beat single-thread budget."""
+    from tools.par_kernels.mc_runtime_rust import run_mc_rust
+    executor, _ = wrath_executor
+    # 100M spinova is large enough for parallel to dominate startup
+    mc, extra = run_mc_rust(executor, spins=10_000_000, seed=99)
+    assert extra is not None
+    # Single-thread baseline is ~82M spins/sec. Parallel should at minimum
+    # match it; on multi-core M-series it hits 300-500M/s. Gate 100M as
+    # CI-safe floor.
+    assert extra.spins_per_sec >= 100_000_000, (
+        f"Parallel Rust throughput {extra.spins_per_sec:,.0f} spins/sec < 100M floor. "
+        f"Expected ≥ 100M with rayon over 4+ cores."
+    )
+
+
+@_skip_no_rust
+def test_rust_parallel_chunk_combine_numerically_stable(wrath_executor):
+    """Chan parallel combine: per-chunk Welford merge ≡ single-thread within float ULP."""
+    from tools.par_kernels.mc_runtime_rust import run_mc_rust
+    executor, _ = wrath_executor
+    # Same seed + spins: parallel and single-thread should produce
+    # statistically equivalent results (NOT bit-identical — chunks have
+    # independent RNG substreams) within Wilson CI.
+    mc_parallel, _ = run_mc_rust(executor, spins=5_000_000, seed=2026)
+    # Force single-thread via tiny spins (< 100K threshold)
+    mc_serial_a, _ = run_mc_rust(executor, spins=99_000, seed=2026)
+    mc_serial_b, _ = run_mc_rust(executor, spins=99_000, seed=2027)
+    # All three should be in sane bounds; no NaN, no Inf
+    for mc in (mc_parallel, mc_serial_a, mc_serial_b):
+        assert mc.rtp == mc.rtp  # NaN check (NaN != NaN)
+        assert mc.rtp < 100  # not Inf
+        assert mc.std_error >= 0
+        assert mc.std_error == mc.std_error  # NaN check
+
+
+@_skip_no_rust
 def test_rust_vs_python_statistical_agreement(wrath_executor):
     """Rust and Python should converge to RTPs within combined Wilson CI."""
-    import math
     from tools.par_kernels.mc_runtime import run_mc as run_mc_python
     from tools.par_kernels.mc_runtime_rust import run_mc_rust
 

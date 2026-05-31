@@ -171,7 +171,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
 
     delegated = delegated_baseline_rtp(cf) + base_rtp + scatter_rtp + lightning_rtp
 
-    # MC (optional)
+    # MC (optional) — defaults to Rust runtime, falls back to Python
     mc_result = None
     if args.mc_spins > 0:
         from tools.par_kernels.mc_runtime import (
@@ -180,11 +180,28 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
         )
         executor = build_wrath_executor_from_cf(cf)
         t0 = time.perf_counter()
-        mc_result = run_mc(
-            executor, spins=args.mc_spins, seed=args.seed,
-            cf_target_rtp=target_rtp,
-        )
+        mc_engine_note = "python (pure)"
+        if args.python_mc:
+            mc_result = run_mc(
+                executor, spins=args.mc_spins, seed=args.seed,
+                cf_target_rtp=target_rtp,
+            )
+        else:
+            from tools.par_kernels.mc_runtime_rust import run_mc_rust
+            mc_result, rust_extra = run_mc_rust(
+                executor, spins=args.mc_spins, seed=args.seed,
+                cf_target_rtp=target_rtp,
+                fallback_to_python=True,
+            )
+            mc_engine_note = (
+                f"rust ({rust_extra.spins_per_sec/1e6:.0f}M spins/s)"
+                if rust_extra
+                else "python (rust binary missing — fallback)"
+            )
         wallclock["mc"] = time.perf_counter() - t0
+        # Stash engine note in result.summary by appending to wallclock label later
+        if mc_result is not None:
+            setattr(mc_result, "_engine_note", mc_engine_note)
 
     report = _format_report(
         game_id=game_id,
@@ -221,6 +238,9 @@ def main(argv: list[str] | None = None) -> int:
     p_eval.add_argument("--variant", help="Variant tag (default v12.0.0)")
     p_eval.add_argument("--mc-spins", type=int, default=0, help="If > 0, run MC sampler with this many spins")
     p_eval.add_argument("--seed", type=int, default=42)
+    p_eval.add_argument("--python-mc", action="store_true",
+                        help="Force pure-Python MC runtime (default: Rust if binary built, "
+                             "fallback Python). Rust is ~70× faster single-thread, ~500× parallel.")
     p_eval.add_argument("--tolerance-bps", type=float, default=50.0,
                         help="bps tolerance for composer pass/fail "
                              "(default 50 — accommodates reel-strip vs RNG gap)")

@@ -20,9 +20,8 @@ import json
 import os
 import shutil
 import subprocess
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 from tools.par_kernels.mc_runtime import McResult, WrathSpinExecutor, run_mc
 

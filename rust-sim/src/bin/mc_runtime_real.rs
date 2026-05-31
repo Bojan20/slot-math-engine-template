@@ -50,6 +50,7 @@
 //! }
 //! ```
 
+use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::io::{self, Read};
 use std::time::Instant;
@@ -62,7 +63,14 @@ struct McInput {
     #[serde(default = "default_seed")]
     seed: u64,
     cf_target_rtp: Option<f64>,
+    #[serde(default = "default_threads")]
+    threads: usize,
     executor: ExecutorParams,
+}
+
+fn default_threads() -> usize {
+    // 0 = use rayon's default (= num_cpus)
+    0
 }
 
 #[derive(Debug, Deserialize)]
@@ -211,6 +219,7 @@ fn sample_bernoulli_session(
 
 // ─── Streaming Welford stats ──────────────────────────────────────────
 
+#[derive(Clone, Default)]
 struct StreamingStats {
     n: u64,
     mean: f64,
@@ -223,7 +232,7 @@ struct StreamingStats {
 
 impl StreamingStats {
     fn new() -> Self {
-        Self { n: 0, mean: 0.0, m2: 0.0, max_observed: 0.0, hits: 0, fs_triggers: 0, hnw_triggers: 0 }
+        Self::default()
     }
 
     #[inline(always)]
@@ -244,6 +253,31 @@ impl StreamingStats {
         }
         if hnw {
             self.hnw_triggers += 1;
+        }
+    }
+
+    /// Chan parallel combine — merge two Welford accumulators numerically stable.
+    /// Reference: Chan, Golub, LeVeque (1979), eq (1.5a/b).
+    fn merge(&self, other: &Self) -> Self {
+        if other.n == 0 {
+            return self.clone();
+        }
+        if self.n == 0 {
+            return other.clone();
+        }
+        let n_total = self.n + other.n;
+        let delta = other.mean - self.mean;
+        let mean = (self.n as f64 * self.mean + other.n as f64 * other.mean) / n_total as f64;
+        let m2 = self.m2 + other.m2
+            + delta * delta * (self.n as f64 * other.n as f64) / n_total as f64;
+        Self {
+            n: n_total,
+            mean,
+            m2,
+            max_observed: self.max_observed.max(other.max_observed),
+            hits: self.hits + other.hits,
+            fs_triggers: self.fs_triggers + other.fs_triggers,
+            hnw_triggers: self.hnw_triggers + other.hnw_triggers,
         }
     }
 
@@ -274,17 +308,17 @@ struct McResult {
     convergence_pass: bool,
     wallclock_seconds: f64,
     spins_per_sec: f64,
+    threads_used: usize,
+    parallel: bool,
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────
 
-fn run_mc(input: &McInput) -> McResult {
-    let exec = &input.executor;
-    let mut rng = Xoshiro256pp::from_seed(input.seed);
+/// Run one chunk of spinova with its own RNG substream + local Welford.
+fn run_chunk(exec: &ExecutorParams, chunk_seed: u64, spins: u64) -> StreamingStats {
+    let mut rng = Xoshiro256pp::from_seed(chunk_seed);
     let mut stats = StreamingStats::new();
-
-    let start = Instant::now();
-    for _ in 0..input.spins {
+    for _ in 0..spins {
         let base = sample_base_lines(
             &mut rng,
             exec.base_rtp_per_spin,
@@ -297,14 +331,73 @@ fn run_mc(input: &McInput) -> McResult {
         let (hnw_hit, hnw_pay) = sample_bernoulli_session(
             &mut rng, exec.hnw_trigger_p, exec.hnw_session_e, exec.hnw_session_std,
         );
-
         let mut total = base + fs_pay + hnw_pay;
         if total > exec.max_win_cap_x {
             total = exec.max_win_cap_x;
         }
-
         stats.push(total, base > 0.0, fs_hit, hnw_hit);
     }
+    stats
+}
+
+fn run_mc(input: &McInput) -> McResult {
+    let exec = &input.executor;
+
+    // Decide thread count + chunk shape
+    let want_threads = if input.threads == 0 {
+        rayon::current_num_threads().max(1)
+    } else {
+        input.threads
+    };
+    // Don't parallelize tiny runs — overhead dominates below ~50K spinova
+    let use_parallel = input.spins >= 100_000 && want_threads > 1;
+    let n_chunks = if use_parallel { want_threads } else { 1 };
+    let base_spins_per_chunk = input.spins / n_chunks as u64;
+    let remainder = input.spins % n_chunks as u64;
+
+    // Per-chunk seed = SplitMix64(input.seed XOR chunk_idx)
+    // — guarantees independent substreams across threads.
+    let chunk_seeds: Vec<u64> = (0..n_chunks)
+        .map(|i| {
+            let mut z = input.seed.wrapping_add((i as u64).wrapping_mul(0x9E37_79B9_7F4A_7C15));
+            z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+            z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+            z ^ (z >> 31)
+        })
+        .collect();
+
+    let start = Instant::now();
+
+    let stats: StreamingStats = if use_parallel {
+        // Configure rayon pool if user requested a specific count
+        let pool = if input.threads > 0 {
+            Some(
+                rayon::ThreadPoolBuilder::new()
+                    .num_threads(input.threads)
+                    .build()
+                    .expect("rayon pool"),
+            )
+        } else {
+            None
+        };
+        let run = || {
+            (0..n_chunks)
+                .into_par_iter()
+                .map(|i| {
+                    let extra = if (i as u64) < remainder { 1 } else { 0 };
+                    let spins = base_spins_per_chunk + extra;
+                    run_chunk(exec, chunk_seeds[i], spins)
+                })
+                .reduce(StreamingStats::new, |a, b| a.merge(&b))
+        };
+        match pool {
+            Some(p) => p.install(run),
+            None => run(),
+        }
+    } else {
+        run_chunk(exec, chunk_seeds[0], input.spins)
+    };
+
     let wallclock = start.elapsed().as_secs_f64();
     let spins_per_sec = if wallclock > 0.0 {
         input.spins as f64 / wallclock
@@ -338,6 +431,8 @@ fn run_mc(input: &McInput) -> McResult {
         convergence_pass: pass,
         wallclock_seconds: wallclock,
         spins_per_sec,
+        threads_used: n_chunks,
+        parallel: use_parallel,
     }
 }
 
