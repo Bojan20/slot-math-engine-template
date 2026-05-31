@@ -74,17 +74,17 @@
 
 **Acceptance Faza 2:** Svaka od 4 PAR varijante producuje validan `game.ir.json` koji prolazi schema check + coverage gate.
 
-### 🔴 FAZA 3 — MC convergence sweep (0% done)
+### 🟡 FAZA 3 — MC convergence sweep (86% done — 6/7, Rust hot-path pending)
 
 | Sub-task | Path | Acceptance | Status |
 |---|---|---|---|
 | 3.1 MC orchestrator (Rust) | `rust-sim/src/bin/mc_convergence.rs` | rayon parallel, multi-seed, Welford streaming | ⬜ |
-| 3.2 Tier matrix config | `tools/par_mc_convergence/tiers.py` | T1 (1M×32) → T5 (100B×2) | ⬜ |
-| 3.3 Wilson CI gate | `tools/par_mc_convergence/wilson.py` | 99.9% CI, per-metric | ⬜ |
-| 3.4 Metric comparators (6 axes) | `tools/par_mc_convergence/compare.py` | RTP, hit_freq, feature_freq, var, max_win, P50/90/99/99.9 | ⬜ |
-| 3.5 FAIL diff reporter | `tools/par_mc_convergence/diff_report.py` | per-metric delta, suspected root cause | ⬜ |
-| 3.6 Attestation emit | `mc_sweep.attestation.json` per variant | all 200B+ MC results, Merkle pinned | ⬜ |
-| 3.7 Test gate | `tools/tests/test_mc_convergence.py` | synthetic PAR → guaranteed PASS, mutated PAR → FAIL | ⬜ |
+| 3.2 Tier matrix config | `tools/par_mc_convergence/tiers.py` | T1 (1M×32) → T5 (100B×2) | ✅ |
+| 3.3 Wilson CI gate | `tools/par_mc_convergence/wilson.py` | 99.9% CI, per-metric | ✅ |
+| 3.4 Metric comparators (6 axes) | `tools/par_mc_convergence/compare.py` | RTP, hit_freq, feature_freq, var, max_win, P50/90/99/99.9 | ✅ |
+| 3.5 FAIL diff reporter | `tools/par_mc_convergence/diff_report.py` | per-metric delta, suspected root cause | ✅ |
+| 3.6 Attestation emit | `mc_sweep.attestation.json` per variant | all 200B+ MC results, Merkle pinned | ✅ |
+| 3.7 Test gate | `tools/tests/test_mc_convergence.py` | synthetic PAR → guaranteed PASS, mutated PAR → FAIL | ✅ (30/30) |
 
 **Acceptance Faza 3:** Za sve 4 varijante, T3 (1B × 8 seedova) PASS sa Wilson CI ±0.002 pp. T5 (100B × 2 seeds) opt-in, audit-grade.
 
