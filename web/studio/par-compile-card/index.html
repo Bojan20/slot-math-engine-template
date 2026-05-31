@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>slot-math · Compile from PAR</title>
+  <style>
+    body { margin: 0; background: #0a0a0a; color: #e0e0e0; font-family: ui-monospace, "SF Mono", Menlo, monospace; min-height: 100vh; }
+    header { padding: 16px 32px; border-bottom: 1px solid #222; }
+    header h1 { font-size: 18px; margin: 0; color: #00d4ff; }
+    .layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; padding: 24px; max-width: 1600px; margin: 0 auto; }
+    .panel { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px; }
+    .panel h2 { font-size: 14px; color: #00d4ff; margin: 0 0 12px; }
+    .drop-zone { border: 2px dashed #444; border-radius: 6px; padding: 32px; text-align: center; color: #888; transition: border-color 0.2s; cursor: pointer; }
+    .drop-zone.drag-over { border-color: #00d4ff; background: #001a22; }
+    input[type=file] { display: none; }
+    label, input, select, button { color: #e0e0e0; background: #0a0a0a; border: 1px solid #333; padding: 8px 12px; border-radius: 4px; font: inherit; }
+    label { background: none; border: none; padding: 8px 0 4px; display: block; font-size: 11px; color: #888; text-transform: uppercase; }
+    input, select { width: 100%; box-sizing: border-box; }
+    button.primary { background: #00d4ff; color: #000; cursor: pointer; font-weight: bold; padding: 12px 24px; }
+    button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .pipeline-step { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 4px; margin: 6px 0; background: #0a0a0a; }
+    .pipeline-step.active { background: #001a22; border-left: 3px solid #00d4ff; }
+    .pipeline-step.done { color: #00ff88; }
+    .pipeline-step.fail { color: #ff4444; }
+    .step-icon { font-size: 18px; width: 24px; text-align: center; }
+    .step-time { margin-left: auto; color: #666; font-size: 11px; }
+    pre { background: #050505; padding: 12px; border-radius: 4px; font-size: 11px; max-height: 280px; overflow: auto; color: #aaa; }
+  </style>
+</head>
+<body>
+  <header><h1>🎰 Compile from PAR</h1></header>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>1. Upload PAR sheet</h2>
+      <div class="drop-zone" id="drop">
+        Drag PAR file here<br/>
+        <small>(XLSX / PDF / JSON / CSV)</small><br/>
+        <small style="color:#444">or click to browse</small>
+      </div>
+      <input type="file" id="file-input" accept=".xlsx,.pdf,.json,.csv,.yaml"/>
+
+      <label>Game ID</label>
+      <input type="text" id="game-id" placeholder="crimson-tiger"/>
+
+      <label>Variant ID</label>
+      <input type="text" id="variant-id" placeholder="a / b / c / d"/>
+
+      <label>MC Tier</label>
+      <select id="mc-tier">
+        <option value="T1">T1 — 1M × 32 seeds (~15s, designer feedback)</option>
+        <option value="T2">T2 — 10M × 16 (~1min, CI gate)</option>
+        <option value="T3" selected>T3 — 1B × 8 (~10min, regulator GLI-19)</option>
+        <option value="T4">T4 — 10B × 4 (~30min, pre-deploy stress)</option>
+        <option value="T5">T5 — 100B × 2 (~60min, ultimate audit)</option>
+      </select>
+
+      <label>Skin (optional)</label>
+      <select id="skin-select">
+        <option value="">(default text-glyph)</option>
+      </select>
+
+      <br/><br/>
+      <button class="primary" id="compile-btn" disabled>Compile</button>
+    </div>
+
+    <div class="panel">
+      <h2>2. Pipeline progress</h2>
+      <div id="steps">
+        <div class="pipeline-step" data-step="normalize"><span class="step-icon">○</span>Normalize → canonical PAR<span class="step-time"></span></div>
+        <div class="pipeline-step" data-step="ir"><span class="step-icon">○</span>PAR → Game IR<span class="step-time"></span></div>
+        <div class="pipeline-step" data-step="mc"><span class="step-icon">○</span>MC convergence sweep<span class="step-time"></span></div>
+        <div class="pipeline-step" data-step="deploy"><span class="step-icon">○</span>Build web + RGS bundle<span class="step-time"></span></div>
+        <div class="pipeline-step" data-step="attest"><span class="step-icon">○</span>Merkle attestation chain<span class="step-time"></span></div>
+      </div>
+
+      <h2 style="margin-top:24px;">3. Output log</h2>
+      <pre id="log">(awaiting upload)</pre>
+    </div>
+  </div>
+
+  <script src="compile.js"></script>
+</body>
+</html>

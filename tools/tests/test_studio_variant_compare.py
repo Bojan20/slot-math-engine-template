@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 
 REPO = Path(__file__).resolve().parent.parent.parent
 COMPARE_DIR = REPO / "web" / "studio" / "variant-compare"
@@ -90,3 +92,101 @@ def test_compare_js_supports_refresh_button():
     js = (COMPARE_DIR / "compare.js").read_text(encoding="utf-8")
     assert 'id="refresh"' in html
     assert "refresh" in js
+
+
+# ─── Faza 5.4 — Compare report HTML ──────────────────────────────────────
+
+from tools.par_deploy.variant_compare_report import (
+    VariantSnapshot,
+    emit_compare_report,
+    render_compare_report,
+)
+
+
+def _variant_snapshot(vid: str, rtp: float) -> VariantSnapshot:
+    return VariantSnapshot(
+        variant_id=vid,
+        par={
+            "merkle_root_sha256": vid * 32,
+            "rtp": {"rtp_total": rtp, "variance": 100.0},
+            "limits": {"hit_freq_target": 0.25, "max_win_x": 5000.0},
+        },
+        ir={"provenance": {"ir_sha256": (vid[0] * 64)}},
+        mc_attestation={
+            "attestation_sha256": "m" * 64,
+            "tier": "T3",
+        },
+        build_manifest={"deploy_signature": "d" * 64},
+    )
+
+
+def test_compare_report_renders_html():
+    variants = [
+        _variant_snapshot("a", 0.92),
+        _variant_snapshot("b", 0.94),
+        _variant_snapshot("c", 0.96),
+        _variant_snapshot("d", 0.98),
+    ]
+    html_out = render_compare_report("crimson-tiger", variants)
+    assert "<!DOCTYPE html>" in html_out
+    assert "crimson-tiger" in html_out
+    assert "variant_a" in html_out and "variant_d" in html_out
+    # All RTPs visible
+    assert "92.00%" in html_out
+    assert "98.00%" in html_out
+
+
+def test_compare_report_picks_baseline_min_rtp():
+    variants = [
+        _variant_snapshot("c", 0.96),
+        _variant_snapshot("a", 0.92),  # lowest → baseline
+        _variant_snapshot("b", 0.94),
+    ]
+    html_out = render_compare_report("g", variants)
+    # Subtitle should call out baseline=a
+    assert "baseline: <code>variant_a</code>" in html_out
+
+
+def test_compare_report_explicit_baseline():
+    variants = [
+        _variant_snapshot("a", 0.92),
+        _variant_snapshot("b", 0.94),
+    ]
+    html_out = render_compare_report("g", variants, baseline_variant_id="b")
+    assert "baseline: <code>variant_b</code>" in html_out
+
+
+def test_compare_report_writes_to_disk(tmp_path):
+    variants = [
+        _variant_snapshot("a", 0.92),
+        _variant_snapshot("b", 0.96),
+    ]
+    out = tmp_path / "variant-compare-test.html"
+    written = emit_compare_report("game-x", variants, out)
+    assert written == out
+    assert out.is_file()
+    content = out.read_text(encoding="utf-8")
+    assert "game-x" in content
+    assert "Paper trail" in content
+
+
+def test_compare_report_rejects_empty_variants():
+    with pytest.raises(ValueError):
+        render_compare_report("g", [])
+
+
+def test_compare_report_rejects_unknown_baseline():
+    variants = [_variant_snapshot("a", 0.92)]
+    with pytest.raises(ValueError):
+        render_compare_report("g", variants, baseline_variant_id="nope")
+
+
+def test_compare_report_includes_merkle_chain():
+    variants = [_variant_snapshot("a", 0.92)]
+    html_out = render_compare_report("g", variants)
+    # PAR/IR/MC/deploy hashes should appear (truncated form)
+    assert "Merkle attestation chain" in html_out
+    assert "par</span>" in html_out
+    assert "ir</span>" in html_out
+    assert "mc_sweep</span>" in html_out
+    assert "deploy</span>" in html_out
