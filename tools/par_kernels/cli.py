@@ -847,6 +847,19 @@ def main(argv: list[str] | None = None) -> int:
     p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")
     p_shapes.set_defaults(func=cmd_shapes)
 
+    p_diff = sub.add_parser(
+        "bench-diff",
+        help="Diff two `batch --bench` JSON payloads (regression report)",
+    )
+    p_diff.add_argument("current", help="Path to current bench JSON")
+    p_diff.add_argument("baseline", help="Path to baseline bench JSON")
+    p_diff.add_argument("--out", help="Write diff Markdown to path (default stdout)")
+    p_diff.add_argument("--fail-on-regression", action="store_true",
+                        help="Exit 1 if any pass→fail flip, "
+                             "composer drift > 10 bps, or speed -20%%+")
+    from tools.par_kernels.bench_history import cmd_bench_diff
+    p_diff.set_defaults(func=cmd_bench_diff)
+
     args = parser.parse_args(argv)
     return args.func(args)
 
