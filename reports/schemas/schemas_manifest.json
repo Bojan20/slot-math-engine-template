@@ -1,6 +1,6 @@
 {
   "draft": "json-schema draft 2020-12",
-  "manifest_merkle_root_sha256": "83a8b92c843185449cd546aad5b1239bfa5744deec244d8fc0ec281949c8ff86",
+  "manifest_merkle_root_sha256": "d51d1349f5e2b1f1723de8e588c13343d7ece5528c5e33ec541652c59b07b507",
   "purpose": "Industry-standard JSON Schema files validating the W244 acceptance + dossier surface. Validates with any conforming validator (ajv, Python jsonschema, gojsonschema, NJsonSchema).",
   "schema": "w244-schemas-manifest/v1",
   "schemas": [
@@ -15,6 +15,12 @@
       "sha256": "519f0346524009e106662c9c1f5d336c4fd0b31655cb364646605d3332b87052",
       "size_bytes": 1641,
       "title": "Closed-Form Portfolio dossier"
+    },
+    {
+      "filename": "game_ir.schema.json",
+      "sha256": "e5707dedb7529f131c9994e26ed7de851e3964b3ed5ded1d7817c92ca347bc2b",
+      "size_bytes": 9979,
+      "title": "Game IR \u2014 engine-native runtime spec"
     },
     {
       "filename": "industry_first_dossier.schema.json",
@@ -41,6 +47,6 @@
       "title": "W244 per-kernel acceptance artefakt"
     }
   ],
-  "schemas_count": 6,
+  "schemas_count": 7,
   "verification": "Re-run `python3 tools/build_acceptance_schemas.py`. manifest_merkle_root_sha256 must rebuild byte-identical."
 }

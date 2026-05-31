@@ -1,9 +1,9 @@
 {
   "schema": "w4-11-evidence-manifest/v1",
-  "generated_at_utc": "deterministic-by-merkle:a171d777caf5bc58",
-  "merkle_root_sha256": "a171d777caf5bc583687a0a02b6231df893630faf901ef6e843c5a71754191c6",
+  "generated_at_utc": "deterministic-by-merkle:13e93e11e88fb4f7",
+  "merkle_root_sha256": "13e93e11e88fb4f7d93120fc91762d59f16870f15cc0fa2d214007a4cbe68b57",
   "file_count": 27,
-  "total_bytes": 377138,
+  "total_bytes": 382025,
   "missing_files": [],
   "records": [
     {
@@ -119,7 +119,7 @@
     {
       "path": "reports/dashboards/sales-one-pager.html",
       "size_bytes": 8570,
-      "sha256": "36f0635c16e7ccd858a5199f647c03be72c28d74c07ad1a001bdc577a8b43f97"
+      "sha256": "201126a094c4d3188713fe1e66073a1b733ec80ba5f8851436cc02fc68b96048"
     },
     {
       "path": "reports/dashboards/sales-one-pager.manifest.json",
@@ -133,8 +133,8 @@
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.json",
-      "size_bytes": 116283,
-      "sha256": "917c136e5dc75a2f914fbec4d8d73e5d6454a48012b5d62174a14d01f4ceea1f"
+      "size_bytes": 121170,
+      "sha256": "5fe43f19699fc7e6decbdb9d5b2ff6d48d00df3f12633ec98dd3d2605193a97e"
     },
     {
       "path": "reports/dossier/INDUSTRY_FIRST_DOSSIER.md",

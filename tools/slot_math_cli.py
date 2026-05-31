@@ -69,11 +69,11 @@ def _cmd_ir(args: argparse.Namespace) -> int:
     import yaml
 
     from tools.par_to_ir import (
-        attach_kernel_composition,
         bind_rng_profile,
         map_par_to_ir,
         validate_ir,
     )
+    from tools.par_to_ir.dispatcher import attach_kernel_composition
     from tools.par_to_ir.map import attach_ir_merkle
 
     par_path = REPO / "reports" / "par-library" / args.game / args.variant / "canonical.par.yaml"
