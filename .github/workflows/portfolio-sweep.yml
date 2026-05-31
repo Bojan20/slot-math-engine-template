@@ -207,7 +207,11 @@ jobs:
         with:
           name: portfolio-history-ledger
           path: reports/bench/portfolio-history/
-          retention-days: 365
+          # 90 = repo cap (workflow tried 365, got clamped + warning).
+          # The ledger keeps growing across runs anyway since it's
+          # idempotent — even with 90-day artifact, INDEX.json carries
+          # the entire history forward when re-downloaded as baseline.
+          retention-days: 90
 
       # ─────────────────────────────────────────────────────────────────
       # PR-only: fetch latest main artifact as baseline, compute diff.

@@ -766,6 +766,197 @@ def cmd_batch(args: argparse.Namespace) -> int:
     return 0 if failed == 0 else 1
 
 
+def cmd_demo(args: argparse.Namespace) -> int:
+    """End-to-end showcase — runs the entire pipeline in one command.
+
+    1. Pick a featured game (default: wrath-of-olympus)
+    2. Run `evaluate` with MC (composer + per-feature breakdown)
+    3. Run `batch` across the entire library
+    4. Pin the bench JSON into a temp ledger
+    5. Re-pin to demonstrate idempotency
+    6. Render the trend dashboard
+
+    Designed for screencasts, sales demos, and "what does this even do?"
+    onboarding. Writes a single Markdown demo report to --out (or stdout).
+    """
+    import tempfile
+
+    spins = args.mc_spins
+    featured_game = args.game
+    featured_variant = args.variant
+
+    library = REPO / "reports" / "par-library"
+    featured_dir = library / featured_game / featured_variant
+    if not featured_dir.is_dir():
+        print(f"Featured game dir missing: {featured_dir}", file=sys.stderr)
+        # Pick first available game as fallback
+        if library.is_dir():
+            for g_dir in sorted(library.iterdir()):
+                if g_dir.is_dir():
+                    for v_dir in sorted(g_dir.iterdir()):
+                        if (v_dir / "game.ir.json").is_file():
+                            featured_game = g_dir.name
+                            featured_variant = v_dir.name
+                            featured_dir = v_dir
+                            print(f"Fallback featured: {featured_game}/{featured_variant}",
+                                  file=sys.stderr)
+                            break
+                    else:
+                        continue
+                    break
+
+    out_lines = [
+        "# SLOT-MATH — End-to-End Demo",
+        "",
+        f"_Generated: {time.strftime('%Y-%m-%d %H:%M:%S')} · "
+        f"MC spins per game: {spins:,} · seed: {args.seed}_",
+        "",
+        "> One command runs the entire SLOT-MATH pipeline against the live PAR",
+        "> library: composer math, Monte-Carlo convergence, portfolio dashboard,",
+        "> structured bench JSON, content-hashed pin into history ledger, and",
+        "> per-game trend across the ledger.",
+        "",
+        "---",
+        "",
+    ]
+
+    with tempfile.TemporaryDirectory(prefix="slot-math-demo-") as td:
+        td = Path(td)
+        ledger_dir = td / "ledger"
+        # ─── Step 1: single-game evaluate (with MC) ───
+        eval_args = argparse.Namespace(
+            ir_path=None, cf=None, game=featured_game,
+            variant=featured_variant, mc_spins=spins, seed=args.seed,
+            python_mc=False, tolerance_bps=args.tolerance_bps,
+            out=str(td / "evaluate.md"),
+        )
+        out_lines += [
+            f"## 1. Evaluate one game (`{featured_game}/{featured_variant}`)",
+            "",
+            "```bash",
+            f"slot-math evaluate --game {featured_game} --variant {featured_variant} "
+            f"--mc-spins {spins}",
+            "```",
+            "",
+        ]
+        try:
+            eval_ec = cmd_evaluate(eval_args)
+            eval_report = (td / "evaluate.md").read_text()
+            out_lines += [
+                f"_Exit: {eval_ec} {'✅' if eval_ec == 0 else '🔴'}_",
+                "",
+                "<details><summary>Click to expand evaluate report</summary>",
+                "",
+                eval_report,
+                "",
+                "</details>",
+                "",
+            ]
+        except Exception as e:
+            out_lines += [f"_evaluate failed: {e}_", ""]
+
+        # ─── Step 2: batch (entire library) ───
+        bench_path = td / "bench.json"
+        dash_path = td / "dashboard.md"
+        batch_args = argparse.Namespace(
+            mc_spins=spins, seed=args.seed, tolerance_bps=args.tolerance_bps,
+            filter=None, out=str(dash_path), bench=str(bench_path),
+        )
+        out_lines += [
+            "## 2. Batch evaluate (entire PAR library)",
+            "",
+            "```bash",
+            f"slot-math batch --mc-spins {spins} --out dashboard.md "
+            "--bench bench.json",
+            "```",
+            "",
+        ]
+        try:
+            batch_ec = cmd_batch(batch_args)
+            dash_md = dash_path.read_text()
+            out_lines += [
+                f"_Exit: {batch_ec} {'✅' if batch_ec == 0 else '🔴'}_",
+                "",
+                dash_md,
+                "",
+            ]
+        except Exception as e:
+            out_lines += [f"_batch failed: {e}_", ""]
+
+        # ─── Step 3: pin into ledger (twice, prove idempotency) ───
+        from tools.par_kernels.bench_pin import (
+            cmd_bench_trend,
+            compute_trend,
+            format_trend_markdown,
+            pin_bench,
+        )
+        out_lines += [
+            "## 3. Pin bench JSON into portfolio-history ledger",
+            "",
+            "```bash",
+            "slot-math bench-pin bench.json --pin-dir ./history",
+            "slot-math bench-pin bench.json --pin-dir ./history  "
+            "# second call = idempotent skip",
+            "```",
+            "",
+        ]
+        try:
+            r1 = pin_bench(bench_path, pin_dir=ledger_dir)
+            r2 = pin_bench(bench_path, pin_dir=ledger_dir)
+            out_lines += [
+                f"- First call: `pinned={r1.pinned}`, "
+                f"content_sha=`{r1.content_sha}`",
+                f"- Second call: `pinned={r2.pinned}` (idempotent ✅)",
+                "",
+            ]
+        except Exception as e:
+            out_lines += [f"_pin failed: {e}_", ""]
+
+        # ─── Step 4: trend dashboard ───
+        out_lines += [
+            "## 4. Render portfolio trend (across ledger)",
+            "",
+            "```bash",
+            "slot-math bench-trend --pin-dir ./history",
+            "```",
+            "",
+        ]
+        try:
+            trend = compute_trend(pin_dir=ledger_dir)
+            trend_md = format_trend_markdown(trend)
+            out_lines += [trend_md, ""]
+        except Exception as e:
+            out_lines += [f"_trend failed: {e}_", ""]
+            del cmd_bench_trend  # silence unused-import if trend block fails
+
+        # ─── Footer ───
+        out_lines += [
+            "---",
+            "",
+            "## Pipeline summary",
+            "",
+            "| Step | Command | Purpose |",
+            "|---|---|---|",
+            "| 1 | `evaluate` | Single-game composer + MC verification |",
+            "| 2 | `batch`    | Portfolio sweep (composer + MC per shape) |",
+            "| 3 | `bench-pin` | Pin bench JSON to history ledger (idempotent) |",
+            "| 4 | `bench-trend` | Per-game RTP trend across pinned history |",
+            "",
+            "All four primitives are CI-wired in `.github/workflows/portfolio-sweep.yml` —",
+            "every push to main pins + uploads the ledger as a 90-day artifact, every PR",
+            "computes regression diff vs the latest main pin and posts a single comment.",
+            "",
+        ]
+
+    report = "\n".join(out_lines)
+    if args.out:
+        Path(args.out).write_text(report)
+        print(f"Demo report written to {args.out}", file=sys.stderr)
+    else:
+        print(report)
+    return 0
+
+
 def cmd_shapes(args: argparse.Namespace) -> int:
     """Print supported evaluation shapes + industry examples + MC throughput."""
     print("# SLOT-MATH supported shapes (W244 kernel coverage)")
@@ -846,6 +1037,21 @@ def main(argv: list[str] | None = None) -> int:
 
     p_shapes = sub.add_parser("shapes", help="List supported evaluation shapes")
     p_shapes.set_defaults(func=cmd_shapes)
+
+    p_demo = sub.add_parser(
+        "demo",
+        help="End-to-end pipeline showcase (evaluate + batch + pin + trend)",
+    )
+    p_demo.add_argument("--game", default="wrath-of-olympus",
+                        help="Featured game for single-evaluate step")
+    p_demo.add_argument("--variant", default="v12.0.0",
+                        help="Variant of featured game")
+    p_demo.add_argument("--mc-spins", type=int, default=100_000,
+                        help="MC rounds per game (default 100,000 — fast demo)")
+    p_demo.add_argument("--seed", type=int, default=42)
+    p_demo.add_argument("--tolerance-bps", type=float, default=50.0)
+    p_demo.add_argument("--out", help="Write demo report to path (default stdout)")
+    p_demo.set_defaults(func=cmd_demo)
 
     p_diff = sub.add_parser(
         "bench-diff",
