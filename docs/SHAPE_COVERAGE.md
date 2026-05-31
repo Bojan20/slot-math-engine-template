@@ -1,7 +1,18 @@
 # SLOT-MATH — Shape Coverage Dossier
 
 > One-page authority on what slot-math W244 stack supports end-to-end.
-> Status: **v2.0 — 5/5 shapes covered, 6/6 games proven, sub-bps composer + Wilson CI MC.**
+> Status: **v2.1 — 5/5 shapes covered, 6/6 games proven, sub-bps composer
+> + Wilson CI MC, CI-gated portfolio sweep on every push.**
+
+[![PAR Library Portfolio Sweep](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/portfolio-sweep.yml/badge.svg?branch=main)](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/portfolio-sweep.yml)
+[![slot-math-ci](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/slot-math-ci.yml/badge.svg?branch=main)](https://github.com/Bojan20/slot-math-engine-template/actions/workflows/slot-math-ci.yml)
+
+One command runs composer + MC across every game and exits non-zero on
+any regression:
+
+```bash
+python3 -m tools.par_kernels.cli batch --mc-spins 1000000
+```
 
 ---
 

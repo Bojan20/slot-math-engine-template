@@ -1,0 +1,223 @@
+name: PAR Library Portfolio Sweep
+
+# Runs `slot-math batch --mc-spins N` against the full PAR library on every
+# push to main, every PR, weekly schedule, and manual dispatch.
+#
+# Outputs:
+#   - Markdown dashboard artifact (uploaded on every run)
+#   - PR comment with current dashboard + diff vs main (PRs only)
+#   - Job summary embedding the dashboard inline (GitHub UI)
+#   - Red CI on any composer/MC regression (exit 1 from `slot-math batch`)
+#
+# Why a dedicated workflow:
+#   The existing `slot-math-ci.yml` covers tools/ + games/ tests. This new
+#   sweep is the *portfolio* gate — does every reference game still pass
+#   composer parity AND Monte-Carlo convergence end-to-end? Rust binary is
+#   built fresh per run so the MC engine matches the source tree.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/par_kernels/**"
+      - "rust-sim/src/bin/mc_extended_real.rs"
+      - "rust-sim/src/bin/mc_runtime_real.rs"
+      - "rust-sim/Cargo.toml"
+      - "reports/par-library/**"
+      - ".github/workflows/portfolio-sweep.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tools/par_kernels/**"
+      - "rust-sim/src/bin/mc_extended_real.rs"
+      - "rust-sim/src/bin/mc_runtime_real.rs"
+      - "rust-sim/Cargo.toml"
+      - "reports/par-library/**"
+      - ".github/workflows/portfolio-sweep.yml"
+  schedule:
+    # Weekly: Monday 06:00 UTC. Catches drift from upstream Rust/Python
+    # toolchain updates even when nobody touched the math.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      mc_spins:
+        description: "Monte Carlo rounds per game (default 1_000_000)"
+        required: false
+        default: "1000000"
+        type: string
+      tolerance_bps:
+        description: "Composer parity tolerance (bps)"
+        required: false
+        default: "50"
+        type: string
+
+concurrency:
+  # Cancel superseded in-flight runs on the same ref.
+  group: portfolio-sweep-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write  # for PR comment posting
+
+jobs:
+  sweep:
+    name: Sweep PAR library — composer + MC convergence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      mc_spins: ${{ steps.params.outputs.mc_spins }}
+      tolerance_bps: ${{ steps.params.outputs.tolerance_bps }}
+      sweep_status: ${{ steps.batch.outputs.status }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Rust toolchain (stable)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-portfolio-${{ hashFiles('Cargo.lock', 'rust-sim/Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-portfolio-
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Resolve sweep parameters
+        id: params
+        run: |
+          mc_spins="${{ inputs.mc_spins || '1000000' }}"
+          tolerance_bps="${{ inputs.tolerance_bps || '50' }}"
+          echo "mc_spins=$mc_spins"        >> "$GITHUB_OUTPUT"
+          echo "tolerance_bps=$tolerance_bps" >> "$GITHUB_OUTPUT"
+          echo "::notice::Sweep parameters: --mc-spins $mc_spins --tolerance-bps $tolerance_bps"
+
+      - name: Build Rust MC binaries (release)
+        # Use workspace root build so binaries land at target/release/
+        # — that's where mc_extended_rust.py + mc_runtime_rust.py look.
+        run: |
+          cargo build --release --bin mc_extended_real --bin mc_runtime_real
+          ls -la target/release/mc_extended_real target/release/mc_runtime_real
+
+      - name: Smoke-test Rust binaries are callable
+        run: |
+          python -c "
+          from tools.par_kernels.mc_extended_rust import find_extended_binary
+          from tools.par_kernels.mc_runtime_rust   import find_real_binary
+          ext = find_extended_binary()
+          wrath = find_real_binary()
+          assert ext is not None,   'mc_extended_real not found'
+          assert wrath is not None, 'mc_runtime_real not found'
+          print('  mc_extended_real:', ext)
+          print('  mc_runtime_real :', wrath)
+          "
+
+      - name: Run portfolio sweep
+        id: batch
+        run: |
+          set +e
+          mkdir -p reports/portfolio
+          python -m tools.par_kernels.cli batch \
+              --mc-spins "${{ steps.params.outputs.mc_spins }}" \
+              --tolerance-bps "${{ steps.params.outputs.tolerance_bps }}" \
+              --out reports/portfolio/dashboard.md
+          ec=$?
+          set -e
+          echo "status=$ec" >> "$GITHUB_OUTPUT"
+          if [ $ec -eq 0 ]; then
+            echo "::notice::Portfolio sweep PASSED — all games converge."
+          else
+            echo "::warning::Portfolio sweep FAILED (exit $ec) — see dashboard artifact."
+          fi
+          # Always emit dashboard to job summary
+          echo "## Portfolio Sweep Dashboard" >> "$GITHUB_STEP_SUMMARY"
+          cat reports/portfolio/dashboard.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload dashboard artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-dashboard-${{ github.sha }}
+          path: reports/portfolio/
+          retention-days: 90
+
+      - name: Post PR comment with dashboard
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'reports/portfolio/dashboard.md';
+            if (!fs.existsSync(path)) {
+              console.log('No dashboard file — skipping comment.');
+              return;
+            }
+            const dashboard = fs.readFileSync(path, 'utf8');
+            const status = '${{ steps.batch.outputs.status }}';
+            const emoji = status === '0' ? '✅' : '🔴';
+            const verdict = status === '0' ? 'PASSED' : 'FAILED';
+            const body = [
+              `## ${emoji} Portfolio Sweep — ${verdict}`,
+              '',
+              `**SHA:** \`${context.sha.slice(0,7)}\` · `,
+              `**MC spins/game:** ${{ steps.params.outputs.mc_spins }} · `,
+              `**Tolerance:** ${{ steps.params.outputs.tolerance_bps }} bps`,
+              '',
+              '<details><summary>Click to expand dashboard</summary>',
+              '',
+              dashboard,
+              '',
+              '</details>',
+              '',
+              `_Workflow: [portfolio-sweep](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})_`,
+            ].join('\n');
+
+            // Find any existing portfolio comment from this bot to update,
+            // otherwise create a new one. Avoids spam on every push.
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c =>
+              c.user.type === 'Bot' && c.body && c.body.includes('Portfolio Sweep')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+              console.log(`Updated existing portfolio comment #${existing.id}`);
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+              console.log('Created new portfolio comment');
+            }
+
+      - name: Fail job on red sweep
+        if: steps.batch.outputs.status != '0'
+        run: |
+          echo "::error::Portfolio sweep returned exit ${{ steps.batch.outputs.status }} — check dashboard artifact"
+          exit 1
