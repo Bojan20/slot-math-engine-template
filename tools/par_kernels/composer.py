@@ -105,6 +105,11 @@ KERNEL_REGISTRY: dict[str, dict[str, str]] = {
         # crash_kernel.rtp returns float, not dict — composer wraps below.
         "rtp_fn": "rtp",
     },
+    "pay_anywhere": {
+        "module": "slot_math_kernels.pay_anywhere",
+        "params": "PayAnywhereParams",
+        "rtp_fn": "pay_anywhere_rtp",
+    },
 }
 
 

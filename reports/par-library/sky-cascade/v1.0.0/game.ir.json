@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "sky-cascade",
+    "name": "Sky Cascade",
+    "version": "1.0.0",
+    "description": "6th-game proof — pay_anywhere shape (Sweet Bonanza scatter mode / Gonzo Quest). 6×5 grid, K-of-symbol pays regardless of position. NO paylines, NO clusters."
+  },
+  "topology": { "kind": "rectangular", "reels": 6, "rows": 5 },
+  "symbols": [
+    { "id": "STAR_R", "name": "Red Star",    "kind": "hp" },
+    { "id": "STAR_B", "name": "Blue Star",   "kind": "hp" },
+    { "id": "MOON",   "name": "Moon",        "kind": "mp" },
+    { "id": "SUN",    "name": "Sun",         "kind": "mp" },
+    { "id": "CLOUD",  "name": "Cloud",       "kind": "lp" },
+    { "id": "WIND",   "name": "Wind",        "kind": "lp" }
+  ],
+  "evaluation": { "kind": "pay_anywhere", "min_pay_count": 8 },
+  "features": [
+    { "kind": "cascade", "name": "Tumble cascade after any payout",
+      "trigger": "any_pay", "max_cascades": 10 }
+  ],
+  "rng": { "kind": "pcg64" },
+  "bet": { "currency": "EUR", "base_bet": 1, "max_win_x": 5000, "target_volatility": "high" },
+  "provenance": { "par_source": "v1.0.0", "ir_sha256": "synthetic" }
+}

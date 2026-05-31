@@ -1,0 +1,50 @@
+{
+  "game": "Sky Cascade",
+  "version": "1.0.0",
+  "algorithm": "synthetic 6th-game proof \u2014 pay_anywhere + cascade",
+  "target_rtp": 0.96,
+  "total_rtp": 0.96,
+  "components": {
+    "pay_anywhere_base": 0.7,
+    "cascade_uplift": 0.26
+  },
+  "n_cells": 30,
+  "pay_anywhere_symbols": [
+    {
+      "symbol_name": "STAR_R",
+      "p_per_cell": 0.1,
+      "min_pay_count": 8,
+      "pay_table": {
+        "8": 14.12099643326696,
+        "9": 28.24199286653392,
+        "10": 70.60498216633479,
+        "11": 141.20996433266959,
+        "12": 282.41992866533917
+      }
+    },
+    {
+      "symbol_name": "MOON",
+      "p_per_cell": 0.12,
+      "min_pay_count": 8,
+      "pay_table": {
+        "8": 5.648398573306784,
+        "9": 11.296797146613567,
+        "10": 28.24199286653392,
+        "11": 70.60498216633479,
+        "12": 141.20996433266959
+      }
+    },
+    {
+      "symbol_name": "CLOUD",
+      "p_per_cell": 0.15,
+      "min_pay_count": 8,
+      "pay_table": {
+        "8": 1.412099643326696,
+        "9": 4.236298929980087,
+        "10": 11.296797146613567,
+        "11": 28.24199286653392,
+        "12": 70.60498216633479
+      }
+    }
+  ]
+}

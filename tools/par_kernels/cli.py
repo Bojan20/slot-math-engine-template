@@ -146,6 +146,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
         lightning_uplift_rtp_from_ir,
         lines_eval_rtp_from_ir,
         make_params_builder,
+        pay_anywhere_rtp_from_cf,
         scatter_pay_rtp_from_ir,
     )
 
@@ -190,7 +191,13 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     # Cascade uplift (delegated slice — kernel-level cascade math TBD)
     cascade_rtp = cascade_uplift_from_cf(cf)
 
-    delegated = delegated_baseline_rtp(cf) + base_rtp + scatter_rtp + lightning_rtp + cascade_rtp
+    # Pay-anywhere multi-symbol (Sweet Bonanza scatter / Gonzo pattern)
+    pay_anywhere_rtp, _ = pay_anywhere_rtp_from_cf(cf)
+
+    delegated = (
+        delegated_baseline_rtp(cf)
+        + base_rtp + scatter_rtp + lightning_rtp + cascade_rtp + pay_anywhere_rtp
+    )
 
     # MC (optional) — defaults to Rust runtime, falls back to Python
     mc_result = None

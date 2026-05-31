@@ -134,6 +134,14 @@ def build_generic_params(
     if kernel_id == "asymmetric_paytable":
         return None
 
+    # ── pay_anywhere (6th game shape: Sweet Bonanza scatter / Gonzo) ──
+    # Multi-symbol pattern: CF supplies N paying symbols, each with its
+    # own (p_per_cell, pay_table). Single composer call can't handle a
+    # list; we delegate to `pay_anywhere_rtp_from_cf()` helper that
+    # iterates + sums. Composer entry stays None (handled via helper).
+    if kernel_id == "pay_anywhere":
+        return None
+
     # ── crash_kernel (5th game shape: Stake Crash / Aviator) ──────
     # CF supplies house_edge (typical 0.01) + cashout_multiplier (player
     # target). RTP is INDEPENDENT of T: rtp = 1 - house_edge. Composer
@@ -320,6 +328,35 @@ def lightning_uplift_rtp_from_ir(
         return 0.0, {}
     r = lightning_uplift_rtp(p)
     return r["rtp_contribution"], r
+
+
+def pay_anywhere_rtp_from_cf(cf: dict[str, Any]) -> tuple[float, list[dict[str, Any]]]:
+    """Aggregate pay_anywhere RTP across all paying symbols in CF.
+
+    Each symbol contributes via Binomial(n_cells, p_per_cell)(K) × pay_table[K].
+    Returns (total_rtp, per_symbol_breakdown).
+    """
+    from slot_math_kernels.pay_anywhere import PayAnywhereParams, pay_anywhere_rtp
+    n_cells = int(cf.get("n_cells", 30))
+    syms_raw = cf.get("pay_anywhere_symbols", [])
+    total = 0.0
+    breakdown = []
+    for s in syms_raw:
+        pay_table = {int(k): float(v) for k, v in s.get("pay_table", {}).items()}
+        if not pay_table:
+            continue
+        p = PayAnywhereParams(
+            n_cells=n_cells,
+            p_per_cell=float(s["p_per_cell"]),
+            pay_table=pay_table,
+            min_pay_count=int(s.get("min_pay_count", 8)),
+            symbol_name=s.get("symbol_name", "?"),
+        )
+        r = pay_anywhere_rtp(p)
+        rtp = float(r["rtp_contribution"])
+        total += rtp
+        breakdown.append({"symbol": p.symbol_name, "rtp": rtp})
+    return total, breakdown
 
 
 def cascade_uplift_from_cf(cf: dict[str, Any]) -> float:
