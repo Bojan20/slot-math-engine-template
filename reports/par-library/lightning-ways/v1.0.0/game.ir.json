@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "lightning-ways",
+    "name": "Lightning Ways",
+    "version": "1.0.0",
+    "description": "4th-game proof — 6-reel Megaways-style variable-rows ways game. Topology: 6 reels × {2..7} rows per reel ⇒ 64..117,649 ways per spin."
+  },
+  "topology": {
+    "kind": "megaways",
+    "reels": 6,
+    "rows_min": 2,
+    "rows_max": 7,
+    "rows_distribution_per_reel": [
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 },
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 },
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 },
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 },
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 },
+      { "2": 0.10, "3": 0.30, "4": 0.30, "5": 0.20, "6": 0.07, "7": 0.03 }
+    ]
+  },
+  "symbols": [
+    { "id": "WILD",   "name": "Lightning Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "STORM",  "name": "Storm",   "kind": "hp" },
+    { "id": "THUNDER","name": "Thunder", "kind": "hp" },
+    { "id": "RAIN",   "name": "Rain",    "kind": "mp" },
+    { "id": "CLOUD",  "name": "Cloud",   "kind": "mp" },
+    { "id": "10",     "name": "Ten",     "kind": "lp" },
+    { "id": "J",      "name": "Jack",    "kind": "lp" },
+    { "id": "Q",      "name": "Queen",   "kind": "lp" },
+    { "id": "K",      "name": "King",    "kind": "lp" },
+    { "id": "A",      "name": "Ace",     "kind": "lp" },
+    { "id": "BONUS",  "name": "Scatter", "kind": "scatter" }
+  ],
+  "evaluation": { "kind": "ways" },
+  "features": [
+    { "kind": "cascade", "name": "Reaction cascade after winning spin",
+      "trigger": "any_paying_way", "max_cascades": 12 }
+  ],
+  "rng": { "kind": "pcg64" },
+  "bet": { "currency": "EUR", "base_bet": 1, "max_win_x": 15000, "target_volatility": "high" },
+  "provenance": { "par_source": "v1.0.0", "ir_sha256": "synthetic" }
+}

@@ -134,6 +134,24 @@ def build_generic_params(
     if kernel_id == "asymmetric_paytable":
         return None
 
+    # ── ways_evaluator (4th game shape: Megaways / variable-rows) ─
+    # CF supplies row_distribution_per_reel + per_way_rtp_x_bet. Kernel
+    # multiplies E[ways] × per_way_rtp to produce per-spin ways RTP.
+    if kernel_id == "ways_evaluator":
+        from slot_math_kernels.ways_evaluator import WaysEvaluatorParams
+        row_dist_raw = cf.get("row_distribution_per_reel")
+        per_way = cf.get("per_way_rtp_x_bet")
+        if not row_dist_raw or per_way is None:
+            return None
+        row_dist = tuple(
+            {int(k): float(v) for k, v in reel_dist.items()}
+            for reel_dist in row_dist_raw
+        )
+        return WaysEvaluatorParams(
+            row_distribution_per_reel=row_dist,
+            per_way_rtp_x_bet=float(per_way),
+        )
+
     # ── cluster_pays (NEW — 3rd game shape: cluster grids) ────────
     # CF source provides `cluster_distribution` + `pay_table`; we feed
     # them straight to the closed-form kernel.

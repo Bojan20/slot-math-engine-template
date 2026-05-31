@@ -66,7 +66,7 @@ KERNEL_REGISTRY: dict[str, dict[str, str]] = {
     },
     "ways_evaluator": {
         "module": "slot_math_kernels.ways_evaluator",
-        "params": "WaysParams",
+        "params": "WaysEvaluatorParams",
         "rtp_fn": "ways_evaluator_rtp",
     },
     "cluster_pays": {

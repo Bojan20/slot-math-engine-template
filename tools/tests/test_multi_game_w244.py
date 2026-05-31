@@ -24,7 +24,8 @@ def _game_paths(game: str, variant: str) -> tuple[Path, Path]:
 GAMES = [
     ("wrath-of-olympus", "v12.0.0"),
     ("oracle-of-delphi", "v1.0.0"),
-    ("mystic-cluster", "v1.0.0"),  # 3rd-game proof: cluster_pays + cascade, 6×5 grid
+    ("mystic-cluster", "v1.0.0"),    # 3rd-game proof: cluster_pays + cascade, 6×5 grid
+    ("lightning-ways", "v1.0.0"),    # 4th-game proof: ways/Megaways + cascade, 6 reels × {2..7} rows
 ]
 
 
@@ -108,7 +109,6 @@ def test_mc_runtime_convergence_per_game(game: str, variant: str):
             build_cluster_executor_from_cf, run_mc_cluster,
         )
         executor = build_cluster_executor_from_cf(cf, ir)
-        # Cluster-pays MC is heavy-tailed; bump spin count for tighter CI
         result = run_mc_cluster(
             executor, spins=200_000, seed=42, cf_target_rtp=target,
         )
@@ -119,11 +119,26 @@ def test_mc_runtime_convergence_per_game(game: str, variant: str):
         )
         return
 
+    if "row_distribution_per_reel" in cf:
+        from tools.par_kernels.mc_ways_runtime import (
+            build_ways_executor_from_cf, run_mc_ways,
+        )
+        executor = build_ways_executor_from_cf(cf, ir)
+        result = run_mc_ways(
+            executor, spins=200_000, seed=42, cf_target_rtp=target,
+        )
+        assert result.convergence_pass, (
+            f"{game}/{variant} ways MC RTP {result.rtp:.4%} outside Wilson "
+            f"99% CI of CF target {target:.4%}. Δ={result.delta_bps:+.2f} bps, "
+            f"CI half-width=±{result.wilson_99_halfwidth:.4%}"
+        )
+        return
+
     # Wrath-shape (fs + hnw sessions)
     if "fs_session" not in cf or "hnw_session" not in cf:
         pytest.skip(
             f"{game}/{variant} CF lacks fs_session/hnw_session AND lacks "
-            f"cluster_distribution — no MC executor available"
+            f"cluster_distribution/row_distribution — no MC executor available"
         )
 
     from tools.par_kernels.mc_runtime import (
