@@ -81,24 +81,48 @@ def _format_report(
         if engine_note:
             lines.append(f"_Engine: {engine_note}_")
             lines.append("")
+        # Duck-type: extended (cluster/ways/crash) result has `rounds` and `shape`;
+        # legacy Wrath-shape result has `spins` + FS/H&W trigger rates.
+        is_extended = hasattr(mc_result, "rounds") and hasattr(mc_result, "shape")
         lines.append("| Metric | Value |")
         lines.append("|---|---|")
-        lines.append(f"| Spins | {mc_result.spins:,} |")
-        lines.append(f"| Measured RTP | {mc_result.rtp:.6%} |")
-        lines.append(f"| Std error | ±{mc_result.std_error:.6%} |")
-        lines.append(f"| Wilson 99% CI half-width | ±{mc_result.wilson_99_halfwidth:.6%} |")
-        lines.append(f"| Δ vs CF target | {mc_result.delta_bps:+.2f} bps |")
-        mc_pass = "✅" if mc_result.convergence_pass else "🔴"
-        lines.append(f"| Convergence (within Wilson 99% CI) | {mc_pass} |")
-        lines.append(f"| Hit rate | {mc_result.hit_rate:.4%} |")
-        lines.append(f"| FS trigger | 1/{1.0/mc_result.fs_trigger_rate:.2f} |" if mc_result.fs_trigger_rate > 0 else "| FS trigger | none |")
-        lines.append(f"| H&W trigger | 1/{1.0/mc_result.hnw_trigger_rate:.2f} |" if mc_result.hnw_trigger_rate > 0 else "| H&W trigger | none |")
-        lines.append(f"| Max win observed | {mc_result.max_win_x:.2f}× |")
-        if wallclock and "mc" in wallclock:
-            rate = mc_result.spins / wallclock["mc"] if wallclock["mc"] > 0 else 0
-            lines.append(f"| Throughput | {rate:,.0f} spins/sec |")
+        if is_extended:
+            lines.append(f"| Shape | `{mc_result.shape}` |")
+            lines.append(f"| Rounds | {mc_result.rounds:,} |")
+            lines.append(f"| Measured RTP | {mc_result.rtp:.6%} |")
+            lines.append(f"| Std error | ±{mc_result.std_error:.6%} |")
+            lines.append(f"| Wilson 99% CI half-width | ±{mc_result.wilson_99_halfwidth:.6%} |")
+            if mc_result.delta_bps is not None:
+                lines.append(f"| Δ vs CF target | {mc_result.delta_bps:+.2f} bps |")
+            mc_pass = "✅" if mc_result.convergence_pass else "🔴"
+            lines.append(f"| Convergence (within Wilson 99% CI) | {mc_pass} |")
+            lines.append(f"| Hit rate | {mc_result.hit_rate:.4%} |")
+            if mc_result.cascade_rate > 0:
+                lines.append(f"| Cascade rate | {mc_result.cascade_rate:.4%} |")
+            if mc_result.extra_per_round_avg > 0:
+                lines.append(f"| Extra (avg/round) | {mc_result.extra_per_round_avg:.4f} |")
+            lines.append(f"| Max observed | {mc_result.max_observed:.2f}× |")
+            if mc_result.rounds_per_sec > 0:
+                lines.append(f"| Throughput | {mc_result.rounds_per_sec:,.0f} rounds/sec |")
+            if mc_result.threads_used > 1:
+                lines.append(f"| Threads | {mc_result.threads_used} ({'parallel' if mc_result.parallel else 'serial'}) |")
+        else:
+            lines.append(f"| Spins | {mc_result.spins:,} |")
+            lines.append(f"| Measured RTP | {mc_result.rtp:.6%} |")
+            lines.append(f"| Std error | ±{mc_result.std_error:.6%} |")
+            lines.append(f"| Wilson 99% CI half-width | ±{mc_result.wilson_99_halfwidth:.6%} |")
+            lines.append(f"| Δ vs CF target | {mc_result.delta_bps:+.2f} bps |")
+            mc_pass = "✅" if mc_result.convergence_pass else "🔴"
+            lines.append(f"| Convergence (within Wilson 99% CI) | {mc_pass} |")
+            lines.append(f"| Hit rate | {mc_result.hit_rate:.4%} |")
+            lines.append(f"| FS trigger | 1/{1.0/mc_result.fs_trigger_rate:.2f} |" if mc_result.fs_trigger_rate > 0 else "| FS trigger | none |")
+            lines.append(f"| H&W trigger | 1/{1.0/mc_result.hnw_trigger_rate:.2f} |" if mc_result.hnw_trigger_rate > 0 else "| H&W trigger | none |")
+            lines.append(f"| Max win observed | {mc_result.max_win_x:.2f}× |")
+            if wallclock and "mc" in wallclock:
+                rate = mc_result.spins / wallclock["mc"] if wallclock["mc"] > 0 else 0
+                lines.append(f"| Throughput | {rate:,.0f} spins/sec |")
         lines.append("")
-        # Per-feature breakdown (NEW — regulator-grade transparency)
+        # Per-feature breakdown (Wrath-shape only — regulator-grade transparency)
         per_feature = getattr(mc_result, "_feature_breakdown", None)
         if per_feature:
             lines.append("### Per-feature MC breakdown (Wilson 99% CI)")
@@ -199,38 +223,93 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
         + base_rtp + scatter_rtp + lightning_rtp + cascade_rtp + pay_anywhere_rtp
     )
 
-    # MC (optional) — defaults to Rust runtime, falls back to Python
+    # MC (optional) — defaults to Rust runtime, falls back to Python.
+    # Shape dispatch (auto-detected from CF):
+    #   - pay_anywhere_symbols  → skip MC (CF is exact)
+    #   - cluster_distribution  → run_cluster_rust (Mystic-shape)
+    #   - row_distribution_per_reel → run_ways_rust (Lightning Ways)
+    #   - house_edge + cashout_multiplier → run_crash_rust (Stake Rush)
+    #   - else (fs_session/hnw_session/lines) → Wrath-shape (lines+FS+HW)
     mc_result = None
     if args.mc_spins > 0:
-        from tools.par_kernels.mc_runtime import (
-            build_wrath_executor_from_cf,
-            run_mc,
-        )
-        executor = build_wrath_executor_from_cf(cf)
-        t0 = time.perf_counter()
         mc_engine_note = "python (pure)"
-        if args.python_mc:
-            mc_result = run_mc(
-                executor, spins=args.mc_spins, seed=args.seed,
+        rust_extra = None
+
+        if "pay_anywhere_symbols" in cf:
+            # Pay-anywhere shape: CF is exact (no sampling needed).
+            mc_engine_note = "skipped (pay_anywhere CF is exact, no MC needed)"
+            print(
+                "[mc-dispatch] pay_anywhere shape detected — CF is exact, "
+                "skipping MC sampler. Composed RTP already validated.",
+                file=sys.stderr,
+            )
+        elif "cluster_distribution" in cf:
+            from tools.par_kernels.mc_extended_rust import run_cluster_rust
+            t0 = time.perf_counter()
+            mc_result = run_cluster_rust(
+                cf, ir, n_rounds=args.mc_spins, seed=args.seed,
                 cf_target_rtp=target_rtp,
+            )
+            wallclock["mc"] = time.perf_counter() - t0
+            mc_engine_note = (
+                f"rust cluster ({mc_result.rounds_per_sec/1e6:.0f}M rounds/s, "
+                f"{mc_result.threads_used}T {'parallel' if mc_result.parallel else 'serial'})"
+            )
+        elif "row_distribution_per_reel" in cf:
+            from tools.par_kernels.mc_extended_rust import run_ways_rust
+            t0 = time.perf_counter()
+            mc_result = run_ways_rust(
+                cf, ir, n_rounds=args.mc_spins, seed=args.seed,
+                cf_target_rtp=target_rtp,
+            )
+            wallclock["mc"] = time.perf_counter() - t0
+            mc_engine_note = (
+                f"rust ways ({mc_result.rounds_per_sec/1e6:.0f}M rounds/s, "
+                f"{mc_result.threads_used}T {'parallel' if mc_result.parallel else 'serial'})"
+            )
+        elif "house_edge" in cf and "cashout_multiplier" in cf:
+            from tools.par_kernels.mc_extended_rust import run_crash_rust
+            t0 = time.perf_counter()
+            mc_result = run_crash_rust(
+                cf, ir, n_rounds=args.mc_spins, seed=args.seed,
+                cf_target_rtp=target_rtp,
+            )
+            wallclock["mc"] = time.perf_counter() - t0
+            mc_engine_note = (
+                f"rust crash ({mc_result.rounds_per_sec/1e6:.0f}M rounds/s, "
+                f"{mc_result.threads_used}T {'parallel' if mc_result.parallel else 'serial'})"
             )
         else:
-            from tools.par_kernels.mc_runtime_rust import run_mc_rust
-            mc_result, rust_extra = run_mc_rust(
-                executor, spins=args.mc_spins, seed=args.seed,
-                cf_target_rtp=target_rtp,
-                fallback_to_python=True,
+            # Wrath-shape (lines + free_spins + hold_and_win)
+            from tools.par_kernels.mc_runtime import (
+                build_wrath_executor_from_cf,
+                run_mc,
             )
-            mc_engine_note = (
-                f"rust ({rust_extra.spins_per_sec/1e6:.0f}M spins/s)"
-                if rust_extra
-                else "python (rust binary missing — fallback)"
-            )
-        wallclock["mc"] = time.perf_counter() - t0
+            executor = build_wrath_executor_from_cf(cf)
+            t0 = time.perf_counter()
+            if args.python_mc:
+                mc_result = run_mc(
+                    executor, spins=args.mc_spins, seed=args.seed,
+                    cf_target_rtp=target_rtp,
+                )
+            else:
+                from tools.par_kernels.mc_runtime_rust import run_mc_rust
+                mc_result, rust_extra = run_mc_rust(
+                    executor, spins=args.mc_spins, seed=args.seed,
+                    cf_target_rtp=target_rtp,
+                    fallback_to_python=True,
+                )
+                mc_engine_note = (
+                    f"rust wrath ({rust_extra.spins_per_sec/1e6:.0f}M spins/s)"
+                    if rust_extra
+                    else "python (rust binary missing — fallback)"
+                )
+            wallclock["mc"] = time.perf_counter() - t0
+
         # Stash engine note + per-feature breakdown for report renderer.
         if mc_result is not None:
             setattr(mc_result, "_engine_note", mc_engine_note)
-            fb = getattr(rust_extra, "feature_breakdown", None) if not args.python_mc else None
+            fb = getattr(rust_extra, "feature_breakdown", None) if rust_extra else None
             if fb is not None:
                 setattr(mc_result, "_feature_breakdown", fb)
 
@@ -249,10 +328,16 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     else:
         print(report)
 
-    # Exit code reflects composer pass/fail
+    # Exit code: composer parity AND (if MC ran) MC convergence both must pass.
+    # Rationale: cluster/ways/crash composers are slice-only; MC convergence
+    # is the real regulator gate for those shapes.
     composed_total = comp_result.composed_rtp + delegated
     delta_bps = (composed_total - target_rtp) * 10000.0
-    return 0 if abs(delta_bps) <= args.tolerance_bps else 1
+    composer_ok = abs(delta_bps) <= args.tolerance_bps
+    mc_ok = True
+    if mc_result is not None and hasattr(mc_result, "convergence_pass"):
+        mc_ok = bool(mc_result.convergence_pass)
+    return 0 if (composer_ok and mc_ok) else 1
 
 
 def cmd_list_games(args: argparse.Namespace) -> int:
