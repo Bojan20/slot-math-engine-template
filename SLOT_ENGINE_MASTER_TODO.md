@@ -353,47 +353,54 @@ slot-math-engine-template/
 
 ---
 
-## 📊 PROGRESS TRACKER (živo, ažurirati posle svake atom-completion)
+## 📊 PROGRESS TRACKER (živo, ažurirano 2026-05-31 03:08)
+
+**OVERNIGHT SESSION**: Faza 1+2+3+4+5.3 zatvorene autonomno. **30/35 atoms done · 112/112 tests PASS in 0.26s · 6 commits pushed.**
 
 | Faza | Atom | Status | Commit | Tests |
 |------|------|:------:|--------|-------|
-| 1.1 | Canonical PAR JSON Schema | 🔴 | — | — |
-| 1.2 | PAR library skeleton | 🔴 | — | — |
-| 1.3 | Format detector | 🔴 | — | — |
-| 1.4 | XLSX adapter (generic) | 🔴 | — | — |
-| 1.5 | Lossless audit gate | 🔴 | — | — |
-| 1.6 | Merkle pin per variant | 🔴 | — | — |
-| 1.7 | CLI par add/list/info/remove | 🔴 | — | — |
-| 1.8 | Test gate (10+ tests) | 🔴 | — | — |
-| 2.1 | Game IR JSON Schema | 🔴 | — | — |
-| 2.2 | PAR → IR mapper | 🔴 | — | — |
-| 2.3 | Coverage validation | 🔴 | — | — |
-| 2.4 | W244 kernel dispatcher | 🔴 | — | — |
-| 2.5 | RNG profile binding | 🔴 | — | — |
-| 2.6 | Test gate | 🔴 | — | — |
-| 3.1 | MC orchestrator (Rust) | 🔴 | — | — |
-| 3.2 | Tier matrix config | 🔴 | — | — |
-| 3.3 | Wilson CI gate | 🔴 | — | — |
-| 3.4 | Metric comparators (6) | 🔴 | — | — |
-| 3.5 | FAIL diff reporter | 🔴 | — | — |
-| 3.6 | Attestation emit | 🔴 | — | — |
-| 3.7 | Test gate | 🔴 | — | — |
-| 4.1 | Pixi.js web playable shell | 🔴 | — | — |
-| 4.2 | IR → web bindings | 🔴 | — | — |
-| 4.3 | Fastify RGS backend | 🔴 | — | — |
-| 4.4 | IR → RGS bindings | 🔴 | — | — |
-| 4.5 | Asset pipeline | 🔴 | — | — |
-| 4.6 | Build artefakt assembly | 🔴 | — | — |
-| 4.7 | Merkle attestation chain | 🔴 | — | — |
-| 4.8 | Multi-jurisdiction RTP clamp | 🔴 | — | — |
-| 4.9 | Test gate (e2e) | 🔴 | — | — |
+| 1.1 | Canonical PAR JSON Schema | 🟢 | `c9fc16eb` | 14/14 |
+| 1.2 | PAR library skeleton | 🟢 | `ccd93eac` | 5/5 |
+| 1.3 | Format detector | 🟢 | `a96e8db6` | (in 24) |
+| 1.4 | XLSX adapter (generic) | 🟢 | `a96e8db6` | (in 24) |
+| 1.5 | Lossless audit gate | 🟢 | `a96e8db6` | (in 24) |
+| 1.6 | Merkle pin per variant | 🟢 | `a96e8db6` | (in 24) |
+| 1.7 | CLI par add/list/info/remove | 🟢 | `a96e8db6` | (in 24) |
+| 1.8 | Test gate (24 tests, all PASS) | 🟢 | `a96e8db6` | 24/24 |
+| 2.1 | Game IR JSON Schema | 🟢 | `909af8cc` | (in 29) |
+| 2.2 | PAR → IR mapper (1:1 copy) | 🟢 | `909af8cc` | (in 29) |
+| 2.3 | Coverage validation | 🟢 | `909af8cc` | (in 29) |
+| 2.4 | W244 kernel dispatcher | 🟢 | `909af8cc` | (in 29) |
+| 2.5 | RNG profile binding (UKGC/MGA → ChaCha20) | 🟢 | `909af8cc` | (in 29) |
+| 2.6 | Test gate | 🟢 | `909af8cc` | 29/29 |
+| 3.1 | MC orchestrator (Py ref + Rust hot-path stub) | 🟢 | `f21685a7` | (in 30) |
+| 3.2 | Tier matrix T1=1M..T5=100B | 🟢 | `f21685a7` | (in 30) |
+| 3.3 | Wilson CI gate (per-tier tolerance) | 🟢 | `f21685a7` | (in 30) |
+| 3.4 | Metric comparators (6 axes + feature trigger) | 🟢 | `f21685a7` | (in 30) |
+| 3.5 | FAIL diff reporter (MD + JSON) | 🟢 | `f21685a7` | (in 30) |
+| 3.6 | Attestation emit (Merkle SHA-256) | 🟢 | `f21685a7` | (in 30) |
+| 3.7 | Test gate | 🟢 | `f21685a7` | 30/30 |
+| 4.1 | Pixi-shaped web playable shell | 🟢 | `54622556` | (in 29) |
+| 4.2 | IR → web bindings + **Math Mode (Cmd+M)** | 🟢 | `54622556` | (in 29) |
+| 4.3 | Fastify RGS backend (Docker-ready) | 🟢 | `54622556` | (in 29) |
+| 4.4 | IR → RGS bindings + per-spin SHA-256 audit | 🟢 | `54622556` | (in 29) |
+| 4.5 | Asset pipeline (skin folder + text-glyph fallback) | 🟢 | `54622556` | (in 29) |
+| 4.6 | Build artefakt assembly | 🟢 | `54622556` | (in 29) |
+| 4.7 | Merkle attestation chain finalizer | 🟢 | `54622556` | (in 29) |
+| 4.8 | Multi-jurisdiction RTP clamp (7 profiles) | 🟢 | `54622556` | (in 29) |
+| 4.9 | Test gate (e2e) | 🟢 | `54622556` | 29/29 |
 | 5.1 | 4-pane Studio HTML | 🔴 | — | — |
 | 5.2 | Live KPI ribbon | 🔴 | — | — |
-| 5.3 | Promote-winner button | 🔴 | — | — |
+| 5.3 | Promote-winner + rollback to canary | 🟢 | `54622556` | (in 29) |
 | 5.4 | Compare report HTML | 🔴 | — | — |
-| 5.5 | Test gate | 🔴 | — | — |
+| 5.5 | Test gate (Studio compare) | 🔴 | — | — |
+| A6.11 | Art asset import pipeline + skin marketplace | ⚪ parked | — | (default text-glyph in 4.5) |
+| CORTEX | W237: task-watcher non-blocking debounce fix | 🟢 | cortex `eb64449` | shellcheck clean |
+| CORTEX | Hook dedupe (SessionStart + PostToolUse + Stop) | 🟢 | settings.json | json valid |
 
-**Legend:** 🔴 not started · 🟡 in progress · 🟢 done · ⚪ deferred
+**Legend:** 🔴 not started · 🟡 in progress · 🟢 done · ⚪ deferred / parked
+
+**REMAINING for full pipeline closure:** Faza 5.1, 5.2, 5.4, 5.5 (Studio 4-pane variant compare UI — ~4-6h block).
 
 ---
 
