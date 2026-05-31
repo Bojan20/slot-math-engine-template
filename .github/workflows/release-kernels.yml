@@ -1,0 +1,160 @@
+name: Release slot-math-kernels → PyPI
+
+# Builds and publishes the `slot-math-kernels` Python package to PyPI
+# when a tag matching `slot-math-kernels-v*` is pushed (e.g.
+# `slot-math-kernels-v1.0.0`).
+#
+# Uses PyPI Trusted Publishing (OIDC) — no API tokens stored in repo.
+# To enable: register the repo + workflow at
+# https://pypi.org/manage/account/publishing/ for project slot-math-kernels.
+#
+# Manual dispatch supported for dry-run builds; `--repository testpypi`
+# is opt-in via input.
+
+on:
+  push:
+    tags:
+      - "slot-math-kernels-v*"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Target PyPI: 'pypi' (default) or 'testpypi'"
+        required: false
+        default: "pypi"
+        type: choice
+        options: [pypi, testpypi]
+      dry_run:
+        description: "Build only, no publish"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  id-token: write  # required for PyPI Trusted Publishing OIDC
+
+concurrency:
+  group: release-kernels-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build wheel + sdist
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    outputs:
+      pkg_version: ${{ steps.meta.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build twine
+
+      - name: Read package version
+        id: meta
+        working-directory: packages/slot-math-kernels
+        run: |
+          v=$(python -c "import tomllib; print(tomllib.loads(open('pyproject.toml').read())['project']['version'])")
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "::notice::Building slot-math-kernels v$v"
+
+      - name: Sanity-check tag matches package version
+        if: startsWith(github.ref, 'refs/tags/slot-math-kernels-v')
+        run: |
+          tag_v="${GITHUB_REF#refs/tags/slot-math-kernels-v}"
+          pkg_v="${{ steps.meta.outputs.version }}"
+          if [ "$tag_v" != "$pkg_v" ]; then
+            echo "::error::Tag version ($tag_v) ≠ pyproject version ($pkg_v)"
+            exit 1
+          fi
+
+      - name: Build wheel + sdist
+        working-directory: packages/slot-math-kernels
+        run: |
+          rm -rf dist build
+          python -m build
+          ls -la dist/
+
+      - name: Verify wheel imports
+        working-directory: packages/slot-math-kernels
+        run: |
+          python -m pip install dist/*.whl
+          python -c "
+          from slot_math_kernels import (
+              expanding_symbol, hold_and_win, cluster_pays,
+              ways_evaluator, crash_kernel, pay_anywhere,
+              charge_meter, money_collect, must_hit_by,
+          )
+          print('✓ All 9 spot-checked kernels importable')
+          print('  expanding_symbol:', expanding_symbol.__name__)
+          print('  crash_kernel:    ', crash_kernel.__name__)
+          print('  pay_anywhere:    ', pay_anywhere.__name__)
+          "
+
+      - name: Run twine check
+        working-directory: packages/slot-math-kernels
+        run: twine check dist/*
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: slot-math-kernels-dist
+          path: packages/slot-math-kernels/dist/
+          retention-days: 30
+
+  publish-pypi:
+    name: Publish to PyPI (Trusted Publishing)
+    needs: build
+    if: |
+      startsWith(github.ref, 'refs/tags/slot-math-kernels-v') &&
+      (github.event_name != 'workflow_dispatch' || inputs.dry_run != true)
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/slot-math-kernels
+    permissions:
+      id-token: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: slot-math-kernels-dist
+          path: dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          # repository-url defaults to PyPI; testpypi mode below.
+
+  publish-testpypi:
+    name: Publish to TestPyPI (manual dry-run)
+    needs: build
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'testpypi'
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/slot-math-kernels
+    permissions:
+      id-token: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: slot-math-kernels-dist
+          path: dist
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          repository-url: https://test.pypi.org/legacy/
