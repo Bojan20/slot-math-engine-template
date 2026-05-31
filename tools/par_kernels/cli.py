@@ -860,6 +860,30 @@ def main(argv: list[str] | None = None) -> int:
     from tools.par_kernels.bench_history import cmd_bench_diff
     p_diff.set_defaults(func=cmd_bench_diff)
 
+    p_pin = sub.add_parser(
+        "bench-pin",
+        help="Pin a batch --bench JSON to the portfolio-history ledger",
+    )
+    p_pin.add_argument("bench", help="Path to bench JSON (from `batch --bench`)")
+    p_pin.add_argument("--pin-dir", default=None,
+                       help="Override default reports/bench/portfolio-history/")
+    p_pin.add_argument("--git-sha", default=None,
+                       help="Git SHA (auto-detected from .git if absent)")
+    from tools.par_kernels.bench_pin import cmd_bench_pin
+    p_pin.set_defaults(func=cmd_bench_pin)
+
+    p_trend = sub.add_parser(
+        "bench-trend",
+        help="Render per-game RTP trend across pinned history (sparkline + slope)",
+    )
+    p_trend.add_argument("--pin-dir", default=None,
+                         help="Override default reports/bench/portfolio-history/")
+    p_trend.add_argument("--last-n", type=int, default=None,
+                         help="Only analyze the N most recent entries")
+    p_trend.add_argument("--out", help="Write trend Markdown to path (default stdout)")
+    from tools.par_kernels.bench_pin import cmd_bench_trend
+    p_trend.set_defaults(func=cmd_bench_trend)
+
     args = parser.parse_args(argv)
     return args.func(args)
 

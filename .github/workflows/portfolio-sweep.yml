@@ -174,6 +174,42 @@ jobs:
           retention-days: 90
 
       # ─────────────────────────────────────────────────────────────────
+      # Main-push only: pin this run's bench.json into the long-running
+      # portfolio-history ledger AND upload the entire ledger as a
+      # separate artifact. Idempotent (content_sha-keyed) — re-runs of
+      # the same SHA do not duplicate entries.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Pin bench to portfolio-history ledger (main only)
+        if: |
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          steps.batch.outputs.status == '0'
+        run: |
+          python -m tools.par_kernels.cli bench-pin \
+              reports/portfolio/bench.json \
+              --pin-dir reports/bench/portfolio-history \
+              --git-sha "${{ github.sha }}"
+          # Render trend summary into job summary
+          {
+            echo ""
+            echo "## Portfolio Trend (across pinned history)"
+            python -m tools.par_kernels.cli bench-trend \
+                --pin-dir reports/bench/portfolio-history \
+                --last-n 20
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload portfolio-history ledger artifact (main only)
+        if: |
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          steps.batch.outputs.status == '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-history-ledger
+          path: reports/bench/portfolio-history/
+          retention-days: 365
+
+      # ─────────────────────────────────────────────────────────────────
       # PR-only: fetch latest main artifact as baseline, compute diff.
       # Baseline absence is NOT an error (first run on a new repo, or
       # main has no artifact yet) — we just fall back to the full
@@ -187,7 +223,10 @@ jobs:
         run: |
           mkdir -p reports/portfolio/baseline
           set +e
-          # Pick most recent SUCCESSFUL run of this workflow on main.
+          # Prefer the cumulative portfolio-history ledger artifact —
+          # it survives even when the single-run dashboard artifact has
+          # been GC'd, and gives bench-trend something to work with.
+          # Fall back to per-run dashboard artifact if ledger missing.
           base_run_id=$(gh run list \
               --workflow="portfolio-sweep.yml" \
               --branch=main \
@@ -202,27 +241,38 @@ jobs:
             exit 0
           fi
           echo "::notice::Baseline run on main: $base_run_id"
-          # Artifact name pattern: portfolio-dashboard-<sha>. The exact
-          # SHA is unknown, so just download whatever matches the prefix.
-          gh run download "$base_run_id" \
-              --dir reports/portfolio/baseline \
-              --pattern "portfolio-dashboard-*" || {
-            echo "::warning::Failed to download baseline artifact"
-            echo "have_baseline=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          }
-          # Artifact extraction puts files inside portfolio-dashboard-<sha>/
-          # (a directory). Locate bench.json within.
-          baseline_json=$(find reports/portfolio/baseline -name "bench.json" | head -1)
+          baseline_json=""
+          # First try: ledger artifact (preferred)
+          if gh run download "$base_run_id" \
+                --dir reports/portfolio/baseline-ledger \
+                --name "portfolio-history-ledger" 2>/dev/null; then
+            # Index sorted by ts; last entry = newest pinned baseline.
+            last_filename=$(python -c "import json,sys; idx=json.load(open('reports/portfolio/baseline-ledger/INDEX.json')); print(idx[-1]['filename'] if idx else '')" 2>/dev/null || true)
+            if [ -n "$last_filename" ]; then
+              baseline_json="reports/portfolio/baseline-ledger/$last_filename"
+              echo "::notice::Using ledger entry as baseline: $last_filename"
+            fi
+          fi
+          # Fallback: per-run dashboard artifact
+          if [ -z "$baseline_json" ]; then
+            gh run download "$base_run_id" \
+                --dir reports/portfolio/baseline \
+                --pattern "portfolio-dashboard-*" || {
+              echo "::warning::Failed to download baseline artifact"
+              echo "have_baseline=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            }
+            baseline_json=$(find reports/portfolio/baseline -name "bench.json" | head -1)
+          fi
           if [ -z "$baseline_json" ] || [ ! -f "$baseline_json" ]; then
-            echo "::warning::Baseline artifact has no bench.json"
+            echo "::warning::No baseline bench.json found in any artifact"
             echo "have_baseline=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           cp "$baseline_json" reports/portfolio/baseline/bench.json
           echo "have_baseline=true" >> "$GITHUB_OUTPUT"
           echo "baseline_run_id=$base_run_id" >> "$GITHUB_OUTPUT"
-          echo "::notice::Baseline bench.json staged at $baseline_json"
+          echo "::notice::Baseline bench.json staged from $baseline_json"
 
       - name: Compute regression diff (current vs baseline)
         id: diff
