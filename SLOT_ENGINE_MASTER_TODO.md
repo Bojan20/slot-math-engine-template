@@ -2738,6 +2738,40 @@ Excel PAR sheet publishes `rtp_breakdown` shares (multiway/scatter/coins/jackpot
 
 ---
 
+## 🏁 MILESTONE SNAPSHOT — 2026-06-01 19:35 (post **PHASE 51 LANDED** — One-click GDD → playable slot u browser-u)
+
+**Status:** **GDD import dead-end zatvoren.** Boki je javio "ubacim gdd i ne radi" — full QA traversal pronašao 2 missing wires u Generate-handler-u (`web/studio/app.js:2866-2976`):
+
+| # | Bug | Severity | File:Line | Fix |
+|---|---|---|---|---|
+| 1 | GDD import postavlja `v.tierCounts` + `v.paytable` ali NIKAD ne materijalizuje `v.symbols` / `v.reels` — Play Template gate `v.symbols.length===0` ćutke pali warning toast i Boki mora 3 dodatna klika (BUILD tab → Play Template) | 🔴 P0 | `web/studio/app.js:2866-2976` | Posle `logActivity(...)` inline `autoBuildReelsFor(v)` (kaskada u `buildSymbolPoolFor` kad symbols=[]) + overlay GDD paytable po tier-ordinal (descending x5 → HP, mid → MP, low → LP), adopt GDD imena |
+| 2 | Generate handler ne triggeruje Play Template automatski — "one-click" obećanje slomljeno; popup permission propada ako se setTimeout-uje | 🔴 P0 | `web/studio/app.js:~2975` | Inline `playTemplateBtn.click()` u istom click-gesture stack-u → Chrome zadržava popup-grant kroz async MTL seal ceremony |
+
+### Test tally
+
+| Suite | Pass | Notes |
+|---|---|---|
+| `web/studio/tests/gdd-parser.test.ts` | **19 / 19** ✅ | Parser end-to-end (JSON/CSV/MD/TXT + gddToIR Zod) |
+| `web/studio/tests/*` (full) | **537 / 542** ✅ | 5 fail = pre-existing pilot/marketing assets, irrelevant |
+| `node --check web/studio/app.js` | ✅ clean | Syntax pass |
+| `e2e/gdd-import.spec.ts` | +1 novi test | "PHASE 51 — GDD import auto-launches Play Template in new tab" (waitForEvent('page') verifikuje popup) |
+
+### Studio test failures koje OSTAJU (out-of-scope)
+
+| File | Why | Action |
+|---|---|---|
+| `catalog.test.ts`, `mobile.test.ts`, `template-expansion.test.ts` | Pre-existing fixture load fail | Separate cleanup wave |
+| `pilot-*.test.ts` | Pre-existing missing marketing one-pagers | Sales content backlog |
+
+### User-flow posle PHASE 51
+
+```
+PRE:  Drop GDD → modal → Generate → workspace created → 🤷 (3 dodatna klika do playable slot)
+POST: Drop GDD → modal → Generate → ⚡ new tab automatski opens sa playable slot machine
+```
+
+---
+
 ## 🏁 MILESTONE SNAPSHOT — 2026-05-28 00:00 (post **W9.1 + W9.2 + W9.3 + W9.4 LANDED** — multi-jurisdiction generator + spec compare matrix + schema migration + perf bench)
 
 **Status:** **Portfolio / fleet management surface complete.** Four atomic waves that turn the math compiler from per-game tool into a fleet-of-games platform:

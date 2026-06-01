@@ -2973,6 +2973,61 @@
       ttl: 7000
     });
     logActivity(`GDD import → ${name} · stated ${statedRtp}% / computed ${computedRtp}%`);
+
+    // PHASE 51 — One-click GDD → playable slot in new tab.
+    // GDD import historically dead-ended at workspace creation: v.tierCounts
+    // and v.paytable were seeded, but v.symbols / v.reels stayed empty so
+    // Play Template's `v.symbols.length === 0` gate fired a warning toast
+    // and Boki had to walk BUILD tab → Play Template manually (3 clicks
+    // + tab nav). Here we materialize the pool + display reels inline,
+    // overlay GDD paytable rows onto the synthesized symbols by tier
+    // ordinal (highest x5 → HP, mid → MP, low → LP), then chain straight
+    // into Play Template within the same click-gesture stack so Chrome
+    // keeps window.open() popup permission through MTL's async seal.
+    try {
+      autoBuildReelsFor(v); // cascades into buildSymbolPoolFor when symbols empty
+
+      if (v.paytable && typeof v.paytable === "object") {
+        const ptEntries = Object.entries(v.paytable);
+        if (ptEntries.length > 0) {
+          const ranked = ptEntries
+            .map(([symName, pays]) => ({ symName, pays: pays || {}, x5: +(pays && pays.x5) || 0 }))
+            .sort((a, b) => b.x5 - a.x5);
+          const hpCount = Math.max(0, v.tierCounts.HP | 0);
+          const mpCount = Math.max(0, v.tierCounts.MP | 0);
+          const tierBuckets = { HP: [], MP: [], LP: [] };
+          for (let i = 0; i < ranked.length; i++) {
+            if (i < hpCount) tierBuckets.HP.push(ranked[i]);
+            else if (i < hpCount + mpCount) tierBuckets.MP.push(ranked[i]);
+            else tierBuckets.LP.push(ranked[i]);
+          }
+          for (const sym of v.symbols) {
+            const bucket = tierBuckets[sym.tier];
+            if (!bucket || bucket.length === 0) continue;
+            const entry = bucket.shift();
+            if (entry.symName) sym.name = entry.symName;
+            sym.pay = {
+              x3: +entry.pays.x3 || sym.pay.x3,
+              x4: +entry.pays.x4 || sym.pay.x4,
+              x5: +entry.pays.x5 || sym.pay.x5,
+            };
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("[studio] GDD symbol/reel hydration failed:", err);
+    }
+
+    // Same-stack click → Chrome treats the resulting window.open() as a
+    // valid user gesture. setTimeout would lose that grant.
+    try {
+      const playBtn = document.querySelector("#btn-play-template");
+      if (playBtn && !playBtn.hasAttribute("disabled")) {
+        playBtn.click();
+      }
+    } catch (_) {
+      /* never break GDD import on auto-Play failure */
+    }
   });
 
   /* ============================================================

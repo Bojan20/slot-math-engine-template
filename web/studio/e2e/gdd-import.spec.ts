@@ -3,6 +3,9 @@
 // Open studio, BUILD tab → + New Game → Import from GDD, upload
 // `gdd-samples/dragon-spin.json`, verify review modal, click Generate,
 // confirm the new workspace appears.
+//
+// PHASE 51 — second test verifies one-click GDD → playable slot:
+// after Generate, the Play Template should auto-launch a new tab.
 
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
@@ -46,4 +49,33 @@ test('GDD import → review modal → generate workspace', async ({ page }) => {
   await expect(wsName).toBeVisible();
   const name = (await wsName.textContent()) ?? '';
   expect(name.trim().length).toBeGreaterThan(0);
+});
+
+test('PHASE 51 — GDD import auto-launches Play Template in new tab', async ({ page, context }) => {
+  await page.goto('/');
+  await page.waitForSelector('#tab-build', { timeout: 10_000 });
+
+  const fileInput = page.locator('#gdd-file-input');
+  await expect(fileInput).toBeAttached();
+  const samplePath = path.resolve(__dirname, '..', 'gdd-samples', 'dragon-spin.json');
+  await fileInput.setInputFiles(samplePath);
+
+  await expect(page.locator('#gdd-review')).toBeVisible({ timeout: 15_000 });
+
+  // Wait for the new-tab `page` event triggered by auto-Play Template inside
+  // the Generate click handler. MTL sealing + blob assembly take ~1–2s.
+  const popupPromise = context.waitForEvent('page', { timeout: 20_000 });
+  await page.locator('#gdd-generate').click();
+
+  const popup = await popupPromise;
+  await popup.waitForLoadState('domcontentloaded', { timeout: 15_000 });
+
+  // The runner template embeds a `#stage` (or equivalent) plus the IR as
+  // an inline script with id `inline-ir` — assert at least one of them.
+  const hasIr = await popup.evaluate(() => {
+    return !!document.getElementById('inline-ir')
+      || !!document.querySelector('[data-role="runner-stage"]')
+      || !!document.querySelector('canvas');
+  });
+  expect(hasIr).toBe(true);
 });
