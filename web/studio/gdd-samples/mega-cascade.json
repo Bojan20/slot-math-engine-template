@@ -1,0 +1,53 @@
+{
+  "id": "mega-cascade-storm",
+  "name": "Mega Cascade Storm",
+  "version": "0.1.0",
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "HP1", "name": "Lion", "kind": "hp" },
+    { "id": "HP2", "name": "Tiger", "kind": "hp" },
+    { "id": "HP3", "name": "Eagle", "kind": "hp" },
+    { "id": "MP1", "name": "Ruby", "kind": "mp" },
+    { "id": "MP2", "name": "Emerald", "kind": "mp" },
+    { "id": "MP3", "name": "Sapphire", "kind": "mp" },
+    { "id": "LP1", "name": "Ace", "kind": "lp" },
+    { "id": "LP2", "name": "King", "kind": "lp" },
+    { "id": "LP3", "name": "Queen", "kind": "lp" },
+    { "id": "WILD", "name": "Storm Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "SCATTER", "name": "Storm Scatter", "kind": "scatter" },
+    { "id": "BONUS", "name": "Bonus Orb", "kind": "bonus" }
+  ],
+  "paytable": [
+    { "symbol": "HP1", "x3": 80, "x4": 240, "x5": 800 },
+    { "symbol": "HP2", "x3": 75, "x4": 225, "x5": 750 },
+    { "symbol": "HP3", "x3": 70, "x4": 200, "x5": 700 },
+    { "symbol": "MP1", "x3": 30, "x4": 90, "x5": 300 },
+    { "symbol": "MP2", "x3": 25, "x4": 75, "x5": 250 },
+    { "symbol": "MP3", "x3": 22, "x4": 66, "x5": 220 },
+    { "symbol": "LP1", "x3": 10, "x4": 30, "x5": 100 },
+    { "symbol": "LP2", "x3": 8, "x4": 24, "x5": 80 },
+    { "symbol": "LP3", "x3": 6, "x4": 18, "x5": 60 },
+    { "symbol": "WILD", "x3": 0, "x4": 0, "x5": 0 },
+    { "symbol": "SCATTER", "x3": 5, "x4": 20, "x5": 100 }
+  ],
+  "limits": {
+    "target_rtp": 0.965,
+    "max_win_x": 10000,
+    "target_volatility": "high"
+  },
+  "compliance": {
+    "jurisdictions": ["UKGC", "MGA", "DGOJ"]
+  },
+  "features": [
+    "free_spins",
+    "hold_and_win",
+    "multiplier",
+    "cascade",
+    "expanding_wild",
+    "walking_wild",
+    "sticky_wild",
+    "mystery_symbol",
+    "buy_feature",
+    "bonus_pick"
+  ]
+}

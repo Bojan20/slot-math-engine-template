@@ -9,7 +9,7 @@ import type { LiveRTP, ValidationReport } from './engine.js';
 import { Persistence } from './persistence.js';
 import type { StudioVariant, StudioPersistedState, StudioWorkspace } from './types.js';
 import { createPlayTab, type PlayTabBridge } from './playTab.js';
-import { parseGDD, gddToIR } from './gdd-parser.js';
+import { parseGDD, gddToIR, gddRunnerExtrasFromTags, gddTagsFrom } from './gdd-parser.js';
 import type { ExtractedGDD } from './gdd-parser.js';
 import { createComposeBridge, type ComposeBridge } from './compose.js';
 import { createRuleEditorBridge, type RuleEditorBridge, type IRRule } from './rule-editor.js';
@@ -151,7 +151,7 @@ interface StudioBridge {
   scheduleRTPRecompute(): void;
   // ── GDD Import Pipeline (W199.5) ──
   parseGDD(file: File): Promise<ExtractedGDD>;
-  generateFromGDD(gdd: ExtractedGDD): { ok: boolean; message: string; computedRtp?: number };
+  generateFromGDD(gdd: ExtractedGDD): { ok: boolean; message: string; computedRtp?: number; runnerExtras?: Array<{ kind: string; [k: string]: unknown }> };
   // ── Auto-MC (Phase 2) ──
   // Kicks off a Monte-Carlo sim against the supplied IR.  Returns a handle
   // so callers (app.js, Sensitivity tab) can subscribe to progress and
@@ -364,7 +364,7 @@ function scheduleRTPRecompute(): void {
 // ── GDD Import Pipeline (W199.5) ────────────────────────────────────
 function generateFromGDD(
   gdd: ExtractedGDD
-): { ok: boolean; message: string; computedRtp?: number } {
+): { ok: boolean; message: string; computedRtp?: number; runnerExtras?: Array<{ kind: string; [k: string]: unknown }> } {
   try {
     const ir = gddToIR(gdd);
     const report = validateIRBlob(ir);
@@ -375,6 +375,13 @@ function generateFromGDD(
         message: `IR invalid: ${report.issueCount} issue(s)${first ? ` · ${first.path}: ${first.message}` : ''}`,
       };
     }
+    // PHASE 52 — Runner extras (non-IR-schema feature kinds the runner's
+    // component-builder knows how to mount: multiplier, cluster_pays,
+    // ways, sticky/expanding/walking_wild, mystery_symbol, bonus_pick,
+    // wheel_bonus, buy_feature alias, power_meter). Returned alongside
+    // the validated IR so app.js can splice them into the Play Template
+    // IR.features[] after Zod has signed off on the strict subset.
+    const runnerExtras = gddRunnerExtrasFromTags(gddTagsFrom(gdd));
     // Compute base-game RTP from the produced IR so the studio toast can
     // show stated-vs-computed delta without a full MC run.
     let computedRtp: number | undefined;
@@ -417,6 +424,7 @@ function generateFromGDD(
       ok: true,
       message: `Generated ${ir.meta.name}`,
       computedRtp,
+      runnerExtras,
     };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

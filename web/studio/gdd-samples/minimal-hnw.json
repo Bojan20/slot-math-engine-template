@@ -1,0 +1,24 @@
+{
+  "id": "minimal-hnw",
+  "name": "Minimal HnW",
+  "version": "0.1.0",
+  "topology": { "kind": "rectangular", "reels": 5, "rows": 3 },
+  "symbols": [
+    { "id": "HP1", "name": "Lion", "kind": "hp" },
+    { "id": "MP1", "name": "Coin", "kind": "mp" },
+    { "id": "LP1", "name": "Ace", "kind": "lp" },
+    { "id": "WILD", "name": "Wild", "kind": "wild", "substitutes": "*" },
+    { "id": "SCATTER", "name": "Scatter", "kind": "scatter" },
+    { "id": "BONUS", "name": "Bonus", "kind": "bonus" }
+  ],
+  "paytable": [
+    { "symbol": "HP1", "x3": 50, "x4": 150, "x5": 500 },
+    { "symbol": "MP1", "x3": 20, "x4": 60, "x5": 200 },
+    { "symbol": "LP1", "x3": 5, "x4": 20, "x5": 50 },
+    { "symbol": "WILD", "x3": 0, "x4": 0, "x5": 0 },
+    { "symbol": "SCATTER", "x3": 5, "x4": 20, "x5": 100 }
+  ],
+  "limits": { "target_rtp": 0.96, "max_win_x": 5000, "target_volatility": "high" },
+  "compliance": { "jurisdictions": ["UKGC"] },
+  "features": ["free_spins", "hold_and_win"]
+}

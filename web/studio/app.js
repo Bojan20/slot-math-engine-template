@@ -2900,6 +2900,15 @@
     }
     const ws = newWorkspace({ id, name, theme: "cyan", layout, irName });
     const v = ws.variants[ws.activeVariantId];
+    // PHASE 52 — preserve runner-extras (non-IR-schema feature kinds the
+    // runner component-builder still knows how to mount: multiplier,
+    // cluster_pays, ways, sticky/expanding/walking_wild, mystery_symbol,
+    // bonus_pick, wheel_bonus, …). variantToFullIR merges them into
+    // ir.features[] BEFORE Play Template serializes — bypassing Zod
+    // but giving the runner a complete feature list.
+    if (Array.isArray(result.runnerExtras) && result.runnerExtras.length > 0) {
+      v.runnerExtras = result.runnerExtras.slice();
+    }
     v.rtpTarget = +(edited.targetRTP.value * 100).toFixed(2);
     v.maxWin = edited.maxWin.value;
     v.vola = (edited.volatility.value || "MID").toString().toUpperCase();
@@ -4042,24 +4051,41 @@
     // RNG kind, bet structure, limits — everything the user can't tweak
     // in Studio but the engine still depends on.  Tweakable fields
     // (meta name, paytable, validated_metrics) are layered on top.
+    let ir;
     if (v.irOriginal && typeof v.irOriginal === "object") {
-      const ir = JSON.parse(JSON.stringify(v.irOriginal));
+      ir = JSON.parse(JSON.stringify(v.irOriginal));
       ir.meta = ir.meta || {};
       ir.meta.name = ws?.name || ir.meta.name || v.name || "Slot Template";
       ir.meta.id = ir.meta.id || v.id || "slot-template";
       ir.meta.version = ir.meta.version || "1.0.0";
       if (v.rtpAllocation) ir.rtp_allocation = v.rtpAllocation;
       if (v.validatedMetrics) ir.validated_metrics = v.validatedMetrics;
-      return ir;
+    } else {
+      ir = variantToIrForMc(v);
+      if (!ir) return null;
+      ir.meta = ir.meta || {};
+      ir.meta.id = ir.meta.id || v.id || "slot-template";
+      ir.meta.name = ws?.name || v.name || "Slot Template";
+      ir.meta.version = ir.meta.version || "1.0.0";
+      if (v.rtpAllocation) ir.rtp_allocation = v.rtpAllocation;
+      if (v.validatedMetrics) ir.validated_metrics = v.validatedMetrics;
     }
-    const ir = variantToIrForMc(v);
-    if (!ir) return null;
-    ir.meta = ir.meta || {};
-    ir.meta.id = ir.meta.id || v.id || "slot-template";
-    ir.meta.name = ws?.name || v.name || "Slot Template";
-    ir.meta.version = ir.meta.version || "1.0.0";
-    if (v.rtpAllocation) ir.rtp_allocation = v.rtpAllocation;
-    if (v.validatedMetrics) ir.validated_metrics = v.validatedMetrics;
+    // PHASE 52 — Merge runner-extras (non-IR-schema kinds) into
+    // ir.features[]. Runner's component-builder reads kind only — it
+    // tolerates objects that don't match the IR Zod union. This widens
+    // the set of features the playable slot mounts from a GDD without
+    // forcing the IR Zod schema to absorb every UX-layer mechanic.
+    if (Array.isArray(v.runnerExtras) && v.runnerExtras.length > 0) {
+      const existing = Array.isArray(ir.features) ? ir.features.slice() : [];
+      const seen = new Set(existing.map((f) => (f && f.kind) || null).filter(Boolean));
+      for (const extra of v.runnerExtras) {
+        if (!extra || typeof extra !== "object" || !extra.kind) continue;
+        if (seen.has(extra.kind)) continue;
+        existing.push(JSON.parse(JSON.stringify(extra)));
+        seen.add(extra.kind);
+      }
+      ir.features = existing;
+    }
     return ir;
   }
 
@@ -4076,6 +4102,13 @@
       replayJs, watchtowerJs, watchtowerWorkerJs,
       featureRegistryJs, componentBuilderJs,
       ftMultiplierJs, ftPowerMeterJs, ftFreeSpinsJs, ftHoldAndWinJs,
+      // PHASE 52 — 9 additional feature modules (cascade / tumble,
+      // expanding/walking/sticky wild, mystery symbol, buy_feature,
+      // bonus_pick, cluster_pays, ways). Each self-registers via
+      // window.MTLFeatures.register(). Missing files fetch to "" so the
+      // bundle stays valid even if a module gets removed.
+      ftCascadeJs, ftExpandingWildJs, ftWalkingWildJs, ftStickyWildJs,
+      ftMysterySymbolJs, ftBuyFeatureJs, ftBonusPickJs, ftClusterPaysJs, ftWaysJs,
     ] = await Promise.all([
       fetch(base + "template.html").then((r) => r.text()),
       fetch(base + "runtime.js").then((r) => r.text()),
@@ -4097,6 +4130,18 @@
       fetch(base + "features/power-meter.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "features/free-spins.js").then((r) => r.text()).catch(() => ""),
       fetch(base + "features/hold-and-win.js").then((r) => r.text()).catch(() => ""),
+      // PHASE 52 — Mount all industry-standard mechanics so any GDD
+      // declaring them lands a visible runtime hook (placeholder badge
+      // for math-driven feel, with real math arriving on PAR injection).
+      fetch(base + "features/cascade.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/expanding-wild.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/walking-wild.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/sticky-wild.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/mystery-symbol.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/buy-feature.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/bonus-pick.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/cluster-pays.js").then((r) => r.text()).catch(() => ""),
+      fetch(base + "features/ways.js").then((r) => r.text()).catch(() => ""),
     ]);
     // Embed IR as a JSON script tag the runtime reads, plus inline CSS + JS.
     // We use REPLACER FUNCTIONS (not strings) so `$` characters in the
@@ -4115,7 +4160,12 @@
     // template.html only needs ONE script slot for all of them.  Order
     // is alphabetical for stability; each component self-registers via
     // window.MTLFeatures.register() so order doesn't affect mount logic.
-    const featuresBundle = [ftFreeSpinsJs, ftHoldAndWinJs, ftMultiplierJs, ftPowerMeterJs].filter(Boolean).join('\n\n');
+    const featuresBundle = [
+      ftFreeSpinsJs, ftHoldAndWinJs, ftMultiplierJs, ftPowerMeterJs,
+      // PHASE 52 — appended modules cover the full industry mechanic set.
+      ftCascadeJs, ftExpandingWildJs, ftWalkingWildJs, ftStickyWildJs,
+      ftMysterySymbolJs, ftBuyFeatureJs, ftBonusPickJs, ftClusterPaysJs, ftWaysJs,
+    ].filter(Boolean).join('\n\n');
     const finalHtml = templateHtml
       .replace("/* RUNNER-CSS */", () => stylesCss)
       .replace(/(<script id="inline-ir"[^>]*>)\{\}(<\/script>)/, (m, open, close) => open + irJson + close)

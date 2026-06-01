@@ -167,11 +167,13 @@ function emptyExtraction(filename: string): ExtractedGDD {
 // Heuristic helpers — tier / feature / jurisdiction recognisers
 // ───────────────────────────────────────────────────────────────────────
 
-function tierOf(label: string): 'HP' | 'MP' | 'LP' | 'WILD' | 'SCATTER' | 'MULT' | null {
+function tierOf(label: string): 'HP' | 'MP' | 'LP' | 'WILD' | 'SCATTER' | 'MULT' | 'BONUS' | null {
   const l = label.trim().toLowerCase();
   if (!l) return null;
   if (/^(w|wild|substitute|wld)\d*$/.test(l) || l.includes('wild')) return 'WILD';
-  if (/^(s|sc|sct|scatter|free.?spin|bonus.?trig)\d*$/.test(l) || l.includes('scatter')) return 'SCATTER';
+  if (/^(s|sc|sct|scatter|free.?spin)\d*$/.test(l) || l.includes('scatter')) return 'SCATTER';
+  // PHASE 52 — bonus is its own tier (hold_and_win cross-validate needs it).
+  if (/^(b|bn|bns|bonus|coin|cash|orb)\d*$/.test(l) || l.includes('bonus')) return 'BONUS';
   if (/(mult|multiplier|x\d+|×\d+)/.test(l)) return 'MULT';
   if (/^(hp\d*|h\d+|high\d*|premium\d*|prem\d*)$/.test(l)) return 'HP';
   if (/^(mp\d*|m\d+|mid\d*|medium\d*|med\d*)$/.test(l)) return 'MP';
@@ -274,8 +276,8 @@ function extractTopology(text: string): { reels: number; rows: number; confidenc
   return null;
 }
 
-function tallyPool(rows: PaytableRow[]): { HP: number; MP: number; LP: number; WILD: number; SCATTER: number; MULT: number } {
-  const tally = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
+function tallyPool(rows: PaytableRow[]): { HP: number; MP: number; LP: number; WILD: number; SCATTER: number; MULT: number; BONUS: number } {
+  const tally = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0, BONUS: 0 };
   for (const row of rows) {
     const t = tierOf(row.symbol);
     if (!t) continue;
@@ -395,7 +397,7 @@ async function parseJSON(file: File): Promise<ExtractedGDD> {
   // Symbols → tier counts
   const syms = o.symbols;
   if (Array.isArray(syms)) {
-    const tally = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0 };
+    const tally = { HP: 0, MP: 0, LP: 0, WILD: 0, SCATTER: 0, MULT: 0, BONUS: 0 };
     for (const s of syms) {
       if (!s || typeof s !== 'object') continue;
       const sr = s as Record<string, unknown>;
@@ -405,6 +407,8 @@ async function parseJSON(file: File): Promise<ExtractedGDD> {
       if (kind === 'wild') t = 'WILD';
       else if (kind === 'scatter') t = 'SCATTER';
       else if (kind === 'multiplier') t = 'MULT';
+      else if (kind === 'bonus') t = 'BONUS';
+      else if (kind === 'mp') t = 'MP';
       else if (kind === 'hp') t = id.toUpperCase().startsWith('MP') ? 'MP' : 'HP';
       else if (kind === 'lp') t = 'LP';
       else t = tierOf(id);
@@ -416,6 +420,23 @@ async function parseJSON(file: File): Promise<ExtractedGDD> {
     out.symbolPool.WILD = f(tally.WILD, 95, 'symbols');
     out.symbolPool.SCATTER = f(tally.SCATTER, 95, 'symbols');
     out.symbolPool.MULT = f(tally.MULT, 95, 'symbols');
+    // PHASE 52 — ensure BONUS symbols (declared in JSON.symbols[] but
+    // typically absent from paytable) make it into the IR symbol pool so
+    // hold_and_win cross-validate finds a bonus-kind symbol.
+    if (tally.BONUS > 0) {
+      const existing = new Set(out.paytable.value.map((r) => r.symbol.toUpperCase()));
+      for (const s of syms) {
+        if (!s || typeof s !== 'object') continue;
+        const sr = s as Record<string, unknown>;
+        const kind = typeof sr.kind === 'string' ? sr.kind : '';
+        const id = typeof sr.id === 'string' ? sr.id : '';
+        const isBonus = kind === 'bonus' || tierOf(id) === 'BONUS';
+        if (isBonus && id && !existing.has(id.toUpperCase())) {
+          out.paytable.value.push({ symbol: id, x3: 0, x4: 0, x5: 0 });
+          existing.add(id.toUpperCase());
+        }
+      }
+    }
   } else if (out.paytable.value.length) {
     const tally = tallyPool(out.paytable.value);
     out.symbolPool.HP = f(tally.HP, 80, 'paytable-derived');
@@ -846,7 +867,7 @@ export async function parseGDD(file: File): Promise<ExtractedGDD> {
 // gddToIR — build a SlotGameIR from an ExtractedGDD
 // ───────────────────────────────────────────────────────────────────────
 
-function tierToIRKind(tier: 'HP' | 'MP' | 'LP' | 'WILD' | 'SCATTER' | 'MULT'): SymbolKind {
+function tierToIRKind(tier: 'HP' | 'MP' | 'LP' | 'WILD' | 'SCATTER' | 'MULT' | 'BONUS'): SymbolKind {
   switch (tier) {
     case 'HP':
       return 'hp';
@@ -860,6 +881,8 @@ function tierToIRKind(tier: 'HP' | 'MP' | 'LP' | 'WILD' | 'SCATTER' | 'MULT'): S
       return 'scatter';
     case 'MULT':
       return 'multiplier';
+    case 'BONUS':
+      return 'bonus';
   }
 }
 
@@ -933,11 +956,71 @@ export function gddToIR(gdd: ExtractedGDD): SlotGameIR {
   const hasScatter = symbols.some((s) => s.kind === 'scatter');
   const featureTags = gdd.features.value;
   const features: SlotGameIR['features'] = [];
+
+  // PHASE 52 — Emit IR.features[] for IR-Feature-schema-compliant kinds.
+  // Non-IR runner kinds (multiplier, cluster_pays, ways, sticky_wild,
+  // expanding_wild, walking_wild, bonus_pick, wheel_bonus, mystery_symbol
+  // (non-schema), …) get appended later as runner extras in app.js
+  // buildPlayTemplateBlob — see `gddRunnerExtrasFromTags` below.
   if (hasScatter || featureTags.includes('free_spins')) {
     features.push({
       kind: 'free_spins',
       trigger: { by: 'scatter_count', min: 3, thresholds: { '3': 10, '4': 15, '5': 20 } },
     });
+  }
+  if (featureTags.includes('hold_and_win')) {
+    features.push({
+      kind: 'hold_and_win',
+      trigger: { by: 'bonus_count', min: 6 },
+      respins_initial: 3,
+      respin_reset_on_new: true,
+      cash_value_distribution: [
+        { value: 1, weight: 8 },
+        { value: 2, weight: 4 },
+        { value: 5, weight: 2 },
+        { value: 10, weight: 1 },
+      ],
+      jackpot_tiers: [
+        { id: 'mini', multiplier: 20 },
+        { id: 'major', multiplier: 200 },
+      ],
+    });
+  }
+  if (featureTags.includes('cascade')) {
+    features.push({ kind: 'cascade', replacement: 'drop', max_chain: 8 });
+  }
+  if (featureTags.includes('buy_feature') || featureTags.includes('bonus_buy')) {
+    features.push({
+      kind: 'buy_feature',
+      offers: [{ id: 'free_spins', cost_x: 80, guaranteed: 'free_spins_entry' }],
+    });
+  }
+  if (featureTags.includes('pick')) {
+    features.push({
+      kind: 'pick',
+      prize_pool: [
+        { id: 'small', weight: 5, pay_multiplier: 5 },
+        { id: 'mid', weight: 2, pay_multiplier: 25 },
+        { id: 'big', weight: 1, pay_multiplier: 100 },
+      ],
+    });
+  }
+  if (featureTags.includes('wheel')) {
+    features.push({
+      kind: 'wheel',
+      segments: [
+        { id: 'a', weight: 4, pay_multiplier: 5 },
+        { id: 'b', weight: 3, pay_multiplier: 10 },
+        { id: 'c', weight: 2, pay_multiplier: 25 },
+        { id: 'd', weight: 1, pay_multiplier: 100 },
+      ],
+    });
+  }
+  if (featureTags.includes('gamble')) {
+    features.push({ kind: 'gamble', type: 'red_black', max_steps: 5, tie_resolution: 'push' });
+  }
+  if (featureTags.includes('ante_bet')) {
+    features.push({ kind: 'ante_bet', extra_multiplier: 1.25, enabled_by_default: false });
   }
 
   const volTag: 'low' | 'medium' | 'high' = gdd.volatility.value === 'LOW' ? 'low' : gdd.volatility.value === 'HIGH' ? 'high' : 'medium';
@@ -1001,4 +1084,83 @@ export function gddToIR(gdd: ExtractedGDD): SlotGameIR {
   };
 
   return ir;
+}
+
+// ───────────────────────────────────────────────────────────────────────
+// PHASE 52 — Runner extras (non-IR-schema feature kinds)
+// ───────────────────────────────────────────────────────────────────────
+//
+// Some industry-standard slot mechanics (multiplier, sticky/expanding/
+// walking wilds, cluster_pays, ways, mystery_symbol render-style,
+// bonus_pick, wheel_bonus) aren't part of the strict IR Zod schema yet,
+// but the runner's component-builder registers modules for them. We emit
+// them as a separate flat array attached to the IR at blob-build time
+// via app.js (see buildPlayTemplateBlob) — they bypass parseGameIR.
+//
+// Each entry mirrors the IR.features[] shape (object with `kind`), so the
+// runner's component-builder can mount them identically.
+
+export interface RunnerExtraFeature {
+  kind: string;
+  [k: string]: unknown;
+}
+
+export function gddRunnerExtrasFromTags(featureTags: string[]): RunnerExtraFeature[] {
+  const out: RunnerExtraFeature[] = [];
+  if (featureTags.includes('multiplier')) {
+    out.push({
+      kind: 'multiplier',
+      distribution: [
+        { value: 2, weight: 5 },
+        { value: 3, weight: 3 },
+        { value: 5, weight: 2 },
+        { value: 10, weight: 1 },
+      ],
+      trigger: { probability: 0.18 },
+      scope: 'base_game_only',
+    });
+  }
+  if (featureTags.includes('cluster')) {
+    out.push({ kind: 'cluster_pays', min_cluster: 5 });
+  }
+  if (featureTags.includes('megaways')) {
+    out.push({ kind: 'ways' });
+  }
+  if (featureTags.includes('sticky_wilds') || featureTags.includes('sticky_wild')) {
+    out.push({ kind: 'sticky_wild', lockSpins: 2, scope: 'fs' });
+  }
+  if (featureTags.includes('expanding_wilds') || featureTags.includes('expanding_wild')) {
+    out.push({ kind: 'expanding_wild' });
+  }
+  if (featureTags.includes('walking_wild')) {
+    out.push({ kind: 'walking_wild', direction: 'left' });
+  }
+  if (featureTags.includes('mystery_symbol')) {
+    out.push({ kind: 'mystery_symbol', revealMs: 700 });
+  }
+  if (featureTags.includes('bonus_pick') || featureTags.includes('pick')) {
+    // Note: 'pick' is also emitted into IR.features[] as the canonical
+    // schema-valid pick game — but the runner reads bonus_pick from
+    // runnerExtras for the overlay UI. Both can coexist.
+    out.push({ kind: 'bonus_pick', picksAllowed: 3 });
+  }
+  if (featureTags.includes('wheel')) {
+    out.push({ kind: 'wheel_bonus' });
+  }
+  if (featureTags.includes('buy_feature') || featureTags.includes('bonus_buy')) {
+    out.push({
+      kind: 'buy_feature',
+      features: [{ id: 'free_spins', label: 'FREE SPINS', multiplier: 80 }],
+    });
+  }
+  if (featureTags.includes('power_meter') || featureTags.includes('charge_meter')) {
+    out.push({ kind: 'power_meter' });
+  }
+  return out;
+}
+
+// Convenience: extract raw tags from an ExtractedGDD so app.js can derive
+// runner extras alongside the IR.
+export function gddTagsFrom(gdd: ExtractedGDD): string[] {
+  return Array.from(gdd.features.value || []);
 }
