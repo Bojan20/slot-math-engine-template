@@ -4401,12 +4401,40 @@
     return null;
   }
 
+  // ── Dual reel-shape extractor — supports:
+  //    A) canonical SlotGameIR: ir.reels.base[r] = {symId: weight}
+  //    B) L&W slot-sim:         ir.reels.base[0].reels[r] = [{symbol,weight}…]
+  //    C) cluster/pay-anywhere: ir.reels = null → caller falls back to
+  //       the workspace variant pool (tier-default weights).
+  function _extractReelBags(ir) {
+    const base = ir.reels?.base;
+    if (!Array.isArray(base) || base.length === 0) return null;
+    if (base[0] && typeof base[0] === "object" && Array.isArray(base[0].reels)) {
+      // Shape B (L&W sim): flatten per-reel cell-arrays into {sym: weight} bags.
+      return base[0].reels.map((reel) => {
+        const m = {};
+        if (Array.isArray(reel)) {
+          for (const cell of reel) {
+            if (cell && typeof cell === "object" && cell.symbol) {
+              const w = Number(cell.weight) || 1;
+              m[cell.symbol] = (m[cell.symbol] || 0) + w;
+            }
+          }
+        }
+        return m;
+      });
+    }
+    // Shape A: already {symId: weight}.
+    return base.map((bag) => (bag && typeof bag === "object" ? bag : {}));
+  }
+
   // ── Canonical IR helper: walk paylines × symbols + wild subs.
   function _distFromCanonicalIR(ir) {
-    const reels = ir.reels.base.length;
-    if (reels < 3) return null;
+    const bags = _extractReelBags(ir);
+    if (!bags || bags.length < 3) return null;
+    const reels = bags.length;
     // Build per-reel frequency map: {symId: probability}
-    const freqPerReel = ir.reels.base.map((bag) => {
+    const freqPerReel = bags.map((bag) => {
       const w = {};
       let total = 0;
       for (const [sym, wt] of Object.entries(bag || {})) {

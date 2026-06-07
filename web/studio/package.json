@@ -10,6 +10,7 @@
     "preview": "vite preview --port 5174",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:symbol-coverage": "node tools/audit-symbol-coverage.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
