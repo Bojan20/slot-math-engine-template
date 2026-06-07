@@ -8,7 +8,7 @@
 >
 > **Created**: 2026-06-08 (post-Wave H3, post-`cba1bbcc` first audit ship).
 >
-> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `_pending_` (slot-math-engine-template/web/studio).
+> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `a9b56856` (slot-math-engine-template/web/studio).
 >
 > **Most recent ship**: Wave **G4** — pilot roster 5 → 15 (+10 new vendor-neutral templates), Wilson 95% CI rule for scatter-rate, gap-detection bucket in tier-inference fallback, universal DOM-dispatch click. **560/560 PASS (100%)** across 20 fixtures × 2 viewports × 14 asserts.
 
@@ -117,8 +117,8 @@
 | Vendor-neutral pilot templates | ✅ no franchise names |
 | Generator JSDoc-documented | ✅ |
 | Master TODO row flipped (G4 → ✅) | ✅ |
-| Hash pin | ⏳ next commit |
-| Push origin/main | ⏳ this commit |
+| Hash pin | ✅ `a9b56856` |
+| Push origin/main | ✅ `9bb871c1..a9b56856` |
 
 ---
 
