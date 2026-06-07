@@ -1809,19 +1809,48 @@
           // industry-standard 3/3/4/1/1/0 (HP/MP/LP/WILD/SCATTER/MULT).
           const pt = v.paytable && typeof v.paytable === "object" ? v.paytable : null;
           if (pt) {
-            // Bucket symbols by x5 pay magnitude — highest tertile = HP,
-            // middle = MP, lowest = LP. Industry convention used by every
-            // certified math lab.
+            // Bucket symbols by x5 pay magnitude. Naive tertile splits
+            // produce false MP-tier on GDDs that declare ONLY HP+LP
+            // (e.g. cluster-cosmic 4 HP + 4 LP, no MP) — the mid third
+            // of the sort would land 100x rows alongside 600x rows and
+            // call them "MP" when they're really LP.
+            //
+            // Fix: use natural pay-gap detection. If consecutive sorted
+            // rows differ by ≥ 3× we treat that as a tier boundary; if
+            // no big gap appears, fall back to tertile split.
             const rows = Object.entries(pt)
               .map(([sym, p]) => ({ sym, x5: +(p?.x5 || 0) }))
               .filter(r => r.x5 > 0)
               .sort((a, b) => b.x5 - a.x5);
             if (rows.length > 0) {
-              const third = Math.max(1, Math.ceil(rows.length / 3));
+              // Find gap boundaries (ratio > 3 between consecutive rows).
+              const boundaries = [];
+              for (let i = 1; i < rows.length; i++) {
+                if (rows[i - 1].x5 / Math.max(1e-9, rows[i].x5) >= 3) boundaries.push(i);
+              }
+              let hpCount, mpCount, lpCount;
+              if (boundaries.length >= 2) {
+                // Gap structure suggests three tiers naturally.
+                hpCount = boundaries[0];
+                mpCount = boundaries[1] - boundaries[0];
+                lpCount = rows.length - boundaries[1];
+              } else if (boundaries.length === 1) {
+                // Single gap → just HP + LP (no MP), matches the
+                // cluster-cosmic 4+4 pattern Boki's audit surfaced.
+                hpCount = boundaries[0];
+                mpCount = 0;
+                lpCount = rows.length - boundaries[0];
+              } else {
+                // No gap → equal-spread paytable, fall back to tertile.
+                const third = Math.max(1, Math.ceil(rows.length / 3));
+                hpCount = Math.min(3, third);
+                mpCount = Math.min(3, third);
+                lpCount = Math.max(2, rows.length - 2 * third);
+              }
               v.tierCounts = {
-                HP: Math.min(3, third),
-                MP: Math.min(3, third),
-                LP: Math.min(5, rows.length - 2 * third) || 3,
+                HP: Math.max(1, hpCount),
+                MP: Math.max(0, mpCount),
+                LP: Math.max(2, lpCount),  // always have at least 2 LP for visible-frequency dominance
                 WILD: 1,
                 SCATTER: 1,
                 MULT: 0,
