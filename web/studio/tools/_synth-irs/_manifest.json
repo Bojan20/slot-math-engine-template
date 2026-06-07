@@ -1,0 +1,231 @@
+{
+  "count": 25,
+  "generated_at_utc": "2026-06-07T23:22:17.385Z",
+  "fixtures": [
+    {
+      "id": "synth-rect-5x3-shallow-lines",
+      "name": "Synth Rect 5×3 shallow lines",
+      "file": "synth-rect-5x3-shallow-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 5,
+      "rows": 3
+    },
+    {
+      "id": "synth-rect-5x3-shallow-ways",
+      "name": "Synth Rect 5×3 shallow ways",
+      "file": "synth-rect-5x3-shallow-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 5,
+      "rows": 3
+    },
+    {
+      "id": "synth-rect-5x3-deep-lines",
+      "name": "Synth Rect 5×3 deep lines",
+      "file": "synth-rect-5x3-deep-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 5,
+      "rows": 3
+    },
+    {
+      "id": "synth-rect-5x3-deep-ways",
+      "name": "Synth Rect 5×3 deep ways",
+      "file": "synth-rect-5x3-deep-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 5,
+      "rows": 3
+    },
+    {
+      "id": "synth-rect-5x4-shallow-lines",
+      "name": "Synth Rect 5×4 shallow lines",
+      "file": "synth-rect-5x4-shallow-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 5,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-5x4-shallow-ways",
+      "name": "Synth Rect 5×4 shallow ways",
+      "file": "synth-rect-5x4-shallow-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 5,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-5x4-deep-lines",
+      "name": "Synth Rect 5×4 deep lines",
+      "file": "synth-rect-5x4-deep-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 5,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-5x4-deep-ways",
+      "name": "Synth Rect 5×4 deep ways",
+      "file": "synth-rect-5x4-deep-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 5,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-6x4-shallow-lines",
+      "name": "Synth Rect 6×4 shallow lines",
+      "file": "synth-rect-6x4-shallow-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 6,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-6x4-shallow-ways",
+      "name": "Synth Rect 6×4 shallow ways",
+      "file": "synth-rect-6x4-shallow-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 6,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-6x4-deep-lines",
+      "name": "Synth Rect 6×4 deep lines",
+      "file": "synth-rect-6x4-deep-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 6,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-6x4-deep-ways",
+      "name": "Synth Rect 6×4 deep ways",
+      "file": "synth-rect-6x4-deep-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 6,
+      "rows": 4
+    },
+    {
+      "id": "synth-rect-7x5-shallow-lines",
+      "name": "Synth Rect 7×5 shallow lines",
+      "file": "synth-rect-7x5-shallow-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 7,
+      "rows": 5
+    },
+    {
+      "id": "synth-rect-7x5-shallow-ways",
+      "name": "Synth Rect 7×5 shallow ways",
+      "file": "synth-rect-7x5-shallow-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 7,
+      "rows": 5
+    },
+    {
+      "id": "synth-rect-7x5-deep-lines",
+      "name": "Synth Rect 7×5 deep lines",
+      "file": "synth-rect-7x5-deep-lines.ir.json",
+      "topology": "rectangular",
+      "eval": "lines",
+      "reels": 7,
+      "rows": 5
+    },
+    {
+      "id": "synth-rect-7x5-deep-ways",
+      "name": "Synth Rect 7×5 deep ways",
+      "file": "synth-rect-7x5-deep-ways.ir.json",
+      "topology": "rectangular",
+      "eval": "ways",
+      "reels": 7,
+      "rows": 5
+    },
+    {
+      "id": "synth-cluster-5x5-shallow",
+      "name": "Synth Cluster 5×5 shallow",
+      "file": "synth-cluster-5x5-shallow.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 5,
+      "rows": 5
+    },
+    {
+      "id": "synth-cluster-5x5-deep",
+      "name": "Synth Cluster 5×5 deep",
+      "file": "synth-cluster-5x5-deep.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 5,
+      "rows": 5
+    },
+    {
+      "id": "synth-cluster-6x6-shallow",
+      "name": "Synth Cluster 6×6 shallow",
+      "file": "synth-cluster-6x6-shallow.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 6,
+      "rows": 6
+    },
+    {
+      "id": "synth-cluster-6x6-deep",
+      "name": "Synth Cluster 6×6 deep",
+      "file": "synth-cluster-6x6-deep.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 6,
+      "rows": 6
+    },
+    {
+      "id": "synth-cluster-8x8-shallow",
+      "name": "Synth Cluster 8×8 shallow",
+      "file": "synth-cluster-8x8-shallow.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 8,
+      "rows": 8
+    },
+    {
+      "id": "synth-cluster-8x8-deep",
+      "name": "Synth Cluster 8×8 deep",
+      "file": "synth-cluster-8x8-deep.ir.json",
+      "topology": "cluster",
+      "eval": "cluster",
+      "reels": 8,
+      "rows": 8
+    },
+    {
+      "id": "synth-mega-6r-3-4-5-5-4-3",
+      "name": "Synth Megaways 6r [3-4-5-5-4-3]",
+      "file": "synth-mega-6r-3-4-5-5-4-3.ir.json",
+      "topology": "variable_rows",
+      "eval": "ways",
+      "reels": 6,
+      "rows": 5
+    },
+    {
+      "id": "synth-mega-6r-7-7-7-7-7-7",
+      "name": "Synth Megaways 6r [7-7-7-7-7-7]",
+      "file": "synth-mega-6r-7-7-7-7-7-7.ir.json",
+      "topology": "variable_rows",
+      "eval": "ways",
+      "reels": 6,
+      "rows": 7
+    },
+    {
+      "id": "synth-hex-ring3",
+      "name": "Synth Hex Ring 3",
+      "file": "synth-hex-ring3.ir.json",
+      "topology": "hexagonal",
+      "eval": "cluster",
+      "reels": 7,
+      "rows": 7
+    }
+  ]
+}

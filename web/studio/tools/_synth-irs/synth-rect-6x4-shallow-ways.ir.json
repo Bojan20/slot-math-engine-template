@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "id": "synth-rect-6x4-shallow-ways",
+    "name": "Synth Rect 6×4 shallow ways",
+    "version": "1.0.0",
+    "description": "Wave G5 synthetic — rectangular 6×4 · shallow pool · ways eval. Vendor-neutral.",
+    "theme_tags": [
+      "g5",
+      "synth",
+      "rectangular",
+      "6x4",
+      "shallow",
+      "ways"
+    ],
+    "author": "CORTI WAVE G5",
+    "created_at_utc": "2026-06-08T00:00:00Z"
+  },
+  "topology": {
+    "kind": "rectangular",
+    "reels": 6,
+    "rows": 4
+  },
+  "symbols": [
+    {
+      "id": "HP1",
+      "name": "Hi 1",
+      "kind": "hp"
+    },
+    {
+      "id": "HP2",
+      "name": "Hi 2",
+      "kind": "hp"
+    },
+    {
+      "id": "MP1",
+      "name": "Mid 1",
+      "kind": "mp"
+    },
+    {
+      "id": "MP2",
+      "name": "Mid 2",
+      "kind": "mp"
+    },
+    {
+      "id": "LP1",
+      "name": "Low 1",
+      "kind": "lp"
+    },
+    {
+      "id": "LP2",
+      "name": "Low 2",
+      "kind": "lp"
+    },
+    {
+      "id": "LP3",
+      "name": "Low 3",
+      "kind": "lp"
+    },
+    {
+      "id": "WLD",
+      "name": "Wild",
+      "kind": "wild",
+      "substitutes": "*"
+    },
+    {
+      "id": "SCT",
+      "name": "Scatter",
+      "kind": "scatter"
+    }
+  ],
+  "reels": {
+    "mode": "weighted",
+    "base": [
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      }
+    ],
+    "free_spins": [
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      },
+      {
+        "HP1": 2,
+        "HP2": 2,
+        "MP1": 5,
+        "MP2": 5,
+        "LP1": 8,
+        "LP2": 8,
+        "LP3": 8,
+        "WLD": 1,
+        "SCT": 1
+      }
+    ]
+  },
+  "evaluation": {
+    "kind": "ways",
+    "min_match": 3,
+    "ways_per_reel": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  "paytable": {
+    "HP1": {
+      "3": 12,
+      "4": 60,
+      "5": 300
+    },
+    "HP2": {
+      "3": 12,
+      "4": 60,
+      "5": 300
+    },
+    "MP1": {
+      "3": 5,
+      "4": 20,
+      "5": 80
+    },
+    "MP2": {
+      "3": 5,
+      "4": 20,
+      "5": 80
+    },
+    "LP1": {
+      "3": 2,
+      "4": 8,
+      "5": 32
+    },
+    "LP2": {
+      "3": 2,
+      "4": 8,
+      "5": 32
+    },
+    "LP3": {
+      "3": 2,
+      "4": 8,
+      "5": 32
+    },
+    "WLD": {
+      "3": 25,
+      "4": 100,
+      "5": 500
+    },
+    "SCT": {
+      "3": 5,
+      "4": 25,
+      "5": 200
+    }
+  },
+  "features": [],
+  "limits": {
+    "target_rtp": 0.96,
+    "max_win_x": 5000
+  }
+}

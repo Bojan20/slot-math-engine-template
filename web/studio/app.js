@@ -1878,6 +1878,18 @@
     renderSidebarWorkspaces();
     renderVariantTabs();
     rerenderAll();
+
+    // Wave G6 — refresh the eval-kind window contract every time the
+    // active workspace changes. Otherwise the previous workspace's
+    // evalKind would leak across switches (eyes asserts would see
+    // stale data on multi-import audit runs).
+    try {
+      const vNow = ws.variants[ws.activeVariantId];
+      if (vNow && typeof window !== 'undefined') {
+        window.__active_eval_kind = vNow.evalKind || 'lines';
+      }
+    } catch (_) { /* defensive */ }
+
     toast({ kind: "cyan", msg: `Switched to <b>${ws.name}</b>` });
     logActivity(`workspace → ${ws.name}`);
 
@@ -2587,6 +2599,14 @@
       v.paytable = paytableMapped;
       v.paylines = (ir.evaluation && ir.evaluation.paylines) || [];
       v.features = ir.features || [];
+      // Wave G6 — Eval-pattern parity contract: stamp the active
+      // evaluation kind onto the variant + window so cortex-eyes
+      // can assert the topology→eval map (cluster → cluster eval,
+      // ways → ways eval, etc.) without re-parsing the IR.
+      v.evalKind = (ir.evaluation && ir.evaluation.kind) || 'lines';
+      if (typeof window !== 'undefined') {
+        window.__active_eval_kind = v.evalKind;
+      }
       v.rng = ir.rng || { kind: "pcg64" };
       v.bet = ir.bet || { currency: "EUR", base_bet: 1, denominations: [0.01] };
       // Preserve IR rtp_allocation so recomputeFor() can use the validated
@@ -3132,6 +3152,37 @@
     // PHASE 49 — preserve jurisdiction list for compliance auto-validation.
     if (Array.isArray(edited.jurisdictions?.value)) {
       v.jurisdictions = edited.jurisdictions.value.slice();
+    }
+    // Wave G6 — Eval-pattern parity contract: GDD-narrative path doesn't
+    // emit an explicit `evaluation.kind` so we infer it from topology
+    // PLUS feature tags. The GDD parser tags features like "Cluster Pay"
+    // but leaves topology.kind at its default "rectangular" — without
+    // this feature-tag boost a 7×7 cluster GDD would be tagged as lines
+    // eval (the cluster-cosmic.txt audit bug surfaced 08.06.2026).
+    //
+    // Industry mapping (vendor-neutral):
+    //   cluster     → cluster
+    //   variable_rows → ways (Megaways family)
+    //   hexagonal   → cluster (Reactoonz-style adjacency)
+    //   rectangular → lines  (default; ways possible if features says so;
+    //                cluster possible if a "cluster pay" feature is set)
+    const featureList = Array.isArray(edited.features?.value) ? edited.features.value : [];
+    const featureNamesLower = featureList.map(s => (typeof s === 'string' ? s.toLowerCase() : ''));
+    const hasClusterFeature = featureNamesLower.some(n =>
+      /\bcluster\b/.test(n) || /cluster\s*pay/.test(n));
+    const hasWaysFeature = featureNamesLower.some(n =>
+      /\bways\b/.test(n) || /\b\d{2,4}\s*ways\b/.test(n));
+
+    const inferredEval =
+      topoKind === 'cluster'       ? 'cluster' :
+      topoKind === 'variable_rows' ? 'ways'    :
+      topoKind === 'hexagonal'     ? 'cluster' :
+      hasClusterFeature            ? 'cluster' :  // feature-tag boost
+      hasWaysFeature               ? 'ways'    :  // feature-tag boost
+                                     'lines';
+    v.evalKind = inferredEval;
+    if (typeof window !== 'undefined') {
+      window.__active_eval_kind = inferredEval;
     }
     workspaces[id] = ws;
     wsOrder.push(id);
