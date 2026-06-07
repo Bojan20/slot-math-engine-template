@@ -4565,3 +4565,44 @@ b.fail { color: var(--rose); }
     transition-duration: 0s !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Play tab — Apple HIG / WCAG 2.5.5 spin CTA contract
+   2026-06-07 (Boki cortex-eyes audit fix)
+   ─────────────────────────────────────────────────────────────
+   The play tab spin button is the single most important touch
+   target in Studio. Three guarantees:
+     1. ≥ 44 × 44 px hit-area (Apple HIG; WCAG 2.5.5 Target Size).
+     2. `touch-action: manipulation` (suppresses iOS 300ms tap
+        delay so spin feels instant).
+     3. Visible on every responsive breakpoint — narrow viewports
+        wrap the action bar instead of clipping the CTA.
+   These overrides target #btn-spin specifically so the desktop
+   chrome (`.btn-primary` at 28px) stays unchanged elsewhere.
+*/
+#btn-spin {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 18px;
+  touch-action: manipulation;
+}
+#panel-play .ctx-bar-r {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+/* Mobile viewport — collapse the ctx-bar so the spin CTA wraps to
+   its own row instead of being pushed off-screen. */
+@media (max-width: 480px) {
+  #panel-play .ctx-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  #panel-play .ctx-bar-r {
+    justify-content: flex-end;
+  }
+  #btn-spin {
+    width: 100%;
+    justify-content: center;
+  }
+}
