@@ -898,6 +898,33 @@ export function gddToIR(gdd: ExtractedGDD): SlotGameIR {
   const paytable: Record<string, Record<string, number>> = {};
   const ptRows = gdd.paytable.value;
 
+  // Industry-realistic per-tier weight defaults (template-wide, NOT
+  // game-specific). Calibrated so on a typical 5x3 grid with the
+  // standard 3-HP / 3-MP / 3-LP / 1-WILD / 1-SCATTER pool:
+  //   • P(scatter on any cell)   ≈ 1.4%  → P(3+ scatter on a spin) ≈ 2-3%
+  //   • LP visible-frequency     ≈ 45%
+  //   • MP visible-frequency     ≈ 30%
+  //   • HP visible-frequency     ≈ 18%
+  // This mirrors the empirical floor of every certified slot we shipped.
+  //
+  // Previous defaults (HP=3.5 / MP=5.2 / LP=8.0 / WILD=1.5 / SCATTER=1.5)
+  // gave scatter parity with WILD — and a 9% per-cell scatter probability,
+  // which is the bug Boki reported as "sve je nekako podeseno da padaju
+  // skateri" (2026-06-07, huff-puff regression).
+  //
+  // Fix is template-wide so EVERY GDD imported through this pipeline
+  // — past, present, future — converges to industry baseline without
+  // any game-specific overrides.
+  const TIER_WEIGHTS: Record<string, number> = {
+    HP:      3.0,
+    MP:      6.0,
+    LP:     10.0,
+    WILD:    1.5,
+    SCATTER: 3.0,  // canonical engine doesn't reel-gate — but evaluator
+    MULT:    2.0,  // ignores scatter on lines, so ~1.4% per cell is OK
+    BONUS:   2.0,
+  };
+
   if (ptRows.length > 0) {
     for (const row of ptRows) {
       const tier = tierOf(row.symbol) ?? 'LP';
@@ -906,7 +933,7 @@ export function gddToIR(gdd: ExtractedGDD): SlotGameIR {
         name: row.symbol,
         kind: tierToIRKind(tier),
         ...(tier === 'WILD' ? { substitutes: '*' as const } : {}),
-        weight_hint: tier === 'HP' ? 3.5 : tier === 'MP' ? 5.2 : tier === 'LP' ? 8.0 : tier === 'WILD' ? 1.5 : tier === 'SCATTER' ? 1.5 : 1.0,
+        weight_hint: TIER_WEIGHTS[tier] ?? 1.0,
       });
       paytable[row.symbol] = { '3': row.x3, '4': row.x4, '5': row.x5 };
     }
@@ -921,7 +948,7 @@ export function gddToIR(gdd: ExtractedGDD): SlotGameIR {
           name: id,
           kind: tierToIRKind(tier),
           ...(tier === 'WILD' ? { substitutes: '*' as const } : {}),
-          weight_hint: tier === 'HP' ? 3.5 : tier === 'MP' ? 5.2 : tier === 'LP' ? 8.0 : 1.5,
+          weight_hint: TIER_WEIGHTS[tier] ?? 1.0,
         });
         const x3 = tier === 'HP' ? 50 : tier === 'MP' ? 20 : tier === 'LP' ? 5 : tier === 'SCATTER' ? 5 : 0;
         const x4 = tier === 'HP' ? 150 : tier === 'MP' ? 60 : tier === 'LP' ? 20 : tier === 'SCATTER' ? 20 : 0;

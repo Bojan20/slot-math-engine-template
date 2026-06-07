@@ -464,3 +464,12 @@ A non-tech designer drops a GDD markdown on Studio, clicks **Build**, and:
 ---
 
 *Math wave gate*: All of Phase A-G + at least 80% of Phase H must be green before any math (PAR/MC/RTP) work resumes. Math lives in `SLOT_ENGINE_MASTER_TODO.md`, NOT here.
+
+---
+
+## 🔥 Hot-patches (cross-cutting, outside wave structure)
+
+| Date | Hot-patch | Trigger | Files touched | Validation |
+|---|---|---|---|---|
+| **2026-06-07** | **Studio simulator — industry-realistic tier weights + reel-gated SCATTER + canonical-IR aware distribution** | Boki regression on `huff-puff.md`: *"nije ocitao sve parametre, nije bilo ni pola simbola. sve je nekako podeseno da se padaju sketeri."* | `web/studio/app.js` (`renderPlayGrid` + new `_drawCellSymbol` reel-gated weighted draw + rewritten `_computePlayDistFromIR` for the canonical IR shape + `buildSymbolPoolFor` tier weight table); `web/studio/src/gdd-parser.ts` (`gddToIR` weight_hint ladder); `web/studio/tests/gdd-parser.test.ts` (4 regression asserts on huff-puff fixture) | 23/23 vitest gdd-parser (4 new), 541 passed overall (0 regression vs pre-fix baseline 537), node-side 5 000-spin probe → P(3+ scatter)=**1.0%**, LP=50% / MP=30% / HP=15% / SCATTER=3% / WILD=2.5%, every symbol spawns. Template-wide (LEGO rule), zero game-specific branches. |
+

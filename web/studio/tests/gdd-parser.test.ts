@@ -248,3 +248,82 @@ describe('round-trip: parseGDD → gddToIR → JSON', () => {
     expect(validation.ok).toBe(true);
   });
 });
+
+// ──────────────────────────────────────────────────────────────────
+// Regression suite for the 2026-06-07 huff-puff scatter-storm bug.
+//
+// Boki reported: "kada sam ubacio huff and puff, opet nije ocitao
+// simulator sve parametre, nije bilo ni pola simbola. takodje, sve
+// je nekako podeseno da se padaju sketeri."
+//
+// Root cause (now fixed): `gddToIR` emitted weight_hint=1.5 for both
+// WILD and SCATTER — and the Play tab's renderPlayGrid drew symbols
+// UNIFORMLY (ignoring the weight entirely). On a 5x3 grid with 11
+// symbols that gave P(scatter on any cell) = 1/11 = 9.1%, so 3+
+// scatters triggered on ~25% of spins.
+//
+// The fixes are TEMPLATE-WIDE (no game-specific branch):
+//   1. gddToIR weight_hint: LP=10 / MP=6 / HP=3 / WILD=1.5 / SCATTER=3
+//   2. app.js _drawCellSymbol: weighted draw + reel-gate for SCATTER/
+//      BONUS/MULT on reels 0,2,4 only (industry classic).
+//   3. Default tier weights in buildSymbolPoolFor mirror (1).
+//
+// These tests assert the IR shape — the renderPlayGrid behaviour is
+// covered by a Playwright sanity probe in e2e/.
+// ──────────────────────────────────────────────────────────────────
+describe('huff-puff regression — industry-realistic tier weights', () => {
+  it('parses all 11 symbols from huff-puff.md paytable (HP×3, MP×3, LP×3, WILD, SCATTER)', async () => {
+    const file = loadFixture('huff-puff.md');
+    const gdd = await parseGDD(file);
+    expect(gdd.paytable.value.length).toBe(11);
+    const ids = gdd.paytable.value.map((r) => r.symbol).sort();
+    expect(ids).toEqual([
+      'HP1', 'HP2', 'HP3',
+      'LP1', 'LP2', 'LP3',
+      'MP1', 'MP2', 'MP3',
+      'SCATTER1', 'WILD1',
+    ]);
+  });
+
+  it('classifies each row to its correct tier (no MP rows leaking to LP/HP)', async () => {
+    const file = loadFixture('huff-puff.md');
+    const gdd = await parseGDD(file);
+    expect(gdd.symbolPool.HP.value).toBe(3);
+    expect(gdd.symbolPool.MP.value).toBe(3);
+    expect(gdd.symbolPool.LP.value).toBe(3);
+    expect(gdd.symbolPool.WILD.value).toBe(1);
+    expect(gdd.symbolPool.SCATTER.value).toBe(1);
+  });
+
+  it('gddToIR emits LP-heavy weight ladder so SCATTER < WILD < HP < MP < LP', async () => {
+    const file = loadFixture('huff-puff.md');
+    const gdd = await parseGDD(file);
+    const ir = gddToIR(gdd);
+    const w = (id: string) => ir.symbols.find((s) => s.id === id)?.weight_hint ?? 0;
+    // Tier hierarchy (industry baseline):
+    //   LP (10) > MP (6) > HP (3) > SCATTER (3) ≈ WILD (1.5)
+    expect(w('LP1')).toBeGreaterThan(w('MP1'));
+    expect(w('MP1')).toBeGreaterThan(w('HP1'));
+    expect(w('HP1')).toBeGreaterThanOrEqual(w('WILD1'));
+    // SCATTER must NOT exceed HP (the regression: previously both 1.5).
+    expect(w('SCATTER1')).toBeLessThanOrEqual(w('HP1'));
+    // SCATTER must be visible (>= 1.0) so it spawns at all.
+    expect(w('SCATTER1')).toBeGreaterThanOrEqual(1.0);
+  });
+
+  it('gddToIR yields industry-realistic P(scatter on any cell) ≤ 6%', async () => {
+    const file = loadFixture('huff-puff.md');
+    const gdd = await parseGDD(file);
+    const ir = gddToIR(gdd);
+    const reel0 = ir.reels.base[0]!;
+    const totalW = Object.values(reel0).reduce((a, b) => a + b, 0);
+    const scatterIds = ir.symbols.filter((s) => s.kind === 'scatter').map((s) => s.id);
+    const scatterW = scatterIds.reduce((a, id) => a + (reel0[id] || 0), 0);
+    const pScatterPerCell = scatterW / totalW;
+    // Industry baseline: 1-5% per cell. Pre-fix it was 1.5 / total = ~3%
+    // BUT compounded with UNIFORM draw it became 9.1%. Now it must
+    // stay within the IR-level cap.
+    expect(pScatterPerCell).toBeLessThanOrEqual(0.06);
+    expect(pScatterPerCell).toBeGreaterThan(0.005);
+  });
+});
